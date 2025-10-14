@@ -269,6 +269,12 @@ payment-modernization/
 |---------|---------|--------|
 | `/arckit.traceability` | Generate traceability matrix | `projects/XXX/traceability-matrix.md` |
 
+### Quality Assurance
+
+| Command | Purpose | Output |
+|---------|---------|--------|
+| `/arckit.analyze` | Comprehensive governance quality analysis across all artifacts | Analysis report (read-only) |
+
 ### UK Government
 
 | Command | Purpose | Output |
