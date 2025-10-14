@@ -275,6 +275,7 @@ payment-modernization/
 |---------|---------|--------|
 | `/arckit.tcop` | Assess Technology Code of Practice compliance | `projects/XXX/tcop-assessment.md` |
 | `/arckit.ai-playbook` | Assess AI Playbook compliance for responsible AI | `projects/XXX/ai-playbook-assessment.md` |
+| `/arckit.atrs` | Generate Algorithmic Transparency Recording Standard (ATRS) record | `projects/XXX/atrs-record.md` |
 
 ---
 
@@ -346,10 +347,10 @@ The `/arckit.ai-playbook` command helps assess compliance with the UK Government
 
 - **Technology Code of Practice template** with all 13 points
 - **AI Playbook template** with 10 principles + 6 ethical themes
+- **Algorithmic Transparency Recording Standard (ATRS)** template and generator
 - **Service Standard alignment** (Point 13)
 - **WCAG 2.2 Level AA** accessibility requirements
 - **UK GDPR and DPIA** compliance tracking
-- **Algorithmic Transparency Recording Standard (ATRS)** support
 - **Digital Marketplace** procurement guidance (G-Cloud, DOS)
 - **GOV.UK services integration** (Pay, Notify, Design System)
 - **Cyber Essentials** security requirements
