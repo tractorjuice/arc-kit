@@ -274,12 +274,13 @@ payment-modernization/
 | Command | Purpose | Output |
 |---------|---------|--------|
 | `/arckit.tcop` | Assess Technology Code of Practice compliance | `projects/XXX/tcop-assessment.md` |
+| `/arckit.ai-playbook` | Assess AI Playbook compliance for responsible AI | `projects/XXX/ai-playbook-assessment.md` |
 
 ---
 
 ## UK Government Support
 
-**ArcKit fully supports UK Government Technology Code of Practice (TCoP) compliance.**
+**ArcKit fully supports UK Government Technology Code of Practice (TCoP) and AI Playbook compliance.**
 
 ### Technology Code of Practice Assessment
 
@@ -317,17 +318,44 @@ claude
 /arckit.hld-review Review HLD ensuring Cloud First and Open Standards compliance
 ```
 
+### AI Playbook Assessment
+
+The `/arckit.ai-playbook` command helps assess compliance with the UK Government AI Playbook for responsible AI deployment:
+
+**10 Core Principles**:
+1. ✅ Understanding AI - Capabilities and limitations
+2. ✅ Lawful and Ethical Use - DPIA, EqIA, Human Rights
+3. ✅ Security - AI-specific threats (prompt injection, data poisoning)
+4. ✅ Human Control - Human-in-the-loop for high-risk AI
+5. ✅ Lifecycle Management - Selection to decommissioning
+6. ✅ Right Tool Selection - AI only when genuinely better
+7. ✅ Collaboration - Cross-government, academia, civil society
+8. ✅ Commercial Partnership - Responsible AI in contracts
+9. ✅ Skills and Expertise - Multidisciplinary teams
+10. ✅ Organizational Alignment - Governance and assurance
+
+**6 Ethical Themes**:
+- Safety, Security, and Robustness
+- Transparency and Explainability (ATRS)
+- Fairness, Bias, and Discrimination
+- Accountability and Responsibility
+- Contestability and Redress
+- Societal Wellbeing and Public Good
+
 ### Built-in UK Government Support
 
 - **Technology Code of Practice template** with all 13 points
+- **AI Playbook template** with 10 principles + 6 ethical themes
 - **Service Standard alignment** (Point 13)
 - **WCAG 2.2 Level AA** accessibility requirements
 - **UK GDPR and DPIA** compliance tracking
-- **Digital Marketplace** procurement guidance
+- **Algorithmic Transparency Recording Standard (ATRS)** support
+- **Digital Marketplace** procurement guidance (G-Cloud, DOS)
 - **GOV.UK services integration** (Pay, Notify, Design System)
 - **Cyber Essentials** security requirements
 - **Open Standards Profile** compliance
 - **Greening Government ICT** sustainability requirements
+- **AI risk assessment** (High/Medium/Low risk AI systems)
 
 ---
 
