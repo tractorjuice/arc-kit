@@ -5,6 +5,7 @@
 ArcKit is a toolkit for enterprise architects that transforms architecture governance from scattered documents into a systematic, AI-assisted workflow for:
 - 🏛️ Establishing and enforcing architecture principles
 - 📋 Creating comprehensive requirements documents
+- 🗺️ Strategic planning with Wardley Mapping
 - 🤝 Managing vendor RFP and selection processes
 - ✅ Conducting formal design reviews (HLD/DLD)
 - 🔗 Maintaining requirements traceability
@@ -76,6 +77,16 @@ Create detailed requirements with:
 - Non-functional requirements (performance, security, scalability, compliance)
 - Integration requirements
 - Success criteria and KPIs
+
+### Phase 2.5: Strategic Planning with Wardley Mapping
+**`/arckit.wardley`** → Create strategic Wardley Maps
+
+Visualize strategic positioning with:
+- Component evolution analysis (Genesis → Custom → Product → Commodity)
+- Build vs Buy decision framework
+- Vendor comparison and procurement strategy
+- UK Government Digital Marketplace mapping
+- Evolution predictions and strategic gameplay
 
 ### Phase 3: Vendor Procurement (if needed)
 **`/arckit.sow`** → Generate Statement of Work (RFP)
@@ -182,22 +193,25 @@ claude
 complies with PCI-DSS Level 1, integrates with Stripe and PayPal, and provides real-time
 fraud detection
 
-# 4. Generate SOW for vendor RFP
+# 4. Create strategic Wardley Map for build vs buy decisions
+/arckit.wardley Create current state Wardley Map for payment gateway showing build vs buy strategy
+
+# 5. Generate SOW for vendor RFP
 /arckit.sow Generate RFP for vendor selection with 12-month timeline and $2M budget
 
-# 5. After receiving vendor proposals...
+# 6. After receiving vendor proposals...
 /arckit.evaluate Create evaluation framework
 
-# 6. Score vendors
+# 7. Score vendors
 /arckit.evaluate Compare all vendors for payment gateway project
 
-# 7. Review selected vendor's HLD
+# 8. Review selected vendor's HLD
 /arckit.hld-review Review Acme Corp's high-level design
 
-# 8. Review detailed design
+# 9. Review detailed design
 /arckit.dld-review Review Acme Corp's detailed design for payment service
 
-# 9. Ensure traceability
+# 10. Ensure traceability
 /arckit.traceability Generate matrix from requirements through design to tests
 ```
 
@@ -218,6 +232,11 @@ payment-modernization/
 ├── projects/
 │   └── 001-payment-gateway/
 │       ├── requirements.md                 # Comprehensive requirements
+│       ├── wardley-maps/                   # Strategic Wardley Maps
+│       │   ├── current-state.md            # Current architecture positioning
+│       │   ├── future-state.md             # Target architecture vision
+│       │   ├── gap-analysis.md             # Current vs future comparison
+│       │   └── procurement-strategy.md     # Build vs buy decisions
 │       ├── sow.md                          # Statement of Work (RFP)
 │       ├── evaluation-criteria.md          # Vendor evaluation framework
 │       ├── vendors/
@@ -263,6 +282,12 @@ payment-modernization/
 | `/arckit.hld-review` | Review high-level design | `projects/XXX/vendors/[vendor]/reviews/hld-review.md` |
 | `/arckit.dld-review` | Review detailed design | `projects/XXX/vendors/[vendor]/reviews/dld-review.md` |
 
+### Strategic Planning
+
+| Command | Purpose | Output |
+|---------|---------|--------|
+| `/arckit.wardley` | Create strategic Wardley Maps for build vs buy and procurement strategy | `projects/XXX/wardley-maps/{map-name}.md` |
+
 ### Traceability
 
 | Command | Purpose | Output |
@@ -282,6 +307,96 @@ payment-modernization/
 | `/arckit.tcop` | Assess Technology Code of Practice compliance | `projects/XXX/tcop-assessment.md` |
 | `/arckit.ai-playbook` | Assess AI Playbook compliance for responsible AI | `projects/XXX/ai-playbook-assessment.md` |
 | `/arckit.atrs` | Generate Algorithmic Transparency Recording Standard (ATRS) record | `projects/XXX/atrs-record.md` |
+
+---
+
+## Wardley Mapping for Strategic Architecture
+
+**ArcKit integrates Wardley Mapping for strategic situational awareness and build vs buy decision-making.**
+
+### What is Wardley Mapping?
+
+Wardley Mapping is a strategic visualization technique that helps you:
+- **Map the value chain**: From user needs → capabilities → components
+- **Position by evolution**: Genesis (novel) → Custom → Product → Commodity
+- **Identify movement**: How components evolve over time
+- **Make strategic decisions**: Build vs Buy, vendor selection, technology choices
+
+### Evolution Stages
+
+| Stage | Evolution | Strategic Action | Example |
+|-------|-----------|------------------|---------|
+| **Genesis** | 0.00-0.25 | Build only if strategic differentiator, R&D focus | Novel AI algorithm, new protocol |
+| **Custom** | 0.25-0.50 | Critical build vs buy decision, invest in IP | Custom integration, specialized service |
+| **Product** | 0.50-0.75 | Buy from vendors, compare features | Salesforce, Oracle, SAP |
+| **Commodity** | 0.75-1.00 | Always use commodity/cloud, never build | AWS S3, Auth0, PostgreSQL |
+
+### Wardley Mapping in ArcKit
+
+The `/arckit.wardley` command creates strategic maps for:
+
+**Current State Mapping**:
+- Understand existing system landscape
+- Identify technical debt and inertia
+- Baseline for transformation
+
+**Future State Mapping**:
+- Visualize target architecture
+- Plan evolution paths
+- Strategic roadmap development
+
+**Gap Analysis**:
+- Compare current vs future state
+- Prioritize investments
+- Identify migration paths
+
+**Vendor Comparison**:
+- Compare vendor proposals strategically
+- Assess vendor lock-in risks
+- Validate vendor evolution positioning
+
+**Procurement Strategy** (UK Government):
+- Map components to Digital Marketplace frameworks
+- Identify GOV.UK service reuse opportunities
+- Align with Technology Code of Practice
+
+### Example: Benefits Eligibility Chatbot (UK Government)
+
+```bash
+# Create Wardley Map for procurement strategy
+/arckit.wardley Create procurement strategy Wardley Map for DWP benefits eligibility chatbot
+
+# Map output shows:
+# - BUILD: Benefits rules engine (Custom, 0.42) - domain expertise
+# - BUILD: Human review queue (Custom, 0.45) - HIGH-RISK AI requirement
+# - BUY (G-Cloud): GPT-4 (Product, 0.72) - commercial LLM
+# - BUY (G-Cloud): Cloud hosting (Commodity, 0.95) - AWS via G-Cloud
+# - REUSE: GOV.UK Notify (Commodity, 0.92) - email/SMS notifications
+# - REUSE: GOV.UK Design System (Product, 0.75) - accessibility compliance
+```
+
+**Strategic Insights**:
+- 40% build (competitive advantage components)
+- 35% buy via G-Cloud (commodity/product components)
+- 25% reuse GOV.UK services (avoid duplication)
+
+### Wardley Mapping Integration
+
+Wardley Maps integrate throughout the ArcKit workflow:
+
+- **Requirements Phase**: Identify components and evolution stages
+- **Procurement Phase**: Guide build vs buy decisions
+- **Vendor Evaluation**: Compare vendor architectures strategically
+- **Design Review**: Validate designs against strategic positioning
+- **Analysis**: Detect misaligned decisions (building commodity components)
+
+### Visualization
+
+All Wardley Maps use the **OnlineWardleyMaps** format and can be visualized at:
+
+**[https://create.wardleymaps.ai](https://create.wardleymaps.ai)**
+
+Simply paste the map code from the generated document to see the visual map.
 
 ---
 
@@ -371,6 +486,7 @@ The `/arckit.ai-playbook` command helps assess compliance with the UK Government
 | Feature | ArcKit | Sparx EA | Ardoq | LeanIX | Confluence |
 |---------|--------|----------|-------|--------|------------|
 | **AI-Assisted** | ✅ | ❌ | ❌ | ❌ | ❌ |
+| **Wardley Mapping** | ✅ | ❌ | ⚠️ Limited | ❌ | ❌ |
 | **Version Control** | ✅ Git | ❌ | ❌ | ❌ | ⚠️ Limited |
 | **Vendor RFP** | ✅ | ❌ | ❌ | ❌ | ⚠️ Manual |
 | **Design Review Gates** | ✅ | ⚠️ Manual | ❌ | ❌ | ⚠️ Manual |
