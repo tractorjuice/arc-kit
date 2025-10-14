@@ -264,7 +264,7 @@ This release is built on guidance from:
 - [UK Government Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice)
 - [UK Government AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government)
 - [UK Government Digital Marketplace](https://www.digitalmarketplace.service.gov.uk/)
-- [Algorithmic Transparency Recording Standard (ATRS)](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard)
+- [Algorithmic Transparency Recording Standard (ATRS)](https://www.gov.uk/government/publications/guidance-for-organisations-using-the-algorithmic-transparency-recording-standard)
 - [GDS Service Manual](https://www.gov.uk/service-manual)
 
 ## 📄 License

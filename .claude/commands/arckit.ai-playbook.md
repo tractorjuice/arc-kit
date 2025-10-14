@@ -368,6 +368,6 @@ You should:
 ## Resources
 
 - AI Playbook: https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government
-- ATRS: https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard
+- ATRS: https://www.gov.uk/government/publications/guidance-for-organisations-using-the-algorithmic-transparency-recording-standard
 - Data Ethics Framework: https://www.gov.uk/government/publications/data-ethics-framework
 - ICO AI Guidance: https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/
