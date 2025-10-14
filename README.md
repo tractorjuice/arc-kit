@@ -269,6 +269,66 @@ payment-modernization/
 |---------|---------|--------|
 | `/arckit.traceability` | Generate traceability matrix | `projects/XXX/traceability-matrix.md` |
 
+### UK Government
+
+| Command | Purpose | Output |
+|---------|---------|--------|
+| `/arckit.tcop` | Assess Technology Code of Practice compliance | `projects/XXX/tcop-assessment.md` |
+
+---
+
+## UK Government Support
+
+**ArcKit fully supports UK Government Technology Code of Practice (TCoP) compliance.**
+
+### Technology Code of Practice Assessment
+
+The `/arckit.tcop` command helps UK government departments and public sector organizations assess compliance with all 13 TCoP points:
+
+1. ✅ Define User Needs
+2. ✅ Make Things Accessible and Inclusive
+3. ✅ Be Open and Use Open Source
+4. ✅ Make Use of Open Standards
+5. ✅ Use Cloud First
+6. ✅ Make Things Secure
+7. ✅ Make Privacy Integral
+8. ✅ Share, Reuse and Collaborate
+9. ✅ Integrate and Adapt Technology
+10. ✅ Make Better Use of Data
+11. ✅ Define Your Purchasing Strategy
+12. ✅ Make Your Technology Sustainable
+13. ✅ Meet the Service Standard
+
+### Example: UK Government Project
+
+```bash
+# Initialize project for UK government department
+arckit init digital-service-modernization --ai claude
+cd digital-service-modernization
+claude
+
+# Assess TCoP compliance (Discovery/Alpha/Beta/Live phase)
+/arckit.tcop Assess Technology Code of Practice compliance for HMRC tax filing in Beta phase
+
+# Generate requirements aligned with TCoP
+/arckit.requirements Define requirements for GOV.UK service with WCAG 2.2 AA accessibility
+
+# Include TCoP in design reviews
+/arckit.hld-review Review HLD ensuring Cloud First and Open Standards compliance
+```
+
+### Built-in UK Government Support
+
+- **Technology Code of Practice template** with all 13 points
+- **Service Standard alignment** (Point 13)
+- **WCAG 2.2 Level AA** accessibility requirements
+- **UK GDPR and DPIA** compliance tracking
+- **Digital Marketplace** procurement guidance
+- **GOV.UK services integration** (Pay, Notify, Design System)
+- **Cyber Essentials** security requirements
+- **Open Standards Profile** compliance
+- **Greening Government ICT** sustainability requirements
+
 ---
 
 ## Comparison to Other Tools
