@@ -15,15 +15,20 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 ### Installation
 
-Install ArcKit CLI using `uv`:
+Install ArcKit CLI:
 
 ```bash
-# Install globally
-uv tool install arckit-cli --from git+https://github.com/github/arc-kit.git
+# Install with pip
+pip install git+https://github.com/tractorjuice/arc-kit.git
+
+# Or with uv
+uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
 
 # Or run without installing
-uvx --from git+https://github.com/github/arc-kit.git arckit init my-project
+uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
+
+**Latest Release**: [v0.1.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.1.0)
 
 ### Initialize a Project
 
@@ -90,7 +95,7 @@ Set up systematic scoring:
 - Reference check templates
 - Decision matrix
 
-**`/arckit.compare`** → Compare vendor proposals
+**`/arckit.evaluate`** (compare mode) → Compare vendor proposals
 
 Side-by-side analysis of:
 - Technical approaches
@@ -184,7 +189,7 @@ fraud detection
 /arckit.evaluate Create evaluation framework
 
 # 6. Score vendors
-/arckit.compare Compare proposals from Acme Corp, Beta Systems, and Gamma Technologies
+/arckit.evaluate Compare all vendors for payment gateway project
 
 # 7. Review selected vendor's HLD
 /arckit.hld-review Review Acme Corp's high-level design
@@ -249,8 +254,7 @@ payment-modernization/
 
 | Command | Purpose | Output |
 |---------|---------|--------|
-| `/arckit.evaluate` | Create evaluation framework | `projects/XXX/evaluation-criteria.md` |
-| `/arckit.compare` | Compare vendor proposals | `projects/XXX/vendors/comparison.md` |
+| `/arckit.evaluate` | Create evaluation framework and score vendors | `projects/XXX/evaluation-criteria.md`, `projects/XXX/vendor-comparison.md` |
 
 ### Design Review
 
@@ -294,11 +298,11 @@ payment-modernization/
 
 ```bash
 # Clone the repository
-git clone https://github.com/github/arc-kit.git
+git clone https://github.com/tractorjuice/arc-kit.git
 cd arc-kit
 
 # Install in development mode
-uv pip install -e .
+pip install -e .
 
 # Run the CLI
 arckit init my-project
@@ -343,9 +347,9 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/github/arc-kit/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/github/arc-kit/discussions)
-- **Documentation**: [GitHub Pages](https://github.github.io/arc-kit/)
+- **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
+- **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
+- **Latest Version**: [v0.1.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.1.0)
 
 ---
 
