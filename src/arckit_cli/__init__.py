@@ -252,25 +252,29 @@ def init(
     # Create project structure
     create_project_structure(project_path, ai_assistant)
 
-    # Copy templates (placeholder - in real implementation, would copy from package)
+    # Copy templates from arc-kit repository
     console.print("[cyan]Setting up templates...[/cyan]")
     templates_src = Path(__file__).parent.parent.parent / "templates"
     templates_dst = project_path / ".arckit" / "templates"
+    scripts_src = Path(__file__).parent.parent.parent / "scripts"
+    scripts_dst = project_path / ".arckit" / "scripts"
+    commands_src = Path(__file__).parent.parent.parent / ".claude" / "commands"
+    agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
+    commands_dst = project_path / agent_folder / "commands"
 
-    # For now, just create placeholder files
-    template_files = [
-        "architecture-principles-template.md",
-        "requirements-template.md",
-        "sow-template.md",
-        "evaluation-criteria-template.md",
-        "hld-review-template.md",
-        "dld-review-template.md",
-        "vendor-scoring-template.md",
-        "traceability-matrix-template.md",
-    ]
+    # Copy templates if they exist
+    if templates_src.exists():
+        for template_file in templates_src.glob("*.md"):
+            shutil.copy2(template_file, templates_dst / template_file.name)
 
-    for template in template_files:
-        (templates_dst / template).touch()
+    # Copy scripts if they exist
+    if scripts_src.exists():
+        shutil.copytree(scripts_src, scripts_dst, dirs_exist_ok=True)
+
+    # Copy slash commands if they exist (for Claude)
+    if ai_assistant == "claude" and commands_src.exists():
+        for command_file in commands_src.glob("arckit.*.md"):
+            shutil.copy2(command_file, commands_dst / command_file.name)
 
     console.print("[green]✓[/green] Templates configured")
 
