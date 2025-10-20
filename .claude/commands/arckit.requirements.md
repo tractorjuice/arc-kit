@@ -77,15 +77,42 @@ $ARGUMENTS
    - Ensure high-priority stakeholder drivers get MUST requirements
    - Document which stakeholder benefits from each requirement
 
-7. **Write the output**:
+7. **Identify and resolve conflicting requirements**:
+   - Review stakeholder analysis `conflict analysis` section for known competing drivers
+   - Identify requirement conflicts that arise from stakeholder conflicts:
+     - **Speed vs Quality**: CFO wants fast delivery vs Operations wants thorough testing
+     - **Cost vs Features**: Finance wants minimal spend vs Product wants rich features
+     - **Security vs Usability**: Security wants MFA vs Users want seamless experience
+     - **Flexibility vs Standardization**: Business wants customization vs IT wants standards
+   - For each conflict, document:
+     - **Conflicting Requirements**: Which requirements are incompatible (e.g., FR-001 vs NFR-P-002)
+     - **Stakeholders Involved**: Who wants what (e.g., CFO wants X, CTO wants Y)
+     - **Trade-off Analysis**: What is gained and lost with each option
+     - **Resolution Strategy**: How will this be resolved:
+       - **Prioritize**: Choose one over the other based on stakeholder power/importance
+       - **Compromise**: Find middle ground (e.g., MFA for admin, passwordless for regular users)
+       - **Phase**: Satisfy both but at different times (e.g., MVP focused on speed, Phase 2 adds quality)
+       - **Innovate**: Find creative solution that satisfies both (e.g., automated testing for speed AND quality)
+   - **Decision Authority**: Reference stakeholder analysis RACI matrix for who decides
+   - **Document Resolution**: Create explicit "Requirement Conflicts & Resolutions" section showing:
+     - What was chosen and why
+     - What was deferred or rejected
+     - Which stakeholder "won" and which "lost"
+     - How losing stakeholder will be managed (communication, future consideration)
+   - **Transparency**: Be explicit about trade-offs - don't hide conflicts or pretend both can be satisfied
+
+8. **Write the output**:
    - Write to `projects/{project-dir}/requirements.md`
    - Use the exact template structure
    - Include all sections even if some are TBD
+   - MUST include "Requirement Conflicts & Resolutions" section if any conflicts exist
 
-8. **Summarize what you created**:
+9. **Summarize what you created**:
    - How many requirements were defined (BRs, FRs, NFRs, etc.)
+   - How many conflicts identified and resolved
+   - Which stakeholders "won" and which "lost" in conflict resolutions
    - Key gaps or TBDs that need follow-up
-   - Suggested next steps (e.g., "Now run `/arckit.sow` to generate RFP document")
+   - Suggested next steps (e.g., "Now run `/arckit.sow` to generate RFP document" or "Review conflicts section with stakeholders before proceeding")
 
 ## Example Usage
 

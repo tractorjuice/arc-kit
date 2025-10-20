@@ -757,6 +757,90 @@
 
 ---
 
+## Requirement Conflicts & Resolutions
+
+> **Purpose**: Document conflicting requirements that arise from competing stakeholder drivers and show how conflicts were resolved.
+>
+> **Source**: Conflicts often originate from stakeholder analysis (see `stakeholder-drivers.md` conflict analysis section).
+>
+> **Principle**: Be transparent about trade-offs - don't hide conflicts or pretend both requirements can be fully satisfied.
+
+### Conflict C-1: [Conflict Name]
+
+**Conflicting Requirements**:
+- **Requirement A**: [Requirement ID and description] (e.g., FR-001: Launch MVP in 3 months)
+- **Requirement B**: [Requirement ID and description] (e.g., NFR-Q-001: 95% test coverage before launch)
+
+**Stakeholders Involved**:
+- **Stakeholder A** (e.g., CEO): Wants Requirement A because [driver/goal] (e.g., competitive pressure, Q2 revenue target)
+- **Stakeholder B** (e.g., CTO): Wants Requirement B because [driver/goal] (e.g., quality reputation, reduce production bugs)
+
+**Nature of Conflict**:
+- [Explain why both cannot be fully satisfied]
+- Example: "3-month timeline insufficient to achieve 95% coverage and build all planned features"
+
+**Trade-off Analysis**:
+
+| Option | Pros | Cons | Impact |
+|--------|------|------|--------|
+| **Option 1**: Prioritize Speed (Launch in 3 months with 70% coverage) | ✅ Meet market window<br>✅ Early revenue | ❌ Higher bug risk<br>❌ Technical debt | CEO happy<br>CTO concerned |
+| **Option 2**: Prioritize Quality (6 month launch with 95% coverage) | ✅ Quality reputation<br>✅ Lower production bugs | ❌ Miss market window<br>❌ Delayed revenue | CTO happy<br>CEO frustrated |
+| **Option 3**: Compromise (4 months, 85% coverage, reduced scope) | ✅ Balance speed/quality<br>✅ Partial satisfaction | ❌ Neither fully satisfied<br>❌ Feature cuts needed | Both somewhat satisfied |
+| **Option 4**: Innovate (3 months, automated testing, pair programming) | ✅ Speed AND quality<br>✅ Both satisfied | ❌ Higher upfront cost<br>❌ Team training needed | Both satisfied if works |
+
+**Resolution Strategy**: [PRIORITIZE | COMPROMISE | PHASE | INNOVATE]
+
+**Decision**: [What was chosen]
+- Example: "Option 3 - Compromise: 4-month launch with 85% test coverage and reduced MVP scope"
+
+**Rationale**: [Why this decision was made]
+- Example: "Board approved 1-month timeline extension. CEO accepted delay for quality. CTO accepted 85% coverage threshold with commitment to reach 95% post-launch."
+
+**Decision Authority**: [Who made the final decision]
+- Reference stakeholder analysis RACI matrix
+- Example: "Executive Sponsor (CEO) with input from Steering Committee"
+
+**Impact on Requirements**:
+- **Modified**: FR-001 changed from "3 months" to "4 months"
+- **Modified**: NFR-Q-001 changed from "95% coverage" to "85% coverage at launch, 95% within 3 months post-launch"
+- **Removed**: FR-015, FR-022, FR-031 (deferred to Phase 2)
+
+**Stakeholder Management**:
+- **CEO (Lost timeline)**: Communicated market analysis showing 4-month launch still captures 80% of opportunity. Committed to weekly progress updates.
+- **CTO (Lost full coverage)**: Committed to post-launch quality sprint. Added NFR-Q-002: "Reach 95% coverage within 3 months of launch"
+
+**Future Consideration**:
+- Re-evaluate coverage target after 3 months of production data
+- Deferred features (FR-015, FR-022, FR-031) prioritized for Phase 2
+
+---
+
+### Conflict C-2: [Another Conflict]
+
+[Repeat structure for each conflict]
+
+**Common Conflict Patterns**:
+
+1. **Speed vs Quality**: Fast delivery vs thorough testing/documentation
+   - Resolution strategies: MVP/phased, automated testing, pair programming
+
+2. **Cost vs Features**: Budget constraints vs feature richness
+   - Resolution strategies: prioritize must-haves, defer nice-to-haves, open-source alternatives
+
+3. **Security vs Usability**: Strong security vs seamless user experience
+   - Resolution strategies: risk-based controls, adaptive authentication, user segmentation
+
+4. **Flexibility vs Standardization**: Custom solutions vs standard platforms
+   - Resolution strategies: configurable platforms, plugin architecture, standard + exceptions process
+
+5. **Innovation vs Stability**: New technology vs proven technology
+   - Resolution strategies: pilot projects, hybrid approach, gradual migration
+
+6. **Global vs Local**: Centralized control vs regional autonomy
+   - Resolution strategies: federated model, global policies + local implementation, regional opt-ins
+
+---
+
 ## Timeline and Milestones
 
 ### High-Level Milestones
