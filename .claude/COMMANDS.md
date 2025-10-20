@@ -557,4 +557,4 @@ For issues or questions:
 ---
 
 **Last updated**: 2025-10-20
-**ArcKit Version**: 0.2.0
+**ArcKit Version**: 0.2.1
