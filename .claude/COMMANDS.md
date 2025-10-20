@@ -127,7 +127,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 
 **Output**: `projects/NNN-project-name/requirements.md`
 
-**Next step**: Run `/arckit.stakeholders` to analyze stakeholder drivers and goals, or proceed to `/arckit.sow` for vendor procurement.
+**Next step**: Use stakeholder insights to inform `/arckit.sow` for vendor procurement, or continue with strategic planning.
 
 ---
 

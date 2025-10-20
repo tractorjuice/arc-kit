@@ -12,9 +12,14 @@ $ARGUMENTS
 
 ## Instructions
 
-1. **Check for architecture principles**: First, check if `.arckit/memory/architecture-principles.md` exists
-   - If it exists, read it to ensure requirements align with established principles
-   - If it doesn't exist, suggest running `/arckit.principles` first
+1. **Check for architecture principles and stakeholder analysis**:
+   - First, check if `.arckit/memory/architecture-principles.md` exists
+     - If it doesn't exist, suggest running `/arckit.principles` first
+   - Then, check if a stakeholder analysis exists for this project
+     - Look for `projects/*/stakeholder-drivers.md` files
+     - If stakeholder analysis exists, read it to understand stakeholder goals and priorities
+     - If it doesn't exist, strongly recommend running `/arckit.stakeholders` first to understand who cares and what they need
+     - Stakeholder drivers should inform requirement prioritization and success criteria
 
 2. **Create or find the project**:
    - Run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create project structure
@@ -63,8 +68,14 @@ $ARGUMENTS
    - Priority (MUST/SHOULD/MAY)
    - Rationale
 
-6. **Align with architecture principles**: Reference relevant principles from `.arckit/memory/architecture-principles.md`:
-   - Example: "NFR-S-001 aligns with Security by Design principle (SEC-001)"
+6. **Align with stakeholder goals and architecture principles**:
+   - If stakeholder analysis exists, trace requirements back to stakeholder goals:
+     - Example: "BR-001 addresses CFO's goal G-1: Reduce infrastructure costs 40% by end of Year 1"
+     - Example: "NFR-P-001 supports Operations Director's outcome O-3: Maintain 99.95% uptime"
+   - Reference relevant principles from `.arckit/memory/architecture-principles.md`:
+     - Example: "NFR-S-001 aligns with Security by Design principle (SEC-001)"
+   - Ensure high-priority stakeholder drivers get MUST requirements
+   - Document which stakeholder benefits from each requirement
 
 7. **Write the output**:
    - Write to `projects/{project-dir}/requirements.md`

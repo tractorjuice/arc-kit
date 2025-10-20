@@ -74,7 +74,7 @@ Define your organization's architecture standards:
 ### Phase 2: Stakeholder Analysis
 **`/arckit.stakeholders`** → Analyze stakeholder drivers, goals, and outcomes
 
-Understand who cares about the project and why:
+**Do this BEFORE requirements** to understand who cares about the project and why:
 - Identify all stakeholders (internal and external)
 - Document underlying drivers (strategic, operational, financial, compliance, risk, personal)
 - Map drivers to SMART goals
@@ -86,7 +86,7 @@ Understand who cares about the project and why:
 ### Phase 3: Define Requirements
 **`/arckit.requirements`** → Document comprehensive requirements
 
-Create detailed requirements aligned with stakeholder goals:
+Create detailed requirements **informed by stakeholder goals**:
 - Business requirements with rationale
 - Functional requirements with acceptance criteria
 - Non-functional requirements (performance, security, scalability, compliance)

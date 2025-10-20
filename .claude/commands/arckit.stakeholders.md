@@ -103,7 +103,7 @@ $ARGUMENTS
    - How many outcomes mapped
    - Key conflicts or risks
    - Critical success factors
-   - Suggested next steps (e.g., "Now run `/arckit.requirements` to ensure requirements align with stakeholder goals")
+   - Suggested next steps: "Now run `/arckit.requirements` to create requirements that align with and address these stakeholder goals and drivers"
 
 ## Example Usage
 
