@@ -265,9 +265,14 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-ArcKit v0.2.1 (17 commands)
+ArcKit v0.2.2 (17 commands)
 
-**What's New in v0.2.1:**
+**What's New in v0.2.2:**
+- 🤖 Added OpenAI Codex CLI support with `.codex/` folder structure
+- 📚 Comprehensive `.codex/README.md` setup and usage guide
+- 🔄 All 17 ArcKit commands available in Codex format
+
+**What was New in v0.2.1:**
 - ✨ Added `/prompts:arckit.stakeholders` command for stakeholder driver analysis
 - 🔄 Updated requirements workflow to prioritize stakeholder analysis
 - 🤝 Added conflict resolution framework for competing stakeholder drivers

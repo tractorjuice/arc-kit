@@ -1,6 +1,6 @@
 # Announcing ArcKit: The Free, Open-Source Toolkit Transforming Enterprise Architecture Governance
 
-**Today, we're excited to announce the release of ArcKit v0.2.0—a free, open-source toolkit that brings AI-assisted workflows, strategic Wardley Mapping, and systematic governance to enterprise architecture.**
+**Today, we're excited to announce ArcKit v0.2.2—a free, open-source toolkit that brings AI-assisted workflows, strategic Wardley Mapping, and systematic governance to enterprise architecture. Now supporting OpenAI Codex CLI and comprehensive stakeholder analysis!**
 
 ---
 
@@ -20,7 +20,7 @@ Enterprise architects face a crisis that few talk about openly. Despite spending
 
 ArcKit is a new approach to enterprise architecture governance. Instead of expensive proprietary platforms, it provides:
 
-- **AI-Assisted Workflows**: Works with Claude Code, GitHub Copilot, Cursor, or Gemini CLI
+- **AI-Assisted Workflows**: Works with Claude Code, OpenAI Codex CLI, GitHub Copilot, Cursor, or Gemini CLI
 - **Template-Driven Quality**: Comprehensive templates guide AI to generate complete documentation
 - **Git-Versioned Artifacts**: Everything in Markdown—no vendor lock-in, full version control
 - **Strategic Decision-Making**: Built-in Wardley Mapping for build vs buy decisions
@@ -30,7 +30,7 @@ ArcKit is a new approach to enterprise architecture governance. Instead of expen
 
 ## What You Can Do with ArcKit
 
-ArcKit provides 12 slash commands that cover the complete enterprise architecture lifecycle:
+ArcKit provides 17 slash commands that cover the complete enterprise architecture lifecycle:
 
 ### Core Governance
 
@@ -48,6 +48,22 @@ Generates principles covering:
 - Data residency and sovereignty
 
 Each principle includes governance implications, trade-off analysis, and compliance requirements—not vague aspirations.
+
+**`/arckit.stakeholders`** - Analyze stakeholder drivers, goals, and outcomes (NEW in v0.2.1)
+```bash
+/arckit.stakeholders Analyze stakeholders for cloud migration where CFO wants
+cost savings, CTO wants innovation, and Operations is worried about downtime
+```
+
+**Why This is Critical**: Requirements should address real stakeholder goals, not invented needs. This command:
+- Creates Power-Interest Grid (Manage Closely, Keep Satisfied, Keep Informed, Monitor)
+- Identifies 7 types of drivers (STRATEGIC, OPERATIONAL, FINANCIAL, COMPLIANCE, PERSONAL, RISK, CUSTOMER)
+- Maps Driver → Goal → Outcome with complete traceability
+- Identifies conflicts between stakeholders (e.g., CFO speed vs Operations safety)
+- Provides resolution strategies (PRIORITIZE, COMPROMISE, PHASE, INNOVATE)
+- Defines RACI matrix for decision authority
+
+**Output**: Complete stakeholder analysis showing who cares, what they need, why they need it, and how to measure success.
 
 **`/arckit.requirements`** - Define comprehensive, traceable requirements
 ```bash
@@ -543,7 +559,7 @@ claude
 
 **Resources**:
 - **GitHub**: https://github.com/tractorjuice/arc-kit
-- **Latest Release**: v0.2.0 - UK Government Compliance Edition
+- **Latest Release**: v0.2.2 - OpenAI Codex CLI Support & Enhanced Stakeholder Analysis
 - **Documentation**: https://github.com/tractorjuice/arc-kit/blob/main/README.md
 - **Full Article**: https://github.com/tractorjuice/arc-kit/blob/main/ARTICLE.md
 - **Test Project**: https://github.com/tractorjuice/arckit-test-project-v1
