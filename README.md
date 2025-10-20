@@ -4,6 +4,7 @@
 
 ArcKit is a toolkit for enterprise architects that transforms architecture governance from scattered documents into a systematic, AI-assisted workflow for:
 - 🏛️ Establishing and enforcing architecture principles
+- 👥 Analyzing stakeholder drivers, goals, and outcomes
 - 📋 Creating comprehensive requirements documents
 - 🗺️ Strategic planning with Wardley Mapping
 - 📊 Generating visual architecture diagrams (Mermaid)
@@ -70,17 +71,29 @@ Define your organization's architecture standards:
 - Technology standards
 - FinOps and cost governance
 
-### Phase 2: Define Requirements
+### Phase 2: Stakeholder Analysis
+**`/arckit.stakeholders`** → Analyze stakeholder drivers, goals, and outcomes
+
+Understand who cares about the project and why:
+- Identify all stakeholders (internal and external)
+- Document underlying drivers (strategic, operational, financial, compliance, risk, personal)
+- Map drivers to SMART goals
+- Map goals to measurable outcomes
+- Create Stakeholder → Driver → Goal → Outcome traceability
+- Identify conflicts and synergies
+- Define engagement and communication strategies
+
+### Phase 3: Define Requirements
 **`/arckit.requirements`** → Document comprehensive requirements
 
-Create detailed requirements with:
+Create detailed requirements aligned with stakeholder goals:
 - Business requirements with rationale
 - Functional requirements with acceptance criteria
 - Non-functional requirements (performance, security, scalability, compliance)
 - Integration requirements
 - Success criteria and KPIs
 
-### Phase 2.5: Strategic Planning with Wardley Mapping
+### Phase 3.5: Strategic Planning with Wardley Mapping
 **`/arckit.wardley`** → Create strategic Wardley Maps
 
 Visualize strategic positioning with:
@@ -90,7 +103,7 @@ Visualize strategic positioning with:
 - UK Government Digital Marketplace mapping
 - Evolution predictions and strategic gameplay
 
-### Phase 3: Vendor Procurement (if needed)
+### Phase 4: Vendor Procurement (if needed)
 **`/arckit.sow`** → Generate Statement of Work (RFP)
 
 Create RFP-ready documents with:
@@ -116,7 +129,7 @@ Side-by-side analysis of:
 - Risk assessments
 - Value propositions
 
-### Phase 4: Design Review
+### Phase 5: Design Review
 **`/arckit.hld-review`** → Review High-Level Design
 
 Validate designs against:
@@ -135,7 +148,7 @@ Implementation-ready validation:
 - Security implementation
 - Test strategy
 
-### Phase 5: ServiceNow Service Management Design
+### Phase 6: ServiceNow Service Management Design
 **`/arckit.servicenow`** → Generate ServiceNow service design
 
 Bridge architecture to operations:
@@ -146,7 +159,7 @@ Bridge architecture to operations:
 - Monitoring and alerting plan
 - Service transition plan
 
-### Phase 6: Traceability
+### Phase 7: Traceability
 **`/arckit.traceability`** → Generate traceability matrix
 
 Ensure complete coverage:
@@ -201,33 +214,36 @@ claude
 # 2. Establish principles
 /arckit.principles Create principles for PCI-DSS compliant payment processing with 99.99% availability
 
-# 3. Document requirements
+# 3. Analyze stakeholders
+/arckit.stakeholders Analyze stakeholders where CFO wants cost reduction, CTO wants modern architecture, and Compliance needs PCI-DSS Level 1
+
+# 4. Document requirements
 /arckit.requirements Build a payment gateway that processes credit cards, supports 10K TPS,
 complies with PCI-DSS Level 1, integrates with Stripe and PayPal, and provides real-time
 fraud detection
 
-# 4. Create strategic Wardley Map for build vs buy decisions
+# 5. Create strategic Wardley Map for build vs buy decisions
 /arckit.wardley Create current state Wardley Map for payment gateway showing build vs buy strategy
 
-# 5. Generate SOW for vendor RFP
+# 6. Generate SOW for vendor RFP
 /arckit.sow Generate RFP for vendor selection with 12-month timeline and $2M budget
 
-# 6. After receiving vendor proposals...
+# 7. After receiving vendor proposals...
 /arckit.evaluate Create evaluation framework
 
-# 7. Score vendors
+# 8. Score vendors
 /arckit.evaluate Compare all vendors for payment gateway project
 
-# 8. Review selected vendor's HLD
+# 9. Review selected vendor's HLD
 /arckit.hld-review Review Acme Corp's high-level design
 
-# 9. Review detailed design
+# 10. Review detailed design
 /arckit.dld-review Review Acme Corp's detailed design for payment service
 
-# 10. Design ServiceNow service management
+# 11. Design ServiceNow service management
 /arckit.servicenow Generate ServiceNow design for payment gateway service
 
-# 11. Ensure traceability
+# 12. Ensure traceability
 /arckit.traceability Generate matrix from requirements through design to tests
 ```
 
@@ -247,6 +263,7 @@ payment-modernization/
 │   └── templates/                         # Document templates
 ├── projects/
 │   └── 001-payment-gateway/
+│       ├── stakeholder-drivers.md         # Stakeholder analysis
 │       ├── requirements.md                 # Comprehensive requirements
 │       ├── wardley-maps/                   # Strategic Wardley Maps
 │       │   ├── current-state.md            # Current architecture positioning

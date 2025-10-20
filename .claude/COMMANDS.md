@@ -7,7 +7,8 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
 | `/arckit.principles` | Create architecture principles | Start of organization/project |
-| `/arckit.requirements` | Define comprehensive requirements | After principles, before vendor selection |
+| `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | After principles, before or alongside requirements |
+| `/arckit.requirements` | Define comprehensive requirements | After stakeholder analysis, before vendor selection |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
 | `/arckit.diagram` | Generate architecture diagrams (Mermaid) | Visualize system structure throughout project |
 | `/arckit.sow` | Generate Statement of Work / RFP | After requirements, for vendor procurement |
@@ -31,28 +32,31 @@ Complete guide to all ArcKit slash commands for Claude Code.
 1. /arckit.principles
    ↓ (establishes governance rules)
 
-2. /arckit.requirements
-   ↓ (defines what you need)
+2. /arckit.stakeholders
+   ↓ (understand who cares, what they need, why)
 
-3. /arckit.sow
+3. /arckit.requirements
+   ↓ (defines what you need, aligned to stakeholder goals)
+
+4. /arckit.sow
    ↓ (creates RFP for vendors)
 
-4. /arckit.evaluate
+5. /arckit.evaluate
    ↓ (scores vendor proposals)
 
-5. /arckit.hld-review
+6. /arckit.hld-review
    ↓ (reviews architecture before build)
 
-6. /arckit.dld-review
+7. /arckit.dld-review
    ↓ (reviews technical details before code)
 
-7. Implementation happens
+8. Implementation happens
    ↓
 
-8. /arckit.traceability
+9. /arckit.traceability
    ↓ (verifies all requirements met)
 
-9. Release!
+10. Release!
 ```
 
 ---
@@ -123,7 +127,90 @@ Complete guide to all ArcKit slash commands for Claude Code.
 
 **Output**: `projects/NNN-project-name/requirements.md`
 
-**Next step**: Run `/arckit.sow` to generate RFP document for vendor procurement.
+**Next step**: Run `/arckit.stakeholders` to analyze stakeholder drivers and goals, or proceed to `/arckit.sow` for vendor procurement.
+
+---
+
+### 2.5. `/arckit.stakeholders` - Stakeholder Drivers & Goals Analysis
+
+**Purpose**: Understand stakeholder drivers, map them to goals, and define measurable outcomes that satisfy each stakeholder.
+
+**Usage**:
+```
+/arckit.stakeholders Analyze stakeholders for cloud migration where CFO wants cost savings and Operations worries about downtime
+/arckit.stakeholders Map drivers to goals for project 001
+/arckit.stakeholders Create stakeholder engagement plan for DWP benefits chatbot
+```
+
+**What it does**:
+- Creates `projects/NNN-project-name/stakeholder-drivers.md`
+- Identifies all relevant stakeholders (internal and external)
+- Documents underlying drivers (STRATEGIC | OPERATIONAL | FINANCIAL | COMPLIANCE | PERSONAL | RISK | CUSTOMER)
+- Maps drivers to specific SMART goals
+- Maps goals to measurable business outcomes
+- Creates complete Stakeholder → Driver → Goal → Outcome traceability
+- Identifies conflicts between stakeholders and proposes resolutions
+- Defines stakeholder engagement and communication strategies
+
+**Stakeholder Types**:
+- **Internal**: Executives, Business Units, Technical Teams, Operations, Compliance, Security, Finance
+- **External**: Regulators, Customers, Vendors, Partners, Industry Bodies
+
+**Driver Categories**:
+- **STRATEGIC**: Competitive advantage, market position, innovation, digital transformation
+- **OPERATIONAL**: Efficiency, quality, speed, reliability, workload reduction
+- **FINANCIAL**: Cost reduction, revenue growth, ROI, budget constraints
+- **COMPLIANCE**: Regulatory requirements, audit findings, risk mitigation, legal obligations
+- **PERSONAL**: Career advancement, reputation, skill development
+- **RISK**: Avoiding penalties, preventing failures, reducing exposure
+- **CUSTOMER**: Satisfaction, retention, acquisition, experience improvement
+
+**Traceability Chain**:
+```
+Stakeholder → Driver → Goal → Outcome
+
+Example:
+CFO → Reduce datacenter costs (FINANCIAL)
+    → Reduce infrastructure costs 40% by end of Year 1 (GOAL)
+    → £2M annual cost savings (OUTCOME)
+
+Operations Director → Minimize downtime risk (RISK)
+    → Zero unplanned downtime during migration (GOAL)
+    → 99.95% uptime maintained (OUTCOME)
+```
+
+**Key Outputs**:
+- Power-Interest Grid (who to manage closely vs keep informed)
+- Driver intensity analysis (CRITICAL | HIGH | MEDIUM | LOW)
+- SMART goals with metrics, baselines, and targets
+- Measurable outcomes with KPIs and timelines
+- Conflict analysis and resolution strategies
+- Engagement plan with stakeholder-specific messaging
+- Change impact assessment (champions, fence-sitters, resisters)
+- RACI matrix for decision authority
+- Stakeholder-related risk register
+
+**Why This Matters**:
+- **Requirements Prioritization**: Align to high-impact drivers
+- **Design Decisions**: Optimize for stakeholder outcomes
+- **Communication Plans**: Message to each stakeholder's motivations
+- **Change Management**: Address resistance rooted in threatened drivers
+- **Success Metrics**: Measure what stakeholders actually care about
+- **Governance**: Give decision rights to stakeholders with most at stake
+
+**UK Government Context**:
+For UK Government projects, includes:
+- Minister accountability and parliamentary questions
+- Permanent Secretary governance and NAO scrutiny
+- Treasury spending controls and value for money
+- Service assessment and GDS standards
+- Public transparency requirements
+- Citizen/user needs (digital inclusion, accessibility)
+- ICO data protection requirements
+
+**Output**: `projects/NNN-project-name/stakeholder-drivers.md`
+
+**Next step**: Use insights from stakeholder analysis to inform `/arckit.requirements` - ensure requirements align with stakeholder goals and priorities.
 
 ---
 
