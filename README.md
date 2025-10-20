@@ -329,13 +329,20 @@ payment-modernization/
 |---------|---------|--------|
 | `/arckit.analyze` | Comprehensive governance quality analysis across all artifacts | Analysis report (read-only) |
 
-### UK Government
+### UK Government Compliance
 
 | Command | Purpose | Output |
 |---------|---------|--------|
-| `/arckit.tcop` | Assess Technology Code of Practice compliance | `projects/XXX/tcop-assessment.md` |
+| `/arckit.tcop` | Comprehensive Technology Code of Practice assessment (all 13 points, Digital Spend Controls) | `projects/XXX/tcop-review.md` |
 | `/arckit.ai-playbook` | Assess AI Playbook compliance for responsible AI | `projects/XXX/ai-playbook-assessment.md` |
 | `/arckit.atrs` | Generate Algorithmic Transparency Recording Standard (ATRS) record | `projects/XXX/atrs-record.md` |
+
+### Security Assessment
+
+| Command | Purpose | Output |
+|---------|---------|--------|
+| `/arckit.secure` | UK Government Secure by Design assessment (NCSC CAF, Cyber Essentials, UK GDPR) | `projects/XXX/ukgov-secure-by-design.md` |
+| `/arckit.mod-secure` | MOD Secure by Design assessment (JSP 440, IAMM, security clearances) | `projects/XXX/mod-secure-by-design.md` |
 
 ---
 
@@ -916,11 +923,49 @@ The `/arckit.ai-playbook` command helps assess compliance with the UK Government
 - Contestability and Redress
 - Societal Wellbeing and Public Good
 
+### Security Assessment
+
+ArcKit provides comprehensive security assessment commands for UK Government projects:
+
+**`/arckit.secure` - UK Government Secure by Design (Civilian Departments)**
+
+For civilian departments (HMRC, DWP, Home Office, DEFRA, etc.):
+- **NCSC Cyber Assessment Framework (CAF)**: All 14 principles across 4 objectives
+  - Objective A: Managing Security Risk (Governance, Risk Management, Asset Management, Supply Chain)
+  - Objective B: Protecting Against Cyber Attack (6 principles including Identity, Data Security, System Security)
+  - Objective C: Detecting Cyber Security Events (Monitoring, Proactive Discovery)
+  - Objective D: Minimising Impact of Incidents (Response, Recovery, Improvement)
+- **Cyber Essentials / Cyber Essentials Plus**: 5 controls (Firewalls, Secure Config, Access Control, Malware, Patching)
+- **UK GDPR compliance**: DPO, DPIA, data subject rights, ICO reporting (72 hours)
+- **Data classifications**: PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE
+- **SIRO sign-off**: Senior Information Risk Owner approval requirements
+
+**`/arckit.mod-secure` - MOD Secure by Design (Defence Projects)**
+
+For UK Ministry of Defence projects:
+- **JSP 440 compliance**: MOD Information Assurance Policy
+- **IAMM levels**: Information Assurance Maturity Model (Levels 0-5)
+- **Security clearances**: BPSS, SC, DV, eDV requirements
+- **Data classifications**: OFFICIAL, SECRET, TOP SECRET
+- **CESG cryptography**: UK cryptographic standards for classified systems
+- **10 Security Domains**: Classification, Accreditation, Threat Modeling, Technical Controls, SDLC, Supply Chain, Operations, Personnel, Compliance
+- **MOD Security Principles**: Defence in Depth, Secure by Default, Least Privilege, Assume Breach
+
+```bash
+# Example: Civilian UK Government project
+/arckit.secure Generate Secure by Design assessment for HMRC tax filing Beta phase - OFFICIAL-SENSITIVE data
+
+# Example: MOD project
+/arckit.mod-secure Generate MOD Secure by Design assessment for Army logistics system - SECRET classification
+```
+
 ### Built-in UK Government Support
 
-- **Technology Code of Practice template** with all 13 points
+- **Technology Code of Practice template** with all 13 points (enhanced with Digital Spend Controls form)
 - **AI Playbook template** with 10 principles + 6 ethical themes
 - **Algorithmic Transparency Recording Standard (ATRS)** template and generator
+- **UK Government Secure by Design** (NCSC CAF, Cyber Essentials, UK GDPR)
+- **MOD Secure by Design** (JSP 440, IAMM, security clearances)
 - **Service Standard alignment** (Point 13)
 - **WCAG 2.2 Level AA** accessibility requirements
 - **UK GDPR and DPIA** compliance tracking
