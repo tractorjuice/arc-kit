@@ -40,6 +40,9 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 # Create a new architecture governance project
 arckit init payment-modernization --ai claude
 
+# Or use OpenAI Codex CLI
+arckit init payment-modernization --ai codex
+
 # Or initialize in current directory
 arckit init . --ai claude
 ```
@@ -197,9 +200,27 @@ ArcKit provides:
 | Agent | Support | Notes |
 |-------|---------|-------|
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended |
+| [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
 | [GitHub Copilot](https://code.visualstudio.com/) | ✅ | |
 | [Cursor](https://cursor.sh/) | ✅ | |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | |
+
+### Using with Codex CLI
+
+For OpenAI Codex CLI users, commands use the `/prompts:` format:
+
+```bash
+# Set CODEX_HOME to use project-specific commands
+export CODEX_HOME="$(pwd)/.codex"
+codex --auto
+
+# Then use ArcKit commands
+/prompts:arckit.principles Create principles for financial services
+/prompts:arckit.stakeholders Analyze stakeholders for cloud migration
+/prompts:arckit.requirements Create comprehensive requirements
+```
+
+See [.codex/README.md](.codex/README.md) for full Codex CLI setup and usage.
 
 ---
 
