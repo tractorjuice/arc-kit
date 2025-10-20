@@ -9,6 +9,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 - 📊 Generating visual architecture diagrams (Mermaid)
 - 🤝 Managing vendor RFP and selection processes
 - ✅ Conducting formal design reviews (HLD/DLD)
+- 🔧 ServiceNow service management design
 - 🔗 Maintaining requirements traceability
 
 ---
@@ -134,7 +135,18 @@ Implementation-ready validation:
 - Security implementation
 - Test strategy
 
-### Phase 5: Traceability
+### Phase 5: ServiceNow Service Management Design
+**`/arckit.servicenow`** → Generate ServiceNow service design
+
+Bridge architecture to operations:
+- CMDB design (derived from architecture diagrams)
+- SLA definitions (derived from NFRs)
+- Incident management design
+- Change management plan
+- Monitoring and alerting plan
+- Service transition plan
+
+### Phase 6: Traceability
 **`/arckit.traceability`** → Generate traceability matrix
 
 Ensure complete coverage:
@@ -212,7 +224,10 @@ fraud detection
 # 9. Review detailed design
 /arckit.dld-review Review Acme Corp's detailed design for payment service
 
-# 10. Ensure traceability
+# 10. Design ServiceNow service management
+/arckit.servicenow Generate ServiceNow design for payment gateway service
+
+# 11. Ensure traceability
 /arckit.traceability Generate matrix from requirements through design to tests
 ```
 
@@ -250,6 +265,7 @@ payment-modernization/
 │       │   ├── beta-systems/
 │       │   │   └── ...
 │       │   └── comparison.md
+│       ├── servicenow-design.md            # Service management design
 │       ├── traceability-matrix.md
 │       └── final/
 │           ├── selected-vendor.md
@@ -294,6 +310,12 @@ payment-modernization/
 | Command | Purpose | Output |
 |---------|---------|--------|
 | `/arckit.diagram` | Generate visual architecture diagrams using Mermaid (C4, deployment, sequence, data flow) | `projects/XXX/diagrams/{diagram-type}-{name}.md` |
+
+### Service Management
+
+| Command | Purpose | Output |
+|---------|---------|--------|
+| `/arckit.servicenow` | Generate ServiceNow service design (CMDB, SLAs, incident/change management, monitoring) | `projects/XXX/servicenow-design.md` |
 
 ### Traceability
 
@@ -607,6 +629,229 @@ Each diagram includes:
 
 ---
 
+## ServiceNow Service Management Design
+
+**ArcKit bridges the gap between architecture design and operational implementation with ServiceNow service management design.**
+
+### The Architecture-to-Operations Gap
+
+Most enterprise architecture tools stop at design documentation. ArcKit goes further by generating actionable ServiceNow configuration specifications that operations teams can implement directly.
+
+### What is ServiceNow Design?
+
+ServiceNow is the leading enterprise service management platform (ITSM, CMDB, Change Management). The `/arckit.servicenow` command automatically generates comprehensive service designs from your architecture artifacts.
+
+### Key Features
+
+**CMDB Design (Configuration Management Database)**:
+- Automatically generates CMDB structure from architecture diagrams
+- CI hierarchy maps 1:1 with C4 container diagrams
+- Component attributes (technology stack, cloud resources, health checks)
+- CI relationships (hosted on, depends on, connected to)
+
+**SLA Definitions (Service Level Agreements)**:
+- Availability SLA derived from NFR-Availability requirements
+- Performance SLA derived from NFR-Performance requirements
+- Incident resolution SLA based on service tier (Tier 1/2/3)
+- Support coverage hours (24/7 vs business hours)
+
+**Incident Management Design**:
+- Priority matrix (P1-P5) aligned with service criticality
+- Incident categories mapped to architecture components
+- Assignment groups for each component
+- Complete P1 incident response runbook
+- Escalation paths and on-call rotation
+
+**Change Management Plan**:
+- Change categories (Standard/Normal/Emergency/Major)
+- Risk assessment matrix
+- Maintenance windows and blackout periods
+- Rollback plans and decision criteria
+
+**Monitoring & Alerting**:
+- Health check endpoints from sequence diagrams
+- Technical metrics (CPU, memory, error rate, response time)
+- Alert routing rules (PagerDuty, Slack, ServiceNow)
+- Operational and business dashboards
+
+**Service Transition Plan**:
+- Go-live readiness checklist (40+ items)
+- Cutover plan with timeline and rollback triggers
+- Training plan for support teams
+- Post-go-live review schedule
+
+### Using /arckit.servicenow
+
+Generate ServiceNow design after completing architecture:
+
+```bash
+# After creating requirements and architecture diagrams
+/arckit.servicenow Generate ServiceNow design for payment gateway - Tier 1 critical service with 24/7 support
+
+# Output includes:
+# - Service Overview (owner, dependencies)
+# - Service Catalog entry design
+# - CMDB structure (6 CIs for payment gateway)
+# - Change Management plan
+# - Incident Management design (P1 response: 15 min)
+# - SLA definitions (99.95% availability, <500ms p95)
+# - Monitoring & alerting plan
+# - Knowledge base article plan
+# - Service transition checklist
+# - Requirements traceability
+```
+
+### Architecture Integration
+
+ServiceNow design is derived from existing architecture artifacts:
+
+**From Requirements** → SLAs:
+- NFR-Availability: 99.9% → Service Tier 2 → 99.9% SLA
+- NFR-Performance: <500ms → <500ms p95 response time SLA
+- NFR-Security: PCI-DSS → Strict change control, ECAB for emergency changes
+- NFR-Capacity: 10K concurrent users → Throughput SLA
+
+**From Architecture Diagrams** → CMDB:
+- C4 Context diagram → Top-level Service CI + external dependencies
+- C4 Container diagram → Application CIs (web app, API, database)
+- Deployment diagram → Infrastructure CIs (EC2, RDS, Lambda)
+- Data flow diagram → CMDB relationships (which components depend on which)
+- Sequence diagram → Health check endpoints for monitoring
+
+**From Wardley Map** → Change Risk:
+- Genesis/Custom components → High risk changes (CAB required)
+- Product components → Medium risk (CAB for major changes)
+- Commodity components → Low risk (standard changes possible)
+
+### Example: Payment Gateway
+
+**Input** (from architecture artifacts):
+- Requirements: 99.9% availability, <500ms response time, PCI-DSS
+- Container diagram: Web App, Payment API, Orchestrator, PostgreSQL, Stripe/PayPal
+- Wardley Map: Orchestrator is Custom (0.42), Stripe is Product (0.72), PostgreSQL is Commodity (0.95)
+
+**Output** (ServiceNow design):
+```markdown
+**Service**: Payment Gateway
+**Service Tier**: Tier 2 (Important)
+**Availability SLA**: 99.9% (43.8 min downtime/month)
+**Performance SLA**: <500ms p95 response time
+**Support**: 24/7 on-call (financial service)
+
+**CMDB Structure**:
+├── Payment Gateway (Service CI)
+    ├── Payment Web App (Application CI) - Product 0.72
+    ├── Payment API (Application CI) - Product 0.72
+    ├── Payment Orchestrator (Application CI) - Custom 0.42 [BUILD]
+    ├── PostgreSQL RDS (Database CI) - Commodity 0.95 [USE]
+    ├── Stripe Integration (External CI) - Product 0.72 [BUY]
+    └── PayPal Integration (External CI) - Product 0.72 [BUY]
+
+**Incident Management**:
+- P1 (Critical): 1 hour response, 8 hours resolution
+- P2 (High): 4 hours response, 24 hours resolution
+- Categories: Auth, API, Database, Frontend, Infrastructure
+- Assignment Groups: PaymentGateway-Backend-L2, DBA-Support, etc.
+
+**Change Management**:
+- Payment Orchestrator: CAB required (Custom component, high business value)
+- Database schema changes: CAB + ECAB option (data risk)
+- Stripe/PayPal config: Standard change (vendor-managed)
+- Maintenance window: Sunday 02:00-06:00 UTC
+- Blackout periods: Black Friday week, year-end (peak transaction volume)
+```
+
+### ITIL v4 Alignment
+
+ServiceNow designs follow ITIL v4 best practices:
+
+**Service Value Chain Activities**:
+- **Plan**: Change Management (CAB, risk assessment)
+- **Improve**: Post-incident reviews, quarterly runbook reviews
+- **Engage**: Service Catalog, user training
+- **Design & Transition**: CMDB design, go-live checklist
+- **Obtain/Build**: Change management for releases
+- **Deliver & Support**: Incident Management, SLA monitoring
+
+**Continual Improvement**:
+- Post-incident reviews within 48 hours of major incidents
+- Runbook reviews quarterly
+- SLA performance reviews monthly
+- Service design reviews after architectural changes
+
+### UK Government Integration
+
+For UK Government projects, ServiceNow design includes:
+
+**GDS Service Standard Compliance** (Point 13):
+- Service Standard assessment criteria
+- Performance metrics aligned with KPIs
+- Accessibility monitoring (WCAG 2.2 AA)
+
+**Technology Code of Practice** (from TCoP assessment):
+- Cloud First (Point 5): AWS/Azure/GCP infrastructure CIs
+- Open Standards (Point 4): API contracts, data formats
+- Security (Point 6): Security controls in change management
+- Data (Point 10): Data retention, UK GDPR compliance
+
+**GOV.UK Services**:
+- CMDB CIs for GOV.UK Notify, Pay, Design System (REUSE)
+- Service dependencies mapped
+- SLAs aligned with GOV.UK service availability
+
+### Example: DWP Benefits Chatbot (UK Government)
+
+```bash
+/arckit.servicenow Generate ServiceNow design for DWP Benefits Eligibility Chatbot - Tier 1 HIGH-RISK AI service
+
+# Output includes:
+# - Service Tier: Tier 1 (99.95% SLA) - critical service for benefits access
+# - CMDB: 8 CIs (Web, API, GPT-4, Rules Engine, Human Review Queue, DB, GOV.UK Notify, DWP Legacy)
+# - Incident Management: P1 response 15 min (citizens blocked from benefits)
+# - Change Management: HIGH-RISK AI → ECAB + senior leadership approval for changes
+# - Compliance: DPIA completed, ATRS published, AI Playbook compliance
+# - Monitoring: Bias metrics, human-in-loop SLA (100% of advice reviewed before citizen sees it)
+```
+
+### Benefits
+
+**For Operations Teams**:
+- ✅ Ready-to-implement ServiceNow configuration
+- ✅ Complete runbooks for incident response
+- ✅ Clear escalation paths and on-call requirements
+- ✅ Monitoring plan with specific metrics and thresholds
+
+**For Architecture Teams**:
+- ✅ Ensures architecture decisions map to operational reality
+- ✅ Forces thinking about operational readiness early
+- ✅ Validates NFRs are achievable with proposed design
+- ✅ Bridges design-to-operations handoff gap
+
+**For Business Stakeholders**:
+- ✅ Clear SLA commitments with measurable targets
+- ✅ Incident response timeframes (what to expect during outages)
+- ✅ Change windows and impact communication
+- ✅ Service costs and support requirements
+
+### Validation
+
+ServiceNow designs are validated for:
+- **Completeness**: Every NFR has an SLA, every component has a CMDB CI
+- **Accuracy**: SLA targets match NFRs exactly (not more aggressive, not more lenient)
+- **Traceability**: Every requirement maps to operational design element
+- **Achievability**: SLA targets are realistic for the proposed architecture
+
+### Next Steps After Generation
+
+1. **Review with stakeholders**: Service owner, technical lead, operations manager
+2. **Create ServiceNow CIs**: Import CMDB structure into ServiceNow pre-production
+3. **Configure incident categories**: Set up assignment groups and routing rules
+4. **Set up monitoring**: Implement health checks and alerting rules
+5. **Train support team**: Use runbooks from Section 8 for training
+6. **Go-live**: Execute service transition plan from Section 9
+
+---
+
 ## UK Government Support
 
 **ArcKit fully supports UK Government Technology Code of Practice (TCoP) and AI Playbook compliance.**
@@ -756,10 +1001,11 @@ ArcKit is inspired by [Spec Kit](https://github.com/github/spec-kit) but targets
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 **Areas we need help**:
-- Integration with enterprise tools (Jira, Azure DevOps, ServiceNow)
+- Integration with enterprise tools (Jira, Azure DevOps)
 - Additional AI agent support
 - Template improvements based on real-world usage
 - Documentation and examples
+- ServiceNow API integration for automated CI creation
 
 ---
 
