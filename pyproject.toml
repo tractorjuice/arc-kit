@@ -30,10 +30,10 @@ classifiers = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/github/arc-kit"
-Documentation = "https://github.com/github/arc-kit/blob/main/README.md"
-Repository = "https://github.com/github/arc-kit"
-Issues = "https://github.com/github/arc-kit/issues"
+Homepage = "https://github.com/tractorjuice/arc-kit"
+Documentation = "https://github.com/tractorjuice/arc-kit/blob/main/README.md"
+Repository = "https://github.com/tractorjuice/arc-kit"
+Issues = "https://github.com/tractorjuice/arc-kit/issues"
 
 [project.scripts]
 arckit = "arckit_cli:main"
