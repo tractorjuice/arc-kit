@@ -6,6 +6,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 - 🏛️ Establishing and enforcing architecture principles
 - 📋 Creating comprehensive requirements documents
 - 🗺️ Strategic planning with Wardley Mapping
+- 📊 Generating visual architecture diagrams (Mermaid)
 - 🤝 Managing vendor RFP and selection processes
 - ✅ Conducting formal design reviews (HLD/DLD)
 - 🔗 Maintaining requirements traceability
@@ -288,6 +289,12 @@ payment-modernization/
 |---------|---------|--------|
 | `/arckit.wardley` | Create strategic Wardley Maps for build vs buy and procurement strategy | `projects/XXX/wardley-maps/{map-name}.md` |
 
+### Architecture Diagrams
+
+| Command | Purpose | Output |
+|---------|---------|--------|
+| `/arckit.diagram` | Generate visual architecture diagrams using Mermaid (C4, deployment, sequence, data flow) | `projects/XXX/diagrams/{diagram-type}-{name}.md` |
+
 ### Traceability
 
 | Command | Purpose | Output |
@@ -397,6 +404,206 @@ All Wardley Maps use the **OnlineWardleyMaps** format and can be visualized at:
 **[https://create.wardleymaps.ai](https://create.wardleymaps.ai)**
 
 Simply paste the map code from the generated document to see the visual map.
+
+---
+
+## Architecture Diagrams with Mermaid
+
+**ArcKit generates visual architecture diagrams using Mermaid for clear technical communication.**
+
+### What are Architecture Diagrams?
+
+Architecture diagrams visualize system structure, interactions, and deployment for:
+- **Technical Communication**: Share architecture with stakeholders
+- **Design Documentation**: Document current and future state
+- **Vendor Evaluation**: Compare vendor technical approaches
+- **UK Government Compliance**: Visualize Cloud First, GOV.UK services, PII handling
+
+### Diagram Types
+
+ArcKit supports 6 essential diagram types based on the C4 Model and enterprise architecture best practices:
+
+| Diagram Type | Level | Purpose | When to Use |
+|--------------|-------|---------|-------------|
+| **C4 Context** | Level 1 | System in context with users and external systems | After requirements, to show system boundaries |
+| **C4 Container** | Level 2 | Technical containers and technology choices | After HLD, for vendor review |
+| **C4 Component** | Level 3 | Internal components within a container | After DLD, for implementation |
+| **Deployment** | Infrastructure | Cloud resources and network topology | Cloud First compliance, cost estimation |
+| **Sequence** | Interaction | API flows and request/response patterns | Integration requirements, API design |
+| **Data Flow** | Data | How data moves, PII handling, GDPR compliance | UK GDPR, DPIA requirements |
+
+### Using /arckit.diagram
+
+The `/arckit.diagram` command generates diagrams automatically from your architecture artifacts:
+
+```bash
+# Auto-detect diagram type from context
+/arckit.diagram Generate architecture diagram for payment gateway
+
+# Explicit diagram type
+/arckit.diagram context Generate C4 context diagram for benefits chatbot
+/arckit.diagram container Generate C4 container diagram showing AWS services
+/arckit.diagram component Generate component diagram for payment orchestrator
+/arckit.diagram deployment Generate deployment diagram for production environment
+/arckit.diagram sequence Generate sequence diagram for payment authorization flow
+/arckit.diagram dataflow Generate data flow diagram showing PII handling for UK GDPR
+```
+
+### Strategic Integration with Wardley Maps
+
+Diagrams integrate with Wardley Maps to show strategic positioning:
+
+```mermaid
+C4Container
+    title Container Diagram - Payment Gateway
+
+    Person(customer, "Customer", "User")
+
+    System_Boundary(pg, "Payment Gateway") {
+        Container(web, "Web Application", "React, TypeScript", "User interface, WCAG 2.2 AA")
+        Container(api, "Payment API", "Node.js, Express", "RESTful API, 10K TPS")
+        Container(orchestrator, "Payment Orchestrator", "Python", "Multi-provider routing [Custom 0.42]")
+        ContainerDb(db, "Database", "PostgreSQL RDS", "Transaction data [Commodity 0.95]")
+    }
+
+    System_Ext(stripe, "Stripe", "Payment processor [Product 0.72]")
+    System_Ext(paypal, "PayPal", "Payment processor [Product 0.72]")
+
+    Rel(customer, web, "Uses", "HTTPS")
+    Rel(web, api, "Calls", "REST/JSON")
+    Rel(api, orchestrator, "Routes to", "")
+    Rel(orchestrator, db, "Stores", "SQL")
+    Rel(orchestrator, stripe, "Processes via", "REST API")
+    Rel(orchestrator, paypal, "Processes via", "REST API")
+```
+
+**Note**: Components are annotated with evolution stages from Wardley Map:
+- `[Custom 0.42]` = Build (competitive advantage)
+- `[Product 0.72]` = Buy from vendor
+- `[Commodity 0.95]` = Use cloud/utility service
+
+### UK Government Compliance in Diagrams
+
+Diagrams automatically include UK Government compliance elements:
+
+**GOV.UK Services**:
+```mermaid
+C4Container
+    System_Ext(notify, "GOV.UK Notify", "Messaging [REUSE]")
+    System_Ext(pay, "GOV.UK Pay", "Payments [REUSE]")
+    System_Ext(design, "GOV.UK Design System", "Frontend [REUSE]")
+```
+
+**Cloud First (TCoP Point 5)**:
+```mermaid
+flowchart TB
+    subgraph AWS["AWS Cloud (G-Cloud)"]
+        subgraph VPC["VPC 10.0.0.0/16"]
+            ALB[Application Load Balancer]
+            EC2[EC2 Auto Scaling Group]
+            RDS[(RDS PostgreSQL)]
+        end
+    end
+```
+
+**PII Handling (UK GDPR)**:
+```mermaid
+flowchart LR
+    User[User] -->|PII: Name, Email| WebApp[Web Application]
+    WebApp -->|Encrypted TLS| API[API Gateway]
+    API -->|Encrypted at rest| DB[(Database)]
+    DB -->|30 day retention| Deletion[Automated Deletion]
+```
+
+### Example: Benefits Eligibility Chatbot (UK Government)
+
+```bash
+# 1. Context diagram - system boundaries
+/arckit.diagram context Generate C4 context diagram for DWP benefits eligibility chatbot
+
+# Output shows:
+# - Users: Citizens, DWP case workers, administrators
+# - System: Benefits eligibility chatbot (HIGH-RISK AI)
+# - External: GOV.UK Notify, GOV.UK Design System, DWP benefits database
+
+# 2. Container diagram - technical architecture
+/arckit.diagram container Generate container diagram showing GOV.UK services and AWS
+
+# Output shows:
+# - Frontend: GOV.UK Design System (WCAG 2.2 AA) [REUSE]
+# - Backend: Node.js API, GPT-4 (via Azure) [BUY]
+# - Custom: Benefits rules engine [BUILD 0.42], Human review queue [BUILD 0.45]
+# - Data: PostgreSQL RDS [USE 0.95], S3 audit logs [USE 0.98]
+# - Integrations: GOV.UK Notify [REUSE], DWP benefits API
+
+# 3. Data flow diagram - UK GDPR compliance
+/arckit.diagram dataflow Generate data flow diagram showing PII handling and GDPR compliance
+
+# Output shows:
+# - PII types: Name, NI number, address, financial data
+# - Legal basis: Public task (Article 6(1)(e))
+# - Retention: 6 years (aligned with DWP retention schedule)
+# - Encryption: TLS 1.3 in transit, AES-256 at rest
+# - DPIA: Required (HIGH-RISK AI processing sensitive data)
+```
+
+### Diagram Integration Throughout Workflow
+
+Architecture diagrams integrate with the full ArcKit workflow:
+
+- **Requirements Phase**: Generate context diagrams to visualize system boundaries
+- **Procurement Phase**: Create deployment diagrams for cost estimation
+- **Vendor Evaluation**: Compare vendor container diagrams side-by-side
+- **HLD Review**: Validate container diagrams against architecture principles
+- **DLD Review**: Review component diagrams and sequence diagrams
+- **Traceability**: Link components to requirements in traceability matrix
+
+### Component Inventory
+
+All diagrams include a component inventory table with:
+
+| Component | Type | Technology | Responsibility | Evolution Stage | Build/Buy |
+|-----------|------|------------|----------------|-----------------|--------------|
+| Payment Orchestrator | Service | Python | Multi-provider routing | Custom 0.42 | BUILD |
+| Database | Data Store | PostgreSQL RDS | Transaction persistence | Commodity 0.95 | USE |
+| Stripe Integration | External API | REST | Credit card processing | Product 0.72 | BUY |
+
+**Evolution Stage Legend**:
+- **Genesis (0.0-0.25)**: Novel, unproven, rapidly changing → BUILD only if strategic differentiator
+- **Custom (0.25-0.50)**: Bespoke, emerging practices → Critical BUILD vs BUY decision
+- **Product (0.50-0.75)**: Commercial products with features → BUY from vendors
+- **Commodity (0.75-1.0)**: Utility services, standardized → USE cloud/commodity services
+
+### Visualization
+
+All diagrams use **Mermaid syntax** and can be visualized:
+
+**GitHub**: Renders automatically in markdown preview
+**VS Code**: Install [Mermaid Preview extension](https://marketplace.visualstudio.com/items?itemName=vstirbu.vscode-mermaid-preview)
+**Online**: [https://mermaid.live](https://mermaid.live) - paste code to visualize
+**Export**: Use mermaid.live to export as PNG/SVG/PDF
+
+### Example Output Structure
+
+```
+projects/001-payment-gateway/
+├── diagrams/
+│   ├── context-payment-gateway.md         # C4 Level 1
+│   ├── container-payment-gateway.md       # C4 Level 2
+│   ├── component-orchestrator.md          # C4 Level 3
+│   ├── deployment-production.md           # Infrastructure
+│   ├── sequence-payment-flow.md           # API interactions
+│   └── dataflow-pii-handling.md           # UK GDPR compliance
+```
+
+Each diagram includes:
+- Mermaid code (copy-paste ready)
+- Component inventory with evolution stages
+- Architecture decisions and rationale
+- Requirements traceability
+- Security controls
+- UK Government compliance (if applicable)
+- Change log and versioning
 
 ---
 
