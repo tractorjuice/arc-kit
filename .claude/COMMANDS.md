@@ -8,11 +8,20 @@ Complete guide to all ArcKit slash commands for Claude Code.
 |---------|---------|-------------|
 | `/arckit.principles` | Create architecture principles | Start of organization/project |
 | `/arckit.requirements` | Define comprehensive requirements | After principles, before vendor selection |
+| `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
+| `/arckit.diagram` | Generate architecture diagrams (Mermaid) | Visualize system structure throughout project |
 | `/arckit.sow` | Generate Statement of Work / RFP | After requirements, for vendor procurement |
 | `/arckit.evaluate` | Evaluate vendor proposals | After receiving vendor responses |
 | `/arckit.hld-review` | Review High-Level Design | After vendor selection, before implementation |
 | `/arckit.dld-review` | Review Detailed Design | After HLD approval, before coding |
+| `/arckit.servicenow` | Generate ServiceNow service design | After architecture, bridge to operations |
 | `/arckit.traceability` | Generate traceability matrix | Throughout project, especially before release |
+| `/arckit.analyze` | Comprehensive quality analysis | Periodically throughout project |
+| `/arckit.tcop` | UK Gov Technology Code of Practice assessment | UK Government projects (all phases) |
+| `/arckit.ai-playbook` | UK Gov AI Playbook compliance | UK Government AI projects |
+| `/arckit.atrs` | UK Gov Algorithmic Transparency Record | UK Government AI systems |
+| `/arckit.secure` | UK Gov Secure by Design (civilian) | UK Government security assessment |
+| `/arckit.mod-secure` | MOD Secure by Design (defence) | UK Ministry of Defence security assessment |
 
 ---
 
@@ -547,5 +556,5 @@ For issues or questions:
 
 ---
 
-**Last updated**: 2025-10-14
-**ArcKit Version**: 0.1.0
+**Last updated**: 2025-10-20
+**ArcKit Version**: 0.2.0
