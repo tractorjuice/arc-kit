@@ -77,7 +77,7 @@ Define your organization's architecture standards:
 ### Phase 2: Stakeholder Analysis
 **`/arckit.stakeholders`** → Analyze stakeholder drivers, goals, and outcomes
 
-**Do this BEFORE requirements** to understand who cares about the project and why:
+**Do this BEFORE business case** to understand who cares about the project and why:
 - Identify all stakeholders (internal and external)
 - Document underlying drivers (strategic, operational, financial, compliance, risk, personal)
 - Map drivers to SMART goals
@@ -86,17 +86,30 @@ Define your organization's architecture standards:
 - Identify conflicts and synergies
 - Define engagement and communication strategies
 
-### Phase 3: Define Requirements
+### Phase 3: Business Case Justification
+**`/arckit.sobc`** → Create Strategic Outline Business Case (SOBC)
+
+**Do this BEFORE requirements** to justify investment and secure approval:
+- Use HM Treasury Green Book 5-case model (Strategic, Economic, Commercial, Financial, Management)
+- Analyze strategic options (Do Nothing, Minimal, Balanced, Comprehensive)
+- Map benefits to stakeholder goals (complete traceability)
+- Provide high-level cost estimates (Rough Order of Magnitude)
+- Economic appraisal (ROI range, payback period)
+- Procurement and funding strategy
+- Governance and risk management
+- Enable go/no-go decision BEFORE detailed requirements work
+
+### Phase 4: Define Requirements
 **`/arckit.requirements`** → Document comprehensive requirements
 
-Create detailed requirements **informed by stakeholder goals**:
+Create detailed requirements **informed by stakeholder goals** (if SOBC approved):
 - Business requirements with rationale
 - Functional requirements with acceptance criteria
 - Non-functional requirements (performance, security, scalability, compliance)
 - Integration requirements
 - Success criteria and KPIs
 
-### Phase 3.5: Strategic Planning with Wardley Mapping
+### Phase 4.5: Strategic Planning with Wardley Mapping
 **`/arckit.wardley`** → Create strategic Wardley Maps
 
 Visualize strategic positioning with:
@@ -106,7 +119,7 @@ Visualize strategic positioning with:
 - UK Government Digital Marketplace mapping
 - Evolution predictions and strategic gameplay
 
-### Phase 4: Vendor Procurement (if needed)
+### Phase 5: Vendor Procurement (if needed)
 **`/arckit.sow`** → Generate Statement of Work (RFP)
 
 Create RFP-ready documents with:
@@ -132,7 +145,7 @@ Side-by-side analysis of:
 - Risk assessments
 - Value propositions
 
-### Phase 5: Design Review
+### Phase 6: Design Review
 **`/arckit.hld-review`** → Review High-Level Design
 
 Validate designs against:
@@ -151,7 +164,7 @@ Implementation-ready validation:
 - Security implementation
 - Test strategy
 
-### Phase 6: ServiceNow Service Management Design
+### Phase 7: ServiceNow Service Management Design
 **`/arckit.servicenow`** → Generate ServiceNow service design
 
 Bridge architecture to operations:
@@ -162,7 +175,7 @@ Bridge architecture to operations:
 - Monitoring and alerting plan
 - Service transition plan
 
-### Phase 7: Traceability
+### Phase 8: Traceability
 **`/arckit.traceability`** → Generate traceability matrix
 
 Ensure complete coverage:
@@ -238,33 +251,36 @@ claude
 # 3. Analyze stakeholders
 /arckit.stakeholders Analyze stakeholders where CFO wants cost reduction, CTO wants modern architecture, and Compliance needs PCI-DSS Level 1
 
-# 4. Document requirements
+# 4. Create business case to justify investment
+/arckit.sobc Create SOBC for payment gateway modernization with £2M investment
+
+# 5. Document requirements (if SOBC approved)
 /arckit.requirements Build a payment gateway that processes credit cards, supports 10K TPS,
 complies with PCI-DSS Level 1, integrates with Stripe and PayPal, and provides real-time
 fraud detection
 
-# 5. Create strategic Wardley Map for build vs buy decisions
+# 6. Create strategic Wardley Map for build vs buy decisions
 /arckit.wardley Create current state Wardley Map for payment gateway showing build vs buy strategy
 
-# 6. Generate SOW for vendor RFP
+# 7. Generate SOW for vendor RFP
 /arckit.sow Generate RFP for vendor selection with 12-month timeline and $2M budget
 
-# 7. After receiving vendor proposals...
+# 8. After receiving vendor proposals...
 /arckit.evaluate Create evaluation framework
 
-# 8. Score vendors
+# 9. Score vendors
 /arckit.evaluate Compare all vendors for payment gateway project
 
-# 9. Review selected vendor's HLD
+# 10. Review selected vendor's HLD
 /arckit.hld-review Review Acme Corp's high-level design
 
-# 10. Review detailed design
+# 11. Review detailed design
 /arckit.dld-review Review Acme Corp's detailed design for payment service
 
-# 11. Design ServiceNow service management
+# 12. Design ServiceNow service management
 /arckit.servicenow Generate ServiceNow design for payment gateway service
 
-# 12. Ensure traceability
+# 13. Ensure traceability
 /arckit.traceability Generate matrix from requirements through design to tests
 ```
 
@@ -285,6 +301,7 @@ payment-modernization/
 ├── projects/
 │   └── 001-payment-gateway/
 │       ├── stakeholder-drivers.md         # Stakeholder analysis
+│       ├── sobc.md                         # Strategic Outline Business Case
 │       ├── requirements.md                 # Comprehensive requirements
 │       ├── wardley-maps/                   # Strategic Wardley Maps
 │       │   ├── current-state.md            # Current architecture positioning
@@ -322,6 +339,7 @@ payment-modernization/
 |---------|---------|--------|
 | `/arckit.principles` | Establish architecture governance | `memory/architecture-principles.md` |
 | `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | `projects/XXX/stakeholder-drivers.md` |
+| `/arckit.sobc` | Create Strategic Outline Business Case (Green Book 5-case) | `projects/XXX/sobc.md` |
 | `/arckit.requirements` | Define comprehensive requirements | `projects/XXX/requirements.md` |
 | `/arckit.sow` | Generate vendor RFP | `projects/XXX/sow.md` |
 
