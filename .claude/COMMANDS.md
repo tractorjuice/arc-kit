@@ -7,8 +7,9 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
 | `/arckit.principles` | Create architecture principles | Start of organization/project |
-| `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | After principles, BEFORE business case |
-| `/arckit.sobc` | Create Strategic Outline Business Case (SOBC) | After stakeholders, BEFORE requirements |
+| `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | After principles, BEFORE risk assessment |
+| `/arckit.risk` | Create comprehensive risk register (Orange Book) | After stakeholders, BEFORE business case |
+| `/arckit.sobc` | Create Strategic Outline Business Case (SOBC) | After risk assessment, BEFORE requirements |
 | `/arckit.requirements` | Define comprehensive requirements | After SOBC approval, before vendor selection |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
 | `/arckit.diagram` | Generate architecture diagrams (Mermaid) | Visualize system structure throughout project |
@@ -36,31 +37,34 @@ Complete guide to all ArcKit slash commands for Claude Code.
 2. /arckit.stakeholders
    ↓ (understand who cares, what they need, why)
 
-3. /arckit.sobc
-   ↓ (create business case to justify investment)
+3. /arckit.risk
+   ↓ (identify and assess risks - Orange Book)
 
-4. /arckit.requirements
+4. /arckit.sobc
+   ↓ (create business case using risk register)
+
+5. /arckit.requirements
    ↓ (if approved, define detailed requirements)
 
-5. /arckit.sow
+6. /arckit.sow
    ↓ (creates RFP for vendors)
 
-6. /arckit.evaluate
+7. /arckit.evaluate
    ↓ (scores vendor proposals)
 
-7. /arckit.hld-review
+8. /arckit.hld-review
    ↓ (reviews architecture before build)
 
-8. /arckit.dld-review
+9. /arckit.dld-review
    ↓ (reviews technical details before code)
 
-9. Implementation happens
+10. Implementation happens
    ↓
 
-10. /arckit.traceability
+11. /arckit.traceability
    ↓ (verifies all requirements met)
 
-11. Release!
+12. Release!
 ```
 
 ---
@@ -178,11 +182,235 @@ For UK Government projects, includes:
 
 **Output**: `projects/NNN-project-name/stakeholder-drivers.md`
 
-**Next step**: Create Strategic Outline Business Case with `/arckit.sobc` to justify investment and secure approval.
+**Next step**: Identify and assess project risks with `/arckit.risk` using Orange Book methodology, then create business case.
 
 ---
 
-### 3. `/arckit.sobc` - Strategic Outline Business Case
+### 3. `/arckit.risk` - Risk Management (Orange Book)
+
+**Purpose**: Create comprehensive risk register following HM Treasury Orange Book (2023) principles for systematic risk identification, assessment, and management.
+
+**Usage**:
+```
+/arckit.risk Identify risks for cloud migration project
+/arckit.risk Create risk register for payment gateway modernization
+/arckit.risk Assess risks for DWP benefits chatbot with stakeholder concerns
+```
+
+**What it does**:
+- Creates `projects/NNN-project-name/risk-register.md`
+- **Requires stakeholder analysis** (MANDATORY - every risk needs an owner from RACI matrix)
+- Follows HM Treasury Orange Book 2023 framework (Part I: 5 Principles, Part II: Risk Control Framework)
+- Identifies risks across 6 categories (Strategic, Operational, Financial, Compliance, Reputational, Technology)
+- Assesses inherent risk (before controls) and residual risk (after controls)
+- Applies 4Ts response framework (Tolerate, Treat, Transfer, Terminate)
+- Links risks to stakeholder concerns and objectives
+- Monitors risk appetite compliance
+- Feeds into SOBC Management Case Part E
+
+**Orange Book 2023 Framework**:
+
+**Part I - Risk Management Principles**:
+- **A. Governance and Leadership**: Risk owners from senior stakeholders
+- **B. Integration**: Risks linked to objectives, business case, requirements
+- **C. Collaboration**: Multiple perspectives from stakeholder analysis
+- **D. Risk Processes**: Systematic identification, assessment, response, monitoring
+- **E. Continual Improvement**: Regular reviews, KRIs, lessons learned
+
+**Part II - Risk Control Framework (4-Pillar Structure)**:
+- Risk appetite and tolerance thresholds
+- Risk ownership and governance
+- Risk assessment methodology (5×5 matrix)
+- Control effectiveness measurement
+
+**6 Risk Categories**:
+
+1. **STRATEGIC**: Risks to strategic objectives, competitive position, policy changes
+   - Example: "Strategic direction changes mid-project due to ministerial reshuffle"
+
+2. **OPERATIONAL**: Risks to operations, service delivery, business continuity
+   - Example: "Insufficient cloud expertise in team for migration"
+
+3. **FINANCIAL**: Budget overruns, funding shortfalls, ROI not achieved
+   - Example: "Cloud costs exceed budget by 40% due to poor estimation"
+
+4. **COMPLIANCE/REGULATORY**: Non-compliance with laws, regulations, policies
+   - Example: "GDPR breach due to international data transfer"
+
+5. **REPUTATIONAL**: Damage to reputation, stakeholder confidence, public perception
+   - Example: "High-profile service outage damages citizen trust"
+
+6. **TECHNOLOGY**: Technical failure, cyber security, legacy system issues
+   - Example: "Legacy integration fails under production load"
+
+**Risk Assessment (5×5 Matrix)**:
+
+**Inherent Risk** (before controls):
+- **Likelihood** (1-5): Rare → Unlikely → Possible → Likely → Almost Certain
+- **Impact** (1-5): Negligible → Minor → Moderate → Major → Catastrophic
+- **Score** = Likelihood × Impact (1-25)
+
+**Residual Risk** (after controls):
+- Same scales applied after existing controls
+- Shows control effectiveness (% risk reduction)
+
+**Risk Zones**:
+- 🟥 **Critical (20-25)**: Immediate escalation to senior management
+- 🟧 **High (13-19)**: Management attention, mitigation plan required
+- 🟨 **Medium (6-12)**: Management monitoring, consider mitigation
+- 🟩 **Low (1-5)**: Routine monitoring, accept or low-cost controls
+
+**4Ts Response Framework**:
+
+Each risk receives ONE primary response:
+
+- **TOLERATE**: Accept the risk (within appetite, cost of mitigation exceeds benefit)
+  - When to use: Low residual score (1-5), within risk appetite
+  - Example: "Minor UI inconsistency - aesthetic only, no functional impact"
+
+- **TREAT**: Mitigate or reduce the risk (implement additional controls)
+  - When to use: Medium/High risk that can be reduced through actions
+  - Example: "Implement automated testing pipeline to reduce defect risk"
+
+- **TRANSFER**: Transfer risk to 3rd party (insurance, outsourcing, contracts)
+  - When to use: Low likelihood/high impact, can be insured or contracted away
+  - Example: "Purchase cyber insurance for breach liability coverage"
+
+- **TERMINATE**: Stop the activity creating the risk
+  - When to use: High likelihood/high impact, exceeds appetite, cannot be mitigated
+  - Example: "Cancel high-risk vendor contract, source alternative supplier"
+
+**Complete Stakeholder Integration**:
+
+Every risk must trace to stakeholder analysis:
+
+```
+Stakeholder: CFO (from stakeholder-drivers.md)
+  → Driver D-001: Reduce costs (FINANCIAL, HIGH)
+    → Risk R-004: Cloud costs exceed budget by 40% (FINANCIAL, Score: 9)
+      → Risk Owner: CFO (from RACI matrix - Accountable)
+        → Current Controls: Monthly cost reviews, FinOps dashboards
+          → Residual Score: 9 (Medium, within appetite)
+            → Response: TREAT - Implement automated cost anomaly alerts
+              → Target Score: 6 (Low, well within appetite)
+```
+
+**Risk Register Contents**:
+
+**A. Executive Summary**:
+- Risk profile overview (Critical/High/Medium/Low distribution)
+- Top 5 risks requiring immediate attention
+- Risks exceeding organizational appetite
+- Overall risk assessment (Acceptable/Concerning/Unacceptable)
+- Key findings and recommendations
+
+**B. Risk Matrix Visualization**:
+- Inherent risk matrix (5×5 grid showing risks before controls)
+- Residual risk matrix (5×5 grid showing risks after controls)
+- Risk movement analysis (control effectiveness)
+
+**C. Top 10 Risks** (ranked by residual score):
+- Table with ID, title, category, scores, owner, status, response
+
+**D. Detailed Risk Register**:
+For each risk (R-001, R-002, R-003...):
+- Risk identification (description, root cause, trigger events, consequences)
+- Affected stakeholders (links to stakeholder-drivers.md)
+- Related objectives (stakeholder goals under threat)
+- Inherent assessment (L×I before controls)
+- Current controls and effectiveness
+- Residual assessment (L×I after controls)
+- 4Ts response with rationale
+- Risk ownership (from stakeholder RACI)
+- Action plan with owners, dates, costs, target risk reduction
+- Risk appetite assessment (within/exceeds appetite)
+
+**E. Risk Category Analysis**:
+- Analysis per category (Strategic, Operational, etc.)
+- Average scores, control effectiveness
+- Key themes and patterns
+
+**F. Risk Ownership Matrix**:
+- Which stakeholder owns which risks
+- Risk concentration analysis (load balancing)
+
+**G. 4Ts Response Summary**:
+- Distribution: Tolerate X% | Treat Y% | Transfer Z% | Terminate W%
+- Response patterns by category
+
+**H. Risk Appetite Compliance**:
+- Compliance by category (within/exceeding appetite)
+- Risks requiring escalation/approval
+- Justification for appetite exceedances
+
+**I. Prioritized Action Plan**:
+- Priority 1 (URGENT): Critical risks or significant appetite exceedance
+- Priority 2 (HIGH): High risks within appetite
+- Priority 3 (MEDIUM): Medium risks requiring treatment
+- Actions with owners, dates, costs, expected impact
+
+**J. Integration with SOBC**:
+- **Strategic Case**: Strategic risks demonstrate urgency ("Why Now?")
+- **Economic Case**: Financial risks inform risk-adjusted costs (optimism bias)
+- **Management Case Part E**: Full risk register included for risk management section
+- **Recommendation**: High-risk profile influences option selection and phasing
+
+**K. Monitoring and Review Framework**:
+- Review schedule: Weekly (Critical/High), Monthly (Medium), Quarterly (Low)
+- Key Risk Indicators (KRIs) - leading and lagging
+- Escalation criteria (auto-escalation triggers)
+- Reporting requirements (weekly/monthly/quarterly)
+
+**L. Orange Book Compliance Checklist**:
+- Demonstrates compliance with all 5 principles
+- Risk Control Framework alignment
+
+**UK Government Specific Risks**:
+
+For UK Government/public sector projects:
+
+**STRATEGIC**:
+- Policy/ministerial direction change mid-project
+- Manifesto commitment not delivered
+- Machinery of government changes
+- Parliamentary scrutiny and questions
+
+**COMPLIANCE/REGULATORY**:
+- HM Treasury spending controls (approval delays)
+- NAO audit findings and recommendations
+- PAC (Public Accounts Committee) scrutiny
+- FOI requests revealing sensitive information
+- Judicial review of procurement decisions
+
+**REPUTATIONAL**:
+- Media scrutiny of government IT failures
+- Citizen complaints and service failures
+- Social media backlash
+- Select Committee inquiry
+
+**OPERATIONAL**:
+- GDS Service Assessment failure (cannot go live)
+- CDDO digital spend control rejection
+- Civil service headcount restrictions
+- Security clearance delays (SC/DV)
+
+**Why This Matters**:
+
+- **Informed Decision-Making**: Risk register enables go/no-go decisions in SOBC
+- **Proactive Management**: Identify and mitigate risks early, before they materialize
+- **Stakeholder Confidence**: Demonstrates systematic risk management to Board/Treasury
+- **Resource Allocation**: Prioritize risk mitigation budget (action plan costs)
+- **Compliance**: Orange Book compliance required for UK Government assurance
+- **Audit Trail**: Documented risk assessment for NAO/audit review
+- **Integration**: Risks link to stakeholders, inform business case, shape requirements
+
+**Output**: `projects/NNN-project-name/risk-register.md`
+
+**Next step**: Use risk register to inform `/arckit.sobc` - Management Case Part E requires comprehensive risk assessment.
+
+---
+
+### 4. `/arckit.sobc` - Strategic Outline Business Case
 
 **Purpose**: Create a Strategic Outline Business Case (SOBC) following HM Treasury Green Book 5-case model to justify investment in a technology project.
 
@@ -274,7 +502,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 4. `/arckit.requirements` - Requirements Definition
+### 5. `/arckit.requirements` - Requirements Definition
 
 **Purpose**: Create comprehensive business and technical requirements for a project, informed by stakeholder goals.
 
@@ -313,7 +541,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 5. `/arckit.sow` - Statement of Work / RFP
+### 6. `/arckit.sow` - Statement of Work / RFP
 
 **Purpose**: Generate Statement of Work (SOW) document for vendor procurement / RFP.
 
@@ -348,7 +576,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 6. `/arckit.evaluate` - Vendor Evaluation
+### 7. `/arckit.evaluate` - Vendor Evaluation
 
 **Purpose**: Create vendor evaluation framework and score vendor proposals.
 
@@ -390,7 +618,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 7. `/arckit.hld-review` - High-Level Design Review
+### 8. `/arckit.hld-review` - High-Level Design Review
 
 **Purpose**: Review High-Level Design (HLD) against architecture principles and requirements.
 
@@ -428,7 +656,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 8. `/arckit.dld-review` - Detailed Design Review
+### 9. `/arckit.dld-review` - Detailed Design Review
 
 **Purpose**: Review Detailed Design (DLD) for implementation readiness.
 
@@ -470,7 +698,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 9. `/arckit.traceability` - Traceability Matrix
+### 10. `/arckit.traceability` - Traceability Matrix
 
 **Purpose**: Generate requirements traceability matrix from requirements → design → implementation → tests.
 
@@ -531,13 +759,14 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 Always follow the recommended sequence:
 1. Principles FIRST (establishes governance)
 2. Stakeholders SECOND (understand who cares and why)
-3. Business Case THIRD (justify investment with SOBC)
-4. Requirements FOURTH (if approved, define detailed requirements aligned to stakeholder goals)
-5. SOW/RFP FIFTH (procurement)
-6. Evaluate vendors
-7. HLD review (architecture gate)
-8. DLD review (implementation gate)
-9. Traceability (verification)
+3. Risk Assessment THIRD (identify and assess risks using Orange Book)
+4. Business Case FOURTH (justify investment with SOBC using risk register)
+5. Requirements FIFTH (if approved, define detailed requirements aligned to stakeholder goals)
+6. SOW/RFP SIXTH (procurement)
+7. Evaluate vendors
+8. HLD review (architecture gate)
+9. DLD review (implementation gate)
+10. Traceability (verification)
 
 ### 2. Keep Principles Updated
 
@@ -603,15 +832,19 @@ Architecture principles should be:
 /arckit.stakeholders Analyze stakeholders for CRM modernization
 /arckit.stakeholders Analyze stakeholders for data platform migration
 
-# 3. Create business case to justify investment
+# 3. Identify and assess risks
+/arckit.risk Create risk register for CRM modernization
+/arckit.risk Create risk register for data platform migration
+
+# 4. Create business case using risk register
 /arckit.sobc Create SOBC for CRM modernization
 /arckit.sobc Create SOBC for data platform migration
 
-# 4. If approved, then create detailed requirements aligned to stakeholder goals
+# 5. If approved, then create detailed requirements aligned to stakeholder goals
 /arckit.requirements Create requirements for CRM modernization
 /arckit.requirements Create requirements for data platform migration
 
-# 5. Continue with each project...
+# 6. Continue with each project...
 ```
 
 ### Pattern 2: Vendor Selection for Project
@@ -620,25 +853,28 @@ Architecture principles should be:
 # 1. Analyze stakeholders
 /arckit.stakeholders Analyze stakeholders for payment gateway project
 
-# 2. Create business case to justify investment
+# 2. Assess risks
+/arckit.risk Create risk register for payment gateway
+
+# 3. Create business case using risk register
 /arckit.sobc Create SOBC for payment gateway modernization
 
-# 3. If approved, define requirements based on stakeholder goals
+# 4. If approved, define requirements based on stakeholder goals
 /arckit.requirements Create requirements for payment gateway
 
-# 4. Generate RFP
+# 5. Generate RFP
 /arckit.sow Generate SOW for payment gateway project
 
-# 5. After receiving proposals, evaluate
+# 6. After receiving proposals, evaluate
 /arckit.evaluate Score Vendor A proposal for payment gateway
 /arckit.evaluate Score Vendor B proposal for payment gateway
 /arckit.evaluate Compare all vendors for payment gateway
 
-# 6. Select vendor and review designs
+# 7. Select vendor and review designs
 /arckit.hld-review Review Vendor A HLD for payment gateway
 /arckit.dld-review Review Vendor A DLD for payment gateway
 
-# 7. Track implementation
+# 8. Track implementation
 /arckit.traceability Generate traceability for payment gateway
 ```
 
@@ -698,6 +934,7 @@ my-arckit-project/
 ├── projects/
 │   └── 001-payment-gateway/
 │       ├── stakeholder-drivers.md          ← /arckit.stakeholders
+│       ├── risk-register.md                ← /arckit.risk (Orange Book)
 │       ├── sobc.md                         ← /arckit.sobc (Strategic Outline Business Case)
 │       ├── requirements.md                 ← /arckit.requirements
 │       ├── sow.md                          ← /arckit.sow
