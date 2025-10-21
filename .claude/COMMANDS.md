@@ -7,8 +7,9 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
 | `/arckit.principles` | Create architecture principles | Start of organization/project |
-| `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | After principles, BEFORE requirements |
-| `/arckit.requirements` | Define comprehensive requirements | After stakeholder analysis, before vendor selection |
+| `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | After principles, BEFORE business case |
+| `/arckit.sobc` | Create Strategic Outline Business Case (SOBC) | After stakeholders, BEFORE requirements |
+| `/arckit.requirements` | Define comprehensive requirements | After SOBC approval, before vendor selection |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
 | `/arckit.diagram` | Generate architecture diagrams (Mermaid) | Visualize system structure throughout project |
 | `/arckit.sow` | Generate Statement of Work / RFP | After requirements, for vendor procurement |
@@ -35,28 +36,31 @@ Complete guide to all ArcKit slash commands for Claude Code.
 2. /arckit.stakeholders
    ↓ (understand who cares, what they need, why)
 
-3. /arckit.requirements
-   ↓ (defines what you need, aligned to stakeholder goals)
+3. /arckit.sobc
+   ↓ (create business case to justify investment)
 
-4. /arckit.sow
+4. /arckit.requirements
+   ↓ (if approved, define detailed requirements)
+
+5. /arckit.sow
    ↓ (creates RFP for vendors)
 
-5. /arckit.evaluate
+6. /arckit.evaluate
    ↓ (scores vendor proposals)
 
-6. /arckit.hld-review
+7. /arckit.hld-review
    ↓ (reviews architecture before build)
 
-7. /arckit.dld-review
+8. /arckit.dld-review
    ↓ (reviews technical details before code)
 
-8. Implementation happens
+9. Implementation happens
    ↓
 
-9. /arckit.traceability
+10. /arckit.traceability
    ↓ (verifies all requirements met)
 
-10. Release!
+11. Release!
 ```
 
 ---
@@ -91,7 +95,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 
 **Output**: `.arckit/memory/architecture-principles.md`
 
-**Next step**: Run `/arckit.stakeholders` to analyze who cares about this project and why, before defining requirements.
+**Next step**: Run `/arckit.stakeholders` to analyze who cares about this project and why, then create business case.
 
 ---
 
@@ -174,11 +178,103 @@ For UK Government projects, includes:
 
 **Output**: `projects/NNN-project-name/stakeholder-drivers.md`
 
-**Next step**: Use insights from stakeholder analysis to inform `/arckit.requirements` - ensure requirements align with stakeholder goals and priorities.
+**Next step**: Create Strategic Outline Business Case with `/arckit.sobc` to justify investment and secure approval.
 
 ---
 
-### 3. `/arckit.requirements` - Requirements Definition
+### 3. `/arckit.sobc` - Strategic Outline Business Case
+
+**Purpose**: Create a Strategic Outline Business Case (SOBC) following HM Treasury Green Book 5-case model to justify investment in a technology project.
+
+**Usage**:
+```
+/arckit.sobc Create SOBC for cloud migration project
+/arckit.sobc Generate business case for payment modernization
+/arckit.sobc Create strategic outline for DWP benefits chatbot
+```
+
+**What it does**:
+- Creates `projects/NNN-project-name/sobc.md`
+- **Requires stakeholder analysis** (MANDATORY - SOBC must link to stakeholder goals)
+- Generates comprehensive business case following HM Treasury Green Book 5-case model
+- Analyzes multiple strategic options (Do Nothing, Minimal, Balanced, Comprehensive)
+- Maps benefits to stakeholder goals from stakeholder analysis
+- Provides high-level cost estimates (Rough Order of Magnitude)
+- Enables go/no-go decision BEFORE investing in detailed requirements
+
+**Business Case Lifecycle**:
+- **SOBC** (this command): Strategic Outline - High-level case for change with ROM estimates
+- **OBC**: Outline Business Case - After some design work, with refined costs
+- **FBC**: Full Business Case - Detailed case with accurate costs, ready for final approval
+
+**The Five Cases (HM Treasury Green Book Model)**:
+
+**A. Strategic Case**:
+- Problem statement (from stakeholder pain points)
+- Strategic fit and alignment with organizational strategy
+- Stakeholder drivers mapped to strategic imperatives
+- Scope definition (in/out of scope)
+- Dependencies and urgency (why now?)
+
+**B. Economic Case**:
+- Options analysis (Do Nothing, Minimal, Balanced, Comprehensive)
+- Benefits mapping (every benefit traces to stakeholder goal)
+- High-level cost estimates (CapEx, OpEx, 3-year TCO)
+- Economic appraisal (ROI range, payback period)
+- Recommended option with rationale
+
+**C. Commercial Case**:
+- Procurement strategy (Digital Marketplace for UK Gov, Build/Buy/Partner for private)
+- Market assessment (supplier availability, competition)
+- Sourcing route and contract approach
+- SME opportunities (UK Government requirement)
+
+**D. Financial Case**:
+- Budget requirement (how much needed?)
+- Funding source (where does money come from?)
+- Approval thresholds (who must approve?)
+- Affordability assessment
+- Cash flow and budget constraints
+
+**E. Management Case**:
+- Governance (from stakeholder RACI matrix)
+- Project approach (Agile/Waterfall/Phased)
+- Key milestones and deliverables
+- Resource requirements (team size, skills)
+- Change management (from stakeholder conflict analysis)
+- Benefits realization (linked to stakeholder outcomes)
+- Risk management (top 5-10 strategic risks)
+
+**Complete Traceability**:
+```
+Stakeholder Driver → Strategic Case → Benefit → Financial Case → Success Criterion
+
+Example:
+CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
+  → Strategic Case: Cost pressure driving change
+    → Economic Case: Benefit B-1: £2M annual savings (maps to CFO Goal G-1)
+      → Financial Case: 18-month payback acceptable to CFO
+        → Management Case: CFO sits on steering committee (RACI: Accountable)
+          → Success Criterion: CFO Outcome O-1 measured monthly
+```
+
+**UK Government Specific Features**:
+- Policy alignment (manifesto commitments, departmental objectives)
+- Public value and citizen outcomes
+- Digital Marketplace assessment (G-Cloud, DOS)
+- Social Cost Benefit Analysis with Green Book discount rates (3.5%)
+- Optimism bias adjustment
+- Social value (minimum 10% weighting)
+- Service Standard assessment plan
+- WCAG 2.2 AA accessibility compliance
+
+**Output**: `projects/NNN-project-name/sobc.md`
+
+**Next step**: Present SOBC to approval body for go/no-go decision. If approved, run `/arckit.requirements` to define detailed requirements.
+
+---
+
+### 4. `/arckit.requirements` - Requirements Definition
 
 **Purpose**: Create comprehensive business and technical requirements for a project, informed by stakeholder goals.
 
@@ -217,7 +313,7 @@ For UK Government projects, includes:
 
 ---
 
-### 4. `/arckit.sow` - Statement of Work / RFP
+### 5. `/arckit.sow` - Statement of Work / RFP
 
 **Purpose**: Generate Statement of Work (SOW) document for vendor procurement / RFP.
 
@@ -252,7 +348,7 @@ For UK Government projects, includes:
 
 ---
 
-### 5. `/arckit.evaluate` - Vendor Evaluation
+### 6. `/arckit.evaluate` - Vendor Evaluation
 
 **Purpose**: Create vendor evaluation framework and score vendor proposals.
 
@@ -294,7 +390,7 @@ For UK Government projects, includes:
 
 ---
 
-### 6. `/arckit.hld-review` - High-Level Design Review
+### 7. `/arckit.hld-review` - High-Level Design Review
 
 **Purpose**: Review High-Level Design (HLD) against architecture principles and requirements.
 
@@ -332,7 +428,7 @@ For UK Government projects, includes:
 
 ---
 
-### 7. `/arckit.dld-review` - Detailed Design Review
+### 8. `/arckit.dld-review` - Detailed Design Review
 
 **Purpose**: Review Detailed Design (DLD) for implementation readiness.
 
@@ -374,7 +470,7 @@ For UK Government projects, includes:
 
 ---
 
-### 8. `/arckit.traceability` - Traceability Matrix
+### 9. `/arckit.traceability` - Traceability Matrix
 
 **Purpose**: Generate requirements traceability matrix from requirements → design → implementation → tests.
 
@@ -435,12 +531,13 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 Always follow the recommended sequence:
 1. Principles FIRST (establishes governance)
 2. Stakeholders SECOND (understand who cares and why)
-3. Requirements THIRD (defines what you need, aligned to stakeholder goals)
-4. SOW/RFP FOURTH (procurement)
-5. Evaluate vendors
-6. HLD review (architecture gate)
-7. DLD review (implementation gate)
-8. Traceability (verification)
+3. Business Case THIRD (justify investment with SOBC)
+4. Requirements FOURTH (if approved, define detailed requirements aligned to stakeholder goals)
+5. SOW/RFP FIFTH (procurement)
+6. Evaluate vendors
+7. HLD review (architecture gate)
+8. DLD review (implementation gate)
+9. Traceability (verification)
 
 ### 2. Keep Principles Updated
 
@@ -506,11 +603,15 @@ Architecture principles should be:
 /arckit.stakeholders Analyze stakeholders for CRM modernization
 /arckit.stakeholders Analyze stakeholders for data platform migration
 
-# 3. Then create requirements aligned to stakeholder goals
+# 3. Create business case to justify investment
+/arckit.sobc Create SOBC for CRM modernization
+/arckit.sobc Create SOBC for data platform migration
+
+# 4. If approved, then create detailed requirements aligned to stakeholder goals
 /arckit.requirements Create requirements for CRM modernization
 /arckit.requirements Create requirements for data platform migration
 
-# 4. Continue with each project...
+# 5. Continue with each project...
 ```
 
 ### Pattern 2: Vendor Selection for Project
@@ -519,22 +620,25 @@ Architecture principles should be:
 # 1. Analyze stakeholders
 /arckit.stakeholders Analyze stakeholders for payment gateway project
 
-# 2. Define requirements based on stakeholder goals
+# 2. Create business case to justify investment
+/arckit.sobc Create SOBC for payment gateway modernization
+
+# 3. If approved, define requirements based on stakeholder goals
 /arckit.requirements Create requirements for payment gateway
 
-# 3. Generate RFP
+# 4. Generate RFP
 /arckit.sow Generate SOW for payment gateway project
 
-# 4. After receiving proposals, evaluate
+# 5. After receiving proposals, evaluate
 /arckit.evaluate Score Vendor A proposal for payment gateway
 /arckit.evaluate Score Vendor B proposal for payment gateway
 /arckit.evaluate Compare all vendors for payment gateway
 
-# 5. Select vendor and review designs
+# 6. Select vendor and review designs
 /arckit.hld-review Review Vendor A HLD for payment gateway
 /arckit.dld-review Review Vendor A DLD for payment gateway
 
-# 6. Track implementation
+# 7. Track implementation
 /arckit.traceability Generate traceability for payment gateway
 ```
 
@@ -593,7 +697,9 @@ my-arckit-project/
 │
 ├── projects/
 │   └── 001-payment-gateway/
-│       ├── requirements.md                  ← /arckit.requirements
+│       ├── stakeholder-drivers.md          ← /arckit.stakeholders
+│       ├── sobc.md                         ← /arckit.sobc (Strategic Outline Business Case)
+│       ├── requirements.md                 ← /arckit.requirements
 │       ├── sow.md                          ← /arckit.sow
 │       ├── evaluation-criteria.md          ← /arckit.evaluate
 │       ├── vendor-comparison.md            ← /arckit.evaluate (compare)
