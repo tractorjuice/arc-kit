@@ -5,7 +5,10 @@
 ArcKit is a toolkit for enterprise architects that transforms architecture governance from scattered documents into a systematic, AI-assisted workflow for:
 - 🏛️ Establishing and enforcing architecture principles
 - 👥 Analyzing stakeholder drivers, goals, and outcomes
+- 🛡️ Risk management (HM Treasury Orange Book)
+- 💼 Business case justification (HM Treasury Green Book SOBC)
 - 📋 Creating comprehensive requirements documents
+- 🗄️ Data modeling with ERD, GDPR compliance, and data governance
 - 🗺️ Strategic planning with Wardley Mapping
 - 📊 Generating visual architecture diagrams (Mermaid)
 - 🤝 Managing vendor RFP and selection processes
