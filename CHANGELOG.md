@@ -5,6 +5,57 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2025-10-21
+
+### Added
+- **Data Modeling Command**: `/arckit.data-model` for comprehensive data modeling with ERD, GDPR compliance, and data governance
+  - Visual Entity-Relationship Diagram (ERD) using Mermaid syntax
+  - Detailed entity catalog (E-001, E-002, etc.) with attributes, types, validation rules
+  - PII identification and GDPR/DPA 2018 compliance (retention, erasure, subject access rights)
+  - Data governance matrix (business owners from stakeholder RACI, stewards, custodians)
+  - CRUD matrix showing which components Create/Read/Update/Delete each entity
+  - Data integration mapping (upstream sources, downstream consumers)
+  - Sector-specific compliance (PCI-DSS for payments, HIPAA for health, FCA for finance, Government classifications)
+  - Data quality framework with measurable metrics (accuracy, completeness, consistency, timeliness, uniqueness)
+  - Complete traceability: DR-xxx requirements → Entities → Attributes → Stakeholders
+- `templates/data-model-template.md` (720 lines) - Comprehensive data modeling template
+- `.claude/commands/arckit.data-model.md` - Data modeling command specification
+- `.codex/prompts/arckit.data-model.md` - Data modeling command for OpenAI Codex CLI
+
+### Changed
+- **WORKFLOW UPDATE**: Data modeling now positioned after requirements, before vendor selection
+  - Old workflow: Requirements → SOW → Vendor selection
+  - New workflow: Requirements → **Data Model** → SOW → Vendor selection
+- Total command count increased from 19 to 20
+
+### Documentation
+- Updated `README.md`:
+  - Added Phase 5.5: Data Modeling
+  - Updated feature list to include data modeling, risk management, and SOBC
+  - Added data-model to Core Commands table
+  - Updated payment gateway example workflow to include data modeling step
+  - Updated project structure to include data-model.md
+  - Renumbered subsequent phases (6→7, 7→8, 8→9, 9→10)
+- Updated `.claude/COMMANDS.md`:
+  - Added section 6 for `/arckit.data-model`
+  - Renumbered subsequent sections (6→7, 7→8, 8→9, 9→10, 10→11)
+  - Updated workflow overview and best practices
+  - Updated common patterns to include data modeling
+- Updated `.codex/README.md`:
+  - Added Phase 5.5: Data Model
+  - Updated to v0.3.1 with 20 commands
+  - Updated file structure to show data-model files
+- Deployed to all 7 test repositories
+
+### Integration
+- Data model integrates with:
+  - **Input**: Requires `requirements.md` (extracts DR-xxx Data Requirements)
+  - **Input**: Uses `stakeholder-drivers.md` (for data ownership RACI matrix)
+  - **Input**: References `sobc.md` (for data-related costs and benefits)
+  - **Output**: Feeds into `/arckit.hld-review` (validates database technology choices)
+  - **Output**: Feeds into `/arckit.dld-review` (validates schema design, indexes, query patterns)
+  - **Output**: Supports `/arckit.traceability` (DR-xxx → Entity → Attribute → HLD Component)
+
 ## [0.3.0] - 2025-10-21
 
 ### Added
@@ -235,6 +286,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Release Links
 
+- [v0.3.1](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.1) - Data Modeling with ERD, GDPR Compliance, and Data Governance
 - [v0.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.0) - Green Book & Orange Book Edition (SOBC + Risk Management)
 - [v0.2.2](https://github.com/tractorjuice/arc-kit/releases/tag/v0.2.2) - OpenAI Codex CLI Support & Enhanced Stakeholder Analysis
 - [v0.2.1](https://github.com/tractorjuice/arc-kit/releases/tag/v0.2.1) - Stakeholder Analysis & Conflict Resolution
@@ -256,5 +308,6 @@ ArcKit follows [Semantic Versioning](https://semver.org/):
 - v0.2.0 → v0.2.1: Added stakeholder analysis (new feature)
 - v0.2.1 → v0.2.2: Added Codex CLI support (new feature)
 - v0.2.2 → v0.3.0: Added Green Book SOBC + Orange Book risk management (significant new features)
-- Future v0.3.0 → v0.3.1: Bug fixes only (patch)
+- v0.3.0 → v0.3.1: Added data modeling command (new feature)
+- Future v0.3.1 → v0.3.2: Bug fixes only (patch)
 - Future v0.3.x → v1.0.0: Breaking changes to workflow or API (major)
