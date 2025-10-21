@@ -50,25 +50,28 @@ Complete guide to all ArcKit slash commands for Claude Code.
 6. /arckit.data-model
    ↓ (create data model with ERD, GDPR compliance)
 
-7. /arckit.sow
+7. /arckit.wardley
+   ↓ (strategic planning, build vs buy decisions)
+
+8. /arckit.sow
    ↓ (creates RFP for vendors)
 
-8. /arckit.evaluate
+9. /arckit.evaluate
    ↓ (scores vendor proposals)
 
-9. /arckit.hld-review
+10. /arckit.hld-review
    ↓ (reviews architecture before build)
 
-10. /arckit.dld-review
+11. /arckit.dld-review
    ↓ (reviews technical details before code)
 
-11. Implementation happens
+12. Implementation happens
    ↓
 
-12. /arckit.traceability
+13. /arckit.traceability
    ↓ (verifies all requirements met)
 
-13. Release!
+14. Release!
 ```
 
 ---
@@ -823,11 +826,12 @@ Always follow the recommended sequence:
 4. Business Case FOURTH (justify investment with SOBC using risk register)
 5. Requirements FIFTH (if approved, define detailed requirements aligned to stakeholder goals)
 6. Data Model SIXTH (create data model with ERD, GDPR compliance)
-7. SOW/RFP SEVENTH (procurement)
-8. Evaluate vendors
-9. HLD review (architecture gate)
-10. DLD review (implementation gate)
-11. Traceability (verification)
+7. Wardley Mapping SEVENTH (strategic planning, build vs buy decisions)
+8. SOW/RFP EIGHTH (procurement)
+9. Evaluate vendors
+10. HLD review (architecture gate)
+11. DLD review (implementation gate)
+12. Traceability (verification)
 
 ### 2. Keep Principles Updated
 
@@ -926,19 +930,22 @@ Architecture principles should be:
 # 5. Create data model with ERD and GDPR compliance
 /arckit.data-model Create data model for payment gateway
 
-# 6. Generate RFP
+# 6. Create strategic Wardley Map for build vs buy decisions
+/arckit.wardley Create Wardley Map for payment gateway showing build vs buy strategy
+
+# 7. Generate RFP
 /arckit.sow Generate SOW for payment gateway project
 
-# 7. After receiving proposals, evaluate
+# 8. After receiving proposals, evaluate
 /arckit.evaluate Score Vendor A proposal for payment gateway
 /arckit.evaluate Score Vendor B proposal for payment gateway
 /arckit.evaluate Compare all vendors for payment gateway
 
-# 8. Select vendor and review designs
+# 9. Select vendor and review designs
 /arckit.hld-review Review Vendor A HLD for payment gateway
 /arckit.dld-review Review Vendor A DLD for payment gateway
 
-# 9. Track implementation
+# 10. Track implementation
 /arckit.traceability Generate traceability for payment gateway
 ```
 
