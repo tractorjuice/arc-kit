@@ -63,25 +63,27 @@ Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 # Phase 5.5: Data Modeling
 /prompts:arckit.data-model Create data model for payment gateway with ERD and GDPR compliance
 
-# Phase 6: Vendor Selection
+# Phase 6: Strategic Planning with Wardley Mapping
+/prompts:arckit.wardley Create Wardley map for digital services showing build vs buy strategy
+
+# Phase 7: Vendor Selection
 /prompts:arckit.sow Generate RFP statement of work
 /prompts:arckit.evaluate Score vendors against requirements
 
-# Phase 7: Design Reviews
+# Phase 8: Design Reviews
 /prompts:arckit.hld-review Review high-level design for scalability
 /prompts:arckit.dld-review Review detailed design for security
 
-# Phase 8: Compliance & Security
+# Phase 9: Compliance & Security
 /prompts:arckit.secure UK Government Secure by Design review
 /prompts:arckit.mod-secure MOD Secure by Design review
 /prompts:arckit.tcop Technology Code of Practice assessment
 /prompts:arckit.atrs AI Transparency Risk Standards assessment
 /prompts:arckit.ai-playbook AI Playbook compliance check
 
-# Phase 9: Analysis & Visualization
+# Phase 10: Analysis & Visualization
 /prompts:arckit.analyze Analyze architecture for complexity
 /prompts:arckit.diagram Generate architecture diagrams
-/prompts:arckit.wardley Create Wardley map for digital services
 /prompts:arckit.traceability Generate traceability matrix
 /prompts:arckit.servicenow Export architecture to ServiceNow CMDB
 ```
