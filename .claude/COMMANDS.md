@@ -7,7 +7,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
 | `/arckit.principles` | Create architecture principles | Start of organization/project |
-| `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | After principles, before or alongside requirements |
+| `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | After principles, BEFORE requirements |
 | `/arckit.requirements` | Define comprehensive requirements | After stakeholder analysis, before vendor selection |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
 | `/arckit.diagram` | Generate architecture diagrams (Mermaid) | Visualize system structure throughout project |
@@ -91,47 +91,11 @@ Complete guide to all ArcKit slash commands for Claude Code.
 
 **Output**: `.arckit/memory/architecture-principles.md`
 
-**Next step**: Run `/arckit.requirements` to create project requirements that align with these principles.
+**Next step**: Run `/arckit.stakeholders` to analyze who cares about this project and why, before defining requirements.
 
 ---
 
-### 2. `/arckit.requirements` - Requirements Definition
-
-**Purpose**: Create comprehensive business and technical requirements for a project.
-
-**Usage**:
-```
-/arckit.requirements Create requirements for payment gateway modernization
-/arckit.requirements Define requirements for customer portal project
-/arckit.requirements Add compliance requirements to project 001
-```
-
-**What it does**:
-- Creates new project in `projects/NNN-project-name/`
-- Generates comprehensive requirements document
-- Links requirements to architecture principles
-- Includes Business, Functional, Non-Functional, Integration, and Data requirements
-- Each requirement has unique ID, acceptance criteria, and priority
-
-**Requirements types**:
-- **BR-xxx**: Business Requirements (ROI, cost savings, business objectives)
-- **FR-xxx**: Functional Requirements (features, user stories, use cases)
-- **NFR-xxx**: Non-Functional Requirements (performance, security, scalability)
-  - **NFR-P-xxx**: Performance
-  - **NFR-S-xxx**: Security
-  - **NFR-R-xxx**: Reliability
-  - **NFR-SC-xxx**: Scalability
-  - **NFR-C-xxx**: Compliance
-- **INT-xxx**: Integration Requirements (APIs, upstream/downstream systems)
-- **DR-xxx**: Data Requirements (data models, retention, privacy)
-
-**Output**: `projects/NNN-project-name/requirements.md`
-
-**Next step**: Use stakeholder insights to inform `/arckit.sow` for vendor procurement, or continue with strategic planning.
-
----
-
-### 2.5. `/arckit.stakeholders` - Stakeholder Drivers & Goals Analysis
+### 2. `/arckit.stakeholders` - Stakeholder Drivers & Goals Analysis
 
 **Purpose**: Understand stakeholder drivers, map them to goals, and define measurable outcomes that satisfy each stakeholder.
 
@@ -214,7 +178,46 @@ For UK Government projects, includes:
 
 ---
 
-### 3. `/arckit.sow` - Statement of Work / RFP
+### 3. `/arckit.requirements` - Requirements Definition
+
+**Purpose**: Create comprehensive business and technical requirements for a project, informed by stakeholder goals.
+
+**Usage**:
+```
+/arckit.requirements Create requirements for payment gateway modernization
+/arckit.requirements Define requirements for customer portal project
+/arckit.requirements Add compliance requirements to project 001
+```
+
+**What it does**:
+- Creates new project in `projects/NNN-project-name/`
+- Generates comprehensive requirements document
+- **Checks for stakeholder analysis first** (recommends running `/arckit.stakeholders` if missing)
+- **Traces requirements back to stakeholder goals** when stakeholder analysis exists
+- Links requirements to architecture principles
+- Includes Business, Functional, Non-Functional, Integration, and Data requirements
+- Each requirement has unique ID, acceptance criteria, and priority
+- **Identifies and resolves conflicts** between requirements based on stakeholder conflicts
+
+**Requirements types**:
+- **BR-xxx**: Business Requirements (ROI, cost savings, business objectives)
+- **FR-xxx**: Functional Requirements (features, user stories, use cases)
+- **NFR-xxx**: Non-Functional Requirements (performance, security, scalability)
+  - **NFR-P-xxx**: Performance
+  - **NFR-S-xxx**: Security
+  - **NFR-R-xxx**: Reliability
+  - **NFR-SC-xxx**: Scalability
+  - **NFR-C-xxx**: Compliance
+- **INT-xxx**: Integration Requirements (APIs, upstream/downstream systems)
+- **DR-xxx**: Data Requirements (data models, retention, privacy)
+
+**Output**: `projects/NNN-project-name/requirements.md`
+
+**Next step**: Use `/arckit.sow` for vendor procurement, or `/arckit.wardley` for strategic build vs buy analysis.
+
+---
+
+### 4. `/arckit.sow` - Statement of Work / RFP
 
 **Purpose**: Generate Statement of Work (SOW) document for vendor procurement / RFP.
 
@@ -249,7 +252,7 @@ For UK Government projects, includes:
 
 ---
 
-### 4. `/arckit.evaluate` - Vendor Evaluation
+### 5. `/arckit.evaluate` - Vendor Evaluation
 
 **Purpose**: Create vendor evaluation framework and score vendor proposals.
 
@@ -291,7 +294,7 @@ For UK Government projects, includes:
 
 ---
 
-### 5. `/arckit.hld-review` - High-Level Design Review
+### 6. `/arckit.hld-review` - High-Level Design Review
 
 **Purpose**: Review High-Level Design (HLD) against architecture principles and requirements.
 
@@ -329,7 +332,7 @@ For UK Government projects, includes:
 
 ---
 
-### 6. `/arckit.dld-review` - Detailed Design Review
+### 7. `/arckit.dld-review` - Detailed Design Review
 
 **Purpose**: Review Detailed Design (DLD) for implementation readiness.
 
@@ -371,7 +374,7 @@ For UK Government projects, includes:
 
 ---
 
-### 7. `/arckit.traceability` - Traceability Matrix
+### 8. `/arckit.traceability` - Traceability Matrix
 
 **Purpose**: Generate requirements traceability matrix from requirements → design → implementation → tests.
 
@@ -431,12 +434,13 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 
 Always follow the recommended sequence:
 1. Principles FIRST (establishes governance)
-2. Requirements SECOND (defines what you need)
-3. SOW/RFP THIRD (procurement)
-4. Evaluate vendors
-5. HLD review (architecture gate)
-6. DLD review (implementation gate)
-7. Traceability (verification)
+2. Stakeholders SECOND (understand who cares and why)
+3. Requirements THIRD (defines what you need, aligned to stakeholder goals)
+4. SOW/RFP FOURTH (procurement)
+5. Evaluate vendors
+6. HLD review (architecture gate)
+7. DLD review (implementation gate)
+8. Traceability (verification)
 
 ### 2. Keep Principles Updated
 
@@ -498,32 +502,39 @@ Architecture principles should be:
 # 1. Establish governance
 /arckit.principles Create architecture principles for our enterprise
 
-# 2. For each major initiative, create requirements
+# 2. For each major initiative, analyze stakeholders
+/arckit.stakeholders Analyze stakeholders for CRM modernization
+/arckit.stakeholders Analyze stakeholders for data platform migration
+
+# 3. Then create requirements aligned to stakeholder goals
 /arckit.requirements Create requirements for CRM modernization
 /arckit.requirements Create requirements for data platform migration
 
-# 3. Continue with each project...
+# 4. Continue with each project...
 ```
 
 ### Pattern 2: Vendor Selection for Project
 
 ```bash
-# 1. Define requirements
+# 1. Analyze stakeholders
+/arckit.stakeholders Analyze stakeholders for payment gateway project
+
+# 2. Define requirements based on stakeholder goals
 /arckit.requirements Create requirements for payment gateway
 
-# 2. Generate RFP
+# 3. Generate RFP
 /arckit.sow Generate SOW for payment gateway project
 
-# 3. After receiving proposals, evaluate
+# 4. After receiving proposals, evaluate
 /arckit.evaluate Score Vendor A proposal for payment gateway
 /arckit.evaluate Score Vendor B proposal for payment gateway
 /arckit.evaluate Compare all vendors for payment gateway
 
-# 4. Select vendor and review designs
+# 5. Select vendor and review designs
 /arckit.hld-review Review Vendor A HLD for payment gateway
 /arckit.dld-review Review Vendor A DLD for payment gateway
 
-# 5. Track implementation
+# 6. Track implementation
 /arckit.traceability Generate traceability for payment gateway
 ```
 
@@ -644,4 +655,4 @@ For issues or questions:
 ---
 
 **Last updated**: 2025-10-20
-**ArcKit Version**: 0.2.1
+**ArcKit Version**: 0.2.2
