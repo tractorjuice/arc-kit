@@ -10,7 +10,8 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | After principles, BEFORE risk assessment |
 | `/arckit.risk` | Create comprehensive risk register (Orange Book) | After stakeholders, BEFORE business case |
 | `/arckit.sobc` | Create Strategic Outline Business Case (SOBC) | After risk assessment, BEFORE requirements |
-| `/arckit.requirements` | Define comprehensive requirements | After SOBC approval, before vendor selection |
+| `/arckit.requirements` | Define comprehensive requirements | After SOBC approval, before data modeling |
+| `/arckit.data-model` | Create comprehensive data model with ERD | After requirements, before vendor selection |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
 | `/arckit.diagram` | Generate architecture diagrams (Mermaid) | Visualize system structure throughout project |
 | `/arckit.sow` | Generate Statement of Work / RFP | After requirements, for vendor procurement |
@@ -46,25 +47,28 @@ Complete guide to all ArcKit slash commands for Claude Code.
 5. /arckit.requirements
    ↓ (if approved, define detailed requirements)
 
-6. /arckit.sow
+6. /arckit.data-model
+   ↓ (create data model with ERD, GDPR compliance)
+
+7. /arckit.sow
    ↓ (creates RFP for vendors)
 
-7. /arckit.evaluate
+8. /arckit.evaluate
    ↓ (scores vendor proposals)
 
-8. /arckit.hld-review
+9. /arckit.hld-review
    ↓ (reviews architecture before build)
 
-9. /arckit.dld-review
+10. /arckit.dld-review
    ↓ (reviews technical details before code)
 
-10. Implementation happens
+11. Implementation happens
    ↓
 
-11. /arckit.traceability
+12. /arckit.traceability
    ↓ (verifies all requirements met)
 
-12. Release!
+13. Release!
 ```
 
 ---
@@ -537,11 +541,67 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 **Output**: `projects/NNN-project-name/requirements.md`
 
-**Next step**: Use `/arckit.sow` for vendor procurement, or `/arckit.wardley` for strategic build vs buy analysis.
+**Next step**: Use `/arckit.data-model` to create the data model, or `/arckit.wardley` for strategic build vs buy analysis.
 
 ---
 
-### 6. `/arckit.sow` - Statement of Work / RFP
+### 6. `/arckit.data-model` - Data Model with ERD
+
+**Purpose**: Create comprehensive data model with entity-relationship diagrams, GDPR compliance, and data governance.
+
+**Usage**:
+```
+/arckit.data-model Create data model for payment gateway project
+/arckit.data-model Generate data model for project 001
+/arckit.data-model Add GDPR compliance to customer data model
+```
+
+**What it does**:
+- **REQUIRES `requirements.md`** (must have DR-xxx Data Requirements)
+- Creates `projects/NNN-project-name/data-model.md`
+- Extracts all DR-xxx (Data Requirements) from requirements.md
+- Generates visual Entity-Relationship Diagram (ERD) using Mermaid
+- Creates detailed entity catalog with attributes, types, validation rules
+- Identifies PII (Personally Identifiable Information) and flags for GDPR compliance
+- Defines data governance matrix (business owners, stewards, custodians)
+- Creates CRUD matrix showing which components access which entities
+- Documents data integration mapping (upstream/downstream systems)
+- Ensures GDPR/DPA 2018 compliance (retention, erasure, subject access rights)
+- Sector-specific compliance (PCI-DSS for payment data, HIPAA for health data)
+- Data quality framework with measurable metrics
+- Complete traceability: DR-xxx → Entity → Attribute
+
+**Key Features**:
+- **Visual ERD**: Mermaid diagram showing entities, relationships, cardinality
+- **Entity Catalog**: Detailed entity definitions (E-001, E-002, etc.)
+  - Attributes with types, validation rules, PII flags
+  - Data classification (Public, Internal, Confidential, Restricted)
+  - Volume estimates and retention policies
+  - Relationships (one-to-one, one-to-many, many-to-many)
+  - Indexes (primary keys, foreign keys, performance indexes)
+- **GDPR Compliance**:
+  - PII inventory across all entities
+  - Legal basis for processing (consent, contract, legitimate interest)
+  - Data subject rights (access, rectification, erasure, portability)
+  - Data retention schedules and deletion policies
+  - Cross-border transfer considerations (UK-EU, UK-US)
+  - DPIA (Data Protection Impact Assessment) if required
+- **Data Governance**:
+  - Business Owner (accountable from stakeholder RACI matrix)
+  - Data Steward (enforces quality and compliance)
+  - Technical Custodian (manages storage and backups)
+  - Access control rules per entity
+- **CRUD Matrix**: Shows which components Create, Read, Update, Delete each entity
+- **Integration Mapping**: Upstream sources and downstream consumers of data
+- **Data Quality**: Accuracy, completeness, consistency, timeliness, uniqueness metrics
+
+**Output**: `projects/NNN-project-name/data-model.md`
+
+**Next step**: Use `/arckit.sow` for vendor procurement, or `/arckit.hld-review` to validate database choices.
+
+---
+
+### 7. `/arckit.sow` - Statement of Work / RFP
 
 **Purpose**: Generate Statement of Work (SOW) document for vendor procurement / RFP.
 
@@ -576,7 +636,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 7. `/arckit.evaluate` - Vendor Evaluation
+### 8. `/arckit.evaluate` - Vendor Evaluation
 
 **Purpose**: Create vendor evaluation framework and score vendor proposals.
 
@@ -618,7 +678,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 8. `/arckit.hld-review` - High-Level Design Review
+### 9. `/arckit.hld-review` - High-Level Design Review
 
 **Purpose**: Review High-Level Design (HLD) against architecture principles and requirements.
 
@@ -656,7 +716,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 9. `/arckit.dld-review` - Detailed Design Review
+### 10. `/arckit.dld-review` - Detailed Design Review
 
 **Purpose**: Review Detailed Design (DLD) for implementation readiness.
 
@@ -698,7 +758,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 10. `/arckit.traceability` - Traceability Matrix
+### 11. `/arckit.traceability` - Traceability Matrix
 
 **Purpose**: Generate requirements traceability matrix from requirements → design → implementation → tests.
 
@@ -762,11 +822,12 @@ Always follow the recommended sequence:
 3. Risk Assessment THIRD (identify and assess risks using Orange Book)
 4. Business Case FOURTH (justify investment with SOBC using risk register)
 5. Requirements FIFTH (if approved, define detailed requirements aligned to stakeholder goals)
-6. SOW/RFP SIXTH (procurement)
-7. Evaluate vendors
-8. HLD review (architecture gate)
-9. DLD review (implementation gate)
-10. Traceability (verification)
+6. Data Model SIXTH (create data model with ERD, GDPR compliance)
+7. SOW/RFP SEVENTH (procurement)
+8. Evaluate vendors
+9. HLD review (architecture gate)
+10. DLD review (implementation gate)
+11. Traceability (verification)
 
 ### 2. Keep Principles Updated
 
@@ -862,19 +923,22 @@ Architecture principles should be:
 # 4. If approved, define requirements based on stakeholder goals
 /arckit.requirements Create requirements for payment gateway
 
-# 5. Generate RFP
+# 5. Create data model with ERD and GDPR compliance
+/arckit.data-model Create data model for payment gateway
+
+# 6. Generate RFP
 /arckit.sow Generate SOW for payment gateway project
 
-# 6. After receiving proposals, evaluate
+# 7. After receiving proposals, evaluate
 /arckit.evaluate Score Vendor A proposal for payment gateway
 /arckit.evaluate Score Vendor B proposal for payment gateway
 /arckit.evaluate Compare all vendors for payment gateway
 
-# 7. Select vendor and review designs
+# 8. Select vendor and review designs
 /arckit.hld-review Review Vendor A HLD for payment gateway
 /arckit.dld-review Review Vendor A DLD for payment gateway
 
-# 8. Track implementation
+# 9. Track implementation
 /arckit.traceability Generate traceability for payment gateway
 ```
 

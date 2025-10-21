@@ -60,6 +60,9 @@ Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 # Phase 5: Define Requirements
 /prompts:arckit.requirements Create requirements for payment gateway modernization
 
+# Phase 5.5: Data Modeling
+/prompts:arckit.data-model Create data model for payment gateway with ERD and GDPR compliance
+
 # Phase 6: Vendor Selection
 /prompts:arckit.sow Generate RFP statement of work
 /prompts:arckit.evaluate Score vendors against requirements
@@ -163,6 +166,30 @@ Creates: `projects/001-project-name/requirements.md`
 - Example: "BR-001 addresses CFO's goal G-1: Reduce infrastructure costs 40%"
 - Documents requirement conflicts and resolutions
 
+### 5.5. Data Model (NEW)
+
+```bash
+/prompts:arckit.data-model Create data model for payment gateway
+```
+
+Creates: `projects/001-project-name/data-model.md`
+
+**Creates comprehensive data model based on DR-xxx requirements:**
+- Visual Entity-Relationship Diagram (ERD) using Mermaid
+- Detailed entity catalog (E-001, E-002, etc.) with attributes, types, validation
+- PII identification and GDPR/DPA 2018 compliance
+- Data governance matrix (business owners from stakeholder RACI, stewards, custodians)
+- CRUD matrix showing which components access which entities
+- Data integration mapping (upstream sources, downstream consumers)
+- Sector-specific compliance (PCI-DSS for payments, HIPAA for health, etc.)
+- Data quality framework with measurable metrics
+- Complete traceability: DR-xxx → Entity → Attribute → Stakeholder
+
+**Key Features:**
+- **GDPR Compliance**: PII inventory, legal basis for processing, data subject rights, retention schedules
+- **Data Governance**: Clear ownership and accountability from stakeholder RACI matrix
+- **Integration Ready**: Maps upstream/downstream data flows for HLD/DLD review
+
 ### 6. Vendor RFP
 
 ```bash
@@ -231,7 +258,10 @@ your-project/
 │   └── prompts/
 │       ├── arckit.principles.md
 │       ├── arckit.stakeholders.md
+│       ├── arckit.risk.md
+│       ├── arckit.sobc.md
 │       ├── arckit.requirements.md
+│       ├── arckit.data-model.md
 │       ├── arckit.sow.md
 │       ├── arckit.hld-review.md
 │       ├── arckit.dld-review.md
@@ -261,7 +291,10 @@ your-project/
 └── projects/
     └── 001-project-name/
         ├── stakeholder-drivers.md
+        ├── risk-register.md
+        ├── sobc.md
         ├── requirements.md
+        ├── data-model.md
         ├── sow.md
         └── (other artifacts)
 ```
@@ -315,18 +348,20 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-ArcKit v0.2.2 (17 commands)
+ArcKit v0.3.0 (20 commands)
 
-**What's New in v0.2.2:**
+**What's New in v0.3.0:**
+- 🎯 Added `/prompts:arckit.sobc` - HM Treasury Green Book Strategic Outline Business Case
+- 🛡️ Added `/prompts:arckit.risk` - HM Treasury Orange Book Risk Management
+- 📊 Added `/prompts:arckit.data-model` - Data modeling with ERD, GDPR compliance, data governance
+- 🔄 Updated workflow: Stakeholders → Risk → SOBC → Requirements → Data Model → Vendor selection
+- ✅ Complete UK Government compliance (Green Book + Orange Book)
+- 🔗 End-to-end traceability: Stakeholder → Driver → Goal → Risk → Benefit → Requirement → Entity
+
+**What was New in v0.2.2:**
 - 🤖 Added OpenAI Codex CLI support with `.codex/` folder structure
 - 📚 Comprehensive `.codex/README.md` setup and usage guide
-- 🔄 All 17 ArcKit commands available in Codex format
-
-**What was New in v0.2.1:**
-- ✨ Added `/prompts:arckit.stakeholders` command for stakeholder driver analysis
-- 🔄 Updated requirements workflow to prioritize stakeholder analysis
-- 🤝 Added conflict resolution framework for competing stakeholder drivers
-- 📊 Enhanced traceability: requirements now trace back to stakeholder goals
+- 🔄 All ArcKit commands available in Codex format
 
 ## Support
 

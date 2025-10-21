@@ -118,10 +118,24 @@ Create detailed requirements **informed by stakeholder goals** (if SOBC approved
 - Business requirements with rationale
 - Functional requirements with acceptance criteria
 - Non-functional requirements (performance, security, scalability, compliance)
-- Integration requirements
+- Integration requirements (upstream/downstream systems)
+- Data requirements (DR-xxx)
 - Success criteria and KPIs
 
-### Phase 5.5: Strategic Planning with Wardley Mapping
+### Phase 5.5: Data Modeling
+**`/arckit.data-model`** → Create comprehensive data model with ERD
+
+Create data model based on Data Requirements (DR-xxx):
+- Visual Entity-Relationship Diagram (ERD) using Mermaid
+- Detailed entity catalog with attributes, types, validation rules
+- PII identification and GDPR/DPA 2018 compliance
+- Data governance matrix (business owners, stewards, custodians)
+- CRUD matrix showing component access patterns
+- Data integration mapping (upstream sources, downstream consumers)
+- Data quality framework with measurable metrics
+- Requirements traceability (DR-xxx → Entity → Attribute)
+
+### Phase 6: Strategic Planning with Wardley Mapping
 **`/arckit.wardley`** → Create strategic Wardley Maps
 
 Visualize strategic positioning with:
@@ -131,7 +145,7 @@ Visualize strategic positioning with:
 - UK Government Digital Marketplace mapping
 - Evolution predictions and strategic gameplay
 
-### Phase 6: Vendor Procurement (if needed)
+### Phase 7: Vendor Procurement (if needed)
 **`/arckit.sow`** → Generate Statement of Work (RFP)
 
 Create RFP-ready documents with:
@@ -157,7 +171,7 @@ Side-by-side analysis of:
 - Risk assessments
 - Value propositions
 
-### Phase 7: Design Review
+### Phase 8: Design Review
 **`/arckit.hld-review`** → Review High-Level Design
 
 Validate designs against:
@@ -176,7 +190,7 @@ Implementation-ready validation:
 - Security implementation
 - Test strategy
 
-### Phase 8: ServiceNow Service Management Design
+### Phase 9: ServiceNow Service Management Design
 **`/arckit.servicenow`** → Generate ServiceNow service design
 
 Bridge architecture to operations:
@@ -187,7 +201,7 @@ Bridge architecture to operations:
 - Monitoring and alerting plan
 - Service transition plan
 
-### Phase 9: Traceability
+### Phase 10: Traceability
 **`/arckit.traceability`** → Generate traceability matrix
 
 Ensure complete coverage:
@@ -274,28 +288,31 @@ claude
 complies with PCI-DSS Level 1, integrates with Stripe and PayPal, and provides real-time
 fraud detection
 
-# 7. Create strategic Wardley Map for build vs buy decisions
+# 7. Create data model with ERD and GDPR compliance
+/arckit.data-model Create data model for payment gateway with PCI-DSS compliance
+
+# 8. Create strategic Wardley Map for build vs buy decisions
 /arckit.wardley Create current state Wardley Map for payment gateway showing build vs buy strategy
 
-# 8. Generate SOW for vendor RFP
+# 9. Generate SOW for vendor RFP
 /arckit.sow Generate RFP for vendor selection with 12-month timeline and $2M budget
 
-# 9. After receiving vendor proposals...
+# 10. After receiving vendor proposals...
 /arckit.evaluate Create evaluation framework
 
-# 10. Score vendors
+# 11. Score vendors
 /arckit.evaluate Compare all vendors for payment gateway project
 
-# 11. Review selected vendor's HLD
+# 12. Review selected vendor's HLD
 /arckit.hld-review Review Acme Corp's high-level design
 
-# 12. Review detailed design
+# 13. Review detailed design
 /arckit.dld-review Review Acme Corp's detailed design for payment service
 
-# 13. Design ServiceNow service management
+# 14. Design ServiceNow service management
 /arckit.servicenow Generate ServiceNow design for payment gateway service
 
-# 14. Ensure traceability
+# 15. Ensure traceability
 /arckit.traceability Generate matrix from requirements through design to tests
 ```
 
@@ -319,6 +336,7 @@ payment-modernization/
 │       ├── risk-register.md                # Risk register (Orange Book)
 │       ├── sobc.md                         # Strategic Outline Business Case
 │       ├── requirements.md                 # Comprehensive requirements
+│       ├── data-model.md                   # Data model with ERD, GDPR compliance
 │       ├── wardley-maps/                   # Strategic Wardley Maps
 │       │   ├── current-state.md            # Current architecture positioning
 │       │   ├── future-state.md             # Target architecture vision
@@ -358,6 +376,7 @@ payment-modernization/
 | `/arckit.risk` | Create comprehensive risk register (Orange Book) | `projects/XXX/risk-register.md` |
 | `/arckit.sobc` | Create Strategic Outline Business Case (Green Book 5-case) | `projects/XXX/sobc.md` |
 | `/arckit.requirements` | Define comprehensive requirements | `projects/XXX/requirements.md` |
+| `/arckit.data-model` | Create data model with ERD, GDPR compliance, data governance | `projects/XXX/data-model.md` |
 | `/arckit.sow` | Generate vendor RFP | `projects/XXX/sow.md` |
 
 ### Vendor Management
