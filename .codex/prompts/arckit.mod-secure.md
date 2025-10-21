@@ -1,103 +1,179 @@
 ---
 description: Generate a MOD Secure by Design assessment for UK Ministry of Defence projects
-tags: [security, mod, defence, accreditation, jsp-440, secure-by-design]
+tags: [security, mod, defence, accreditation, jsp-440, jsp-453, secure-by-design, continuous-risk-management]
 ---
 
 # MOD Secure by Design Assessment
 
-You are helping to conduct a **Secure by Design assessment** for a UK Ministry of Defence (MOD) technology project or programme.
+You are helping to conduct a **Secure by Design (SbD) assessment** for a UK Ministry of Defence (MOD) technology project, programme, or capability.
 
 ## Context
 
-MOD requires all technology projects to follow Secure by Design principles and obtain appropriate security accreditation before deployment. This assessment evaluates security controls across the full system lifecycle.
+Since August 2023, ALL Defence capabilities, technology infrastructure, and digital services **MUST** follow the Secure by Design (SbD) approach mandated in JSP 440 Leaflet 5C. This represents a fundamental shift from legacy RMADS (Risk Management and Accreditation Documentation Set) to **continuous risk management** throughout the capability lifecycle.
 
 **Key MOD Security References**:
-- JSP 440: Defence Information Assurance Policy
-- NCSC Cyber Assessment Framework (CAF)
-- Defence Digital Security Standards
-- HMG Security Policy Framework
+- **JSP 440**: Defence Manual of Security (primary security policy)
+- **JSP 440 Leaflet 5C**: Secure by Design mandate (August 2023)
+- **JSP 453**: Digital Policies and Standards for Defence
+- **ISN 2023/09**: Industry Security Notice - Secure by Design Requirements
+- **ISN 2023/10**: Industry Security Notice - Supplier attestation and legacy accreditation withdrawal
+- **NIST Cybersecurity Framework (CSF)**: Risk assessment and controls framework
+- **NCSC Secure Design Principles**: Technical security guidance
+- **Data Protection Act 2018 / UK GDPR**: Data privacy requirements
+
+## Critical Changes (Post-August 2023)
+
+**SbD is now mandatory**:
+- Cyber security is a **licence to operate** - cannot be traded out
+- Applies to ALL new programmes and systems
+- Legacy systems transition when accreditation expires (by 31 March 2024 completed)
+- Supplier-owned continuous assurance (not MOD accreditation)
+- **Suppliers must attest** that systems are secure
+- Senior Responsible Owners (SROs), capability owners, and delivery teams are **accountable**
 
 ## Your Task
 
-Generate a comprehensive Secure by Design assessment document by:
+Generate a comprehensive Secure by Design assessment document using the **continuous risk management** approach by:
 
-1. **Loading the template**: Use the MOD Secure by Design template from `.specify/templates/mod-secure-by-design-template.md`
-
-2. **Understanding the project context**:
-   - Project name and MOD organization (Army, Navy, RAF, Defence Digital, etc.)
+1. **Understanding the project context**:
+   - Programme/project/capability name
+   - MOD organization (Army, Navy, RAF, Defence Digital, Strategic Command, etc.)
    - Data classification level (OFFICIAL, OFFICIAL-SENSITIVE, SECRET, TOP SECRET)
-   - Project phase (Discovery, Alpha, Beta, Live)
-   - Accreditation status and timeline
-   - Deployment environment (MOD network, cloud, operational theatre)
+   - Project phase (Discovery, Alpha, Beta, Live, Through-Life)
+   - Deployment environment (MOD network, cloud, operational theatre, coalition)
+   - Delivery Team Security Lead appointed (Yes/No)
+   - Project Security Officer (PSyO) appointed if SECRET+ (Yes/No)
+   - Current SbD maturity level (self-assessment score)
 
-3. **Check existing documentation**:
-   - Requirements documents in `specs/*/requirements.md`
-   - Architecture diagrams in `specs/*/diagrams/`
+2. **Check existing documentation**:
+   - Requirements documents in `projects/*/requirements.md`
+   - Risk register in `projects/*/risk-register.md`
+   - Architecture diagrams in `projects/*/diagrams/`
    - Any existing security documentation
    - TCoP assessments (if available)
-   - Risk registers
+   - Previous SbD self-assessments
 
-4. **Assess security across 10 key domains**:
+3. **Assess against the 7 MOD Secure by Design Principles** (ISN 2023/09):
 
-   **Domain 1: Security Classification and Data Handling**
-   - Determine highest data classification
-   - Identify data types (personal, classified, operational, intelligence)
-   - Assess data handling controls
+   **Principle 1: Understand and Define Context**
+   - Understand the capability's overall context
+   - How it will use and manage MOD data
+   - How it achieves its primary business/operational outcome
+   - **Assessment**:
+     - Context documented (mission, users, data flows)
+     - Data classification determined
+     - Operational environment understood
+     - Stakeholder security requirements captured
 
-   **Domain 2: MOD Security Principles**
-   - Defence in Depth (multiple security layers)
-   - Secure by Default (secure out-of-box)
-   - Least Privilege (minimum necessary access)
-   - Assume Breach (design for compromise)
+   **Principle 2: Apply Security from the Start**
+   - Security embedded in design from inception (not bolt-on)
+   - Security requirements defined early
+   - Security architecture designed before build
+   - **Assessment**:
+     - Security requirements in initial specifications
+     - Threat model created in Discovery/Alpha
+     - Security architecture reviewed and approved
+     - Security expertise involved from start
 
-   **Domain 3: MOD Accreditation Requirements**
-   - JSP 440 compliance status
-   - IAMM (Information Assurance Maturity Model) level
-   - Security Accreditation progress
-   - IAO/IAA engagement
+   **Principle 3: Apply Defence in Depth**
+   - Multiple layers of security controls
+   - Fail-safe defaults (secure by default)
+   - Assume breach (design for compromise)
+   - **Assessment**:
+     - Layered security controls (network, host, application, data)
+     - Segmentation and least privilege implemented
+     - Monitoring and detection at each layer
+     - Containment and recovery capabilities
 
-   **Domain 4: Threat Modeling and Risk Assessment**
-   - Threat actors (nation state, terrorist, insider, etc.)
-   - Threat model completeness (STRIDE, PASTA, etc.)
-   - Risk register and residual risks
-   - Critical/high security risks
+   **Principle 4: Follow Secure Design Patterns**
+   - Use proven secure architectures
+   - Leverage NCSC/NIST guidance
+   - Avoid known insecure patterns
+   - **Assessment**:
+     - NCSC Secure Design Principles applied
+     - NIST CSF controls mapped
+     - Common vulnerabilities (OWASP Top 10) mitigated
+     - Secure coding standards followed
 
-   **Domain 5: Technical Security Controls**
-   - Cryptography (CESG-approved algorithms)
-   - Authentication and Identity (smart card, MFA, PAM)
-   - Network Security (segmentation, firewalls, IDS/IPS, air-gap)
-   - Vulnerability Management (scanning, patching, pen testing)
-   - Security Monitoring (SIEM, SOC, logging)
+   **Principle 5: Continuously Manage Risk**
+   - Risk assessment is ongoing (not one-time)
+   - Risk register maintained through-life
+   - Security testing continuous
+   - **Assessment**:
+     - Risk register actively maintained
+     - Regular vulnerability scanning and pen testing
+     - Security incidents tracked and lessons learned
+     - Continuous monitoring and threat intelligence
 
-   **Domain 6: Secure Development Lifecycle**
-   - Secure coding practices (OWASP Top 10 mitigation)
-   - Security testing (SAST, DAST, SCA)
-   - DevSecOps integration
-   - Code review including security
+   **Principle 6: Secure the Supply Chain**
+   - Third-party components assessed
+   - Vendor security requirements in contracts
+   - Software supply chain protected
+   - **Assessment**:
+     - Software Bill of Materials (SBOM) maintained
+     - Third-party risk assessments completed
+     - Supplier security attestations obtained (ISN 2023/10)
+     - Open source software vetted
+     - Supply chain attack vectors mitigated
 
-   **Domain 7: Supply Chain Security**
-   - Third-party risk management
-   - Vendor security assessments
-   - Open source software security
-   - Software Bill of Materials (SBOM)
+   **Principle 7: Enable Through-Life Assurance**
+   - Security posture maintained post-deployment
+   - Regular security reviews
+   - Capability to respond to new threats
+   - **Assessment**:
+     - Security monitoring operational
+     - Incident response capability proven
+     - Patching and update process defined
+     - Security governance continues through-life
+     - Decommissioning process includes secure data deletion
 
-   **Domain 8: Operational Security**
-   - Backup and recovery (3-2-1 rule, RTO, RPO)
-   - Incident response (plan, team, exercises)
-   - Disaster recovery and business continuity
-   - DR testing
+4. **Assess using NIST Cybersecurity Framework** (as mandated by SbD):
 
-   **Domain 9: Personnel Security**
-   - Security clearances (BPSS, SC, DV, eDV)
-   - Vetting compliance for classification level
+   **Identify**:
+   - Asset inventory (hardware, software, data, people)
+   - Business environment and criticality
+   - Governance structure and policies
+   - Risk assessment methodology
+
+   **Protect**:
+   - Access control (authentication, authorization)
+   - Data security (encryption at rest/in transit, DLP)
+   - Protective technology (firewalls, AV, IDS/IPS)
    - Security awareness training
-   - Insider threat mitigation
 
-   **Domain 10: Compliance and Governance**
-   - Regulatory compliance (UK GDPR, Official Secrets Act, etc.)
-   - Security policies and procedures
-   - Documentation currency
-   - Governance structure
+   **Detect**:
+   - Continuous monitoring (SIEM, SOC integration)
+   - Anomaly and event detection
+   - Security testing (vulnerability scanning, pen testing)
+   - Detection processes and procedures
+
+   **Respond**:
+   - Incident response plan
+   - Communications and reporting (to MOD CERT)
+   - Analysis and mitigation
+   - Improvements from lessons learned
+
+   **Recover**:
+   - Recovery planning (backup, DR, BC)
+   - Improvements (post-incident review)
+   - Communications and restoration
+
+5. **Assess Three Lines of Defence**:
+
+   **First Line**: Delivery team owns security
+   - Delivery Team Security Lead appointed
+   - Security requirements owned by capability owner
+   - Day-to-day security management
+
+   **Second Line**: Assurance and oversight
+   - Technical Coherence Assurance
+   - Security policies and standards
+   - Independent security reviews
+
+   **Third Line**: Independent audit
+   - Internal audit of security controls
+   - Penetration testing by independent teams
+   - External audit (NAO, GIAA)
 
 5. **For each domain**:
    - Assess status: ✅ Compliant / ⚠️ Partially Compliant / ❌ Non-Compliant
