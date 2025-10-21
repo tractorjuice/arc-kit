@@ -5,6 +5,96 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.2] - 2025-10-21
+
+### Changed
+
+- **BREAKING CHANGE: MOD Secure by Design - RMADS Removed**:
+  - `/arckit.mod-secure` updated to align with current MOD framework (August 2023)
+  - RMADS (Risk Management and Accreditation Documentation Set) REMOVED
+  - Point-in-time accreditation process REPLACED with continuous assurance
+  - **CAAT** (Cyber Activity and Assurance Tracker): Self-assessment tool now mandatory
+    - All programmes must register on CAAT in Discovery/Alpha
+    - Based on 7 SbD Principles question sets
+    - Continuously updated throughout lifecycle (not one-time submission)
+    - Available through MOD Secure by Design portal (DefenceGateway account)
+  - **New Roles**:
+    - Delivery Team Security Lead (DTSL): Owns security (First Line of Defence)
+    - Security Assurance Coordinator (SAC): Supports DTSL
+    - IAO/IAA roles replaced/redefined
+  - **Terminology Changes**:
+    - "Accreditation" → "Continuous assurance"
+    - "Accreditation blockers" → "Deployment blockers"
+    - "RMADS documentation submitted" → "CAAT self-assessment completed"
+    - "Accreditation approval" → "Security governance review"
+  - Supplier attestation required for vendor-delivered systems (ISN 2023/10)
+  - SROs and capability owners accountable (not delegated to accreditation authority)
+  - Cyber security is a "licence to operate" - cannot be traded out
+
+- **Enhanced Analysis Command**:
+  - `/arckit.analyze` updated to analyze all artifacts from v0.2.1-v0.3.1
+  - **New Detection Passes**:
+    - **E. Stakeholder Traceability Analysis** (if stakeholder-drivers.md exists):
+      - Requirements traced to stakeholder goals
+      - Orphan requirements (not linked to stakeholder goals)
+      - Requirement conflicts documented and resolved
+      - RACI governance alignment (risk owners, data owners from RACI)
+    - **F. Risk Management Analysis** (if risk-register.md exists):
+      - High/Very High risks have mitigation in requirements/design
+      - Risk owners aligned with RACI matrix
+      - Risk-SOBC alignment (strategic risks, financial risks in Economic Case)
+      - Risk-requirements alignment (mitigation actions to requirements)
+    - **G. Business Case Alignment** (if sobc.md exists):
+      - Benefits traced to stakeholder goals and requirements
+      - Benefits measurable and verifiable
+      - Option analysis quality (Do Nothing baseline, build vs buy)
+      - SOBC-requirements alignment (drivers, benefits, budget, delivery)
+      - SOBC-risk alignment (risks in Management Case Part E)
+    - **H. Data Model Consistency** (if data-model.md exists):
+      - DR-xxx requirements mapped to entities
+      - Data model-design alignment (schemas match entities, CRUD aligns)
+      - Data governance alignment (owners from RACI, PII identified, GDPR)
+      - Data model quality (ERD renderable, complete specs, relationships)
+    - **J. MOD Secure by Design Compliance** (if mod-secure-by-design.md exists):
+      - 7 SbD Principles assessment
+      - NIST CSF coverage (Identify, Protect, Detect, Respond, Recover)
+      - CAAT continuous assurance process (registration, self-assessment)
+      - Three Lines of Defence implementation
+      - Supplier attestation (ISN 2023/10)
+      - Classification-specific requirements
+  - **Enhanced Report Structure**:
+    - Stakeholder Traceability Analysis section
+    - Risk Management Analysis section
+    - Business Case Analysis section
+    - Data Model Analysis section
+    - MOD Secure by Design Analysis section (separate from UK Gov TCoP)
+  - **New Severity Criteria**:
+    - CRITICAL: Orphan requirements, high/very high risks unmitigated, benefits not traced, DR-xxx unmapped, PII not identified, CAAT not registered
+    - HIGH: Conflicts unresolved, medium risks unmitigated, benefits not measurable, schema mismatch, SbD gaps
+    - MEDIUM: Missing stakeholder/risk/SOBC/data-model artifacts (recommended)
+  - **Updated Metrics Dashboard**:
+    - Stakeholder traceability score
+    - Risk management score
+    - Business case score
+    - Data model score
+    - MOD SbD score (separate from UK Gov compliance)
+
+### Documentation
+
+- Updated MOD Secure by Design command documentation with:
+  - CAAT continuous assurance process
+  - ISN 2023/09 and ISN 2023/10 references
+  - JSP 453 Digital Policies
+  - https://www.digital.mod.uk/policy-rules-standards-and-guidance/secure-by-design
+- Updated analysis command documentation with new detection passes and report sections
+- Deployed to all 7 test repositories
+
+### Resources
+
+- MOD Secure by Design portal: https://www.digital.mod.uk/policy-rules-standards-and-guidance/secure-by-design
+- Launched 28 July 2023, mandatory from August 2023
+- Replaces point-in-time accreditation with continual assurance
+
 ## [0.3.1] - 2025-10-21
 
 ### Added
