@@ -1,6 +1,6 @@
 ---
-description: Generate a MOD Secure by Design assessment for UK Ministry of Defence projects
-tags: [security, mod, defence, accreditation, jsp-440, jsp-453, secure-by-design, continuous-risk-management]
+description: Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance
+tags: [security, mod, defence, jsp-440, jsp-453, secure-by-design, continuous-assurance, caat, continuous-risk-management, isn-2023-09, isn-2023-10]
 ---
 
 # MOD Secure by Design Assessment
@@ -184,12 +184,12 @@ Generate a comprehensive Secure by Design assessment document using the **contin
 
 6. **Determine overall security posture**:
    - Calculate domain compliance scores
-   - Identify critical security issues (blockers for accreditation)
-   - Assess readiness for security accreditation
+   - Identify critical security issues (blockers for deployment)
+   - Assess SbD maturity level using CAAT
    - Determine overall risk level (Low/Medium/High/Very High)
 
 7. **Generate actionable recommendations**:
-   - Critical priority (0-30 days) - must resolve before accreditation
+   - Critical priority (0-30 days) - must resolve before deployment
    - High priority (1-3 months) - significant risk reduction
    - Medium priority (3-6 months) - continuous improvement
    - Assign owners and due dates
@@ -204,7 +204,7 @@ Generate a comprehensive Secure by Design assessment document using the **contin
 - **⚠️ Partially Compliant**: Some controls in place but significant gaps remain
 - **❌ Non-Compliant**: Controls not implemented or ineffective, critical gaps exist
 
-### Critical Security Issues (Accreditation Blockers)
+### Critical Security Issues (Deployment Blockers)
 
 Mark as CRITICAL if:
 - Data classified SECRET or above without appropriate controls
@@ -234,7 +234,7 @@ Mark as CRITICAL if:
 - CESG-approved cryptography
 - Air-gapped or assured network connectivity
 - Enhanced physical security
-- Full security accreditation before deployment
+- CAAT assessment and security governance review before deployment
 
 **TOP SECRET**:
 - Developed Vetting (DV) personnel
@@ -249,19 +249,20 @@ Mark as CRITICAL if:
 - Classification determination
 - Preliminary risk assessment
 - Security architecture design
-- Accreditation planning
+- CAAT registration and initial self-assessment
+- Delivery Team Security Lead (DTSL) appointed
 
 **Beta**:
 - Comprehensive threat model
 - Full risk assessment
 - Security controls implemented
 - Penetration testing completed
-- RMADS documentation submitted
-- Interim or conditional accreditation
+- CAAT self-assessment completed
+- Security governance review
 
 **Live**:
 - All security controls operational
-- Full accreditation granted
+- CAAT continuously updated
 - Continuous monitoring active
 - Regular security reviews
 - Incident response capability proven
@@ -280,18 +281,53 @@ Assess maturity across 8 domains (0-5 scale):
 
 Target Level 3+ for operational systems.
 
-### Accreditation Process
+### Continuous Assurance Process (Replaced RMADS in August 2023)
 
-1. Engage with Accreditation Service early (Discovery/Alpha)
-2. Appoint Information Assurance Owner (IAO) and Architect (IAA)
-3. Complete Business Impact Assessment (BIA)
-4. Develop Risk Management and Accreditation Documentation Set (RMADS)
-5. Obtain Security Aspects Letter (SAL)
-6. Implement security controls
-7. Conduct security testing (penetration test, vulnerability scan)
-8. Submit for accreditation review
-9. Remediate identified issues
-10. Obtain accreditation approval from IAA
+**SbD replaces point-in-time accreditation with continuous assurance**:
+
+1. **Register on CAAT** (Cyber Activity and Assurance Tracker)
+   - Every programme must register on CAAT in Discovery/Alpha
+   - CAAT is the self-assessment tool for cyber security maturity
+   - Available through MOD Secure by Design portal (DefenceGateway account required)
+
+2. **Appoint Delivery Team Security Lead (DTSL)**
+   - DTSL owns security for the delivery team (First Line of Defence)
+   - May also appoint Security Assurance Coordinator (SAC)
+   - Project Security Officer (PSyO) still required for SECRET+ systems
+
+3. **Complete CAAT self-assessment question sets**
+   - Based on the 7 MOD Secure by Design Principles
+   - Assess cyber security maturity throughout lifecycle
+   - Regular updates required (not one-time submission)
+
+4. **Complete Business Impact Assessment (BIA)**
+   - Understand criticality and impact of compromise
+   - Informs risk assessment and security controls
+
+5. **Implement security controls**
+   - Based on NIST CSF, NCSC guidance, and JSP 440 requirements
+   - Defence in depth approach
+   - Continuous improvement throughout lifecycle
+
+6. **Conduct continuous security testing**
+   - Vulnerability scanning (regular, automated)
+   - Penetration testing (at key milestones)
+   - Security audits by Third Line of Defence
+
+7. **Maintain continuous risk management**
+   - Risk register actively maintained
+   - Threats and vulnerabilities continuously monitored
+   - Security incidents tracked and lessons learned applied
+
+8. **Supplier attestation** (for systems delivered by suppliers)
+   - Suppliers must attest that systems are secure (ISN 2023/10)
+   - Supplier-owned continuous assurance (not MOD accreditation)
+   - Supplier security requirements in contracts
+
+9. **Security governance reviews**
+   - Regular reviews by Second Line (Technical Coherence)
+   - No single "accreditation approval" - ongoing assurance
+   - SROs and capability owners accountable for security posture
 
 ### Common MOD Security Requirements
 
@@ -343,29 +379,33 @@ Target Level 3+ for operational systems.
 **Status**: ❌ Non-Compliant
 **Evidence**: Network segmentation incomplete, no IDS/IPS deployed...
 **Gaps**:
-- Deploy network segmentation (CRITICAL - accreditation blocker)
+- Deploy network segmentation (CRITICAL - deployment blocker)
 - Implement IDS/IPS (HIGH PRIORITY)
 
 ## Critical Issues
-1. Network segmentation incomplete (Domain 5) - BLOCKER for accreditation
+1. Network segmentation incomplete (Domain 5) - BLOCKER for deployment
 2. Penetration test not completed (Domain 5) - Required before Beta
 
 ## Recommendations
 **Critical** (0-30 days):
 - Complete network segmentation - Security Architect - 30 days
-- Schedule penetration test - IAO - 15 days
+- Schedule penetration test - DTSL - 15 days
 ```
 
 ## Important Notes
 
-- **Accreditation is mandatory** for MOD systems before operational deployment
-- Non-compliance can block project progression and funding
-- IAO/IAA engagement required from Discovery phase
+- **Continuous assurance is mandatory** for MOD systems throughout their lifecycle (replaced point-in-time accreditation August 2023)
+- **CAAT registration required** for all programmes from Discovery/Alpha phase
+- Non-compliance can block project progression, funding, and deployment
+- **Delivery Team Security Lead (DTSL)** engagement required from Discovery phase
 - Regular security reviews required (quarterly during development, annually in Live)
+- **SROs and capability owners are accountable** for security posture (not delegated to accreditation authority)
 - Classification determines security control requirements
+- **Supplier attestation required** for supplier-delivered systems (ISN 2023/10)
 - Insider threat is a primary concern for MOD - emphasize personnel security
 - Supply chain security critical due to foreign adversary threats
 - Operational security (OPSEC) essential for operational systems
+- **Cyber security is a "licence to operate"** - cannot be traded out or descoped
 
 ## Related MOD Standards
 
@@ -378,9 +418,15 @@ Target Level 3+ for operational systems.
 
 ## Resources
 
+- **MOD Secure by Design**: https://www.digital.mod.uk/policy-rules-standards-and-guidance/secure-by-design
+- **MOD Secure by Design Portal**: Requires DefenceGateway account for industry partners
+- **CAAT** (Cyber Activity and Assurance Tracker): Self-assessment tool available through SbD portal
 - JSP 440: https://www.gov.uk/government/publications/jsp-440-defence-information-assurance
+- JSP 453 (Digital Policies): https://www.digital.mod.uk/policy-rules-standards-and-guidance
+- ISN 2023/09: Industry Security Notice - Secure by Design Requirements
+- ISN 2023/10: Industry Security Notice - Supplier attestation
 - NCSC CAF: https://www.ncsc.gov.uk/collection/caf
+- NCSC Secure Design Principles: https://www.ncsc.gov.uk/collection/cyber-security-design-principles
 - Defence Digital: https://www.gov.uk/government/organisations/defence-digital
-- CESG: https://www.ncsc.gov.uk/section/products-services/cesg
 
 Generate the MOD Secure by Design assessment now based on the project information provided.
