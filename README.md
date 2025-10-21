@@ -86,7 +86,19 @@ Define your organization's architecture standards:
 - Identify conflicts and synergies
 - Define engagement and communication strategies
 
-### Phase 3: Business Case Justification
+### Phase 3: Risk Assessment
+**`/arckit.risk`** → Create comprehensive risk register (Orange Book)
+
+**Do this BEFORE business case** to identify and assess risks systematically:
+- Follow HM Treasury Orange Book 2023 framework
+- Identify risks across 6 categories (Strategic, Operational, Financial, Compliance, Reputational, Technology)
+- Assess inherent risk (before controls) and residual risk (after controls)
+- Apply 4Ts response framework (Tolerate, Treat, Transfer, Terminate)
+- Link every risk to stakeholder from RACI matrix
+- Monitor risk appetite compliance
+- Feed into SOBC Management Case Part E
+
+### Phase 4: Business Case Justification
 **`/arckit.sobc`** → Create Strategic Outline Business Case (SOBC)
 
 **Do this BEFORE requirements** to justify investment and secure approval:
@@ -96,10 +108,10 @@ Define your organization's architecture standards:
 - Provide high-level cost estimates (Rough Order of Magnitude)
 - Economic appraisal (ROI range, payback period)
 - Procurement and funding strategy
-- Governance and risk management
+- Governance and risk management (uses risk register)
 - Enable go/no-go decision BEFORE detailed requirements work
 
-### Phase 4: Define Requirements
+### Phase 5: Define Requirements
 **`/arckit.requirements`** → Document comprehensive requirements
 
 Create detailed requirements **informed by stakeholder goals** (if SOBC approved):
@@ -109,7 +121,7 @@ Create detailed requirements **informed by stakeholder goals** (if SOBC approved
 - Integration requirements
 - Success criteria and KPIs
 
-### Phase 4.5: Strategic Planning with Wardley Mapping
+### Phase 5.5: Strategic Planning with Wardley Mapping
 **`/arckit.wardley`** → Create strategic Wardley Maps
 
 Visualize strategic positioning with:
@@ -119,7 +131,7 @@ Visualize strategic positioning with:
 - UK Government Digital Marketplace mapping
 - Evolution predictions and strategic gameplay
 
-### Phase 5: Vendor Procurement (if needed)
+### Phase 6: Vendor Procurement (if needed)
 **`/arckit.sow`** → Generate Statement of Work (RFP)
 
 Create RFP-ready documents with:
@@ -145,7 +157,7 @@ Side-by-side analysis of:
 - Risk assessments
 - Value propositions
 
-### Phase 6: Design Review
+### Phase 7: Design Review
 **`/arckit.hld-review`** → Review High-Level Design
 
 Validate designs against:
@@ -164,7 +176,7 @@ Implementation-ready validation:
 - Security implementation
 - Test strategy
 
-### Phase 7: ServiceNow Service Management Design
+### Phase 8: ServiceNow Service Management Design
 **`/arckit.servicenow`** → Generate ServiceNow service design
 
 Bridge architecture to operations:
@@ -175,7 +187,7 @@ Bridge architecture to operations:
 - Monitoring and alerting plan
 - Service transition plan
 
-### Phase 8: Traceability
+### Phase 9: Traceability
 **`/arckit.traceability`** → Generate traceability matrix
 
 Ensure complete coverage:
@@ -251,36 +263,39 @@ claude
 # 3. Analyze stakeholders
 /arckit.stakeholders Analyze stakeholders where CFO wants cost reduction, CTO wants modern architecture, and Compliance needs PCI-DSS Level 1
 
-# 4. Create business case to justify investment
+# 4. Assess risks
+/arckit.risk Create risk register for payment gateway project
+
+# 5. Create business case using risk register
 /arckit.sobc Create SOBC for payment gateway modernization with £2M investment
 
-# 5. Document requirements (if SOBC approved)
+# 6. Document requirements (if SOBC approved)
 /arckit.requirements Build a payment gateway that processes credit cards, supports 10K TPS,
 complies with PCI-DSS Level 1, integrates with Stripe and PayPal, and provides real-time
 fraud detection
 
-# 6. Create strategic Wardley Map for build vs buy decisions
+# 7. Create strategic Wardley Map for build vs buy decisions
 /arckit.wardley Create current state Wardley Map for payment gateway showing build vs buy strategy
 
-# 7. Generate SOW for vendor RFP
+# 8. Generate SOW for vendor RFP
 /arckit.sow Generate RFP for vendor selection with 12-month timeline and $2M budget
 
-# 8. After receiving vendor proposals...
+# 9. After receiving vendor proposals...
 /arckit.evaluate Create evaluation framework
 
-# 9. Score vendors
+# 10. Score vendors
 /arckit.evaluate Compare all vendors for payment gateway project
 
-# 10. Review selected vendor's HLD
+# 11. Review selected vendor's HLD
 /arckit.hld-review Review Acme Corp's high-level design
 
-# 11. Review detailed design
+# 12. Review detailed design
 /arckit.dld-review Review Acme Corp's detailed design for payment service
 
-# 12. Design ServiceNow service management
+# 13. Design ServiceNow service management
 /arckit.servicenow Generate ServiceNow design for payment gateway service
 
-# 13. Ensure traceability
+# 14. Ensure traceability
 /arckit.traceability Generate matrix from requirements through design to tests
 ```
 
@@ -301,6 +316,7 @@ payment-modernization/
 ├── projects/
 │   └── 001-payment-gateway/
 │       ├── stakeholder-drivers.md         # Stakeholder analysis
+│       ├── risk-register.md                # Risk register (Orange Book)
 │       ├── sobc.md                         # Strategic Outline Business Case
 │       ├── requirements.md                 # Comprehensive requirements
 │       ├── wardley-maps/                   # Strategic Wardley Maps
@@ -339,6 +355,7 @@ payment-modernization/
 |---------|---------|--------|
 | `/arckit.principles` | Establish architecture governance | `memory/architecture-principles.md` |
 | `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | `projects/XXX/stakeholder-drivers.md` |
+| `/arckit.risk` | Create comprehensive risk register (Orange Book) | `projects/XXX/risk-register.md` |
 | `/arckit.sobc` | Create Strategic Outline Business Case (Green Book 5-case) | `projects/XXX/sobc.md` |
 | `/arckit.requirements` | Define comprehensive requirements | `projects/XXX/requirements.md` |
 | `/arckit.sow` | Generate vendor RFP | `projects/XXX/sow.md` |
