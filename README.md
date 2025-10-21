@@ -1,5 +1,7 @@
 # ArcKit - Enterprise Architecture Governance Toolkit
 
+![ArcKit v0.3.2 - Secure By Design + Data Modelling](docs/assets/arckit-v0.3.2-banner.png)
+
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
 
 ArcKit is a toolkit for enterprise architects that transforms architecture governance from scattered documents into a systematic, AI-assisted workflow for:
