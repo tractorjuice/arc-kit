@@ -321,6 +321,7 @@ payment-modernization/
 | Command | Purpose | Output |
 |---------|---------|--------|
 | `/arckit.principles` | Establish architecture governance | `memory/architecture-principles.md` |
+| `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | `projects/XXX/stakeholder-drivers.md` |
 | `/arckit.requirements` | Define comprehensive requirements | `projects/XXX/requirements.md` |
 | `/arckit.sow` | Generate vendor RFP | `projects/XXX/sow.md` |
 

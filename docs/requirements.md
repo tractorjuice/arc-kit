@@ -38,11 +38,36 @@ ls .arckit/memory/architecture-principles.md
 /arckit.principles Create principles for [your organization]
 ```
 
-### Step 2: Run the Requirements Command
+### Step 2: Analyze Stakeholders (CRITICAL - Do This BEFORE Requirements!)
+
+```bash
+/arckit.stakeholders Analyze stakeholders for [your project]
+```
+
+**Why This is Critical**: Requirements should address **real stakeholder goals**, not invented needs. Understanding who cares about the project and why ensures:
+- Requirements trace to stakeholder drivers
+- Prioritization based on stakeholder power/interest
+- Conflicts identified early
+- Strong stakeholder buy-in
+
+**Examples**:
+```bash
+/arckit.stakeholders Analyze stakeholders for payment gateway where CFO wants cost savings and CTO wants innovation
+/arckit.stakeholders Map drivers to goals for customer portal project
+/arckit.stakeholders Create stakeholder engagement plan for data warehouse migration
+```
+
+### Step 3: Run the Requirements Command
 
 ```bash
 /arckit.requirements Create requirements for [your project]
 ```
+
+The requirements command will:
+- Check for stakeholder analysis (recommends creating it if missing)
+- Trace requirements back to stakeholder goals
+- Identify conflicts based on stakeholder conflicts
+- Document resolution strategies
 
 **Examples**:
 ```bash
@@ -51,7 +76,7 @@ ls .arckit/memory/architecture-principles.md
 /arckit.requirements Build requirements for data warehouse migration to cloud
 ```
 
-### Step 3: Review and Refine
+### Step 4: Review and Refine
 
 The command generates a comprehensive requirements document in `projects/NNN-project-name/requirements.md`. Review, refine, and validate with stakeholders.
 
