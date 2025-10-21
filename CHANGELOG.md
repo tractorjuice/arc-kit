@@ -5,6 +5,106 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2025-10-21
+
+### Added
+- **Strategic Outline Business Case (SOBC) Command**: `/arckit.sobc` implementing HM Treasury Green Book 5-case model
+  - Strategic Case: Problem, drivers, stakeholder goals, scope
+  - Economic Case: Options analysis (Do Nothing, Minimal, Balanced, Comprehensive), benefits mapping, NPV, ROI
+  - Commercial Case: Procurement strategy, Digital Marketplace routes (UK Gov)
+  - Financial Case: Budget, TCO, affordability, Value for Money
+  - Management Case: Governance, delivery, change management, benefits realization, risk management
+- **Risk Management Command**: `/arckit.risk` implementing HM Treasury Orange Book 2023 framework
+  - Part I: 5 Risk Management Principles (Governance, Integration, Collaboration, Risk Processes, Continual Improvement)
+  - Part II: Risk Control Framework (4-pillar structure)
+  - 6 risk categories: Strategic, Operational, Financial, Compliance, Reputational, Technology
+  - 4Ts response framework: Tolerate, Treat, Transfer, Terminate
+  - 5×5 risk matrix: Inherent vs Residual risk (Likelihood × Impact)
+  - Complete stakeholder integration (risk owners from RACI matrix)
+  - Risk appetite compliance monitoring
+- `templates/sobc-template.md` (1,012 lines) - Comprehensive Green Book 5-case business case template
+- `templates/risk-register-template.md` (900 lines) - Comprehensive Orange Book risk register template
+- `.codex/prompts/arckit.sobc.md` - SOBC command for OpenAI Codex CLI
+- `.codex/prompts/arckit.risk.md` - Risk command for OpenAI Codex CLI
+
+### Changed
+- **CRITICAL WORKFLOW CHANGE**: Risk assessment and business case now come BEFORE requirements
+  - Old workflow: Principles → Stakeholders → Requirements
+  - New workflow: Principles → Stakeholders → **Risk** → **SOBC** → Requirements
+- Updated `/arckit.requirements` to reference SOBC approval as prerequisite
+- Enhanced SOBC to use risk register for:
+  - Strategic Case urgency ("Why Now?" uses strategic risks)
+  - Economic Case risk-adjusted costs (optimism bias from risk scores)
+  - Management Case Part E (full risk register included)
+  - Recommendation (high-risk profile influences option selection)
+- Total command count increased from 17 to 19
+
+### Documentation
+- Updated `README.md`:
+  - Added Phase 3: Risk Assessment
+  - Added Phase 4: Business Case Justification (SOBC)
+  - Renumbered all subsequent phases
+  - Added risk and SOBC to Core Commands table
+  - Updated payment gateway example workflow
+  - Updated project structure to include risk-register.md and sobc.md
+- Updated `.claude/COMMANDS.md`:
+  - Added section 3: Risk Management (Orange Book) - 220+ lines
+  - Added section 4: Strategic Outline Business Case (SOBC)
+  - Renumbered all subsequent sections (requirements=5, sow=6, evaluate=7, hld=8, dld=9, traceability=10)
+  - Updated workflow overview
+  - Updated Best Practices to include risk and SOBC
+  - Updated Common Patterns examples
+  - Updated file structure reference
+- Updated `.codex/README.md`:
+  - Added Phase 3: Risk Assessment (NEW - v0.3.0)
+  - Added Phase 4: Business Case (updated from v0.2.3)
+  - Renumbered subsequent phases
+  - Added Orange Book and Green Book framework overviews
+  - Documented SOBC-risk integration
+- Deployed to all 7 test repositories:
+  - arckit-test-project-v0-mod-chatbot
+  - arckit-test-project-v1-m365
+  - arckit-test-project-v2-hmrc-chatbot
+  - arckit-test-project-v3-windows11
+  - arckit-test-project-v4
+  - arckit-test-project-v5
+  - arckit-test-project-v6-patent-system
+
+### UK Government Compliance
+- **Green Book Compliance**: Full 5-case business case model for investment appraisal
+  - Options analysis with do-nothing baseline
+  - Benefits mapping to stakeholder goals
+  - Digital Marketplace procurement routes
+  - Social value (minimum 10% weighting)
+  - Green Book discount rates (3.5% standard)
+  - Optimism bias adjustment from risk assessment
+  - Whole-life costs (3-year TCO)
+- **Orange Book Compliance**: Comprehensive risk management framework
+  - Systematic risk identification (6 categories)
+  - Inherent vs Residual risk assessment
+  - 4Ts response framework (Tolerate, Treat, Transfer, Terminate)
+  - Risk appetite and tolerance monitoring
+  - Risk ownership from stakeholder RACI matrix
+  - Continual improvement and monitoring framework
+- UK-specific risks included:
+  - Strategic: Policy/ministerial changes, machinery of government, parliamentary scrutiny
+  - Compliance: HMT spending controls, NAO audits, PAC scrutiny, FOI, judicial review
+  - Reputational: Media scrutiny, citizen complaints, select committees
+  - Operational: GDS Service Assessment, CDDO controls, security clearances
+
+### Integration
+- Complete traceability chain: Stakeholder → Driver → Goal → Risk → Benefit → Requirement
+- Risk register feeds into SOBC Management Case Part E
+- Financial risks inform Economic Case cost contingency (optimism bias)
+- Strategic risks demonstrate urgency in Strategic Case
+- Stakeholder RACI matrix provides risk owners
+- Risk appetite compliance enables go/no-go decisions
+
+### Bug Fixes
+- Fixed command ordering in `.claude/COMMANDS.md` (stakeholders correctly positioned before risk/SOBC)
+- Improved documentation commit messages for clarity
+- Corrected workflow documentation alignment across all files
+
 ## [0.2.2] - 2025-10-20
 
 ### Added
@@ -135,6 +235,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Release Links
 
+- [v0.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.0) - Green Book & Orange Book Edition (SOBC + Risk Management)
 - [v0.2.2](https://github.com/tractorjuice/arc-kit/releases/tag/v0.2.2) - OpenAI Codex CLI Support & Enhanced Stakeholder Analysis
 - [v0.2.1](https://github.com/tractorjuice/arc-kit/releases/tag/v0.2.1) - Stakeholder Analysis & Conflict Resolution
 - [v0.2.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.2.0) - UK Government Compliance Edition
@@ -154,5 +255,6 @@ ArcKit follows [Semantic Versioning](https://semver.org/):
 - v0.1.0 → v0.2.0: Added UK Government support (new features)
 - v0.2.0 → v0.2.1: Added stakeholder analysis (new feature)
 - v0.2.1 → v0.2.2: Added Codex CLI support (new feature)
-- Future v0.2.2 → v0.2.3: Bug fixes only (patch)
-- Future v0.2.x → v1.0.0: Breaking changes to workflow or API (major)
+- v0.2.2 → v0.3.0: Added Green Book SOBC + Orange Book risk management (significant new features)
+- Future v0.3.0 → v0.3.1: Bug fixes only (patch)
+- Future v0.3.x → v1.0.0: Breaking changes to workflow or API (major)
