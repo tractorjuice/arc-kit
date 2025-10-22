@@ -402,6 +402,7 @@ payment-modernization/
 | `/arckit.requirements` | Define comprehensive requirements | `projects/XXX/requirements.md` |
 | `/arckit.data-model` | Create data model with ERD, GDPR compliance, data governance | `projects/XXX/data-model.md` |
 | `/arckit.research` | Research technology, services, and products with build vs buy analysis | `projects/XXX/research-findings.md` |
+| `/arckit.wardley` | Create strategic Wardley Maps for build vs buy and procurement strategy | `projects/XXX/wardley-maps/{map-name}.md` |
 | `/arckit.sow` | Generate vendor RFP | `projects/XXX/sow.md` |
 
 ### Vendor Management
@@ -416,12 +417,6 @@ payment-modernization/
 |---------|---------|--------|
 | `/arckit.hld-review` | Review high-level design | `projects/XXX/vendors/[vendor]/reviews/hld-review.md` |
 | `/arckit.dld-review` | Review detailed design | `projects/XXX/vendors/[vendor]/reviews/dld-review.md` |
-
-### Strategic Planning
-
-| Command | Purpose | Output |
-|---------|---------|--------|
-| `/arckit.wardley` | Create strategic Wardley Maps for build vs buy and procurement strategy | `projects/XXX/wardley-maps/{map-name}.md` |
 
 ### Architecture Diagrams
 
