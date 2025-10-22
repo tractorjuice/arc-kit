@@ -61,7 +61,7 @@ $ARGUMENTS
    - How many principles were defined
    - Key areas covered
    - Any industry-specific additions
-   - Suggested next steps (e.g., "Now run `/arckit.requirements` to define requirements that comply with these principles")
+   - Suggested next steps: "Now run `/arckit.stakeholders` to analyze stakeholder drivers and goals for your project"
 
 ## Example Usage
 
