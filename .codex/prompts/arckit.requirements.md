@@ -112,7 +112,9 @@ $ARGUMENTS
    - How many conflicts identified and resolved
    - Which stakeholders "won" and which "lost" in conflict resolutions
    - Key gaps or TBDs that need follow-up
-   - Suggested next steps (e.g., "Now run `/arckit.sow` to generate RFP document" or "Review conflicts section with stakeholders before proceeding")
+   - Suggested next steps:
+     - If data requirements (DR-xxx) exist: "Now run `/arckit.data-model` to create a comprehensive data model with ERD and GDPR compliance"
+     - Otherwise: "Now run `/arckit.research` to research technology options that meet these requirements"
 
 ## Example Usage
 
