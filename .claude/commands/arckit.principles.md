@@ -21,19 +21,28 @@ $ARGUMENTS
    - Tailoring principles for a specific industry (e.g., financial services, healthcare, retail)
 
 3. **Generate comprehensive principles**: Based on the user's input, create detailed architecture principles following the template structure:
-   - Strategic Principles (Cloud-First, API-First, Security by Design, etc.)
+   - Strategic Principles (Scalability, Resilience, Interoperability, Security by Design, etc.)
    - Data Principles (Single Source of Truth, Data Quality, Privacy by Design)
-   - Technology Standards (approved languages, frameworks, databases)
-   - Architecture Patterns (microservices, event-driven, etc.)
-   - Development Practices (CI/CD, testing, code review)
+   - Integration Principles (Loose Coupling, Standard Interfaces, Asynchronous Communication)
+   - Quality Attributes (Performance, Availability, Maintainability, Observability)
+   - Development Practices (Automation, Testing, Code Review, Continuous Improvement)
    - Exception Process (how to request deviations)
 
+   **IMPORTANT**: Principles MUST be **technology-agnostic**:
+   - Focus on CHARACTERISTICS, not specific products (e.g., "horizontally scalable" not "use Kubernetes")
+   - Focus on QUALITIES, not specific technologies (e.g., "encrypted in transit" not "use TLS 1.3")
+   - Focus on PATTERNS, not specific implementations (e.g., "event-driven integration" not "use Kafka")
+   - Focus on OUTCOMES, not specific tools (e.g., "infrastructure as code" not "use Terraform")
+
+   **What TO include**: Architectural qualities, patterns, practices, and decision criteria
+   **What NOT to include**: Specific vendors, products, cloud providers, programming languages, frameworks
+
 4. **Make it actionable**: Each principle MUST include:
-   - Clear principle statement with MUST/SHOULD/MAY
-   - Rationale explaining WHY
-   - Approved technologies/patterns
-   - Validation gates (checklist items)
-   - Example implementations
+   - Clear principle statement with MUST/SHOULD/MAY (technology-agnostic)
+   - Rationale explaining WHY this principle matters
+   - Implications (how it affects design decisions)
+   - Validation gates (checklist items to verify compliance)
+   - Example scenarios (good vs bad, without naming specific products)
    - Common violations to avoid
 
 5. **Industry-specific customization**: If the user mentions an industry:
@@ -68,7 +77,24 @@ You should:
 
 ## Important Notes
 
+- **Technology Agnostic**: Principles describe WHAT qualities the architecture must have, not HOW to implement them with specific products
+- **Decision Criteria, Not Decisions**: Principles guide technology selection during `/arckit.research` phase, they don't prescribe specific technologies
+- **Timeless**: Good principles survive technology changes - "scalable" is timeless, "use Docker" is not
 - These principles become the "constitution" for all architecture decisions
 - They will be referenced in requirements documents, design reviews, and vendor evaluations
 - Make them specific enough to be enforceable but flexible enough to allow innovation
 - Include validation gates so reviews can be objective
+
+## Examples of Good vs Bad Principles
+
+**❌ BAD** (Technology-Specific):
+- "All applications MUST use Kubernetes for container orchestration"
+- "Authentication MUST use Auth0"
+- "Databases MUST be PostgreSQL or MySQL"
+- "APIs MUST use REST with JSON payloads"
+
+**✅ GOOD** (Technology-Agnostic):
+- "All applications MUST support horizontal scaling to meet demand"
+- "Authentication MUST use industry-standard protocols with multi-factor authentication"
+- "Databases MUST support ACID transactions for financial data"
+- "APIs MUST use standard protocols with versioning and backward compatibility"
