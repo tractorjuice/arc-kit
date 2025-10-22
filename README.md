@@ -1167,6 +1167,60 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ---
 
+## Troubleshooting
+
+### Token Limit Error
+
+If you see: `API Error: Claude's response exceeded the 32000 output token maximum`
+
+**The Problem**: ArcKit generates large documents that can exceed Claude's 32K token output limit.
+
+**⚠️ IMPORTANT**: Your Claude subscription plan determines the maximum tokens:
+- 🔴 Free/Pro plans: **32K max** (cannot be increased)
+- ✅ Team/Enterprise plans: Can increase to 64K via environment variable
+
+**Solutions**:
+
+1. **For Team/Enterprise plans** - Increase token limit:
+   ```bash
+   export CLAUDE_CODE_MAX_OUTPUT_TOKENS=64000
+   ```
+
+2. **For ALL plans** (including Free/Pro) - Use **Write tool strategy**:
+   ```
+   User: /arckit.requirements but write directly to file using Write tool, show me only a summary
+   ```
+
+   This tells Claude to use the Write tool to create the file (doesn't count toward output tokens) and only show you a summary.
+
+**Which commands are affected?**
+- 🔴 HIGH RISK: `/arckit.research`, `/arckit.sobc`, `/arckit.requirements`, `/arckit.data-model`, `/arckit.sow`
+- 🟡 MEDIUM RISK: `/arckit.risk`, `/arckit.evaluation`, `/arckit.principles`
+
+**See full guide**: [docs/TOKEN-LIMITS.md](docs/TOKEN-LIMITS.md)
+
+### Common Issues
+
+**Command not found**: Ensure Claude Code is installed and commands are loaded
+```bash
+# Check if .claude/commands/ directory exists
+ls .claude/commands/
+```
+
+**Template not found**: Ensure you've run `/arckit.principles` first
+```bash
+# Check if templates exist
+ls templates/
+```
+
+**Project creation fails**: Ensure you have an ArcKit repository initialized
+```bash
+# Initialize if needed
+arckit init .
+```
+
+---
+
 ## Support
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
