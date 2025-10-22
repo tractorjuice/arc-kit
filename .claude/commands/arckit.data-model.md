@@ -200,8 +200,9 @@ You should:
   - CRUD matrix: Payment API can create transactions, Admin can read all, Reporting read-only
   - PCI-DSS compliance: Payment card data encrypted, tokenized, not stored long-term
   - Requirements traceability: All DR-001 through DR-008 mapped to entities
-- Write to `projects/001-payment-gateway-modernization/data-model.md`
-- Confirm completion with summary
+- **CRITICAL - Token Efficiency**: Use the **Write tool** to create `projects/001-payment-gateway-modernization/data-model.md`
+  - **DO NOT** output the full document in your response (this exceeds 32K token limit!)
+- Show summary only (see Output Instructions below)
 
 ## Important Notes
 
@@ -225,3 +226,92 @@ You should:
 - **Output**: Feeds into `/arckit.dld-review` (validates schema design, indexes, query patterns)
 - **Output**: Feeds into `/arckit.sow` (RFP includes data migration, data governance requirements)
 - **Output**: Supports `/arckit.traceability` (DR-xxx → Entity → Attribute → HLD Component)
+
+## Output Instructions
+
+**CRITICAL - Token Efficiency**:
+
+### 1. Generate Data Model
+
+Create the comprehensive data model following the template structure with all sections.
+
+### 2. Write Directly to File
+
+**Use the Write tool** to create `projects/[PROJECT]/data-model.md` with the complete data model.
+
+**DO NOT** output the full document in your response. This would exceed token limits.
+
+### 3. Show Summary Only
+
+After writing the file, show ONLY a concise summary:
+
+```markdown
+## Data Model Complete ✅
+
+**Project**: [Project Name]
+**File Created**: `projects/[PROJECT]/data-model.md`
+
+### Data Model Summary
+
+**Entities**: [Number] entities modeled
+- Core Entities: [List main entities, e.g., Customer, Order, Payment]
+- Supporting Entities: [List supporting entities]
+- Lookup/Reference Data: [List reference tables]
+
+**Relationships**: [Number] relationships defined
+- One-to-Many: [Number]
+- Many-to-Many: [Number]
+- One-to-One: [Number]
+
+**Attributes**: [Number] total attributes across all entities
+- PII Attributes: [Number] (GDPR-sensitive)
+- Encrypted Attributes: [Number]
+- Indexed Attributes: [Number] (for performance)
+
+**GDPR Compliance**:
+- PII Entities: [List entities containing PII]
+- Legal Basis: [e.g., Consent, Contract, Legitimate Interest]
+- DPIA Required: [Yes/No]
+- Retention Periods: [Range, e.g., 6 months to 7 years]
+
+**Data Governance**:
+- Data Owners: [Number] stakeholders assigned as data owners
+- CRUD Matrix: [Number] roles/systems defined
+- Access Controls: [Summary of who can access what]
+
+**Compliance Requirements**:
+- [List: GDPR, PCI-DSS, HIPAA, SOX, etc. as applicable]
+
+**Requirements Traceability**:
+- Data Requirements Mapped: [Number] DR-xxx requirements
+- Unmapped Requirements: [Number] (need clarification)
+
+### What's in the Document
+
+- Entity Relationship Diagram (Mermaid ERD)
+- Detailed Entity Catalog (all attributes, data types, constraints)
+- GDPR Compliance Matrix (PII identification and protection)
+- Data Governance Framework (ownership, CRUD matrix)
+- Data Quality Metrics (accuracy, completeness, timeliness targets)
+- Data Retention Policy (by entity)
+- Encryption and Security Requirements
+- Requirements Traceability Matrix (DR-xxx → Entity mapping)
+
+### Next Steps
+
+- Review `data-model.md` for full ERD and entity details
+- Validate with data owners and stakeholders
+- Run `/arckit.research` to research database technologies
+- Run `/arckit.hld-review` after HLD is created
+```
+
+**Statistics to Include**:
+- Number of entities
+- Number of relationships
+- Number of PII attributes
+- Number of data requirements mapped
+- Number of data owners assigned
+- DPIA required (yes/no)
+- Compliance frameworks applicable
+
+Generate the data model now, write to file using Write tool, and show only the summary above.

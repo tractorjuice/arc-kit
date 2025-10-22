@@ -964,4 +964,73 @@ User: `/arckit.research Research tech options for UK Government citizen portal`
 - **Wardley Mapping**: https://learnwardleymapping.com/
 - **TCO Analysis**: Include CAPEX + OPEX + hidden costs (integration, training, exit)
 
-Generate the research findings document now based on the project requirements.
+## Output Instructions
+
+**CRITICAL - Token Efficiency**:
+
+To avoid exceeding Claude Code's 32K token output limit, you MUST use the following strategy:
+
+### 1. Generate Research Findings
+
+Create the full research findings document following the template structure.
+
+### 2. Write Directly to File
+
+**Use the Write tool** to create `projects/[PROJECT]/research-findings.md` with the complete research document.
+
+**DO NOT** output the full document in your response. This would exceed token limits.
+
+### 3. Show Summary Only
+
+After writing the file, show ONLY a concise summary:
+
+```markdown
+## Research Complete ✅
+
+**Project**: [Project Name]
+**File Created**: `projects/[PROJECT]/research-findings.md`
+
+### Research Summary
+
+**Categories Researched**: [Number] categories identified from requirements
+- [Category 1]: [Number] options researched ([X] SaaS, [Y] open source, [Z] UK Gov)
+- [Category 2]: [Number] options researched
+- [Category 3]: [Number] options researched
+- ...
+
+**Build vs Buy Recommendation**: [Summary of recommendation]
+**Estimated TCO Range**: [Low] - [High] over 3 years
+**Preferred Option**: [Brief recommendation]
+
+**UK Government Specific**:
+- GOV.UK Platforms Used: [List if applicable]
+- Digital Marketplace Suppliers: [Count] suppliers identified
+- Technology Code of Practice: [Compliance summary]
+
+### What's in the Document
+
+- Executive Summary with overall recommendation
+- [N] detailed research sections (one per category)
+- TCO comparison table across all options
+- Build vs Buy decision framework
+- Vendor shortlist with scoring
+- Risk assessment for each option
+- Next steps and recommendations
+
+### Next Steps
+
+- Review `research-findings.md` for detailed findings
+- Run `/arckit.wardley` to create Wardley maps based on research
+- Run `/arckit.sobc` to create Strategic Outline Business Case using TCO data
+```
+
+**Statistics to Include**:
+- Total categories researched
+- Number of SaaS options per category
+- Number of open source options per category
+- Number of UK Gov platforms per category (if applicable)
+- Total vendors/products evaluated
+- TCO range (min-max)
+- Recommended approach (build/buy/hybrid)
+
+Generate the research findings now, write to file using Write tool, and show only the summary above.

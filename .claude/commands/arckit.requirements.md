@@ -102,19 +102,63 @@ $ARGUMENTS
    - **Transparency**: Be explicit about trade-offs - don't hide conflicts or pretend both can be satisfied
 
 8. **Write the output**:
-   - Write to `projects/{project-dir}/requirements.md`
+   - **CRITICAL - Token Efficiency**: Use the **Write tool** to create `projects/{project-dir}/requirements.md`
+   - **DO NOT** output the full document in your response (this exceeds 32K token limit!)
    - Use the exact template structure
    - Include all sections even if some are TBD
    - MUST include "Requirement Conflicts & Resolutions" section if any conflicts exist
 
-9. **Summarize what you created**:
-   - How many requirements were defined (BRs, FRs, NFRs, etc.)
-   - How many conflicts identified and resolved
-   - Which stakeholders "won" and which "lost" in conflict resolutions
-   - Key gaps or TBDs that need follow-up
-   - Suggested next steps:
-     - If data requirements (DR-xxx) exist: "Now run `/arckit.data-model` to create a comprehensive data model with ERD and GDPR compliance"
-     - Otherwise: "Now run `/arckit.research` to research technology options that meet these requirements"
+9. **Show summary only** (NOT the full document):
+
+   After writing the file with Write tool, show ONLY this summary:
+
+   ```markdown
+   ## Requirements Complete ✅
+
+   **Project**: [Project Name]
+   **File Created**: `projects/[PROJECT]/requirements.md`
+
+   ### Requirements Summary
+
+   **Total Requirements**: [Number]
+   - Business Requirements (BR-xxx): [Number]
+   - Functional Requirements (FR-xxx): [Number]
+   - Non-Functional Requirements (NFR-xxx): [Number]
+     - Performance (NFR-P-xxx): [Number]
+     - Security (NFR-SEC-xxx): [Number]
+     - Scalability (NFR-S-xxx): [Number]
+     - Availability (NFR-A-xxx): [Number]
+     - Compliance (NFR-C-xxx): [Number]
+   - Data Requirements (DR-xxx): [Number]
+   - Integration Requirements (INT-xxx): [Number]
+
+   **Requirement Conflicts**: [Number] conflicts identified and resolved
+   - [Brief summary of key conflicts and resolutions]
+   - [Which stakeholders won/lost in conflicts]
+
+   **Compliance Requirements**:
+   - [List key compliance frameworks: PCI-DSS, GDPR, HIPAA, etc.]
+
+   **Key Gaps/TBDs**:
+   - [List any major gaps that need follow-up]
+
+   ### What's in the Document
+
+   - Business Requirements with measurable success criteria
+   - Functional Requirements organized by user journey
+   - Non-Functional Requirements with specific targets
+   - Data Requirements with GDPR considerations
+   - Integration Requirements with third-party systems
+   - Acceptance Criteria for each requirement
+   - Requirements Traceability Matrix
+   - Requirement Conflicts & Resolutions
+
+   ### Next Steps
+
+   - Review `requirements.md` for full details
+   - [If DR-xxx exist]: Run `/arckit.data-model` to create comprehensive data model
+   - [If no DR-xxx]: Run `/arckit.research` to research technology options
+   ```
 
 ## Example Usage
 

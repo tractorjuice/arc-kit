@@ -122,8 +122,9 @@ You should:
   - Vendor quals: PCI-DSS experience, financial services references
   - Evaluation: 60% technical, 40% cost
   - Contract: Milestone-based payments, 90-day warranty
-- Write to `projects/001-payment-gateway-modernization/sow.md`
-- Confirm completion
+- **CRITICAL - Token Efficiency**: Use the **Write tool** to create `projects/001-payment-gateway-modernization/sow.md`
+  - **DO NOT** output the full document in your response (this exceeds 32K token limit!)
+- Show summary only (see Output Instructions below)
 
 ## Important Notes
 
@@ -134,3 +135,114 @@ You should:
 - Make acceptance criteria objective and measurable
 - Consider adding penalty clauses for SLA violations
 - Include provisions for IP ownership and source code escrow
+
+## Output Instructions
+
+**CRITICAL - Token Efficiency**:
+
+### 1. Generate SOW Document
+
+Create the comprehensive Statement of Work following the template structure.
+
+### 2. Write Directly to File
+
+**Use the Write tool** to create `projects/[PROJECT]/sow.md` with the complete SOW.
+
+**DO NOT** output the full document in your response. This would exceed token limits.
+
+### 3. Show Summary Only
+
+After writing the file, show ONLY a concise summary:
+
+```markdown
+## SOW Complete ✅
+
+**Project**: [Project Name]
+**File Created**: `projects/[PROJECT]/sow.md`
+
+### SOW Summary
+
+**Scope**:
+- In Scope: [List key deliverables in scope]
+- Out of Scope: [List explicitly excluded items]
+- Assumptions: [Number] key assumptions documented
+
+**Requirements**:
+- Total Requirements: [Number]
+  - Business Requirements: [Number]
+  - Functional Requirements: [Number]
+  - Non-Functional Requirements: [Number]
+  - Data Requirements: [Number]
+  - Integration Requirements: [Number]
+- Compliance: [List: PCI-DSS, GDPR, HIPAA, etc.]
+
+**Deliverables**:
+- Architecture: [e.g., HLD, DLD, ERD]
+- Code: [e.g., Source code, unit tests, integration tests]
+- Documentation: [e.g., User guides, runbooks, API docs]
+- Other: [e.g., Training, data migration]
+
+**Timeline**:
+- Total Duration: [Number] weeks
+- Phase 1 (HLD): [Number] weeks
+- Phase 2 (DLD): [Number] weeks
+- Phase 3 (Implementation): [Number] weeks
+- Phase 4 (Testing & UAT): [Number] weeks
+
+**Vendor Qualifications**:
+- Required Experience: [e.g., 5+ years in financial services]
+- Required Certifications: [e.g., PCI-DSS, ISO 27001]
+- Team Size: Minimum [Number] FTEs
+- References: [Number] client references required
+
+**Evaluation Criteria**:
+- Technical Approach: [X]%
+- Cost: [X]%
+- Experience & References: [X]%
+- Timeline & Delivery Plan: [X]%
+
+**Contract Terms**:
+- Payment: [e.g., Milestone-based, monthly]
+- Warranty: [e.g., 90 days post-delivery]
+- SLA Penalties: [Yes/No]
+- IP Ownership: [e.g., Client owns all IP]
+
+**UK Government Specific** (if applicable):
+- Procurement Route: [e.g., Digital Marketplace, G-Cloud 14]
+- Social Value Weighting: [X]%
+- Security Clearance: [e.g., SC, DV required]
+- Open Source Policy: [Compliance noted]
+
+### What's in the Document
+
+- Executive Summary (business case and objectives)
+- Project Scope (in/out/assumptions/dependencies)
+- Complete Requirements (all BR, FR, NFR, DR, INT with IDs)
+- Deliverables & Acceptance Criteria
+- Project Timeline with Review Gates
+- Vendor Qualifications & Experience Requirements
+- Proposal Evaluation Criteria with Weightings
+- Contract Terms & Conditions
+- Technical Environment & Constraints
+- Appendices (glossary, references, architecture principles)
+
+**Total Length**: [X] pages (ready for RFP release)
+
+### Next Steps
+
+- Review `sow.md` for full SOW document
+- Get legal review of contract terms
+- Get procurement/finance approval
+- Publish to Digital Marketplace (if UK Gov)
+- Run `/arckit.evaluate` to create vendor evaluation framework
+```
+
+**Statistics to Include**:
+- Total requirements
+- Number of deliverables
+- Timeline duration (weeks)
+- Number of vendor qualifications
+- Number of evaluation criteria
+- Page count
+
+Generate the SOW now, write to file using Write tool, and show only the summary above.

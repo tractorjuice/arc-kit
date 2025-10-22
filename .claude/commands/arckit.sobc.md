@@ -287,4 +287,96 @@ Use the template at `.arckit/templates/sobc-template.md` as the structure. Fill 
 - Industry/sector best practices
 - UK Government guidance (if applicable)
 
-Generate a comprehensive, executive-ready Strategic Outline Business Case (SOBC) that will secure approval and funding to proceed to next stage.
+## Output Instructions
+
+**CRITICAL - Token Efficiency**:
+
+To avoid exceeding Claude Code's 32K token output limit, you MUST use the following strategy:
+
+### 1. Generate SOBC Document
+
+Create the comprehensive, executive-ready Strategic Outline Business Case following the 5-case model template structure.
+
+### 2. Write Directly to File
+
+**Use the Write tool** to create `projects/[PROJECT]/sobc.md` with the complete SOBC document.
+
+**DO NOT** output the full document in your response. This would exceed token limits.
+
+### 3. Show Summary Only
+
+After writing the file, show ONLY a concise summary:
+
+```markdown
+## SOBC Complete ✅
+
+**Project**: [Project Name]
+**File Created**: `projects/[PROJECT]/sobc.md`
+
+### SOBC Summary
+
+**Strategic Case**:
+- Strategic Alignment: [Brief summary of how project aligns with strategy]
+- Spending Objectives: [List 3-5 key objectives linked to stakeholder goals]
+- Critical Success Factors: [3-5 CSFs]
+
+**Economic Case**:
+- Options Appraised: [Number] options evaluated
+- Preferred Option: [Option number and name]
+- NPV over [X] years: £[Amount]
+- BCR (Benefit-Cost Ratio): [Ratio]
+- Key Benefits: [Top 3-5 benefits with £ values]
+
+**Commercial Case**:
+- Procurement Route: [e.g., Digital Marketplace, G-Cloud, Open tender]
+- Contract Strategy: [e.g., Single supplier, Framework, Multi-supplier]
+- Risk Allocation: [Public/Private split]
+
+**Financial Case**:
+- Total Budget Required: £[Amount]
+- Funding Source: [e.g., Spending Review settlement, reserves]
+- Affordability: [Confirmed/To be confirmed]
+- Cash Flow: [Summary of phasing]
+
+**Management Case**:
+- Project Approach: [Agile/Waterfall/Hybrid]
+- Governance: [Board/SRO structure]
+- Key Risks: [Top 3-5 risks]
+- Timeline: [Start] - [End] ([Duration])
+
+**UK Government Specific** (if applicable):
+- Green Book Compliance: [5-case model, options appraisal, sensitivity analysis]
+- Technology Code of Practice: [Points addressed]
+- Service Standard: [Assessment plan]
+- Social Value: [% weighting in procurement]
+
+### What's in the Document
+
+- Executive Summary (2-3 pages)
+- Strategic Case: Why we need to act (10-15 pages)
+- Economic Case: Options and value for money (15-20 pages)
+- Commercial Case: Procurement approach (5-10 pages)
+- Financial Case: Funding and affordability (5-10 pages)
+- Management Case: Delivery capability (10-15 pages)
+- Appendices: Stakeholder analysis, risk register, assumptions
+
+**Total Length**: [X] pages (ready for senior leadership and Treasury approval)
+
+### Next Steps
+
+- Review `sobc.md` for full SOBC document
+- Present to Senior Responsible Owner (SRO) for approval
+- If approved, run `/arckit.requirements` to define detailed requirements
+- After requirements, refine to Outline Business Case (OBC) with firmer costs
+```
+
+**Statistics to Include**:
+- Number of options evaluated
+- NPV and BCR for preferred option
+- Total budget required
+- Timeline (start date - end date)
+- Number of stakeholder goals addressed
+- Number of critical success factors
+- Number of key risks identified
+
+Generate the SOBC now, write to file using Write tool, and show only the summary above.
