@@ -5,6 +5,49 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.4] - 2025-10-23
+
+### Fixed
+
+- **Critical Installation Bug**: Fixed package distribution to properly include markdown files
+  - Added `[tool.hatch.build.targets.wheel.shared-data]` configuration to pyproject.toml
+  - Templates, scripts, and .claude commands now correctly packaged in wheel
+  - Enhanced `get_data_paths()` function to locate installed package data:
+    - Supports uv tool installs (`~/.local/share/uv/tools/arckit-cli/share/arckit/`)
+    - Supports pip installs (site-packages)
+    - Supports platformdirs locations
+    - Fallback to source directory for development mode
+  - Added debug output showing resolved data paths during `arckit init`
+  - Added warning messages if templates/scripts/commands not found
+  - Fixed: `arckit init` now works correctly when installed via pip or uv
+  - Credit: @umag (PR #3)
+
+### Added
+
+- **UI Implementation Plan**: Comprehensive plan for building a web-based user interface
+  - Next.js 14 + FastAPI architecture for hybrid CLI/UI approach
+  - Interactive dashboard with project visualization and status tracking
+  - Requirements management interface with filtering, sorting, and graph views
+  - Traceability matrix visualization (interactive graph + table views)
+  - Diagram viewers for Mermaid diagrams and Wardley Maps
+  - Vendor comparison dashboard with side-by-side evaluation
+  - AI assistant chat integration for executing slash commands from UI
+  - Real-time sync between CLI and UI using file watchers and WebSockets
+  - 5-phase implementation roadmap (12-16 weeks)
+  - Multiple deployment options: local web server, desktop app (Electron), cloud
+  - Maintains markdown files as source of truth (no database lock-in)
+  - Full technical specifications, API design, and risk assessment
+
+### Documentation
+
+- Added `UI-IMPLEMENTATION-PLAN.md` with complete architecture and implementation strategy
+- Detailed backend API specifications with FastAPI endpoints
+- Frontend component structure and technology stack recommendations
+- Data flow diagrams showing CLI-to-UI synchronization
+- Risk assessment and mitigation strategies
+- Budget and resource requirements
+- Success metrics and KPIs
+
 ## [0.3.2] - 2025-10-21
 
 ### Changed
