@@ -1,6 +1,6 @@
 [project]
 name = "arckit-cli"
-version = "0.3.3"
+version = "0.3.4"
 description = "ArcKit CLI - Enterprise Architecture Governance & Vendor Procurement Toolkit"
 requires-python = ">=3.11"
 dependencies = [
@@ -11,12 +11,17 @@ dependencies = [
     "readchar",
     "truststore>=0.10.4",
 ]
-authors = [
-    {name = "Your Name", email = "your.email@example.com"}
-]
+authors = [{ name = "Your Name", email = "your.email@example.com" }]
 readme = "README.md"
-license = {text = "MIT"}
-keywords = ["architecture", "enterprise", "governance", "procurement", "rfp", "vendor-selection"]
+license = { text = "MIT" }
+keywords = [
+    "architecture",
+    "enterprise",
+    "governance",
+    "procurement",
+    "rfp",
+    "vendor-selection",
+]
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -44,3 +49,8 @@ build-backend = "hatchling.build"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/arckit_cli"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"templates" = "share/arckit/templates"
+".claude" = "share/arckit/.claude"
+"scripts" = "share/arckit/scripts"

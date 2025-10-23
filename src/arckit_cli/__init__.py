@@ -31,6 +31,7 @@ from rich.align import Align
 import readchar
 import ssl
 import truststore
+import platformdirs
 
 ssl_context = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 client = httpx.Client(verify=ssl_context)
@@ -150,6 +151,53 @@ def init_git_repo(project_path: Path) -> bool:
         os.chdir(original_cwd)
 
 
+def get_data_paths():
+    """Get paths to templates, scripts, and commands from installed package or source."""
+    # First try to find installed package data
+    try:
+        # Try to find the shared data directory for uv tool installs
+        # uv installs tools in ~/.local/share/uv/tools/{package-name}/share/{package}/
+        uv_tools_path = Path.home() / ".local" / "share" / "uv" / "tools" / "arckit-cli" / "share" / "arckit"
+        if uv_tools_path.exists():
+            return {
+                "templates": uv_tools_path / "templates",
+                "scripts": uv_tools_path / "scripts", 
+                "commands": uv_tools_path / ".claude" / "commands"
+            }
+        
+        # Try to find the shared data directory for regular pip installs
+        import site
+        for site_dir in site.getsitepackages() + [site.getusersitepackages()]:
+            if site_dir:
+                share_path = Path(site_dir) / "share" / "arckit"
+                if share_path.exists():
+                    return {
+                        "templates": share_path / "templates",
+                        "scripts": share_path / "scripts", 
+                        "commands": share_path / ".claude" / "commands"
+                    }
+        
+        # Try platformdirs approach for other installs
+        data_dir = Path(platformdirs.user_data_dir("arckit"))
+        if data_dir.exists():
+            return {
+                "templates": data_dir / "templates",
+                "scripts": data_dir / "scripts",
+                "commands": data_dir / ".claude" / "commands"
+            }
+            
+    except Exception:
+        pass
+    
+    # Fallback to source directory (development mode)
+    source_root = Path(__file__).parent.parent.parent
+    return {
+        "templates": source_root / "templates",
+        "scripts": source_root / "scripts", 
+        "commands": source_root / ".claude" / "commands"
+    }
+
+
 def create_project_structure(project_path: Path, ai_assistant: str):
     """Create the basic ArcKit project structure."""
 
@@ -252,29 +300,54 @@ def init(
     # Create project structure
     create_project_structure(project_path, ai_assistant)
 
-    # Copy templates from arc-kit repository
+    # Copy templates from installed package or source
     console.print("[cyan]Setting up templates...[/cyan]")
-    templates_src = Path(__file__).parent.parent.parent / "templates"
+    
+    data_paths = get_data_paths()
+    templates_src = data_paths["templates"]
+    scripts_src = data_paths["scripts"]
+    commands_src = data_paths["commands"]
+    
+    console.print(f"[dim]Debug: Resolved data paths:[/dim]")
+    console.print(f"[dim]  templates: {templates_src}[/dim]")
+    console.print(f"[dim]  scripts: {scripts_src}[/dim]")
+    console.print(f"[dim]  commands: {commands_src}[/dim]")
+    
     templates_dst = project_path / ".arckit" / "templates"
-    scripts_src = Path(__file__).parent.parent.parent / "scripts"
     scripts_dst = project_path / ".arckit" / "scripts"
-    commands_src = Path(__file__).parent.parent.parent / ".claude" / "commands"
     agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
     commands_dst = project_path / agent_folder / "commands"
 
     # Copy templates if they exist
     if templates_src.exists():
+        console.print(f"[dim]Copying templates from: {templates_src}[/dim]")
+        template_count = 0
         for template_file in templates_src.glob("*.md"):
             shutil.copy2(template_file, templates_dst / template_file.name)
+            template_count += 1
+        console.print(f"[green]✓[/green] Copied {template_count} templates")
+    else:
+        console.print(f"[yellow]Warning: Templates not found at {templates_src}[/yellow]")
 
     # Copy scripts if they exist
     if scripts_src.exists():
+        console.print(f"[dim]Copying scripts from: {scripts_src}[/dim]")
         shutil.copytree(scripts_src, scripts_dst, dirs_exist_ok=True)
+        console.print(f"[green]✓[/green] Scripts copied")
+    else:
+        console.print(f"[yellow]Warning: Scripts not found at {scripts_src}[/yellow]")
 
     # Copy slash commands if they exist (for Claude)
-    if ai_assistant == "claude" and commands_src.exists():
-        for command_file in commands_src.glob("arckit.*.md"):
-            shutil.copy2(command_file, commands_dst / command_file.name)
+    if ai_assistant == "claude":
+        if commands_src.exists():
+            console.print(f"[dim]Copying commands from: {commands_src}[/dim]")
+            command_count = 0
+            for command_file in commands_src.glob("arckit.*.md"):
+                shutil.copy2(command_file, commands_dst / command_file.name)
+                command_count += 1
+            console.print(f"[green]✓[/green] Copied {command_count} commands")
+        else:
+            console.print(f"[yellow]Warning: Commands not found at {commands_src}[/yellow]")
 
     console.print("[green]✓[/green] Templates configured")
 
