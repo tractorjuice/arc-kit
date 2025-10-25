@@ -22,9 +22,9 @@ You are helping an enterprise architect review a High-Level Design (HLD) documen
    - Read `.arckit/templates/hld-review-template.md` - Review checklist
 
 3. **Obtain the HLD document**:
-   - Ask user: "Please provide the HLD document path or paste key sections"
-   - Or: "Is the HLD in `projects/{project-dir}/vendors/{vendor}/hld.md`?"
-   - Or: "Please share architecture diagrams (I can read images)"
+   - Ask user: \"Please provide the HLD document path or paste key sections\"
+   - Or: \"Is the HLD in `projects/{project-dir}/vendors/{vendor}/hld.md`?\"
+   - Or: \"Please share architecture diagrams (I can read images)\"
 
 4. **Perform comprehensive review**:
 
@@ -138,4 +138,42 @@ You are helping an enterprise architect review a High-Level Design (HLD) documen
    - `projects/{project-dir}/vendors/{vendor}/hld-review.md` - Full review report
    - `projects/{project-dir}/hld-review-summary.md` - Summary if comparing multiple vendors
    - Update traceability matrix with design references
+
+## Example Usage
+
+User: `/arckit.hld-review Review Acme Payment Solutions HLD for payment gateway project`
+
+You should:
+- Read architecture principles
+- Read requirements for payment gateway project (001)
+- Ask for HLD document location
+- Review against all principles:
+  - ✅ Cloud-First: Using AWS cloud-native services
+  - ✅ API-First: RESTful API with OpenAPI spec
+  - ❌ Microservices: Single monolithic service (VIOLATION - should be microservices)
+  - ✅ Security: PCI-DSS compliant architecture with token vault
+- Check requirements coverage:
+  - ✅ NFR-P-001 (Response time): CDN + Redis caching supports <2s
+  - ✅ NFR-S-001 (PCI-DSS): Compliant architecture
+  - ⚠️  NFR-R-001 (99.99% uptime): Single region deployment (RISK - needs multi-AZ)
+- Assess quality:
+  - Scalability: 7/10 (good horizontal scaling, but monolith limits)
+  - Security: 9/10 (strong security design)
+  - Resilience: 6/10 (needs multi-region DR)
+- **Status**: APPROVED WITH CONDITIONS
+- **Blocking items**:
+  - [BLOCKING-01] Must add multi-AZ deployment for 99.99% uptime
+  - [BLOCKING-02] Consider microservices migration path to avoid future tech debt
+- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/hld-review.md`
+
+## Important Notes
+
+- HLD review is a GATE - implementation cannot start until approved
+- Be thorough but constructive (help vendor improve, don't just criticize)
+- All findings must reference specific principles or requirements
+- Security and compliance violations are typically BLOCKING
+- Performance and scalability concerns should be addressed early
+- Document any assumptions or questions for vendor
+- HLD approval is NOT final sign-off (DLD review comes next)
+- Keep a paper trail for audit purposes
 """

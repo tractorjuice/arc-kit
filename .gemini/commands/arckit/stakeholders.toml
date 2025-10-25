@@ -11,9 +11,9 @@ You are helping an enterprise architect or project manager understand stakeholde
 ## Instructions
 
 1. **Create or find the project**:
-   - Run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create project structure
+   - Run `.arckit/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create project structure
    - Parse the JSON output to get the project directory path
-   - Or if the user specifies an existing project number (e.g., "001"), use that directory
+   - Or if the user specifies an existing project number (e.g., \"001\"), use that directory
 
 2. **Read the template**: Read `.arckit/templates/stakeholder-drivers-template.md` to understand the comprehensive structure
 
@@ -52,7 +52,7 @@ You are helping an enterprise architect or project manager understand stakeholde
    - Define success metrics, baselines, targets, and measurement methods
    - Identify dependencies and risks to goal achievement
 
-   Example: Driver "Reduce operational costs" → Goal "Reduce invoice processing time from 7 days to 2 days by Q2 2026"
+   Example: Driver \"Reduce operational costs\" → Goal \"Reduce invoice processing time from 7 days to 2 days by Q2 2026\"
 
    **Phase 4: Map Goals to Outcomes**
    - Define measurable business outcomes that prove goals are achieved
@@ -61,7 +61,7 @@ You are helping an enterprise architect or project manager understand stakeholde
    - Define timeline with phase targets
    - Identify leading indicators (early signals) and lagging indicators (final proof)
 
-   Example: Goal "Reduce processing time" → Outcome "30% operational efficiency increase measured by transactions per FTE"
+   Example: Goal \"Reduce processing time\" → Outcome \"30% operational efficiency increase measured by transactions per FTE\"
 
    **Phase 5: Traceability Matrix**
    - Create complete Stakeholder → Driver → Goal → Outcome traceability table
@@ -101,5 +101,87 @@ You are helping an enterprise architect or project manager understand stakeholde
    - How many outcomes mapped
    - Key conflicts or risks
    - Critical success factors
-   - Suggested next steps: "Now run `/arckit.requirements` to create requirements that align with and address these stakeholder goals and drivers"
+   - Suggested next steps: \"Now run `/arckit.requirements` to create requirements that align with and address these stakeholder goals and drivers\"
+
+## Example Usage
+
+**Example 1**: New project
+```
+/arckit.stakeholders Analyze stakeholders for a cloud migration project where the CFO wants cost savings, the CTO wants innovation, Operations is worried about downtime, and Security needs enhanced controls
+```
+
+You should:
+- Create project \"cloud-migration\" (gets number 001)
+- Identify stakeholders: CFO, CTO, Operations Director, CISO, App Owners, End Users
+- Document drivers:
+  - CFO: Reduce datacenter costs by £2M annually (FINANCIAL)
+  - CTO: Modernize tech stack to attract talent (STRATEGIC)
+  - Operations: Minimize downtime risk during migration (RISK)
+  - CISO: Improve security posture and compliance (COMPLIANCE)
+- Map to goals:
+  - G-1: Reduce infrastructure costs 40% by end of Year 1
+  - G-2: Migrate 80% of workloads to cloud in 18 months
+  - G-3: Zero unplanned downtime during migration
+  - G-4: Achieve ISO 27001 certification
+- Map to outcomes:
+  - O-1: £2M annual cost savings (CFO satisfied)
+  - O-2: 50% faster time-to-market for new features (CTO satisfied)
+  - O-3: 99.95% uptime maintained (Operations satisfied)
+  - O-4: Zero security incidents during migration (CISO satisfied)
+- Identify conflict: CFO wants speed (cost savings start sooner) vs Operations wants slow careful migration (minimize risk)
+- Resolution strategy: Phased approach - start with low-risk apps for quick wins, save critical apps for later when team has experience
+- Write to `projects/001-cloud-migration/stakeholder-drivers.md`
+
+**Example 2**: UK Government AI project
+```
+/arckit.stakeholders Analyze stakeholders for a DWP benefits chatbot where the Minister wants quick delivery, Civil Service wants due diligence, Citizens need accuracy, and ICO requires data protection
+```
+
+You should identify UK Government specific drivers:
+- Minister: Deliver manifesto commitment, respond to parliamentary questions (POLITICAL)
+- Permanent Secretary: Ensure proper governance, avoid NAO criticism (RISK/ACCOUNTABILITY)
+- Service Delivery: Reduce call center volume, improve citizen experience (OPERATIONAL)
+- Digital/Technology: Modern architecture, attract digital talent (STRATEGIC)
+- Citizens: Fast accurate answers, accessible service (USER)
+- ICO: Data protection compliance, transparency (REGULATORY)
+- Treasury: Value for money, spending controls (FINANCIAL)
+
+Include UK-specific outcomes like:
+- Ministerial dashboard metrics for parliamentary questions
+- NAO audit readiness
+- GDS service assessment pass rate
+- Technology Code of Practice compliance
+- User satisfaction on GOV.UK
+
+## Important Notes
+
+- **Drivers are the WHY**: Don't just list what stakeholders want - dig into WHY they want it (career, pressure from boss, regulatory deadline, competitive threat)
+- **Goals are the WHAT**: Specific, measurable targets that address the drivers
+- **Outcomes are the PROOF**: Business metrics that prove goals were achieved and drivers satisfied
+- **Traceability matters**: Every outcome should trace back through goals to specific stakeholder drivers
+- **Conflicts are normal**: Don't hide them - document honestly and propose resolutions
+- **Be realistic**: Use actual timeframes, real budget numbers, achievable metrics
+- **Stakeholders are people**: They have careers, fears, ambitions - not just \"business needs\"
+- **Update regularly**: This is a living document - stakeholders' drivers evolve as context changes
+
+## Success Criteria
+
+A good stakeholder drivers analysis will:
+- ✅ Identify all stakeholders with power or interest (don't miss hidden influencers)
+- ✅ Dig into underlying motivations (not surface-level wants)
+- ✅ Show clear Driver → Goal → Outcome traceability chains
+- ✅ Quantify everything possible (metrics, timelines, costs)
+- ✅ Acknowledge conflicts honestly and propose pragmatic resolutions
+- ✅ Identify synergies that create stakeholder alignment
+- ✅ Provide actionable communication and engagement strategies
+- ✅ Include governance and decision rights
+- ✅ Set up measurable success criteria that stakeholders care about
+
+This document becomes the foundation for:
+- Requirements prioritization (align to high-impact drivers)
+- Design decisions (optimize for stakeholder outcomes)
+- Communication plans (message to each stakeholder's drivers)
+- Change management (address resistance rooted in threatened drivers)
+- Success metrics (measure what stakeholders actually care about)
+- Governance (give decision rights to stakeholders with most at stake)
 """

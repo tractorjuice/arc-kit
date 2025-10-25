@@ -27,9 +27,9 @@ You are helping an enterprise architect review a Detailed Design (DLD) document 
    - Confirm no new architectural changes were introduced (if yes, needs HLD re-review)
 
 4. **Obtain the DLD document**:
-   - Ask: "Please provide the DLD document path or paste key sections"
-   - Or: "Is the DLD in `projects/{project-dir}/vendors/{vendor}/dld.md`?"
-   - Or: "Please share detailed design diagrams, sequence diagrams, ERDs"
+   - Ask: \"Please provide the DLD document path or paste key sections\"
+   - Or: \"Is the DLD in `projects/{project-dir}/vendors/{vendor}/dld.md`?\"
+   - Or: \"Please share detailed design diagrams, sequence diagrams, ERDs\"
 
 5. **Perform detailed technical review**:
 
@@ -148,4 +148,49 @@ You are helping an enterprise architect review a Detailed Design (DLD) document 
    - `projects/{project-dir}/vendors/{vendor}/dld-review.md` - Full review report
    - Update traceability matrix with implementation details
    - Create implementation checklist if approved
+
+## Example Usage
+
+User: `/arckit.dld-review Review Acme Payment Solutions DLD for payment gateway`
+
+You should:
+- Check HLD was approved and conditions met
+- Ask for DLD document
+- Review component design:
+  - ✅ Payment Service: Well-defined API, clear business logic
+  - ❌ Fraud Service: Missing ML model specification (BLOCKING)
+  - ✅ Notification Service: Complete event-driven design
+- Review API design:
+  - ✅ OpenAPI 3.0 spec provided
+  - ✅ Proper REST conventions
+  - ⚠️  Missing rate limiting implementation details
+- Review data model:
+  - ✅ Complete ERD with all relationships
+  - ✅ Indexes on high-traffic queries
+  - ❌ Missing data retention/archival strategy (BLOCKING)
+- Review security:
+  - ✅ OAuth 2.0 + JWT implementation detailed
+  - ✅ AES-256 encryption with AWS KMS
+  - ✅ PCI-DSS controls mapped to code
+- Review testing:
+  - ✅ 80% unit test coverage target
+  - ✅ Integration test scenarios defined
+  - ⚠️  Performance test plan incomplete
+- **Status**: APPROVED WITH CONDITIONS
+- **Blocking items**:
+  - [BLOCKING-01] Specify fraud detection ML model (algorithm, features, thresholds)
+  - [BLOCKING-02] Define data retention policy (7 years for PCI compliance)
+- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/dld-review.md`
+
+## Important Notes
+
+- DLD review is the FINAL gate before implementation
+- HLD must be approved before DLD review starts
+- Any architectural changes require HLD re-review
+- DLD must be detailed enough for ANY developer to implement
+- All technical decisions must be documented and justified
+- Security and compliance details are critical
+- Test strategy must be comprehensive
+- DLD approval means \"ready to code\" - no ambiguity allowed
+- This is the last chance to catch design issues before expensive code changes
 """
