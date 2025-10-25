@@ -1,6 +1,6 @@
 # ArcKit - Enterprise Architecture Governance Toolkit
 
-![ArcKit v0.3.3 - Token Limit Fix](docs/assets/arckit-v0.3.2-banner.png)
+![ArcKit v0.3.4 - Installation Fix + UI Plan](docs/assets/arckit-v0.3.2-banner.png)
 
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
 
@@ -38,7 +38,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v0.3.3](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.3)
+**Latest Release**: [v0.3.4](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.4)
 
 ### Initialize a Project
 
@@ -1225,7 +1225,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v0.3.3](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.3)
+- **Latest Version**: [v0.3.4](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.4)
 
 ---
 
