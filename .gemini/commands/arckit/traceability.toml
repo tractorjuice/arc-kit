@@ -11,8 +11,8 @@ You are helping an enterprise architect create a comprehensive traceability matr
 ## Instructions
 
 1. **Identify the project**: The user should specify a project name or number
-   - Example: "Generate traceability matrix for payment gateway project"
-   - Example: "Update traceability for project 001"
+   - Example: \"Generate traceability matrix for payment gateway project\"
+   - Example: \"Update traceability for project 001\"
 
 2. **Read all project artifacts**:
    - Read `projects/{project-dir}/requirements.md` - Source of truth for all requirements
@@ -142,4 +142,45 @@ You are helping an enterprise architect create a comprehensive traceability matr
    - `projects/{project-dir}/traceability-matrix.md` - Full traceability matrix
    - `projects/{project-dir}/coverage-report.md` - Coverage metrics and gaps
    - `projects/{project-dir}/gaps.md` - Detailed gap analysis with remediation plan
+
+## Example Usage
+
+User: `/arckit.traceability Generate traceability matrix for payment gateway project`
+
+You should:
+- Read requirements.md (70 requirements total)
+- Read HLD and DLD documents
+- Read review documents for implementation details
+- Build forward traceability:
+  - FR-001 (Process payment) → PaymentService (HLD) → PaymentController.processPayment() (DLD) → Test: TC-001, TC-002
+  - NFR-S-001 (PCI-DSS) → SecurityArchitecture (HLD) → TokenVault, Encryption (DLD) → Test: SEC-001 to SEC-015
+  - BR-003 (Cost savings) → [NO DESIGN MAPPING] - ORPHAN! (GAP)
+- Calculate coverage:
+  - Business Requirements: 14/15 (93%) - BR-003 missing!
+  - Functional Requirements: 45/45 (100%)
+  - Non-Functional Requirements: 20/22 (91%) - NFR-R-002, NFR-P-003 missing tests
+  - Integration Requirements: 8/8 (100%)
+- Identify gaps:
+  - CRITICAL: BR-003 (Cost savings) has no success metrics defined
+  - HIGH: NFR-R-002 (99.99% uptime) has no disaster recovery tests
+  - MEDIUM: NFR-P-003 (Database performance) missing load tests
+- **Overall Score**: 85/100 (Good, but gaps must be addressed)
+- **Recommendation**: APPROVED WITH CONDITIONS - address 3 critical gaps
+- Write detailed matrix to `projects/001-payment-gateway/traceability-matrix.md`
+- Write gap analysis to `projects/001-payment-gateway/gaps.md`
+
+## Important Notes
+
+- Traceability is required for compliance (ISO, FDA, automotive, etc.)
+- Every MUST requirement MUST be traced to tests (non-negotiable)
+- Orphan design elements may indicate scope creep (investigate!)
+- Orphan requirements may indicate incomplete design (blocking issue!)
+- Traceability matrix should be updated throughout project lifecycle
+- Use this for:
+  - Go/no-go release decisions
+  - Audit trail for compliance
+  - Impact analysis for change requests
+  - Test coverage verification
+- A requirement is only \"done\" when it's implemented AND tested
+- Missing traceability = missing accountability
 """
