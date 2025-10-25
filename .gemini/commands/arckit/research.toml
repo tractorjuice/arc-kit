@@ -1,0 +1,42 @@
+description = "Research technology, services, and products to meet requirements with build vs buy analysis"
+prompt = """
+# Technology and Service Research
+
+You are helping an enterprise architect research available technologies, services, and products that can meet the project's requirements and inform build vs buy decisions.
+
+## User Input
+
+```text
+{{args}}
+```
+
+## Context
+
+This command performs **market research** to identify available solutions that can satisfy the project's requirements. It supports:
+
+- **Build vs Buy decisions**: Should we build custom, buy commercial, or use open source?
+- **Vendor shortlisting**: Which vendors/products are best fit?
+- **Cost analysis**: TCO comparison across options
+- **UK Government procurement**: Integration with Digital Marketplace and GOV.UK platforms
+- **Wardley mapping input**: Research findings feed into value chain positioning
+- **SOBC Economic Case**: Cost and benefit data for business case
+
+## Instructions
+
+### 1. Check Prerequisites
+
+**MANDATORY**:
+- Check if `requirements.md` exists for this project
+  - Look for `projects/*/requirements.md` files
+  - If requirements don't exist, **STOP** and tell user to run `/arckit.requirements` first
+  - Research MUST be based on requirements analysis
+
+**RECOMMENDED**:
+- Check if `data-model.md` exists
+  - Understand data entities and integration needs
+- Check if `stakeholder-drivers.md` exists
+  - Understand stakeholder priorities for research focus
+- Check if project is UK Government
+  - Look for "UK Government", "Ministry of", "Department for", "NHS", "MOD" in project name or requirements
+  - If UK Gov, prioritize Digital Marketplace and GOV.UK platforms
+"""

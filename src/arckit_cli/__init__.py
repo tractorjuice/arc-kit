@@ -161,10 +161,11 @@ def get_data_paths():
         if uv_tools_path.exists():
             return {
                 "templates": uv_tools_path / "templates",
-                "scripts": uv_tools_path / "scripts", 
-                "commands": uv_tools_path / ".claude" / "commands"
+                "scripts": uv_tools_path / "scripts",
+                "claude_commands": uv_tools_path / ".claude" / "commands",
+                "gemini_commands": uv_tools_path / ".gemini" / "commands",
             }
-        
+
         # Try to find the shared data directory for regular pip installs
         import site
         for site_dir in site.getsitepackages() + [site.getusersitepackages()]:
@@ -173,28 +174,31 @@ def get_data_paths():
                 if share_path.exists():
                     return {
                         "templates": share_path / "templates",
-                        "scripts": share_path / "scripts", 
-                        "commands": share_path / ".claude" / "commands"
+                        "scripts": share_path / "scripts",
+                        "claude_commands": share_path / ".claude" / "commands",
+                        "gemini_commands": share_path / ".gemini" / "commands",
                     }
-        
+
         # Try platformdirs approach for other installs
         data_dir = Path(platformdirs.user_data_dir("arckit"))
         if data_dir.exists():
             return {
                 "templates": data_dir / "templates",
                 "scripts": data_dir / "scripts",
-                "commands": data_dir / ".claude" / "commands"
+                "claude_commands": data_dir / ".claude" / "commands",
+                "gemini_commands": data_dir / ".gemini" / "commands",
             }
-            
+
     except Exception:
         pass
-    
+
     # Fallback to source directory (development mode)
     source_root = Path(__file__).parent.parent.parent
     return {
         "templates": source_root / "templates",
-        "scripts": source_root / "scripts", 
-        "commands": source_root / ".claude" / "commands"
+        "scripts": source_root / "scripts",
+        "claude_commands": source_root / ".claude" / "commands",
+        "gemini_commands": source_root / ".gemini" / "commands",
     }
 
 
@@ -306,12 +310,10 @@ def init(
     data_paths = get_data_paths()
     templates_src = data_paths["templates"]
     scripts_src = data_paths["scripts"]
-    commands_src = data_paths["commands"]
     
     console.print(f"[dim]Debug: Resolved data paths:[/dim]")
     console.print(f"[dim]  templates: {templates_src}[/dim]")
     console.print(f"[dim]  scripts: {scripts_src}[/dim]")
-    console.print(f"[dim]  commands: {commands_src}[/dim]")
     
     templates_dst = project_path / ".arckit" / "templates"
     scripts_dst = project_path / ".arckit" / "scripts"
@@ -337,17 +339,26 @@ def init(
     else:
         console.print(f"[yellow]Warning: Scripts not found at {scripts_src}[/yellow]")
 
-    # Copy slash commands if they exist (for Claude)
+    # Copy slash commands if they exist
     if ai_assistant == "claude":
+        commands_src = data_paths["claude_commands"]
         if commands_src.exists():
-            console.print(f"[dim]Copying commands from: {commands_src}[/dim]")
+            console.print(f"[dim]Copying Claude commands from: {commands_src}[/dim]")
             command_count = 0
             for command_file in commands_src.glob("arckit.*.md"):
                 shutil.copy2(command_file, commands_dst / command_file.name)
                 command_count += 1
-            console.print(f"[green]✓[/green] Copied {command_count} commands")
+            console.print(f"[green]✓[/green] Copied {command_count} Claude commands")
         else:
-            console.print(f"[yellow]Warning: Commands not found at {commands_src}[/yellow]")
+            console.print(f"[yellow]Warning: Claude commands not found at {commands_src}[/yellow]")
+    elif ai_assistant == "gemini":
+        commands_src = data_paths["gemini_commands"]
+        if commands_src.exists():
+            console.print(f"[dim]Copying Gemini commands from: {commands_src}[/dim]")
+            shutil.copytree(commands_src, commands_dst, dirs_exist_ok=True)
+            console.print(f"[green]✓[/green] Gemini commands copied")
+        else:
+            console.print(f"[yellow]Warning: Gemini commands not found at {commands_src}[/yellow]")
 
     console.print("[green]✓[/green] Templates configured")
 

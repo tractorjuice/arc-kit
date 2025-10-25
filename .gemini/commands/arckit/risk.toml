@@ -1,0 +1,102 @@
+description = "Create comprehensive risk register following HM Treasury Orange Book principles"
+prompt = """
+You are helping an enterprise architect create a comprehensive risk register following the UK Government Orange Book (2023) risk management framework.
+
+## About Orange Book Risk Management
+
+The **Orange Book** is HM Treasury's guidance on risk management in government. The 2023 update provides:
+
+- **Part I**: 5 Risk Management Principles (Governance, Integration, Collaboration, Risk Processes, Continual Improvement)
+- **Part II**: Risk Control Framework (4-pillar "house" structure)
+- **4Ts Risk Response Framework**: Tolerate, Treat, Transfer, Terminate
+- **Risk Assessment Methodology**: Likelihood × Impact for Inherent and Residual risk
+- **Risk Appetite**: Amount of risk organization is prepared to accept/tolerate
+
+## User Input
+
+```text
+{{args}}
+```
+
+## Instructions
+
+This command creates a **comprehensive risk register** following HM Treasury Orange Book principles and integrates with ArcKit's stakeholder-driven workflow.
+
+**When to use this:**
+- **After**: `/arckit.stakeholders` (MANDATORY - every risk needs an owner)
+- **Before**: `/arckit.sobc` (SOBC Management Case Part E uses risk register)
+- **Purpose**: Identify, assess, and manage project risks using Orange Book methodology
+
+1. **Check for prerequisites**:
+   - **MANDATORY**: Check if stakeholder analysis exists for this project
+     - Read `.arckit/memory/` or `projects/*/stakeholder-drivers.md` to find it
+     - If NO stakeholder analysis exists, STOP and tell user:
+       "⚠️ Risk register requires stakeholder analysis. Run `/arckit.stakeholders` first to identify risk owners and affected parties."
+   - **RECOMMENDED**: Check if architecture principles exist
+     - Read `.arckit/memory/architecture-principles.md`
+     - Non-compliance with principles creates risks
+   - **RECOMMENDED**: Check if organizational risk appetite exists
+     - Read `.arckit/memory/risk-appetite.md`
+     - If exists, assess risks against appetite thresholds
+   - **OPTIONAL**: Check if requirements exist
+     - Requirements can create risks (complexity, technical challenges)
+     - Requirements can mitigate risks (NFRs address risks)
+
+2. **Understand the request**: The user may be:
+   - Creating initial risk register (most common)
+   - Updating existing risk register with new risks
+   - Reassessing risks after changes
+   - Creating organizational risk appetite (advanced - if user asks for this specifically)
+
+3. **Determine project context**:
+   - If user mentions "UK Government", "public sector", "department", "ministry" → Include regulatory/parliamentary risks
+   - If user mentions specific industry → Include industry-specific risk categories
+   - Check stakeholder analysis for context on project scale, complexity, stakeholders
+
+4. **Read stakeholder analysis carefully**:
+   - Extract risk owners from RACI matrix (Accountable = Risk Owner)
+   - Extract affected stakeholders (who cares about which risks?)
+   - Extract stakeholder concerns from conflict analysis (these ARE risks!)
+   - Extract stakeholder drivers (drivers under threat = strategic risks)
+   - Note: EVERY risk MUST have a risk owner from stakeholder analysis
+
+5. **Identify risks across Orange Book categories**:
+
+   Use these risk categories aligned to Orange Book framework:
+
+   **STRATEGIC Risks**:
+   - Risks to strategic objectives and organizational goals
+   - Competitive position, market changes, policy changes
+   - Stakeholder drivers under threat
+   - Example: "Strategic direction changes mid-project"
+
+   **OPERATIONAL Risks**:
+   - Risks to operations, service delivery, business continuity
+   - Resource availability, skills gaps, dependencies
+   - Process failures, quality issues
+   - Example: "Insufficient cloud migration expertise in team"
+
+   **FINANCIAL Risks**:
+   - Budget overruns, funding shortfalls, ROI not achieved
+   - Cost escalation, currency fluctuations
+   - Economic downturn impact
+   - Example: "Cloud costs exceed budget by 40%"
+
+   **COMPLIANCE/REGULATORY Risks**:
+   - Non-compliance with laws, regulations, policies
+   - Audit findings, regulatory penalties
+   - Data protection (GDPR, DPA 2018), procurement rules
+   - Example: "GDPR non-compliance due to data transfer"
+
+   **REPUTATIONAL Risks**:
+   - Damage to reputation, stakeholder confidence, public perception
+   - Media scrutiny, parliamentary questions (UK Gov)
+   - Service failures visible to public
+   - Example: "High-profile service outage damages citizen trust"
+
+   **TECHNOLOGY Risks**:
+   - Technical failure, cyber security, legacy system issues
+   - Vendor lock-in, technology obsolescence
+   - Integration challenges, scalability limitations
+   - Example: "Legacy integration fails during peak load"
+"""

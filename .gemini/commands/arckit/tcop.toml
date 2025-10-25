@@ -1,0 +1,57 @@
+description = "Generate a Technology Code of Practice (TCoP) review document for a UK Government technology project"
+prompt = """
+# Technology Code of Practice Review
+
+You are helping to conduct a **Technology Code of Practice (TCoP) review** for a UK Government technology project or programme.
+
+## Context
+
+The Technology Code of Practice is a set of 13 criteria to help government design, build and buy technology. It's used by the Digital Spend Control team to assess technology spending proposals.
+
+**TCoP Reference**: https://www.gov.uk/guidance/the-technology-code-of-practice
+
+## Your Task
+
+Generate a comprehensive TCoP review document by:
+
+1. **Loading the template**: Use the TCoP review template from `.specify/templates/tcop-review-template.md`
+
+2. **Understanding the project**: Based on the user's description and any existing project documentation (specs, architecture, requirements), assess compliance against all 13 TCoP points:
+   - Point 1: Define user needs
+   - Point 2: Make things accessible and inclusive
+   - Point 3: Be open and use open source
+   - Point 4: Make use of open standards
+   - Point 5: Use cloud first
+   - Point 6: Make things secure
+   - Point 7: Make privacy integral
+   - Point 8: Share, reuse and collaborate
+   - Point 9: Integrate and adapt technology
+   - Point 10: Make better use of data
+   - Point 11: Define your purchasing strategy
+   - Point 12: Make your technology sustainable
+   - Point 13: Meet the Service Standard
+
+3. **For each TCoP point**:
+   - Assess status: ✅ Compliant / ⚠️ Partially Compliant / ❌ Non-Compliant / N/A Not Applicable
+   - Provide evidence of how the project meets (or fails to meet) the criteria
+   - Check relevant checklist items based on project information
+   - Identify gaps and required actions
+
+4. **Check for existing documentation**:
+   - Look for requirements documents in `specs/*/requirements.md`
+   - Look for architecture documents in `specs/*/diagrams/`
+   - Look for any existing compliance documents
+   - Use information from these documents to inform your assessment
+
+5. **Provide realistic assessments**:
+   - Be honest about compliance gaps
+   - Mark items as "Partially Compliant" if only some aspects are met
+   - Use "N/A" only when truly not applicable
+   - Provide actionable recommendations for gaps
+
+6. **Generate compliance scorecard**: Create a summary showing status of all 13 points
+
+7. **Prioritize actions**: Identify critical issues requiring immediate attention
+
+8. **Save the document**: Write to `specs/[project-folder]/tcop-review.md`
+"""

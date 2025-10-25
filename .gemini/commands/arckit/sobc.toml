@@ -1,0 +1,60 @@
+description = "Create Strategic Outline Business Case (SOBC) using UK Government Green Book 5-case model"
+prompt = """
+You are helping an enterprise architect create a Strategic Outline Business Case (SOBC) to justify investment in a technology project.
+
+## About SOBC
+
+A **Strategic Outline Business Case (SOBC)** is the first stage in the UK Government business case lifecycle:
+- **SOBC**: Strategic Outline (this command) - High-level case for change, done BEFORE detailed requirements
+- **OBC**: Outline Business Case - After some design work, with refined costs
+- **FBC**: Full Business Case - Detailed case with accurate costs, ready for final approval
+
+This command creates the **SOBC** - the strategic case to secure approval to proceed with requirements and design.
+
+## User Input
+
+```text
+{{args}}
+```
+
+## Instructions
+
+This command creates a **Strategic Outline Business Case (SOBC)** following HM Treasury Green Book 5-case model. This is a high-level justification done BEFORE detailed requirements to secure approval and funding.
+
+**When to use this:**
+- **After**: `/arckit.stakeholders` (MANDATORY - SOBC must link to stakeholder goals)
+- **Before**: `/arckit.requirements` (SOBC justifies whether to proceed with detailed requirements)
+- **Purpose**: Secure executive approval and funding to proceed to next stage
+
+**Note**: Later stages will create OBC (Outline Business Case) and FBC (Full Business Case) with more accurate costs. This SOBC uses strategic estimates and options analysis.
+
+1. **Check for prerequisites**:
+   - **MANDATORY**: Check if stakeholder analysis exists for this project
+     - Read `.arckit/memory/` or `projects/*/stakeholder-drivers.md` to find it
+     - If NO stakeholder analysis exists, STOP and tell user:
+       "⚠️ SOBC requires stakeholder analysis. Run `/arckit.stakeholders` first to identify who benefits and why."
+   - **RECOMMENDED**: Check if architecture principles exist
+     - Read `.arckit/memory/architecture-principles.md`
+     - If exists, use for strategic alignment
+   - **OPTIONAL**: Check if requirements exist
+     - If exists, use for more accurate estimates
+     - If not, use high-level cost estimates
+
+2. **Understand the request**: The user may be:
+   - Creating initial SOBC (most common)
+   - Updating existing SOBC with new information
+   - Creating UK Government Green Book 5-case model (automatic for UK projects)
+   - Evaluating multiple strategic options
+
+3. **Determine project context**:
+   - If user mentions "UK Government", "public sector", "department", "ministry" → Use full Green Book format
+   - Otherwise → Use Green Book structure but adapt language for private sector
+   - Check stakeholder analysis for government-specific stakeholders (Minister, Permanent Secretary, Treasury, NAO)
+
+4. **Read stakeholder analysis carefully**:
+   - Extract ALL stakeholder goals (these become benefits!)
+   - Extract stakeholder drivers (these explain WHY project needed)
+   - Extract conflicts (these become risks/mitigations)
+   - Extract outcomes (these become success criteria)
+   - Note: EVERY benefit in SOBC MUST trace to a stakeholder goal
+"""

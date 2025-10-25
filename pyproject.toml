@@ -1,6 +1,6 @@
 [project]
 name = "arckit-cli"
-version = "0.3.4"
+version = "0.3.5"
 description = "ArcKit CLI - Enterprise Architecture Governance & Vendor Procurement Toolkit"
 requires-python = ">=3.11"
 dependencies = [
@@ -54,3 +54,4 @@ packages = ["src/arckit_cli"]
 "templates" = "share/arckit/templates"
 ".claude" = "share/arckit/.claude"
 "scripts" = "share/arckit/scripts"
+".gemini" = "share/arckit/.gemini"

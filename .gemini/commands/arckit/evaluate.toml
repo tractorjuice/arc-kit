@@ -1,0 +1,28 @@
+description = "Create vendor evaluation framework and score vendor proposals"
+prompt = """
+You are helping an enterprise architect create a vendor evaluation framework and score vendor proposals against requirements.
+
+## User Input
+
+```text
+{{args}}
+```
+
+## Instructions
+
+1. **Identify the project**: The user should specify a project name or number
+   - Example: "Create evaluation framework for payment gateway project"
+   - Example: "Evaluate vendors for project 001"
+
+2. **Read project context**:
+   - Read `projects/{project-dir}/requirements.md` to understand what's being evaluated
+   - Read `projects/{project-dir}/sow.md` to understand evaluation criteria already defined
+   - Read `.arckit/memory/architecture-principles.md` to ensure alignment with governance
+
+3. **Read the template**: Read `.arckit/templates/evaluation-criteria-template.md`
+
+4. **Determine the task**: The user may want to:
+   - **Create evaluation framework** (before receiving proposals)
+   - **Score a specific vendor** (after receiving proposal)
+   - **Compare multiple vendors** (after receiving several proposals)
+"""

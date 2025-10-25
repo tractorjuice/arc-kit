@@ -1,0 +1,98 @@
+description = "Generate a Secure by Design assessment for UK Government projects (civilian departments)"
+prompt = """
+# UK Government Secure by Design Assessment
+
+You are helping to conduct a **Secure by Design assessment** for a UK Government technology project (civilian/non-MOD).
+
+## Context
+
+UK Government departments must follow NCSC (National Cyber Security Centre) guidance and achieve appropriate security certifications before deploying systems. This assessment evaluates security controls using the NCSC Cyber Assessment Framework (CAF).
+
+**Key UK Government Security References**:
+- NCSC Cyber Assessment Framework (CAF)
+- Cyber Essentials / Cyber Essentials Plus
+- UK GDPR and Data Protection Act 2018
+- Government Security Classifications Policy
+- Cloud Security Principles
+
+## Your Task
+
+Generate a comprehensive Secure by Design assessment document by:
+
+1. **Loading the template**: Use the UK Gov Secure by Design template from `.specify/templates/ukgov-secure-by-design-template.md`
+
+2. **Understanding the project context**:
+   - Department/organization (HMRC, DWP, Home Office, DEFRA, etc.)
+   - Data classification (PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE)
+   - Project phase (Discovery, Alpha, Beta, Live)
+   - User base (public-facing, internal staff, both)
+   - Hosting approach (cloud, on-premise, hybrid)
+
+3. **Check existing documentation**:
+   - Requirements documents in `specs/*/requirements.md`
+   - Architecture diagrams in `specs/*/diagrams/`
+   - Any existing security or compliance documents
+   - TCoP assessments (if available)
+   - Risk registers or threat models
+
+4. **Assess security using NCSC CAF (14 principles across 4 objectives)**:
+
+   **Objective A: Managing Security Risk (4 principles)**
+   - A1: Governance - SIRO appointed, security policies, oversight
+   - A2: Risk Management - Asset classification, risk register, treatment plans
+   - A3: Asset Management - Inventory of hardware, software, data
+   - A4: Supply Chain - Vendor assessments, contracts, third-party controls
+
+   **Objective B: Protecting Against Cyber Attack (6 principles)**
+   - B1: Service Protection Policies - Acceptable use, access control, data protection policies
+   - B2: Identity and Access Control - MFA, PAM, least privilege, access reviews
+   - B3: Data Security - Encryption, UK GDPR compliance, DPIA, DLP
+   - B4: System Security - Patching, hardening, anti-malware, EDR
+   - B5: Resilient Networks - Segmentation, firewalls, IDS/IPS, VPN
+   - B6: Staff Awareness - Security training, phishing awareness, data protection
+
+   **Objective C: Detecting Cyber Security Events (2 principles)**
+   - C1: Security Monitoring - SIEM, alerting, logging, threat intelligence
+   - C2: Proactive Security Event Discovery - Vulnerability scanning, pen testing, threat hunting
+
+   **Objective D: Minimising the Impact of Incidents (2 principles)**
+   - D1: Response and Recovery Planning - Incident response, BC/DR, RTO/RPO
+   - D2: Improvements - Post-incident reviews, metrics, continuous improvement
+
+5. **Assess Cyber Essentials compliance (5 controls)**:
+   - Firewalls - Boundary firewalls configured
+   - Secure Configuration - Hardened systems, unnecessary services disabled
+   - Access Control - User accounts, MFA, least privilege
+   - Malware Protection - Anti-malware on all devices
+   - Patch Management - Timely patching (critical within 14 days)
+
+6. **Assess UK GDPR compliance (if processing personal data)**:
+   - DPO appointed (if required)
+   - Lawful basis identified
+   - Privacy notice published
+   - Data subject rights procedures
+   - DPIA completed (if high risk)
+   - Data breach notification process (72 hours to ICO)
+   - Records of Processing Activities (ROPA)
+
+7. **For each CAF principle and control**:
+   - Assess status: ✅ Achieved / ⚠️ Partially Achieved / ❌ Not Achieved / N/A
+   - Gather evidence from project documents
+   - Check relevant security controls
+   - Identify gaps and risks
+   - Provide specific remediation actions with owners and timelines
+
+8. **Calculate overall CAF score**: X/14 principles achieved
+
+9. **Identify critical security issues**:
+   - Issues that block progression to next phase
+   - Unacceptable risk levels
+   - Regulatory non-compliance (UK GDPR, Data Protection Act)
+
+10. **Generate actionable recommendations**:
+    - Critical priority (0-30 days) - blockers for next phase
+    - High priority (1-3 months) - significant risk reduction
+    - Medium priority (3-6 months) - continuous improvement
+
+11. **Save the document**: Write to `specs/[project-folder]/ukgov-secure-by-design.md`
+"""

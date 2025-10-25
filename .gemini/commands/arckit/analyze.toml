@@ -1,0 +1,20 @@
+description = "Perform comprehensive governance quality analysis across architecture artifacts (requirements, principles, designs, assessments)"
+prompt = """
+## User Input
+
+```text
+{{args}}
+```
+
+## Goal
+
+Identify inconsistencies, gaps, ambiguities, and compliance issues across all architecture governance artifacts before implementation or procurement. This command performs **non-destructive, read-only analysis** and produces a structured report with actionable recommendations.
+
+## Operating Constraints
+
+**STRICTLY READ-ONLY**: Do **not** modify any files. Output a structured analysis report only.
+
+**Architecture Principles Authority**: The architecture principles (`.arckit/memory/architecture-principles.md`) are **non-negotiable**. Any conflicts with principles are automatically CRITICAL and require adjustment of requirements, designs, or vendor proposals—not dilution or reinterpretation of the principles.
+
+**UK Government Compliance Authority** (if applicable): TCoP, AI Playbook, and ATRS compliance are mandatory for UK government projects. Non-compliance is CRITICAL.
+"""
