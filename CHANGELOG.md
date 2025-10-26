@@ -5,7 +5,7 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.3.5] - 2025-10-26
 
 ### Added
 
@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Copies slash commands to `.codex/prompts/` directory
   - Added Codex to interactive AI assistant selection menu
   - Enhanced next steps output with Codex-specific setup instructions (direnv recommended)
+- Added `.envrc` and updated `.gitignore` for main arc-kit repository
 
 ### Changed
 
