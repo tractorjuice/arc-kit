@@ -5,6 +5,24 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.5] - 2025-10-26
+
+### Added
+
+- **Codex CLI Integration**: Full support for OpenAI Codex CLI in `arckit init`
+  - Added `codex` to AGENT_CONFIG with proper installation URL
+  - Automatic `.envrc` generation for Codex projects with `CODEX_HOME` environment variable
+  - Auto-creates `.gitignore` entries to exclude auth tokens while preserving prompts
+  - Copies slash commands to `.codex/prompts/` directory
+  - Added Codex to interactive AI assistant selection menu
+  - Enhanced next steps output with Codex-specific setup instructions (direnv recommended)
+- Added `.envrc` and updated `.gitignore` for main arc-kit repository
+
+### Changed
+
+- Updated `arckit init` help text to include `codex` as supported AI assistant option
+- Commands are now copied for both Claude and Codex (previously Claude-only)
+
 ## [0.3.4] - 2025-10-23
 
 ### Fixed
