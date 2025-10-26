@@ -53,6 +53,7 @@ htmlcov/
 .codex/*
 !.codex/prompts/
 !.codex/README.md
+!.codex/.gitignore
 
 # direnv
 .envrc.local
