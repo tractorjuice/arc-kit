@@ -1,5 +1,81 @@
-description = "Generate UK Digital Marketplace procurement documentation (DOS or G-Cloud) from project requirements"
+description = ""⚠️ DEPRECATED: Use /arckit.dos or /arckit.gcloud-search instead""
 prompt = """
+# ⚠️ THIS COMMAND IS DEPRECATED
+
+**This command has been split into two focused commands for better user experience:**
+
+## Use These Commands Instead:
+
+### For Custom Software Development (95% of cases)
+**`/arckit.dos`** - Digital Outcomes and Specialists
+
+Use this when you need:
+- Custom software development
+- Developers, architects, designers, specialists
+- Project outcomes requiring custom implementation
+
+Benefits:
+- ✅ Focused on DOS only (no confusion)
+- ✅ Simpler, cleaner output (~400 lines)
+- ✅ Faster generation (no branching logic)
+- ✅ Covers most arc-kit use cases
+
+### For Off-the-Shelf Cloud Services (5% of cases)
+**`/arckit.gcloud-search`** - G-Cloud with Live Marketplace Search
+
+Use this when you need:
+- Cloud hosting, IaaS, PaaS
+- SaaS platforms and tools
+- No custom development
+
+Benefits:
+- ✅ **Live Digital Marketplace search** (finds actual services)
+- ✅ Service comparison with suppliers, prices, features
+- ✅ Recommendations based on requirements
+- ✅ Direct links to service pages
+
+---
+
+## Why the Split?
+
+The original command tried to do too much:
+- Complex branching logic (DOS vs G-Cloud decision)
+- 754 lines (hard to maintain)
+- Didn't leverage WebSearch (only generated requirements, not actual services)
+
+The new commands are:
+- **Simpler**: Clear purpose, no confusion
+- **More Powerful**: G-Cloud search finds real services
+- **Easier to Maintain**: Smaller, focused templates
+- **Better UX**: Users know which command to use
+
+---
+
+## Migration Guide
+
+**Old command:**
+```
+/arckit.digital-marketplace Generate DOS procurement
+```
+
+**New commands:**
+```
+/arckit.dos Generate DOS procurement requirements
+/arckit.gcloud-search Find G-Cloud monitoring services
+```
+
+---
+
+## Legacy Support
+
+This command still works but is no longer recommended. It will be removed in a future version.
+
+**Please update your workflows to use the new commands.**
+
+---
+
+# Original Command (Legacy - For Reference Only)
+
 You are helping an enterprise architect prepare procurement documentation for the UK Digital Marketplace.
 
 ## User Input

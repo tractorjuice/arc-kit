@@ -176,13 +176,24 @@ Create RFP-ready documents with:
 - Evaluation criteria
 - Contract terms
 
-**`/arckit.digital-marketplace`** → UK Digital Marketplace procurement (DOS/G-Cloud) 🇬🇧
+**`/arckit.dos`** → Digital Outcomes and Specialists (DOS) procurement 🇬🇧
 
-For UK public sector organizations, generate Digital Marketplace-compliant documentation:
-- **DOS** (Digital Outcomes and Specialists): Custom development, specialists, project outcomes
-- **G-Cloud**: Off-the-shelf cloud services, hosting, SaaS platforms
-- Extracts from requirements, stakeholders, and architecture principles
-- Audit-ready documentation with evaluation frameworks
+For UK public sector organizations needing custom development:
+- Generate DOS-compliant procurement documentation
+- Extract requirements from project artifacts (BR/FR/NFR/INT/DR)
+- Essential vs desirable skills from requirements
+- Success criteria (technology-agnostic)
+- Evaluation framework (40% Technical, 30% Team, 20% Quality, 10% Value)
+- Audit-ready documentation for Digital Marketplace
+
+**`/arckit.gcloud-search`** → G-Cloud service search with live marketplace search 🇬🇧
+
+For UK public sector organizations needing off-the-shelf cloud services:
+- Generate G-Cloud requirements document
+- **Live Digital Marketplace search** using WebSearch
+- Find actual services with suppliers, prices, features, links
+- Service comparison table with recommendations
+- Shortlist top 3-5 matching services
 - Links to Digital Marketplace guidance (gov.uk)
 
 **`/arckit.evaluate`** → Create vendor evaluation framework
@@ -413,7 +424,8 @@ payment-modernization/
 | `/arckit.research` | Research technology, services, and products with build vs buy analysis | `projects/XXX/research-findings.md` |
 | `/arckit.wardley` | Create strategic Wardley Maps for build vs buy and procurement strategy | `projects/XXX/wardley-maps/{map-name}.md` |
 | `/arckit.sow` | Generate vendor RFP | `projects/XXX/sow.md` |
-| `/arckit.digital-marketplace` | Generate UK Digital Marketplace procurement docs (DOS/G-Cloud) | `projects/XXX/procurement/digital-marketplace-dos.md` or `digital-marketplace-gcloud.md` |
+| `/arckit.dos` | Generate Digital Outcomes and Specialists (DOS) procurement docs for UK Digital Marketplace | `projects/XXX/procurement/dos-requirements.md` |
+| `/arckit.gcloud-search` | Search G-Cloud services on UK Digital Marketplace with live WebSearch | `projects/XXX/procurement/gcloud-requirements.md` |
 
 ### Vendor Management
 
