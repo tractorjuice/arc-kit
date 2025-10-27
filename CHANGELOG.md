@@ -5,6 +5,54 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.6] - 2025-10-27
+
+### Added
+
+- **Gemini CLI Support**: Full support for Google Gemini CLI across all commands
+  - Added `converter.py` to convert Claude markdown commands to Gemini TOML format
+  - All 24 commands now available for Gemini CLI (`.gemini/commands/arckit/*.toml`)
+  - Automatic conversion maintains command functionality and arguments
+  - Complete parity: Claude, Codex, and Gemini now have identical command sets
+  - Credit: @umag (PR #5)
+
+- **Digital Marketplace Command Split**: Split monolithic command into two focused commands
+  - **`/arckit.dos`** - Digital Outcomes and Specialists (custom development)
+    - ~400 lines (focused, clean - down from 754 lines)
+    - Covers 95% of arc-kit use cases
+    - Essential vs desirable skills extraction
+    - Evaluation framework (40% Technical, 30% Team, 20% Quality, 10% Value)
+    - Technology-agnostic success criteria
+    - No branching logic (DOS only)
+  - **`/arckit.gcloud-search`** - G-Cloud with Live Marketplace Search
+    - ~500 lines with WebSearch integration
+    - **Live Digital Marketplace search** using WebSearch
+    - Searches: `site:digitalmarketplace.service.gov.uk g-cloud [keywords]`
+    - Finds actual services with suppliers, prices, features, links
+    - Service comparison table (top 3-5 services)
+    - Recommendations based on requirements match
+    - Covers 5% of use cases (cloud services only)
+
+### Changed
+
+- **Command Count**: Now 24 commands per AI assistant (22 original + 2 new)
+- **README**: Updated to reflect new DOS and G-Cloud search commands
+
+### Deprecated
+
+- **`/arckit.digital-marketplace`**: Now deprecated (replaced by dos and gcloud-search)
+  - Still functional with clear deprecation notice
+  - Migration guide provided directing users to appropriate command
+  - Will be removed in future version
+
+### Benefits
+
+- **Clearer Purpose**: No framework confusion (DOS vs G-Cloud)
+- **More Powerful**: G-Cloud search finds actual services, not just requirements
+- **Better UX**: Users know which command to use
+- **Easier Maintenance**: Smaller, focused templates
+- **Time Savings**: G-Cloud users save 30+ minutes of manual marketplace searching
+
 ## [0.3.5] - 2025-10-26
 
 ### Added
