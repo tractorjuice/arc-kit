@@ -54,3 +54,4 @@ packages = ["src/arckit_cli"]
 "templates" = "share/arckit/templates"
 ".claude" = "share/arckit/.claude"
 "scripts" = "share/arckit/scripts"
+".gemini" = "share/arckit/.gemini"
