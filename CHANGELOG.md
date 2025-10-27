@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Complete parity: Claude, Codex, and Gemini now have identical command sets
   - Credit: @umag (PR #5)
 
-- **Digital Marketplace Command Split**: Split monolithic command into two focused commands
+- **Digital Marketplace Command Split**: Split monolithic command into three focused commands
   - **`/arckit.dos`** - Digital Outcomes and Specialists (custom development)
     - ~400 lines (focused, clean - down from 754 lines)
     - Covers 95% of arc-kit use cases
@@ -32,26 +32,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Service comparison table (top 3-5 services)
     - Recommendations based on requirements match
     - Covers 5% of use cases (cloud services only)
+  - **`/arckit.gcloud-clarify`** - G-Cloud Service Validation (NEW!)
+    - **Bridge between search and evaluation** - validates services before supplier engagement
+    - Systematic gap analysis (MUST/SHOULD requirements vs service descriptions)
+    - Detects three gap types: ✅ Confirmed, ⚠️ Ambiguous, ❌ Not mentioned
+    - Generates prioritized questions (🔴 Critical / 🟠 High / 🔵 Medium / 🟢 Low)
+    - Risk assessment matrix for each service
+    - Email templates for supplier engagement
+    - Evidence requirements specification
+    - Completes the G-Cloud workflow: Search → Clarify → Evaluate
 
 ### Changed
 
-- **Command Count**: Now 24 commands per AI assistant (22 original + 2 new)
-- **README**: Updated to reflect new DOS and G-Cloud search commands
+- **Command Count**: Now 25 commands per AI assistant (22 original + 3 new G-Cloud commands)
+- **README**: Updated to reflect new DOS, G-Cloud search, and G-Cloud clarify commands
+- **Complete G-Cloud Workflow**: Requirements → Search → Clarify → Engage → Evaluate → Award
 
 ### Deprecated
 
-- **`/arckit.digital-marketplace`**: Now deprecated (replaced by dos and gcloud-search)
+- **`/arckit.digital-marketplace`**: Now deprecated (replaced by dos, gcloud-search, gcloud-clarify)
   - Still functional with clear deprecation notice
-  - Migration guide provided directing users to appropriate command
+  - Migration guide provided directing users to appropriate commands
   - Will be removed in future version
 
 ### Benefits
 
 - **Clearer Purpose**: No framework confusion (DOS vs G-Cloud)
 - **More Powerful**: G-Cloud search finds actual services, not just requirements
-- **Better UX**: Users know which command to use
-- **Easier Maintenance**: Smaller, focused templates
-- **Time Savings**: G-Cloud users save 30+ minutes of manual marketplace searching
+- **Complete Validation**: Gap analysis identifies missing/ambiguous requirements before supplier engagement
+- **Risk Mitigation**: Identifies blockers BEFORE contacting suppliers
+- **Better UX**: Users know which command to use at each workflow stage
+- **Easier Maintenance**: Smaller, focused templates (400-500 lines vs 754)
+- **Time Savings**:
+  - G-Cloud search: 30+ minutes of manual marketplace searching automated
+  - G-Cloud clarify: 30-60 minutes of manual gap analysis automated
+  - Total: 1-2 hours saved per procurement
+- **Structured Process**: End-to-end G-Cloud workflow from discovery to contract award
 
 ## [0.3.5] - 2025-10-26
 
