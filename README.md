@@ -176,6 +176,15 @@ Create RFP-ready documents with:
 - Evaluation criteria
 - Contract terms
 
+**`/arckit.digital-marketplace`** → UK Digital Marketplace procurement (DOS/G-Cloud) 🇬🇧
+
+For UK public sector organizations, generate Digital Marketplace-compliant documentation:
+- **DOS** (Digital Outcomes and Specialists): Custom development, specialists, project outcomes
+- **G-Cloud**: Off-the-shelf cloud services, hosting, SaaS platforms
+- Extracts from requirements, stakeholders, and architecture principles
+- Audit-ready documentation with evaluation frameworks
+- Links to Digital Marketplace guidance (gov.uk)
+
 **`/arckit.evaluate`** → Create vendor evaluation framework
 
 Set up systematic scoring:
@@ -404,6 +413,7 @@ payment-modernization/
 | `/arckit.research` | Research technology, services, and products with build vs buy analysis | `projects/XXX/research-findings.md` |
 | `/arckit.wardley` | Create strategic Wardley Maps for build vs buy and procurement strategy | `projects/XXX/wardley-maps/{map-name}.md` |
 | `/arckit.sow` | Generate vendor RFP | `projects/XXX/sow.md` |
+| `/arckit.digital-marketplace` | Generate UK Digital Marketplace procurement docs (DOS/G-Cloud) | `projects/XXX/procurement/digital-marketplace-dos.md` or `digital-marketplace-gcloud.md` |
 
 ### Vendor Management
 
