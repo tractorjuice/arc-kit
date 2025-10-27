@@ -196,6 +196,17 @@ For UK public sector organizations needing off-the-shelf cloud services:
 - Shortlist top 3-5 matching services
 - Links to Digital Marketplace guidance (gov.uk)
 
+**`/arckit.gcloud-clarify`** → G-Cloud service validation and gap analysis 🇬🇧
+
+Validate G-Cloud services and generate supplier clarification questions:
+- **Systematic gap analysis** (MUST/SHOULD requirements vs service descriptions)
+- Detect gaps: ✅ Confirmed, ⚠️ Ambiguous, ❌ Not mentioned
+- Generate prioritized questions (🔴 Critical / 🟠 High / 🔵 Medium / 🟢 Low)
+- Risk assessment matrix for each service
+- Email templates for supplier engagement
+- Evidence requirements specification
+- Next steps checklist
+
 **`/arckit.evaluate`** → Create vendor evaluation framework
 
 Set up systematic scoring:
@@ -426,6 +437,7 @@ payment-modernization/
 | `/arckit.sow` | Generate vendor RFP | `projects/XXX/sow.md` |
 | `/arckit.dos` | Generate Digital Outcomes and Specialists (DOS) procurement docs for UK Digital Marketplace | `projects/XXX/procurement/dos-requirements.md` |
 | `/arckit.gcloud-search` | Search G-Cloud services on UK Digital Marketplace with live WebSearch | `projects/XXX/procurement/gcloud-requirements.md` |
+| `/arckit.gcloud-clarify` | Validate G-Cloud services and generate supplier clarification questions | `projects/XXX/procurement/gcloud-clarification-questions.md` |
 
 ### Vendor Management
 
