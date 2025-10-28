@@ -34,14 +34,14 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 13. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
 
 ### UK Government
-- [Digital Marketplace](uk-government/digital-marketplace.md) - `/arckit.gcloud-search`, `/arckit.gcloud-clarify`, `/arckit.dos`
-- [Technology Code of Practice](uk-government/technology-code-of-practice.md) - `/arckit.tcop` ⭐ NEW
-- [AI Playbook](uk-government/ai-playbook.md) - `/arckit.ai-playbook` ⭐ NEW
-- [Algorithmic Transparency](uk-government/algorithmic-transparency.md) - `/arckit.atrs` ⭐ NEW
-- [Secure by Design](uk-government/secure-by-design.md) - `/arckit.secure` ⭐ NEW
+- [Digital Marketplace](guides/uk-government/digital-marketplace.md) - `/arckit.gcloud-search`, `/arckit.gcloud-clarify`, `/arckit.dos`
+- [Technology Code of Practice](guides/uk-government/technology-code-of-practice.md) - `/arckit.tcop` ⭐ NEW
+- [AI Playbook](guides/uk-government/ai-playbook.md) - `/arckit.ai-playbook` ⭐ NEW
+- [Algorithmic Transparency](guides/uk-government/algorithmic-transparency.md) - `/arckit.atrs` ⭐ NEW
+- [Secure by Design](guides/uk-government/secure-by-design.md) - `/arckit.secure` ⭐ NEW
 
 ### UK MOD (Ministry of Defence)
-- [MOD Secure by Design](uk-mod/secure-by-design.md) - `/arckit.mod-secure` ⭐ NEW
+- [MOD Secure by Design](guides/uk-mod/secure-by-design.md) - `/arckit.mod-secure` ⭐ NEW
 
 ---
 
@@ -56,7 +56,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ### "I need to procure a vendor"
 1. Define needs: [Requirements Definition](guides/requirements.md)
 2. Create RFP: [Vendor Procurement](guides/procurement.md)
-3. UK Gov: [Digital Marketplace](uk-government/digital-marketplace.md)
+3. UK Gov: [Digital Marketplace](guides/uk-government/digital-marketplace.md)
 
 ### "I'm reviewing a design"
 - [Design Reviews Guide](guides/design-review.md)
@@ -68,7 +68,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 
 ## 🇬🇧 UK Government Specific
 
-- [Digital Marketplace Procurement](uk-government/digital-marketplace.md) - G-Cloud, DOS framework
+- [Digital Marketplace Procurement](guides/uk-government/digital-marketplace.md) - G-Cloud, DOS framework
 
 ---
 
@@ -91,9 +91,9 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.research` | [research.md](guides/research.md) | ✅ Complete |
 | `/arckit.wardley` | [wardley-mapping.md](guides/wardley-mapping.md) | ✅ Complete |
 | `/arckit.diagram` | [diagram.md](guides/diagram.md) | ✅ Complete |
-| `/arckit.gcloud-search` | [digital-marketplace.md](uk-government/digital-marketplace.md) | ✅ Complete |
-| `/arckit.gcloud-clarify` | [digital-marketplace.md](uk-government/digital-marketplace.md) | ✅ Complete |
-| `/arckit.dos` | [digital-marketplace.md](uk-government/digital-marketplace.md) | ✅ Complete |
+| `/arckit.gcloud-search` | [digital-marketplace.md](guides/uk-government/digital-marketplace.md) | ✅ Complete |
+| `/arckit.gcloud-clarify` | [digital-marketplace.md](guides/uk-government/digital-marketplace.md) | ✅ Complete |
+| `/arckit.dos` | [digital-marketplace.md](guides/uk-government/digital-marketplace.md) | ✅ Complete |
 | `/arckit.sow` | [procurement.md](guides/procurement.md) | ✅ Complete |
 | `/arckit.evaluate` | [procurement.md](guides/procurement.md) | ✅ Complete |
 | `/arckit.hld-review` | [design-review.md](guides/design-review.md) | ✅ Complete |
@@ -101,11 +101,11 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.servicenow` | [design-review.md](guides/design-review.md) | ✅ Complete |
 | `/arckit.traceability` | [traceability.md](guides/traceability.md) | ✅ Complete |
 | `/arckit.analyze` | [analyze.md](guides/analyze.md) | ✅ Complete |
-| `/arckit.tcop` | [technology-code-of-practice.md](uk-government/technology-code-of-practice.md) | ✅ Complete |
-| `/arckit.ai-playbook` | [ai-playbook.md](uk-government/ai-playbook.md) | ✅ Complete |
-| `/arckit.atrs` | [algorithmic-transparency.md](uk-government/algorithmic-transparency.md) | ✅ Complete |
-| `/arckit.secure` | [secure-by-design.md](uk-government/secure-by-design.md) | ✅ Complete |
-| `/arckit.mod-secure` | [secure-by-design.md](uk-mod/secure-by-design.md) | ✅ Complete |
+| `/arckit.tcop` | [technology-code-of-practice.md](guides/uk-government/technology-code-of-practice.md) | ✅ Complete |
+| `/arckit.ai-playbook` | [ai-playbook.md](guides/uk-government/ai-playbook.md) | ✅ Complete |
+| `/arckit.atrs` | [algorithmic-transparency.md](guides/uk-government/algorithmic-transparency.md) | ✅ Complete |
+| `/arckit.secure` | [secure-by-design.md](guides/uk-government/secure-by-design.md) | ✅ Complete |
+| `/arckit.mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
 
 **Coverage**: 24/24 commands documented (100%) ✅ COMPLETE
 
