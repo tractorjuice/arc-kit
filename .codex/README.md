@@ -380,20 +380,29 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-ArcKit v0.3.0 (20 commands)
+ArcKit v0.3.6 (25 commands)
 
-**What's New in v0.3.0:**
+**What's New in v0.3.6:**
+- 🗓️ Added `/prompts:arckit.plan` - Project planning with GDS Agile Delivery phases, Mermaid Gantt charts, and workflow gates
+- 🤖 Added Gemini CLI support (third AI system!) with automatic converter
+- 🏛️ Added `/prompts:arckit.dos` - Digital Outcomes and Specialists procurement
+- 🏛️ Added `/prompts:arckit.gcloud` - G-Cloud Framework procurement
+- 📚 Triple-AI documentation (Claude Code + Codex CLI + Gemini CLI)
+- 🔧 Fixed .codex/.gitignore tracking issue
+
+**What was New in v0.3.5:**
+- 🤖 Full OpenAI Codex CLI support with `.codex/` folder structure
+- 📚 Comprehensive `.codex/README.md` setup and usage guide
+- 🔄 All ArcKit commands available in Codex format
+- ⚙️ Automatic CODEX_HOME environment setup
+
+**What was New in v0.3.0:**
 - 🎯 Added `/prompts:arckit.sobc` - HM Treasury Green Book Strategic Outline Business Case
 - 🛡️ Added `/prompts:arckit.risk` - HM Treasury Orange Book Risk Management
 - 📊 Added `/prompts:arckit.data-model` - Data modeling with ERD, GDPR compliance, data governance
 - 🔄 Updated workflow: Stakeholders → Risk → SOBC → Requirements → Data Model → Vendor selection
 - ✅ Complete UK Government compliance (Green Book + Orange Book)
 - 🔗 End-to-end traceability: Stakeholder → Driver → Goal → Risk → Benefit → Requirement → Entity
-
-**What was New in v0.2.2:**
-- 🤖 Added OpenAI Codex CLI support with `.codex/` folder structure
-- 📚 Comprehensive `.codex/README.md` setup and usage guide
-- 🔄 All ArcKit commands available in Codex format
 
 ## Support
 
