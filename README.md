@@ -1,6 +1,6 @@
 # ArcKit - Enterprise Architecture Governance Toolkit
 
-![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner.png)
+![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
 
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
 
