@@ -489,7 +489,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### CLI Tool
 - `arckit init` command to bootstrap new projects
-- Support for Claude Code, GitHub Copilot, Cursor, and Gemini CLI
+- Support for Claude Code, OpenAI Codex CLI, and Gemini CLI
 - Bash and PowerShell script support
 
 ### Documentation

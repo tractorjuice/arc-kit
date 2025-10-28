@@ -1,6 +1,6 @@
 # Introducing ArcKit: AI-Assisted Enterprise Architecture Governance
 
-**TL;DR**: Free, open-source toolkit that brings systematic governance to enterprise architecture using AI assistants (Claude Code, Copilot, Cursor). Think "Spec Kit for enterprise architects."
+**TL;DR**: Free, open-source toolkit that brings systematic governance to enterprise architecture using AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI). Think "Spec Kit for enterprise architects."
 
 ## What is ArcKit?
 
@@ -42,7 +42,7 @@ claude
 
 **ArcKit**:
 - ✅ Free and open-source
-- ✅ Works with Claude Code, Copilot, Cursor, Gemini
+- ✅ Works with Claude Code, OpenAI Codex CLI, Gemini CLI
 - ✅ Git-versioned Markdown (no lock-in)
 - ✅ Template-driven quality (comprehensive prompts guide AI)
 - ✅ Strategic decision-making (built-in Wardley Mapping)

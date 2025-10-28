@@ -35,12 +35,10 @@ codex --auto
 - 🆚 Comparison guide: Codex CLI vs Claude Code
 - 🐛 Troubleshooting section
 
-**Supported AI Agents** (now 5 total):
+**Supported AI Agents** (now 3 total):
 1. **Claude Code** ✅ (Recommended)
 2. **OpenAI Codex CLI** ✅ (NEW in v0.2.2)
-3. **GitHub Copilot** ✅
-4. **Cursor** ✅
-5. **Gemini CLI** ✅
+3. **Gemini CLI** ✅
 
 ---
 

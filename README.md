@@ -367,8 +367,6 @@ ArcKit provides:
 |-------|---------|-------|
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended |
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
-| [GitHub Copilot](https://code.visualstudio.com/) | ✅ | |
-| [Cursor](https://cursor.sh/) | ✅ | |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | |
 
 ### Using with Codex CLI
@@ -1219,7 +1217,7 @@ For UK Ministry of Defence projects:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: Claude Code, GitHub Copilot, Cursor, or Gemini CLI
+- **AI Coding Agent**: Claude Code, OpenAI Codex CLI, or Gemini CLI
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---

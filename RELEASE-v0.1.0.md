@@ -32,7 +32,7 @@ Complete Python CLI for project management:
 
 - Project initialization and scaffolding
 - Template and script management
-- Multi-agent AI support (Claude Code, GitHub Copilot, Cursor, Gemini)
+- Multi-agent AI support (Claude Code, OpenAI Codex CLI, Gemini CLI)
 - Git integration
 - Rich terminal UI
 
@@ -107,7 +107,7 @@ claude
 - **7 slash commands** for complete architecture lifecycle (1,300+ lines)
 - **8 templates** covering principles to traceability (4,800+ lines)
 - **Bash automation scripts** for project management
-- **Multi-agent support** (Claude Code, Copilot, Cursor, Gemini)
+- **Multi-agent support** (Claude Code, OpenAI Codex CLI, Gemini CLI)
 - **Industry customization** (financial, healthcare, retail, government)
 - **CLI infrastructure** with Python/typer
 
@@ -116,7 +116,7 @@ claude
 - **Language**: Python 3.11+
 - **Dependencies**: typer, rich, httpx
 - **CLI Framework**: typer with rich terminal UI
-- **AI Agents**: Claude Code (primary), GitHub Copilot, Cursor, Gemini
+- **AI Agents**: Claude Code (primary), OpenAI Codex CLI, Gemini CLI
 - **License**: MIT
 
 ## 🎓 Example Workflow
@@ -155,7 +155,7 @@ Planned features for next release:
 - Real-world validation with enterprise architects
 - Video walkthrough and tutorials
 - Additional helper commands (`/arckit.compare`, `/arckit.report`)
-- GitHub Copilot and Cursor command implementations
+- Additional AI assistant integrations
 - Web interface for stakeholder visibility
 
 ---
