@@ -1,16 +1,65 @@
 # Design Review Guide
 
-Complete guide to conducting High-Level Design (HLD) and Detailed Design (DLD) reviews using ArcKit.
+A comprehensive guide to conducting High-Level Design (HLD) and Detailed Design (DLD) reviews using ArcKit.
 
 ---
 
-## Overview
+## What are Design Reviews?
 
-Design reviews are **quality gates** that prevent costly mistakes:
-- **HLD Review** - Architecture decisions (before implementation)
-- **DLD Review** - Technical implementation details (before coding)
+Design reviews are **quality gates** that validate architecture and implementation plans before development begins:
+- **HLD Review** - Architecture decisions, system structure, technology choices
+- **DLD Review** - Technical implementation details, APIs, data models, testing strategy
 
 **Critical principle**: Implementation cannot start until both gates pass.
+
+### Why Design Reviews Matter
+
+Without design reviews:
+- ❌ Architecture flaws discovered during implementation (10x-100x more expensive to fix)
+- ❌ Requirements gaps found after coding begins
+- ❌ Non-compliant designs approved without scrutiny
+- ❌ Vendor designs rubber-stamped without validation
+- ❌ Technical debt accumulates from poor design decisions
+- ❌ Integration issues discovered late in testing
+
+With design reviews:
+- ✅ Architecture validated before expensive implementation
+- ✅ Requirements gaps identified early
+- ✅ Compliance with architecture principles enforced
+- ✅ Vendor accountability through structured review
+- ✅ Design quality maintained through gates
+- ✅ Integration strategy validated upfront
+
+**Mandatory for:**
+- All vendor-delivered solutions
+- Complex internal systems (microservices, distributed systems)
+- Systems handling sensitive data (PCI-DSS, GDPR)
+- High-availability systems (99.9%+ uptime)
+- Integration with critical systems
+
+---
+
+## When to Conduct Design Reviews
+
+**HLD Review:**
+```bash
+/arckit.hld-review Review [vendor] HLD for [project]
+```
+
+**Timing:** After vendor selection, before detailed design begins
+
+**DLD Review:**
+```bash
+/arckit.dld-review Review [vendor] DLD for [project]
+```
+
+**Timing:** After HLD approval, before implementation starts
+
+**Run at key gates:**
+- **After vendor selection** - Request and review HLD
+- **Before implementation** - Review and approve DLD
+- **After major changes** - Re-review if architecture changes significantly
+- **Quarterly** - Review ongoing vendor work for drift
 
 ---
 
@@ -656,13 +705,132 @@ DLD is APPROVED pending:
 
 ---
 
+## Integration with Other Requirements
+
+### Architecture Principles
+- **Link**: [Principles Guide](principles.md)
+- **Integration**: HLD review validates compliance with all architecture principles
+- **Action**: Every principle must be checked during HLD review
+
+### Requirements Traceability
+- **Link**: [Requirements Guide](requirements.md)
+- **Integration**: Requirements coverage matrix ensures all requirements addressed in design
+- **Action**: Map every requirement to design components
+
+### Vendor Procurement
+- **Link**: [Procurement Guide](procurement.md)
+- **Integration**: Design reviews validate winning vendor's technical approach
+- **Action**: Schedule HLD review 4 weeks after vendor selection
+
+### Risk Management
+- **Link**: [Risk Management Guide](risk-management.md)
+- **Integration**: Design risks identified during reviews added to risk register
+- **Action**: Update risk register with design-related risks
+
+### Technology Code of Practice (UK Gov)
+- **Link**: [Technology Code of Practice](uk-government/technology-code-of-practice.md)
+- **Integration**: HLD review checks TCoP compliance (Points 4, 5, 6, 7, 10)
+- **Action**: Validate cloud-first, open standards, security, and privacy in design
+
+### Security Architecture
+- **Integration**: Design reviews validate threat modeling, encryption, authentication
+- **Action**: Request STRIDE threat model as part of HLD deliverable
+
+---
+
+## Design Review Checklist
+
+### HLD Review Checklist
+
+- [ ] All architecture principles checked and validated
+- [ ] All requirements mapped to architecture components
+- [ ] Scalability strategy defined and adequate for NFRs
+- [ ] Security architecture comprehensive (threat model, encryption, auth)
+- [ ] Resilience / DR strategy meets uptime requirements
+- [ ] Technology stack approved and aligned with standards
+- [ ] Integration patterns appropriate for external systems
+- [ ] No anti-patterns identified (distributed monolith, chatty APIs)
+- [ ] Vendor qualifications verified (certifications, experience)
+- [ ] Blocking issues identified, assigned, and tracked
+- [ ] Approval decision documented with conditions
+- [ ] Next review date scheduled
+
+### DLD Review Checklist
+
+- [ ] HLD conditions verified as complete
+- [ ] API specifications complete (OpenAPI 3.0+)
+- [ ] Database schemas defined with proper indexes
+- [ ] Data migration strategy documented (if applicable)
+- [ ] Security implementation detailed (auth, encryption, secrets)
+- [ ] Error handling comprehensive for all failure modes
+- [ ] Test strategy complete (unit, integration, performance, security)
+- [ ] Deployment procedures defined (blue-green, canary, rollback)
+- [ ] Monitoring and alerting specified with thresholds
+- [ ] Operational runbooks provided (incident response, DR)
+- [ ] Performance testing plan defined with success criteria
+- [ ] Implementation ready (no ambiguities or TBDs)
+- [ ] Approval decision documented with conditions
+- [ ] Implementation start date confirmed
+
+---
+
+## Common Gaps and How to Fix Them
+
+### Gap 1: Vague Architecture Description
+**Problem**: "We'll use microservices and cloud"
+**Fix**: Require specific services, communication patterns, data flow diagrams
+
+### Gap 2: No Disaster Recovery Plan
+**Problem**: Single-region deployment for 99.99% uptime requirement
+**Fix**: Require multi-region with documented RTO/RPO
+
+### Gap 3: Missing Security Details
+**Problem**: "We'll use industry standard security"
+**Fix**: Require specific auth mechanism, encryption standards, threat model
+
+### Gap 4: No Performance Testing Plan
+**Problem**: "We'll test performance during UAT"
+**Fix**: Require load testing plan with specific scenarios and success criteria
+
+### Gap 5: Incomplete API Specifications
+**Problem**: Sample requests/responses without formal spec
+**Fix**: Require OpenAPI 3.0 specification with all endpoints documented
+
+### Gap 6: No Monitoring Strategy
+**Problem**: "We'll add logging"
+**Fix**: Require monitoring dashboard, alerting thresholds, SLI/SLO definitions
+
+### Gap 7: Technology Stack Not Approved
+**Problem**: Vendor proposes unapproved technologies without justification
+**Fix**: Reject or require formal exception approval from architecture board
+
+### Gap 8: Shared Databases Between Microservices
+**Problem**: Services share database tables (anti-pattern)
+**Fix**: Require separate schemas per service or use event-driven integration
+
+---
+
 ## Related Documentation
 
-- [Principles Guide](principles.md) - Principles used in HLD review
-- [Requirements Guide](requirements.md) - Requirements used in reviews
+- [Principles Guide](principles.md) - Architecture principles enforced in reviews
+- [Requirements Guide](requirements.md) - Requirements validated in reviews
 - [Procurement Guide](procurement.md) - Vendor selection before design review
 - [Traceability Guide](traceability.md) - Verify design meets requirements
+- [Risk Management Guide](risk-management.md) - Design risks added to register
+- [Technology Code of Practice](uk-government/technology-code-of-practice.md) - UK Gov compliance
+
+---
+
+## Support
+
+For issues or questions:
+- GitHub Issues: https://github.com/tractorjuice/arc-kit/issues
 
 ---
 
 **Remember**: Design reviews are gates for a reason. Don't skip them or rubber-stamp. Bad designs cost 10x-100x more to fix in production.
+
+---
+
+**Last updated**: 2025-10-28
+**ArcKit Version**: 0.3.6
