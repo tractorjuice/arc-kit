@@ -22,8 +22,9 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 
 **Aspect Ratio:** 1:1 (square, compact)
 
-### Banner Image
-- **`arckit-banner.png`** - Full-width banner for documentation headers (1600x400px)
+### Banner Images
+- **`arckit-banner-light.svg`** - Version-agnostic SVG banner (1600x400px) **[RECOMMENDED]**
+- **`arckit-banner.png`** - Legacy PNG banner with version number (deprecated, 1600x400px)
 
 ---
 
@@ -59,9 +60,9 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 
 **README.md header:**
 ```markdown
-![ArcKit](docs/assets/arckit-banner.png)
+![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
 ```
-→ Use: `arckit-banner.png`
+→ Use: `arckit-banner-light.svg` (version-agnostic SVG, recommended)
 
 **Inline logo in documentation:**
 ```markdown
@@ -89,10 +90,10 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 → Use: `ArcKit_Mark_Dark.svg` or `ArcKit_Stacked_Dark.svg`
 
 **LinkedIn banner (wide):**
-→ Use: `ArcKit_Logo_Horizontal_Dark.svg` or `arckit-banner.png`
+→ Use: `ArcKit_Logo_Horizontal_Dark.svg` or `arckit-banner-light.svg`
 
 **GitHub repository social preview (1280x640):**
-→ Use: `arckit-banner.png` (crop/resize as needed)
+→ Use: `arckit-banner-light.svg` (crop/resize as needed)
 
 ### Presentation Slides
 
@@ -111,7 +112,7 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 → Use: `ArcKit_Logo_Horizontal_Dark.svg` (40-50px height)
 
 **Newsletter header:**
-→ Use: `arckit-banner.png` or `ArcKit_Logo_Horizontal_Dark.svg`
+→ Use: `arckit-banner-light.svg` or `ArcKit_Logo_Horizontal_Dark.svg`
 
 ### Favicons/App Icons
 
@@ -141,7 +142,7 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 → Use: `ArcKit_Mark_Dark.svg`
 
 **Extension banner:**
-→ Use: `arckit-banner.png`
+→ Use: `arckit-banner-light.svg`
 
 ### Business Cards
 
@@ -157,7 +158,7 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 
 | Context | Layout | Background | Recommended File |
 |---------|--------|------------|------------------|
-| **README header** | Wide | Light | `arckit-banner.png` |
+| **README header** | Wide | Light | `arckit-banner-light.svg` |
 | **Website nav** | Wide | Light | `ArcKit_Logo_Horizontal_Dark.svg` |
 | **Website footer** | Wide | Dark | `ArcKit_Logo_Horizontal_Light.svg` |
 | **Social profile** | Square | Light | `ArcKit_Stacked_Dark.svg` |
@@ -175,7 +176,7 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 
 1. **Generate documentation with a logo:**
-   - Use `arckit-banner.png` for main README headers
+   - Use `arckit-banner-light.svg` for main README headers (version-agnostic)
    - Use `ArcKit_Logo_Horizontal_Dark.svg` for section headers
    - Use `ArcKit_Mark_Dark.svg` for inline icons
 
@@ -191,7 +192,7 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 
 4. **Design social media graphics:**
    - Use `ArcKit_Stacked_Dark.svg` for profile pictures
-   - Use `arckit-banner.png` for cover images
+   - Use `arckit-banner-light.svg` for cover images
    - Use `ArcKit_Mark_Dark.svg` for small thumbnails
 
 5. **Generate HTML/CSS:**
@@ -249,7 +250,7 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 ```markdown
 # ArcKit - Enterprise Architecture Governance Toolkit
 
-![ArcKit](docs/assets/arckit-banner.png)
+![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
 ```
 
 ### ✅ Good: Website Navigation
