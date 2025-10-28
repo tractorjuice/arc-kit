@@ -303,6 +303,60 @@ The completion percentage is based on 10 standard artifacts:
 9. Evaluation Criteria (evaluation-criteria.md)
 10. Vendor Proposals (vendors/)
 
+### 5. converter.py
+
+**Purpose**: Convert Claude Code commands to Gemini CLI TOML format
+
+**Usage**:
+```bash
+python scripts/converter.py
+```
+
+**Description**:
+
+Automatically converts all Claude Code slash commands from `.claude/commands/*.md` format to Gemini CLI `.gemini/commands/arckit/*.toml` format.
+
+**Key Features**:
+- Extracts YAML frontmatter from Claude markdown commands
+- Converts `description` field to TOML format
+- Replaces `$ARGUMENTS` with `{{args}}` for Gemini syntax
+- Creates `.gemini/commands/arckit/` directory if needed
+- Processes all `.md` files in `.claude/commands/`
+
+**Conversion Process**:
+1. Reads each `.claude/commands/arckit.*.md` file
+2. Extracts frontmatter description
+3. Converts prompt body
+4. Writes to `.gemini/commands/arckit/*.toml`
+
+**Example**:
+```bash
+# From repository root
+python scripts/converter.py
+
+# Output:
+# Converted .claude/commands/arckit.plan.md to .gemini/commands/arckit/plan.toml
+# Converted .claude/commands/arckit.principles.md to .gemini/commands/arckit/principles.toml
+# ... (25 commands total)
+```
+
+**Use Cases**:
+- After adding new Claude commands
+- After updating existing Claude command descriptions
+- Setting up Gemini CLI for the first time
+- Syncing changes from Claude to Gemini
+
+**Requirements**:
+- Python 3.6+
+- No external dependencies (uses standard library only)
+
+**Related**:
+- Claude commands: `.claude/commands/`
+- Gemini commands: `.gemini/commands/arckit/`
+- See RELEASE-v0.3.6.md for Gemini CLI setup
+
+---
+
 ## Developer Guide
 
 ### Prerequisites

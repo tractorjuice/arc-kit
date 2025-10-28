@@ -228,7 +228,7 @@ All three AI systems now have full project planning capabilities:
 - **Status**: ✅ Deployed and documented
 
 ### Gemini CLI
-- **File**: `.gemini/commands/arckit/plan.toml` (converted via converter.py)
+- **File**: `.gemini/commands/arckit/plan.toml` (converted via scripts/converter.py)
 - **Usage**: `arckit plan <description>`
 - **Status**: ✅ Deployed and documented
 
