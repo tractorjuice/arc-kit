@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit logo">
+<rect width="256" height="256" fill="#0B1F33"/>
+<title>ArcKit</title>
+
+<g fill="none">
+  <path d="M 51.79,84.00 A 88.00,88.00 0 0 1 204.21,84.00" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" />
+  <path d="M 70.84,95.00 A 66.00,66.00 0 0 1 185.16,95.00" stroke="#FFFFFF" stroke-width="5.00" stroke-linecap="round" />
+  <line x1="82.50" y1="77.47" x2="69.12" y2="62.60" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
+  <line x1="135.11" y1="60.37" x2="137.20" y2="40.48" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
+  <line x1="178.53" y1="82.50" x2="193.40" y2="69.12" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
+  <circle cx="69.12" cy="62.60" r="6.25" fill="#1ED3C6" /><circle cx="137.20" cy="40.48" r="6.25" fill="#1ED3C6" /><circle cx="193.40" cy="69.12" r="6.25" fill="#1ED3C6" />
+  <line x1="122.00" y1="62.00" x2="134.00" y2="62.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" /><line x1="128.00" y1="56.00" x2="128.00" y2="68.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
+</g>
+</svg>

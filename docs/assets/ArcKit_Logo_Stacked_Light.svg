@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="640" height="640" viewBox="0 0 640 640" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit logo">
+
+<title>ArcKit</title>
+
+<g fill="none">
+  <path d="M 216.08,190.00 A 120.00,120.00 0 0 1 423.92,190.00" stroke="#0B1F33" stroke-width="12" stroke-linecap="round" />
+  <path d="M 240.33,204.00 A 92.00,92.00 0 0 1 399.67,204.00" stroke="#0B1F33" stroke-width="6.00" stroke-linecap="round" />
+  <line x1="257.10" y1="180.14" x2="239.70" y2="160.82" stroke="#0B1F33" stroke-width="6.67" stroke-linecap="round" />
+  <line x1="329.83" y1="156.51" x2="332.54" y2="130.66" stroke="#0B1F33" stroke-width="6.67" stroke-linecap="round" />
+  <line x1="389.86" y1="187.10" x2="409.18" y2="169.70" stroke="#0B1F33" stroke-width="6.67" stroke-linecap="round" />
+  <circle cx="239.70" cy="160.82" r="7.50" fill="#1ED3C6" /><circle cx="332.54" cy="130.66" r="7.50" fill="#1ED3C6" /><circle cx="409.18" cy="169.70" r="7.50" fill="#1ED3C6" />
+  <line x1="314.00" y1="158.00" x2="326.00" y2="158.00" stroke="#0B1F33" stroke-opacity="0.35" stroke-width="4.00" stroke-linecap="round" /><line x1="320.00" y1="152.00" x2="320.00" y2="164.00" stroke="#0B1F33" stroke-opacity="0.35" stroke-width="4.00" stroke-linecap="round" />
+</g>
+<text x="180.0" y="440.0" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
+font-size="100" font-weight="600" fill="#0B1F33" letter-spacing="0.5px">ArcKit</text></svg>
