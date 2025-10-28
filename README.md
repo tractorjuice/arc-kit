@@ -1,6 +1,6 @@
 # ArcKit - Enterprise Architecture Governance Toolkit
 
-![ArcKit v0.3.6 - Command Split + Gemini Support](docs/assets/arckit-v0.3.2-banner.png)
+![ArcKit v0.3.6 - Command Split + Gemini Support](docs/assets/arckit-banner.png)
 
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
 
@@ -261,6 +261,81 @@ Ensure complete coverage:
 - Design → Test mapping
 - Gap analysis and orphan detection
 - Change impact tracking
+
+### Phase 12: Quality Assurance
+**`/arckit.analyze`** → Comprehensive governance quality analysis
+
+Periodically assess governance quality across all artifacts:
+- Architecture principles compliance
+- Requirements coverage and traceability
+- Stakeholder alignment verification
+- Risk management completeness
+- Design review quality
+- Documentation completeness and quality
+- Gap identification and recommendations
+
+**When to use**: Run periodically (before milestones, design reviews, or procurement decisions) to identify gaps and ensure governance standards are maintained.
+
+### Phase 13: Compliance Assessment (UK Government)
+For UK Government and public sector projects:
+
+**`/arckit.tcop`** → Technology Code of Practice assessment
+
+Assess compliance with all 13 TCoP points:
+- Point 1: Define user needs
+- Point 2: Make things accessible
+- Point 3: Be open and use open source
+- Point 4: Make use of open standards
+- Point 5: Use cloud first
+- Point 6: Make things secure
+- Point 7: Make privacy integral
+- Point 8: Share, reuse and collaborate
+- Point 9: Integrate and adapt technology
+- Point 10: Make better use of data
+- Point 11: Define your purchasing strategy
+- Point 12: Meet the Digital Spend Controls
+- Point 13: Define your responsible AI use
+
+**`/arckit.secure`** → UK Government Secure by Design assessment
+
+Security compliance assessment:
+- NCSC Cloud Security Principles
+- NCSC Cyber Assessment Framework (CAF)
+- Cyber Essentials / Cyber Essentials Plus
+- UK GDPR and DPA 2018 compliance
+- Security architecture review
+- Threat modeling
+
+**`/arckit.ai-playbook`** → AI Playbook compliance (for AI systems)
+
+Responsible AI assessment:
+- AI ethics principles
+- Transparency and explainability
+- Fairness and bias mitigation
+- Data governance for AI
+- Human oversight mechanisms
+- Impact assessment
+
+**`/arckit.atrs`** → Algorithmic Transparency Recording Standard
+
+Generate ATRS record for algorithmic decision-making:
+- Algorithm details and logic
+- Purpose and use case
+- Data sources and data quality
+- Performance metrics and monitoring
+- Impact assessment and mitigation
+
+**For MOD Projects**:
+
+**`/arckit.mod-secure`** → MOD Secure by Design assessment
+
+MOD-specific security compliance:
+- JSP 440 (Defence Project & Programme Management)
+- Information Assurance Maturity Model (IAMM)
+- MOD Security clearances and vetting
+- STRAP classification handling
+- Security Operating Procedures (SyOPs)
+- Supplier attestation requirements
 
 ---
 
