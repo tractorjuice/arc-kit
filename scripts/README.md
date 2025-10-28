@@ -1,5 +1,9 @@
 # ArcKit Bash Scripts
 
+<p align="center">
+  <img src="../docs/assets/ArcKit_Logo_Horizontal_Dark.svg" alt="ArcKit" height="32">
+</p>
+
 This directory contains bash scripts for ArcKit project management and automation.
 
 ## Overview
