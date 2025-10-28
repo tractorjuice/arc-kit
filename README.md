@@ -1,6 +1,6 @@
 # ArcKit - Enterprise Architecture Governance Toolkit
 
-![ArcKit v0.3.6 - Command Split + Gemini Support](docs/assets/arckit-banner.png)
+![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner.png)
 
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
 
@@ -1348,4 +1348,10 @@ ArcKit is inspired by the methodology and patterns from [Spec Kit](https://githu
 
 ---
 
-**Built with ❤️ for enterprise architects who want systematic, AI-assisted governance.**
+<p align="center">
+  <img src="docs/assets/ArcKit_Logo_Horizontal_Dark.svg" alt="ArcKit" height="40">
+</p>
+
+<p align="center">
+  <strong>Built with ❤️ for enterprise architects who want systematic, AI-assisted governance.</strong>
+</p>

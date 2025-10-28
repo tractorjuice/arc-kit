@@ -1,5 +1,9 @@
 # Using ArcKit with OpenAI Codex CLI
 
+<p align="center">
+  <img src="../docs/assets/ArcKit_Logo_Horizontal_Dark.svg" alt="ArcKit" height="32">
+</p>
+
 This directory contains ArcKit slash commands adapted for [OpenAI Codex CLI](https://chatgpt.com/features/codex).
 
 ## Prerequisites
