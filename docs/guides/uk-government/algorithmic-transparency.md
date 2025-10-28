@@ -10,24 +10,25 @@ The Algorithmic Transparency Recording Standard (ATRS) requires UK Government or
 
 ### Why ATRS Matters
 
+Without ATRS:
+- ❌ No public accountability for AI decisions
+- ❌ Citizens don't understand how algorithms affect them
+- ❌ GDPR Article 22 non-compliance
+- ❌ Erosion of public trust in government AI
+- ❌ No external scrutiny or oversight
+
+With ATRS:
+- ✅ Public transparency and accountability
+- ✅ Citizens understand algorithmic decision-making
+- ✅ GDPR Article 22 compliance
+- ✅ Trust in government AI systems
+- ✅ External scrutiny and improvement
+
 **Mandatory for**:
-- Algorithmic decision-making systems
-- AI/ML models used in government services
-- Automated processing affecting citizens
-- Any algorithm assisting significant decisions about individuals
-
-**Purpose**:
-- Public transparency and accountability
-- Build trust in government AI
-- Enable external scrutiny
-- Demonstrate responsible AI use
-- GDPR Article 22 compliance
-
-**Legal Context**:
-- GDPR Article 22 (automated decision-making)
-- Equality Act 2010 (no discrimination)
-- Public sector transparency obligations
-- Central Digital and Data Office (CDDO) guidance
+- Algorithmic decision-making systems in UK central government
+- AI/ML models assisting significant decisions about individuals
+- Automated processing affecting citizens (benefits, services, enforcement)
+- Systems covered by GDPR Article 22 and Equality Act 2010
 
 ---
 
