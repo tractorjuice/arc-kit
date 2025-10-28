@@ -23,8 +23,7 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 **Aspect Ratio:** 1:1 (square, compact)
 
 ### Banner Images
-- **`arckit-banner-light.svg`** - Version-agnostic SVG banner (1600x400px) **[RECOMMENDED]**
-- **`arckit-banner.png`** - Legacy PNG banner with version number (deprecated, 1600x400px)
+- **`arckit-banner-light.svg`** - Version-agnostic SVG banner (1600x400px)
 
 ---
 
@@ -216,7 +215,6 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 - **All logos are SVG** = Infinitely scalable without quality loss
 - **Use SVG directly** whenever possible (web, documentation)
 - **Convert to PNG/ICO** only when required (favicons, email clients, old systems)
-- **Banner is PNG** = Raster format, already optimized at 1600x400px
 
 ---
 

@@ -1,15 +1,72 @@
 # Vendor Procurement Guide
 
-Complete guide to managing vendor RFPs, evaluation, and selection using ArcKit.
+A comprehensive guide to managing vendor RFPs, evaluation, and selection using ArcKit.
 
 ---
 
-## Overview
+## What is Vendor Procurement?
 
-ArcKit streamlines vendor procurement through three commands:
-1. **`/arckit.sow`** - Generate Statement of Work / RFP
-2. **`/arckit.evaluate`** - Create evaluation framework and score vendors
-3. **`/arckit.evaluate`** (compare mode) - Compare multiple vendors
+Vendor procurement is the structured process of selecting the right vendor to deliver your solution:
+1. **Statement of Work (SOW/RFP)** - Define what you need
+2. **Evaluation Framework** - Create objective scoring criteria
+3. **Vendor Scoring** - Evaluate each vendor proposal
+4. **Vendor Comparison** - Select the best vendor
+
+### Why Vendor Procurement Matters
+
+Without structured procurement:
+- ❌ Vendors submit incomparable proposals (different formats, missing information)
+- ❌ Selection based on "gut feel" or relationships, not merit
+- ❌ Requirements gaps discovered after contract signing
+- ❌ No objective justification for vendor selection (audit risk)
+- ❌ Price-focused decisions that ignore technical capability
+- ❌ Vendor lock-in without competitive alternatives
+
+With structured procurement:
+- ✅ Standardized proposals that are easy to compare
+- ✅ Objective, defensible vendor selection
+- ✅ Requirements validated before contract signing
+- ✅ Audit trail showing fair, merit-based selection
+- ✅ Best value (technical capability + price) selection
+- ✅ Competitive tension drives better proposals
+
+**Mandatory for:**
+- UK Government procurements (all values)
+- EU procurement regulations (above thresholds)
+- Large procurements (typically > £100K)
+- Systems handling sensitive data
+- Multi-year contracts
+- Mission-critical systems
+
+---
+
+## When to Use Procurement Commands
+
+**Generate SOW/RFP:**
+```bash
+/arckit.sow Generate SOW for [project name]
+```
+
+**Create Evaluation Framework:**
+```bash
+/arckit.evaluate Create evaluation framework for [project]
+```
+
+**Score Vendor Proposal:**
+```bash
+/arckit.evaluate Score [vendor name] proposal for [project]
+```
+
+**Compare Vendors:**
+```bash
+/arckit.evaluate Compare all vendors for [project]
+```
+
+**Run at key gates:**
+- **After requirements complete** - Generate SOW
+- **Before vendor outreach** - Finalize evaluation criteria
+- **During proposal evaluation** - Score each vendor
+- **Before selection decision** - Compare all vendors
 
 ---
 
@@ -478,17 +535,138 @@ but pricing significantly exceeds budget and timeline seems aggressive.
 
 ---
 
+## Integration with Other Requirements
+
+### Requirements Documentation
+- **Link**: [Requirements Guide](requirements.md)
+- **Integration**: SOW automatically includes all requirements from requirements.md
+- **Action**: Complete requirements before generating SOW
+
+### Architecture Principles
+- **Link**: [Principles Guide](principles.md)
+- **Integration**: Evaluation criteria derived from architecture principles
+- **Action**: Vendor proposals scored on principles compliance
+
+### Design Reviews
+- **Link**: [Design Review Guide](design-review.md)
+- **Integration**: Winning vendor's HLD/DLD reviewed using design review process
+- **Action**: Schedule HLD review 4 weeks after vendor selection
+
+### Risk Management
+- **Link**: [Risk Management Guide](risk-management.md)
+- **Integration**: Vendor risks (lock-in, capability, financial) added to risk register
+- **Action**: Document vendor-specific risks during evaluation
+
+### Technology Code of Practice (UK Gov)
+- **Link**: [Technology Code of Practice](uk-government/technology-code-of-practice.md)
+- **Integration**: SOW includes TCoP compliance requirements
+- **Action**: Score vendors on TCoP alignment (especially Points 4, 5, 6, 10)
+
+### Data Protection
+- **Integration**: SOW includes GDPR/data protection requirements
+- **Action**: Verify vendor has Data Protection Officer and GDPR processes
+
+---
+
+## Procurement Checklist
+
+### SOW/RFP Checklist
+- [ ] All requirements from requirements.md included
+- [ ] Scope clearly defined (in-scope and out-of-scope)
+- [ ] Timeline is realistic for scope
+- [ ] Budget constraints documented (if applicable)
+- [ ] Deliverables specified (HLD, DLD, code, tests, docs)
+- [ ] Acceptance criteria defined for each deliverable
+- [ ] Evaluation criteria and weights documented
+- [ ] Mandatory qualifications specified
+- [ ] Contract terms reviewed by legal
+- [ ] Submission deadline and format specified
+- [ ] Q&A process defined
+
+### Evaluation Checklist
+- [ ] Evaluation framework approved before sending SOW
+- [ ] Multiple evaluators assigned (3-5 people)
+- [ ] Mandatory qualifications defined (pass/fail)
+- [ ] Scoring rubric detailed with examples
+- [ ] Weights assigned based on project priorities
+- [ ] Conflict of interest checks completed
+- [ ] Reference check questions prepared
+
+### Vendor Scoring Checklist
+- [ ] Mandatory qualifications verified (certifications, experience)
+- [ ] Technical approach scored against criteria
+- [ ] Team qualifications assessed
+- [ ] Company experience validated
+- [ ] References checked (minimum 3)
+- [ ] Pricing analyzed (fixed vs T&M, breakdown)
+- [ ] Risks identified and documented
+- [ ] Justification provided for every score
+- [ ] Strengths and weaknesses documented
+- [ ] Recommendation made (select, consider, reject)
+
+### Selection Decision Checklist
+- [ ] All vendor proposals scored by multiple evaluators
+- [ ] Scores averaged and normalized
+- [ ] Vendor comparison matrix created
+- [ ] Best value vendor identified (not just cheapest)
+- [ ] Selection rationale documented
+- [ ] Approval obtained from decision authority
+- [ ] Unsuccessful vendors notified professionally
+- [ ] Contract negotiation initiated with winning vendor
+
+---
+
+## Common Gaps and How to Fix Them
+
+### Gap 1: Vague SOW
+**Problem**: "Vendor should modernize the system"
+**Fix**: Specific requirements, success criteria, deliverables, acceptance tests
+
+### Gap 2: No Mandatory Qualifications
+**Problem**: Unqualified vendors waste evaluation time
+**Fix**: Define must-have certifications and experience upfront (PCI-DSS, 5+ similar projects)
+
+### Gap 3: Price-Only Evaluation
+**Problem**: Selecting cheapest vendor without considering capability
+**Fix**: Weight technical approach 60-70%, price 10-30%
+
+### Gap 4: No Reference Checks
+**Problem**: Trusting vendor's claims without validation
+**Fix**: Call 3+ references, ask specific questions about performance
+
+### Gap 5: Subjective Scoring
+**Problem**: "Architecture looks good" without criteria
+**Fix**: Detailed rubric with examples for each score level
+
+### Gap 6: Single Evaluator
+**Problem**: One person's bias affects decision
+**Fix**: 3-5 evaluators score independently, then discuss outliers
+
+### Gap 7: Ignoring Red Flags
+**Problem**: Accepting unrealistic timelines or unclear proposals
+**Fix**: Disqualify vendors with major gaps or request clarification
+
+### Gap 8: No Contract Flexibility
+**Problem**: SOW locks in requirements that may need to change
+**Fix**: Include change management process with pricing mechanism
+
+---
+
 ## Next Steps
 
 1. **Requirements complete?** If not, run `/arckit.requirements`
 2. **Generate SOW**: Run `/arckit.sow`
-3. **Legal review**: Have legal review SOW
-4. **Send to vendors**: Distribute with clear deadline
+3. **Legal review**: Have legal review SOW and contract terms
+4. **Send to vendors**: Distribute with clear deadline and Q&A process
 5. **Create evaluation criteria**: Run `/arckit.evaluate`
-6. **Score proposals**: Run `/arckit.evaluate Score [vendor]` for each
-7. **Compare**: Run `/arckit.evaluate Compare all vendors`
-8. **Select vendor**: Make decision and notify
-9. **Design review**: Run `/arckit.hld-review` when vendor submits HLD
+6. **Vendor briefing**: Hold Q&A session with vendors (optional)
+7. **Score proposals**: Run `/arckit.evaluate Score [vendor]` for each vendor
+8. **Reference checks**: Call references for shortlisted vendors
+9. **Compare**: Run `/arckit.evaluate Compare all vendors`
+10. **Select vendor**: Make decision and obtain approval
+11. **Notify vendors**: Inform all vendors of decision
+12. **Contract negotiation**: Negotiate terms with winning vendor
+13. **Design review**: Run `/arckit.hld-review` when vendor submits HLD
 
 ---
 
@@ -497,7 +675,21 @@ but pricing significantly exceeds budget and timeline seems aggressive.
 - [Requirements Guide](requirements.md) - Create requirements before SOW
 - [Design Review Guide](design-review.md) - Review winning vendor's designs
 - [Principles Guide](principles.md) - Use principles in evaluation criteria
+- [Risk Management Guide](risk-management.md) - Vendor risks management
+- [Technology Code of Practice](uk-government/technology-code-of-practice.md) - UK Gov compliance
 
 ---
 
-**Remember**: Procurement decisions are expensive to reverse. Invest time in thorough evaluation.
+## Support
+
+For issues or questions:
+- GitHub Issues: https://github.com/tractorjuice/arc-kit/issues
+
+---
+
+**Remember**: Procurement decisions are expensive to reverse. Invest time in thorough evaluation. The cost of a bad vendor selection far exceeds the cost of a rigorous procurement process.
+
+---
+
+**Last updated**: 2025-10-28
+**ArcKit Version**: 0.3.6
