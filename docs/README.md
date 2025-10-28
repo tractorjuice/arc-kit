@@ -15,23 +15,24 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ## 📖 Guides
 
 ### Core Workflow
-1. [Architecture Principles](guides/principles.md) - `/arckit.principles`
-2. [Stakeholder Analysis](guides/stakeholder-analysis.md) - `/arckit.stakeholders`
-3. [Risk Management](guides/risk-management.md) - `/arckit.risk`
-4. [Business Case](guides/business-case.md) - `/arckit.sobc` ⭐ NEW
-5. [Requirements Definition](guides/requirements.md) - `/arckit.requirements`
-6. [Data Model](guides/data-model.md) - `/arckit.data-model` ⭐ NEW
-7. [Wardley Mapping](guides/wardley-mapping.md) - `/arckit.wardley` ⭐ NEW
-8. [Design Reviews](guides/design-review.md) - `/arckit.hld-review`, `/arckit.dld-review`
-9. [Traceability](guides/traceability.md) - `/arckit.traceability`
+1. [Project Plan](guides/plan.md) - `/arckit.plan` ⭐ NEW
+2. [Architecture Principles](guides/principles.md) - `/arckit.principles`
+3. [Stakeholder Analysis](guides/stakeholder-analysis.md) - `/arckit.stakeholders`
+4. [Risk Management](guides/risk-management.md) - `/arckit.risk`
+5. [Business Case](guides/business-case.md) - `/arckit.sobc` ⭐ NEW
+6. [Requirements Definition](guides/requirements.md) - `/arckit.requirements`
+7. [Data Model](guides/data-model.md) - `/arckit.data-model` ⭐ NEW
+8. [Wardley Mapping](guides/wardley-mapping.md) - `/arckit.wardley` ⭐ NEW
+9. [Design Reviews](guides/design-review.md) - `/arckit.hld-review`, `/arckit.dld-review`
+10. [Traceability](guides/traceability.md) - `/arckit.traceability`
 
 ### Research & Analysis
-10. [Research](guides/research.md) - `/arckit.research` ⭐ NEW
-11. [Analyze](guides/analyze.md) - `/arckit.analyze` ⭐ NEW
-12. [Diagrams](guides/diagram.md) - `/arckit.diagram` ⭐ NEW
+11. [Research](guides/research.md) - `/arckit.research` ⭐ NEW
+12. [Analyze](guides/analyze.md) - `/arckit.analyze` ⭐ NEW
+13. [Diagrams](guides/diagram.md) - `/arckit.diagram` ⭐ NEW
 
 ### Procurement
-13. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
+14. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
 
 ### UK Government
 - [Digital Marketplace](guides/uk-government/digital-marketplace.md) - `/arckit.gcloud-search`, `/arckit.gcloud-clarify`, `/arckit.dos`
@@ -48,10 +49,11 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ## 🎯 By Use Case
 
 ### "I'm starting a new project"
-1. Start here: [Architecture Principles](guides/principles.md)
-2. Then: [Stakeholder Analysis](guides/stakeholder-analysis.md)
-3. Then: [Risk Management](guides/risk-management.md)
-4. Then: [Requirements Definition](guides/requirements.md)
+1. Start here: [Project Plan](guides/plan.md) - See the full timeline
+2. Then: [Architecture Principles](guides/principles.md)
+3. Then: [Stakeholder Analysis](guides/stakeholder-analysis.md)
+4. Then: [Risk Management](guides/risk-management.md)
+5. Then: [Requirements Definition](guides/requirements.md)
 
 ### "I need to procure a vendor"
 1. Define needs: [Requirements Definition](guides/requirements.md)
@@ -82,6 +84,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 
 | Command | Guide | Status |
 |---------|-------|--------|
+| `/arckit.plan` | [plan.md](guides/plan.md) | ✅ Complete |
 | `/arckit.principles` | [principles.md](guides/principles.md) | ✅ Complete |
 | `/arckit.stakeholders` | [stakeholder-analysis.md](guides/stakeholder-analysis.md) | ✅ Complete |
 | `/arckit.risk` | [risk-management.md](guides/risk-management.md) | ✅ Complete |
@@ -107,7 +110,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.secure` | [secure-by-design.md](guides/uk-government/secure-by-design.md) | ✅ Complete |
 | `/arckit.mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
 
-**Coverage**: 24/24 commands documented (100%) ✅ COMPLETE
+**Coverage**: 25/25 commands documented (100%) ✅ COMPLETE
 
 ---
 
