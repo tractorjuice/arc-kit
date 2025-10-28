@@ -334,6 +334,7 @@ def init(
 
     # Copy slash commands if they exist (for Claude and Codex)
     if ai_assistant in ["claude", "codex"]:
+        commands_src = data_paths["claude_commands"]
         if commands_src.exists():
             console.print(f"[dim]Copying Claude commands from: {commands_src}[/dim]")
             command_count = 0
