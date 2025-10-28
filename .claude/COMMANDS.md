@@ -6,6 +6,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 
 | Command | Purpose | When to Use |
 |---------|---------|-------------|
+| `/arckit.plan` | Create project plan with timeline and gates | Project initiation, visualize full delivery |
 | `/arckit.principles` | Create architecture principles | Start of organization/project |
 | `/arckit.stakeholders` | Analyze stakeholder drivers, goals, and outcomes | After principles, BEFORE risk assessment |
 | `/arckit.risk` | Create comprehensive risk register (Orange Book) | After stakeholders, BEFORE business case |
@@ -36,53 +37,90 @@ Complete guide to all ArcKit slash commands for Claude Code.
 ## Workflow Overview
 
 ```
-1. /arckit.principles
+1. /arckit.plan
+   ↓ (create project timeline with phases and gates)
+
+2. /arckit.principles
    ↓ (establishes governance rules)
 
-2. /arckit.stakeholders
+3. /arckit.stakeholders
    ↓ (understand who cares, what they need, why)
 
-3. /arckit.risk
+4. /arckit.risk
    ↓ (identify and assess risks - Orange Book)
 
-4. /arckit.sobc
+5. /arckit.sobc
    ↓ (create business case using risk register)
 
-5. /arckit.requirements
+6. /arckit.requirements
    ↓ (if approved, define detailed requirements)
 
-6. /arckit.data-model
+7. /arckit.data-model
    ↓ (create data model with ERD, GDPR compliance)
 
-7. /arckit.wardley
+8. /arckit.wardley
    ↓ (strategic planning, build vs buy decisions)
 
-8. /arckit.sow
+9. /arckit.sow
    ↓ (creates RFP for vendors)
 
-9. /arckit.evaluate
+10. /arckit.evaluate
    ↓ (scores vendor proposals)
 
-10. /arckit.hld-review
+11. /arckit.hld-review
    ↓ (reviews architecture before build)
 
-11. /arckit.dld-review
+12. /arckit.dld-review
    ↓ (reviews technical details before code)
 
-12. Implementation happens
+13. Implementation happens
    ↓
 
-13. /arckit.traceability
+14. /arckit.traceability
    ↓ (verifies all requirements met)
 
-14. Release!
+15. Release!
 ```
 
 ---
 
 ## Command Details
 
-### 1. `/arckit.principles` - Architecture Principles
+### 1. `/arckit.plan` - Project Plan
+
+**Purpose**: Create comprehensive project plans with visual timelines, phases, gates, and Mermaid diagrams.
+
+**Usage**:
+```
+/arckit.plan Create project plan for payment gateway modernization
+/arckit.plan Create plan for NHS appointment system
+/arckit.plan Generate timeline for HMRC chatbot project
+```
+
+**What it does**:
+- Creates project plan with GDS Agile Delivery phases (Discovery → Alpha → Beta → Live)
+- Generates Mermaid Gantt chart with timeline, dependencies, and milestones
+- Creates workflow diagram showing gates and decision points
+- Tailors timeline based on project complexity (small/medium/large)
+- Integrates all ArcKit commands into project schedule
+- Defines gate approval criteria (Discovery, Alpha, Beta assessments)
+- Provides phase-by-phase activity tables
+
+**Output**: `projects/{project-name}/project-plan.md`
+
+**When to use**:
+- Project initiation (visualize full delivery timeline)
+- Before Discovery phase (set expectations)
+- Gate reviews (update plan based on decisions)
+- Stakeholder communication (show timeline and milestones)
+
+**Next steps**: Review plan with stakeholders, start Discovery with `/arckit.stakeholders`
+
+**Guide**: See [docs/guides/plan.md](../docs/guides/plan.md) for full documentation
+
+---
+
+### 2. `/arckit.principles` - Architecture Principles
 
 **Purpose**: Create or update enterprise architecture principles that govern all technology decisions.
 
@@ -114,7 +152,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 
 ---
 
-### 2. `/arckit.stakeholders` - Stakeholder Drivers & Goals Analysis
+### 3. `/arckit.stakeholders` - Stakeholder Drivers & Goals Analysis
 
 **Purpose**: Understand stakeholder drivers, map them to goals, and define measurable outcomes that satisfy each stakeholder.
 
@@ -197,7 +235,7 @@ For UK Government projects, includes:
 
 ---
 
-### 3. `/arckit.risk` - Risk Management (Orange Book)
+### 4. `/arckit.risk` - Risk Management (Orange Book)
 
 **Purpose**: Create comprehensive risk register following HM Treasury Orange Book (2023) principles for systematic risk identification, assessment, and management.
 
@@ -421,7 +459,7 @@ For UK Government/public sector projects:
 
 ---
 
-### 4. `/arckit.sobc` - Strategic Outline Business Case
+### 5. `/arckit.sobc` - Strategic Outline Business Case
 
 **Purpose**: Create a Strategic Outline Business Case (SOBC) following HM Treasury Green Book 5-case model to justify investment in a technology project.
 
@@ -513,7 +551,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 5. `/arckit.requirements` - Requirements Definition
+### 6. `/arckit.requirements` - Requirements Definition
 
 **Purpose**: Create comprehensive business and technical requirements for a project, informed by stakeholder goals.
 
@@ -552,7 +590,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 6. `/arckit.data-model` - Data Model with ERD
+### 7. `/arckit.data-model` - Data Model with ERD
 
 **Purpose**: Create comprehensive data model with entity-relationship diagrams, GDPR compliance, and data governance.
 
@@ -608,7 +646,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 7. `/arckit.research` - Technology and Service Research
+### 8. `/arckit.research` - Technology and Service Research
 
 **Purpose**: Research available technologies, services, and products to meet requirements and inform build vs buy decisions.
 

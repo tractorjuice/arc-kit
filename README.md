@@ -71,6 +71,17 @@ claude  # or your chosen AI assistant
 
 ArcKit guides you through the enterprise architecture lifecycle:
 
+### Phase 0: Project Planning
+**`/arckit.plan`** → Create project plan with timeline, phases, and gates
+
+Visualize your entire project delivery:
+- GDS Agile Delivery phases (Discovery → Alpha → Beta → Live)
+- Mermaid Gantt chart with timeline, dependencies, and milestones
+- Workflow diagram showing gates and decision points
+- Tailored timeline based on project complexity
+- Integration of all ArcKit commands into schedule
+- Gate approval criteria for governance
+
 ### Phase 1: Establish Governance
 **`/arckit.principles`** → Create enterprise architecture principles
 
