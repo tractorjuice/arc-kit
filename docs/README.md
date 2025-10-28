@@ -38,7 +38,10 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 - [Technology Code of Practice](uk-government/technology-code-of-practice.md) - `/arckit.tcop` ⭐ NEW
 - [AI Playbook](uk-government/ai-playbook.md) - `/arckit.ai-playbook` ⭐ NEW
 - [Algorithmic Transparency](uk-government/algorithmic-transparency.md) - `/arckit.atrs` ⭐ NEW
-- [Secure by Design](uk-government/secure-by-design.md) - `/arckit.secure`, `/arckit.mod-secure` ⭐ NEW
+- [Secure by Design](uk-government/secure-by-design.md) - `/arckit.secure` ⭐ NEW
+
+### UK MOD (Ministry of Defence)
+- [MOD Secure by Design](uk-mod/secure-by-design.md) - `/arckit.mod-secure` ⭐ NEW
 
 ---
 
@@ -102,7 +105,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.ai-playbook` | [ai-playbook.md](uk-government/ai-playbook.md) | ✅ Complete |
 | `/arckit.atrs` | [algorithmic-transparency.md](uk-government/algorithmic-transparency.md) | ✅ Complete |
 | `/arckit.secure` | [secure-by-design.md](uk-government/secure-by-design.md) | ✅ Complete |
-| `/arckit.mod-secure` | [secure-by-design.md](uk-government/secure-by-design.md) | ✅ Complete |
+| `/arckit.mod-secure` | [secure-by-design.md](uk-mod/secure-by-design.md) | ✅ Complete |
 
 **Coverage**: 24/24 commands documented (100%) ✅ COMPLETE
 
