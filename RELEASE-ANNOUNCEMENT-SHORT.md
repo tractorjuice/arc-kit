@@ -15,7 +15,7 @@ Enterprise architecture governance is broken. Despite expensive tools like Sparx
 
 ## The Solution: ArcKit
 
-ArcKit transforms EA governance into systematic, AI-assisted workflows using Claude Code, GitHub Copilot, Cursor, or Gemini CLI.
+ArcKit transforms EA governance into systematic, AI-assisted workflows using Claude Code, OpenAI Codex CLI, or Gemini CLI.
 
 **12 Slash Commands. Complete Governance. Zero Cost.**
 

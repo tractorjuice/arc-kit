@@ -44,23 +44,11 @@ AGENT_CONFIG = {
         "install_url": "https://docs.anthropic.com/en/docs/claude-code/setup",
         "requires_cli": True,
     },
-    "copilot": {
-        "name": "GitHub Copilot",
-        "folder": ".github/",
-        "install_url": None,
-        "requires_cli": False,
-    },
     "gemini": {
         "name": "Gemini CLI",
         "folder": ".gemini/",
         "install_url": "https://github.com/google-gemini/gemini-cli",
         "requires_cli": True,
-    },
-    "cursor-agent": {
-        "name": "Cursor",
-        "folder": ".cursor/",
-        "install_url": None,
-        "requires_cli": False,
     },
     "codex": {
         "name": "OpenAI Codex CLI",
@@ -235,7 +223,7 @@ def create_project_structure(project_path: Path, ai_assistant: str):
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional, use '.' for current directory)"),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: claude, gemini, copilot, cursor-agent, codex"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: claude, gemini, codex"),
     no_git: bool = typer.Option(False, "--no-git", help="Skip git repository initialization"),
     here: bool = typer.Option(False, "--here", help="Initialize project in the current directory"),
 ):
@@ -251,7 +239,7 @@ def init(
     Examples:
         arckit init my-architecture-project
         arckit init my-project --ai claude
-        arckit init . --ai copilot
+        arckit init . --ai gemini
         arckit init --here --ai claude
     """
 
@@ -292,13 +280,11 @@ def init(
     if not ai_assistant:
         console.print("\n[cyan]Select your AI assistant:[/cyan]")
         console.print("1. claude (Claude Code)")
-        console.print("2. copilot (GitHub Copilot)")
-        console.print("3. gemini (Gemini CLI)")
-        console.print("4. cursor-agent (Cursor)")
-        console.print("5. codex (OpenAI Codex CLI)")
+        console.print("2. gemini (Gemini CLI)")
+        console.print("3. codex (OpenAI Codex CLI)")
 
         choice = typer.prompt("Enter choice", default="1")
-        ai_map = {"1": "claude", "2": "copilot", "3": "gemini", "4": "cursor-agent", "5": "codex"}
+        ai_map = {"1": "claude", "2": "gemini", "3": "codex"}
         ai_assistant = ai_map.get(choice, "claude")
 
     if ai_assistant not in AGENT_CONFIG:
@@ -503,7 +489,6 @@ def check():
         "git": "Version control",
         "claude": "Claude Code",
         "code": "Visual Studio Code",
-        "cursor": "Cursor IDE",
     }
 
     for tool, description in tools.items():

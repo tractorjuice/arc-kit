@@ -20,7 +20,7 @@ Enterprise architects face a crisis that few talk about openly. Despite spending
 
 ArcKit is a new approach to enterprise architecture governance. Instead of expensive proprietary platforms, it provides:
 
-- **AI-Assisted Workflows**: Works with Claude Code, OpenAI Codex CLI, GitHub Copilot, Cursor, or Gemini CLI
+- **AI-Assisted Workflows**: Works with Claude Code, OpenAI Codex CLI, or Gemini CLI
 - **Template-Driven Quality**: Comprehensive templates guide AI to generate complete documentation
 - **Git-Versioned Artifacts**: Everything in Markdown—no vendor lock-in, full version control
 - **Strategic Decision-Making**: Built-in Wardley Mapping for build vs buy decisions
@@ -441,8 +441,7 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 
 ArcKit works with:
 - **Claude Code** (recommended) - https://www.anthropic.com/claude-code
-- **GitHub Copilot** - https://github.com/features/copilot
-- **Cursor** - https://cursor.sh
+- **OpenAI Codex CLI** - https://chatgpt.com/features/codex
 - **Gemini CLI** - https://github.com/google-gemini/gemini-cli
 
 ### Try It Now

@@ -160,8 +160,6 @@ Every decision links back to stakeholder value.
 ### Multi-AI Support
 - **Claude Code** (recommended)
 - **OpenAI Codex CLI** (ChatGPT Plus/Pro/Enterprise)
-- **GitHub Copilot**
-- **Cursor**
 - **Gemini CLI**
 
 ## Use Cases

@@ -23,7 +23,7 @@ ArcKit is an enterprise architecture governance toolkit that provides structured
 - **Design Reviews**: Formal HLD/DLD validation gates
 - **Requirements Traceability**: Automated gap detection and coverage analysis
 
-Unlike traditional EA tools that lock you into proprietary platforms, ArcKit works with your existing AI coding assistant (Claude Code, GitHub Copilot, Cursor, or Gemini) and stores everything in Git-versioned Markdown files.
+Unlike traditional EA tools that lock you into proprietary platforms, ArcKit works with your existing AI coding assistant (Claude Code, OpenAI Codex CLI, or Gemini CLI) and stores everything in Git-versioned Markdown files.
 
 ## The ArcKit Philosophy: Template-Driven Quality
 
@@ -573,10 +573,9 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 
 ### Choose Your AI Assistant
 
-ArcKit works with any AI coding assistant:
+ArcKit works with multiple AI coding assistants:
 - **Claude Code** (recommended) - https://www.anthropic.com/claude-code
-- **GitHub Copilot** - https://github.com/features/copilot
-- **Cursor** - https://cursor.sh
+- **OpenAI Codex CLI** - https://chatgpt.com/features/codex
 - **Gemini CLI** - https://github.com/google-gemini/gemini-cli
 
 ### Initialize Your First Project
