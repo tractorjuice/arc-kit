@@ -49,16 +49,19 @@ Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 **ArcKit commands:**
 
 ```bash
+# Phase 0: Project Planning
+/prompts:arckit.plan Create project plan with timeline, phases, gates, and Mermaid diagrams
+
 # Phase 1: Establish Governance
 /prompts:arckit.principles Create architecture principles for financial services
 
-# Phase 2: Stakeholder Analysis (NEW - v0.2.1)
+# Phase 2: Stakeholder Analysis
 /prompts:arckit.stakeholders Analyze stakeholders for cloud migration project
 
-# Phase 3: Risk Assessment (NEW - v0.2.4)
+# Phase 3: Risk Assessment
 /prompts:arckit.risk Create risk register for payment gateway using Orange Book
 
-# Phase 4: Business Case (NEW - v0.2.3)
+# Phase 4: Business Case
 /prompts:arckit.sobc Create Strategic Outline Business Case for payment gateway
 
 # Phase 5: Define Requirements
@@ -93,6 +96,28 @@ Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 ```
 
 ## Workflow
+
+### 0. Project Plan (Start Here!)
+
+```bash
+/prompts:arckit.plan Create project plan for cloud migration with 6-month timeline
+```
+
+Creates: `projects/001-project-name/project-plan.md`
+
+**Generates comprehensive project plan with:**
+- GDS Agile Delivery phases (Discovery → Alpha → Beta → Live)
+- Mermaid Gantt chart showing timeline, dependencies, and milestones
+- Workflow diagram showing gates and decision points
+- Phase-by-phase activity tables with ArcKit command integration
+- Approval criteria for Discovery, Alpha, and Beta assessments
+
+**Reads existing artifacts to tailor the plan:**
+- Stakeholder analysis → impacts Discovery timeline
+- Requirements → impacts Alpha/Beta timeline
+- Architecture principles → identifies compliance needs
+- Business case → informs budget and team sizing
+- Risk register → highlights timeline risks
 
 ### 1. Architecture Principles (Foundation)
 
@@ -262,6 +287,7 @@ your-project/
 ├── .codex/
 │   ├── README.md (this file)
 │   └── prompts/
+│       ├── arckit.plan.md
 │       ├── arckit.principles.md
 │       ├── arckit.stakeholders.md
 │       ├── arckit.risk.md
