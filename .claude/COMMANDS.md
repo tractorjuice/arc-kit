@@ -12,8 +12,12 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.sobc` | Create Strategic Outline Business Case (SOBC) | After risk assessment, BEFORE requirements |
 | `/arckit.requirements` | Define comprehensive requirements | After SOBC approval, before data modeling |
 | `/arckit.data-model` | Create comprehensive data model with ERD | After requirements, before vendor selection |
+| `/arckit.research` | Research technology and services for build vs buy | After requirements, inform procurement decisions |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
 | `/arckit.diagram` | Generate architecture diagrams (Mermaid) | Visualize system structure throughout project |
+| `/arckit.gcloud-search` | Find G-Cloud services on UK Digital Marketplace | UK Gov procurement of off-the-shelf services |
+| `/arckit.gcloud-clarify` | Generate supplier clarification questions | After G-Cloud search, validate service claims |
+| `/arckit.dos` | Generate Digital Outcomes & Specialists docs | UK Gov procurement of custom development |
 | `/arckit.sow` | Generate Statement of Work / RFP | After requirements, for vendor procurement |
 | `/arckit.evaluate` | Evaluate vendor proposals | After receiving vendor responses |
 | `/arckit.hld-review` | Review High-Level Design | After vendor selection, before implementation |
@@ -600,11 +604,164 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 **Output**: `projects/NNN-project-name/data-model.md`
 
-**Next step**: Use `/arckit.sow` for vendor procurement, or `/arckit.hld-review` to validate database choices.
+**Next step**: Use `/arckit.research` to explore build vs buy options, or `/arckit.wardley` for strategic analysis.
 
 ---
 
-### 7. `/arckit.sow` - Statement of Work / RFP
+### 7. `/arckit.research` - Technology and Service Research
+
+**Purpose**: Research available technologies, services, and products to meet requirements and inform build vs buy decisions.
+
+**Usage**:
+```
+/arckit.research Research payment gateway solutions for project 001
+/arckit.research Find CRM platforms that meet our requirements
+/arckit.research Compare cloud hosting options for microservices architecture
+```
+
+**What it does**:
+- Performs market research to identify available solutions
+- Analyzes build vs buy tradeoffs
+- Compares commercial products, SaaS platforms, and open source options
+- Estimates Total Cost of Ownership (TCO)
+- Maps solutions to requirements
+- Recommends procurement approach (build custom, buy commercial, use open source)
+
+**Research categories**:
+- **Commercial Products**: Licensed software, enterprise platforms
+- **SaaS Platforms**: Cloud-based subscription services
+- **Open Source**: Community or commercially-supported OSS
+- **UK Digital Marketplace**: G-Cloud services, DOS suppliers
+
+**Key outputs**:
+- Solution comparison matrix
+- Build vs Buy analysis with TCO estimates
+- Requirements coverage assessment
+- Risk analysis for each option
+- Procurement recommendations
+
+**Output**: `projects/NNN-project-name/research-findings.md`
+
+**Next step**: Use findings to inform `/arckit.wardley` mapping or proceed to procurement with `/arckit.gcloud-search`, `/arckit.dos`, or `/arckit.sow`.
+
+---
+
+### 8. `/arckit.gcloud-search` - G-Cloud Service Search
+
+**Purpose**: Find and compare G-Cloud services on the UK Digital Marketplace for off-the-shelf procurement.
+
+**Usage**:
+```
+/arckit.gcloud-search Find cloud hosting services for microservices
+/arckit.gcloud-search Search for payment gateway SaaS on G-Cloud
+/arckit.gcloud-search Compare CRM platforms available on Digital Marketplace
+```
+
+**What it does**:
+- Searches UK Digital Marketplace G-Cloud framework
+- Finds off-the-shelf cloud services (hosting, SaaS, PaaS, IaaS)
+- Compares services against requirements
+- Analyzes pricing and service levels
+- Identifies suitable suppliers
+- **No custom development** - procurement only
+
+**When to use**:
+- ✅ Buying off-the-shelf cloud services
+- ✅ SaaS platforms and tools
+- ✅ Cloud hosting (IaaS, PaaS)
+- ❌ Custom development (use `/arckit.dos` instead)
+
+**UK Government context**:
+- G-Cloud is for services you can buy and use immediately
+- Streamlined procurement process
+- Pre-qualified suppliers
+- Standard terms and conditions
+- Call-off contracts under £100M
+
+**Output**: `projects/NNN-project-name/gcloud-search-results.md`
+
+**Next step**: Use `/arckit.gcloud-clarify` to generate clarification questions for shortlisted suppliers.
+
+---
+
+### 9. `/arckit.gcloud-clarify` - G-Cloud Clarification Questions
+
+**Purpose**: Generate clarification questions to validate G-Cloud service claims and fill gaps in supplier information.
+
+**Usage**:
+```
+/arckit.gcloud-clarify Generate questions for Supplier A cloud hosting service
+/arckit.gcloud-clarify Validate compliance claims for payment gateway SaaS
+/arckit.gcloud-clarify Check integration capabilities for CRM platform
+```
+
+**What it does**:
+- Analyzes G-Cloud service descriptions for vagueness or gaps
+- Generates specific technical clarification questions
+- Validates compliance and security claims
+- Checks integration capabilities
+- Verifies SLA and support commitments
+- Ensures requirements coverage
+
+**Common clarification areas**:
+- **Technical**: API specifications, integration patterns, data formats
+- **Security**: Certifications, encryption standards, audit logs
+- **Compliance**: GDPR, sector-specific regulations
+- **Performance**: SLAs, uptime guarantees, scalability limits
+- **Support**: Response times, escalation procedures, UK coverage
+- **Pricing**: Hidden costs, data transfer fees, scaling costs
+
+**Output**: `projects/NNN-project-name/vendors/supplier-name/clarification-questions.md`
+
+**Next step**: Send questions to suppliers via Digital Marketplace, then evaluate responses with `/arckit.evaluate`.
+
+---
+
+### 10. `/arckit.dos` - Digital Outcomes and Specialists
+
+**Purpose**: Generate Digital Outcomes and Specialists (DOS) procurement documentation for custom development on UK Digital Marketplace.
+
+**Usage**:
+```
+/arckit.dos Create DOS brief for payment gateway development
+/arckit.dos Generate user research specialist requirement
+/arckit.dos Create digital outcome brief for customer portal project
+```
+
+**What it does**:
+- Creates DOS-compliant procurement documentation
+- Defines requirements for custom software development
+- Specifies team composition (developers, architects, designers, specialists)
+- Sets project outcomes and deliverables
+- Includes evaluation criteria for DOS suppliers
+- Aligns with GDS Service Standard
+
+**When to use**:
+- ✅ Custom software development
+- ✅ Hiring developers, architects, designers, specialists
+- ✅ Digital outcomes requiring custom implementation
+- ❌ Off-the-shelf services (use `/arckit.gcloud-search` instead)
+
+**DOS categories**:
+- **Digital Outcomes**: Specific project outcomes (e.g., build a portal)
+- **Digital Specialists**: Individual specialists (e.g., hire a Python developer)
+- **User Research Studios**: User research services
+- **User Research Participants**: Recruit research participants
+
+**UK Government context**:
+- DOS is for custom development and specialist hiring
+- Competitive process with evaluation criteria
+- Agile delivery approach
+- GDS Service Standard compliance
+- Maximum contract value per lot applies
+
+**Output**: `projects/NNN-project-name/dos-brief.md`
+
+**Next step**: Publish on Digital Marketplace, then use `/arckit.evaluate` to score supplier proposals.
+
+---
+
+### 11. `/arckit.sow` - Statement of Work / RFP
 
 **Purpose**: Generate Statement of Work (SOW) document for vendor procurement / RFP.
 
@@ -639,7 +796,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 8. `/arckit.evaluate` - Vendor Evaluation
+### 12. `/arckit.evaluate` - Vendor Evaluation
 
 **Purpose**: Create vendor evaluation framework and score vendor proposals.
 
@@ -681,7 +838,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 9. `/arckit.hld-review` - High-Level Design Review
+### 13. `/arckit.hld-review` - High-Level Design Review
 
 **Purpose**: Review High-Level Design (HLD) against architecture principles and requirements.
 
@@ -719,7 +876,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 10. `/arckit.dld-review` - Detailed Design Review
+### 14. `/arckit.dld-review` - Detailed Design Review
 
 **Purpose**: Review Detailed Design (DLD) for implementation readiness.
 
@@ -761,7 +918,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 11. `/arckit.traceability` - Traceability Matrix
+### 15. `/arckit.traceability` - Traceability Matrix
 
 **Purpose**: Generate requirements traceability matrix from requirements → design → implementation → tests.
 
@@ -1068,5 +1225,5 @@ For issues or questions:
 
 ---
 
-**Last updated**: 2025-10-20
-**ArcKit Version**: 0.2.2
+**Last updated**: 2025-10-28
+**ArcKit Version**: 0.3.6
