@@ -96,11 +96,11 @@ ArcKit now works with **THREE AI systems**:
 
 #### Converter Script
 
-**New Tool**: `converter.py` - Automatic conversion from Claude commands to Gemini .toml format
+**New Tool**: `scripts/converter.py` - Automatic conversion from Claude commands to Gemini .toml format
 
 ```bash
 # Convert all Claude commands to Gemini format
-python converter.py
+python scripts/converter.py
 
 # Automatically creates .gemini/commands/arckit/*.toml files
 ```
@@ -267,7 +267,7 @@ codex --auto
 ### Added (v0.3.6)
 - **`/arckit.plan`** - Project planning command with Mermaid diagrams
 - **Gemini CLI support** - Third AI system integration
-- **`converter.py`** - Claude → Gemini command converter
+- **`scripts/converter.py`** - Claude → Gemini command converter
 - **`/arckit.dos`** - Digital Outcomes and Specialists procurement
 - **`/arckit.gcloud`** - G-Cloud Framework procurement
 - **Comprehensive planning guide** (`docs/guides/plan.md`)
@@ -393,7 +393,7 @@ codex --auto
 - **GitHub Repository**: https://github.com/tractorjuice/arc-kit
 - **Issues**: https://github.com/tractorjuice/arc-kit/issues
 - **Planning Guide**: `docs/guides/plan.md`
-- **Converter Script**: `converter.py`
+- **Converter Script**: `scripts/converter.py`
 - **Changelog**: `CHANGELOG.md`
 
 ---

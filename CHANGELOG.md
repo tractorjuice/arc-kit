@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **Gemini CLI Support**: Full support for Google Gemini CLI across all commands
-  - Added `converter.py` to convert Claude markdown commands to Gemini TOML format
+  - Added `scripts/converter.py` to convert Claude markdown commands to Gemini TOML format
   - All 24 commands now available for Gemini CLI (`.gemini/commands/arckit/*.toml`)
   - Automatic conversion maintains command functionality and arguments
   - Complete parity: Claude, Codex, and Gemini now have identical command sets
