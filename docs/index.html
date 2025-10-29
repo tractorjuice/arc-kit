@@ -12,6 +12,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css">
 
     <style>
+        /*
+         * Font Override for Non-GOV.UK Domains
+         *
+         * GDS Transport font is licensed ONLY for *.gov.uk, *.service.gov.uk, and *.blog.gov.uk domains.
+         * ArcKit is hosted on tractorjuice.github.io, so per GDS guidelines we must use system fonts.
+         *
+         * Reference: https://design-system.service.gov.uk/styles/typeface/
+         * "If your service is publicly available on a subdomain other than service.gov.uk,
+         * use an alternative typeface like Helvetica or Arial."
+         */
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        /* Override all GDS typography classes to use system fonts */
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
         /* Minimal custom styles for ArcKit-specific components not in GDS */
         .app-hero {
             background: linear-gradient(135deg, #1d70b8 0%, #003078 100%);
@@ -529,6 +552,7 @@ claude
             <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
 
             <p class="govuk-body-s">Built with <a href="https://design-system.service.gov.uk/" class="govuk-link">GOV.UK Design System</a> | MIT License</p>
+            <p class="govuk-body-s">Note: This site uses system fonts (Helvetica, Arial) as per <a href="https://design-system.service.gov.uk/styles/typeface/" class="govuk-link">GDS guidelines for non-gov.uk domains</a>. GDS Transport font is licensed only for official GOV.UK services.</p>
         </div>
     </footer>
 
