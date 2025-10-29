@@ -1,4 +1,6 @@
-description = "Research technology, services, and products to meet requirements with build vs buy analysis"
+description = """
+Research technology, services, and products to meet requirements with build vs buy analysis
+"""
 prompt = """
 # Technology and Service Research
 

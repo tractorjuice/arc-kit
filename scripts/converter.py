@@ -26,15 +26,23 @@ def convert_claude_to_gemini():
                     desc_match = re.search(r'description:\s*(.*)', frontmatter)
                     if desc_match:
                         description = desc_match.group(1).strip()
+                        # Remove surrounding quotes if present (from YAML)
+                        if description.startswith('"') and description.endswith('"'):
+                            description = description[1:-1]
+                        elif description.startswith("'") and description.endswith("'"):
+                            description = description[1:-1]
 
             # Prepare TOML content
             # The prompt needs to be enclosed in triple quotes and properly escaped.
             prompt_formatted = '"""\n' + prompt.replace('\\', '\\\\').replace('"', '\\"') + '\n"""'
-            
+
             # Replace $ARGUMENTS with {{args}}
             prompt_formatted = prompt_formatted.replace('$ARGUMENTS', '{{args}}')
 
-            toml_content = f'description = "{description}"\nprompt = {prompt_formatted}\n'
+            # Use triple quotes for description to handle special characters
+            description_formatted = '"""\n' + description + '\n"""'
+
+            toml_content = f'description = {description_formatted}\nprompt = {prompt_formatted}\n'
 
             # Create new filename
             new_filename = filename.replace('arckit.', '').replace('.md', '.toml')

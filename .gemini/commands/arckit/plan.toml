@@ -1,4 +1,6 @@
-description = "Create project plan with timeline, phases, gates, and Mermaid diagrams"
+description = """
+Create project plan with timeline, phases, gates, and Mermaid diagrams
+"""
 prompt = """
 # ArcKit: Project Plan Generation
 

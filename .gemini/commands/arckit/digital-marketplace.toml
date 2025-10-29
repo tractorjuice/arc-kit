@@ -1,4 +1,6 @@
-description = ""⚠️ DEPRECATED: Use /arckit.dos or /arckit.gcloud-search instead""
+description = """
+⚠️ DEPRECATED: Use /arckit.dos or /arckit.gcloud-search instead
+"""
 prompt = """
 # ⚠️ THIS COMMAND IS DEPRECATED
 

@@ -1,4 +1,6 @@
-description = ""
+description = """
+
+"""
 prompt = """
 # /arckit.servicenow - ServiceNow Service Design Command
 
