@@ -5,6 +5,116 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.1] - 2025-10-29
+
+### Added
+
+- **CONTRIBUTING.md**: Comprehensive contribution guide (241 lines)
+  - Getting started workflow (fork, clone, branch)
+  - Types of contributions (bugs, features, docs, commands, code)
+  - Command structure and standards
+  - Documentation style guidelines (UK English, GOV.UK principles)
+  - Commit message conventions (conventional commits)
+  - Pull request process
+  - Testing guidelines
+  - UK Government standards compliance requirements
+  - Command naming conventions
+  - Code of conduct
+
+### Changed
+
+- **docs/index.html**: Complete redesign using GOV.UK Design System v5.13.0
+  - Professional, accessible, mobile-responsive design
+  - Official GDS components: phase banner, buttons, tags, typography, grid
+  - Reduced file size 45% (978 → 542 lines)
+  - CDN-hosted GOV.UK Frontend assets
+  - WCAG 2.1 AA accessibility compliance
+  - Progressive enhancement with js-enabled detection
+
+- **Documentation Expansion** (+1,336 lines across 4 guides):
+  - **docs/guides/analyze.md**: 535 → 876 lines (+341)
+    - Added "Integration with Other Requirements" section (145 lines)
+    - Added "Common Gaps and How to Fix Them" section (8 gaps, 192 lines)
+  - **docs/guides/diagram.md**: 525 → 857 lines (+332)
+    - Added "Integration with Other Requirements" section (139 lines)
+    - Added "Common Gaps and How to Fix Them" section (8 gaps, 208 lines)
+  - **docs/guides/traceability.md**: 639 → 808 lines (+169)
+    - Added "Integration with Other Requirements" section (163 lines)
+  - **docs/guides/wardley-mapping.md**: 112 → 606 lines (+494)
+    - Added "Integration with Other Requirements" section (168 lines)
+    - Added "Common Gaps and How to Fix Them" section (8 gaps, 323 lines)
+
+- **scripts/converter.py**: Moved from root to scripts/ directory
+  - Better organization alongside other tools
+  - Updated all references in documentation
+  - Added comprehensive section to scripts/README.md
+
+- **scripts/bash/create-project.sh**: Removed empty file creation
+  - Commands use Write tool to create files with content
+  - Empty touch commands removed (requirements.md, sow.md, etc.)
+  - Enhanced project README template with complete GDS workflow
+
+### Fixed
+
+- **Font Licensing Compliance**: GDS Transport font override for non-gov.uk domains
+  - GDS Transport licensed only for *.gov.uk, *.service.gov.uk, *.blog.gov.uk
+  - Added explicit system font override: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial
+  - Complies with GDS typography guidelines for non-government services
+  - Transparent footer note explaining font choice
+  - Reference: https://design-system.service.gov.uk/styles/typeface/
+
+- **Broken Links**: Created missing CONTRIBUTING.md (was returning 404)
+
+### Removed
+
+- **SETUP.md**: Deleted outdated development artifact (329 lines)
+  - Referenced only 8 templates (now 25 commands)
+  - Had TODOs for already-implemented commands
+  - Superseded by README.md, .claude/COMMANDS.md, .codex/README.md
+
+- **docs/index.html from test repositories**: Removed from all 8 test projects
+  - Website hosting only needed in main arc-kit repository
+  - Test projects are for testing commands, not hosting website
+
+## [0.4.0] - 2025-10-28
+
+### Added
+
+- **`/arckit.plan`**: Comprehensive project planning command
+  - Generates project plans with GDS Agile Delivery phases (Discovery → Alpha → Beta → Live)
+  - Mermaid Gantt charts with timeline visualization
+  - Workflow diagrams showing decision gates
+  - Phase-by-phase activity tables with ArcKit command recommendations
+  - Approval criteria for each phase
+  - Risk mitigation strategies
+  - Resource allocation planning
+  - Success metrics and KPIs
+  - Comprehensive 660-line planning guide
+
+### Changed
+
+- **Documentation Guides**: Expanded procurement and design-review guides
+  - **docs/guides/procurement.md**: Enhanced with detailed DOS and G-Cloud workflows
+  - **docs/guides/design-review.md**: Added comprehensive 10-section assessment checklist
+
+- **Multi-AI Deployment**: Plan command deployed to all three AI systems
+  - `.claude/prompts/arckit.plan.md` - Claude Code version
+  - `.codex/prompts/arckit.plan.md` - Codex CLI version
+  - `.gemini/commands/arckit/plan.toml` - Gemini CLI version
+
+- **Workflow Enhancement**: Added Phase 0 (Planning) to GDS Agile Delivery framework
+  - Updated all documentation to show: Phase 0 → Discovery → Alpha → Beta → Live
+  - Planning phase runs before Discovery to establish project foundation
+
+### Fixed
+
+- **Version Consistency**: Synchronized all version references to v0.4.0
+  - VERSION file: Updated to 0.4.0
+  - pyproject.toml: version = "0.4.0"
+  - README.md: Latest Release links
+  - docs/README.md: ArcKit Version
+  - .codex/README.md: version and What's New
+
 ## [0.3.6] - 2025-10-27
 
 ### Added
