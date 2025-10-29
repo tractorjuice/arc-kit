@@ -9,8 +9,7 @@ This directory contains ArcKit commands adapted for [Google Gemini CLI](https://
 ## Prerequisites
 
 1. **Node.js and npm**: Required to install Gemini CLI
-2. **Gemini API access**: Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
-3. **Git repository**: ArcKit works best in a git repository
+2. **Git repository**: ArcKit works best in a git repository
 
 ## Setup
 
@@ -24,17 +23,7 @@ npm install -g @google/gemini-cli@latest
 npx @google/gemini-cli
 ```
 
-### 2. Configure API Key
-
-```bash
-# Set your Gemini API key
-export GOOGLE_API_KEY="your-api-key-here"
-
-# Add to your shell profile (~/.zshrc, ~/.bashrc, etc.) for persistence
-echo 'export GOOGLE_API_KEY="your-api-key-here"' >> ~/.zshrc
-```
-
-### 3. Project Setup
+### 2. Project Setup
 
 ArcKit commands are pre-installed in the `.gemini/commands/arckit:` directory. The Gemini CLI will automatically discover them when you're in the project directory.
 
@@ -266,19 +255,19 @@ your-project/
 | **Command format** | `/arckit.plan` | `/prompts:arckit.plan` | `/arckit:plan` |
 | **Command location** | `.claude/commands/` | `.codex/prompts/` | `.gemini/commands/arckit/` |
 | **Installation** | Built-in | Python CLI | npm package |
-| **API Key** | N/A (native) | N/A (ChatGPT account) | `GOOGLE_API_KEY` |
-| **Cost** | Claude subscription | ChatGPT Plus/Pro ($20/mo) | Pay-per-use (API pricing) |
+| **Authentication** | Built-in | ChatGPT account | Google account |
+| **Cost** | Claude subscription | ChatGPT Plus/Pro ($20/mo) | Free with Gemini |
 | **Bash scripts** | ✅ Automatic | ✅ With `--auto` | ✅ Supported |
 | **File access** | ✅ Full workspace | ✅ Sandboxed | ✅ Full workspace |
-| **Best for** | Professional use | Enterprise users | Cost-conscious, API users |
+| **Best for** | Professional use | Enterprise users | Free access, Google ecosystem |
 
 ## Key Differences from Other CLIs
 
 ### From Claude Code
 
 - **Command invocation**: `/arckit:plan` instead of `/arckit.plan` (colon separator for subdirectories)
-- **API requirement**: Need to set `GOOGLE_API_KEY` environment variable
 - **Installation**: npm package vs built-in IDE integration
+- **Authentication**: Google account vs Claude subscription
 - **Namespace structure**: Subdirectories use colon notation (`.gemini/commands/arckit/` → `/arckit:*`)
 
 ### From Codex CLI
@@ -286,7 +275,7 @@ your-project/
 - **Installation method**: npm vs Python
 - **Command syntax**: `/arckit:plan` instead of `/prompts:arckit.plan`
 - **Namespace format**: Colon (`:`) for subdirectories vs `prompts:` prefix
-- **Pay-per-use pricing**: Based on API usage vs ChatGPT subscription
+- **Cost**: Free with Gemini vs ChatGPT Plus/Pro subscription
 
 ## Troubleshooting
 
@@ -318,21 +307,6 @@ If `/arckit:plan` doesn't work:
    # Ensure you have the latest version
    ```
 
-### API Key Issues
-
-If you see authentication errors:
-
-```bash
-# Check API key is set
-echo $GOOGLE_API_KEY
-
-# If empty, set it
-export GOOGLE_API_KEY="your-api-key-here"
-
-# Test API access
-gemini "Hello, are you working?"
-```
-
 ### Permission Errors
 
 If Gemini CLI asks for file permissions:
@@ -351,7 +325,7 @@ If Gemini CLI asks for file permissions:
 # Use Gemini 1.5 Pro (default)
 gemini
 
-# Use Gemini 1.5 Flash (faster, cheaper)
+# Use Gemini 1.5 Flash (faster)
 gemini --model gemini-1.5-flash
 
 # Use Gemini 2.0 (latest)
@@ -368,21 +342,6 @@ gemini << EOF
 /arckit:requirements Create requirements based on stakeholder analysis
 EOF
 ```
-
-## Cost Optimization
-
-Gemini API pricing (approximate as of 2025):
-
-| Model | Input (per 1M tokens) | Output (per 1M tokens) |
-|-------|----------------------|------------------------|
-| Gemini 1.5 Flash | $0.075 | $0.30 |
-| Gemini 1.5 Pro | $1.25 | $5.00 |
-| Gemini 2.0 Pro | $1.25 | $5.00 |
-
-**Cost-saving tips:**
-- Use Gemini 1.5 Flash for simple commands (principles, stakeholders)
-- Use Gemini 1.5 Pro for complex analysis (analyze, research, diagram)
-- Typical ArcKit project (25 commands): ~$1-3 total cost
 
 ## Version
 
@@ -427,12 +386,11 @@ The `.gemini/commands/arckit:*.toml` files are automatically generated from Clau
 ## Next Steps
 
 1. **Install Gemini CLI**: `npm install -g @google/gemini-cli@latest`
-2. **Set API key**: `export GOOGLE_API_KEY="your-key"`
-3. **Start Gemini**: `gemini`
-4. **Create plan**: `/arckit:plan Create project plan for cloud migration`
-5. **Create principles**: `/arckit:principles Create cloud-first principles`
-6. **Analyze stakeholders**: `/arckit:stakeholders <your project description>`
-7. **Define requirements**: `/arckit:requirements <your project description>`
+2. **Start Gemini**: `gemini`
+3. **Create plan**: `/arckit:plan Create project plan for cloud migration`
+4. **Create principles**: `/arckit:principles Create cloud-first principles`
+5. **Analyze stakeholders**: `/arckit:stakeholders <your project description>`
+6. **Define requirements**: `/arckit:requirements <your project description>`
 
 ---
 
