@@ -353,7 +353,7 @@ python scripts/converter.py
 **Related**:
 - Claude commands: `.claude/commands/`
 - Gemini commands: `.gemini/commands/arckit/`
-- See RELEASE-v0.3.6.md for Gemini CLI setup
+- See `.codex/README.md` for multi-AI CLI setup (Claude Code, Codex CLI, Gemini CLI)
 
 ---
 
