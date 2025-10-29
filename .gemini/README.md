@@ -4,12 +4,12 @@
   <img src="../docs/assets/ArcKit_Logo_Horizontal_Dark.svg" alt="ArcKit" height="32">
 </p>
 
-This directory contains ArcKit commands adapted for [Google Gemini CLI](https://github.com/google-gemini/gemini-cli).
+This directory contains ArcKit commands adapted for [Google Gemini CLI](https://cloud.google.com/gemini/docs/cli).
 
 ## Prerequisites
 
-1. **Gemini API access**: Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
-2. **Gemini CLI installed**: Follow [installation instructions](https://github.com/google-gemini/gemini-cli#installation)
+1. **Node.js and npm**: Required to install Gemini CLI
+2. **Gemini API access**: Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
 3. **Git repository**: ArcKit works best in a git repository
 
 ## Setup
@@ -17,26 +17,26 @@ This directory contains ArcKit commands adapted for [Google Gemini CLI](https://
 ### 1. Install Gemini CLI
 
 ```bash
-# Install via pip
-pip install google-gemini-cli
+# Install globally via npm (recommended)
+npm install -g @google/gemini-cli@latest
 
-# Or using pipx (recommended)
-pipx install google-gemini-cli
+# Or run without installing using npx
+npx @google/gemini-cli
 ```
 
 ### 2. Configure API Key
 
 ```bash
 # Set your Gemini API key
-export GEMINI_API_KEY="your-api-key-here"
+export GOOGLE_API_KEY="your-api-key-here"
 
 # Add to your shell profile (~/.zshrc, ~/.bashrc, etc.) for persistence
-echo 'export GEMINI_API_KEY="your-api-key-here"' >> ~/.zshrc
+echo 'export GOOGLE_API_KEY="your-api-key-here"' >> ~/.zshrc
 ```
 
 ### 3. Project Setup
 
-ArcKit commands are pre-installed in the `.gemini/commands/arckit/` directory. The Gemini CLI will automatically discover them when you're in the project directory.
+ArcKit commands are pre-installed in the `.gemini/commands/arckit:` directory. The Gemini CLI will automatically discover them when you're in the project directory.
 
 ```bash
 cd /path/to/your/project
@@ -45,13 +45,13 @@ gemini
 
 ## Command Invocation
 
-Gemini CLI uses custom command namespaces. ArcKit commands are available under the `arckit` namespace:
+Gemini CLI uses colon-separated namespaces for commands in subdirectories. ArcKit commands are available under the `arckit` namespace:
 
 ```bash
-# Format: /arckit/<command-name> <arguments>
-/arckit/plan Create project plan for cloud migration with 6-month timeline
-/arckit/principles Create cloud-first architecture principles
-/arckit/stakeholders Analyze stakeholders for payment gateway project
+# Format: /arckit:<command-name> <arguments>
+/arckit:plan Create project plan for cloud migration with 6-month timeline
+/arckit:principles Create cloud-first architecture principles
+/arckit:stakeholders Analyze stakeholders for payment gateway project
 ```
 
 ## ArcKit Commands (26 Available)
@@ -59,7 +59,7 @@ Gemini CLI uses custom command namespaces. ArcKit commands are available under t
 ### Phase 0: Project Planning
 
 ```bash
-/arckit/plan Create project plan with timeline, phases, gates, and Mermaid diagrams
+/arckit:plan Create project plan with timeline, phases, gates, and Mermaid diagrams
 ```
 
 Creates: `projects/001-project-name/project-plan.md`
@@ -75,16 +75,16 @@ Creates: `projects/001-project-name/project-plan.md`
 
 ```bash
 # Establish architecture principles
-/arckit/principles Create cloud-first principles for our organisation
+/arckit:principles Create cloud-first principles for our organisation
 
 # Analyze stakeholders
-/arckit/stakeholders Analyze stakeholders for cloud migration where CFO wants cost savings
+/arckit:stakeholders Analyze stakeholders for cloud migration where CFO wants cost savings
 
 # Risk assessment
-/arckit/risk Create risk register for cloud migration project
+/arckit:risk Create risk register for cloud migration project
 
 # Business case
-/arckit/sobc Create Strategic Outline Business Case for cloud migration with £2M investment
+/arckit:sobc Create Strategic Outline Business Case for cloud migration with £2M investment
 ```
 
 **Outputs:**
@@ -97,16 +97,16 @@ Creates: `projects/001-project-name/project-plan.md`
 
 ```bash
 # Define requirements
-/arckit/requirements Create requirements for the cloud migration project
+/arckit:requirements Create requirements for the cloud migration project
 
 # Data modelling
-/arckit/data-model Create data model for payment gateway with ERD and GDPR compliance
+/arckit:data-model Create data model for payment gateway with ERD and GDPR compliance
 
 # Strategic planning
-/arckit/wardley Create Wardley map for digital services showing build vs buy strategy
+/arckit:wardley Create Wardley map for digital services showing build vs buy strategy
 
 # Technology research
-/arckit/research Research cloud hosting options with build vs buy analysis
+/arckit:research Research cloud hosting options with build vs buy analysis
 ```
 
 **Outputs:**
@@ -119,14 +119,14 @@ Creates: `projects/001-project-name/project-plan.md`
 
 ```bash
 # Digital Marketplace
-/arckit/digital-marketplace Search Digital Marketplace for cloud hosting services
-/arckit/gcloud-search Search G-Cloud 14 framework for cloud services
-/arckit/gcloud-clarify Generate clarification questions for G-Cloud supplier
-/arckit/dos Generate Digital Outcomes and Specialists procurement documents
+/arckit:digital-marketplace Search Digital Marketplace for cloud hosting services
+/arckit:gcloud-search Search G-Cloud 14 framework for cloud services
+/arckit:gcloud-clarify Generate clarification questions for G-Cloud supplier
+/arckit:dos Generate Digital Outcomes and Specialists procurement documents
 
 # RFP Management
-/arckit/sow Generate statement of work for cloud migration RFP
-/arckit/evaluate Score vendors against requirements
+/arckit:sow Generate statement of work for cloud migration RFP
+/arckit:evaluate Score vendors against requirements
 ```
 
 **Outputs:**
@@ -139,21 +139,21 @@ Creates: `projects/001-project-name/project-plan.md`
 
 ```bash
 # Design reviews
-/arckit/hld-review Review high-level design for scalability
-/arckit/dld-review Review detailed design for security
+/arckit:hld-review Review high-level design for scalability
+/arckit:dld-review Review detailed design for security
 
 # Compliance & security
-/arckit/secure UK Government Secure by Design review
-/arckit/mod-secure MOD Secure by Design review
-/arckit/tcop Technology Code of Practice assessment
-/arckit/atrs AI Transparency Risk Standards assessment
-/arckit/ai-playbook AI Playbook compliance check
+/arckit:secure UK Government Secure by Design review
+/arckit:mod-secure MOD Secure by Design review
+/arckit:tcop Technology Code of Practice assessment
+/arckit:atrs AI Transparency Risk Standards assessment
+/arckit:ai-playbook AI Playbook compliance check
 
 # Analysis & visualisation
-/arckit/analyze Comprehensive gap analysis across all project artifacts
-/arckit/diagram Generate architecture diagrams with Mermaid
-/arckit/traceability Generate requirements traceability matrix
-/arckit/servicenow Export architecture to ServiceNow CMDB
+/arckit:analyze Comprehensive gap analysis across all project artifacts
+/arckit:diagram Generate architecture diagrams with Mermaid
+/arckit:traceability Generate requirements traceability matrix
+/arckit:servicenow Export architecture to ServiceNow CMDB
 ```
 
 **Outputs:**
@@ -171,34 +171,34 @@ cd /path/to/your/project
 gemini
 
 # 0. Create project plan
-/arckit/plan Create project plan for cloud migration with 6-month timeline, £2M budget
+/arckit:plan Create project plan for cloud migration with 6-month timeline, £2M budget
 
 # 1. Establish governance
-/arckit/principles Create cloud-first architecture principles
+/arckit:principles Create cloud-first architecture principles
 
 # 2. Discovery phase
-/arckit/stakeholders Analyze stakeholders for cloud migration: CFO wants cost savings, CTO wants innovation
-/arckit/risk Create risk register for cloud migration
-/arckit/sobc Create Strategic Outline Business Case with £2M investment
+/arckit:stakeholders Analyze stakeholders for cloud migration: CFO wants cost savings, CTO wants innovation
+/arckit:risk Create risk register for cloud migration
+/arckit:sobc Create Strategic Outline Business Case with £2M investment
 
 # 3. Alpha phase
-/arckit/requirements Create requirements for cloud migration
-/arckit/data-model Create data model for customer data with GDPR compliance
-/arckit/wardley Create Wardley map showing build vs buy for cloud infrastructure
+/arckit:requirements Create requirements for cloud migration
+/arckit:data-model Create data model for customer data with GDPR compliance
+/arckit:wardley Create Wardley map showing build vs buy for cloud infrastructure
 
 # 4. Research & procurement
-/arckit/research Research AWS, Azure, and GCP for cloud hosting
-/arckit/digital-marketplace Search for cloud hosting on Digital Marketplace
-/arckit/sow Generate RFP statement of work
+/arckit:research Research AWS, Azure, and GCP for cloud hosting
+/arckit:digital-marketplace Search for cloud hosting on Digital Marketplace
+/arckit:sow Generate RFP statement of work
 
 # 5. Beta phase
-/arckit/hld-review Review high-level design for microservices architecture
-/arckit/secure Conduct Secure by Design review
+/arckit:hld-review Review high-level design for microservices architecture
+/arckit:secure Conduct Secure by Design review
 
 # 6. Analysis
-/arckit/analyze Comprehensive gap analysis across all artifacts
-/arckit/diagram Generate C4 architecture diagrams
-/arckit/traceability Generate requirements traceability matrix
+/arckit:analyze Comprehensive gap analysis across all artifacts
+/arckit:diagram Generate C4 architecture diagrams
+/arckit:traceability Generate requirements traceability matrix
 ```
 
 ## File Structure
@@ -263,11 +263,12 @@ your-project/
 
 | Feature | Claude Code | Codex CLI | Gemini CLI |
 |---------|-------------|-----------|------------|
-| **Command format** | `/arckit.plan` | `/prompts:arckit.plan` | `/arckit/plan` |
+| **Command format** | `/arckit.plan` | `/prompts:arckit.plan` | `/arckit:plan` |
 | **Command location** | `.claude/commands/` | `.codex/prompts/` | `.gemini/commands/arckit/` |
-| **API Key** | N/A (native) | N/A (ChatGPT account) | `GEMINI_API_KEY` |
+| **Installation** | Built-in | Python CLI | npm package |
+| **API Key** | N/A (native) | N/A (ChatGPT account) | `GOOGLE_API_KEY` |
 | **Cost** | Claude subscription | ChatGPT Plus/Pro ($20/mo) | Pay-per-use (API pricing) |
-| **Bash scripts** | ✅ Automatic | ✅ With `--auto` | ✅ Permission-based |
+| **Bash scripts** | ✅ Automatic | ✅ With `--auto` | ✅ Supported |
 | **File access** | ✅ Full workspace | ✅ Sandboxed | ✅ Full workspace |
 | **Best for** | Professional use | Enterprise users | Cost-conscious, API users |
 
@@ -275,21 +276,23 @@ your-project/
 
 ### From Claude Code
 
-- **Command invocation**: `/arckit/plan` instead of `/arckit.plan`
-- **API requirement**: Need to set `GEMINI_API_KEY` environment variable
-- **Namespace structure**: Commands in `arckit` namespace under `.gemini/commands/`
+- **Command invocation**: `/arckit:plan` instead of `/arckit.plan` (colon separator for subdirectories)
+- **API requirement**: Need to set `GOOGLE_API_KEY` environment variable
+- **Installation**: npm package vs built-in IDE integration
+- **Namespace structure**: Subdirectories use colon notation (`.gemini/commands/arckit/` → `/arckit:*`)
 
 ### From Codex CLI
 
-- **No GEMINI_HOME**: Commands discovered automatically from `.gemini/` directory
-- **Simpler syntax**: `/arckit/plan` instead of `/prompts:arckit.plan`
-- **Pay-per-use pricing**: Based on API usage, not subscription
+- **Installation method**: npm vs Python
+- **Command syntax**: `/arckit:plan` instead of `/prompts:arckit.plan`
+- **Namespace format**: Colon (`:`) for subdirectories vs `prompts:` prefix
+- **Pay-per-use pricing**: Based on API usage vs ChatGPT subscription
 
 ## Troubleshooting
 
 ### Commands Not Found
 
-If `/arckit/plan` doesn't work:
+If `/arckit:plan` doesn't work:
 
 1. **Check you're in the project directory**:
    ```bash
@@ -299,7 +302,7 @@ If `/arckit/plan` doesn't work:
 
 2. **Verify files exist**:
    ```bash
-   ls -la .gemini/commands/arckit/
+   ls -la .gemini/commands/arckit:
    # Should show .toml files
    ```
 
@@ -321,10 +324,10 @@ If you see authentication errors:
 
 ```bash
 # Check API key is set
-echo $GEMINI_API_KEY
+echo $GOOGLE_API_KEY
 
 # If empty, set it
-export GEMINI_API_KEY="your-api-key-here"
+export GOOGLE_API_KEY="your-api-key-here"
 
 # Test API access
 gemini "Hello, are you working?"
@@ -360,9 +363,9 @@ gemini --model gemini-2.0-pro
 ```bash
 # Process multiple commands in sequence
 gemini << EOF
-/arckit/principles Create cloud-first principles
-/arckit/stakeholders Analyze stakeholders for payment gateway
-/arckit/requirements Create requirements based on stakeholder analysis
+/arckit:principles Create cloud-first principles
+/arckit:stakeholders Analyze stakeholders for payment gateway
+/arckit:requirements Create requirements based on stakeholder analysis
 EOF
 ```
 
@@ -386,23 +389,23 @@ Gemini API pricing (approximate as of 2025):
 ArcKit v0.4.1 (26 commands)
 
 **What's New in v0.4.1:**
-- 🗓️ **Project Planning**: `/arckit/plan` - Comprehensive project planning with GDS Agile Delivery phases
+- 🗓️ **Project Planning**: `/arckit:plan` - Comprehensive project planning with GDS Agile Delivery phases
 - 📚 **Documentation Expansion**: 660-line planning guide, expanded design review (+167 lines) and procurement (+191 lines) guides
 - 🚀 **Multi-AI Deployment**: Plan command deployed to all three AI systems (Claude, Codex, Gemini)
 - 📋 **Updated Workflow**: Plan-first approach with Phase 0 before all other phases
 - 🔧 **Version Consistency**: All version references synchronized to v0.4.1
 
 **What was New in v0.3.6:**
-- 🗓️ Added `/arckit/plan` - Project planning with GDS Agile Delivery phases, Mermaid Gantt charts
+- 🗓️ Added `/arckit:plan` - Project planning with GDS Agile Delivery phases, Mermaid Gantt charts
 - 🤖 Added Gemini CLI support (third AI system!)
-- 🏛️ Added `/arckit/dos` - Digital Outcomes and Specialists procurement
-- 🏛️ Added `/arckit/gcloud-search` and `/arckit/gcloud-clarify` - G-Cloud Framework procurement
+- 🏛️ Added `/arckit:dos` - Digital Outcomes and Specialists procurement
+- 🏛️ Added `/arckit:gcloud-search` and `/arckit:gcloud-clarify` - G-Cloud Framework procurement
 - 📚 Triple-AI documentation (Claude Code + Codex CLI + Gemini CLI)
 
 **What was New in v0.3.0:**
-- 🎯 Added `/arckit/sobc` - HM Treasury Green Book Strategic Outline Business Case
-- 🛡️ Added `/arckit/risk` - HM Treasury Orange Book Risk Management
-- 📊 Added `/arckit/data-model` - Data modelling with ERD, GDPR compliance, data governance
+- 🎯 Added `/arckit:sobc` - HM Treasury Green Book Strategic Outline Business Case
+- 🛡️ Added `/arckit:risk` - HM Treasury Orange Book Risk Management
+- 📊 Added `/arckit:data-model` - Data modelling with ERD, GDPR compliance, data governance
 - 🔄 Updated workflow: Stakeholders → Risk → SOBC → Requirements → Data Model → Vendor selection
 - ✅ Complete UK Government compliance (Green Book + Orange Book)
 - 🔗 End-to-end traceability: Stakeholder → Driver → Goal → Risk → Benefit → Requirement → Entity
@@ -412,23 +415,24 @@ ArcKit v0.4.1 (26 commands)
 - **Documentation**: See main [ArcKit README](../README.md)
 - **Issues**: Report Gemini-specific issues with `[Gemini]` prefix on [GitHub](https://github.com/tractorjuice/arc-kit/issues)
 - **Workflow Guide**: See `.arckit/templates/` for template examples
-- **Gemini CLI Docs**: [Official documentation](https://github.com/google-gemini/gemini-cli)
+- **Gemini CLI Docs**: [Official documentation](https://cloud.google.com/gemini/docs/cli)
+- **Custom Commands Guide**: [Custom slash commands tutorial](https://cloud.google.com/blog/topics/developers-practitioners/gemini-cli-custom-slash-commands)
 
 ## Development Note
 
-The `.gemini/commands/arckit/*.toml` files are automatically generated from Claude Code commands using `scripts/converter.py`. End users don't need to run the converter - all formats are pre-installed with ArcKit.
+The `.gemini/commands/arckit:*.toml` files are automatically generated from Claude Code commands using `scripts/converter.py`. End users don't need to run the converter - all formats are pre-installed with ArcKit.
 
 **For developers**: If you modify Claude commands, run `python scripts/converter.py` to regenerate Gemini TOML files.
 
 ## Next Steps
 
-1. **Install Gemini CLI**: `pipx install google-gemini-cli`
-2. **Set API key**: `export GEMINI_API_KEY="your-key"`
+1. **Install Gemini CLI**: `npm install -g @google/gemini-cli@latest`
+2. **Set API key**: `export GOOGLE_API_KEY="your-key"`
 3. **Start Gemini**: `gemini`
-4. **Create plan**: `/arckit/plan Create project plan for cloud migration`
-5. **Create principles**: `/arckit/principles Create cloud-first principles`
-6. **Analyze stakeholders**: `/arckit/stakeholders <your project description>`
-7. **Define requirements**: `/arckit/requirements <your project description>`
+4. **Create plan**: `/arckit:plan Create project plan for cloud migration`
+5. **Create principles**: `/arckit:principles Create cloud-first principles`
+6. **Analyze stakeholders**: `/arckit:stakeholders <your project description>`
+7. **Define requirements**: `/arckit:requirements <your project description>`
 
 ---
 
