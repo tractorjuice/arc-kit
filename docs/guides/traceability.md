@@ -518,6 +518,170 @@ For compliance audits:
 
 ---
 
+## Integration with Other Requirements
+
+Traceability integrates with and validates all other ArcKit artifacts:
+
+### Links to Requirements
+
+**Traceability starts with requirements:**
+- Every BR, FR, NFR, INT, DR must appear in matrix
+- Requirements categorized by priority (MUST/SHOULD/MAY)
+- Orphan requirements signal incomplete implementation
+- Missing requirements signal scope creep
+
+**Example:**
+If requirements.md has FR-015 "Process credit card payments":
+- ✅ Traceability matrix shows FR-015 → PaymentService component
+- ✅ Shows FR-015 → TestPaymentProcessing test case
+- ⚠️ If missing → Requirement not implemented (gap)
+
+**Action:** Every requirement ID must trace to at least one design element.
+
+### Links to Architecture Principles
+
+**Traceability validates principle enforcement:**
+- Security principles → Security requirements → Security controls → Security tests
+- Performance principles → Performance requirements → Performance architecture → Performance tests
+- Reliability principles → Reliability requirements → HA architecture → Failover tests
+
+**Example:**
+If principle SEC-001 states "Zero Trust Architecture":
+- ✅ Traces to NFR-S-003 "All API calls require authentication"
+- ✅ Traces to AuthenticationMiddleware component in HLD
+- ✅ Traces to TestAuthenticationEnforcement test suite
+- Complete chain: Principle → Requirement → Design → Test
+
+**Action:** Include principle IDs in traceability matrix for governance visibility.
+
+### Links to Stakeholder Analysis
+
+**Traceability shows stakeholder value delivered:**
+- Stakeholder goals (G-xxx) → Business requirements (BR-xxx) → Features delivered
+- Stakeholder outcomes (O-xxx) → Success metrics → Test results
+- Stakeholder concerns → Risk mitigations → Validation tests
+
+**Example:**
+If CFO has goal "G-1: Reduce costs 40%":
+- ✅ Traces to BR-003 "Automate procurement workflow"
+- ✅ Traces to AutomationEngine component
+- ✅ Traces to TestAutomationEfficiency (validates cost savings)
+- Shows CFO's goal is implemented and tested
+
+**Action:** Create stakeholder-facing traceability view: Goals → Requirements → Status.
+
+### Links to Risk Register
+
+**Traceability validates risk mitigations:**
+- HIGH/CRITICAL risks → Mitigation requirements → Architecture → Tests
+- Risk acceptance decisions → Requirements to skip → Gaps explained
+- Residual risks → Monitoring requirements → Observability → Alert tests
+
+**Example:**
+If RISK-003 is "Single point of failure (HIGH)" with mitigation "Multi-AZ deployment":
+- ✅ Traces to NFR-R-002 "99.95% uptime SLA"
+- ✅ Traces to Multi-AZ deployment architecture in HLD
+- ✅ Traces to TestFailoverScenarios test suite
+- Proves risk is mitigated, not just documented
+
+**Action:** Include risk IDs in traceability matrix to show mitigation coverage.
+
+### Links to Business Case (SOBC)
+
+**Traceability validates business case delivery:**
+- Economic Case benefits → Business requirements → Implementation → Validation
+- Strategic Case objectives → Requirements → Architecture → Tests
+- Management Case assumptions → Non-functional requirements → Tests
+
+**Example:**
+If SOBC Economic Case claims "£500K annual savings from automation":
+- ✅ Traces to BR-008 "Reduce manual approval time from 5 days to 1 hour"
+- ✅ Traces to WorkflowAutomation component
+- ✅ Traces to TestAutomationPerformance (proves 1 hour target achieved)
+- ⚠️ If savings not tested → Business case at risk
+
+**Action:** Create business case validation report using traceability data.
+
+### Links to Data Model
+
+**Traceability validates data implementation:**
+- Data requirements (DR-xxx) → Entities (E-xxx) → Database tables → Data tests
+- PII inventory → Encryption requirements → Security controls → Compliance tests
+- Retention requirements → Archive procedures → Automation → Audit tests
+
+**Example:**
+If DR-005 requires "Store customer payment history for 7 years":
+- ✅ Traces to Entity E-004 (PaymentHistory)
+- ✅ Traces to payment_history table in PostgreSQL
+- ✅ Traces to PaymentHistoryRepository component
+- ✅ Traces to TestDataRetention (validates 7-year policy)
+
+**Action:** Ensure every DR-xxx traces to entity, table, and data validation test.
+
+### Links to Design Reviews
+
+**Traceability is the deliverable FROM design reviews:**
+- HLD Review → High-level traceability (Requirements → Containers/Services)
+- DLD Review → Detailed traceability (Requirements → Components/Classes)
+- Review checklist → Traceability coverage targets (80% minimum, 95% ideal)
+- Approval criteria → Gaps addressed or justified
+
+**Example:**
+HLD Review for payment gateway checks:
+- ✅ All payment requirements (FR-015 to FR-022) trace to PaymentService
+- ✅ All integration requirements (INT-xxx) trace to external APIs
+- ⚠️ NFR-P-003 (caching) has no design element → Add Redis cache
+- HLD approved contingent on adding cache
+
+**Action:** Use traceability matrix as primary review artifact for design reviews.
+
+### Links to Compliance
+
+**Traceability provides audit evidence:**
+- GDPR Article 17 (Right to erasure) → DR-012 → DeleteUserDataService → TestDataErasure
+- PCI-DSS 3.2.1 (Encrypt card data) → NFR-S-005 → AES-256 encryption → TestEncryption
+- Technology Code of Practice #5 (Make things secure) → Security requirements → Security controls → Security tests
+
+**Example:**
+For GDPR audit, traceability shows:
+- ✅ Legal basis documented (DR-003)
+- ✅ Consent management implemented (FR-008)
+- ✅ Data subject rights implemented (FR-009 to FR-012)
+- ✅ All GDPR requirements tested (90+ test cases)
+- Compliance proven with traceability matrix as evidence
+
+**Action:** Include compliance framework IDs in traceability matrix (GDPR Article X, PCI-DSS X.X).
+
+### Links to Testing
+
+**Traceability drives test strategy:**
+- MUST requirements → 100% test coverage required
+- SHOULD requirements → 80% test coverage target
+- MAY requirements → Tested if implemented
+- Critical path requirements → Integration + E2E tests required
+
+**Example:**
+If FR-015 is MUST "Process credit card payments":
+- ✅ Unit tests: TestPaymentProcessing (component level)
+- ✅ Integration tests: TestStripeIntegration (API level)
+- ✅ E2E tests: TestCheckoutFlow (user journey)
+- ✅ Security tests: TestPCICompliance (compliance)
+- All 4 test types required for MUST requirements
+
+**Action:** Generate test plan from traceability gaps - untested requirements = test cases to write.
+
+### Integration Summary
+
+**Traceability is the validation layer that proves:**
+1. **Vertical alignment**: Principles → Requirements → Design → Code → Tests
+2. **Horizontal traceability**: Stakeholders → Goals → Requirements → Features → Tests
+3. **Governance compliance**: Risks → Mitigations → Requirements → Architecture → Tests
+4. **Business case delivery**: Benefits → Requirements → Implementation → Validation
+
+**Without traceability, you have documents. With traceability, you have proof.**
+
+---
+
 ## Best Practices
 
 ### 1. Maintain Throughout Lifecycle
@@ -637,3 +801,8 @@ Parse comments to build traceability automatically.
 ---
 
 **Remember**: You can't improve what you don't measure. Traceability is your measurement system for project completeness.
+
+---
+
+**Last updated**: 2025-10-28
+**ArcKit Version**: 0.4.0
