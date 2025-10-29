@@ -497,8 +497,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Supported AI agents increased from 4 to 5 (added Codex CLI)
 
 ### Documentation
-- Created `RELEASE-v0.2.2.md` with complete release notes
-- Updated `RELEASE-ANNOUNCEMENT.md` to v0.2.2
 - Updated version references throughout documentation
 
 ## [0.2.1] - 2025-10-19
