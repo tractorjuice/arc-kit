@@ -43,7 +43,7 @@ Gemini CLI uses colon-separated namespaces for commands in subdirectories. ArcKi
 /arckit:stakeholders Analyze stakeholders for payment gateway project
 ```
 
-## ArcKit Commands (26 Available)
+## ArcKit Commands (25 Available)
 
 ### Phase 0: Project Planning
 
@@ -108,7 +108,6 @@ Creates: `projects/001-project-name/project-plan.md`
 
 ```bash
 # Digital Marketplace
-/arckit:digital-marketplace Search Digital Marketplace for cloud hosting services
 /arckit:gcloud-search Search G-Cloud 14 framework for cloud services
 /arckit:gcloud-clarify Generate clarification questions for G-Cloud supplier
 /arckit:dos Generate Digital Outcomes and Specialists procurement documents
@@ -177,7 +176,8 @@ gemini
 
 # 4. Research & procurement
 /arckit:research Research AWS, Azure, and GCP for cloud hosting
-/arckit:digital-marketplace Search for cloud hosting on Digital Marketplace
+/arckit:gcloud-search Search G-Cloud 14 for cloud hosting services
+/arckit:dos Generate Digital Outcomes and Specialists procurement
 /arckit:sow Generate RFP statement of work
 
 # 5. Beta phase
@@ -345,7 +345,7 @@ EOF
 
 ## Version
 
-ArcKit v0.4.1 (26 commands)
+ArcKit v0.4.1 (25 commands)
 
 **What's New in v0.4.1:**
 - 🗓️ **Project Planning**: `/arckit:plan` - Comprehensive project planning with GDS Agile Delivery phases

@@ -76,6 +76,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Website hosting only needed in main arc-kit repository
   - Test projects are for testing commands, not hosting website
 
+- **arckit.digital-marketplace command**: Deprecated command fully removed
+  - Replaced by focused commands: `/arckit.dos` and `/arckit.gcloud-search`
+  - Removed from Claude, Codex, and Gemini command sets
+  - Total commands reduced from 26 to 25
+
 ## [0.4.0] - 2025-10-28
 
 ### Added
@@ -158,12 +163,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **README**: Updated to reflect new DOS, G-Cloud search, and G-Cloud clarify commands
 - **Complete G-Cloud Workflow**: Requirements → Search → Clarify → Engage → Evaluate → Award
 
-### Deprecated
-
-- **`/arckit.digital-marketplace`**: Now deprecated (replaced by dos, gcloud-search, gcloud-clarify)
-  - Still functional with clear deprecation notice
-  - Migration guide provided directing users to appropriate commands
-  - Will be removed in future version
 
 ### Benefits
 
