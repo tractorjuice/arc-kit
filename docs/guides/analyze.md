@@ -449,6 +449,152 @@ critical gaps in compliance (threat modeling, accessibility) and cost alignment
 
 ---
 
+## Integration with Other Requirements
+
+Project analysis integrates with and validates other ArcKit artifacts:
+
+### Links to Architecture Principles
+
+**Analysis validates compliance with principles:**
+- Security principles → Security requirements coverage
+- Performance principles → NFR-P requirements quality
+- Data principles → Data requirements completeness
+- Cloud principles → Infrastructure requirements
+- API principles → Integration requirements
+
+**Example:**
+If principle SEC-001 states "Zero Trust Architecture", analysis checks:
+- ✅ NFR-S requirements enforce least privilege
+- ✅ All API integrations use authentication
+- ✅ No implicit trust relationships in architecture
+
+**Action:** Analysis flags principle violations as high-priority issues.
+
+### Links to Stakeholder Analysis
+
+**Analysis validates stakeholder alignment:**
+- Business requirements → Stakeholder goals (G-xxx)
+- Success metrics → Stakeholder outcomes (O-xxx)
+- Priority conflicts → Stakeholder driver conflicts
+- Risk tolerance → Stakeholder concerns
+
+**Example:**
+If CFO has goal "G-1: Reduce costs 40%", analysis checks:
+- ✅ Business requirements include cost reduction (BR-003)
+- ✅ Success metrics measure TCO
+- ✅ Architecture decisions favor cost over features
+
+**Action:** Analysis identifies unaddressed stakeholder goals as gaps.
+
+### Links to Risk Register
+
+**Analysis validates risk management:**
+- All CRITICAL/HIGH risks have mitigation plans
+- Residual risk scores are acceptable
+- Risk owners are assigned and active
+- Risk-related requirements exist (e.g., RISK-005 → NFR-R-002)
+
+**Example:**
+If RISK-007 is "Vendor lock-in (HIGH)", analysis checks:
+- ⚠️ No INT requirements for abstraction layer
+- ⚠️ No multi-cloud architecture in design
+- ⚠️ Mitigation plan is "TBD"
+
+**Action:** Analysis flags unmitigated high risks as blockers.
+
+### Links to Business Case (SOBC)
+
+**Analysis validates business case assumptions:**
+- Requirements align with benefits claimed in Economic Case
+- Risks identified match Management Case (Part E)
+- Compliance requirements support Strategic Case
+- Costs are reasonable given scope
+
+**Example:**
+If SOBC claims "£500K annual savings from automation", analysis checks:
+- ✅ Functional requirements include automation (FR-015 to FR-022)
+- ⚠️ No success metrics to measure savings (missing BR-xxx)
+- ❌ No data requirements for reporting savings
+
+**Action:** Analysis validates business case is achievable given current scope.
+
+### Links to Requirements
+
+**Analysis validates requirements quality:**
+- All requirement types present (BR, FR, NFR, INT, DR)
+- Unique IDs with no duplicates
+- Acceptance criteria defined and testable
+- MoSCoW prioritization complete
+- No orphan requirements
+
+**Example:**
+If requirements.md has 45 FR but only 3 DR:
+- ⚠️ Data requirements likely incomplete
+- ⚠️ Expect 8-12 DR for typical system
+- ⚠️ GDPR/data protection not fully addressed
+
+**Action:** Analysis recommends adding missing requirement types.
+
+### Links to Data Model
+
+**Analysis validates data completeness:**
+- All DR-xxx requirements have corresponding entities
+- PII inventory matches GDPR requirements
+- Data governance roles assigned
+- No orphan entities (entities not required by any DR-xxx)
+
+**Example:**
+If DR-005 requires "Customer payment history", analysis checks:
+- ✅ Entity E-004 (PaymentHistory) exists
+- ✅ PII classification documented
+- ✅ Retention schedule defined (7 years)
+
+**Action:** Analysis flags data model gaps as high-priority.
+
+### Links to Design Reviews
+
+**Analysis validates architecture quality:**
+- HLD addresses all non-functional requirements
+- DLD provides implementation details for all FR
+- Architecture aligns with principles
+- Design decisions documented and rationale clear
+
+**Example:**
+If NFR-P-001 requires "< 200ms response time", analysis checks:
+- ✅ HLD includes caching strategy
+- ✅ DLD specifies Redis configuration
+- ⚠️ No load testing plan in review checklist
+
+**Action:** Analysis ensures design reviews are comprehensive.
+
+### Links to Traceability
+
+**Analysis uses traceability matrix:**
+- Requirements → Design elements (coverage %)
+- Requirements → Tests (validation %)
+- Gaps identified and tracked
+- Orphans flagged
+
+**Example:**
+Traceability matrix shows:
+- ✅ 42/45 FR have design elements (93%)
+- ⚠️ 35/45 FR have tests (78%)
+- ❌ FR-012, FR-019, FR-031 have no tests
+
+**Action:** Analysis identifies untested requirements as gaps.
+
+### Integration Summary
+
+**Analysis is the validation layer that ensures:**
+1. **Principles** → Requirements → Design → Tests (vertical alignment)
+2. **Stakeholders** → Goals → Requirements → Benefits (horizontal traceability)
+3. **Risks** → Mitigations → Requirements → Architecture (risk-driven design)
+4. **Compliance** → Requirements → Design → Evidence (audit readiness)
+
+**Without analysis, these connections break and project quality suffers.**
+
+---
+
 ## Best Practices
 
 ### 1. Run Analysis Regularly
@@ -478,6 +624,201 @@ critical gaps in compliance (threat modeling, accessibility) and cost alignment
 - Share analysis reports with governance board
 - Use for gate decision-making
 - Track improvement over time
+
+---
+
+## Common Gaps and How to Fix Them
+
+### Gap 1: Incomplete Requirements Coverage
+
+**Symptom:**
+- Analysis shows "Missing NFR-A-001 to NFR-A-005"
+- Requirements score < 70/100
+- Only 3 data requirements for complex system
+
+**Why It Happens:**
+- Teams focus on functional requirements
+- Non-functional requirements overlooked
+- Data/integration requirements left to "implementation"
+
+**How to Fix:**
+1. Run `/arckit.requirements` with comprehensive template
+2. Explicitly address all requirement types:
+   - BR (Business): 5-10 requirements
+   - FR (Functional): 20-50 requirements
+   - NFR (Non-Functional): 15-25 requirements (P, S, R, SC, U, M, A)
+   - INT (Integration): 3-8 per external system
+   - DR (Data): 8-15 requirements for GDPR/data protection
+3. Review each section with stakeholders
+4. Don't skip acceptance criteria
+
+**Prevention:** Use the requirements template checklist before running analysis.
+
+### Gap 2: Unmitigated High/Critical Risks
+
+**Symptom:**
+- Analysis shows "3 CRITICAL risks with no mitigation"
+- Risk score < 60/100
+- Mitigation plans say "TBD" or "Under discussion"
+
+**Why It Happens:**
+- Risk workshops identify risks but don't assign owners
+- Mitigation planning deferred to "later"
+- No governance forcing mitigation
+
+**How to Fix:**
+1. For each CRITICAL/HIGH risk, immediately:
+   - Assign owner (named person from RACI)
+   - Set mitigation due date (before next gate)
+   - Choose 4Ts strategy: Tolerate, Treat, Transfer, Terminate
+2. If "Treat", create specific requirements (e.g., RISK-007 → INT-005)
+3. Update risk register with mitigation actions
+4. Track weekly until residual risk is MEDIUM or lower
+
+**Prevention:** Don't leave risk workshop without assigned owners and due dates.
+
+### Gap 3: Poor Traceability Coverage (< 80%)
+
+**Symptom:**
+- Analysis shows "12 orphan requirements"
+- Traceability score < 70/100
+- Requirements have no design elements or tests
+
+**Why It Happens:**
+- Requirements written but not designed
+- Design elements not linked back to requirements
+- Testing disconnected from requirements
+- No traceability matrix maintained
+
+**How to Fix:**
+1. Run `/arckit.traceability` to generate matrix
+2. For each orphan requirement:
+   - Confirm it's still needed (delete if obsolete)
+   - Create design element (component, API, database table)
+   - Write test case (unit, integration, or acceptance test)
+   - Document the links in traceability matrix
+3. Update matrix weekly as design evolves
+4. Target 90%+ coverage before HLD review
+
+**Prevention:** Update traceability matrix every sprint, don't wait until gate.
+
+### Gap 4: Missing Compliance Evidence
+
+**Symptom:**
+- Analysis shows "GDPR: No DPA 2018 evidence"
+- Compliance score < 65/100
+- No documented compliance checks
+
+**Why It Happens:**
+- Compliance seen as "legal problem" not architecture problem
+- Evidence scattered across multiple documents
+- No systematic compliance checking
+
+**How to Fix:**
+1. For UK Gov projects:
+   - Run `/arckit.tcop` → Technology Code of Practice assessment
+   - Run `/arckit.secure` → Secure by Design review
+   - Run `/arckit.ai-playbook` → AI compliance (if AI system)
+2. For GDPR/DPA 2018:
+   - Ensure data model includes PII inventory
+   - Document legal basis for processing
+   - Create data subject rights procedures
+   - Define retention schedules
+3. Store all compliance evidence in `compliance/` directory
+4. Reference evidence in requirements (e.g., "NFR-C-001: GDPR Article 17 satisfied by DR-008")
+
+**Prevention:** Run compliance commands early (Alpha phase), not late (Beta).
+
+### Gap 5: Architecture-Principle Misalignment
+
+**Symptom:**
+- Analysis shows "Violates SEC-001: Zero Trust"
+- Architecture score < 70/100
+- Design decisions contradict principles
+
+**Why It Happens:**
+- Principles created but not enforced
+- Architects unaware of principles
+- Convenience overrides principles
+
+**How to Fix:**
+1. Review `.arckit/memory/architecture-principles.md`
+2. For each violated principle:
+   - Understand the principle rationale
+   - Refactor design to align (or justify deviation)
+   - Add requirements to enforce principle (e.g., SEC-001 → NFR-S-003)
+3. Update HLD to reference principles explicitly
+4. In design reviews, check compliance with principles
+
+**Prevention:** Reference principles when making architecture decisions, not after.
+
+### Gap 6: Stakeholder Goals Not Addressed
+
+**Symptom:**
+- Analysis shows "CFO goal G-1 not addressed"
+- Stakeholder alignment score < 75/100
+- No requirements trace to stakeholder goals
+
+**Why It Happens:**
+- Stakeholder analysis done but not used
+- Requirements written in isolation
+- No one checks if goals are satisfied
+
+**How to Fix:**
+1. Open `stakeholder-drivers.md`
+2. For each unaddressed goal:
+   - Create business requirement (BR-xxx) that satisfies goal
+   - Define success metric to measure goal achievement
+   - Assign priority based on stakeholder power/interest
+3. Add traceability: "BR-003 addresses CFO's goal G-1"
+4. Review with stakeholder to confirm alignment
+
+**Prevention:** Write requirements WITH stakeholder analysis open, not separate.
+
+### Gap 7: No Success Metrics or KPIs
+
+**Symptom:**
+- Analysis shows "No measurable success criteria"
+- Business requirements score < 60/100
+- Can't tell if project succeeded
+
+**Why It Happens:**
+- Focus on "what to build" not "what success looks like"
+- Metrics seen as PM problem not architecture problem
+- Fear of accountability for measurable targets
+
+**How to Fix:**
+1. For each business requirement, add:
+   - **Baseline**: Current state (e.g., "Current: 5-day procurement cycle")
+   - **Target**: Desired state (e.g., "Target: 1-day procurement cycle")
+   - **Metric**: How to measure (e.g., "Average days from RFP to vendor selected")
+   - **Measurement**: When/how often (e.g., "Monthly, tracked in PowerBI")
+2. Ensure metrics align with stakeholder outcomes (O-xxx)
+3. Include metrics in business case Economic Case (benefits)
+4. Plan measurement infrastructure (data collection, dashboards)
+
+**Prevention:** Don't approve BR without measurable acceptance criteria.
+
+### Gap 8: Analysis Run Too Late
+
+**Symptom:**
+- Analysis run at Beta gate, finds 40 critical issues
+- Project delayed 6 weeks to fix issues
+- Cost of fixing 10x higher than if caught in Alpha
+
+**Why It Happens:**
+- Analysis seen as "gate requirement" not "quality tool"
+- Team thinks analysis is for auditors not developers
+- No culture of continuous improvement
+
+**How to Fix:**
+1. Run `/arckit.analyze` weekly during active development
+2. Treat analysis as sprint retrospective input
+3. Fix issues immediately when found (cost is low)
+4. Track improvement trend over time
+5. Celebrate score improvements
+
+**Prevention:** Integrate analysis into sprint cadence, not just gates.
 
 ---
 
@@ -532,4 +873,4 @@ For issues or questions:
 ---
 
 **Last updated**: 2025-10-28
-**ArcKit Version**: 0.3.6
+**ArcKit Version**: 0.4.0
