@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 25 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
+    <meta name="keywords" content="enterprise architecture, UK government, GDS, architecture governance, vendor procurement, ArcKit, compliance, TCOP, secure by design">
+    <meta name="author" content="ArcKit">
+    <title>ArcKit - Enterprise Architecture Governance & Vendor Procurement</title>
+
+    <style>
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-dark: #1e40af;
+            --color-secondary: #059669;
+            --color-secondary-dark: #047857;
+            --color-gray-50: #f9fafb;
+            --color-gray-100: #f3f4f6;
+            --color-gray-200: #e5e7eb;
+            --color-gray-300: #d1d5db;
+            --color-gray-600: #4b5563;
+            --color-gray-700: #374151;
+            --color-gray-800: #1f2937;
+            --color-gray-900: #111827;
+            --max-width: 1200px;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            line-height: 1.6;
+            color: var(--color-gray-800);
+            background: white;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 700;
+            line-height: 1.2;
+            color: var(--color-gray-900);
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--color-gray-700);
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: var(--color-primary-dark);
+        }
+
+        /* Layout */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 var(--spacing-sm);
+        }
+
+        section {
+            padding: var(--spacing-lg) 0;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: white;
+            border-bottom: 1px solid var(--color-gray-200);
+            z-index: 1000;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        nav .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-primary);
+        }
+
+        nav .logo img {
+            height: 32px;
+            margin-right: 0.5rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: var(--color-gray-700);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--color-primary);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--color-gray-700);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            color: white;
+            text-align: center;
+            padding: var(--spacing-xl) 0;
+        }
+
+        .hero h1 {
+            color: white;
+            font-size: 3.5rem;
+        }
+
+        .hero .tagline {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero .subtitle {
+            font-size: 1.25rem;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--color-primary);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Version Badge */
+        .version-badge {
+            display: inline-block;
+            background: var(--color-secondary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .grid-2 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        }
+
+        .grid-3 {
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        }
+
+        .grid-4 {
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border: 1px solid var(--color-gray-200);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            border-color: var(--color-primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            color: var(--color-gray-900);
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: var(--color-gray-600);
+            font-size: 0.9375rem;
+        }
+
+        /* Features Section */
+        .features {
+            background: var(--color-gray-50);
+        }
+
+        .feature-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: var(--color-secondary);
+            font-weight: bold;
+            margin-right: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        /* Phases Section */
+        .phases {
+            background: white;
+        }
+
+        .phase-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .phase-box {
+            flex: 1;
+            min-width: 150px;
+            background: var(--color-gray-50);
+            border: 2px solid var(--color-primary);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        .phase-arrow {
+            font-size: 2rem;
+            color: var(--color-gray-400);
+        }
+
+        /* Commands Section */
+        .commands {
+            background: var(--color-gray-50);
+        }
+
+        .command-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .command-phase {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .command-phase h3 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .command-list {
+            list-style: none;
+        }
+
+        .command-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--color-gray-100);
+        }
+
+        .command-list li:last-child {
+            border-bottom: none;
+        }
+
+        .command-name {
+            font-family: 'Courier New', monospace;
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--color-gray-900);
+            color: #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .code-block code {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: var(--color-primary);
+            color: white;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .stat-label {
+            font-size: 1.125rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-gray-900);
+            color: var(--color-gray-300);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: var(--color-gray-300);
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--color-gray-700);
+            padding-top: 2rem;
+            text-align: center;
+            color: var(--color-gray-400);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.75rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .tagline {
+                font-size: 1.25rem;
+            }
+
+            nav ul {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                gap: 0;
+                box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            }
+
+            nav ul.active {
+                display: flex;
+            }
+
+            nav ul li {
+                padding: 1rem;
+                border-bottom: 1px solid var(--color-gray-200);
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .phase-arrow {
+                display: none;
+            }
+
+            section {
+                padding: var(--spacing-md) 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">
+                <span>ArcKit</span>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul id="nav-menu">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#workflow">Workflow</a></li>
+                <li><a href="#commands">Commands</a></li>
+                <li><a href="#docs">Documentation</a></li>
+                <li><a href="#getting-started">Get Started</a></li>
+                <li><a href="https://github.com/tractorjuice/arc-kit" target="_blank">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="version-badge">v0.4.0 - Latest Release</div>
+            <h1>ArcKit</h1>
+            <p class="tagline">Enterprise Architecture Governance & Vendor Procurement</p>
+            <p class="subtitle">25 AI-assisted commands for systematic, compliant project delivery following UK Government standards</p>
+            <div class="cta-buttons">
+                <a href="#getting-started" class="btn btn-primary">Get Started</a>
+                <a href="#docs" class="btn btn-secondary">View Documentation</a>
+                <a href="https://github.com/tractorjuice/arc-kit" class="btn btn-secondary" target="_blank">Star on GitHub ⭐</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">25</div>
+                    <div class="stat-label">AI Commands</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">AI Systems</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Documentation</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">v0.4.0</div>
+                    <div class="stat-label">Active Development</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 style="text-align: center;">Why ArcKit?</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 3rem;">Stop drowning in architecture documents. Start shipping quality systems.</p>
+
+            <div class="grid grid-4">
+                <div class="card">
+                    <div class="card-icon">📋</div>
+                    <h3>Systematic</h3>
+                    <p>25-command workflow covers Discovery to Live following GDS Agile Delivery methodology</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">✅</div>
+                    <h3>Compliant</h3>
+                    <p>Built-in UK Government standards: TCOP, Secure by Design, Orange Book, Green Book</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🔍</div>
+                    <h3>Auditable</h3>
+                    <p>Complete traceability from requirements to tests. Git-based workflow with audit trail</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h3>AI-Assisted</h3>
+                    <p>Works with Claude Code, OpenAI Codex CLI, and Gemini CLI. Choose your preferred AI</p>
+                </div>
+            </div>
+
+            <div style="margin-top: 3rem;">
+                <h3>What You Get</h3>
+                <div class="grid grid-2">
+                    <div>
+                        <ul class="feature-list">
+                            <li><strong>Project Planning</strong> - GDS phases with Mermaid Gantt charts</li>
+                            <li><strong>Stakeholder Analysis</strong> - Power-Interest Grid, RACI, conflict resolution</li>
+                            <li><strong>Risk Management</strong> - HM Treasury Orange Book methodology</li>
+                            <li><strong>Business Case</strong> - Green Book 5-case model (Strategic, Economic, etc.)</li>
+                            <li><strong>Requirements</strong> - BR, FR, NFR, INT, DR with full traceability</li>
+                            <li><strong>Data Modeling</strong> - ERD diagrams, GDPR/DPA 2018 compliance</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="feature-list">
+                            <li><strong>Wardley Mapping</strong> - Strategic planning and build vs buy decisions</li>
+                            <li><strong>Vendor Procurement</strong> - Digital Marketplace (DOS, G-Cloud), SOW, evaluation</li>
+                            <li><strong>Design Reviews</strong> - HLD/DLD reviews with comprehensive checklists</li>
+                            <li><strong>Architecture Diagrams</strong> - C4 model with Mermaid (Context, Container, Component)</li>
+                            <li><strong>Compliance</strong> - TCOP, Secure by Design (UK Gov + MOD), ATRS, AI Playbook</li>
+                            <li><strong>Analysis</strong> - Quality analysis, traceability matrix, ServiceNow export</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Workflow Section -->
+    <section id="workflow" class="phases">
+        <div class="container">
+            <h2 style="text-align: center;">GDS Agile Delivery Workflow</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem;">ArcKit follows UK Government Digital Service standards for agile project delivery</p>
+
+            <div class="phase-flow">
+                <div class="phase-box">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🗓️</div>
+                    <div>Phase 0</div>
+                    <div style="font-size: 0.875rem; margin-top: 0.25rem;">Planning</div>
+                </div>
+                <div class="phase-arrow">→</div>
+                <div class="phase-box">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+                    <div>Discovery</div>
+                    <div style="font-size: 0.875rem; margin-top: 0.25rem;">Understand</div>
+                </div>
+                <div class="phase-arrow">→</div>
+                <div class="phase-box">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🚀</div>
+                    <div>Alpha</div>
+                    <div style="font-size: 0.875rem; margin-top: 0.25rem;">Prototype</div>
+                </div>
+                <div class="phase-arrow">→</div>
+                <div class="phase-box">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🛠️</div>
+                    <div>Beta</div>
+                    <div style="font-size: 0.875rem; margin-top: 0.25rem;">Build</div>
+                </div>
+                <div class="phase-arrow">→</div>
+                <div class="phase-box">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">✨</div>
+                    <div>Live</div>
+                    <div style="font-size: 0.875rem; margin-top: 0.25rem;">Operate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commands Section -->
+    <section id="commands" class="commands">
+        <div class="container">
+            <h2 style="text-align: center;">25 Commands Organized by Phase</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem;">Every command generates comprehensive documentation following best practices and UK Gov standards</p>
+
+            <div class="command-grid">
+                <div class="command-phase">
+                    <h3>📋 Phase 0: Planning</h3>
+                    <ul class="command-list">
+                        <li><span class="command-name">/arckit.plan</span> - Create project plan with Gantt charts, phases, and gates</li>
+                    </ul>
+                </div>
+
+                <div class="command-phase">
+                    <h3>🔍 Discovery Phase</h3>
+                    <ul class="command-list">
+                        <li><span class="command-name">/arckit.principles</span> - Architecture principles</li>
+                        <li><span class="command-name">/arckit.stakeholders</span> - Stakeholder analysis</li>
+                        <li><span class="command-name">/arckit.risk</span> - Risk register (Orange Book)</li>
+                        <li><span class="command-name">/arckit.sobc</span> - Business case (Green Book)</li>
+                    </ul>
+                </div>
+
+                <div class="command-phase">
+                    <h3>🚀 Alpha Phase</h3>
+                    <ul class="command-list">
+                        <li><span class="command-name">/arckit.requirements</span> - Comprehensive requirements</li>
+                        <li><span class="command-name">/arckit.data-model</span> - Data model with GDPR</li>
+                        <li><span class="command-name">/arckit.wardley</span> - Wardley mapping</li>
+                        <li><span class="command-name">/arckit.research</span> - Technology research</li>
+                        <li><span class="command-name">/arckit.dos</span> - Digital Outcomes & Specialists</li>
+                        <li><span class="command-name">/arckit.gcloud</span> - G-Cloud procurement</li>
+                        <li><span class="command-name">/arckit.sow</span> - Statement of Work</li>
+                        <li><span class="command-name">/arckit.evaluate</span> - Vendor evaluation</li>
+                    </ul>
+                </div>
+
+                <div class="command-phase">
+                    <h3>🛠️ Beta Phase</h3>
+                    <ul class="command-list">
+                        <li><span class="command-name">/arckit.hld-review</span> - High-Level Design review</li>
+                        <li><span class="command-name">/arckit.dld-review</span> - Detailed Design review</li>
+                        <li><span class="command-name">/arckit.diagram</span> - Architecture diagrams (C4)</li>
+                        <li><span class="command-name">/arckit.traceability</span> - Traceability matrix</li>
+                        <li><span class="command-name">/arckit.analyze</span> - Quality analysis</li>
+                    </ul>
+                </div>
+
+                <div class="command-phase">
+                    <h3>✅ Compliance</h3>
+                    <ul class="command-list">
+                        <li><span class="command-name">/arckit.secure</span> - UK Gov Secure by Design</li>
+                        <li><span class="command-name">/arckit.mod-secure</span> - MOD Secure by Design</li>
+                        <li><span class="command-name">/arckit.tcop</span> - Technology Code of Practice</li>
+                        <li><span class="command-name">/arckit.atrs</span> - AI Transparency Standards</li>
+                        <li><span class="command-name">/arckit.ai-playbook</span> - UK Gov AI Playbook</li>
+                    </ul>
+                </div>
+
+                <div class="command-phase">
+                    <h3>📊 Analysis</h3>
+                    <ul class="command-list">
+                        <li><span class="command-name">/arckit.servicenow</span> - Export to ServiceNow CMDB</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Multi-AI Section -->
+    <section class="features">
+        <div class="container">
+            <h2 style="text-align: center;">Works With Your Preferred AI</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem;">ArcKit supports three major AI assistants. Choose the one that fits your workflow.</p>
+
+            <div class="grid grid-3">
+                <div class="card">
+                    <h3>Claude Code</h3>
+                    <p><strong>Format:</strong> <code>/arckit.plan</code></p>
+                    <p><strong>Location:</strong> <code>.claude/commands/</code></p>
+                    <p>Anthropic's AI assistant with native code understanding and enterprise features.</p>
+                </div>
+
+                <div class="card">
+                    <h3>OpenAI Codex CLI</h3>
+                    <p><strong>Format:</strong> <code>/prompts:arckit.plan</code></p>
+                    <p><strong>Location:</strong> <code>.codex/prompts/</code></p>
+                    <p>ChatGPT Plus powered CLI with terminal integration and CODEX_HOME support.</p>
+                </div>
+
+                <div class="card">
+                    <h3>Gemini CLI</h3>
+                    <p><strong>Format:</strong> <code>arckit plan</code></p>
+                    <p><strong>Location:</strong> <code>.gemini/commands/arckit/</code></p>
+                    <p>Google's Gemini AI with automatic command conversion via converter script.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section style="background: white;">
+        <div class="container">
+            <h2 style="text-align: center;">Real-World Use Cases</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem;">ArcKit is being used for complex UK Government and public sector projects</p>
+
+            <div class="grid grid-3">
+                <div class="card">
+                    <div class="card-icon">🏥</div>
+                    <h3>NHS Appointment System</h3>
+                    <p>Patient booking system with GDPR compliance, HL7 FHIR integration, and 99.95% uptime SLA</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">🛡️</div>
+                    <h3>MOD Secure Messaging</h3>
+                    <p>Defense-grade secure communications with MOD Secure by Design and SECRET classification</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💰</div>
+                    <h3>HMRC Chatbot</h3>
+                    <p>Tax assistance chatbot with AI Playbook compliance and citizen-facing services</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">📄</div>
+                    <h3>Patent System</h3>
+                    <p>Intellectual Property Office patent search and filing modernization</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💼</div>
+                    <h3>Microsoft 365 Integration</h3>
+                    <p>SharePoint, Teams, and Azure AD integration for government departments</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">💳</div>
+                    <h3>Payment Gateway</h3>
+                    <p>PCI-DSS compliant payment processing for Digital Marketplace transactions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Section -->
+    <section id="docs" class="features">
+        <div class="container">
+            <h2 style="text-align: center;">Comprehensive Documentation</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 2rem;">Every command has detailed guides with examples, best practices, and common pitfalls</p>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <h3>📚 25 Command Guides</h3>
+                    <p>Complete documentation for every command with:</p>
+                    <ul class="feature-list">
+                        <li>What it does and why it matters</li>
+                        <li>When to use it in the workflow</li>
+                        <li>Integration with other commands</li>
+                        <li>Common gaps and how to fix them</li>
+                        <li>Examples and templates</li>
+                    </ul>
+                    <a href="guides/">Browse All Guides →</a>
+                </div>
+
+                <div class="card">
+                    <h3>🚀 Quick Start</h3>
+                    <p>Get started in minutes:</p>
+                    <ul class="feature-list">
+                        <li>Installation for all 3 AI systems</li>
+                        <li>Project initialization</li>
+                        <li>Running your first command</li>
+                        <li>Understanding output structure</li>
+                        <li>Phase-by-phase workflow</li>
+                    </ul>
+                    <a href="QUICKSTART.md">Read Quick Start →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Getting Started Section -->
+    <section id="getting-started" style="background: white;">
+        <div class="container">
+            <h2 style="text-align: center;">Get Started in 5 Minutes</h2>
+
+            <div style="max-width: 800px; margin: 0 auto;">
+                <h3>1. Clone the Repository</h3>
+                <div class="code-block"><code>git clone https://github.com/tractorjuice/arc-kit.git
+cd arc-kit</code></div>
+
+                <h3>2. Choose Your AI Assistant</h3>
+                <p>ArcKit works with Claude Code, OpenAI Codex CLI, or Gemini CLI. Commands are ready to use in:</p>
+                <ul class="feature-list">
+                    <li><code>.claude/commands/</code> - For Claude Code users</li>
+                    <li><code>.codex/prompts/</code> - For Codex CLI users (set <code>CODEX_HOME</code>)</li>
+                    <li><code>.gemini/commands/arckit/</code> - For Gemini CLI users</li>
+                </ul>
+
+                <h3>3. Start with a Plan</h3>
+                <div class="code-block"><code># Claude Code
+/arckit.plan Create project plan for cloud migration with 6-month timeline
+
+# Codex CLI
+/prompts:arckit.plan Create project plan for cloud migration with 6-month timeline
+
+# Gemini CLI
+arckit plan Create project plan for cloud migration with 6-month timeline</code></div>
+
+                <h3>4. Follow the Workflow</h3>
+                <p>Your project plan will show when to run each command:</p>
+                <ul class="feature-list">
+                    <li><strong>Discovery</strong>: Stakeholders → Risk → Business Case</li>
+                    <li><strong>Alpha</strong>: Requirements → Data Model → Vendor Procurement</li>
+                    <li><strong>Beta</strong>: Design Reviews → Traceability → Compliance</li>
+                    <li><strong>Live</strong>: Deployment → Analysis → Benefits Realization</li>
+                </ul>
+
+                <div style="text-align: center; margin-top: 3rem;">
+                    <a href="https://github.com/tractorjuice/arc-kit" class="btn btn-primary" target="_blank">View on GitHub</a>
+                    <a href="https://github.com/tractorjuice/arc-kit/releases/latest" class="btn btn-secondary" target="_blank">Download v0.4.0</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>ArcKit</h4>
+                    <p>Enterprise Architecture Governance & Vendor Procurement Toolkit</p>
+                    <p style="margin-top: 1rem;">MIT License | Open Source</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Documentation</h4>
+                    <ul>
+                        <li><a href="guides/">All Guides</a></li>
+                        <li><a href="QUICKSTART.md">Quick Start</a></li>
+                        <li><a href=".claude/COMMANDS.md">Command Reference</a></li>
+                        <li><a href="CHANGELOG.md">Changelog</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="https://github.com/tractorjuice/arc-kit" target="_blank">GitHub Repository</a></li>
+                        <li><a href="https://github.com/tractorjuice/arc-kit/releases" target="_blank">Releases</a></li>
+                        <li><a href="https://github.com/tractorjuice/arc-kit/issues" target="_blank">Issues</a></li>
+                        <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/LICENSE" target="_blank">License</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <ul>
+                        <li><a href="https://github.com/tractorjuice/arc-kit/discussions" target="_blank">Discussions</a></li>
+                        <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md" target="_blank">Contributing</a></li>
+                        <li><a href="https://github.com/tractorjuice/arc-kit" target="_blank">Star on GitHub ⭐</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 ArcKit. Built with ❤️ for enterprise architects who want systematic, AI-assisted governance.</p>
+                <p style="margin-top: 0.5rem;">Latest Release: v0.4.0 - "Plan First, Execute Right"</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile menu toggle
+        function toggleMenu() {
+            const menu = document.getElementById('nav-menu');
+            menu.classList.toggle('active');
+        }
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('nav-menu').classList.remove('active');
+            });
+        });
+
+        // Smooth scroll for anchor links (already handled by CSS scroll-behavior)
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (event) => {
+            const menu = document.getElementById('nav-menu');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+
+            if (!menu.contains(event.target) && !toggle.contains(event.target)) {
+                menu.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
