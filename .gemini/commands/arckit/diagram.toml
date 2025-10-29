@@ -1,4 +1,6 @@
-description = "Generate architecture diagrams using Mermaid for visual documentation"
+description = """
+Generate architecture diagrams using Mermaid for visual documentation
+"""
 prompt = """
 # ArcKit: Architecture Diagram Generation
 

@@ -1,4 +1,6 @@
-description = "Create strategic Wardley Maps for architecture decisions and build vs buy analysis"
+description = """
+Create strategic Wardley Maps for architecture decisions and build vs buy analysis
+"""
 prompt = """
 # ArcKit: Wardley Mapping for Strategic Architecture
 
