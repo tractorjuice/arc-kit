@@ -13,7 +13,7 @@ $ARGUMENTS
 ## Instructions
 
 1. **Create or find the project**:
-   - Run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create project structure
+   - Run `.arckit/scripts/bash/create-project.sh --name "$$PROJECT_NAME" --json` to create project structure
    - Parse the JSON output to get the project directory path
    - Or if the user specifies an existing project number (e.g., "001"), use that directory
 
