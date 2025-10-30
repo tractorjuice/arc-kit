@@ -89,6 +89,7 @@ ArcKit plans follow the **GDS Agile Delivery framework**:
 - `/arckit.principles` - Define architecture principles
 - `/arckit.business-case` - Draft business case
 - `/arckit.risk-register` - Initial risk identification
+- `/arckit.service-assessment` - Prepare for Discovery Assessment (run 2 weeks before)
 
 **Gate**: Discovery Assessment
 - **Criteria**: Problem validated, approach feasible, business case sound
@@ -120,6 +121,7 @@ ArcKit plans follow the **GDS Agile Delivery framework**:
 - `/arckit.hld-review` - HLD approval gate
 - `/arckit.business-case` - Update with detailed costs
 - `/arckit.risk-register` - Update with design risks
+- `/arckit.service-assessment` - Prepare for Alpha Assessment (run 2 weeks before)
 
 **Gate**: Alpha Assessment
 - **Criteria**: HLD approved, requirements complete, vendor selected
@@ -148,6 +150,7 @@ ArcKit plans follow the **GDS Agile Delivery framework**:
 - `/arckit.traceability` - Verify design → code → tests
 - `/arckit.atrs` - Algorithmic Transparency (if AI)
 - `/arckit.ai-playbook` - AI compliance (if AI)
+- `/arckit.service-assessment` - Prepare for Beta Assessment (run 2 weeks before)
 
 **Gate**: Beta Assessment (Go/No-Go)
 - **Criteria**: All tests passed, UAT complete, production ready
@@ -318,6 +321,7 @@ graph TB
 | 7 | Architecture Principles | `/arckit.principles` | 10-15 principles |
 | 8 | Initial Business Case | `/arckit.business-case` | Cost/benefit analysis |
 | 8 | Initial Risk Register | `/arckit.risk-register` | Top 10 risks |
+| 6-7 | Service Assessment Prep | `/arckit.service-assessment` | Readiness report for gate |
 
 ### Gate: Discovery Assessment (Week 8)
 
@@ -354,6 +358,7 @@ graph TB
 | 16 | Security Threat Model | `/arckit.threat-model` | STRIDE model |
 | 17 | HLD Review Prep | Manual | HLD document finalized |
 | 18 | HLD Review | `/arckit.hld-review` | HLD approval or feedback |
+| 18-19 | Service Assessment Prep | `/arckit.service-assessment` | Readiness report for gate |
 | 19 | Updated Business Case | `/arckit.business-case` | Detailed costs, ROI |
 | 20 | Alpha Assessment | Manual | Gate decision |
 
@@ -411,6 +416,7 @@ graph TB
 | 32-33 | Security Testing | Manual | SAST, DAST, pen test |
 | 34-35 | Performance Testing | Manual | Load tests, 10K TPS |
 | 35-36 | User Acceptance Testing | Manual | UAT sign-off |
+| 34-35 | Service Assessment Prep | `/arckit.service-assessment` | Readiness report for gate |
 | 36 | Operational Readiness | Manual | Runbooks, monitoring |
 | 36 | Beta Assessment | Manual | Go/No-Go decision |
 
@@ -656,5 +662,5 @@ For issues or questions:
 
 ---
 
-**Last updated**: 2025-10-28
-**ArcKit Version**: 0.3.6
+**Last updated**: 2025-10-30
+**ArcKit Version**: 0.5.0
