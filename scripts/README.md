@@ -337,7 +337,7 @@ python scripts/converter.py
 # Output:
 # Converted .claude/commands/arckit.plan.md to .gemini/commands/arckit/plan.toml
 # Converted .claude/commands/arckit.principles.md to .gemini/commands/arckit/principles.toml
-# ... (25 commands total)
+# ... (26 commands total)
 ```
 
 **Use Cases**:

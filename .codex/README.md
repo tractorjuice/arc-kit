@@ -82,6 +82,7 @@ Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 /prompts:arckit.dld-review Review detailed design for security
 
 # Phase 9: Compliance & Security
+/prompts:arckit.service-assessment GDS Service Standard assessment preparation
 /prompts:arckit.secure UK Government Secure by Design review
 /prompts:arckit.mod-secure MOD Secure by Design review
 /prompts:arckit.tcop Technology Code of Practice assessment

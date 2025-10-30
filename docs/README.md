@@ -35,6 +35,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 14. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
 
 ### UK Government
+- [Service Assessment](guides/service-assessment.md) - `/arckit.service-assessment` ⭐ NEW
 - [Digital Marketplace](guides/uk-government/digital-marketplace.md) - `/arckit.gcloud-search`, `/arckit.gcloud-clarify`, `/arckit.dos`
 - [Technology Code of Practice](guides/uk-government/technology-code-of-practice.md) - `/arckit.tcop` ⭐ NEW
 - [AI Playbook](guides/uk-government/ai-playbook.md) - `/arckit.ai-playbook` ⭐ NEW
@@ -104,13 +105,14 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.servicenow` | [design-review.md](guides/design-review.md) | ✅ Complete |
 | `/arckit.traceability` | [traceability.md](guides/traceability.md) | ✅ Complete |
 | `/arckit.analyze` | [analyze.md](guides/analyze.md) | ✅ Complete |
+| `/arckit.service-assessment` | [service-assessment.md](guides/service-assessment.md) | ✅ Complete |
 | `/arckit.tcop` | [technology-code-of-practice.md](guides/uk-government/technology-code-of-practice.md) | ✅ Complete |
 | `/arckit.ai-playbook` | [ai-playbook.md](guides/uk-government/ai-playbook.md) | ✅ Complete |
 | `/arckit.atrs` | [algorithmic-transparency.md](guides/uk-government/algorithmic-transparency.md) | ✅ Complete |
 | `/arckit.secure` | [secure-by-design.md](guides/uk-government/secure-by-design.md) | ✅ Complete |
 | `/arckit.mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
 
-**Coverage**: 25/26 commands documented (100%) ✅ COMPLETE
+**Coverage**: 26/26 commands documented (100%) ✅ COMPLETE
 
 ---
 
@@ -122,5 +124,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2025-10-28
+**Last updated**: 2025-10-30
 **ArcKit Version**: 0.5.0
