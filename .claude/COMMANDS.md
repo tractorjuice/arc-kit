@@ -26,6 +26,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.servicenow` | Generate ServiceNow service design | After architecture, bridge to operations |
 | `/arckit.traceability` | Generate traceability matrix | Throughout project, especially before release |
 | `/arckit.analyze` | Comprehensive quality analysis | Periodically throughout project |
+| `/arckit.service-assessment` | GDS Service Standard assessment preparation | Before alpha/beta/live assessments (UK Gov) |
 | `/arckit.tcop` | UK Gov Technology Code of Practice assessment | UK Government projects (all phases) |
 | `/arckit.ai-playbook` | UK Gov AI Playbook compliance | UK Government AI projects |
 | `/arckit.atrs` | UK Gov Algorithmic Transparency Record | UK Government AI systems |
@@ -1010,6 +1011,132 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 
 ---
 
+### 16. `/arckit.service-assessment` - GDS Service Standard Assessment Preparation
+
+**Purpose**: Prepare for mandatory UK Government GDS Service Standard assessments by analyzing evidence against all 14 points, identifying gaps, and generating readiness reports.
+
+**Usage**:
+```
+/arckit.service-assessment PHASE=alpha
+/arckit.service-assessment PHASE=beta DATE=2025-12-15
+/arckit.service-assessment PHASE=live
+```
+
+**What it does**:
+- Analyzes ALL ArcKit artifacts as evidence for 14 Service Standard points
+- Provides phase-appropriate gap analysis (alpha/beta/live have different evidence requirements)
+- Generates RAG (Red/Amber/Green) ratings per point + overall readiness score
+- Creates actionable recommendations with priorities (Critical/High/Medium) and timelines
+- Includes comprehensive assessment day preparation guidance
+- Maps ArcKit artifacts to Service Standard evidence requirements
+- Identifies what's ready vs what needs work before booking assessment
+
+**The 14 Service Standard Points**:
+1. Understand users and their needs
+2. Solve a whole problem for users
+3. Provide a joined up experience across all channels
+4. Make the service simple to use
+5. Make sure everyone can use the service
+6. Have a multidisciplinary team
+7. Use agile ways of working
+8. Iterate and improve frequently
+9. Create a secure service which protects users' privacy
+10. Define what success looks like and publish performance data
+11. Choose the right tools and technology
+12. Make new source code open
+13. Use and contribute to open standards, common components and patterns
+14. Operate a reliable service
+
+**Evidence Mapping Examples**:
+```
+Point 1 (Understand users) ← stakeholder-drivers.md + requirements.md (user stories)
+Point 5 (Accessibility) ← requirements.md (WCAG 2.1 AA) + ukgov-secure-by-design.md
+Point 9 (Security) ← ukgov-secure-by-design.md + data-model.md (GDPR) + atrs-record.md
+Point 11 (Right tools) ← research/ + wardley-maps/ + tcop-assessment.md
+Point 14 (Reliable) ← requirements.md (availability NFRs) + hld-review.md (resilience)
+```
+
+**RAG Rating System**:
+- **🟢 Green**: All critical evidence present → Ready to present confidently
+- **🟡 Amber**: Evidence exists but gaps/weaknesses → Needs strengthening (1-2 weeks)
+- **🔴 Red**: Critical evidence missing → Must address before booking (3+ weeks)
+
+**Overall Readiness**:
+- **🟢 Ready to book**: 12+ points Green, max 2 Amber, 0 Red
+- **🟡 Nearly ready**: 10+ points Green/Amber, max 2 Red
+- **🔴 Not ready**: More than 2 Red points (complete critical actions first)
+
+**Phase-Appropriate Evidence**:
+
+**Alpha** (lower bar - proving viability):
+- User research with real users (CRITICAL)
+- Technology viability proven
+- Team has right skills
+- Performance data not required (targets defined is enough)
+
+**Beta** (higher bar - proving production readiness):
+- WCAG 2.1 AA audit completed (CRITICAL)
+- Security testing done
+- Performance monitoring in place
+- End-to-end service working
+
+**Live** (highest bar - operational excellence):
+- Performance data published on GOV.UK (CRITICAL - 4 mandatory KPIs)
+- User satisfaction tracked
+- Continuous improvement demonstrated
+- Operational maturity proven
+
+**Outputs**:
+- `projects/{project-dir}/service-assessment-alpha-prep.md` (for alpha)
+- `projects/{project-dir}/service-assessment-beta-prep.md` (for beta)
+- `projects/{project-dir}/service-assessment-live-prep.md` (for live)
+
+**Report Structure**:
+1. **Executive Summary**: Overall readiness, score (X/14), critical gaps, timeline
+2. **14-Point Assessment**: Detailed section per point with evidence found, gaps, recommendations
+3. **Evidence Inventory**: Complete traceability matrix (Service Standard Point → ArcKit Artifacts)
+4. **Preparation Checklist**: Critical/High/Medium priority actions with timelines
+5. **Assessment Day Prep**: Documentation to share, who should attend, 4-hour timeline, tips
+6. **After Assessment**: Handling Amber ratings, tracking progress, next steps
+
+**When to use**:
+- **Early in phase**: Week 0-1 to understand evidence requirements and plan work
+- **Mid-phase**: Week 4-6 to check progress and identify emerging gaps
+- **Pre-assessment**: 2 weeks before assessment date for final readiness check
+- **Weekly**: Re-run weekly during assessment prep to track Red → Amber → Green progress
+
+**Assessment Timeline**:
+```
+Week 0: Run command, identify critical gaps (Red ratings)
+Week 1-2: Address Red ratings (user research, accessibility approach, security)
+Week 3-4: Strengthen Amber ratings (testing, documentation, reviews)
+Week 5-6: Final prep, book assessment (5 weeks in advance)
+Week 7: Share documentation with panel (1 week before)
+Week 8: Assessment day (4 hours with GDS panel)
+```
+
+**Time Savings**:
+- Manual assessment prep: **2-4 weeks**
+- With this command: **2-3 days**
+- **~80% reduction in preparation time**
+
+**UK Government Context**:
+Mandatory for all UK Government digital services at:
+- End of alpha (before building)
+- Mid-beta (private to public beta transition)
+- Before live (production launch)
+
+Assessments conducted by GDS-trained panels, 4 hours, resulting in Green (pass), Amber (conditional pass), or Red (fail) ratings.
+
+**Next steps**:
+- If Green/Amber → Book assessment 5 weeks in advance
+- If Red → Complete critical actions first, re-run command weekly
+- After assessment → Track any Amber points, update artifacts
+
+**Guide**: See [docs/guides/service-assessment.md](../docs/guides/service-assessment.md) for complete workflow
+
+---
+
 ## Best Practices
 
 ### 1. Follow the Workflow
@@ -1263,5 +1390,5 @@ For issues or questions:
 
 ---
 
-**Last updated**: 2025-10-28
-**ArcKit Version**: 0.3.6
+**Last updated**: 2025-10-30
+**ArcKit Version**: 0.5.0
