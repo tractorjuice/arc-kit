@@ -345,14 +345,14 @@ EOF
 
 ## Version
 
-ArcKit v0.4.1 (25 commands)
+ArcKit v0.5.0 (26 commands)
 
-**What's New in v0.4.1:**
+**What's New in v0.5.0:**
 - 🗓️ **Project Planning**: `/arckit:plan` - Comprehensive project planning with GDS Agile Delivery phases
 - 📚 **Documentation Expansion**: 660-line planning guide, expanded design review (+167 lines) and procurement (+191 lines) guides
 - 🚀 **Multi-AI Deployment**: Plan command deployed to all three AI systems (Claude, Codex, Gemini)
 - 📋 **Updated Workflow**: Plan-first approach with Phase 0 before all other phases
-- 🔧 **Version Consistency**: All version references synchronized to v0.4.1
+- 🔧 **Version Consistency**: All version references synchronized to v0.5.0
 
 **What was New in v0.3.6:**
 - 🗓️ Added `/arckit:plan` - Project planning with GDS Agile Delivery phases, Mermaid Gantt charts

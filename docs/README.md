@@ -110,7 +110,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.secure` | [secure-by-design.md](guides/uk-government/secure-by-design.md) | ✅ Complete |
 | `/arckit.mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
 
-**Coverage**: 25/25 commands documented (100%) ✅ COMPLETE
+**Coverage**: 25/26 commands documented (100%) ✅ COMPLETE
 
 ---
 
@@ -123,4 +123,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2025-10-28
-**ArcKit Version**: 0.4.1
+**ArcKit Version**: 0.5.0
