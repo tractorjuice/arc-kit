@@ -363,24 +363,21 @@ If `/prompts:arckit.principles` doesn't work:
 
 ### Argument Parsing Error: "expected key=value"
 
-If you get an error like "expected key=value but found 'Add'":
+If you get an error like "expected key=value but found 'Add'" or "expected key=value but found 'Create'":
 
-**Problem**: Codex CLI tries to parse arguments that start with certain words as named parameters.
+**Problem**: Some prompts accidentally included `$PROJECT_NAME` in example text, which Codex CLI interprets as a required named parameter.
 
-**Solution**: Wrap your entire argument in double quotes:
+**Solution**: This has been fixed in the prompts (v0.4.1+). If using older versions, provide an empty value:
 
 ```bash
-# ❌ ERROR: Codex interprets "Add" as a parameter name
+# ✅ WORKAROUND for older versions:
+/prompts:arckit.stakeholders PROJECT_NAME="" Add GDS as a stakeholder
+
+# ✅ FIXED in v0.4.1+: Just use normally
 /prompts:arckit.stakeholders Add GDS as a stakeholder
-
-# ✅ CORRECT: Quote the entire argument
-/prompts:arckit.stakeholders "Add GDS as a stakeholder"
-
-# ✅ ALTERNATIVE: Start with a verb that doesn't look like a parameter
-/prompts:arckit.stakeholders Analyze stakeholders including GDS
 ```
 
-**Why**: Codex CLI supports both positional arguments (`$ARGUMENTS`) and named parameters (`KEY=value`). If your text starts with a word that could be a parameter name, quote it to force positional parsing.
+**Why**: Codex CLI detects any `$VARIABLE_NAME` in prompts as a required named parameter. We've fixed this by escaping example variables as `$$VARIABLE_NAME` so they're treated as literal text.
 
 ### Bash Scripts Require Approval
 
