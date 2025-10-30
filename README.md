@@ -558,7 +558,7 @@ payment-modernization/
 
 | Command | Purpose | Output |
 |---------|---------|--------|
-| `/arckit.analyze` | Comprehensive governance quality analysis across all artifacts | Analysis report (read-only) |
+| `/arckit.analyze` | Comprehensive governance quality analysis across all artifacts | `projects/XXX/analysis-report.md` |
 
 ### UK Government Compliance
 
