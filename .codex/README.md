@@ -361,6 +361,27 @@ If `/prompts:arckit.principles` doesn't work:
    cp .codex/prompts/*.md ~/.codex/prompts/
    ```
 
+### Argument Parsing Error: "expected key=value"
+
+If you get an error like "expected key=value but found 'Add'":
+
+**Problem**: Codex CLI tries to parse arguments that start with certain words as named parameters.
+
+**Solution**: Wrap your entire argument in double quotes:
+
+```bash
+# ❌ ERROR: Codex interprets "Add" as a parameter name
+/prompts:arckit.stakeholders Add GDS as a stakeholder
+
+# ✅ CORRECT: Quote the entire argument
+/prompts:arckit.stakeholders "Add GDS as a stakeholder"
+
+# ✅ ALTERNATIVE: Start with a verb that doesn't look like a parameter
+/prompts:arckit.stakeholders Analyze stakeholders including GDS
+```
+
+**Why**: Codex CLI supports both positional arguments (`$ARGUMENTS`) and named parameters (`KEY=value`). If your text starts with a word that could be a parameter name, quote it to force positional parsing.
+
 ### Bash Scripts Require Approval
 
 If Codex keeps asking for approval to run `.arckit/scripts/bash/*.sh`:
