@@ -367,13 +367,13 @@ If you get an error like "expected key=value but found 'Add'" or "expected key=v
 
 **Problem**: Some prompts accidentally included `$PROJECT_NAME` in example text, which Codex CLI interprets as a required named parameter.
 
-**Solution**: This has been fixed in the prompts (v0.4.1+). If using older versions, provide an empty value:
+**Solution**: This has been fixed in the prompts (v0.5.0+). If using older versions, provide an empty value:
 
 ```bash
 # ✅ WORKAROUND for older versions:
 /prompts:arckit.stakeholders PROJECT_NAME="" Add GDS as a stakeholder
 
-# ✅ FIXED in v0.4.1+: Just use normally
+# ✅ FIXED in v0.5.0+: Just use normally
 /prompts:arckit.stakeholders Add GDS as a stakeholder
 ```
 
@@ -398,14 +398,14 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-ArcKit v0.4.1 (25 commands)
+ArcKit v0.5.0 (26 commands)
 
-**What's New in v0.4.1:**
+**What's New in v0.5.0:**
 - 🗓️ **Project Planning**: `/prompts:arckit.plan` - Comprehensive project planning with GDS Agile Delivery phases
 - 📚 **Documentation Expansion**: 660-line planning guide, expanded design review (+167 lines) and procurement (+191 lines) guides
 - 🚀 **Multi-AI Deployment**: Plan command deployed to all three AI systems (Claude, Codex, Gemini)
 - 📋 **Updated Workflow**: Plan-first approach with Phase 0 before all other phases
-- 🔧 **Version Consistency**: All version references synchronized to v0.4.1
+- 🔧 **Version Consistency**: All version references synchronized to v0.5.0
 - 🧹 **Asset Cleanup**: Removed versioned PNG banner files
 
 **What was New in v0.3.6:**

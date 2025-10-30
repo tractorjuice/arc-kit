@@ -5,6 +5,54 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2025-10-30
+
+### Added
+
+- **`/arckit.service-assessment` command**: GDS Service Standard assessment preparation
+  - Analyzes evidence against all 14 Service Standard points
+  - Generates RAG (Red/Amber/Green) ratings per point and overall readiness score
+  - Provides phase-appropriate gap analysis (alpha/beta/live)
+  - Creates actionable recommendations with priorities (Critical/High/Medium) and timelines
+  - Includes comprehensive assessment day preparation guidance
+  - Maps all ArcKit artifacts to Service Standard evidence requirements
+  - Output: `projects/{project-dir}/service-assessment-{phase}-prep.md`
+
+- **docs/guides/service-assessment.md**: Comprehensive 600+ line guide
+  - GDS Service Standard overview (14 points explained)
+  - Assessment process and timings (alpha/beta/live)
+  - Phase-appropriate evidence requirements
+  - Complete workflow (Week 0 to assessment day)
+  - Real-world examples (NHS Appointment Booking alpha prep)
+  - Common pitfalls and how ArcKit helps
+  - Integration with other ArcKit commands
+  - Tips for success and assessment day guidance
+
+- **gds-service-assessment-command-design.md**: 800+ line design specification
+  - Research findings from actual GDS assessment reports
+  - Design rationale and decision log
+  - Evidence discovery algorithm
+  - Phase-specific evidence matrices (alpha/beta/live)
+  - Recommendation generation approach
+  - Success criteria and future enhancements
+
+### Changed
+
+- **Command count**: 25 → 26 commands
+- **README.md**: Added service-assessment to Phase 13 (UK Government Compliance)
+- **docs/index.html**: Added new "UK Government Compliance" section with service-assessment command
+- **Version**: Updated from v0.4.1 to v0.5.0 across all files
+
+### Deployment
+
+Deployed to 6 test repositories:
+- arckit-test-project-v1-m365
+- arckit-test-project-v2-hmrc-chatbot
+- arckit-test-project-v3-windows11
+- arckit-test-project-v6-patent-system
+- arckit-test-project-v7-nhs-appointment
+- arckit-test-project-v8-cabinet-office-genai (new)
+
 ## [0.4.1] - 2025-10-29
 
 ### Added

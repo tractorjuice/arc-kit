@@ -38,7 +38,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v0.4.1](https://github.com/tractorjuice/arc-kit/releases/tag/v0.4.1)
+**Latest Release**: [v0.5.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.5.0)
 
 ### Initialize a Project
 
@@ -289,6 +289,18 @@ Periodically assess governance quality across all artifacts:
 
 ### Phase 13: Compliance Assessment (UK Government)
 For UK Government and public sector projects:
+
+**`/arckit.service-assessment`** → GDS Service Standard assessment preparation
+
+Prepare for mandatory GDS Service Standard assessments:
+- Analyze evidence against all 14 Service Standard points
+- Identify gaps for alpha, beta, or live assessments
+- Generate RAG (Red/Amber/Green) ratings and overall readiness score
+- Provide actionable recommendations with priorities and timelines
+- Include assessment day preparation guidance
+- Map ArcKit artifacts to Service Standard evidence requirements
+
+Run at end of Discovery (for alpha prep), mid-Beta (for beta prep), or before Live to ensure readiness.
 
 **`/arckit.tcop`** → Technology Code of Practice assessment
 
@@ -564,6 +576,7 @@ payment-modernization/
 
 | Command | Purpose | Output |
 |---------|---------|--------|
+| `/arckit.service-assessment` | Prepare for GDS Service Standard assessment - analyze evidence against 14 points, identify gaps, generate readiness report | `projects/XXX/service-assessment-{phase}-prep.md` |
 | `/arckit.tcop` | Comprehensive Technology Code of Practice assessment (all 13 points, Digital Spend Controls) | `projects/XXX/tcop-review.md` |
 | `/arckit.ai-playbook` | Assess AI Playbook compliance for responsible AI | `projects/XXX/ai-playbook-assessment.md` |
 | `/arckit.atrs` | Generate Algorithmic Transparency Recording Standard (ATRS) record | `projects/XXX/atrs-record.md` |
