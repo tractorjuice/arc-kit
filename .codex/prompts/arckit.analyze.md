@@ -10,11 +10,11 @@ $ARGUMENTS
 
 ## Goal
 
-Identify inconsistencies, gaps, ambiguities, and compliance issues across all architecture governance artifacts before implementation or procurement. This command performs **non-destructive, read-only analysis** and produces a structured report with actionable recommendations.
+Identify inconsistencies, gaps, ambiguities, and compliance issues across all architecture governance artifacts before implementation or procurement. This command performs **non-destructive analysis** and produces a structured report saved to the project directory for tracking and audit purposes.
 
 ## Operating Constraints
 
-**STRICTLY READ-ONLY**: Do **not** modify any files. Output a structured analysis report only.
+**Non-Destructive Analysis**: Do **not** modify existing artifacts. Generate a comprehensive analysis report and save it to the project directory for tracking, sharing, and audit trail.
 
 **Architecture Principles Authority**: The architecture principles (`.arckit/memory/architecture-principles.md`) are **non-negotiable**. Any conflicts with principles are automatically CRITICAL and require adjustment of requirements, designs, or vendor proposals—not dilution or reinterpretation of the principles.
 
@@ -555,9 +555,9 @@ Use this heuristic to prioritize findings:
 - Documentation formatting
 - Non-critical missing optional fields
 
-### 6. Produce Compact Analysis Report
+### 6. Produce Comprehensive Analysis Report
 
-Output a Markdown report (no file writes) with the following structure:
+Generate a comprehensive Markdown report and save it to `projects/{project-dir}/analysis-report.md` with the following structure:
 
 ```markdown
 # Architecture Governance Analysis Report
@@ -1194,7 +1194,61 @@ FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 **END OF ANALYSIS REPORT**
 ```
 
-### 7. Provide Remediation Guidance
+### 7. Write Analysis Report to File
+
+Save the complete analysis report generated in Step 6 to:
+
+**`projects/{project-dir}/analysis-report.md`**
+
+The saved report must include:
+- ✅ All sections from Executive Summary to Detailed Findings
+- ✅ Complete metrics dashboard
+- ✅ Actionable recommendations with priorities
+- ✅ Next steps and suggested commands
+- ✅ Traceability to source artifacts
+
+After writing the file, provide a summary message to the user:
+
+```
+✅ Governance Analysis Complete
+
+**Project**: {project-name}
+**Report Location**: projects/{project-dir}/analysis-report.md
+
+**Overall Status**: ✅ Ready / ⚠️ Issues Found / ❌ Critical Issues
+**Governance Health Score**: {score}/100 ({grade})
+
+**Issue Summary**:
+- Critical Issues: {count}
+- High Priority Issues: {count}
+- Medium Priority Issues: {count}
+- Low Priority Issues: {count}
+
+**Key Metrics**:
+- Requirements Coverage: {percentage}%
+- Principles Compliance: {percentage}%
+- Traceability Score: {percentage}%
+- Stakeholder Alignment: {percentage}%
+- Risk Management: {percentage}%
+- UK Gov Compliance: {percentage}% (if applicable)
+- MOD SbD Compliance: {percentage}% (if applicable)
+
+**Top 3 Critical Issues**:
+1. {issue} - {location}
+2. {issue} - {location}
+3. {issue} - {location}
+
+**Recommendation**: {PROCEED / RESOLVE CRITICAL ISSUES FIRST / MAJOR REWORK NEEDED}
+
+**Next Steps**:
+- {action}
+- {action}
+- {action}
+
+📄 Full analysis report saved to: projects/{project-dir}/analysis-report.md
+```
+
+### 8. Provide Remediation Guidance
 
 After outputting the report, ask:
 
@@ -1219,7 +1273,8 @@ After outputting the report, ask:
 
 ### Analysis Guidelines
 
-- **NEVER modify files** (this is read-only analysis)
+- **DO NOT modify existing artifacts** (non-destructive analysis)
+- **DO write analysis report** to `projects/{project-dir}/analysis-report.md`
 - **NEVER hallucinate missing sections** (if absent, report them accurately)
 - **Prioritize principle violations** (these are always CRITICAL)
 - **Prioritize UK Gov compliance issues** (mandatory for public sector)
@@ -1288,7 +1343,8 @@ Example output: "Architecture Governance Analysis Report" with 18 findings (3 CR
 
 ## Important Notes
 
-- This is **read-only analysis** - no files are modified
+- This is **non-destructive analysis** - existing artifacts are not modified
+- Analysis report is saved to `projects/{project-dir}/analysis-report.md` for audit trail
 - Run `/arckit.analyze` after major changes to requirements, designs, or assessments
 - Ideal times to run:
   - Before issuing SOW/RFP to vendors
