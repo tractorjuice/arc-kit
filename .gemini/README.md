@@ -43,7 +43,7 @@ Gemini CLI uses colon-separated namespaces for commands in subdirectories. ArcKi
 /arckit:stakeholders Analyze stakeholders for payment gateway project
 ```
 
-## ArcKit Commands (25 Available)
+## ArcKit Commands (26 Available)
 
 ### Phase 0: Project Planning
 
@@ -131,6 +131,7 @@ Creates: `projects/001-project-name/project-plan.md`
 /arckit:dld-review Review detailed design for security
 
 # Compliance & security
+/arckit:service-assessment GDS Service Standard assessment preparation
 /arckit:secure UK Government Secure by Design review
 /arckit:mod-secure MOD Secure by Design review
 /arckit:tcop Technology Code of Practice assessment
