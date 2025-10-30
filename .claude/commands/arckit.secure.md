@@ -273,7 +273,7 @@ Responsibilities:
 ## UK GDPR Compliance
 
 **Status**: ⚠️ Partially Compliant
-**DPO**: Appointed (Jane Smith)
+**DPO**: Appointed ([Data Protection Officer Name])
 **DPIA**: Not completed (REQUIRED before Beta)
 
 **Critical Issues**:

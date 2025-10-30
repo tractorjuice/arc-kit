@@ -246,7 +246,7 @@ You should:
   - Phase: Private Beta
   - Region: England and Wales
 - Complete Tier 2 (detailed):
-  - Section 1: DWP Digital, Benefits Policy Team, SRO: Jane Smith (Director)
+  - Section 1: DWP Digital, Benefits Policy Team, SRO: [Senior Responsible Owner] (Director)
   - External Supplier: OpenAI (GPT-4), Companies House: 12345678
   - Section 2: Generative AI (LLM), GPT-4, fine-tuned on benefits policy
   - Section 3: Human-in-the-loop (all advice reviewed before shown to users)
