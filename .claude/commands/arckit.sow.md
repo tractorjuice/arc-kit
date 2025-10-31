@@ -38,7 +38,7 @@ $ARGUMENTS
 
    **Requirements**:
    - Import from requirements.md
-   - Organize by Business, Functional, Non-Functional, Integration
+   - Organise by Business, Functional, Non-Functional, Integration
    - Clearly mark which are MUST vs SHOULD vs MAY
    - Reference requirement IDs (BR-001, FR-001, etc.)
 

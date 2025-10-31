@@ -65,7 +65,7 @@ You are helping an enterprise architect review a High-Level Design (HLD) documen
 
    **Performance**:
    - Caching strategy (Redis, CDN)
-   - Database optimization
+   - Database optimisation
    - Asynchronous processing
    - API response times
 

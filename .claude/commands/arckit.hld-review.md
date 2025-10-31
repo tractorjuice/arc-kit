@@ -65,7 +65,7 @@ $ARGUMENTS
 
    **Performance**:
    - Caching strategy (Redis, CDN)
-   - Database optimization
+   - Database optimisation
    - Asynchronous processing
    - API response times
 

@@ -86,7 +86,7 @@ $ARGUMENTS
    ### F. Performance Design Review
 
    - **Caching strategy**: What gets cached? TTL? Invalidation strategy?
-   - **Database optimization**: Indexes defined? Query optimization?
+   - **Database optimisation**: Indexes defined? Query optimisation?
    - **Connection pooling**: Pool sizes, timeout configs?
    - **Async processing**: Background jobs, queue workers?
    - **Batch processing**: Batch sizes, scheduling?

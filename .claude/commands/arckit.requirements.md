@@ -44,7 +44,7 @@ $ARGUMENTS
 
    **Non-Functional Requirements (NFR-xxx)**:
    - Performance (response time, throughput, concurrent users)
-   - Security (authentication, authorization, encryption, compliance)
+   - Security (authentication, authorisation, encryption, compliance)
    - Scalability (growth projections, load handling)
    - Reliability (uptime SLA, MTBF, MTTR)
    - Compliance (regulations, standards, certifications)

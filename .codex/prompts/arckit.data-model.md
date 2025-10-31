@@ -53,7 +53,7 @@ $ARGUMENTS
      - All entities (E-001, E-002, etc.)
      - Relationships (one-to-one, one-to-many, many-to-many)
      - Cardinality notation
-   - Organize by logical domain/bounded context if possible
+   - Organise by logical domain/bounded context if possible
    - Use descriptive entity and relationship names
 
    **C. Entity Catalog** (E-001, E-002, etc.):

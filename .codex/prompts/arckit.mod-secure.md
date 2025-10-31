@@ -136,7 +136,7 @@ Generate a comprehensive Secure by Design assessment document using the **contin
    - Risk assessment methodology
 
    **Protect**:
-   - Access control (authentication, authorization)
+   - Access control (authentication, authorisation)
    - Data security (encryption at rest/in transit, DLP)
    - Protective technology (firewalls, AV, IDS/IPS)
    - Security awareness training
