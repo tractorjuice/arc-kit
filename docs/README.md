@@ -102,6 +102,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.evaluate` | [procurement.md](guides/procurement.md) | ✅ Complete |
 | `/arckit.hld-review` | [design-review.md](guides/design-review.md) | ✅ Complete |
 | `/arckit.dld-review` | [design-review.md](guides/design-review.md) | ✅ Complete |
+| `/arckit.backlog` | [backlog.md](guides/backlog.md) | ✅ Complete |
 | `/arckit.servicenow` | [design-review.md](guides/design-review.md) | ✅ Complete |
 | `/arckit.traceability` | [traceability.md](guides/traceability.md) | ✅ Complete |
 | `/arckit.analyze` | [analyze.md](guides/analyze.md) | ✅ Complete |
@@ -112,7 +113,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.secure` | [secure-by-design.md](guides/uk-government/secure-by-design.md) | ✅ Complete |
 | `/arckit.mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
 
-**Coverage**: 26/26 commands documented (100%) ✅ COMPLETE
+**Coverage**: 27/27 commands documented (100%) ✅ COMPLETE
 
 ---
 

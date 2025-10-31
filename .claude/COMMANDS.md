@@ -1392,3 +1392,332 @@ For issues or questions:
 
 **Last updated**: 2025-10-30
 **ArcKit Version**: 0.5.0
+
+### 17. `/arckit.backlog` - Product Backlog Generation
+
+**Purpose**: Automatically generate prioritized product backlogs from ArcKit artifacts, converting requirements into sprint-ready GDS-format user stories.
+
+**When to Use**: After HLD approval, before Sprint 1 (Alpha → Beta transition)
+
+**Usage**:
+```
+/arckit.backlog
+/arckit.backlog VELOCITY=25 SPRINTS=12
+/arckit.backlog FORMAT=all PRIORITY=risk
+```
+
+**Arguments**:
+- `SPRINT_LENGTH` (optional): Sprint duration - `1w`, `2w` (default), `3w`, `4w`
+- `SPRINTS` (optional): Number of sprints to plan (default: 8)
+- `VELOCITY` (optional): Team velocity in story points/sprint (default: 20)
+- `FORMAT` (optional): Output formats - `markdown` (default), `csv`, `json`, `all`
+- `PRIORITY` (optional): Prioritization approach - `multi` (default), `moscow`, `risk`, `value`, `dependency`
+
+**What It Does**:
+
+**1. Scans ArcKit Artifacts**:
+- `requirements.md` - BRs, FRs, NFRs, INTs, DRs
+- `hld.md` / `dld.md` - Component mapping
+- `stakeholder-analysis.md` - User personas
+- `risk-register.md` - Risk levels
+- `business-case.md` - Value priorities
+- `threat-model.md` - Security threats
+- `principles.md` - Definition of Done
+
+**2. Converts Requirements to User Stories**:
+
+| Requirement Type | Converts To | Example |
+|-----------------|-------------|---------|
+| BR-xxx (Business) | Epic | Epic: User Authentication (34 points, 8 stories) |
+| FR-xxx (Functional) | User Story | Story-001: Create user account (8 points) |
+| NFR-xxx (Non-Functional) | Technical Task | Task-NFR-005: Implement Redis caching (5 points) |
+| INT-xxx (Integration) | Integration Story | Story-015: Connect to Stripe API (8 points) |
+| DR-xxx (Data) | Data Task | Task-DR-002: Design payment history schema (3 points) |
+
+**3. Generates GDS-Compliant User Stories**:
+```markdown
+### Story-001: Create user account
+
+**As a** new user
+**I want** to create an account with email and password
+**So that** I can access the service and save my preferences
+
+**Acceptance Criteria**:
+- It's done when I can enter email and password on registration form
+- It's done when email verification is sent within 1 minute
+- It's done when account is created after I verify my email
+- It's done when GDPR consent is captured and stored
+
+**Technical Tasks**:
+- Task-001-A: Design user table schema (2 points)
+- Task-001-B: Implement registration API (3 points)
+- Task-001-C: Email verification service (3 points)
+
+**Story Points**: 8
+**Priority**: Must Have
+**Sprint**: 1
+**Component**: User Service
+**Requirements**: FR-001, NFR-008 (GDPR)
+```
+
+**4. Multi-Factor Prioritization**:
+```
+Priority Score = (
+  MoSCoW_Weight * 40% +
+  Risk_Weight * 20% +
+  Value_Weight * 20% +
+  Dependency_Weight * 20%
+)
+
+Weights:
+- MoSCoW: Must=4, Should=3, Could=2, Won't=1
+- Risk: Critical=4, High=3, Medium=2, Low=1
+- Value: High=4, Medium=3, Low=2, None=1
+- Dependency: Blocks many=4, some=3, few=2, none=1
+```
+
+**5. Organizes into Sprint Plan**:
+
+**Sprint Structure** (default 20-point velocity):
+```
+Sprint Capacity Allocation:
+  60% Features (12 points) - User-facing value
+  20% Technical (4 points) - Infrastructure, NFRs
+  15% Testing (3 points) - Quality assurance
+   5% Buffer (1 point) - Unexpected work
+
+Sprint 1 - Foundation:
+  ✅ User authentication (8+5 = 13 points)
+  ✅ Database setup (2 points)
+  ✅ CI/CD pipeline (2 points)
+  ✅ Testing framework (1 point)
+  ✅ Rate limiting (1 point)
+  Buffer: Story-003 (5 points, move if needed)
+
+Sprint 2 - Core Features:
+  ✅ Payment integration (8 points)
+  ✅ Process payment (8 points)
+  ✅ Redis caching (3 points)
+  ✅ GDPR audit log (2 points)
+```
+
+**Dependency Management**:
+- Sprint 1 always: Auth, Database, CI/CD, Testing
+- Technical foundation before features
+- Integration points before dependent features
+
+**6. Generates Traceability Matrix**:
+```
+| Requirement | Type | Stories | Sprint | Status |
+|-------------|------|---------|--------|--------|
+| BR-001 | Business | Story-001..008 | 1-2 | Planned |
+| FR-001 | Functional | Story-001 | 1 | Planned |
+| FR-005 | Functional | Story-016 | 2 | Planned |
+| NFR-005 | Non-Functional | Task-NFR-005 | 2 | Planned |
+```
+
+**Output Files**:
+```
+projects/{project-dir}/
+├── backlog.md (primary)
+├── backlog.csv (Jira/Azure DevOps import)
+└── backlog.json (API integration)
+```
+
+**Output Structure**:
+
+**backlog.md Contents**:
+1. Executive Summary
+   - Total stories, epics, story points
+   - Priority breakdown (Must/Should/Could)
+   - Epic breakdown
+
+2. How to Use section
+   - Guidance for Product Owners
+   - Guidance for Dev Teams
+   - Guidance for Scrum Masters
+   - Backlog refinement schedule
+
+3. Epics Section
+   - All epics with descriptions
+   - Stories grouped by epic
+   - Epic dependencies and points
+
+4. Prioritized Backlog
+   - All user stories (sorted by priority)
+   - Technical tasks
+   - Acceptance criteria
+   - Story points and sprint assignments
+
+5. Sprint Plan
+   - Detailed sprint backlogs (Sprints 1-8)
+   - Sprint goals
+   - Dependencies and risks
+   - Definition of Done
+
+6. Appendices
+   - Requirements traceability matrix
+   - Dependency graph
+   - Epic overview table
+   - Story points distribution
+   - Risk prioritization
+   - Definition of Done criteria
+
+**Story Point Estimation**:
+
+Fibonacci sequence: **1, 2, 3, 5, 8, 13**
+
+- **1 point**: Trivial, < 2 hours (config change)
+- **2 points**: Simple, half day (basic form)
+- **3 points**: Moderate, 1 day (API with validation)
+- **5 points**: Complex, 2-3 days (workflow)
+- **8 points**: Very complex, 1 week (major feature)
+- **13+ points**: Too large - break down
+
+**Time Savings**:
+
+**Manual backlog creation**:
+- Convert requirements: 2-3 weeks
+- Prioritize and sequence: 1 week
+- Sprint planning: 1 week
+- **Total: 4-6 weeks (80-120 hours)**
+
+**With /arckit.backlog**:
+- Run command: 2-5 minutes
+- Review and refine: 1-2 days
+- Team refinement: 2-3 days
+- **Total: 3-5 days (24-40 hours)**
+
+**Time savings: 75-85%**
+
+**Example - Real World**:
+
+**Project**: NHS Appointment Booking System
+**Requirements**: 65 (12 BR, 30 FR, 15 NFR, 5 INT, 3 DR)
+**Team**: 8 developers, 2 testers
+**Duration**: 16 weeks (8 sprints)
+
+```bash
+/arckit.backlog VELOCITY=25 SPRINTS=8
+```
+
+**Generated Backlog**:
+- Total Stories: 45
+- Total Epics: 8
+- Total Story Points: 197
+- Estimated Duration: 8 sprints (16 weeks at 25 points/sprint)
+
+**Top Epics**:
+1. User Registration & Authentication (34 points, 7 stories)
+2. Appointment Booking (42 points, 9 stories)
+3. NHS Spine Integration (28 points, 5 stories)
+4. GP Practice Management (25 points, 6 stories)
+5. Notifications (18 points, 4 stories)
+
+**Sprint 1** (25 points):
+- Story-001: Create patient account (8 pts) - Must Have
+- Story-002: Patient login with NHS number (5 pts) - Must Have
+- Task-DB-001: PostgreSQL setup (2 pts) - Must Have
+- Task-CI-001: GitHub Actions CI/CD (2 pts) - Must Have
+- Task-TEST-001: Jest + Supertest (2 pts) - Should Have
+- Task-NFR-008: GDPR audit logging (1 pt) - Must Have
+- Story-003: View appointments (3 pts) - Could Have [Buffer]
+
+**Best Practices**:
+
+**1. Velocity Calibration**:
+- Initial velocity (20) is assumed
+- After Sprint 1, calculate actual velocity
+- Adjust Sprint 2+ capacity accordingly
+- Track velocity trend over time
+
+**2. Team Poker**:
+- Review AI estimates with team
+- Use team poker for consensus
+- Re-estimate based on team context
+- Track actual vs estimated
+
+**3. Backlog Refinement**:
+- Weekly: Refine next 2 sprints
+- Bi-weekly: Groom beyond 2 sprints
+- Monthly: Review epic priorities
+- Per sprint: Update based on learnings
+
+**4. Definition of Done**:
+- Extracted from `principles.md`
+- Applied to every story
+- Includes quality, security, testing, documentation criteria
+
+**Integration with Other Commands**:
+
+**Inputs From**:
+- `/arckit.requirements` - Source of all stories (BRs, FRs, NFRs)
+- `/arckit.hld` - Component mapping
+- `/arckit.stakeholders` - User personas
+- `/arckit.risk-register` - Risk priorities
+- `/arckit.business-case` - Value priorities
+- `/arckit.threat-model` - Security stories
+
+**Outputs To**:
+- `/arckit.traceability` - Requirements → Stories → Sprints
+- `/arckit.test-strategy` - Test cases from acceptance criteria
+- `/arckit.analyze` - Backlog completeness validation
+
+**Common Pitfalls**:
+
+**❌ Don't**:
+- Accept AI estimates without team validation
+- Ignore dependencies (features before foundation)
+- Let backlog go stale (no refinement)
+- Skip DoD criteria
+- Forget to track velocity after Sprint 1
+
+**✅ Do**:
+- Review and refine all story points with team
+- Validate dependencies in sprint planning
+- Refine backlog weekly
+- Update DoD in principles.md
+- Calibrate velocity after each sprint
+- Re-generate when requirements change significantly
+
+**Export Formats**:
+
+**CSV (Jira/Azure DevOps import)**:
+```csv
+Type,Key,Epic,Summary,Description,Acceptance Criteria,Priority,Story Points,Sprint,Status
+Epic,EPIC-001,,"User Management","Foundation epic",,Must Have,34,1-2,To Do
+Story,STORY-001,EPIC-001,"Create user account","As a new user...",...,Must Have,8,1,To Do
+Task,TASK-001-A,STORY-001,"Design user table schema","PostgreSQL schema",,Must Have,2,1,To Do
+```
+
+**JSON (API integration)**:
+```json
+{
+  "project": "payment-gateway",
+  "summary": {
+    "total_stories": 87,
+    "total_points": 342
+  },
+  "stories": [
+    {
+      "id": "STORY-001",
+      "title": "Create user account",
+      "as_a": "new user",
+      "story_points": 8,
+      "sprint": 1
+    }
+  ]
+}
+```
+
+**Related Documentation**:
+- [Product Backlog Guide](docs/guides/backlog.md)
+- [Requirements Guide](docs/guides/requirements.md)
+- [Traceability Guide](docs/guides/traceability.md)
+- [GDS Agile Delivery](https://www.gov.uk/service-manual/agile-delivery)
+- [GDS User Stories](https://www.gov.uk/service-manual/agile-delivery/writing-user-stories)
+
+---
+
+*Last updated: 2025-10-30 | Version: 0.6.0*
+
