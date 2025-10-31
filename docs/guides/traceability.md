@@ -805,4 +805,4 @@ Parse comments to build traceability automatically.
 ---
 
 **Last updated**: 2025-10-28
-**ArcKit Version**: 0.5.0
+**ArcKit Version**: 0.6.0

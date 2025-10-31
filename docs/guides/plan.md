@@ -663,4 +663,4 @@ For issues or questions:
 ---
 
 **Last updated**: 2025-10-30
-**ArcKit Version**: 0.5.0
+**ArcKit Version**: 0.6.0
