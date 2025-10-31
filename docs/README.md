@@ -44,6 +44,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 
 ### UK MOD (Ministry of Defence)
 - [MOD Secure by Design](guides/uk-mod/secure-by-design.md) - `/arckit.mod-secure` ⭐ NEW
+- [JSP 936 AI Assurance](guides/jsp-936.md) - `/arckit.jsp-936` ⭐ NEW
 
 ---
 
@@ -112,8 +113,9 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.atrs` | [algorithmic-transparency.md](guides/uk-government/algorithmic-transparency.md) | ✅ Complete |
 | `/arckit.secure` | [secure-by-design.md](guides/uk-government/secure-by-design.md) | ✅ Complete |
 | `/arckit.mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
+| `/arckit.jsp-936` | [jsp-936.md](guides/jsp-936.md) | ✅ Complete |
 
-**Coverage**: 27/27 commands documented (100%) ✅ COMPLETE
+**Coverage**: 28/28 commands documented (100%) ✅ COMPLETE
 
 ---
 
@@ -125,5 +127,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2025-10-30
-**ArcKit Version**: 0.5.0
+**Last updated**: 2025-10-31
+**ArcKit Version**: 0.7.0

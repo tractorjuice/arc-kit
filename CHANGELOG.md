@@ -5,6 +5,90 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0] - 2025-10-31
+
+### Added
+
+- **`/arckit.jsp-936` command**: MOD JSP 936 AI assurance documentation generator
+  - Comprehensive JSP 936 (Dependable Artificial Intelligence in Defence) compliance documentation
+  - 5 Ethical Principles assessment: Human-Centricity, Responsibility, Understanding, Bias & Harm Mitigation, Reliability
+  - AI ethical risk classification using likelihood × impact matrix (1-5 scale)
+  - 5 Risk Classification Levels (Critical/Severe/Major/Moderate/Minor) with approval pathways
+  - 8 AI Lifecycle Phases: Planning, Requirements, Architecture, Algorithm Design, Model Development, V&V, Integration & Use, Quality Assurance
+  - Governance structure documentation (RAISOs, Ethics Managers, Independent Assurance)
+  - Approval pathways (2PUS/Ministerial → Defence-Level JROC/IAC → TLB-Level)
+  - Human-AI teaming strategy (human-in-loop, human-on-loop, human-out-of-loop models)
+  - AI-specific security threats and controls (adversarial examples, data poisoning, model extraction, model inversion, backdoors, drift)
+  - Supplier assurance for third-party AI components
+  - Continuous monitoring and re-assessment plan (drift detection, retraining triggers, annual review)
+  - Comprehensive compliance matrix (27 JSP 936 requirements)
+  - Output: `.arckit/jsp-936/jsp-936-assessment.md`
+
+- **docs/guides/jsp-936.md**: Comprehensive 1,000+ line user guide
+  - JSP 936 framework overview (5 principles, 5 risk levels, 8 lifecycle phases, governance)
+  - When to run JSP 936 assessment (Discovery/Alpha/Beta/Live phases)
+  - AI component types identified (7 categories: ML models, AI algorithms, autonomous systems, decision support, NLP, computer vision, generative AI)
+  - Ethical risk assessment methodology (likelihood × impact matrix)
+  - Five ethical principles deep dive (requirements, assessment approach)
+  - Human-AI teaming models explained (HIL/HOL/HOOL with examples)
+  - AI-specific security threats (6 categories with mitigations)
+  - Continuous monitoring and re-assessment requirements
+  - Approval pathways for each risk classification
+  - Integration with other ArcKit commands
+  - Common JSP 936 patterns (image classification, decision support, autonomous vehicles, LLMs)
+  - JSP 936 compliance checklist
+  - FAQs (mandatory assessment, timelines, roles, COTS AI, JSP 440 relationship, risk escalation, monitoring, human control)
+  - Example scenarios (satellite imagery analysis, predictive maintenance, autonomous drone)
+  - Additional resources (MOD references, UK Government AI guidance, international standards)
+
+- **`.arckit/templates/jsp-936-template.md`**: Complete JSP 936 assessment template
+  - Executive summary structure
+  - AI system inventory with detailed component cataloging
+  - Ethical risk assessment matrices for each AI component
+  - Five ethical principles compliance sections
+  - Eight AI lifecycle phase documentation structures
+  - Governance and approval tracking
+  - Human-AI teaming strategy documentation
+  - Secure by Design evidence structure
+  - Supplier assurance section
+  - Continuous monitoring plan
+  - JSP 936 compliance matrix (27 requirements)
+  - 10 appendices (risk methodology, checklists, model cards, bias reports, V&V reports, security tests, training materials, dashboards)
+
+### Changed
+
+- **Command count**: 27 → 28 commands
+- **README.md**:
+  - Added `/arckit.jsp-936` to Security Assessment commands table
+  - Added JSP 936 information to MOD Projects section
+  - Added JSP 936 example usage
+  - Added MOD JSP 936 AI Assurance to Built-in UK Government Support list
+- **docs/index.html**: To be updated with JSP 936 command (28 commands)
+- **Version**: Updated from v0.6.0 to v0.7.0
+
+### Why This Matters
+
+JSP 936 (Dependable Artificial Intelligence in Defence), published November 2024, establishes the UK Ministry of Defence's mandatory framework for safe and responsible adoption of AI/ML systems. Defence projects using AI must complete JSP 936 assessments to receive approval at the appropriate level (2PUS/Ministerial for Critical, Defence-Level for Severe/Major, TLB-Level for Moderate/Minor).
+
+Without JSP 936 compliance, defence AI projects face:
+- Approval blockages (no deployment without JSP 936 assessment)
+- Ethical risks unidentified until late stages
+- Unclear accountability for AI decisions
+- Inadequate bias testing and harm mitigation
+- Missing security controls for AI-specific threats
+- No continuous monitoring or drift detection
+
+The `/arckit.jsp-936` command automates the creation of comprehensive JSP 936 compliance documentation, guiding project teams through:
+- Systematic identification of all AI/ML components
+- Ethical risk classification using MOD's likelihood × impact methodology
+- Assessment against all 5 ethical principles (Human-Centricity, Responsibility, Understanding, Bias & Harm Mitigation, Reliability)
+- Documentation for all 8 AI lifecycle phases
+- Human-AI teaming strategy design
+- AI-specific security threat assessment
+- Continuous monitoring and re-assessment planning
+
+This command ensures MOD AI projects have the documentation required for approval while embedding best practices for responsible AI throughout the lifecycle.
+
 ## [0.6.0] - 2025-10-30
 
 ### Added
