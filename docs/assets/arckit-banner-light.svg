@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="700" height="160" viewBox="0 0 700 160" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit - Enterprise Architecture Governance Toolkit">
+<svg width="580" height="155" viewBox="0 0 580 155" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit - Enterprise Architecture Governance Toolkit">
 <title>ArcKit - Enterprise Architecture Governance Toolkit</title>
 
-<!-- Logo and text -->
+<!-- Logo arc -->
 <g fill="none">
-  <path d="M 52.06,55.00 A 90.00,90.00 0 0 1 207.94,55.00" stroke="#1A1A1A" stroke-width="10" stroke-linecap="round" />
-  <path d="M 71.11,66.00 A 68.00,68.00 0 0 1 188.89,66.00" stroke="#1A1A1A" stroke-width="5.00" stroke-linecap="round" />
-  <line x1="83.16" y1="47.98" x2="69.78" y2="33.12" stroke="#1A1A1A" stroke-width="5.56" stroke-linecap="round" />
-  <line x1="137.32" y1="30.38" x2="139.41" y2="10.49" stroke="#1A1A1A" stroke-width="5.56" stroke-linecap="round" />
-  <line x1="182.02" y1="53.16" x2="196.88" y2="39.78" stroke="#1A1A1A" stroke-width="5.56" stroke-linecap="round" />
-  <circle cx="69.78" cy="33.12" r="6.25" fill="#1ED3C6" />
-  <circle cx="139.41" cy="10.49" r="6.25" fill="#1ED3C6" />
-  <circle cx="196.88" cy="39.78" r="6.25" fill="#1ED3C6" />
-  <line x1="124.00" y1="32.00" x2="136.00" y2="32.00" stroke="#1A1A1A" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
-  <line x1="130.00" y1="26.00" x2="130.00" y2="38.00" stroke="#1A1A1A" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
+  <path d="M 7.06,55.00 A 90.00,90.00 0 0 1 162.94,55.00" stroke="#1A1A1A" stroke-width="10" stroke-linecap="round" />
+  <path d="M 26.11,66.00 A 68.00,68.00 0 0 1 143.89,66.00" stroke="#1A1A1A" stroke-width="5.00" stroke-linecap="round" />
+  <line x1="38.16" y1="47.98" x2="24.78" y2="33.12" stroke="#1A1A1A" stroke-width="5.56" stroke-linecap="round" />
+  <line x1="92.32" y1="30.38" x2="94.41" y2="10.49" stroke="#1A1A1A" stroke-width="5.56" stroke-linecap="round" />
+  <line x1="137.02" y1="53.16" x2="151.88" y2="39.78" stroke="#1A1A1A" stroke-width="5.56" stroke-linecap="round" />
+  <circle cx="24.78" cy="33.12" r="6.25" fill="#1ED3C6" />
+  <circle cx="94.41" cy="10.49" r="6.25" fill="#1ED3C6" />
+  <circle cx="151.88" cy="39.78" r="6.25" fill="#1ED3C6" />
+  <line x1="79.00" y1="32.00" x2="91.00" y2="32.00" stroke="#1A1A1A" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
+  <line x1="85.00" y1="26.00" x2="85.00" y2="38.00" stroke="#1A1A1A" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
 </g>
 
-<text x="230" y="120" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
+<!-- ArcKit text -->
+<text x="175" y="120" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
 font-size="96" font-weight="600" fill="#1A1A1A" letter-spacing="0.5px">ArcKit</text>
 
 <!-- Tagline -->
-<text x="350" y="155" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
-font-size="16" font-weight="400" fill="#666666" letter-spacing="0.5px" text-anchor="middle">Enterprise Architecture Governance Toolkit</text>
+<text x="290" y="150" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
+font-size="14" font-weight="400" fill="#666666" letter-spacing="0.3px" text-anchor="middle">Enterprise Architecture Governance Toolkit</text>
 </svg>
