@@ -184,7 +184,7 @@ Assigns Red/Amber/Green rating to each point and overall:
 
 ### 5. Actionable Recommendations
 
-Provides prioritized actions with timelines:
+Provides prioritised actions with timelines:
 
 **Critical** (must complete before booking):
 - Addresses Red ratings
@@ -607,7 +607,7 @@ A: Service Standard is flexible - you can meet points in different ways. The com
 **ArcKit Usage**:
 - Ran `/arckit.service-assessment PHASE=beta` 6 weeks before assessment
 - Identified critical gaps in Point 5 (accessibility) and Point 12 (open source)
-- Used command recommendations to prioritize accessibility testing
+- Used command recommendations to prioritise accessibility testing
 - Re-ran weekly to track progress
 
 **Outcome**: 🟡 Amber (Pass with conditions) - Proceeded to public beta with 3-month tracking

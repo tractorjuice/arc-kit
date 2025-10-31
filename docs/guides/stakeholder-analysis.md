@@ -49,7 +49,7 @@ With stakeholder analysis:
 ls .arckit/memory/architecture-principles.md
 
 # If not, create them first
-/arckit.principles Create principles for [your organization]
+/arckit.principles Create principles for [your organisation]
 ```
 
 ### Step 2: Run Stakeholder Analysis
@@ -232,7 +232,7 @@ Once you've completed stakeholder analysis, it feeds into:
 - **Economic Case** - ROI calculation uses stakeholder outcome metrics
 
 ### `/arckit.requirements` - Requirements
-- Requirements prioritized by stakeholder power/interest
+- Requirements prioritised by stakeholder power/interest
 - Conflicts resolved using stakeholder conflict strategies
 - Acceptance criteria based on stakeholder outcomes
 
@@ -257,7 +257,7 @@ Once you've completed stakeholder analysis, it feeds into:
 
 ### 3. Describing Roles, Not Drivers
 **Mistake**: "CFO cares about finance" (too vague)
-**Impact**: Can't prioritize between conflicting requirements
+**Impact**: Can't prioritise between conflicting requirements
 **Fix**: Specific drivers like "CFO wants to reduce cloud costs 30% by Q4"
 
 ### 4. No Measurable Outcomes

@@ -163,7 +163,7 @@ Do Nothing: System failure risk 80% by EOL, regulatory non-compliance
 ```
 
 ### Strategic Fit
-- How does this align with organizational strategy?
+- How does this align with organisational strategy?
 - What stakeholder drivers does it address? (from stakeholder-drivers.md)
 - Policy alignment (for UK Government)
 

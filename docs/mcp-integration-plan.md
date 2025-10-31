@@ -210,7 +210,7 @@ If Microsoft Learn MCP tools are available, enhance your output by:
 ## Fallback Behavior
 
 If MCP tools are not available:
-- [Existing behavior]
+- [Existing behaviour]
 - [Alternative approaches]
 
 [Rest of original prompt]
@@ -324,7 +324,7 @@ If MCP tools are not available:
 
 **Deliverables**:
 - Integration test results
-- Performance optimization notes
+- Performance optimisation notes
 
 **Day 12**: Documentation review
 
@@ -488,7 +488,7 @@ If MCP tools are not available:
 ### Risk 1: MCP Server Availability
 
 **Risk**: Microsoft Learn MCP server downtime or changes
-**Mitigation**: Graceful degradation to non-MCP behavior
+**Mitigation**: Graceful degradation to non-MCP behaviour
 **Severity**: Low (commands still work without MCP)
 
 ### Risk 2: Platform MCP Support Changes
@@ -530,7 +530,7 @@ If MCP tools are not available:
 - ✅ MCP setup guide with screenshots
 - ✅ Example outputs showing MCP benefits
 - ✅ Troubleshooting documentation
-- ✅ Performance optimization
+- ✅ Performance optimisation
 
 ### Nice to Have (v0.5.1+)
 
@@ -803,7 +803,7 @@ This is the foundation for more MCP integrations. We're exploring:
 - AWS Documentation MCP (when available)
 - GCP Documentation MCP (when available)
 - GitHub code search MCP
-- Custom organizational MCP servers
+- Custom organisational MCP servers
 
 ## Try It Today
 

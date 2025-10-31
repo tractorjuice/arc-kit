@@ -158,7 +158,7 @@ Comprehensive security documentation:
 - Data exfiltration patterns
 - Malware detection
 - Configuration changes
-- Anomalous user behavior
+- Anomalous user behaviour
 
 ### JSP 440 Compliance
 
@@ -289,7 +289,7 @@ Document all threats in Security Risk Management Overview (SRMO).
 
 ### 5. Insider Threat Not Addressed
 **Gap**: Focus only on external threats
-**Fix**: User behavior analytics, need-to-know enforcement, vetting
+**Fix**: User behaviour analytics, need-to-know enforcement, vetting
 
 ### 6. Missing SRMO Documentation
 **Gap**: Incomplete accreditation documentation

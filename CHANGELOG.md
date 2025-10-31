@@ -59,7 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Why This Matters
 
-Product backlog creation is one of the most time-consuming tasks when transitioning from design (Alpha) to implementation (Beta). Teams spend 4-6 weeks manually converting requirements into user stories, estimating effort, prioritizing work, and organizing into sprints. This command automates that process in minutes, saving 75%+ of the time while maintaining GDS compliance and best practices.
+Product backlog creation is one of the most time-consuming tasks when transitioning from design (Alpha) to implementation (Beta). Teams spend 4-6 weeks manually converting requirements into user stories, estimating effort, prioritising work, and organising into sprints. This command automates that process in minutes, saving 75%+ of the time while maintaining GDS compliance and best practices.
 
 The backlog command bridges the gap between ArcKit's design phase commands (`/arckit.requirements`, `/arckit.hld`) and implementation, providing a sprint-ready backlog that development teams can immediately use for sprint planning.
 
@@ -257,7 +257,7 @@ Deployed to 6 test repositories:
     - **Bridge between search and evaluation** - validates services before supplier engagement
     - Systematic gap analysis (MUST/SHOULD requirements vs service descriptions)
     - Detects three gap types: ✅ Confirmed, ⚠️ Ambiguous, ❌ Not mentioned
-    - Generates prioritized questions (🔴 Critical / 🟠 High / 🔵 Medium / 🟢 Low)
+    - Generates prioritised questions (🔴 Critical / 🟠 High / 🔵 Medium / 🟢 Low)
     - Risk assessment matrix for each service
     - Email templates for supplier engagement
     - Evidence requirements specification

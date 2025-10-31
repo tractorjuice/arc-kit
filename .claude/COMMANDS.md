@@ -350,7 +350,7 @@ Stakeholder: CFO (from stakeholder-drivers.md)
 **A. Executive Summary**:
 - Risk profile overview (Critical/High/Medium/Low distribution)
 - Top 5 risks requiring immediate attention
-- Risks exceeding organizational appetite
+- Risks exceeding organisational appetite
 - Overall risk assessment (Acceptable/Concerning/Unacceptable)
 - Key findings and recommendations
 
@@ -489,7 +489,7 @@ For UK Government/public sector projects:
 
 **A. Strategic Case**:
 - Problem statement (from stakeholder pain points)
-- Strategic fit and alignment with organizational strategy
+- Strategic fit and alignment with organisational strategy
 - Stakeholder drivers mapped to strategic imperatives
 - Scope definition (in/out of scope)
 - Dependencies and urgency (why now?)
@@ -901,7 +901,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 - **Scalability**: Horizontal scaling? Load balancing?
 - **Security**: Authentication? Encryption? Compliance?
 - **Resilience**: Fault tolerance? Disaster recovery?
-- **Performance**: Caching? Database optimization?
+- **Performance**: Caching? Database optimisation?
 - **Operational Excellence**: Monitoring? CI/CD? Runbooks?
 
 **Approval status**:
@@ -1395,7 +1395,7 @@ For issues or questions:
 
 ### 17. `/arckit.backlog` - Product Backlog Generation
 
-**Purpose**: Automatically generate prioritized product backlogs from ArcKit artifacts, converting requirements into sprint-ready GDS-format user stories.
+**Purpose**: Automatically generate prioritised product backlogs from ArcKit artifacts, converting requirements into sprint-ready GDS-format user stories.
 
 **When to Use**: After HLD approval, before Sprint 1 (Alpha → Beta transition)
 
