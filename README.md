@@ -373,6 +373,17 @@ MOD-specific security compliance:
 - Security Operating Procedures (SyOPs)
 - Supplier attestation requirements
 
+**`/arckit.jsp-936`** → MOD JSP 936 AI Assurance Documentation
+
+For defence projects using AI/ML systems:
+- JSP 936 (Dependable Artificial Intelligence in Defence)
+- 5 Ethical Principles (Human-Centricity, Responsibility, Understanding, Bias & Harm Mitigation, Reliability)
+- 5 Risk Classification Levels (Critical to Minor)
+- 8 AI Lifecycle Phases (Planning to Quality Assurance)
+- Approval pathways (2PUS/Ministerial → Defence-Level → TLB-Level)
+- RAISOs and Ethics Manager governance
+- Human-AI teaming strategy and continuous monitoring
+
 ---
 
 ## Why ArcKit?
@@ -606,6 +617,7 @@ payment-modernization/
 |---------|---------|--------|
 | `/arckit.secure` | UK Government Secure by Design assessment (NCSC CAF, Cyber Essentials, UK GDPR) | `projects/XXX/ukgov-secure-by-design.md` |
 | `/arckit.mod-secure` | MOD Secure by Design assessment (JSP 440, IAMM, security clearances) | `projects/XXX/mod-secure-by-design.md` |
+| `/arckit.jsp-936` | MOD JSP 936 AI assurance documentation for defence AI/ML systems | `projects/XXX/jsp-936-assessment.md` |
 
 ---
 
@@ -1218,8 +1230,11 @@ For UK Ministry of Defence projects:
 # Example: Civilian UK Government project
 /arckit.secure Generate Secure by Design assessment for HMRC tax filing Beta phase - OFFICIAL-SENSITIVE data
 
-# Example: MOD project
+# Example: MOD project - security assessment
 /arckit.mod-secure Generate MOD Secure by Design assessment for Army logistics system - SECRET classification
+
+# Example: MOD project - AI assurance
+/arckit.jsp-936 Generate JSP 936 AI assurance documentation for threat detection ML system
 ```
 
 ### Built-in UK Government Support
@@ -1229,6 +1244,7 @@ For UK Ministry of Defence projects:
 - **Algorithmic Transparency Recording Standard (ATRS)** template and generator
 - **UK Government Secure by Design** (NCSC CAF, Cyber Essentials, UK GDPR)
 - **MOD Secure by Design** (JSP 440, IAMM, security clearances)
+- **MOD JSP 936 AI Assurance** (Dependable AI in Defence, ethical principles, risk classification, lifecycle documentation)
 - **Service Standard alignment** (Point 13)
 - **WCAG 2.2 Level AA** accessibility requirements
 - **UK GDPR and DPIA** compliance tracking

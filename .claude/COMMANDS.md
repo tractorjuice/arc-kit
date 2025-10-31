@@ -32,6 +32,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.atrs` | UK Gov Algorithmic Transparency Record | UK Government AI systems |
 | `/arckit.secure` | UK Gov Secure by Design (civilian) | UK Government security assessment |
 | `/arckit.mod-secure` | MOD Secure by Design (defence) | UK Ministry of Defence security assessment |
+| `/arckit.jsp-936` | MOD JSP 936 AI assurance | UK Ministry of Defence AI/ML systems |
 
 ---
 
@@ -1719,5 +1720,89 @@ Task,TASK-001-A,STORY-001,"Design user table schema","PostgreSQL schema",,Must H
 
 ---
 
-*Last updated: 2025-10-30 | Version: 0.6.0*
+### 28. `/arckit.jsp-936` - MOD JSP 936 AI Assurance Documentation
+
+**Purpose**: Generate comprehensive JSP 936 (Dependable Artificial Intelligence in Defence) compliance documentation for UK Ministry of Defence AI/ML systems.
+
+**Usage**:
+```
+/arckit.jsp-936 Generate JSP 936 documentation for threat detection ML system
+/arckit.jsp-936 Assess satellite imagery analysis CNN model for JSP 936 compliance
+/arckit.jsp-936 Create AI assurance for autonomous drone navigation
+```
+
+**What it does**:
+- Identifies all AI/ML components in the project
+- Performs ethical risk classification using likelihood × impact matrix (1-5 scale)
+- Assesses against 5 Ethical Principles: Human-Centricity, Responsibility, Understanding, Bias & Harm Mitigation, Reliability
+- Documents all 8 AI Lifecycle Phases: Planning, Requirements, Architecture, Algorithm Design, Model Development, V&V, Integration & Use, Quality Assurance
+- Defines governance structure (RAISOs, Ethics Managers, Independent Assurance for Critical systems)
+- Determines approval pathway based on risk classification:
+  - **Critical (20-25)**: 2PUS or Ministerial approval
+  - **Severe/Major (10-19)**: Defence-Level (JROC/IAC)
+  - **Moderate/Minor (1-9)**: TLB-Level (delegated)
+- Designs human-AI teaming strategy (human-in-loop, human-on-loop, human-out-of-loop)
+- Assesses AI-specific security threats (adversarial examples, data poisoning, model extraction, model inversion, backdoors, drift)
+- Documents supplier assurance (if third-party AI components)
+- Creates continuous monitoring and re-assessment plan (drift detection, retraining triggers, annual review)
+- Generates comprehensive compliance matrix (27 JSP 936 requirements)
+
+**AI Component Types Identified**:
+1. **Machine Learning Models**: Supervised/unsupervised learning, deep learning, neural networks
+2. **AI Algorithms**: Decision trees, SVMs, Bayesian networks, expert systems
+3. **Autonomous Systems**: Autonomous vehicles/drones, robotic systems, automated decision-making
+4. **Decision Support Systems**: Recommendation engines, risk assessment tools, predictive analytics
+5. **Natural Language Processing**: Chatbots, text classification, NER, machine translation
+6. **Computer Vision**: Object detection, face recognition, image classification, video analysis
+7. **Generative AI**: Large language models, image generation, synthetic data generation
+
+**Ethical Risk Matrix**:
+```
+Risk Score = Likelihood (1-5) × Impact (1-5)
+
+Likelihood: Rare (1) → Unlikely (2) → Possible (3) → Likely (4) → Almost Certain (5)
+Impact: Insignificant (1) → Minor (2) → Moderate (3) → Major (4) → Catastrophic (5)
+
+Classification:
+20-25 = Critical → 2PUS/Ministerial approval
+15-19 = Severe → Defence-Level approval
+10-14 = Major → Defence-Level approval
+5-9 = Moderate → TLB-Level approval
+1-4 = Minor → TLB-Level approval
+```
+
+**Output**: `.arckit/jsp-936/jsp-936-assessment.md`
+
+**When to use**:
+- Discovery/Alpha: Initial ethical risk screening for AI/ML projects
+- Alpha: Full JSP 936 assessment before significant development
+- Beta: Updated assessment as AI system develops
+- Live: Annual re-assessment and continuous monitoring
+
+**Next steps**:
+- Submit to Ethics Manager for review
+- RAISO endorsement
+- Independent assurance (if Critical classification)
+- Submission to appropriate approval authority
+- Continuous monitoring implementation
+
+**Guide**: See [docs/guides/jsp-936.md](../docs/guides/jsp-936.md) for comprehensive guide
+
+**Integration**:
+- **Inputs From**: `/arckit.requirements`, `/arckit.architecture`, `/arckit.data-model`, `/arckit.mod-secure`
+- **Complements**: `/arckit.ai-playbook`, `/arckit.atrs`, `/arckit.risk`
+- **Outputs To**: `/arckit.backlog` (compliance tasks), `/arckit.traceability` (ethical requirements)
+
+**Example - Threat Detection ML System**:
+
+**AI Component**: Deep CNN for satellite imagery threat detection
+- **Risk Assessment**: Likelihood 4 (Likely) × Impact 4 (Major) = 16 (Severe classification)
+- **Approval**: Defence-Level (JROC/IAC)
+- **Human-AI Teaming**: Human-on-loop (analyst monitors, can override)
+- **Key Risks**: False negatives (missed threats), adversarial examples, bias in training data
+- **Mitigations**: Diverse training data, adversarial robustness testing, explainability (heatmaps), continuous bias monitoring
+
+---
+
+*Last updated: 2025-10-31 | Version: 0.7.0*
 
