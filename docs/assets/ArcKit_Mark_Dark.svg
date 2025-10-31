@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="180" height="80" viewBox="40 25 180 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit logo">
+<svg width="165" height="75" viewBox="0 0 165 75" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit logo">
 <title>ArcKit</title>
 
 <g fill="none">
-  <path d="M 51.79,84.00 A 88.00,88.00 0 0 1 204.21,84.00" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" />
-  <path d="M 70.84,95.00 A 66.00,66.00 0 0 1 185.16,95.00" stroke="#FFFFFF" stroke-width="5.00" stroke-linecap="round" />
-  <line x1="82.50" y1="77.47" x2="69.12" y2="62.60" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
-  <line x1="135.11" y1="60.37" x2="137.20" y2="40.48" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
-  <line x1="178.53" y1="82.50" x2="193.40" y2="69.12" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
-  <circle cx="69.12" cy="62.60" r="6.25" fill="#1ED3C6" /><circle cx="137.20" cy="40.48" r="6.25" fill="#1ED3C6" /><circle cx="193.40" cy="69.12" r="6.25" fill="#1ED3C6" />
-  <line x1="122.00" y1="62.00" x2="134.00" y2="62.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" /><line x1="128.00" y1="56.00" x2="128.00" y2="68.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
+  <path d="M 6.79,49.00 A 88.00,88.00 0 0 1 159.21,49.00" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" />
+  <path d="M 25.84,60.00 A 66.00,66.00 0 0 1 140.16,60.00" stroke="#FFFFFF" stroke-width="5.00" stroke-linecap="round" />
+  <line x1="37.50" y1="42.47" x2="24.12" y2="27.60" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
+  <line x1="90.11" y1="25.37" x2="92.20" y2="5.48" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
+  <line x1="133.53" y1="47.50" x2="148.40" y2="34.12" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
+  <circle cx="24.12" cy="27.60" r="6.25" fill="#1ED3C6" /><circle cx="92.20" cy="5.48" r="6.25" fill="#1ED3C6" /><circle cx="148.40" cy="34.12" r="6.25" fill="#1ED3C6" />
+  <line x1="77.00" y1="27.00" x2="89.00" y2="27.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" /><line x1="83.00" y1="21.00" x2="83.00" y2="33.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
 </g>
 </svg>
