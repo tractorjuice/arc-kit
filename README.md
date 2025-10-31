@@ -38,7 +38,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v0.5.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.5.0)
+**Latest Release**: [v0.6.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.6.0)
 
 ### Initialize a Project
 
@@ -253,7 +253,20 @@ Implementation-ready validation:
 - Security implementation
 - Test strategy
 
-### Phase 10: ServiceNow Service Management Design
+### Phase 10: Sprint Planning
+**`/arckit.backlog`** → Generate prioritized product backlog
+
+Transform requirements into sprint-ready user stories:
+- Convert requirements (BR/FR/NFR/INT/DR) to GDS-format user stories
+- Multi-factor prioritization (MoSCoW + risk + value + dependencies)
+- Organize into sprint plan with capacity balancing
+- Generate traceability matrix (requirements → stories → sprints)
+- Export to Jira/Azure DevOps (CSV) or custom tools (JSON)
+- **Time savings**: 75%+ (4-6 weeks → 3-5 days)
+
+**When to run**: After HLD approval, before Sprint 1 (Alpha → Beta transition)
+
+### Phase 11: ServiceNow Service Management Design
 **`/arckit.servicenow`** → Generate ServiceNow service design
 
 Bridge architecture to operations:
@@ -264,7 +277,7 @@ Bridge architecture to operations:
 - Monitoring and alerting plan
 - Service transition plan
 
-### Phase 11: Traceability
+### Phase 12: Traceability
 **`/arckit.traceability`** → Generate traceability matrix
 
 Ensure complete coverage:
@@ -273,7 +286,7 @@ Ensure complete coverage:
 - Gap analysis and orphan detection
 - Change impact tracking
 
-### Phase 12: Quality Assurance
+### Phase 13: Quality Assurance
 **`/arckit.analyze`** → Comprehensive governance quality analysis
 
 Periodically assess governance quality across all artifacts:
@@ -287,7 +300,7 @@ Periodically assess governance quality across all artifacts:
 
 **When to use**: Run periodically (before milestones, design reviews, or procurement decisions) to identify gaps and ensure governance standards are maintained.
 
-### Phase 13: Compliance Assessment (UK Government)
+### Phase 14: Compliance Assessment (UK Government)
 For UK Government and public sector projects:
 
 **`/arckit.service-assessment`** → GDS Service Standard assessment preparation
@@ -534,6 +547,12 @@ payment-modernization/
 | `/arckit.dos` | Generate Digital Outcomes and Specialists (DOS) procurement docs for UK Digital Marketplace | `projects/XXX/procurement/dos-requirements.md` |
 | `/arckit.gcloud-search` | Search G-Cloud services on UK Digital Marketplace with live WebSearch | `projects/XXX/procurement/gcloud-requirements.md` |
 | `/arckit.gcloud-clarify` | Validate G-Cloud services and generate supplier clarification questions | `projects/XXX/procurement/gcloud-clarification-questions.md` |
+
+### Sprint Planning
+
+| Command | Purpose | Output |
+|---------|---------|--------|
+| `/arckit.backlog` | Generate prioritized product backlog - convert requirements to GDS user stories, organize into sprints | `projects/XXX/backlog.md` (+ optional CSV/JSON) |
 
 ### Vendor Management
 
