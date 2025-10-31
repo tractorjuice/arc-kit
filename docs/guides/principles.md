@@ -6,7 +6,7 @@ A comprehensive guide to establishing and enforcing enterprise architecture gove
 
 ## What Are Architecture Principles?
 
-Architecture principles are the fundamental rules and guidelines that govern technology decisions across your organization. They serve as the "constitution" for your enterprise architecture, ensuring consistency, quality, and alignment with business objectives.
+Architecture principles are the fundamental rules and guidelines that govern technology decisions across your organisation. They serve as the "constitution" for your enterprise architecture, ensuring consistency, quality, and alignment with business objectives.
 
 ### Why You Need Principles
 
@@ -18,7 +18,7 @@ Without architecture principles:
 - ❌ No objective basis for design reviews
 
 With architecture principles:
-- ✅ Consistent technology stack across the organization
+- ✅ Consistent technology stack across the organisation
 - ✅ Enforced security and compliance standards
 - ✅ Objective criteria for vendor selection
 - ✅ Clear guidelines for design reviews
@@ -39,7 +39,7 @@ claude
 ### Step 2: Run the Principles Command
 
 ```bash
-/arckit.principles Create architecture principles for [your organization/industry]
+/arckit.principles Create architecture principles for [your organisation/industry]
 ```
 
 **Examples**:
@@ -52,7 +52,7 @@ claude
 
 ### Step 3: Review and Customize
 
-The command will generate comprehensive principles in `.arckit/memory/architecture-principles.md`. Review and customize to match your organization's needs.
+The command will generate comprehensive principles in `.arckit/memory/architecture-principles.md`. Review and customise to match your organisation's needs.
 
 ---
 
@@ -305,7 +305,7 @@ Reference principles when defining requirements:
 standard authentication protocols.
 
 **Acceptance Criteria**:
-- OAuth 2.0 authorization server configured
+- OAuth 2.0 authorisation server configured
 - JWT tokens with 1-hour expiration
 - Refresh token rotation implemented
 ```
@@ -454,7 +454,7 @@ rate limiting, and request/response logging.
 - **Logging**: AWS CloudWatch, Datadog, or Splunk
 
 **Validation Gates**:
-- [ ] OAuth 2.0 authorization server configured
+- [ ] OAuth 2.0 authorisation server configured
 - [ ] API endpoints require valid JWT token
 - [ ] Rate limiting configured (max 1000 req/min per client)
 - [ ] Request/response logging to centralized system
@@ -509,7 +509,7 @@ app.get('/api/users', async (req, res) => {
 ## Next Steps
 
 1. **Create your principles**: Run `/arckit.principles`
-2. **Review and customize**: Tailor to your organization
+2. **Review and customise**: Tailor to your organisation
 3. **Communicate**: Share with teams and stakeholders
 4. **Enforce**: Use in design reviews and vendor evaluation
 5. **Maintain**: Regular updates based on lessons learned

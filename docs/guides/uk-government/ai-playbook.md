@@ -56,7 +56,7 @@ With AI Playbook compliance:
 
 **Requirements:**
 - User research conducted with actual users
-- User needs documented and prioritized
+- User needs documented and prioritised
 - Success criteria defined from user perspective
 - Accessibility considered for all users
 - User testing throughout development

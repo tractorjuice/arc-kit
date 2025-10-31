@@ -6,7 +6,7 @@ A comprehensive guide to generating sprint-ready product backlogs from ArcKit ar
 
 ## What is a Product Backlog?
 
-A **product backlog** is a prioritized list of work items (user stories, technical tasks, bugs) that a development team will implement during a project. It's the single source of truth for what needs to be built.
+A **product backlog** is a prioritised list of work items (user stories, technical tasks, bugs) that a development team will implement during a project. It's the single source of truth for what needs to be built.
 
 ### Key Components
 
@@ -21,7 +21,7 @@ A **product backlog** is a prioritized list of work items (user stories, technic
 
 **Technical Tasks**: Infrastructure and non-functional work
 - Derived from Non-Functional Requirements (NFR-xxx)
-- Examples: caching layer, security hardening, database optimization
+- Examples: caching layer, security hardening, database optimisation
 
 **Acceptance Criteria**: Measurable outcomes that define "done"
 - Format: "It's done when [measurable outcome]"
@@ -47,7 +47,7 @@ Run `/arckit.backlog` at these points:
 
 **Start of Beta Phase** (before Sprint 1):
 - Generate backlog for implementation planning
-- Organize work into sprints
+- Organise work into sprints
 - Establish baseline velocity
 
 **Mid-Beta** (requirements change):
@@ -549,7 +549,7 @@ Actual Velocity = 8 + 5 + 2 + 2 = 17 points
 - **Duration**: 1-2 hours
 
 **Bi-Weekly** (Groom Beyond 2 Sprints):
-- Re-prioritize based on learnings
+- Re-prioritise based on learnings
 - Add new stories from bugs/feedback
 - Remove obsolete stories
 - Adjust epic priorities
@@ -955,7 +955,7 @@ message = f"Sprint 1 has {len(sprint1['stories'])} stories, {sprint1['velocity']
 → Adjust: 18 points planned, 2 points buffer
 ```
 
-### Q: Can I customize the Definition of Done?
+### Q: Can I customise the Definition of Done?
 
 **A**: Yes, in `principles.md`:
 1. Document your team's DoD criteria

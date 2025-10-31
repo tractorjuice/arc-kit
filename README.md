@@ -85,7 +85,7 @@ Visualize your entire project delivery:
 ### Phase 1: Establish Governance
 **`/arckit.principles`** → Create enterprise architecture principles
 
-Define your organization's architecture standards:
+Define your organisation's architecture standards:
 - Cloud strategy (AWS/Azure/GCP)
 - Security frameworks (Zero Trust, compliance)
 - Technology standards
@@ -212,7 +212,7 @@ For UK public sector organizations needing off-the-shelf cloud services:
 Validate G-Cloud services and generate supplier clarification questions:
 - **Systematic gap analysis** (MUST/SHOULD requirements vs service descriptions)
 - Detect gaps: ✅ Confirmed, ⚠️ Ambiguous, ❌ Not mentioned
-- Generate prioritized questions (🔴 Critical / 🟠 High / 🔵 Medium / 🟢 Low)
+- Generate prioritised questions (🔴 Critical / 🟠 High / 🔵 Medium / 🟢 Low)
 - Risk assessment matrix for each service
 - Email templates for supplier engagement
 - Evidence requirements specification
@@ -254,12 +254,12 @@ Implementation-ready validation:
 - Test strategy
 
 ### Phase 10: Sprint Planning
-**`/arckit.backlog`** → Generate prioritized product backlog
+**`/arckit.backlog`** → Generate prioritised product backlog
 
 Transform requirements into sprint-ready user stories:
 - Convert requirements (BR/FR/NFR/INT/DR) to GDS-format user stories
 - Multi-factor prioritization (MoSCoW + risk + value + dependencies)
-- Organize into sprint plan with capacity balancing
+- Organise into sprint plan with capacity balancing
 - Generate traceability matrix (requirements → stories → sprints)
 - Export to Jira/Azure DevOps (CSV) or custom tools (JSON)
 - **Time savings**: 75%+ (4-6 weeks → 3-5 days)
@@ -552,7 +552,7 @@ payment-modernization/
 
 | Command | Purpose | Output |
 |---------|---------|--------|
-| `/arckit.backlog` | Generate prioritized product backlog - convert requirements to GDS user stories, organize into sprints | `projects/XXX/backlog.md` (+ optional CSV/JSON) |
+| `/arckit.backlog` | Generate prioritised product backlog - convert requirements to GDS user stories, organise into sprints | `projects/XXX/backlog.md` (+ optional CSV/JSON) |
 
 ### Vendor Management
 
@@ -737,7 +737,7 @@ The `/arckit.diagram` command generates diagrams automatically from your archite
 /arckit.diagram container Generate C4 container diagram showing AWS services
 /arckit.diagram component Generate component diagram for payment orchestrator
 /arckit.diagram deployment Generate deployment diagram for production environment
-/arckit.diagram sequence Generate sequence diagram for payment authorization flow
+/arckit.diagram sequence Generate sequence diagram for payment authorisation flow
 /arckit.diagram dataflow Generate data flow diagram showing PII handling for UK GDPR
 ```
 

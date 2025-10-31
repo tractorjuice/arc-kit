@@ -316,7 +316,7 @@ All fraud investigators receive:
 **What to include**:
 - Accuracy metrics
 - Impact on users
-- Benefits realized
+- Benefits realised
 - Issues identified
 
 **Example**:

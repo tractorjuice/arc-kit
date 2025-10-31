@@ -35,7 +35,7 @@ With good requirements:
 ls .arckit/memory/architecture-principles.md
 
 # If not, create them first
-/arckit.principles Create principles for [your organization]
+/arckit.principles Create principles for [your organisation]
 ```
 
 ### Step 2: Analyze Stakeholders (CRITICAL - Do This BEFORE Requirements!)
@@ -84,7 +84,7 @@ The command generates a comprehensive requirements document in `projects/NNN-pro
 
 ## Requirement Types
 
-ArcKit organizes requirements into five categories:
+ArcKit organises requirements into five categories:
 
 ### 1. Business Requirements (BR-xxx)
 
@@ -159,7 +159,7 @@ can complete my purchase quickly.
 ```
 
 **Common Functional Requirements**:
-- User authentication and authorization
+- User authentication and authorisation
 - Data entry and validation
 - Business logic processing
 - Reporting and analytics
@@ -282,7 +282,7 @@ spikes within 5 minutes.
 **Acceptance Criteria**:
 - [ ] Scales from 2 to 20 app instances in < 5 minutes
 - [ ] No increase in error rate during scale-up
-- [ ] Scales down during low traffic (cost optimization)
+- [ ] Scales down during low traffic (cost optimisation)
 - [ ] Database connections pooled appropriately
 
 **Test Method**: Gradually increase load from 1K to 10K TPS over 10 minutes

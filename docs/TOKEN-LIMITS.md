@@ -6,7 +6,7 @@ ArcKit commands can hit Claude Code's 32,000 output token limit, causing this er
 
 ```
 API Error: Claude's response exceeded the 32000 output token maximum.
-To configure this behavior, set the CLAUDE_CODE_MAX_OUTPUT_TOKENS environment variable
+To configure this behaviour, set the CLAUDE_CODE_MAX_OUTPUT_TOKENS environment variable
 ```
 
 ## Why This Happens
@@ -99,7 +99,7 @@ TOTAL: 5K tokens ← Safe!
 **DO**:
 - ✅ Use `Write` tool to create files (doesn't count toward output tokens)
 - ✅ Show summaries instead of full content
-- ✅ Work in phases (outline → write → summarize)
+- ✅ Work in phases (outline → write → summarise)
 - ✅ Use `Edit` tool for incremental updates
 - ✅ Provide statistics ("Created 127 requirements in 8 categories")
 
@@ -240,14 +240,14 @@ Token usage: 15234/64000 (24% of limit) ← SAFE
 
 ### /arckit.research (HIGHEST RISK)
 
-**Current behavior**:
+**Current behaviour**:
 - Runs 10 research strategies
 - Each strategy generates 1000-3000 tokens
 - Total: 10,000-30,000 tokens
 - Plus explanations: 5,000 tokens
 - **TOTAL: 15,000-35,000 tokens** ← EXCEEDS LIMIT!
 
-**New behavior**:
+**New behaviour**:
 ```markdown
 1. Identify research categories (1K tokens)
 2. Show research plan (1K tokens)
@@ -261,7 +261,7 @@ TOTAL: 5K tokens ← SAFE!
 
 ### /arckit.requirements (HIGH RISK)
 
-**New behavior**:
+**New behaviour**:
 ```markdown
 1. Analyze context (1K tokens)
 2. Show requirements outline (2K tokens)
@@ -278,7 +278,7 @@ TOTAL: 5K tokens ← SAFE!
 
 ### /arckit.sobc (HIGH RISK)
 
-**New behavior with chunking**:
+**New behaviour with chunking**:
 ```markdown
 ## Phase 1: Strategic Case (10K tokens)
 - Generate strategic case section

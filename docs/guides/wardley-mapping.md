@@ -115,7 +115,7 @@ Wardley Maps inform and validate multiple ArcKit artifacts. They provide strateg
 **Example:**
 If SOBC Strategic Case presents three options:
 1. Build entirely custom platform
-2. Buy COTS product and customize
+2. Buy COTS product and customise
 3. Use cloud commodity services
 
 **Wardley Map shows**:
@@ -283,7 +283,7 @@ Based on analysis of 100+ Wardley Maps, here are the most common issues and thei
 **Why It Happens:**
 - Team unfamiliar with market availability
 - "Not invented here" bias (we built it, must be unique)
-- Confusing "we customized it" with "it's custom-built"
+- Confusing "we customised it" with "it's custom-built"
 
 **How to Fix:**
 
@@ -404,7 +404,7 @@ Based on analysis of 100+ Wardley Maps, here are the most common issues and thei
    |-----------------|------------------|------------------|
    | Genesis | **Build** in-house | Never buy (no products exist) |
    | Custom | **Build** or partner | Buy if good consultancy exists |
-   | Product | **Buy** COTS + customize | Build if core differentiator |
+   | Product | **Buy** COTS + customise | Build if core differentiator |
    | Commodity | **Buy** SaaS/utility | Never build (waste of resources) |
 
 2. **Document Decisions**:
@@ -495,7 +495,7 @@ Based on analysis of 100+ Wardley Maps, here are the most common issues and thei
    **Collaborate (Buy - Product)**:
    - Patient portal (Clinix)
    - SMS reminders (Esendex)
-   → Use best products, customize
+   → Use best products, customise
 
    **Commoditize (Buy - Utility)**:
    - Cloud infrastructure (AWS)
