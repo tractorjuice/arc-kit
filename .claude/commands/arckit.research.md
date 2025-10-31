@@ -41,7 +41,7 @@ This command performs **market research** to identify available solutions that c
   - Understand stakeholder priorities for research focus
 - Check if project is UK Government
   - Look for "UK Government", "Ministry of", "Department for", "NHS", "MOD" in project name or requirements
-  - If UK Gov, prioritize Digital Marketplace and GOV.UK platforms
+  - If UK Gov, prioritise Digital Marketplace and GOV.UK platforms
 
 ### 2. Find the Project
 
@@ -942,7 +942,7 @@ User: `/arckit.research Research tech options for UK Government citizen portal`
 
 - **Input**: Requires `requirements.md` (identifies research categories from requirements)
 - **Input**: Uses `data-model.md` (understands data entities for database research)
-- **Input**: Uses `stakeholder-drivers.md` (prioritizes research based on stakeholder needs)
+- **Input**: Uses `stakeholder-drivers.md` (prioritises research based on stakeholder needs)
 - **Output**: Feeds into `/arckit.wardley` (evolution positioning: commodity vs product vs genesis)
 - **Output**: Feeds into `/arckit.sobc` (Economic Case options and TCO data)
 - **Output**: Feeds into `/arckit.sow` (RFP vendor requirements informed by research)

@@ -1181,7 +1181,7 @@ Create a public document (visible to assessment team) showing:
 **Panel feedback themes**:
 - "Cannot proceed to public beta until [critical issue] resolved"
 - "This is essential for a beta service"
-- "Team needs to prioritize [issue] immediately"
+- "Team needs to prioritise [issue] immediately"
 
 ---
 

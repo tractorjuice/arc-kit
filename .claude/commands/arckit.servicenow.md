@@ -135,7 +135,7 @@ Using the template at `.arckit/templates/servicenow-design-template.md`, generat
 
 **2. Service Catalog Entry**:
 - Display name: User-friendly version of service name
-- Request process: Standard approval flow (customize for security requirements)
+- Request process: Standard approval flow (customise for security requirements)
 - Fulfillment workflow: Mermaid diagram of approval → provisioning → notification
 - Approval chain: Derive from security/compliance requirements
 

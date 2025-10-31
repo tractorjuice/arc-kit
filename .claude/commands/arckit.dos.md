@@ -485,7 +485,7 @@ Vendors must provide:
 
 **GDS Approval**:
 - ⚠️ New or redesigned services may require formal GDS approval
-- ⚠️ Check if spend control process applies to your organization
+- ⚠️ Check if spend control process applies to your organisation
 - ⚠️ Consult with digital/technology leadership before publishing
 
 **Transparency**:

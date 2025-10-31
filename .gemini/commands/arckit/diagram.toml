@@ -510,7 +510,7 @@ The diagram document must include:
 
 7. **Security Architecture**:
    - Security zones
-   - Authentication/authorization
+   - Authentication/authorisation
    - Security controls
 
 8. **Deployment Architecture** (for deployment diagrams):

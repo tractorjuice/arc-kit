@@ -492,7 +492,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 
 ### 5. Severity Assignment
 
-Use this heuristic to prioritize findings:
+Use this heuristic to prioritise findings:
 
 **CRITICAL**:
 - Violates architecture principles (MUST)

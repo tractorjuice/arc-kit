@@ -1,5 +1,5 @@
 ---
-description: Generate prioritized product backlog from ArcKit artifacts - convert requirements to user stories, organize into sprints
+description: Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints
 ---
 
 # Generate Product Backlog
@@ -9,7 +9,7 @@ description: Generate prioritized product backlog from ArcKit artifacts - conver
 $ARGUMENTS
 ```
 
-You are creating a **prioritized product backlog** for an ArcKit project, converting design artifacts into sprint-ready user stories.
+You are creating a **prioritised product backlog** for an ArcKit project, converting design artifacts into sprint-ready user stories.
 
 ## Arguments
 
@@ -302,7 +302,7 @@ Use Fibonacci sequence: **1, 2, 3, 5, 8, 13**
 - Data migration or transformation
 - Complex business logic
 - Regulatory compliance (GDPR, PCI-DSS)
-- Performance optimization needed
+- Performance optimisation needed
 
 **Estimation algorithm**:
 ```
@@ -765,7 +765,7 @@ Sprint 2:
 
 ### Step 8: Sprint Planning
 
-Organize stories into sprints with capacity planning:
+Organise stories into sprints with capacity planning:
 
 #### 8.1: Sprint Parameters
 
@@ -864,7 +864,7 @@ Buffer = 5% = 1 point
 
 **Step 2: Select stories by priority**
 
-Starting from top of prioritized backlog:
+Starting from top of prioritised backlog:
 
 ```
 For each unscheduled story S (sorted by priority):
@@ -1108,7 +1108,7 @@ Every story must meet these criteria before marking "Done":
 - [ ] Security scan passed (no critical/high vulnerabilities)
 - [ ] OWASP Top 10 checks completed
 - [ ] Secrets not hardcoded (use environment variables)
-- [ ] Authentication and authorization tested
+- [ ] Authentication and authorisation tested
 
 ### Performance
 - [ ] Performance tested (meets NFR thresholds)
@@ -1432,7 +1432,7 @@ Dependencies are identified automatically but may need adjustment:
 
 ### Risk Management
 
-High-risk items are prioritized early to:
+High-risk items are prioritised early to:
 - Prove technical feasibility
 - Identify blockers early
 - Reduce uncertainty
