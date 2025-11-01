@@ -55,3 +55,4 @@ packages = ["src/arckit_cli"]
 ".claude" = "share/arckit/.claude"
 "scripts" = "share/arckit/scripts"
 ".gemini" = "share/arckit/.gemini"
+".arckit" = "share/arckit/.arckit"
