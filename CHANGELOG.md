@@ -5,6 +5,64 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- **LICENSE**: Updated copyright holder from "GitHub" to "Mark Craddock"
+- **Project README template**: Now documents all 28 commands (previously only 8)
+  - Added 10 organized categories: Project Planning, Core Workflow, Vendor Procurement, Design Review, Architecture Diagrams, Sprint Planning, Service Management, Traceability & Quality, UK Government Compliance, Security Assessment
+  - Improves command discoverability for new ArcKit projects
+
+### Removed
+
+- **Obsolete documentation files** (7 files, ~123KB):
+  - `PUSH-TO-GITHUB.md` - Initial push instructions (no longer needed)
+  - `OPENAI-INTEGRATION-PLAN.md` - Planning doc (implemented in .codex/)
+  - `UI-IMPLEMENTATION-PLAN.md` - Future planning (not current priority)
+  - `arckit-backlog-command-design.md` - Design doc (command implemented)
+  - `gds-service-assessment-command-design.md` - Design doc (command implemented)
+  - `ARTICLE.md` - Marketing article draft
+  - `GITHUB-DISCUSSION-POST.md` - Discussion post draft
+
+## [0.8.1] - 2025-11-01
+
+### Fixed
+
+- **Installation compatibility**: Added fallback path for system-wide pip installs
+  - Resolves issues when ArcKit installed globally vs in virtual environment
+  - Improved template and script discovery across different installation methods
+
+## [0.8.0] - 2025-11-01
+
+### Added
+
+- **Enterprise document control system**: Complete version control and document management
+  - Document metadata (version, status, approvers, classification)
+  - Comprehensive change log tracking
+  - Version control best practices
+  - Distribution and access control
+  - Applied to all generated documents
+
+- **Enhanced backlog template**: Updated with document control metadata
+
+### Fixed
+
+- **Package distribution**: Added .arckit directory to package distribution
+  - Templates and scripts now properly included in pip/uv installs
+  - Fixed missing templates issue in fresh installations
+
+- **Script paths**: Corrected script paths in all command files
+  - Scripts now reference correct `/scripts/` directory
+  - Improved script execution reliability
+
+### Changed
+
+- **Repository organization**: Consolidated scripts to root /scripts directory
+  - Removed duplicate root templates directory
+  - Cleaner repository structure
+  - Improved maintainability
+
 ## [0.7.0] - 2025-10-31
 
 ### Added
