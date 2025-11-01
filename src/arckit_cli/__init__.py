@@ -164,7 +164,18 @@ def get_data_paths():
         import site
         for site_dir in site.getsitepackages() + [site.getusersitepackages()]:
             if site_dir:
+                # Try site-packages/share/arckit
                 share_path = Path(site_dir) / "share" / "arckit"
+                if share_path.exists():
+                    return {
+                        "templates": share_path / ".arckit" / "templates",
+                        "scripts": share_path / "scripts",
+                        "claude_commands": share_path / ".claude" / "commands",
+                        "gemini_commands": share_path / ".gemini" / "commands",
+                    }
+
+                # Try ../../../share/arckit from site-packages (for system installs)
+                share_path = Path(site_dir).parent.parent.parent / "share" / "arckit"
                 if share_path.exists():
                     return {
                         "templates": share_path / ".arckit" / "templates",
