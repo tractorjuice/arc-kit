@@ -25,6 +25,75 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ARTICLE.md` - Marketing article draft
   - `GITHUB-DISCUSSION-POST.md` - Discussion post draft
 
+## [0.8.2] - 2025-11-01
+
+### Fixed
+
+- **Dependency Matrix Accuracy**: Corrected 4 critical (M-level) dependency errors
+  - `dos` now correctly requires principles (M) - ensures evaluation framework aligned with architecture governance
+  - `evaluate` now correctly requires principles (M) - ensures vendor scoring criteria match organizational standards
+  - `hld-review` now correctly requires principles (M) - validates design decisions against documented principles
+  - `dld-review` now correctly requires principles (M) - ensures implementation adheres to architectural standards
+
+- **High-Priority Dependencies**: Added 9 recommended (R-level) dependencies to improve quality
+  - `plan` now recommends stakeholders (R), requirements (R), principles (R), sobc (R), risk (R) - creates realistic timelines based on project scope
+  - `principles` now recommends gcloud-search (R) for G-Cloud procurement - ensures search criteria align with principles
+  - `stakeholders` now recommends research (R), dos (R) - better procurement strategy and vendor requirements
+  - `data-model` now recommends research (R) - data modeling informed by vendor research and technology choices
+  - `service-assessment` now recommends plan (R) - validates timelines and delivery approach
+
+- **Artifact Summary Counts**: Corrected consumer counts in dependency matrix
+  - `principles.md` consumer count: 10 → 14 commands (added dos, gcloud-search, service-assessment)
+  - `stakeholders.md` consumer count: 7 → 9 commands (added research, dos, service-assessment)
+
+### Added
+
+- **Comprehensive Dependency Documentation** (3 new documents):
+  - `DEPENDENCY-MATRIX.md` (191 lines) - 28×28 Dependency Structure Matrix showing all command dependencies
+    - Matrix legend (M=Mandatory, R=Recommended, O=Optional)
+    - 10-tier dependency hierarchy (Tier 0: Foundation → Tier 10: Compliance)
+    - 5 critical paths (Standard, UK Gov, UK Gov AI, MOD Defence, MOD Defence AI)
+    - Artifact fan-in/fan-out analysis (requirements.md consumed by 22 commands)
+    - Design notes explaining dependency rationale
+  - `DEPENDENCY-GAPS-SUMMARY.md` (212 lines) - Gap analysis identifying 50+ missing dependencies
+    - 4 critical (M-level) gaps (dos/evaluate/hld-review/dld-review missing principles checks)
+    - 23 high-priority (R-level) gaps (quality degradation if missing)
+    - 26 optional (O-level) enhancements
+    - 3-phase implementation plan with expected outcomes
+  - `WORKFLOW-DIAGRAMS.md` (431 lines) - Visual workflow diagrams for all 5 project paths
+    - Mermaid flowcharts showing decision gates and command flows
+    - Standard Project workflow (12 steps)
+    - UK Government Project workflow (16 steps)
+    - UK Government AI Project workflow (15 steps)
+    - MOD Defence Project workflow (16 steps)
+    - MOD Defence AI Project workflow (17 steps)
+
+### Changed
+
+- **Command Template Enforcement**: Updated 4 command templates to enforce critical dependencies
+  - `.claude/commands/arckit.dos.md` - Added principles (M) check with guidance
+  - `.claude/commands/arckit.evaluate.md` - Added principles (M) check with guidance
+  - `.claude/commands/arckit.hld-review.md` - Added principles (M) check with guidance
+  - `.claude/commands/arckit.dld-review.md` - Added principles (M) check with guidance
+
+### Why This Matters
+
+The dependency matrix work ensures ArcKit commands are executed in the correct order, preventing:
+- **Quality Issues**: Running evaluate without principles means vendor scoring isn't aligned with organizational standards
+- **Rework**: Running hld-review/dld-review without principles means design decisions may violate governance
+- **Incomplete Analysis**: Running plan without requirements means timelines don't reflect actual scope
+- **Procurement Failures**: Running dos without stakeholders means vendor requirements don't address real needs
+
+The comprehensive dependency documentation provides:
+- **Clear Guidance**: 5 workflow diagrams showing exactly which commands to run for different project types
+- **Traceability**: Complete dependency chain from foundation commands to final compliance assessments
+- **Quality Assurance**: Artifact fan-in analysis shows requirements.md consumed by 22 commands (highest)
+
+This release completes the dependency analysis initiative (Issue #9) with:
+- Phase 1: 4 critical (M-level) fixes ✅
+- Phase 2: 9 high-priority (R-level) enhancements ✅
+- Phase 3: 26 optional (O-level) enhancements (future work)
+
 ## [0.8.1] - 2025-11-01
 
 ### Fixed

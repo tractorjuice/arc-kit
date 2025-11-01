@@ -185,6 +185,6 @@ traceability → analyze → service-assessment → tcop → mod-secure → jsp-
 
 ## Version
 
-- **ArcKit Version**: 0.8.1
+- **ArcKit Version**: 0.8.2
 - **Matrix Date**: 2025-11-01
 - **Commands Documented**: 28
