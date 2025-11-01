@@ -36,7 +36,7 @@ a. **Project with Requirements** (MUST exist):
    - If NOT found: ERROR "Run /arckit.requirements first to define project needs"
 
 b. **Architecture Principles** (RECOMMENDED):
-   - Check if `.arckit/templates/architecture-principles.md` exists
+   - Check if `.arckit/memory/architecture-principles.md` exists
    - If exists: Read it for cloud strategy, security requirements
    - If NOT found: WARN "Consider running /arckit.principles to define cloud governance"
 
@@ -45,7 +45,7 @@ b. **Architecture Principles** (RECOMMENDED):
 Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, then:
 
 1. Read `projects/[project]/requirements.md`
-2. Read `.arckit/templates/architecture-principles.md` if available
+2. Read `.arckit/memory/architecture-principles.md` if available
 3. Parse user input for specific service types needed
 
 ### 3. Analyze Cloud Service Needs
