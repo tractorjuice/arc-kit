@@ -118,7 +118,7 @@ Before completing the document, populate ALL document control fields in the head
 ### Step 1: Generate Document ID
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(../.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "REQ" "1.0")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "REQ" "1.0")
 # Example output: ARC-001-REQ-v1.0
 ```
 
