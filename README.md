@@ -1299,10 +1299,18 @@ arckit init my-project
 
 ## Documentation
 
+### Core Guides
+
 - **[Architecture Principles Guide](docs/principles.md)** - How to establish governance
 - **[Requirements Guide](docs/requirements.md)** - Writing comprehensive requirements
 - **[Vendor Procurement Guide](docs/procurement.md)** - Managing RFP and selection
 - **[Design Review Guide](docs/design-review.md)** - Conducting HLD/DLD reviews
+
+### Workflow & Dependencies
+
+- **[Workflow Diagrams](WORKFLOW-DIAGRAMS.md)** - Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI) with Gantt charts and decision trees
+- **[Dependency Structure Matrix](DEPENDENCY-MATRIX.md)** - Complete 28×28 command dependency matrix showing mandatory, recommended, and optional relationships
+- **[Dependency Gap Analysis](DEPENDENCY-GAPS-SUMMARY.md)** - Comprehensive analysis of 50+ missing dependencies with remediation recommendations
 - **[Traceability Guide](docs/traceability.md)** - Maintaining requirement coverage
 
 ---
