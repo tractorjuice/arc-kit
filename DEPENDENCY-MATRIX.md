@@ -20,11 +20,11 @@ This matrix shows which commands depend on outputs from other commands.
 | PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | research | wardley | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | traceability | analyze | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 |
 |------------|------|------------|--------------|------|------|--------------|------------|----------|---------|-----|-----|---------------|----------------|----------|------------|------------|---------|---------|------------|--------------|---------|-------------------|------|-------------|------|--------|------------|---------|
 | **plan** | - | | | | | | | | | | | | | | | | | | | | | | | | | | | |
-| **principles** | | - | R | R | R | R | | | | | | | | | M | M | | | | | M | R | M | | | M | M | |
+| **principles** | | - | R | R | R | R | | | | | M | | | M | M | M | | | | | M | R | M | | | M | M | |
 | **stakeholders** | | | - | R | M | R | R | | | | | | | | | | R | | | | M | R | | | | | | |
 | **risk** | | | | - | R | R | | | | | | | | | | | R | | | | M | R | | | | R | R | |
 | **sobc** | | | | | - | R | O | | | | | | | | | | | | | | R | R | | | | | | |
-| **requirements** | | | | | | - | M | M | M | M | M | M | | M | M | M | M | M | M | M | M | M | M | M | M | M | M | M |
+| **requirements** | | | | | | - | M | M | M | M | M | M | | M | M | M | M | M | M | M | M | M | M | O | O | M | M | M |
 | **data-model** | | | | | | | - | | | | | | | | | | R | R | R | R | M | R | | | | | | |
 | **research** | | | | | | | | - | M | R | | R | | R | | | | | | | M | R | | | | | | |
 | **wardley** | | | | | | | | | - | R | | | | R | | | | | | | M | R | | | | | | |
@@ -77,10 +77,10 @@ All these commands REQUIRE requirements.md:
 ### Tier 5: Procurement (Depends on Requirements)
 All procurement commands REQUIRE requirements.md:
 - **sow** → Depends on: requirements (M), research (R)
-- **dos** → Depends on: requirements (M)
+- **dos** → Depends on: requirements (M), principles (M)
 - **gcloud-search** → Depends on: requirements (M), research (R)
 - **gcloud-clarify** → Depends on: requirements (M), gcloud-search (M)
-- **evaluate** → Depends on: requirements (M), sow/dos (R), research (R), gcloud-clarify (R)
+- **evaluate** → Depends on: requirements (M), principles (M), sow/dos (R), research (R), gcloud-clarify (R)
 
 ### Tier 6: Design Reviews (Depends on Design Documents + Requirements)
 - **hld-review** → Depends on: requirements (M), principles (M), HLD (M)
@@ -100,8 +100,8 @@ All procurement commands REQUIRE requirements.md:
 These assess compliance across the project:
 - **service-assessment** → Depends on: requirements (M), stakeholders (R), risk (R), analyze (R)
 - **tcop** → Depends on: requirements (M), principles (M)
-- **ai-playbook** → Depends on: requirements (M) [if AI system]
-- **atrs** → Depends on: requirements (M) [if AI system]
+- **ai-playbook** → Depends on: requirements (O) [if AI system]
+- **atrs** → Depends on: requirements (O) [if AI system]
 - **secure** → Depends on: requirements (M), principles (M), risk (R)
 - **mod-secure** → Depends on: requirements (M), principles (M), risk (R)
 - **jsp-936** → Depends on: requirements (M) [if MOD AI system]
@@ -151,10 +151,10 @@ traceability → analyze → service-assessment → tcop → mod-secure → jsp-
 ### Commands That Are Frequently Consumed (High Fan-In)
 
 **requirements.md** - consumed by 22 commands:
-- data-model, research, wardley, sow, dos, gcloud-search, evaluate, hld-review, dld-review, backlog, diagram, servicenow, traceability, analyze, service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936, gcloud-clarify
+- data-model (M), research (M), wardley (M), sow (M), dos (M), gcloud-search (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), diagram (M), servicenow (M), traceability (M), analyze (M), service-assessment (M), tcop (M), ai-playbook (O), atrs (O), secure (M), mod-secure (M), jsp-936 (M), gcloud-clarify (M - implicit)
 
-**principles.md** - consumed by 8 commands:
-- stakeholders (R), risk (R), sobc (R), requirements (R), hld-review (M), dld-review (M), tcop (M), secure (M), mod-secure (M), analyze (M)
+**principles.md** - consumed by 10 commands:
+- stakeholders (R), risk (R), sobc (R), requirements (R), dos (M), evaluate (M), hld-review (M), dld-review (M), tcop (M), secure (M), mod-secure (M), analyze (M)
 
 **stakeholders.md** - consumed by 7 commands:
 - risk (R), sobc (M), requirements (R), data-model (R), backlog (R), analyze (M), service-assessment (R)
@@ -165,7 +165,7 @@ traceability → analyze → service-assessment → tcop → mod-secure → jsp-
 ### Commands That Produce Critical Artifacts (High Fan-Out)
 
 **requirements** produces requirements.md → consumed by 22 commands (highest)
-**principles** produces principles.md → consumed by 8 commands
+**principles** produces principles.md → consumed by 10 commands
 **stakeholders** produces stakeholder-drivers.md → consumed by 7 commands
 **HLD** (external) → consumed by 7 commands
 **risk** produces risk-register.md → consumed by 6 commands
