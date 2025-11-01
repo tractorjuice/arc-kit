@@ -154,8 +154,8 @@ def get_data_paths():
         uv_tools_path = Path.home() / ".local" / "share" / "uv" / "tools" / "arckit-cli" / "share" / "arckit"
         if uv_tools_path.exists():
             return {
-                "templates": uv_tools_path / "templates",
-                "scripts": uv_tools_path / "scripts",
+                "templates": uv_tools_path / ".arckit" / "templates",
+                "scripts": uv_tools_path / ".arckit" / "scripts",
                 "claude_commands": uv_tools_path / ".claude" / "commands",
                 "gemini_commands": uv_tools_path / ".gemini" / "commands",
             }
@@ -167,8 +167,8 @@ def get_data_paths():
                 share_path = Path(site_dir) / "share" / "arckit"
                 if share_path.exists():
                     return {
-                        "templates": share_path / "templates",
-                        "scripts": share_path / "scripts",
+                        "templates": share_path / ".arckit" / "templates",
+                        "scripts": share_path / ".arckit" / "scripts",
                         "claude_commands": share_path / ".claude" / "commands",
                         "gemini_commands": share_path / ".gemini" / "commands",
                     }
@@ -177,8 +177,8 @@ def get_data_paths():
         data_dir = Path(platformdirs.user_data_dir("arckit"))
         if data_dir.exists():
             return {
-                "templates": data_dir / "templates",
-                "scripts": data_dir / "scripts",
+                "templates": data_dir / ".arckit" / "templates",
+                "scripts": data_dir / ".arckit" / "scripts",
                 "claude_commands": data_dir / ".claude" / "commands",
                 "gemini_commands": data_dir / ".gemini" / "commands",
             }
@@ -189,8 +189,8 @@ def get_data_paths():
     # Fallback to source directory (development mode)
     source_root = Path(__file__).parent.parent.parent
     return {
-        "templates": source_root / "templates",
-        "scripts": source_root / "scripts",
+        "templates": source_root / ".arckit" / "templates",
+        "scripts": source_root / ".arckit" / "scripts",
         "claude_commands": source_root / ".claude" / "commands",
         "gemini_commands": source_root / ".gemini" / "commands",
     }
