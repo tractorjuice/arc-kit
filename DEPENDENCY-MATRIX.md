@@ -153,11 +153,11 @@ traceability → analyze → service-assessment → tcop → mod-secure → jsp-
 **requirements.md** - consumed by 22 commands:
 - data-model (M), research (M), wardley (M), sow (M), dos (M), gcloud-search (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), diagram (M), servicenow (M), traceability (M), analyze (M), service-assessment (M), tcop (M), ai-playbook (O), atrs (O), secure (M), mod-secure (M), jsp-936 (M), gcloud-clarify (M - implicit)
 
-**principles.md** - consumed by 10 commands:
-- stakeholders (R), risk (R), sobc (R), requirements (R), dos (M), evaluate (M), hld-review (M), dld-review (M), tcop (M), secure (M), mod-secure (M), analyze (M)
+**principles.md** - consumed by 14 commands:
+- stakeholders (R), risk (R), sobc (R), requirements (R), dos (M), gcloud-search (R), evaluate (M), hld-review (M), dld-review (M), analyze (M), service-assessment (R), tcop (M), secure (M), mod-secure (M)
 
-**stakeholders.md** - consumed by 7 commands:
-- risk (R), sobc (M), requirements (R), data-model (R), backlog (R), analyze (M), service-assessment (R)
+**stakeholders.md** - consumed by 9 commands:
+- risk (R), sobc (M), requirements (R), data-model (R), research (R), dos (R), backlog (R), analyze (M), service-assessment (R)
 
 **HLD** (external document) - consumed by 7 commands:
 - dld-review (M), backlog (M), diagram (R), servicenow (R), traceability (M), analyze (M), hld-review (validates it), service-assessment (M)
@@ -165,8 +165,8 @@ traceability → analyze → service-assessment → tcop → mod-secure → jsp-
 ### Commands That Produce Critical Artifacts (High Fan-Out)
 
 **requirements** produces requirements.md → consumed by 22 commands (highest)
-**principles** produces principles.md → consumed by 10 commands
-**stakeholders** produces stakeholder-drivers.md → consumed by 7 commands
+**principles** produces principles.md → consumed by 14 commands
+**stakeholders** produces stakeholder-drivers.md → consumed by 9 commands
 **HLD** (external) → consumed by 7 commands
 **risk** produces risk-register.md → consumed by 6 commands
 
