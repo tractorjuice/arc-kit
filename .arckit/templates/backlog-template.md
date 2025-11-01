@@ -203,7 +203,7 @@
 **Coverage Summary**:
 - Total Requirements: [N]
 - Mapped to Stories: [N] (100%)
-- Scheduled in Sprints 1-8: [N] ([X]%)
+- Scheduled in Sprints 1-[N]: [N] ([X]%)
 - Remaining for Future Sprints: [N] ([X]%)
 
 ---
