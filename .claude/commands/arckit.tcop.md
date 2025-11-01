@@ -68,7 +68,7 @@ Before completing the document, populate ALL document control fields in the head
 ### Step 1: Generate Document ID
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(../.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "TCOP" "1.0")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "TCOP" "1.0")
 # Example output: ARC-001-TCOP-v1.0
 ```
 
