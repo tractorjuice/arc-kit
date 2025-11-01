@@ -19,13 +19,13 @@ This matrix shows which commands depend on outputs from other commands.
 
 | PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | research | wardley | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | traceability | analyze | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 |
 |------------|------|------------|--------------|------|------|--------------|------------|----------|---------|-----|-----|---------------|----------------|----------|------------|------------|---------|---------|------------|--------------|---------|-------------------|------|-------------|------|--------|------------|---------|
-| **plan** | - | | | | | | | | | | | | | | | | | | | | | | | | | | | |
-| **principles** | | - | R | R | R | R | | | | | M | | | M | M | M | | | | | M | R | M | | | M | M | |
-| **stakeholders** | | | - | R | M | R | R | | | | | | | | | | R | | | | M | R | | | | | | |
+| **plan** | - | O | O | O | O | O | | | | | | | | | | | | | | | | R | | | | | | |
+| **principles** | | - | R | R | R | R | | | | | M | R | | M | M | M | | | | | M | R | M | | | M | M | |
+| **stakeholders** | | | - | R | M | R | R | R | | | R | | | | | | R | | | | M | R | | | | | | |
 | **risk** | | | | - | R | R | | | | | | | | | | | R | | | | M | R | | | | R | R | |
 | **sobc** | | | | | - | R | O | | | | | | | | | | | | | | R | R | | | | | | |
 | **requirements** | | | | | | - | M | M | M | M | M | M | | M | M | M | M | M | M | M | M | M | M | O | O | M | M | M |
-| **data-model** | | | | | | | - | | | | | | | | | | R | R | R | R | M | R | | | | | | |
+| **data-model** | | | | | | | - | R | | | | | | | | | R | R | R | R | M | R | | | | | | |
 | **research** | | | | | | | | - | M | R | | R | | R | | | | | | | M | R | | | | | | |
 | **wardley** | | | | | | | | | - | R | | | | R | | | | | | | M | R | | | | | | |
 | **sow** | | | | | | | | | | - | | | | R | | | | | | | M | | | | | | | |
@@ -52,9 +52,9 @@ This matrix shows which commands depend on outputs from other commands.
 
 ## Command Groups by Dependency Level
 
-### Tier 0: Foundation (No Dependencies)
+### Tier 0: Foundation (No Mandatory Dependencies)
 These commands can run first:
-- **plan** - Project planning and timeline
+- **plan** - Project planning and timeline (can optionally read: stakeholders, requirements, principles, sobc, risk if they exist)
 - **principles** - Architecture principles
 
 ### Tier 1: Strategic Context (Depends on Foundation)
@@ -70,15 +70,15 @@ These commands can run first:
 ### Tier 4: Detailed Design (Depends on Requirements)
 All these commands REQUIRE requirements.md:
 - **data-model** → Depends on: requirements (M), stakeholders (R), sobc (O)
-- **research** → Depends on: requirements (M)
+- **research** → Depends on: requirements (M), stakeholders (R), data-model (R)
 - **wardley** → Depends on: requirements (M), research (M)
 - **diagram** → Depends on: requirements (M)
 
 ### Tier 5: Procurement (Depends on Requirements)
 All procurement commands REQUIRE requirements.md:
 - **sow** → Depends on: requirements (M), research (R)
-- **dos** → Depends on: requirements (M), principles (M)
-- **gcloud-search** → Depends on: requirements (M), research (R)
+- **dos** → Depends on: requirements (M), principles (M), stakeholders (R)
+- **gcloud-search** → Depends on: requirements (M), research (R), principles (R)
 - **gcloud-clarify** → Depends on: requirements (M), gcloud-search (M)
 - **evaluate** → Depends on: requirements (M), principles (M), sow/dos (R), research (R), gcloud-clarify (R)
 
@@ -98,7 +98,7 @@ All procurement commands REQUIRE requirements.md:
 
 ### Tier 10: Compliance Assessment (Depends on Multiple Artifacts)
 These assess compliance across the project:
-- **service-assessment** → Depends on: requirements (M), stakeholders (R), risk (R), analyze (R)
+- **service-assessment** → Depends on: requirements (M), plan (R), data-model (R), principles (R), stakeholders (R), risk (R), analyze (R), hld-review (R), dld-review (R), diagram (R), traceability (R), wardley (R), tcop (M), ai-playbook (M), atrs (M), secure (M), mod-secure (M)
 - **tcop** → Depends on: requirements (M), principles (M)
 - **ai-playbook** → Depends on: requirements (O) [if AI system]
 - **atrs** → Depends on: requirements (O) [if AI system]
