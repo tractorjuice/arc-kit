@@ -310,6 +310,7 @@ If AI system:
 **DLD**: `{path_to_dld}`
 **TCoP Assessment**: `{path_to_tcop}`
 **AI Playbook Assessment**: `{path_to_ai_playbook}`
+**ATRS Record**: `{path_to_atrs}`
 
 ---
 

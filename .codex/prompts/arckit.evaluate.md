@@ -16,14 +16,33 @@ $ARGUMENTS
    - Example: "Create evaluation framework for payment gateway project"
    - Example: "Evaluate vendors for project 001"
 
-2. **Read project context**:
+2. **Prerequisites Check**:
+
+**IMPORTANT**: Check prerequisites before proceeding:
+
+a. **Architecture Principles** (MUST exist):
+   - Check if `.arckit/memory/architecture-principles.md` exists
+   - If NOT found: ERROR "Run /arckit.principles first to define governance standards"
+   - Vendor evaluation MUST align with organizational governance
+
+b. **Project Requirements** (MUST exist):
+   - Check if user specified a project name/number
+   - Look for `projects/{project-dir}/requirements.md`
+   - If NOT found: ERROR "Run /arckit.requirements first to define what you're evaluating"
+
+c. **Statement of Work** (RECOMMENDED):
+   - Check if `projects/{project-dir}/sow.md` or `projects/{project-dir}/procurement/dos.md` exists
+   - If NOT found: WARN "Consider running /arckit.sow or /arckit.dos to define evaluation criteria"
+   - If exists: Read it to understand pre-defined evaluation criteria
+
+3. **Read project context**:
    - Read `projects/{project-dir}/requirements.md` to understand what's being evaluated
    - Read `projects/{project-dir}/sow.md` to understand evaluation criteria already defined
    - Read `.arckit/memory/architecture-principles.md` to ensure alignment with governance
 
-3. **Read the template**: Read `.arckit/templates/evaluation-criteria-template.md`
+4. **Read the template**: Read `.arckit/templates/evaluation-criteria-template.md`
 
-4. **Determine the task**: The user may want to:
+5. **Determine the task**: The user may want to:
    - **Create evaluation framework** (before receiving proposals)
    - **Score a specific vendor** (after receiving proposal)
    - **Compare multiple vendors** (after receiving several proposals)

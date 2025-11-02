@@ -20,33 +20,34 @@ This matrix shows which commands depend on outputs from other commands.
 | PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | research | wardley | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | traceability | analyze | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 |
 |------------|------|------------|--------------|------|------|--------------|------------|----------|---------|-----|-----|---------------|----------------|----------|------------|------------|---------|---------|------------|--------------|---------|-------------------|------|-------------|------|--------|------------|---------|
 | **plan** | - | O | O | O | O | O | | | | | | | | | | | | | | | | R | | | | | | |
-| **principles** | | - | R | R | R | R | | | | | M | R | | M | M | M | | | | | M | R | M | | | M | M | |
-| **stakeholders** | | | - | R | M | R | R | R | | | R | | | | | | R | | | | M | R | | | | | | |
-| **risk** | | | | - | R | R | | | | | | | | | | | R | | | | M | R | | | | R | R | |
-| **sobc** | | | | | - | R | O | | | | | | | | | | | | | | R | R | | | | | | |
-| **requirements** | | | | | | - | M | M | M | M | M | M | | M | M | M | M | M | M | M | M | M | M | O | O | M | M | M |
-| **data-model** | | | | | | | - | R | | | | | | | | | R | R | R | R | M | R | | | | | | |
+| **principles** | O | - | R | R | R | R | | | O | | M | R | | M | M | M | | O | | | M | R | M | | | M | M | |
+| **stakeholders** | O | | - | R | M | R | R | R | | | R | | | | | | R | | | | M | R | | | | | | |
+| **risk** | O | | | - | R | R | | | | | | | | | | | R | | | | M | R | | | | R | R | |
+| **sobc** | O | | | | - | R | O | | | | | | | | | | | | | | R | R | | | | | | |
+| **requirements** | O | | | | | - | M | M | M | M | M | M | | M | M | M | M | M | M | M | M | M | M | O | O | M | M | M |
+| **data-model** | | | | | | | - | R | | | | | | | | | R | R | R | R | M | R | | | | | | O |
 | **research** | | | | | | | | - | M | R | | R | | R | | | | | | | M | R | | | | | | |
 | **wardley** | | | | | | | | | - | R | | | | R | | | | | | | M | R | | | | | | |
-| **sow** | | | | | | | | | | - | | | | R | | | | | | | M | | | | | | | |
+| **sow** | | | | | | | | | | - | O | | | R | O | | | | | | M | | | | | | | |
 | **dos** | | | | | | | | | | | - | | | R | | | | | | | M | | | | | | | |
 | **gcloud-search** | | | | | | | | | | | | - | M | R | | | | | | | M | | | | | | | |
 | **gcloud-clarify** | | | | | | | | | | | | | - | R | | | | | | | M | | | | | | | |
 | **evaluate** | | | | | | | | | | | | | | - | | | | | | | M | | | | | | | |
 | **HLD** (external) | | | | | | | | | | | | | | | - | M | M | R | R | M | M | M | | | | | | |
-| **DLD** (external) | | | | | | | | | | | | | | | | - | R | | | M | M | M | | | | | | |
-| **diagram** | | | | | | | | | | | | | | | | | | - | R | R | M | R | | | | | | |
+| **DLD** (external) | | | | | | | | | | | | | | | | - | R | O | | M | M | M | | | | | | |
+| **diagram** | | | | | | | | | | | | | | | | | | - | R | R | M | R | O | | | O | O | O |
 | **hld-review** | | | | | | | | | | | | | | | | | | | | | M | R | | | | | | |
 | **dld-review** | | | | | | | | | | | | | | | | | | | | | M | R | | | | | | |
 | **backlog** | | | | | | | | | | | | | | | | | - | | | | M | R | | | | | | |
 | **servicenow** | | | | | | | | | | | | | | | | | | | - | | M | R | | | | | | |
 | **traceability** | | | | | | | | | | | | | | | | | | | | - | M | R | | | | | | |
-| **tcop** | | | | | | | | | | | | | | | | | | | | | M | M | | | | | | |
-| **ai-playbook** | | | | | | | | | | | | | | | | | | | | | M | M | | | | | | |
-| **atrs** | | | | | | | | | | | | | | | | | | | | | M | M | | | | | | |
-| **secure** | | | | | | | | | | | | | | | | | | | | | M | M | | | | | | |
-| **mod-secure** | | | | | | | | | | | | | | | | | | | | | M | M | | | | | | |
-| **jsp-936** | | | | | | | | | | | | | | | | | | | | | M | M | | | | | | |
+| **analyze** | | O | O | O | O | O | O | | | O | | | | O | | | | | | O | - | | O | O | O | | O | |
+| **tcop** | | | | | | | | | O | | | | | | | | | O | | | O | O | | | | O | | |
+| **ai-playbook** | | | | | | | | | O | | | | | | | | | O | | | O | O | | | O | | | |
+| **atrs** | | | | | | | | | O | | | | | | | | | O | | | O | O | | | | | | |
+| **secure** | | | | | | | | | | | | | | | | | | O | | | O | O | | | | | | |
+| **mod-secure** | | | | | | | | | | | | | | | | | | O | | | O | O | | | | | | |
+| **jsp-936** | | | | | | | | | | | | | | | | | | O | | | O | O | | | | | | |
 
 ---
 
@@ -93,12 +94,14 @@ All procurement commands REQUIRE requirements.md:
 - **servicenow** → Depends on: requirements (M), diagram (R), data-model (R)
 - **traceability** → Depends on: requirements (M), HLD (M), DLD (M), data-model (R)
 
-### Tier 9: Quality Assurance (Depends on ALL Artifacts)
-- **analyze** → Depends on: ALL artifacts (principles, stakeholders, risk, sobc, requirements, data-model, designs, compliance assessments)
+### Tier 9: Quality Assurance (Can Run Before or After Compliance)
+- **analyze** → Depends on: principles (O), stakeholders (O), risk (O), sobc (O), requirements (O), data-model (O), sow (O), evaluate (O), traceability (O), tcop (O), ai-playbook (O), atrs (O), mod-secure (O)
+  - Note: All dependencies are optional - analyze identifies gaps for missing artifacts
 
 ### Tier 10: Compliance Assessment (Depends on Multiple Artifacts)
 These assess compliance across the project:
-- **service-assessment** → Depends on: requirements (M), plan (R), data-model (R), principles (R), stakeholders (R), risk (R), analyze (R), hld-review (R), dld-review (R), diagram (R), traceability (R), wardley (R), tcop (M), ai-playbook (M), atrs (M), secure (M), mod-secure (M)
+- **service-assessment** → Depends on: requirements (M), plan (R), data-model (R), principles (R), stakeholders (R), risk (R), analyze (R), hld-review (R), dld-review (R), diagram (R), traceability (R), wardley (R), tcop (O), ai-playbook (O), atrs (O), secure (O), mod-secure (O), jsp-936 (O)
+  - Note: Compliance artifacts are optional - service-assessment identifies them as gaps if missing
 - **tcop** → Depends on: requirements (M), principles (M)
 - **ai-playbook** → Depends on: requirements (O) [if AI system]
 - **atrs** → Depends on: requirements (O) [if AI system]
@@ -120,29 +123,31 @@ sow/evaluate → hld-review → backlog → servicenow → traceability → anal
 ```
 plan → principles → stakeholders → risk → sobc → requirements → data-model → research →
 wardley → gcloud-search → gcloud-clarify → evaluate → hld-review → dld-review →
-backlog → servicenow → traceability → analyze → service-assessment → tcop → secure
+backlog → servicenow → traceability → tcop → secure → analyze → service-assessment
 ```
 
 ### UK Government AI Project Path
 ```
 plan → principles → stakeholders → risk → sobc → requirements → data-model → research →
 wardley → gcloud-search → evaluate → hld-review → dld-review → backlog → servicenow →
-traceability → analyze → service-assessment → tcop → ai-playbook → atrs → secure
+traceability → tcop → ai-playbook → atrs → secure → analyze → service-assessment
 ```
 
 ### MOD Defence Project Path
 ```
 plan → principles → stakeholders → risk → sobc → requirements → data-model → research →
 wardley → dos → evaluate → hld-review → dld-review → backlog → servicenow →
-traceability → analyze → service-assessment → tcop → mod-secure
+traceability → tcop → mod-secure → analyze → service-assessment
 ```
 
 ### MOD Defence AI Project Path
 ```
 plan → principles → stakeholders → risk → sobc → requirements → data-model → research →
 wardley → dos → evaluate → hld-review → dld-review → backlog → servicenow →
-traceability → analyze → service-assessment → tcop → mod-secure → jsp-936
+traceability → tcop → mod-secure → jsp-936 → analyze → service-assessment
 ```
+
+**Note**: analyze and service-assessment can also run earlier in the workflow to identify gaps in missing artifacts (all their dependencies are optional). The paths above show the complete workflow where all compliance assessments are done before final quality gates.
 
 ---
 
@@ -151,16 +156,17 @@ traceability → analyze → service-assessment → tcop → mod-secure → jsp-
 ### Commands That Are Frequently Consumed (High Fan-In)
 
 **requirements.md** - consumed by 22 commands:
-- data-model (M), research (M), wardley (M), sow (M), dos (M), gcloud-search (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), diagram (M), servicenow (M), traceability (M), analyze (M), service-assessment (M), tcop (M), ai-playbook (O), atrs (O), secure (M), mod-secure (M), jsp-936 (M), gcloud-clarify (M - implicit)
+- data-model (M), research (M), wardley (M), sow (M), dos (M), gcloud-search (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), diagram (M), servicenow (M), traceability (M), analyze (O), service-assessment (M), tcop (M), ai-playbook (O), atrs (O), secure (M), mod-secure (M), jsp-936 (M), gcloud-clarify (M - implicit)
 
 **principles.md** - consumed by 14 commands:
-- stakeholders (R), risk (R), sobc (R), requirements (R), dos (M), gcloud-search (R), evaluate (M), hld-review (M), dld-review (M), analyze (M), service-assessment (R), tcop (M), secure (M), mod-secure (M)
+- stakeholders (R), risk (R), sobc (R), requirements (R), dos (M), gcloud-search (R), evaluate (M), hld-review (M), dld-review (M), analyze (O), service-assessment (R), tcop (M), secure (M), mod-secure (M)
 
 **stakeholders.md** - consumed by 9 commands:
-- risk (R), sobc (M), requirements (R), data-model (R), research (R), dos (R), backlog (R), analyze (M), service-assessment (R)
+- risk (R), sobc (M), requirements (R), data-model (R), research (R), dos (R), backlog (R), analyze (O), service-assessment (R)
 
 **HLD** (external document) - consumed by 7 commands:
-- dld-review (M), backlog (M), diagram (R), servicenow (R), traceability (M), analyze (M), hld-review (validates it), service-assessment (M)
+- dld-review (M), backlog (M), diagram (R), servicenow (R), traceability (M), hld-review (validates it), service-assessment (M)
+  - Note: analyze reads HLD directly if available (O), not via hld-review
 
 ### Commands That Produce Critical Artifacts (High Fan-Out)
 
@@ -177,8 +183,8 @@ traceability → analyze → service-assessment → tcop → mod-secure → jsp-
 1. **requirements.md is the central artifact** - Nearly all downstream commands depend on it
 2. **principles.md is the governance foundation** - All design reviews check against principles
 3. **Strategic order matters** - stakeholders → risk → sobc → requirements ensures business justification before technical work
-4. **Compliance commands are terminal** - They analyze but don't produce artifacts consumed by others
-5. **analyze is the quality gate** - It consumes all artifacts and identifies gaps
+4. **Quality gates can run iteratively** - analyze and service-assessment have optional dependencies, allowing them to run early (identifying gaps) or late (validating completeness)
+5. **Compliance assessments feed quality gates** - tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 outputs are optionally consumed by analyze and service-assessment
 6. **External artifacts** - HLD and DLD are created outside ArcKit but validated by hld-review/dld-review commands
 
 ---
@@ -186,5 +192,30 @@ traceability → analyze → service-assessment → tcop → mod-secure → jsp-
 ## Version
 
 - **ArcKit Version**: 0.8.2
-- **Matrix Date**: 2025-11-01
+- **Matrix Date**: 2025-11-02 (Critical fixes applied)
 - **Commands Documented**: 28
+- **Matrix Rows**: 30 (28 commands + 2 external documents)
+
+## Changelog
+
+### 2025-11-02 - Critical Fixes + Optional Dependencies
+- **Added**: analyze row showing optional dependencies on all artifacts
+- **Fixed**: service-assessment compliance dependencies changed from M to O (tcop, ai-playbook, atrs, secure, mod-secure, jsp-936)
+- **Fixed**: analyze compliance dependencies changed from M to O (tcop, ai-playbook, atrs, mod-secure)
+- **Updated**: Critical paths reordered to show compliance commands before quality gates
+- **Updated**: Tier 9 and Tier 10 descriptions to reflect optional dependencies and iterative execution
+- **Added**: 23 optional dependencies to complete matrix:
+  - plan: principles, stakeholders, risk, sobc, requirements (5)
+  - diagram: principles, DLD, tcop, ai-playbook, atrs (5)
+  - wardley: principles, tcop, ai-playbook, atrs (4)
+  - tcop: diagram, wardley (2)
+  - ai-playbook: diagram, wardley, atrs (3)
+  - atrs: diagram, wardley (2)
+  - secure: diagram (1)
+  - mod-secure: diagram (1)
+  - jsp-936: data-model, diagram (2)
+  - sow: dos, hld-review (2)
+  - DLD: diagram (1)
+- **Updated Templates**:
+  - architecture-diagram-template.md: Added ATRS to Linked Artifacts
+  - wardley-map-template.md: Added AI Playbook/ATRS mapping sections for AI systems

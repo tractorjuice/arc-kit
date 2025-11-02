@@ -346,9 +346,15 @@ EOF
 
 ## Version
 
-ArcKit v0.6.0 (26 commands)
+ArcKit v0.8.2 (28 commands)
 
-**What's New in v0.6.0:**
+**What's New in v0.8.2:**
+- 🔧 **Dependency Matrix**: Complete 28×28 command dependency matrix with mandatory, recommended, and optional relationships
+- 📊 **Workflow Diagrams**: Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI)
+- 📝 **Gap Analysis**: Comprehensive analysis of 50+ missing dependencies with remediation recommendations
+- 🔧 **Version Consistency**: All version references synchronized to v0.8.2
+
+**What was New in v0.6.0:**
 - 🗓️ **Project Planning**: `/arckit:plan` - Comprehensive project planning with GDS Agile Delivery phases
 - 📚 **Documentation Expansion**: 660-line planning guide, expanded design review (+167 lines) and procurement (+191 lines) guides
 - 🚀 **Multi-AI Deployment**: Plan command deployed to all three AI systems (Claude, Codex, Gemini)

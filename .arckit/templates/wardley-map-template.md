@@ -292,6 +292,21 @@ style wardley
 | 5. Cloud First | {components} | {status} | {gaps} |
 | 6. Security | {components} | {status} | {gaps} |
 
+### AI Playbook Mapping (if AI system)
+
+| AI Principle | Related Components | Compliance Status | Gap Analysis |
+|--------------|-------------------|-------------------|--------------|
+| Human Oversight | {components} | {status} | {gaps} |
+| Fairness & Bias Mitigation | {components} | {status} | {gaps} |
+| Transparency & Explainability | {components} | {status} | {gaps} |
+| Data Quality & Governance | {components} | {status} | {gaps} |
+
+**HIGH-RISK AI Components** (if applicable):
+- [ ] Human-in-the-loop component mapped (Custom, ~0.45 evolution)
+- [ ] Bias testing framework mapped (Custom, ~0.35 evolution)
+- [ ] DPIA/EqIA requirements noted
+- [ ] ATRS publication requirement noted
+
 ---
 
 ## Dependencies and Value Chain

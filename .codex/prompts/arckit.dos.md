@@ -26,7 +26,7 @@ This command generates DOS-compliant procurement documentation from your existin
 **IMPORTANT**: Check prerequisites before proceeding:
 
 a. **Architecture Principles** (MUST exist):
-   - Check if `.arckit/templates/architecture-principles.md` exists
+   - Check if `.arckit/memory/architecture-principles.md` exists
    - If NOT found: ERROR "Run /arckit.principles first to define governance standards"
 
 b. **Project with Requirements** (MUST exist):
@@ -49,7 +49,7 @@ d. **Existing SOW** (OPTIONAL):
 Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, then:
 
 1. Read `projects/[project]/requirements.md` (source of truth)
-2. Read `.arckit/templates/architecture-principles.md` (governance constraints)
+2. Read `.arckit/memory/architecture-principles.md` (governance constraints)
 3. Read `projects/[project]/stakeholder-drivers.md` if available (priorities)
 4. Parse user input for additional context (budget, timeline, specific skills)
 
@@ -462,7 +462,7 @@ Vendors must provide:
 ### 15.2 Project Documents
 
 - **Requirements**: projects/[project]/requirements.md
-- **Architecture Principles**: .arckit/templates/architecture-principles.md
+- **Architecture Principles**: .arckit/memory/architecture-principles.md
 - **Stakeholder Analysis**: projects/[project]/stakeholder-drivers.md (if exists)
 - **General RFP/SOW**: projects/[project]/procurement/sow.md (if exists)
 

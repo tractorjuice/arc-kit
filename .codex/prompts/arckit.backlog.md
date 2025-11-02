@@ -1,13 +1,9 @@
 ---
 description: Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints
+alwaysShow: true
 ---
 
 # Generate Product Backlog
-
-## User Input
-```text
-$ARGUMENTS
-```
 
 You are creating a **prioritised product backlog** for an ArcKit project, converting design artifacts into sprint-ready user stories.
 
