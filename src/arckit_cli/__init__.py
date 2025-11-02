@@ -158,6 +158,7 @@ def get_data_paths():
                 "scripts": uv_tools_path / "scripts",
                 "claude_commands": uv_tools_path / ".claude" / "commands",
                 "gemini_commands": uv_tools_path / ".gemini" / "commands",
+                "codex_root": uv_tools_path / ".codex",
             }
 
         # Try to find the shared data directory for regular pip installs
@@ -172,6 +173,7 @@ def get_data_paths():
                         "scripts": share_path / "scripts",
                         "claude_commands": share_path / ".claude" / "commands",
                         "gemini_commands": share_path / ".gemini" / "commands",
+                        "codex_root": share_path / ".codex",
                     }
 
                 # Try ../../../share/arckit from site-packages (for system installs)
@@ -182,6 +184,7 @@ def get_data_paths():
                         "scripts": share_path / "scripts",
                         "claude_commands": share_path / ".claude" / "commands",
                         "gemini_commands": share_path / ".gemini" / "commands",
+                        "codex_root": share_path / ".codex",
                     }
 
         # Try platformdirs approach for other installs
@@ -192,6 +195,7 @@ def get_data_paths():
                 "scripts": data_dir / "scripts",
                 "claude_commands": data_dir / ".claude" / "commands",
                 "gemini_commands": data_dir / ".gemini" / "commands",
+                "codex_root": data_dir / ".codex",
             }
 
     except Exception:
@@ -204,6 +208,7 @@ def get_data_paths():
         "scripts": source_root / "scripts",
         "claude_commands": source_root / ".claude" / "commands",
         "gemini_commands": source_root / ".gemini" / "commands",
+        "codex_root": source_root / ".codex",
     }
 
 
@@ -479,12 +484,29 @@ export CODEX_HOME="$PWD/.codex"
 """
         envrc_path.write_text(envrc_content)
 
+        # Copy .codex/README.md if it exists
+        codex_src = data_paths.get("codex_root")
+        if codex_src and codex_src.exists():
+            codex_readme_src = codex_src / "README.md"
+            codex_gitignore_src = codex_src / ".gitignore"
+            codex_dst = project_path / ".codex"
+
+            if codex_readme_src.exists():
+                shutil.copy2(codex_readme_src, codex_dst / "README.md")
+                console.print(f"[green]✓[/green] Copied .codex/README.md")
+
+            if codex_gitignore_src.exists():
+                shutil.copy2(codex_gitignore_src, codex_dst / ".gitignore")
+                console.print(f"[green]✓[/green] Copied .codex/.gitignore")
+
         # Create/update .gitignore
         gitignore_path = project_path / ".gitignore"
         codex_ignore_entries = [
             "# Codex CLI - exclude auth tokens but include prompts",
             ".codex/*",
             "!.codex/prompts/",
+            "!.codex/README.md",
+            "!.codex/.gitignore",
             "",
             "# direnv",
             ".envrc.local",
