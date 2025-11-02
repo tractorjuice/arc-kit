@@ -368,8 +368,6 @@ gh repo list tractorjuice --limit 200 --json name,url,visibility | jq '.[] | sel
 
    # Copy root documentation (exclude CLAUDE.md - that's for arc-kit developers only)
    cp "$SOURCE_DIR/DEPENDENCY-MATRIX.md" .
-   cp "$SOURCE_DIR/DEPENDENCY-GAPS-SUMMARY.md" .
-   cp "$SOURCE_DIR/DEPENDENCY-MATRIX-GAPS.md" .
    cp "$SOURCE_DIR/WORKFLOW-DIAGRAMS.md" .
    cp "$SOURCE_DIR/README.md" .
    cp "$SOURCE_DIR/CHANGELOG.md" .
