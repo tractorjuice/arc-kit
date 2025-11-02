@@ -8,6 +8,8 @@ This document contains Mermaid diagrams for all 5 ArcKit workflow paths based on
 - **Orange boxes** = Design & Implementation (Tier 6-7)
 - **Purple boxes** = Quality & Operations (Tier 8-9)
 - **Red boxes** = Compliance (Tier 10)
+- **Solid arrows (→)** = Mandatory sequential flow
+- **Dotted arrows (-.->)** = Recommended dependencies or optional inputs
 
 ---
 
@@ -27,27 +29,29 @@ graph TD
     E --> F[requirements]
 
     %% Tier 4: Detailed Design
-    F --> G[research]
-    G --> H[wardley]
+    F --> G[data-model]
+    F --> H[research]
+    G -.-> H
+    C -.-> H
+    H --> I[wardley]
 
     %% Tier 5: Procurement
-    H --> I[sow]
-    I --> J[evaluate]
+    I --> J[sow]
+    J --> K[evaluate]
 
     %% Tier 6: Design Reviews
-    J --> K[hld-review]
-    K --> L[dld-review]
+    K --> L[hld-review]
+    L --> M[dld-review]
 
     %% Tier 7: Implementation
-    L --> M[backlog]
+    M --> N[backlog]
 
     %% Tier 8-9: Operations & Quality
-    M --> N[servicenow]
-    N --> O[traceability]
-    O --> P[analyze]
+    N --> O[servicenow]
+    O --> P[traceability]
+    P --> Q[analyze]
 
     %% Optional parallel paths
-    F -.-> Q[data-model]
     F -.-> R[diagram]
 
     style A fill:#87CEEB
@@ -63,10 +67,10 @@ graph TD
     style K fill:#FFA500
     style L fill:#FFA500
     style M fill:#FFA500
-    style N fill:#9370DB
+    style N fill:#FFA500
     style O fill:#9370DB
     style P fill:#9370DB
-    style Q fill:#90EE90
+    style Q fill:#9370DB
     style R fill:#90EE90
 ```
 
@@ -93,10 +97,13 @@ graph TD
     %% Tier 4: Detailed Design
     F --> G[data-model]
     F --> H[research]
+    G -.-> H
+    C -.-> H
     H --> I[wardley]
 
     %% Tier 5: UK Gov Procurement
-    I --> J[gcloud-search]
+    B -.-> J[gcloud-search]
+    I --> J
     J --> K[gcloud-clarify]
     K --> L[evaluate]
 
@@ -167,10 +174,13 @@ graph TD
     %% Tier 4: Detailed Design
     F --> G[data-model]
     F --> H[research]
+    G -.-> H
+    C -.-> H
     H --> I[wardley]
 
     %% Tier 5: UK Gov Procurement
-    I --> J[gcloud-search]
+    B -.-> J[gcloud-search]
+    I --> J
     J --> K[evaluate]
 
     %% Tier 6: Design Reviews
@@ -247,10 +257,14 @@ graph TD
     %% Tier 4: Detailed Design
     F --> G[data-model]
     F --> H[research]
+    G -.-> H
+    C -.-> H
     H --> I[wardley]
 
     %% Tier 5: MOD Procurement
-    I --> J[dos]
+    B -.-> J[dos]
+    C -.-> J
+    I --> J
     J --> K[evaluate]
 
     %% Tier 6: Design Reviews
@@ -323,10 +337,14 @@ graph TD
     %% Tier 4: Detailed Design
     F --> G[data-model]
     F --> H[research]
+    G -.-> H
+    C -.-> H
     H --> I[wardley]
 
     %% Tier 5: MOD Procurement
-    I --> J[dos]
+    B -.-> J[dos]
+    C -.-> J
+    I --> J
     J --> K[evaluate]
 
     %% Tier 6: Design Reviews
@@ -428,7 +446,7 @@ gantt
     section Alpha (12 weeks)
     requirements            :b1, after a5, 3w
     data-model              :b2, after b1, 2w
-    research                :b3, after b1, 3w
+    research                :b3, after b2, 2w
     wardley                 :b4, after b3, 2w
     gcloud-search           :b5, after b4, 2w
     evaluate                :b6, after b5, 2w
@@ -494,18 +512,21 @@ If architecture principles and governance already established:
 
 ```mermaid
 graph LR
-    A[requirements] --> B[research]
-    B --> C[evaluate]
-    C --> D[hld-review]
-    D --> E[dld-review]
-    E --> F[backlog]
+    A[requirements] --> B[data-model]
+    A --> C[research]
+    B -.-> C
+    C --> D[evaluate]
+    D --> E[hld-review]
+    E --> F[dld-review]
+    F --> G[backlog]
 
     style A fill:#90EE90
     style B fill:#90EE90
     style C fill:#90EE90
-    style D fill:#FFA500
+    style D fill:#90EE90
     style E fill:#FFA500
     style F fill:#FFA500
+    style G fill:#FFA500
 ```
 
 **Duration**: 2-4 months
@@ -534,6 +555,7 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 0.8.1
-- **Document Date**: 2025-11-01
-- **Based On**: DEPENDENCY-MATRIX.md v1.0
+- **ArcKit Version**: 0.8.2
+- **Document Date**: 2025-11-02
+- **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
+- **Key Changes**: Added recommended dependencies (dotted lines) for data-model→research, stakeholders→research, principles→gcloud-search, stakeholders→dos

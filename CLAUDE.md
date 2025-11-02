@@ -312,6 +312,101 @@ The CLI must find templates/scripts across different install methods:
    # Or install direnv and run: direnv allow
    ```
 
+### Updating Test Repositories
+
+ArcKit maintains test repositories on GitHub (both public and private) for testing and demonstration purposes. These repos follow the naming pattern `arckit-test-project-v*`.
+
+**Finding All Test Repositories** (including private):
+```bash
+# Requires GH_TOKEN environment variable with repo access
+export GH_TOKEN="<github-token>"
+gh repo list tractorjuice --limit 200 --json name,url,visibility | jq '.[] | select(.name | contains("arckit"))'
+```
+
+**Current Test Repositories** (as of v0.8.2):
+- **Public** (7): v1-m365, v2-hmrc-chatbot, v3-windows11, v6-patent-system, v7-nhs-appointment, v8-ons-data-platform, v8-cabinet-office-genai
+- **Private** (3): v0-mod-chatbot, v4-ipa, v5-dstl
+
+**Updating Test Repos with Latest Changes**:
+
+1. **Clone repositories**:
+   ```bash
+   mkdir -p /tmp/arckit-test-repos && cd /tmp/arckit-test-repos
+   GH_TOKEN="<token>" gh repo clone tractorjuice/arckit-test-project-v1-m365
+   # Repeat for each repo
+   ```
+
+2. **Create update scripts**:
+
+   **Commands/templates/scripts** (`/tmp/update-repo.sh`):
+   ```bash
+   #!/bin/bash
+   REPO_DIR="$1"
+   SOURCE_DIR="/workspaces/arc-kit"
+
+   cd "$REPO_DIR"
+
+   # Update commands and templates
+   rsync -av --delete "$SOURCE_DIR/.claude/commands/" ".claude/commands/"
+   rsync -av --delete "$SOURCE_DIR/.codex/prompts/" ".codex/prompts/"
+   rsync -av --delete "$SOURCE_DIR/.gemini/commands/" ".gemini/commands/"
+   rsync -av --delete "$SOURCE_DIR/.arckit/templates/" ".arckit/templates/"
+
+   # Update bash scripts
+   mkdir -p .arckit/scripts/bash
+   rsync -av "$SOURCE_DIR/scripts/bash/" ".arckit/scripts/bash/"
+   chmod +x .arckit/scripts/bash/*.sh
+   ```
+
+   **Documentation** (`/tmp/update-docs.sh`):
+   ```bash
+   #!/bin/bash
+   REPO_DIR="$1"
+   SOURCE_DIR="/workspaces/arc-kit"
+
+   cd "$REPO_DIR"
+
+   # Copy root documentation (exclude CLAUDE.md - that's for arc-kit developers only)
+   cp "$SOURCE_DIR/DEPENDENCY-MATRIX.md" .
+   cp "$SOURCE_DIR/DEPENDENCY-GAPS-SUMMARY.md" .
+   cp "$SOURCE_DIR/DEPENDENCY-MATRIX-GAPS.md" .
+   cp "$SOURCE_DIR/WORKFLOW-DIAGRAMS.md" .
+   cp "$SOURCE_DIR/README.md" .
+   cp "$SOURCE_DIR/CHANGELOG.md" .
+   ```
+
+3. **Run update on all repos**:
+   ```bash
+   for repo in /tmp/arckit-test-repos/arckit-test-project-*; do
+       /tmp/update-repo.sh "$repo"
+   done
+   ```
+
+4. **Commit and push changes**:
+   ```bash
+   cd /tmp/arckit-test-repos/arckit-test-project-v1-m365
+   git add -A
+   git commit -m "chore: sync with arc-kit v0.8.2 - update commands, templates, and scripts"
+   git push "https://<TOKEN>@github.com/tractorjuice/arckit-test-project-v1-m365.git" main
+   # Repeat for each repo
+   ```
+
+**What Gets Updated**:
+- `.claude/commands/arckit.*.md` - All 28 Claude Code slash commands
+- `.codex/prompts/arckit.*.md` - All Codex CLI prompts
+- `.gemini/commands/arckit/*.toml` - All Gemini CLI commands
+- `.arckit/templates/*.md` - All 30 document templates
+- `.arckit/scripts/bash/*.sh` - All 5 bash helper scripts
+
+**When to Update Test Repos**:
+- After adding new slash commands
+- After modifying templates
+- After updating helper scripts
+- Before releasing a new version
+- When fixing bugs that affect generated artifacts
+
+**Note**: Private repositories require a GitHub Personal Access Token with `repo` scope. Store token securely and never commit it to the repository.
+
 ## Requirements Context
 
 **Requirement Types** (used across templates):
