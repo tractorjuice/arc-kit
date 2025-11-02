@@ -25,6 +25,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `ARTICLE.md` - Marketing article draft
   - `GITHUB-DISCUSSION-POST.md` - Discussion post draft
 
+## [0.8.3] - 2025-11-02
+
+### Fixed
+
+- **Command Template Synchronization**: Ensured all 28 commands are synchronized across Claude Code, Codex CLI, and Gemini CLI platforms
+  - Fixed missing dependency checks in command templates
+  - Validated all M/R/O dependencies are properly enforced
+
+### Changed
+
+- **Documentation Cleanup**: Removed completed dependency gap analysis files
+  - Removed `DEPENDENCY-GAPS-SUMMARY.md` (Phase 1-2 fixes complete)
+  - Removed `DEPENDENCY-MATRIX-GAPS.md` (all critical gaps resolved)
+  - Updated `README.md` to remove gap file references
+  - Updated `CHANGELOG.md` to note Phase 1-2 completion
+  - Updated `CLAUDE.md` developer documentation
+  - Gap analysis preserved in git history (commits 4a3f631, 5da8a62, 561902d)
+
+- **Test Repository Updates**: All 10 arckit-test-project repositories synchronized with v0.8.3
+  - Updated all commands, templates, and scripts
+  - Pushed WORKFLOW-DIAGRAMS.md with Phase 2 R-level dependency visualizations
+  - Removed obsolete gap analysis files
+  - Repository rename: arckit-test-project-v8-cabinet-office-genai → v9-cabinet-office-genai
+
 ## [0.8.2] - 2025-11-01
 
 ### Fixed

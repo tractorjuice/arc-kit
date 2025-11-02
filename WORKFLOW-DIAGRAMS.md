@@ -555,7 +555,7 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 0.8.2
+- **ArcKit Version**: 0.8.3
 - **Document Date**: 2025-11-02
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
 - **Key Changes**: Added recommended dependencies (dotted lines) for data-model→research, stakeholders→research, principles→gcloud-search, stakeholders→dos
