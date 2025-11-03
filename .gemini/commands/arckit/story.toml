@@ -481,34 +481,31 @@ mindmap
     [... continue for all phases ...]
 ```
 
-### Step 8: Write Narrative Chapters
+### Step 8: Write Design & Delivery Review Chapters
 
-For **each of the 8 chapters** in the template, write a comprehensive narrative using the data extracted:
+For **the 2 key chapters** in the template, write a comprehensive narrative using the data extracted:
 
-**Chapter 1: Foundation**
+**Chapter 6: Design Review - Validating the Solution**
+- Timeline context: Dates, duration, percentage of project timeline
+- What happened: Vendor designs underwent rigorous ArcKit governance reviews
+- Key activities:
+  - High-Level Design Review (HLD): Assessment against principles, requirements, NFRs, risks
+  - Detailed Design Review (DLD): API specs, database schemas, security controls, performance
+- Findings: Strengths, concerns, gaps for both HLD and DLD
+- Verdict: APPROVED/APPROVED WITH CONDITIONS/REJECTED for each review
+- Decision Points: HLD review decision, DLD review decision
+- Traceability Chain: Principles → HLD, Requirements → HLD/DLD, Risk → DLD
+- Artifacts created: hld-review.md, dld-review.md
+
+**Chapter 7: Delivery Planning - From Requirements to Sprints**
 - Timeline context: Dates, duration, percentage of project
-- What happened: Describe the foundation phase
-- Key activities: Principles, stakeholders, risk assessment
-- Decisions made: Key decisions with rationale
-- Traceability established: Show chains
-- Artifacts created: List artifacts with paths
-
-**Chapter 2: Business Case**
-- Timeline context: When it happened, how long it took
-- SOBC details: 5-case model highlights
-- Economic case: NPV, ROI, BCR
-- Data model: Entities, relationships, GDPR
-- Decisions made: Procurement route, strategic alignment
-- Traceability chain: Goals → Business Case
-
-[Continue for all 8 chapters...]
-
-**Chapter 3: Requirements**
-**Chapter 4: Research & Strategic Planning**
-**Chapter 5: Procurement**
-**Chapter 6: Design Review**
-**Chapter 7: Delivery Planning**
-**Chapter 8: Compliance & Governance**
+- What happened: Translating approved designs into delivery plans
+- Key activities:
+  - Product Backlog: Requirements → GDS user stories, MoSCoW prioritization, sprint planning
+  - ServiceNow Design: CMDB CIs, SLA definitions, incident/change management workflows
+- Backlog Summary: Story count, sprint count, velocity assumptions
+- Traceability Chain: Requirements → User Stories → Sprint Backlog, Components → CMDB CIs
+- Artifacts created: backlog.md, servicenow-design.md
 
 ### Step 9: Calculate Timeline Metrics
 
@@ -776,7 +773,7 @@ cd projects/009-cabinet-office-genai
 - ✅ All timeline data extracted from git log or file dates
 - ✅ All placeholders replaced with real data
 - ✅ 4 timeline visualizations generated
-- ✅ 8 narrative chapters written with timeline context
+- ✅ 2 key narrative chapters written (Design Review, Delivery Planning)
 - ✅ Timeline metrics calculated
 - ✅ Timeline insights & lessons learned written
 - ✅ Complete traceability chain documented
