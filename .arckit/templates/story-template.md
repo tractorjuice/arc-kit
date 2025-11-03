@@ -458,10 +458,6 @@ Some activities could have been parallelized:
    - [LESSON_1: e.g., "Design reviews could have been parallelized with compliance assessments"]
    - [LESSON_2: e.g., "Earlier engagement with security team would have reduced design review iterations"]
 
-3. **Recommendations for Future Projects**:
-   - [REC_1: e.g., "Start compliance assessments earlier in parallel with design work"]
-   - [REC_2: e.g., "Establish vendor shortlist during research phase to accelerate procurement"]
-
 ---
 
 ## Complete Traceability Chain
