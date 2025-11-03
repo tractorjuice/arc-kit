@@ -104,40 +104,40 @@ gantt
 flowchart TD
     Start([Project Initiated<br/>[START_DATE]]) --> Principles
 
-    Principles[/arckit.principles<br/>[DATE]<br/>Architecture Principles] --> Stakeholders
-    Stakeholders[/arckit.stakeholders<br/>[DATE]<br/>Stakeholder Analysis] --> Risk
-    Risk[/arckit.risk<br/>[DATE]<br/>Risk Register] --> SOBC
+    Principles["arckit.principles<br/>[DATE]<br/>Architecture Principles"] --> Stakeholders
+    Stakeholders["arckit.stakeholders<br/>[DATE]<br/>Stakeholder Analysis"] --> Risk
+    Risk["arckit.risk<br/>[DATE]<br/>Risk Register"] --> SOBC
 
-    SOBC[/arckit.sobc<br/>[DATE]<br/>Business Case] --> Requirements
-    Requirements[/arckit.requirements<br/>[DATE]<br/>Requirements] --> DataModel
-    DataModel[/arckit.data-model<br/>[DATE]<br/>Data Model] --> Research
+    SOBC["arckit.sobc<br/>[DATE]<br/>Business Case"] --> Requirements
+    Requirements["arckit.requirements<br/>[DATE]<br/>Requirements"] --> DataModel
+    DataModel["arckit.data-model<br/>[DATE]<br/>Data Model"] --> Research
 
-    Research[/arckit.research<br/>[DATE]<br/>Technology Research] --> Wardley
-    Wardley[/arckit.wardley<br/>[DATE]<br/>Wardley Maps] --> Diagrams
-    Diagrams[/arckit.diagram<br/>[DATE]<br/>Architecture Diagrams] --> SOW
+    Research["arckit.research<br/>[DATE]<br/>Technology Research"] --> Wardley
+    Wardley["arckit.wardley<br/>[DATE]<br/>Wardley Maps"] --> Diagrams
+    Diagrams["arckit.diagram<br/>[DATE]<br/>Architecture Diagrams"] --> SOW
 
-    SOW[/arckit.sow<br/>[DATE]<br/>Statement of Work] --> Evaluate
-    Evaluate[/arckit.evaluate<br/>[DATE]<br/>Vendor Evaluation] --> HLD
+    SOW["arckit.sow<br/>[DATE]<br/>Statement of Work"] --> Evaluate
+    Evaluate["arckit.evaluate<br/>[DATE]<br/>Vendor Evaluation"] --> HLD
 
-    HLD[/arckit.hld-review<br/>[DATE]<br/>HLD Review] --> DLD
-    DLD[/arckit.dld-review<br/>[DATE]<br/>DLD Review] --> Backlog
+    HLD["arckit.hld-review<br/>[DATE]<br/>HLD Review"] --> DLD
+    DLD["arckit.dld-review<br/>[DATE]<br/>DLD Review"] --> Backlog
 
-    Backlog[/arckit.backlog<br/>[DATE]<br/>Product Backlog] --> ServiceNow
-    ServiceNow[/arckit.servicenow<br/>[DATE]<br/>ServiceNow Design] --> Compliance
+    Backlog["arckit.backlog<br/>[DATE]<br/>Product Backlog"] --> ServiceNow
+    ServiceNow["arckit.servicenow<br/>[DATE]<br/>ServiceNow Design"] --> Compliance
 
     Compliance{Compliance<br/>Requirements?}
-    Compliance -->|UK Gov| TCoP[/arckit.tcop<br/>[DATE]<br/>TCoP Review]
-    Compliance -->|All Projects| Secure[/arckit.secure<br/>[DATE]<br/>Secure by Design]
-    Compliance -->|MOD| ModSecure[/arckit.mod-secure<br/>[DATE]<br/>MOD Security]
-    Compliance -->|AI System| AIPlaybook[/arckit.ai-playbook<br/>[DATE]<br/>AI Playbook]
+    Compliance -->|UK Gov| TCoP["arckit.tcop<br/>[DATE]<br/>TCoP Review"]
+    Compliance -->|All Projects| Secure["arckit.secure<br/>[DATE]<br/>Secure by Design"]
+    Compliance -->|MOD| ModSecure["arckit.mod-secure<br/>[DATE]<br/>MOD Security"]
+    Compliance -->|AI System| AIPlaybook["arckit.ai-playbook<br/>[DATE]<br/>AI Playbook"]
 
     TCoP --> Trace
     Secure --> Trace
     ModSecure --> Trace
     AIPlaybook --> Trace
 
-    Trace[/arckit.traceability<br/>[DATE]<br/>Traceability Matrix] --> Analyze
-    Analyze[/arckit.analyze<br/>[DATE]<br/>Quality Analysis] --> End
+    Trace["arckit.traceability<br/>[DATE]<br/>Traceability Matrix"] --> Analyze
+    Analyze["arckit.analyze<br/>[DATE]<br/>Quality Analysis"] --> End
 
     End([Project Complete<br/>[END_DATE]])
 
