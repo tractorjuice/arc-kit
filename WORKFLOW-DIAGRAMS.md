@@ -8,6 +8,7 @@ This document contains Mermaid diagrams for all 5 ArcKit workflow paths based on
 - **Orange boxes** = Design & Implementation (Tier 6-7)
 - **Purple boxes** = Quality & Operations (Tier 8-9)
 - **Red boxes** = Compliance (Tier 10)
+- **Gold boxes** = Project Story & Reporting (Tier 11)
 - **Solid arrows (→)** = Mandatory sequential flow
 - **Dotted arrows (-.->)** = Recommended dependencies or optional inputs
 
@@ -51,6 +52,9 @@ graph TD
     O --> P[traceability]
     P --> Q[analyze]
 
+    %% Tier 11: Reporting
+    Q --> S[story]
+
     %% Optional parallel paths
     F -.-> R[diagram]
 
@@ -72,6 +76,7 @@ graph TD
     style P fill:#9370DB
     style Q fill:#9370DB
     style R fill:#90EE90
+    style S fill:#FFD700
 ```
 
 **Duration**: 4-8 months
@@ -124,6 +129,9 @@ graph TD
     S --> T[tcop]
     T --> U[secure]
 
+    %% Tier 11: Reporting
+    U --> W[story]
+
     %% Optional parallel paths
     F -.-> V[diagram]
 
@@ -149,6 +157,7 @@ graph TD
     style T fill:#FF6B6B
     style U fill:#FF6B6B
     style V fill:#90EE90
+    style W fill:#FFD700
 ```
 
 **Duration**: 6-12 months
@@ -202,6 +211,9 @@ graph TD
     T --> U[atrs]
     U --> V[secure]
 
+    %% Tier 11: Reporting
+    V --> X[story]
+
     %% Optional parallel paths
     F -.-> W[diagram]
 
@@ -228,6 +240,7 @@ graph TD
     style U fill:#FF6B6B
     style V fill:#FF6B6B
     style W fill:#90EE90
+    style X fill:#FFD700
 ```
 
 **Duration**: 9-18 months
@@ -284,6 +297,9 @@ graph TD
     R --> S[tcop]
     S --> T[mod-secure]
 
+    %% Tier 11: Reporting
+    T --> V[story]
+
     %% Optional parallel paths
     F -.-> U[diagram]
 
@@ -308,6 +324,7 @@ graph TD
     style S fill:#FF6B6B
     style T fill:#FF6B6B
     style U fill:#90EE90
+    style V fill:#FFD700
 ```
 
 **Duration**: 12-24 months
@@ -365,6 +382,9 @@ graph TD
     S --> T[mod-secure]
     T --> U[jsp-936]
 
+    %% Tier 11: Reporting
+    U --> W[story]
+
     %% Optional parallel paths
     F -.-> V[diagram]
 
@@ -390,6 +410,7 @@ graph TD
     style T fill:#FF6B6B
     style U fill:#FF6B6B
     style V fill:#90EE90
+    style W fill:#FFD700
 ```
 
 **Duration**: 18-36 months

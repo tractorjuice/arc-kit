@@ -384,6 +384,22 @@ For defence projects using AI/ML systems:
 - RAISOs and Ethics Manager governance
 - Human-AI teaming strategy and continuous monitoring
 
+### Phase 15: Project Story & Reporting
+**`/arckit.story`** → Generate comprehensive project story
+
+Create narrative historical record with complete timeline analysis:
+- **Timeline Analysis**: 4 visualization types (Gantt chart, linear flowchart, detailed table, phase duration pie chart)
+- **Timeline Metrics**: Project duration, velocity, phase analysis, critical path identification
+- **Complete Timeline**: All events from git log or file modification dates with days-from-start
+- **8 Narrative Chapters**: Foundation → Business Case → Requirements → Research → Procurement → Design → Delivery → Compliance
+- **Traceability Demonstration**: End-to-end chains with Mermaid diagrams showing stakeholder → goals → requirements → stories → sprints
+- **Governance Achievements**: Showcase compliance (TCoP, Service Standard, NCSC CAF), risk management, decision rationale
+- **Strategic Context**: Wardley Map insights, build vs buy decisions, vendor selection rationale
+- **Lessons Learned**: Pacing analysis, timeline deviations, recommendations for future projects
+- **Comprehensive Appendices**: Artifact register, chronological activity log, DSM, command reference, glossary
+
+**When to use**: At project milestones or completion to create shareable story for stakeholders, leadership, or portfolio reporting. Perfect for demonstrating systematic governance and ArcKit workflow value.
+
 ---
 
 ## Why ArcKit?

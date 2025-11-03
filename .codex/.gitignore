@@ -2,5 +2,6 @@
 # but keep prompts and documentation
 *
 !prompts/
+!prompts/*.md
 !README.md
 !.gitignore

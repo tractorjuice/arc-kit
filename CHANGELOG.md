@@ -7,12 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **New Command**: `/arckit.story` (29th ArcKit command) - Generate comprehensive project story with timeline analysis
+  - **Timeline Analysis**: 4 visualization types (Gantt chart, linear flowchart, detailed table, phase duration pie chart)
+  - **Timeline Metrics**: Project duration, velocity, phase analysis, critical path identification
+  - **Complete Timeline**: All events from git log or file modification dates with days-from-start
+  - **8 Narrative Chapters**: Foundation → Business Case → Requirements → Research → Procurement → Design → Delivery → Compliance
+  - **Traceability Demonstration**: End-to-end chains with Mermaid diagrams showing stakeholder → goals → requirements → stories → sprints
+  - **Governance Achievements**: Showcase compliance (TCoP, Service Standard, NCSC CAF), risk management, decision rationale
+  - **Strategic Context**: Wardley Map insights, build vs buy decisions, vendor selection rationale
+  - **Lessons Learned**: Pacing analysis, timeline deviations, recommendations for future projects
+  - **Comprehensive Appendices**: Artifact register, chronological activity log, DSM, command reference, glossary
+  - **Template**: `story-template.md` (1,200+ lines) with timeline-first approach
+  - **Use Cases**: Project milestones, completion reporting, stakeholder communication, portfolio reporting, demonstrating ArcKit governance value
+
 ### Changed
 
 - **LICENSE**: Updated copyright holder from "GitHub" to "Mark Craddock"
-- **Project README template**: Now documents all 28 commands (previously only 8)
+- **Project README template**: Now documents all 29 commands (previously only 8)
+  - Added Phase 15: Project Story & Reporting with `/arckit.story` command
   - Added 10 organized categories: Project Planning, Core Workflow, Vendor Procurement, Design Review, Architecture Diagrams, Sprint Planning, Service Management, Traceability & Quality, UK Government Compliance, Security Assessment
   - Improves command discoverability for new ArcKit projects
+- **DEPENDENCY-MATRIX.md**: Added story command as Tier 11 (final reporting tier)
+  - All dependencies are optional (O) - scans whatever artifacts exist
+  - Added to all 5 critical paths as final reporting step
+  - 29×29 matrix now complete
+- **WORKFLOW-DIAGRAMS.md**: Added story command to all 5 workflow diagrams
+  - Added as gold/yellow box (Tier 11: Reporting)
+  - Updated legend to include gold boxes for reporting tier
+  - Story command is final step in all workflow paths
 
 ### Removed
 
