@@ -551,19 +551,20 @@
         <h2 class="govuk-heading-l">Getting Started (5 Minutes)</h2>
 
         <h3 class="govuk-heading-m">1. Install Claude Code</h3>
-        <p class="govuk-body">macOS:</p>
-        <div class="app-code-block">brew install claude</div>
-        <p class="govuk-body govuk-!-margin-top-3">Linux:</p>
-        <div class="app-code-block">curl -fsSL https://claude.ai/install.sh | sh</div>
+        <p class="govuk-body">macOS & Linux (Homebrew):</p>
+        <div class="app-code-block">brew install --cask claude-code</div>
+        <p class="govuk-body govuk-!-margin-top-3">macOS, Linux & WSL (Shell script):</p>
+        <div class="app-code-block">curl -fsSL https://claude.ai/install.sh | bash</div>
+        <p class="govuk-body govuk-!-margin-top-3">Windows (PowerShell):</p>
+        <div class="app-code-block">irm https://claude.ai/install.ps1 | iex</div>
 
-        <h3 class="govuk-heading-m govuk-!-margin-top-6">2. Clone ArcKit</h3>
-        <div class="app-code-block">git clone https://github.com/tractorjuice/arc-kit.git
-cd arc-kit</div>
+        <h3 class="govuk-heading-m govuk-!-margin-top-6">2. Install ArcKit CLI</h3>
+        <div class="app-code-block">pip install arckit-cli</div>
 
-        <h3 class="govuk-heading-m govuk-!-margin-top-6">3. Initialize in Your Project</h3>
-        <div class="app-code-block">cd /path/to/your/project
-claude
-/arckit.init</div>
+        <h3 class="govuk-heading-m govuk-!-margin-top-6">3. Initialize Your Project</h3>
+        <div class="app-code-block">arckit init my-project --ai claude
+cd my-project
+claude</div>
 
         <h3 class="govuk-heading-m govuk-!-margin-top-6">4. Run Your First Command</h3>
         <div class="app-code-block">/arckit.plan Create project plan for NHS appointment booking system</div>
