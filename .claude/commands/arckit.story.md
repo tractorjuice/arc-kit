@@ -384,14 +384,14 @@ Use Mermaid flowchart with dates on each command node:
 flowchart TD
     Start([Project Initiated<br/>[START_DATE]]) --> Principles
 
-    Principles[/arckit.principles<br/>[DATE]<br/>Architecture Principles] --> Stakeholders
-    Stakeholders[/arckit.stakeholders<br/>[DATE]<br/>Stakeholder Analysis] --> Risk
-    Risk[/arckit.risk<br/>[DATE]<br/>Risk Register] --> SOBC
+    Principles["arckit.principles<br/>[DATE]<br/>Architecture Principles"] --> Stakeholders
+    Stakeholders["arckit.stakeholders<br/>[DATE]<br/>Stakeholder Analysis"] --> Risk
+    Risk["arckit.risk<br/>[DATE]<br/>Risk Register"] --> SOBC
 
     [... continue for all commands actually executed ...]
 
-    Trace[/arckit.traceability<br/>[DATE]<br/>Traceability Matrix] --> Analyze
-    Analyze[/arckit.analyze<br/>[DATE]<br/>Quality Analysis] --> End
+    Trace["arckit.traceability<br/>[DATE]<br/>Traceability Matrix"] --> Analyze
+    Analyze["arckit.analyze<br/>[DATE]<br/>Quality Analysis"] --> End
 
     End([Project Complete<br/>[END_DATE]])
 
