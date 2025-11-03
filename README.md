@@ -1325,7 +1325,7 @@ arckit init my-project
 ### Workflow & Dependencies
 
 - **[Workflow Diagrams](WORKFLOW-DIAGRAMS.md)** - Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI) with Gantt charts and decision trees
-- **[Dependency Structure Matrix](DEPENDENCY-MATRIX.md)** - Complete 28×28 command dependency matrix showing mandatory, recommended, and optional relationships
+- **[Dependency Structure Matrix](DEPENDENCY-MATRIX.md)** - Complete 29×29 command dependency matrix showing mandatory, recommended, and optional relationships
 - **[Traceability Guide](docs/traceability.md)** - Maintaining requirement coverage
 
 ---

@@ -202,8 +202,8 @@ traceability → tcop → mod-secure → jsp-936 → analyze → service-assessm
 
 - **ArcKit Version**: 0.8.3
 - **Matrix Date**: 2025-11-02 (Critical fixes applied)
-- **Commands Documented**: 28
-- **Matrix Rows**: 30 (28 commands + 2 external documents)
+- **Commands Documented**: 29
+- **Matrix Rows**: 31 (29 commands + 2 external documents)
 
 ## Changelog
 

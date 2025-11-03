@@ -114,8 +114,9 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.secure` | [secure-by-design.md](guides/uk-government/secure-by-design.md) | ✅ Complete |
 | `/arckit.mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
 | `/arckit.jsp-936` | [jsp-936.md](guides/jsp-936.md) | ✅ Complete |
+| `/arckit.story` | TBD | 📝 Pending |
 
-**Coverage**: 28/28 commands documented (100%) ✅ COMPLETE
+**Coverage**: 28/29 commands documented (96.6%)
 
 ---
 

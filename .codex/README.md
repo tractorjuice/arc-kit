@@ -399,6 +399,16 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
+**Unreleased (29 commands)**
+
+**Coming Soon:**
+- 📖 **New Command**: `/prompts:arckit.story` (29th command) - Generate comprehensive project story with timeline analysis
+- 📊 **Timeline-First Reporting**: 4 timeline visualizations, 8 narrative chapters, complete traceability demonstration
+- 🗺️ **Project Journey**: Showcase governance achievements, strategic decisions, and lessons learned
+- 📈 **Updated Documentation**: 29×29 dependency matrix, updated workflow diagrams with Tier 11 (Reporting)
+
+---
+
 ArcKit v0.8.3 (28 commands)
 
 **What's New in v0.8.3:**
