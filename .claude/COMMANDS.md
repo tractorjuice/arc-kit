@@ -1048,7 +1048,137 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 
 ---
 
-### 18. `/arckit.service-assessment` - GDS Service Standard Assessment Preparation
+### 18. `/arckit.principles-compliance` - Architecture Principles Compliance Assessment
+
+**Purpose**: Assess project compliance with architecture principles defined in `.arckit/memory/architecture-principles.md` and generate evidence-based compliance scorecard with RAG status, gaps, and recommendations.
+
+**Usage**:
+```
+/arckit.principles-compliance Assess compliance for Cabinet Office GenAI platform
+/arckit.principles-compliance Generate principles compliance report for project 001
+/arckit.principles-compliance Check principles adherence for Beta gate review
+```
+
+**What it does**:
+- **Dynamic Principle Extraction**: Extracts ALL principles from architecture-principles.md (supports 5, 10, 20+ principles - never assumes fixed count)
+- **RAG Status Assessment**: Four-level rating system for each principle:
+  - 🟢 **GREEN**: Fully compliant with strong evidence across multiple artifact types
+  - 🟠 **AMBER**: Partial compliance with identified gaps and remediation plan
+  - 🔴 **RED**: Non-compliant or principle violated with no compliance plan
+  - ⚪ **NOT ASSESSED**: Too early in project lifecycle or insufficient artifacts
+- **Evidence-Based Validation**: All RAG statuses must link to specific file:section:line references
+- **Comprehensive Evidence Search**: Requirements coverage, design evidence (HLD/DLD), implementation artifacts, compliance assessments (TCoP, Secure by Design), validation results
+- **Validation Gates**: Assesses each principle's validation checklist items individually (PASS/FAIL/N/A)
+- **Gap Identification**: For AMBER/RED principles - documents specific gaps with impact, severity (CRITICAL/HIGH/MEDIUM/LOW), remediation actions, responsible owner, target date
+- **Exception Management**: Time-bound waivers requiring CTO/CIO approval, expiry dates, remediation plans, quarterly review process
+- **Gate Decision Support**: Overall recommendation (❌ BLOCK / ⚠️ CONDITIONAL APPROVAL / ✅ PROCEED)
+
+**RAG Status Criteria**:
+
+🟢 **GREEN (Fully Compliant)**:
+- Evidence in multiple artifact types (requirements + design + implementation/validation)
+- Most or all validation gates satisfied
+- No significant gaps identified
+- Principle demonstrably satisfied with proof
+
+🟠 **AMBER (Partial Compliance)**:
+- Some evidence exists (typically requirements or design)
+- Clear gaps identified but remediation plan exists
+- Work in progress with target completion dates
+- Path to GREEN status clear and achievable
+
+🔴 **RED (Non-Compliant)**:
+- Principle directly violated by design decisions
+- No evidence of compliance and no plan to comply
+- Critical gaps with no remediation plan
+- Requires immediate attention or exception approval
+
+⚪ **NOT ASSESSED (Insufficient Evidence)**:
+- Project phase too early for meaningful assessment
+- Required artifacts don't exist yet (by design)
+- Assessment deferred to appropriate later gate
+- No concern - timing appropriate for project phase
+
+**Evidence Types Searched**:
+
+**Primary Evidence** (strongest):
+- Requirements with acceptance criteria (requirements.md)
+- Design documentation with specific technical decisions (HLD/DLD)
+- Implementation artifacts (IaC code, configs, CI/CD pipelines)
+- Test results (load tests, pen tests, security scans)
+- Operational metrics (monitoring dashboards, SLA reports)
+
+**Secondary Evidence** (supporting):
+- Compliance assessments (tcop-assessment.md, secure-by-design.md, ai-playbook.md)
+- Architecture diagrams showing principle implementation
+- Traceability matrices linking requirements to design
+- Stakeholder requirements driving principle adherence
+
+**Outputs**:
+- `projects/{project-dir}/principles-compliance-assessment-{YYYY-MM-DD}.md`
+
+**Document Structure**:
+1. **Executive Summary**: Overall compliance (X/Y principles assessed), RAG distribution, critical issues, gate recommendation
+2. **Compliance Scorecard**: One-line summary per principle with status, evidence count, gaps, next action
+3. **Detailed Principle Assessment**: For each principle:
+   - Principle statement and rationale (quoted from architecture-principles.md)
+   - Evidence analysis (requirements, design, implementation, compliance, validation)
+   - Validation gates status (PASS/FAIL/N/A with evidence)
+   - Assessment justification (why this RAG status)
+   - Gaps identified (if AMBER/RED)
+   - Recommendations (actionable next steps)
+4. **Exception Register**: Time-bound waivers with approval workflow
+5. **Summary & Recommendations**: Prioritized action plan (P1: CRITICAL, P2: HIGH, P3: MEDIUM)
+
+**When to use**:
+- **Discovery Phase**: Understand which principles apply to this project type
+- **Alpha Phase**: Validate requirements align with principles
+- **Beta Phase**: Confirm implementation matches principles
+- **Live/Quarterly**: Monitor compliance drift and architecture erosion
+- **Before Major Gates**: Generate evidence for architecture review boards
+- **After Major Changes**: Reassess when technology stack or design changes
+
+**Prerequisites**:
+- **MANDATORY**: `.arckit/memory/architecture-principles.md` must exist (run `/arckit.principles` first)
+- **RECOMMENDED**: More artifacts = better assessment
+  - requirements.md
+  - HLD/DLD documents
+  - hld-review.md, dld-review.md
+  - traceability-matrix.md
+  - Compliance assessments (tcop, secure, mod-secure, ai-playbook)
+
+**Next steps**:
+- If RED principles → BLOCK gate, remediate or request exception
+- If AMBER principles → Conditional approval with tracked remediation
+- If GREEN → Proceed to next gate
+- Feed findings into `/arckit.analyze` for comprehensive quality check
+- Include in `/arckit.service-assessment` as evidence of governance
+
+**Guide**: See [docs/guides/principles-compliance.md](../docs/guides/principles-compliance.md) for complete workflow
+
+**Example Output Summary**:
+```
+✅ Principles compliance assessment generated
+
+📊 **Overall Compliance Summary**:
+   - 16 principles assessed
+   - 🟢 GREEN: 12 principles (75%)
+   - 🟠 AMBER: 3 principles (19%)
+   - 🔴 RED: 1 principle (6%)
+
+⚠️ **Critical Issues**:
+   - RED: "Security by Design" - No security testing performed
+
+🔍 **Recommendation**: ⚠️ CONDITIONAL APPROVAL
+   - Address 1 RED principle before Live gate
+   - Complete 3 AMBER remediations by next review
+
+📄 **Document**: projects/001-genai-platform/principles-compliance-assessment-2025-11-04.md
+```
+
+---
+
+### 19. `/arckit.service-assessment` - GDS Service Standard Assessment Preparation
 
 **Purpose**: Prepare for mandatory UK Government GDS Service Standard assessments by analyzing evidence against all 14 points, identifying gaps, and generating readiness reports.
 
@@ -1430,7 +1560,7 @@ For issues or questions:
 **Last updated**: 2025-11-04
 **ArcKit Version**: 0.8.3
 
-### 19. `/arckit.backlog` - Product Backlog Generation
+### 20. `/arckit.backlog` - Product Backlog Generation
 
 **Purpose**: Automatically generate prioritised product backlogs from ArcKit artifacts, converting requirements into sprint-ready GDS-format user stories.
 
@@ -1756,7 +1886,7 @@ Task,TASK-001-A,STORY-001,"Design user table schema","PostgreSQL schema",,Must H
 
 ---
 
-### 20. `/arckit.story` - Project Story & Governance Summary
+### 21. `/arckit.story` - Project Story & Governance Summary
 
 **Purpose**: Create an executive-ready narrative that summarises delivery progress, governance outcomes, and next steps across the entire ArcKit lifecycle.
 
@@ -1788,7 +1918,7 @@ Task,TASK-001-A,STORY-001,"Design user table schema","PostgreSQL schema",,Must H
 
 ---
 
-### 21. `/arckit.jsp-936` - MOD JSP 936 AI Assurance Documentation
+### 22. `/arckit.jsp-936` - MOD JSP 936 AI Assurance Documentation
 
 **Purpose**: Generate comprehensive JSP 936 (Dependable Artificial Intelligence in Defence) compliance documentation for UK Ministry of Defence AI/ML systems.
 

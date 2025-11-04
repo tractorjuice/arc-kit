@@ -471,15 +471,17 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-**Unreleased (30 commands)**
+**Unreleased (31 commands)**
 
 **Coming Soon:**
-- 🔒 **New Command**: `/prompts:arckit.dpia` (30th command) - Generate Data Protection Impact Assessment for UK GDPR Article 35 compliance
-- 📖 **New Command**: `/prompts:arckit.story` (29th command) - Generate comprehensive project story with timeline analysis
+- ✅ **New Command**: `/prompts:arckit.principles-compliance` (31st command) - Assess project compliance with architecture principles using RAG status and evidence-based validation
+- ✅ **New Command**: `/prompts:arckit.dpia` (30th command) - Generate Data Protection Impact Assessment for UK GDPR Article 35 compliance
+- ✅ **New Command**: `/prompts:arckit.story` (29th command) - Generate comprehensive project story with timeline analysis
+- 🔐 **Principles Governance**: Dynamic principle extraction, RAG status system (Red/Amber/Green/Not Assessed), evidence-based assessment, exception management
 - 🛡️ **Privacy Risk Management**: ICO 9-criteria screening, auto-population from data model, children's data assessment, AI/ML bias assessment
 - 📊 **Timeline-First Reporting**: 4 timeline visualizations, 8 narrative chapters, complete traceability demonstration
 - 🗺️ **Project Journey**: Showcase governance achievements, strategic decisions, and lessons learned
-- 📈 **Updated Documentation**: 30×30 dependency matrix, updated workflow diagrams with DPIA integration
+- 📈 **Updated Documentation**: 31×31 dependency matrix, updated workflow diagrams with principles compliance integration
 
 ---
 
