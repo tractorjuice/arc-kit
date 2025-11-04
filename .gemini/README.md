@@ -43,7 +43,7 @@ Gemini CLI uses colon-separated namespaces for commands in subdirectories. ArcKi
 /arckit:stakeholders Analyze stakeholders for payment gateway project
 ```
 
-## ArcKit Commands (26 Available)
+## ArcKit Commands (30 Available)
 
 ### Phase 0: Project Planning
 
@@ -91,6 +91,9 @@ Creates: `projects/001-project-name/project-plan.md`
 # Data modelling
 /arckit:data-model Create data model for payment gateway with ERD and GDPR compliance
 
+# Data protection
+/arckit:dpia Generate Data Protection Impact Assessment for GDPR Article 35 compliance
+
 # Strategic planning
 /arckit:wardley Create Wardley map for digital services showing build vs buy strategy
 
@@ -101,6 +104,7 @@ Creates: `projects/001-project-name/project-plan.md`
 **Outputs:**
 - `projects/001-project-name/requirements.md`
 - `projects/001-project-name/data-model.md`
+- `projects/001-project-name/dpia.md`
 - `projects/001-project-name/wardley-map.md`
 - `projects/001-project-name/research/technology-name/`
 
@@ -134,6 +138,7 @@ Creates: `projects/001-project-name/project-plan.md`
 /arckit:service-assessment GDS Service Standard assessment preparation
 /arckit:secure UK Government Secure by Design review
 /arckit:mod-secure MOD Secure by Design review
+/arckit:jsp-936 Generate JSP 936 AI assurance documentation
 /arckit:tcop Technology Code of Practice assessment
 /arckit:atrs AI Transparency Risk Standards assessment
 /arckit:ai-playbook AI Playbook compliance check
@@ -143,14 +148,22 @@ Creates: `projects/001-project-name/project-plan.md`
 /arckit:diagram Generate architecture diagrams with Mermaid
 /arckit:traceability Generate requirements traceability matrix
 /arckit:servicenow Export architecture to ServiceNow CMDB
+
+# Delivery management
+/arckit:backlog Generate sprint-ready backlog with velocity 20 and 8 sprints
+/arckit:story Create executive story for steering committee update
 ```
 
 **Outputs:**
 - `projects/001-project-name/hld-review-YYYYMMDD.md`
 - `projects/001-project-name/dld-review-YYYYMMDD.md`
 - `projects/001-project-name/compliance/secure-by-design.md`
+- `projects/001-project-name/compliance/service-assessment.md`
+- `projects/001-project-name/compliance/jsp-936.md`
 - `projects/001-project-name/analysis/gap-analysis.md`
 - `projects/001-project-name/diagrams/`
+- `projects/001-project-name/backlog.md` (+ `.csv`, `.json`)
+- `projects/001-project-name/story.md` (+ `story-summary.md`)
 
 ## Workflow Example
 
@@ -173,6 +186,7 @@ gemini
 # 3. Alpha phase
 /arckit:requirements Create requirements for cloud migration
 /arckit:data-model Create data model for customer data with GDPR compliance
+/arckit:dpia Generate DPIA covering GDPR Article 35 requirements
 /arckit:wardley Create Wardley map showing build vs buy for cloud infrastructure
 
 # 4. Research & procurement
@@ -180,12 +194,17 @@ gemini
 /arckit:gcloud-search Search G-Cloud 14 for cloud hosting services
 /arckit:dos Generate Digital Outcomes and Specialists procurement
 /arckit:sow Generate RFP statement of work
+/arckit:evaluate Score supplier proposals against evaluation criteria
 
 # 5. Beta phase
 /arckit:hld-review Review high-level design for microservices architecture
 /arckit:secure Conduct Secure by Design review
 
-# 6. Analysis
+# 6. Delivery & reporting
+/arckit:backlog Generate sprint backlog with velocity 20 and 8 sprints
+/arckit:story Create executive story for steering committee update
+
+# 7. Analysis
 /arckit:analyze Comprehensive gap analysis across all artifacts
 /arckit:diagram Generate C4 architecture diagrams
 /arckit:traceability Generate requirements traceability matrix
@@ -199,32 +218,36 @@ your-project/
 │   ├── README.md (this file)
 │   └── commands/
 │       └── arckit/
-│           ├── plan.toml
-│           ├── principles.toml
-│           ├── stakeholders.toml
-│           ├── risk.toml
-│           ├── sobc.toml
-│           ├── requirements.toml
-│           ├── data-model.toml
-│           ├── wardley.toml
-│           ├── research.toml
-│           ├── digital-marketplace.toml
-│           ├── gcloud-search.toml
-│           ├── gcloud-clarify.toml
-│           ├── dos.toml
-│           ├── sow.toml
-│           ├── evaluate.toml
-│           ├── hld-review.toml
-│           ├── dld-review.toml
-│           ├── secure.toml
-│           ├── mod-secure.toml
-│           ├── tcop.toml
-│           ├── atrs.toml
 │           ├── ai-playbook.toml
 │           ├── analyze.toml
+│           ├── atrs.toml
+│           ├── backlog.toml
+│           ├── data-model.toml
 │           ├── diagram.toml
+│           ├── dld-review.toml
+│           ├── dos.toml
+│           ├── dpia.toml
+│           ├── evaluate.toml
+│           ├── gcloud-clarify.toml
+│           ├── gcloud-search.toml
+│           ├── hld-review.toml
+│           ├── jsp-936.toml
+│           ├── mod-secure.toml
+│           ├── plan.toml
+│           ├── principles.toml
+│           ├── requirements.toml
+│           ├── research.toml
+│           ├── risk.toml
+│           ├── secure.toml
+│           ├── service-assessment.toml
+│           ├── servicenow.toml
+│           ├── sobc.toml
+│           ├── sow.toml
+│           ├── stakeholders.toml
+│           ├── story.toml
+│           ├── tcop.toml
 │           ├── traceability.toml
-│           └── servicenow.toml
+│           └── wardley.toml
 ├── .arckit/
 │   ├── memory/
 │   │   └── architecture-principles.md
@@ -346,15 +369,7 @@ EOF
 
 ## Version
 
-**Unreleased (30 commands)**
-
-**Coming Soon:**
-- 🔒 **New Command**: `/arckit:dpia` (30th command) - Generate Data Protection Impact Assessment for UK GDPR Article 35 compliance
-- 📖 **New Command**: `/arckit:story` (29th command) - Generate comprehensive project story with timeline analysis
-- 🛡️ **Privacy Risk Management**: ICO 9-criteria screening, auto-population from data model, children's data assessment, AI/ML bias assessment
-- 📊 **Timeline-First Reporting**: 4 timeline visualizations, 8 narrative chapters, complete traceability demonstration
-- 🗺️ **Project Journey**: Showcase governance achievements, strategic decisions, and lessons learned
-- 📈 **Updated Documentation**: 30×30 dependency matrix, updated workflow diagrams with DPIA integration
+ArcKit 0.8.3 (released 2025-11-04) — all 30 commands available in Gemini CLI, including DPIA, Backlog, and Story.
 
 ---
 

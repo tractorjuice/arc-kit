@@ -46,54 +46,58 @@ codex
 
 Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 
-**ArcKit commands:**
+### Foundation & Governance
 
 ```bash
-# Phase 0: Project Planning
 /prompts:arckit.plan Create project plan with timeline, phases, gates, and Mermaid diagrams
-
-# Phase 1: Establish Governance
 /prompts:arckit.principles Create architecture principles for financial services
-
-# Phase 2: Stakeholder Analysis
 /prompts:arckit.stakeholders Analyze stakeholders for cloud migration project
-
-# Phase 3: Risk Assessment
 /prompts:arckit.risk Create risk register for payment gateway using Orange Book
-
-# Phase 4: Business Case
 /prompts:arckit.sobc Create Strategic Outline Business Case for payment gateway
+```
 
-# Phase 5: Define Requirements
+### Requirements & Data
+
+```bash
 /prompts:arckit.requirements Create requirements for payment gateway modernization
+/prompts:arckit.data-model Create data model with ERD and GDPR compliance
+/prompts:arckit.dpia Generate Data Protection Impact Assessment with ICO 9-criteria screening
+```
 
-# Phase 5.5: Data Modeling
-/prompts:arckit.data-model Create data model for payment gateway with ERD and GDPR compliance
+### Research & Procurement
 
-# Phase 6: Strategic Planning with Wardley Mapping
-/prompts:arckit.wardley Create Wardley map for digital services showing build vs buy strategy
-
-# Phase 7: Vendor Selection
+```bash
+/prompts:arckit.research Research market options with build vs buy analysis
+/prompts:arckit.wardley Create Wardley map for digital services strategy
+/prompts:arckit.gcloud-search Search G-Cloud 14 for compliant services
+/prompts:arckit.gcloud-clarify Generate clarification questions for shortlisted suppliers
+/prompts:arckit.dos Produce Digital Outcomes and Specialists procurement pack
 /prompts:arckit.sow Generate RFP statement of work
 /prompts:arckit.evaluate Score vendors against requirements
+```
 
-# Phase 8: Design Reviews
-/prompts:arckit.hld-review Review high-level design for scalability
-/prompts:arckit.dld-review Review detailed design for security
+### Delivery & Quality
 
-# Phase 9: Compliance & Security
-/prompts:arckit.service-assessment GDS Service Standard assessment preparation
-/prompts:arckit.secure UK Government Secure by Design review
-/prompts:arckit.mod-secure MOD Secure by Design review
-/prompts:arckit.tcop Technology Code of Practice assessment
-/prompts:arckit.atrs AI Transparency Risk Standards assessment
-/prompts:arckit.ai-playbook AI Playbook compliance check
-
-# Phase 10: Analysis & Visualization
-/prompts:arckit.analyze Analyze architecture for complexity
-/prompts:arckit.diagram Generate architecture diagrams
+```bash
+/prompts:arckit.backlog Generate sprint-ready GDS backlog from requirements
+/prompts:arckit.hld-review Review high-level design for scalability and compliance
+/prompts:arckit.dld-review Review detailed design for security and implementation readiness
+/prompts:arckit.analyze Run cross-artifact quality analysis
+/prompts:arckit.diagram Generate C4 architecture diagrams
 /prompts:arckit.traceability Generate traceability matrix
 /prompts:arckit.servicenow Export architecture to ServiceNow CMDB
+```
+
+### Compliance & Governance Reporting
+
+```bash
+/prompts:arckit.service-assessment Prepare for GDS Service Standard assessment
+/prompts:arckit.secure Conduct Secure by Design review
+/prompts:arckit.mod-secure Run MOD Secure by Design assessment
+/prompts:arckit.tcop Assess Technology Code of Practice compliance
+/prompts:arckit.atrs Produce Algorithmic Transparency Record
+/prompts:arckit.ai-playbook Check UK Government AI Playbook alignment
+/prompts:arckit.story Create programme story summarising governance outcomes
 ```
 
 ## Workflow
@@ -142,7 +146,7 @@ Creates: `projects/001-project-name/stakeholder-drivers.md`
 - Conflict analysis and resolutions
 - RACI matrix
 
-### 3. Risk Assessment (NEW - v0.2.4)
+### 3. Risk Assessment
 
 ```bash
 /prompts:arckit.risk Create risk register for cloud migration project
@@ -167,7 +171,7 @@ Creates: `projects/001-project-name/risk-register.md`
 - Economic Case: Financial risks inform cost contingency
 - Management Case Part E: Full risk register
 
-### 4. Business Case (NEW - v0.2.3)
+### 4. Business Case
 
 ```bash
 /prompts:arckit.sobc Create SOBC for cloud migration with £2M investment
@@ -198,7 +202,7 @@ Creates: `projects/001-project-name/requirements.md`
 - Example: "BR-001 addresses CFO's goal G-1: Reduce infrastructure costs 40%"
 - Documents requirement conflicts and resolutions
 
-### 5.5. Data Model (NEW)
+### 5.5 Data Model
 
 ```bash
 /prompts:arckit.data-model Create data model for payment gateway
@@ -222,6 +226,23 @@ Creates: `projects/001-project-name/data-model.md`
 - **Data Governance**: Clear ownership and accountability from stakeholder RACI matrix
 - **Integration Ready**: Maps upstream/downstream data flows for HLD/DLD review
 
+### 5.6 Data Protection Impact Assessment
+
+```bash
+/prompts:arckit.dpia Generate DPIA for payment gateway modernization
+```
+
+Creates: `projects/001-project-name/dpia.md`
+
+**What it produces:**
+- ICO 9-criteria screening to confirm mandatory DPIA
+- Processing overview and lawful basis mapped to stakeholder goals and requirements
+- Risk register linkage (DPIA-xxx IDs) with likelihood × severity scoring
+- Mitigation plan referencing `/arckit.secure` controls and backlog actions
+- Data subject rights checklist, international transfer safeguards, review cadence
+
+**Tip**: Run after `/prompts:arckit.data-model` so entity definitions and PII flags feed the DPIA automatically.
+
 ### 6. Vendor RFP
 
 ```bash
@@ -230,6 +251,16 @@ Creates: `projects/001-project-name/data-model.md`
 
 Creates: `projects/001-project-name/sow.md`
 
+Also use:
+
+```bash
+/prompts:arckit.gcloud-search Search G-Cloud 14 for cloud hosting services
+/prompts:arckit.gcloud-clarify Generate clarification questions for shortlisted suppliers
+/prompts:arckit.dos Produce Digital Outcomes and Specialists procurement documents
+```
+
+These commands create procurement-ready packs in `projects/001-project-name/procurement/`.
+
 ### 7. Design Reviews
 
 ```bash
@@ -237,6 +268,39 @@ Creates: `projects/001-project-name/sow.md`
 ```
 
 Creates: `projects/001-project-name/hld-review-YYYYMMDD.md`
+
+### 8. Product Backlog
+
+```bash
+/prompts:arckit.backlog Generate sprint-ready backlog with velocity 25 and 8 sprints
+```
+
+Creates:
+- `projects/001-project-name/backlog.md`
+- `backlog.csv` (Jira/Azure DevOps import)
+- `backlog.json` (automation)
+
+**Highlights:**
+- Converts BR/FR/NFR/INT requirements into GDS-format user stories
+- Allocates stories into sprints using team velocity and dependency sequencing
+- Maintains Definition of Done from architecture principles
+
+### 9. Programme Story
+
+```bash
+/prompts:arckit.story Create executive story for steering committee update
+```
+
+Creates:
+- `projects/001-project-name/story.md`
+- `story-summary.md` (one-page brief)
+
+**Captures:**
+- Timeline of milestones, gate decisions, and compliance outcomes
+- Delivery health dashboard (scope burn-up, risk status, outstanding actions)
+- Stakeholder-specific call-outs and next-step recommendations
+
+Share this narrative before major governance reviews to keep sponsors aligned.
 
 ## Approval Modes
 
@@ -295,10 +359,19 @@ your-project/
 │       ├── arckit.sobc.md
 │       ├── arckit.requirements.md
 │       ├── arckit.data-model.md
+│       ├── arckit.dpia.md
+│       ├── arckit.research.md
+│       ├── arckit.wardley.md
+│       ├── arckit.gcloud-search.md
+│       ├── arckit.gcloud-clarify.md
+│       ├── arckit.dos.md
 │       ├── arckit.sow.md
+│       ├── arckit.evaluate.md
+│       ├── arckit.backlog.md
 │       ├── arckit.hld-review.md
 │       ├── arckit.dld-review.md
-│       ├── arckit.evaluate.md
+│       ├── arckit.traceability.md
+│       ├── arckit.service-assessment.md
 │       ├── arckit.secure.md
 │       ├── arckit.mod-secure.md
 │       ├── arckit.tcop.md
@@ -306,9 +379,8 @@ your-project/
 │       ├── arckit.ai-playbook.md
 │       ├── arckit.analyze.md
 │       ├── arckit.diagram.md
-│       ├── arckit.wardley.md
-│       ├── arckit.traceability.md
-│       └── arckit.servicenow.md
+│       ├── arckit.servicenow.md
+│       └── arckit.story.md
 ├── .arckit/
 │   ├── memory/
 │   │   └── architecture-principles.md
