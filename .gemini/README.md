@@ -346,20 +346,22 @@ EOF
 
 ## Version
 
-**Unreleased (29 commands)**
+**Unreleased (30 commands)**
 
 **Coming Soon:**
+- 🔒 **New Command**: `/arckit:dpia` (30th command) - Generate Data Protection Impact Assessment for UK GDPR Article 35 compliance
 - 📖 **New Command**: `/arckit:story` (29th command) - Generate comprehensive project story with timeline analysis
+- 🛡️ **Privacy Risk Management**: ICO 9-criteria screening, auto-population from data model, children's data assessment, AI/ML bias assessment
 - 📊 **Timeline-First Reporting**: 4 timeline visualizations, 8 narrative chapters, complete traceability demonstration
 - 🗺️ **Project Journey**: Showcase governance achievements, strategic decisions, and lessons learned
-- 📈 **Updated Documentation**: 29×29 dependency matrix, updated workflow diagrams with Tier 11 (Reporting)
+- 📈 **Updated Documentation**: 30×30 dependency matrix, updated workflow diagrams with DPIA integration
 
 ---
 
 ArcKit v0.8.2 (28 commands)
 
 **What's New in v0.8.2:**
-- 🔧 **Dependency Matrix**: Complete 29×29 command dependency matrix with mandatory, recommended, and optional relationships
+- 🔧 **Dependency Matrix**: Complete 30×30 command dependency matrix with mandatory, recommended, and optional relationships
 - 📊 **Workflow Diagrams**: Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI)
 - 📝 **Gap Analysis**: Comprehensive analysis of 50+ missing dependencies with remediation recommendations
 - 🔧 **Version Consistency**: All version references synchronized to v0.8.2

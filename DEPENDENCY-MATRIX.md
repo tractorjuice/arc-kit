@@ -17,39 +17,40 @@ This matrix shows which commands depend on outputs from other commands.
 
 ## Dependency Structure Matrix
 
-| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | research | wardley | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | traceability | analyze | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story |
-|------------|------|------------|--------------|------|------|--------------|------------|----------|---------|-----|-----|---------------|----------------|----------|------------|------------|---------|---------|------------|--------------|---------|-------------------|------|-------------|------|--------|------------|---------|-------|
-| **plan** | - | O | O | O | O | O | | | | | | | | | | | | | | | | R | | | | | | | O |
-| **principles** | O | - | R | R | R | R | | | O | | M | R | | M | M | M | | O | | | M | R | M | | | M | M | | O |
-| **stakeholders** | O | | - | R | M | R | R | R | | | R | | | | | | R | | | | M | R | | | | | | | O |
-| **risk** | O | | | - | R | R | | | | | | | | | | | R | | | | M | R | | | | R | R | | O |
-| **sobc** | O | | | | - | R | O | | | | | | | | | | | | | | R | R | | | | | | | O |
-| **requirements** | O | | | | | - | M | M | M | M | M | M | | M | M | M | M | M | M | M | M | M | M | O | O | M | M | M | O |
-| **data-model** | | | | | | | - | R | | | | | | | | | R | R | R | R | M | R | | | | | | O | O |
-| **research** | | | | | | | | - | M | R | | R | | R | | | | | | | M | R | | | | | | | O |
-| **wardley** | | | | | | | | | - | R | | | | R | | | | | | | M | R | | | | | | | O |
-| **sow** | | | | | | | | | | - | O | | | R | O | | | | | | M | | | | | | | | O |
-| **dos** | | | | | | | | | | | - | | | R | | | | | | | M | | | | | | | | O |
-| **gcloud-search** | | | | | | | | | | | | - | M | R | | | | | | | M | | | | | | | | O |
-| **gcloud-clarify** | | | | | | | | | | | | | - | R | | | | | | | M | | | | | | | | O |
-| **evaluate** | | | | | | | | | | | | | | - | | | | | | | M | | | | | | | | O |
-| **HLD** (external) | | | | | | | | | | | | | | | - | M | M | R | R | M | M | M | | | | | | | O |
-| **DLD** (external) | | | | | | | | | | | | | | | | - | R | O | | M | M | M | | | | | | | O |
-| **diagram** | | | | | | | | | | | | | | | | | | - | R | R | M | R | O | | | O | O | O | O |
-| **hld-review** | | | | | | | | | | | | | | | | | | | | | M | R | | | | | | | O |
-| **dld-review** | | | | | | | | | | | | | | | | | | | | | M | R | | | | | | | O |
-| **backlog** | | | | | | | | | | | | | | | | | - | | | | M | R | | | | | | | O |
-| **servicenow** | | | | | | | | | | | | | | | | | | | - | | M | R | | | | | | | O |
-| **traceability** | | | | | | | | | | | | | | | | | | | | - | M | R | | | | | | | O |
-| **analyze** | | O | O | O | O | O | O | | | O | | | | O | | | | | | O | - | | O | O | O | | O | | O |
-| **service-assessment** | | | | | | | | | | | | | | | | | | | | | | - | O | O | O | O | O | O | O |
-| **tcop** | | | | | | | | | O | | | | | | | | | O | | | O | O | - | | | O | | | O |
-| **ai-playbook** | | | | | | | | | O | | | | | | | | | O | | | O | O | | - | O | | | | O |
-| **atrs** | | | | | | | | | O | | | | | | | | | O | | | O | O | | | - | | | | O |
-| **secure** | | | | | | | | | | | | | | | | | | O | | | O | O | | | | - | | | O |
-| **mod-secure** | | | | | | | | | | | | | | | | | | O | | | O | O | | | | | - | | O |
-| **jsp-936** | | | | | | | | | | | | | | | | | | O | | | O | O | | | | | | - | O |
-| **story** | | | | | | | | | | | | | | | | | | | | | | | | | | | | | - |
+| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | dpia | research | wardley | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | traceability | analyze | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story |
+|------------|------|------------|--------------|------|------|--------------|------------|------|----------|---------|-----|-----|---------------|----------------|----------|------------|------------|---------|---------|------------|--------------|---------|-------------------|------|-------------|------|--------|------------|---------|-------|
+| **plan** | - | O | O | O | O | O | | | | | | | | | | | | | | | | | R | | | | | | | | O |
+| **principles** | O | - | R | R | R | R | | R | | O | | M | R | | M | M | M | | O | | | M | R | M | | | M | M | | O |
+| **stakeholders** | O | | - | R | M | R | R | R | R | | | R | | | | | | R | | | | M | R | | | | | | | O |
+| **risk** | O | | | - | R | R | | R | | | | | | | | | | R | | | | M | R | | | | R | R | | O |
+| **sobc** | O | | | | - | R | O | | | | | | | | | | | | | | | R | R | | | | | | | O |
+| **requirements** | O | | | | | - | M | R | M | M | M | M | M | | M | M | M | M | M | M | M | M | M | M | O | O | M | M | M | O |
+| **data-model** | | | | | | | - | M | R | | | | | | | | | R | R | R | R | M | R | | | | | | O | O |
+| **dpia** | | | | R | | | | - | R | | | | | | | | | R | R | | | R | M | R | | R | R | R | R | R | O |
+| **research** | | | | | | | | | - | M | R | | R | | R | | | | | | | M | R | | | | | | | O |
+| **wardley** | | | | | | | | | | - | R | | | | R | | | | | | | M | R | | | | | | | O |
+| **sow** | | | | | | | | | | | - | O | | | R | O | | | | | | M | | | | | | | | O |
+| **dos** | | | | | | | | | | | | - | | | R | | | | | | | M | | | | | | | | O |
+| **gcloud-search** | | | | | | | | | | | | | - | M | R | | | | | | | M | | | | | | | | O |
+| **gcloud-clarify** | | | | | | | | | | | | | | - | R | | | | | | | M | | | | | | | | O |
+| **evaluate** | | | | | | | | | | | | | | | - | | | | | | | M | | | | | | | | O |
+| **HLD** (external) | | | | | | | | | | | | | | | | - | M | M | R | R | M | M | M | | | | | | | O |
+| **DLD** (external) | | | | | | | | | | | | | | | | | - | R | O | | M | M | M | | | | | | | O |
+| **diagram** | | | | | | | | | | | | | | | | | | | - | R | R | M | R | O | | | O | O | O | O |
+| **hld-review** | | | | | | | | | | | | | | | | | | | | | | M | R | | | | | | | O |
+| **dld-review** | | | | | | | | | | | | | | | | | | | | | | M | R | | | | | | | O |
+| **backlog** | | | | | | | | | | | | | | | | | | - | | | | M | R | | | | | | | O |
+| **servicenow** | | | | | | | | | | | | | | | | | | | | - | | M | R | | | | | | | O |
+| **traceability** | | | | | | | | | | | | | | | | | | | | | - | M | R | | | | | | | O |
+| **analyze** | | O | O | O | O | O | O | O | | | O | | | | O | | | | | | O | - | | O | O | O | | O | | O |
+| **service-assessment** | | | | | | | | O | | | | | | | | | | | | | | | - | O | O | O | O | O | O | O |
+| **tcop** | | | | | | | | | | O | | | | | | | | | O | | | O | O | - | | | O | | | O |
+| **ai-playbook** | | | | | | | | R | | O | | | | | | | | | O | | | O | O | | - | O | | | | O |
+| **atrs** | | | | | | | | R | | O | | | | | | | | | O | | | O | O | | | - | | | | O |
+| **secure** | | | | | | | | R | | | | | | | | | | | O | | | O | O | | | | - | | | O |
+| **mod-secure** | | | | | | | | R | | | | | | | | | | | O | | | O | O | | | | | - | | O |
+| **jsp-936** | | | | | | | | R | | | | | | | | | | | O | | | O | O | | | | | | - | O |
+| **story** | | | | | | | | O | | | | | | | | | | | | | | | | | | | | | | - |
 
 ---
 
@@ -73,6 +74,7 @@ These commands can run first:
 ### Tier 4: Detailed Design (Depends on Requirements)
 All these commands REQUIRE requirements.md:
 - **data-model** → Depends on: requirements (M), stakeholders (R), sobc (O)
+- **dpia** → Depends on: data-model (M), requirements (R), principles (R), stakeholders (R)
 - **research** → Depends on: requirements (M), stakeholders (R), data-model (R)
 - **wardley** → Depends on: requirements (M), research (M)
 - **diagram** → Depends on: requirements (M)
@@ -202,8 +204,8 @@ traceability → tcop → mod-secure → jsp-936 → analyze → service-assessm
 
 - **ArcKit Version**: 0.8.3
 - **Matrix Date**: 2025-11-02 (Critical fixes applied)
-- **Commands Documented**: 29
-- **Matrix Rows**: 31 (29 commands + 2 external documents)
+- **Commands Documented**: 30
+- **Matrix Rows**: 32 (30 commands + 2 external documents)
 
 ## Changelog
 

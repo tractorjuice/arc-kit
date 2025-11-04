@@ -57,7 +57,7 @@ pip install dist/arckit_cli-*.whl
 - Handles data path resolution for templates/scripts across different install methods (uv tools, pip, source)
 
 **Data Files** (distributed with package):
-- `.claude/commands/arckit.*.md` - 29 slash commands for Claude Code (frontmatter + prompt)
+- `.claude/commands/arckit.*.md` - 30 slash commands for Claude Code (frontmatter + prompt)
 - `.gemini/commands/arckit/*.toml` - Gemini CLI equivalents (generated via `scripts/converter.py`)
 - `.arckit/templates/*.md` - 30 document templates for all artifact types
 - `scripts/bash/*.sh` - Helper scripts (create-project.sh, generate-document-id.sh, etc.)
@@ -86,7 +86,7 @@ project-name/
 
 ### Slash Command System
 
-ArcKit's primary interface is **29 slash commands** that generate architecture artifacts:
+ArcKit's primary interface is **30 slash commands** that generate architecture artifacts:
 
 **Command Structure**: `.claude/commands/arckit.{command}.md` files contain:
 1. **Frontmatter** (YAML): `description` field

@@ -93,6 +93,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.sobc` | [business-case.md](guides/business-case.md) | ✅ Complete |
 | `/arckit.requirements` | [requirements.md](guides/requirements.md) | ✅ Complete |
 | `/arckit.data-model` | [data-model.md](guides/data-model.md) | ✅ Complete |
+| `/arckit.dpia` | TBD | 📝 Pending |
 | `/arckit.research` | [research.md](guides/research.md) | ✅ Complete |
 | `/arckit.wardley` | [wardley-mapping.md](guides/wardley-mapping.md) | ✅ Complete |
 | `/arckit.diagram` | [diagram.md](guides/diagram.md) | ✅ Complete |
@@ -116,7 +117,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.jsp-936` | [jsp-936.md](guides/jsp-936.md) | ✅ Complete |
 | `/arckit.story` | TBD | 📝 Pending |
 
-**Coverage**: 28/29 commands documented (96.6%)
+**Coverage**: 28/30 commands documented (93.3%)
 
 ---
 

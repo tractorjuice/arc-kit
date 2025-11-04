@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **New Command**: `/arckit.dpia` (30th ArcKit command) - Generate Data Protection Impact Assessment for UK GDPR Article 35 compliance
+  - **ICO 9-Criteria Screening**: Automated assessment (evaluation, automated decisions, monitoring, sensitive data, large scale, dataset matching, vulnerable subjects, innovative tech, rights prevention)
+  - **Auto-Population**: Extracts entities, PII, special category data from data-model.md; processing purposes from requirements.md; data subjects from stakeholder-drivers.md
+  - **Risk Assessment**: Focus on impact on individuals (privacy harm, discrimination, physical harm, financial loss), not organizational risk
+  - **Likelihood × Severity Matrix**: Remote/Possible/Probable × Minimal/Significant/Severe = Low/Medium/High risk
+  - **Risk Register Integration**: Bidirectional links with DPIA-xxx risk IDs in risk register
+  - **Mitigation Extraction**: Links security controls from secure-by-design-assessment.md as DPIA mitigations
+  - **Data Subject Rights**: Implementation checklist for SAR, rectification, erasure, portability, objection, restriction, automated decision-making
+  - **Children's Data Assessment**: Age verification, parental consent, best interests, child-friendly privacy notices
+  - **AI/ML Assessment**: Algorithmic bias, explainability, human oversight, links to ai-playbook and ATRS
+  - **ICO Prior Consultation**: Automatic flagging when residual high risks require ICO consultation before processing
+  - **International Transfers**: Safeguards assessment (SCCs, BCRs, adequacy decisions)
+  - **Template**: `dpia-template.md` (1,000+ lines) with 16 sections following ICO guidance
+  - **Legal Context**: UK GDPR Article 35 REQUIRES DPIAs for high-risk processing; failure to conduct when required can result in ICO enforcement
+  - **Workflow Position**: Run AFTER /arckit.data-model (needs data inventory), BEFORE /arckit.research (must assess privacy risks before tech selection)
+  - **Use Cases**: Health data processing, AI/ML systems, large-scale profiling, children's services, vulnerable groups, cross-border transfers
+
 - **New Command**: `/arckit.story` (29th ArcKit command) - Generate comprehensive project story with timeline analysis
   - **Timeline Analysis**: 4 visualization types (Gantt chart, linear flowchart, detailed table, phase duration pie chart)
   - **Timeline Metrics**: Project duration, velocity, phase analysis, critical path identification
@@ -25,7 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **LICENSE**: Updated copyright holder from "GitHub" to "Mark Craddock"
-- **Project README template**: Now documents all 29 commands (previously only 8)
+- **Project README template**: Now documents all 30 commands (previously only 8)
   - Added Phase 15: Project Story & Reporting with `/arckit.story` command
   - Added 10 organized categories: Project Planning, Core Workflow, Vendor Procurement, Design Review, Architecture Diagrams, Sprint Planning, Service Management, Traceability & Quality, UK Government Compliance, Security Assessment
   - Improves command discoverability for new ArcKit projects

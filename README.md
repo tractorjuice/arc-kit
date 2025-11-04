@@ -152,6 +152,21 @@ Create data model based on Data Requirements (DR-xxx):
 - Data quality framework with measurable metrics
 - Requirements traceability (DR-xxx → Entity → Attribute)
 
+### Phase 5.7: Data Protection Impact Assessment
+**`/arckit.dpia`** → Generate DPIA for UK GDPR Article 35 compliance
+
+**MANDATORY for high-risk processing** - assess privacy risks before technology selection:
+- ICO 9-criteria automated screening (sensitive data, large scale, vulnerable subjects, AI/ML, etc.)
+- Auto-populated from data model (entities, PII, special category data, lawful basis)
+- Risk assessment focused on impact on individuals (privacy harm, discrimination)
+- Data subject rights implementation checklist (SAR, deletion, portability)
+- Children's data assessment (age verification, parental consent)
+- AI/ML algorithmic processing assessment (bias, explainability, human oversight)
+- ICO prior consultation flagging for high residual risks
+- International transfer safeguards (SCCs, BCRs, adequacy decisions)
+- Bidirectional links to risk register (DPIA-xxx risk IDs)
+- Links mitigations to Secure by Design security controls
+
 ### Phase 6: Technology Research
 **`/arckit.research`** → Research technology, services, and products
 
@@ -1325,7 +1340,7 @@ arckit init my-project
 ### Workflow & Dependencies
 
 - **[Workflow Diagrams](WORKFLOW-DIAGRAMS.md)** - Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI) with Gantt charts and decision trees
-- **[Dependency Structure Matrix](DEPENDENCY-MATRIX.md)** - Complete 29×29 command dependency matrix showing mandatory, recommended, and optional relationships
+- **[Dependency Structure Matrix](DEPENDENCY-MATRIX.md)** - Complete 30×30 command dependency matrix showing mandatory, recommended, and optional relationships
 - **[Traceability Guide](docs/traceability.md)** - Maintaining requirement coverage
 
 ---
