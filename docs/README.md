@@ -30,10 +30,11 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ### Research & Analysis
 12. [Research](guides/research.md) - `/arckit.research` ⭐ NEW
 13. [Analyze](guides/analyze.md) - `/arckit.analyze` ⭐ NEW
-14. [Diagrams](guides/diagram.md) - `/arckit.diagram` ⭐ NEW
+14. [Principles Compliance](guides/principles-compliance.md) - `/arckit.principles-compliance` ⭐ NEW
+15. [Diagrams](guides/diagram.md) - `/arckit.diagram` ⭐ NEW
 
 ### Procurement
-15. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
+16. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
 
 ### UK Government
 - [Service Assessment](guides/service-assessment.md) - `/arckit.service-assessment` ⭐ NEW
@@ -109,6 +110,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.servicenow` | [design-review.md](guides/design-review.md) | ✅ Complete |
 | `/arckit.traceability` | [traceability.md](guides/traceability.md) | ✅ Complete |
 | `/arckit.analyze` | [analyze.md](guides/analyze.md) | ✅ Complete |
+| `/arckit.principles-compliance` | [principles-compliance.md](guides/principles-compliance.md) | ✅ Complete |
 | `/arckit.service-assessment` | [service-assessment.md](guides/service-assessment.md) | ✅ Complete |
 | `/arckit.tcop` | [technology-code-of-practice.md](guides/uk-government/technology-code-of-practice.md) | ✅ Complete |
 | `/arckit.ai-playbook` | [ai-playbook.md](guides/uk-government/ai-playbook.md) | ✅ Complete |
@@ -118,7 +120,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.jsp-936` | [jsp-936.md](guides/jsp-936.md) | ✅ Complete |
 | `/arckit.story` | [story.md](guides/story.md) | ✅ Complete |
 
-**Coverage**: 30/30 commands documented (100%)
+**Coverage**: 31/31 commands documented (100%)
 
 ---
 

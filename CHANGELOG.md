@@ -26,6 +26,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **Workflow Position**: Run AFTER /arckit.data-model (needs data inventory), BEFORE /arckit.research (must assess privacy risks before tech selection)
   - **Use Cases**: Health data processing, AI/ML systems, large-scale profiling, children's services, vulnerable groups, cross-border transfers
 
+- **New Command**: `/arckit.principles-compliance` (31st ArcKit command) - Assess project compliance with architecture principles
+  - **Dynamic Principle Extraction**: Extracts ALL principles from architecture-principles.md (supports 5, 10, 20+ principles - never assumes fixed count)
+  - **RAG Status System**: Four-level assessment (🟢 GREEN: Fully compliant | 🟠 AMBER: Partial compliance | 🔴 RED: Non-compliant | ⚪ NOT ASSESSED: Insufficient evidence)
+  - **Evidence-Based Assessment**: All RAG statuses must link to specific file:section:line references from project artifacts
+  - **Validation Gates**: Each principle's validation checklist assessed individually with PASS/FAIL/N/A status
+  - **Comprehensive Evidence Search**: Requirements coverage, design evidence (HLD/DLD), implementation artifacts, compliance assessments (TCoP, Secure by Design), validation results
+  - **Gap Identification**: For AMBER/RED principles - specific gaps with impact, severity, remediation plan, responsible owner, target date
+  - **Exception Management**: Time-bound waivers with CTO/CIO approval workflow, expiry dates, quarterly review process
+  - **Point-in-Time Assessment**: Run at project gates (Discovery, Alpha, Beta, Live) and quarterly for ongoing compliance monitoring
+  - **Gate Decision Support**: Overall recommendation (❌ BLOCK / ⚠️ CONDITIONAL APPROVAL / ✅ PROCEED) with prioritized action plan
+  - **Template**: `principles-compliance-assessment-template.md` (340+ lines) with executive summary, compliance scorecard, detailed assessments, exception register
+  - **Integration**: Feeds into /arckit.analyze and /arckit.service-assessment for comprehensive quality/compliance checks
+  - **Use Cases**: Project gate reviews, quarterly compliance audits, architecture governance, demonstrating principles adoption, identifying architecture drift
+  - **Workflow Position**: Run AFTER design reviews when evidence exists, BEFORE major project gates for go/no-go decisions
+
 - **New Command**: `/arckit.story` (29th ArcKit command) - Generate comprehensive project story with timeline analysis
   - **Timeline Analysis**: 4 visualization types (Gantt chart, linear flowchart, detailed table, phase duration pie chart)
   - **Timeline Metrics**: Project duration, velocity, phase analysis, critical path identification

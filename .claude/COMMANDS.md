@@ -28,6 +28,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.servicenow` | Generate ServiceNow service design | After architecture, bridge to operations |
 | `/arckit.traceability` | Generate traceability matrix | Throughout project, especially before release |
 | `/arckit.analyze` | Comprehensive quality analysis | Periodically throughout project |
+| `/arckit.principles-compliance` | Assess compliance with architecture principles | At project gates (Discovery/Alpha/Beta/Live) and quarterly |
 | `/arckit.service-assessment` | GDS Service Standard assessment preparation | Before alpha/beta/live assessments (UK Gov) |
 | `/arckit.tcop` | UK Gov Technology Code of Practice assessment | UK Government projects (all phases) |
 | `/arckit.ai-playbook` | UK Gov AI Playbook compliance | UK Government AI projects |
