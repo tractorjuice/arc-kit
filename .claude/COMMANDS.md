@@ -13,6 +13,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.sobc` | Create Strategic Outline Business Case (SOBC) | After risk assessment, BEFORE requirements |
 | `/arckit.requirements` | Define comprehensive requirements | After SOBC approval, before data modeling |
 | `/arckit.data-model` | Create comprehensive data model with ERD | After requirements, before vendor selection |
+| `/arckit.dpia` | Generate Data Protection Impact Assessment | After data model when processing personal data |
 | `/arckit.research` | Research technology and services for build vs buy | After requirements, inform procurement decisions |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
 | `/arckit.diagram` | Generate architecture diagrams (Mermaid) | Visualize system structure throughout project |
@@ -21,6 +22,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.dos` | Generate Digital Outcomes & Specialists docs | UK Gov procurement of custom development |
 | `/arckit.sow` | Generate Statement of Work / RFP | After requirements, for vendor procurement |
 | `/arckit.evaluate` | Evaluate vendor proposals | After receiving vendor responses |
+| `/arckit.backlog` | Generate prioritized product backlog | After requirements, before development sprints |
 | `/arckit.hld-review` | Review High-Level Design | After vendor selection, before implementation |
 | `/arckit.dld-review` | Review Detailed Design | After HLD approval, before coding |
 | `/arckit.servicenow` | Generate ServiceNow service design | After architecture, bridge to operations |
@@ -33,6 +35,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.secure` | UK Gov Secure by Design (civilian) | UK Government security assessment |
 | `/arckit.mod-secure` | MOD Secure by Design (defence) | UK Ministry of Defence security assessment |
 | `/arckit.jsp-936` | MOD JSP 936 AI assurance | UK Ministry of Defence AI/ML systems |
+| `/arckit.story` | Produce executive-ready programme story | After key milestones, before governance reviews |
 
 ---
 
@@ -648,7 +651,39 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 8. `/arckit.research` - Technology and Service Research
+### 8. `/arckit.dpia` - Data Protection Impact Assessment
+
+**Purpose**: Generate a GDPR-compliant Data Protection Impact Assessment that links privacy risks, mitigations, and accountability back to ArcKit artifacts.
+
+**Usage**:
+```
+/arckit.dpia Create DPIA for payment gateway modernization
+/arckit.dpia Generate DPIA for NHS appointment portal
+```
+
+**Prerequisites**:
+- `projects/NNN-project-name/requirements.md` (with DR-xxx Data Requirements)
+- `projects/NNN-project-name/data-model.md` (entities annotated with PII flags)
+- Processing involves personal data or meets ICO high-risk indicators
+
+**What it does**:
+- Runs ICO 9-criteria screening to confirm DPIA necessity
+- Compiles processing overview, lawful basis, and purpose from requirements and stakeholder drivers
+- Pulls entities, attributes, and PII classifications from `data-model.md`
+- Identifies risks to data subjects, evaluates likelihood × severity, and records residual scores
+- Maps each risk to mitigating controls (including `/arckit.secure` outputs) and links back to `risk-register.md`
+- Documents data subject rights handling, DPIA sign-off, review cadence, and international transfer safeguards
+- Flags open actions that must be addressed before go-live (e.g., DPO review, ICO consultation)
+
+**Outputs**:
+- `projects/NNN-project-name/dpia.md`
+- Updates `risk-register.md` with DPIA-xxx identifiers when risks already exist
+
+**Next step**: Review with the Data Protection Officer, update `/arckit.risk` for any new risks, and ensure mitigations feed into `/arckit.backlog` or `/arckit.traceability`.
+
+---
+
+### 9. `/arckit.research` - Technology and Service Research
 
 **Purpose**: Research available technologies, services, and products to meet requirements and inform build vs buy decisions.
 
@@ -686,7 +721,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 8. `/arckit.gcloud-search` - G-Cloud Service Search
+### 10. `/arckit.gcloud-search` - G-Cloud Service Search
 
 **Purpose**: Find and compare G-Cloud services on the UK Digital Marketplace for off-the-shelf procurement.
 
@@ -724,7 +759,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 9. `/arckit.gcloud-clarify` - G-Cloud Clarification Questions
+### 11. `/arckit.gcloud-clarify` - G-Cloud Clarification Questions
 
 **Purpose**: Generate clarification questions to validate G-Cloud service claims and fill gaps in supplier information.
 
@@ -757,7 +792,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 10. `/arckit.dos` - Digital Outcomes and Specialists
+### 12. `/arckit.dos` - Digital Outcomes and Specialists
 
 **Purpose**: Generate Digital Outcomes and Specialists (DOS) procurement documentation for custom development on UK Digital Marketplace.
 
@@ -801,7 +836,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 11. `/arckit.sow` - Statement of Work / RFP
+### 13. `/arckit.sow` - Statement of Work / RFP
 
 **Purpose**: Generate Statement of Work (SOW) document for vendor procurement / RFP.
 
@@ -836,7 +871,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 12. `/arckit.evaluate` - Vendor Evaluation
+### 14. `/arckit.evaluate` - Vendor Evaluation
 
 **Purpose**: Create vendor evaluation framework and score vendor proposals.
 
@@ -878,7 +913,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 13. `/arckit.hld-review` - High-Level Design Review
+### 15. `/arckit.hld-review` - High-Level Design Review
 
 **Purpose**: Review High-Level Design (HLD) against architecture principles and requirements.
 
@@ -916,7 +951,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 14. `/arckit.dld-review` - Detailed Design Review
+### 16. `/arckit.dld-review` - Detailed Design Review
 
 **Purpose**: Review Detailed Design (DLD) for implementation readiness.
 
@@ -958,7 +993,7 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 ---
 
-### 15. `/arckit.traceability` - Traceability Matrix
+### 17. `/arckit.traceability` - Traceability Matrix
 
 **Purpose**: Generate requirements traceability matrix from requirements → design → implementation → tests.
 
@@ -1012,7 +1047,7 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 
 ---
 
-### 16. `/arckit.service-assessment` - GDS Service Standard Assessment Preparation
+### 18. `/arckit.service-assessment` - GDS Service Standard Assessment Preparation
 
 **Purpose**: Prepare for mandatory UK Government GDS Service Standard assessments by analyzing evidence against all 14 points, identifying gaps, and generating readiness reports.
 
@@ -1391,10 +1426,10 @@ For issues or questions:
 
 ---
 
-**Last updated**: 2025-10-30
-**ArcKit Version**: 0.5.0
+**Last updated**: 2025-11-04
+**ArcKit Version**: 0.8.3
 
-### 17. `/arckit.backlog` - Product Backlog Generation
+### 19. `/arckit.backlog` - Product Backlog Generation
 
 **Purpose**: Automatically generate prioritised product backlogs from ArcKit artifacts, converting requirements into sprint-ready GDS-format user stories.
 
@@ -1720,7 +1755,39 @@ Task,TASK-001-A,STORY-001,"Design user table schema","PostgreSQL schema",,Must H
 
 ---
 
-### 28. `/arckit.jsp-936` - MOD JSP 936 AI Assurance Documentation
+### 20. `/arckit.story` - Project Story & Governance Summary
+
+**Purpose**: Create an executive-ready narrative that summarises delivery progress, governance outcomes, and next steps across the entire ArcKit lifecycle.
+
+**Usage**:
+```
+/arckit.story Generate programme story for payment gateway
+/arckit.story Create delivery update for Cabinet Office GenAI platform
+```
+
+**Prerequisites**:
+- Core governance artifacts (`plan.md`, `principles.md`, `stakeholder-drivers.md`, `risk-register.md`, `sobc.md`)
+- Delivery evidence (`requirements.md`, `traceability-matrix.md`, `backlog.md`, `hld-review.md`, `dld-review.md`)
+- Latest compliance outputs (`dpia.md`, `/arckit.secure`, `/arckit.service-assessment` where applicable)
+
+**What it does**:
+- Builds a timeline of major milestones, decisions, and approvals mapped to GDS phases
+- Highlights governance achievements (principles adoption, risk mitigation, compliance scores)
+- Summarises delivery health: scope burn-up, velocity trends, outstanding actions
+- Surfaces red/amber issues that require steering input and links back to source artifacts
+- Provides stakeholder-specific call-outs and recommended next milestones
+- Includes annexes with traceability snapshots and data protection status (e.g., DPIA readiness)
+
+**Outputs**:
+- `projects/NNN-project-name/story.md` (narrative)
+- `projects/NNN-project-name/story-summary.md` (bullet executive briefing)
+- Optional `story-slides.md` for rapid conversion into presentation format
+
+**Next step**: Circulate with the steering group, update `/arckit.plan` gates if dates change, and feed actions into `/arckit.backlog` or governance registers.
+
+---
+
+### 21. `/arckit.jsp-936` - MOD JSP 936 AI Assurance Documentation
 
 **Purpose**: Generate comprehensive JSP 936 (Dependable Artificial Intelligence in Defence) compliance documentation for UK Ministry of Defence AI/ML systems.
 
@@ -1804,5 +1871,4 @@ Classification:
 
 ---
 
-*Last updated: 2025-10-31 | Version: 0.7.0*
-
+*Last updated: 2025-11-04 | Version: 0.8.3*
