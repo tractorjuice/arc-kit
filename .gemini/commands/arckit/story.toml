@@ -17,6 +17,41 @@ This command creates a **PROJECT-STORY.md** document that serves as:
 
 ## Instructions
 
+### Step 0: Check Prerequisites
+
+**IMPORTANT**: Before generating a project story, verify that foundational governance artifacts exist:
+
+1. **Architecture Principles** (REQUIRED):
+   - Check if `.arckit/memory/architecture-principles.md` exists
+   - If it does NOT exist:
+     ```
+     ❌ Architecture principles not found.
+
+     The project story requires architecture principles to be established first.
+     Architecture principles are the foundation of the ArcKit governance framework.
+
+     Please run: /arckit.principles Create enterprise architecture principles
+
+     Then return here to generate the project story.
+     ```
+   - If it exists, proceed to Step 1
+
+2. **Project Artifacts** (RECOMMENDED):
+   - A meaningful project story requires at least 3-5 artifacts to exist
+   - If the project has fewer than 3 artifacts, warn the user:
+     ```
+     ⚠️  Warning: This project only has [N] artifacts.
+
+     A comprehensive story typically requires at least:
+     - Architecture principles (global)
+     - Stakeholder analysis
+     - Requirements or Risk Register
+
+     Consider running more ArcKit commands before generating the story, or proceed
+     with a limited story based on available artifacts.
+     ```
+   - Ask the user if they want to proceed or run more commands first
+
 ### Step 1: Identify or Create Project
 
 **Option A: User Provided Project Name/Number**
@@ -730,25 +765,27 @@ The story demonstrates systematic architecture governance from stakeholder needs
 
 ## Important Notes
 
-1. **Use Write tool**: The PROJECT-STORY.md will be 3000-5000 lines. You MUST use the Write tool to avoid exceeding token limits.
+1. **Prerequisites first**: Always check that architecture principles exist before generating a story. The principles command (`/arckit.principles`) is the foundation of the ArcKit governance framework and should be the FIRST command run in any project.
 
-2. **Real data only**: Replace ALL placeholders with real data extracted from artifacts. No \"[PLACEHOLDER]\" should remain in the final document.
+2. **Use Write tool**: The PROJECT-STORY.md will be 3000-5000 lines. You MUST use the Write tool to avoid exceeding token limits.
 
-3. **Timeline emphasis**: The story is primarily about the timeline. Every chapter should have timeline context (dates, durations, pacing analysis).
+3. **Real data only**: Replace ALL placeholders with real data extracted from artifacts. No \"[PLACEHOLDER]\" should remain in the final document.
 
-4. **Git log preferred**: If available, use git log for most accurate timeline. Fall back to file modification dates if needed.
+4. **Timeline emphasis**: The story is primarily about the timeline. Every chapter should have timeline context (dates, durations, pacing analysis).
 
-5. **Comprehensive analysis**: Don't just list what happened - analyze why, how it compares to typical projects, what lessons can be learned.
+5. **Git log preferred**: If available, use git log for most accurate timeline. Fall back to file modification dates if needed.
 
-6. **Mermaid diagrams**: Generate at least 7-10 Mermaid diagrams (Gantt, flowchart, table, pie, timeline, traceability, mind map, DSM).
+6. **Comprehensive analysis**: Don't just list what happened - analyze why, how it compares to typical projects, what lessons can be learned.
 
-7. **Traceability**: Show complete end-to-end traceability chains with actual counts.
+7. **Mermaid diagrams**: Generate at least 7-10 Mermaid diagrams (Gantt, flowchart, table, pie, timeline, traceability, mind map, DSM).
 
-8. **Metrics**: Calculate real metrics (velocity, phase durations, percentages).
+8. **Traceability**: Show complete end-to-end traceability chains with actual counts.
 
-9. **Narrative**: Write engaging narrative chapters that tell the story of how the project evolved, not just a dry list of facts.
+9. **Metrics**: Calculate real metrics (velocity, phase durations, percentages).
 
-10. **Quality**: This is a showcase document. Make it comprehensive, accurate, and professionally written.
+10. **Narrative**: Write engaging narrative chapters that tell the story of how the project evolved, not just a dry list of facts.
+
+11. **Quality**: This is a showcase document. Make it comprehensive, accurate, and professionally written.
 
 ## Example Usage
 
@@ -769,6 +806,7 @@ cd projects/009-cabinet-office-genai
 
 ## Success Criteria
 
+- ✅ Prerequisites checked (architecture principles exist)
 - ✅ PROJECT-STORY.md created in project directory
 - ✅ All timeline data extracted from git log or file dates
 - ✅ All placeholders replaced with real data
