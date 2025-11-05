@@ -626,7 +626,7 @@ ArcKit uses Wardley Maps to expose the strategic position of every component bef
 - Plot evolution from Genesis → Commodity to reveal when to build, buy, reuse, or retire capabilities.
 - Feed procurement, vendor evaluation, and design reviews with shared situational awareness.
 
-Maps are emitted in the OnlineWardleyMaps format — paste them straight into [https://create.wardleymaps.ai](https://create.wardleymaps.ai) for a visual view. Full example outputs live in the public demos such as `arckit-test-project-v1-m365` (cloud migration strategy) and `arckit-test-project-v8-cabinet-office-genai` (cross-government GenAI platform).
+Maps are emitted in the Open Wardley Map format — paste them straight into [https://create.wardleymaps.ai](https://create.wardleymaps.ai) for a visual view. Full example outputs live in the public demos such as `arckit-test-project-v1-m365` (cloud migration strategy) and `arckit-test-project-v8-cabinet-office-genai` (cross-government GenAI platform).
 
 ---
 
