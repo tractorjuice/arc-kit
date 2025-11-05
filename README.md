@@ -80,6 +80,28 @@ Public demonstration repositories showcase complete ArcKit deliverables:
 
 ---
 
+## Why ArcKit?
+
+### Problem: Architecture Governance is Broken
+
+Traditional enterprise architecture suffers from:
+- ❌ Scattered documents across tools (Word, Confluence, PowerPoint)
+- ❌ Inconsistent governance enforcement
+- ❌ Manual vendor evaluation with bias
+- ❌ Lost traceability between requirements and design
+- ❌ Stale documentation that doesn't match reality
+
+### Solution: Structured, AI-Assisted Governance
+
+ArcKit provides:
+- ✅ **Template-Driven Quality**: Comprehensive templates ensure nothing is forgotten
+- ✅ **Systematic Workflows**: Clear processes from requirements → procurement → design review
+- ✅ **AI Assistance**: Let AI handle document generation, you focus on decisions
+- ✅ **Enforced Traceability**: Automatic gap detection and coverage analysis
+- ✅ **Version Control**: Git-based workflow for all architecture artifacts
+
+---
+
 ## UK Government Compliance
 
 ArcKit includes dedicated commands for UK public sector delivery:
@@ -440,28 +462,6 @@ Create narrative historical record with complete timeline analysis:
 - **Comprehensive Appendices**: Artifact register, chronological activity log, DSM, command reference, glossary
 
 **When to use**: At project milestones or completion to create shareable story for stakeholders, leadership, or portfolio reporting. Perfect for demonstrating systematic governance and ArcKit workflow value.
-
----
-
-## Why ArcKit?
-
-### Problem: Architecture Governance is Broken
-
-Traditional enterprise architecture suffers from:
-- ❌ Scattered documents across tools (Word, Confluence, PowerPoint)
-- ❌ Inconsistent governance enforcement
-- ❌ Manual vendor evaluation with bias
-- ❌ Lost traceability between requirements and design
-- ❌ Stale documentation that doesn't match reality
-
-### Solution: Structured, AI-Assisted Governance
-
-ArcKit provides:
-- ✅ **Template-Driven Quality**: Comprehensive templates ensure nothing is forgotten
-- ✅ **Systematic Workflows**: Clear processes from requirements → procurement → design review
-- ✅ **AI Assistance**: Let AI handle document generation, you focus on decisions
-- ✅ **Enforced Traceability**: Automatic gap detection and coverage analysis
-- ✅ **Version Control**: Git-based workflow for all architecture artifacts
 
 ---
 
