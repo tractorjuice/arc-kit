@@ -67,6 +67,19 @@ claude  # or your chosen AI assistant
 
 ---
 
+### Explore Example Outputs
+
+Public demonstration repositories showcase complete ArcKit deliverables:
+- **NHS Appointment Booking** — [arckit-test-project-v7-nhs-appointment](https://github.com/tractorjuice/arckit-test-project-v7-nhs-appointment): Digital health platform with NHS Spine integration and GDPR safeguards.
+- **M365 GCC-H Migration** — [arckit-test-project-v1-m365](https://github.com/tractorjuice/arckit-test-project-v1-m365): Government cloud migration with compliance mapping and change management.
+- **HMRC Tax Assistant** — [arckit-test-project-v2-hmrc-chatbot](https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot): Conversational AI service covering PII protection and bilingual support.
+- **Windows 11 Deployment** — [arckit-test-project-v3-windows11](https://github.com/tractorjuice/arckit-test-project-v3-windows11): Enterprise OS rollout with policy migration and security baselines.
+- **Patent Application System** — [arckit-test-project-v6-patent-system](https://github.com/tractorjuice/arckit-test-project-v6-patent-system): Intellectual property workflow automation using GOV.UK Pay and Notify.
+- **ONS Data Platform** — [arckit-test-project-v8-ons-data-platform](https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform): Official statistics analytics environment with Five Safes governance.
+- **Cabinet Office GenAI Platform** — [arckit-test-project-v8-cabinet-office-genai](https://github.com/tractorjuice/arckit-test-project-v8-cabinet-office-genai): Cross-government GenAI platform with responsible AI guardrails.
+
+---
+
 ## The ArcKit Workflow
 
 ArcKit guides you through the enterprise architecture lifecycle:
@@ -464,65 +477,6 @@ codex --auto
 
 See [.codex/README.md](.codex/README.md) for full Codex CLI setup and usage.
 
----
-
-## Example: Payment Modernization Project
-
-```bash
-# 1. Initialize project
-arckit init payment-modernization --ai claude
-cd payment-modernization
-claude
-
-# 2. Establish principles
-/arckit.principles Create principles for PCI-DSS compliant payment processing with 99.99% availability
-
-# 3. Analyze stakeholders
-/arckit.stakeholders Analyze stakeholders where CFO wants cost reduction, CTO wants modern architecture, and Compliance needs PCI-DSS Level 1
-
-# 4. Assess risks
-/arckit.risk Create risk register for payment gateway project
-
-# 5. Create business case using risk register
-/arckit.sobc Create SOBC for payment gateway modernization with £2M investment
-
-# 6. Document requirements (if SOBC approved)
-/arckit.requirements Build a payment gateway that processes credit cards, supports 10K TPS,
-complies with PCI-DSS Level 1, integrates with Stripe and PayPal, and provides real-time
-fraud detection
-
-# 7. Create data model with ERD and GDPR compliance
-/arckit.data-model Create data model for payment gateway with PCI-DSS compliance
-
-# 8. Research technology options with build vs buy analysis
-/arckit.research Research technology options for payment gateway - analyze authentication, payments, databases, monitoring
-
-# 9. Create strategic Wardley Map for build vs buy decisions
-/arckit.wardley Create current state Wardley Map for payment gateway showing build vs buy strategy
-
-# 10. Generate SOW for vendor RFP
-/arckit.sow Generate RFP for vendor selection with 12-month timeline and $2M budget
-
-# 11. After receiving vendor proposals...
-/arckit.evaluate Create evaluation framework
-
-# 12. Score vendors
-/arckit.evaluate Compare all vendors for payment gateway project
-
-# 13. Review selected vendor's HLD
-/arckit.hld-review Review Acme Corp's high-level design
-
-# 14. Review detailed design
-/arckit.dld-review Review Acme Corp's detailed design for payment service
-
-# 15. Design ServiceNow service management
-/arckit.servicenow Generate ServiceNow design for payment gateway service
-
-# 16. Ensure traceability
-/arckit.traceability Generate matrix from requirements through design to tests
-```
-
----
 
 ## Project Structure
 
@@ -702,26 +656,6 @@ The `/arckit.wardley` command creates strategic maps for:
 - Identify GOV.UK service reuse opportunities
 - Align with Technology Code of Practice
 
-### Example: Benefits Eligibility Chatbot (UK Government)
-
-```bash
-# Create Wardley Map for procurement strategy
-/arckit.wardley Create procurement strategy Wardley Map for DWP benefits eligibility chatbot
-
-# Map output shows:
-# - BUILD: Benefits rules engine (Custom, 0.42) - domain expertise
-# - BUILD: Human review queue (Custom, 0.45) - HIGH-RISK AI requirement
-# - BUY (G-Cloud): GPT-4 (Product, 0.72) - commercial LLM
-# - BUY (G-Cloud): Cloud hosting (Commodity, 0.95) - AWS via G-Cloud
-# - REUSE: GOV.UK Notify (Commodity, 0.92) - email/SMS notifications
-# - REUSE: GOV.UK Design System (Product, 0.75) - accessibility compliance
-```
-
-**Strategic Insights**:
-- 40% build (competitive advantage components)
-- 35% buy via G-Cloud (commodity/product components)
-- 25% reuse GOV.UK services (avoid duplication)
-
 ### Wardley Mapping Integration
 
 Wardley Maps integrate throughout the ArcKit workflow:
@@ -850,38 +784,6 @@ flowchart LR
     DB -->|30 day retention| Deletion[Automated Deletion]
 ```
 
-### Example: Benefits Eligibility Chatbot (UK Government)
-
-```bash
-# 1. Context diagram - system boundaries
-/arckit.diagram context Generate C4 context diagram for DWP benefits eligibility chatbot
-
-# Output shows:
-# - Users: Citizens, DWP case workers, administrators
-# - System: Benefits eligibility chatbot (HIGH-RISK AI)
-# - External: GOV.UK Notify, GOV.UK Design System, DWP benefits database
-
-# 2. Container diagram - technical architecture
-/arckit.diagram container Generate container diagram showing GOV.UK services and AWS
-
-# Output shows:
-# - Frontend: GOV.UK Design System (WCAG 2.2 AA) [REUSE]
-# - Backend: Node.js API, GPT-4 (via Azure) [BUY]
-# - Custom: Benefits rules engine [BUILD 0.42], Human review queue [BUILD 0.45]
-# - Data: PostgreSQL RDS [USE 0.95], S3 audit logs [USE 0.98]
-# - Integrations: GOV.UK Notify [REUSE], DWP benefits API
-
-# 3. Data flow diagram - UK GDPR compliance
-/arckit.diagram dataflow Generate data flow diagram showing PII handling and GDPR compliance
-
-# Output shows:
-# - PII types: Name, NI number, address, financial data
-# - Legal basis: Public task (Article 6(1)(e))
-# - Retention: 6 years (aligned with DWP retention schedule)
-# - Encryption: TLS 1.3 in transit, AES-256 at rest
-# - DPIA: Required (HIGH-RISK AI processing sensitive data)
-```
-
 ### Diagram Integration Throughout Workflow
 
 Architecture diagrams integrate with the full ArcKit workflow:
@@ -917,30 +819,6 @@ All diagrams use **Mermaid syntax** and can be visualized:
 **VS Code**: Install [Mermaid Preview extension](https://marketplace.visualstudio.com/items?itemName=vstirbu.vscode-mermaid-preview)
 **Online**: [https://mermaid.live](https://mermaid.live) - paste code to visualize
 **Export**: Use mermaid.live to export as PNG/SVG/PDF
-
-### Example Output Structure
-
-```
-projects/001-payment-gateway/
-├── diagrams/
-│   ├── context-payment-gateway.md         # C4 Level 1
-│   ├── container-payment-gateway.md       # C4 Level 2
-│   ├── component-orchestrator.md          # C4 Level 3
-│   ├── deployment-production.md           # Infrastructure
-│   ├── sequence-payment-flow.md           # API interactions
-│   └── dataflow-pii-handling.md           # UK GDPR compliance
-```
-
-Each diagram includes:
-- Mermaid code (copy-paste ready)
-- Component inventory with evolution stages
-- Architecture decisions and rationale
-- Requirements traceability
-- Security controls
-- UK Government compliance (if applicable)
-- Change log and versioning
-
----
 
 ## ServiceNow Service Management Design
 
@@ -1036,44 +914,6 @@ ServiceNow design is derived from existing architecture artifacts:
 - Product components → Medium risk (CAB for major changes)
 - Commodity components → Low risk (standard changes possible)
 
-### Example: Payment Gateway
-
-**Input** (from architecture artifacts):
-- Requirements: 99.9% availability, <500ms response time, PCI-DSS
-- Container diagram: Web App, Payment API, Orchestrator, PostgreSQL, Stripe/PayPal
-- Wardley Map: Orchestrator is Custom (0.42), Stripe is Product (0.72), PostgreSQL is Commodity (0.95)
-
-**Output** (ServiceNow design):
-```markdown
-**Service**: Payment Gateway
-**Service Tier**: Tier 2 (Important)
-**Availability SLA**: 99.9% (43.8 min downtime/month)
-**Performance SLA**: <500ms p95 response time
-**Support**: 24/7 on-call (financial service)
-
-**CMDB Structure**:
-├── Payment Gateway (Service CI)
-    ├── Payment Web App (Application CI) - Product 0.72
-    ├── Payment API (Application CI) - Product 0.72
-    ├── Payment Orchestrator (Application CI) - Custom 0.42 [BUILD]
-    ├── PostgreSQL RDS (Database CI) - Commodity 0.95 [USE]
-    ├── Stripe Integration (External CI) - Product 0.72 [BUY]
-    └── PayPal Integration (External CI) - Product 0.72 [BUY]
-
-**Incident Management**:
-- P1 (Critical): 1 hour response, 8 hours resolution
-- P2 (High): 4 hours response, 24 hours resolution
-- Categories: Auth, API, Database, Frontend, Infrastructure
-- Assignment Groups: PaymentGateway-Backend-L2, DBA-Support, etc.
-
-**Change Management**:
-- Payment Orchestrator: CAB required (Custom component, high business value)
-- Database schema changes: CAB + ECAB option (data risk)
-- Stripe/PayPal config: Standard change (vendor-managed)
-- Maintenance window: Sunday 02:00-06:00 UTC
-- Blackout periods: Black Friday week, year-end (peak transaction volume)
-```
-
 ### ITIL v4 Alignment
 
 ServiceNow designs follow ITIL v4 best practices:
@@ -1111,20 +951,6 @@ For UK Government projects, ServiceNow design includes:
 - CMDB CIs for GOV.UK Notify, Pay, Design System (REUSE)
 - Service dependencies mapped
 - SLAs aligned with GOV.UK service availability
-
-### Example: DWP Benefits Chatbot (UK Government)
-
-```bash
-/arckit.servicenow Generate ServiceNow design for DWP Benefits Eligibility Chatbot - Tier 1 HIGH-RISK AI service
-
-# Output includes:
-# - Service Tier: Tier 1 (99.95% SLA) - critical service for benefits access
-# - CMDB: 8 CIs (Web, API, GPT-4, Rules Engine, Human Review Queue, DB, GOV.UK Notify, DWP Legacy)
-# - Incident Management: P1 response 15 min (citizens blocked from benefits)
-# - Change Management: HIGH-RISK AI → ECAB + senior leadership approval for changes
-# - Compliance: DPIA completed, ATRS published, AI Playbook compliance
-# - Monitoring: Bias metrics, human-in-loop SLA (100% of advice reviewed before citizen sees it)
-```
 
 ### Benefits
 
@@ -1187,24 +1013,6 @@ The `/arckit.tcop` command helps UK government departments and public sector org
 12. ✅ Make Your Technology Sustainable
 13. ✅ Meet the Service Standard
 
-### Example: UK Government Project
-
-```bash
-# Initialize project for UK government department
-arckit init digital-service-modernization --ai claude
-cd digital-service-modernization
-claude
-
-# Assess TCoP compliance (Discovery/Alpha/Beta/Live phase)
-/arckit.tcop Assess Technology Code of Practice compliance for HMRC tax filing in Beta phase
-
-# Generate requirements aligned with TCoP
-/arckit.requirements Define requirements for GOV.UK service with WCAG 2.2 AA accessibility
-
-# Include TCoP in design reviews
-/arckit.hld-review Review HLD ensuring Cloud First and Open Standards compliance
-```
-
 ### AI Playbook Assessment
 
 The `/arckit.ai-playbook` command helps assess compliance with the UK Government AI Playbook for responsible AI deployment:
@@ -1256,17 +1064,6 @@ For UK Ministry of Defence projects:
 - **CESG cryptography**: UK cryptographic standards for classified systems
 - **10 Security Domains**: Classification, Accreditation, Threat Modeling, Technical Controls, SDLC, Supply Chain, Operations, Personnel, Compliance
 - **MOD Security Principles**: Defence in Depth, Secure by Default, Least Privilege, Assume Breach
-
-```bash
-# Example: Civilian UK Government project
-/arckit.secure Generate Secure by Design assessment for HMRC tax filing Beta phase - OFFICIAL-SENSITIVE data
-
-# Example: MOD project - security assessment
-/arckit.mod-secure Generate MOD Secure by Design assessment for Army logistics system - SECRET classification
-
-# Example: MOD project - AI assurance
-/arckit.jsp-936 Generate JSP 936 AI assurance documentation for threat detection ML system
-```
 
 ### Built-in UK Government Support
 
@@ -1342,19 +1139,6 @@ arckit init my-project
 - **[Workflow Diagrams](WORKFLOW-DIAGRAMS.md)** - Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI) with Gantt charts and decision trees
 - **[Dependency Structure Matrix](DEPENDENCY-MATRIX.md)** - Complete 31×31 command dependency matrix showing mandatory, recommended, and optional relationships
 - **[Traceability Guide](docs/traceability.md)** - Maintaining requirement coverage
-
-### Public Demonstration Repositories
-
-Explore end-to-end outputs generated by ArcKit across real UK Government scenarios:
-- **NHS Appointment Booking** — [arckit-test-project-v7-nhs-appointment](https://github.com/tractorjuice/arckit-test-project-v7-nhs-appointment): Digital health platform with NHS Spine integration, IG Toolkit compliance, accessibility (WCAG 2.1 AA), and GDPR safeguards.
-- **M365 GCC-H Migration** — [arckit-test-project-v1-m365](https://github.com/tractorjuice/arckit-test-project-v1-m365): Migration to Microsoft 365 GCC High covering data sovereignty, compliance mapping, and change management.
-- **HMRC Tax Assistant** — [arckit-test-project-v2-hmrc-chatbot](https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot): Conversational AI for tax guidance with PII protection, HMRC integration, and bilingual support.
-- **Windows 11 Deployment** — [arckit-test-project-v3-windows11](https://github.com/tractorjuice/arckit-test-project-v3-windows11): Enterprise OS rollout with hardware readiness, Group Policy migration, and security baseline alignment.
-- **Patent Application System** — [arckit-test-project-v6-patent-system](https://github.com/tractorjuice/arckit-test-project-v6-patent-system): Intellectual property workflow automation using GOV.UK Pay and GOV.UK Notify for status updates.
-- **ONS Data Platform** — [arckit-test-project-v8-ons-data-platform](https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform): Official statistics analytics environment with secure data pipelines, Five Safes governance, and reproducible research workflows.
-- **Cabinet Office GenAI Platform** — [arckit-test-project-v8-cabinet-office-genai](https://github.com/tractorjuice/arckit-test-project-v8-cabinet-office-genai): Cross-government generative AI service with AI Playbook compliance and responsible AI governance.
-
----
 
 ## Relationship to Spec Kit
 
