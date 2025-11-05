@@ -661,13 +661,13 @@ Write tool:
 - content: [Full populated template with all placeholders replaced]
 ```
 
-The document will be **3000-5000 lines** with:
+The document will be **2000-3000 lines** with:
 - Complete document control
 - Executive summary with metrics
 - 4 timeline visualizations
 - Timeline metrics table
 - Milestone timeline
-- 8 detailed narrative chapters (each 200-400 lines)
+- 2 detailed narrative chapters (Design Review & Delivery Planning)
 - Timeline insights & analysis
 - Complete traceability chain with Mermaid diagrams
 - Key outcomes & achievements
@@ -733,13 +733,13 @@ Governance & Traceability      4 days      5%
 📄 **Document Contents**
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-The 3,847-line PROJECT-STORY.md includes:
+The 2,400-line PROJECT-STORY.md includes:
 
 ✓ Executive summary with timeline snapshot
 ✓ 4 timeline visualizations (Gantt, flowchart, table, pie chart)
 ✓ Timeline metrics analysis
 ✓ Milestone timeline
-✓ 8 detailed narrative chapters with timeline context
+✓ 2 detailed narrative chapters (Design Review & Delivery Planning)
 ✓ Timeline insights & lessons learned
 ✓ Complete traceability chain with Mermaid diagrams
 ✓ Governance achievements mind map
@@ -767,7 +767,7 @@ The story demonstrates systematic architecture governance from stakeholder needs
 
 1. **Prerequisites first**: Always check that architecture principles exist before generating a story. The principles command (`/arckit.principles`) is the foundation of the ArcKit governance framework and should be the FIRST command run in any project.
 
-2. **Use Write tool**: The PROJECT-STORY.md will be 3000-5000 lines. You MUST use the Write tool to avoid exceeding token limits.
+2. **Use Write tool**: The PROJECT-STORY.md will be 2000-3000 lines. You MUST use the Write tool to avoid exceeding token limits.
 
 3. **Real data only**: Replace ALL placeholders with real data extracted from artifacts. No "[PLACEHOLDER]" should remain in the final document.
 
