@@ -61,6 +61,7 @@ Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 ```bash
 /prompts:arckit.requirements Create requirements for payment gateway modernization
 /prompts:arckit.data-model Create data model with ERD and GDPR compliance
+/prompts:arckit.data-mesh-contract Create federated data product contract (ODCS v3.0.2)
 /prompts:arckit.dpia Generate Data Protection Impact Assessment with ICO 9-criteria screening
 ```
 
@@ -368,6 +369,7 @@ your-project/
 │       ├── arckit.sow.md
 │       ├── arckit.evaluate.md
 │       ├── arckit.backlog.md
+│       ├── arckit.data-mesh-contract.md
 │       ├── arckit.hld-review.md
 │       ├── arckit.dld-review.md
 │       ├── arckit.traceability.md
@@ -471,9 +473,10 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-**Unreleased (31 commands)**
+**Unreleased (32 commands)**
 
 **Coming Soon:**
+- ✅ **New Command**: `/prompts:arckit.data-mesh-contract` (32nd command) - Create federated data product contracts for mesh architectures (ODCS v3.0.2)
 - ✅ **New Command**: `/prompts:arckit.principles-compliance` (31st command) - Assess project compliance with architecture principles using RAG status and evidence-based validation
 - ✅ **New Command**: `/prompts:arckit.dpia` (30th command) - Generate Data Protection Impact Assessment for UK GDPR Article 35 compliance
 - ✅ **New Command**: `/prompts:arckit.story` (29th command) - Generate comprehensive project story with timeline analysis

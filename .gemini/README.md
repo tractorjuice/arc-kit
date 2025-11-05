@@ -43,7 +43,7 @@ Gemini CLI uses colon-separated namespaces for commands in subdirectories. ArcKi
 /arckit:stakeholders Analyze stakeholders for payment gateway project
 ```
 
-## ArcKit Commands (31 Available)
+## ArcKit Commands (32 Available)
 
 ### Phase 0: Project Planning
 
@@ -90,6 +90,9 @@ Creates: `projects/001-project-name/project-plan.md`
 
 # Data modelling
 /arckit:data-model Create data model for payment gateway with ERD and GDPR compliance
+
+# Data mesh contracts
+/arckit:data-mesh-contract Create federated data product contract for analytics platform (ODCS v3.0.2)
 
 # Data protection
 /arckit:dpia Generate Data Protection Impact Assessment for GDPR Article 35 compliance
@@ -222,6 +225,7 @@ your-project/
 │           ├── analyze.toml
 │           ├── atrs.toml
 │           ├── backlog.toml
+│           ├── data-mesh-contract.toml
 │           ├── data-model.toml
 │           ├── diagram.toml
 │           ├── dld-review.toml
@@ -369,7 +373,7 @@ EOF
 
 ## Version
 
-ArcKit 0.8.3 (released 2025-11-04) — all 31 commands available in Gemini CLI, including DPIA, Backlog, Story, and Principles Compliance.
+ArcKit 0.8.3 (released 2025-11-04) — all 32 commands available in Gemini CLI, including Data Mesh Contract, DPIA, Backlog, Story, and Principles Compliance.
 
 ---
 
