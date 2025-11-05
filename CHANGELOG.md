@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **New Command**: `/arckit.data-mesh-contract` (32nd ArcKit command) - Create federated data product contracts for mesh architectures
+  - **ODCS Compliance**: Open Data Contract Standard v3.0.2 with full YAML export
+  - **10 Core Sections**: Fundamentals, Schema, Data Quality, SLA, Access Methods, Security, Governance, Consumer Obligations, Pricing, Infrastructure
+  - **Auto-Population**: Extracts entities from data-model.md (→ objects), DR-xxx requirements (→ quality rules), NFR-xxx (→ SLA targets), stakeholders (→ ownership roles)
+  - **Schema Management**: Semantic versioning (MAJOR.MINOR.PATCH), breaking change policy with 90-day notice, backward compatibility guarantees
+  - **Data Quality**: ODCS-compatible automated rules (null_check, uniqueness, referential_integrity, regex, range) executable by data quality engines
+  - **SLA Commitments**: Availability (99.9%), response time (p95 <200ms), freshness (<5min), retention policies
+  - **Access Methods**: REST API, GraphQL, SQL query, data lake, event streams with authentication, rate limits, consumer onboarding
+  - **GDPR Compliance**: PII inventory, legal basis, data subject rights, cross-border transfers, DPIA integration, audit logging
+  - **Federated Governance**: Change management (minor 7-day notice, major 90-day notice), quarterly reviews, deprecation policy
+  - **Consumer Obligations**: Attribution, usage constraints, quality feedback, security requirements
+  - **UK Government Context**: Technology Code of Practice alignment, National Data Strategy pillars, Data Quality Framework (5 dimensions)
+  - **Template**: `data-mesh-contract-template.md` (1,100+ lines) with 16 sections, ODCS YAML export, comprehensive guidance
+  - **Guide**: `docs/guides/data-mesh-contract.md` - What is data mesh, domain ownership, data as product, computational governance
+  - **Workflow Position**: Run AFTER /arckit.data-model (entities → objects) and /arckit.requirements (DR-xxx → quality rules)
+  - **Use Cases**: Data mesh architectures, federated data ownership, data product management, multi-domain data sharing, self-serve analytics
+
 - **New Command**: `/arckit.dpia` (30th ArcKit command) - Generate Data Protection Impact Assessment for UK GDPR Article 35 compliance
   - **ICO 9-Criteria Screening**: Automated assessment (evaluation, automated decisions, monitoring, sensitive data, large scale, dataset matching, vulnerable subjects, innovative tech, rights prevention)
   - **Auto-Population**: Extracts entities, PII, special category data from data-model.md; processing purposes from requirements.md; data subjects from stakeholder-drivers.md

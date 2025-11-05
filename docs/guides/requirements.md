@@ -52,5 +52,6 @@ For public sector projects, MoSCoW priorities are automatically assigned.
 
 1. Workshop with stakeholders to confirm priorities and resolve conflicts.
 2. Feed requirements into `/arckit.sow`, `/arckit.diagram`, `/arckit.backlog`.
-3. Re-run the command whenever scope changes; commit deltas for audit.
-4. Pair with `/arckit.traceability` to ensure design, tests, and operational artefacts stay aligned.
+3. For data mesh architectures, DR-xxx requirements inform `/arckit.data-mesh-contract` SLAs and quality rules.
+4. Re-run the command whenever scope changes; commit deltas for audit.
+5. Pair with `/arckit.traceability` to ensure design, tests, and operational artefacts stay aligned.

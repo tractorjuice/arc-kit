@@ -53,3 +53,11 @@ Use the output to enrich `/arckit.dpia` (automatic when run afterwards).
 - Run the command whenever requirements change materially.
 - Ask data stewards to sign off catalogue rows before build.
 - Store diagrams alongside other architecture artefacts for audit trails.
+
+---
+
+## Related Commands
+
+- `/arckit.dpia` - Generate Data Protection Impact Assessment (auto-references data model)
+- `/arckit.data-mesh-contract` - Create federated data product contracts from entities (mesh architecture)
+- `/arckit.traceability` - Link entities to requirements and test cases
