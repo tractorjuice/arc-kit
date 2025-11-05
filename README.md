@@ -668,6 +668,16 @@ For full outputs, explore the public demos (for example `arckit-test-project-v7-
 
 ---
 
+## Documentation
+
+Key references live in `docs/` and top-level guides:
+- Quick tour: [docs/index.html](docs/index.html) mirrors the public landing page.
+- Lifecycle visuals: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover command flow and relationships.
+- Core guides: [docs/principles.md](docs/principles.md), [docs/requirements.md](docs/requirements.md), [docs/procurement.md](docs/procurement.md), [docs/design-review.md](docs/design-review.md).
+- Traceability: [docs/traceability.md](docs/traceability.md) documents end-to-end coverage patterns.
+
+---
+
 ## Comparison to Other Tools
 
 | Feature | ArcKit | Sparx EA | Ardoq | LeanIX | Confluence |
