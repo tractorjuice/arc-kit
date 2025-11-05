@@ -79,12 +79,12 @@ flowchart TD
 - [Government Service Standard](https://www.gov.uk/service-manual/service-standard)
 - [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice)
 - [UK Government Service Manual & DDaT Playbook](https://www.gov.uk/service-manual)
-- [UK Government AI Playbook](https://www.gov.uk/government/collections/ai-guidance-and-resources)
-- [Algorithmic Transparency Recording Standard](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard)
-- [Secure by Design (NCSC)](https://www.ncsc.gov.uk/collection/secure-development)
+- [UK Government AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government)
+- [Algorithmic Transparency Recording Standard Hub](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub)
+- Secure by Design (NCSC collection)
 - [Cyber Assessment Framework](https://www.ncsc.gov.uk/collection/caf)
 - [Managing Public Money](https://www.gov.uk/government/publications/managing-public-money)
-- [Sourcing Playbook](https://www.gov.uk/government/publications/the-sourcing-playbook) / [Digital Marketplace](https://www.digitalmarketplace.service.gov.uk/)
+- [Sourcing and Consultancy Playbooks](https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks) / [Digital Marketplace](https://www.digitalmarketplace.service.gov.uk/)
 - [HM Treasury Green Book](https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government)
 
 Use this map when planning UK government digital or AI services to ensure the correct policies, approvals, and evidence are in scope from the outset.
