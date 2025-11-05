@@ -1,93 +1,45 @@
-# Research Guide
+# Technology Research Guide
 
-A guide to researching technologies, services, and products to inform build vs buy decisions using ArcKit.
-
----
-
-## What is Technology Research?
-
-Technology research identifies available solutions (commercial products, SaaS platforms, open source) that can meet project requirements, enabling informed build vs buy decisions.
-
-### Why Research Matters
-
-Without systematic research:
-- ❌ Build custom solutions when good products exist
-- ❌ Choose wrong vendors
-- ❌ Miss cost-effective alternatives
-- ❌ Reinvent the wheel
-
-With comprehensive research:
-- ✅ Informed build vs buy decisions
-- ✅ Vendor shortlist with pros/cons
-- ✅ TCO comparison across options
-- ✅ Risk-aware selection
+`/arckit.research` investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.
 
 ---
 
-## When to Conduct Research
+## Scenario Matrix
+
+| Scenario | Prompt seed | Focus |
+|---------|-------------|-------|
+| Build vs buy | “Research options for <capability> and recommend build vs buy” | Compares custom development vs product |
+| Supplier shortlist | “Research G-Cloud services for <need> including pricing tiers” | Public sector supplier discovery |
+| Standards review | “Research regulatory obligations for <domain>” | Highlights policies, certifications, compliance |
+| Migration | “Research tooling to migrate from <legacy> to <target>” | Guides modernisation approaches |
+| Risk investigation | “Research security/operational risks for <technology>” | Informs risk register and mitigations |
+
+Add constraints (budget, data residency, clearance) in the prompt for tailored results.
+
+---
+
+## Command
 
 ```bash
-/arckit.research Research [technology] solutions for [your project]
+/arckit.research Research <topic> for <project>
 ```
 
-**Examples**:
-```bash
-/arckit.research Research payment gateway solutions for project 001
-
-/arckit.research Find CRM platforms that meet our requirements
-
-/arckit.research Compare cloud hosting options for microservices
-```
+Outputs: `projects/<id>/research-findings.md` plus optional CSV of suppliers.
 
 ---
 
-## Research Categories
+## Output Highlights
 
-### 1. Commercial Products
-- Licensed software, enterprise platforms
-- One-time or subscription pricing
-- Vendor support included
-
-### 2. SaaS Platforms
-- Cloud-based, subscription services
-- Rapid deployment, low upfront cost
-- Shared infrastructure
-
-### 3. Open Source
-- Community or commercially-supported
-- Free licensing, support costs
-- Customization flexibility
-
-### 4. UK Digital Marketplace
-- G-Cloud services (off-the-shelf)
-- DOS suppliers (custom development)
+- Option catalogue with pros, cons, pricing, support model.
+- Alignment to requirements and principles.
+- Risk considerations (lock-in, data sovereignty, accessibility).
+- Recommendation with rationale and next steps (PoC, procurement, or custom build).
 
 ---
 
-## TCO Analysis
+## Follow-on Actions
 
-Compare Total Cost of Ownership over 3-5 years:
-
-**Build Custom**:
-- Development costs
-- Ongoing maintenance
-- Team salaries
-- Infrastructure
-
-**Buy Commercial**:
-- License fees
-- Implementation
-- Training
-- Annual support
-
----
-
-## Support
-
-For issues or questions:
-- GitHub Issues: https://github.com/tractorjuice/arc-kit/issues
-
----
-
-**Last updated**: 2025-10-28
-**ArcKit Version**: 0.3.6
+- Feed supplier data into `/arckit.sow` and `/arckit.evaluate`.
+- Update Wardley Maps with evolution stage insights.
+- Add identified risks to `/arckit.risk` and mitigations to project backlog.
+- Cite findings in business case and design reviews.
