@@ -442,13 +442,13 @@ If you get an error like "expected key=value but found 'Add'" or "expected key=v
 
 **Problem**: Some prompts accidentally included `$PROJECT_NAME` in example text, which Codex CLI interprets as a required named parameter.
 
-**Solution**: This has been fixed in the prompts (v0.8.3+). If using older versions, provide an empty value:
+**Solution**: This has been fixed in the prompts (v0.9.0+). If using older versions, provide an empty value:
 
 ```bash
 # ✅ WORKAROUND for older versions:
 /prompts:arckit.stakeholders PROJECT_NAME="" Add GDS as a stakeholder
 
-# ✅ FIXED in v0.8.3+: Just use normally
+# ✅ FIXED in v0.9.0+: Just use normally
 /prompts:arckit.stakeholders Add GDS as a stakeholder
 ```
 
@@ -488,13 +488,13 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ---
 
-ArcKit v0.8.3 (28 commands)
+ArcKit v0.9.0 (32 commands)
 
-**What's New in v0.8.3:**
-- 🔧 **Command Template Synchronization**: Ensured all 28 commands are synchronized across Claude Code, Codex CLI, and Gemini CLI platforms
-- 🧹 **Documentation Cleanup**: Removed completed dependency gap analysis files
-- 📦 **Installation Enhancement**: Added docs/ and .codex/ to package installation for complete guide coverage
-- 🔧 **Version Consistency**: All version references synchronized to v0.8.3
+**What's New in v0.9.0:**
+- 🔄 **New Command**: `/prompts:arckit.data-mesh-contract` (32nd command) - Create federated data product contracts for mesh architectures (ODCS v3.0.2)
+- 📊 **Data Mesh Support**: Full Open Data Contract Standard v3.0.2 compliance with 10 core sections
+- 🔐 **Federated Governance**: Domain ownership, data as product, self-serve infrastructure
+- 🔧 **Version Consistency**: All version references synchronized to v0.9.0
 
 **What was New in v0.6.0:**
 - 🗓️ **Project Planning**: `/prompts:arckit.plan` - Comprehensive project planning with GDS Agile Delivery phases

@@ -206,7 +206,7 @@ traceability → tcop → mod-secure → jsp-936 → principles-compliance → a
 
 ## Version
 
-- **ArcKit Version**: 0.8.3
+- **ArcKit Version**: 0.9.0
 - **Matrix Date**: 2025-11-04 (Added principles-compliance command)
 - **Commands Documented**: 31
 - **Matrix Rows**: 33 (31 commands + 2 external documents)

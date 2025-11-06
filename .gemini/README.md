@@ -373,7 +373,7 @@ EOF
 
 ## Version
 
-ArcKit 0.8.3 (released 2025-11-04) — all 32 commands available in Gemini CLI, including Data Mesh Contract, DPIA, Backlog, Story, and Principles Compliance.
+ArcKit 0.9.0 (released 2025-01-06) — all 32 commands available in Gemini CLI, including Data Mesh Contract, DPIA, Backlog, Story, and Principles Compliance.
 
 ---
 

@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+### Changed
+
+### Fixed
+
+### Removed
+
+## [0.9.0] - 2025-01-06
+
+### Added
+
 - **New Command**: `/arckit.data-mesh-contract` (32nd ArcKit command) - Create federated data product contracts for mesh architectures
   - **ODCS Compliance**: Open Data Contract Standard v3.0.2 with full YAML export
   - **10 Core Sections**: Fundamentals, Schema, Data Quality, SLA, Access Methods, Security, Governance, Consumer Obligations, Pricing, Infrastructure
