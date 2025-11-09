@@ -187,6 +187,22 @@ Create detailed requirements **informed by stakeholder goals** (if SOBC approved
 - Data requirements (DR-xxx)
 - Success criteria and KPIs
 
+### Phase 5.3: Platform Strategy Design (Optional - for Multi-Sided Platforms)
+**`/arckit.platform-design`** → Design multi-sided platform strategy using Platform Design Toolkit
+
+Use this phase when designing **ecosystem-based platforms** (Government as a Platform, marketplaces, data platforms):
+- **Ecosystem Canvas**: Map supply side, demand side, supporting entities with relationship diagrams
+- **Entity-Role Portraits**: Deep dive into 3-5 key entities (context, pressures, goals, gains)
+- **Motivations Matrix**: Identify synergies and conflicts across entities with mitigation strategies
+- **Transactions Board**: Design 10-20 transactions with cost reduction analysis (search, information, negotiation, coordination, enforcement)
+- **Learning Engine Canvas**: 5+ services that help participants improve (data, feedback loops, network effects)
+- **Platform Experience Canvas**: Journey maps with business model and unit economics
+- **MVP Canvas**: Liquidity bootstrapping strategy to solve chicken-and-egg problem
+- **Platform Design Canvas**: Synthesize all 8 canvases into cohesive platform strategy
+- **UK Government Context**: Aligns with Government as a Platform (GaaP), TCoP Point 8 (share/reuse), Digital Marketplace
+
+**Use Cases**: NHS appointment booking, local authority data marketplaces, training procurement platforms, citizen services portals
+
 ### Phase 5.5: Data Modeling
 **`/arckit.data-model`** → Create comprehensive data model with ERD
 
@@ -549,6 +565,7 @@ payment-modernization/
 | `/arckit.risk` | Create comprehensive risk register (Orange Book) | `projects/XXX/risk-register.md` |
 | `/arckit.sobc` | Create Strategic Outline Business Case (Green Book 5-case) | `projects/XXX/sobc.md` |
 | `/arckit.requirements` | Define comprehensive requirements | `projects/XXX/requirements.md` |
+| `/arckit.platform-design` | Design multi-sided platform strategy using Platform Design Toolkit (8 PDT canvases) | `projects/XXX/platform-design.md` |
 | `/arckit.data-model` | Create data model with ERD, GDPR compliance, data governance | `projects/XXX/data-model.md` |
 | `/arckit.research` | Research technology, services, and products with build vs buy analysis | `projects/XXX/research-findings.md` |
 | `/arckit.wardley` | Create strategic Wardley Maps for build vs buy and procurement strategy | `projects/XXX/wardley-maps/{map-name}.md` |
@@ -723,7 +740,7 @@ arckit init my-project
 Full guidance lives in `docs/` and the static site.
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/principles.md](docs/principles.md), [docs/requirements.md](docs/requirements.md), [docs/procurement.md](docs/procurement.md), [docs/design-review.md](docs/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 31×31 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 33×33 command matrix.
 - Traceability: [docs/traceability.md](docs/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit

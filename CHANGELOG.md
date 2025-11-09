@@ -9,6 +9,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **New Command**: `/arckit.platform-design` (33rd ArcKit command) - Design multi-sided platforms using Platform Design Toolkit (PDT) methodology
+  - **8 PDT Canvases**: Ecosystem Canvas, Entity-Role Portraits, Motivations Matrix, Transactions Board, Learning Engine Canvas, Platform Experience Canvas, MVP Canvas, Platform Design Canvas
+  - **Platform Economics**: Transaction cost reduction analysis (search, information, negotiation, coordination, enforcement costs)
+  - **Network Effects**: Same-side, cross-side, data, and learning network effects for defensibility
+  - **Auto-Population**: Extracts stakeholders → entity portraits, requirements → platform capabilities, Wardley maps → build vs buy, principles → governance
+  - **Ecosystem Mapping**: Supply side, demand side, supporting entities with Mermaid relationship diagrams
+  - **Entity Portraits**: 3-5 detailed portraits with context, performance pressures, goals, gains (pain relievers, gain creators)
+  - **Motivations Matrix**: Cross-entity synergies and conflicts with mitigation strategies
+  - **Transactions Board**: 10-20 transactions with cost analysis, data flows, platform services that reduce each cost
+  - **Learning Engine**: 5+ services that help ecosystem participants improve (data sources, feedback loops, network learning effects)
+  - **Platform Experience**: 2+ journey maps (onboarding, transaction, touchpoints, emotions, business model, unit economics)
+  - **MVP Canvas**: Assumption-risk matrix, minimum feature set, liquidity bootstrapping strategy, validation metrics
+  - **Liquidity Bootstrapping**: Solves chicken-and-egg problem (seed supply, incentivize demand, staged rollout, validation strategy)
+  - **UK Government Context**: Government as a Platform (GaaP), TCoP Point 8 (share/reuse/collaborate), Digital Marketplace integration
+  - **Template**: `platform-design-template.md` (1,800+ lines) with all 8 canvases, comprehensive PDT methodology
+  - **Guide**: `docs/guides/platform-design.md` - What is PDT, when to use, 8 canvas explanations, GaaP context, examples, common pitfalls
+  - **Workflow Position**: Run AFTER /arckit.requirements (Tier 3.5: Strategic Planning), BEFORE detailed design (Tier 4)
+  - **Use Cases**: Government as a Platform services, data marketplaces, multi-sided platforms, NHS appointment booking, training marketplaces
+  - **Based on**: Platform Design Toolkit v2.2.1 from Boundaryless.io (CC-BY-SA license)
+
 ### Changed
 
 ### Fixed
