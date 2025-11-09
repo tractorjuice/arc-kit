@@ -60,6 +60,7 @@ Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 
 ```bash
 /prompts:arckit.requirements Create requirements for payment gateway modernization
+/prompts:arckit.platform-design Design NHS appointment booking platform using Platform Design Toolkit (8 PDT canvases)
 /prompts:arckit.data-model Create data model with ERD and GDPR compliance
 /prompts:arckit.data-mesh-contract Create federated data product contract (ODCS v3.0.2)
 /prompts:arckit.dpia Generate Data Protection Impact Assessment with ICO 9-criteria screening
@@ -473,7 +474,7 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-**Unreleased (32 commands)**
+**Unreleased (33 commands)**
 
 **Coming Soon:**
 - ✅ **New Command**: `/prompts:arckit.data-mesh-contract` (32nd command) - Create federated data product contracts for mesh architectures (ODCS v3.0.2)
@@ -488,7 +489,7 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ---
 
-ArcKit v0.9.0 (32 commands)
+ArcKit v0.9.0+ (33 commands)
 
 **What's New in v0.9.0:**
 - 🔄 **New Command**: `/prompts:arckit.data-mesh-contract` (32nd command) - Create federated data product contracts for mesh architectures (ODCS v3.0.2)

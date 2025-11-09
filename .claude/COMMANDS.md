@@ -12,6 +12,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.risk` | Create comprehensive risk register (Orange Book) | After stakeholders, BEFORE business case |
 | `/arckit.sobc` | Create Strategic Outline Business Case (SOBC) | After risk assessment, BEFORE requirements |
 | `/arckit.requirements` | Define comprehensive requirements | After SOBC approval, before data modeling |
+| `/arckit.platform-design` | Design multi-sided platform strategy using PDT | After requirements when building ecosystem platforms |
 | `/arckit.data-model` | Create comprehensive data model with ERD | After requirements, before vendor selection |
 | `/arckit.dpia` | Generate Data Protection Impact Assessment | After data model when processing personal data |
 | `/arckit.research` | Research technology and services for build vs buy | After requirements, inform procurement decisions |
