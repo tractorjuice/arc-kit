@@ -256,6 +256,25 @@ Visualize strategic positioning with:
 - UK Government Digital Marketplace mapping
 - Evolution predictions and strategic gameplay
 
+### Phase 7.5: Strategic Roadmap
+**`/arckit.roadmap`** → Create multi-year architecture roadmap
+
+Create strategic roadmap for multi-year transformation programs:
+- **Multi-year timeline**: 3-5 year roadmap with Mermaid Gantt chart aligned to financial years (FY 2024/25, etc.)
+- **Strategic themes**: Cloud migration, data modernization, security & compliance, DevOps transformation
+- **Capability evolution**: Maturity progression from L1 (Initial) to L5 (Optimized) over time
+- **Investment planning**: CAPEX/OPEX budget by financial year, ROI projections, benefits realization
+- **Governance framework**: ARB monthly, Programme Board monthly, Steering Committee quarterly
+- **Service Standard gates**: Alpha/Beta/Live assessment milestones (UK Government)
+- **Dependencies**: Mermaid flowchart showing initiative sequencing and critical path
+- **Success metrics**: Cloud adoption %, technical debt reduction, deployment frequency, time to market
+- **Traceability**: Links roadmap themes to stakeholder drivers, architecture principles, requirements
+- **UK Government specifics**: Spending Review alignment, TCoP compliance timeline, NCSC CAF progression
+
+**Use this when**: You have a multi-year transformation program with multiple initiatives running in parallel. Roadmaps are strategic (multi-year, multi-initiative, executive communication) vs project plans which are tactical (single initiative, detailed tasks, team execution).
+
+**Roadmap feeds into**: `/arckit.plan` for detailed phase execution, `/arckit.sobc` for investment business case, `/arckit.backlog` for prioritized user stories.
+
 ### Phase 8: Vendor Procurement (if needed)
 **`/arckit.sow`** → Generate Statement of Work (RFP)
 
