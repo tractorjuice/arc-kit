@@ -436,7 +436,15 @@ For each component, annotate with:
 5. Use subgraphs for logical grouping
 6. Add notes for critical decisions or constraints
 7. Keep diagrams focused (split large diagrams into multiple smaller ones)
-8. **IMPORTANT - Mermaid Syntax**: C4 diagrams support pipe separators for multi-line content (e.g., `Container(api, \"API\", \"Node.js | Express\", \"Description\")`), but flowcharts do NOT support pipes in node labels. For flowcharts, use HTML line breaks instead (e.g., `Node[\"Line 1<br/>Line 2<br/>Line 3\"]`). Never use pipe characters in flowchart node labels or edge labels as they cause parsing errors.
+8. **IMPORTANT - Mermaid Syntax for Line Breaks**:
+   - **C4 Diagrams**: Support `<br/>` tags in BOTH node labels AND edge labels
+     - ✅ `Person(user, \"User<br/>(Role)\")` - WORKS
+     - ✅ `Rel(user, api, \"Uses<br/>HTTPS\")` - WORKS
+   - **Flowcharts/Sequence/Deployment**: Support `<br/>` tags in node labels ONLY, NOT in edge labels
+     - ✅ `Node[\"User<br/>(Role)\"]` - WORKS in node labels
+     - ❌ `Node -->|Uses<br/>HTTPS| Other` - FAILS (causes \"Parse error - Expecting 'SQE', got 'PIPE'\")
+     - ✅ `Node -->|Uses via HTTPS, JWT auth| Other` - WORKS (use comma-separated text in edge labels)
+   - **Best Practice**: For flowcharts, always use comma-separated text in edge labels, never `<br/>` tags
 
 **C4 Diagram Syntax**:
 - `Person(id, \"Label\", \"Description\")` - User or actor

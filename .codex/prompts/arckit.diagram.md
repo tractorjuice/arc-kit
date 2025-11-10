@@ -335,24 +335,24 @@ sequenceDiagram
 ```mermaid
 flowchart LR
     subgraph Sources["Data Sources"]
-        Customer["Customer Input | PII: Name, Email, Card"]
-        Merchant["Merchant Data | PII: Business details"]
+        Customer["Customer Input<br/>PII: Name, Email, Card"]
+        Merchant["Merchant Data<br/>PII: Business details"]
     end
 
     subgraph Processing["Payment Gateway Processing"]
-        WebApp["Web Application | Tokenize card | Encrypt PII"]
-        API["Payment API | Validate PII | Hash email | Pseudonymize ID"]
-        Fraud["Fraud Detection | Risk scoring | Retention: 90 days"]
+        WebApp["Web Application<br/>Tokenize card<br/>Encrypt PII"]
+        API["Payment API<br/>Validate PII<br/>Hash email<br/>Pseudonymize ID"]
+        Fraud["Fraud Detection<br/>Risk scoring<br/>Retention: 90 days"]
     end
 
     subgraph Storage["Data Storage"]
-        Database[("Database | PII: Name, email | Legal Basis: Contract | Retention: 7 years | AES-256")]
-        LogStorage[("S3 Logs | PII: None | Retention: 90 days")]
+        Database[("Database<br/>PII: Name, email<br/>Legal Basis: Contract<br/>Retention: 7 years<br/>AES-256")]
+        LogStorage[("S3 Logs<br/>PII: None<br/>Retention: 90 days")]
     end
 
     subgraph External["External Systems"]
-        Stripe["Stripe | PII: Tokenized card | UK Residency: Yes"]
-        BI["Analytics/BI | PII: Anonymized only"]
+        Stripe["Stripe<br/>PII: Tokenized card<br/>UK Residency: Yes"]
+        BI["Analytics/BI<br/>PII: Anonymized only"]
     end
 
     Customer -->|HTTPS/TLS 1.3| WebApp
@@ -436,7 +436,15 @@ For each component, annotate with:
 5. Use subgraphs for logical grouping
 6. Add notes for critical decisions or constraints
 7. Keep diagrams focused (split large diagrams into multiple smaller ones)
-8. For multi-line content in flowcharts, use pipe separators (e.g., `["Line 1 | Line 2 | Line 3"]`) instead of `<br/>` tags which can cause parsing errors
+8. **IMPORTANT - Mermaid Syntax for Line Breaks**:
+   - **C4 Diagrams**: Support `<br/>` tags in BOTH node labels AND edge labels
+     - ✅ `Person(user, "User<br/>(Role)")` - WORKS
+     - ✅ `Rel(user, api, "Uses<br/>HTTPS")` - WORKS
+   - **Flowcharts/Sequence/Deployment**: Support `<br/>` tags in node labels ONLY, NOT in edge labels
+     - ✅ `Node["User<br/>(Role)"]` - WORKS in node labels
+     - ❌ `Node -->|Uses<br/>HTTPS| Other` - FAILS (causes "Parse error - Expecting 'SQE', got 'PIPE'")
+     - ✅ `Node -->|Uses via HTTPS, JWT auth| Other` - WORKS (use comma-separated text in edge labels)
+   - **Best Practice**: For flowcharts, always use comma-separated text in edge labels, never `<br/>` tags
 
 **C4 Diagram Syntax**:
 - `Person(id, "Label", "Description")` - User or actor

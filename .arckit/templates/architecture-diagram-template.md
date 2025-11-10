@@ -35,6 +35,53 @@
 
 ---
 
+## Mermaid Syntax Reference
+
+**IMPORTANT - Line Break Syntax Rules**:
+
+### C4 Diagrams (Context, Container, Component)
+
+C4 diagrams support `<br/>` tags in **BOTH node labels AND edge labels**:
+
+✅ **Node Labels** - WORKS:
+```
+Person(user, "User<br/>(Customer Role)")
+System(api, "Payment API<br/>(REST)")
+```
+
+✅ **Edge Labels** - WORKS:
+```
+Rel(user, api, "Submits payment<br/>HTTPS, JWT auth")
+Rel(api, db, "Stores transaction<br/>Encrypted at rest")
+```
+
+### Flowcharts, Sequence Diagrams, Deployment Diagrams
+
+These diagram types support `<br/>` tags in **node labels ONLY** - NOT in edge labels:
+
+✅ **Node Labels** - WORKS:
+```
+flowchart LR
+    User["User<br/>(Customer Role)"]
+    API["Payment API<br/>(REST)"]
+```
+
+❌ **Edge Labels with `<br/>`** - FAILS (causes parse error):
+```
+flowchart LR
+    User -->|Submits payment<br/>HTTPS| API  %% PARSE ERROR!
+```
+
+✅ **Edge Labels with commas** - WORKS:
+```
+flowchart LR
+    User -->|Submits payment via HTTPS, JWT auth| API
+```
+
+**Best Practice**: For flowcharts, use comma-separated text in edge labels instead of attempting multi-line formatting.
+
+---
+
 ## Diagram Type Reference
 
 **C4 Context Diagram** (Level 1): System in context with users and external systems
