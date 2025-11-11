@@ -72,6 +72,7 @@ Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 /prompts:arckit.research Research market options with build vs buy analysis
 /prompts:arckit.wardley Create Wardley map for digital services strategy
 /prompts:arckit.roadmap Create multi-year strategic architecture roadmap with capability evolution
+/prompts:arckit.adr Document architectural decisions with MADR format and UK Government compliance
 /prompts:arckit.gcloud-search Search G-Cloud 14 for compliant services
 /prompts:arckit.gcloud-clarify Generate clarification questions for shortlisted suppliers
 /prompts:arckit.dos Produce Digital Outcomes and Specialists procurement pack
@@ -366,6 +367,7 @@ your-project/
 │       ├── arckit.research.md
 │       ├── arckit.wardley.md
 │       ├── arckit.roadmap.md
+│       ├── arckit.adr.md
 │       ├── arckit.gcloud-search.md
 │       ├── arckit.gcloud-clarify.md
 │       ├── arckit.dos.md
@@ -476,7 +478,7 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-**Unreleased (34 commands)**
+**Unreleased (35 commands)**
 
 **Coming Soon:**
 - ✅ **New Command**: `/prompts:arckit.data-mesh-contract` (32nd command) - Create federated data product contracts for mesh architectures (ODCS v3.0.2)
@@ -491,7 +493,7 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ---
 
-ArcKit v0.9.0+ (34 commands)
+ArcKit v0.9.0+ (35 commands)
 
 **What's New in v0.9.0:**
 - 🔄 **New Command**: `/prompts:arckit.data-mesh-contract` (32nd command) - Create federated data product contracts for mesh architectures (ODCS v3.0.2)

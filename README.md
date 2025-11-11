@@ -275,6 +275,25 @@ Create strategic roadmap for multi-year transformation programs:
 
 **Roadmap feeds into**: `/arckit.plan` for detailed phase execution, `/arckit.sobc` for investment business case, `/arckit.backlog` for prioritized user stories.
 
+### Phase 7.7: Architecture Decision Records
+**`/arckit.adr`** → Document architectural decisions
+
+Create Architecture Decision Records (ADRs) following MADR v4.0 format enhanced with UK Government requirements:
+- **Decision metadata**: Sequential numbering (ADR-001, ADR-002), status (Proposed/Accepted/Superseded), escalation level (Team/Cross-team/Department/Cross-government)
+- **Stakeholder RACI**: Deciders (accountable), Consulted (SMEs, two-way), Informed (one-way communication)
+- **Context and problem statement**: Why this decision is needed, business/technical/regulatory drivers
+- **Decision drivers**: Technical forces (performance, security, scalability), business forces (cost, time), compliance forces (GDS Service Standard, TCoP, NCSC, UK GDPR)
+- **Options analysis**: Minimum 2-3 options plus "Do Nothing" baseline, each with pros/cons, cost (CAPEX/OPEX/TCO), GDS Service Standard impact, Wardley evolution stage
+- **Y-Statement**: Structured justification - "In the context of X, facing Y, we decided for Z to achieve A, accepting B"
+- **Consequences**: Positive (benefits, capabilities), Negative (trade-offs, technical debt), Neutral (training, infrastructure), Risks and mitigations
+- **Validation**: How implementation will be verified (design reviews, code reviews, testing, monitoring)
+- **Traceability**: Links to requirements, principles, stakeholders, research, Wardley maps, diagrams, risk register
+- **UK Government specifics**: Escalation levels (Team → Cross-team → Department → Cross-government), governance forums (ARB, TDA, Programme Board), Service Standard/TCoP compliance documentation
+
+**Use this when**: Making significant architectural decisions that affect system structure, quality attributes, or behavior - technology choices (databases, frameworks, cloud services), integration patterns, security approaches, deployment strategies, data management.
+
+**ADR feeds into**: `/arckit.diagram` (architecture diagrams reflect decisions), `/arckit.hld-review` and `/arckit.dld-review` (reviews verify decisions implemented), `/arckit.traceability` (decisions are key traceability artifacts).
+
 ### Phase 8: Vendor Procurement (if needed)
 **`/arckit.sow`** → Generate Statement of Work (RFP)
 
@@ -588,6 +607,8 @@ payment-modernization/
 | `/arckit.data-model` | Create data model with ERD, GDPR compliance, data governance | `projects/XXX/data-model.md` |
 | `/arckit.research` | Research technology, services, and products with build vs buy analysis | `projects/XXX/research-findings.md` |
 | `/arckit.wardley` | Create strategic Wardley Maps for build vs buy and procurement strategy | `projects/XXX/wardley-maps/{map-name}.md` |
+| `/arckit.roadmap` | Create multi-year strategic architecture roadmap with capability evolution and governance | `projects/XXX/roadmap.md` |
+| `/arckit.adr` | Document architectural decisions with MADR v4.0 format and UK Government compliance | `projects/XXX/decisions/ADR-{NUM}-{title}.md` |
 | `/arckit.sow` | Generate vendor RFP | `projects/XXX/sow.md` |
 | `/arckit.dos` | Generate Digital Outcomes and Specialists (DOS) procurement docs for UK Digital Marketplace | `projects/XXX/procurement/dos-requirements.md` |
 | `/arckit.gcloud-search` | Search G-Cloud services on UK Digital Marketplace with live WebSearch | `projects/XXX/procurement/gcloud-requirements.md` |
@@ -759,7 +780,7 @@ arckit init my-project
 Full guidance lives in `docs/` and the static site.
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/principles.md](docs/principles.md), [docs/requirements.md](docs/requirements.md), [docs/procurement.md](docs/procurement.md), [docs/design-review.md](docs/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 33×33 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 35×35 command matrix.
 - Traceability: [docs/traceability.md](docs/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit

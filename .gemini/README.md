@@ -103,6 +103,7 @@ Creates: `projects/001-project-name/project-plan.md`
 # Strategic planning
 /arckit:wardley Create Wardley map for digital services showing build vs buy strategy
 /arckit:roadmap Create multi-year strategic architecture roadmap with capability evolution
+/arckit:adr Document architectural decisions with MADR format and UK Government compliance
 
 # Technology research
 /arckit:research Research cloud hosting options with build vs buy analysis
@@ -225,6 +226,7 @@ your-project/
 │   ├── README.md (this file)
 │   └── commands/
 │       └── arckit/
+│           ├── adr.toml
 │           ├── ai-playbook.toml
 │           ├── analyze.toml
 │           ├── atrs.toml
@@ -378,7 +380,7 @@ EOF
 
 ## Version
 
-ArcKit 0.9.0+ — all 34 commands available in Gemini CLI, including Platform Design (PDT), Data Mesh Contract, DPIA, Backlog, Story, Principles Compliance, and Strategic Roadmap.
+ArcKit 0.9.0+ — all 35 commands available in Gemini CLI, including Platform Design (PDT), Data Mesh Contract, DPIA, Backlog, Story, Principles Compliance, Strategic Roadmap, and Architecture Decision Records (ADR).
 
 ---
 
