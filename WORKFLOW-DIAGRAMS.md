@@ -29,38 +29,34 @@ graph TD
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
-    F --> G[platform-design]
-    F --> H[data-model]
+    %% Tier 4: Detailed Design
+    F --> G[data-model]
+    F --> H[research]
     G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    K --> L[wardley]
-    L --> M[roadmap]
-    H -.-> N[diagram]
+    C -.-> H
+    H --> I[wardley]
 
     %% Tier 5: Procurement
-    M --> O[sow]
-    O --> P[evaluate]
-    J -.-> O
-    I -.-> O
+    I --> J[sow]
+    J --> K[evaluate]
 
     %% Tier 6: Design Reviews
-    P --> Q[hld-review]
-    Q --> R[dld-review]
-    R --> S[adr]
+    K --> L[hld-review]
+    L --> M[dld-review]
 
     %% Tier 7: Implementation
-    R --> T[backlog]
+    M --> N[backlog]
 
     %% Tier 8-9: Operations & Quality
-    T --> U[servicenow]
-    U --> V[traceability]
-    V --> W[analyze]
+    N --> O[servicenow]
+    O --> P[traceability]
+    P --> Q[analyze]
 
     %% Tier 11: Reporting
-    W --> X[story]
+    Q --> S[story]
+
+    %% Optional parallel paths
+    F -.-> R[diagram]
 
     style A fill:#87CEEB
     style B fill:#87CEEB
@@ -72,24 +68,19 @@ graph TD
     style H fill:#90EE90
     style I fill:#90EE90
     style J fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#FFA500
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#9370DB
-    style V fill:#9370DB
-    style W fill:#9370DB
-    style X fill:#FFD700
+    style K fill:#FFA500
+    style L fill:#FFA500
+    style M fill:#FFA500
+    style N fill:#FFA500
+    style O fill:#9370DB
+    style P fill:#9370DB
+    style Q fill:#9370DB
+    style R fill:#90EE90
+    style S fill:#FFD700
 ```
 
 **Duration**: 4-8 months
-**Key Milestones**: SOBC Approval → Requirements/Platform Strategy Sign-off → HLD Approval → DLD/ADR Approval → Sprint 1 → Go Live
+**Key Milestones**: SOBC Approval → Requirements Sign-off → HLD Approval → DLD Approval → Sprint 1 → Go Live
 
 ---
 
@@ -108,46 +99,41 @@ graph TD
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
-    F --> G[platform-design]
-    F --> H[data-model]
+    %% Tier 4: Detailed Design
+    F --> G[data-model]
+    F --> H[research]
     G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    K --> L[wardley]
-    L --> M[roadmap]
-    H -.-> V[diagram]
+    C -.-> H
+    H --> I[wardley]
 
     %% Tier 5: UK Gov Procurement
-    B -.-> N[gcloud-search]
-    M --> N
-    N --> O[gcloud-clarify]
-    O --> P[evaluate]
-    M -.-> Q[sow]
-    Q -.-> P
-    J -.-> P
+    B -.-> J[gcloud-search]
+    I --> J
+    J --> K[gcloud-clarify]
+    K --> L[evaluate]
 
     %% Tier 6: Design Reviews
-    P --> R[hld-review]
-    R --> S[dld-review]
-    S --> T[adr]
+    L --> M[hld-review]
+    M --> N[dld-review]
 
     %% Tier 7: Implementation
-    S --> U[backlog]
+    N --> O[backlog]
 
     %% Tier 8-9: Operations & Quality
-    U --> W[servicenow]
-    W --> X[traceability]
-    X --> Y[analyze]
+    O --> P[servicenow]
+    P --> Q[traceability]
+    Q --> R[analyze]
 
     %% Tier 10: UK Gov Compliance
-    Y --> Z[service-assessment]
-    Z --> Z1[tcop]
-    Z1 --> Z2[secure]
+    R --> S[service-assessment]
+    S --> T[tcop]
+    T --> U[secure]
 
     %% Tier 11: Reporting
-    Z2 --> AA[story]
+    U --> W[story]
+
+    %% Optional parallel paths
+    F -.-> V[diagram]
 
     style A fill:#87CEEB
     style B fill:#87CEEB
@@ -161,26 +147,21 @@ graph TD
     style J fill:#90EE90
     style K fill:#90EE90
     style L fill:#90EE90
-    style M fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#90EE90
+    style M fill:#FFA500
     style N fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#FFA500
+    style O fill:#FFA500
+    style P fill:#9370DB
+    style Q fill:#9370DB
+    style R fill:#9370DB
+    style S fill:#FF6B6B
+    style T fill:#FF6B6B
+    style U fill:#FF6B6B
     style V fill:#90EE90
-    style W fill:#9370DB
-    style X fill:#9370DB
-    style Y fill:#9370DB
-    style Z fill:#FF6B6B
-    style Z1 fill:#FF6B6B
-    style Z2 fill:#FF6B6B
-    style AA fill:#FFD700
+    style W fill:#FFD700
 ```
 
 **Duration**: 6-12 months
-**Key Milestones**: SOBC Approval → Requirements/Platform Strategy Sign-off → DPIA Complete → G-Cloud Clarifications → Service Assessment → Go Live
+**Key Milestones**: SOBC Approval → Alpha Assessment → Beta Assessment → Service Assessment → Go Live
 
 ---
 
@@ -199,48 +180,42 @@ graph TD
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
-    F --> G[platform-design]
-    F --> H[data-model]
+    %% Tier 4: Detailed Design
+    F --> G[data-model]
+    F --> H[research]
     G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    K --> L[wardley]
-    L --> M[roadmap]
-    H -.-> W[diagram]
+    C -.-> H
+    H --> I[wardley]
 
     %% Tier 5: UK Gov Procurement
-    B -.-> N[gcloud-search]
-    M --> N
-    N --> O[gcloud-clarify]
-    O --> P[evaluate]
-    M -.-> Q[sow]
-    Q -.-> P
-    J -.-> P
+    B -.-> J[gcloud-search]
+    I --> J
+    J --> K[evaluate]
 
     %% Tier 6: Design Reviews
-    P --> R[hld-review]
-    R --> S[dld-review]
-    S --> T[adr]
+    K --> L[hld-review]
+    L --> M[dld-review]
 
     %% Tier 7: Implementation
-    S --> U[backlog]
+    M --> N[backlog]
 
     %% Tier 8-9: Operations & Quality
-    U --> V[servicenow]
-    V --> X[traceability]
-    X --> Y[analyze]
+    N --> O[servicenow]
+    O --> P[traceability]
+    P --> Q[analyze]
 
-    %% Tier 10: UK Gov + AI Compliance
-    Y --> Z[service-assessment]
-    Z --> Z1[tcop]
-    Z1 --> Z2[ai-playbook]
-    Z2 --> Z3[atrs]
-    Z3 --> Z4[secure]
+    %% Tier 10: UK Gov Compliance + AI Compliance
+    Q --> R[service-assessment]
+    R --> S[tcop]
+    S --> T[ai-playbook]
+    T --> U[atrs]
+    U --> V[secure]
 
     %% Tier 11: Reporting
-    Z4 --> AA[story]
+    V --> X[story]
+
+    %% Optional parallel paths
+    F -.-> W[diagram]
 
     style A fill:#87CEEB
     style B fill:#87CEEB
@@ -253,30 +228,23 @@ graph TD
     style I fill:#90EE90
     style J fill:#90EE90
     style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#90EE90
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#FFA500
-    style V fill:#9370DB
+    style L fill:#FFA500
+    style M fill:#FFA500
+    style N fill:#FFA500
+    style O fill:#9370DB
+    style P fill:#9370DB
+    style Q fill:#9370DB
+    style R fill:#FF6B6B
+    style S fill:#FF6B6B
+    style T fill:#FF6B6B
+    style U fill:#FF6B6B
+    style V fill:#FF6B6B
     style W fill:#90EE90
-    style X fill:#9370DB
-    style Y fill:#9370DB
-    style Z fill:#FF6B6B
-    style Z1 fill:#FF6B6B
-    style Z2 fill:#FF6B6B
-    style Z3 fill:#FF6B6B
-    style Z4 fill:#FF6B6B
-    style AA fill:#FFD700
+    style X fill:#FFD700
 ```
 
 **Duration**: 9-18 months
-**Key Milestones**: SOBC Approval → Requirements/Platform Strategy Sign-off → DPIA Complete → G-Cloud Clarifications → AI Playbook Approval → ATRS Publication → Service Assessment → Go Live
+**Key Milestones**: SOBC Approval → Alpha Assessment → AI Playbook Approval → Beta Assessment → ATRS Publication → Service Assessment → Go Live
 
 **Critical Gates**:
 - AI Playbook compliance required before Beta
@@ -299,46 +267,41 @@ graph TD
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
-    F --> G[platform-design]
-    F --> H[data-model]
+    %% Tier 4: Detailed Design
+    F --> G[data-model]
+    F --> H[research]
     G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    K --> L[wardley]
-    L --> M[roadmap]
-    H -.-> U[diagram]
+    C -.-> H
+    H --> I[wardley]
 
     %% Tier 5: MOD Procurement
-    B -.-> N[dos]
-    C -.-> N
-    M --> N
-    N --> O[evaluate]
-    M -.-> P[sow]
-    P -.-> O
-    J -.-> O
+    B -.-> J[dos]
+    C -.-> J
+    I --> J
+    J --> K[evaluate]
 
     %% Tier 6: Design Reviews
-    O --> Q[hld-review]
-    Q --> R[dld-review]
-    R --> S[adr]
+    K --> L[hld-review]
+    L --> M[dld-review]
 
     %% Tier 7: Implementation
-    R --> T[backlog]
+    M --> N[backlog]
 
     %% Tier 8-9: Operations & Quality
-    T --> V[servicenow]
-    V --> W[traceability]
-    W --> X[analyze]
+    N --> O[servicenow]
+    O --> P[traceability]
+    P --> Q[analyze]
 
     %% Tier 10: MOD Compliance
-    X --> Y[service-assessment]
-    Y --> Y1[tcop]
-    Y1 --> Y2[mod-secure]
+    Q --> R[service-assessment]
+    R --> S[tcop]
+    S --> T[mod-secure]
 
     %% Tier 11: Reporting
-    Y2 --> Z[story]
+    T --> V[story]
+
+    %% Optional parallel paths
+    F -.-> U[diagram]
 
     style A fill:#87CEEB
     style B fill:#87CEEB
@@ -351,27 +314,21 @@ graph TD
     style I fill:#90EE90
     style J fill:#90EE90
     style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#FFA500
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style T fill:#FFA500
+    style L fill:#FFA500
+    style M fill:#FFA500
+    style N fill:#FFA500
+    style O fill:#9370DB
+    style P fill:#9370DB
+    style Q fill:#9370DB
+    style R fill:#FF6B6B
+    style S fill:#FF6B6B
+    style T fill:#FF6B6B
     style U fill:#90EE90
-    style V fill:#9370DB
-    style W fill:#9370DB
-    style X fill:#9370DB
-    style Y fill:#FF6B6B
-    style Y1 fill:#FF6B6B
-    style Y2 fill:#FF6B6B
-    style Z fill:#FFD700
+    style V fill:#FFD700
 ```
 
 **Duration**: 12-24 months
-**Key Milestones**: SOBC Approval → Requirements/Platform Strategy Sign-off → DOS Down-select → MOD Secure by Design Approval → Service Assessment → Go Live
+**Key Milestones**: SOBC Approval → Alpha Assessment → MOD SbD Approval → Beta Assessment → Service Assessment → Go Live
 
 **Critical Gates**:
 - MOD Secure by Design (JSP 440, IAMM) required before Beta
@@ -394,50 +351,42 @@ graph TD
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
-    F --> G[platform-design]
-    F --> H[data-model]
+    %% Tier 4: Detailed Design
+    F --> G[data-model]
+    F --> H[research]
     G -.-> H
-    H --> I[data-mesh-contract]
-    H --> J[dpia]
-    F --> K[research]
-    K --> L[wardley]
-    L --> M[roadmap]
-    H -.-> V[diagram]
+    C -.-> H
+    H --> I[wardley]
 
     %% Tier 5: MOD Procurement
-    B -.-> N[dos]
-    C -.-> N
-    M --> N
-    N --> O[evaluate]
-    M -.-> P[sow]
-    P -.-> O
-    J -.-> O
+    B -.-> J[dos]
+    C -.-> J
+    I --> J
+    J --> K[evaluate]
 
     %% Tier 6: Design Reviews
-    O --> Q[hld-review]
-    Q --> R[dld-review]
-    R --> S[adr]
+    K --> L[hld-review]
+    L --> M[dld-review]
 
     %% Tier 7: Implementation
-    R --> T[backlog]
+    M --> N[backlog]
 
     %% Tier 8-9: Operations & Quality
-    T --> U[servicenow]
-    U --> W[traceability]
-    W --> X[analyze]
+    N --> O[servicenow]
+    O --> P[traceability]
+    P --> Q[analyze]
 
     %% Tier 10: MOD + AI Compliance
-    X --> Y[service-assessment]
-    Y --> Y1[tcop]
-    Y1 --> Y2[ai-playbook]
-    Y2 --> Y3[atrs]
-    Y3 --> Y4[mod-secure]
-    Y4 --> Y5[jsp-936]
-    Y5 --> Y6[secure]
+    Q --> R[service-assessment]
+    R --> S[tcop]
+    S --> T[mod-secure]
+    T --> U[jsp-936]
 
     %% Tier 11: Reporting
-    Y6 --> Z[story]
+    U --> W[story]
+
+    %% Optional parallel paths
+    F -.-> V[diagram]
 
     style A fill:#87CEEB
     style B fill:#87CEEB
@@ -450,31 +399,22 @@ graph TD
     style I fill:#90EE90
     style J fill:#90EE90
     style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#FFA500
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#9370DB
+    style L fill:#FFA500
+    style M fill:#FFA500
+    style N fill:#FFA500
+    style O fill:#9370DB
+    style P fill:#9370DB
+    style Q fill:#9370DB
+    style R fill:#FF6B6B
+    style S fill:#FF6B6B
+    style T fill:#FF6B6B
+    style U fill:#FF6B6B
     style V fill:#90EE90
-    style W fill:#9370DB
-    style X fill:#9370DB
-    style Y fill:#FF6B6B
-    style Y1 fill:#FF6B6B
-    style Y2 fill:#FF6B6B
-    style Y3 fill:#FF6B6B
-    style Y4 fill:#FF6B6B
-    style Y5 fill:#FF6B6B
-    style Y6 fill:#FF6B6B
-    style Z fill:#FFD700
+    style W fill:#FFD700
 ```
 
 **Duration**: 18-36 months
-**Key Milestones**: SOBC Approval → Requirements/Platform Strategy Sign-off → DPIA Complete → DOS Down-select → MOD Secure by Design + JSP 936 Approval → Service Assessment → Go Live
+**Key Milestones**: SOBC Approval → Alpha Assessment → MOD SbD + JSP 936 Approval → Beta Assessment → Service Assessment → Go Live
 
 **Critical Gates**:
 - MOD Secure by Design required before Beta
@@ -501,13 +441,12 @@ graph TD
 | 1 | Strategic Context | stakeholders, risk |
 | 2 | Business Justification | sobc |
 | 3 | Requirements | requirements |
-| 4 | Strategy & Design | platform-design, data-model, data-mesh-contract, dpia, research, wardley, roadmap, diagram |
+| 4 | Detailed Design | data-model, research, wardley |
 | 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
-| 6 | Design Reviews | hld-review, dld-review, adr |
+| 6 | Design Reviews | hld-review, dld-review |
 | 7 | Implementation | backlog |
 | 8-9 | Operations & Quality | servicenow, traceability, analyze |
 | 10 | Compliance | service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
-| 11 | Reporting | story |
 
 ---
 
@@ -637,7 +576,7 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 0.9.1
+- **ArcKit Version**: 0.9.0
 - **Document Date**: 2025-11-02
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
 - **Key Changes**: Added recommended dependencies (dotted lines) for data-model→research, stakeholders→research, principles→gcloud-search, stakeholders→dos

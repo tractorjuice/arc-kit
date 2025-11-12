@@ -15,47 +15,47 @@ This matrix shows which commands depend on outputs from other commands.
 
 ---
 
-## Dependency Reference
+## Dependency Structure Matrix
 
-To keep this manageable across 35 commands, dependencies are grouped into **Mandatory**, **Recommended**, and **Optional** categories. Mandatory inputs must exist before you run the command. Recommended inputs improve output quality and should be provided when available. Optional inputs are nice-to-have context the command can consume if present.
-
-| Command | Mandatory Inputs | Recommended Inputs | Optional Inputs |
-|---------|------------------|--------------------|-----------------|
-| `/arckit.plan` | _None_ | principles, stakeholders, sobc, risk, requirements | roadmap |
-| `/arckit.principles` | _None_ | plan | stakeholders |
-| `/arckit.stakeholders` | principles | plan | sobc |
-| `/arckit.risk` | stakeholders | principles, plan | sobc |
-| `/arckit.sobc` | stakeholders, risk | principles | plan |
-| `/arckit.requirements` | sobc, stakeholders | principles, risk | plan |
-| `/arckit.platform-design` | principles, requirements | stakeholders, wardley | risk, roadmap |
-| `/arckit.data-model` | requirements | stakeholders | sobc |
-| `/arckit.data-mesh-contract` | requirements, data-model | platform-design | stakeholders |
-| `/arckit.dpia` | requirements, data-model | stakeholders, risk, secure | platform-design |
-| `/arckit.research` | requirements | data-model | stakeholders |
-| `/arckit.wardley` | requirements | research, platform-design | plan |
-| `/arckit.roadmap` | principles, stakeholders, requirements | plan, wardley, sobc | risk |
-| `/arckit.adr` | requirements, principles | risk, hld-review | stakeholders |
-| `/arckit.sow` | requirements | research | stakeholders, data-model |
-| `/arckit.dos` | requirements | stakeholders, principles | plan |
-| `/arckit.gcloud-search` | requirements | research, principles | sow |
-| `/arckit.gcloud-clarify` | gcloud-search | requirements | research |
-| `/arckit.evaluate` | requirements, sow/dos | gcloud-clarify | research |
-| `/arckit.hld-review` | requirements, principles, external HLD | plan | risk |
-| `/arckit.dld-review` | requirements, hld-review, external DLD | principles | risk |
-| `/arckit.backlog` | requirements | hld-review | stakeholders, risk |
-| `/arckit.diagram` | requirements | data-model, platform-design | wardley |
-| `/arckit.servicenow` | requirements, diagram | data-model | traceability |
-| `/arckit.traceability` | requirements, hld-review, dld-review | data-model | dpia |
-| `/arckit.analyze` | _None_ | plan, principles, stakeholders, risk, sobc, requirements, data-model, sow, evaluate, traceability | dpia, secure, tcop |
-| `/arckit.principles-compliance` | principles | requirements, stakeholders, hld-review, dld-review, traceability, dpia | tcop, secure |
-| `/arckit.service-assessment` | plan, requirements | stakeholders, risk, sobc, data-model, diagram, analyze, principles-compliance, tcop, ai-playbook, secure, dpia | story |
-| `/arckit.tcop` | principles, requirements | stakeholders, sobc | plan |
-| `/arckit.ai-playbook` | requirements (AI systems) | dpia, risk, data-model | research |
-| `/arckit.atrs` | requirements (AI systems) | ai-playbook, dpia | secure |
-| `/arckit.secure` | requirements, risk, principles | dpia | diagram |
-| `/arckit.mod-secure` | requirements, risk, principles | secure, dpia | diagram |
-| `/arckit.jsp-936` | requirements, risk | ai-playbook, atrs, mod-secure | secure |
-| `/arckit.story` | plan, stakeholders, risk, sobc, requirements | roadmap, hld-review, dld-review, traceability, dpia, secure | service-assessment |
+| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | data-mesh-contract | platform-design | dpia | research | wardley | roadmap | adr | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | traceability | analyze | principles-compliance | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story |
+|------------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
+| **plan** | - | R | R | R | O | O |  |  |  |  |  | O | R |  |  | O | O |  |  | R |  |  |  |  |  | R |  | M | O |  |  |  |  |  | R |
+| **principles** |  | - | M | R | R | R |  |  | M | R |  |  | M | M |  | M | R |  |  | M | M |  |  |  |  | R | M |  | M |  |  | M | M |  |  |
+| **stakeholders** |  | O | - | M | M | M | R | O | R | R | O |  | M | O | O | R |  |  |  |  |  | R |  |  |  | R | R | R | R |  |  |  |  |  | R |
+| **risk** |  |  |  | - | M | R |  |  | O | R |  |  | R | O |  |  |  |  |  | R | R | R |  |  |  | R | R | R |  | R |  | R | R | M | R |
+| **sobc** |  |  | O | O | - | M | O |  |  |  |  |  | R |  |  |  |  |  |  |  |  | O |  |  |  | R |  | R | R |  |  |  |  |  | R |
+| **requirements** |  |  |  |  |  | - | M | M | M | M | M | M | M | M | M | M | M | R | M | M | M | M | M | M | M | R | R | M | M | M | M | M | M | M | R |
+| **data-model** |  |  |  |  |  |  | - | M | O | M | R |  |  |  | O |  |  |  |  |  |  |  | R | R | R | R | R | R |  | R |  |  |  |  |  |
+| **data-mesh-contract** |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **platform-design** |  |  |  |  |  |  | O | R | - | O | O | R |  |  |  |  |  |  |  |  |  |  | R |  |  |  | R |  |  |  |  |  |  |  |  |
+| **dpia** |  |  |  |  |  |  |  |  |  | - |  |  | O |  | R |  |  |  | O |  |  |  | O |  | O | R | R | R |  | R | R | R | R |  | R |
+| **research** |  |  |  |  |  |  |  |  |  |  | - | R |  |  | R |  | R | O | R |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |
+| **wardley** |  |  |  |  |  |  |  |  | R |  | O | - | R |  |  |  |  |  |  |  |  |  | O |  |  |  |  | R |  |  |  |  |  |  |  |
+| **roadmap** |  |  |  |  |  |  |  |  | O |  |  | O | - |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
+| **adr** |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **sow** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  | O |  | R |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  |
+| **dos** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **gcloud-search** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | M |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **gcloud-clarify** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **evaluate** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  |
+| **hld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  | - | M | M |  |  | M |  | R |  |  |  |  |  |  |  | R |
+| **dld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  | - | R |  |  | M |  | R |  |  |  |  |  |  |  | R |
+| **backlog** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **diagram** |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  | R | R |  | - | M |  | R |  | R |  |  |  | O | O |  |  |
+| **servicenow** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | O |  |  |  |  |  |  |  |  |  |  |
+| **traceability** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | - | R | R |  |  |  |  |  |  |  | R |
+| **analyze** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | O | R | O |  |  |  |  |  | O |
+| **principles-compliance** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  |
+| **service-assessment** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | - |  |  |  |  |  |  | R |
+| **tcop** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R | R | - |  |  |  |  |  |  |
+| **ai-playbook** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | R |  | - | R |  |  | R |  |
+| **atrs** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  | - |  |  | R |  |
+| **secure** |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | R |  | O | O | - | R | O | R |
+| **mod-secure** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | O |  |  |  |  | - | R |  |
+| **jsp-936** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  | - |  |
+| **story** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  |  | - |
+| **HLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | M | O |  |  | R | M | O |  | R |  |  |  |  |  |  |  |
+| **DLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | M | M |  |  | M |  |  | R |  |  |  |  |  |  |  |
 
 ## Command Groups by Dependency Level
 
