@@ -5,23 +5,27 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | ARC-[PROJECT_ID]-ROADMAP-v1.0 |
-| **Project** | [PROJECT_NAME] |
-| **Owner** | [Enterprise Architect Name] |
-| **Status** | Draft |
-| **Created** | [CREATION_DATE] |
-| **Last Updated** | [LAST_UPDATE_DATE] |
-| **Review Cycle** | Quarterly |
-| **Next Review** | [NEXT_REVIEW_DATE] |
+| **Document Type** | Strategic Architecture Roadmap |
+| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
+| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
+| **Version** | [VERSION] |
+| **Created Date** | [YYYY-MM-DD] |
+| **Last Modified** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Reviewed By** | [REVIEWER_NAME] on [DATE] or [PENDING] |
+| **Approved By** | [APPROVER_NAME] on [DATE] or [PENDING] |
+| **Distribution** | [DISTRIBUTION_LIST] |
 | **Financial Years Covered** | FY [START_YEAR] - FY [END_YEAR] |
 | **Approver** | [Chief Architect / CTO] |
 
-### Revision History
+## Revision History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | [DATE] | [AUTHOR] | Initial roadmap |
-
----
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.[COMMAND]` command | [PENDING] | [PENDING] |
 
 ## Executive Summary
 

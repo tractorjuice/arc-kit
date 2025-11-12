@@ -4,7 +4,7 @@
   <img src="../docs/assets/ArcKit_Logo_Horizontal_Dark.svg" alt="ArcKit" height="32">
 </p>
 
-This directory contains bash scripts for ArcKit project management and automation.
+This directory contains bash scripts for ArcKit project management and automation. All shell utilities live under `scripts/bash/`; run them from the repository root as `./scripts/bash/<script>.sh`.
 
 ## Overview
 
@@ -67,7 +67,7 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 
 **Usage**:
 ```bash
-./check-prerequisites.sh [OPTIONS]
+./scripts/bash/check-prerequisites.sh [OPTIONS]
 ```
 
 **Options**:
@@ -81,19 +81,19 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 **Examples**:
 ```bash
 # Check prerequisites in JSON mode
-./check-prerequisites.sh --json
+./scripts/bash/check-prerequisites.sh --json
 
 # Find project by prefix
-./check-prerequisites.sh --project "payment"
+./scripts/bash/check-prerequisites.sh --project "payment"
 
 # Require specific files
-./check-prerequisites.sh --project "001" --require-file "requirements.md"
+./scripts/bash/check-prerequisites.sh --project "001" --require-file "requirements.md"
 
 # List all projects
-./check-prerequisites.sh --list-projects
+./scripts/bash/check-prerequisites.sh --list-projects
 
 # Get environment paths only
-./check-prerequisites.sh --paths-only
+./scripts/bash/check-prerequisites.sh --paths-only
 ```
 
 **JSON Output Format**:
@@ -134,7 +134,7 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 
 **Usage**:
 ```bash
-./create-project.sh [OPTIONS]
+./scripts/bash/create-project.sh [OPTIONS]
 ```
 
 **Options**:
@@ -146,16 +146,16 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 **Examples**:
 ```bash
 # Create project with name
-./create-project.sh --name "Payment Gateway Modernization"
+./scripts/bash/create-project.sh --name "Payment Gateway Modernization"
 
 # Interactive mode (prompts for name)
-./create-project.sh
+./scripts/bash/create-project.sh
 
 # JSON mode for AI agents
-./create-project.sh --name "M365 Integration" --json
+./scripts/bash/create-project.sh --name "M365 Integration" --json
 
 # Force creation without prerequisites
-./create-project.sh --name "Test Project" --force
+./scripts/bash/create-project.sh --name "Test Project" --force
 ```
 
 **Prerequisites**:
@@ -197,13 +197,36 @@ The script automatically determines the next steps based on what artifacts exist
 7. /arckit.sow (if sow.md missing)
 8. /arckit.evaluate (if all above complete)
 
-### 4. list-projects.sh
+### 4. generate-document-id.sh
+
+**Purpose**: Generate consistent ArcKit document IDs (`ARC-<PROJECT>-<TYPE>-vX.Y`) for traceability.
+
+**Usage**:
+```bash
+./scripts/bash/generate-document-id.sh PROJECT_ID DOC_TYPE [VERSION]
+```
+
+**Examples**:
+```bash
+# Default version v1.0
+./scripts/bash/generate-document-id.sh 001 REQ
+
+# Explicit version
+./scripts/bash/generate-document-id.sh 042 HLD 2.1
+```
+
+**Notes**:
+- Pads project numbers to three digits automatically.
+- Accepts any doc type (REQ, HLD, DPIA, ATRS, etc.).
+- Emits the ID to stdout so it can be piped into editors or JSON payloads.
+
+### 5. list-projects.sh
 
 **Purpose**: List all projects with status indicators
 
 **Usage**:
 ```bash
-./list-projects.sh [OPTIONS]
+./scripts/bash/list-projects.sh [OPTIONS]
 ```
 
 **Options**:
@@ -214,13 +237,13 @@ The script automatically determines the next steps based on what artifacts exist
 **Examples**:
 ```bash
 # List all projects
-./list-projects.sh
+./scripts/bash/list-projects.sh
 
 # List with detailed artifact status
-./list-projects.sh --verbose
+./scripts/bash/list-projects.sh --verbose
 
 # Output in JSON format
-./list-projects.sh --json
+./scripts/bash/list-projects.sh --json
 ```
 
 **Text Output**:
@@ -303,7 +326,7 @@ The completion percentage is based on 10 standard artifacts:
 9. Evaluation Criteria (evaluation-criteria.md)
 10. Vendor Proposals (vendors/)
 
-### 5. converter.py
+### 6. converter.py
 
 **Purpose**: Convert Claude Code commands to Gemini CLI TOML format
 
@@ -337,7 +360,7 @@ python scripts/converter.py
 # Output:
 # Converted .claude/commands/arckit.plan.md to .gemini/commands/arckit/plan.toml
 # Converted .claude/commands/arckit.principles.md to .gemini/commands/arckit/principles.toml
-# ... (26 commands total)
+# ... (35 commands total)
 ```
 
 **Use Cases**:

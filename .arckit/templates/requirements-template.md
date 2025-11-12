@@ -12,7 +12,8 @@
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
-| **Review Date** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
 | **Owner** | [OWNER_NAME_AND_ROLE] |
 | **Reviewed By** | [REVIEWER_NAME] on [DATE] or [PENDING] |
 | **Approved By** | [APPROVER_NAME] on [DATE] or [PENDING] |
@@ -958,4 +959,3 @@ By signing below, stakeholders confirm that requirements are complete, understoo
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

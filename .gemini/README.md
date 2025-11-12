@@ -43,7 +43,15 @@ Gemini CLI uses colon-separated namespaces for commands in subdirectories. ArcKi
 /arckit:stakeholders Analyze stakeholders for payment gateway project
 ```
 
-## ArcKit Commands (33 Available)
+## Document Control Standard
+
+All commands that produce Markdown artifacts must render the canonical **Document Control** table and **Revision History** captured in [`docs/templates/document-control.md`](../docs/templates/document-control.md):
+- Generate Document IDs with `./scripts/bash/generate-document-id.sh <PROJECT_ID> <DOC_CODE> <VERSION>`.
+- Populate every standard field (Classification, Status, Review Cycle, Next Review Date, Owner, Reviewed/Approved By, Distribution) before writing body content.
+- Append doc-specific metadata (e.g., ADR Number, Financial Years Covered) after the standard rows to keep the header layout identical across deliverables.
+- Always read `.arckit/VERSION` so metadata reflects the current ArcKit release.
+
+## ArcKit Commands (35 Available)
 
 ### Phase 0: Project Planning
 
@@ -143,6 +151,7 @@ Creates: `projects/001-project-name/project-plan.md`
 /arckit:dld-review Review detailed design for security
 
 # Compliance & security
+/arckit:principles-compliance Assess compliance with approved architecture principles using RAG evidence
 /arckit:service-assessment GDS Service Standard assessment preparation
 /arckit:secure UK Government Secure by Design review
 /arckit:mod-secure MOD Secure by Design review
@@ -380,7 +389,7 @@ EOF
 
 ## Version
 
-ArcKit 0.9.0+ — all 35 commands available in Gemini CLI, including Platform Design (PDT), Data Mesh Contract, DPIA, Backlog, Story, Principles Compliance, Strategic Roadmap, and Architecture Decision Records (ADR).
+ArcKit 0.9.1+ — all 35 commands available in Gemini CLI, including Platform Design (PDT), Data Mesh Contract, DPIA, Backlog, Story, Principles Compliance, Strategic Roadmap, and Architecture Decision Records (ADR).
 
 ---
 

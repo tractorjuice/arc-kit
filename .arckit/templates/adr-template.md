@@ -5,25 +5,32 @@
 | Field | Value |
 |-------|-------|
 | **Document ID** | ARC-[PROJECT_ID]-ADR-[NUM]-v[VERSION] |
-| **ADR Number** | ADR-[NUM] |
+| **Document Type** | Architecture Decision Record |
+| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
+| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
 | **Version** | [VERSION] |
-| **Status** | [Proposed / Accepted / Deprecated / Superseded] |
+| **Created Date** | [YYYY-MM-DD] |
+| **Last Modified** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Reviewed By** | [REVIEWER_NAME] on [DATE] or [PENDING] |
+| **Approved By** | [APPROVER_NAME] on [DATE] or [PENDING] |
+| **Distribution** | [DISTRIBUTION_LIST] |
+| **ADR Number** | ADR-[NUM] |
 | **Date** | [YYYY-MM-DD] |
 | **Author** | [AUTHOR_NAME] |
-| **Owner** | [TEAM/ROLE] |
 | **Supersedes** | [ADR-XXX] (if applicable) |
 | **Superseded by** | [ADR-YYY] (if applicable) |
 | **Escalation Level** | [Team / Cross-team / Department / Cross-government] |
 | **Governance Forum** | [Architecture Review Board / TDA / Programme Board / Steering Committee] |
 
-### Revision History
+## Revision History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 0.1 | YYYY-MM-DD | [Author] | Initial draft |
-| 1.0 | YYYY-MM-DD | [Author] | Decision accepted |
-
----
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.[COMMAND]` command | [PENDING] | [PENDING] |
 
 ## 1. Decision Title
 

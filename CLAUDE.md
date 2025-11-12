@@ -477,7 +477,7 @@ ArcKit has deep UK Government integration:
 ## Important Notes
 
 - **Token Limit Handling**: Commands MUST use Write tool for large documents (requirements, SOBC, research findings, etc.) to avoid exceeding 32K output token limit. Only show summary to user.
-- **Document Control**: All artifacts auto-populate Document ID, Version, Dates using helper scripts.
+- **Document Control**: All artifacts MUST use the standard table + revision history defined in `docs/templates/document-control.md` (populate Document ID via `generate-document-id.sh`, fill review cycle/next review date, owner, reviewers, approvers before writing content).
 - **Traceability**: Every artifact links back to stakeholders, principles, requirements for full governance chain.
 - **Multi-phase Workflow**: Commands designed to run in sequence (principles → stakeholders → risk → SOBC → requirements → research → procurement → design review → backlog → operations).
 - **Template-Driven**: Never generate freeform documents - always use templates from `.arckit/templates/`.

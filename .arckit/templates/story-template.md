@@ -4,22 +4,28 @@
 
 | Field | Value |
 |-------|-------|
-| **Document ID** | {document_id} |
-| **Version** | {version} |
-| **Status** | {status} |
-| **Date Created** | {date_created} |
-| **Last Updated** | {last_updated} |
-| **Project ID** | {project_id} |
+| **Document ID** | ARC-[PROJECT_ID]-STORY-v[VERSION] |
+| **Document Type** | Project Story |
+| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
+| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
+| **Version** | [VERSION] |
+| **Created Date** | [YYYY-MM-DD] |
+| **Last Modified** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Reviewed By** | [REVIEWER_NAME] on [DATE] or [PENDING] |
+| **Approved By** | [APPROVER_NAME] on [DATE] or [PENDING] |
+| **Distribution** | [DISTRIBUTION_LIST] |
 | **Author** | Enterprise Architect |
 | **Approver** | [Approver Name] |
 
-### Revision History
+## Revision History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| {version} | {date_created} | Enterprise Architect | Initial project story generated |
-
----
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.[COMMAND]` command | [PENDING] | [PENDING] |
 
 ## Executive Summary
 

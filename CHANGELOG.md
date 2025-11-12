@@ -35,6 +35,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+## [0.9.1] - 2025-11-12
+
+### Added
+
+- **Document Control Standard**: New reference in `docs/templates/document-control.md` plus README cross-links so every command references the same metadata expectations (Document ID, classification, review cadence, distribution, revision history, etc.).
+- **Guides**: Added roadmap and ADR playbooks under `docs/guides/` to document the new workflows released in 0.9.0 and highlight where document control fits in those processes.
+
+### Changed
+
+- **Template Alignment**: All Markdown templates in `.arckit/templates/` now share the canonical Document Control table and revision history format, with doc-specific fields (e.g., ADR Number, Financial Years) appended below the standard block.
+- **Command Updates**: Claude/Codex/Gemini instructions explicitly reference the new standard, require `generate-document-id.sh`, and ensure commands populate metadata before writing body content.
+- **Dynamic Version Metadata**: `/arckit.sobc` and `/arckit.service-assessment` prompts (for every agent) read `.arckit/VERSION` so generated artifacts always show the current ArcKit release.
+- **Docs Refresh**: README, docs index, workflow diagrams, dependency matrix, and command references updated to advertise v0.9.1 as the latest release.
+
+### Fixed
+
+- **Version Drift**: Removed remaining hardcoded `v0.9.0` strings so prompts either reference `.arckit/VERSION` or historical sections only.
+
 ## [0.9.0] - 2025-01-06
 
 ### Added

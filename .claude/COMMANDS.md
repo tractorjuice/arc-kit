@@ -14,9 +14,12 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.requirements` | Define comprehensive requirements | After SOBC approval, before data modeling |
 | `/arckit.platform-design` | Design multi-sided platform strategy using PDT | After requirements when building ecosystem platforms |
 | `/arckit.data-model` | Create comprehensive data model with ERD | After requirements, before vendor selection |
+| `/arckit.data-mesh-contract` | Create federated data product contracts (ODCS v3.0.2) | When delivering data mesh/federated analytics |
 | `/arckit.dpia` | Generate Data Protection Impact Assessment | After data model when processing personal data |
 | `/arckit.research` | Research technology and services for build vs buy | After requirements, inform procurement decisions |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
+| `/arckit.roadmap` | Produce multi-year capability roadmap with governance gates | After strategy artifacts, before procurement |
+| `/arckit.adr` | Capture MADR-format architectural decisions | Whenever key design choices need approval trail |
 | `/arckit.diagram` | Generate architecture diagrams (Mermaid) | Visualize system structure throughout project |
 | `/arckit.gcloud-search` | Find G-Cloud services on UK Digital Marketplace | UK Gov procurement of off-the-shelf services |
 | `/arckit.gcloud-clarify` | Generate supplier clarification questions | After G-Cloud search, validate service claims |
@@ -1558,8 +1561,8 @@ For issues or questions:
 
 ---
 
-**Last updated**: 2025-11-04
-**ArcKit Version**: 0.8.3
+**Last updated**: 2025-11-12
+**ArcKit Version**: 0.9.1
 
 ### 20. `/arckit.backlog` - Product Backlog Generation
 
@@ -2003,4 +2006,296 @@ Classification:
 
 ---
 
-*Last updated: 2025-11-04 | Version: 0.8.3*
+### 23. `/arckit.platform-design` - Platform Strategy (PDT)
+
+**Purpose**: Design multi-sided platform strategies using the Platform Design Toolkit (PDT) canvases for marketplaces, data platforms, or shared services.
+
+**Usage**:
+```
+/arckit.platform-design Design NHS appointment platform using PDT canvases
+/arckit.platform-design Map supply and demand entities for GOV.UK Payments ecosystem
+```
+
+**Prerequisites**:
+- Architecture principles (mandatory) to guide platform governance
+- Stakeholder analysis and requirements (recommended) for entity portraits and capabilities
+- Wardley maps (optional) for evolution lenses
+
+**What it does**:
+- Auto-populates Ecosystem Canvas, Entity Portraits, Motivations Matrix, Transactions Board, Learning Engine, Platform Experience Canvas, MVP Canvas, and Platform Design Canvas
+- Maps stakeholder drivers to supply/demand entities with pains, gains, and triggers
+- Designs transactions (search, negotiation, execution) with cost reduction analysis
+- Captures governance rules, monetisation levers, trust mechanisms, and KPIs
+
+**Output**: `projects/NNN-platform-name/platform-design.md`
+
+**Next step**: Feed platform capabilities into `/arckit.wardley`, `/arckit.roadmap`, and `/arckit.requirements` for delivery planning.
+
+---
+
+### 24. `/arckit.data-mesh-contract` - Federated Data Product Contracts
+
+**Purpose**: Generate Open Data Contract Standard (ODCS) v3.0.2 compliant contracts for data mesh or federated analytics programmes.
+
+**Usage**:
+```
+/arckit.data-mesh-contract Create ODCS contract for citizen 360 domain
+/arckit.data-mesh-contract Define data product for NHS spine integration
+```
+
+**Prerequisites**:
+- Requirements and data model (mandatory) for schema and SLA information
+- Platform design or stakeholder goals (recommended) for use cases
+
+**What it does**:
+- Fills all 10 ODCS sections: Summary, Stewardship, Schema, Semantics, Interface, SLO/SLA, Policies, Lineage, Change Management, Observability
+- Generates versioned contract IDs, owners, escalation routes, access tiers, and privacy notes
+- Lists consuming domains, mesh interoperability rules, and quality gates
+
+**Output**: `projects/NNN-domain/data-products/<slug>-contract.md`
+
+**Next step**: Reference the contract in `/arckit.servicenow`, `/arckit.traceability`, and vendor SOWs.
+
+---
+
+### 25. `/arckit.wardley` - Wardley Mapping
+
+**Purpose**: Produce Wardley Maps that visualise user needs, value chain components, and evolution stages to inform build/partner/buy decisions.
+
+**Usage**:
+```
+/arckit.wardley Create Wardley map for digital identity programme
+/arckit.wardley Map capability evolution for cloud centre of excellence
+```
+
+**What it does**:
+- Identifies anchor user needs drawn from stakeholders and requirements
+- Maps components across value chain vs. evolution axis (Genesis → Custom → Product → Commodity/Utility)
+- Highlights duplication, inertia, and automation opportunities
+- Suggests gameplay (e.g., open source, standards, ecosystem plays) and target sourcing strategy
+- Includes textual summary plus Mermaid map for static sites
+
+**Output**: `projects/NNN-project-name/wardley-maps/<slug>.md`
+
+**Next step**: Use the map to prioritise `/arckit.research`, `/arckit.roadmap`, and `/arckit.sow` scope.
+
+---
+
+### 26. `/arckit.roadmap` - Strategic Architecture Roadmap
+
+**Purpose**: Build multi-year capability roadmaps linking current state, interim states, and target outcomes with governance gates and investment envelopes.
+
+**Usage**:
+```
+/arckit.roadmap Create roadmap for devolved HR platform FY24/25–FY27/28
+/arckit.roadmap Plot modern slavery intelligence roadmap with risk mitigations
+```
+
+**What it does**:
+- Generates document control block with ARC ID, owner, and review cadence
+- Creates executive summary (vision, spend profile, measurable outcomes)
+- Breaks roadmap into themes with “now/next/later” capability narratives
+- Provides quarterly or semester swimlanes showing dependencies and approvals
+- Integrates compliance checkpoints (TCoP, Secure by Design, AI Playbook)
+- Lists top transformation risks with contingency triggers
+
+**Output**: `projects/NNN-project-name/roadmap.md`
+
+**Next step**: Align procurement (`/arckit.sow`, `/arckit.dos`) and delivery plans (`/arckit.plan`, `/arckit.story`) to roadmap milestones.
+
+---
+
+### 27. `/arckit.adr` - Architecture Decision Records
+
+**Purpose**: Document architecture decisions using MADR v4.0 format with traceability to requirements, risks, and compliance constraints.
+
+**Usage**:
+```
+/arckit.adr Choose API gateway vs. service mesh for payments
+/arckit.adr Decide hosting region strategy for GenAI workloads
+```
+
+**What it does**:
+- Captures context, problem statement, and decision drivers referencing stakeholder goals and principles
+- Compares multiple options (including do-nothing) with evidence-backed pros/cons
+- States decision outcome, status, follow-up actions, and re-evaluation date
+- Records approvals (Design Authority, CAB, Architecture Board) plus RACI
+- Links to downstream backlog items and compliance artefacts
+
+**Output**: `projects/NNN-project-name/decisions/<slug>.md`
+
+**Next step**: Surface summaries in `/arckit.story`, update `/arckit.traceability`, and include decisions in design review packs.
+
+---
+
+### 28. `/arckit.diagram` - Architecture Diagram Generation
+
+**Purpose**: Generate C4 Model-aligned diagrams (Context, Container, Component, Deployment) using Mermaid.
+
+**Usage**:
+```
+/arckit.diagram Create C4 diagrams for citizen identity platform
+/arckit.diagram Update container view after microservice split
+```
+
+**What it does**:
+- Reads requirements, HLD/DLD, and platform design to populate actors, systems, containers, and technologies
+- Produces multiple Mermaid diagrams plus textual commentary
+- Annotates security zones, data classifications, latency, and throughput
+- Points out compliance controls (Zero Trust, encryption, audit)
+
+**Output**: `projects/NNN-project-name/diagrams/*.md`
+
+**Next step**: Share diagrams in design reviews, embed into `/arckit.hld-review`, and sync with `/arckit.servicenow`.
+
+---
+
+### 29. `/arckit.servicenow` - ServiceNow Design Package
+
+**Purpose**: Translate architecture outputs into ServiceNow service portfolio artefacts (CIs, services, SLAs, process integrations).
+
+**Usage**:
+```
+/arckit.servicenow Export architecture to ServiceNow for ITSM onboarding
+/arckit.servicenow Map CMDB for payments modernisation
+```
+
+**What it does**:
+- Generates service definitions, CI classes, relationships, support groups, knowledge articles, and SLAs
+- Maps traceability between requirements, diagrams, and ServiceNow tables
+- Produces onboarding checklist (CAB, change models, incident flows)
+
+**Output**: `projects/NNN-project-name/servicenow-design.md`
+
+**Next step**: Coordinate with operations teams to implement CIs, update `/arckit.traceability`, and reflect status in `/arckit.story`.
+
+---
+
+### 30. `/arckit.analyze` - Cross-Artifact Quality Analysis
+
+**Purpose**: Perform holistic quality review across all available artifacts to highlight gaps, inconsistencies, and action items.
+
+**Usage**:
+```
+/arckit.analyze Run quality sweep before Alpha exit
+/arckit.analyze Identify documentation gaps ahead of governance review
+```
+
+**What it does**:
+- Scans plan, principles, stakeholders, risk, requirements, data model, diagrams, procurement, compliance, and story outputs
+- Generates gap matrix with severity (Critical/High/Medium/Low) and remediation guidance
+- Tracks dependencies (e.g., DPIA pending because data model missing)
+- Provides readiness score per GDS phase and compliance objective
+
+**Output**: `projects/NNN-project-name/analysis/gap-analysis.md`
+
+**Next step**: Feed remediation actions into `/arckit.backlog` and include highlights in `/arckit.service-assessment`.
+
+---
+
+### 31. `/arckit.ai-playbook` - UK Government AI Playbook Alignment
+
+**Purpose**: Demonstrate compliance with the UK Government AI Playbook across Discovery → Live phases.
+
+**Usage**:
+```
+/arckit.ai-playbook Assess AI playbook readiness for GenAI assistant
+/arckit.ai-playbook Document compliance for fraud analytics service
+```
+
+**What it does**:
+- Maps project artefacts to AI Playbook stages: Understand Context, Design, Build, Deploy, Operate
+- Provides checklists for policy compliance, data ethics, transparency, and assurance
+- Highlights missing evidence, recommended follow-up actions, and owners
+
+**Output**: `projects/NNN-project-name/compliance/ai-playbook.md`
+
+**Next step**: Pair with `/arckit.atrs` for publication and feed outcomes into `/arckit.story`.
+
+---
+
+### 32. `/arckit.atrs` - Algorithmic Transparency Record Standard (ATRS)
+
+**Purpose**: Produce ATRS entries for public transparency of algorithmic systems.
+
+**Usage**:
+```
+/arckit.atrs Draft ATRS entry for benefits eligibility model
+/arckit.atrs Update transparency record after model retrain
+```
+
+**What it does**:
+- Captures high-level description, purpose, legal basis, data sources, beneficiaries, and oversight model
+- Documents fairness safeguards, impact assessments, and contact channels
+- Provides publication-ready Markdown/HTML text with structured sections
+
+**Output**: `projects/NNN-project-name/compliance/atrs.md`
+
+**Next step**: Publish via departmental transparency pages and cross-reference `/arckit.ai-playbook`, `/arckit.jsp-936`.
+
+---
+
+### 33. `/arckit.secure` - Secure by Design (Civilian)
+
+**Purpose**: Generate Secure by Design artefacts covering NCSC CAF, Cyber Essentials, UK GDPR controls for civil government services.
+
+**Usage**:
+```
+/arckit.secure Secure by Design review for online licensing platform
+/arckit.secure Map CAF outcomes for citizen portal
+```
+
+**What it does**:
+- Aligns requirements to NCSC CAF functions (Identify, Protect, Detect, Respond)
+- Documents threat model, control coverage, residual risks, and action plan
+- Includes RACI, implementation timeline, and evidence references
+
+**Output**: `projects/NNN-project-name/compliance/secure-by-design.md`
+
+**Next step**: Feed mandatory actions into `/arckit.backlog`, reference in `/arckit.service-assessment`, and ensure alignment with `/arckit.mod-secure` if defence scope emerges.
+
+---
+
+### 34. `/arckit.mod-secure` - MOD Secure by Design
+
+**Purpose**: Apply MOD Secure by Design (based on JSP 440, IAMM) for defence programmes requiring heightened assurance.
+
+**Usage**:
+```
+/arckit.mod-secure Secure by Design for secure comms modernisation
+/arckit.mod-secure Document JSP 440 controls for defence data hub
+```
+
+**What it does**:
+- Maps system components to MOD threat classifications and handling caveats
+- Documents protective monitoring, accreditation artefacts, and clearance pathways
+- Provides control implementation plan plus dependencies on JSP 604, JSP 935, JSP 936 outputs
+
+**Output**: `projects/NNN-project-name/compliance/mod-secure.md`
+
+**Next step**: Share with ISS accreditation teams, feed dependencies into `/arckit.jsp-936`, `/arckit.story`, and `/arckit.service-assessment`.
+
+---
+
+### 35. `/arckit.tcop` - Technology Code of Practice (TCoP)
+
+**Purpose**: Assess compliance with the 14 TCoP points for UK government technology projects.
+
+**Usage**:
+```
+/arckit.tcop Evaluate TCoP compliance for citizen payments modernisation
+/arckit.tcop Prepare evidence pack ahead of Cabinet Office assurance
+```
+
+**What it does**:
+- Reviews each TCoP point (from user needs to open working) and pulls supporting evidence from ArcKit artifacts
+- Assigns RAG status, owners, next actions, and due dates
+- Highlights mandatory actions before entering Beta/Live
+
+**Output**: `projects/NNN-project-name/compliance/tcop.md`
+
+**Next step**: Reference in `/arckit.service-assessment`, `/arckit.story`, and share with Cabinet Office assurance teams.
+
+---
+
+*Last updated: 2025-11-12 | Version: 0.9.1*

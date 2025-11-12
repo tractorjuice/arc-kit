@@ -21,18 +21,21 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 4. [Risk Management](guides/risk-management.md) - `/arckit.risk`
 5. [Business Case](guides/business-case.md) - `/arckit.sobc` ⭐ NEW
 6. [Requirements Definition](guides/requirements.md) - `/arckit.requirements`
-7. [Data Model](guides/data-model.md) - `/arckit.data-model` ⭐ NEW
-8. [Data Mesh Contract](guides/data-mesh-contract.md) - `/arckit.data-mesh-contract` ⭐ NEW
-9. [Data Protection Impact Assessment](guides/dpia.md) - `/arckit.dpia` ⭐ NEW
-10. [Wardley Mapping](guides/wardley-mapping.md) - `/arckit.wardley` ⭐ NEW
-11. [Design Reviews](guides/design-review.md) - `/arckit.hld-review`, `/arckit.dld-review`
-12. [Traceability](guides/traceability.md) - `/arckit.traceability`
+7. [Platform Design](guides/platform-design.md) - `/arckit.platform-design` ⭐ NEW
+8. [Data Model](guides/data-model.md) - `/arckit.data-model` ⭐ NEW
+9. [Data Mesh Contract](guides/data-mesh-contract.md) - `/arckit.data-mesh-contract` ⭐ NEW
+10. [Data Protection Impact Assessment](guides/dpia.md) - `/arckit.dpia` ⭐ NEW
+11. [Wardley Mapping](guides/wardley-mapping.md) - `/arckit.wardley` ⭐ NEW
+12. [Roadmap](guides/roadmap.md) - `/arckit.roadmap` ⭐ NEW
+13. [Design Reviews](guides/design-review.md) - `/arckit.hld-review`, `/arckit.dld-review`
+14. [Traceability](guides/traceability.md) - `/arckit.traceability`
 
 ### Research & Analysis
 13. [Research](guides/research.md) - `/arckit.research` ⭐ NEW
 14. [Analyze](guides/analyze.md) - `/arckit.analyze` ⭐ NEW
 15. [Principles Compliance](guides/principles-compliance.md) - `/arckit.principles-compliance` ⭐ NEW
 16. [Diagrams](guides/diagram.md) - `/arckit.diagram` ⭐ NEW
+17. [Architecture Decision Records](guides/adr.md) - `/arckit.adr` ⭐ NEW
 
 ### Procurement
 17. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
@@ -82,6 +85,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ## 🔧 Technical Guides
 
 - [Token Limits Solutions](TOKEN-LIMITS.md) - Handling large projects with AI token limits
+- [Document Control Standard](templates/document-control.md) - Canonical metadata + revision history table used across all templates
 
 ---
 
@@ -95,11 +99,14 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.risk` | [risk-management.md](guides/risk-management.md) | ✅ Complete |
 | `/arckit.sobc` | [business-case.md](guides/business-case.md) | ✅ Complete |
 | `/arckit.requirements` | [requirements.md](guides/requirements.md) | ✅ Complete |
+| `/arckit.platform-design` | [platform-design.md](guides/platform-design.md) | ✅ Complete |
 | `/arckit.data-model` | [data-model.md](guides/data-model.md) | ✅ Complete |
 | `/arckit.data-mesh-contract` | [data-mesh-contract.md](guides/data-mesh-contract.md) | ✅ Complete |
 | `/arckit.dpia` | [dpia.md](guides/dpia.md) | ✅ Complete |
 | `/arckit.research` | [research.md](guides/research.md) | ✅ Complete |
 | `/arckit.wardley` | [wardley-mapping.md](guides/wardley-mapping.md) | ✅ Complete |
+| `/arckit.roadmap` | [roadmap.md](guides/roadmap.md) | ✅ Complete |
+| `/arckit.adr` | [adr.md](guides/adr.md) | ✅ Complete |
 | `/arckit.diagram` | [diagram.md](guides/diagram.md) | ✅ Complete |
 | `/arckit.gcloud-search` | [digital-marketplace.md](guides/uk-government/digital-marketplace.md) | ✅ Complete |
 | `/arckit.gcloud-clarify` | [digital-marketplace.md](guides/uk-government/digital-marketplace.md) | ✅ Complete |
@@ -122,7 +129,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.jsp-936` | [jsp-936.md](guides/jsp-936.md) | ✅ Complete |
 | `/arckit.story` | [story.md](guides/story.md) | ✅ Complete |
 
-**Coverage**: 32/32 commands documented (100%)
+**Coverage**: 35/35 commands documented (100%)
 
 ---
 
@@ -134,5 +141,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2025-11-04
-**ArcKit Version**: 0.8.3
+**Last updated**: 2025-11-12
+**ArcKit Version**: 0.9.1

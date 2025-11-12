@@ -42,6 +42,15 @@ cp .codex/prompts/*.md ~/.codex/prompts/
 codex
 ```
 
+## Document Control Standard
+
+Every command that generates an artifact must insert the canonical **Document Control** table and **Revision History** defined in [`docs/templates/document-control.md`](../docs/templates/document-control.md). Always:
+
+- Read `.arckit/VERSION` to populate `ArcKit Version` metadata.
+- Generate the Document ID via `./scripts/bash/generate-document-id.sh PROJECT_ID DOC_CODE VERSION`.
+- Fill the standard fields (Project, Classification, Status, Review Cycle, Next Review Date, Owner, Reviewed/Approved By, Distribution) before writing any narrative content.
+- Keep additional rows (e.g., “Financial Years Covered”, “ADR Number”) below the standard block so every artifact shares the same governance header.
+
 ## Command Invocation
 
 Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
@@ -95,9 +104,11 @@ Codex CLI uses the format `/prompts:command-name` to invoke custom commands.
 ### Compliance & Governance Reporting
 
 ```bash
+/prompts:arckit.principles-compliance Assess compliance with approved architecture principles using RAG evidence
 /prompts:arckit.service-assessment Prepare for GDS Service Standard assessment
 /prompts:arckit.secure Conduct Secure by Design review
 /prompts:arckit.mod-secure Run MOD Secure by Design assessment
+/prompts:arckit.jsp-936 Generate JSP 936 AI assurance documentation
 /prompts:arckit.tcop Assess Technology Code of Practice compliance
 /prompts:arckit.atrs Produce Algorithmic Transparency Record
 /prompts:arckit.ai-playbook Check UK Government AI Playbook alignment
@@ -447,13 +458,13 @@ If you get an error like "expected key=value but found 'Add'" or "expected key=v
 
 **Problem**: Some prompts accidentally included `$PROJECT_NAME` in example text, which Codex CLI interprets as a required named parameter.
 
-**Solution**: This has been fixed in the prompts (v0.9.0+). If using older versions, provide an empty value:
+**Solution**: This has been fixed in the prompts (v0.9.1+). If using older versions, provide an empty value:
 
 ```bash
 # ✅ WORKAROUND for older versions:
 /prompts:arckit.stakeholders PROJECT_NAME="" Add GDS as a stakeholder
 
-# ✅ FIXED in v0.9.0+: Just use normally
+# ✅ FIXED in v0.9.1+: Just use normally
 /prompts:arckit.stakeholders Add GDS as a stakeholder
 ```
 
@@ -478,27 +489,21 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-**Unreleased (35 commands)**
+**Current Release: v0.9.1 (35 commands)**
 
-**Coming Soon:**
-- ✅ **New Command**: `/prompts:arckit.data-mesh-contract` (32nd command) - Create federated data product contracts for mesh architectures (ODCS v3.0.2)
-- ✅ **New Command**: `/prompts:arckit.principles-compliance` (31st command) - Assess project compliance with architecture principles using RAG status and evidence-based validation
-- ✅ **New Command**: `/prompts:arckit.dpia` (30th command) - Generate Data Protection Impact Assessment for UK GDPR Article 35 compliance
-- ✅ **New Command**: `/prompts:arckit.story` (29th command) - Generate comprehensive project story with timeline analysis
-- 🔐 **Principles Governance**: Dynamic principle extraction, RAG status system (Red/Amber/Green/Not Assessed), evidence-based assessment, exception management
-- 🛡️ **Privacy Risk Management**: ICO 9-criteria screening, auto-population from data model, children's data assessment, AI/ML bias assessment
-- 📊 **Timeline-First Reporting**: 4 timeline visualizations, 8 narrative chapters, complete traceability demonstration
-- 🗺️ **Project Journey**: Showcase governance achievements, strategic decisions, and lessons learned
-- 📈 **Updated Documentation**: 31×31 dependency matrix, updated workflow diagrams with principles compliance integration
+**Latest Additions**
+- 🧾 **Document Control Standard**: Commands now reference `docs/templates/document-control.md` and auto-fill the canonical metadata + revision history before writing content.
+- 🪪 **Dynamic Version Metadata**: SOB C and Service Assessment prompts (all agents) read `.arckit/VERSION` so generated documents always display the current ArcKit release.
+- 🧱 **Template Alignment**: Every template header now shares the same field order (Document ID/Type, Project, Classification, Status, Review Cycle, etc.) with doc-specific rows appended beneath.
+- 📚 **New Guides**: Added roadmap and ADR guides plus README cross-links so teams can reference the new workflows quickly.
 
----
+ArcKit v0.9.1+ (35 commands)
 
-ArcKit v0.9.0+ (35 commands)
-
-**What's New in v0.9.0:**
-- 🔄 **New Command**: `/prompts:arckit.data-mesh-contract` (32nd command) - Create federated data product contracts for mesh architectures (ODCS v3.0.2)
-- 📊 **Data Mesh Support**: Full Open Data Contract Standard v3.0.2 compliance with 10 core sections
-- 🔐 **Federated Governance**: Domain ownership, data as product, self-serve infrastructure
+**What was New in v0.9.0:**
+- 🔄 **New Command**: `/prompts:arckit.data-mesh-contract` – Create federated data product contracts (ODCS v3.0.2)
+- 🧭 **New Command**: `/prompts:arckit.roadmap` – Strategic roadmap covering capability evolution and investment cases
+- 📝 **New Command**: `/prompts:arckit.adr` – MADR-format architectural decision logs with governance metadata
+- 🧮 **Compliance Enhancements**: `/prompts:arckit.principles-compliance` and `/prompts:arckit.story` provide traceable governance reporting
 - 🔧 **Version Consistency**: All version references synchronized to v0.9.0
 
 **What was New in v0.6.0:**
