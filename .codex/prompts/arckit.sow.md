@@ -1,6 +1,3 @@
----
-description: Generate Statement of Work (SOW) / RFP document for vendor procurement
----
 
 You are helping an enterprise architect generate a comprehensive Statement of Work (SOW) that will be used as an RFP document for vendor procurement.
 
@@ -15,7 +12,11 @@ $ARGUMENTS
 1. **Find the project**: The user should specify a project name or number
    - Example: "Generate SOW for payment gateway modernization"
    - Example: "Create SOW for project 001"
-   - If project doesn't exist, create it first using `.arckit/scripts/bash/create-project.sh`
+   - If project doesn't exist, create it first using:
+     ```bash
+     .arckit/scripts/bash/create-project.sh --name "project-name" --json
+     ```
+     Parse the JSON output to get the project path and ID
 
 2. **Read the requirements**: Read `projects/{project-dir}/requirements.md`
    - If requirements don't exist, suggest running `/arckit.requirements` first

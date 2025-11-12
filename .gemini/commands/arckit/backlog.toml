@@ -1359,6 +1359,9 @@ Write all files to `projects/{project-dir}/`:
 - `backlog.csv` - If FORMAT=csv or FORMAT=all
 - `backlog.json` - If FORMAT=json or FORMAT=all
 
+**CRITICAL - Show Summary Only**:
+After writing the file(s), show ONLY the confirmation message below. Do NOT output the full backlog content in your response. The backlog document can be 1000+ lines and will exceed token limits.
+
 **Confirmation message**:
 
 ```

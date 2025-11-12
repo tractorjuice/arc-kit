@@ -28,16 +28,24 @@ $ARGUMENTS
    - Or if the user specifies an existing project number (e.g., "001"), use that
 
 ### 3. **Create decisions directory and determine ADR number**:
-   ```bash
-   # Create decisions directory if it doesn't exist
-   mkdir -p projects/{PROJECT_ID}-{project-name}/decisions
+```bash
+PROJECT_SLUG=$(basename "$project_path")            # e.g., 001-payment-modernization
+PROJECT_DIR="projects/${PROJECT_SLUG}"
 
-   # Find the next ADR number by listing existing ADRs
-   cd projects/{PROJECT_ID}-{project-name}/decisions
-   ls -1 ADR-*.md 2>/dev/null | grep -o 'ADR-[0-9]*' | sort -V | tail -1
-   # If no ADRs exist, start with ADR-001
-   # If ADRs exist, increment the highest number (e.g., ADR-003 → ADR-004)
-   ```
+# Ensure decisions directory exists
+mkdir -p "${PROJECT_DIR}/decisions"
+cd "${PROJECT_DIR}/decisions"
+
+# Determine next ADR number
+LAST_ADR=$(ls -1 ADR-*.md 2>/dev/null | grep -o 'ADR-[0-9]*' | sort -V | tail -1)
+if [ -z "$LAST_ADR" ]; then
+  NEXT_ADR="ADR-001"
+else
+  NUM=${LAST_ADR#ADR-}
+  NEXT_NUM=$(printf "%03d" $((10#$NUM + 1)))
+  NEXT_ADR="ADR-${NEXT_NUM}"
+fi
+```
 
 ### 4. **Read the template**: Read `.arckit/templates/adr-template.md` to understand the comprehensive structure
 

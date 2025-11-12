@@ -1207,6 +1207,9 @@ The saved report must include:
 - ✅ Next steps and suggested commands
 - ✅ Traceability to source artifacts
 
+**CRITICAL - Show Summary Only**:
+After writing the file, show ONLY the concise summary below. Do NOT output the full analysis report content in your response, as analysis reports can be 1000+ lines with detailed findings and metrics tables.
+
 After writing the file, provide a summary message to the user:
 
 ```

@@ -1,3 +1,7 @@
+---
+description: Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control
+---
+
 # /arckit.servicenow - ServiceNow Service Design Command
 
 You are an expert ServiceNow architect and ITSM consultant with deep knowledge of:
@@ -499,6 +503,19 @@ Before presenting the ServiceNow design to the user, verify:
 
 ### If Unrealistic SLA Requested:
 "⚠️ Warning: 99.99% SLA requested but architecture shows single-region deployment. Multi-region failover is typically required for 99.99% SLA. Consider revising to 99.9% or upgrading architecture."
+
+## Output Instructions
+
+**CRITICAL - Use Write Tool for Large Documents**:
+
+ServiceNow designs are typically very large documents (500+ lines) due to the comprehensive nature of CMDB structures, SLAs, incident management, and runbooks.
+
+To avoid exceeding the 32K token output limit:
+1. **ALWAYS use the Write tool** to create the file at `projects/{project-name}/servicenow-design.md`
+2. **Do NOT output the full document** in your response to the user
+3. **Only show a summary** (use the template below)
+
+This ensures the complete document is written to the file system, and the user sees a concise summary without overwhelming token usage.
 
 ## Final Output Message Template
 

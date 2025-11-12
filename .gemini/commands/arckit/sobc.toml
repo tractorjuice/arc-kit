@@ -168,6 +168,32 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
      - Typically: `/arckit.requirements` to define detailed requirements
      - Then: `/arckit.business-case-detailed` with accurate costs
 
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+### Step 1: Generate Document ID
+```bash
+# Use the ArcKit document ID generation script
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"SOBC\" \"1.0\")
+# Example output: ARC-001-SOBC-v1.0
+```
+
+### Step 2: Populate Required Fields
+
+**Auto-populated fields** (populate these automatically):
+- `[PROJECT_ID]` → Extract from project path (e.g., \"001\" from \"projects/001-project-name\")
+- `[VERSION]` → Start with \"1.0\" for new documents
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → \"Strategic Outline Business Case (SOBC)\"
+- `[CLASSIFICATION]` → Default to \"OFFICIAL\" for UK Gov, \"INTERNAL\" for private sector
+- `[STATUS]` → \"DRAFT\" for new documents
+
+**User-specified fields** (must be confirmed with user):
+- `[OWNER]` → Who owns this business case? (typically from stakeholder RACI matrix)
+- `[REVIEWED_BY]` → Who will review? (mark as \"PENDING\" if not yet reviewed)
+- `[APPROVED_BY]` → Who must approve? (mark as \"PENDING\" if not yet approved)
+
 8. **Write the output**:
    - Create or update `projects/NNN-project-name/sobc.md`
    - Use project directory structure (create if doesn't exist)

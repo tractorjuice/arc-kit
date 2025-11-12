@@ -1,7 +1,3 @@
----
-description: Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints
-alwaysShow: true
----
 
 # Generate Product Backlog
 
@@ -28,7 +24,6 @@ You are creating a **prioritised product backlog** for an ArcKit project, conver
 - `dependency` - Dependency-based only
 - `multi` - Multi-factor (recommended)
 
----
 
 ## What This Command Does
 
@@ -72,7 +67,6 @@ Scans all ArcKit artifacts and automatically:
 
 **Time Savings**: 75%+ reduction (4-6 weeks → 3-5 days)
 
----
 
 ## Process
 
@@ -460,7 +454,6 @@ For **each BR-xxx**, create an epic:
 **Stories in this Epic**:
 {List all FR stories that map to this BR}
 
----
 ```
 
 #### 5.2: Group Stories into Epics
@@ -516,7 +509,6 @@ UK GDPR and provide audit trail for all user data access.
 
 **Total**: 34 story points across 8 stories
 
----
 ```
 
 ### Step 6: Create Technical Tasks from NFRs
@@ -1134,7 +1126,6 @@ Every story must meet these criteria before marking "Done":
 - [ ] Acceptance criteria validated by PO
 - [ ] User feedback incorporated (if available)
 
----
 
 **Note**: This DoD applies to all stories. Additional criteria may be added per story based on specific requirements.
 ```
@@ -1155,7 +1146,6 @@ Create comprehensive markdown file at `projects/{project-dir}/backlog.md`:
 **Sprint Length**: {sprint_length}
 **Total Sprints Planned**: {sprints}
 
----
 
 ## Executive Summary
 
@@ -1172,7 +1162,6 @@ Create comprehensive markdown file at `projects/{project-dir}/backlog.md`:
 ### Epic Breakdown
 {List all epics with point totals}
 
----
 
 ## How to Use This Backlog
 
@@ -1202,35 +1191,29 @@ Create comprehensive markdown file at `projects/{project-dir}/backlog.md`:
 - **Monthly**: Reassess epic priorities
 - **Per sprint**: Update based on completed work and learnings
 
----
 
 ## Epics
 
 {Generate all epic sections from Step 5}
 
----
 
 ## Prioritized Backlog
 
 {Generate all user stories from Step 4, sorted by priority from Step 7}
 
----
 
 ## Sprint Plan
 
 {Generate all sprint plans from Step 8}
 
----
 
 ## Appendices
 
 {Include all appendices from Steps 9-12}
 
----
 
 **Note**: This backlog was auto-generated from ArcKit artifacts. Review and refine with your team before sprint planning begins. Story points are estimates - re-estimate based on your team's velocity and capacity.
 
----
 
 **End of Backlog**
 ```
@@ -1360,6 +1343,9 @@ Write all files to `projects/{project-dir}/`:
 - `backlog.csv` - If FORMAT=csv or FORMAT=all
 - `backlog.json` - If FORMAT=json or FORMAT=all
 
+**CRITICAL - Show Summary Only**:
+After writing the file(s), show ONLY the confirmation message below. Do NOT output the full backlog content in your response. The backlog document can be 1000+ lines and will exceed token limits.
+
 **Confirmation message**:
 
 ```
@@ -1391,7 +1377,6 @@ Write all files to `projects/{project-dir}/`:
   - Link to /arckit.traceability for requirements tracking
 ```
 
----
 
 ## Important Notes
 
@@ -1434,7 +1419,6 @@ High-risk items are prioritised early to:
 - Reduce uncertainty
 - Allow time for mitigation
 
----
 
 ## Error Handling
 
@@ -1472,7 +1456,6 @@ Then re-run /arckit.backlog
 
 Continue with available artifacts, note limitations in output.
 
----
 
 ## Time Savings
 
@@ -1490,7 +1473,6 @@ Continue with available artifacts, note limitations in output.
 
 **Time savings: 75-85%**
 
----
 
 ## Examples
 
@@ -1538,7 +1520,6 @@ Output:
 - High-risk items first
 - Ignores MoSCoW, value, dependencies
 
----
 
 ## Integration with Other Commands
 
@@ -1556,7 +1537,6 @@ Output:
 - `/arckit.test-strategy` → Test cases from acceptance criteria
 - `/arckit.analyze` → Backlog completeness check
 
----
 
 ## Success Criteria
 
@@ -1572,6 +1552,5 @@ Backlog is complete when:
 ✅ Traceability is maintained
 ✅ Output formats are tool-compatible
 
----
 
 Now generate the backlog following this comprehensive process.

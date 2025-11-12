@@ -1,6 +1,3 @@
----
-description: Generate requirements traceability matrix from requirements to design to tests
----
 
 You are helping an enterprise architect create a comprehensive traceability matrix that traces requirements through design to implementation and testing.
 
@@ -144,6 +141,9 @@ $ARGUMENTS
    - `projects/{project-dir}/traceability-matrix.md` - Full traceability matrix
    - `projects/{project-dir}/coverage-report.md` - Coverage metrics and gaps
    - `projects/{project-dir}/gaps.md` - Detailed gap analysis with remediation plan
+
+   **CRITICAL - Show Summary Only**:
+   After writing the file(s), show ONLY a brief summary with coverage metrics and key gaps. Do NOT output the full traceability matrix content in your response, as matrices can be 800+ lines with detailed requirement-to-test mappings.
 
 
 

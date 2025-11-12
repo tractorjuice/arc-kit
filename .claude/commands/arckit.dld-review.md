@@ -151,6 +151,9 @@ $ARGUMENTS
    - Update traceability matrix with implementation details
    - Create implementation checklist if approved
 
+   **CRITICAL - Show Summary Only**:
+   After writing the file(s), show ONLY a brief summary with key findings (status, score, blocking items). Do NOT output the full review document content in your response, as DLD reviews can be 700+ lines.
+
 ## Example Usage
 
 User: `/arckit.dld-review Review Acme Payment Solutions DLD for payment gateway`

@@ -70,7 +70,7 @@ fi
 **Option B: User Wants to Select from List**
 If the user didn't specify a project or said \"list\" or \"choose\":
 ```bash
-./.arckit/scripts/bash/list-projects.sh
+bash .arckit/scripts/bash/list-projects.sh
 ```
 Then ask the user which project number they want to generate a story for.
 

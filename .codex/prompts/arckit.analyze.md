@@ -1,6 +1,3 @@
----
-description: Perform comprehensive governance quality analysis across architecture artifacts (requirements, principles, designs, assessments)
----
 
 ## User Input
 
@@ -566,7 +563,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 **Date**: {current-date}
 **Analyzed By**: ArcKit v{version}
 
----
 
 ## Executive Summary
 
@@ -582,7 +578,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 **Recommendation**: [PROCEED / RESOLVE CRITICAL ISSUES FIRST / MAJOR REWORK NEEDED]
 
----
 
 ## Findings Summary
 
@@ -593,7 +588,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 | T1 | Traceability | HIGH | No HLD coverage | NFR-P-002 (10K TPS) not addressed | Add performance architecture section to HLD |
 | UK1 | UK Gov Compliance | CRITICAL | Missing DPIA | AI system requires DPIA before deployment | Complete DPIA for AI Playbook compliance |
 
----
 
 ## Requirements Analysis
 
@@ -618,7 +612,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 | NFR-S-003 | MUST | Encrypt data at rest | Security requirement |
 | NFR-P-002 | MUST | Support 10K TPS | Performance critical |
 
----
 
 ## Architecture Principles Compliance
 
@@ -630,7 +623,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 **Critical Principle Violations**: {count}
 
----
 
 ## Stakeholder Traceability Analysis
 
@@ -652,7 +644,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 - Orphan requirements: {count} requirements not linked to stakeholder goals
 - Unresolved conflicts: {count} requirement conflicts without resolution
 
----
 
 ## Risk Management Analysis
 
@@ -679,7 +670,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 - Risk owners from stakeholder RACI: ✅ Yes / ⚠️ Partial / ❌ No
 - Risk appetite compliance: {count} risks within tolerance
 
----
 
 ## Business Case Analysis
 
@@ -713,7 +703,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 - Benefits without requirement support: {count}
 - Budget shortfall: £{amount} (requirements scope exceeds budget)
 
----
 
 ## Data Model Analysis
 
@@ -753,7 +742,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 - PII not identified (GDPR risk): {count} entities
 - Data owners not from RACI matrix: {count} entities
 
----
 
 ## UK Government Compliance Analysis
 
@@ -791,7 +779,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 - [ ] Bias testing results
 - [ ] Fallback procedures
 
----
 
 ## MOD Secure by Design Analysis
 
@@ -887,7 +874,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 **Deployment Readiness**: ✅ Ready / ⚠️ Issues to resolve / ❌ BLOCKED
 
----
 
 ## Traceability Analysis
 
@@ -906,7 +892,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 - {count} design elements with no requirement justification
 - {count} components with no test coverage
 
----
 
 ## Vendor Procurement Analysis
 
@@ -937,7 +922,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 | Security architecture | ❌ | ❌ | Missing |
 | Performance (10K TPS) | ⚠️ | ❌ | Insufficient |
 
----
 
 ## Security & Compliance Summary
 
@@ -958,7 +942,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 **Compliance Coverage**: {percentage}%
 
----
 
 ## Recommendations
 
@@ -985,7 +968,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 1. **[S1] Improve requirement wording**: Replace "fast" with measurable criteria (e.g., "< 200ms p95").
 2. **[S2] Add edge case documentation**: Document edge cases for error handling.
 
----
 
 ## Metrics Dashboard
 
@@ -1059,7 +1041,6 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 - D (60-69%): Poor governance, major rework needed
 - F (<60%): Insufficient governance, do not proceed
 
----
 
 ## Next Steps
 
@@ -1119,7 +1100,6 @@ After making changes, re-run analysis:
 
 Expected improvement in scores after addressing findings.
 
----
 
 ## Detailed Findings
 
@@ -1146,7 +1126,6 @@ NFR-S-005: All stored data SHALL be encrypted with AES-256 encryption
 
 **Estimated Effort**: 10 minutes
 
----
 
 ### Finding P1: Violates Cloud-First Principle (CRITICAL)
 
@@ -1168,11 +1147,9 @@ FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 
 **Estimated Effort**: 2 hours (requirement change + design update)
 
----
 
 (Continue with detailed findings for top 10-20 issues)
 
----
 
 ## Appendix: Analysis Methodology
 
@@ -1189,7 +1166,6 @@ FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 
 **Analysis Version**: ArcKit v{version}
 
----
 
 **END OF ANALYSIS REPORT**
 ```
@@ -1206,6 +1182,9 @@ The saved report must include:
 - ✅ Actionable recommendations with priorities
 - ✅ Next steps and suggested commands
 - ✅ Traceability to source artifacts
+
+**CRITICAL - Show Summary Only**:
+After writing the file, show ONLY the concise summary below. Do NOT output the full analysis report content in your response, as analysis reports can be 1000+ lines with detailed findings and metrics tables.
 
 After writing the file, provide a summary message to the user:
 

@@ -115,7 +115,7 @@ Read the following artifacts to extract information for auto-population:
 Read the DPIA template:
 
 ```bash
-.arckit/templates/dpia-template.md
+cat .arckit/templates/dpia-template.md
 ```
 
 This template has 16 major sections and uses the ICO's 9-criteria screening checklist.

@@ -1,6 +1,3 @@
----
-description: Review High-Level Design (HLD) against architecture principles and requirements
----
 
 You are helping an enterprise architect review a High-Level Design (HLD) document to ensure it meets architecture principles, requirements, and quality standards before implementation begins.
 
@@ -140,6 +137,9 @@ $ARGUMENTS
    - `projects/{project-dir}/vendors/{vendor}/hld-review.md` - Full review report
    - `projects/{project-dir}/hld-review-summary.md` - Summary if comparing multiple vendors
    - Update traceability matrix with design references
+
+   **CRITICAL - Show Summary Only**:
+   After writing the file(s), show ONLY a brief summary with key findings (status, score, blocking items). Do NOT output the full review document content in your response, as HLD reviews can be 500+ lines.
 
 ## Example Usage
 

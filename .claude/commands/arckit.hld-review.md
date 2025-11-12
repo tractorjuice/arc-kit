@@ -141,6 +141,9 @@ $ARGUMENTS
    - `projects/{project-dir}/hld-review-summary.md` - Summary if comparing multiple vendors
    - Update traceability matrix with design references
 
+   **CRITICAL - Show Summary Only**:
+   After writing the file(s), show ONLY a brief summary with key findings (status, score, blocking items). Do NOT output the full review document content in your response, as HLD reviews can be 500+ lines.
+
 ## Example Usage
 
 User: `/arckit.hld-review Review Acme Payment Solutions HLD for payment gateway project`

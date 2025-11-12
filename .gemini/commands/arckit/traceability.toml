@@ -145,6 +145,9 @@ You are helping an enterprise architect create a comprehensive traceability matr
    - `projects/{project-dir}/coverage-report.md` - Coverage metrics and gaps
    - `projects/{project-dir}/gaps.md` - Detailed gap analysis with remediation plan
 
+   **CRITICAL - Show Summary Only**:
+   After writing the file(s), show ONLY a brief summary with coverage metrics and key gaps. Do NOT output the full traceability matrix content in your response, as matrices can be 800+ lines with detailed requirement-to-test mappings.
+
 
 
 **CRITICAL - Auto-Populate Document Control Fields**:

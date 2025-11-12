@@ -1,6 +1,3 @@
----
-description: Review Detailed Design (DLD) for implementation readiness
----
 
 You are helping an enterprise architect review a Detailed Design (DLD) document to ensure the design is ready for implementation with all technical details properly specified.
 
@@ -150,6 +147,9 @@ $ARGUMENTS
    - `projects/{project-dir}/vendors/{vendor}/dld-review.md` - Full review report
    - Update traceability matrix with implementation details
    - Create implementation checklist if approved
+
+   **CRITICAL - Show Summary Only**:
+   After writing the file(s), show ONLY a brief summary with key findings (status, score, blocking items). Do NOT output the full review document content in your response, as DLD reviews can be 700+ lines.
 
 ## Example Usage
 
