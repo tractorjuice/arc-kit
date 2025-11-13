@@ -64,8 +64,8 @@ REPO_ROOT="$(find_repo_root)"
 # Check prerequisites (unless --force is used)
 if [[ "$FORCE_CREATE" != "true" ]]; then
     ARCKIT_DIR="$(get_arckit_dir "$REPO_ROOT")"
-    TEMPLATES_DIR="$(get_templates_dir "$REPO_ROOT")"
-    PRINCIPLES_FILE="$TEMPLATES_DIR/architecture-principles.md"
+    MEMORY_DIR="$(get_memory_dir "$REPO_ROOT")"
+    PRINCIPLES_FILE="$MEMORY_DIR/architecture-principles.md"
 
     if [[ ! -f "$PRINCIPLES_FILE" ]]; then
         log_error "Prerequisites not met: architecture-principles.md not found"

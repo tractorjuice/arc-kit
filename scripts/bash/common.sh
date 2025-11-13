@@ -342,11 +342,11 @@ get_projects_dir() {
 # Get memory directory path
 get_memory_dir() {
     local repo_root="${1:-$(find_repo_root)}"
-    echo "$repo_root/memory"
+    echo "$repo_root/.arckit/memory"
 }
 
 # Get templates directory path
 get_templates_dir() {
     local repo_root="${1:-$(find_repo_root)}"
-    echo "$repo_root/templates"
+    echo "$repo_root/.arckit/templates"
 }
