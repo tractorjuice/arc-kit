@@ -8,42 +8,30 @@ ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit**
 
 **Core Value Proposition**: Enable enterprise architects to establish governance principles, analyze stakeholders, assess risks, create business cases, define requirements, research technology options, manage vendor procurement, conduct design reviews, and maintain traceability - all through structured AI-assisted workflows.
 
-## Installation & Development Setup
-
-### Local Development
+## Build & Development Commands
 
 ```bash
 # Install in development mode
 pip install -e .
-
 # Or using uv (recommended)
 uv pip install -e .
 
-# Run CLI
-arckit init my-project --ai claude
-```
-
-### Testing Installation
-
-```bash
-# Test the CLI works
+# Test CLI
 arckit --help
 arckit check
 
 # Test project initialization
 arckit init test-project --ai claude --no-git
-cd test-project
-ls -la .claude/commands/  # Should contain arckit.*.md files
-```
+cd test-project && ls -la .claude/commands/
 
-### Building Distribution
-
-```bash
-# Build wheel
+# Build distribution
 python -m build
 
-# Install from wheel (for testing)
-pip install dist/arckit_cli-*.whl
+# Convert Claude commands to Gemini format
+python scripts/converter.py
+
+# Debug data path resolution
+python -c "from arckit_cli import get_data_paths; print(get_data_paths())"
 ```
 
 ## Architecture
@@ -57,9 +45,9 @@ pip install dist/arckit_cli-*.whl
 - Handles data path resolution for templates/scripts across different install methods (uv tools, pip, source)
 
 **Data Files** (distributed with package):
-- `.claude/commands/arckit.*.md` - 30 slash commands for Claude Code (frontmatter + prompt)
+- `.claude/commands/arckit.*.md` - 33+ slash commands for Claude Code (frontmatter + prompt)
 - `.gemini/commands/arckit/*.toml` - Gemini CLI equivalents (generated via `scripts/converter.py`)
-- `.arckit/templates/*.md` - 30 document templates for all artifact types
+- `.arckit/templates/*.md` - 33+ document templates for all artifact types
 - `scripts/bash/*.sh` - Helper scripts (create-project.sh, generate-document-id.sh, etc.)
 
 **Project Structure Created by `arckit init`**:
@@ -99,23 +87,31 @@ ArcKit's primary interface is **30 slash commands** that generate architecture a
    - Show summary only (not full document)
 
 **Key Commands** (in workflow order):
-1. `/arckit.principles` → `.arckit/memory/architecture-principles.md` (global)
-2. `/arckit.stakeholders` → `projects/XXX/stakeholder-drivers.md`
-3. `/arckit.risk` → `projects/XXX/risk-register.md` (HM Treasury Orange Book)
-4. `/arckit.sobc` → `projects/XXX/sobc.md` (Green Book 5-case model)
-5. `/arckit.requirements` → `projects/XXX/requirements.md` (BR/FR/NFR/INT/DR)
-6. `/arckit.data-model` → `projects/XXX/data-model.md` (ERD, GDPR compliance)
-7. `/arckit.research` → `projects/XXX/research-findings.md` (build vs buy analysis)
-8. `/arckit.wardley` → `projects/XXX/wardley-maps/{name}.md` (strategic positioning)
-9. `/arckit.diagram` → `projects/XXX/diagrams/{type}-{name}.md` (Mermaid C4/deployment/sequence)
-10. `/arckit.sow` → `projects/XXX/sow.md` (vendor RFP)
-11. `/arckit.evaluate` → `projects/XXX/evaluation-criteria.md` + vendor scoring
-12. `/arckit.hld-review` → `projects/XXX/vendors/{vendor}/reviews/hld-review.md`
-13. `/arckit.dld-review` → `projects/XXX/vendors/{vendor}/reviews/dld-review.md`
-14. `/arckit.backlog` → `projects/XXX/backlog.md` (requirements → GDS user stories)
-15. `/arckit.servicenow` → `projects/XXX/servicenow-design.md` (CMDB, SLAs, incident mgmt)
-16. `/arckit.traceability` → `projects/XXX/traceability-matrix.md`
-17. `/arckit.analyze` → `projects/XXX/analysis-report.md` (governance quality check)
+1. `/arckit.plan` → `projects/XXX/project-plan.md` (timeline, phases, gates)
+2. `/arckit.principles` → `.arckit/memory/architecture-principles.md` (global)
+3. `/arckit.stakeholders` → `projects/XXX/stakeholder-drivers.md`
+4. `/arckit.risk` → `projects/XXX/risk-register.md` (HM Treasury Orange Book)
+5. `/arckit.sobc` → `projects/XXX/sobc.md` (Green Book 5-case model)
+6. `/arckit.requirements` → `projects/XXX/requirements.md` (BR/FR/NFR/INT/DR)
+7. `/arckit.data-model` → `projects/XXX/data-model.md` (ERD, GDPR compliance)
+8. `/arckit.dpia` → `projects/XXX/dpia.md` (UK GDPR Article 35 impact assessment)
+9. `/arckit.platform-design` → `projects/XXX/platform-design.md` (Platform Design Toolkit 8 canvases)
+10. `/arckit.research` → `projects/XXX/research-findings.md` (build vs buy analysis)
+11. `/arckit.wardley` → `projects/XXX/wardley-maps/{name}.md` (strategic positioning)
+12. `/arckit.roadmap` → `projects/XXX/roadmap.md` (multi-year strategic roadmap)
+13. `/arckit.adr` → `projects/XXX/decisions/ADR-{NUM}-{title}.md` (architecture decisions)
+14. `/arckit.diagram` → `projects/XXX/diagrams/{type}-{name}.md` (Mermaid C4/deployment/sequence)
+15. `/arckit.sow` → `projects/XXX/sow.md` (vendor RFP)
+16. `/arckit.evaluate` → `projects/XXX/evaluation-criteria.md` + vendor scoring
+17. `/arckit.hld-review` → `projects/XXX/vendors/{vendor}/reviews/hld-review.md`
+18. `/arckit.dld-review` → `projects/XXX/vendors/{vendor}/reviews/dld-review.md`
+19. `/arckit.backlog` → `projects/XXX/backlog.md` (requirements → GDS user stories)
+20. `/arckit.servicenow` → `projects/XXX/servicenow-design.md` (CMDB, SLAs, incident mgmt)
+21. `/arckit.traceability` → `projects/XXX/traceability-matrix.md`
+22. `/arckit.principles-compliance` → `projects/XXX/principles-compliance.md` (RAG assessment)
+23. `/arckit.analyze` → `projects/XXX/analysis-report.md` (governance quality check)
+24. `/arckit.story` → `projects/XXX/project-story.md` (narrative with timeline)
+25. `/arckit.data-mesh-contract` → `projects/XXX/data-contracts/{domain}.md` (ODCS data contracts)
 
 **UK Government Specific**:
 - `/arckit.tcop` - Technology Code of Practice (13 points)
@@ -274,17 +270,16 @@ The CLI must find templates/scripts across different install methods:
 
 ### Version Management
 
-**Version is defined in 3 places** (keep synchronized):
-1. `VERSION` file (source of truth) - e.g., `0.8.2`
-2. `pyproject.toml` - `version = "0.8.2"`
-3. `CHANGELOG.md` - Document changes
+**Version is defined in 2 places** (keep synchronized):
+1. `VERSION` file (source of truth) - e.g., `0.9.1`
+2. `pyproject.toml` - `version = "0.9.1"`
 
 **Release Process**:
 1. Update VERSION file
 2. Update pyproject.toml version
 3. Document changes in CHANGELOG.md
-4. Commit: `git commit -m "chore: release v0.8.2"`
-5. Tag: `git tag v0.8.2`
+4. Commit: `git commit -m "chore: release vX.Y.Z"`
+5. Tag: `git tag vX.Y.Z`
 6. Push: `git push && git push --tags`
 
 ### Debugging Installation Issues
@@ -323,87 +318,40 @@ export GH_TOKEN="<github-token>"
 gh repo list tractorjuice --limit 200 --json name,url,visibility | jq '.[] | select(.name | contains("arckit"))'
 ```
 
-**Current Test Repositories** (as of v0.8.2):
-- **Public** (7): v1-m365, v2-hmrc-chatbot, v3-windows11, v6-patent-system, v7-nhs-appointment, v8-ons-data-platform, v8-cabinet-office-genai
-- **Private** (3): v0-mod-chatbot, v4-ipa, v5-dstl
+**Current Test Repositories**:
+- **Public**: v1-m365, v2-hmrc-chatbot, v3-windows11, v6-patent-system, v7-nhs-appointment, v8-ons-data-platform, v9-cabinet-office-genai
+- **Private**: v0-mod-chatbot, v4-ipa, v5-dstl
 
 **Updating Test Repos with Latest Changes**:
 
-1. **Clone repositories**:
-   ```bash
-   mkdir -p /tmp/arckit-test-repos && cd /tmp/arckit-test-repos
-   GH_TOKEN="<token>" gh repo clone tractorjuice/arckit-test-project-v1-m365
-   # Repeat for each repo
-   ```
+```bash
+# Clone all repos
+mkdir -p /tmp/arckit-test-repos && cd /tmp/arckit-test-repos
+for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl v6-patent-system v7-nhs-appointment v8-ons-data-platform v9-cabinet-office-genai; do
+    GH_TOKEN="<token>" gh repo clone tractorjuice/arckit-test-project-$repo
+done
 
-2. **Create update scripts**:
+# Update script (/tmp/update-repo.sh):
+#!/bin/bash
+REPO_DIR="$1"
+SOURCE_DIR="/workspaces/arc-kit"
+cd "$REPO_DIR"
+rsync -av --delete "$SOURCE_DIR/.claude/commands/" ".claude/commands/"
+rsync -av --delete "$SOURCE_DIR/.codex/prompts/" ".codex/prompts/"
+rsync -av --delete "$SOURCE_DIR/.gemini/commands/" ".gemini/commands/"
+rsync -av --delete "$SOURCE_DIR/.arckit/templates/" ".arckit/templates/"
+mkdir -p .arckit/scripts/bash
+rsync -av "$SOURCE_DIR/scripts/bash/" ".arckit/scripts/bash/"
+chmod +x .arckit/scripts/bash/*.sh
 
-   **Commands/templates/scripts** (`/tmp/update-repo.sh`):
-   ```bash
-   #!/bin/bash
-   REPO_DIR="$1"
-   SOURCE_DIR="/workspaces/arc-kit"
+# Run on all repos, commit, and push
+for repo in /tmp/arckit-test-repos/arckit-test-project-*; do
+    /tmp/update-repo.sh "$repo"
+    cd "$repo" && git add -A && git commit -m "chore: sync with arc-kit" && git push
+done
+```
 
-   cd "$REPO_DIR"
-
-   # Update commands and templates
-   rsync -av --delete "$SOURCE_DIR/.claude/commands/" ".claude/commands/"
-   rsync -av --delete "$SOURCE_DIR/.codex/prompts/" ".codex/prompts/"
-   rsync -av --delete "$SOURCE_DIR/.gemini/commands/" ".gemini/commands/"
-   rsync -av --delete "$SOURCE_DIR/.arckit/templates/" ".arckit/templates/"
-
-   # Update bash scripts
-   mkdir -p .arckit/scripts/bash
-   rsync -av "$SOURCE_DIR/scripts/bash/" ".arckit/scripts/bash/"
-   chmod +x .arckit/scripts/bash/*.sh
-   ```
-
-   **Documentation** (`/tmp/update-docs.sh`):
-   ```bash
-   #!/bin/bash
-   REPO_DIR="$1"
-   SOURCE_DIR="/workspaces/arc-kit"
-
-   cd "$REPO_DIR"
-
-   # Copy root documentation (exclude CLAUDE.md - that's for arc-kit developers only)
-   cp "$SOURCE_DIR/DEPENDENCY-MATRIX.md" .
-   cp "$SOURCE_DIR/WORKFLOW-DIAGRAMS.md" .
-   cp "$SOURCE_DIR/README.md" .
-   cp "$SOURCE_DIR/CHANGELOG.md" .
-   ```
-
-3. **Run update on all repos**:
-   ```bash
-   for repo in /tmp/arckit-test-repos/arckit-test-project-*; do
-       /tmp/update-repo.sh "$repo"
-   done
-   ```
-
-4. **Commit and push changes**:
-   ```bash
-   cd /tmp/arckit-test-repos/arckit-test-project-v1-m365
-   git add -A
-   git commit -m "chore: sync with arc-kit v0.8.2 - update commands, templates, and scripts"
-   git push "https://<TOKEN>@github.com/tractorjuice/arckit-test-project-v1-m365.git" main
-   # Repeat for each repo
-   ```
-
-**What Gets Updated**:
-- `.claude/commands/arckit.*.md` - All 28 Claude Code slash commands
-- `.codex/prompts/arckit.*.md` - All Codex CLI prompts
-- `.gemini/commands/arckit/*.toml` - All Gemini CLI commands
-- `.arckit/templates/*.md` - All 30 document templates
-- `.arckit/scripts/bash/*.sh` - All 5 bash helper scripts
-
-**When to Update Test Repos**:
-- After adding new slash commands
-- After modifying templates
-- After updating helper scripts
-- Before releasing a new version
-- When fixing bugs that affect generated artifacts
-
-**Note**: Private repositories require a GitHub Personal Access Token with `repo` scope. Store token securely and never commit it to the repository.
+**When to Update Test Repos**: After adding/modifying commands, templates, or scripts; before releases.
 
 ## Requirements Context
 
@@ -479,7 +427,24 @@ ArcKit has deep UK Government integration:
 - **Token Limit Handling**: Commands MUST use Write tool for large documents (requirements, SOBC, research findings, etc.) to avoid exceeding 32K output token limit. Only show summary to user.
 - **Document Control**: All artifacts MUST use the standard table + revision history defined in `docs/templates/document-control.md` (populate Document ID via `generate-document-id.sh`, fill review cycle/next review date, owner, reviewers, approvers before writing content).
 - **Traceability**: Every artifact links back to stakeholders, principles, requirements for full governance chain.
-- **Multi-phase Workflow**: Commands designed to run in sequence (principles → stakeholders → risk → SOBC → requirements → research → procurement → design review → backlog → operations).
+- **Multi-phase Workflow**: Commands designed to run in sequence (plan → principles → stakeholders → risk → SOBC → requirements → data-model → dpia → research → wardley → roadmap → adr → procurement → design review → backlog → operations → traceability → analyze → story).
 - **Template-Driven**: Never generate freeform documents - always use templates from `.arckit/templates/`.
 - **Git Integration**: Projects should be version-controlled (git init by default, --no-git to skip).
 - **Slash Command Prefix**: Claude uses `/arckit.command`, Codex uses `/prompts:arckit.command`, Gemini uses `/arckit:command`.
+
+## Critical Patterns
+
+**When Adding a New Command**:
+1. Create `.claude/commands/arckit.{name}.md` with YAML frontmatter (`description:`)
+2. Create `.arckit/templates/{name}-template.md` with document control section
+3. Run `python scripts/converter.py` to generate Gemini TOML
+4. Test: `arckit init test --ai claude --no-git && cd test && claude` then run the command
+5. Update README.md Available Commands table
+
+**Command Prompt Structure** (every slash command follows this pattern):
+1. Check prerequisites (architecture-principles.md exists, etc.)
+2. Create/find project via `create-project.sh --name "X" --json`
+3. Read template from `.arckit/templates/{type}-template.md`
+4. Generate document using template structure
+5. **Use Write tool** to create file (avoids 32K token limit)
+6. Show only a summary to user
