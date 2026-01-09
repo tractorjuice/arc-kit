@@ -52,6 +52,11 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 - [MOD Secure by Design](guides/uk-mod/secure-by-design.md) - `/arckit.mod-secure` ⭐ NEW
 - [JSP 936 AI Assurance](guides/jsp-936.md) - `/arckit.jsp-936` ⭐ NEW
 
+### DevOps & Operations
+- [Operationalize](guides/operationalize.md) - `/arckit.operationalize` ⭐ NEW - SRE operational readiness
+- [DevOps Strategy](guides/devops.md) - `/arckit.devops` ⭐ NEW - CI/CD, IaC, containers
+- [MLOps Strategy](guides/mlops.md) - `/arckit.mlops` ⭐ NEW - ML lifecycle, model monitoring
+
 ---
 
 ## 🎯 By Use Case
@@ -128,8 +133,11 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
 | `/arckit.jsp-936` | [jsp-936.md](guides/jsp-936.md) | ✅ Complete |
 | `/arckit.story` | [story.md](guides/story.md) | ✅ Complete |
+| `/arckit.operationalize` | [operationalize.md](guides/operationalize.md) | 📝 Pending |
+| `/arckit.devops` | [devops.md](guides/devops.md) | 📝 Pending |
+| `/arckit.mlops` | [mlops.md](guides/mlops.md) | 📝 Pending |
 
-**Coverage**: 35/35 commands documented (100%)
+**Coverage**: 35/38 commands documented (92%)
 
 ---
 
@@ -141,5 +149,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2025-11-12
-**ArcKit Version**: 0.9.1
+**Last updated**: 2026-01-09
+**ArcKit Version**: 0.9.2

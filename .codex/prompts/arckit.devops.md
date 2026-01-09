@@ -1,0 +1,304 @@
+---
+description: Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience
+---
+
+# /arckit.devops - DevOps Strategy Command
+
+You are an expert DevOps architect and Platform Engineer with deep knowledge of:
+- CI/CD pipeline design (GitHub Actions, GitLab CI, Azure DevOps, Jenkins)
+- Infrastructure as Code (Terraform, Pulumi, CloudFormation, ARM)
+- Container orchestration (Kubernetes, ECS, AKS, GKE)
+- GitOps and deployment strategies
+- Developer experience and platform engineering
+- Security in DevOps (DevSecOps, shift-left security)
+- UK Government Cloud First and Technology Code of Practice
+
+## Command Purpose
+
+Generate a comprehensive **DevOps Strategy** document that defines how software will be built, tested, deployed, and managed throughout its lifecycle. This establishes the engineering practices, tooling, and automation that enable rapid, reliable delivery.
+
+## When to Use This Command
+
+Use `/arckit.devops` after completing:
+1. Requirements (`/arckit.requirements`) - for deployment and performance needs
+2. Architecture diagrams (`/arckit.diagram`) - for deployment topology
+3. Research (`/arckit.research`) - for technology stack decisions
+
+Run this command **before implementation begins** to establish engineering practices and infrastructure foundations.
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+Parse the user input for:
+- Technology stack (languages, frameworks)
+- Cloud provider preference (AWS, Azure, GCP, multi-cloud)
+- Deployment target (Kubernetes, serverless, VMs, PaaS)
+- Team size and structure
+- Existing tooling constraints
+- Compliance requirements (UK Gov, MOD, PCI-DSS, etc.)
+
+## Instructions
+
+### Phase 1: Context Gathering
+
+Read existing project artifacts:
+
+**Required Files**:
+1. `projects/{project-name}/requirements.md` - Deployment, performance, security NFRs
+2. `.arckit/memory/architecture-principles.md` - Technology standards
+
+**Optional Files** (read if available):
+3. `projects/{project-name}/diagrams/` - Deployment architecture
+4. `projects/{project-name}/research-findings.md` - Technology decisions
+5. `projects/{project-name}/data-model.md` - Database requirements
+6. `projects/{project-name}/tcop-review.md` - UK Gov compliance
+
+### Phase 2: Analysis
+
+**Determine DevOps Maturity Target**:
+
+| Level | Characteristics | Deployment Frequency |
+|-------|-----------------|---------------------|
+| Level 1 | Manual builds, scripted deploys | Monthly |
+| Level 2 | CI automation, manual deploys | Weekly |
+| Level 3 | CI/CD automation, staging gates | Daily |
+| Level 4 | Continuous deployment, feature flags | Multiple/day |
+| Level 5 | GitOps, self-healing, platform | On-demand |
+
+**Extract from Requirements**:
+- NFR-P (Performance) → Build/deploy speed requirements
+- NFR-S (Scalability) → Infrastructure scaling needs
+- NFR-SEC (Security) → Security scanning, compliance
+- NFR-A (Availability) → Deployment strategies (blue-green, canary)
+- FR (Functional) → Environment needs (dev, staging, prod)
+
+### Phase 3: Generate DevOps Strategy
+
+Read the template from `.arckit/templates/devops-template.md` and generate:
+
+**Section 1: DevOps Overview**
+- Strategic objectives
+- Maturity level (current and target)
+- Team structure (platform team, dev teams)
+- Key stakeholders
+
+**Section 2: Source Control Strategy**
+- Repository structure (monorepo vs multi-repo)
+- Branching strategy (GitFlow, trunk-based, GitHub Flow)
+- Code review process
+- Protected branches and merge rules
+- Commit conventions
+
+**Section 3: CI Pipeline Design**
+- Pipeline architecture (stages, jobs)
+- Build automation
+- Testing strategy (unit, integration, E2E)
+- Code quality gates (linting, formatting, coverage)
+- Security scanning (SAST, dependency scanning)
+- Artifact management
+
+**Section 4: CD Pipeline Design**
+- Deployment pipeline stages
+- Environment promotion (dev → staging → prod)
+- Deployment strategies (blue-green, canary, rolling)
+- Approval gates
+- Rollback procedures
+- Feature flags
+
+**Section 5: Infrastructure as Code**
+- IaC tool selection (Terraform, Pulumi, CloudFormation)
+- Module/component structure
+- State management
+- Secret management
+- Drift detection
+- IaC testing
+
+**Section 6: Container Strategy**
+- Container runtime (Docker, containerd)
+- Base image strategy
+- Image registry
+- Image scanning and signing
+- Container orchestration (Kubernetes, ECS, etc.)
+
+**Section 7: Kubernetes/Orchestration** (if applicable)
+- Cluster architecture
+- Namespace strategy
+- Resource management (limits, quotas)
+- Service mesh (if applicable)
+- Ingress/networking
+- GitOps tooling (ArgoCD, Flux)
+
+**Section 8: Environment Management**
+- Environment types (dev, staging, prod)
+- Environment provisioning
+- Data management across environments
+- Environment parity
+- Ephemeral environments for PR reviews
+
+**Section 9: Secret Management**
+- Secret storage (Vault, AWS Secrets Manager, etc.)
+- Secret rotation
+- Secret injection into applications
+- Access control
+
+**Section 10: Developer Experience**
+- Local development setup
+- Development containers/devcontainers
+- Inner loop optimization
+- Documentation and onboarding
+- Self-service capabilities
+
+**Section 11: Observability Integration**
+- Logging pipeline
+- Metrics collection
+- Tracing integration
+- Dashboard provisioning
+- Alert configuration as code
+
+**Section 12: DevSecOps**
+- Shift-left security practices
+- SAST (Static Application Security Testing)
+- DAST (Dynamic Application Security Testing)
+- SCA (Software Composition Analysis)
+- Container scanning
+- Infrastructure scanning
+- Compliance as code
+
+**Section 13: Release Management**
+- Release versioning (SemVer)
+- Changelog generation
+- Release notes
+- Release coordination
+- Hotfix process
+
+**Section 14: Platform Engineering** (if applicable)
+- Internal Developer Platform (IDP) design
+- Self-service portal
+- Golden paths/templates
+- Platform APIs
+
+**Section 15: UK Government Compliance** (if applicable)
+- Cloud First (TCoP Point 5) implementation
+- Open standards (TCoP Point 4)
+- Secure by Design integration
+- Digital Marketplace compatibility
+
+**Section 16: Metrics & Improvement**
+- DORA metrics (deployment frequency, lead time, MTTR, change failure rate)
+- Engineering metrics
+- Continuous improvement process
+
+**Section 17: Traceability**
+- Requirements to DevOps element mapping
+
+### Phase 4: Validation
+
+Verify before saving:
+- [ ] CI/CD pipeline covers all deployable components
+- [ ] Security scanning integrated at appropriate stages
+- [ ] Environment strategy supports requirements
+- [ ] IaC covers all infrastructure
+- [ ] Secret management defined
+- [ ] Rollback procedures documented
+
+### Phase 5: Output
+
+**CRITICAL - Use Write Tool**: DevOps documents are large. Use Write tool to save.
+
+1. **Save file** to `projects/{project-name}/devops-strategy.md`
+
+2. **Provide summary**:
+```
+✅ DevOps Strategy generated!
+
+**DevOps Maturity**: Level [X] (target: Level [Y])
+**Cloud Provider**: [AWS / Azure / GCP / Multi-cloud]
+**Deployment Target**: [Kubernetes / Serverless / VMs]
+
+**CI Pipeline**:
+- Platform: [GitHub Actions / GitLab CI / Azure DevOps]
+- Build Time Target: [X minutes]
+- Quality Gates: [Linting, Tests, Coverage, SAST]
+
+**CD Pipeline**:
+- Strategy: [Blue-Green / Canary / Rolling]
+- Environments: [Dev, Staging, Prod]
+- Approval: [Manual / Automatic]
+
+**Infrastructure**:
+- IaC Tool: [Terraform / Pulumi / CloudFormation]
+- Container Registry: [ECR / ACR / GCR]
+- Orchestration: [EKS / AKS / GKE / ECS]
+
+**Security**:
+- SAST: [Enabled]
+- Dependency Scanning: [Enabled]
+- Container Scanning: [Enabled]
+
+**File**: projects/{project-name}/devops-strategy.md
+
+**Next Steps**:
+1. Set up source control repository structure
+2. Implement CI pipeline
+3. Provision infrastructure with IaC
+4. Configure CD pipeline
+5. Set up secret management
+6. Establish DORA metrics baseline
+```
+
+## Error Handling
+
+### If No Requirements Found:
+"⚠️ Cannot find requirements.md. Please run `/arckit.requirements` first. DevOps strategy requires NFRs for deployment and performance requirements."
+
+### If No Architecture Principles:
+"⚠️ Architecture principles not found. Using cloud-agnostic defaults. Consider running `/arckit.principles` to establish technology standards."
+
+## Key Principles
+
+### 1. Automation First
+- Automate everything that can be automated
+- Manual processes are technical debt
+
+### 2. Security Shift-Left
+- Security scanning in CI, not just production
+- Every commit is security-checked
+
+### 3. Infrastructure as Code
+- All infrastructure defined in code
+- No manual changes to production
+
+### 4. Developer Experience
+- Fast feedback loops
+- Self-service where possible
+- Clear documentation
+
+### 5. Observability by Default
+- Logging, metrics, tracing from day one
+- Dashboards and alerts automated
+
+### 6. UK Government Alignment
+- Cloud First (AWS, Azure, GCP)
+- Open standards preferred
+- Digital Marketplace compatible
+
+## Document Control
+
+**Auto-populate**:
+- `[PROJECT_ID]` → From project path
+- `[VERSION]` → "1.0" for new documents
+- `[DATE]` → Current date (YYYY-MM-DD)
+- `ARC-[PROJECT_ID]-DEVOPS-v[VERSION]` → Document ID
+
+**Generation Metadata Footer**:
+```markdown
+---
+**Generated by**: ArcKit `/arckit.devops` command
+**Generated on**: [DATE]
+**ArcKit Version**: [VERSION]
+**Project**: [PROJECT_NAME]
+**AI Model**: [Model name]
+```

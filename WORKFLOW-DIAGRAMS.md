@@ -56,7 +56,9 @@ graph TD
 
     %% Tier 8-9: Operations & Quality
     T --> U[servicenow]
-    U --> V[traceability]
+    U --> U1[devops]
+    U1 --> U2[operationalize]
+    U2 --> V[traceability]
     V --> W[analyze]
 
     %% Tier 11: Reporting
@@ -83,12 +85,14 @@ graph TD
     style S fill:#FFA500
     style T fill:#FFA500
     style U fill:#9370DB
+    style U1 fill:#9370DB
+    style U2 fill:#9370DB
     style V fill:#9370DB
     style W fill:#9370DB
     style X fill:#FFD700
 ```
 
-**Duration**: 4-8 months  
+**Duration**: 4-8 months
 **Key Milestones**: SOBC Approval → Strategy/Requirements Sign-off → DPIA Complete → ADR Approved → Sprint 1 → Go Live
 
 ---
@@ -138,7 +142,9 @@ graph TD
 
     %% Tier 8-9: Operations & Quality
     U --> W[servicenow]
-    W --> X[traceability]
+    W --> W1[devops]
+    W1 --> W2[operationalize]
+    W2 --> X[traceability]
     X --> Y[analyze]
 
     %% Tier 10: UK Gov Compliance
@@ -172,6 +178,8 @@ graph TD
     style U fill:#FFA500
     style V fill:#90EE90
     style W fill:#9370DB
+    style W1 fill:#9370DB
+    style W2 fill:#9370DB
     style X fill:#9370DB
     style Y fill:#9370DB
     style Z fill:#FF6B6B
@@ -180,7 +188,7 @@ graph TD
     style AA fill:#FFD700
 ```
 
-**Duration**: 6-12 months  
+**Duration**: 6-12 months
 **Key Milestones**: SOBC Approval → Strategy/Requirements Sign-off → DPIA Complete → G-Cloud Clarifications → Service Assessment → Go Live
 
 ---
@@ -230,7 +238,10 @@ graph TD
 
     %% Tier 8-9: Operations & Quality
     U --> V[servicenow]
-    V --> X[traceability]
+    V --> V1[devops]
+    V1 --> V2[mlops]
+    V2 --> V3[operationalize]
+    V3 --> X[traceability]
     X --> Y[analyze]
 
     %% Tier 10: UK Gov + AI Compliance
@@ -265,6 +276,9 @@ graph TD
     style T fill:#FFA500
     style U fill:#FFA500
     style V fill:#9370DB
+    style V1 fill:#9370DB
+    style V2 fill:#9370DB
+    style V3 fill:#9370DB
     style W fill:#90EE90
     style X fill:#9370DB
     style Y fill:#9370DB
@@ -276,7 +290,7 @@ graph TD
     style AA fill:#FFD700
 ```
 
-**Duration**: 9-18 months  
+**Duration**: 9-18 months
 **Key Milestones**: SOBC Approval → Strategy/Requirements Sign-off → DPIA Complete → G-Cloud Clarifications → AI Playbook Approval → ATRS Publication → Service Assessment → Go Live
 
 **Critical Gates**:
@@ -330,7 +344,9 @@ graph TD
 
     %% Tier 8-9: Operations & Quality
     T --> V[servicenow]
-    V --> W[traceability]
+    V --> V1[devops]
+    V1 --> V2[operationalize]
+    V2 --> W[traceability]
     W --> X[analyze]
 
     %% Tier 10: MOD Compliance
@@ -363,6 +379,8 @@ graph TD
     style T fill:#FFA500
     style U fill:#90EE90
     style V fill:#9370DB
+    style V1 fill:#9370DB
+    style V2 fill:#9370DB
     style W fill:#9370DB
     style X fill:#9370DB
     style Y fill:#FF6B6B
@@ -371,7 +389,7 @@ graph TD
     style Z fill:#FFD700
 ```
 
-**Duration**: 12-24 months  
+**Duration**: 12-24 months
 **Key Milestones**: SOBC Approval → Strategy/Requirements Sign-off → DPIA Complete → DOS Down-select → MOD Secure by Design Approval → Service Assessment → Go Live
 
 **Critical Gates**:
@@ -425,7 +443,10 @@ graph TD
 
     %% Tier 8-9: Operations & Quality
     T --> W[servicenow]
-    W --> X[traceability]
+    W --> W1[devops]
+    W1 --> W2[mlops]
+    W2 --> W3[operationalize]
+    W3 --> X[traceability]
     X --> Y[analyze]
 
     %% Tier 10: MOD + AI Compliance
@@ -460,6 +481,9 @@ graph TD
     style T fill:#FFA500
     style V fill:#90EE90
     style W fill:#9370DB
+    style W1 fill:#9370DB
+    style W2 fill:#9370DB
+    style W3 fill:#9370DB
     style X fill:#9370DB
     style Y fill:#9370DB
     style Z fill:#FF6B6B
@@ -470,7 +494,7 @@ graph TD
     style AA fill:#FFD700
 ```
 
-**Duration**: 18-36 months  
+**Duration**: 18-36 months
 **Key Milestones**: SOBC Approval → Strategy/Requirements Sign-off → DPIA Complete → DOS Down-select → MOD Secure by Design + JSP 936 Approval → Service Assessment → Go Live
 
 **Critical Gates**:
@@ -502,7 +526,7 @@ graph TD
 | 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
 | 6 | Design Reviews | hld-review, dld-review |
 | 7 | Implementation | backlog |
-| 8-9 | Operations & Quality | servicenow, traceability, analyze |
+| 8-9 | Operations & Quality | servicenow, devops, mlops (AI projects), operationalize, traceability, analyze |
 | 10 | Compliance | service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
 
 ---
@@ -633,7 +657,7 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 0.9.0
-- **Document Date**: 2025-11-02
+- **ArcKit Version**: 0.9.2
+- **Document Date**: 2026-01-09
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
-- **Key Changes**: Added recommended dependencies (dotted lines) for data-model→research, stakeholders→research, principles→gcloud-search, stakeholders→dos
+- **Key Changes**: Added devops, mlops, operationalize commands to Operations & Quality tier (Tier 8-9)

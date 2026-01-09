@@ -105,6 +105,9 @@ All procurement commands REQUIRE requirements.md:
 
 ### Tier 8: Operations (Depends on Architecture)
 - **servicenow** → Depends on: requirements (M), diagram (R), data-model (R)
+- **devops** → Depends on: requirements (M), diagram (R), research (R), principles (R)
+- **mlops** → Depends on: requirements (M), data-model (R), ai-playbook (R), research (R) [for AI projects]
+- **operationalize** → Depends on: requirements (M), servicenow (R), diagram (R), risk (R)
 - **traceability** → Depends on: requirements (M), HLD (M), DLD (M), data-model (R)
 
 ### Tier 9: Quality Assurance (Can Run Before or After Compliance)
@@ -138,42 +141,48 @@ Final reporting command that creates comprehensive project narrative:
 ### Standard Project Path (Non-AI, Non-Government)
 ```
 plan → principles → stakeholders → risk → sobc → requirements → research → wardley →
-sow/evaluate → hld-review → backlog → servicenow → traceability → principles-compliance → analyze → story
+sow/evaluate → hld-review → backlog → servicenow → devops → operationalize →
+traceability → principles-compliance → analyze → story
 ```
 
 ### UK Government Project Path
 ```
 plan → principles → stakeholders → risk → sobc → requirements → data-model → research →
 wardley → gcloud-search → gcloud-clarify → evaluate → hld-review → dld-review →
-backlog → servicenow → traceability → tcop → secure → principles-compliance → analyze → service-assessment → story
+backlog → servicenow → devops → operationalize → traceability →
+tcop → secure → principles-compliance → analyze → service-assessment → story
 ```
 
 ### UK Government Platform Strategy Path
 ```
 plan → principles → stakeholders → risk → sobc → requirements → platform-design → data-model → research →
 wardley → gcloud-search → evaluate → hld-review → dld-review → backlog → servicenow →
-traceability → tcop → secure → principles-compliance → analyze → service-assessment → story
+devops → operationalize → traceability → tcop → secure → principles-compliance →
+analyze → service-assessment → story
 ```
 
 ### UK Government AI Project Path
 ```
 plan → principles → stakeholders → risk → sobc → requirements → data-model → research →
 wardley → gcloud-search → evaluate → hld-review → dld-review → backlog → servicenow →
-traceability → tcop → ai-playbook → atrs → secure → principles-compliance → analyze → service-assessment → story
+devops → mlops → operationalize → traceability → tcop → ai-playbook → atrs → secure →
+principles-compliance → analyze → service-assessment → story
 ```
 
 ### MOD Defence Project Path
 ```
 plan → principles → stakeholders → risk → sobc → requirements → data-model → research →
 wardley → dos → evaluate → hld-review → dld-review → backlog → servicenow →
-traceability → tcop → mod-secure → principles-compliance → analyze → service-assessment → story
+devops → operationalize → traceability → tcop → mod-secure → principles-compliance →
+analyze → service-assessment → story
 ```
 
 ### MOD Defence AI Project Path
 ```
 plan → principles → stakeholders → risk → sobc → requirements → data-model → research →
 wardley → dos → evaluate → hld-review → dld-review → backlog → servicenow →
-traceability → tcop → mod-secure → jsp-936 → principles-compliance → analyze → service-assessment → story
+devops → mlops → operationalize → traceability → tcop → mod-secure → jsp-936 →
+principles-compliance → analyze → service-assessment → story
 ```
 
 **Note**: analyze and service-assessment can also run earlier in the workflow to identify gaps in missing artifacts (all their dependencies are optional). The story command can be run at any project milestone to create a narrative snapshot, but is most comprehensive when run after all artifacts are complete. The paths above show the complete workflow with story as the final reporting step.
@@ -227,12 +236,23 @@ traceability → tcop → mod-secure → jsp-936 → principles-compliance → a
 
 ## Version
 
-- **ArcKit Version**: 0.9.1
-- **Matrix Date**: 2025-01-06 (Added platform-design command)
-- **Commands Documented**: 33
-- **Matrix Rows**: 35 (33 commands + 2 external documents)
+- **ArcKit Version**: 0.9.2
+- **Matrix Date**: 2026-01-09 (Added devops, mlops, operationalize commands)
+- **Commands Documented**: 36
+- **Matrix Rows**: 38 (36 commands + 2 external documents)
 
 ## Changelog
+
+### 2026-01-09 - Added DevOps, MLOps, and Operationalize Commands
+- **Added**: `/arckit.devops` command (34th ArcKit command) for DevOps strategy with CI/CD pipelines, IaC, container orchestration
+- **Added**: `/arckit.mlops` command (35th ArcKit command) for MLOps strategy with model lifecycle, training pipelines, serving, monitoring
+- **Added**: `/arckit.operationalize` command (36th ArcKit command) for operational readiness with SRE practices, runbooks, DR/BCP
+- **Updated**: Tier 8 Operations to include devops, mlops (AI projects), operationalize commands
+- **Updated**: All 6 critical paths to include new commands in operations phase
+- **Dependencies**:
+  - devops: requirements (M), diagram (R), research (R), principles (R)
+  - mlops: requirements (M), data-model (R), ai-playbook (R), research (R)
+  - operationalize: requirements (M), servicenow (R), diagram (R), risk (R)
 
 ### 2025-01-06 - Added Platform Design Command
 - **Added**: `/arckit.platform-design` command (33rd ArcKit command) for multi-sided platform strategy design using Platform Design Toolkit (PDT) methodology
