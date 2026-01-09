@@ -132,18 +132,39 @@ project/
 
 ## Test Repositories
 
-ArcKit maintains test repos on GitHub (pattern: `arckit-test-project-v*`):
-- **Public**: v1-m365, v2-hmrc-chatbot, v3-windows11, v6-patent-system, v7-nhs-appointment, v8-ons-data-platform, v9-cabinet-office-genai
-- **Private**: v0-mod-chatbot, v4-ipa, v5-dstl
+ArcKit maintains 14 test repos on GitHub (pattern: `arckit-test-project-v*`):
+
+| Version | Name | Type | Description |
+|---------|------|------|-------------|
+| v0 | mod-chatbot | Private | MOD chatbot project |
+| v1 | m365 | Public | Microsoft 365 migration |
+| v2 | hmrc-chatbot | Public | HMRC chatbot |
+| v3 | windows11 | Public | Windows 11 deployment |
+| v4 | ipa | Private | Infrastructure Projects Authority |
+| v5 | dstl | Private | Defence Science & Technology Lab |
+| v6 | patent-system | Public | Patent system modernization |
+| v7 | nhs-appointment | Public | NHS appointment booking |
+| v8 | ons-data-platform | Public | ONS data platform |
+| v9 | cabinet-office-genai | Public | Cabinet Office GenAI |
+| v10 | training-marketplace | Public | UK Government Training Marketplace |
+| v11 | national-highways-data | Public | National Highways data architecture |
+| v12 | honky-tonks | Private | Restaurant data analytics |
+| v13 | plymouth-research | Private | Plymouth restaurant web scraping |
 
 **Sync test repos after changes**:
 ```bash
 # Clone and update all test repos
-for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot ...; do
-    gh repo clone tractorjuice/arckit-test-project-$repo /tmp/$repo
+TOKEN="<github-token>"
+for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
+            v6-patent-system v7-nhs-appointment v8-ons-data-platform v9-cabinet-office-genai \
+            v10-training-marketplace v11-national-highways-data v12-honky-tonks v13-plymouth-research; do
+    git clone "https://x-access-token:${TOKEN}@github.com/tractorjuice/arckit-test-project-$repo.git" /tmp/$repo
     rsync -av --delete .claude/commands/ /tmp/$repo/.claude/commands/
+    rsync -av --delete .codex/prompts/ /tmp/$repo/.codex/prompts/
+    rsync -av --delete .gemini/commands/ /tmp/$repo/.gemini/commands/
     rsync -av --delete .arckit/templates/ /tmp/$repo/.arckit/templates/
-    # ... commit and push
+    rsync -av scripts/bash/ /tmp/$repo/.arckit/scripts/bash/
+    cd /tmp/$repo && git add -A && git commit -m "chore: sync with arc-kit" && git push && cd -
 done
 ```
 
