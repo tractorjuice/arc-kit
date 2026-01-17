@@ -132,7 +132,7 @@ project/
 
 ## Test Repositories
 
-ArcKit maintains 14 test repos on GitHub (pattern: `arckit-test-project-v*`):
+ArcKit maintains 15 test repos on GitHub (pattern: `arckit-test-project-v*`):
 
 | Version | Name | Type | Description |
 |---------|------|------|-------------|
@@ -150,6 +150,7 @@ ArcKit maintains 14 test repos on GitHub (pattern: `arckit-test-project-v*`):
 | v11 | national-highways-data | Public | National Highways data architecture |
 | v12 | honky-tonks | Private | Restaurant data analytics |
 | v13 | plymouth-research | Private | Plymouth restaurant web scraping |
+| v14 | scottish-courts | Private | Scottish Courts and Tribunals Service GenAI strategy |
 
 **Sync test repos after changes**:
 ```bash
@@ -157,7 +158,8 @@ ArcKit maintains 14 test repos on GitHub (pattern: `arckit-test-project-v*`):
 TOKEN="<github-token>"
 for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
             v6-patent-system v7-nhs-appointment v8-ons-data-platform v9-cabinet-office-genai \
-            v10-training-marketplace v11-national-highways-data v12-honky-tonks v13-plymouth-research; do
+            v10-training-marketplace v11-national-highways-data v12-honky-tonks v13-plymouth-research \
+            v14-scottish-courts; do
     git clone "https://x-access-token:${TOKEN}@github.com/tractorjuice/arckit-test-project-$repo.git" /tmp/$repo
     rsync -av --delete .claude/commands/ /tmp/$repo/.claude/commands/
     rsync -av --delete .codex/prompts/ /tmp/$repo/.codex/prompts/
