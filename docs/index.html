@@ -265,6 +265,23 @@
             text-decoration: underline;
         }
 
+        /* Sticky Status Column */
+        .app-command-table th:last-child,
+        .app-command-table td:last-child {
+            position: sticky;
+            right: 0;
+            background: #fff;
+            box-shadow: -2px 0 4px rgba(0,0,0,0.1);
+        }
+
+        .app-command-table th:last-child {
+            background: #f3f2f1;
+        }
+
+        .app-command-table tbody tr:hover td:last-child {
+            background: #f8f8f8;
+        }
+
         /* Status Tags */
         .app-status-tag {
             display: inline-block;
