@@ -265,17 +265,38 @@
             text-decoration: underline;
         }
 
-        /* Sticky Status Column */
+        /* Sticky Command Column (left) */
+        .app-command-table th:first-child,
+        .app-command-table td:first-child {
+            position: sticky;
+            left: 0;
+            background: #fff;
+            box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+            z-index: 1;
+        }
+
+        .app-command-table th:first-child {
+            background: #f3f2f1;
+            z-index: 2;
+        }
+
+        .app-command-table tbody tr:hover td:first-child {
+            background: #f8f8f8;
+        }
+
+        /* Sticky Status Column (right) */
         .app-command-table th:last-child,
         .app-command-table td:last-child {
             position: sticky;
             right: 0;
             background: #fff;
             box-shadow: -2px 0 4px rgba(0,0,0,0.1);
+            z-index: 1;
         }
 
         .app-command-table th:last-child {
             background: #f3f2f1;
+            z-index: 2;
         }
 
         .app-command-table tbody tr:hover td:last-child {
