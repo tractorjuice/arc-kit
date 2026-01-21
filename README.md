@@ -646,12 +646,13 @@ payment-modernization/
 | `/arckit.servicenow` | Generate ServiceNow service design (CMDB, SLAs, incident/change management, monitoring) | `projects/XXX/servicenow-design.md` |
 | `/arckit.operationalize` | Create operational readiness pack with support model, runbooks, DR/BCP, on-call, and handover | `projects/XXX/operational-readiness.md` |
 
-### DevOps & MLOps
+### DevOps, MLOps & FinOps
 
 | Command | Purpose | Output |
 |---------|---------|--------|
 | `/arckit.devops` | Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience | `projects/XXX/devops-strategy.md` |
 | `/arckit.mlops` | Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance | `projects/XXX/mlops-strategy.md` |
+| `/arckit.finops` | Create FinOps strategy with cloud cost management, optimization, governance, and forecasting | `projects/XXX/finops-strategy.md` |
 
 ### Traceability
 
