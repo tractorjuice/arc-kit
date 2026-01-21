@@ -488,36 +488,54 @@
 
         <pre class="mermaid">
 flowchart LR
-    subgraph Foundation["🏛️ Foundation"]
-        plan[plan] --> principles[principles]
+    subgraph Foundation[Foundation]
+        plan[plan]
+        principles[principles]
     end
 
-    subgraph Discovery["🔍 Discovery"]
-        principles --> stakeholders[stakeholders]
-        stakeholders --> risk[risk]
-        risk --> sobc[sobc]
+    subgraph Discovery[Discovery]
+        stakeholders[stakeholders]
+        risk[risk]
+        sobc[sobc]
     end
 
-    subgraph Alpha["📋 Alpha"]
-        sobc --> requirements[requirements]
-        requirements --> data-model[data-model]
-        requirements --> research[research]
-        research --> wardley[wardley]
+    subgraph Alpha[Alpha]
+        requirements[requirements]
+        data-model[data-model]
+        research[research]
+        wardley[wardley]
     end
 
-    subgraph Beta["🔨 Beta"]
-        wardley --> sow[sow]
-        sow --> evaluate[evaluate]
-        evaluate --> hld-review[hld-review]
-        hld-review --> backlog[backlog]
-        data-model --> diagram[diagram]
+    subgraph Beta[Beta]
+        sow[sow]
+        evaluate[evaluate]
+        hld-review[hld-review]
+        backlog[backlog]
+        diagram[diagram]
     end
 
-    subgraph Live["🚀 Live"]
-        backlog --> servicenow[servicenow]
-        servicenow --> traceability[traceability]
-        traceability --> story[story]
+    subgraph Live[Live]
+        servicenow[servicenow]
+        traceability[traceability]
+        story[story]
     end
+
+    plan --> principles
+    principles --> stakeholders
+    stakeholders --> risk
+    risk --> sobc
+    sobc --> requirements
+    requirements --> data-model
+    requirements --> research
+    research --> wardley
+    wardley --> sow
+    data-model --> diagram
+    sow --> evaluate
+    evaluate --> hld-review
+    hld-review --> backlog
+    backlog --> servicenow
+    servicenow --> traceability
+    traceability --> story
 
     style Foundation fill:#1d70b8,color:#fff
     style Discovery fill:#f47738,color:#fff
