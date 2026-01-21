@@ -657,9 +657,9 @@ All 39 ArcKit commands with maturity status and example outputs from public test
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
 | `/arckit.sow` | Generate Statement of Work (SOW) / RFP document for vendor procurement | [v1](https://github.com/tractorjuice/arckit-test-project-v1-m365/blob/main/projects/001-exchange-online-migration/sow.md) [v2](https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot/blob/main/projects/001-hmrc-chatbot/sow.md) [v3](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/sow.md) [v6](https://github.com/tractorjuice/arckit-test-project-v6-patent-system/blob/main/projects/001-patent-management-system-for-the-intellectual-property-office/sow.md) | 🟢 Live |
-| `/arckit.dos` | Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace | — | 🟠 Alpha |
-| `/arckit.gcloud-search` | Find G-Cloud services on UK Digital Marketplace with live search and comparison | — | 🟠 Alpha |
-| `/arckit.gcloud-clarify` | Analyze G-Cloud service gaps and generate supplier clarification questions | — | 🟠 Alpha |
+| `/arckit.dos` | Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace | — | 🟣 Experimental |
+| `/arckit.gcloud-search` | Find G-Cloud services on UK Digital Marketplace with live search and comparison | — | 🟣 Experimental |
+| `/arckit.gcloud-clarify` | Analyze G-Cloud service gaps and generate supplier clarification questions | — | 🟣 Experimental |
 | `/arckit.evaluate` | Create vendor evaluation framework and score vendor proposals | [v1](https://github.com/tractorjuice/arckit-test-project-v1-m365/blob/main/projects/001-exchange-online-migration/evaluation-criteria.md) [v2](https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot/blob/main/projects/001-hmrc-chatbot/evaluation-criteria.md) [v3](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/evaluation-criteria.md) [v6](https://github.com/tractorjuice/arckit-test-project-v6-patent-system/blob/main/projects/001-patent-management-system-for-the-intellectual-property-office/evaluation-criteria.md) | 🟢 Live |
 
 ### Design & Architecture
