@@ -107,6 +107,7 @@ All procurement commands REQUIRE requirements.md:
 - **servicenow** → Depends on: requirements (M), diagram (R), data-model (R)
 - **devops** → Depends on: requirements (M), diagram (R), research (R), principles (R)
 - **mlops** → Depends on: requirements (M), data-model (R), ai-playbook (R), research (R) [for AI projects]
+- **finops** → Depends on: requirements (M), devops (R), diagram (R), principles (R)
 - **operationalize** → Depends on: requirements (M), servicenow (R), diagram (R), risk (R)
 - **traceability** → Depends on: requirements (M), HLD (M), DLD (M), data-model (R)
 
@@ -237,11 +238,16 @@ principles-compliance → analyze → service-assessment → story
 ## Version
 
 - **ArcKit Version**: 0.9.2
-- **Matrix Date**: 2026-01-09 (Added devops, mlops, operationalize commands)
-- **Commands Documented**: 36
-- **Matrix Rows**: 38 (36 commands + 2 external documents)
+- **Matrix Date**: 2026-01-21 (Added finops command)
+- **Commands Documented**: 39
+- **Matrix Rows**: 41 (39 commands + 2 external documents)
 
 ## Changelog
+
+### 2026-01-21 - Added FinOps Command
+- **Added**: `/arckit.finops` command (39th ArcKit command) for FinOps strategy with cloud cost management, optimization, governance, and forecasting
+- **Updated**: Tier 8 Operations to include finops command
+- **Dependencies**: requirements (M), devops (R), diagram (R), principles (R)
 
 ### 2026-01-09 - Added DevOps, MLOps, and Operationalize Commands
 - **Added**: `/arckit.devops` command (34th ArcKit command) for DevOps strategy with CI/CD pipelines, IaC, container orchestration

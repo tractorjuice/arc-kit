@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **New Command**: `/arckit.finops` (39th ArcKit command) - Create FinOps strategy for cloud financial management
+  - **Cost Visibility**: Tagging strategy, cost allocation, reporting cadence, dashboards
+  - **Cost Optimization**: Rightsizing, reserved instances/savings plans, spot instances, storage tiering
+  - **Commitment Management**: RI/SP inventory, utilization tracking, purchase recommendations
+  - **Showback/Chargeback**: Allocation methodology, unit economics, internal billing processes
+  - **Budgeting & Forecasting**: Budget types, alert thresholds, forecasting methodology
+  - **Anomaly Detection**: Alert configuration, investigation workflow, escalation matrix
+  - **Governance**: Cloud policies, approval workflows, exception processes
+  - **Sustainability**: Carbon footprint visibility, green region preferences, sustainable practices
+  - **UK Government Context**: Cabinet Office spend controls, Treasury Green Book, G-Cloud tracking
+  - **Template**: `finops-template.md` (800+ lines) with 16 comprehensive sections
+  - **Workflow Position**: Run AFTER /arckit.devops (Tier 8: Operations)
+  - **Use Cases**: Cloud cost management, FinOps maturity assessment, cost optimization initiatives
+
 - **New Command**: `/arckit.operationalize` (36th ArcKit command) - Create operational readiness pack for production services
   - **SRE Best Practices**: SLIs, SLOs, error budgets, golden signals monitoring
   - **Support Model**: Tiered support (L1/L2/L3), escalation procedures, on-call rotations

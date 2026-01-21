@@ -57,7 +57,8 @@ graph TD
     %% Tier 8-9: Operations & Quality
     T --> U[servicenow]
     U --> U1[devops]
-    U1 --> U2[operationalize]
+    U1 --> U1a[finops]
+    U1a --> U2[operationalize]
     U2 --> V[traceability]
     V --> W[analyze]
 
@@ -143,7 +144,8 @@ graph TD
     %% Tier 8-9: Operations & Quality
     U --> W[servicenow]
     W --> W1[devops]
-    W1 --> W2[operationalize]
+    W1 --> W1a[finops]
+    W1a --> W2[operationalize]
     W2 --> X[traceability]
     X --> Y[analyze]
 
@@ -239,7 +241,8 @@ graph TD
     %% Tier 8-9: Operations & Quality
     U --> V[servicenow]
     V --> V1[devops]
-    V1 --> V2[mlops]
+    V1 --> V1a[finops]
+    V1a --> V2[mlops]
     V2 --> V3[operationalize]
     V3 --> X[traceability]
     X --> Y[analyze]
@@ -345,7 +348,8 @@ graph TD
     %% Tier 8-9: Operations & Quality
     T --> V[servicenow]
     V --> V1[devops]
-    V1 --> V2[operationalize]
+    V1 --> V1a[finops]
+    V1a --> V2[operationalize]
     V2 --> W[traceability]
     W --> X[analyze]
 
@@ -444,7 +448,8 @@ graph TD
     %% Tier 8-9: Operations & Quality
     T --> W[servicenow]
     W --> W1[devops]
-    W1 --> W2[mlops]
+    W1 --> W1a[finops]
+    W1a --> W2[mlops]
     W2 --> W3[operationalize]
     W3 --> X[traceability]
     X --> Y[analyze]
@@ -526,7 +531,7 @@ graph TD
 | 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
 | 6 | Design Reviews | hld-review, dld-review |
 | 7 | Implementation | backlog |
-| 8-9 | Operations & Quality | servicenow, devops, mlops (AI projects), operationalize, traceability, analyze |
+| 8-9 | Operations & Quality | servicenow, devops, finops, mlops (AI projects), operationalize, traceability, analyze |
 | 10 | Compliance | service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
 
 ---
@@ -660,4 +665,4 @@ graph LR
 - **ArcKit Version**: 0.9.2
 - **Document Date**: 2026-01-09
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
-- **Key Changes**: Added devops, mlops, operationalize commands to Operations & Quality tier (Tier 8-9)
+- **Key Changes**: Added devops, finops, mlops, operationalize commands to Operations & Quality tier (Tier 8-9)
