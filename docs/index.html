@@ -482,6 +482,49 @@
             <div class="app-phase-arrow">→</div>
             <div class="app-phase-box">Live</div>
         </div>
+
+        <h3 class="govuk-heading-m govuk-!-margin-top-6">ArcKit Command Workflow</h3>
+        <p class="govuk-body">Commands flow from governance through requirements to delivery:</p>
+
+        <pre class="mermaid">
+flowchart LR
+    subgraph Foundation["🏛️ Foundation"]
+        plan[plan] --> principles[principles]
+    end
+
+    subgraph Discovery["🔍 Discovery"]
+        principles --> stakeholders[stakeholders]
+        stakeholders --> risk[risk]
+        risk --> sobc[sobc]
+    end
+
+    subgraph Alpha["📋 Alpha"]
+        sobc --> requirements[requirements]
+        requirements --> data-model[data-model]
+        requirements --> research[research]
+        research --> wardley[wardley]
+    end
+
+    subgraph Beta["🔨 Beta"]
+        wardley --> sow[sow]
+        sow --> evaluate[evaluate]
+        evaluate --> hld-review[hld-review]
+        hld-review --> backlog[backlog]
+        data-model --> diagram[diagram]
+    end
+
+    subgraph Live["🚀 Live"]
+        backlog --> servicenow[servicenow]
+        servicenow --> traceability[traceability]
+        traceability --> story[story]
+    end
+
+    style Foundation fill:#1d70b8,color:#fff
+    style Discovery fill:#f47738,color:#fff
+    style Alpha fill:#912b88,color:#fff
+    style Beta fill:#00703c,color:#fff
+    style Live fill:#d4351c,color:#fff
+        </pre>
     </div>
 
     <!-- Commands Section -->
