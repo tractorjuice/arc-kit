@@ -193,6 +193,156 @@
         .app-footer a:hover {
             color: #5694ca;
         }
+
+        /* Command Reference Table Styles */
+        .app-command-table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        .app-command-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .app-command-table th,
+        .app-command-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #b1b4b6;
+            vertical-align: top;
+        }
+
+        .app-command-table th {
+            background: #f3f2f1;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .app-command-table th:hover {
+            background: #e8e6e3;
+        }
+
+        .app-command-table th .sort-indicator {
+            margin-left: 0.5rem;
+            opacity: 0.5;
+        }
+
+        .app-command-table th.sorted .sort-indicator {
+            opacity: 1;
+        }
+
+        .app-command-table tbody tr:hover {
+            background: #f8f8f8;
+        }
+
+        .app-command-table code {
+            background: #f3f2f1;
+            padding: 0.125rem 0.375rem;
+            font-size: 0.8125rem;
+            white-space: nowrap;
+        }
+
+        .app-command-table .description {
+            max-width: 350px;
+        }
+
+        .app-command-table .examples {
+            white-space: nowrap;
+        }
+
+        .app-command-table .examples a {
+            display: inline-block;
+            margin-right: 0.25rem;
+            font-size: 0.75rem;
+            text-decoration: none;
+        }
+
+        .app-command-table .examples a:hover {
+            text-decoration: underline;
+        }
+
+        /* Status Tags */
+        .app-status-tag {
+            display: inline-block;
+            padding: 0.125rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 2px;
+        }
+
+        .app-status-live {
+            background: #00703c;
+            color: white;
+        }
+
+        .app-status-beta {
+            background: #1d70b8;
+            color: white;
+        }
+
+        .app-status-alpha {
+            background: #f47738;
+            color: white;
+        }
+
+        .app-status-experimental {
+            background: #912b88;
+            color: white;
+        }
+
+        /* Filter Controls */
+        .app-filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f3f2f1;
+        }
+
+        .app-filter-controls label {
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .app-filter-controls select {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 2px solid #0b0c0c;
+        }
+
+        .app-filter-controls input[type="text"] {
+            padding: 0.5rem;
+            font-size: 1rem;
+            border: 2px solid #0b0c0c;
+            min-width: 200px;
+        }
+
+        .app-status-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .app-status-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .app-command-count {
+            font-weight: 700;
+            color: #505a5f;
+        }
     </style>
 </head>
 <body class="govuk-template__body">
@@ -337,129 +487,473 @@
     <!-- Commands Section -->
     <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
         <h2 class="govuk-heading-l">39 ArcKit Commands</h2>
-        <p class="govuk-body">Organized by workflow phase for systematic project execution:</p>
+        <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
 
-        <!-- Foundation Commands -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Foundation</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.plan</span> - Create comprehensive project plan with GDS phases, Mermaid Gantt charts, and workflow diagrams</li>
-                <li><span class="app-command-code">/arckit.principles</span> - Establish architecture principles (Security, Performance, Scalability, Interoperability)</li>
-            </ul>
+        <!-- Status Legend -->
+        <div class="app-status-legend">
+            <div class="app-status-legend-item">
+                <span class="app-status-tag app-status-live">Live</span>
+                <span>Production-ready, extensively tested</span>
+            </div>
+            <div class="app-status-legend-item">
+                <span class="app-status-tag app-status-beta">Beta</span>
+                <span>Feature-complete, actively refined</span>
+            </div>
+            <div class="app-status-legend-item">
+                <span class="app-status-tag app-status-alpha">Alpha</span>
+                <span>Working, limited testing</span>
+            </div>
+            <div class="app-status-legend-item">
+                <span class="app-status-tag app-status-experimental">Experimental</span>
+                <span>New in v0.10.0, early adopters</span>
+            </div>
         </div>
 
-        <!-- Strategic Context -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Strategic Context</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.stakeholders</span> - Analyze stakeholder drivers and goals (RACI matrix, power/interest grid)</li>
-                <li><span class="app-command-code">/arckit.risk</span> - Create comprehensive risk register (HM Treasury Orange Book methodology)</li>
-                <li><span class="app-command-code">/arckit.sobc</span> - Generate Strategic Outline Business Case (Green Book 5-case model: Strategic, Economic, Commercial, Financial, Management)</li>
-            </ul>
+        <!-- Filter Controls -->
+        <div class="app-filter-controls">
+            <div>
+                <label for="status-filter">Filter by status:</label>
+                <select id="status-filter" onchange="filterTable()">
+                    <option value="all">All statuses</option>
+                    <option value="live">Live</option>
+                    <option value="beta">Beta</option>
+                    <option value="alpha">Alpha</option>
+                    <option value="experimental">Experimental</option>
+                </select>
+            </div>
+            <div>
+                <label for="category-filter">Category:</label>
+                <select id="category-filter" onchange="filterTable()">
+                    <option value="all">All categories</option>
+                    <option value="foundation">Foundation</option>
+                    <option value="strategic">Strategic Context</option>
+                    <option value="requirements">Requirements & Data</option>
+                    <option value="research">Research & Strategy</option>
+                    <option value="procurement">Procurement</option>
+                    <option value="design">Design & Architecture</option>
+                    <option value="operations">Operations</option>
+                    <option value="governance">Quality & Governance</option>
+                    <option value="ukgov">UK Government</option>
+                    <option value="mod">UK MOD</option>
+                </select>
+            </div>
+            <div>
+                <label for="search-filter">Search:</label>
+                <input type="text" id="search-filter" placeholder="Search commands..." oninput="filterTable()">
+            </div>
+            <div class="app-command-count">
+                Showing <span id="visible-count">39</span> of 39 commands
+            </div>
         </div>
 
-        <!-- Requirements & Data -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Requirements & Data</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.requirements</span> - Define comprehensive requirements (Business, Functional, Non-Functional, Data, Integration)</li>
-                <li><span class="app-command-code">/arckit.data-model</span> - Design entity-relationship data model with GDPR compliance</li>
-                <li><span class="app-command-code">/arckit.data-mesh-contract</span> - Create federated data product contracts for mesh architectures (ODCS v3.0.2 compliant)</li>
-                <li><span class="app-command-code">/arckit.dpia</span> - Generate Data Protection Impact Assessment for UK GDPR Article 35 compliance with ICO 9-criteria screening</li>
-            </ul>
+        <!-- Command Reference Table -->
+        <div class="app-command-table-container">
+            <table class="app-command-table" id="command-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)" data-sort="asc">Command <span class="sort-indicator">↕</span></th>
+                        <th onclick="sortTable(1)">Description <span class="sort-indicator">↕</span></th>
+                        <th onclick="sortTable(2)">Category <span class="sort-indicator">↕</span></th>
+                        <th>Examples</th>
+                        <th onclick="sortTable(4)">Status <span class="sort-indicator">↕</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Foundation -->
+                    <tr data-status="live" data-category="foundation">
+                        <td><code>/arckit.plan</code></td>
+                        <td class="description">Create project plan with timeline, phases, gates, and Mermaid diagrams</td>
+                        <td>Foundation</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/project-plan.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/project-plan.md" title="ONS Data">v8</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/project-plan.md" title="Cabinet Office">v9</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace/blob/main/projects/001-ai-training-marketplace/project-plan.md" title="Training">v10</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+                    <tr data-status="live" data-category="foundation">
+                        <td><code>/arckit.principles</code></td>
+                        <td class="description">Create or update enterprise architecture principles</td>
+                        <td>Foundation</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+
+                    <!-- Strategic Context -->
+                    <tr data-status="live" data-category="strategic">
+                        <td><code>/arckit.stakeholders</code></td>
+                        <td class="description">Analyze stakeholder drivers, goals, and measurable outcomes</td>
+                        <td>Strategic Context</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/stakeholder-drivers.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/stakeholder-drivers.md" title="ONS Data">v8</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/stakeholder-drivers.md" title="Cabinet Office">v9</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace/blob/main/projects/001-ai-training-marketplace/stakeholder-drivers.md" title="Training">v10</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+                    <tr data-status="live" data-category="strategic">
+                        <td><code>/arckit.risk</code></td>
+                        <td class="description">Create comprehensive risk register following HM Treasury Orange Book principles</td>
+                        <td>Strategic Context</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/risk-register.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/risk-register.md" title="ONS Data">v8</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/risk-register.md" title="Cabinet Office">v9</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data/blob/main/projects/001-national-highways-data-architecture-modernization/risk-register.md" title="Highways">v11</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+                    <tr data-status="live" data-category="strategic">
+                        <td><code>/arckit.sobc</code></td>
+                        <td class="description">Create Strategic Outline Business Case (SOBC) using UK Government Green Book 5-case model</td>
+                        <td>Strategic Context</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/sobc.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/sobc.md" title="ONS Data">v8</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+
+                    <!-- Requirements & Data -->
+                    <tr data-status="live" data-category="requirements">
+                        <td><code>/arckit.requirements</code></td>
+                        <td class="description">Create comprehensive business and technical requirements</td>
+                        <td>Requirements & Data</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v1-m365/blob/main/projects/001-exchange-online-migration/requirements.md" title="M365">v1</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot/blob/main/projects/001-hmrc-chatbot/requirements.md" title="HMRC">v2</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/requirements.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/requirements.md" title="Cabinet Office">v9</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+                    <tr data-status="live" data-category="requirements">
+                        <td><code>/arckit.data-model</code></td>
+                        <td class="description">Create comprehensive data model with entity relationships, GDPR compliance, and data governance</td>
+                        <td>Requirements & Data</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/data-model.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/data-model.md" title="ONS Data">v8</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/data-model.md" title="Cabinet Office">v9</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace/blob/main/projects/001-ai-training-marketplace/data-model.md" title="Training">v10</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+                    <tr data-status="alpha" data-category="requirements">
+                        <td><code>/arckit.data-mesh-contract</code></td>
+                        <td class="description">Create federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees</td>
+                        <td>Requirements & Data</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="requirements">
+                        <td><code>/arckit.dpia</code></td>
+                        <td class="description">Generate Data Protection Impact Assessment (DPIA) for UK GDPR Article 35 compliance</td>
+                        <td>Requirements & Data</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/dpia.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/dpia.md" title="ONS Data">v8</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/dpia.md" title="Cabinet Office">v9</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+
+                    <!-- Research & Strategy -->
+                    <tr data-status="experimental" data-category="research">
+                        <td><code>/arckit.platform-design</code></td>
+                        <td class="description">Create platform strategy using Platform Design Toolkit (8 canvases for multi-sided ecosystems)</td>
+                        <td>Research & Strategy</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace/blob/main/projects/001-ai-training-marketplace/platform-design.md" title="Training">v10</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="research">
+                        <td><code>/arckit.research</code></td>
+                        <td class="description">Research technology, services, and products to meet requirements with build vs buy analysis</td>
+                        <td>Research & Strategy</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/research-findings.md" title="Windows 11">v3</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="research">
+                        <td><code>/arckit.wardley</code></td>
+                        <td class="description">Create strategic Wardley Maps for architecture decisions and build vs buy analysis</td>
+                        <td>Research & Strategy</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/tree/main/projects/001-windows-11-migration-intune/wardley-maps" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v6-patent-system/tree/main/projects/001-patent-management-system-for-the-intellectual-property-office/wardley-maps" title="Patent">v6</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data/tree/main/projects/001-national-highways-data-architecture-modernization/wardley-maps" title="Highways">v11</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="research">
+                        <td><code>/arckit.roadmap</code></td>
+                        <td class="description">Create strategic architecture roadmap with multi-year timeline, capability evolution, and governance</td>
+                        <td>Research & Strategy</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/roadmap.md" title="Windows 11">v3</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="research">
+                        <td><code>/arckit.adr</code></td>
+                        <td class="description">Document architectural decisions with options analysis and traceability</td>
+                        <td>Research & Strategy</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/tree/main/projects/001-windows-11-migration-intune/decisions" title="Windows 11">v3</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+
+                    <!-- Procurement -->
+                    <tr data-status="live" data-category="procurement">
+                        <td><code>/arckit.sow</code></td>
+                        <td class="description">Generate Statement of Work (SOW) / RFP document for vendor procurement</td>
+                        <td>Procurement</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v1-m365/blob/main/projects/001-exchange-online-migration/sow.md" title="M365">v1</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot/blob/main/projects/001-hmrc-chatbot/sow.md" title="HMRC">v2</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/sow.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v6-patent-system/blob/main/projects/001-patent-management-system-for-the-intellectual-property-office/sow.md" title="Patent">v6</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+                    <tr data-status="alpha" data-category="procurement">
+                        <td><code>/arckit.dos</code></td>
+                        <td class="description">Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace</td>
+                        <td>Procurement</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
+                    </tr>
+                    <tr data-status="alpha" data-category="procurement">
+                        <td><code>/arckit.gcloud-search</code></td>
+                        <td class="description">Find G-Cloud services on UK Digital Marketplace with live search and comparison</td>
+                        <td>Procurement</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
+                    </tr>
+                    <tr data-status="alpha" data-category="procurement">
+                        <td><code>/arckit.gcloud-clarify</code></td>
+                        <td class="description">Analyze G-Cloud service gaps and generate supplier clarification questions</td>
+                        <td>Procurement</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
+                    </tr>
+                    <tr data-status="live" data-category="procurement">
+                        <td><code>/arckit.evaluate</code></td>
+                        <td class="description">Create vendor evaluation framework and score vendor proposals</td>
+                        <td>Procurement</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v1-m365/blob/main/projects/001-exchange-online-migration/evaluation-criteria.md" title="M365">v1</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot/blob/main/projects/001-hmrc-chatbot/evaluation-criteria.md" title="HMRC">v2</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/evaluation-criteria.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v6-patent-system/blob/main/projects/001-patent-management-system-for-the-intellectual-property-office/evaluation-criteria.md" title="Patent">v6</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+
+                    <!-- Design & Architecture -->
+                    <tr data-status="live" data-category="design">
+                        <td><code>/arckit.diagram</code></td>
+                        <td class="description">Generate architecture diagrams using Mermaid for visual documentation</td>
+                        <td>Design & Architecture</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v1-m365/tree/main/projects/001-exchange-online-migration/diagrams" title="M365">v1</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/tree/main/projects/001-windows-11-migration-intune/diagrams" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace/tree/main/projects/001-ai-training-marketplace/diagrams" title="Training">v10</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="design">
+                        <td><code>/arckit.hld-review</code></td>
+                        <td class="description">Review High-Level Design (HLD) against architecture principles and requirements</td>
+                        <td>Design & Architecture</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/hld.md" title="Windows 11">v3</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="design">
+                        <td><code>/arckit.dld-review</code></td>
+                        <td class="description">Review Detailed Design (DLD) for implementation readiness</td>
+                        <td>Design & Architecture</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+
+                    <!-- Operations -->
+                    <tr data-status="beta" data-category="operations">
+                        <td><code>/arckit.backlog</code></td>
+                        <td class="description">Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints</td>
+                        <td>Operations</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/backlog.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/backlog.md" title="Cabinet Office">v9</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="operations">
+                        <td><code>/arckit.servicenow</code></td>
+                        <td class="description">Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control</td>
+                        <td>Operations</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/servicenow-design.md" title="Windows 11">v3</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="operations">
+                        <td><code>/arckit.devops</code></td>
+                        <td class="description">Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience</td>
+                        <td>Operations</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="operations">
+                        <td><code>/arckit.mlops</code></td>
+                        <td class="description">Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance</td>
+                        <td>Operations</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="operations">
+                        <td><code>/arckit.finops</code></td>
+                        <td class="description">Create FinOps strategy with cloud cost management, optimization, governance, and forecasting</td>
+                        <td>Operations</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="operations">
+                        <td><code>/arckit.operationalize</code></td>
+                        <td class="description">Create operational readiness pack with support model, runbooks, DR/BCP, on-call, and handover documentation</td>
+                        <td>Operations</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="live" data-category="operations">
+                        <td><code>/arckit.traceability</code></td>
+                        <td class="description">Generate requirements traceability matrix from requirements to design to tests</td>
+                        <td>Operations</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v1-m365/blob/main/projects/001-exchange-online-migration/traceability-matrix.md" title="M365">v1</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot/blob/main/projects/001-hmrc-chatbot/traceability-matrix.md" title="HMRC">v2</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/traceability-matrix.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/traceability-matrix.md" title="Cabinet Office">v9</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-live">Live</span></td>
+                    </tr>
+
+                    <!-- Quality & Governance -->
+                    <tr data-status="beta" data-category="governance">
+                        <td><code>/arckit.analyze</code></td>
+                        <td class="description">Perform comprehensive governance quality analysis across architecture artifacts (requirements, principles, designs, assessments)</td>
+                        <td>Quality & Governance</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/analysis-report.md" title="Cabinet Office">v9</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data/blob/main/projects/001-national-highways-data-architecture-modernization/analysis-report.md" title="Highways">v11</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="alpha" data-category="governance">
+                        <td><code>/arckit.principles-compliance</code></td>
+                        <td class="description">Assess compliance with architecture principles and generate scorecard with evidence, gaps, and recommendations</td>
+                        <td>Quality & Governance</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/principles-compliance-assessment-2025-11-04.md" title="Windows 11">v3</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
+                    </tr>
+
+                    <!-- UK Government -->
+                    <tr data-status="beta" data-category="ukgov">
+                        <td><code>/arckit.service-assessment</code></td>
+                        <td class="description">Prepare for GDS Service Standard assessment - analyze evidence against 14 points, identify gaps, generate readiness report</td>
+                        <td>UK Government</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="ukgov">
+                        <td><code>/arckit.tcop</code></td>
+                        <td class="description">Generate a Technology Code of Practice (TCoP) review document for a UK Government technology project</td>
+                        <td>UK Government</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v6-patent-system/blob/main/projects/001-patent-management-system-for-the-intellectual-property-office/tcop-assessment.md" title="Patent">v6</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/tcop-review.md" title="ONS Data">v8</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/tcop-review.md" title="Cabinet Office">v9</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data/blob/main/projects/001-national-highways-data-architecture-modernization/tcop-assessment.md" title="Highways">v11</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="beta" data-category="ukgov">
+                        <td><code>/arckit.secure</code></td>
+                        <td class="description">Generate a Secure by Design assessment for UK Government projects (civilian departments)</td>
+                        <td>UK Government</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/ukgov-secure-by-design.md" title="ONS Data">v8</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/ukgov-secure-by-design.md" title="Cabinet Office">v9</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data/blob/main/projects/001-national-highways-data-architecture-modernization/ukgov-secure-by-design.md" title="Highways">v11</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="alpha" data-category="ukgov">
+                        <td><code>/arckit.ai-playbook</code></td>
+                        <td class="description">Assess UK Government AI Playbook compliance for responsible AI deployment</td>
+                        <td>UK Government</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/ai-playbook-assessment.md" title="Cabinet Office">v9</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
+                    </tr>
+                    <tr data-status="alpha" data-category="ukgov">
+                        <td><code>/arckit.atrs</code></td>
+                        <td class="description">Generate Algorithmic Transparency Recording Standard (ATRS) record for AI/algorithmic tools</td>
+                        <td>UK Government</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot/blob/main/projects/001-hmrc-chatbot/atrs-record.md" title="HMRC">v2</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/atrs-record.md" title="Cabinet Office">v9</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
+                    </tr>
+
+                    <!-- UK MOD -->
+                    <tr data-status="experimental" data-category="mod">
+                        <td><code>/arckit.mod-secure</code></td>
+                        <td class="description">Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance</td>
+                        <td>UK MOD</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/mod-secure-by-design.md" title="Windows 11">v3</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="mod">
+                        <td><code>/arckit.jsp-936</code></td>
+                        <td class="description">Generate MOD JSP 936 AI assurance documentation for defence AI/ML systems</td>
+                        <td>UK MOD</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+
+                    <!-- Reporting -->
+                    <tr data-status="alpha" data-category="governance">
+                        <td><code>/arckit.story</code></td>
+                        <td class="description">Generate comprehensive project story with timeline analysis, traceability, and governance achievements</td>
+                        <td>Quality & Governance</td>
+                        <td class="examples">
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/PROJECT-STORY.md" title="Windows 11">v3</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/PROJECT-STORY.md" title="ONS Data">v8</a>
+                            <a href="https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/PROJECT-STORY.md" title="Cabinet Office">v9</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
-        <!-- Research & Strategy -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Research & Strategy</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.platform-design</span> - Design multi-sided platform strategy using Platform Design Toolkit (8 PDT canvases for ecosystem platforms)</li>
-                <li><span class="app-command-code">/arckit.research</span> - Internet research with cited sources for technical decisions and build vs buy analysis</li>
-                <li><span class="app-command-code">/arckit.wardley</span> - Create Wardley Map for strategic planning and evolution analysis</li>
-                <li><span class="app-command-code">/arckit.roadmap</span> - Create multi-year strategic architecture roadmap with capability evolution and governance framework</li>
-                <li><span class="app-command-code">/arckit.adr</span> - Document architectural decisions with MADR v4.0 format, options analysis, and UK Government escalation levels</li>
-            </ul>
-        </div>
-
-        <!-- Procurement -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Procurement</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.sow</span> - Generate Statement of Work (SOW) / RFP document for vendor procurement</li>
-                <li><span class="app-command-code">/arckit.dos</span> - Generate Digital Outcomes and Specialists procurement documentation for UK Digital Marketplace</li>
-                <li><span class="app-command-code">/arckit.gcloud-search</span> - Find G-Cloud services on UK Digital Marketplace with live search</li>
-                <li><span class="app-command-code">/arckit.gcloud-clarify</span> - Analyze G-Cloud service gaps and generate supplier clarification questions</li>
-                <li><span class="app-command-code">/arckit.evaluate</span> - Create vendor evaluation framework and score vendor proposals</li>
-            </ul>
-        </div>
-
-        <!-- Design & Architecture -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Design & Architecture</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.diagram</span> - Generate architecture diagrams using Mermaid (C4 Model: Context, Container, Component, Deployment)</li>
-                <li><span class="app-command-code">/arckit.hld-review</span> - Review High-Level Design (HLD) against architecture principles and requirements</li>
-                <li><span class="app-command-code">/arckit.dld-review</span> - Review Detailed Low-Level Design (DLD) for implementation readiness</li>
-            </ul>
-        </div>
-
-        <!-- Implementation Planning -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Implementation Planning</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.backlog</span> - Generate prioritized product backlog - convert requirements to GDS user stories, organize into sprints</li>
-            </ul>
-        </div>
-
-        <!-- Operations -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Operations</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.servicenow</span> - Generate ServiceNow CMDB design with CIs, relationships, and service management integration</li>
-                <li><span class="app-command-code">/arckit.operationalize</span> - Create operational readiness pack with support model, runbooks, DR/BCP, on-call, and handover</li>
-                <li><span class="app-command-code">/arckit.devops</span> - Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience</li>
-                <li><span class="app-command-code">/arckit.mlops</span> - Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance</li>
-                <li><span class="app-command-code">/arckit.finops</span> - Create FinOps strategy with cloud cost management, optimization, governance, and forecasting</li>
-                <li><span class="app-command-code">/arckit.traceability</span> - Generate requirements traceability matrix from requirements → design → tests</li>
-            </ul>
-        </div>
-
-        <!-- Quality & Governance -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Quality & Governance</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.analyze</span> - Perform comprehensive governance quality analysis across all architecture artifacts</li>
-                <li><span class="app-command-code">/arckit.principles-compliance</span> - Assess project compliance with architecture principles using RAG status and evidence-based validation</li>
-            </ul>
-        </div>
-
-        <!-- UK Government Compliance -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">UK Government Compliance</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.service-assessment</span> - Prepare for GDS Service Standard assessment (14 points, RAG ratings, evidence mapping)</li>
-                <li><span class="app-command-code">/arckit.tcop</span> - Generate Technology Code of Practice (TCoP) review document (13 points)</li>
-                <li><span class="app-command-code">/arckit.secure</span> - Generate Secure by Design assessment for UK Government projects (NCSC CAF, Cyber Essentials, UK GDPR)</li>
-                <li><span class="app-command-code">/arckit.ai-playbook</span> - Assess UK Government AI Playbook compliance for responsible AI deployment</li>
-                <li><span class="app-command-code">/arckit.atrs</span> - Generate Algorithmic Transparency Recording Standard (ATRS) record for AI/algorithmic tools</li>
-            </ul>
-        </div>
-
-        <!-- UK MOD Defence -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">UK MOD (Ministry of Defence)</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.mod-secure</span> - Generate MOD Secure by Design assessment using CAAT and continuous assurance</li>
-                <li><span class="app-command-code">/arckit.jsp-936</span> - Generate MOD JSP 936 AI assurance documentation for defence AI/ML systems</li>
-            </ul>
-        </div>
-
-        <!-- Reporting -->
-        <div class="app-command-section">
-            <h3 class="govuk-heading-m">Reporting</h3>
-            <ul class="app-command-list">
-                <li><span class="app-command-code">/arckit.story</span> - Generate comprehensive project story with timeline analysis, traceability, and governance achievements</li>
-            </ul>
+        <div class="govuk-inset-text">
+            <strong>Example repo key:</strong> v1=M365, v2=HMRC, v3=Windows11, v6=Patent, v8=ONS, v9=Cabinet Office, v10=Training, v11=Highways
         </div>
     </div>
 
@@ -587,7 +1081,7 @@
                 <h3 class="govuk-heading-s">Workflow & Dependencies</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/WORKFLOW-DIAGRAMS.md" class="govuk-link">Workflow Diagrams</a> - Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI) with Gantt charts and decision trees</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">Dependency Structure Matrix</a> - Complete 35×35 command dependency matrix showing mandatory, recommended, and optional relationships</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">Dependency Structure Matrix</a> - Complete 39×39 command dependency matrix showing mandatory, recommended, and optional relationships</li>
                 </ul>
             </div>
         </div>
@@ -650,7 +1144,7 @@ claude</code></pre></div>
                 <div class="govuk-grid-column-two-thirds">
                     <h2 class="govuk-heading-m">ArcKit</h2>
                     <p class="govuk-body">Enterprise Architecture Governance & Vendor Procurement Toolkit</p>
-                    <p class="govuk-body">Version 0.9.1 - November 2025</p>
+                    <p class="govuk-body">Version 0.10.0 - January 2026</p>
                 </div>
 
                 <div class="govuk-grid-column-one-third">
@@ -676,6 +1170,85 @@ claude</code></pre></div>
     <script type="module">
         import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
         initAll()
+    </script>
+
+    <!-- Command Table Filtering and Sorting -->
+    <script>
+        // Filter table based on selected filters
+        function filterTable() {
+            const statusFilter = document.getElementById('status-filter').value;
+            const categoryFilter = document.getElementById('category-filter').value;
+            const searchFilter = document.getElementById('search-filter').value.toLowerCase();
+            const table = document.getElementById('command-table');
+            const rows = table.querySelectorAll('tbody tr');
+            let visibleCount = 0;
+
+            rows.forEach(row => {
+                const status = row.getAttribute('data-status');
+                const category = row.getAttribute('data-category');
+                const text = row.textContent.toLowerCase();
+
+                const statusMatch = statusFilter === 'all' || status === statusFilter;
+                const categoryMatch = categoryFilter === 'all' || category === categoryFilter;
+                const searchMatch = searchFilter === '' || text.includes(searchFilter);
+
+                if (statusMatch && categoryMatch && searchMatch) {
+                    row.style.display = '';
+                    visibleCount++;
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            document.getElementById('visible-count').textContent = visibleCount;
+        }
+
+        // Sort table by column
+        function sortTable(columnIndex) {
+            const table = document.getElementById('command-table');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            const header = table.querySelectorAll('th')[columnIndex];
+            const isAscending = header.getAttribute('data-sort') !== 'asc';
+
+            // Update sort indicators
+            table.querySelectorAll('th').forEach(th => {
+                th.classList.remove('sorted');
+                th.setAttribute('data-sort', '');
+            });
+            header.classList.add('sorted');
+            header.setAttribute('data-sort', isAscending ? 'asc' : 'desc');
+
+            // Sort rows
+            rows.sort((a, b) => {
+                let aValue, bValue;
+
+                if (columnIndex === 4) {
+                    // Status column - sort by maturity level
+                    const statusOrder = { 'live': 1, 'beta': 2, 'alpha': 3, 'experimental': 4 };
+                    aValue = statusOrder[a.getAttribute('data-status')] || 5;
+                    bValue = statusOrder[b.getAttribute('data-status')] || 5;
+                } else {
+                    aValue = a.cells[columnIndex].textContent.trim().toLowerCase();
+                    bValue = b.cells[columnIndex].textContent.trim().toLowerCase();
+                }
+
+                if (typeof aValue === 'number') {
+                    return isAscending ? aValue - bValue : bValue - aValue;
+                }
+                return isAscending
+                    ? aValue.localeCompare(bValue)
+                    : bValue.localeCompare(aValue);
+            });
+
+            // Re-append sorted rows
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // Initialize table
+        document.addEventListener('DOMContentLoaded', function() {
+            filterTable();
+        });
     </script>
 </body>
 </html>
