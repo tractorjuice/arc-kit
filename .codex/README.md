@@ -44,12 +44,14 @@ codex
 
 ## Document Control Standard
 
-Every command that generates an artifact must insert the canonical **Document Control** table and **Revision History** defined in [`docs/templates/document-control.md`](../docs/templates/document-control.md). Always:
+Every command that generates an artifact must insert the canonical **Document Control** table and **Revision History**. See [`CLAUDE.md`](../CLAUDE.md#document-control-standard) for the full specification.
 
-- Read `.arckit/VERSION` to populate `ArcKit Version` metadata.
-- Generate the Document ID via `./scripts/bash/generate-document-id.sh PROJECT_ID DOC_CODE VERSION`.
-- Fill the standard fields (Project, Classification, Status, Review Cycle, Next Review Date, Owner, Reviewed/Approved By, Distribution) before writing any narrative content.
-- Keep additional rows (e.g., “Financial Years Covered”, “ADR Number”) below the standard block so every artifact shares the same governance header.
+Key requirements:
+- Read `.arckit/VERSION` to populate `ArcKit Version` metadata
+- Generate the Document ID via `./scripts/bash/generate-document-id.sh PROJECT_ID DOC_CODE VERSION`
+- Fill the standard fields (Project, Classification, Status, Review Cycle, Next Review Date, Owner, Reviewed/Approved By, Distribution) before writing any narrative content
+- Keep additional rows (e.g., "Financial Years Covered", "ADR Number") below the standard block
+- Use existing templates in `.arckit/templates/` as reference examples
 
 ## Command Invocation
 
@@ -492,7 +494,7 @@ chmod +x .arckit/scripts/bash/*.sh
 **Current Release: v0.9.1 (35 commands)**
 
 **Latest Additions**
-- 🧾 **Document Control Standard**: Commands now reference `docs/templates/document-control.md` and auto-fill the canonical metadata + revision history before writing content.
+- 🧾 **Document Control Standard**: Commands auto-fill the canonical metadata + revision history before writing content (see `CLAUDE.md`).
 - 🪪 **Dynamic Version Metadata**: SOB C and Service Assessment prompts (all agents) read `.arckit/VERSION` so generated documents always display the current ArcKit release.
 - 🧱 **Template Alignment**: Every template header now shares the same field order (Document ID/Type, Project, Classification, Status, Review Cycle, etc.) with doc-specific rows appended beneath.
 - 📚 **New Guides**: Added roadmap and ADR guides plus README cross-links so teams can reference the new workflows quickly.

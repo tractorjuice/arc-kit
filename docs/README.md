@@ -90,7 +90,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ## 🔧 Technical Guides
 
 - [Token Limits Solutions](TOKEN-LIMITS.md) - Handling large projects with AI token limits
-- [Document Control Standard](templates/document-control.md) - Canonical metadata + revision history table used across all templates
+- Document Control Standard - See [CLAUDE.md](../CLAUDE.md#document-control-standard) for the canonical specification
 
 ---
 

@@ -123,6 +123,32 @@ project/
 - **Use Write tool** to save output (avoids token limit issues)
 - Show only a summary to user
 
+### Document Control Standard
+
+Every template must start with a **Document Control** table followed by **Revision History**:
+
+**Document Control fields** (in order):
+| Field | Example |
+|-------|---------|
+| Document ID | `ARC-001-REQ-v1.0` (use `generate-document-id.sh`) |
+| Document Type | Requirements Specification |
+| Project | PROJECT_NAME (Project PROJECT_ID) |
+| Classification | PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET |
+| Status | DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED |
+| Version | 1.0 |
+| Created Date | YYYY-MM-DD |
+| Last Modified | YYYY-MM-DD |
+| Review Cycle | Monthly / Quarterly / Annual / On-Demand |
+| Next Review Date | YYYY-MM-DD |
+| Owner | Role or individual |
+| Reviewed By | Name (date) or PENDING |
+| Approved By | Name (date) or PENDING |
+| Distribution | Distribution list |
+
+> Domain-specific fields (e.g., "ADR Number", "Assessment Phase") go **after** standard fields.
+
+**Revision History columns**: Version | Date | Author | Changes | Approved By | Approval Date
+
 ## Version Management
 
 **Version defined in 2 places** (keep synchronized):

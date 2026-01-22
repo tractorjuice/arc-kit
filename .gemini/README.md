@@ -45,9 +45,12 @@ Gemini CLI uses colon-separated namespaces for commands in subdirectories. ArcKi
 
 ## Document Control Standard
 
-All commands that produce Markdown artifacts must render the canonical **Document Control** table and **Revision History** captured in [`docs/templates/document-control.md`](../docs/templates/document-control.md):
-- Generate Document IDs with `./scripts/bash/generate-document-id.sh <PROJECT_ID> <DOC_CODE> <VERSION>`.
-- Populate every standard field (Classification, Status, Review Cycle, Next Review Date, Owner, Reviewed/Approved By, Distribution) before writing body content.
+All commands that produce Markdown artifacts must render the canonical **Document Control** table and **Revision History**. See [`CLAUDE.md`](../CLAUDE.md#document-control-standard) for the full specification.
+
+Key requirements:
+- Generate Document IDs with `./scripts/bash/generate-document-id.sh <PROJECT_ID> <DOC_CODE> <VERSION>`
+- Populate every standard field (Classification, Status, Review Cycle, Next Review Date, Owner, Reviewed/Approved By, Distribution) before writing body content
+- Use existing templates in `.arckit/templates/` as reference examples
 - Append doc-specific metadata (e.g., ADR Number, Financial Years Covered) after the standard rows to keep the header layout identical across deliverables.
 - Always read `.arckit/VERSION` so metadata reflects the current ArcKit release.
 
