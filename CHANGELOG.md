@@ -5,6 +5,49 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.0] - 2026-01-22
+
+### Added
+
+- **New Command**: `/arckit.pages` (40th ArcKit command) - Generate GitHub Pages documentation site
+  - **Auto-Discovery**: Scans repository for all known ArcKit artifacts across all projects
+  - **Document Categories**: Discovery, Planning, Architecture, Governance, Compliance, Operations, Procurement, Diagrams, Decisions
+  - **Mermaid Support**: Auto-renders all Mermaid diagrams (flowcharts, sequence, C4, ERD, Gantt, state, class)
+  - **GOV.UK Styling**: Professional government design system (GOV.UK Frontend 5.13.0)
+  - **Manifest Generation**: Creates `docs/manifest.json` for programmatic access to document index
+  - **Hash-Based Routing**: Shareable URLs to specific documents (`#projects/001-name/requirements.md`)
+  - **Mobile Responsive**: Works on all screen sizes with collapsible sidebar
+  - **Lazy Loading**: Documents fetched on demand with in-memory caching
+  - **Template**: `pages-template.html` - Full HTML/CSS/JS single-page application
+  - **Guide**: `docs/guides/pages.md` - Usage guide with workflow and setup instructions
+  - **Workflow Position**: Tier 12: Documentation Publishing (utility command)
+  - **Use Cases**: Project documentation portals, architecture documentation sites, stakeholder communication
+
+- **Command Guides**: Added 21 comprehensive guides for complete command coverage
+  - All 40 commands now have dedicated playbooks in `docs/guides/`
+  - Each guide includes: inputs, command usage, outputs, workflow position, review checklist, key principles
+  - Guides for: ai-playbook, analyze, atrs, backlog, data-mesh-contract, devops, dld-review, dos, dpia, evaluate, finops, gcloud-clarify, gcloud-search, hld-review, jsp-936, mlops, mod-secure, operationalize, pages, platform-design, servicenow
+
+### Changed
+
+- **Documentation Site**: Enhanced `docs/index.html` with interactive features
+  - Added Mermaid.js for workflow diagram rendering
+  - Made Command and Status columns sticky for better navigation
+  - Reduced table row height with tighter padding
+  - Expanded example links to show multiple test projects per command
+  - Changed workflow diagram to vertical layout for better readability
+
+- **Dependency Matrix**: Updated to include pages command
+  - Added pages column with Recommended (R) dependencies on all document-producing commands
+  - Added Tier 12: Documentation Publishing
+  - Total commands: 40
+
+### Fixed
+
+- Mermaid diagram syntax for cross-subgraph connections
+- DOS and G-Cloud commands status changed to experimental
+- Missing example links in command reference tables
+
 ## [0.10.0] - 2026-01-21
 
 ### Added
