@@ -1,0 +1,387 @@
+description = """
+Generate GitHub Pages site to display all project documents with Mermaid diagram support
+"""
+prompt = """
+# ArcKit: GitHub Pages Generator
+
+You are an expert web developer helping generate a GitHub Pages site that displays all ArcKit project documents with full Mermaid diagram rendering support.
+
+## What is the Pages Generator?
+
+The Pages Generator creates a `docs/index.html` file that:
+- **Displays** all ArcKit artifacts in a navigable web interface
+- **Renders** Mermaid diagrams inline
+- **Organizes** documents by project with sidebar navigation
+- **Follows** GOV.UK Design System styling
+- **Works** with GitHub Pages hosting
+
+## Your Task
+
+**User Request**: {{args}}
+
+Generate a GitHub Pages site for this ArcKit repository.
+
+## Step 1: Discover Repository Structure
+
+Scan the repository to find all ArcKit artifacts:
+
+### 1.1 Global Documents
+
+Check `.arckit/memory/` for global artifacts:
+```
+.arckit/memory/
+├── architecture-principles.md
+└── {other global documents}
+```
+
+### 1.2 Project Documents
+
+Check `projects/` for all project folders:
+```
+projects/
+├── 001-{project-name}/
+│   ├── requirements.md
+│   ├── stakeholder-drivers.md
+│   ├── risk-register.md
+│   ├── sobc.md
+│   ├── hld.md
+│   ├── data-model.md
+│   ├── sow.md
+│   ├── research-findings.md
+│   ├── evaluation-criteria.md
+│   ├── backlog.md
+│   ├── project-plan.md
+│   ├── roadmap.md
+│   ├── traceability-matrix*.md
+│   ├── dpia.md
+│   ├── servicenow-design.md
+│   ├── devops-strategy.md
+│   ├── mlops-strategy.md
+│   ├── finops-strategy.md
+│   ├── operationalize.md
+│   ├── tcop-review.md
+│   ├── secure-by-design.md
+│   ├── mod-secure-by-design.md
+│   ├── ai-playbook-assessment.md
+│   ├── atrs-record.md
+│   ├── principles-compliance-assessment*.md
+│   ├── wardley-map.md
+│   ├── diagrams/
+│   │   └── *.md (Mermaid diagrams)
+│   ├── decisions/
+│   │   └── *.md (ADRs)
+│   ├── vendors/
+│   │   └── {vendor-name}/
+│   │       ├── hld*.md
+│   │       ├── dld*.md
+│   │       └── proposal*.md
+│   └── procurement/
+│       └── *.md
+├── 002-{another-project}/
+│   └── ...
+└── ...
+```
+
+### 1.3 Known ArcKit Artifact Types
+
+Only include these known artifact types:
+
+| Category | File Patterns | Display Name |
+|----------|---------------|--------------|
+| **Discovery** | | |
+| | `requirements.md` | Requirements |
+| | `stakeholder-drivers.md` | Stakeholder Drivers |
+| | `research-findings.md` | Research Findings |
+| **Planning** | | |
+| | `sobc.md` | Strategic Outline Business Case |
+| | `project-plan.md` | Project Plan |
+| | `roadmap.md` | Roadmap |
+| | `backlog.md` | Product Backlog |
+| **Architecture** | | |
+| | `architecture-principles.md` | Architecture Principles |
+| | `hld.md`, `hld-*.md` | High-Level Design |
+| | `dld.md`, `dld-*.md` | Detailed Design |
+| | `data-model.md`, `*-data-model.md` | Data Model |
+| | `wardley-map.md` | Wardley Map |
+| | `diagrams/*.md` | Architecture Diagrams |
+| | `decisions/*.md` | Architecture Decision Records |
+| **Governance** | | |
+| | `risk-register.md` | Risk Register |
+| | `traceability-matrix*.md` | Traceability Matrix |
+| | `principles-compliance-assessment*.md` | Principles Compliance |
+| **Compliance** | | |
+| | `tcop-review.md`, `tcop-assessment.md` | TCoP Assessment |
+| | `secure-by-design.md` | Secure by Design |
+| | `mod-secure-by-design.md` | MOD Secure by Design |
+| | `ai-playbook-assessment.md` | AI Playbook Assessment |
+| | `atrs-record.md` | ATRS Record |
+| | `dpia.md` | Data Protection Impact Assessment |
+| **Operations** | | |
+| | `servicenow-design.md` | ServiceNow Design |
+| | `devops-strategy.md` | DevOps Strategy |
+| | `mlops-strategy.md` | MLOps Strategy |
+| | `finops-strategy.md` | FinOps Strategy |
+| | `operationalize.md` | Operational Readiness |
+| **Procurement** | | |
+| | `sow.md`, `sow-*.md` | Statement of Work |
+| | `evaluation-criteria.md` | Evaluation Criteria |
+| | `vendors/*/*.md` | Vendor Documents |
+| | `procurement/*.md` | Procurement Documents |
+
+## Step 2: Generate manifest.json
+
+Create `docs/manifest.json` with the discovered structure:
+
+```json
+{
+  \"generated\": \"2026-01-22T10:30:00Z\",
+  \"repository\": {
+    \"owner\": \"{owner}\",
+    \"name\": \"{repo-name}\",
+    \"branch\": \"main\"
+  },
+  \"global\": [
+    {
+      \"path\": \".arckit/memory/architecture-principles.md\",
+      \"title\": \"Architecture Principles\",
+      \"category\": \"Architecture\"
+    }
+  ],
+  \"projects\": [
+    {
+      \"id\": \"001-project-name\",
+      \"name\": \"Project Name\",
+      \"documents\": [
+        {
+          \"path\": \"projects/001-project-name/requirements.md\",
+          \"title\": \"Requirements\",
+          \"category\": \"Discovery\"
+        },
+        {
+          \"path\": \"projects/001-project-name/stakeholder-drivers.md\",
+          \"title\": \"Stakeholder Drivers\",
+          \"category\": \"Discovery\"
+        }
+      ],
+      \"diagrams\": [
+        {
+          \"path\": \"projects/001-project-name/diagrams/context-system.md\",
+          \"title\": \"System Context Diagram\"
+        }
+      ],
+      \"decisions\": [
+        {
+          \"path\": \"projects/001-project-name/decisions/001-cloud-provider.md\",
+          \"title\": \"ADR-001: Cloud Provider Selection\"
+        }
+      ],
+      \"vendors\": [
+        {
+          \"name\": \"Acme Corp\",
+          \"documents\": [
+            {
+              \"path\": \"projects/001-project-name/vendors/acme-corp/hld-v1.md\",
+              \"title\": \"HLD v1.0\"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Step 3: Generate index.html
+
+Create `docs/index.html` using the template from `.arckit/templates/pages-template.html`.
+
+The HTML must include:
+
+### 3.1 Core Libraries (CDN)
+
+```html
+<!-- GOV.UK Frontend for styling -->
+<link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css\">
+
+<!-- Marked.js for Markdown rendering -->
+<script src=\"https://cdn.jsdelivr.net/npm/marked@15.0.6/marked.min.js\"></script>
+
+<!-- Mermaid.js for diagram rendering -->
+<script src=\"https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js\"></script>
+```
+
+### 3.2 Layout Structure
+
+```
++------------------+--------------------------------+
+|     Header       |                                |
+|  (Project Name)  |                                |
++------------------+--------------------------------+
+|                  |                                |
+|    Sidebar       |         Content Area           |
+|   Navigation     |                                |
+|                  |      (Rendered Markdown)       |
+|  - Global Docs   |                                |
+|  - Project 001   |      (Mermaid Diagrams)        |
+|    - Requirements|                                |
+|    - HLD         |                                |
+|    - Diagrams    |                                |
+|  - Project 002   |                                |
+|    ...           |                                |
+|                  |                                |
++------------------+--------------------------------+
+|     Footer       |                                |
++------------------+--------------------------------+
+```
+
+### 3.3 JavaScript Functionality
+
+1. **Manifest Loading**: Fetch and parse `manifest.json`
+2. **Navigation Building**: Generate sidebar from manifest
+3. **Document Fetching**: Fetch markdown from GitHub raw URLs
+4. **Markdown Rendering**: Convert markdown to HTML using marked.js
+5. **Mermaid Rendering**: Detect and render Mermaid code blocks
+6. **URL Routing**: Handle hash-based navigation (#document-path)
+
+### 3.4 GitHub Raw URL Pattern
+
+```javascript
+// Construct raw URL for fetching documents
+const rawBase = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/`;
+const documentUrl = rawBase + documentPath;
+```
+
+### 3.5 Mermaid Integration
+
+```javascript
+// Configure marked to handle mermaid blocks
+const renderer = new marked.Renderer();
+renderer.code = function(code, language) {
+  if (language === 'mermaid') {
+    return `<pre class=\"mermaid\">${code}</pre>`;
+  }
+  return `<pre><code class=\"language-${language}\">${escapeHtml(code)}</code></pre>`;
+};
+
+marked.setOptions({ renderer: renderer });
+
+// Initialize mermaid after content loads
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'default',
+  securityLevel: 'loose'
+});
+
+// Render mermaid diagrams after markdown is inserted
+async function renderMermaid() {
+  await mermaid.run({ querySelector: '.mermaid' });
+}
+```
+
+## Step 4: Write Output Files
+
+**IMPORTANT**: Use the Write tool to create both files.
+
+### 4.1 Write manifest.json
+
+```
+docs/manifest.json
+```
+
+### 4.2 Write index.html
+
+```
+docs/index.html
+```
+
+## Step 5: Provide Summary
+
+After generating, provide this summary:
+
+```
+GitHub Pages Site Generated
+
+Files Created:
+- docs/index.html (main page)
+- docs/manifest.json (document index)
+
+Repository: {owner}/{repo}
+Projects Found: {count}
+Documents Indexed: {total_documents}
+
+Document Breakdown:
+- Global: {global_count}
+- Project Documents: {project_doc_count}
+- Diagrams: {diagram_count}
+- ADRs: {adr_count}
+- Vendor Documents: {vendor_doc_count}
+
+To Enable GitHub Pages:
+1. Go to repository Settings > Pages
+2. Set Source to \"Deploy from a branch\"
+3. Set Branch to \"main\" and folder to \"/docs\"
+4. Save
+
+Your site will be available at:
+https://{owner}.github.io/{repo}/
+
+Features:
+- Sidebar navigation for all projects
+- Markdown rendering with syntax highlighting
+- Mermaid diagram support (auto-rendered)
+- GOV.UK Design System styling
+- Responsive mobile layout
+
+Next Steps:
+- Commit and push the docs/ folder
+- Enable GitHub Pages in repository settings
+- Access your documentation site
+```
+
+## Important Notes
+
+### File Discovery
+
+- Only include files that actually exist in the repository
+- Use Glob or file system commands to discover files
+- Don't include placeholder entries for missing files
+
+### Error Handling
+
+The generated HTML should handle:
+- Missing documents gracefully (show \"Document not found\")
+- Failed fetch requests (show error message)
+- Invalid markdown (display raw content)
+- Invalid mermaid syntax (show error, display raw code)
+
+### Mobile Responsiveness
+
+- Sidebar should collapse on mobile
+- Content should be readable on all screen sizes
+- Touch-friendly navigation
+
+### Accessibility
+
+- Proper heading hierarchy
+- ARIA labels for navigation
+- Keyboard navigation support
+- Skip to content link
+
+### Performance
+
+- Lazy load documents (only fetch when selected)
+- Cache fetched documents in memory
+- Show loading indicator during fetch
+
+---
+
+## Template Reference
+
+Read the template from: `.arckit/templates/pages-template.html`
+
+If the template doesn't exist, generate the HTML inline following the structure above.
+
+---
+
+**Remember**: The goal is a clean, professional documentation site that makes all ArcKit artifacts easily accessible and renders Mermaid diagrams beautifully.
+"""
