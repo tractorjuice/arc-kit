@@ -232,7 +232,7 @@ else
         else
             for doc in "${AVAILABLE_DOCS[@]}"; do
                 echo "  ✓ $doc"
-            fi
+            done
         fi
     else
         echo "Project: (not specified)"
