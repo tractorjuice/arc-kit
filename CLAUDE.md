@@ -111,9 +111,10 @@ project/
 
 1. Create `.claude/commands/arckit.{name}.md` with YAML frontmatter
 2. Create `.arckit/templates/{name}-template.md` with document control section
-3. Run `python scripts/converter.py` to generate Gemini TOML
-4. Test: `arckit init test --ai claude --no-git && cd test && claude`
-5. Update README.md Available Commands table
+3. Create `docs/guides/{name}.md` with usage guide
+4. Run `python scripts/converter.py` to generate Gemini TOML
+5. Test: `arckit init test --ai claude --no-git && cd test && claude`
+6. Update documentation: README.md, docs/index.html, DEPENDENCY-MATRIX.md, CHANGELOG.md
 
 **Command must**:
 - Check prerequisites before generating
@@ -161,14 +162,22 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
             v10-training-marketplace v11-national-highways-data v12-honky-tonks v13-plymouth-research \
             v14-scottish-courts; do
     git clone "https://x-access-token:${TOKEN}@github.com/tractorjuice/arckit-test-project-$repo.git" /tmp/$repo
+    # Sync commands and templates
     rsync -av --delete .claude/commands/ /tmp/$repo/.claude/commands/
     rsync -av --delete .codex/prompts/ /tmp/$repo/.codex/prompts/
     rsync -av --delete .gemini/commands/ /tmp/$repo/.gemini/commands/
     rsync -av --delete .arckit/templates/ /tmp/$repo/.arckit/templates/
     rsync -av scripts/bash/ /tmp/$repo/.arckit/scripts/bash/
+    # Sync guides
+    mkdir -p /tmp/$repo/docs/guides
+    rsync -av --delete docs/guides/ /tmp/$repo/docs/guides/
+    # Sync root docs (NOT docs/index.html or CLAUDE.md - those are repo-specific)
+    cp README.md DEPENDENCY-MATRIX.md CHANGELOG.md WORKFLOW-DIAGRAMS.md /tmp/$repo/
     cd /tmp/$repo && git add -A && git commit -m "chore: sync with arc-kit" && git push && cd -
 done
 ```
+
+**Note**: `docs/index.html` and `CLAUDE.md` are NOT synced - these are repo-specific.
 
 ## Key Patterns
 
