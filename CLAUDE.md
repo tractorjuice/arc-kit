@@ -172,7 +172,7 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
     mkdir -p /tmp/$repo/docs/guides
     rsync -av --delete docs/guides/ /tmp/$repo/docs/guides/
     # Sync root docs (NOT docs/index.html or CLAUDE.md - those are repo-specific)
-    cp README.md DEPENDENCY-MATRIX.md CHANGELOG.md WORKFLOW-DIAGRAMS.md /tmp/$repo/
+    cp README.md DEPENDENCY-MATRIX.md CHANGELOG.md WORKFLOW-DIAGRAMS.md VERSION /tmp/$repo/
     cd /tmp/$repo && git add -A && git commit -m "chore: sync with arc-kit" && git push && cd -
 done
 ```
