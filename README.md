@@ -517,6 +517,18 @@ Create narrative historical record with complete timeline analysis:
 
 **When to use**: At project milestones or completion to create shareable story for stakeholders, leadership, or portfolio reporting. Perfect for demonstrating systematic governance and ArcKit workflow value.
 
+### Phase 16: Documentation Publishing
+**`/arckit.pages`** → Generate GitHub Pages documentation site
+
+Publish all project documentation as an interactive website:
+- **GitHub Pages Integration**: Generates `docs/index.html` and `docs/manifest.json` for GitHub Pages hosting
+- **Mermaid Diagram Rendering**: All architecture diagrams render inline with mermaid.js
+- **Project Navigation**: Sidebar with collapsible project tree and document categories
+- **GOV.UK Styling**: Professional government design system styling
+- **Document Index**: Manifest.json provides programmatic access to all artifacts
+
+**When to use**: When you want to share project documentation with stakeholders via a professional web interface, or to create a portfolio view of all architecture artifacts.
+
 ---
 
 ## Supported AI Agents
@@ -594,7 +606,7 @@ payment-modernization/
 
 ## Complete Command Reference
 
-All 39 ArcKit commands with maturity status and example outputs from public test repositories.
+All 40 ArcKit commands with maturity status and example outputs from public test repositories.
 
 ### Status Legend
 
@@ -707,6 +719,12 @@ All 39 ArcKit commands with maturity status and example outputs from public test
 | `/arckit.mod-secure` | Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance | [v3/001](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/mod-secure-by-design.md) [v3/006](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/006-large-format-printer/mod-secure-by-design.md) | 🟣 Experimental |
 | `/arckit.jsp-936` | Generate MOD JSP 936 AI assurance documentation for defence AI/ML systems | — | 🟣 Experimental |
 
+### Documentation & Publishing
+
+| Command | Description | Examples | Status |
+|---------|-------------|----------|--------|
+| `/arckit.pages` | Generate GitHub Pages documentation site with Mermaid diagram support | — | 🟠 Alpha |
+
 ---
 
 ## Wardley Mapping for Strategic Architecture
@@ -813,7 +831,7 @@ arckit init my-project
 Full guidance lives in `docs/` and the static site.
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/principles.md](docs/principles.md), [docs/requirements.md](docs/requirements.md), [docs/procurement.md](docs/procurement.md), [docs/design-review.md](docs/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 39×39 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 40×40 command matrix.
 - Traceability: [docs/traceability.md](docs/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit

@@ -237,12 +237,17 @@ principles-compliance → analyze → service-assessment → story
 
 ## Version
 
-- **ArcKit Version**: 0.9.2
-- **Matrix Date**: 2026-01-21 (Added finops command)
-- **Commands Documented**: 39
-- **Matrix Rows**: 41 (39 commands + 2 external documents)
+- **ArcKit Version**: 0.11.0
+- **Matrix Date**: 2026-01-22 (Added pages command)
+- **Commands Documented**: 40
+- **Matrix Rows**: 42 (40 commands + 2 external documents)
 
 ## Changelog
+
+### 2026-01-22 - Added Pages Command
+- **Added**: `/arckit.pages` command (40th ArcKit command) for GitHub Pages documentation site generation with Mermaid diagram support
+- **Category**: Documentation & Publishing
+- **Dependencies**: None (utility command)
 
 ### 2026-01-21 - Added FinOps Command
 - **Added**: `/arckit.finops` command (39th ArcKit command) for FinOps strategy with cloud cost management, optimization, governance, and forecasting

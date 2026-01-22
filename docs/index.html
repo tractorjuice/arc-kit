@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 39 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
+    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 40 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
     <meta name="keywords" content="enterprise architecture, UK government, GDS, architecture governance, vendor procurement, ArcKit, compliance, TCOP, secure by design">
     <meta name="author" content="ArcKit">
     <title>ArcKit - Enterprise Architecture Governance & Vendor Procurement</title>
@@ -405,7 +405,7 @@
             <div class="govuk-width-container">
                 <h1 class="govuk-heading-xl">ArcKit</h1>
                 <p class="govuk-body-l">Transform architecture chaos into systematic, audit-ready governance.</p>
-                <p class="govuk-body">39 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
+                <p class="govuk-body">40 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
 
                 <div class="govuk-button-group govuk-!-margin-top-6">
                     <a href="https://github.com/tractorjuice/arc-kit" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
@@ -585,7 +585,7 @@ flowchart TD
 
     <!-- Commands Section -->
     <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
-        <h2 class="govuk-heading-l">39 ArcKit Commands</h2>
+        <h2 class="govuk-heading-l">40 ArcKit Commands</h2>
         <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
 
         <!-- Status Legend -->
@@ -634,6 +634,7 @@ flowchart TD
                     <option value="governance">Quality & Governance</option>
                     <option value="ukgov">UK Government</option>
                     <option value="mod">UK MOD</option>
+                    <option value="publishing">Documentation</option>
                 </select>
             </div>
             <div>
@@ -641,7 +642,7 @@ flowchart TD
                 <input type="text" id="search-filter" placeholder="Search commands..." oninput="filterTable()">
             </div>
             <div class="app-command-count">
-                Showing <span id="visible-count">39</span> of 39 commands
+                Showing <span id="visible-count">40</span> of 40 commands
             </div>
         </div>
 
@@ -1089,6 +1090,15 @@ flowchart TD
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
 
+                    <!-- Documentation & Publishing -->
+                    <tr data-status="alpha" data-category="publishing">
+                        <td><code>/arckit.pages</code></td>
+                        <td class="description">Generate GitHub Pages documentation site with Mermaid diagram support</td>
+                        <td>Documentation</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
+                    </tr>
+
                     <!-- Reporting -->
                     <tr data-status="live" data-category="governance">
                         <td><code>/arckit.story</code></td>
@@ -1232,7 +1242,7 @@ flowchart TD
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md" class="govuk-link">Changelog</a> - Release history and updates</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md" class="govuk-link">Contributing</a> - How to contribute to ArcKit</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/releases" class="govuk-link">Release Notes</a> - Detailed version information</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/.claude/COMMANDS.md" class="govuk-link">Command Reference</a> - All 39 commands documented</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/.claude/COMMANDS.md" class="govuk-link">Command Reference</a> - All 40 commands documented</li>
                 </ul>
             </div>
         </div>
@@ -1242,7 +1252,7 @@ flowchart TD
                 <h3 class="govuk-heading-s">Workflow & Dependencies</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/WORKFLOW-DIAGRAMS.md" class="govuk-link">Workflow Diagrams</a> - Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI) with Gantt charts and decision trees</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">Dependency Structure Matrix</a> - Complete 39×39 command dependency matrix showing mandatory, recommended, and optional relationships</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">Dependency Structure Matrix</a> - Complete 40×40 command dependency matrix showing mandatory, recommended, and optional relationships</li>
                 </ul>
             </div>
         </div>
