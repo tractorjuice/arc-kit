@@ -1,24 +1,33 @@
 # Architecture Principles Compliance Assessment
 
-## Document Information
+## Document Control
 
 | Field | Value |
 |-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-PRIN-COMP-v1.0 |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
+| **Document ID** | ARC-[PROJECT_ID]-PRIN-COMP-v[VERSION] |
 | **Document Type** | Principles Compliance Assessment |
-| **Classification** | [OFFICIAL / OFFICIAL-SENSITIVE] |
+| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
+| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
+| **Version** | [VERSION] |
+| **Created Date** | [YYYY-MM-DD] |
+| **Last Modified** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Reviewed By** | [REVIEWER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Approved By** | [APPROVER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Distribution** | [DISTRIBUTION_LIST] |
 | **Assessment Date** | [YYYY-MM-DD] |
 | **Project Phase** | [Discovery / Alpha / Beta / Live] |
 | **Assessor** | ArcKit AI + [USER_NAME] |
 | **Principles Source** | `.arckit/memory/architecture-principles.md` ([DATE]) |
-| **Status** | [DRAFT / FINAL] |
 
 ## Revision History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| 1.0 | [DATE] | ArcKit AI | Initial assessment from `/arckit.principles-compliance` command |
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [DATE] | ArcKit AI | Initial assessment from `/arckit.principles-compliance` command | PENDING | PENDING |
 
 ---
 

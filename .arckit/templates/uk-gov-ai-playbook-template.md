@@ -1,11 +1,33 @@
 # UK Government AI Playbook Assessment
 
-**Project**: [Project Name]
-**Department/Agency**: [Department]
-**AI System**: [Name/Description of AI System]
-**Assessment Date**: [Date]
-**Assessor**: [Name/Role]
-**Risk Level**: [ ] High-Risk / [ ] Medium-Risk / [ ] Low-Risk
+## Document Control
+
+| Field | Value |
+|-------|-------|
+| **Document ID** | ARC-[PROJECT_ID]-AIPB-v[VERSION] |
+| **Document Type** | UK Government AI Playbook Assessment |
+| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
+| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
+| **Version** | [VERSION] |
+| **Created Date** | [YYYY-MM-DD] |
+| **Last Modified** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Reviewed By** | [REVIEWER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Approved By** | [APPROVER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Distribution** | [DISTRIBUTION_LIST] |
+| **Department/Agency** | [Department] |
+| **AI System** | [Name/Description of AI System] |
+| **Assessor** | [Name/Role] |
+| **Risk Level** | [High-Risk / Medium-Risk / Low-Risk] |
+
+## Revision History
+
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.ai-playbook` command | PENDING | PENDING |
 
 ---
 

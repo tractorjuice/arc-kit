@@ -1,10 +1,31 @@
 # GDS Service Assessment Preparation Report
 
-**Project**: [Project Name]
-**Assessment Phase**: [Alpha / Beta / Live]
-**Assessment Date**: [Date / Not yet scheduled]
-**Report Generated**: [Date]
-**ArcKit Version**: 0.5.0
+## Document Control
+
+| Field | Value |
+|-------|-------|
+| **Document ID** | ARC-[PROJECT_ID]-SVCASS-v[VERSION] |
+| **Document Type** | GDS Service Assessment Preparation Report |
+| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
+| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
+| **Version** | [VERSION] |
+| **Created Date** | [YYYY-MM-DD] |
+| **Last Modified** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Reviewed By** | [REVIEWER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Approved By** | [APPROVER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Distribution** | [DISTRIBUTION_LIST] |
+| **Assessment Phase** | [Alpha / Beta / Live] |
+| **Assessment Date** | [Date / Not yet scheduled] |
+
+## Revision History
+
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.service-assessment` command | PENDING | PENDING |
 
 ---
 

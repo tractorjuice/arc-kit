@@ -1,23 +1,29 @@
 # Operational Readiness Pack
 
-## Document Information
+## Document Control
 
 | Field | Value |
 |-------|-------|
 | **Document ID** | ARC-[PROJECT_ID]-OPS-v[VERSION] |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
 | **Document Type** | Operational Readiness Pack |
-| **Classification** | [OFFICIAL / OFFICIAL-SENSITIVE] |
+| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
+| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
 | **Version** | [VERSION] |
-| **Status** | [DRAFT / FINAL] |
-| **Date** | [YYYY-MM-DD] |
+| **Created Date** | [YYYY-MM-DD] |
+| **Last Modified** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
 | **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Reviewed By** | [REVIEWER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Approved By** | [APPROVER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Distribution** | [DISTRIBUTION_LIST] |
 
 ## Revision History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.operationalize` command |
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.operationalize` command | PENDING | PENDING |
 
 ---
 

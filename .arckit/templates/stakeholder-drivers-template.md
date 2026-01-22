@@ -1,23 +1,29 @@
 # Stakeholder Drivers & Goals Analysis: [PROJECT_NAME]
 
-## Document Information
+## Document Control
 
 | Field | Value |
 |-------|-------|
 | **Document ID** | ARC-[PROJECT_ID]-STKE-v[VERSION] |
+| **Document Type** | Stakeholder Drivers & Goals Analysis |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Document Type** | [DOCUMENT_TYPE_NAME] |
-| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE] |
+| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
 | **Version** | [VERSION] |
-| **Status** | [DRAFT / FINAL / ARCHIVED] |
-| **Date** | [YYYY-MM-DD] |
+| **Created Date** | [YYYY-MM-DD] |
+| **Last Modified** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
 | **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Reviewed By** | [REVIEWER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Approved By** | [APPROVER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Distribution** | [DISTRIBUTION_LIST] |
 
 ## Revision History
 
-| Version | Date | Author | Changes |
-|---------|------|--------|---------|
-| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.[COMMAND]` command |
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.stakeholders` command | PENDING | PENDING |
 
 ---
 
