@@ -57,3 +57,5 @@ packages = ["src/arckit_cli"]
 ".gemini" = "share/arckit/.gemini"
 ".arckit" = "share/arckit/.arckit"
 "docs" = "share/arckit/docs"
+"DEPENDENCY-MATRIX.md" = "share/arckit/DEPENDENCY-MATRIX.md"
+"WORKFLOW-DIAGRAMS.md" = "share/arckit/WORKFLOW-DIAGRAMS.md"

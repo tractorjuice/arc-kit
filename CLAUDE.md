@@ -20,6 +20,8 @@ arckit check
 
 # Test project initialization
 arckit init test-project --ai claude --no-git
+arckit init test-project --all-ai --no-git    # Install all AI formats
+arckit init test-project --ai claude --minimal # Skip docs/guides
 cd test-project && ls -la .claude/commands/
 
 # Build distribution
@@ -48,6 +50,10 @@ python -c "from arckit_cli import get_data_paths; print(get_data_paths())"
 - `.codex/prompts/arckit/*.md` - Codex prompts (same as Claude)
 - `.arckit/templates/*.md` - Document templates
 - `scripts/bash/*.sh` - Helper scripts
+- `docs/guides/*.md` - Command usage guides
+- `docs/README.md` - Documentation index
+- `DEPENDENCY-MATRIX.md` - Command dependencies
+- `WORKFLOW-DIAGRAMS.md` - Visual workflows
 
 **Data Path Resolution Order** (in `get_data_paths()`):
 1. uv tool install: `~/.local/share/uv/tools/arckit-cli/share/arckit/`
@@ -91,7 +97,12 @@ project/
 │   ├── memory/           # Global principles (architecture-principles.md)
 │   ├── templates/        # Document templates
 │   └── scripts/bash/     # create-project.sh, generate-document-id.sh, etc.
-├── .claude/commands/     # Slash commands (or .codex/ or .gemini/)
+├── .claude/commands/     # Slash commands (or .codex/ or .gemini/, or all with --all-ai)
+├── docs/                 # Documentation (unless --minimal)
+│   ├── README.md         # Documentation index
+│   └── guides/           # Command usage guides
+├── DEPENDENCY-MATRIX.md  # Command dependencies (unless --minimal)
+├── WORKFLOW-DIAGRAMS.md  # Visual workflows (unless --minimal)
 └── projects/
     └── 001-project-name/ # Numbered project directories
         ├── requirements.md
@@ -100,6 +111,13 @@ project/
         ├── sobc.md
         └── vendors/
 ```
+
+**Init flags:**
+- `--ai claude|gemini|codex` - Select AI assistant (default: prompt)
+- `--all-ai` - Install commands for all AI assistants
+- `--minimal` - Skip docs, guides, and reference files
+- `--no-git` - Skip git repository initialization
+- `--here` - Initialize in current directory
 
 ### Helper Scripts
 

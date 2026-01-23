@@ -147,19 +147,28 @@ def init_git_repo(project_path: Path) -> bool:
 
 def get_data_paths():
     """Get paths to templates, scripts, and commands from installed package or source."""
+
+    def build_paths(base_path):
+        """Build the full paths dictionary from a base path."""
+        return {
+            "templates": base_path / ".arckit" / "templates",
+            "scripts": base_path / "scripts",
+            "claude_commands": base_path / ".claude" / "commands",
+            "gemini_commands": base_path / ".gemini" / "commands",
+            "codex_root": base_path / ".codex",
+            "docs_guides": base_path / "docs" / "guides",
+            "docs_readme": base_path / "docs" / "README.md",
+            "dependency_matrix": base_path / "DEPENDENCY-MATRIX.md",
+            "workflow_diagrams": base_path / "WORKFLOW-DIAGRAMS.md",
+        }
+
     # First try to find installed package data
     try:
         # Try to find the shared data directory for uv tool installs
         # uv installs tools in ~/.local/share/uv/tools/{package-name}/share/{package}/
         uv_tools_path = Path.home() / ".local" / "share" / "uv" / "tools" / "arckit-cli" / "share" / "arckit"
         if uv_tools_path.exists():
-            return {
-                "templates": uv_tools_path / ".arckit" / "templates",
-                "scripts": uv_tools_path / "scripts",
-                "claude_commands": uv_tools_path / ".claude" / "commands",
-                "gemini_commands": uv_tools_path / ".gemini" / "commands",
-                "codex_root": uv_tools_path / ".codex",
-            }
+            return build_paths(uv_tools_path)
 
         # Try to find the shared data directory for regular pip installs
         import site
@@ -168,51 +177,27 @@ def get_data_paths():
                 # Try site-packages/share/arckit
                 share_path = Path(site_dir) / "share" / "arckit"
                 if share_path.exists():
-                    return {
-                        "templates": share_path / ".arckit" / "templates",
-                        "scripts": share_path / "scripts",
-                        "claude_commands": share_path / ".claude" / "commands",
-                        "gemini_commands": share_path / ".gemini" / "commands",
-                        "codex_root": share_path / ".codex",
-                    }
+                    return build_paths(share_path)
 
                 # Try ../../../share/arckit from site-packages (for system installs)
                 share_path = Path(site_dir).parent.parent.parent / "share" / "arckit"
                 if share_path.exists():
-                    return {
-                        "templates": share_path / ".arckit" / "templates",
-                        "scripts": share_path / "scripts",
-                        "claude_commands": share_path / ".claude" / "commands",
-                        "gemini_commands": share_path / ".gemini" / "commands",
-                        "codex_root": share_path / ".codex",
-                    }
+                    return build_paths(share_path)
 
         # Try platformdirs approach for other installs
         data_dir = Path(platformdirs.user_data_dir("arckit"))
         if data_dir.exists():
-            return {
-                "templates": data_dir / ".arckit" / "templates",
-                "scripts": data_dir / "scripts",
-                "claude_commands": data_dir / ".claude" / "commands",
-                "gemini_commands": data_dir / ".gemini" / "commands",
-                "codex_root": data_dir / ".codex",
-            }
+            return build_paths(data_dir)
 
     except Exception:
         pass
 
     # Fallback to source directory (development mode)
     source_root = Path(__file__).parent.parent.parent
-    return {
-        "templates": source_root / ".arckit" / "templates",
-        "scripts": source_root / "scripts",
-        "claude_commands": source_root / ".claude" / "commands",
-        "gemini_commands": source_root / ".gemini" / "commands",
-        "codex_root": source_root / ".codex",
-    }
+    return build_paths(source_root)
 
 
-def create_project_structure(project_path: Path, ai_assistant: str):
+def create_project_structure(project_path: Path, ai_assistant: str, all_ai: bool = False):
     """Create the basic ArcKit project structure."""
 
     console.print("[cyan]Creating project structure...[/cyan]")
@@ -225,8 +210,16 @@ def create_project_structure(project_path: Path, ai_assistant: str):
         "projects",
     ]
 
-    agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
-    directories.append(f"{agent_folder}commands")
+    if all_ai:
+        # Create directories for all AI assistants
+        directories.extend([
+            ".claude/commands",
+            ".gemini/commands",
+            ".codex/prompts/arckit",
+        ])
+    else:
+        agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
+        directories.append(f"{agent_folder}commands")
 
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
@@ -242,6 +235,8 @@ def init(
     ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: claude, gemini, codex"),
     no_git: bool = typer.Option(False, "--no-git", help="Skip git repository initialization"),
     here: bool = typer.Option(False, "--here", help="Initialize project in the current directory"),
+    all_ai: bool = typer.Option(False, "--all-ai", help="Install commands for all AI assistants (claude, gemini, codex)"),
+    minimal: bool = typer.Option(False, "--minimal", help="Minimal install: skip docs and guides"),
 ):
     """
     Initialize a new ArcKit project for enterprise architecture governance.
@@ -250,13 +245,15 @@ def init(
     1. Create project directory structure
     2. Copy templates for architecture principles, requirements, SOW, etc.
     3. Set up AI assistant commands
-    4. Initialize git repository (optional)
+    4. Copy documentation and guides (unless --minimal)
+    5. Initialize git repository (optional)
 
     Examples:
         arckit init my-architecture-project
         arckit init my-project --ai claude
+        arckit init my-project --all-ai
         arckit init . --ai gemini
-        arckit init --here --ai claude
+        arckit init --here --ai claude --minimal
     """
 
     show_banner()
@@ -308,10 +305,13 @@ def init(
         console.print(f"Choose from: {', '.join(AGENT_CONFIG.keys())}")
         raise typer.Exit(1)
 
-    console.print(f"[cyan]Selected AI assistant:[/cyan] {AGENT_CONFIG[ai_assistant]['name']}")
+    if all_ai:
+        console.print(f"[cyan]Selected AI assistant:[/cyan] All (Claude, Gemini, Codex)")
+    else:
+        console.print(f"[cyan]Selected AI assistant:[/cyan] {AGENT_CONFIG[ai_assistant]['name']}")
 
     # Create project structure
-    create_project_structure(project_path, ai_assistant)
+    create_project_structure(project_path, ai_assistant, all_ai)
 
     # Copy templates from installed package or source
     console.print("[cyan]Setting up templates...[/cyan]")
@@ -348,28 +348,83 @@ def init(
     else:
         console.print(f"[yellow]Warning: Scripts not found at {scripts_src}[/yellow]")
 
-    # Copy slash commands if they exist (for Claude and Codex)
-    if ai_assistant in ["claude", "codex"]:
-        commands_src = data_paths["claude_commands"]
-        if commands_src.exists():
-            console.print(f"[dim]Copying Claude commands from: {commands_src}[/dim]")
-            command_count = 0
-            for command_file in commands_src.glob("arckit.*.md"):
-                shutil.copy2(command_file, commands_dst / command_file.name)
-                command_count += 1
-            console.print(f"[green]✓[/green] Copied {command_count} Claude commands")
-        else:
-            console.print(f"[yellow]Warning: Claude commands not found at {commands_src}[/yellow]")
-    elif ai_assistant == "gemini":
-        commands_src = data_paths["gemini_commands"]
-        if commands_src.exists():
-            console.print(f"[dim]Copying Gemini commands from: {commands_src}[/dim]")
-            shutil.copytree(commands_src, commands_dst, dirs_exist_ok=True)
-            console.print(f"[green]✓[/green] Gemini commands copied")
-        else:
-            console.print(f"[yellow]Warning: Gemini commands not found at {commands_src}[/yellow]")
+    # Copy slash commands
+    if all_ai:
+        # Install all AI formats
+        ai_formats = [
+            ("claude", data_paths["claude_commands"], project_path / ".claude" / "commands"),
+            ("gemini", data_paths["gemini_commands"], project_path / ".gemini" / "commands"),
+            ("codex", data_paths["claude_commands"], project_path / ".codex" / "prompts" / "arckit"),
+        ]
+        for ai_name, src, dst in ai_formats:
+            dst.mkdir(parents=True, exist_ok=True)
+            if src.exists():
+                if ai_name == "gemini":
+                    shutil.copytree(src, dst, dirs_exist_ok=True)
+                else:
+                    for cmd_file in src.glob("arckit.*.md"):
+                        shutil.copy2(cmd_file, dst / cmd_file.name)
+                console.print(f"[green]✓[/green] Copied {ai_name} commands")
+            else:
+                console.print(f"[yellow]Warning: {ai_name} commands not found[/yellow]")
+    else:
+        # Install only selected AI format
+        if ai_assistant in ["claude", "codex"]:
+            commands_src = data_paths["claude_commands"]
+            if commands_src.exists():
+                console.print(f"[dim]Copying Claude commands from: {commands_src}[/dim]")
+                command_count = 0
+                for command_file in commands_src.glob("arckit.*.md"):
+                    shutil.copy2(command_file, commands_dst / command_file.name)
+                    command_count += 1
+                console.print(f"[green]✓[/green] Copied {command_count} Claude commands")
+            else:
+                console.print(f"[yellow]Warning: Claude commands not found at {commands_src}[/yellow]")
+        elif ai_assistant == "gemini":
+            commands_src = data_paths["gemini_commands"]
+            if commands_src.exists():
+                console.print(f"[dim]Copying Gemini commands from: {commands_src}[/dim]")
+                shutil.copytree(commands_src, commands_dst, dirs_exist_ok=True)
+                console.print(f"[green]✓[/green] Gemini commands copied")
+            else:
+                console.print(f"[yellow]Warning: Gemini commands not found at {commands_src}[/yellow]")
 
     console.print("[green]✓[/green] Templates configured")
+
+    # Copy documentation (unless --minimal)
+    if not minimal:
+        console.print("[cyan]Setting up documentation...[/cyan]")
+
+        # Copy docs/guides/
+        docs_guides_src = data_paths["docs_guides"]
+        if docs_guides_src.exists():
+            docs_guides_dst = project_path / "docs" / "guides"
+            docs_guides_dst.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(docs_guides_src, docs_guides_dst, dirs_exist_ok=True)
+            guide_count = len(list(docs_guides_dst.glob("*.md")))
+            console.print(f"[green]✓[/green] Copied {guide_count} command guides")
+
+        # Copy docs/README.md
+        docs_readme_src = data_paths["docs_readme"]
+        if docs_readme_src.exists():
+            docs_readme_dst = project_path / "docs" / "README.md"
+            docs_readme_dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(docs_readme_src, docs_readme_dst)
+            console.print(f"[green]✓[/green] Copied docs/README.md")
+
+        # Copy DEPENDENCY-MATRIX.md
+        dep_matrix_src = data_paths["dependency_matrix"]
+        if dep_matrix_src.exists():
+            shutil.copy2(dep_matrix_src, project_path / "DEPENDENCY-MATRIX.md")
+            console.print(f"[green]✓[/green] Copied DEPENDENCY-MATRIX.md")
+
+        # Copy WORKFLOW-DIAGRAMS.md
+        workflow_src = data_paths["workflow_diagrams"]
+        if workflow_src.exists():
+            shutil.copy2(workflow_src, project_path / "WORKFLOW-DIAGRAMS.md")
+            console.print(f"[green]✓[/green] Copied WORKFLOW-DIAGRAMS.md")
+
+        console.print("[green]✓[/green] Documentation configured")
 
     # Create README
     readme_content = f"""# {project_name}
