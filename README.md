@@ -49,6 +49,12 @@ arckit init payment-modernization --ai claude
 # Or use OpenAI Codex CLI
 arckit init payment-modernization --ai codex
 
+# Install all AI formats (Claude, Gemini, Codex)
+arckit init payment-modernization --all-ai
+
+# Minimal install (skip docs and guides)
+arckit init payment-modernization --ai claude --minimal
+
 # Or initialize in current directory
 arckit init . --ai claude
 ```

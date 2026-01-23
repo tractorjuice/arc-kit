@@ -5,9 +5,17 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.11.0] - 2026-01-22
+## [0.11.0] - 2026-01-23
 
 ### Added
+
+- **Enhanced `arckit init`**: New flags and documentation copying
+  - `--all-ai` flag: Install commands for all AI assistants (Claude, Gemini, Codex)
+  - `--minimal` flag: Skip copying docs and guides for lightweight install
+  - Now copies `docs/guides/` with command usage documentation
+  - Now copies `docs/README.md` as documentation index
+  - Now copies `DEPENDENCY-MATRIX.md` for command dependencies
+  - Now copies `WORKFLOW-DIAGRAMS.md` for visual workflows
 
 - **New Command**: `/arckit.pages` (40th ArcKit command) - Generate GitHub Pages documentation site
   - **Auto-Discovery**: Scans repository for all known ArcKit artifacts across all projects
