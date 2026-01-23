@@ -58,3 +58,6 @@ htmlcov/
 
 # direnv
 .envrc.local
+
+# Draft articles (not for version control)
+docs/articles/
