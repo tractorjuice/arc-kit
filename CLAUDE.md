@@ -194,9 +194,10 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
     rsync -av --delete .gemini/commands/ /tmp/$repo/.gemini/commands/
     rsync -av --delete .arckit/templates/ /tmp/$repo/.arckit/templates/
     rsync -av scripts/bash/ /tmp/$repo/.arckit/scripts/bash/
-    # Sync guides
+    # Sync guides and docs README
     mkdir -p /tmp/$repo/docs/guides
     rsync -av --delete docs/guides/ /tmp/$repo/docs/guides/
+    cp docs/README.md /tmp/$repo/docs/README.md
     # Sync root docs (NOT docs/index.html or CLAUDE.md - those are repo-specific)
     cp README.md DEPENDENCY-MATRIX.md CHANGELOG.md WORKFLOW-DIAGRAMS.md VERSION /tmp/$repo/
     # Sync devcontainer
@@ -206,7 +207,7 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
 done
 ```
 
-**Note**: `docs/index.html` and `CLAUDE.md` are NOT synced - these are repo-specific.
+**Note**: `docs/index.html` and `CLAUDE.md` are NOT synced - these are repo-specific. `docs/README.md` IS synced.
 
 ## Key Patterns
 
