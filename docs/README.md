@@ -56,6 +56,10 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 - [Operationalize](guides/operationalize.md) - `/arckit.operationalize` ⭐ NEW - SRE operational readiness
 - [DevOps Strategy](guides/devops.md) - `/arckit.devops` ⭐ NEW - CI/CD, IaC, containers
 - [MLOps Strategy](guides/mlops.md) - `/arckit.mlops` ⭐ NEW - ML lifecycle, model monitoring
+- [FinOps Strategy](guides/finops.md) - `/arckit.finops` ⭐ NEW - Cloud cost management, optimization
+
+### Documentation & Publishing
+- [GitHub Pages](guides/pages.md) - `/arckit.pages` ⭐ NEW - Generate documentation site
 
 ---
 
@@ -133,11 +137,13 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.mod-secure` | [secure-by-design.md](guides/uk-mod/secure-by-design.md) | ✅ Complete |
 | `/arckit.jsp-936` | [jsp-936.md](guides/jsp-936.md) | ✅ Complete |
 | `/arckit.story` | [story.md](guides/story.md) | ✅ Complete |
-| `/arckit.operationalize` | [operationalize.md](guides/operationalize.md) | 📝 Pending |
-| `/arckit.devops` | [devops.md](guides/devops.md) | 📝 Pending |
-| `/arckit.mlops` | [mlops.md](guides/mlops.md) | 📝 Pending |
+| `/arckit.operationalize` | [operationalize.md](guides/operationalize.md) | ✅ Complete |
+| `/arckit.devops` | [devops.md](guides/devops.md) | ✅ Complete |
+| `/arckit.mlops` | [mlops.md](guides/mlops.md) | ✅ Complete |
+| `/arckit.finops` | [finops.md](guides/finops.md) | ✅ Complete |
+| `/arckit.pages` | [pages.md](guides/pages.md) | ✅ Complete |
 
-**Coverage**: 35/38 commands documented (92%)
+**Coverage**: 40/40 commands documented (100%)
 
 ---
 
@@ -149,5 +155,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2026-01-09
+**Last updated**: 2026-01-23
 **ArcKit Version**: 0.9.2
