@@ -703,6 +703,8 @@
                 const h1Match = markdown.match(/^#\s+(.+)$/m);
                 if (h1Match) {
                     title = h1Match[1];
+                    // Remove the first H1 from markdown to avoid duplicate title
+                    markdown = markdown.replace(/^#\s+.+$/m, '').trimStart();
                 }
 
                 // Build breadcrumb
