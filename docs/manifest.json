@@ -1,0 +1,563 @@
+{
+  "generated": "2026-01-24T12:00:00Z",
+  "repository": {
+    "owner": "tractorjuice",
+    "name": "arc-kit",
+    "branch": "main"
+  },
+  "global": [
+    {
+      "path": "README.md",
+      "title": "ArcKit Overview",
+      "category": "Overview"
+    },
+    {
+      "path": "docs/README.md",
+      "title": "Documentation Index",
+      "category": "Overview"
+    },
+    {
+      "path": "CHANGELOG.md",
+      "title": "Changelog",
+      "category": "Overview"
+    },
+    {
+      "path": "DEPENDENCY-MATRIX.md",
+      "title": "Command Dependencies",
+      "category": "Overview"
+    },
+    {
+      "path": "WORKFLOW-DIAGRAMS.md",
+      "title": "Workflow Diagrams",
+      "category": "Overview"
+    },
+    {
+      "path": "docs/TOKEN-LIMITS.md",
+      "title": "Token Limits Guide",
+      "category": "Technical"
+    }
+  ],
+  "projects": [
+    {
+      "id": "guides-core",
+      "name": "Core Workflow Guides",
+      "documents": [
+        {
+          "path": "docs/guides/plan.md",
+          "title": "Project Plan",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/principles.md",
+          "title": "Architecture Principles",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/stakeholder-analysis.md",
+          "title": "Stakeholder Analysis",
+          "category": "Discovery"
+        },
+        {
+          "path": "docs/guides/stakeholders.md",
+          "title": "Stakeholders Command",
+          "category": "Discovery"
+        },
+        {
+          "path": "docs/guides/risk-management.md",
+          "title": "Risk Management",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/risk.md",
+          "title": "Risk Command",
+          "category": "Governance"
+        },
+        {
+          "path": "docs/guides/business-case.md",
+          "title": "Business Case (SOBC)",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/sobc.md",
+          "title": "SOBC Command",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/requirements.md",
+          "title": "Requirements Definition",
+          "category": "Discovery"
+        },
+        {
+          "path": "docs/guides/roadmap.md",
+          "title": "Roadmap",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/backlog.md",
+          "title": "Product Backlog",
+          "category": "Planning"
+        },
+        {
+          "path": "docs/guides/traceability.md",
+          "title": "Traceability",
+          "category": "Governance"
+        }
+      ]
+    },
+    {
+      "id": "guides-architecture",
+      "name": "Architecture Guides",
+      "documents": [
+        {
+          "path": "docs/guides/platform-design.md",
+          "title": "Platform Design",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/data-model.md",
+          "title": "Data Model",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/data-mesh-contract.md",
+          "title": "Data Mesh Contract",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/wardley-mapping.md",
+          "title": "Wardley Mapping",
+          "category": "Strategy"
+        },
+        {
+          "path": "docs/guides/wardley.md",
+          "title": "Wardley Command",
+          "category": "Strategy"
+        },
+        {
+          "path": "docs/guides/diagram.md",
+          "title": "Architecture Diagrams",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/adr.md",
+          "title": "Architecture Decision Records",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/design-review.md",
+          "title": "Design Reviews",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/hld-review.md",
+          "title": "HLD Review",
+          "category": "Architecture"
+        },
+        {
+          "path": "docs/guides/dld-review.md",
+          "title": "DLD Review",
+          "category": "Architecture"
+        }
+      ]
+    },
+    {
+      "id": "guides-research",
+      "name": "Research & Analysis Guides",
+      "documents": [
+        {
+          "path": "docs/guides/research.md",
+          "title": "Research",
+          "category": "Research"
+        },
+        {
+          "path": "docs/guides/analyze.md",
+          "title": "Governance Analysis",
+          "category": "Analysis"
+        },
+        {
+          "path": "docs/guides/principles-compliance.md",
+          "title": "Principles Compliance",
+          "category": "Compliance"
+        },
+        {
+          "path": "docs/guides/story.md",
+          "title": "Project Story",
+          "category": "Analysis"
+        }
+      ]
+    },
+    {
+      "id": "guides-compliance",
+      "name": "Compliance Guides",
+      "documents": [
+        {
+          "path": "docs/guides/dpia.md",
+          "title": "Data Protection Impact Assessment",
+          "category": "Privacy"
+        },
+        {
+          "path": "docs/guides/service-assessment.md",
+          "title": "GDS Service Assessment",
+          "category": "UK Government"
+        }
+      ]
+    },
+    {
+      "id": "guides-uk-gov",
+      "name": "UK Government Guides",
+      "documents": [
+        {
+          "path": "docs/guides/uk-government/technology-code-of-practice.md",
+          "title": "Technology Code of Practice",
+          "category": "Standards"
+        },
+        {
+          "path": "docs/guides/tcop.md",
+          "title": "TCoP Command",
+          "category": "Standards"
+        },
+        {
+          "path": "docs/guides/uk-government/ai-playbook.md",
+          "title": "AI Playbook",
+          "category": "AI Governance"
+        },
+        {
+          "path": "docs/guides/ai-playbook.md",
+          "title": "AI Playbook Command",
+          "category": "AI Governance"
+        },
+        {
+          "path": "docs/guides/uk-government/algorithmic-transparency.md",
+          "title": "Algorithmic Transparency (ATRS)",
+          "category": "AI Governance"
+        },
+        {
+          "path": "docs/guides/atrs.md",
+          "title": "ATRS Command",
+          "category": "AI Governance"
+        },
+        {
+          "path": "docs/guides/uk-government/secure-by-design.md",
+          "title": "Secure by Design",
+          "category": "Security"
+        },
+        {
+          "path": "docs/guides/secure.md",
+          "title": "Secure Command",
+          "category": "Security"
+        },
+        {
+          "path": "docs/guides/uk-government/digital-marketplace.md",
+          "title": "Digital Marketplace",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/gcloud-search.md",
+          "title": "G-Cloud Search",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/gcloud-clarify.md",
+          "title": "G-Cloud Clarify",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/dos.md",
+          "title": "DOS Procurement",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/uk-government/standards-map.md",
+          "title": "UK Standards Map",
+          "category": "Standards"
+        }
+      ]
+    },
+    {
+      "id": "guides-uk-mod",
+      "name": "UK MOD Guides",
+      "documents": [
+        {
+          "path": "docs/guides/uk-mod/secure-by-design.md",
+          "title": "MOD Secure by Design",
+          "category": "Security"
+        },
+        {
+          "path": "docs/guides/mod-secure.md",
+          "title": "MOD Secure Command",
+          "category": "Security"
+        },
+        {
+          "path": "docs/guides/jsp-936.md",
+          "title": "JSP 936 AI Assurance",
+          "category": "AI Governance"
+        }
+      ]
+    },
+    {
+      "id": "guides-procurement",
+      "name": "Procurement Guides",
+      "documents": [
+        {
+          "path": "docs/guides/procurement.md",
+          "title": "Vendor Procurement",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/sow.md",
+          "title": "Statement of Work",
+          "category": "Procurement"
+        },
+        {
+          "path": "docs/guides/evaluate.md",
+          "title": "Vendor Evaluation",
+          "category": "Procurement"
+        }
+      ]
+    },
+    {
+      "id": "guides-devops",
+      "name": "DevOps & Operations Guides",
+      "documents": [
+        {
+          "path": "docs/guides/operationalize.md",
+          "title": "Operational Readiness",
+          "category": "Operations"
+        },
+        {
+          "path": "docs/guides/devops.md",
+          "title": "DevOps Strategy",
+          "category": "DevOps"
+        },
+        {
+          "path": "docs/guides/mlops.md",
+          "title": "MLOps Strategy",
+          "category": "MLOps"
+        },
+        {
+          "path": "docs/guides/finops.md",
+          "title": "FinOps Strategy",
+          "category": "FinOps"
+        },
+        {
+          "path": "docs/guides/servicenow.md",
+          "title": "ServiceNow Design",
+          "category": "ITSM"
+        }
+      ]
+    },
+    {
+      "id": "guides-publishing",
+      "name": "Documentation & Publishing",
+      "documents": [
+        {
+          "path": "docs/guides/pages.md",
+          "title": "GitHub Pages Generator",
+          "category": "Publishing"
+        }
+      ]
+    },
+    {
+      "id": "templates",
+      "name": "Document Templates",
+      "documents": [
+        {
+          "path": ".arckit/templates/architecture-principles-template.md",
+          "title": "Architecture Principles Template",
+          "category": "Architecture"
+        },
+        {
+          "path": ".arckit/templates/requirements-template.md",
+          "title": "Requirements Template",
+          "category": "Discovery"
+        },
+        {
+          "path": ".arckit/templates/stakeholder-drivers-template.md",
+          "title": "Stakeholder Drivers Template",
+          "category": "Discovery"
+        },
+        {
+          "path": ".arckit/templates/risk-register-template.md",
+          "title": "Risk Register Template",
+          "category": "Governance"
+        },
+        {
+          "path": ".arckit/templates/sobc-template.md",
+          "title": "SOBC Template",
+          "category": "Planning"
+        },
+        {
+          "path": ".arckit/templates/roadmap-template.md",
+          "title": "Roadmap Template",
+          "category": "Planning"
+        },
+        {
+          "path": ".arckit/templates/backlog-template.md",
+          "title": "Backlog Template",
+          "category": "Planning"
+        },
+        {
+          "path": ".arckit/templates/data-model-template.md",
+          "title": "Data Model Template",
+          "category": "Architecture"
+        },
+        {
+          "path": ".arckit/templates/data-mesh-contract-template.md",
+          "title": "Data Mesh Contract Template",
+          "category": "Architecture"
+        },
+        {
+          "path": ".arckit/templates/platform-design-template.md",
+          "title": "Platform Design Template",
+          "category": "Architecture"
+        },
+        {
+          "path": ".arckit/templates/wardley-map-template.md",
+          "title": "Wardley Map Template",
+          "category": "Strategy"
+        },
+        {
+          "path": ".arckit/templates/architecture-diagram-template.md",
+          "title": "Architecture Diagram Template",
+          "category": "Architecture"
+        },
+        {
+          "path": ".arckit/templates/adr-template.md",
+          "title": "ADR Template",
+          "category": "Architecture"
+        },
+        {
+          "path": ".arckit/templates/hld-review-template.md",
+          "title": "HLD Review Template",
+          "category": "Architecture"
+        },
+        {
+          "path": ".arckit/templates/dld-review-template.md",
+          "title": "DLD Review Template",
+          "category": "Architecture"
+        },
+        {
+          "path": ".arckit/templates/research-findings-template.md",
+          "title": "Research Findings Template",
+          "category": "Research"
+        },
+        {
+          "path": ".arckit/templates/evaluation-criteria-template.md",
+          "title": "Evaluation Criteria Template",
+          "category": "Procurement"
+        },
+        {
+          "path": ".arckit/templates/vendor-scoring-template.md",
+          "title": "Vendor Scoring Template",
+          "category": "Procurement"
+        },
+        {
+          "path": ".arckit/templates/sow-template.md",
+          "title": "Statement of Work Template",
+          "category": "Procurement"
+        },
+        {
+          "path": ".arckit/templates/traceability-matrix-template.md",
+          "title": "Traceability Matrix Template",
+          "category": "Governance"
+        },
+        {
+          "path": ".arckit/templates/principles-compliance-assessment-template.md",
+          "title": "Principles Compliance Template",
+          "category": "Governance"
+        },
+        {
+          "path": ".arckit/templates/story-template.md",
+          "title": "Project Story Template",
+          "category": "Governance"
+        },
+        {
+          "path": ".arckit/templates/dpia-template.md",
+          "title": "DPIA Template",
+          "category": "Privacy"
+        },
+        {
+          "path": ".arckit/templates/service-assessment-prep-template.md",
+          "title": "Service Assessment Prep Template",
+          "category": "UK Government"
+        },
+        {
+          "path": ".arckit/templates/uk-gov-tcop-template.md",
+          "title": "TCoP Review Template",
+          "category": "UK Government"
+        },
+        {
+          "path": ".arckit/templates/tcop-review-template.md",
+          "title": "TCoP Assessment Template",
+          "category": "UK Government"
+        },
+        {
+          "path": ".arckit/templates/uk-gov-ai-playbook-template.md",
+          "title": "AI Playbook Template",
+          "category": "UK Government"
+        },
+        {
+          "path": ".arckit/templates/uk-gov-atrs-template.md",
+          "title": "ATRS Template",
+          "category": "UK Government"
+        },
+        {
+          "path": ".arckit/templates/ukgov-secure-by-design-template.md",
+          "title": "Secure by Design Template",
+          "category": "UK Government"
+        },
+        {
+          "path": ".arckit/templates/mod-secure-by-design-template.md",
+          "title": "MOD Secure by Design Template",
+          "category": "UK MOD"
+        },
+        {
+          "path": ".arckit/templates/jsp-936-template.md",
+          "title": "JSP 936 Template",
+          "category": "UK MOD"
+        },
+        {
+          "path": ".arckit/templates/devops-template.md",
+          "title": "DevOps Strategy Template",
+          "category": "Operations"
+        },
+        {
+          "path": ".arckit/templates/mlops-template.md",
+          "title": "MLOps Strategy Template",
+          "category": "Operations"
+        },
+        {
+          "path": ".arckit/templates/finops-template.md",
+          "title": "FinOps Strategy Template",
+          "category": "Operations"
+        },
+        {
+          "path": ".arckit/templates/operationalize-template.md",
+          "title": "Operational Readiness Template",
+          "category": "Operations"
+        },
+        {
+          "path": ".arckit/templates/servicenow-design-template.md",
+          "title": "ServiceNow Design Template",
+          "category": "Operations"
+        }
+      ]
+    },
+    {
+      "id": "articles",
+      "name": "Articles",
+      "documents": [
+        {
+          "path": "docs/articles/arckit-medium-linkedin-article.md",
+          "title": "ArcKit Article",
+          "category": "Marketing"
+        },
+        {
+          "path": "docs/articles/arckit-linkedin-post.md",
+          "title": "LinkedIn Post",
+          "category": "Marketing"
+        }
+      ]
+    }
+  ]
+}
