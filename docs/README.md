@@ -155,5 +155,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2026-01-23
-**ArcKit Version**: 0.9.2
+**Last updated**: 2026-01-24
+**ArcKit Version**: 0.11.1
