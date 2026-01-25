@@ -16,34 +16,65 @@
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
 
     <style>
+        /* CSS Variables for theming */
+        :root {
+            --sidebar-width: 300px;
+            --sidebar-collapsed-width: 0px;
+            --toc-width: 220px;
+            --header-height: 50px;
+            --primary-color: #1d70b8;
+            --primary-dark: #003078;
+            --background-light: #f3f2f1;
+            --border-color: #b1b4b6;
+            --text-muted: #505a5f;
+            --transition-speed: 0.3s;
+        }
+
         /* Font Override - GDS Transport only for *.gov.uk domains */
         body, .govuk-template, .govuk-template__body, [class*="govuk-"] {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                          Helvetica, Arial, sans-serif !important;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         /* Layout */
         .app-layout {
             display: flex;
-            min-height: calc(100vh - 200px);
+            min-height: calc(100vh - var(--header-height) - 80px);
         }
 
         /* Sidebar */
         .app-sidebar {
-            width: 280px;
-            min-width: 280px;
-            background: #f3f2f1;
-            border-right: 1px solid #b1b4b6;
+            width: var(--sidebar-width);
+            min-width: var(--sidebar-width);
+            background: var(--background-light);
+            border-right: 1px solid var(--border-color);
             overflow-y: auto;
             position: sticky;
             top: 0;
-            height: 100vh;
+            height: calc(100vh - var(--header-height));
+            transition: width var(--transition-speed), min-width var(--transition-speed), transform var(--transition-speed);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .app-sidebar.collapsed {
+            width: var(--sidebar-collapsed-width);
+            min-width: var(--sidebar-collapsed-width);
+            overflow: hidden;
         }
 
         .app-sidebar-header {
             padding: 1rem;
-            background: #1d70b8;
+            background: var(--primary-color);
             color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0;
         }
 
         .app-sidebar-header h2 {
@@ -52,8 +83,90 @@
             font-size: 1.1rem;
         }
 
+        .app-sidebar-toggle {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.25rem;
+            padding: 0.25rem;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .app-sidebar-toggle:hover {
+            opacity: 1;
+        }
+
+        /* Search */
+        .app-search {
+            padding: 0.75rem 1rem;
+            background: white;
+            border-bottom: 1px solid var(--border-color);
+            flex-shrink: 0;
+        }
+
+        .app-search-input {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 2px solid var(--border-color);
+            border-radius: 0;
+            font-size: 0.9rem;
+            font-family: inherit;
+        }
+
+        .app-search-input:focus {
+            outline: 3px solid #ffdd00;
+            outline-offset: 0;
+            border-color: #0b0c0c;
+        }
+
+        .app-search-results {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .app-search-results.visible {
+            display: block;
+        }
+
+        .app-search-result {
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--background-light);
+        }
+
+        .app-search-result:hover {
+            background: var(--background-light);
+        }
+
+        .app-search-result-title {
+            font-weight: 600;
+        }
+
+        .app-search-result-path {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Navigation */
+        .app-nav-container {
+            flex: 1;
+            overflow-y: auto;
+        }
+
         .app-nav-section {
-            border-bottom: 1px solid #b1b4b6;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .app-nav-section-header {
@@ -67,14 +180,16 @@
             border: none;
             width: 100%;
             text-align: left;
+            font-size: 0.9rem;
         }
 
         .app-nav-section-header:hover {
-            background: #f3f2f1;
+            background: var(--background-light);
         }
 
         .app-nav-section-header .chevron {
             transition: transform 0.2s;
+            font-size: 0.75rem;
         }
 
         .app-nav-section-header.collapsed .chevron {
@@ -94,68 +209,124 @@
         .app-nav-list a {
             display: block;
             padding: 0.5rem 1rem 0.5rem 1.5rem;
-            color: #1d70b8;
+            color: var(--primary-color);
             text-decoration: none;
             font-size: 0.875rem;
             border-left: 4px solid transparent;
+            transition: background 0.15s, border-color 0.15s;
         }
 
         .app-nav-list a:hover {
             background: #fff;
-            border-left-color: #1d70b8;
+            border-left-color: var(--primary-color);
         }
 
         .app-nav-list a.active {
             background: #fff;
-            border-left-color: #1d70b8;
+            border-left-color: var(--primary-color);
             font-weight: 700;
         }
 
         .app-nav-category {
-            font-size: 0.75rem;
-            color: #505a5f;
+            font-size: 0.7rem;
+            color: var(--text-muted);
             padding: 0.5rem 1rem 0.25rem 1.5rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
-        /* Nested navigation for vendors, diagrams, etc. */
-        .app-nav-nested {
-            padding-left: 1rem;
+        /* Main Content - Full Width */
+        .app-content-wrapper {
+            flex: 1;
+            display: flex;
+            min-width: 0;
+            position: relative;
         }
 
-        .app-nav-nested a {
-            padding-left: 2.5rem;
-            font-size: 0.8125rem;
-        }
-
-        /* Main Content */
         .app-content {
             flex: 1;
-            padding: 2rem;
-            max-width: 960px;
+            padding: 2rem 3rem;
             overflow-y: auto;
+            min-width: 0;
         }
 
         .app-content-inner {
-            max-width: 720px;
+            max-width: 100%;
+        }
+
+        /* Table of Contents Sidebar */
+        .app-toc {
+            width: var(--toc-width);
+            min-width: var(--toc-width);
+            padding: 1.5rem 1rem;
+            border-left: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            height: calc(100vh - var(--header-height));
+            overflow-y: auto;
+            font-size: 0.8125rem;
+        }
+
+        .app-toc-title {
+            font-weight: 700;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.75rem;
+        }
+
+        .app-toc-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-toc-list li {
+            margin: 0;
+        }
+
+        .app-toc-list a {
+            display: block;
+            padding: 0.25rem 0;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-left: 2px solid transparent;
+            padding-left: 0.75rem;
+            margin-left: -0.75rem;
+            transition: color 0.15s, border-color 0.15s;
+        }
+
+        .app-toc-list a:hover {
+            color: var(--primary-color);
+        }
+
+        .app-toc-list a.active {
+            color: var(--primary-color);
+            border-left-color: var(--primary-color);
+        }
+
+        .app-toc-list .toc-h3 {
+            padding-left: 1.5rem;
+            font-size: 0.75rem;
         }
 
         /* Document Header */
         .app-doc-header {
-            border-bottom: 1px solid #b1b4b6;
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 1rem;
             margin-bottom: 2rem;
         }
 
         .app-doc-breadcrumb {
             font-size: 0.875rem;
-            color: #505a5f;
+            color: var(--text-muted);
             margin-bottom: 0.5rem;
         }
 
         .app-doc-title {
             margin: 0;
+            font-size: 2.25rem;
         }
 
         /* Loading State */
@@ -164,14 +335,14 @@
             align-items: center;
             justify-content: center;
             padding: 4rem;
-            color: #505a5f;
+            color: var(--text-muted);
         }
 
         .app-spinner {
             width: 24px;
             height: 24px;
-            border: 3px solid #f3f2f1;
-            border-top-color: #1d70b8;
+            border: 3px solid var(--background-light);
+            border-top-color: var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-right: 1rem;
@@ -200,16 +371,58 @@
         }
 
         .app-welcome p {
-            color: #505a5f;
-            max-width: 500px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .app-welcome-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 800px;
             margin: 0 auto;
+            text-align: left;
+        }
+
+        .app-welcome-feature {
+            background: var(--background-light);
+            padding: 1.25rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .app-welcome-feature h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1rem;
+        }
+
+        .app-welcome-feature p {
+            margin: 0;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Keyboard shortcuts help */
+        .app-keyboard-hint {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 2rem;
+        }
+
+        .app-keyboard-hint kbd {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            padding: 0.125rem 0.375rem;
+            font-family: inherit;
+            font-size: 0.7rem;
         }
 
         /* Markdown Content Styles */
         .app-markdown h1 { font-size: 2rem; margin-top: 0; }
-        .app-markdown h2 { font-size: 1.5rem; margin-top: 2rem; border-bottom: 1px solid #b1b4b6; padding-bottom: 0.5rem; }
-        .app-markdown h3 { font-size: 1.25rem; margin-top: 1.5rem; }
-        .app-markdown h4 { font-size: 1.1rem; margin-top: 1rem; }
+        .app-markdown h2 { font-size: 1.5rem; margin-top: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; scroll-margin-top: 1rem; }
+        .app-markdown h3 { font-size: 1.25rem; margin-top: 2rem; scroll-margin-top: 1rem; }
+        .app-markdown h4 { font-size: 1.1rem; margin-top: 1.5rem; }
 
         .app-markdown p { margin: 1rem 0; line-height: 1.6; }
 
@@ -218,55 +431,71 @@
             padding-left: 2rem;
         }
 
-        .app-markdown li { margin: 0.5rem 0; }
+        .app-markdown li { margin: 0.5rem 0; line-height: 1.5; }
 
         .app-markdown table {
             width: 100%;
             border-collapse: collapse;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
         }
 
         .app-markdown th, .app-markdown td {
-            border: 1px solid #b1b4b6;
+            border: 1px solid var(--border-color);
             padding: 0.75rem;
             text-align: left;
         }
 
         .app-markdown th {
-            background: #f3f2f1;
+            background: var(--background-light);
             font-weight: 700;
         }
 
+        .app-markdown tr:hover {
+            background: #fafafa;
+        }
+
         .app-markdown code {
-            background: #f3f2f1;
+            background: var(--background-light);
             padding: 0.125rem 0.375rem;
-            font-family: monospace;
+            font-family: 'SF Mono', 'Consolas', 'Liberation Mono', monospace;
             font-size: 0.875em;
+            border-radius: 2px;
         }
 
         .app-markdown pre {
             background: #0b0c0c;
             color: #fff;
-            padding: 1rem;
+            padding: 1.25rem;
             overflow-x: auto;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
+            border-radius: 0;
         }
 
         .app-markdown pre code {
             background: none;
             padding: 0;
             color: inherit;
+            border-radius: 0;
         }
 
         .app-markdown blockquote {
-            border-left: 4px solid #1d70b8;
-            margin: 1rem 0;
-            padding: 0.5rem 1rem;
-            background: #f3f2f1;
+            border-left: 4px solid var(--primary-color);
+            margin: 1.5rem 0;
+            padding: 0.75rem 1.25rem;
+            background: var(--background-light);
+        }
+
+        .app-markdown blockquote p:first-child {
+            margin-top: 0;
+        }
+
+        .app-markdown blockquote p:last-child {
+            margin-bottom: 0;
         }
 
         .app-markdown a {
-            color: #1d70b8;
+            color: var(--primary-color);
         }
 
         .app-markdown img {
@@ -274,13 +503,20 @@
             height: auto;
         }
 
-        /* Mermaid Diagrams */
+        .app-markdown hr {
+            border: none;
+            border-top: 1px solid var(--border-color);
+            margin: 2rem 0;
+        }
+
+        /* Mermaid Diagrams - Full Width */
         .app-markdown .mermaid {
             background: #fff;
-            padding: 1rem;
-            margin: 1rem 0;
-            border: 1px solid #b1b4b6;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
             text-align: center;
+            overflow-x: auto;
         }
 
         .app-markdown .mermaid svg {
@@ -297,7 +533,7 @@
             width: 56px;
             height: 56px;
             border-radius: 50%;
-            background: #1d70b8;
+            background: var(--primary-color);
             color: white;
             border: none;
             font-size: 1.5rem;
@@ -306,19 +542,47 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
+        /* Sidebar expand button (visible when collapsed) */
+        .app-sidebar-expand {
+            display: none;
+            position: fixed;
+            left: 0;
+            top: calc(var(--header-height) + 1rem);
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 0.75rem;
+            cursor: pointer;
+            z-index: 99;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .app-sidebar.collapsed ~ .app-content-wrapper .app-sidebar-expand {
+            display: block;
+        }
+
         /* Header */
         .app-header {
             background: #0b0c0c;
-            padding: 0.75rem 0;
+            padding: 0;
+            height: var(--header-height);
+            position: sticky;
+            top: 0;
+            z-index: 50;
         }
 
         .app-header-inner {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
+            height: 100%;
+            padding: 0 1.5rem;
+        }
+
+        .app-header-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
         }
 
         .app-header-title {
@@ -339,46 +603,76 @@
 
         /* Footer */
         .app-footer {
-            background: #f3f2f1;
+            background: var(--background-light);
             padding: 1.5rem 0;
-            border-top: 1px solid #b1b4b6;
+            border-top: 1px solid var(--border-color);
         }
 
         .app-footer-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
+            padding: 0 1.5rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 0.875rem;
-            color: #505a5f;
+            color: var(--text-muted);
         }
 
         .app-footer a {
-            color: #1d70b8;
+            color: var(--primary-color);
+        }
+
+        /* Stats */
+        .app-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .app-stat {
+            font-size: 0.8125rem;
+        }
+
+        .app-stat-value {
+            font-weight: 700;
+            color: var(--primary-color);
         }
 
         /* Responsive */
-        @media (max-width: 768px) {
+        @media (max-width: 1200px) {
+            .app-toc {
+                display: none;
+            }
+        }
+
+        @media (max-width: 900px) {
             .app-sidebar {
                 position: fixed;
-                left: -280px;
-                top: 0;
+                left: calc(-1 * var(--sidebar-width));
+                top: var(--header-height);
                 z-index: 100;
-                transition: left 0.3s;
+                height: calc(100vh - var(--header-height));
+                transition: left var(--transition-speed);
+                box-shadow: none;
             }
 
             .app-sidebar.open {
                 left: 0;
+                box-shadow: 2px 0 8px rgba(0,0,0,0.15);
+            }
+
+            .app-sidebar.collapsed {
+                left: calc(-1 * var(--sidebar-width));
             }
 
             .app-mobile-toggle {
                 display: block;
             }
 
+            .app-sidebar-expand {
+                display: none !important;
+            }
+
             .app-content {
-                padding: 1rem;
+                padding: 1.5rem;
             }
 
             .app-header-meta {
@@ -386,10 +680,24 @@
             }
         }
 
+        @media (max-width: 600px) {
+            .app-content {
+                padding: 1rem;
+            }
+
+            .app-doc-title {
+                font-size: 1.75rem;
+            }
+
+            .app-welcome-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Print Styles */
         @media print {
-            .app-sidebar, .app-mobile-toggle, .app-header, .app-footer {
-                display: none;
+            .app-sidebar, .app-mobile-toggle, .app-header, .app-footer, .app-toc, .app-sidebar-expand {
+                display: none !important;
             }
 
             .app-content {
@@ -401,6 +709,12 @@
                 page-break-inside: avoid;
             }
         }
+
+        /* Focus styles for accessibility */
+        *:focus-visible {
+            outline: 3px solid #ffdd00;
+            outline-offset: 0;
+        }
     </style>
 </head>
 <body class="govuk-template__body">
@@ -410,7 +724,10 @@
     <!-- Header -->
     <header class="app-header">
         <div class="app-header-inner">
-            <a href="#" class="app-header-title" id="header-title">Project Documentation</a>
+            <div class="app-header-left">
+                <a href="#" class="app-header-title" id="header-title">Project Documentation</a>
+            </div>
+            <div class="app-stats" id="header-stats"></div>
             <span class="app-header-meta" id="header-meta"></span>
         </div>
     </header>
@@ -421,8 +738,15 @@
         <nav class="app-sidebar" id="sidebar" aria-label="Document navigation">
             <div class="app-sidebar-header">
                 <h2>Documents</h2>
+                <button class="app-sidebar-toggle" id="sidebar-toggle" aria-label="Collapse sidebar" title="Collapse sidebar (Ctrl+B)">
+                    ◀
+                </button>
             </div>
-            <div id="nav-container">
+            <div class="app-search" id="search-container">
+                <input type="search" class="app-search-input" id="search-input" placeholder="Search documents... (Ctrl+K)" aria-label="Search documents">
+                <div class="app-search-results" id="search-results"></div>
+            </div>
+            <div class="app-nav-container" id="nav-container">
                 <!-- Navigation will be populated by JavaScript -->
                 <div class="app-loading">
                     <div class="app-spinner"></div>
@@ -431,15 +755,54 @@
             </div>
         </nav>
 
-        <!-- Main Content -->
-        <main class="app-content" id="main-content">
-            <div class="app-content-inner" id="content">
-                <div class="app-welcome">
-                    <h1>Welcome</h1>
-                    <p>Select a document from the sidebar to view its contents. Mermaid diagrams will be rendered automatically.</p>
+        <!-- Content Wrapper -->
+        <div class="app-content-wrapper">
+            <!-- Sidebar expand button -->
+            <button class="app-sidebar-expand" id="sidebar-expand" aria-label="Expand sidebar">
+                ▶
+            </button>
+
+            <!-- Main Content -->
+            <main class="app-content" id="main-content">
+                <div class="app-content-inner" id="content">
+                    <div class="app-welcome">
+                        <h1>Welcome</h1>
+                        <p>Select a document from the sidebar to view its contents. This documentation site supports Mermaid diagrams, full-text search, and keyboard navigation.</p>
+                        <div class="app-welcome-features">
+                            <div class="app-welcome-feature">
+                                <h3>Search</h3>
+                                <p>Use the search bar or press Ctrl+K to quickly find documents.</p>
+                            </div>
+                            <div class="app-welcome-feature">
+                                <h3>Navigation</h3>
+                                <p>Browse by project or category in the sidebar. Use arrow keys to navigate.</p>
+                            </div>
+                            <div class="app-welcome-feature">
+                                <h3>Diagrams</h3>
+                                <p>Mermaid diagrams render automatically with full interactivity.</p>
+                            </div>
+                            <div class="app-welcome-feature">
+                                <h3>Table of Contents</h3>
+                                <p>Long documents show a table of contents for easy navigation.</p>
+                            </div>
+                        </div>
+                        <p class="app-keyboard-hint">
+                            <kbd>Ctrl</kbd>+<kbd>K</kbd> Search &nbsp;&nbsp;
+                            <kbd>Ctrl</kbd>+<kbd>B</kbd> Toggle sidebar &nbsp;&nbsp;
+                            <kbd>Esc</kbd> Close search
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </main>
+            </main>
+
+            <!-- Table of Contents -->
+            <aside class="app-toc" id="toc" aria-label="Table of contents">
+                <div class="app-toc-title">On this page</div>
+                <ul class="app-toc-list" id="toc-list">
+                    <!-- Populated by JavaScript -->
+                </ul>
+            </aside>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -452,7 +815,7 @@
 
     <!-- Mobile Toggle -->
     <button class="app-mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
-        ☰
+        &#9776;
     </button>
 
     <script>
@@ -470,6 +833,8 @@
         // ============================================
         let manifest = null;
         let documentCache = new Map();
+        let allDocuments = [];
+        let currentTocObserver = null;
 
         // ============================================
         // Utilities
@@ -495,6 +860,14 @@
                 .replace(/\b\w/g, l => l.toUpperCase());
         }
 
+        function debounce(fn, delay) {
+            let timeout;
+            return (...args) => {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => fn(...args), delay);
+            };
+        }
+
         // ============================================
         // Marked Configuration
         // ============================================
@@ -514,6 +887,17 @@
             return `<pre><code class="${langClass}">${escapeHtml(code)}</code></pre>`;
         };
 
+        // Add IDs to headings for ToC links
+        renderer.heading = function(text, level) {
+            // Handle object input (newer marked versions)
+            if (typeof text === 'object') {
+                level = text.depth;
+                text = text.text;
+            }
+            const id = text.toLowerCase().replace(/[^\w]+/g, '-');
+            return `<h${level} id="${id}">${text}</h${level}>`;
+        };
+
         marked.setOptions({
             renderer: renderer,
             gfm: true,
@@ -530,6 +914,197 @@
             flowchart: { useMaxWidth: true },
             sequence: { useMaxWidth: true }
         });
+
+        // ============================================
+        // Search Functionality
+        // ============================================
+        function buildSearchIndex(manifest) {
+            allDocuments = [];
+
+            // Add global documents
+            if (manifest.global) {
+                manifest.global.forEach(doc => {
+                    allDocuments.push({
+                        ...doc,
+                        searchText: `${doc.title} ${doc.category || ''} global`.toLowerCase()
+                    });
+                });
+            }
+
+            // Add project documents
+            if (manifest.projects) {
+                manifest.projects.forEach(project => {
+                    const projectName = project.name || project.id;
+
+                    if (project.documents) {
+                        project.documents.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                searchText: `${doc.title} ${doc.category || ''} ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.diagrams) {
+                        project.diagrams.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Diagrams',
+                                searchText: `${doc.title} diagrams ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.decisions) {
+                        project.decisions.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Decisions',
+                                searchText: `${doc.title} decisions adr ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.vendors) {
+                        project.vendors.forEach(vendor => {
+                            if (vendor.documents) {
+                                vendor.documents.forEach(doc => {
+                                    allDocuments.push({
+                                        ...doc,
+                                        project: projectName,
+                                        vendor: vendor.name,
+                                        searchText: `${doc.title} ${vendor.name} vendor ${projectName}`.toLowerCase()
+                                    });
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+        }
+
+        function searchDocuments(query) {
+            if (!query || query.length < 2) return [];
+
+            const terms = query.toLowerCase().split(/\s+/);
+            return allDocuments
+                .filter(doc => terms.every(term => doc.searchText.includes(term)))
+                .slice(0, 10);
+        }
+
+        function setupSearch() {
+            const input = document.getElementById('search-input');
+            const results = document.getElementById('search-results');
+
+            const doSearch = debounce(() => {
+                const query = input.value.trim();
+                const matches = searchDocuments(query);
+
+                if (matches.length === 0) {
+                    results.classList.remove('visible');
+                    return;
+                }
+
+                results.innerHTML = matches.map(doc => `
+                    <div class="app-search-result" data-path="${doc.path}">
+                        <div class="app-search-result-title">${doc.title}</div>
+                        <div class="app-search-result-path">${doc.project ? doc.project + ' / ' : ''}${doc.category || 'Document'}</div>
+                    </div>
+                `).join('');
+
+                results.classList.add('visible');
+
+                // Add click handlers
+                results.querySelectorAll('.app-search-result').forEach(el => {
+                    el.addEventListener('click', () => {
+                        const path = el.dataset.path;
+                        window.location.hash = path;
+                        loadDocument(path);
+                        input.value = '';
+                        results.classList.remove('visible');
+
+                        // Update active state
+                        document.querySelectorAll('#nav-container a').forEach(a => {
+                            a.classList.toggle('active', a.dataset.path === path);
+                        });
+
+                        // Close mobile sidebar
+                        document.getElementById('sidebar').classList.remove('open');
+                    });
+                });
+            }, 150);
+
+            input.addEventListener('input', doSearch);
+
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    input.value = '';
+                    results.classList.remove('visible');
+                    input.blur();
+                }
+            });
+
+            // Close results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('#search-container')) {
+                    results.classList.remove('visible');
+                }
+            });
+        }
+
+        // ============================================
+        // Table of Contents
+        // ============================================
+        function buildTableOfContents(container) {
+            const toc = document.getElementById('toc');
+            const tocList = document.getElementById('toc-list');
+            const headings = container.querySelectorAll('h2, h3');
+
+            if (headings.length < 2) {
+                toc.style.display = 'none';
+                return;
+            }
+
+            toc.style.display = 'block';
+            tocList.innerHTML = '';
+
+            headings.forEach(heading => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `#${heading.id}`;
+                a.textContent = heading.textContent;
+                if (heading.tagName === 'H3') {
+                    a.classList.add('toc-h3');
+                }
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    heading.scrollIntoView({ behavior: 'smooth' });
+                });
+                li.appendChild(a);
+                tocList.appendChild(li);
+            });
+
+            // Setup intersection observer for active state
+            if (currentTocObserver) {
+                currentTocObserver.disconnect();
+            }
+
+            currentTocObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        tocList.querySelectorAll('a').forEach(a => {
+                            a.classList.toggle('active', a.getAttribute('href') === `#${id}`);
+                        });
+                    }
+                });
+            }, { rootMargin: '-20% 0px -70% 0px' });
+
+            headings.forEach(heading => currentTocObserver.observe(heading));
+        }
 
         // ============================================
         // Navigation Building
@@ -602,7 +1177,7 @@
                 <div class="app-nav-section">
                     <button class="app-nav-section-header">
                         ${title}
-                        <span class="chevron">▼</span>
+                        <span class="chevron">&#9660;</span>
                     </button>
                     <ul class="app-nav-list">${listHtml}</ul>
                 </div>
@@ -662,7 +1237,7 @@
                 <div class="app-nav-section">
                     <button class="app-nav-section-header">
                         ${displayName}
-                        <span class="chevron">▼</span>
+                        <span class="chevron">&#9660;</span>
                     </button>
                     <ul class="app-nav-list">${listHtml}</ul>
                 </div>
@@ -674,6 +1249,10 @@
         // ============================================
         async function loadDocument(path) {
             const content = document.getElementById('content');
+            const toc = document.getElementById('toc');
+
+            // Hide TOC while loading
+            toc.style.display = 'none';
 
             // Show loading
             content.innerHTML = `
@@ -722,8 +1301,14 @@
                     <div class="app-markdown">${html}</div>
                 `;
 
+                // Build table of contents
+                buildTableOfContents(content.querySelector('.app-markdown'));
+
                 // Render mermaid diagrams
                 await mermaid.run({ querySelector: '.mermaid' });
+
+                // Scroll to top
+                document.getElementById('main-content').scrollTo(0, 0);
 
             } catch (error) {
                 content.innerHTML = `
@@ -735,6 +1320,53 @@
                     <p><a href="${getRawUrl(path)}" target="_blank">Try opening directly</a></p>
                 `;
             }
+        }
+
+        // ============================================
+        // Sidebar Toggle
+        // ============================================
+        function setupSidebarToggle() {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebar-toggle');
+            const expandBtn = document.getElementById('sidebar-expand');
+
+            function toggleSidebar() {
+                sidebar.classList.toggle('collapsed');
+                const isCollapsed = sidebar.classList.contains('collapsed');
+                toggleBtn.innerHTML = isCollapsed ? '&#9654;' : '&#9664;';
+                toggleBtn.setAttribute('aria-label', isCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
+            }
+
+            toggleBtn.addEventListener('click', toggleSidebar);
+            expandBtn.addEventListener('click', toggleSidebar);
+        }
+
+        // ============================================
+        // Keyboard Shortcuts
+        // ============================================
+        function setupKeyboardShortcuts() {
+            document.addEventListener('keydown', (e) => {
+                // Ctrl+K - Focus search
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    document.getElementById('search-input').focus();
+                }
+
+                // Ctrl+B - Toggle sidebar
+                if ((e.ctrlKey || e.metaKey) && e.key === 'b') {
+                    e.preventDefault();
+                    document.getElementById('sidebar-toggle').click();
+                }
+
+                // Escape - Close search
+                if (e.key === 'Escape') {
+                    const searchInput = document.getElementById('search-input');
+                    if (document.activeElement === searchInput) {
+                        searchInput.blur();
+                        document.getElementById('search-results').classList.remove('visible');
+                    }
+                }
+            });
         }
 
         // ============================================
@@ -760,8 +1392,28 @@
                         `Generated: ${date.toLocaleDateString()}`;
                 }
 
+                // Update header stats
+                const totalDocs = allDocuments.length || countDocuments(manifest);
+                const projectCount = manifest.projects ? manifest.projects.length : 0;
+                document.getElementById('header-stats').innerHTML = `
+                    <span class="app-stat"><span class="app-stat-value">${totalDocs}</span> documents</span>
+                    <span class="app-stat"><span class="app-stat-value">${projectCount}</span> projects</span>
+                `;
+
+                // Build search index
+                buildSearchIndex(manifest);
+
                 // Build navigation
                 buildNavigation(manifest);
+
+                // Setup search
+                setupSearch();
+
+                // Setup sidebar toggle
+                setupSidebarToggle();
+
+                // Setup keyboard shortcuts
+                setupKeyboardShortcuts();
 
                 // Handle initial hash
                 if (window.location.hash) {
@@ -780,6 +1432,24 @@
                     </div>
                 `;
             }
+        }
+
+        function countDocuments(manifest) {
+            let count = 0;
+            if (manifest.global) count += manifest.global.length;
+            if (manifest.projects) {
+                manifest.projects.forEach(p => {
+                    if (p.documents) count += p.documents.length;
+                    if (p.diagrams) count += p.diagrams.length;
+                    if (p.decisions) count += p.decisions.length;
+                    if (p.vendors) {
+                        p.vendors.forEach(v => {
+                            if (v.documents) count += v.documents.length;
+                        });
+                    }
+                });
+            }
+            return count;
         }
 
         // Mobile toggle
