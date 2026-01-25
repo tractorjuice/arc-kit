@@ -235,7 +235,7 @@
             letter-spacing: 0.05em;
         }
 
-        /* Main Content - Full Width */
+        /* Main Content - Full Width, Left Aligned */
         .app-content-wrapper {
             flex: 1;
             display: flex;
@@ -245,7 +245,7 @@
 
         .app-content {
             flex: 1;
-            padding: 2rem 3rem;
+            padding: 2rem 2rem 2rem 2.5rem;
             overflow-y: auto;
             min-width: 0;
         }
@@ -362,8 +362,8 @@
 
         /* Welcome Screen */
         .app-welcome {
-            text-align: center;
-            padding: 4rem 2rem;
+            text-align: left;
+            padding: 2rem 0;
         }
 
         .app-welcome h1 {
@@ -373,15 +373,14 @@
         .app-welcome p {
             color: var(--text-muted);
             max-width: 600px;
-            margin: 0 auto 2rem;
+            margin: 0 0 2rem 0;
         }
 
         .app-welcome-features {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 1.5rem;
-            max-width: 800px;
-            margin: 0 auto;
+            max-width: 900px;
             text-align: left;
         }
 
@@ -407,6 +406,7 @@
             font-size: 0.75rem;
             color: var(--text-muted);
             margin-top: 2rem;
+            text-align: left;
         }
 
         .app-keyboard-hint kbd {
