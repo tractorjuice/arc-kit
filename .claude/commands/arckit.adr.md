@@ -49,6 +49,8 @@ fi
 
 ### 4. **Read the template**: Read `.arckit/templates/adr-template.md` to understand the comprehensive structure
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 ### 5. **Gather decision information from user**:
    - **Decision title**: Short noun phrase (e.g., "Use PostgreSQL for Data Persistence")
    - **Problem statement**: What architectural decision needs to be made?

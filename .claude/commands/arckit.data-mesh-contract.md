@@ -144,6 +144,8 @@ Read the data mesh contract template:
 
 ```bash
 cat .arckit/templates/data-mesh-contract-template.md
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 ```
 
 ### Step 5: Gather Context from Existing Artifacts

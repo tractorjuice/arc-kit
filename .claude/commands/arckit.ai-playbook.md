@@ -46,6 +46,8 @@ $ARGUMENTS
    - Read `projects/{project-dir}/requirements.md` (if exists)
    - Read `.arckit/templates/uk-gov-ai-playbook-template.md` for assessment structure
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 4. **Assess the 10 Core Principles**:
 
 ### Principle 1: Understanding AI

@@ -106,6 +106,8 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 
    Use the template at `.arckit/templates/risk-register-template.md` and populate:
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
    **Risk Identification**:
    - **Risk ID**: R-001, R-002, R-003, etc. (sequential)
    - **Category**: STRATEGIC | OPERATIONAL | FINANCIAL | COMPLIANCE | REPUTATIONAL | TECHNOLOGY

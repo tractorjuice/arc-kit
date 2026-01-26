@@ -63,6 +63,8 @@ Load the roadmap template structure:
 
 ```bash
 cat .arckit/templates/roadmap-template.md
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 ```
 
 ### 4. Generate Strategic Roadmap

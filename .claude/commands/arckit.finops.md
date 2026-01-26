@@ -84,6 +84,8 @@ Read existing project artifacts:
 
 Read the template from `.arckit/templates/finops-template.md` and generate:
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 **Section 1: FinOps Overview**
 - Strategic objectives (cost visibility, optimization, governance)
 - FinOps maturity level (current and target)

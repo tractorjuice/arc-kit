@@ -23,6 +23,8 @@ $ARGUMENTS
    - Read `projects/{project-dir}/requirements.md` - Technical requirements
    - Read `.arckit/templates/dld-review-template.md` - Review checklist
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 3. **Verify HLD approval**:
    - Check that HLD was approved (DLD cannot proceed without HLD approval)
    - Verify all HLD conditions were addressed

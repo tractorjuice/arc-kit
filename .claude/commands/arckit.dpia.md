@@ -116,6 +116,8 @@ Read the DPIA template:
 
 ```bash
 cat .arckit/templates/dpia-template.md
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 ```
 
 This template has 16 major sections and uses the ICO's 9-criteria screening checklist.

@@ -27,6 +27,10 @@ $ARGUMENTS
    - Or if the user specifies an existing project number (e.g., "001"), use that
 
 3. **Read the template**: Read `.arckit/templates/requirements-template.md` to understand the structure
+   - **Update Template Version**: Read the `VERSION` file and replace the version number in the template metadata line:
+     ```
+     > **Template Status**: [keep] | **Version**: [from VERSION file] | **Command**: [keep]
+     ```
 
 4. **Generate comprehensive requirements** based on user input:
 

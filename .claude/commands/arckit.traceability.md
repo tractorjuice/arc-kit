@@ -24,6 +24,8 @@ $ARGUMENTS
    - Read `projects/{project-dir}/vendors/{vendor}/dld-review.md` - Review findings
    - Read `.arckit/templates/traceability-matrix-template.md` - Template structure
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 3. **Build the traceability matrix**:
 
    ### Forward Traceability (Requirements → Design → Implementation → Tests)

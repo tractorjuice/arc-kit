@@ -27,6 +27,8 @@ $ARGUMENTS
 
 3. **Read the template**: Read `.arckit/templates/sow-template.md` to understand the structure
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 4. **Generate comprehensive SOW** with these sections:
 
    **Executive Summary**:
