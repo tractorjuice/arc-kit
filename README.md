@@ -38,7 +38,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v0.10.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.10.0)
+**Latest Release**: [v0.11.2](https://github.com/tractorjuice/arc-kit/releases/tag/v0.11.2)
 
 ### Initialize a Project
 
@@ -621,7 +621,7 @@ All 40 ArcKit commands with maturity status and example outputs from public test
 | 🟢 **Live** | Production-ready, extensively tested |
 | 🔵 **Beta** | Feature-complete, actively refined |
 | 🟠 **Alpha** | Working, limited testing |
-| 🟣 **Experimental** | New in v0.10.0, early adopters |
+| 🟣 **Experimental** | New in v0.11.x, early adopters |
 
 ### Example Repositories
 
@@ -924,7 +924,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v0.10.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.10.0)
+- **Latest Version**: [v0.11.2](https://github.com/tractorjuice/arc-kit/releases/tag/v0.11.2)
 
 ---
 
