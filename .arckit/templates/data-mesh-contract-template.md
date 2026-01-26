@@ -1,5 +1,7 @@
 # Data Mesh Contract: {data_product_name}
 
+> **Template Status**: Alpha | **Version**: 0.11.1 | **Command**: `/arckit.data-mesh-contract`
+
 ## Document Control
 
 | Field | Value |

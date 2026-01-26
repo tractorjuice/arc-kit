@@ -1,5 +1,7 @@
 # Vendor Scoring Summary: [PROJECT_NAME]
 
+> **Template Status**: Live | **Version**: 0.11.1 | **Command**: `/arckit.evaluate`
+
 ## Document Control
 
 | Field | Value |

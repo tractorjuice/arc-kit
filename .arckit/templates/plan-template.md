@@ -1,5 +1,7 @@
 # Implementation Plan: [FEATURE]
 
+> **Template Status**: Internal | **Version**: 0.11.1 | **Command**: *(utility template)*
+
 **Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
 **Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
 

@@ -1,5 +1,7 @@
 # MLOps Strategy
 
+> **Template Status**: Experimental | **Version**: 0.11.1 | **Command**: `/arckit.mlops`
+
 ## Document Control
 
 | Field | Value |

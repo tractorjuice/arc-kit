@@ -1,5 +1,7 @@
 # DevOps Strategy
 
+> **Template Status**: Experimental | **Version**: 0.11.1 | **Command**: `/arckit.devops`
+
 ## Document Control
 
 | Field | Value |

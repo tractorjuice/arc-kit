@@ -1,5 +1,7 @@
 # Data Model: [PROJECT_NAME]
 
+> **Template Status**: Live | **Version**: 0.11.1 | **Command**: `/arckit.data-model`
+
 ## Document Control
 
 | Field | Value |

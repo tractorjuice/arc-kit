@@ -1,5 +1,7 @@
 # Statement of Work (SOW): [PROJECT_NAME]
 
+> **Template Status**: Live | **Version**: 0.11.1 | **Command**: `/arckit.sow`
+
 ## Document Control
 
 | Field | Value |

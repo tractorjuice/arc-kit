@@ -4,6 +4,8 @@ description: "Task list template for feature implementation"
 
 # Tasks: [FEATURE NAME]
 
+> **Template Status**: Internal | **Version**: 0.11.1 | **Command**: *(utility template)*
+
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 

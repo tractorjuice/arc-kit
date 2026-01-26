@@ -1,5 +1,7 @@
 # [CHECKLIST TYPE] Checklist: [FEATURE NAME]
 
+> **Template Status**: Internal | **Version**: 0.11.1 | **Command**: *(utility template)*
+
 **Purpose**: [Brief description of what this checklist covers]
 **Created**: [DATE]
 **Feature**: [Link to spec.md or relevant documentation]

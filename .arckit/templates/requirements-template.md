@@ -1,5 +1,7 @@
 # Project Requirements: [PROJECT_NAME]
 
+> **Template Status**: Live | **Version**: 0.11.1 | **Command**: `/arckit.requirements`
+
 ## Document Control
 
 | Field | Value |

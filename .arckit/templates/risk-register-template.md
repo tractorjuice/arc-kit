@@ -1,5 +1,7 @@
 # Risk Register
 
+> **Template Status**: Live | **Version**: 0.11.1 | **Command**: `/arckit.risk`
+
 ## Document Control
 
 | Field | Value |

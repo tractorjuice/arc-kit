@@ -1,5 +1,7 @@
 # Feature Specification: [FEATURE NAME]
 
+> **Template Status**: Internal | **Version**: 0.11.1 | **Command**: *(utility template)*
+
 **Feature Branch**: `[###-feature-name]`  
 **Created**: [DATE]  
 **Status**: Draft  

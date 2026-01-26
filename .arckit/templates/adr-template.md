@@ -1,5 +1,7 @@
 # Architecture Decision Record: [DECISION_TITLE]
 
+> **Template Status**: Beta | **Version**: 0.11.1 | **Command**: `/arckit.adr`
+
 ## Document Control
 
 | Field | Value |

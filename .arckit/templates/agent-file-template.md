@@ -1,5 +1,7 @@
 # [PROJECT NAME] Development Guidelines
 
+> **Template Status**: Internal | **Version**: 0.11.1 | **Command**: *(utility template)*
+
 Auto-generated from all feature plans. Last updated: [DATE]
 
 ## Active Technologies

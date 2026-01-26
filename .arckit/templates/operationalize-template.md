@@ -1,5 +1,7 @@
 # Operational Readiness Pack
 
+> **Template Status**: Experimental | **Version**: 0.11.1 | **Command**: `/arckit.operationalize`
+
 ## Document Control
 
 | Field | Value |

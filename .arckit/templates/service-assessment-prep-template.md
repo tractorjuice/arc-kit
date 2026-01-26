@@ -1,5 +1,7 @@
 # GDS Service Assessment Preparation Report
 
+> **Template Status**: Beta | **Version**: 0.11.1 | **Command**: `/arckit.service-assessment`
+
 ## Document Control
 
 | Field | Value |

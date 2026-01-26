@@ -1,5 +1,7 @@
 # FinOps Strategy
 
+> **Template Status**: Experimental | **Version**: 0.11.1 | **Command**: `/arckit.finops`
+
 ## Document Control
 
 | Field | Value |
