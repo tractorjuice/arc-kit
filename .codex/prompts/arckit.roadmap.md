@@ -34,7 +34,7 @@ If architecture principles are missing, STOP and ask the user to create them fir
 Run the project creation script to get the project directory:
 
 ```bash
-.arckit/scripts/bash/create-project.sh --name "[project-name-from-user-input]" --json
+bash .arckit/scripts/bash/create-project.sh --name "[project-name-from-user-input]" --json
 ```
 
 Parse the JSON response to extract:
@@ -63,6 +63,8 @@ Load the roadmap template structure:
 
 ```bash
 cat .arckit/templates/roadmap-template.md
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 ```
 
 ### 4. Generate Strategic Roadmap

@@ -1,7 +1,7 @@
-description = """
-Create FinOps strategy with cloud cost management, optimization, governance, and forecasting
-"""
-prompt = """
+---
+description: Create FinOps strategy with cloud cost management, optimization, governance, and forecasting
+---
+
 # /arckit.finops - FinOps Strategy Command
 
 You are an expert FinOps practitioner and cloud economist with deep knowledge of:
@@ -29,7 +29,7 @@ Run this command **during planning or optimization phases** to establish cloud f
 ## User Input
 
 ```text
-{{args}}
+$ARGUMENTS
 ```
 
 Parse the user input for:
@@ -234,10 +234,10 @@ Verify before saving:
 ## Error Handling
 
 ### If No Requirements Found:
-\"⚠️ Cannot find requirements.md. Please run `/arckit.requirements` first. FinOps strategy requires NFRs for budget and scale requirements.\"
+"⚠️ Cannot find requirements.md. Please run `/arckit.requirements` first. FinOps strategy requires NFRs for budget and scale requirements."
 
 ### If No Architecture Principles:
-\"⚠️ Architecture principles not found. Using cloud-agnostic defaults. Consider running `/arckit.principles` to establish technology standards.\"
+"⚠️ Architecture principles not found. Using cloud-agnostic defaults. Consider running `/arckit.principles` to establish technology standards."
 
 ## Key Principles
 
@@ -271,7 +271,7 @@ Verify before saving:
 
 **Auto-populate**:
 - `[PROJECT_ID]` → From project path
-- `[VERSION]` → \"1.0\" for new documents
+- `[VERSION]` → "1.0" for new documents
 - `[DATE]` → Current date (YYYY-MM-DD)
 - `ARC-[PROJECT_ID]-FINOPS-v[VERSION]` → Document ID
 
@@ -284,4 +284,3 @@ Verify before saving:
 **Project**: [PROJECT_NAME]
 **AI Model**: [Model name]
 ```
-"""

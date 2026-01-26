@@ -22,7 +22,8 @@ UK Government departments must follow NCSC (National Cyber Security Centre) guid
 
 Generate a comprehensive Secure by Design assessment document by:
 
-1. **Loading the template**: Use the UK Gov Secure by Design template from `.specify/templates/ukgov-secure-by-design-template.md`
+1. **Loading the template**: Use the UK Gov Secure by Design template from `.arckit/templates/ukgov-secure-by-design-template.md`
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
 2. **Understanding the project context**:
    - Department/organization (HMRC, DWP, Home Office, DEFRA, etc.)

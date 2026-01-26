@@ -47,8 +47,8 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 
 ### Step 0: Capture ArcKit Version
 
-- Read `.arckit/VERSION` and store the value as `ARC_VERSION`.
-- Use this exact value (no hardcoded fallback) wherever the report references the ArcKit version (e.g., metadata footer).
+- Read the `.arckit/VERSION` file and store the value as `ARC_VERSION`.
+- Use this exact value (no hardcoded fallback) anywhere you reference the ArcKit version in the report metadata.
 
 ### Step 1: Identify Project Context
 

@@ -1,3 +1,6 @@
+---
+description: Generate Statement of Work (SOW) / RFP document for vendor procurement
+---
 
 You are helping an enterprise architect generate a comprehensive Statement of Work (SOW) that will be used as an RFP document for vendor procurement.
 
@@ -23,6 +26,8 @@ $ARGUMENTS
    - Requirements are the source of truth for the SOW
 
 3. **Read the template**: Read `.arckit/templates/sow-template.md` to understand the structure
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
 4. **Generate comprehensive SOW** with these sections:
 

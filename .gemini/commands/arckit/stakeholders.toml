@@ -18,6 +18,10 @@ You are helping an enterprise architect or project manager understand stakeholde
    - Or if the user specifies an existing project number (e.g., \"001\"), use that directory
 
 2. **Read the template**: Read `.arckit/templates/stakeholder-drivers-template.md` to understand the comprehensive structure
+   - **Update Template Version**: Read the `VERSION` file and replace the version number in the template metadata line:
+     ```
+     > **Template Status**: [keep] | **Version**: [from VERSION file] | **Command**: [keep]
+     ```
 
 3. **Check for existing context**:
    - If `.arckit/memory/architecture-principles.md` exists, read it to understand organizational context

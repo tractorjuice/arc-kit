@@ -42,6 +42,8 @@ c. **Statement of Work** (RECOMMENDED):
 
 4. **Read the template**: Read `.arckit/templates/evaluation-criteria-template.md`
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 5. **Determine the task**: The user may want to:
    - **Create evaluation framework** (before receiving proposals)
    - **Score a specific vendor** (after receiving proposal)

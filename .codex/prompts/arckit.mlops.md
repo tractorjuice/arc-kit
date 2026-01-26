@@ -91,6 +91,8 @@ Read existing project artifacts:
 
 Read the template from `.arckit/templates/mlops-template.md` and generate:
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 **Section 1: ML System Overview**
 - Use cases and business value
 - Model types and purposes

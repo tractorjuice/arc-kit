@@ -79,6 +79,8 @@ Read existing project artifacts:
 
 Read the template from `.arckit/templates/devops-template.md` and generate:
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 **Section 1: DevOps Overview**
 - Strategic objectives
 - Maturity level (current and target)

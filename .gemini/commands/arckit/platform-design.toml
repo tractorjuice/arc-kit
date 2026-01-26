@@ -107,6 +107,8 @@ Read the platform design template:
 
 ```bash
 cat .arckit/templates/platform-design-template.md
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 ```
 
 This template contains the structure for all 8 PDT canvases.

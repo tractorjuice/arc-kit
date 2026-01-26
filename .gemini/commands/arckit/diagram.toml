@@ -480,6 +480,8 @@ Create the architecture diagram document using the template:
 
 **Template**: `.arckit/templates/architecture-diagram-template.md`
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 ### Output Contents
 
 The diagram document must include:

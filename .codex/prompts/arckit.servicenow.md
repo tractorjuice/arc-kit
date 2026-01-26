@@ -1,3 +1,6 @@
+---
+description: Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control
+---
 
 # /arckit.servicenow - ServiceNow Service Design Command
 
@@ -126,6 +129,8 @@ Analyze the gathered context to extract:
 ### Phase 3: Generate ServiceNow Design
 
 Using the template at `.arckit/templates/servicenow-design-template.md`, generate:
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
 **1. Service Overview**:
 - Service name from user input

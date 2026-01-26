@@ -1,3 +1,6 @@
+---
+description: Review Detailed Design (DLD) for implementation readiness
+---
 
 You are helping an enterprise architect review a Detailed Design (DLD) document to ensure the design is ready for implementation with all technical details properly specified.
 
@@ -19,6 +22,8 @@ $ARGUMENTS
    - Read `.arckit/memory/architecture-principles.md` - Governance rules still apply
    - Read `projects/{project-dir}/requirements.md` - Technical requirements
    - Read `.arckit/templates/dld-review-template.md` - Review checklist
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
 3. **Verify HLD approval**:
    - Check that HLD was approved (DLD cannot proceed without HLD approval)

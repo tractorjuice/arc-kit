@@ -86,6 +86,8 @@ Extract operational requirements from artifacts:
 
 Read the template from `.arckit/templates/operationalize-template.md` and generate a comprehensive operational readiness document.
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 **Section 1: Service Overview**
 - Service name, description, business criticality
 - Service tier with justification from NFRs

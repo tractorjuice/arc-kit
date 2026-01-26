@@ -14,6 +14,8 @@ $ARGUMENTS
 
 1. **Read the template**: Read `.arckit/templates/architecture-principles-template.md` to understand the structure
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 2. **Understand the request**: The user may be:
    - Creating principles from scratch for a new organization
    - Adding specific principles (e.g., "add API-first principle")

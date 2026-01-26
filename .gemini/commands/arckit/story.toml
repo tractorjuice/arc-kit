@@ -615,6 +615,8 @@ Read the story template:
 
 ```bash
 cat ./.arckit/templates/story-template.md
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 ```
 
 **Populate ALL placeholders** in the template with real data:

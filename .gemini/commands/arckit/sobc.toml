@@ -62,6 +62,8 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
 5. **Generate comprehensive SOBC** following the template at `.arckit/templates/sobc-template.md`:
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
    **Five Cases (HM Treasury Green Book Model)**:
 
    **A. Strategic Case**:

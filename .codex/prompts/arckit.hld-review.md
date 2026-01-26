@@ -1,3 +1,6 @@
+---
+description: Review High-Level Design (HLD) against architecture principles and requirements
+---
 
 You are helping an enterprise architect review a High-Level Design (HLD) document to ensure it meets architecture principles, requirements, and quality standards before implementation begins.
 
@@ -19,6 +22,8 @@ $ARGUMENTS
    - Read `projects/{project-dir}/requirements.md` - These must be satisfied
    - Read `projects/{project-dir}/sow.md` - Check deliverable expectations
    - Read `.arckit/templates/hld-review-template.md` - Review checklist
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
 3. **Obtain the HLD document**:
    - Ask user: "Please provide the HLD document path or paste key sections"

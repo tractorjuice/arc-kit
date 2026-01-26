@@ -1,14 +1,14 @@
-description = """
-Create federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees (project)
-"""
-prompt = """
+---
+description: Create federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees (project)
+---
+
 You are helping an enterprise architect **create a data mesh contract** for a data product in a federated mesh architecture.
 
 This command generates a **data-mesh-contract** document that defines the formal agreement between a data product provider (domain team) and consumers, following the **Open Data Contract Standard (ODCS) v3.0.2**.
 
 ## User Input
 ```text
-{{args}}
+$ARGUMENTS
 ```
 
 ## Instructions
@@ -46,8 +46,8 @@ This command generates a **data-mesh-contract** document that defines the formal
 
      Continue anyway? (yes/no)
      ```
-   - If user says \"no\", stop here and tell them to run `/arckit.data-model` first
-   - If user says \"yes\" or if data-model.md exists, proceed to Step 1
+   - If user says "no", stop here and tell them to run `/arckit.data-model` first
+   - If user says "yes" or if data-model.md exists, proceed to Step 1
 
 3. **Stakeholder Analysis** (RECOMMENDED):
    - Check if the project has `stakeholder-drivers.md`
@@ -66,15 +66,15 @@ This command generates a **data-mesh-contract** document that defines the formal
 
      Continue anyway? (yes/no)
      ```
-   - If user says \"no\", stop here
-   - If user says \"yes\" or if stakeholder-drivers.md exists, proceed to Step 1
+   - If user says "no", stop here
+   - If user says "yes" or if stakeholder-drivers.md exists, proceed to Step 1
 
 ### Step 1: Parse User Input
 
 Extract the **data product name** from the user's message. Examples:
-- \"Create contract for customer payments\"
-- \"Generate mesh contract for seller analytics data product\"
-- \"customer-orders contract\"
+- "Create contract for customer payments"
+- "Generate mesh contract for seller analytics data product"
+- "customer-orders contract"
 
 The data product name should be:
 - Kebab-case: `customer-payments`, `seller-analytics`
@@ -98,8 +98,8 @@ Data product name (kebab-case):
 Use the `create-project.sh` script to find or create the project directory:
 
 ```bash
-bash .arckit/scripts/bash/create-project.sh \\
-  --name \"$DATA_PRODUCT_NAME\" \\
+bash .arckit/scripts/bash/create-project.sh \
+  --name "$DATA_PRODUCT_NAME" \
   --json
 ```
 
@@ -202,7 +202,7 @@ Using the template and context gathered, generate a comprehensive data mesh cont
    - Contract Name: `{data-product-name}`
    - Semantic Version: Start at `1.0.0`
    - Status: ACTIVE (for published) or DRAFT (for new)
-   - Domain: Extract from project name or ask user (e.g., \"customer\", \"seller\", \"finance\")
+   - Domain: Extract from project name or ask user (e.g., "customer", "seller", "finance")
    - Data Product: The data product name
    - Tenant: Organization name (if known from stakeholders, otherwise placeholder)
    - Purpose: Describe what this data product provides
@@ -530,7 +530,7 @@ Assistant:
 - Do NOT proceed without principles
 
 **If user provides unclear data product name**:
-- Ask for clarification: \"What is the name of the data product?\"
+- Ask for clarification: "What is the name of the data product?"
 - Suggest examples: customer-payments, seller-analytics, order-events
 
 **If project creation fails**:
@@ -538,11 +538,10 @@ Assistant:
 - Ask user to check permissions or directory structure
 
 **If template file is missing**:
-- Error: \"Template not found: .arckit/templates/data-mesh-contract-template.md\"
+- Error: "Template not found: .arckit/templates/data-mesh-contract-template.md"
 - Ask user to check ArcKit installation
 
 **If file write fails**:
 - Show error message
 - Check if directory exists
 - Check permissions
-"""

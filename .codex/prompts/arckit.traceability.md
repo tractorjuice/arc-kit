@@ -1,3 +1,6 @@
+---
+description: Generate requirements traceability matrix from requirements to design to tests
+---
 
 You are helping an enterprise architect create a comprehensive traceability matrix that traces requirements through design to implementation and testing.
 
@@ -20,6 +23,8 @@ $ARGUMENTS
    - Read `projects/{project-dir}/vendors/{vendor}/hld-review.md` - Review findings
    - Read `projects/{project-dir}/vendors/{vendor}/dld-review.md` - Review findings
    - Read `.arckit/templates/traceability-matrix-template.md` - Template structure
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
 3. **Build the traceability matrix**:
 

@@ -1,3 +1,6 @@
+---
+description: Create Strategic Outline Business Case (SOBC) using UK Government Green Book 5-case model
+---
 
 You are helping an enterprise architect create a Strategic Outline Business Case (SOBC) to justify investment in a technology project.
 
@@ -58,6 +61,8 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - Note: EVERY benefit in SOBC MUST trace to a stakeholder goal
 
 5. **Generate comprehensive SOBC** following the template at `.arckit/templates/sobc-template.md`:
+
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
    **Five Cases (HM Treasury Green Book Model)**:
 

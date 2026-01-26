@@ -270,6 +270,8 @@ Create the Wardley Map document using the template:
 
 **Template**: `.arckit/templates/wardley-map-template.md`
 
+   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
 ### Output Contents
 
 The Wardley Map document must include:
