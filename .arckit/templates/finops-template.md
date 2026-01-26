@@ -650,4 +650,4 @@ flowchart TB
 **Generated on**: [DATE]
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
-**AI Model**: [MODEL]
+**Model**: [AI_MODEL]
