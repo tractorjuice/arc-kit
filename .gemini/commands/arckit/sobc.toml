@@ -206,7 +206,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"SOBC\"
 **IMPORTANT - Populate Metadata Footer**:
 Before completing, populate the metadata footer at the end of the generated document with:
 - `[DATE]` → Current date in YYYY-MM-DD format
-- `[VERSION]` → Current ArcKit version read from `.arckit/VERSION` (always use the exact value in that file—do not hardcode or fall back)
+- `[VERSION]` → Current ArcKit version read from `VERSION` (always use the exact value in that file—do not hardcode or fall back)
 - `[PROJECT_NAME]` → The actual project name
 - `[AI_MODEL]` → The AI model used (e.g., \"claude-sonnet-4-5-20250929\", \"gpt-4\", \"gemini-pro\")
 
