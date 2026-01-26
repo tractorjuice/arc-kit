@@ -1,6 +1,6 @@
 # [PROJECT_NAME] - Project Story
 
-> **Template Status**: Live | **Version**: 0.11.1 | **Command**: `/arckit.story`
+> **Template Status**: Live | **Version**: 0.11.2 | **Command**: `/arckit.story`
 
 ## Document Control
 

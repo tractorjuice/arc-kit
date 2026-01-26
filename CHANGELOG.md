@@ -5,6 +5,35 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.11.2] - 2026-01-26
+
+### Added
+
+- **Dynamic Version in Commands**: 29 commands now read VERSION file and update template metadata
+  - Generated documents automatically show current ArcKit version
+  - Template status remains static (Live/Beta/Alpha/Experimental)
+
+- **Template Metadata**: All 36 templates now include status/version blockquote
+  - Format: `> **Template Status**: [status] | **Version**: [version] | **Command**: [command]`
+  - Status indicates maturity: Live (14), Beta (13), Alpha (4), Experimental (5)
+
+### Changed
+
+- **Pages Template**: Moved "On this page" (TOC) from right side to left side of content
+  - Better reading flow with navigation on left
+  - Content remains left-aligned
+
+### Removed
+
+- **Unused Templates**: Removed 5 internal speckit templates not referenced by any commands
+  - plan-template.md, checklist-template.md, tasks-template.md, spec-template.md, agent-file-template.md
+
+### Fixed
+
+- **Legacy Template Paths**: Fixed arckit.secure.md and arckit.tcop.md using old `.specify/templates/` paths
+
+---
+
 ## [0.11.1] - 2026-01-24
 
 - **GitHub Pages Manifest**: Added `docs/manifest.json` for programmatic document index access

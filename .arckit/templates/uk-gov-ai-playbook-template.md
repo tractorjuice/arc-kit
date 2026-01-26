@@ -1,6 +1,6 @@
 # UK Government AI Playbook Assessment
 
-> **Template Status**: Alpha | **Version**: 0.11.1 | **Command**: `/arckit.ai-playbook`
+> **Template Status**: Alpha | **Version**: 0.11.2 | **Command**: `/arckit.ai-playbook`
 
 ## Document Control
 

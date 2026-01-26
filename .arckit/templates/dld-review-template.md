@@ -1,6 +1,6 @@
 # Detailed Design (DLD) Review: [PROJECT_NAME]
 
-> **Template Status**: Beta | **Version**: 0.11.1 | **Command**: `/arckit.dld-review`
+> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.dld-review`
 
 ## Document Control
 

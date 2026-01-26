@@ -1,6 +1,6 @@
 # [ORGANIZATION_NAME] Enterprise Architecture Principles
 
-> **Template Status**: Live | **Version**: 0.11.1 | **Command**: `/arckit.principles`
+> **Template Status**: Live | **Version**: 0.11.2 | **Command**: `/arckit.principles`
 
 ## Document Control
 

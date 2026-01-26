@@ -1,6 +1,6 @@
 # Wardley Map: {map_name}
 
-> **Template Status**: Experimental | **Version**: 0.11.1 | **Command**: `/arckit.wardley`
+> **Template Status**: Experimental | **Version**: 0.11.2 | **Command**: `/arckit.wardley`
 
 ## Document Control
 

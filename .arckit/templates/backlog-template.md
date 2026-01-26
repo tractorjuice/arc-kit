@@ -1,6 +1,6 @@
 # Product Backlog: [Project Name]
 
-> **Template Status**: Beta | **Version**: 0.11.1 | **Command**: `/arckit.backlog`
+> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.backlog`
 
 ## Document Control
 

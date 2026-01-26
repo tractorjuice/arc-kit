@@ -1,6 +1,6 @@
 # Operational Readiness Pack
 
-> **Template Status**: Experimental | **Version**: 0.11.1 | **Command**: `/arckit.operationalize`
+> **Template Status**: Experimental | **Version**: 0.11.2 | **Command**: `/arckit.operationalize`
 
 ## Document Control
 

@@ -1,6 +1,6 @@
 # Data Protection Impact Assessment (DPIA)
 
-> **Template Status**: Beta | **Version**: 0.11.1 | **Command**: `/arckit.dpia`
+> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.dpia`
 
 ## Document Control
 
