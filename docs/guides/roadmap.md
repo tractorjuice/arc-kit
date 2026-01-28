@@ -21,7 +21,7 @@
 /arckit.roadmap Create roadmap for <initiative> covering FY24/25–FY27/28
 ```
 
-Outputs: `projects/<id>/roadmap.md` plus optional Mermaid timeline snippets.
+Outputs: `projects/<id>/ARC-<id>-ROADMAP-v1.0.md` plus optional Mermaid timeline snippets.
 
 ---
 

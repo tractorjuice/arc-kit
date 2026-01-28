@@ -8,7 +8,7 @@ Generate a sprint-ready backlog from existing ArcKit artefacts with `/arckit.bac
 
 | Must Have | Why it matters |
 |-----------|----------------|
-| `requirements.md` with BR/FR/NFR/INT/DR IDs | Feeds epics, stories, and non-functional tasks |
+| `ARC-<id>-REQ-v1.0.md` with BR/FR/NFR/INT/DR IDs | Feeds epics, stories, and non-functional tasks |
 | Approved HLD/DLD | Ensures stories reference actual components |
 | Stakeholder analysis | Provides personas for story wording |
 
@@ -24,7 +24,7 @@ _Strongly recommended_: risk register (for priority), business case (for value),
 /arckit.backlog PRIORITY=risk        # other options: value, moscow, multi
 ```
 
-Outputs land in `projects/<id>/backlog.*`.
+Outputs land in `projects/<id>/ARC-<id>-BLOG-v1.0.*`.
 
 ---
 

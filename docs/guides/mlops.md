@@ -8,8 +8,8 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | ML-related functional and non-functional requirements |
-| Data model (`data-model.md`) | Training data sources and features |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | ML-related functional and non-functional requirements |
+| Data model (`ARC-<id>-DATA-v1.0.md`) | Training data sources and features |
 | AI Playbook assessment | Responsible AI context (UK Government) |
 | Architecture principles | AI/ML technology standards |
 
@@ -21,7 +21,7 @@
 /arckit.mlops Create MLOps strategy for <initiative>
 ```
 
-Output: `projects/<id>/mlops-strategy.md`
+Output: `projects/<id>/ARC-<id>-MLOPS-v1.0.md`
 
 ---
 
@@ -108,10 +108,10 @@ Output: `projects/<id>/mlops-strategy.md`
 
 | Requirement | Document | When Needed |
 |-------------|----------|-------------|
-| AI Playbook Compliance | `ai-playbook-assessment.md` | All UK Gov AI projects |
-| Algorithmic Transparency | `atrs-record.md` | Public-facing algorithmic decisions |
-| MOD AI Assurance | `jsp-936-assessment.md` | Defence AI systems |
-| Data Protection Impact | `dpia.md` | AI processing personal data |
+| AI Playbook Compliance | `ARC-<id>-AIPB-v1.0.md` | All UK Gov AI projects |
+| Algorithmic Transparency | `ARC-<id>-ATRS-v1.0.md` | Public-facing algorithmic decisions |
+| MOD AI Assurance | `ARC-<id>-JSP936-v1.0.md` | Defence AI systems |
+| Data Protection Impact | `ARC-<id>-DPIA-v1.0.md` | AI processing personal data |
 
 ---
 

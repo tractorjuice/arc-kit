@@ -1,6 +1,6 @@
 # Principles Compliance Guide
 
-`/arckit.principles-compliance` scores each architecture principle defined in `.arckit/memory/architecture-principles.md`, producing a RAG status with evidence and actions.
+`/arckit.principles-compliance` scores each architecture principle defined in `.arckit/memory/ARC-000-PRIN-v1.0.md`, producing a RAG status with evidence and actions.
 
 ---
 
@@ -20,7 +20,7 @@
 /arckit.principles-compliance <description>
 ```
 
-Output saved as `projects/<id>/principles-compliance-<date>.md`.
+Output saved as `projects/<id>/ARC-<id>-PRIN-COMP-v1.0.md`.
 
 ---
 

@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | Capabilities needed |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Capabilities needed |
 | Stakeholder drivers | User needs and business context |
 | Architecture diagrams | Current components and dependencies |
 | Market research | Vendor landscape for build vs buy |
@@ -21,7 +21,7 @@
 /arckit.wardley Create Wardley Map for <initiative>
 ```
 
-Output: `projects/<id>/wardley-map.md`
+Output: `projects/<id>/ARC-<id>-WARD-001-v1.0.md` (uses multi-instance numbering)
 
 ---
 

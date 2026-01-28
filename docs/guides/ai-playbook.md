@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | AI-related functional and non-functional requirements |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | AI-related functional and non-functional requirements |
 | Architecture diagrams | AI system components and data flows |
 | Data model | Training data sources, personal data processing |
 | Stakeholder drivers | Business context and user impact |
@@ -21,7 +21,7 @@
 /arckit.ai-playbook Assess AI Playbook compliance for <project>
 ```
 
-Output: `projects/<id>/ai-playbook-assessment.md`
+Output: `projects/<id>/ARC-<id>-AIPB-v1.0.md`
 
 ---
 
@@ -86,9 +86,9 @@ Output: `projects/<id>/ai-playbook-assessment.md`
 
 | Requirement | Document | When Needed |
 |-------------|----------|-------------|
-| Algorithmic Transparency | `atrs-record.md` | Public-facing algorithmic decisions |
-| Data Protection Impact | `dpia.md` | AI processing personal data |
-| MOD AI Assurance | `jsp-936-assessment.md` | Defence AI systems |
+| Algorithmic Transparency | `ARC-<id>-ATRS-v1.0.md` | Public-facing algorithmic decisions |
+| Data Protection Impact | `ARC-<id>-DPIA-v1.0.md` | AI processing personal data |
+| MOD AI Assurance | `ARC-<id>-JSP936-v1.0.md` | Defence AI systems |
 
 ---
 

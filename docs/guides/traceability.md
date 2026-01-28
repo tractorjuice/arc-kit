@@ -8,7 +8,7 @@
 
 | Artefact | Used for |
 |----------|----------|
-| Requirements (`requirements.md`) | Source requirements with IDs |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Source requirements with IDs |
 | Design reviews, diagrams | Map requirement → component |
 | Backlog/test evidence | Link to implementation and verification |
 | Service design / ops docs | Close the loop to run and monitor |
@@ -23,10 +23,7 @@ Run after design reviews or at least once per sprint to maintain coverage.
 /arckit.traceability Generate traceability matrix for <project>
 ```
 
-Outputs:
-- `traceability-matrix.md`
-- `traceability-coverage.md`
-- `traceability-gaps.md`
+Output: `projects/<id>/ARC-<id>-TRAC-v1.0.md` (traceability matrix with coverage metrics and gap analysis)
 
 ---
 

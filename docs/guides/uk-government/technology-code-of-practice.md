@@ -10,7 +10,7 @@
 /arckit.tcop Assess Technology Code of Practice compliance for <project>
 ```
 
-Output: `projects/<id>/tcop-assessment.md`.
+Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`.
 
 ---
 

@@ -10,7 +10,7 @@ Use `/arckit.sobc` to produce HM Treasury Green Book Strategic Outline Business 
 1. /arckit.principles
 2. /arckit.stakeholders
 3. /arckit.risk
-4. /arckit.sobc   ← generates SOBC (projects/<id>/sobc.md)
+4. /arckit.sobc   ← generates SOBC (`projects/<id>/ARC-<id>-SOBC-v1.0.md`)
 5. /arckit.requirements (only if SOBC approved)
 ```
 
@@ -40,7 +40,7 @@ _Do not skip steps 2–3: stakeholder drivers feed benefits; risks drive optimis
 /arckit.sobc Create SOBC for HMRC cloud migration referencing TCoP and spend controls
 ```
 
-Outputs are markdown-first (`sobc.md`). Use Docs → Export to produce PDF if needed.
+Outputs are markdown-first (`projects/<id>/ARC-<id>-SOBC-v1.0.md`). Use Docs → Export to produce PDF if needed.
 
 ---
 

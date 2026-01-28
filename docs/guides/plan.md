@@ -20,7 +20,7 @@
 /arckit.plan Create project plan for <initiative>
 ```
 
-Output: `projects/<id>/project-plan.md` plus Mermaid diagrams.
+Output: `projects/<id>/ARC-<id>-PLAN-v1.0.md` plus Mermaid diagrams.
 
 ---
 

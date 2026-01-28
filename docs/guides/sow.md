@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | What must be delivered |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | What must be delivered |
 | Architecture principles | Technical standards and constraints |
 | Stakeholder drivers | Business context and success criteria |
 | Risk register | Risks for vendor to manage |
@@ -21,7 +21,7 @@
 /arckit.sow Create Statement of Work for <project>
 ```
 
-Output: `projects/<id>/statement-of-work.md`
+Output: `projects/<id>/ARC-<id>-SOW-v1.0.md`
 
 ---
 

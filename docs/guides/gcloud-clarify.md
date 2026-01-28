@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | What the service must deliver |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | What the service must deliver |
 | G-Cloud search results | Services being evaluated |
 | Architecture principles | Governance standards to verify |
 | Security requirements | NCSC, Cyber Essentials requirements |
@@ -21,7 +21,7 @@
 /arckit.gcloud-clarify Generate clarification questions for <service>
 ```
 
-Output: `projects/<id>/gcloud-clarifications.md`
+Output: `projects/<id>/ARC-<id>-GCLC-v1.0.md`
 
 ---
 

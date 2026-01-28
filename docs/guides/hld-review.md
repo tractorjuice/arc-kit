@@ -10,7 +10,7 @@
 |----------|---------|
 | High-Level Design (HLD) | The design document being reviewed |
 | Architecture principles | Governance standards to verify against |
-| Requirements (`requirements.md`) | Verify all requirements addressed |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Verify all requirements addressed |
 | Risk register | Ensure risks are mitigated in design |
 
 ---
@@ -21,7 +21,7 @@
 /arckit.hld-review Review HLD for <project/service>
 ```
 
-Output: `projects/<id>/hld-review.md`
+Output: `projects/<id>/reviews/ARC-<id>-HLD-v1.0.md`
 
 ---
 

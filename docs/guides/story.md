@@ -18,7 +18,7 @@
 /arckit.story Generate project story for <project>
 ```
 
-Output: `projects/<id>/PROJECT-STORY.md`
+Output: `projects/<id>/ARC-<id>-STORY-v1.0.md`
 
 ---
 

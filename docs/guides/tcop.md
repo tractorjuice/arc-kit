@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | What the project delivers |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | What the project delivers |
 | Architecture diagrams | Technical design and components |
 | Architecture principles | Governance alignment |
 | Stakeholder drivers | Business context |
@@ -21,7 +21,7 @@
 /arckit.tcop Create TCoP review for <project>
 ```
 
-Output: `projects/<id>/tcop-review.md`
+Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`
 
 ---
 

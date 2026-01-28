@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | Security requirements (NFR-SEC) |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Security requirements (NFR-SEC) |
 | Architecture diagrams | System boundaries and data flows |
 | Risk register | Security risks identified |
 | Data model | Personal data and classification |
@@ -21,7 +21,7 @@
 /arckit.secure Create Secure by Design assessment for <system>
 ```
 
-Output: `projects/<id>/secure-by-design.md`
+Output: `projects/<id>/ARC-<id>-SECD-v1.0.md`
 
 ---
 

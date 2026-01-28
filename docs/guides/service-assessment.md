@@ -10,7 +10,7 @@
 /arckit.service-assessment PHASE=<alpha|beta|live> DATE=<YYYY-MM-DD optional>
 ```
 
-Output: `projects/<id>/service-assessment-<phase>-prep.md`.
+Output: `projects/<id>/ARC-<id>-SVCASS-v1.0.md`.
 
 ---
 

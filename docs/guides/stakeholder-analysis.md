@@ -25,7 +25,7 @@ ArcKit produces this structure automatically; use it during workshops to confirm
 /arckit.stakeholders Analyse stakeholders for <project>
 ```
 
-Output: `projects/<id>/stakeholder-drivers.md`
+Output: `projects/<id>/ARC-<id>-STKE-v1.0.md`
 
 ---
 

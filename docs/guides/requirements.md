@@ -20,7 +20,7 @@
 /arckit.requirements Create requirements for <project>
 ```
 
-Output: `projects/<id>/requirements.md`.
+Output: `projects/<id>/ARC-<id>-REQ-v1.0.md`.
 
 ---
 

@@ -9,8 +9,8 @@
 | Artefact | Purpose |
 |----------|---------|
 | Architecture principles | Governance standards vendors must align with |
-| Requirements (`requirements.md`) | What you're evaluating vendors against |
-| Statement of Work (`sow.md`) | Pre-defined evaluation criteria |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | What you're evaluating vendors against |
+| Statement of Work (`ARC-<id>-SOW-v1.0.md`) | Pre-defined evaluation criteria |
 | DOS documentation | Digital Marketplace procurement criteria |
 
 ---
@@ -24,9 +24,9 @@
 ```
 
 Output:
-- `projects/<id>/evaluation-criteria.md` (framework)
-- `projects/<id>/vendors/<vendor>/evaluation.md` (scoring)
-- `projects/<id>/vendor-comparison.md` (comparison)
+- `projects/<id>/ARC-<id>-EVAL-v1.0.md` (framework)
+- `projects/<id>/vendors/<vendor>/ARC-<id>-EVAL-<vendor>-v1.0.md` (scoring)
+- `projects/<id>/ARC-<id>-EVCP-v1.0.md` (comparison)
 
 ---
 
@@ -61,9 +61,9 @@ Output:
 
 | Task | When to Use | Output |
 |------|-------------|--------|
-| Create Framework | Before receiving proposals | `evaluation-criteria.md` |
-| Score Vendor | After receiving a proposal | `vendors/<name>/evaluation.md` |
-| Compare Vendors | After scoring multiple vendors | `vendor-comparison.md` |
+| Create Framework | Before receiving proposals | `ARC-<id>-EVAL-v1.0.md` |
+| Score Vendor | After receiving a proposal | `vendors/<name>/ARC-<id>-EVAL-<name>-v1.0.md` |
+| Compare Vendors | After scoring multiple vendors | `ARC-<id>-EVCP-v1.0.md` |
 
 ---
 

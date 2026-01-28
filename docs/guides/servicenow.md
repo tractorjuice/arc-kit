@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | SLA targets from NFRs |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | SLA targets from NFRs |
 | Architecture diagrams | Components for CMDB population |
 | Operational readiness | Support model and escalation paths |
 | Stakeholder drivers | Business criticality and service expectations |
@@ -21,7 +21,7 @@
 /arckit.servicenow Create ServiceNow service design for <service>
 ```
 
-Output: `projects/<id>/servicenow-design.md`
+Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 
 ---
 

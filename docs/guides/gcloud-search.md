@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | What capabilities are needed |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | What capabilities are needed |
 | Architecture principles | Technology and vendor standards |
 | Budget constraints | Pricing parameters |
 
@@ -20,7 +20,7 @@
 /arckit.gcloud-search Find G-Cloud services for <requirement>
 ```
 
-Output: `projects/<id>/gcloud-search-results.md`
+Output: `projects/<id>/ARC-<id>-GCLD-v1.0.md`
 
 ---
 

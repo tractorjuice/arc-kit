@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | Deployment, performance, and security NFRs |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Deployment, performance, and security NFRs |
 | Architecture principles | Technology standards and cloud preferences |
 | Research findings | Technology stack decisions |
 | Architecture diagrams | Deployment topology |
@@ -21,7 +21,7 @@
 /arckit.devops Create DevOps strategy for <initiative>
 ```
 
-Output: `projects/<id>/devops-strategy.md`
+Output: `projects/<id>/ARC-<id>-DEVOPS-v1.0.md`
 
 ---
 

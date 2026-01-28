@@ -10,7 +10,7 @@
 |----------|---------|
 | Detailed-Level Design (DLD) | The design document being reviewed |
 | High-Level Design (HLD) | Reference for architectural alignment |
-| Requirements (`requirements.md`) | Verify all requirements addressed |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Verify all requirements addressed |
 | Architecture principles | Governance standards to verify |
 
 ---
@@ -21,7 +21,7 @@
 /arckit.dld-review Review DLD for <component/service>
 ```
 
-Output: `projects/<id>/dld-review.md`
+Output: `projects/<id>/reviews/ARC-<id>-DLD-v1.0.md`
 
 ---
 

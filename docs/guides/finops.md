@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | Scale and budget constraints from NFRs |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Scale and budget constraints from NFRs |
 | Architecture diagrams | Resource topology and cloud estate |
 | DevOps strategy | Infrastructure patterns and cloud usage |
 | Stakeholder drivers | Business value and ROI targets |
@@ -21,7 +21,7 @@
 /arckit.finops Create FinOps strategy for <initiative>
 ```
 
-Output: `projects/<id>/finops-strategy.md`
+Output: `projects/<id>/ARC-<id>-FINOPS-v1.0.md`
 
 ---
 

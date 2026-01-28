@@ -10,7 +10,7 @@
 /arckit.atrs Create Algorithmic Transparency Record for <AI system>
 ```
 
-Output: `projects/<id>/algorithmic-transparency-record.md`.
+Output: `projects/<id>/ARC-<id>-ATRS-v1.0.md`.
 
 ---
 

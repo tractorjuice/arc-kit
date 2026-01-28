@@ -21,7 +21,7 @@
 /arckit.stakeholders Analyze stakeholders for <project>
 ```
 
-Output: `projects/<id>/stakeholder-drivers.md`
+Output: `projects/<id>/ARC-<id>-STKE-v1.0.md`
 
 ---
 

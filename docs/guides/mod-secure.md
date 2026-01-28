@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | Security requirements and classification |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Security requirements and classification |
 | Architecture diagrams | System boundaries and data flows |
 | Risk register | Security risks identified |
 | Data model | Data classification and handling |
@@ -21,7 +21,7 @@
 /arckit.mod-secure Create MOD Secure by Design assessment for <system>
 ```
 
-Output: `projects/<id>/mod-secure-assessment.md`
+Output: `projects/<id>/ARC-<id>-SECD-MOD-v1.0.md`
 
 ---
 

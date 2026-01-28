@@ -24,7 +24,7 @@ Add constraints (budget, data residency, clearance) in the prompt for tailored r
 /arckit.research Research <topic> for <project>
 ```
 
-Outputs: `projects/<id>/research-findings.md` plus optional CSV of suppliers.
+Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
 
 ---
 

@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | Requirements that could be at risk |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | Requirements that could be at risk |
 | Stakeholder drivers | Business context and risk appetite |
 | Architecture diagrams | Technical risks from design |
 | Existing risk registers | Organizational risk context |
@@ -21,7 +21,7 @@
 /arckit.risk Create risk register for <project>
 ```
 
-Output: `projects/<id>/risk-register.md`
+Output: `projects/<id>/ARC-<id>-RISK-v1.0.md`
 
 ---
 

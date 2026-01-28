@@ -10,7 +10,7 @@
 /arckit.principles Create architecture principles for <organisation>
 ```
 
-Result: `.arckit/memory/architecture-principles.md`
+Result: `.arckit/memory/ARC-000-PRIN-v1.0.md`
 
 ---
 

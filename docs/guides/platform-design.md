@@ -258,7 +258,7 @@ Is there a supply side AND demand side?
 /arckit.platform-design Design NHS appointment booking platform
 ```
 
-**Output**: Creates `projects/{project-id}/platform-design.md` with all 8 canvases
+**Output**: Creates `projects/<id>/ARC-<id>-PLAT-v1.0.md` with all 8 canvases
 
 ### Advanced Usage
 
@@ -348,30 +348,30 @@ Use `/arckit.gcloud-search` to find relevant services, `/arckit.dos` to generate
 
 ```mermaid
 graph TD
-    A[architecture-principles.md] -->|Governance| H[platform-design.md]
-    B[stakeholder-drivers.md] -->|Entity Portraits| H
-    C[requirements.md] -->|Capabilities| H
+    A[ARC-000-PRIN-v1.0.md] -->|Governance| H[ARC-id-PLAT-v1.0.md]
+    B[ARC-id-STKE-v1.0.md] -->|Entity Portraits| H
+    C[ARC-id-REQ-v1.0.md] -->|Capabilities| H
     D[wardley-maps/] -->|Build vs Buy| H
 
-    H -->|Informs| E[diagrams/platform-architecture.md]
-    H -->|Informs| F[backlog.md]
-    H -->|Informs| G[sow.md]
+    H -->|Informs| E[diagrams/ARC-id-DIAG-001-v1.0.md]
+    H -->|Informs| F[ARC-id-BLOG-v1.0.md]
+    H -->|Informs| G[ARC-id-SOW-v1.0.md]
 
     style H fill:#e1f5ff
 ```
 
 **Input Artifacts**:
-- `architecture-principles.md` → Governance principles for platform
-- `stakeholder-drivers.md` → Entity portraits (stakeholders = entities)
-- `requirements.md` → Platform capabilities (FR/DR/INT requirements)
-- `wardley-maps/*.md` → Build vs. buy strategy (component evolution)
+- `ARC-000-PRIN-v1.0.md` → Governance principles for platform
+- `ARC-<id>-STKE-v1.0.md` → Entity portraits (stakeholders = entities)
+- `ARC-<id>-REQ-v1.0.md` → Platform capabilities (FR/DR/INT requirements)
+- `wardley-maps/ARC-<id>-WARD-*.md` → Build vs. buy strategy (component evolution)
 
 **Output Artifacts** (created after platform-design):
-- `diagrams/platform-architecture.md` → C4 diagrams of platform technical architecture
-- `backlog.md` → MVP features converted to user stories, sprint plan
-- `sow.md` → RFP for platform development (if procuring vendor)
-- `evaluation-criteria.md` → Vendor scoring (if multiple proposals)
-- `traceability-matrix.md` → Requirements → Platform components → Tests
+- `diagrams/ARC-<id>-DIAG-001-v1.0.md` → C4 diagrams of platform technical architecture
+- `ARC-<id>-BLOG-v1.0.md` → MVP features converted to user stories, sprint plan
+- `ARC-<id>-SOW-v1.0.md` → RFP for platform development (if procuring vendor)
+- `ARC-<id>-EVAL-v1.0.md` → Vendor scoring (if multiple proposals)
+- `ARC-<id>-TRAC-v1.0.md` → Requirements → Platform components → Tests
 
 ### Typical Workflow
 

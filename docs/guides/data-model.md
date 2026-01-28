@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| `requirements.md` with DR-xxx entries | Defines entities and attributes |
+| `ARC-<id>-REQ-v1.0.md` with DR-xxx entries | Defines entities and attributes |
 | Up-to-date stakeholders & risk register | Drives governance roles and retention risk |
 | Latest architecture diagrams | Populate CRUD matrix and integrations |
 
@@ -20,7 +20,7 @@
 /arckit.data-model Create data model for <project name>
 ```
 
-Output: `projects/<id>/data-model.md`
+Output: `projects/<id>/ARC-<id>-DATA-v1.0.md`
 
 ---
 

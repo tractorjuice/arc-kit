@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | System purpose and user impact |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | System purpose and user impact |
 | AI Playbook assessment | Responsible AI context |
 | Data model | Data sources and processing |
 | Stakeholder drivers | Business context and affected groups |
@@ -21,7 +21,7 @@
 /arckit.atrs Create ATRS record for <algorithmic tool>
 ```
 
-Output: `projects/<id>/atrs-record.md`
+Output: `projects/<id>/ARC-<id>-ATRS-v1.0.md`
 
 ---
 

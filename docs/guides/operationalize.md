@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | NFRs for availability, performance, recovery |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | NFRs for availability, performance, recovery |
 | Architecture diagrams | Components for runbook inventory |
 | Risk register | Operational risks to mitigate |
 | Data model | Backup requirements and data dependencies |
@@ -21,7 +21,7 @@
 /arckit.operationalize Create operational readiness pack for <service>
 ```
 
-Output: `projects/<id>/operational-readiness.md`
+Output: `projects/<id>/ARC-<id>-OPS-v1.0.md`
 
 ---
 

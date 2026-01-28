@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| `data-model.md` | Supplies PII inventory, lawful basis, retention |
+| `ARC-<id>-DATA-v1.0.md` | Supplies PII inventory, lawful basis, retention |
 | Stakeholder analysis | Highlights vulnerable groups, consultation needs |
 | Risk register | Seeds privacy risk scoring and mitigations |
 
@@ -37,7 +37,7 @@ ArcKit screens these automatically; use the list to confirm completeness.
 /arckit.dpia Generate DPIA for <project>
 ```
 
-Output: `projects/<id>/dpia.md`
+Output: `projects/<id>/ARC-<id>-DPIA-v1.0.md`
 
 ---
 

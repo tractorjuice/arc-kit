@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | What outcomes or capabilities are needed |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | What outcomes or capabilities are needed |
 | Stakeholder drivers | Business context and success criteria |
 | Budget constraints | Funding envelope and commercial model |
 | Timeline | Required delivery dates |
@@ -21,7 +21,7 @@
 /arckit.dos Create DOS procurement for <requirement>
 ```
 
-Output: `projects/<id>/dos-procurement.md`
+Output: `projects/<id>/ARC-<id>-DOS-v1.0.md`
 
 ---
 

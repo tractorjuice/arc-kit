@@ -21,7 +21,7 @@
 /arckit.adr Document architectural decision for <topic>, compare options A/B/C
 ```
 
-Output: `projects/<id>/decisions/<slug>.md` plus optional summary table appended to `decisions/index.md`.
+Output: `projects/<id>/decisions/ARC-<id>-ADR-001-v1.0.md` (uses multi-instance numbering) plus optional summary table appended to `decisions/index.md`.
 
 ---
 

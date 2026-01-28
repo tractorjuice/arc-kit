@@ -8,7 +8,7 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| Requirements (`requirements.md`) | What the project must deliver |
+| Requirements (`ARC-<id>-REQ-v1.0.md`) | What the project must deliver |
 | Stakeholder drivers | Business context and strategic alignment |
 | Risk register | Key risks and assumptions |
 | Architecture principles | Technology constraints and standards |
@@ -21,7 +21,7 @@
 /arckit.sobc Create SOBC for <initiative>
 ```
 
-Output: `projects/<id>/sobc.md`
+Output: `projects/<id>/ARC-<id>-SOBC-v1.0.md`
 
 ---
 

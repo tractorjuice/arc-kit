@@ -10,7 +10,7 @@
 /arckit.ai-playbook Assess AI Playbook compliance for <AI system>
 ```
 
-Output: `projects/<id>/ai-playbook-assessment.md`.
+Output: `projects/<id>/ARC-<id>-AIPB-v1.0.md`.
 
 ---
 

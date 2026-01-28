@@ -30,7 +30,7 @@ Run `/arckit.hld-review` and `/arckit.dld-review` to apply structured quality ga
 /arckit.dld-review Review <vendor> detailed design for <project>
 ```
 
-Outputs (`hld-review-*.md`, `dld-review-*.md`) capture compliance results, gaps, and actions.
+Outputs (`reviews/ARC-<id>-HLD-v1.0.md`, `reviews/ARC-<id>-DLD-v1.0.md`) capture compliance results, gaps, and actions.
 
 ---
 
@@ -60,5 +60,5 @@ Record these directly in the generated review file to maintain traceability.
 
 - Update backlog with actions (mark blockers as “must fix before approval”).
 - Re-run the relevant review command once actions are complete.
-- Store approved artefacts in `/reviews/hld/` or `/reviews/dld/` for audit.
+- Store approved artefacts in `reviews/` directory for audit.
 - Notify governance boards with key findings and approval state.

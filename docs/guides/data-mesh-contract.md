@@ -8,9 +8,9 @@
 
 | Artefact | Purpose |
 |----------|---------|
-| `data-model.md` with entity definitions | Provides schema source of truth |
-| `requirements.md` with DR-xxx entries | Defines data quality requirements and SLAs |
-| `stakeholder-drivers.md` | Identifies domain owners and data consumers |
+| `ARC-<id>-DATA-v1.0.md` with entity definitions | Provides schema source of truth |
+| `ARC-<id>-REQ-v1.0.md` with DR-xxx entries | Defines data quality requirements and SLAs |
+| `ARC-<id>-STKE-v1.0.md` | Identifies domain owners and data consumers |
 | Architecture principles | Ensures mesh alignment with governance standards |
 
 ---
@@ -21,7 +21,7 @@
 /arckit.data-mesh-contract Create contract for <domain name> data product
 ```
 
-Output: `projects/<id>/data-mesh-contracts/<domain-name>-contract.md`
+Output: `projects/<id>/ARC-<id>-DMC-001-v1.0.md` (uses multi-instance numbering)
 
 ---
 
@@ -42,7 +42,7 @@ Unlike traditional data models, mesh contracts emphasize:
 | Section | Highlights | Next Action |
 |---------|------------|-------------|
 | Product metadata | Domain, owner, mesh plane alignment | Assign product owner and steward |
-| Schema & versioning | Contracted fields, breaking change policy | Sync with data-model.md for consistency |
+| Schema & versioning | Contracted fields, breaking change policy | Sync with `ARC-<id>-DATA-v1.0.md` for consistency |
 | SLAs | Freshness, availability, quality KPIs | Define monitoring thresholds in observability platform |
 | Access methods | APIs, query endpoints, data feeds | Document authentication and rate limits |
 | Data quality | Validation rules, testing requirements | Implement automated quality checks |
@@ -152,7 +152,7 @@ Contracts align with NDS pillars:
 ### 1. Design Phase
 
 - Domain team drafts contract using template
-- References source `data-model.md` for schema
+- References source `ARC-<id>-DATA-v1.0.md` for schema
 - Defines SLAs based on consumer requirements
 - Documents governance policies
 
