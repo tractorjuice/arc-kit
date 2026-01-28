@@ -212,7 +212,7 @@ ArcKit maintains 17 test repos on GitHub (pattern: `arckit-test-project-v*`):
 | v11 | national-highways-data | Public | National Highways data architecture |
 | v12 | honky-tonks | Private | Restaurant data analytics |
 | v13 | plymouth-research | Private | Plymouth restaurant web scraping |
-| v14 | scottish-courts | Private | Scottish Courts and Tribunals Service GenAI strategy |
+| v14 | scottish-courts | Public | Scottish Courts and Tribunals Service GenAI strategy |
 | v15 | ipad-framework | Private | Investment Promotion Agency Data Framework |
 | v16 | doctors-appointment | Public | Doctors Online Appointment System |
 
