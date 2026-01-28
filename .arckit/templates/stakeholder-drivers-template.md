@@ -77,20 +77,44 @@ This document identifies key stakeholders, their underlying drivers (motivations
 ### Stakeholder Power-Interest Grid
 
 ```
-HIGH POWER
-    │
-    │  [Manage Closely]          │  [Keep Satisfied]
-    │  - Executive Sponsor        │  - Finance
-    │  - Business Unit Leader     │  - Compliance
-    │  - Security                 │  - Legal
-────┼──────────────────────────────┼─────────────────
-    │  [Keep Informed]            │  [Monitor]
-    │  - End Users                │  - Industry Bodies
-    │  - Product Owner            │
-    │  - Operations               │
-    │                             │
-LOW POWER                                        HIGH INTEREST
+                          INTEREST
+              Low                         High
+        ┌─────────────────────┬─────────────────────┐
+        │                     │                     │
+        │   KEEP SATISFIED    │   MANAGE CLOSELY    │
+   High │                     │                     │
+        │  • Security         │  • Executive Sponsor│
+        │  • Finance          │  • Business Lead    │
+        │  • Compliance       │  • Project Board    │
+ P      │                     │                     │
+ O      ├─────────────────────┼─────────────────────┤
+ W      │                     │                     │
+ E      │      MONITOR        │    KEEP INFORMED    │
+ R      │                     │                     │
+   Low  │  • Industry Bodies  │  • End Users        │
+        │                     │  • Product Owner    │
+        │                     │  • Operations       │
+        │                     │                     │
+        └─────────────────────┴─────────────────────┘
 ```
+
+| Stakeholder | Power | Interest | Quadrant | Engagement Strategy |
+|-------------|-------|----------|----------|---------------------|
+| Executive Sponsor | HIGH | HIGH | Manage Closely | Weekly steering meetings |
+| Business Lead | HIGH | HIGH | Manage Closely | Regular status updates |
+| Security Team | HIGH | LOW | Keep Satisfied | Milestone reviews |
+| Finance | HIGH | LOW | Keep Satisfied | Budget checkpoints |
+| Compliance | HIGH | MEDIUM | Keep Satisfied | Compliance gates |
+| End Users | LOW | HIGH | Keep Informed | Newsletter, demos |
+| Product Owner | LOW | HIGH | Keep Informed | Sprint reviews |
+| Operations | LOW | HIGH | Keep Informed | Release notifications |
+| Industry Bodies | LOW | LOW | Monitor | Annual updates |
+
+**Quadrant Interpretation:**
+- **Manage Closely** (High Power, High Interest): Key decision-makers requiring active engagement
+- **Keep Satisfied** (High Power, Low Interest): Influential stakeholders needing periodic updates
+- **Keep Informed** (Low Power, High Interest): Engaged stakeholders needing regular communication
+- **Monitor** (Low Power, Low Interest): Minimal engagement required
 
 ---
 

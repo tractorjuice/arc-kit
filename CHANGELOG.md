@@ -5,6 +5,39 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-01-28
+
+### Added
+
+- **Migration Guide**: New `docs/guides/migration.md` with comprehensive documentation for file migration
+- **Research Subdirectory**: Multi-instance research documents now stored in `research/` directory
+- **Auto-migrate Principles**: Migration script automatically migrates principles from legacy `.arckit/memory/` location
+
+### Changed
+
+- **Migration Script Enhancements**:
+  - Add `--global` flag to migrate only 000-global directory
+  - Handle root-level ADR, diagram, wardley, and research files
+  - Add alternative filename mappings (tcop-assessment.md, hld.md, dld.md, digital-marketplace-dos.md)
+  - Handle `procurement/` subdirectory files
+  - Fix nullglob bug causing incorrect sequence numbers
+  - Add version-suffixed traceability file handling
+
+- **Pages Command Updates**:
+  - Add `reviews`, `wardleyMaps`, `dataContracts`, `research` arrays to manifest
+  - Support new subdirectory structure in navigation
+
+- **Templates**:
+  - Reverted Power-Interest grids to ASCII format (Mermaid quadrantChart had readability issues)
+  - Reverted Risk matrices to ASCII 5×5 format
+
+### Fixed
+
+- Fixed `v8-cabinet-office-genai` → `v9-cabinet-office-genai` typo in documentation
+- Added missing v7-nhs-appointment and v16-doctors-appointment to public repos list
+
+---
+
 ## [1.0.0] - 2026-01-28
 
 ### Release Highlights

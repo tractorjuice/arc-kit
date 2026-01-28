@@ -1014,43 +1014,70 @@ Create visual dependency representation:
 
 ### Sprint 1 → Sprint 2 Dependencies
 
-```
-Sprint 1 (Foundation)
-  ├─ Story-001: User Registration
-  │    ↓ (blocks)
-  │  Sprint 2: Story-015 (needs authenticated users)
-  │  Sprint 2: Story-003 (needs user accounts)
-  │
-  ├─ Story-002: User Login
-  │    ↓ (blocks)
-  │  Sprint 2: Story-015 (needs auth)
-  │
-  ├─ Task-DB-001: Database Setup
-  │    ↓ (blocks)
-  │  Sprint 2: Task-NFR-005 (needs database for caching)
-  │  Sprint 2: Task-NFR-008 (needs database for audit log)
-  │
-  └─ Task-CI-001: CI/CD Pipeline
-       ↓ (blocks)
-     All future work (deploy mechanism required)
+```mermaid
+flowchart TD
+    subgraph S1[Sprint 1 - Foundation]
+        S001[Story-001: User Registration]
+        S002[Story-002: User Login]
+        TDB[Task-DB-001: Database Setup]
+        TCI[Task-CI-001: CI/CD Pipeline]
+    end
+
+    subgraph S2[Sprint 2]
+        S015[Story-015: Needs authenticated users]
+        S003[Story-003: Needs user accounts]
+        TNFR5[Task-NFR-005: Needs database for caching]
+        TNFR8[Task-NFR-008: Needs database for audit log]
+    end
+
+    subgraph Future[All Future Work]
+        FW[Deploy mechanism required]
+    end
+
+    S001 -->|blocks| S015
+    S001 -->|blocks| S003
+    S002 -->|blocks| S015
+    TDB -->|blocks| TNFR5
+    TDB -->|blocks| TNFR8
+    TCI -->|blocks| FW
+
+    style S1 fill:#E3F2FD
+    style S2 fill:#FFF3E0
+    style Future fill:#E8F5E9
 ```
 
 ### Sprint 2 → Sprint 3 Dependencies
 
-```
-Sprint 2 (Core Features)
-  ├─ Story-015: Stripe Integration
-  │    ↓ (blocks)
-  │  Sprint 3: Story-016 (payment processing needs Stripe)
-  │  Sprint 4: Story-025 (payment history needs payments)
-  │
-  ├─ Task-NFR-005: Redis Caching
-  │    ↓ (improves)
-  │  Sprint 3+: All features benefit from caching
-  │
-  └─ Task-NFR-008: GDPR Audit Log
-       ↓ (enables)
-     Sprint 4: Story-030 (GDPR data export)
+```mermaid
+flowchart TD
+    subgraph S2[Sprint 2 - Core Features]
+        S015[Story-015: Stripe Integration]
+        NFR5[Task-NFR-005: Redis Caching]
+        NFR8[Task-NFR-008: GDPR Audit Log]
+    end
+
+    subgraph S3[Sprint 3]
+        S016[Story-016: Payment processing needs Stripe]
+    end
+
+    subgraph S4[Sprint 4]
+        S025[Story-025: Payment history needs payments]
+        S030[Story-030: GDPR data export]
+    end
+
+    subgraph S3Plus[Sprint 3+]
+        ALL[All features benefit from caching]
+    end
+
+    S015 -->|blocks| S016
+    S015 -->|blocks| S025
+    NFR5 -->|improves| ALL
+    NFR8 -->|enables| S030
+
+    style S2 fill:#E3F2FD
+    style S3 fill:#FFF3E0
+    style S4 fill:#E8F5E9
+    style S3Plus fill:#F3E5F5
 ```
 
 [... continue for all sprints ...]

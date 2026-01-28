@@ -75,30 +75,23 @@ Evaluators with conflicts must recuse themselves from evaluation of that vendor.
 
 ### 2.1 Process Flow
 
-```
-1. Proposals Received (Due Date)
-   ↓
-2. Mandatory Qualifications Check (Pass/Fail)
-   ↓ (Qualified vendors only)
-3. Individual Technical Scoring (Blind to Cost)
-   ↓
-4. Consensus Technical Scoring Meeting
-   ↓
-5. Shortlist Top [3-5] Vendors
-   ↓
-6. Cost Proposals Opened (Shortlisted only)
-   ↓
-7. Cost Scoring
-   ↓
-8. Combined Technical + Cost Scoring
-   ↓
-9. Vendor Presentations & Q&A
-   ↓
-10. Reference Checks
-   ↓
-11. Final Scoring & Selection
-   ↓
-12. Selection Approval & Award
+```mermaid
+flowchart TD
+    P1[1. Proposals Received<br/>Due Date] --> P2[2. Mandatory Qualifications Check<br/>Pass/Fail]
+    P2 -->|Qualified vendors only| P3[3. Individual Technical Scoring<br/>Blind to Cost]
+    P3 --> P4[4. Consensus Technical<br/>Scoring Meeting]
+    P4 --> P5[5. Shortlist Top 3-5 Vendors]
+    P5 --> P6[6. Cost Proposals Opened<br/>Shortlisted only]
+    P6 --> P7[7. Cost Scoring]
+    P7 --> P8[8. Combined Technical +<br/>Cost Scoring]
+    P8 --> P9[9. Vendor Presentations & Q&A]
+    P9 --> P10[10. Reference Checks]
+    P10 --> P11[11. Final Scoring & Selection]
+    P11 --> P12[12. Selection Approval & Award]
+
+    style P2 fill:#FFE4B5
+    style P5 fill:#FFE4B5
+    style P12 fill:#C8E6C9
 ```
 
 ### 2.2 Timeline

@@ -28,9 +28,13 @@ declare -A FILE_MAPPING=(
     ["risk-register.md"]="RISK"
     ["sobc.md"]="SOBC"
     ["data-model.md"]="DATA"
-    ["research-findings.md"]="RSCH"
+    # research-findings.md moved to research/ subdirectory (multi-instance)
     ["traceability-matrix.md"]="TRAC"
     ["analysis-report.md"]="ANAL"
+
+    # Global documents (for 000-global)
+    ["architecture-principles.md"]="PRIN"
+    ["principles.md"]="PRIN"  # Alternative name
 
     # Strategy & Operations
     ["project-plan.md"]="PLAN"
@@ -46,12 +50,14 @@ declare -A FILE_MAPPING=(
     # Procurement
     ["sow.md"]="SOW"
     ["dos-requirements.md"]="DOS"
+    ["digital-marketplace-dos.md"]="DOS"  # Alternative name
     ["gcloud-requirements.md"]="GCLD"
     ["gcloud-clarification-questions.md"]="GCLC"
     ["evaluation-criteria.md"]="EVAL"
 
     # Compliance
     ["tcop-review.md"]="TCOP"
+    ["tcop-assessment.md"]="TCOP"  # Alternative name
     ["ukgov-secure-by-design.md"]="SECD"
     ["secure-by-design.md"]="SECD"  # Alternative name
     ["mod-secure-by-design.md"]="SECD-MOD"
@@ -64,7 +70,9 @@ declare -A FILE_MAPPING=(
 
     # Reviews
     ["hld-review.md"]="HLD"
+    ["hld.md"]="HLD"  # Alternative name
     ["dld-review.md"]="DLD"
+    ["dld.md"]="DLD"  # Alternative name
 
     # Other
     ["PROJECT-STORY.md"]="STORY"
@@ -76,6 +84,7 @@ declare -A SUBDIR_MAPPING=(
     ["diagrams"]="DIAG"
     ["wardley-maps"]="WARD"
     ["data-contracts"]="DMC"
+    ["research"]="RSCH"
 )
 
 usage() {
@@ -86,6 +95,7 @@ Migrate ArcKit project files to new Document ID-based filenames.
 
 Options:
     --all           Migrate all projects in the projects/ directory
+    --global        Migrate only the global directory (000-global)
     --dry-run       Show what would be changed without making changes
     --no-backup     Skip creating backup (not recommended)
     --force         Overwrite existing files if they exist
@@ -94,7 +104,17 @@ Options:
 Examples:
     $0 projects/001-payment-gateway
     $0 projects/001-payment-gateway --dry-run
-    $0 --all --dry-run
+    $0 projects/000-global                      # Migrate global principles
+    $0 --global --dry-run                       # Dry run for global only
+    $0 --all --dry-run                          # Migrate all (including global)
+
+Supported global files (000-global):
+    architecture-principles.md  → ARC-000-PRIN-v1.0.md
+    principles.md               → ARC-000-PRIN-v1.0.md
+
+Legacy locations checked for principles:
+    .arckit/memory/architecture-principles.md
+    .arckit/memory/principles.md
 
 EOF
     exit 1
@@ -103,6 +123,7 @@ EOF
 # Parse arguments
 PROJECT_DIR=""
 MIGRATE_ALL=false
+MIGRATE_GLOBAL=false
 DRY_RUN=false
 NO_BACKUP=false
 FORCE=false
@@ -111,6 +132,10 @@ while [[ $# -gt 0 ]]; do
     case $1 in
         --all)
             MIGRATE_ALL=true
+            shift
+            ;;
+        --global)
+            MIGRATE_GLOBAL=true
             shift
             ;;
         --dry-run)
@@ -143,8 +168,8 @@ done
 REPO_ROOT="$(find_repo_root)"
 
 # Validate arguments
-if [[ "$MIGRATE_ALL" == "false" && -z "$PROJECT_DIR" ]]; then
-    log_error "PROJECT_DIR required (or use --all)"
+if [[ "$MIGRATE_ALL" == "false" && "$MIGRATE_GLOBAL" == "false" && -z "$PROJECT_DIR" ]]; then
+    log_error "PROJECT_DIR required (or use --all or --global)"
     usage
 fi
 
@@ -152,6 +177,12 @@ fi
 get_project_id() {
     local dir="$1"
     local basename=$(basename "$dir")
+
+    # Handle 000-global specially
+    if [[ "$basename" == "000-global" ]]; then
+        echo "000"
+        return 0
+    fi
 
     if [[ "$basename" =~ ^([0-9]{3})- ]]; then
         echo "${BASH_REMATCH[1]}"
@@ -232,9 +263,20 @@ migrate_subdir() {
 migrate_project() {
     local project_dir="$1"
 
+    # Create directory if it doesn't exist (especially for 000-global)
     if [[ ! -d "$project_dir" ]]; then
-        log_error "Project directory not found: $project_dir"
-        return 1
+        local basename=$(basename "$project_dir")
+        if [[ "$basename" == "000-global" ]]; then
+            log_info "Creating global directory: $project_dir"
+            if [[ "$DRY_RUN" == "false" ]]; then
+                mkdir -p "$project_dir"
+            else
+                log_info "[DRY-RUN] Would create directory: $project_dir"
+            fi
+        else
+            log_error "Project directory not found: $project_dir"
+            return 1
+        fi
     fi
 
     local project_id
@@ -244,13 +286,37 @@ migrate_project() {
 
     local backup_dir="$project_dir/.backup/$(date +%Y%m%d_%H%M%S)"
 
-    # Create subdirectories for new structure if they don't exist
-    if [[ "$DRY_RUN" == "false" ]]; then
+    # Special handling for 000-global: check legacy locations for principles
+    if [[ "$project_id" == "000" ]]; then
+        local legacy_locations=(
+            "$REPO_ROOT/.arckit/memory/architecture-principles.md"
+            "$REPO_ROOT/.arckit/memory/principles.md"
+        )
+
+        for legacy_path in "${legacy_locations[@]}"; do
+            if [[ -f "$legacy_path" ]]; then
+                local new_name="ARC-000-PRIN-v1.0.md"
+                local new_path="$project_dir/$new_name"
+
+                if [[ -f "$new_path" && "$FORCE" == "false" ]]; then
+                    log_warning "Principles already exist at: $new_path (use --force to overwrite)"
+                else
+                    log_info "Found principles at legacy location: $legacy_path"
+                    migrate_file "$legacy_path" "$new_path" "$backup_dir"
+                fi
+                break
+            fi
+        done
+    fi
+
+    # Create subdirectories for new structure if they don't exist (skip for 000-global)
+    if [[ "$DRY_RUN" == "false" && "$project_id" != "000" ]]; then
         mkdir -p "$project_dir/decisions"
         mkdir -p "$project_dir/diagrams"
         mkdir -p "$project_dir/wardley-maps"
         mkdir -p "$project_dir/data-contracts"
         mkdir -p "$project_dir/reviews"
+        mkdir -p "$project_dir/research"
     fi
 
     # Migrate root-level files
@@ -272,6 +338,20 @@ migrate_project() {
             migrate_file "$old_path" "$new_path" "$backup_dir"
         fi
     done
+
+    # Also check procurement/ subdirectory for old-style files
+    if [[ -d "$project_dir/procurement" ]]; then
+        for old_name in "${!FILE_MAPPING[@]}"; do
+            local type_code="${FILE_MAPPING[$old_name]}"
+            local old_path="$project_dir/procurement/$old_name"
+
+            if [[ -f "$old_path" ]]; then
+                local new_name="ARC-${project_id}-${type_code}-v1.0.md"
+                local new_path="$project_dir/$new_name"
+                migrate_file "$old_path" "$new_path" "$backup_dir"
+            fi
+        done
+    fi
 
     # Migrate date-suffixed compliance files (e.g., principles-compliance-assessment-YYYY-MM-DD.md)
     for file in "$project_dir"/principles-compliance-assessment-*.md; do
@@ -298,12 +378,14 @@ migrate_project() {
     done
 
     # Also check for old wardley-maps location at root level
+    local ward_count=0
+    if [[ -d "$project_dir/wardley-maps" ]]; then
+        ward_count=$(find "$project_dir/wardley-maps" -maxdepth 1 -name "ARC-*.md" 2>/dev/null | wc -l)
+    fi
     for file in "$project_dir"/*-wardley.md "$project_dir"/*-map.md; do
         if [[ -f "$file" ]]; then
-            # Move to wardley-maps subdirectory with new naming
-            local count=$(ls "$project_dir/wardley-maps"/ARC-*.md 2>/dev/null | wc -l)
-            count=$((count + 1))
-            local seq_num=$(printf "%03d" $count)
+            ward_count=$((ward_count + 1))
+            local seq_num=$(printf "%03d" $ward_count)
             local new_name="ARC-${project_id}-WARD-${seq_num}-v1.0.md"
 
             if [[ "$DRY_RUN" == "false" ]]; then
@@ -314,17 +396,67 @@ migrate_project() {
     done
 
     # Check for old diagram files at root
+    local diag_count=0
+    if [[ -d "$project_dir/diagrams" ]]; then
+        diag_count=$(find "$project_dir/diagrams" -maxdepth 1 -name "ARC-*.md" 2>/dev/null | wc -l)
+    fi
     for file in "$project_dir"/*-diagram.md "$project_dir"/diagram-*.md; do
         if [[ -f "$file" ]]; then
-            local count=$(ls "$project_dir/diagrams"/ARC-*.md 2>/dev/null | wc -l)
-            count=$((count + 1))
-            local seq_num=$(printf "%03d" $count)
+            diag_count=$((diag_count + 1))
+            local seq_num=$(printf "%03d" $diag_count)
             local new_name="ARC-${project_id}-DIAG-${seq_num}-v1.0.md"
 
             if [[ "$DRY_RUN" == "false" ]]; then
                 mkdir -p "$project_dir/diagrams"
             fi
             migrate_file "$file" "$project_dir/diagrams/$new_name" "$backup_dir"
+        fi
+    done
+
+    # Check for ADR files at root level (should be in decisions/)
+    local adr_count=0
+    if [[ -d "$project_dir/decisions" ]]; then
+        adr_count=$(find "$project_dir/decisions" -maxdepth 1 -name "ARC-*.md" 2>/dev/null | wc -l)
+    fi
+    for file in "$project_dir"/adr-*.md "$project_dir"/ADR-*.md; do
+        if [[ -f "$file" ]]; then
+            adr_count=$((adr_count + 1))
+            local seq_num=$(printf "%03d" $adr_count)
+            local new_name="ARC-${project_id}-ADR-${seq_num}-v1.0.md"
+
+            if [[ "$DRY_RUN" == "false" ]]; then
+                mkdir -p "$project_dir/decisions"
+            fi
+            migrate_file "$file" "$project_dir/decisions/$new_name" "$backup_dir"
+        fi
+    done
+
+    # Check for research files at root level (should be in research/)
+    local rsch_count=0
+    if [[ -d "$project_dir/research" ]]; then
+        rsch_count=$(find "$project_dir/research" -maxdepth 1 -name "ARC-*.md" 2>/dev/null | wc -l)
+    fi
+    for file in "$project_dir"/research-*.md "$project_dir"/research.md; do
+        if [[ -f "$file" ]]; then
+            rsch_count=$((rsch_count + 1))
+            local seq_num=$(printf "%03d" $rsch_count)
+            local new_name="ARC-${project_id}-RSCH-${seq_num}-v1.0.md"
+
+            if [[ "$DRY_RUN" == "false" ]]; then
+                mkdir -p "$project_dir/research"
+            fi
+            migrate_file "$file" "$project_dir/research/$new_name" "$backup_dir"
+        fi
+    done
+
+    # Check for version-suffixed traceability files (e.g., traceability-matrix-v4.md)
+    for file in "$project_dir"/traceability-matrix-v*.md; do
+        if [[ -f "$file" ]]; then
+            local new_name="ARC-${project_id}-TRAC-v1.0.md"
+            local new_path="$project_dir/$new_name"
+            if [[ ! -f "$new_path" || "$FORCE" == "true" ]]; then
+                migrate_file "$file" "$new_path" "$backup_dir"
+            fi
         fi
     done
 
@@ -339,8 +471,48 @@ migrate_project() {
     log_success "Migration complete for: $(basename "$project_dir")"
 }
 
+# Migrate global principles from legacy locations
+migrate_global_principles() {
+    local global_dir="$REPO_ROOT/projects/000-global"
+    local backup_dir="$global_dir/.backup/$(date +%Y%m%d_%H%M%S)"
+
+    # Check legacy locations for principles
+    local legacy_locations=(
+        "$REPO_ROOT/.arckit/memory/architecture-principles.md"
+        "$REPO_ROOT/.arckit/memory/principles.md"
+    )
+
+    for legacy_path in "${legacy_locations[@]}"; do
+        if [[ -f "$legacy_path" ]]; then
+            local new_name="ARC-000-PRIN-v1.0.md"
+            local new_path="$global_dir/$new_name"
+
+            if [[ -f "$new_path" && "$FORCE" == "false" ]]; then
+                log_info "Principles already exist at: $new_path"
+                return 0
+            fi
+
+            log_info "Found principles at legacy location: $legacy_path"
+
+            if [[ "$DRY_RUN" == "false" ]]; then
+                mkdir -p "$global_dir"
+            fi
+
+            migrate_file "$legacy_path" "$new_path" "$backup_dir"
+            return 0
+        fi
+    done
+}
+
 # Main execution
-if [[ "$MIGRATE_ALL" == "true" ]]; then
+# Always try to migrate global principles first
+migrate_global_principles
+
+if [[ "$MIGRATE_GLOBAL" == "true" ]]; then
+    # Migrate only the global directory (will be created if it doesn't exist)
+    GLOBAL_DIR="$REPO_ROOT/projects/000-global"
+    migrate_project "$GLOBAL_DIR"
+elif [[ "$MIGRATE_ALL" == "true" ]]; then
     PROJECTS_DIR="$REPO_ROOT/projects"
 
     if [[ ! -d "$PROJECTS_DIR" ]]; then

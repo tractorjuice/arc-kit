@@ -321,13 +321,19 @@ style wardley
 
 **Component Dependencies**:
 
-```
-{User_Need}
-  └─> {Capability_1}
-      ├─> {Component_A} (Genesis - Build)
-      ├─> {Component_B} (Custom - Build)
-      └─> {Component_C} (Commodity - Buy)
-          └─> {Cloud_Provider} (Commodity - G-Cloud)
+```mermaid
+flowchart TD
+    UN[User Need] --> C1[Capability 1]
+    C1 --> CA[Component A<br/>Genesis - Build]
+    C1 --> CB[Component B<br/>Custom - Build]
+    C1 --> CC[Component C<br/>Commodity - Buy]
+    CC --> CP[Cloud Provider<br/>Commodity - G-Cloud]
+
+    style UN fill:#FFE4B5
+    style CA fill:#E8F5E9
+    style CB fill:#FFF3E0
+    style CC fill:#E3F2FD
+    style CP fill:#E3F2FD
 ```
 
 **Critical Path Analysis**:

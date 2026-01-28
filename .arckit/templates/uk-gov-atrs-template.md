@@ -243,8 +243,12 @@ This template follows the UK Government's Algorithmic Transparency Recording Sta
 [Describe where the tool fits in the overall process]
 
 **Process Diagram**:
-```
-[Input] → [Processing Step 1] → [Algorithmic Tool] → [Processing Step 2] → [Output/Decision]
+```mermaid
+flowchart LR
+    A[Input] --> B[Processing Step 1]
+    B --> C[Algorithmic Tool]
+    C --> D[Processing Step 2]
+    D --> E[Output/Decision]
 ```
 
 **Integration Points**:

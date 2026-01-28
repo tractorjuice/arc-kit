@@ -94,6 +94,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ## 🔧 Technical Guides
 
 - [Token Limits Solutions](TOKEN-LIMITS.md) - Handling large projects with AI token limits
+- [File Migration](guides/migration.md) - Migrate legacy filenames to Document ID convention
 - Document Control Standard - See [CLAUDE.md](../CLAUDE.md#document-control-standard) for the canonical specification
 
 ---

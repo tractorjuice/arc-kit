@@ -46,14 +46,17 @@ This Requirements Traceability Matrix (RTM) provides end-to-end traceability fro
 ### 1.2 Traceability Scope
 
 This matrix traces:
-```
-Business Requirements (BR)
-  ↓
-Functional Requirements (FR)
-  ↓
-System Components (Design)
-  ↓
-Test Cases (TC)
+
+```mermaid
+flowchart TD
+    BR[Business Requirements<br/>BR] --> FR[Functional Requirements<br/>FR]
+    FR --> SC[System Components<br/>Design]
+    SC --> TC[Test Cases<br/>TC]
+
+    style BR fill:#E3F2FD
+    style FR fill:#FFF3E0
+    style SC fill:#E8F5E9
+    style TC fill:#F3E5F5
 ```
 
 ### 1.3 Document References

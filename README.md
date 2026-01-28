@@ -82,7 +82,8 @@ Public demonstration repositories showcase complete ArcKit deliverables:
 - **Windows 11 Deployment** — [arckit-test-project-v3-windows11](https://github.com/tractorjuice/arckit-test-project-v3-windows11): Enterprise OS rollout with policy migration and security baselines.
 - **Patent Application System** — [arckit-test-project-v6-patent-system](https://github.com/tractorjuice/arckit-test-project-v6-patent-system): Intellectual property workflow automation using GOV.UK Pay and Notify.
 - **ONS Data Platform** — [arckit-test-project-v8-ons-data-platform](https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform): Official statistics analytics environment with Five Safes governance.
-- **Cabinet Office GenAI Platform** — [arckit-test-project-v8-cabinet-office-genai](https://github.com/tractorjuice/arckit-test-project-v8-cabinet-office-genai): Cross-government GenAI platform with responsible AI guardrails.
+- **Cabinet Office GenAI Platform** — [arckit-test-project-v9-cabinet-office-genai](https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai): Cross-government GenAI platform with responsible AI guardrails.
+- **Doctors Appointment System** — [arckit-test-project-v16-doctors-appointment](https://github.com/tractorjuice/arckit-test-project-v16-doctors-appointment): Online appointment booking system with NHS integration.
 
 ---
 
@@ -117,7 +118,7 @@ ArcKit includes dedicated commands for UK public sector delivery:
 - `/arckit.mod-secure` — Map MOD Secure by Design requirements (JSP 440, IAMM, clearance pathways).
 - `/arckit.jsp-936` — Deliver JSP 936 AI assurance packs for defence AI systems.
 
-See the demo repositories for end-to-end examples, especially `arckit-test-project-v7-nhs-appointment` (civilian services) and `arckit-test-project-v8-cabinet-office-genai` (AI governance).
+See the demo repositories for end-to-end examples, especially `arckit-test-project-v7-nhs-appointment` (civilian services) and `arckit-test-project-v9-cabinet-office-genai` (AI governance).
 
 ---
 
@@ -631,10 +632,12 @@ All 40 ArcKit commands with maturity status and example outputs from public test
 | v2 | [arckit-test-project-v2-hmrc-chatbot](https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot) | HMRC Tax Assistant Chatbot |
 | v3 | [arckit-test-project-v3-windows11](https://github.com/tractorjuice/arckit-test-project-v3-windows11) | Windows 11 Enterprise Deployment |
 | v6 | [arckit-test-project-v6-patent-system](https://github.com/tractorjuice/arckit-test-project-v6-patent-system) | IPO Patent Application System |
+| v7 | [arckit-test-project-v7-nhs-appointment](https://github.com/tractorjuice/arckit-test-project-v7-nhs-appointment) | NHS Appointment Booking |
 | v8 | [arckit-test-project-v8-ons-data-platform](https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform) | ONS Data Platform Modernisation |
 | v9 | [arckit-test-project-v9-cabinet-office-genai](https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai) | Cabinet Office GenAI Platform |
 | v10 | [arckit-test-project-v10-training-marketplace](https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace) | UK Government Training Marketplace |
 | v11 | [arckit-test-project-v11-national-highways-data](https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data) | National Highways Data Architecture |
+| v16 | [arckit-test-project-v16-doctors-appointment](https://github.com/tractorjuice/arckit-test-project-v16-doctors-appointment) | Doctors Online Appointment System |
 
 ### Foundation
 
@@ -740,7 +743,7 @@ ArcKit uses Wardley Maps to expose the strategic position of every component bef
 - Plot evolution from Genesis → Commodity to reveal when to build, buy, reuse, or retire capabilities.
 - Feed procurement, vendor evaluation, and design reviews with shared situational awareness.
 
-Maps are emitted in the Open Wardley Map format — paste them straight into [https://create.wardleymaps.ai](https://create.wardleymaps.ai) for a visual view. Full example outputs live in the public demos such as `arckit-test-project-v1-m365` (cloud migration strategy) and `arckit-test-project-v8-cabinet-office-genai` (cross-government GenAI platform).
+Maps are emitted in the Open Wardley Map format — paste them straight into [https://create.wardleymaps.ai](https://create.wardleymaps.ai) for a visual view. Full example outputs live in the public demos such as `arckit-test-project-v1-m365` (cloud migration strategy) and `arckit-test-project-v9-cabinet-office-genai` (cross-government GenAI platform).
 
 ---
 

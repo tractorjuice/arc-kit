@@ -212,29 +212,31 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
    - Key risks requiring immediate attention (top 3-5)
    - Recommended actions and decisions needed
 
-   **B. Risk Matrix Visualization** (5x5 grid):
+   **B. Risk Matrix Visualization** (using ASCII 5×5 matrix):
 
-   Create TWO matrices:
+   Create TWO 5×5 matrices showing Likelihood (rows) × Impact (columns):
 
    **Inherent Risk Matrix** (before controls):
    ```
-   LIKELIHOOD ↑
-       5 |     | R-3 | R-7 |     | R-1 |  ← Almost Certain
-       4 |     |     | R-5 | R-9 |     |
-       3 | R-6 |     | R-2 |     | R-4 |  ← Possible
-       2 |     | R-8 |     |     |     |
-       1 |     |     | R-10|     |     |  ← Rare
-         +---------------------------→
-           1     2     3     4     5
-                IMPACT →
+                                       IMPACT
+                 1-Minimal   2-Minor    3-Moderate   4-Major    5-Severe
+              ┌───────────┬───────────┬───────────┬───────────┬───────────┐
+   5-Almost   │           │           │   R-003   │   R-007   │   R-001   │
+   Certain    │    5      │    10     │    15     │    20     │    25     │
+              ├───────────┼───────────┼───────────┼───────────┼───────────┤
+   4-Likely   │           │           │           │   R-009   │   R-004   │
+              │    4      │    8      │    12     │    16     │    20     │
+   L          ├───────────┼───────────┼───────────┼───────────┼───────────┤
+   I 3-Possible│          │           │   R-002   │           │           │
+   K          │    3      │    6      │    9      │    12     │    15     │
+   ...        └───────────┴───────────┴───────────┴───────────┴───────────┘
+
+   Legend: Critical (20-25)  High (13-19)  Medium (6-12)  Low (1-5)
    ```
 
-   **Residual Risk Matrix** (after controls):
-   ```
-   [Similar 5x5 grid showing risk positions AFTER controls]
-   ```
+   **Residual Risk Matrix** (after controls): Same format showing new positions
 
-   Show movement: \"R-001 moved from Critical (25) to Medium (9) after controls\"
+   Show movement: \"R-001 moved from Critical (25) to Medium (6) after controls\"
 
    **C. Top 10 Risks** (by residual score):
 

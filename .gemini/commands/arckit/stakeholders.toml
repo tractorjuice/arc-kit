@@ -33,7 +33,8 @@ You are helping an enterprise architect or project manager understand stakeholde
    **Phase 1: Identify Stakeholders**
    - List all relevant internal stakeholders (executives, business units, technical teams, operations, compliance, security, finance)
    - List external stakeholders (regulators, customers, vendors, partners)
-   - Create a Power-Interest grid showing who needs what level of engagement
+   - Create a Power-Interest grid using **ASCII box diagram** showing who needs what level of engagement
+   - Include a table with stakeholder details (Power, Interest, Quadrant, Engagement Strategy)
 
    **Phase 2: Understand Drivers**
    For each key stakeholder, identify:

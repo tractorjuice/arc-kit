@@ -218,19 +218,30 @@
 
 ### B. Dependency Graph
 
-```
-Sprint 1 (Foundation)
-  ├─ Story-001: [Title]
-  │    ↓ (blocks)
-  │  Sprint 2: Story-[ID] (needs [dependency])
-  │
-  ├─ Task-DB-001: Database Setup
-  │    ↓ (blocks)
-  │  Sprint 2: [Stories needing database]
-  │
-  └─ Task-CI-001: CI/CD Pipeline
-       ↓ (blocks)
-     All future work (deploy mechanism required)
+```mermaid
+flowchart TD
+    subgraph S1[Sprint 1 - Foundation]
+        S001[Story-001: Title]
+        TDB[Task-DB-001: Database Setup]
+        TCI[Task-CI-001: CI/CD Pipeline]
+    end
+
+    subgraph S2[Sprint 2]
+        S002[Story-ID: Needs dependency]
+        SDB[Stories needing database]
+    end
+
+    subgraph Future[All Future Work]
+        FW[Deploy mechanism required]
+    end
+
+    S001 -->|blocks| S002
+    TDB -->|blocks| SDB
+    TCI -->|blocks| FW
+
+    style S1 fill:#E3F2FD
+    style S2 fill:#FFF3E0
+    style Future fill:#E8F5E9
 ```
 
 ---
@@ -249,18 +260,17 @@ Sprint 1 (Foundation)
 
 ### D. Story Points Distribution
 
+```mermaid
+xychart-beta
+    title "Story Points per Sprint"
+    x-axis [S1, S2, S3, S4, S5, S6, S7, S8]
+    y-axis "Story Points" 0 --> 25
+    bar [20, 20, 20, 20, 20, 20, 20, 20]
 ```
-Sprint 1:  ████████████████████ 20 points
-Sprint 2:  ████████████████████ 20 points
-Sprint 3:  ████████████████████ 20 points
-Sprint 4:  ████████████████████ 20 points
-Sprint 5:  ████████████████████ 20 points
-Sprint 6:  ████████████████████ 20 points
-Sprint 7:  ████████████████████ 20 points
-Sprint 8:  ████████████████████ 20 points
-Total: [N] points allocated / [N] points total
-Remaining: [N] points ([N] more sprints needed)
-```
+
+**Summary**:
+- Total: [N] points allocated / [N] points total
+- Remaining: [N] points ([N] more sprints needed)
 
 ---
 
