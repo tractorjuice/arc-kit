@@ -734,7 +734,7 @@ All 40 ArcKit commands with maturity status and example outputs from public test
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
-| `/arckit.pages` | Generate GitHub Pages documentation site with Mermaid diagram support | [v3](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/docs/index.html) [v7](https://github.com/tractorjuice/arckit-test-project-v7-nhs-appointment/blob/main/docs/index.html) [v9](https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/docs/index.html) [v10](https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace/blob/main/docs/index.html) [v11](https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data/blob/main/docs/index.html) | 🟠 Alpha |
+| `/arckit.pages` | Generate GitHub Pages documentation site with Mermaid diagram support | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/) [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/) [v7](https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/) | 🟠 Alpha |
 
 ---
 
