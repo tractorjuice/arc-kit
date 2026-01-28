@@ -64,13 +64,16 @@ REPO_ROOT="$(find_repo_root)"
 # Check prerequisites (unless --force is used)
 if [[ "$FORCE_CREATE" != "true" ]]; then
     ARCKIT_DIR="$(get_arckit_dir "$REPO_ROOT")"
-    MEMORY_DIR="$(get_memory_dir "$REPO_ROOT")"
-    PRINCIPLES_FILE="$MEMORY_DIR/architecture-principles.md"
+    GLOBAL_DIR="$(get_memory_dir "$REPO_ROOT")"
 
-    if [[ ! -f "$PRINCIPLES_FILE" ]]; then
-        log_error "Prerequisites not met: architecture-principles.md not found"
-        log_error "Before creating a project, you must define architecture principles"
+    # Look for principles file with new naming convention (ARC-000-PRIN-*.md)
+    PRINCIPLES_FILE=$(find "$GLOBAL_DIR" -name "ARC-000-PRIN-*.md" 2>/dev/null | head -1)
+
+    if [[ -z "$PRINCIPLES_FILE" || ! -f "$PRINCIPLES_FILE" ]]; then
+        log_error "Prerequisites not met: Architecture principles not found"
+        log_error "Expected: projects/000-global/ARC-000-PRIN-v*.md"
         log_error ""
+        log_error "Before creating a project, you must define architecture principles"
         log_error "Run: /arckit.principles"
         log_error ""
         log_error "Or use --force to skip this check (not recommended)"

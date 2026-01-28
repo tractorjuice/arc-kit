@@ -159,7 +159,7 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 ```
 
 **Prerequisites**:
-- Must have `templates/architecture-principles.md` file
+- Must have `projects/000-global/ARC-000-PRIN-*.md` file (architecture principles)
 - Use `--force` to skip this check
 
 **What It Creates**:
@@ -575,7 +575,7 @@ cd /path/to/your/arc-kit-project
 
 ### "Prerequisites not met" Error
 
-**Problem**: create-project.sh requires architecture-principles.md
+**Problem**: create-project.sh requires architecture principles in `projects/000-global/ARC-000-PRIN-*.md`
 
 **Solution**:
 ```bash

@@ -1495,12 +1495,12 @@ After using all commands, your project structure will look like:
 ```
 my-arckit-project/
 ├── .arckit/
-│   ├── memory/
-│   │   └── ARC-000-PRIN-v1.0.md      ← Global principles
 │   ├── templates/                           ← Command templates
 │   └── scripts/                             ← Automation scripts
 │
 ├── projects/
+│   ├── 000-global/
+│   │   └── ARC-000-PRIN-v1.0.md      ← Global principles
 │   └── 001-payment-gateway/
 │       ├── stakeholder-drivers.md          ← /arckit.stakeholders
 │       ├── risk-register.md                ← /arckit.risk (Orange Book)

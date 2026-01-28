@@ -88,7 +88,7 @@ Creates: `projects/001-project-name/project-plan.md`
 ```
 
 **Outputs:**
-- `projects/000-global/architecture-principles.md`
+- `projects/000-global/ARC-000-PRIN-v1.0.md`
 - `projects/001-project-name/stakeholder-drivers.md`
 - `projects/001-project-name/risk-register.md`
 - `projects/001-project-name/sobc.md`
@@ -272,8 +272,6 @@ your-project/
 │           ├── traceability.toml
 │           └── wardley.toml
 ├── .arckit/
-│   ├── memory/
-│   │   └── architecture-principles.md
 │   ├── scripts/
 │   │   └── bash/
 │   │       └── create-project.sh
@@ -284,6 +282,8 @@ your-project/
 │       ├── sow-template.md
 │       └── (other templates)
 └── projects/
+    ├── 000-global/
+    │   └── ARC-000-PRIN-v1.0.md
     └── 001-project-name/
         ├── project-plan.md
         ├── stakeholder-drivers.md

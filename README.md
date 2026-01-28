@@ -570,12 +570,12 @@ ArcKit creates this structure:
 ```
 payment-modernization/
 ├── .arckit/
-│   ├── memory/
-│   │   └── ARC-000-PRIN-v1.0.md          # Global principles
 │   ├── scripts/
 │   │   └── bash/                          # Automation scripts
 │   └── templates/                         # Document templates
 ├── projects/
+│   ├── 000-global/
+│   │   └── ARC-000-PRIN-v1.0.md          # Global principles
 │   └── 001-payment-gateway/
 │       ├── ARC-001-STKE-v1.0.md           # Stakeholder analysis
 │       ├── ARC-001-RISK-v1.0.md           # Risk register (Orange Book)

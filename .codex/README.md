@@ -147,7 +147,7 @@ Creates: `projects/001-project-name/project-plan.md`
 /prompts:arckit.principles Create cloud-first principles for our organization
 ```
 
-Creates: `projects/000-global/architecture-principles.md`
+Creates: `projects/000-global/ARC-000-PRIN-v1.0.md`
 
 ### 2. Stakeholder Analysis (Before Requirements!)
 
@@ -402,8 +402,6 @@ your-project/
 │       ├── arckit.servicenow.md
 │       └── arckit.story.md
 ├── .arckit/
-│   ├── memory/
-│   │   └── architecture-principles.md
 │   ├── scripts/
 │   │   └── bash/
 │   │       └── create-project.sh
@@ -414,6 +412,8 @@ your-project/
 │       ├── sow-template.md
 │       └── (other templates)
 └── projects/
+    ├── 000-global/
+    │   └── ARC-000-PRIN-v1.0.md
     └── 001-project-name/
         ├── stakeholder-drivers.md
         ├── risk-register.md
