@@ -94,7 +94,7 @@ $ARGUMENTS
 ```
 project/
 ├── .arckit/
-│   ├── memory/           # Global principles (architecture-principles.md)
+│   ├── memory/           # Global principles (ARC-000-PRIN-v1.0.md)
 │   ├── templates/        # Document templates
 │   └── scripts/bash/     # create-project.sh, generate-document-id.sh, etc.
 ├── .claude/commands/     # Slash commands (or .codex/ or .gemini/, or all with --all-ai)
@@ -105,10 +105,12 @@ project/
 ├── WORKFLOW-DIAGRAMS.md  # Visual workflows (unless --minimal)
 └── projects/
     └── 001-project-name/ # Numbered project directories
-        ├── requirements.md
-        ├── stakeholder-drivers.md
-        ├── risk-register.md
-        ├── sobc.md
+        ├── ARC-001-REQ-v1.0.md      # Requirements
+        ├── ARC-001-STKE-v1.0.md     # Stakeholder analysis
+        ├── ARC-001-RISK-v1.0.md     # Risk register
+        ├── ARC-001-SOBC-v1.0.md     # Business case
+        ├── ARC-001-ADR-001-v1.0.md  # ADRs (multi-instance)
+        ├── ARC-001-DIAG-001-v1.0.md # Diagrams (multi-instance)
         └── vendors/
 ```
 
@@ -122,7 +124,10 @@ project/
 ### Helper Scripts
 
 **`scripts/bash/create-project.sh`**: Creates numbered project directories (001-*, 002-*), returns JSON with path
-**`scripts/bash/generate-document-id.sh`**: Generates doc IDs (e.g., ARC-001-REQ-v1.0)
+**`scripts/bash/generate-document-id.sh`**: Generates doc IDs (e.g., ARC-001-REQ-v1.0) and filenames
+  - `--filename` flag returns the filename with `.md` extension
+  - `--next-num` flag returns the next sequential number for multi-instance types (ADR, DIAG, WARD, DMC)
+**`scripts/bash/migrate-filenames.sh`**: Migrates existing project files to new naming convention
 **`scripts/converter.py`**: Converts Claude commands (.md) to Gemini format (.toml)
 
 ## Adding a New Slash Command
@@ -188,7 +193,7 @@ Every template must start with a **Document Control** table followed by **Revisi
 
 ## Test Repositories
 
-ArcKit maintains 16 test repos on GitHub (pattern: `arckit-test-project-v*`):
+ArcKit maintains 17 test repos on GitHub (pattern: `arckit-test-project-v*`):
 
 | Version | Name | Type | Description |
 |---------|------|------|-------------|
@@ -208,6 +213,7 @@ ArcKit maintains 16 test repos on GitHub (pattern: `arckit-test-project-v*`):
 | v13 | plymouth-research | Private | Plymouth restaurant web scraping |
 | v14 | scottish-courts | Private | Scottish Courts and Tribunals Service GenAI strategy |
 | v15 | ipad-framework | Private | Investment Promotion Agency Data Framework |
+| v16 | doctors-appointment | Public | Doctors Online Appointment System |
 
 **Sync test repos after changes**:
 ```bash
@@ -216,7 +222,7 @@ TOKEN="<github-token>"
 for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
             v6-patent-system v7-nhs-appointment v8-ons-data-platform v9-cabinet-office-genai \
             v10-training-marketplace v11-national-highways-data v12-honky-tonks v13-plymouth-research \
-            v14-scottish-courts v15-ipad-framework; do
+            v14-scottish-courts v15-ipad-framework v16-doctors-appointment; do
     git clone "https://x-access-token:${TOKEN}@github.com/tractorjuice/arckit-test-project-$repo.git" /tmp/$repo
     # Sync commands and templates
     rsync -av --delete .claude/commands/ /tmp/$repo/.claude/commands/
