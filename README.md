@@ -727,7 +727,7 @@ All 40 ArcKit commands with maturity status and example outputs from public test
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
-| `/arckit.mod-secure` | Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance | [v3/001](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/mod-secure-by-design.md) [v3/006](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/006-large-format-printer/mod-secure-by-design.md) | 🟣 Experimental |
+| `/arckit.mod-secure` | Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance | [v3/001](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/ARC-001-SECD-MOD-v1.0.md) [v3/006](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/006-large-format-printer/ARC-006-SECD-MOD-v1.0.md) | 🟣 Experimental |
 | `/arckit.jsp-936` | Generate MOD JSP 936 AI assurance documentation for defence AI/ML systems | — | 🟣 Experimental |
 
 ### Documentation & Publishing
