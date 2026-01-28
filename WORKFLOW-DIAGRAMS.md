@@ -60,7 +60,8 @@ graph TD
     U1 --> U1a[finops]
     U1a --> U2[operationalize]
     U2 --> V[traceability]
-    V --> W[analyze]
+    V --> V1[principles-compliance]
+    V1 --> W[analyze]
 
     %% Tier 11: Reporting
     W --> X[story]
@@ -87,8 +88,10 @@ graph TD
     style T fill:#FFA500
     style U fill:#9370DB
     style U1 fill:#9370DB
+    style U1a fill:#9370DB
     style U2 fill:#9370DB
     style V fill:#9370DB
+    style V1 fill:#9370DB
     style W fill:#9370DB
     style X fill:#FFD700
 ```
@@ -147,15 +150,16 @@ graph TD
     W1 --> W1a[finops]
     W1a --> W2[operationalize]
     W2 --> X[traceability]
-    X --> Y[analyze]
 
     %% Tier 10: UK Gov Compliance
+    X --> X1[tcop]
+    X1 --> X2[secure]
+    X2 --> X3[principles-compliance]
+    X3 --> Y[analyze]
     Y --> Z[service-assessment]
-    Z --> Z1[tcop]
-    Z1 --> Z2[secure]
 
     %% Tier 11: Reporting
-    Z2 --> AA[story]
+    Z --> AA[story]
 
     style A fill:#87CEEB
     style B fill:#87CEEB
@@ -181,12 +185,14 @@ graph TD
     style V fill:#90EE90
     style W fill:#9370DB
     style W1 fill:#9370DB
+    style W1a fill:#9370DB
     style W2 fill:#9370DB
     style X fill:#9370DB
+    style X1 fill:#FF6B6B
+    style X2 fill:#FF6B6B
+    style X3 fill:#9370DB
     style Y fill:#9370DB
     style Z fill:#FF6B6B
-    style Z1 fill:#FF6B6B
-    style Z2 fill:#FF6B6B
     style AA fill:#FFD700
 ```
 
@@ -245,17 +251,18 @@ graph TD
     V1a --> V2[mlops]
     V2 --> V3[operationalize]
     V3 --> X[traceability]
-    X --> Y[analyze]
 
     %% Tier 10: UK Gov + AI Compliance
+    X --> X1[tcop]
+    X1 --> X2[ai-playbook]
+    X2 --> X3[atrs]
+    X3 --> X4[secure]
+    X4 --> X5[principles-compliance]
+    X5 --> Y[analyze]
     Y --> Z[service-assessment]
-    Z --> Z1[tcop]
-    Z1 --> Z2[ai-playbook]
-    Z2 --> Z3[atrs]
-    Z3 --> Z4[secure]
 
     %% Tier 11: Reporting
-    Z4 --> AA[story]
+    Z --> AA[story]
 
     style A fill:#87CEEB
     style B fill:#87CEEB
@@ -280,16 +287,18 @@ graph TD
     style U fill:#FFA500
     style V fill:#9370DB
     style V1 fill:#9370DB
+    style V1a fill:#9370DB
     style V2 fill:#9370DB
     style V3 fill:#9370DB
     style W fill:#90EE90
     style X fill:#9370DB
+    style X1 fill:#FF6B6B
+    style X2 fill:#FF6B6B
+    style X3 fill:#FF6B6B
+    style X4 fill:#FF6B6B
+    style X5 fill:#9370DB
     style Y fill:#9370DB
     style Z fill:#FF6B6B
-    style Z1 fill:#FF6B6B
-    style Z2 fill:#FF6B6B
-    style Z3 fill:#FF6B6B
-    style Z4 fill:#FF6B6B
     style AA fill:#FFD700
 ```
 
@@ -351,15 +360,16 @@ graph TD
     V1 --> V1a[finops]
     V1a --> V2[operationalize]
     V2 --> W[traceability]
-    W --> X[analyze]
 
     %% Tier 10: MOD Compliance
+    W --> W1[tcop]
+    W1 --> W2[mod-secure]
+    W2 --> W3[principles-compliance]
+    W3 --> X[analyze]
     X --> Y[service-assessment]
-    Y --> Y1[tcop]
-    Y1 --> Y2[mod-secure]
 
     %% Tier 11: Reporting
-    Y2 --> Z[story]
+    Y --> Z[story]
 
     style A fill:#87CEEB
     style B fill:#87CEEB
@@ -384,12 +394,14 @@ graph TD
     style U fill:#90EE90
     style V fill:#9370DB
     style V1 fill:#9370DB
+    style V1a fill:#9370DB
     style V2 fill:#9370DB
     style W fill:#9370DB
+    style W1 fill:#FF6B6B
+    style W2 fill:#FF6B6B
+    style W3 fill:#9370DB
     style X fill:#9370DB
     style Y fill:#FF6B6B
-    style Y1 fill:#FF6B6B
-    style Y2 fill:#FF6B6B
     style Z fill:#FFD700
 ```
 
@@ -452,17 +464,17 @@ graph TD
     W1a --> W2[mlops]
     W2 --> W3[operationalize]
     W3 --> X[traceability]
-    X --> Y[analyze]
 
     %% Tier 10: MOD + AI Compliance
+    X --> X1[tcop]
+    X1 --> X2[mod-secure]
+    X2 --> X3[jsp-936]
+    X3 --> X4[principles-compliance]
+    X4 --> Y[analyze]
     Y --> Z[service-assessment]
-    Z --> Z1[tcop]
-    Z1 --> Z2[mod-secure]
-    Z2 --> Z3[jsp-936]
-    Z3 --> Z4[secure]
 
     %% Tier 11: Reporting
-    Z4 --> AA[story]
+    Z --> AA[story]
 
     style A fill:#87CEEB
     style B fill:#87CEEB
@@ -487,15 +499,16 @@ graph TD
     style V fill:#90EE90
     style W fill:#9370DB
     style W1 fill:#9370DB
+    style W1a fill:#9370DB
     style W2 fill:#9370DB
     style W3 fill:#9370DB
     style X fill:#9370DB
+    style X1 fill:#FF6B6B
+    style X2 fill:#FF6B6B
+    style X3 fill:#FF6B6B
+    style X4 fill:#9370DB
     style Y fill:#9370DB
     style Z fill:#FF6B6B
-    style Z1 fill:#FF6B6B
-    style Z2 fill:#FF6B6B
-    style Z3 fill:#FF6B6B
-    style Z4 fill:#FF6B6B
     style AA fill:#FFD700
 ```
 
@@ -527,12 +540,15 @@ graph TD
 | 1 | Strategic Context | stakeholders, risk |
 | 2 | Business Justification | sobc |
 | 3 | Requirements | requirements |
-| 4 | Detailed Design | data-model, research, wardley |
+| 3.5 | Platform Strategy | platform-design |
+| 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, wardley, roadmap, diagram |
 | 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
-| 6 | Design Reviews | hld-review, dld-review |
+| 6 | Design Reviews | hld-review, dld-review, adr |
 | 7 | Implementation | backlog |
-| 8-9 | Operations & Quality | servicenow, devops, finops, mlops (AI projects), operationalize, traceability, analyze |
+| 8-9 | Operations & Quality | servicenow, devops, finops, mlops (AI projects), operationalize, traceability, analyze, principles-compliance |
 | 10 | Compliance | service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
+| 11 | Reporting | story |
+| 12 | Publishing | pages |
 
 ---
 
@@ -545,7 +561,7 @@ gantt
     title UK Government AI Project Timeline (Typical 12-month project)
     dateFormat YYYY-MM-DD
     section Discovery (8 weeks)
-    plan                    :a1, 2025-01-01, 1w
+    plan                    :a1, 2026-01-01, 1w
     principles              :a2, after a1, 1w
     stakeholders            :a3, after a2, 2w
     risk                    :a4, after a3, 2w
@@ -562,13 +578,18 @@ gantt
     dld-review              :c2, after c1, 2w
     backlog                 :c3, after c2, 1w
     Sprint 1-8              :c4, after c3, 16w
-    section Live Prep (12 weeks)
-    servicenow              :d1, after c4, 2w
-    traceability            :d2, after d1, 2w
-    analyze                 :d3, after d2, 2w
-    service-assessment      :d4, after d3, 2w
+    section Live Prep (14 weeks)
+    servicenow              :d1, after c4, 1w
+    devops                  :d1a, after d1, 1w
+    finops                  :d1b, after d1a, 1w
+    mlops                   :d1c, after d1b, 1w
+    operationalize          :d1d, after d1c, 1w
+    traceability            :d2, after d1d, 1w
+    analyze                 :d3, after d2, 1w
+    principles-compliance   :d3a, after d3, 1w
+    service-assessment      :d4, after d3a, 2w
     tcop                    :d5, after d4, 1w
-    ai-playbook             :d6, after d5, 2w
+    ai-playbook             :d6, after d5, 1w
     atrs                    :d7, after d6, 1w
     secure                  :d8, after d7, 1w
     section Live
@@ -645,14 +666,16 @@ For auditing existing projects:
 
 ```mermaid
 graph LR
-    A[analyze] --> B[service-assessment]
-    B --> C[tcop]
-    C --> D[secure]
+    A[tcop] --> B[secure]
+    B --> C[principles-compliance]
+    C --> D[analyze]
+    D --> E[service-assessment]
 
-    style A fill:#9370DB
+    style A fill:#FF6B6B
     style B fill:#FF6B6B
-    style C fill:#FF6B6B
-    style D fill:#FF6B6B
+    style C fill:#9370DB
+    style D fill:#9370DB
+    style E fill:#FF6B6B
 ```
 
 **Duration**: 2-4 weeks
@@ -662,7 +685,13 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 0.9.2
-- **Document Date**: 2026-01-09
+- **ArcKit Version**: 0.2.0
+- **Document Date**: 2026-01-28
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
-- **Key Changes**: Added devops, finops, mlops, operationalize commands to Operations & Quality tier (Tier 8-9)
+- **Commands Documented**: 40
+- **Key Changes**:
+  - Added missing style definitions for finops nodes in all workflow diagrams
+  - Updated Tier Groupings table to include all 40 commands across 13 tiers
+  - Added principles-compliance to Operations & Quality tier
+  - Updated Gantt chart to include devops, finops, mlops, operationalize, principles-compliance
+  - Updated date references from 2025 to 2026

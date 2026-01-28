@@ -17,46 +17,50 @@ This matrix shows which commands depend on outputs from other commands.
 
 ## Dependency Structure Matrix
 
-| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | data-mesh-contract | platform-design | dpia | research | wardley | roadmap | adr | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | traceability | analyze | principles-compliance | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story | pages |
-|------------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
-| **plan** | - | R | R | R | O | O |  |  |  |  |  | O | R |  |  | O | O |  |  | R |  |  |  |  |  | R |  | M | O |  |  |  |  |  | R | R |
-| **principles** |  | - | M | R | R | R |  |  | M | R |  |  | M | M |  | M | R |  |  | M | M |  |  |  |  | R | M |  | M |  |  | M | M |  |  | R |
-| **stakeholders** |  | O | - | M | M | M | R | O | R | R | O |  | M | O | O | R |  |  |  |  |  | R |  |  |  | R | R | R | R |  |  |  |  |  | R | R |
-| **risk** |  |  |  | - | M | R |  |  | O | R |  |  | R | O |  |  |  |  |  | R | R | R |  |  |  | R | R | R |  | R |  | R | R | M | R | R |
-| **sobc** |  |  | O | O | - | M | O |  |  |  |  |  | R |  |  |  |  |  |  |  |  | O |  |  |  | R |  | R | R |  |  |  |  |  | R | R |
-| **requirements** |  |  |  |  |  | - | M | M | M | M | M | M | M | M | M | M | M | R | M | M | M | M | M | M | M | R | R | M | M | M | M | M | M | M | R | R |
-| **data-model** |  |  |  |  |  |  | - | M | O | M | R |  |  |  | O |  |  |  |  |  |  |  | R | R | R | R | R | R |  | R |  |  |  |  |  | R |
-| **data-mesh-contract** |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
-| **platform-design** |  |  |  |  |  |  | O | R | - | O | O | R |  |  |  |  |  |  |  |  |  |  | R |  |  |  | R |  |  |  |  |  |  |  |  | R |
-| **dpia** |  |  |  |  |  |  |  |  |  | - |  |  | O |  | R |  |  |  | O |  |  |  | O |  | O | R | R | R |  | R | R | R | R |  | R | R |
-| **research** |  |  |  |  |  |  |  |  |  |  | - | R |  |  | R |  | R | O | R |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  | R |
-| **wardley** |  |  |  |  |  |  |  |  | R |  | O | - | R |  |  |  |  |  |  |  |  |  | O |  |  |  |  | R |  |  |  |  |  |  |  | R |
-| **roadmap** |  |  |  |  |  |  |  |  | O |  |  | O | - |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
-| **adr** |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
-| **sow** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  | O |  | R |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |
-| **dos** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
-| **gcloud-search** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | M |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
-| **gcloud-clarify** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
-| **evaluate** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |
-| **hld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  | - | M | M |  |  | M |  | R |  |  |  |  |  |  |  | R | R |
-| **dld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  | - | R |  |  | M |  | R |  |  |  |  |  |  |  | R | R |
-| **backlog** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
-| **diagram** |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  | R | R |  | - | M |  | R |  | R |  |  |  | O | O |  |  | R |
-| **servicenow** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | O |  |  |  |  |  |  |  |  |  |  | R |
-| **traceability** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | - | R | R |  |  |  |  |  |  |  | R | R |
-| **analyze** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | O | R | O |  |  |  |  |  | O | R |
-| **principles-compliance** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  | R |
-| **service-assessment** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | - |  |  |  |  |  |  | R | R |
-| **tcop** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R | R | - |  |  |  |  |  |  | R |
-| **ai-playbook** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | R |  | - | R |  |  | R |  | R |
-| **atrs** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  | - |  |  | R |  | R |
-| **secure** |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | R |  | O | O | - | R | O | R | R |
-| **mod-secure** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | O |  |  |  |  | - | R |  | R |
-| **jsp-936** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  | - |  | R |
-| **story** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  |  | - | R |
-| **pages** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |
-| **HLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | M | O |  |  | R | M | O |  | R |  |  |  |  |  |  |  | R |
-| **DLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | M | M |  |  | M |  |  | R |  |  |  |  |  |  |  | R |
+| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | data-mesh-contract | platform-design | dpia | research | wardley | roadmap | adr | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | devops | mlops | finops | operationalize | traceability | analyze | principles-compliance | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story | pages |
+|------------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
+| **plan** | - | R | R | R | O | O |  |  |  |  |  | O | R |  |  | O | O |  |  | R |  |  |  |  |  |  |  |  |  | R |  | M | O |  |  |  |  |  | R | R |
+| **principles** |  | - | M | R | R | R |  |  | M | R |  |  | M | M |  | M | R |  |  | M | M |  |  |  | R |  | R |  |  | R | M |  | M |  |  | M | M |  |  | R |
+| **stakeholders** |  | O | - | M | M | M | R | O | R | R | O |  | M | O | O | R |  |  |  |  |  | R |  |  |  |  |  |  |  | R | R | R | R |  |  |  |  |  | R | R |
+| **risk** |  |  |  | - | M | R |  |  | O | R |  |  | R | O |  |  |  |  |  | R | R | R |  |  |  |  |  | R |  | R | R | R |  | R |  | R | R | M | R | R |
+| **sobc** |  |  | O | O | - | M | O |  |  |  |  |  | R |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  | R |  | R | R |  |  |  |  |  | R | R |
+| **requirements** |  |  |  |  |  | - | M | M | M | M | M | M | M | M | M | M | M | R | M | M | M | M | M | M | M | M | M | M | M | R | R | M | M | M | M | M | M | M | R | R |
+| **data-model** |  |  |  |  |  |  | - | M | O | M | R |  |  |  | O |  |  |  |  |  |  |  | R | R |  | R |  |  | R | R | R | R |  | R |  |  |  |  |  | R |
+| **data-mesh-contract** |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
+| **platform-design** |  |  |  |  |  |  | O | R | - | O | O | R |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  | R |
+| **dpia** |  |  |  |  |  |  |  |  |  | - |  |  | O |  | R |  |  |  | O |  |  |  | O |  |  |  |  |  | O | R | R | R |  | R | R | R | R |  | R | R |
+| **research** |  |  |  |  |  |  |  |  |  |  | - | R |  |  | R |  | R | O | R |  |  |  |  |  | R | R |  |  |  |  |  |  |  | O |  |  |  |  |  | R |
+| **wardley** |  |  |  |  |  |  |  |  | R |  | O | - | R |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |
+| **roadmap** |  |  |  |  |  |  |  |  | O |  |  | O | - |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
+| **adr** |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
+| **sow** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  | O |  | R |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |
+| **dos** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
+| **gcloud-search** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | M |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
+| **gcloud-clarify** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
+| **evaluate** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |
+| **hld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  | - | M | M |  |  |  |  |  |  | M |  | R |  |  |  |  |  |  |  | R | R |
+| **dld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  | - | R |  |  |  |  |  |  | M |  | R |  |  |  |  |  |  |  | R | R |
+| **backlog** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
+| **diagram** |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  | R | R |  | - | M | R |  | R | R |  | R |  | R |  |  |  | O | O |  |  | R |
+| **servicenow** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  | R | O |  |  |  |  |  |  |  |  |  |  | R |
+| **devops** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  | R |  |  |  |  |  |  |  |  |  |  |  | R | R |
+| **mlops** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
+| **finops** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  | R | R |
+| **operationalize** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  | R | R |
+| **traceability** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  | - | R | R |  |  |  |  |  |  |  | R | R |
+| **analyze** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | O | R | O |  |  |  |  |  | O | R |
+| **principles-compliance** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  | R |
+| **service-assessment** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | - |  |  |  |  |  |  | R | R |
+| **tcop** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R | R | - |  |  |  |  |  |  | R |
+| **ai-playbook** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  | O |  | R |  | - | R |  |  | R |  | R |
+| **atrs** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  | - |  |  | R |  | R |
+| **secure** |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | R |  | O | O | - | R | O | R | R |
+| **mod-secure** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | O |  |  |  |  | - | R |  | R |
+| **jsp-936** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  | - |  | R |
+| **story** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  |  | - | R |
+| **pages** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |
+| **HLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | M | O |  |  | R |  |  |  |  | M | O |  | R |  |  |  |  |  |  |  | R |
+| **DLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | M | M |  |  |  |  |  |  | M |  |  | R |  |  |  |  |  |  |  | R |
 
 ## Command Groups by Dependency Level
 
@@ -82,7 +86,7 @@ These commands can run first:
   - Can run earlier if stakeholders and principles exist (requirements/wardley are recommended for better auto-population)
 
 ### Tier 4: Detailed Design (Depends on Requirements)
-All these commands REQUIRE requirements.md:
+All these commands REQUIRE ARC-*-REQ-*.md:
 - **data-model** → Depends on: requirements (M), stakeholders (R), sobc (O)
 - **dpia** → Depends on: data-model (M), requirements (R), principles (R), stakeholders (R)
 - **research** → Depends on: requirements (M), stakeholders (R), data-model (R), platform-design (R)
@@ -90,7 +94,7 @@ All these commands REQUIRE requirements.md:
 - **diagram** → Depends on: requirements (M), platform-design (R)
 
 ### Tier 5: Procurement (Depends on Requirements)
-All procurement commands REQUIRE requirements.md:
+All procurement commands REQUIRE ARC-*-REQ-*.md:
 - **sow** → Depends on: requirements (M), research (R)
 - **dos** → Depends on: requirements (M), principles (M), stakeholders (R)
 - **gcloud-search** → Depends on: requirements (M), research (R), principles (R)
@@ -205,37 +209,37 @@ principles-compliance → analyze → service-assessment → story
 
 ### Commands That Are Frequently Consumed (High Fan-In)
 
-**requirements.md** - consumed by 23 commands:
-- platform-design (R), data-model (M), research (M), wardley (M), sow (M), dos (M), gcloud-search (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), diagram (M), servicenow (M), traceability (M), analyze (O), service-assessment (M), tcop (M), ai-playbook (O), atrs (O), secure (M), mod-secure (M), jsp-936 (M), gcloud-clarify (M - implicit)
+**ARC-*-REQ-*.md** - consumed by 27 commands:
+- platform-design (R), data-model (M), research (M), wardley (M), sow (M), dos (M), gcloud-search (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), diagram (M), servicenow (M), devops (M), mlops (M), finops (M), operationalize (M), traceability (M), analyze (O), service-assessment (M), tcop (M), ai-playbook (O), atrs (O), secure (M), mod-secure (M), jsp-936 (M), gcloud-clarify (M - implicit)
 
-**principles.md** - consumed by 15 commands:
-- platform-design (M), stakeholders (R), risk (R), sobc (R), requirements (R), dos (M), gcloud-search (R), evaluate (M), hld-review (M), dld-review (M), analyze (O), service-assessment (R), tcop (M), secure (M), mod-secure (M)
+**ARC-000-PRIN-v*.md** - consumed by 17 commands:
+- platform-design (M), stakeholders (R), risk (R), sobc (R), requirements (R), dos (M), gcloud-search (R), evaluate (M), hld-review (M), dld-review (M), devops (R), finops (R), analyze (O), service-assessment (R), tcop (M), secure (M), mod-secure (M)
 
-**stakeholders.md** - consumed by 10 commands:
+**ARC-*-STKE-*.md** - consumed by 10 commands:
 - platform-design (R), risk (R), sobc (M), requirements (R), data-model (R), research (R), dos (R), backlog (R), analyze (O), service-assessment (R)
 
 **HLD** (external document) - consumed by 7 commands:
 - dld-review (M), backlog (M), diagram (R), servicenow (R), traceability (M), hld-review (validates it), service-assessment (M)
   - Note: analyze reads HLD directly if available (O), not via hld-review
 
-**platform-design.md** - consumed by 6 commands:
+**ARC-*-PLAT-*.md** - consumed by 6 commands:
 - research (R), wardley (R), diagram (R), analyze (M), principles-compliance (R), service-assessment (R)
 
 ### Commands That Produce Critical Artifacts (High Fan-Out)
 
-**requirements** produces requirements.md → consumed by 23 commands (highest)
-**principles** produces principles.md → consumed by 15 commands
-**stakeholders** produces stakeholder-drivers.md → consumed by 10 commands
+**requirements** produces ARC-*-REQ-*.md → consumed by 23 commands (highest)
+**principles** produces ARC-000-PRIN-v*.md → consumed by 15 commands
+**stakeholders** produces ARC-*-STKE-*.md → consumed by 10 commands
 **HLD** (external) → consumed by 7 commands
-**risk** produces risk-register.md → consumed by 6 commands
-**platform-design** produces platform-design.md → consumed by 6 commands
+**risk** produces ARC-*-RISK-*.md → consumed by 6 commands
+**platform-design** produces ARC-*-PLAT-v*.md → consumed by 6 commands
 
 ---
 
 ## Design Notes
 
-1. **requirements.md is the central artifact** - Nearly all downstream commands depend on it
-2. **principles.md is the governance foundation** - All design reviews check against principles
+1. **ARC-*-REQ-*.md is the central artifact** - Nearly all downstream commands depend on it
+2. **ARC-000-PRIN-v*.md is the governance foundation** - All design reviews check against principles
 3. **Strategic order matters** - stakeholders → risk → sobc → requirements ensures business justification before technical work
 4. **Platform strategy bridges business and technical** - platform-design sits between requirements (business needs) and design (technical architecture), useful for ecosystem-based platforms
 5. **Quality gates can run iteratively** - analyze and service-assessment have optional dependencies, allowing them to run early (identifying gaps) or late (validating completeness)
@@ -246,12 +250,25 @@ principles-compliance → analyze → service-assessment → story
 
 ## Version
 
-- **ArcKit Version**: 0.11.0
-- **Matrix Date**: 2026-01-22 (Added pages command)
+- **ArcKit Version**: 0.2.0
+- **Matrix Date**: 2026-01-28 (Standardized filename patterns)
 - **Commands Documented**: 40
 - **Matrix Rows**: 42 (40 commands + 2 external documents)
 
 ## Changelog
+
+### 2026-01-28 - Added Missing Operations Commands to Matrix
+- **Fixed**: Added devops, mlops, finops, operationalize rows and columns to the matrix
+- **Updated**: ARC-*-REQ-*.md consumption count from 23 to 27 commands
+- **Updated**: ARC-000-PRIN-v*.md consumption count from 15 to 17 commands
+- **Note**: These commands were documented in Tier 8 but missing from the actual DSM table
+
+### 2026-01-28 - Standardized Filename Patterns
+- **Updated**: All filename references now use Document ID pattern `ARC-{PROJECT_ID}-{TYPE}-v*.md`
+- **Updated**: Multi-instance types use `ARC-{PROJECT_ID}-{TYPE}-{NUM}-v*.md` (ADR, DIAG, WARD, DMC)
+- **Updated**: Subdirectory references use explicit patterns (`wardley-maps/ARC-*-WARD-*.md`, `diagrams/ARC-*-DIAG-*.md`)
+- **Updated**: Vendor submissions use versioned pattern (`hld-v*.md`, `dld-v*.md`)
+- **Version**: Bumped to 0.2.0
 
 ### 2026-01-22 - Added Pages Command
 - **Added**: `/arckit.pages` command (40th ArcKit command) for GitHub Pages documentation site generation with Mermaid diagram support
