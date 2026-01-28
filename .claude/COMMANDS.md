@@ -30,6 +30,10 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.hld-review` | Review High-Level Design | After vendor selection, before implementation |
 | `/arckit.dld-review` | Review Detailed Design | After HLD approval, before coding |
 | `/arckit.servicenow` | Generate ServiceNow service design | After architecture, bridge to operations |
+| `/arckit.devops` | Create DevOps strategy with CI/CD pipelines | After architecture, before implementation |
+| `/arckit.mlops` | Create MLOps strategy for AI/ML systems | After architecture, for ML system delivery |
+| `/arckit.finops` | Create FinOps strategy for cloud cost management | After architecture, for cost governance |
+| `/arckit.operationalize` | Create operational readiness pack | Before go-live, handover to support |
 | `/arckit.traceability` | Generate traceability matrix | Throughout project, especially before release |
 | `/arckit.analyze` | Comprehensive quality analysis | Periodically throughout project |
 | `/arckit.principles-compliance` | Assess compliance with architecture principles | At project gates (Discovery/Alpha/Beta/Live) and quarterly |
@@ -41,6 +45,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.mod-secure` | MOD Secure by Design (defence) | UK Ministry of Defence security assessment |
 | `/arckit.jsp-936` | MOD JSP 936 AI assurance | UK Ministry of Defence AI/ML systems |
 | `/arckit.story` | Produce executive-ready programme story | After key milestones, before governance reviews |
+| `/arckit.pages` | Generate GitHub Pages documentation site | Publish project documentation as website |
 
 ---
 
@@ -1561,8 +1566,8 @@ For issues or questions:
 
 ---
 
-**Last updated**: 2025-11-12
-**ArcKit Version**: 0.9.1
+**Last updated**: 2026-01-28
+**ArcKit Version**: 1.0.0
 
 ### 20. `/arckit.backlog` - Product Backlog Generation
 
@@ -2298,4 +2303,127 @@ Classification:
 
 ---
 
-*Last updated: 2025-11-12 | Version: 0.9.1*
+### 36. `/arckit.devops` - DevOps Strategy
+
+**Purpose**: Create comprehensive DevOps strategy with CI/CD pipelines, Infrastructure as Code, container orchestration, and developer experience.
+
+**Usage**:
+```
+/arckit.devops Create DevOps strategy for cloud-native microservices
+/arckit.devops Design CI/CD pipeline for NHS appointment booking system
+```
+
+**What it does**:
+- Designs CI/CD pipeline architecture (build, test, deploy stages)
+- Defines Infrastructure as Code (IaC) strategy (Terraform, CloudFormation, Pulumi)
+- Container orchestration approach (Kubernetes, ECS, AKS)
+- Developer experience improvements (local dev, debugging, documentation)
+- Security integration (SAST, DAST, dependency scanning)
+- Monitoring and observability strategy
+
+**Output**: `projects/NNN-project-name/ARC-NNN-DEVO-v1.0.md`
+
+**Next step**: Use with `/arckit.diagram` to visualize pipeline architecture, `/arckit.backlog` to create implementation stories.
+
+---
+
+### 37. `/arckit.mlops` - MLOps Strategy
+
+**Purpose**: Create MLOps strategy with model lifecycle management, training pipelines, model serving, monitoring, and governance.
+
+**Usage**:
+```
+/arckit.mlops Create MLOps strategy for fraud detection ML system
+/arckit.mlops Design model governance for GenAI platform
+```
+
+**What it does**:
+- Model lifecycle management (development, training, validation, deployment)
+- Feature store and data pipeline design
+- Model registry and versioning strategy
+- Model serving infrastructure (batch, real-time, edge)
+- Model monitoring and drift detection
+- ML governance and explainability requirements
+- Integration with `/arckit.jsp-936` for defence AI assurance
+
+**Output**: `projects/NNN-project-name/ARC-NNN-MLOP-v1.0.md`
+
+**Next step**: Use with `/arckit.ai-playbook` for responsible AI, `/arckit.jsp-936` for MOD AI systems.
+
+---
+
+### 38. `/arckit.finops` - FinOps Strategy
+
+**Purpose**: Create FinOps strategy with cloud cost management, optimization, governance, and forecasting.
+
+**Usage**:
+```
+/arckit.finops Create FinOps strategy for multi-cloud environment
+/arckit.finops Design cost governance for AWS migration
+```
+
+**What it does**:
+- Cloud cost visibility and allocation (tagging, showback, chargeback)
+- Cost optimization recommendations (rightsizing, reserved instances, spot)
+- Budget management and forecasting
+- FinOps team structure and RACI
+- Cost anomaly detection and alerting
+- Sustainability and carbon footprint tracking
+- Integration with procurement and vendor management
+
+**Output**: `projects/NNN-project-name/ARC-NNN-FINO-v1.0.md`
+
+**Next step**: Use with `/arckit.sobc` to inform business case costs, `/arckit.roadmap` for investment planning.
+
+---
+
+### 39. `/arckit.operationalize` - Operational Readiness
+
+**Purpose**: Create operational readiness pack with support model, runbooks, DR/BCP, on-call, and handover documentation.
+
+**Usage**:
+```
+/arckit.operationalize Create operational readiness pack for payment gateway
+/arckit.operationalize Design support model for live service handover
+```
+
+**What it does**:
+- Support model design (L1/L2/L3, escalation paths, SLAs)
+- Runbook library (incident response, failover, recovery)
+- DR/BCP procedures and RTO/RPO targets
+- On-call rota and escalation procedures
+- Knowledge transfer and handover checklist
+- Operational acceptance criteria
+- Integration with ServiceNow CMDB and ITSM
+
+**Output**: `projects/NNN-project-name/ARC-NNN-OPER-v1.0.md`
+
+**Next step**: Use with `/arckit.servicenow` for ITSM integration, `/arckit.service-assessment` for live readiness.
+
+---
+
+### 40. `/arckit.pages` - GitHub Pages Documentation Site
+
+**Purpose**: Generate GitHub Pages documentation site to display all project documents with Mermaid diagram support.
+
+**Usage**:
+```
+/arckit.pages Generate documentation site for project
+/arckit.pages Create GitHub Pages index with all artifacts
+```
+
+**What it does**:
+- Generates `docs/index.html` with GOV.UK Design System styling
+- Creates `docs/manifest.json` with all document metadata
+- Renders Mermaid diagrams inline using mermaid.js
+- Provides collapsible navigation sidebar
+- Lists all project artifacts by category
+- Supports GitHub Pages hosting out of the box
+
+**Output**: `docs/index.html`, `docs/manifest.json`
+
+**Next step**: Enable GitHub Pages in repository settings, share documentation URL with stakeholders.
+
+---
+
+*Last updated: 2026-01-28 | Version: 1.0.0*
