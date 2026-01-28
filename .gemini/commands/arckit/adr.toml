@@ -13,14 +13,14 @@ You are helping an enterprise architect create an Architecture Decision Record (
 ## Instructions
 
 ### 1. **Check for prerequisites**:
-   - First, check if `.arckit/memory/architecture-principles.md` exists
+   - First, check if any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`
      - If it doesn't exist, suggest running `/arckit.principles` first
      - Architecture principles should inform decision drivers
    - Optionally check for related artifacts that may inform the decision:
-     - `projects/*/stakeholder-drivers.md` - understand stakeholder goals
-     - `projects/*/requirements.md` - decisions address requirements
-     - `projects/*/research-findings.md` - research may have analyzed options
-     - `projects/*/wardley-maps/*.md` - evolution stage influences choices
+     - `projects/*/ARC-*-STKE-v*.md` - understand stakeholder goals
+     - `projects/*/ARC-*-REQ-v*.md` - decisions address requirements
+     - `projects/*/ARC-*-RSCH-v*.md` - research may have analyzed options
+     - `projects/*/wardley-maps/ARC-*-WARD-*.md` - evolution stage influences choices
 
 ### 2. **Create or find the project**:
    - Run `.arckit/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create project structure
@@ -209,24 +209,29 @@ fi
 ### 7. **Ensure comprehensive traceability**:
    - Link decision drivers to requirements (BR-xxx, FR-xxx, NFR-xxx)
    - Link to architecture principles (show alignment/conflicts)
-   - Link to stakeholder goals (from stakeholder-drivers.md)
-   - Link to risk mitigations (from risk-register.md)
+   - Link to stakeholder goals (from ARC-{PROJECT_ID}-STKE-v*.md)
+   - Link to risk mitigations (from ARC-{PROJECT_ID}-RISK-v*.md)
    - Link to research findings (which sections analyzed these options)
    - Link to Wardley maps (evolution stage influences choice)
    - Link to roadmap (which theme/initiative this supports)
    - Create bidirectional traceability chain
 
 ### 8. **Create file naming**:
-   - **Format**: `ADR-{NUM}-{short-title}.md`
-   - **Example**: `ADR-001-use-postgresql.md`, `ADR-002-api-gateway-pattern.md`
-   - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ADR-{NUM}-{short-title}.md`
-   - Keep title short (3-5 words), lowercase, hyphen-separated
+   - **Generate filename**: Use `generate-document-id.sh` with --filename --next-num flags:
+     ```bash
+     FILENAME=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"ADR\" \"1.0\" --filename --next-num \"projects/${PROJECT_DIR}/decisions\")
+     # Example output: ARC-001-ADR-003-v1.0.md
+     ```
+   - **Format**: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
+   - **Example**: `ARC-001-ADR-001-v1.0.md`, `ARC-001-ADR-002-v1.0.md`
+   - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v1.0.md`
+   - ADR number is auto-incremented by --next-num flag
 
 ### 9. **Use Write tool to create the ADR file**:
    - **CRITICAL**: Because ADRs are very large documents (500+ lines), you MUST use the Write tool to create the file
    - Do NOT output the full ADR content in your response (this will exceed token limits)
    - Use Write tool with the full ADR content
-   - Path: `projects/{PROJECT_ID}-{project-name}/decisions/ADR-{NUM}-{short-title}.md`
+   - Path: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v1.0.md`
 
 ### 10. **Show summary to user** (NOT full document):
    ```markdown
@@ -235,7 +240,7 @@ fi
    **ADR Number**: ADR-{NUM}
    **Title**: {Decision title}
    **Status**: {Proposed/Accepted/etc}
-   **File**: `projects/{PROJECT_ID}-{project-name}/decisions/ADR-{NUM}-{short-title}.md`
+   **File**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v1.0.md`
 
    ### Chosen Option
    {Option name}

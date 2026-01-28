@@ -88,7 +88,7 @@ Creates: `projects/001-project-name/project-plan.md`
 ```
 
 **Outputs:**
-- `.arckit/memory/architecture-principles.md`
+- `projects/000-global/architecture-principles.md`
 - `projects/001-project-name/stakeholder-drivers.md`
 - `projects/001-project-name/risk-register.md`
 - `projects/001-project-name/sobc.md`
@@ -392,24 +392,15 @@ EOF
 
 ## Version
 
-ArcKit 0.9.1+ — all 35 commands available in Gemini CLI, including Platform Design (PDT), Data Mesh Contract, DPIA, Backlog, Story, Principles Compliance, Strategic Roadmap, and Architecture Decision Records (ADR).
+**Current Release: v1.0.0 (40 commands)**
 
----
+ArcKit 1.0.0 - Production Release. All 40 commands available in Gemini CLI.
 
-ArcKit v0.8.2 (28 commands)
-
-**What's New in v0.8.2:**
-- 🔧 **Dependency Matrix**: Complete 31×31 command dependency matrix with mandatory, recommended, and optional relationships
-- 📊 **Workflow Diagrams**: Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI)
-- 📝 **Gap Analysis**: Comprehensive analysis of 50+ missing dependencies with remediation recommendations
-- 🔧 **Version Consistency**: All version references synchronized to v0.8.2
-
-**What was New in v0.6.0:**
-- 🗓️ **Project Planning**: `/arckit:plan` - Comprehensive project planning with GDS Agile Delivery phases
-- 📚 **Documentation Expansion**: 660-line planning guide, expanded design review (+167 lines) and procurement (+191 lines) guides
-- 🚀 **Multi-AI Deployment**: Plan command deployed to all three AI systems (Claude, Codex, Gemini)
-- 📋 **Updated Workflow**: Plan-first approach with Phase 0 before all other phases
-- 🔧 **Version Consistency**: All version references synchronized to v0.6.0
+**ArcKit 1.0.0 Highlights:**
+- 40 slash commands for complete architecture governance
+- UK Government compliance (TCoP, Service Standard, Secure by Design, AI Playbook)
+- HM Treasury frameworks (Green Book SOBC, Orange Book Risk Management)
+- Multi-AI support (Claude Code, OpenAI Codex CLI, Gemini CLI)
 
 **What was New in v0.3.6:**
 - 🗓️ Added `/arckit:plan` - Project planning with GDS Agile Delivery phases, Mermaid Gantt charts

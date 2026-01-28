@@ -1,6 +1,6 @@
 # Technology Code of Practice (TCoP) Review
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.tcop`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.tcop`
 
 ## Document Control
 

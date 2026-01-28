@@ -18,7 +18,7 @@ $ARGUMENTS
 **IMPORTANT**: Before generating a DPIA, verify that foundational artifacts exist:
 
 1. **Data Model** (REQUIRED):
-   - Check if `projects/*/data-model.md` exists for the target project
+   - Check if `projects/*/ARC-*-DATA-v*.md` exists for the target project
    - If it does NOT exist:
      ```
      ❌ Data model not found.
@@ -36,7 +36,7 @@ $ARGUMENTS
    - If it exists, proceed to Step 1
 
 2. **Architecture Principles** (RECOMMENDED):
-   - Check if `.arckit/memory/architecture-principles.md` exists
+   - Check if `projects/000-global/ARC-000-PRIN-*.md` exists
    - If it does NOT exist, warn:
      ```
      ⚠️  Warning: Architecture principles not found.
@@ -47,7 +47,7 @@ $ARGUMENTS
    - Continue anyway if user confirms
 
 3. **Requirements and Stakeholders** (RECOMMENDED):
-   - Check if `requirements.md` and `stakeholder-drivers.md` exist for the project
+   - Check if `ARC-*-REQ-*.md` and `ARC-*-STKE-*.md` exist for the project
    - If missing, warn that DPIA will have limited context but can still proceed
 
 ### Step 1: Identify or Create Project
@@ -67,7 +67,7 @@ If the user provided a project ID or name in their request, use that. Otherwise,
 Read the following artifacts to extract information for auto-population:
 
 1. **Data Model** (REQUIRED):
-   - Read `projects/{project_id}/data-model.md`
+   - Read `projects/{project_id}/ARC-*-DATA-*.md`
    - Extract:
      - All entities with PII/special category data
      - Data subjects (User, Customer, Employee, etc.)
@@ -78,34 +78,34 @@ Read the following artifacts to extract information for auto-population:
      - Data classifications
 
 2. **Requirements** (if exists):
-   - Read `projects/{project_id}/requirements.md`
+   - Read `projects/{project_id}/ARC-*-REQ-*.md`
    - Extract:
      - Data requirements (DR-xxx) describing processing purposes
      - Security requirements (NFR-SEC-xxx) as potential mitigations
      - Compliance requirements (NFR-C-xxx) related to GDPR
 
 3. **Stakeholder Analysis** (if exists):
-   - Read `projects/{project_id}/stakeholder-drivers.md`
+   - Read `projects/{project_id}/ARC-*-STKE-*.md`
    - Extract:
      - Data subject categories from stakeholders
      - Vulnerable groups (children, elderly, disabled)
      - RACI for data governance roles (DPO, Data Controller, Data Processors)
 
 4. **Architecture Principles** (if exists):
-   - Read `.arckit/memory/architecture-principles.md`
+   - Read `projects/000-global/ARC-000-PRIN-*.md`
    - Extract:
      - Privacy by Design principles
      - Data minimization principles
      - Security principles
 
 5. **Risk Register** (if exists):
-   - Read `projects/{project_id}/risk-register.md`
+   - Read `projects/{project_id}/ARC-*-RISK-*.md`
    - Extract:
      - Existing data protection/privacy risks
      - Check if any risks are already tagged as DPIA-related
 
 6. **Secure by Design Assessment** (if exists):
-   - Read `projects/{project_id}/secure-by-design-assessment.md`
+   - Read any `ARC-*-SECD-*.md` file in `projects/{project_id}/`
    - Extract:
      - Security controls that can serve as DPIA mitigations
      - NCSC CAF A.1 (Data) and A.2 (Identity & Access) controls
@@ -218,7 +218,7 @@ Generate the DPIA by:
      - **Likelihood**: Remote, Possible, Probable
      - **Severity** (impact on individuals): Minimal, Significant, Severe
      - **Overall Risk**: Low (green), Medium (amber), High (red)
-   - Link to existing risks in risk-register.md if they exist
+   - Link to existing risks in ARC-*-RISK-*.md if they exist
 
 7. **Section 6: Mitigations**:
    - For each high/medium risk, propose mitigations:
@@ -226,7 +226,7 @@ Generate the DPIA by:
      - Organizational: Policies, training, DPIAs for suppliers
      - Procedural: Breach notification, incident response, audit trails
    - Show residual risk after mitigations
-   - Extract existing security controls from secure-by-design-assessment.md as mitigations
+   - Extract existing security controls from ARC-*-SECD-*.md as mitigations
 
 8. **Section 7: ICO Consultation**:
    - If any residual risks remain HIGH after mitigations, flag for ICO prior consultation:
@@ -243,7 +243,7 @@ Generate the DPIA by:
     - Set review triggers: 12 months, major system changes, data breaches, ICO guidance updates
 
 11. **Section 10: Traceability**:
-    - Link to all source artifacts (data-model.md, requirements.md, stakeholders.md, principles.md, risk-register.md)
+    - Link to all source artifacts (ARC-*-DATA-*.md, ARC-*-REQ-*.md, ARC-*-STKE-*.md, ARC-000-PRIN-*.md, ARC-*-RISK-*.md)
     - List all DPIA risks with unique IDs (DPIA-001, DPIA-002, etc.)
 
 12. **Section 11: Data Subject Rights**:
@@ -278,7 +278,7 @@ Generate the DPIA by:
 Write the complete DPIA document to:
 
 ```
-projects/{project_id}/dpia.md
+projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v1.0.md
 ```
 
 ### Step 6: Risk Register Integration (Optional)
@@ -289,13 +289,13 @@ Ask the user:
 📊 DPIA generated with [N] risks identified.
 
 Would you like to add DPIA risks to the project risk register?
-This will create/update: projects/{project_id}/risk-register.md
+This will create/update: projects/{project_id}/ARC-*-RISK-*.md
 
 [Y/N]
 ```
 
 If YES:
-1. Read `projects/{project_id}/risk-register.md` (or create from template if it doesn't exist)
+1. Read `projects/{project_id}/ARC-*-RISK-*.md` (or create from template if it doesn't exist)
 2. Add each DPIA risk as a new entry with:
    - Risk ID: DPIA-001, DPIA-002, etc.
    - Category: "Data Protection"
@@ -312,7 +312,7 @@ If YES:
 ✅ DPIA Generated Successfully
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-📄 Document: projects/{project_id}/dpia.md
+📄 Document: projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v{VERSION}.md
 📋 Document ID: {document_id}
 📅 Assessment Date: {date}
 🔒 Classification: OFFICIAL-SENSITIVE
@@ -362,16 +362,16 @@ If YES:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 **Source Artifacts**:
-- ✅ Data Model: projects/{project_id}/data-model.md
-- ✅ Requirements: projects/{project_id}/requirements.md
-- ✅ Stakeholders: projects/{project_id}/stakeholder-drivers.md
-- ✅ Architecture Principles: .arckit/memory/architecture-principles.md
+- ✅ Data Model: projects/{project_id}/ARC-*-DATA-*.md
+- ✅ Requirements: projects/{project_id}/ARC-*-REQ-*.md
+- ✅ Stakeholders: projects/{project_id}/ARC-*-STKE-*.md
+- ✅ Architecture Principles: projects/000-global/ARC-000-PRIN-*.md
 
 **Related Artifacts**:
-- Risk Register: projects/{project_id}/risk-register.md ({added/updated})
-- Secure by Design: projects/{project_id}/secure-by-design-assessment.md
-- {If AI: AI Playbook: projects/{project_id}/ai-playbook-assessment.md}
-- {If AI: ATRS: projects/{project_id}/atrs-record.md}
+- Risk Register: projects/{project_id}/ARC-*-RISK-*.md ({added/updated})
+- Secure by Design: projects/{project_id}/ARC-*-SECD-*.md
+- {If AI: AI Playbook: projects/{project_id}/ARC-*-AIPB-*.md}
+- {If AI: ATRS: projects/{project_id}/ARC-*-ATRS-*.md}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📚 References
@@ -416,7 +416,7 @@ If YES:
 
 ## Success Criteria
 
-- ✅ DPIA document created at `projects/{project_id}/dpia.md`
+- ✅ DPIA document created at `projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v1.0.md`
 - ✅ ICO 9-criteria screening performed and documented
 - ✅ All personal data and special category data from data model included
 - ✅ Processing purposes extracted from requirements

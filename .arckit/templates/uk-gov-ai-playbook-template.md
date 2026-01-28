@@ -1,6 +1,6 @@
 # UK Government AI Playbook Assessment
 
-> **Template Status**: Alpha | **Version**: 0.11.2 | **Command**: `/arckit.ai-playbook`
+> **Template Status**: Alpha | **Version**: 1.0.0 | **Command**: `/arckit.ai-playbook`
 
 ## Document Control
 
@@ -266,9 +266,9 @@
 **Lifecycle Stages**:
 
 **1. Selection and Procurement**:
-- [ ] Requirements defined (see requirements.md)
+- [ ] Requirements defined (see ARC-{PROJECT_ID}-REQ-v*.md)
 - [ ] Build vs buy decision documented
-- [ ] Supplier evaluation completed (see evaluation-criteria.md)
+- [ ] Supplier evaluation completed (see ARC-*-EVAL-*.md)
 - [ ] Contract includes AI-specific terms (performance, bias, retraining)
 
 **2. Development and Testing**:

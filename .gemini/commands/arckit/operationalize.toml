@@ -46,15 +46,15 @@ Parse the user input for:
 First, read existing project artifacts to understand the service:
 
 **Required Files**:
-1. `projects/{project-name}/requirements.md` - NFRs for availability, performance, recovery
-2. `.arckit/memory/architecture-principles.md` - Operational principles
+1. Any `ARC-*-REQ-*.md` file in `projects/{project-name}/` - NFRs for availability, performance, recovery
+2. Any `ARC-000-PRIN-*.md` file in `projects/000-global/` - Operational principles
 3. `projects/{project-name}/diagrams/` - Architecture components
 
 **Optional Files** (read if available):
-4. `projects/{project-name}/risk-register.md` - Operational risks
-5. `projects/{project-name}/data-model.md` - Data dependencies, backup requirements
-6. `projects/{project-name}/servicenow-design.md` - ITSM integration
-7. `projects/{project-name}/stakeholder-drivers.md` - Stakeholder expectations
+4. Any `ARC-*-RISK-*.md` file in `projects/{project-name}/` - Operational risks
+5. Any `ARC-*-DATA-*.md` file in `projects/{project-name}/` - Data dependencies, backup requirements
+6. `projects/{project-name}/ARC-*-SNOW-*.md` - ITSM integration
+7. Any `ARC-*-STKE-*.md` file in `projects/{project-name}/` - Stakeholder expectations
 
 **IMPORTANT**: Do not proceed until you have read the requirements and architecture files.
 
@@ -251,7 +251,7 @@ Before saving, verify:
 **CRITICAL - Use Write Tool**:
 Operational readiness packs are large documents (400+ lines). Use the Write tool to save the document to avoid token limits.
 
-1. **Save the file** to `projects/{project-name}/operational-readiness.md`
+1. **Save the file** to `projects/{project-name}/ARC-{PROJECT_ID}-OPER-v1.0.md`
 
 2. **Provide summary** to user:
 ```
@@ -278,7 +278,7 @@ Operational readiness packs are large documents (400+ lines). Use the Write tool
 
 **Handover Readiness**: [X/Y] checklist items complete
 
-**File**: projects/{project-name}/operational-readiness.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-OPER-v1.0.md
 
 **Next Steps**:
 1. Review SLOs with service owner
@@ -297,7 +297,7 @@ Operational readiness packs are large documents (400+ lines). Use the Write tool
 ## Error Handling
 
 ### If Requirements Not Found:
-\"⚠️ Cannot find requirements.md. Please run `/arckit.requirements` first. Operational readiness requires NFRs for SLO definitions.\"
+\"⚠️ Cannot find requirements document (ARC-*-REQ-*.md). Please run `/arckit.requirements` first. Operational readiness requires NFRs for SLO definitions.\"
 
 ### If No Architecture Diagrams:
 \"⚠️ Cannot find architecture diagrams. Runbooks require component inventory. Please run `/arckit.diagram container` first.\"
@@ -338,7 +338,7 @@ Operational readiness packs are large documents (400+ lines). Use the Write tool
 - `[PROJECT_ID]` → From project path
 - `[VERSION]` → \"1.0\" for new documents
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-OPS-v[VERSION]` → Document ID
+- `ARC-[PROJECT_ID]-OPER-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-OPER-v1.0.md`)
 
 **Generation Metadata Footer**:
 ```markdown

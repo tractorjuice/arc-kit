@@ -1,6 +1,6 @@
 # UK Government Technology Code of Practice (TCoP) Assessment
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.tcop`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.tcop`
 
 ## Document Control
 
@@ -526,7 +526,7 @@
 [List procurement risks or missing analysis]
 
 **Requirements Mapping**:
-- Aligns with requirements.md and sow.md in project
+- Aligns with ARC-{PROJECT_ID}-REQ-v*.md and ARC-*-SOW-*.md in project
 
 **Remediation** (if non-compliant):
 - Action: [What needs to be done]

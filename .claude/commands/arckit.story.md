@@ -4,7 +4,7 @@ description: Generate comprehensive project story with timeline analysis, tracea
 
 You are helping an enterprise architect **generate a comprehensive project story** that documents the journey of an ArcKit-managed project from inception to completion, with heavy emphasis on timeline analysis and governance achievements.
 
-This command creates a **PROJECT-STORY.md** document that serves as:
+This command creates a **ARC-{PROJECT_ID}-STRY-v1.0.md** document that serves as:
 - A historical record of the project's evolution through the ArcKit governance framework
 - A detailed timeline analysis with multiple visualization types (Gantt, flowchart, table, pie chart)
 - A demonstration of end-to-end traceability from stakeholder needs to delivery plans
@@ -22,7 +22,7 @@ $ARGUMENTS
 **IMPORTANT**: Before generating a project story, verify that foundational governance artifacts exist:
 
 1. **Architecture Principles** (REQUIRED):
-   - Check if `.arckit/memory/architecture-principles.md` exists
+   - Check if any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`
    - If it does NOT exist:
      ```
      ❌ Architecture principles not found.
@@ -92,49 +92,49 @@ find "$PROJECT_DIR" -type f -name "*.md" | sort
 **Expected Artifacts** (categorize by type):
 
 **Foundation Artifacts**:
-- `stakeholder-drivers.md` - Stakeholder analysis
-- `.arckit/memory/architecture-principles.md` - Architecture principles (global)
-- `risk-register.md` - Risk assessment
+- `ARC-*-STKE-*.md` - Stakeholder analysis
+- `ARC-000-PRIN-*.md` in `projects/000-global/` - Architecture principles (global)
+- `ARC-*-RISK-*.md` - Risk assessment
 
 **Business Case Artifacts**:
-- `sobc.md` - Strategic Outline Business Case
-- `data-model.md` - Data model and ERD
+- `ARC-*-SOBC-*.md` - Strategic Outline Business Case
+- `ARC-*-DATA-*.md` - Data model and ERD
 
 **Requirements Artifacts**:
-- `requirements.md` - BR/FR/NFR/INT/DR requirements
+- `ARC-*-REQ-*.md` - BR/FR/NFR/INT/DR requirements
 
 **Strategic Planning Artifacts**:
-- `research-findings.md` - Technology research and build vs buy
-- `wardley-maps/*.md` - Wardley maps
-- `diagrams/*.md` - C4 and deployment diagrams
-- `project-plan.md` - Project plan with timeline
+- `ARC-*-RSCH-*.md` - Technology research and build vs buy
+- `wardley-maps/ARC-*-WARD-*.md` - Wardley maps
+- `diagrams/ARC-*-DIAG-*.md` - C4 and deployment diagrams
+- `ARC-*-PLAN-*.md` - Project plan with timeline
 
 **Procurement Artifacts**:
-- `sow.md` - Statement of Work
-- `dos.md` - Digital Outcomes and Specialists
-- `evaluation-criteria.md` - Vendor evaluation framework
+- `ARC-*-SOW-*.md` - Statement of Work
+- `ARC-*-DOS-*.md` - Digital Outcomes and Specialists
+- `ARC-*-EVAL-*.md` - Vendor evaluation framework
 - `vendors/*/scoring.md` - Vendor scoring sheets
 
 **Design Review Artifacts**:
-- `vendors/*/reviews/hld-review.md` - High-Level Design reviews
-- `vendors/*/reviews/dld-review.md` - Detailed Design reviews
+- `vendors/*/reviews/ARC-*-HLD-*.md` - High-Level Design reviews
+- `vendors/*/reviews/ARC-*-DLD-*.md` - Detailed Design reviews
 
 **Delivery Artifacts**:
-- `backlog.md` - Product backlog with user stories
-- `servicenow-design.md` - ServiceNow CMDB and SLA design
+- `ARC-*-BKLG-*.md` - Product backlog with user stories
+- `ARC-*-SNOW-*.md` - ServiceNow CMDB and SLA design
 
 **Compliance Artifacts**:
-- `tcop-review.md` - Technology Code of Practice
-- `service-assessment-readiness.md` - GDS Service Assessment
-- `secure-by-design-assessment.md` - Security assessment
-- `mod-secure-assessment.md` - MOD security (if defence)
-- `ai-playbook-assessment.md` - AI Playbook (if AI system)
-- `atrs-record.md` - ATRS (if algorithmic)
-- `jsp-936-assessment.md` - MOD AI assurance (if MOD AI)
+- `ARC-*-TCOP-*.md` - Technology Code of Practice
+- `ARC-*-SVCASS-*.md` - GDS Service Assessment
+- `ARC-*-SECD-*.md` - Security assessment
+- `ARC-*-SECD-MOD-*.md` - MOD security (if defence)
+- `ARC-*-AIPB-*.md` - AI Playbook (if AI system)
+- `ARC-*-ATRS-*.md` - ATRS (if algorithmic)
+- `ARC-*-JSP936-*.md` - MOD AI assurance (if MOD AI)
 
 **Governance Artifacts**:
-- `traceability-matrix.md` - End-to-end traceability
-- `analysis-report.md` - Governance quality analysis
+- `ARC-*-TRAC-*.md` - End-to-end traceability
+- `ARC-*-ANAL-*.md` - Governance quality analysis
 
 For each artifact found, note:
 - File path
@@ -174,8 +174,8 @@ If git log is not available or sparse, use file modification times:
 # Get file modification times
 stat -c "%y %n" "$PROJECT_DIR"/*.md | sort
 stat -c "%y %n" "$PROJECT_DIR"/vendors/*/*.md | sort
-stat -c "%y %n" "$PROJECT_DIR"/diagrams/*.md | sort
-stat -c "%y %n" "$PROJECT_DIR"/wardley-maps/*.md | sort
+stat -c "%y %n" "$PROJECT_DIR"/diagrams/ARC-*-DIAG-*.md | sort
+stat -c "%y %n" "$PROJECT_DIR"/wardley-maps/ARC-*-WARD-*.md | sort
 ```
 
 **Extract Timeline Metrics**:
@@ -201,7 +201,7 @@ Timeline Events:
     days_from_start: 0,
     event_type: "Foundation",
     command: "/arckit.principles",
-    artifact: "architecture-principles.md",
+    artifact: "ARC-000-PRIN-v1.0.md",
     description: "Established enterprise architecture principles"
   },
   {
@@ -209,7 +209,7 @@ Timeline Events:
     days_from_start: 3,
     event_type: "Foundation",
     command: "/arckit.stakeholders",
-    artifact: "stakeholder-drivers.md",
+    artifact: "ARC-{PROJECT_ID}-STKE-v1.0.md",
     description: "Analyzed 8 stakeholders, 12 goals, 15 outcomes"
   },
   ...
@@ -220,26 +220,26 @@ Timeline Events:
 
 For each artifact found, **read the file** and extract key information:
 
-**stakeholder-drivers.md**:
+**Stakeholder Analysis (`ARC-*-STKE-*.md`)**:
 - Count: Number of stakeholders, goals, outcomes
 - Key stakeholders: List names/roles
 - Primary goals: Extract top 3-5 goals
 - Measurable outcomes: Extract metrics
 
-**risk-register.md**:
+**Risk Register (`ARC-*-RISK-*.md`)**:
 - Total risks: Count
 - Risk breakdown: High/medium/low counts
 - Top risks: Extract top 3-5 risks with scores
 - Mitigation status: How many risks have mitigation plans
 
-**sobc.md**:
+**SOBC (`ARC-*-SOBC-*.md`)**:
 - NPV: Net Present Value
 - ROI: Return on Investment
 - BCR: Benefit-Cost Ratio
 - Strategic alignment: Key strategic objectives
 - Procurement route: G-Cloud/DOS/Traditional
 
-**requirements.md**:
+**Requirements (`ARC-*-REQ-*.md`)**:
 - BR count: Count of BR-xxx requirements
 - FR count: Count of FR-xxx requirements
 - NFR count: Count of NFR-xxx requirements (breakdown by NFR-P, NFR-SEC, NFR-S, NFR-A, NFR-C)
@@ -248,43 +248,43 @@ For each artifact found, **read the file** and extract key information:
 - Priority breakdown: Must/Should/Could/Won't counts
 - Key requirements: Extract top priority requirements
 
-**data-model.md**:
+**Data Model (`ARC-*-DATA-*.md`)**:
 - Entity count: Number of entities defined
 - Relationship count: Number of relationships
 - GDPR compliance: Lawful basis, data subject rights
 - Key entities: List primary entities
 
-**research-findings.md**:
+**Research Findings (`ARC-*-RSCH-*.md`)**:
 - Options evaluated: Count and list
 - Build vs Buy decision: BUILD/BUY/HYBRID
 - Rationale: Why decision was made
 - Recommended vendor: If buy option chosen
 
-**wardley-maps/*.md**:
+**wardley-maps/ARC-*-WARD-*.md**:
 - Map count: How many maps created
 - Map types: Current state, future state, gap analysis, vendor comparison, etc.
 - Evolution insights: Key components and their evolution stages
 - Strategic recommendations: Build vs buy alignment
 
-**diagrams/*.md**:
+**diagrams/ARC-*-DIAG-*.md**:
 - Diagram types: C4 context/container/component, deployment, sequence
 - Component count: Number of system components
 - Technology stack: Technologies identified in diagrams
 - Integration points: External systems
 
-**sow.md**:
+**ARC-*-SOW-*.md**:
 - Procurement route: G-Cloud/DOS/Traditional
 - Requirement count: How many requirements in SOW
 - Deliverables: Key deliverables listed
 - Commercial terms: Payment structure, KPIs
 
-**evaluation-criteria.md & vendors/*/scoring.md**:
+**ARC-*-EVAL-*.md & vendors/*/scoring.md**:
 - Vendors evaluated: Count
 - Evaluation criteria: Technical/commercial/social value weights
 - Winner: Vendor name and score
 - Score breakdown: Individual vendor scores
 
-**vendors/*/reviews/hld-review.md**:
+**vendors/*/reviews/ARC-*-HLD-*.md**:
 - Verdict: APPROVED/APPROVED WITH CONDITIONS/REJECTED
 - Principles compliance: Percentage
 - Requirements coverage: Percentage
@@ -292,38 +292,38 @@ For each artifact found, **read the file** and extract key information:
 - Concerns: Count of concerns
 - Gaps: Count of gaps
 
-**vendors/*/reviews/dld-review.md**:
+**vendors/*/reviews/ARC-*-DLD-*.md**:
 - Verdict: APPROVED/APPROVED WITH CONDITIONS/REJECTED
 - Implementation readiness: Assessment
 - Security controls: Status
 - Performance optimizations: Status
 
-**backlog.md**:
+**ARC-*-BKLG-*.md**:
 - User story count: Total stories
 - Sprint count: Number of sprints
 - Sprint length: Weeks per sprint
 - Estimated duration: Total weeks/months
 - Story breakdown: Must/Should/Could/Won't
 
-**servicenow-design.md**:
+**ARC-*-SNOW-*.md**:
 - CMDB CIs: Count of configuration items
 - SLA count: Number of SLAs defined
 - SLA targets: P1/P2/P3/P4 response and resolution times
 - Integration: ServiceNow integration approach
 
-**Compliance artifacts** (tcop-review.md, service-assessment-readiness.md, secure-by-design-assessment.md, etc.):
+**Compliance artifacts** (ARC-*-TCOP-*.md, ARC-*-SVCASS-*.md, ARC-*-SECD-*.md, etc.):
 - Compliance score: X/Y points
 - Compliance percentage: Score as percentage
 - Status: PASS/PARTIAL/FAIL or READY/NOT READY
 - Key findings: List main findings
 - Framework name: TCoP, GDS Service Standard, NCSC CAF, etc.
 
-**traceability-matrix.md**:
+**Traceability Matrix (`ARC-*-TRAC-*.md`)**:
 - Traceability coverage: Percentage
 - Traceability counts: How many links in each traceability chain
 - Gaps: Any gaps in traceability
 
-**analysis-report.md**:
+**ARC-*-ANAL-*.md**:
 - Artifacts analyzed: Count
 - Completeness: Percentage
 - Quality score: Overall governance quality
@@ -440,8 +440,8 @@ Create a detailed table with all events:
 
 | # | Date | Days from Start | Event Type | Command | Artifact | Description |
 |---|------|-----------------|------------|---------|----------|-------------|
-| 1 | [DATE] | 0 | Foundation | `/arckit.principles` | architecture-principles.md | Established enterprise architecture principles |
-| 2 | [DATE] | [DAYS] | Foundation | `/arckit.stakeholders` | stakeholder-drivers.md | Analyzed [N] stakeholders, [M] goals, [P] outcomes |
+| 1 | [DATE] | 0 | Foundation | `/arckit.principles` | ARC-000-PRIN-v1.0.md | Established enterprise architecture principles |
+| 2 | [DATE] | [DAYS] | Foundation | `/arckit.stakeholders` | ARC-{PROJECT_ID}-STKE-v1.0.md | Analyzed [N] stakeholders, [M] goals, [P] outcomes |
 | ... | ... | ... | ... | ... | ... | ... |
 
 **Visualization 4: Phase Duration Pie Chart**
@@ -530,7 +530,7 @@ For **the 2 key chapters** in the template, write a comprehensive narrative usin
 - Verdict: APPROVED/APPROVED WITH CONDITIONS/REJECTED for each review
 - Decision Points: HLD review decision, DLD review decision
 - Traceability Chain: Principles → HLD, Requirements → HLD/DLD, Risk → DLD
-- Artifacts created: hld-review.md, dld-review.md
+- Artifacts created: ARC-*-HLD-*.md, ARC-*-DLD-*.md
 
 **Chapter 7: Delivery Planning - From Requirements to Sprints**
 - Timeline context: Dates, duration, percentage of project
@@ -540,7 +540,7 @@ For **the 2 key chapters** in the template, write a comprehensive narrative usin
   - ServiceNow Design: CMDB CIs, SLA definitions, incident/change management workflows
 - Backlog Summary: Story count, sprint count, velocity assumptions
 - Traceability Chain: Requirements → User Stories → Sprint Backlog, Components → CMDB CIs
-- Artifacts created: backlog.md, servicenow-design.md
+- Artifacts created: ARC-*-BKLG-*.md, ARC-*-SNOW-*.md
 
 ### Step 9: Calculate Timeline Metrics
 
@@ -554,7 +554,7 @@ Create a comprehensive metrics table:
 | **Shortest Phase** | [PHASE_NAME] ([DAYS] days) | [Why this was fastest] |
 | **Commands per Week** | [VELOCITY] | [Velocity analysis] |
 | **Artifacts per Week** | [VELOCITY] | [Output rate] |
-| **Time to First Artifact** | [DAYS] days | From start to architecture-principles.md |
+| **Time to First Artifact** | [DAYS] days | From start to ARC-000-PRIN-v1.0.md |
 | **Time to Requirements** | [DAYS] days | Critical milestone |
 | **Time to Vendor Selection** | [DAYS] days | Critical milestone |
 | **Time to Design Review** | [DAYS] days | Critical milestone |
@@ -653,13 +653,13 @@ cat ./.arckit/templates/story-template.md
 - Ensure all tables are complete with real counts
 - Write full narrative paragraphs for each chapter with real project details
 
-### Step 13: Write PROJECT-STORY.md Using Write Tool
+### Step 13: Write ARC-{PROJECT_ID}-STRY-v1.0.md Using Write Tool
 
 **CRITICAL**: Use the **Write tool** to create the document. Do NOT output the full content in your response.
 
 ```
 Write tool:
-- file_path: projects/[PROJECT_ID]-[PROJECT_NAME]/PROJECT-STORY.md
+- file_path: projects/[PROJECT_ID]-[PROJECT_NAME]/ARC-{PROJECT_ID}-STRY-v1.0.md
 - content: [Full populated template with all placeholders replaced]
 ```
 
@@ -680,7 +680,7 @@ The document will be **2000-3000 lines** with:
 After writing the file, show the user a **concise summary** (NOT the full document):
 
 ```
-✅ Project story generated: projects/001-cabinet-office-genai/PROJECT-STORY.md
+✅ Project story generated: projects/001-cabinet-office-genai/ARC-001-STRY-v1.0.md
 
 📊 **Project Timeline Summary**
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -735,7 +735,7 @@ Governance & Traceability      4 days      5%
 📄 **Document Contents**
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-The 2,400-line PROJECT-STORY.md includes:
+The 2,400-line ARC-{PROJECT_ID}-STRY-v1.0.md includes:
 
 ✓ Executive summary with timeline snapshot
 ✓ 4 timeline visualizations (Gantt, flowchart, table, pie chart)
@@ -769,7 +769,7 @@ The story demonstrates systematic architecture governance from stakeholder needs
 
 1. **Prerequisites first**: Always check that architecture principles exist before generating a story. The principles command (`/arckit.principles`) is the foundation of the ArcKit governance framework and should be the FIRST command run in any project.
 
-2. **Use Write tool**: The PROJECT-STORY.md will be 2000-3000 lines. You MUST use the Write tool to avoid exceeding token limits.
+2. **Use Write tool**: The ARC-{PROJECT_ID}-STRY-v1.0.md will be 2000-3000 lines. You MUST use the Write tool to avoid exceeding token limits.
 
 3. **Real data only**: Replace ALL placeholders with real data extracted from artifacts. No "[PLACEHOLDER]" should remain in the final document.
 
@@ -809,7 +809,7 @@ cd projects/009-cabinet-office-genai
 ## Success Criteria
 
 - ✅ Prerequisites checked (architecture principles exist)
-- ✅ PROJECT-STORY.md created in project directory
+- ✅ ARC-{PROJECT_ID}-STRY-v1.0.md created in project directory
 - ✅ All timeline data extracted from git log or file dates
 - ✅ All placeholders replaced with real data
 - ✅ 4 timeline visualizations generated

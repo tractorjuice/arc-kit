@@ -1,6 +1,6 @@
 # Project Requirements: [PROJECT_NAME]
 
-> **Template Status**: Live | **Version**: 0.11.2 | **Command**: `/arckit.requirements`
+> **Template Status**: Live | **Version**: 1.0.0 | **Command**: `/arckit.requirements`
 
 ## Document Control
 
@@ -784,7 +784,7 @@
 
 > **Purpose**: Document conflicting requirements that arise from competing stakeholder drivers and show how conflicts were resolved.
 >
-> **Source**: Conflicts often originate from stakeholder analysis (see `stakeholder-drivers.md` conflict analysis section).
+> **Source**: Conflicts often originate from stakeholder analysis (see `ARC-{PROJECT_ID}-STKE-v*.md` conflict analysis section).
 >
 > **Principle**: Be transparent about trade-offs - don't hide conflicts or pretend both requirements can be fully satisfied.
 

@@ -9,7 +9,7 @@
 | Artefact | Purpose |
 |----------|---------|
 | Repository structure | Scans for all ArcKit artifacts |
-| `.arckit/memory/` | Global documents (principles) |
+| `projects/000-global/` | Global documents (principles) |
 | `projects/*/` | All project documents |
 
 ---

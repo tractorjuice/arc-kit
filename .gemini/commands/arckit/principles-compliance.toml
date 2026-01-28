@@ -10,7 +10,7 @@ prompt = """
 
 ## Goal
 
-Generate a comprehensive compliance assessment document that measures adherence to each architecture principle defined in `.arckit/memory/architecture-principles.md`. The assessment includes RAG status (Red/Amber/Green), evidence links, gaps, and actionable recommendations.
+Generate a comprehensive compliance assessment document that measures adherence to each architecture principle defined in `projects/000-global/ARC-000-PRIN-*.md`. The assessment includes RAG status (Red/Amber/Green), evidence links, gaps, and actionable recommendations.
 
 **This is a point-in-time assessment** - run at key project gates (Discovery, Alpha, Beta, Live) to track compliance over time.
 
@@ -19,20 +19,20 @@ Generate a comprehensive compliance assessment document that measures adherence 
 ### Architecture Principles (MANDATORY)
 
 a. **Architecture Principles Document** (MUST exist):
-   - Check if `.arckit/memory/architecture-principles.md` exists
+   - Check if any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`
    - If NOT found: ERROR \"Run /arckit.principles first to define governance standards for your organization\"
    - Principles compliance cannot be assessed without defined principles
 
 ### Project Artifacts (RECOMMENDED)
 
 More artifacts = better evidence = more accurate assessment:
-- `projects/{project-dir}/requirements.md` - Requirements to assess against principles
+- Any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - Requirements to assess against principles
 - `projects/{project-dir}/vendors/{vendor}/hld-v*.md` - High-Level Design
 - `projects/{project-dir}/vendors/{vendor}/dld-v*.md` - Detailed Low-Level Design
-- `projects/{project-dir}/tcop-assessment.md` - Technology Code of Practice compliance
-- `projects/{project-dir}/secure-by-design.md` - Security assessment
-- `projects/{project-dir}/data-model.md` - Data architecture
-- `projects/{project-dir}/traceability-matrix.md` - Requirements traceability
+- Any `ARC-*-TCOP-*.md` file in `projects/{project-dir}/` - Technology Code of Practice compliance
+- Any `ARC-*-SECD-*.md` file in `projects/{project-dir}/` - Security assessment
+- Any `ARC-*-DATA-*.md` file in `projects/{project-dir}/` - Data architecture
+- Any `ARC-*-TRAC-*.md` file in `projects/{project-dir}/` - Requirements traceability
 
 **Note**: Assessment is possible with minimal artifacts, but accuracy improves with more evidence.
 
@@ -40,7 +40,7 @@ More artifacts = better evidence = more accurate assessment:
 
 **Non-Destructive Assessment**: Do NOT modify existing artifacts. Generate a new assessment document only.
 
-**Dynamic Principle Extraction**: Do NOT assume a fixed number of principles. Organizations may define 5, 10, 20, or more principles. Extract ALL principles found in `architecture-principles.md` dynamically.
+**Dynamic Principle Extraction**: Do NOT assume a fixed number of principles. Organizations may define 5, 10, 20, or more principles. Extract ALL principles found in `ARC-000-PRIN-*.md` dynamically.
 
 **Evidence-Based Assessment**: RAG status must be justified by concrete evidence (file references, section numbers, line numbers). Avoid vague statements like \"design addresses this\" - be specific.
 
@@ -52,14 +52,14 @@ More artifacts = better evidence = more accurate assessment:
 
 **Check Architecture Principles**:
 ```bash
-if [ ! -f .arckit/memory/architecture-principles.md ]; then
+if [ ! -f projects/000-global/ARC-000-PRIN-*.md ]; then
     ERROR \"Architecture principles not found. Run /arckit.principles first.\"
 fi
 ```
 
 ### 2. Extract All Principles Dynamically
 
-Read `.arckit/memory/architecture-principles.md` and extract ALL principles found.
+Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` and extract ALL principles found.
 
 **Extraction Pattern**:
 
@@ -113,22 +113,22 @@ Expected project structure:
 ```
 projects/
 └── {project-dir}/
-    ├── requirements.md
-    ├── data-model.md
+    ├── ARC-{PROJECT_ID}-REQ-v*.md
+    ├── ARC-{PROJECT_ID}-DATA-v*.md
     ├── vendors/
     │   └── {vendor-name}/
     │       ├── hld-v1.md
     │       └── dld-v1.md
-    ├── tcop-assessment.md
-    ├── secure-by-design.md
-    └── traceability-matrix.md
+    ├── ARC-*-TCOP-*.md
+    ├── ARC-*-SECD-*.md
+    └── ARC-{PROJECT_ID}-TRAC-v*.md
 ```
 
 ### 4. Load Project Artifacts (Progressive Disclosure)
 
 Load only the information needed for assessment. Do NOT read entire files - extract relevant sections.
 
-**From `projects/{project-dir}/requirements.md`** (if exists):
+**From any `ARC-*-REQ-*.md` file in `projects/{project-dir}/`** (if exists):
 - Business requirements (BR-xxx) count and examples
 - Functional requirements (FR-xxx) count and examples
 - Non-functional requirements by category:
@@ -158,29 +158,29 @@ Load only the information needed for assessment. Do NOT read entire files - extr
 - CI/CD pipeline description
 
 **From compliance assessments** (if exist):
-- `tcop-assessment.md` - TCoP point scores
-- `secure-by-design.md` - NCSC CAF assessment results
-- `mod-secure-by-design.md` - MOD CAAT assessment
-- `ai-playbook-assessment.md` - AI principles scores
-- `atrs-record.md` - Algorithmic transparency
+- `ARC-*-TCOP-*.md` - TCoP point scores
+- `ARC-*-SECD-*.md` - NCSC CAF assessment results
+- `ARC-*-SECD-MOD-*.md` - MOD CAAT assessment
+- `ARC-*-AIPB-*.md` - AI principles scores
+- `ARC-*-ATRS-*.md` - Algorithmic transparency
 
 **From other artifacts**:
-- `data-model.md` - Entity-relationship diagram, GDPR compliance
-- `traceability-matrix.md` - Requirements coverage
-- `servicenow-design.md` - Operational design
-- `stakeholder-drivers.md` - Business drivers
-- `risk-register.md` - Risk mitigation plans
+- Any `ARC-*-DATA-*.md` file - Entity-relationship diagram, GDPR compliance
+- Any `ARC-*-TRAC-*.md` file - Requirements coverage
+- `ARC-*-SNOW-*.md` - Operational design
+- Any `ARC-*-STKE-*.md` file - Business drivers
+- Any `ARC-*-RISK-*.md` file - Risk mitigation plans
 
 ### 5. Assess Each Principle
 
-**FOR EACH principle extracted** from architecture-principles.md:
+**FOR EACH principle extracted** from ARC-000-PRIN-*.md:
 
 #### A. Evidence Search
 
 Look for evidence of compliance in project artifacts:
 
 **Requirements Evidence**:
-- Does requirements.md address this principle?
+- Does ARC-*-REQ-*.md address this principle?
 - Are there specific requirements (BR/FR/NFR) supporting this principle?
 - Example: Security principle → Check for NFR-SEC-xxx requirements
 
@@ -195,7 +195,7 @@ Look for evidence of compliance in project artifacts:
 
 **Compliance Assessment Evidence**:
 - Do compliance assessments (TCoP, Secure by Design) validate this principle?
-- Example: Security principle → Check secure-by-design.md findings
+- Example: Security principle → Check ARC-*-SECD-*.md findings
 
 #### B. RAG Status Assignment
 
@@ -291,7 +291,7 @@ Generate actionable next steps:
 ### 6. Generate Assessment Document
 
 Use the **Write tool** to create:
-`projects/{project-dir}/principles-compliance-assessment-{YYYY-MM-DD}.md`
+`projects/{project-dir}/ARC-{PROJECT_ID}-PRCO-v1.0.md`
 
 **Document Structure** (see template below)
 
@@ -324,7 +324,7 @@ Display concise summary (NOT full document):
    - [Principle Name]: [Brief gap description]
    [List all AMBER principles]
 
-📄 **Document**: projects/{project-dir}/principles-compliance-assessment-{YYYY-MM-DD}.md
+📄 **Document**: projects/{project-dir}/ARC-{PROJECT_ID}-PRIN-COMP-v{VERSION}.md
 
 [OVERALL RECOMMENDATION:]
 🔍 **Recommendation**:
@@ -356,7 +356,7 @@ Display concise summary (NOT full document):
 | **Assessment Date** | {YYYY-MM-DD} |
 | **Project Phase** | [Discovery / Alpha / Beta / Live] |
 | **Assessor** | ArcKit AI + {USER_NAME} |
-| **Principles Source** | `.arckit/memory/architecture-principles.md` ({DATE}) |
+| **Principles Source** | `projects/000-global/ARC-000-PRIN-*.md` ({DATE}) |
 | **Status** | [DRAFT / FINAL] |
 
 ## Revision History
@@ -369,7 +369,7 @@ Display concise summary (NOT full document):
 
 ## Executive Summary
 
-**Purpose**: This document assesses project compliance with enterprise architecture principles defined in `.arckit/memory/architecture-principles.md`. This is a point-in-time assessment for the {PHASE} phase gate review.
+**Purpose**: This document assesses project compliance with enterprise architecture principles defined in `projects/000-global/ARC-000-PRIN-*.md`. This is a point-in-time assessment for the {PHASE} phase gate review.
 
 **Scope**: Assessment covers all {N} architecture principles against available project artifacts.
 
@@ -423,7 +423,7 @@ Display concise summary (NOT full document):
 
 ### {#}. {Principle Name} - Status: [🔴🟠🟢⚪]
 
-**Principle Statement** (from architecture-principles.md):
+**Principle Statement** (from ARC-000-PRIN-*.md):
 > {Quote the principle statement verbatim}
 
 **Rationale** (why this principle exists):
@@ -438,7 +438,7 @@ Display concise summary (NOT full document):
 [DYNAMICALLY GENERATE BASED ON ARTIFACTS]
 
 **Requirements Coverage**:
-[IF requirements.md exists:]
+[IF ARC-*-REQ-*.md exists:]
 - ✅ {N} requirements address this principle:
   - {REQ-ID}: \"{Requirement text}\" (line {N})
   - {REQ-ID}: \"{Requirement text}\" (line {N})
@@ -488,7 +488,7 @@ Display concise summary (NOT full document):
 
 #### Validation Gates Status
 
-[IF principle defines validation gates in architecture-principles.md:]
+[IF principle defines validation gates in ARC-000-PRIN-*.md:]
 
 [FOR EACH validation gate - quote from principle definition]:
 - [x] **\"{Validation gate text}\"**
@@ -505,7 +505,7 @@ Example:
   - **Evidence**: No load test results found. Required before Beta gate per NFR-P-001.
 
 [IF no validation gates defined:]
-- ⚪ No validation gates defined for this principle in architecture-principles.md
+- ⚪ No validation gates defined for this principle in ARC-000-PRIN-*.md
 
 ---
 
@@ -710,17 +710,17 @@ This principle **cannot be assessed** at current project phase:
 This assessment was based on the following artifacts:
 
 **Architecture Principles** (source of truth):
-- ✅ `.arckit/memory/architecture-principles.md` - {DATE} - {N} principles defined
+- ✅ `projects/000-global/ARC-000-PRIN-*.md` - {DATE} - {N} principles defined
 
 **Project Artifacts** (evidence sources):
 [LIST ALL FILES ACTUALLY READ WITH DATES:]
-- ✅ `projects/{project-dir}/requirements.md` - {DATE} - {N} requirements
+- ✅ `projects/{project-dir}/ARC-*-REQ-*.md` - {DATE} - {N} requirements
 - ✅ `projects/{project-dir}/vendors/{vendor}/hld-v1.md` - {DATE} - {N} sections
 - ✅ `projects/{project-dir}/vendors/{vendor}/dld-v1.md` - {DATE} - {N} sections
-- ✅ `projects/{project-dir}/tcop-assessment.md` - {DATE} - {N} points assessed
-- ✅ `projects/{project-dir}/secure-by-design.md` - {DATE} - {N} controls assessed
-- ✅ `projects/{project-dir}/data-model.md` - {DATE} - {N} entities
-- ✅ `projects/{project-dir}/traceability-matrix.md` - {DATE}
+- ✅ `projects/{project-dir}/ARC-*-TCOP-*.md` - {DATE} - {N} points assessed
+- ✅ `projects/{project-dir}/ARC-*-SECD-*.md` - {DATE} - {N} controls assessed
+- ✅ `projects/{project-dir}/ARC-*-DATA-*.md` - {DATE} - {N} entities
+- ✅ `projects/{project-dir}/ARC-*-TRAC-*.md` - {DATE}
 - [List all available artifacts]
 
 **Artifacts Not Available** (limits assessment accuracy):
@@ -789,7 +789,7 @@ This assessment was based on the following artifacts:
 ### Validation Approach
 
 For each principle:
-1. **Extract** principle definition and validation gates from architecture-principles.md
+1. **Extract** principle definition and validation gates from ARC-000-PRIN-*.md
 2. **Search** for evidence across all available project artifacts
 3. **Link** evidence to specific files, sections, and line numbers
 4. **Assess** validation gates (pass/fail/n/a for each)
@@ -814,7 +814,7 @@ After generating the assessment document:
 
 1. **Commit to Git** (if project is git-initialized):
    ```bash
-   git add projects/{project-dir}/principles-compliance-assessment-{date}.md
+   git add projects/{project-dir}/ARC-{PROJECT_ID}-PRIN-COMP-v{VERSION}.md
    git commit -m \"docs: principles compliance assessment for {phase} gate\"
    ```
 
@@ -882,7 +882,7 @@ After generating the assessment document:
 
 **Critical Implementation Points**:
 
-1. **Dynamic Extraction**: NEVER assume 16 principles exist. Extract however many are in architecture-principles.md.
+1. **Dynamic Extraction**: NEVER assume 16 principles exist. Extract however many are in ARC-000-PRIN-*.md.
 
 2. **Evidence Specificity**: ALWAYS link to file:section:line. Bad: \"Design addresses this\". Good: \"HLD Section 4.2 'Security Architecture' (lines 156-203) describes MFA implementation\".
 

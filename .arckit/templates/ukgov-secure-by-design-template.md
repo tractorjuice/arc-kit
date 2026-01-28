@@ -1,6 +1,6 @@
 # UK Government Secure by Design Assessment
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.secure`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.secure`
 
 ## Document Control
 

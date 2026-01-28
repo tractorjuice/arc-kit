@@ -1,6 +1,6 @@
 # Data Protection Impact Assessment (DPIA)
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.dpia`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.dpia`
 
 ## Document Control
 
@@ -649,7 +649,7 @@ If YES, select condition(s):
 
 ### 9.1 Link to Security Controls
 
-**Security Assessment Reference**: `projects/{project_id}/secure-by-design-assessment.md`
+**Security Assessment Reference**: `projects/{project_id}/ARC-{PROJECT_ID}-SBD-v*.md`
 
 **DPIA Mitigations → Security Controls Mapping**:
 
@@ -664,7 +664,7 @@ If YES, select condition(s):
 
 ### 9.2 Link to Risk Register
 
-**Risk Register Reference**: `projects/{project_id}/risk-register.md`
+**Risk Register Reference**: `projects/{project_id}/ARC-{PROJECT_ID}-RISK-v*.md`
 
 **DPIA Risks to Add to Risk Register**:
 
@@ -742,12 +742,12 @@ If YES, select condition(s):
 
 | Artifact | Location | Information Extracted |
 |----------|----------|----------------------|
-| **Architecture Principles** | `.arckit/memory/architecture-principles.md` | Privacy by Design, Data Minimization principles |
-| **Data Model** | `projects/{project_id}/data-model.md` | Entities, PII inventory, special category data, GDPR lawful basis, retention periods |
-| **Requirements** | `projects/{project_id}/requirements.md` | Data requirements (DR-xxx), processing purposes |
-| **Stakeholder Analysis** | `projects/{project_id}/stakeholder-drivers.md` | Data subject categories, vulnerable groups, RACI for data governance roles |
-| **Risk Register** | `projects/{project_id}/risk-register.md` | Existing data protection risks |
-| **Secure by Design Assessment** | `projects/{project_id}/secure-by-design-assessment.md` | Security controls used as DPIA mitigations |
+| **Architecture Principles** | `projects/000-global/ARC-000-PRIN-v*.md` | Privacy by Design, Data Minimization principles |
+| **Data Model** | `projects/{project_id}/ARC-{PROJECT_ID}-DATA-v*.md` | Entities, PII inventory, special category data, GDPR lawful basis, retention periods |
+| **Requirements** | `projects/{project_id}/ARC-{PROJECT_ID}-REQ-v*.md` | Data requirements (DR-xxx), processing purposes |
+| **Stakeholder Analysis** | `projects/{project_id}/ARC-{PROJECT_ID}-STKE-v*.md` | Data subject categories, vulnerable groups, RACI for data governance roles |
+| **Risk Register** | `projects/{project_id}/ARC-{PROJECT_ID}-RISK-v*.md` | Existing data protection risks |
+| **Secure by Design Assessment** | `projects/{project_id}/ARC-*-SECD-*.md` | Security controls used as DPIA mitigations |
 
 ### 11.2 Traceability Matrix: Data → Requirements → DPIA
 
@@ -980,7 +980,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 **Explanation Mechanism**:
 - [Describe how decisions are explained to data subjects]
 
-**ATRS Compliance**: [Link to ATRS record at `projects/{project_id}/atrs-record.md`]
+**ATRS Compliance**: [Link to ATRS record at `projects/{project_id}/ARC-{PROJECT_ID}-ATRS-v*.md`]
 
 ---
 

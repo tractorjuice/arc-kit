@@ -51,15 +51,15 @@ Parse the user input for:
 Read existing project artifacts:
 
 **Required Files**:
-1. `projects/{project-name}/requirements.md` - ML-related requirements (FR/NFR)
-2. `projects/{project-name}/data-model.md` - Training data, features
+1. Any `ARC-*-REQ-*.md` file in `projects/{project-name}/` - ML-related requirements (FR/NFR)
+2. Any `ARC-*-DATA-*.md` file in `projects/{project-name}/` - Training data, features
 
 **Optional Files** (read if available):
-3. `.arckit/memory/architecture-principles.md` - AI/ML principles
-4. `projects/{project-name}/ai-playbook-assessment.md` - Responsible AI context
-5. `projects/{project-name}/atrs-record.md` - Algorithmic transparency
-6. `projects/{project-name}/jsp-936-assessment.md` - MOD AI assurance
-7. `projects/{project-name}/research-findings.md` - ML platform research
+3. Any `ARC-000-PRIN-*.md` file in `projects/000-global/` - AI/ML principles
+4. Any `ARC-*-AIPB-*.md` file in `projects/{project-name}/` - Responsible AI context
+5. Any `ARC-*-ATRS-*.md` file in `projects/{project-name}/` - Algorithmic transparency
+6. Any `ARC-*-JSP936-*.md` file in `projects/{project-name}/` - MOD AI assurance
+7. Any `ARC-*-RSCH-*.md` file in `projects/{project-name}/` - ML platform research
 
 ### Phase 2: Analysis
 
@@ -207,7 +207,7 @@ Verify before saving:
 
 **CRITICAL - Use Write Tool**: MLOps documents are large. Use Write tool to save.
 
-1. **Save file** to `projects/{project-name}/mlops-strategy.md`
+1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-MLOP-v1.0.md`
 
 2. **Provide summary**:
 ```
@@ -233,7 +233,7 @@ Verify before saving:
 - Human Oversight: [Required / Advisory]
 - ATRS: [Required / Not Required]
 
-**File**: projects/{project-name}/mlops-strategy.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-MLOP-v1.0.md
 
 **Next Steps**:
 1. Review model inventory with data science team
@@ -246,10 +246,10 @@ Verify before saving:
 ## Error Handling
 
 ### If No ML Requirements Found:
-\"⚠️ No ML-related requirements found. Please ensure requirements.md includes ML use cases (search for 'model', 'ML', 'AI', 'predict').\"
+\"⚠️ No ML-related requirements found. Please ensure the requirements document (ARC-*-REQ-*.md) includes ML use cases (search for 'model', 'ML', 'AI', 'predict').\"
 
 ### If No Data Model:
-\"⚠️ Data model not found. Training data understanding is important for MLOps. Consider running `/arckit.data-model` first.\"
+\"⚠️ Data model document (ARC-*-DATA-*.md) not found. Training data understanding is important for MLOps. Consider running `/arckit.data-model` first.\"
 
 ## Key Principles
 
@@ -280,7 +280,7 @@ Verify before saving:
 - `[PROJECT_ID]` → From project path
 - `[VERSION]` → \"1.0\" for new documents
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-MLOPS-v[VERSION]` → Document ID
+- `ARC-[PROJECT_ID]-MLOP-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-MLOP-v1.0.md`)
 
 **Generation Metadata Footer**:
 ```markdown

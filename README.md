@@ -38,7 +38,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v0.11.2](https://github.com/tractorjuice/arc-kit/releases/tag/v0.11.2)
+**Latest Release**: [v1.0.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.0.0)
 
 ### Initialize a Project
 
@@ -571,23 +571,23 @@ ArcKit creates this structure:
 payment-modernization/
 ├── .arckit/
 │   ├── memory/
-│   │   └── architecture-principles.md    # Global principles
+│   │   └── ARC-000-PRIN-v1.0.md          # Global principles
 │   ├── scripts/
 │   │   └── bash/                          # Automation scripts
 │   └── templates/                         # Document templates
 ├── projects/
 │   └── 001-payment-gateway/
-│       ├── stakeholder-drivers.md         # Stakeholder analysis
-│       ├── risk-register.md                # Risk register (Orange Book)
-│       ├── sobc.md                         # Strategic Outline Business Case
-│       ├── requirements.md                 # Comprehensive requirements
-│       ├── data-model.md                   # Data model with ERD, GDPR compliance
+│       ├── ARC-001-STKE-v1.0.md           # Stakeholder analysis
+│       ├── ARC-001-RISK-v1.0.md           # Risk register (Orange Book)
+│       ├── ARC-001-SOBC-v1.0.md           # Strategic Outline Business Case
+│       ├── ARC-001-REQ-v1.0.md            # Comprehensive requirements
+│       ├── ARC-001-DATA-v1.0.md           # Data model with ERD, GDPR compliance
 │       ├── wardley-maps/                   # Strategic Wardley Maps
-│       │   ├── current-state.md            # Current architecture positioning
-│       │   ├── future-state.md             # Target architecture vision
-│       │   ├── gap-analysis.md             # Current vs future comparison
-│       │   └── procurement-strategy.md     # Build vs buy decisions
-│       ├── sow.md                          # Statement of Work (RFP)
+│       │   ├── ARC-001-WARD-001-v1.0.md   # Current architecture positioning
+│       │   ├── ARC-001-WARD-002-v1.0.md   # Target architecture vision
+│       │   ├── ARC-001-WARD-003-v1.0.md   # Gap analysis
+│       │   └── ARC-001-WARD-004-v1.0.md   # Build vs buy decisions
+│       ├── ARC-001-SOW-v1.0.md            # Statement of Work (RFP)
 │       ├── evaluation-criteria.md          # Vendor evaluation framework
 │       ├── vendors/
 │       │   ├── acme-corp/
@@ -599,8 +599,8 @@ payment-modernization/
 │       │   ├── beta-systems/
 │       │   │   └── ...
 │       │   └── comparison.md
-│       ├── servicenow-design.md            # Service management design
-│       ├── traceability-matrix.md
+│       ├── ARC-001-SNOW-v1.0.md           # Service management design
+│       ├── ARC-001-TRAC-v1.0.md           # Traceability matrix
 │       └── final/
 │           ├── selected-vendor.md
 │           ├── approved-hld.md
@@ -641,7 +641,7 @@ All 40 ArcKit commands with maturity status and example outputs from public test
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
 | `/arckit.plan` | Create project plan with timeline, phases, gates, and Mermaid diagrams | [v3/001](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/001-windows-11-migration-intune/project-plan.md) [v3/002](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/002-application-packaging-rationalisation/project-plan.md) [v3/004](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/004-conference-facilities-modernization/project-plan.md) [v3/005](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/005-cloud-pki/project-plan.md) [v8](https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/001-ons-data-platform-modernisation/project-plan.md) [v9](https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/001-cabinet-office-genai/project-plan.md) [v10](https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace/blob/main/projects/001-ai-training-marketplace/project-plan.md) [v11](https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data/blob/main/projects/001-national-highways-data-architecture-modernization/project-plan.md) | 🟢 Live |
-| `/arckit.principles` | Create or update enterprise architecture principles | [v1](https://github.com/tractorjuice/arckit-test-project-v1-m365/blob/main/.arckit/memory/architecture-principles.md) [v2](https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot/blob/main/.arckit/memory/architecture-principles.md) [v3](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/.arckit/memory/architecture-principles.md) [v6](https://github.com/tractorjuice/arckit-test-project-v6-patent-system/blob/main/.arckit/memory/architecture-principles.md) [v8](https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/.arckit/memory/architecture-principles.md) [v9](https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/.arckit/memory/architecture-principles.md) [v10](https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace/blob/main/.arckit/memory/architecture-principles.md) [v11](https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data/blob/main/.arckit/memory/architecture-principles.md) | 🟢 Live |
+| `/arckit.principles` | Create or update enterprise architecture principles | [v1](https://github.com/tractorjuice/arckit-test-project-v1-m365/blob/main/projects/000-global/architecture-principles.md) [v2](https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot/blob/main/projects/000-global/architecture-principles.md) [v3](https://github.com/tractorjuice/arckit-test-project-v3-windows11/blob/main/projects/000-global/architecture-principles.md) [v6](https://github.com/tractorjuice/arckit-test-project-v6-patent-system/blob/main/projects/000-global/architecture-principles.md) [v8](https://github.com/tractorjuice/arckit-test-project-v8-ons-data-platform/blob/main/projects/000-global/architecture-principles.md) [v9](https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai/blob/main/projects/000-global/architecture-principles.md) [v10](https://github.com/tractorjuice/arckit-test-project-v10-training-marketplace/blob/main/projects/000-global/architecture-principles.md) [v11](https://github.com/tractorjuice/arckit-test-project-v11-national-highways-data/blob/main/projects/000-global/architecture-principles.md) | 🟢 Live |
 
 ### Strategic Context
 
@@ -924,7 +924,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v0.11.2](https://github.com/tractorjuice/arc-kit/releases/tag/v0.11.2)
+- **Latest Version**: [v1.0.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.0.0)
 
 ---
 

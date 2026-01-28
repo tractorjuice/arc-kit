@@ -54,12 +54,16 @@ $ARGUMENTS
    - **Government**: Add accessibility (Section 508), public records, security clearances
 
 6. **Write the output**:
+   - **CRITICAL**: The filename MUST be `ARC-000-PRIN-v1.0.md` (NOT `architecture-principles.md`)
    - Generate the document ID using: `.arckit/scripts/bash/generate-document-id.sh 000 PRIN 1.0 --filename`
    - This produces: `ARC-000-PRIN-v1.0.md` (000 indicates global/cross-project document)
-   - If `.arckit/memory/ARC-000-PRIN-v1.0.md` exists, update it
-   - If it doesn't exist, create it with comprehensive principles
+   - Write to: `projects/000-global/ARC-000-PRIN-v1.0.md`
+   - If this file exists, update it; if not, create it
    - Use the exact template structure
    - Make it ready for immediate use by development teams
+
+   > **WARNING**: Do NOT use legacy filename `architecture-principles.md`. Always use the document ID format.
+   > **NOTE**: The `projects/000-global/` directory is for cross-project artifacts like architecture principles.
 
 
 
@@ -111,7 +115,7 @@ You should:
 - Generate comprehensive principles
 - Add financial services specific requirements (SOX, PCI-DSS, transaction integrity, audit trails)
 - Include cloud migration principles (cloud-first, lift-and-shift vs re-architecture)
-- Write to `.arckit/memory/ARC-000-PRIN-v1.0.md`
+- Write to `projects/000-global/ARC-000-PRIN-v1.0.md`
 - Confirm completion with summary
 
 ## Important Notes

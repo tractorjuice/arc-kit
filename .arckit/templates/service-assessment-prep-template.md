@@ -1,6 +1,6 @@
 # GDS Service Assessment Preparation Report
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.service-assessment`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.service-assessment`
 
 ## Document Control
 
@@ -80,11 +80,11 @@
 
 **Evidence Found in ArcKit Artifacts**:
 
-✅ **artifact-name.md** (lines XX-YY)
+✅ **ARC-{PROJECT_ID}-REQ-v*.md** (lines XX-YY)
    - [Specific evidence found]
    - [What this demonstrates]
 
-✅ **artifact-name.md** (Section X)
+✅ **ARC-{PROJECT_ID}-STKE-v*.md** (Section X)
    - [Specific evidence found]
    - [What this demonstrates]
 

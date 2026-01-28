@@ -250,7 +250,7 @@ principles-compliance → analyze → service-assessment → story
 
 ## Version
 
-- **ArcKit Version**: 0.2.0
+- **ArcKit Version**: 1.0.0
 - **Matrix Date**: 2026-01-28 (Standardized filename patterns)
 - **Commands Documented**: 40
 - **Matrix Rows**: 42 (40 commands + 2 external documents)
@@ -268,7 +268,7 @@ principles-compliance → analyze → service-assessment → story
 - **Updated**: Multi-instance types use `ARC-{PROJECT_ID}-{TYPE}-{NUM}-v*.md` (ADR, DIAG, WARD, DMC)
 - **Updated**: Subdirectory references use explicit patterns (`wardley-maps/ARC-*-WARD-*.md`, `diagrams/ARC-*-DIAG-*.md`)
 - **Updated**: Vendor submissions use versioned pattern (`hld-v*.md`, `dld-v*.md`)
-- **Version**: Bumped to 0.2.0
+- **Version**: Bumped to 1.0.0
 
 ### 2026-01-22 - Added Pages Command
 - **Added**: `/arckit.pages` command (40th ArcKit command) for GitHub Pages documentation site generation with Mermaid diagram support

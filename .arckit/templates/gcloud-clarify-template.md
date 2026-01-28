@@ -1,6 +1,6 @@
 # G-Cloud Service Clarification Questions
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.gcloud-clarify`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.gcloud-clarify`
 
 ## Document Control
 
@@ -21,8 +21,8 @@
 | **Approved By** | [APPROVER_NAME] ([YYYY-MM-DD]) or PENDING |
 | **Distribution** | [DISTRIBUTION_LIST] |
 | **Services Analyzed** | [N] |
-| **Requirements Source** | projects/[PROJECT_ID]/requirements.md |
-| **G-Cloud Search** | projects/[PROJECT_ID]/procurement/gcloud-requirements.md |
+| **Requirements Source** | projects/[PROJECT_ID]/ARC-{PROJECT_ID}-REQ-v*.md |
+| **G-Cloud Search** | projects/[PROJECT_ID]/procurement/ARC-{PROJECT_ID}-GCLOUD-v*.md |
 
 ## Revision History
 
@@ -307,8 +307,8 @@ Common vague marketing language requiring clarification:
 
 ## Referenced Documents
 
-- **Requirements**: projects/[project]/requirements.md
-- **G-Cloud Search**: projects/[project]/procurement/gcloud-requirements.md
+- **Requirements**: projects/[project]/ARC-*-REQ-v*.md
+- **G-Cloud Search**: projects/[project]/procurement/ARC-*-GCLOUD-v*.md
 - **Service Pages**: [list all service URLs]
 
 ---

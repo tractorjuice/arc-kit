@@ -23,34 +23,34 @@ Architecture diagrams are visual representations of system structure, components
 First, analyze existing project artifacts to understand what to diagram:
 
 1. **Read Requirements** (if available):
-   - File: `projects/{current_project}/requirements.md`
+   - File: Any `ARC-*-REQ-*.md` file in `projects/{current_project}/`
    - Extract: Business requirements, functional requirements, integration requirements
    - Identify: External systems, user actors, data requirements
 
 2. **Read HLD** (if available):
-   - File: `projects/{current_project}/vendors/{vendor}/hld-v*.md` or `projects/{current_project}/final/approved-hld.md`
+   - File: `projects/{current_project}/vendors/{vendor}/hld-v*.md`
    - Extract: Technical architecture, containers, technology choices
    - Identify: Component boundaries, integration patterns
 
 3. **Read DLD** (if available):
-   - File: `projects/{current_project}/vendors/{vendor}/dld-v*.md` or `projects/{current_project}/final/dld/*.md`
+   - File: `projects/{current_project}/vendors/{vendor}/dld-v*.md`
    - Extract: Component specifications, API contracts, database schemas
    - Identify: Internal component structure, dependencies
 
 4. **Read Wardley Map** (if available):
-   - File: `projects/{current_project}/wardley-maps/*.md`
+   - File: `projects/{current_project}/wardley-maps/ARC-*-WARD-*.md`
    - Extract: Component evolution stages, build vs buy decisions
    - Identify: Strategic positioning (Genesis/Custom/Product/Commodity)
 
 5. **Read Architecture Principles** (if available):
-   - File: `.arckit/memory/architecture-principles.md`
+   - File: Any `ARC-000-PRIN-*.md` file in `projects/000-global/`
    - Extract: Technology standards, patterns, constraints
    - Identify: Cloud provider, security framework, compliance requirements
 
 6. **Read UK Government Assessments** (if applicable):
-   - File: `projects/{current_project}/tcop-assessment.md` (TCoP)
-   - File: `projects/{current_project}/ai-playbook-assessment.md` (AI Playbook)
-   - File: `projects/{current_project}/atrs-record.md` (ATRS)
+   - File: Any `ARC-*-TCOP-*.md` file in `projects/{current_project}/` (TCoP)
+   - File: Any `ARC-*-AIPB-*.md` file in `projects/{current_project}/` (AI Playbook)
+   - File: Any `ARC-*-ATRS-*.md` file in `projects/{current_project}/` (ATRS)
    - Identify: GOV.UK services, compliance requirements, HIGH-RISK AI components
 
 ## Step 2: Determine the Diagram Type
@@ -468,15 +468,12 @@ For each component, annotate with:
 
 Create the architecture diagram document using the template:
 
-**File Location**: `projects/{project_number}-{project_name}/diagrams/{diagram_type}-{name}.md`
+**File Location**: `projects/{project_number}-{project_name}/diagrams/ARC-{PROJECT_ID}-DIAG-{NNN}-v1.0.md`
 
-**Naming Convention**:
-- `context-payment-gateway.md` - C4 context diagram
-- `container-payment-gateway.md` - C4 container diagram
-- `component-payment-api.md` - C4 component diagram
-- `deployment-aws-production.md` - Deployment diagram
-- `sequence-payment-flow.md` - Sequence diagram
-- `dataflow-pii-handling.md` - Data flow diagram
+**Naming Convention** (use `generate-document-id.sh` with `--filename --next-num`):
+- `ARC-001-DIAG-001-v1.0.md` - First diagram (e.g., C4 context)
+- `ARC-001-DIAG-002-v1.0.md` - Second diagram (e.g., C4 container)
+- `ARC-001-DIAG-003-v1.0.md` - Third diagram (e.g., C4 component)
 
 **Template**: `.arckit/templates/architecture-diagram-template.md`
 
@@ -779,7 +776,7 @@ The visualization helps:
 
 Generate a comprehensive architecture diagram document saved to:
 
-**`projects/{project_number}-{project_name}/diagrams/{diagram_type}-{name}.md`**
+**`projects/{project_number}-{project_name}/diagrams/ARC-{PROJECT_ID}-DIAG-{NUM}-v{VERSION}.md`**
 
 The document must be:
 - ✅ Complete with all sections from template
@@ -795,7 +792,7 @@ After creating the diagram, provide a summary to the user:
 ```
 ✅ Architecture Diagram Created: {diagram_type} - {name}
 
-📁 Location: projects/{project}/diagrams/{diagram_type}-{name}.md
+📁 Location: projects/{project}/diagrams/ARC-{PROJECT_ID}-DIAG-{NUM}-v{VERSION}.md
 
 🎨 View Diagram:
 - GitHub: Renders automatically in markdown

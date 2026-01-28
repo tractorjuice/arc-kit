@@ -27,27 +27,27 @@ A project plan shows:
 Read existing project artifacts to tailor the plan:
 
 1. **Read Stakeholder Analysis** (if available):
-   - File: `projects/{current_project}/stakeholder-analysis.md`
+   - File: Any `ARC-*-STKE-*.md` file in `projects/{current_project}/`
    - Extract: Number of stakeholders, complexity of drivers
    - Impact: Complex stakeholder landscape = longer Discovery
 
 2. **Read Requirements** (if available):
-   - File: `projects/{current_project}/requirements.md`
+   - File: Any `ARC-*-REQ-*.md` file in `projects/{current_project}/`
    - Count: Total requirements (BRs, FRs, NFRs, INTs, DRs)
    - Impact: 100+ requirements = longer Alpha phase
 
 3. **Read Architecture Principles** (if available):
-   - File: `.arckit/memory/architecture-principles.md`
+   - File: Any `ARC-000-PRIN-*.md` file in `projects/000-global/`
    - Extract: Complexity constraints (security, compliance)
    - Impact: PCI-DSS/GDPR = additional time for threat modeling
 
 4. **Read Business Case** (if available):
-   - File: `projects/{current_project}/business-case.md`
+   - File: Any `ARC-*-SOBC-*.md` file in `projects/{current_project}/`
    - Extract: Budget constraints, ROI expectations
    - Impact: Budget affects team size and timeline
 
 5. **Read Risk Register** (if available):
-   - File: `projects/{current_project}/risk-register.md`
+   - File: Any `ARC-*-RISK-*.md` file in `projects/{current_project}/`
    - Extract: High risks that need mitigation
    - Impact: High vendor lock-in risk = extra procurement time
 
@@ -347,8 +347,8 @@ Create a section mapping ALL relevant ArcKit commands to the plan:
 ## Step 4: Write the Plan
 
 1. **Determine output location**:
-   - If project exists: `projects/{project-name}/project-plan.md`
-   - If no project: `project-plan.md` (root directory)
+   - If project exists: `projects/{project-name}/ARC-{PROJECT_ID}-PLAN-v1.0.md`
+   - If no project: `ARC-XXX-PLAN-v1.0.md` (root directory)
 
 2. **Write comprehensive plan** with ALL sections:
    - Executive Summary
@@ -375,7 +375,7 @@ After writing the plan, provide a summary:
 ```markdown
 ## Project Plan Created ✅
 
-**Location**: `projects/{project-name}/project-plan.md`
+**Location**: `projects/{project-name}/ARC-{PROJECT_ID}-PLAN-v1.0.md`
 
 **Timeline**: {X weeks/months} ({Project Complexity})
 - Discovery: Weeks 1-{X}

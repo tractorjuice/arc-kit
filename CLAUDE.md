@@ -94,7 +94,6 @@ $ARGUMENTS
 ```
 project/
 ├── .arckit/
-│   ├── memory/           # Global principles (ARC-000-PRIN-v1.0.md)
 │   ├── templates/        # Document templates
 │   └── scripts/bash/     # create-project.sh, generate-document-id.sh, etc.
 ├── .claude/commands/     # Slash commands (or .codex/ or .gemini/, or all with --all-ai)
@@ -104,6 +103,8 @@ project/
 ├── DEPENDENCY-MATRIX.md  # Command dependencies (unless --minimal)
 ├── WORKFLOW-DIAGRAMS.md  # Visual workflows (unless --minimal)
 └── projects/
+    ├── 000-global/       # Cross-project artifacts
+    │   └── ARC-000-PRIN-v1.0.md  # Global architecture principles
     └── 001-project-name/ # Numbered project directories
         ├── ARC-001-REQ-v1.0.md      # Requirements
         ├── ARC-001-STKE-v1.0.md     # Stakeholder analysis

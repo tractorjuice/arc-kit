@@ -204,10 +204,9 @@ def create_project_structure(project_path: Path, ai_assistant: str, all_ai: bool
 
     # Create directory structure
     directories = [
-        ".arckit/memory",
         ".arckit/scripts/bash",
         ".arckit/templates",
-        "projects",
+        "projects/000-global",
     ]
 
     if all_ai:
@@ -492,12 +491,12 @@ Once you start your AI assistant, you'll have access to these commands:
 ```
 {project_name}/
 ├── .arckit/
-│   ├── memory/
-│   │   └── architecture-principles.md (global principles)
 │   ├── scripts/
 │   │   └── bash/
 │   └── templates/
 ├── projects/
+│   ├── 000-global/
+│   │   └── ARC-000-PRIN-v1.0.md (global principles)
 │   └── 001-project-name/
 │       ├── requirements.md
 │       ├── sow.md

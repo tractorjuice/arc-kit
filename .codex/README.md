@@ -147,7 +147,7 @@ Creates: `projects/001-project-name/project-plan.md`
 /prompts:arckit.principles Create cloud-first principles for our organization
 ```
 
-Creates: `.arckit/memory/architecture-principles.md`
+Creates: `projects/000-global/architecture-principles.md`
 
 ### 2. Stakeholder Analysis (Before Requirements!)
 
@@ -491,15 +491,17 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-**Current Release: v0.9.1 (35 commands)**
+**Current Release: v1.0.0 (40 commands)**
 
-**Latest Additions**
-- 🧾 **Document Control Standard**: Commands auto-fill the canonical metadata + revision history before writing content (see `CLAUDE.md`).
-- 🪪 **Dynamic Version Metadata**: SOB C and Service Assessment prompts (all agents) read `.arckit/VERSION` so generated documents always display the current ArcKit release.
-- 🧱 **Template Alignment**: Every template header now shares the same field order (Document ID/Type, Project, Classification, Status, Review Cycle, etc.) with doc-specific rows appended beneath.
-- 📚 **New Guides**: Added roadmap and ADR guides plus README cross-links so teams can reference the new workflows quickly.
+**ArcKit 1.0.0 - Production Release**
 
-ArcKit v0.9.1+ (35 commands)
+This release marks ArcKit as production-ready for enterprise architecture governance workflows:
+- 40 slash commands for complete architecture lifecycle
+- UK Government compliance (TCoP, Service Standard, Secure by Design, AI Playbook)
+- HM Treasury frameworks (Green Book SOBC, Orange Book Risk Management)
+- Multi-AI support (Claude Code, OpenAI Codex CLI, Gemini CLI)
+
+ArcKit v1.0.0 (40 commands)
 
 **What was New in v0.9.0:**
 - 🔄 **New Command**: `/prompts:arckit.data-mesh-contract` – Create federated data product contracts (ODCS v3.0.2)

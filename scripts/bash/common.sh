@@ -74,6 +74,11 @@ create_project_dir() {
     mkdir -p "$project_dir"
     mkdir -p "$project_dir/vendors"
     mkdir -p "$project_dir/final"
+    mkdir -p "$project_dir/decisions"
+    mkdir -p "$project_dir/diagrams"
+    mkdir -p "$project_dir/wardley-maps"
+    mkdir -p "$project_dir/data-contracts"
+    mkdir -p "$project_dir/reviews"
 
     log_success "Created project directory: $project_dir"
 }
@@ -342,7 +347,7 @@ get_projects_dir() {
 # Get memory directory path
 get_memory_dir() {
     local repo_root="${1:-$(find_repo_root)}"
-    echo "$repo_root/.arckit/memory"
+    echo "$repo_root/projects/000-global"
 }
 
 # Get templates directory path

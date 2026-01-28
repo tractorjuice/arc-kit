@@ -16,7 +16,7 @@ Identify inconsistencies, gaps, ambiguities, and compliance issues across all ar
 
 **Non-Destructive Analysis**: Do **not** modify existing artifacts. Generate a comprehensive analysis report and save it to the project directory for tracking, sharing, and audit trail.
 
-**Architecture Principles Authority**: The architecture principles (`.arckit/memory/architecture-principles.md`) are **non-negotiable**. Any conflicts with principles are automatically CRITICAL and require adjustment of requirements, designs, or vendor proposals—not dilution or reinterpretation of the principles.
+**Architecture Principles Authority**: The architecture principles (`ARC-000-PRIN-*.md` in `projects/000-global/`) are **non-negotiable**. Any conflicts with principles are automatically CRITICAL and require adjustment of requirements, designs, or vendor proposals—not dilution or reinterpretation of the principles.
 
 **UK Government Compliance Authority** (if applicable): TCoP, AI Playbook, and ATRS compliance are mandatory for UK government projects. Non-compliance is CRITICAL.
 
@@ -33,58 +33,58 @@ Expected structure:
 ```
 projects/
 └── {project-dir}/
-    ├── stakeholder-drivers.md (RECOMMENDED - added v0.2.1)
-    ├── risk-register.md (RECOMMENDED - added v0.3.0)
-    ├── sobc.md (RECOMMENDED - added v0.3.0)
-    ├── requirements.md
-    ├── data-model.md (if DR-xxx requirements exist - added v0.3.1)
-    ├── sow.md (if vendor procurement)
-    ├── evaluation-criteria.md (if vendor procurement)
+    ├── ARC-{PROJECT_ID}-STKE-v*.md (RECOMMENDED - stakeholder analysis)
+    ├── ARC-{PROJECT_ID}-RISK-v*.md (RECOMMENDED - risk register)
+    ├── ARC-{PROJECT_ID}-SOBC-v*.md (RECOMMENDED - business case)
+    ├── ARC-{PROJECT_ID}-REQ-v*.md (requirements)
+    ├── ARC-{PROJECT_ID}-DATA-v*.md (if DR-xxx requirements exist - data model)
+    ├── ARC-*-SOW-*.md (if vendor procurement)
+    ├── ARC-*-EVAL-*.md (if vendor procurement)
     ├── vendors/
     │   └── {vendor-name}/
     │       ├── hld-v1.md
     │       ├── dld-v1.md
     │       └── reviews/
-    ├── tcop-assessment.md (if UK Gov)
-    ├── ai-playbook-assessment.md (if UK Gov AI)
-    ├── atrs-record.md (if UK Gov AI)
-    ├── mod-secure-by-design.md (if MOD project)
-    └── traceability-matrix.md
+    ├── ARC-*-TCOP-*.md (if UK Gov)
+    ├── ARC-*-AIPB-*.md (if UK Gov AI)
+    ├── ARC-*-ATRS-*.md (if UK Gov AI)
+    ├── ARC-*-SECD-MOD-*.md (if MOD project)
+    └── ARC-{PROJECT_ID}-TRAC-v*.md (traceability matrix)
 ```
 
 ### 2. Load Artifacts (Progressive Disclosure)
 
 Load only minimal necessary context from each artifact:
 
-**From `.arckit/memory/architecture-principles.md`** (if exists):
+**From any `ARC-000-PRIN-*.md` file in `projects/000-global/`** (if exists):
 - Strategic principles (Cloud-First, API-First, etc.)
 - Security principles
 - Data principles
 - Technology standards
 - Compliance requirements
 
-**From `projects/{project-dir}/stakeholder-drivers.md`** (if exists):
+**From any `ARC-*-STKE-*.md` file in `projects/{project-dir}/`** (if exists):
 - Stakeholder roster with power-interest grid
 - Driver types (STRATEGIC, OPERATIONAL, FINANCIAL, COMPLIANCE, PERSONAL, RISK, CUSTOMER)
 - Driver → Goal → Outcome traceability
 - Conflicts and resolutions
 - RACI matrix for governance
 
-**From `projects/{project-dir}/risk-register.md`** (if exists):
+**From any `ARC-*-RISK-*.md` file in `projects/{project-dir}/`** (if exists):
 - Risk categories (Strategic, Operational, Financial, Compliance, Reputational, Technology)
 - Inherent vs Residual risk scores (5×5 matrix)
 - Risk responses (4Ts: Tolerate, Treat, Transfer, Terminate)
 - Risk owners (should align with RACI matrix)
 - Risk appetite and tolerance levels
 
-**From `projects/{project-dir}/sobc.md`** (if exists):
+**From any `ARC-*-SOBC-*.md` file in `projects/{project-dir}/`** (if exists):
 - Strategic Case (problem, drivers, stakeholder goals)
 - Economic Case (options, benefits, NPV, ROI)
 - Commercial Case (procurement strategy)
 - Financial Case (budget, TCO)
 - Management Case (governance, delivery, change, risks, benefits realization)
 
-**From `projects/{project-dir}/requirements.md`** (if exists):
+**From any `ARC-*-REQ-*.md` file in `projects/{project-dir}/`** (if exists):
 - Business requirements (BR-xxx)
 - Functional requirements (FR-xxx)
 - Non-functional requirements (NFR-xxx)
@@ -96,7 +96,7 @@ Load only minimal necessary context from each artifact:
 - Data requirements (DR-xxx)
 - Success criteria
 
-**From `projects/{project-dir}/data-model.md`** (if exists):
+**From any `ARC-*-DATA-*.md` file in `projects/{project-dir}/`** (if exists):
 - Entity-Relationship Diagram (ERD)
 - Entity catalog (E-001, E-002, etc.)
 - PII identification and GDPR compliance
@@ -105,7 +105,7 @@ Load only minimal necessary context from each artifact:
 - Data integration mapping (upstream/downstream)
 - DR-xxx requirement traceability to entities
 
-**From `projects/{project-dir}/sow.md`** (if exists):
+**From `projects/{project-dir}/ARC-*-SOW-*.md`** (if exists):
 - Scope of work
 - Deliverables
 - Technical requirements
@@ -125,12 +125,12 @@ Load only minimal necessary context from each artifact:
 - Security implementation
 
 **From UK Government Assessments** (if exist):
-- `tcop-assessment.md`: TCoP compliance status
-- `ai-playbook-assessment.md`: AI Playbook compliance status
-- `atrs-record.md`: ATRS record completeness
+- `ARC-*-TCOP-*.md`: TCoP compliance status
+- `ARC-*-AIPB-*.md`: AI Playbook compliance status
+- `ARC-*-ATRS-*.md`: ATRS record completeness
 
 **From MOD Assessment** (if exists):
-- `mod-secure-by-design.md`: MOD SbD compliance status
+- `ARC-*-SECD-MOD-*.md`: MOD SbD compliance status
   - 7 SbD Principles assessment
   - NIST CSF (Identify, Protect, Detect, Respond, Recover)
   - CAAT registration and self-assessment completion
@@ -142,19 +142,19 @@ Load only minimal necessary context from each artifact:
 
 Create internal representations (do not include raw artifacts in output):
 
-**Stakeholder Traceability Matrix** (if stakeholder-drivers.md exists):
+**Stakeholder Traceability Matrix** (if ARC-*-STKE-*.md exists):
 - Each stakeholder with drivers, goals, outcomes
 - RACI roles for governance
 - Conflicts and resolutions
 - Which requirements trace to which stakeholder goals?
 
-**Risk Coverage Matrix** (if risk-register.md exists):
+**Risk Coverage Matrix** (if ARC-*-RISK-*.md exists):
 - Each risk with category, inherent/residual scores, response
 - Risk owners from RACI matrix
 - Which requirements address risk mitigation?
 - Which design elements mitigate risks?
 
-**Business Case Alignment Matrix** (if sobc.md exists):
+**Business Case Alignment Matrix** (if ARC-*-SOBC-*.md exists):
 - Benefits mapping to stakeholder goals
 - Benefits mapping to requirements
 - Costs mapping to requirements scope
@@ -166,7 +166,7 @@ Create internal representations (do not include raw artifacts in output):
 - Map to stakeholder goals (which goals does this requirement address?)
 - Map to success criteria
 
-**Data Model Coverage Matrix** (if data-model.md exists):
+**Data Model Coverage Matrix** (if ARC-*-DATA-*.md exists):
 - Each DR-xxx requirement mapped to entities
 - Each entity with PII flags, governance owners, CRUD access
 - Data owners from stakeholder RACI matrix
@@ -185,7 +185,7 @@ Create internal representations (do not include raw artifacts in output):
 - AI Playbook: 10 principles + 6 themes with compliance status
 - ATRS: Mandatory fields completion status
 
-**MOD Compliance Matrix** (if mod-secure-by-design.md exists):
+**MOD Compliance Matrix** (if ARC-*-SECD-MOD-*.md exists):
 - 7 SbD Principles with compliance status
 - NIST CSF functions (Identify, Protect, Detect, Respond, Recover)
 - CAAT registration status
@@ -254,8 +254,8 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 #### D. Vendor Procurement Analysis (if applicable)
 
 **SOW Quality**:
-- SOW requirements match requirements.md?
-- All technical requirements from requirements.md included in SOW?
+- SOW requirements match ARC-*-REQ-*.md?
+- All technical requirements from ARC-*-REQ-*.md included in SOW?
 - Missing evaluation criteria?
 - Ambiguous acceptance criteria?
 
@@ -270,7 +270,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Security architecture meets NFR-S requirements?
 - Performance architecture meets NFR-P requirements?
 
-#### E. Stakeholder Traceability Analysis (if stakeholder-drivers.md exists)
+#### E. Stakeholder Traceability Analysis (if ARC-*-STKE-*.md exists)
 
 **Stakeholder Coverage**:
 - All requirements traced to stakeholder goals?
@@ -288,9 +288,9 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Delivery roles aligned with RACI assignments?
 
 **Missing Stakeholder Analysis**:
-- Project has requirements but no stakeholder analysis (RECOMMENDED to run `/arckit.stakeholders`)
+- Project has requirements but no stakeholder analysis document (RECOMMENDED to run `/arckit.stakeholders`)
 
-#### F. Risk Management Analysis (if risk-register.md exists)
+#### F. Risk Management Analysis (if ARC-*-RISK-*.md exists)
 
 **Risk Coverage**:
 - High/Very High inherent risks have mitigation requirements?
@@ -298,7 +298,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Risk owners assigned and aligned with RACI matrix?
 - Risk responses appropriate (4Ts: Tolerate, Treat, Transfer, Terminate)?
 
-**Risk-SOBC Alignment** (if sobc.md exists):
+**Risk-SOBC Alignment** (if ARC-*-SOBC-*.md exists):
 - Strategic risks reflected in Strategic Case urgency?
 - Financial risks reflected in Economic Case cost contingency?
 - Risks from risk register included in Management Case Part E?
@@ -309,9 +309,9 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Compliance risks addressed by NFR-C-xxx requirements?
 
 **Missing Risk Assessment**:
-- Project has requirements but no risk register (RECOMMENDED to run `/arckit.risk`)
+- Project has requirements but no risk register document (RECOMMENDED to run `/arckit.risk`)
 
-#### G. Business Case Alignment (if sobc.md exists)
+#### G. Business Case Alignment (if ARC-*-SOBC-*.md exists)
 
 **Benefits Traceability**:
 - All benefits in Economic Case mapped to stakeholder goals?
@@ -339,7 +339,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 **Missing Business Case**:
 - Project has requirements but no SOBC (RECOMMENDED for major investments to run `/arckit.sobc`)
 
-#### H. Data Model Consistency (if data-model.md exists)
+#### H. Data Model Consistency (if ARC-*-DATA-*.md exists)
 
 **DR-xxx Requirements Coverage**:
 - All DR-xxx requirements mapped to entities?
@@ -395,7 +395,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - AI requirements comply with AI Playbook?
 - ATRS record reflects requirements and design?
 
-#### J. MOD Secure by Design Compliance (if mod-secure-by-design.md exists)
+#### J. MOD Secure by Design Compliance (if ARC-*-SECD-MOD-*.md exists)
 
 **7 SbD Principles Assessment**:
 - Principle 1 (Understand and Define Context): Context documented, data classification determined?
@@ -496,7 +496,7 @@ Use this heuristic to prioritise findings:
 
 **CRITICAL**:
 - Violates architecture principles (MUST)
-- Missing core artifact (no requirements.md)
+- Missing core artifact (no ARC-*-REQ-*.md)
 - MUST requirement with zero design coverage
 - Stakeholder: Orphan requirements (not linked to any stakeholder goal)
 - Risk: High/Very High risks with no mitigation in requirements or design
@@ -557,7 +557,7 @@ Use this heuristic to prioritise findings:
 
 ### 6. Produce Comprehensive Analysis Report
 
-Generate a comprehensive Markdown report and save it to `projects/{project-dir}/analysis-report.md` with the following structure:
+Generate a comprehensive Markdown report and save it to `projects/{project-dir}/ARC-{PROJECT_ID}-ANLZ-v1.0.md` with the following structure:
 
 ```markdown
 # Architecture Governance Analysis Report
@@ -588,8 +588,8 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 | ID | Category | Severity | Location(s) | Summary | Recommendation |
 |----|----------|----------|-------------|---------|----------------|
-| R1 | Requirements Quality | HIGH | requirements.md:L45-52 | Duplicate security requirements | Merge NFR-S-001 and NFR-S-005 |
-| P1 | Principles Alignment | CRITICAL | requirements.md:L120 | Violates Cloud-First principle | Change to cloud-native architecture |
+| R1 | Requirements Quality | HIGH | ARC-*-REQ-*.md:L45-52 | Duplicate security requirements | Merge NFR-S-001 and NFR-S-005 |
+| P1 | Principles Alignment | CRITICAL | ARC-*-REQ-*.md:L120 | Violates Cloud-First principle | Change to cloud-native architecture |
 | T1 | Traceability | HIGH | No HLD coverage | NFR-P-002 (10K TPS) not addressed | Add performance architecture section to HLD |
 | UK1 | UK Gov Compliance | CRITICAL | Missing DPIA | AI system requires DPIA before deployment | Complete DPIA for AI Playbook compliance |
 
@@ -1127,7 +1127,7 @@ Expected improvement in scores after addressing findings.
 
 ### Finding R1: Duplicate Security Requirements (HIGH)
 
-**Location**: `requirements.md:L45-52` and `requirements.md:L120-125`
+**Location**: `ARC-*-REQ-*.md:L45-52` and `ARC-*-REQ-*.md:L120-125`
 
 **Details**:
 ```
@@ -1150,14 +1150,14 @@ NFR-S-005: All stored data SHALL be encrypted with AES-256 encryption
 
 ### Finding P1: Violates Cloud-First Principle (CRITICAL)
 
-**Location**: `requirements.md:L120`, Architecture Principles violation
+**Location**: `ARC-*-REQ-*.md:L120`, Architecture Principles violation
 
 **Details**:
 ```
 FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 ```
 
-**Issue**: Violates "Cloud-First" architecture principle defined in `.arckit/memory/architecture-principles.md`. Principle states "MUST use public cloud (AWS/Azure/GCP) unless explicitly justified exception."
+**Issue**: Violates "Cloud-First" architecture principle defined in `projects/000-global/ARC-000-PRIN-*.md`. Principle states "MUST use public cloud (AWS/Azure/GCP) unless explicitly justified exception."
 
 **Impact**: Architecture doesn't align with organization standards. Blocks procurement approval.
 
@@ -1198,7 +1198,7 @@ FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 
 Save the complete analysis report generated in Step 6 to:
 
-**`projects/{project-dir}/analysis-report.md`**
+**`projects/{project-dir}/ARC-{PROJECT_ID}-ANLZ-v1.0.md`**
 
 The saved report must include:
 - ✅ All sections from Executive Summary to Detailed Findings
@@ -1216,7 +1216,7 @@ After writing the file, provide a summary message to the user:
 ✅ Governance Analysis Complete
 
 **Project**: {project-name}
-**Report Location**: projects/{project-dir}/analysis-report.md
+**Report Location**: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md
 
 **Overall Status**: ✅ Ready / ⚠️ Issues Found / ❌ Critical Issues
 **Governance Health Score**: {score}/100 ({grade})
@@ -1248,7 +1248,7 @@ After writing the file, provide a summary message to the user:
 - {action}
 - {action}
 
-📄 Full analysis report saved to: projects/{project-dir}/analysis-report.md
+📄 Full analysis report saved to: projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md
 ```
 
 ### 8. Provide Remediation Guidance
@@ -1277,7 +1277,7 @@ After outputting the report, ask:
 ### Analysis Guidelines
 
 - **DO NOT modify existing artifacts** (non-destructive analysis)
-- **DO write analysis report** to `projects/{project-dir}/analysis-report.md`
+- **DO write analysis report** to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md`
 - **NEVER hallucinate missing sections** (if absent, report them accurately)
 - **Prioritize principle violations** (these are always CRITICAL)
 - **Prioritize UK Gov compliance issues** (mandatory for public sector)
@@ -1347,7 +1347,7 @@ Example output: "Architecture Governance Analysis Report" with 18 findings (3 CR
 ## Important Notes
 
 - This is **non-destructive analysis** - existing artifacts are not modified
-- Analysis report is saved to `projects/{project-dir}/analysis-report.md` for audit trail
+- Analysis report is saved to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md` for audit trail
 - Run `/arckit.analyze` after major changes to requirements, designs, or assessments
 - Ideal times to run:
   - Before issuing SOW/RFP to vendors

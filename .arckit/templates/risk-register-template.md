@@ -1,6 +1,6 @@
 # Risk Register
 
-> **Template Status**: Live | **Version**: 0.11.2 | **Command**: `/arckit.risk`
+> **Template Status**: Live | **Version**: 1.0.0 | **Command**: `/arckit.risk`
 
 ## Document Control
 
@@ -194,7 +194,7 @@ LIKELIHOOD ↑
 - [Impact 3: e.g., "Loss of stakeholder confidence"]
 
 **Affected Stakeholders:**
-- **[Stakeholder 1]** (from stakeholder-drivers.md): [How they are affected]
+- **[Stakeholder 1]** (from ARC-{PROJECT_ID}-STKE-v*.md): [How they are affected]
 - **[Stakeholder 2]**: [How they are affected]
 - **[Stakeholder 3]**: [How they are affected]
 
@@ -749,7 +749,7 @@ This risk register demonstrates compliance with HM Treasury Orange Book (2023):
 
 **Traceability from Stakeholders to Risks:**
 
-| Stakeholder | Driver (from stakeholder-drivers.md) | Risk ID | Risk Title | Category | Score |
+| Stakeholder | Driver (from ARC-{PROJECT_ID}-STKE-v*.md) | Risk ID | Risk Title | Category | Score |
 |-------------|-------------------------------------|---------|------------|----------|-------|
 | CFO | D-001: Reduce costs (FINANCIAL, HIGH) | R-004 | Cloud costs exceed budget 40% | FINANCIAL | 9 |
 | CFO | D-001: Reduce costs | R-009 | ROI not achieved due to low adoption | FINANCIAL | 8 |
@@ -761,7 +761,7 @@ This risk register demonstrates compliance with HM Treasury Orange Book (2023):
 
 **Stakeholder Concerns Mapped to Risks:**
 
-| Stakeholder Conflict (from stakeholder-drivers.md) | Risk(s) Created | Mitigation |
+| Stakeholder Conflict (from ARC-{PROJECT_ID}-STKE-v*.md) | Risk(s) Created | Mitigation |
 |---------------------------------------------------|-----------------|------------|
 | CFO vs CTO: Cost reduction vs innovation | R-004, R-009 | Phased approach, prove ROI early |
 | Operations vs CTO: Stability vs modernization | R-002, R-006 | Blue-green deployment, rollback plan |

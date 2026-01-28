@@ -26,21 +26,21 @@ This command generates DOS-compliant procurement documentation from your existin
 **IMPORTANT**: Check prerequisites before proceeding:
 
 a. **Architecture Principles** (MUST exist):
-   - Check if `.arckit/memory/architecture-principles.md` exists
+   - Check if `projects/000-global/ARC-000-PRIN-*.md` exists
    - If NOT found: ERROR \"Run /arckit.principles first to define governance standards\"
 
 b. **Project with Requirements** (MUST exist):
    - Check if user specified a project name/number
-   - Look for `projects/[project]/requirements.md`
+   - Look for `projects/[project]/ARC-*-REQ-v*.md`
    - If NOT found: ERROR \"Run /arckit.requirements first to define project needs\"
 
 c. **Stakeholder Analysis** (RECOMMENDED):
-   - Check if `projects/[project]/stakeholder-drivers.md` exists
+   - Check if `projects/[project]/ARC-*-STKE-v*.md` exists
    - If NOT found: WARN \"Consider running /arckit.stakeholders to understand stakeholder priorities\"
    - If exists: Read it to inform procurement priorities
 
 d. **Existing SOW** (OPTIONAL):
-   - Check if `projects/[project]/procurement/sow.md` exists
+   - Check if `projects/[project]/ARC-*-SOW-v*.md` exists
    - If exists: Reference it for additional context
    - This command generates Digital Marketplace-specific docs alongside general SOW
 
@@ -48,16 +48,16 @@ d. **Existing SOW** (OPTIONAL):
 
 Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, then:
 
-1. Read `projects/[project]/requirements.md` (source of truth)
-2. Read `.arckit/memory/architecture-principles.md` (governance constraints)
-3. Read `projects/[project]/stakeholder-drivers.md` if available (priorities)
+1. Read `projects/[project]/ARC-*-REQ-v*.md` (source of truth)
+2. Read `projects/000-global/ARC-000-PRIN-*.md` (governance constraints)
+3. Read `projects/[project]/ARC-*-STKE-v*.md` if available (priorities)
 4. Parse user input for additional context (budget, timeline, specific skills)
 
 ### 3. Generate DOS Procurement Documentation
 
 Create directory: `projects/[project]/procurement/`
 
-Generate `projects/[project]/procurement/dos-requirements.md`:
+Generate `projects/[project]/procurement/ARC-{PROJECT_ID}-DOS-v1.0.md`:
 
 ```markdown
 # UK Digital Marketplace: Digital Outcomes and Specialists
@@ -67,7 +67,7 @@ Generate `projects/[project]/procurement/dos-requirements.md`:
 **Generated**: [DATE]
 **Project**: [PROJECT_NAME]
 **Project ID**: [PROJECT_ID]
-**Requirements Source**: [Link to requirements.md]
+**Requirements Source**: [Link to ARC-*-REQ-*.md]
 
 ---
 
@@ -75,19 +75,19 @@ Generate `projects/[project]/procurement/dos-requirements.md`:
 
 ### 1.1 Procurement Overview
 
-[1-2 paragraph summary extracted from requirements.md Business Requirements section - describe what needs to be delivered and why]
+[1-2 paragraph summary extracted from ARC-*-REQ-*.md Business Requirements section - describe what needs to be delivered and why]
 
 ### 1.2 Strategic Alignment
 
 **Architecture Principles**:
-[Reference relevant principles from architecture-principles.md that constrain this procurement]
+[Reference relevant principles from ARC-000-PRIN-*.md that constrain this procurement]
 
-**Stakeholder Priorities** (if stakeholder-drivers.md exists):
+**Stakeholder Priorities** (if ARC-*-STKE-*.md exists):
 [List top 3 stakeholder drivers/goals this addresses with IDs: D-001, G-001, etc.]
 
 ### 1.3 Expected Outcomes
 
-[Extract from requirements.md Business Requirements (BR-xxx) - the measurable outcomes]
+[Extract from ARC-*-REQ-*.md Business Requirements (BR-xxx) - the measurable outcomes]
 
 ---
 
@@ -97,7 +97,7 @@ Generate `projects/[project]/procurement/dos-requirements.md`:
 
 **What Success Looks Like**:
 
-[Extract success criteria from requirements.md - ensure technology-agnostic]
+[Extract success criteria from ARC-*-REQ-*.md - ensure technology-agnostic]
 - [Outcome 1 with measurable metric]
 - [Outcome 2 with measurable metric]
 - [Outcome 3 with measurable metric]
@@ -110,7 +110,7 @@ Generate `projects/[project]/procurement/dos-requirements.md`:
 
 ## 3. Essential Skills and Experience
 
-[Extract from requirements.md - what capabilities are absolutely required]
+[Extract from ARC-*-REQ-*.md - what capabilities are absolutely required]
 
 ### 3.1 Technical Capabilities (MUST Have)
 
@@ -129,7 +129,7 @@ From Non-Functional Requirements (NFR-xxx):
 
 ### 3.3 Architecture Governance (MUST Have)
 
-From architecture-principles.md:
+From ARC-000-PRIN-*.md:
 - **[Principle Category]**: Experience with [specific technology/approach mandated by principles]
 - **Design Reviews**: Experience with HLD/DLD review processes
 - **Documentation**: Ability to produce architecture diagrams (Mermaid, C4)
@@ -150,7 +150,7 @@ From SHOULD requirements:
 
 ## 5. User Needs and Scenarios
 
-[Extract user personas and scenarios from requirements.md to help vendors understand context]
+[Extract user personas and scenarios from ARC-*-REQ-*.md to help vendors understand context]
 
 **User Personas**:
 [List personas from Functional Requirements section]
@@ -166,7 +166,7 @@ From SHOULD requirements:
 
 ### 6.1 Business Requirements
 
-[Extract all BR-xxx from requirements.md with IDs and priority]
+[Extract all BR-xxx from ARC-*-REQ-*.md with IDs and priority]
 
 | ID | Requirement | Priority | Acceptance Criteria |
 |----|-------------|----------|---------------------|
@@ -175,7 +175,7 @@ From SHOULD requirements:
 
 ### 6.2 Functional Requirements
 
-[Extract all FR-xxx from requirements.md - group by capability area]
+[Extract all FR-xxx from ARC-*-REQ-*.md - group by capability area]
 
 **[Capability Area 1]**:
 - **FR-001** (MUST): [requirement] - [acceptance criteria]
@@ -186,7 +186,7 @@ From SHOULD requirements:
 
 ### 6.3 Non-Functional Requirements
 
-[Extract all NFR-xxx from requirements.md - organize by category]
+[Extract all NFR-xxx from ARC-*-REQ-*.md - organize by category]
 
 **Performance (NFR-P-xxx)**:
 - [requirement with measurable targets]
@@ -205,7 +205,7 @@ From SHOULD requirements:
 
 ### 6.4 Integration Requirements
 
-[Extract all INT-xxx from requirements.md]
+[Extract all INT-xxx from ARC-*-REQ-*.md]
 
 **Upstream Systems**:
 - INT-xxx: [system and integration method]
@@ -222,14 +222,14 @@ From SHOULD requirements:
 
 ### 7.1 In Scope
 
-[Extract from requirements.md scope section OR infer from MUST requirements]
+[Extract from ARC-*-REQ-*.md scope section OR infer from MUST requirements]
 - [Scope item 1]
 - [Scope item 2]
 - [Scope item 3]
 
 ### 7.2 Out of Scope
 
-[Extract from requirements.md OR infer from explicitly excluded items]
+[Extract from ARC-*-REQ-*.md OR infer from explicitly excluded items]
 - [Exclusion 1]
 - [Exclusion 2]
 
@@ -239,13 +239,13 @@ From SHOULD requirements:
 
 ### 8.1 Architecture Constraints
 
-[From architecture-principles.md - what vendors MUST comply with]
+[From ARC-000-PRIN-*.md - what vendors MUST comply with]
 - **[Constraint Type]**: [Specific constraint from principles]
 - **[Constraint Type]**: [Specific constraint from principles]
 
 ### 8.2 Technical Dependencies
 
-[From requirements.md dependencies section or INT-xxx]
+[From ARC-*-REQ-*.md dependencies section or INT-xxx]
 - [Dependency 1]
 - [Dependency 2]
 
@@ -273,7 +273,7 @@ Reference: Run `/arckit.hld-review` and `/arckit.dld-review` for formal review p
 
 ### 9.2 Compliance Requirements
 
-[From architecture-principles.md and NFR-C-xxx requirements]
+[From ARC-000-PRIN-*.md and NFR-C-xxx requirements]
 - [Compliance requirement 1]
 - [Compliance requirement 2]
 
@@ -388,7 +388,7 @@ Reference: Generate with `/arckit.diagram`, `/arckit.data-model`
 Vendors must provide:
 
 1. **Technical Proposal**
-   - Proposed solution architecture (aligned with architecture-principles.md)
+   - Proposed solution architecture (aligned with ARC-000-PRIN-*.md)
    - Approach to each requirement category (BR, FR, NFR, INT, DR)
    - Risk assessment and mitigation strategy
    - Quality assurance approach
@@ -461,10 +461,10 @@ Vendors must provide:
 
 ### 15.2 Project Documents
 
-- **Requirements**: projects/[project]/requirements.md
-- **Architecture Principles**: .arckit/memory/architecture-principles.md
-- **Stakeholder Analysis**: projects/[project]/stakeholder-drivers.md (if exists)
-- **General RFP/SOW**: projects/[project]/procurement/sow.md (if exists)
+- **Requirements**: projects/[project]/ARC-*-REQ-v*.md
+- **Architecture Principles**: projects/000-global/ARC-000-PRIN-*.md
+- **Stakeholder Analysis**: projects/[project]/ARC-*-STKE-v*.md (if exists)
+- **General RFP/SOW**: projects/[project]/ARC-*-SOW-v*.md (if exists)
 
 ### 15.3 Arc-kit Commands for Vendor Management
 
@@ -505,7 +505,7 @@ Vendors must provide:
 
 Before finalizing, validate output:
 
-- ✅ All requirements from requirements.md are included with IDs
+- ✅ All requirements from ARC-*-REQ-*.md are included with IDs
 - ✅ Architecture principles are referenced and enforced
 - ✅ Stakeholder priorities are reflected (if available)
 - ✅ Success criteria are measurable and technology-agnostic
@@ -522,13 +522,13 @@ Output to user:
 ✅ Generated DOS procurement documentation for [PROJECT_NAME]
 
 Framework: Digital Outcomes and Specialists (DOS)
-Document: projects/[project]/procurement/dos-requirements.md
+Document: projects/[project]/procurement/ARC-{PROJECT_ID}-DOS-v1.0.md
 
 Integration Summary:
-- ✅ Requirements extracted from requirements.md
+- ✅ Requirements extracted from ARC-*-REQ-*.md
 - ✅ Architecture principles enforced
-- [✅/⚠️] Stakeholder priorities included (stakeholder-drivers.md)
-- [✅/⚠️] Cross-referenced with existing SOW (sow.md)
+- [✅/⚠️] Stakeholder priorities included (ARC-*-STKE-*.md)
+- [✅/⚠️] Cross-referenced with existing SOW (ARC-*-SOW-*.md)
 
 Document Sections:
 - ✅ Executive Summary (strategic alignment)
@@ -559,7 +559,7 @@ Important: Maintain audit trail of all procurement decisions per Digital Marketp
 
 ## Key Principles
 
-1. **Requirements First**: Always pull from requirements.md - don't invent new requirements
+1. **Requirements First**: Always pull from ARC-*-REQ-*.md - don't invent new requirements
 2. **Principle Enforcement**: Ensure architecture principles constrain vendor proposals
 3. **Stakeholder Alignment**: Reflect stakeholder priorities in evaluation criteria
 4. **Technology-Agnostic**: Remove all implementation details from procurement docs

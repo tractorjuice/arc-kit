@@ -1,6 +1,6 @@
 # Architecture Governance Analysis Report: [PROJECT_NAME]
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.analyze`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.analyze`
 
 ## Document Control
 
@@ -162,7 +162,7 @@
 
 ---
 
-## Data Model Analysis (if data-model.md exists)
+## Data Model Analysis (if ARC-*-DATA-v*.md exists)
 
 **Data Model Exists**: [✅ Yes / ❌ No]
 
@@ -265,16 +265,16 @@
 
 | Artifact | Location | Last Modified | Status |
 |----------|----------|---------------|--------|
-| Architecture Principles | `.arckit/memory/architecture-principles.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
-| Stakeholder Drivers | `projects/[project]/stakeholder-drivers.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
-| Requirements | `projects/[project]/requirements.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
-| Risk Register | `projects/[project]/risk-register.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
-| SOBC | `projects/[project]/sobc.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
-| Data Model | `projects/[project]/data-model.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
+| Architecture Principles | `projects/000-global/ARC-000-PRIN-v*.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
+| Stakeholder Drivers | `projects/[project]/ARC-*-STKE-v*.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
+| Requirements | `projects/[project]/ARC-*-REQ-v*.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
+| Risk Register | `projects/[project]/ARC-*-RISK-v*.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
+| SOBC | `projects/[project]/ARC-*-SOBC-v*.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
+| Data Model | `projects/[project]/ARC-*-DATA-v*.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
 | HLD | `projects/[project]/vendors/[vendor]/hld-v1.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
 | DLD | `projects/[project]/vendors/[vendor]/dld-v1.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
-| TCoP Assessment | `projects/[project]/tcop-assessment.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
-| Traceability Matrix | `projects/[project]/traceability-matrix.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
+| TCoP Assessment | `projects/[project]/ARC-*-TCOP-*.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
+| Traceability Matrix | `projects/[project]/ARC-*-TRAC-*.md` | [Date] | [✅ Analyzed / ❌ Not Found] |
 
 ---
 

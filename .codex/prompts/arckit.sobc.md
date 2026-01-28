@@ -32,11 +32,11 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
 1. **Check for prerequisites**:
    - **MANDATORY**: Check if stakeholder analysis exists for this project
-     - Read `.arckit/memory/` or `projects/*/stakeholder-drivers.md` to find it
+     - Read `projects/000-global/` or `projects/*/ARC-*-STKE-v*.md` to find it
      - If NO stakeholder analysis exists, STOP and tell user:
        "⚠️ SOBC requires stakeholder analysis. Run `/arckit.stakeholders` first to identify who benefits and why."
    - **RECOMMENDED**: Check if architecture principles exist
-     - Read `.arckit/memory/architecture-principles.md`
+     - Read any `ARC-000-PRIN-*.md` file in `projects/000-global/`
      - If exists, use for strategic alignment
    - **OPTIONAL**: Check if requirements exist
      - If exists, use for more accurate estimates
@@ -88,7 +88,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
        - Risks
        - Pros/cons
    - **Benefits Mapping**:
-     - Link EACH benefit to specific stakeholder goal from stakeholder-drivers.md
+     - Link EACH benefit to specific stakeholder goal from ARC-{PROJECT_ID}-STKE-v*.md
      - Quantify where possible (use stakeholder outcomes for metrics)
      - Categorize: FINANCIAL | OPERATIONAL | STRATEGIC | COMPLIANCE | RISK
    - **Cost Estimates** (high-level):
@@ -197,10 +197,10 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SOBC" "1.
 - `[APPROVED_BY]` → Who must approve? (mark as "PENDING" if not yet approved)
 
 8. **Write the output**:
-   - Create or update `projects/NNN-project-name/sobc.md`
+   - Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v1.0.md`
    - Use project directory structure (create if doesn't exist)
-   - File name pattern: `sobc.md` (Strategic Outline Business Case)
-   - Later stages will be: `obc.md` (Outline Business Case), `fbc.md` (Full Business Case)
+   - File name pattern: `ARC-{PROJECT_ID}-SOBC-v{VERSION}.md`
+   - Later stages will be: `ARC-{PROJECT_ID}-OBC-v*.md` (Outline Business Case), `ARC-{PROJECT_ID}-FBC-v*.md` (Full Business Case)
 
 
 **IMPORTANT - Populate Metadata Footer**:
@@ -234,7 +234,7 @@ Example populated footer:
 ## Output Format
 
 Provide:
-1. **Location**: `projects/NNN-project-name/sobc.md`
+1. **Location**: `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v1.0.md`
 2. **Summary**:
    - "Created Strategic Outline Business Case (SOBC) for [project name]"
    - "Analyzed [X] options against [Y] stakeholder goals"
@@ -249,7 +249,7 @@ Provide:
    - "After requirements: Create OBC (Outline Business Case) with refined costs"
    - "After design: Create FBC (Full Business Case) for final approval"
 4. **Traceability note**:
-   - "All [X] benefits traced to stakeholder goals in stakeholder-drivers.md"
+   - "All [X] benefits traced to stakeholder goals in ARC-{PROJECT_ID}-STKE-v*.md"
    - "All [Y] risks linked to stakeholder conflict analysis"
 
 ## Common Patterns
@@ -345,7 +345,7 @@ Create the comprehensive, executive-ready Strategic Outline Business Case follow
 
 ### 2. Write Directly to File
 
-**Use the Write tool** to create `projects/[PROJECT]/sobc.md` with the complete SOBC document.
+**Use the Write tool** to create `projects/[PROJECT]/ARC-{PROJECT_ID}-SOBC-v1.0.md` with the complete SOBC document.
 
 **DO NOT** output the full document in your response. This would exceed token limits.
 
@@ -357,7 +357,7 @@ After writing the file, show ONLY a concise summary:
 ## SOBC Complete ✅
 
 **Project**: [Project Name]
-**File Created**: `projects/[PROJECT]/sobc.md`
+**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-SOBC-v1.0.md`
 
 ### SOBC Summary
 
@@ -410,7 +410,7 @@ After writing the file, show ONLY a concise summary:
 
 ### Next Steps
 
-- Review `sobc.md` for full SOBC document
+- Review `ARC-{PROJECT_ID}-SOBC-v1.0.md` for full SOBC document
 - Present to Senior Responsible Owner (SRO) for approval
 - If approved, run `/arckit.requirements` to define detailed requirements
 - After requirements, refine to Outline Business Case (OBC) with firmer costs

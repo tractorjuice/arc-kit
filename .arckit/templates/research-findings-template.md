@@ -1,6 +1,6 @@
 # Technology and Service Research: [PROJECT_NAME]
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.research`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.research`
 
 ## Document Control
 
@@ -33,7 +33,7 @@
 
 ### Research Scope
 
-This document presents research findings for technology, services, and products that can meet the requirements documented in `requirements.md`. It provides build vs buy analysis and vendor recommendations for procurement decisions.
+This document presents research findings for technology, services, and products that can meet the requirements documented in `ARC-{PROJECT_ID}-REQ-v*.md`. It provides build vs buy analysis and vendor recommendations for procurement decisions.
 
 **Requirements Analyzed**: [X] functional, [Y] non-functional, [Z] integration, [W] data requirements
 

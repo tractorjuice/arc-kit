@@ -1,6 +1,6 @@
 # UK Digital Marketplace: Digital Outcomes and Specialists
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.dos`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.dos`
 
 ## Document Control
 
@@ -22,7 +22,7 @@
 | **Distribution** | [DISTRIBUTION_LIST] |
 | **Framework** | Digital Outcomes and Specialists (DOS) |
 | **Procurement Type** | [Digital Outcome / Digital Specialists / Outcome + Specialists] |
-| **Requirements Source** | projects/[PROJECT_ID]/requirements.md |
+| **Requirements Source** | projects/[PROJECT_ID]/ARC-{PROJECT_ID}-REQ-v*.md |
 
 ## Revision History
 
@@ -36,19 +36,19 @@
 
 ### 1.1 Procurement Overview
 
-[1-2 paragraph summary extracted from requirements.md Business Requirements section - describe what needs to be delivered and why]
+[1-2 paragraph summary extracted from ARC-{PROJECT_ID}-REQ-v*.md Business Requirements section - describe what needs to be delivered and why]
 
 ### 1.2 Strategic Alignment
 
 **Architecture Principles**:
-[Reference relevant principles from architecture-principles.md that constrain this procurement]
+[Reference relevant principles from ARC-000-PRIN-v*.md that constrain this procurement]
 
-**Stakeholder Priorities** (if stakeholder-drivers.md exists):
+**Stakeholder Priorities** (if ARC-{PROJECT_ID}-STKE-v*.md exists):
 [List top 3 stakeholder drivers/goals this addresses with IDs: D-001, G-001, etc.]
 
 ### 1.3 Expected Outcomes
 
-[Extract from requirements.md Business Requirements (BR-xxx) - the measurable outcomes]
+[Extract from ARC-{PROJECT_ID}-REQ-v*.md Business Requirements (BR-xxx) - the measurable outcomes]
 
 ---
 
@@ -58,7 +58,7 @@
 
 **What Success Looks Like**:
 
-[Extract success criteria from requirements.md - ensure technology-agnostic]
+[Extract success criteria from ARC-{PROJECT_ID}-REQ-v*.md - ensure technology-agnostic]
 - [Outcome 1 with measurable metric]
 - [Outcome 2 with measurable metric]
 - [Outcome 3 with measurable metric]
@@ -71,7 +71,7 @@
 
 ## 3. Essential Skills and Experience
 
-[Extract from requirements.md - what capabilities are absolutely required]
+[Extract from ARC-{PROJECT_ID}-REQ-v*.md - what capabilities are absolutely required]
 
 ### 3.1 Technical Capabilities (MUST Have)
 
@@ -90,7 +90,7 @@ From Non-Functional Requirements (NFR-xxx):
 
 ### 3.3 Architecture Governance (MUST Have)
 
-From architecture-principles.md:
+From ARC-000-PRIN-v*.md:
 - **[Principle Category]**: Experience with [specific technology/approach mandated by principles]
 - **Design Reviews**: Experience with HLD/DLD review processes
 - **Documentation**: Ability to produce architecture diagrams (Mermaid, C4)
@@ -111,7 +111,7 @@ From SHOULD requirements:
 
 ## 5. User Needs and Scenarios
 
-[Extract user personas and scenarios from requirements.md to help vendors understand context]
+[Extract user personas and scenarios from ARC-{PROJECT_ID}-REQ-v*.md to help vendors understand context]
 
 **User Personas**:
 [List personas from Functional Requirements section]
@@ -127,7 +127,7 @@ From SHOULD requirements:
 
 ### 6.1 Business Requirements
 
-[Extract all BR-xxx from requirements.md with IDs and priority]
+[Extract all BR-xxx from ARC-{PROJECT_ID}-REQ-v*.md with IDs and priority]
 
 | ID | Requirement | Priority | Acceptance Criteria |
 |----|-------------|----------|---------------------|
@@ -136,7 +136,7 @@ From SHOULD requirements:
 
 ### 6.2 Functional Requirements
 
-[Extract all FR-xxx from requirements.md - group by capability area]
+[Extract all FR-xxx from ARC-{PROJECT_ID}-REQ-v*.md - group by capability area]
 
 **[Capability Area 1]**:
 - **FR-001** (MUST): [requirement] - [acceptance criteria]
@@ -147,7 +147,7 @@ From SHOULD requirements:
 
 ### 6.3 Non-Functional Requirements
 
-[Extract all NFR-xxx from requirements.md - organize by category]
+[Extract all NFR-xxx from ARC-{PROJECT_ID}-REQ-v*.md - organize by category]
 
 **Performance (NFR-P-xxx)**:
 - [requirement with measurable targets]
@@ -166,7 +166,7 @@ From SHOULD requirements:
 
 ### 6.4 Integration Requirements
 
-[Extract all INT-xxx from requirements.md]
+[Extract all INT-xxx from ARC-{PROJECT_ID}-REQ-v*.md]
 
 **Upstream Systems**:
 - INT-xxx: [system and integration method]
@@ -183,14 +183,14 @@ From SHOULD requirements:
 
 ### 7.1 In Scope
 
-[Extract from requirements.md scope section OR infer from MUST requirements]
+[Extract from ARC-{PROJECT_ID}-REQ-v*.md scope section OR infer from MUST requirements]
 - [Scope item 1]
 - [Scope item 2]
 - [Scope item 3]
 
 ### 7.2 Out of Scope
 
-[Extract from requirements.md OR infer from explicitly excluded items]
+[Extract from ARC-{PROJECT_ID}-REQ-v*.md OR infer from explicitly excluded items]
 - [Exclusion 1]
 - [Exclusion 2]
 
@@ -200,13 +200,13 @@ From SHOULD requirements:
 
 ### 8.1 Architecture Constraints
 
-[From architecture-principles.md - what vendors MUST comply with]
+[From ARC-000-PRIN-v*.md - what vendors MUST comply with]
 - **[Constraint Type]**: [Specific constraint from principles]
 - **[Constraint Type]**: [Specific constraint from principles]
 
 ### 8.2 Technical Dependencies
 
-[From requirements.md dependencies section or INT-xxx]
+[From ARC-{PROJECT_ID}-REQ-v*.md dependencies section or INT-xxx]
 - [Dependency 1]
 - [Dependency 2]
 
@@ -234,7 +234,7 @@ Reference: Run `/arckit.hld-review` and `/arckit.dld-review` for formal review p
 
 ### 9.2 Compliance Requirements
 
-[From architecture-principles.md and NFR-C-xxx requirements]
+[From ARC-000-PRIN-v*.md and NFR-C-xxx requirements]
 - [Compliance requirement 1]
 - [Compliance requirement 2]
 
@@ -349,7 +349,7 @@ Reference: Generate with `/arckit.diagram`, `/arckit.data-model`
 Vendors must provide:
 
 1. **Technical Proposal**
-   - Proposed solution architecture (aligned with architecture-principles.md)
+   - Proposed solution architecture (aligned with ARC-000-PRIN-v*.md)
    - Approach to each requirement category (BR, FR, NFR, INT, DR)
    - Risk assessment and mitigation strategy
    - Quality assurance approach
@@ -422,10 +422,10 @@ Vendors must provide:
 
 ### 15.2 Project Documents
 
-- **Requirements**: projects/[project]/requirements.md
-- **Architecture Principles**: .arckit/memory/architecture-principles.md
-- **Stakeholder Analysis**: projects/[project]/stakeholder-drivers.md (if exists)
-- **General RFP/SOW**: projects/[project]/procurement/sow.md (if exists)
+- **Requirements**: projects/[project]/ARC-*-REQ-v*.md
+- **Architecture Principles**: projects/000-global/ARC-000-PRIN-v*.md
+- **Stakeholder Analysis**: projects/[project]/ARC-*-STKE-v*.md (if exists)
+- **General RFP/SOW**: projects/[project]/procurement/ARC-*-SOW-*.md (if exists)
 
 ### 15.3 ArcKit Commands for Vendor Management
 

@@ -18,23 +18,23 @@ You are helping an enterprise architect review a High-Level Design (HLD) documen
    - Location of HLD document or diagrams
 
 2. **Read the governance context**:
-   - Read `.arckit/memory/architecture-principles.md` - These are the rules
-   - Read `projects/{project-dir}/requirements.md` - These must be satisfied
-   - Read `projects/{project-dir}/sow.md` - Check deliverable expectations
+   - Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` - These are the rules
+   - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - These must be satisfied
+   - Read `projects/{project-dir}/ARC-*-SOW-*.md` - Check deliverable expectations
    - Read `.arckit/templates/hld-review-template.md` - Review checklist
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
 3. **Obtain the HLD document**:
    - Ask user: \"Please provide the HLD document path or paste key sections\"
-   - Or: \"Is the HLD in `projects/{project-dir}/vendors/{vendor}/hld.md`?\"
+   - Or: \"Is the HLD in `projects/{project-dir}/vendors/{vendor}/hld-v*.md`?\"
    - Or: \"Please share architecture diagrams (I can read images)\"
 
 4. **Perform comprehensive review**:
 
    ### A. Architecture Principles Compliance
 
-   For each principle in architecture-principles.md:
+   For each principle in the architecture principles document:
    - **Check compliance**: Does the HLD follow this principle?
    - **Validation gates**: Go through the checklist items
    - **Flag violations**: Document any deviations
@@ -139,8 +139,8 @@ You are helping an enterprise architect review a High-Level Design (HLD) documen
    - Re-review requirements
 
 7. **Write outputs**:
-   - `projects/{project-dir}/vendors/{vendor}/hld-review.md` - Full review report
-   - `projects/{project-dir}/hld-review-summary.md` - Summary if comparing multiple vendors
+   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-HLDR-v1.0.md` - Full review report
+   - `projects/{project-dir}/ARC-{PROJECT_ID}-HLDR-SUM-v1.0.md` - Summary if comparing multiple vendors
    - Update traceability matrix with design references
 
    **CRITICAL - Show Summary Only**:
@@ -171,7 +171,7 @@ You should:
 - **Blocking items**:
   - [BLOCKING-01] Must add multi-AZ deployment for 99.99% uptime
   - [BLOCKING-02] Consider microservices migration path to avoid future tech debt
-- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/hld-review.md`
+- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/reviews/ARC-001-HLD-v1.0.md`
 
 ## Important Notes
 

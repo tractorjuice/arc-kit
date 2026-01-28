@@ -18,7 +18,7 @@ $ARGUMENTS
 **IMPORTANT**: Before generating a data mesh contract, verify that foundational artifacts exist:
 
 1. **Architecture Principles** (REQUIRED):
-   - Check if `.arckit/memory/architecture-principles.md` exists
+   - Check if `projects/000-global/ARC-000-PRIN-*.md` exists
    - If it does NOT exist:
      ```
      ❌ Architecture principles not found.
@@ -33,7 +33,7 @@ $ARGUMENTS
    - If it exists, proceed to Step 1
 
 2. **Data Model** (HIGHLY RECOMMENDED):
-   - Check if the project has a `data-model.md` file
+   - Check if the project has a `ARC-*-DATA-*.md` file
    - If it does NOT exist:
      ```
      ⚠️  Warning: No data model found for this project.
@@ -47,10 +47,10 @@ $ARGUMENTS
      Continue anyway? (yes/no)
      ```
    - If user says "no", stop here and tell them to run `/arckit.data-model` first
-   - If user says "yes" or if data-model.md exists, proceed to Step 1
+   - If user says "yes" or if ARC-*-DATA-*.md exists, proceed to Step 1
 
 3. **Stakeholder Analysis** (RECOMMENDED):
-   - Check if the project has `stakeholder-drivers.md`
+   - Check if the project has `ARC-*-STKE-*.md`
    - If it does NOT exist:
      ```
      ⚠️  Warning: No stakeholder analysis found.
@@ -67,7 +67,7 @@ $ARGUMENTS
      Continue anyway? (yes/no)
      ```
    - If user says "no", stop here
-   - If user says "yes" or if stakeholder-drivers.md exists, proceed to Step 1
+   - If user says "yes" or if ARC-*-STKE-*.md exists, proceed to Step 1
 
 ### Step 1: Parse User Input
 
@@ -133,9 +133,14 @@ Data mesh contracts should be organized in a subdirectory:
 mkdir -p {project_path}/data-mesh-contracts
 ```
 
-The contract file will be:
+The contract file will use the multi-instance naming pattern:
 ```
-{project_path}/data-mesh-contracts/{data-product-name}-contract.md
+{project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
+```
+
+Where `{NNN}` is the next sequential number for contracts in this project. Use the script with `--next-num` flag:
+```bash
+bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num
 ```
 
 ### Step 4: Read the Template
@@ -150,8 +155,8 @@ cat .arckit/templates/data-mesh-contract-template.md
 
 ### Step 5: Gather Context from Existing Artifacts
 
-**IF `data-model.md` exists in the project**:
-- Read `{project_path}/data-model.md`
+**IF `ARC-*-DATA-*.md` exists in the project**:
+- Read `{project_path}/ARC-*-DATA-*.md`
 - Extract:
   - Entity definitions (these become Objects in the contract)
   - Attributes (these become Properties)
@@ -159,21 +164,21 @@ cat .arckit/templates/data-mesh-contract-template.md
   - Data classifications
   - Relationships
 
-**IF `requirements.md` exists**:
-- Read `{project_path}/requirements.md`
+**IF `ARC-*-REQ-*.md` exists**:
+- Read `{project_path}/ARC-*-REQ-*.md`
 - Extract:
   - DR-xxx data requirements (these inform schema and quality rules)
   - NFR-P-xxx performance requirements (these become SLA targets)
   - NFR-A-xxx availability requirements (these become SLA uptime targets)
   - INT-xxx integration requirements (these become access methods)
 
-**IF `stakeholder-drivers.md` exists**:
-- Read `{project_path}/stakeholder-drivers.md`
+**IF `ARC-*-STKE-*.md` exists**:
+- Read `{project_path}/ARC-*-STKE-*.md`
 - Extract:
   - Stakeholder names and roles (these become ownership roles: Product Owner, Data Steward)
   - Consumer stakeholders (these inform consumer obligations)
 
-**IF `.arckit/memory/architecture-principles.md` exists**:
+**IF `projects/000-global/ARC-000-PRIN-*.md` exists**:
 - Read it to understand mesh governance standards
 - Look for principles about:
   - Federated ownership
@@ -189,7 +194,7 @@ Using the template and context gathered, generate a comprehensive data mesh cont
 **Key Sections to Populate**:
 
 1. **Document Information**:
-   - Document ID: `ARC-{project_id}-DMC-v1.0`
+   - Document ID: `ARC-{project_id}-DMC-{NNN}-v1.0` (multi-instance type, uses sequential numbering)
    - Project: `{project_name}` (Project {project_id})
    - Classification: Determine based on PII content (OFFICIAL-SENSITIVE if PII, OFFICIAL otherwise)
    - Version: Start at `1.0`
@@ -206,14 +211,14 @@ Using the template and context gathered, generate a comprehensive data mesh cont
    - Data Product: The data product name
    - Tenant: Organization name (if known from stakeholders, otherwise placeholder)
    - Purpose: Describe what this data product provides
-   - Ownership: Map from stakeholder-drivers.md if available
+   - Ownership: Map from ARC-*-STKE-*.md if available
 
 3. **Schema (Section 2)**:
-   - **If data-model.md exists**: Map entities → objects, attributes → properties
-   - **If data-model.md does NOT exist**: Create schema from scratch based on user description
+   - **If ARC-*-DATA-*.md exists**: Map entities → objects, attributes → properties
+   - **If ARC-*-DATA-*.md does NOT exist**: Create schema from scratch based on user description
    - For each object:
      - Object name (e.g., CUSTOMER, TRANSACTION)
-     - Source entity reference (if from data-model.md)
+     - Source entity reference (if from ARC-*-DATA-*.md)
      - Object type (TABLE, DOCUMENT, FILE, STREAM)
      - Properties table with: name, type, required, PII, description, business rules
      - Primary keys, foreign keys, indexes
@@ -222,7 +227,7 @@ Using the template and context gathered, generate a comprehensive data mesh cont
 
 4. **Data Quality (Section 3)**:
    - Quality dimensions: Accuracy, Validity, Completeness, Consistency, Timeliness, Uniqueness
-   - **If requirements.md exists**: Map DR-xxx requirements to quality rules
+   - **If ARC-*-REQ-*.md exists**: Map DR-xxx requirements to quality rules
    - Automated quality rules in ODCS format:
      - null_check for required fields
      - uniqueness for primary keys
@@ -233,14 +238,14 @@ Using the template and context gathered, generate a comprehensive data mesh cont
    - Alert thresholds
 
 5. **Service-Level Agreement (Section 4)**:
-   - **If requirements.md has NFR-A-xxx**: Use those as uptime targets (default: 99.9%)
-   - **If requirements.md has NFR-P-xxx**: Use those as response time targets (default: <200ms p95)
+   - **If ARC-*-REQ-*.md has NFR-A-xxx**: Use those as uptime targets (default: 99.9%)
+   - **If ARC-*-REQ-*.md has NFR-P-xxx**: Use those as response time targets (default: <200ms p95)
    - Freshness targets: <5 minutes for real-time, <1 hour for near-real-time, daily for batch
-   - Data retention: Map from data-model.md if available, otherwise use defaults (7 years for transactional, 90 days for logs)
+   - Data retention: Map from ARC-*-DATA-*.md if available, otherwise use defaults (7 years for transactional, 90 days for logs)
    - Support SLA: Critical <30min, High <4 hours, Normal <1 day
 
 6. **Access Methods (Section 5)**:
-   - **If requirements.md has INT-xxx**: Use those to define access patterns
+   - **If ARC-*-REQ-*.md has INT-xxx**: Use those to define access patterns
    - Default access methods:
      - REST API (for queries)
      - SQL Query (for analytics)
@@ -253,7 +258,7 @@ Using the template and context gathered, generate a comprehensive data mesh cont
    - Encryption: AES-256 at rest, TLS 1.3 in transit
    - Access controls: RBAC with roles (Consumer-Read, Analyst-FullRead, Admin)
    - **GDPR/UK GDPR Compliance**:
-     - PII inventory from data-model.md or schema
+     - PII inventory from ARC-*-DATA-*.md or schema
      - Legal basis: CONTRACT / LEGITIMATE_INTEREST / CONSENT
      - Data subject rights: API endpoint for access/rectification/erasure
      - Cross-border transfers: Default to UK (London region)
@@ -314,13 +319,19 @@ Using the template and context gathered, generate a comprehensive data mesh cont
 
 ### Step 7: Generate Document ID
 
-Use the `generate-document-id.sh` script:
+Use the `generate-document-id.sh` script with `--next-num` to get the next sequential contract number:
 
 ```bash
-bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0
+# Generate document ID with next sequential number
+bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --next-num
+
+# Generate filename with next sequential number
+bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num
 ```
 
-This will generate: `ARC-{project_id}-DMC-v1.0`
+This will generate IDs like:
+- First contract: `ARC-{project_id}-DMC-001-v1.0` (filename: `ARC-001-DMC-001-v1.0.md`)
+- Second contract: `ARC-{project_id}-DMC-002-v1.0` (filename: `ARC-001-DMC-002-v1.0.md`)
 
 Replace `{document_id}` placeholder in the document with this value.
 
@@ -330,9 +341,11 @@ Replace `{document_id}` placeholder in the document with this value.
 
 ```
 Write tool:
-  file_path: {project_path}/data-mesh-contracts/{data-product-name}-contract.md
+  file_path: {project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
   content: {full contract content}
 ```
+
+Note: Use the filename returned by `generate-document-id.sh --filename --next-num` for the actual path.
 
 ### Step 9: Show Summary to User
 
@@ -341,9 +354,9 @@ After writing the file, show the user a concise summary (do NOT show the full do
 ```
 ✅ Data Mesh Contract Generated
 
-**Contract**: {data-product-name}-contract.md
+**Contract**: ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
 **Location**: {project_path}/data-mesh-contracts/
-**Document ID**: ARC-{project_id}-DMC-v1.0
+**Document ID**: ARC-{project_id}-DMC-{NNN}-v1.0
 **ODCS Version**: v3.0.2
 **Contract Version**: 1.0.0
 **Status**: DRAFT
@@ -406,26 +419,26 @@ After writing the file, show the user a concise summary (do NOT show the full do
 
 ---
 
-**Full contract**: `{project_path}/data-mesh-contracts/{data-product-name}-contract.md` ({line_count} lines)
+**Full contract**: `{project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md` ({line_count} lines)
 ```
 
 ### Step 10: Post-Generation Recommendations
 
 Based on what artifacts exist, recommend next steps:
 
-**If no requirements.md**:
+**If no ARC-*-REQ-*.md**:
 ```
 💡 Tip: Run /arckit.requirements to capture DR-xxx data requirements.
    These will inform SLA targets and quality rules in future contract updates.
 ```
 
-**If no stakeholder-drivers.md**:
+**If no ARC-*-STKE-*.md**:
 ```
 💡 Tip: Run /arckit.stakeholders to identify domain owners and consumers.
    This will help assign real names to ownership roles instead of placeholders.
 ```
 
-**If PII exists but no dpia.md**:
+**If PII exists but no ARC-*-DPIA-*.md**:
 ```
 ⚠️  This contract contains PII ({N} fields marked as PII).
 
@@ -493,7 +506,7 @@ User: /arckit.data-mesh-contract Create contract for customer payments
 Assistant:
   - Checks prerequisites ✅
   - Creates project 001-customer-payments
-  - Finds data-model.md with CUSTOMER and TRANSACTION entities
+  - Finds ARC-*-DATA-*.md with CUSTOMER and TRANSACTION entities
   - Generates contract mapping entities → objects
   - Shows summary (not full document)
 ```
@@ -514,7 +527,7 @@ Assistant:
 User: /arckit.data-mesh-contract fraud-detection-features
 Assistant:
   - Checks prerequisites ✅
-  - Finds data-model.md, requirements.md, stakeholder-drivers.md
+  - Finds ARC-*-DATA-*.md, ARC-*-REQ-*.md, ARC-*-STKE-*.md
   - Maps entities → objects
   - Maps DR-xxx → quality rules
   - Maps NFR-P-xxx → SLA response time targets

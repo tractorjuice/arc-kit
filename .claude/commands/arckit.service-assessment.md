@@ -62,38 +62,36 @@ Determine which ArcKit project directory to analyze:
 Systematically read and analyze all available ArcKit artifacts in the project directory:
 
 **Core Artifacts**:
-- `project-plan.md` - Project phases, timeline, team structure, milestones
-- `stakeholder-drivers.md` - Stakeholders, user needs, drivers, RACI matrix, goals
-- `risk-register.md` - Risks, security considerations, mitigation strategies
-- `sobc.md` - Strategic business case, benefits, success metrics, TCO
-- `requirements.md` - Functional requirements, NFRs, user stories, acceptance criteria
-- `data-model.md` - Data entities, GDPR compliance, data governance
-- `.arckit/memory/architecture-principles.md` - Architecture principles and rationale
+- `ARC-*-PLAN-*.md` - Project phases, timeline, team structure, milestones
+- `ARC-*-STKE-*.md` - Stakeholders, user needs, drivers, RACI matrix, goals
+- `ARC-*-RISK-*.md` - Risks, security considerations, mitigation strategies
+- `ARC-*-SOBC-*.md` - Strategic business case, benefits, success metrics, TCO
+- `ARC-*-REQ-*.md` - Functional requirements, NFRs, user stories, acceptance criteria
+- `ARC-*-DATA-*.md` - Data entities, GDPR compliance, data governance
+- `projects/000-global/ARC-000-PRIN-*.md` - Architecture principles and rationale
 
 **Design & Review Artifacts**:
-- `hld-review-*.md` - High-level design reviews, architecture decisions
-- `dld-review-*.md` - Detailed design reviews, implementation details
-- `analysis-report.md` - Governance analysis, quality assessment
-- `traceability-matrix.md` - Requirements traceability
+- `reviews/ARC-*-HLD-*.md` - High-level design reviews, architecture decisions
+- `reviews/ARC-*-DLD-*.md` - Detailed design reviews, implementation details
+- `ARC-*-ANAL-*.md` - Governance analysis, quality assessment
+- `ARC-*-TRAC-*.md` - Requirements traceability
 
 **Compliance Artifacts**:
-- `ai-playbook-assessment.md` - AI ethics and governance
-- `atrs-record.md` - AI transparency and risk standards
-- `tcop-assessment.md` - Technology Code of Practice compliance
-- `ukgov-secure-by-design.md` - Security and privacy assessment
-- `mod-secure-by-design.md` - MOD security assessment (if MOD project)
+- `ARC-*-AIPB-*.md` - AI ethics and governance
+- `ARC-*-ATRS-*.md` - AI transparency and risk standards
+- `ARC-*-TCOP-*.md` - Technology Code of Practice compliance
+- `ARC-*-SECD-*.md` - Security and privacy assessment
+- `ARC-*-SECD-MOD-*.md` - MOD security assessment (if MOD project)
 
 **Procurement & Research Artifacts**:
-- `sow.md` - Statement of work, RFP, vendor requirements
-- `vendor-evaluation.md` - Vendor scoring and selection
+- `ARC-*-SOW-*.md` - Statement of work, RFP, vendor requirements
+- `ARC-*-EVAL-*.md` - Vendor scoring and selection
 - `research/*/` - Technology research findings
 - `wardley-maps/` - Strategic analysis, evolution, build vs buy
 
 **Architecture Artifacts**:
-- `diagrams/context-diagram.md` - C4 context diagram
-- `diagrams/container-diagram.md` - C4 container diagram
-- `diagrams/component-diagram.md` - C4 component diagram
-- `diagrams/deployment-diagram.md` - Deployment architecture
+- `diagrams/ARC-*-DIAG-*.md` - C4 context, container, component diagrams
+- `diagrams/ARC-*-DIAG-*.md` - Deployment architecture diagrams
 
 ### Step 3: Map Evidence to Service Standard Points
 
@@ -102,10 +100,10 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 1: Understand Users and Their Needs
 
 **Evidence Sources**:
-- `stakeholder-drivers.md` - User groups, needs, pain points, drivers
-- `requirements.md` - User stories, personas, user journeys, acceptance criteria
-- `project-plan.md` - User research activities planned/completed
-- `hld-review.md` - User needs validation, usability considerations
+- `ARC-*-STKE-*.md` - User groups, needs, pain points, drivers
+- `ARC-*-REQ-*.md` - User stories, personas, user journeys, acceptance criteria
+- `ARC-*-PLAN-*.md` - User research activities planned/completed
+- `reviews/ARC-*-HLDR-*.md` - User needs validation, usability considerations
 
 **Phase-Specific Evidence Requirements**:
 
@@ -133,11 +131,11 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 2: Solve a Whole Problem for Users
 
 **Evidence Sources**:
-- `requirements.md` - End-to-end user journeys, functional requirements
-- `stakeholder-drivers.md` - User goals, desired outcomes
-- `wardley-maps/` - Value chain, user needs to components mapping
-- `diagrams/context-diagram.md` - Service boundaries, external systems
-- `hld-review.md` - Integration strategy, channel coverage
+- `ARC-*-REQ-*.md` - End-to-end user journeys, functional requirements
+- `ARC-*-STKE-*.md` - User goals, desired outcomes
+- `wardley-maps/ARC-*-WARD-*.md` - Value chain, user needs to components mapping
+- `diagrams/ARC-*-DIAG-*.md` - Service boundaries, external systems
+- `reviews/ARC-*-HLDR-*.md` - Integration strategy, channel coverage
 
 **Phase-Specific Evidence Requirements**:
 
@@ -162,10 +160,10 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 3: Provide a Joined Up Experience Across All Channels
 
 **Evidence Sources**:
-- `requirements.md` - Multi-channel requirements, integration points
-- `hld-review.md` - Channel strategy, integration architecture
+- `ARC-*-REQ-*.md` - Multi-channel requirements, integration points
+- `reviews/ARC-*-HLD-*.md` - Channel strategy, integration architecture
 - `diagrams/` - System integration diagrams
-- `data-model.md` - Data consistency across channels
+- `ARC-*-DATA-*.md` - Data consistency across channels
 
 **Phase-Specific Evidence Requirements**:
 
@@ -191,9 +189,9 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 4: Make the Service Simple to Use
 
 **Evidence Sources**:
-- `requirements.md` - Usability requirements, simplicity NFRs
-- `hld-review.md` - UX design review, simplicity assessment
-- `project-plan.md` - Usability testing activities
+- `ARC-*-REQ-*.md` - Usability requirements, simplicity NFRs
+- `reviews/ARC-*-HLD-*.md` - UX design review, simplicity assessment
+- `ARC-*-PLAN-*.md` - Usability testing activities
 
 **Phase-Specific Evidence Requirements**:
 
@@ -219,10 +217,10 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 5: Make Sure Everyone Can Use the Service
 
 **Evidence Sources**:
-- `requirements.md` - WCAG 2.1 AA requirements, accessibility NFRs
-- `ukgov-secure-by-design.md` - Accessibility considerations
-- `hld-review.md` - Accessibility design review
-- `dld-review.md` - Assistive technology compatibility
+- `ARC-*-REQ-*.md` - WCAG 2.1 AA requirements, accessibility NFRs
+- `ARC-*-SECD-*.md` - Accessibility considerations
+- `reviews/ARC-*-HLD-*.md` - Accessibility design review
+- `reviews/ARC-*-DLD-*.md` - Assistive technology compatibility
 
 **Phase-Specific Evidence Requirements**:
 
@@ -249,9 +247,9 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 6: Have a Multidisciplinary Team
 
 **Evidence Sources**:
-- `stakeholder-drivers.md` - RACI matrix, team roles
-- `project-plan.md` - Team structure, roles, skills
-- `sobc.md` - Team costs, sustainability plan
+- `ARC-*-STKE-*.md` - RACI matrix, team roles
+- `ARC-*-PLAN-*.md` - Team structure, roles, skills
+- `ARC-*-SOBC-*.md` - Team costs, sustainability plan
 
 **Phase-Specific Evidence Requirements**:
 
@@ -278,9 +276,9 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 7: Use Agile Ways of Working
 
 **Evidence Sources**:
-- `project-plan.md` - GDS phases, sprint structure, agile ceremonies
-- `risk-register.md` - Iterative risk management
-- `hld-review.md`, `dld-review.md` - Design iterations
+- `ARC-*-PLAN-*.md` - GDS phases, sprint structure, agile ceremonies
+- `ARC-*-RISK-*.md` - Iterative risk management
+- `reviews/ARC-*-HLD-*.md`, `reviews/ARC-*-DLD-*.md` - Design iterations
 
 **Phase-Specific Evidence Requirements**:
 
@@ -306,10 +304,10 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 8: Iterate and Improve Frequently
 
 **Evidence Sources**:
-- `hld-review.md`, `dld-review.md` - Design iterations, review dates
-- `analysis-report.md` - Governance improvements over time
-- `project-plan.md` - Iteration cycles, review gates
-- `requirements.md` - Requirements evolution
+- `reviews/ARC-*-HLD-*.md`, `reviews/ARC-*-DLD-*.md` - Design iterations, review dates
+- `ARC-*-ANAL-*.md` - Governance improvements over time
+- `ARC-*-PLAN-*.md` - Iteration cycles, review gates
+- `ARC-*-REQ-*.md` - Requirements evolution
 
 **Phase-Specific Evidence Requirements**:
 
@@ -335,12 +333,12 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 9: Create a Secure Service Which Protects Users' Privacy
 
 **Evidence Sources**:
-- `ukgov-secure-by-design.md` - NCSC security principles, threat model
-- `data-model.md` - GDPR compliance, data protection, PII handling
-- `atrs-record.md` - AI transparency and risk (if AI service)
-- `risk-register.md` - Security risks and mitigations
-- `requirements.md` - Security and privacy NFRs
-- `tcop-assessment.md` - TCoP security points
+- `ARC-*-SECD-*.md` - NCSC security principles, threat model
+- `ARC-*-DATA-*.md` - GDPR compliance, data protection, PII handling
+- `ARC-*-ATRS-*.md` - AI transparency and risk (if AI service)
+- `ARC-*-RISK-*.md` - Security risks and mitigations
+- `ARC-*-REQ-*.md` - Security and privacy NFRs
+- `ARC-*-TCOP-*.md` - TCoP security points
 
 **Phase-Specific Evidence Requirements**:
 
@@ -369,10 +367,10 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 10: Define What Success Looks Like and Publish Performance Data
 
 **Evidence Sources**:
-- `requirements.md` - KPIs, success metrics, NFRs
-- `sobc.md` - Benefits realization, success criteria, ROI
-- `project-plan.md` - Milestones, success criteria per phase
-- `tcop-assessment.md` - Performance metrics approach
+- `ARC-*-REQ-*.md` - KPIs, success metrics, NFRs
+- `ARC-*-SOBC-*.md` - Benefits realization, success criteria, ROI
+- `ARC-*-PLAN-*.md` - Milestones, success criteria per phase
+- `ARC-*-TCOP-*.md` - Performance metrics approach
 
 **Phase-Specific Evidence Requirements**:
 
@@ -401,10 +399,10 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Evidence Sources**:
 - `research/` - Technology research, proof of concepts
 - `wardley-maps/` - Build vs buy analysis, technology evolution
-- `tcop-assessment.md` - Technology choices justified (TCoP Point 11)
-- `hld-review.md` - Technology stack, architecture decisions
-- `sow.md` - Vendor selection, procurement justification
-- `vendor-evaluation.md` - Technology/vendor scoring
+- `ARC-*-TCOP-*.md` - Technology choices justified (TCoP Point 11)
+- `reviews/ARC-*-HLD-*.md` - Technology stack, architecture decisions
+- `ARC-*-SOW-*.md` - Vendor selection, procurement justification
+- `ARC-*-EVAL-*.md` - Technology/vendor scoring
 
 **Phase-Specific Evidence Requirements**:
 
@@ -432,9 +430,9 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 12: Make New Source Code Open
 
 **Evidence Sources**:
-- `hld-review.md` - Open source approach, repository links
-- `tcop-assessment.md` - TCoP Point 12 (Open source code)
-- `requirements.md` - Open source licensing requirements
+- `reviews/ARC-*-HLD-*.md` - Open source approach, repository links
+- `ARC-*-TCOP-*.md` - TCoP Point 12 (Open source code)
+- `ARC-*-REQ-*.md` - Open source licensing requirements
 
 **Phase-Specific Evidence Requirements**:
 
@@ -461,10 +459,10 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 13: Use and Contribute to Open Standards, Common Components and Patterns
 
 **Evidence Sources**:
-- `tcop-assessment.md` - TCoP Point 13 (Open standards)
-- `hld-review.md` - GOV.UK Design System usage, API standards, common components
-- `requirements.md` - Standards compliance requirements
-- `data-model.md` - Data standards
+- `ARC-*-TCOP-*.md` - TCoP Point 13 (Open standards)
+- `reviews/ARC-*-HLD-*.md` - GOV.UK Design System usage, API standards, common components
+- `ARC-*-REQ-*.md` - Standards compliance requirements
+- `ARC-*-DATA-*.md` - Data standards
 
 **Phase-Specific Evidence Requirements**:
 
@@ -491,10 +489,10 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 14: Operate a Reliable Service
 
 **Evidence Sources**:
-- `requirements.md` - Availability/reliability NFRs, SLAs
-- `hld-review.md` - Resilience architecture, failover, disaster recovery
-- `dld-review.md` - Infrastructure resilience, monitoring
-- `risk-register.md` - Operational risks, incident response
+- `ARC-*-REQ-*.md` - Availability/reliability NFRs, SLAs
+- `reviews/ARC-*-HLD-*.md` - Resilience architecture, failover, disaster recovery
+- `reviews/ARC-*-DLD-*.md` - Infrastructure resilience, monitoring
+- `ARC-*-RISK-*.md` - Operational risks, incident response
 
 **Phase-Specific Evidence Requirements**:
 
@@ -623,9 +621,9 @@ Provide practical guidance for the assessment day:
 
 Generate a comprehensive markdown report saved to:
 
-**`projects/{project-dir}/service-assessment-{phase}-prep.md`**
+**`projects/{project-dir}/ARC-{PROJECT_ID}-SASS-v1.0.md`**
 
-Example: `projects/001-nhs-appointment/service-assessment-alpha-prep.md`
+Example: `projects/001-nhs-appointment/ARC-001-SASS-v1.0.md`
 
 ## Report Structure
 
@@ -636,7 +634,7 @@ Example: `projects/001-nhs-appointment/service-assessment-alpha-prep.md`
 **Assessment Phase**: [Alpha/Beta/Live]
 **Assessment Date**: [If provided, else "Not yet scheduled"]
 **Report Generated**: [Current date]
-**ArcKit Version**: 0.5.0
+**ArcKit Version**: 1.0.0
 
 ---
 
@@ -691,11 +689,11 @@ Example: `projects/001-nhs-appointment/service-assessment-alpha-prep.md`
 
 **Evidence Found in ArcKit Artifacts**:
 
-✅ **stakeholder-drivers.md** (lines XX-YY)
+✅ **ARC-*-STKE-*.md** (lines XX-YY)
    - [Specific evidence found]
    - [What this demonstrates]
 
-✅ **requirements.md** (Section X: User Stories)
+✅ **ARC-*-REQ-*.md** (Section X: User Stories)
    - [Specific evidence found]
    - [What this demonstrates]
 
@@ -754,20 +752,20 @@ Example: `projects/001-nhs-appointment/service-assessment-alpha-prep.md`
 
 | Service Standard Point | ArcKit Artifacts | Status | Critical Gaps |
 |------------------------|------------------|--------|---------------|
-| 1. Understand users | stakeholder-drivers.md, requirements.md | 🟡 Partial | Prototype testing with users |
-| 2. Solve whole problem | requirements.md, wardley-maps/ | 🟢 Complete | None |
-| 3. Joined up experience | hld-review.md, diagrams/ | 🟡 Partial | Channel integration testing |
-| 4. Simple to use | requirements.md, hld-review.md | 🟢 Complete | None |
-| 5. Everyone can use | requirements.md, ukgov-secure-by-design.md | 🔴 Not Ready | WCAG 2.1 AA testing |
-| 6. Multidisciplinary team | stakeholder-drivers.md, project-plan.md | 🟢 Complete | None |
-| 7. Agile ways of working | project-plan.md | 🟢 Complete | None |
-| 8. Iterate frequently | hld-review.md, dld-review.md | 🟡 Partial | Iteration log |
-| 9. Secure and private | ukgov-secure-by-design.md, data-model.md | 🟢 Complete | None |
-| 10. Success metrics | requirements.md, sobc.md | 🟡 Partial | Performance dashboard |
-| 11. Right tools | research/, wardley-maps/, tcop-assessment.md | 🟢 Complete | None |
-| 12. Open source | hld-review.md | 🔴 Not Ready | Public code repository |
-| 13. Open standards | tcop-assessment.md, hld-review.md | 🟢 Complete | None |
-| 14. Reliable service | requirements.md, hld-review.md | 🟡 Partial | Load testing results |
+| 1. Understand users | ARC-*-STKE-*.md, ARC-*-REQ-*.md | 🟡 Partial | Prototype testing with users |
+| 2. Solve whole problem | ARC-*-REQ-*.md, wardley-maps/ | 🟢 Complete | None |
+| 3. Joined up experience | reviews/ARC-*-HLD-*.md, diagrams/ | 🟡 Partial | Channel integration testing |
+| 4. Simple to use | ARC-*-REQ-*.md, reviews/ARC-*-HLD-*.md | 🟢 Complete | None |
+| 5. Everyone can use | ARC-*-REQ-*.md, ARC-*-SECD-*.md | 🔴 Not Ready | WCAG 2.1 AA testing |
+| 6. Multidisciplinary team | ARC-*-STKE-*.md, ARC-*-PLAN-*.md | 🟢 Complete | None |
+| 7. Agile ways of working | ARC-*-PLAN-*.md | 🟢 Complete | None |
+| 8. Iterate frequently | reviews/ARC-*-HLD-*.md, reviews/ARC-*-DLD-*.md | 🟡 Partial | Iteration log |
+| 9. Secure and private | ARC-*-SECD-*.md, ARC-*-DATA-*.md | 🟢 Complete | None |
+| 10. Success metrics | ARC-*-REQ-*.md, ARC-*-SOBC-*.md | 🟡 Partial | Performance dashboard |
+| 11. Right tools | research/, wardley-maps/, ARC-*-TCOP-*.md | 🟢 Complete | None |
+| 12. Open source | reviews/ARC-*-HLD-*.md | 🔴 Not Ready | Public code repository |
+| 13. Open standards | ARC-*-TCOP-*.md, reviews/ARC-*-HLD-*.md | 🟢 Complete | None |
+| 14. Reliable service | ARC-*-REQ-*.md, reviews/ARC-*-HLD-*.md | 🟡 Partial | Load testing results |
 
 **Summary**:
 - ✅ Strong evidence: Points X, Y, Z
@@ -847,17 +845,17 @@ Priority: Strengthens overall case but not blocking
 **Send 1 week before assessment**:
 
 Required documentation:
-- [ ] Project overview (1-2 pages) - Use `project-plan.md` summary
-- [ ] User research repository or summary - From `stakeholder-drivers.md` and user research findings
+- [ ] Project overview (1-2 pages) - Use `ARC-*-PLAN-*.md` summary
+- [ ] User research repository or summary - From `ARC-*-STKE-*.md` and user research findings
 - [ ] Service architecture diagrams - From `diagrams/` directory
 - [ ] Prototype/demo environment URL (if applicable)
 
 Recommended documentation:
 - [ ] Key ArcKit artifacts:
-  - `stakeholder-drivers.md` - Stakeholders and user needs
-  - `requirements.md` - Requirements and user stories
-  - `hld-review.md` - Architecture decisions
-  - `ukgov-secure-by-design.md` - Security approach
+  - `ARC-*-STKE-*.md` - Stakeholders and user needs
+  - `ARC-*-REQ-*.md` - Requirements and user stories
+  - `reviews/ARC-*-HLD-*.md` - Architecture decisions
+  - `ARC-*-SECD-*.md` - Security approach
   - [List other relevant phase-specific artifacts]
 
 Optional supplementary:
@@ -1237,13 +1235,13 @@ Create a public document (visible to assessment team) showing:
 /arckit.service-assessment PHASE=alpha DATE=2025-12-15
 ```
 
-Generates: `projects/001-nhs-appointment/service-assessment-alpha-prep.md`
+Generates: `projects/001-nhs-appointment/ARC-001-SVCASS-v1.0.md`
 
 ```
 /arckit.service-assessment PHASE=beta
 ```
 
-Generates: `projects/002-payment-gateway/service-assessment-beta-prep.md`
+Generates: `projects/002-payment-gateway/ARC-002-SVCASS-v1.0.md`
 
 ## Success Indicators
 

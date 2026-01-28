@@ -1,6 +1,6 @@
 # Architecture Roadmap: [INITIATIVE_NAME]
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.roadmap`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.roadmap`
 
 ## Document Control
 
@@ -62,14 +62,14 @@
 [What business transformation is this roadmap enabling?]
 
 #### Link to Stakeholder Drivers
-[Reference to stakeholder-drivers.md document]
+[Reference to ARC-{PROJECT_ID}-STKE-v*.md document]
 
 | Stakeholder Group | Key Driver | Strategic Goal | Roadmap Alignment |
 |-------------------|------------|----------------|-------------------|
 | [Group] | [Driver] | [Goal] | [Which roadmap theme/initiative] |
 
 #### Architecture Principles Alignment
-[Reference to architecture-principles.md]
+[Reference to ARC-000-PRIN-v*.md]
 
 | Principle | Roadmap Compliance | Timeline for Full Compliance |
 |-----------|-------------------|------------------------------|
@@ -105,7 +105,7 @@
 - **Impact on Delivery**: [How debt slows current delivery]
 
 #### Risk Exposure
-[Link to risk-register.md]
+[Link to ARC-{PROJECT_ID}-RISK-v*.md]
 
 **Strategic Risks**:
 1. **Risk 1**: [Description, impact on roadmap]
@@ -453,7 +453,7 @@ flowchart TD
 | R-002 | Vendor lock-in to cloud provider | High | Medium | Multi-cloud strategy, abstraction layers | FY [YEAR] Q2 | [Cloud Architect] |
 | R-003 | Skills shortage in cloud-native development | High | High | Training program, partner with suppliers | FY [YEAR] Q1 | [HR/Recruitment] |
 
-[Link to full risk register: risk-register.md]
+[Link to full risk register: ARC-{PROJECT_ID}-RISK-v*.md]
 
 ### Critical Assumptions
 
@@ -590,21 +590,21 @@ flowchart TD
 ### Links to Architecture Artifacts
 
 #### Stakeholder Drivers → Roadmap Themes
-[Reference: stakeholder-drivers.md]
+[Reference: ARC-{PROJECT_ID}-STKE-v*.md]
 
 | Stakeholder Driver | Strategic Goal | Roadmap Theme | Timeline |
 |--------------------|----------------|---------------|----------|
 | [Driver ID] | [Goal] | Theme [N] | FY [YEAR] |
 
 #### Architecture Principles → Compliance Timeline
-[Reference: architecture-principles.md]
+[Reference: ARC-000-PRIN-v*.md]
 
 | Principle | Current Compliance | Roadmap Activities | Target Compliance Date |
 |-----------|-------------------|-------------------|------------------------|
 | [Principle Name] | [%] | [Activities] | FY [YEAR] Q[N] |
 
 #### Requirements → Capability Delivery
-[Reference: requirements.md]
+[Reference: ARC-{PROJECT_ID}-REQ-v*.md]
 
 | Requirement ID | Capability Delivered | Roadmap Phase | Delivery Date |
 |----------------|---------------------|---------------|---------------|
@@ -618,7 +618,7 @@ flowchart TD
 | [Component] | Custom (0.35) | Product (0.65) | FY [YEAR] - FY [YEAR+1] |
 
 #### Risk Register → Mitigation Timeline
-[Reference: risk-register.md]
+[Reference: ARC-{PROJECT_ID}-RISK-v*.md]
 
 | Risk ID | Mitigation Activity | Roadmap Phase | Mitigation Date |
 |---------|-------------------|---------------|-----------------|

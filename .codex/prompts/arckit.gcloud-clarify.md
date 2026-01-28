@@ -28,17 +28,17 @@ This command analyzes gaps between requirements and service descriptions, then g
 
 a. **Project Requirements** (MUST exist):
    - Check if user specified a project name/number
-   - Look for `projects/[project]/requirements.md`
+   - Look for `projects/[project]/ARC-*-REQ-v*.md`
    - If NOT found: ERROR "Run /arckit.requirements first - need source requirements"
 
 b. **G-Cloud Search Results** (MUST exist):
-   - Look for `projects/[project]/procurement/gcloud-requirements.md`
+   - Look for `projects/[project]/procurement/ARC-*-GCLD-v*.md`
    - If NOT found: ERROR "Run /arckit.gcloud-search first - need service search results"
    - If exists but no services found: ERROR "No services to clarify - search returned no results"
 
 ### 2. Load Project Context
 
-1. Read `projects/[project]/requirements.md`:
+1. Read `projects/[project]/ARC-*-REQ-v*.md`:
    - Extract all MUST requirements (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx with MUST priority)
    - Extract all SHOULD requirements
    - Extract compliance requirements (NFR-C-xxx)
@@ -46,7 +46,7 @@ b. **G-Cloud Search Results** (MUST exist):
    - Extract performance requirements (NFR-P-xxx)
    - Extract security requirements (NFR-S-xxx)
 
-2. Read `projects/[project]/procurement/gcloud-requirements.md`:
+2. Read `projects/[project]/procurement/ARC-*-GCLD-v*.md`:
    - Extract shortlisted services (top 3-5 from Section 6)
    - For each service extract:
      - Service name
@@ -199,7 +199,7 @@ Create risk matrix for each service:
 
 ### 6. Generate Output Document
 
-Create `projects/[project]/procurement/gcloud-clarification-questions.md`:
+Create `projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v1.0.md`:
 
 ```markdown
 # G-Cloud Service Clarification Questions
@@ -366,8 +366,8 @@ Thank you,
 
 ## 📎 Referenced Documents
 
-- **Requirements**: projects/[project]/requirements.md
-- **G-Cloud Search**: projects/[project]/procurement/gcloud-requirements.md
+- **Requirements**: projects/[project]/ARC-*-REQ-*.md
+- **G-Cloud Search**: projects/[project]/procurement/gcloud-ARC-*-REQ-*.md
 - **Service Pages**: [list all service URLs]
 
 ---
@@ -398,7 +398,7 @@ Output to user:
 ✅ Generated G-Cloud clarification questions for [PROJECT_NAME]
 
 Services Analyzed: [N]
-Document: projects/[project]/procurement/gcloud-clarification-questions.md
+Document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v1.0.md
 
 Gap Analysis Summary:
 - [Service 1]: [Risk Level] - [N] critical gaps, [N] high gaps
@@ -411,7 +411,7 @@ Recommendations:
 - 🟢 [N] services are LOW risk (proceed to technical demo)
 
 Next Steps:
-1. Review generated questions in gcloud-clarification-questions.md
+1. Review generated questions in ARC-{PROJECT_ID}-GCLC-v1.0.md
 2. Send email to suppliers using provided templates
 3. Set response deadline: [DATE + 1 week]
 4. Schedule follow-up to review responses
@@ -455,8 +455,8 @@ Important: Do not award contracts to services with CRITICAL gaps until gaps are 
 
 ## Error Handling
 
-- **No requirements.md**: ERROR "Requirements not found - run /arckit.requirements first"
-- **No gcloud-requirements.md**: ERROR "G-Cloud search results not found - run /arckit.gcloud-search first"
+- **No ARC-*-REQ-*.md**: ERROR "Requirements not found - run /arckit.requirements first"
+- **No gcloud-ARC-*-REQ-*.md**: ERROR "G-Cloud search results not found - run /arckit.gcloud-search first"
 - **No services shortlisted**: ERROR "No services to clarify - gcloud-search found no results"
 - **All MUST requirements confirmed**: INFO "All MUST requirements confirmed with evidence - minimal clarification needed. Proceed to /arckit.evaluate"
 

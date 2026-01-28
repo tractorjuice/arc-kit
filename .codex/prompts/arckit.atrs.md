@@ -31,9 +31,9 @@ $ARGUMENTS
    - **LOW-RISK**: Administrative, productivity tools, recommendations with human control
 
 4. **Read relevant project documents**:
-   - Read `.arckit/memory/architecture-principles.md` (if exists)
-   - Read `projects/{project-dir}/requirements.md` (if exists)
-   - Read `projects/{project-dir}/ai-playbook-assessment.md` (if exists - for AI systems)
+   - Read `projects/000-global/ARC-000-PRIN-*.md` (if exists)
+   - Read `projects/{project-dir}/ARC-*-REQ-*.md` (if exists)
+   - Read any `ARC-*-AIPB-*.md` file in `projects/{project-dir}/` (if exists - for AI systems)
    - Read `.arckit/templates/uk-gov-atrs-template.md` for structure
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
@@ -183,7 +183,7 @@ $ARGUMENTS
 - Periodic reviews
 
 8. **Link to existing ArcKit artifacts**:
-   - Map to requirements from `requirements.md`
+   - Map to requirements from `ARC-*-REQ-*.md`
    - Reference AI Playbook assessment (if exists)
    - Reference TCoP assessment (if exists)
    - Reference design reviews (HLD/DLD)
@@ -207,7 +207,7 @@ $ARGUMENTS
 
 10. **Generate comprehensive ATRS record**:
 
-Output location: `projects/{project-dir}/atrs-record.md`
+Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-ATRS-v1.0.md`
 
 Use the template structure from `uk-gov-atrs-template.md`
 
@@ -265,7 +265,7 @@ You should:
 - Flag completeness: 95% complete
 - **BLOCKING**: Need to add fallback procedure for system failures
 - **WARNING**: Model card not yet published (recommended)
-- Write to `projects/NNN-benefits-chatbot/atrs-record.md`
+- Write to `projects/NNN-benefits-chatbot/ARC-NNN-ATRS-v1.0.md`
 - Provide next steps: "Complete fallback procedures, then ready for SRO approval and GOV.UK publication"
 
 ## Important Notes

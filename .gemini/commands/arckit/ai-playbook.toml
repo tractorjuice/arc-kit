@@ -42,8 +42,8 @@ You are helping a UK government organization assess compliance with the UK Gover
 - Examples: Email categorization, meeting scheduling, document summarization
 
 3. **Read relevant project documents**:
-   - Read `.arckit/memory/architecture-principles.md` (if exists)
-   - Read `projects/{project-dir}/requirements.md` (if exists)
+   - Read `projects/000-global/ARC-000-PRIN-*.md` (if exists)
+   - Read `projects/{project-dir}/ARC-*-REQ-*.md` (if exists)
    - Read `.arckit/templates/uk-gov-ai-playbook-template.md` for assessment structure
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
@@ -294,7 +294,7 @@ Create detailed report with:
 
 10. **Write comprehensive output**:
 
-Output location: `projects/{project-dir}/ai-playbook-assessment.md`
+Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-AIPB-v1.0.md`
 
 Use template structure from `uk-gov-ai-playbook-template.md`
 
@@ -345,7 +345,7 @@ You should:
   3. Publish ATRS
   4. Create contestability process
   5. Re-assess after remediation
-- Write to `projects/NNN-benefits-chatbot/ai-playbook-assessment.md`
+- Write to `projects/NNN-benefits-chatbot/ARC-NNN-AIPB-v1.0.md`
 - **Summary**: \"HIGH-RISK AI system with 4 blocking issues. Cannot deploy until ALL principles met.\"
 
 ## Important Notes

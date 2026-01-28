@@ -153,24 +153,60 @@ Use ArcKit commands to generate project artifacts in the recommended order:
 
 ## Project Structure
 
-Documents will be created in this directory as you run ArcKit commands:
+Documents use standardized naming: \`ARC-{PROJECT_ID}-{TYPE}-v{VERSION}.md\`
 
 \`\`\`
 $PROJECT_DIR_NAME/
 ├── README.md (this file)
-├── stakeholder-analysis.md (from /arckit.stakeholders)
-├── risk-register.md (from /arckit.risk)
-├── sobc.md (from /arckit.sobc)
-├── requirements.md (from /arckit.requirements)
-├── data-model.md (from /arckit.data-model)
-├── sow.md (from /arckit.sow)
-├── evaluation-criteria.md (from /arckit.evaluate)
-├── traceability-matrix.md (from /arckit.traceability)
-├── hld-review-YYYYMMDD.md (from /arckit.hld-review)
-├── dld-review-YYYYMMDD.md (from /arckit.dld-review)
-├── wardley-maps/ (from /arckit.wardley)
-└── vendors/ (vendor proposals)
+│
+├── # Core Documents
+├── ARC-$PROJECT_NUMBER-STKE-v1.0.md     # Stakeholder drivers (/arckit.stakeholders)
+├── ARC-$PROJECT_NUMBER-RISK-v1.0.md     # Risk register (/arckit.risk)
+├── ARC-$PROJECT_NUMBER-SOBC-v1.0.md     # Business case (/arckit.sobc)
+├── ARC-$PROJECT_NUMBER-REQ-v1.0.md      # Requirements (/arckit.requirements)
+├── ARC-$PROJECT_NUMBER-DATA-v1.0.md     # Data model (/arckit.data-model)
+├── ARC-$PROJECT_NUMBER-RSCH-v1.0.md     # Research findings (/arckit.research)
+├── ARC-$PROJECT_NUMBER-TRAC-v1.0.md     # Traceability matrix (/arckit.traceability)
+│
+├── # Procurement
+├── ARC-$PROJECT_NUMBER-SOW-v1.0.md      # Statement of Work (/arckit.sow)
+├── ARC-$PROJECT_NUMBER-EVAL-v1.0.md     # Evaluation criteria (/arckit.evaluate)
+│
+├── # Multi-instance Documents (subdirectories)
+├── decisions/
+│   ├── ARC-$PROJECT_NUMBER-ADR-001-v1.0.md  # Architecture decisions (/arckit.adr)
+│   └── ARC-$PROJECT_NUMBER-ADR-002-v1.0.md
+├── diagrams/
+│   └── ARC-$PROJECT_NUMBER-DIAG-001-v1.0.md # Diagrams (/arckit.diagram)
+├── wardley-maps/
+│   └── ARC-$PROJECT_NUMBER-WARD-001-v1.0.md # Wardley maps (/arckit.wardley)
+├── reviews/
+│   ├── ARC-$PROJECT_NUMBER-HLD-v1.0.md      # HLD review (/arckit.hld-review)
+│   └── ARC-$PROJECT_NUMBER-DLD-v1.0.md      # DLD review (/arckit.dld-review)
+│
+└── vendors/                             # Vendor proposals
 \`\`\`
+
+## Document Type Codes
+
+| Code | Document Type |
+|------|---------------|
+| REQ | Requirements |
+| STKE | Stakeholder Analysis |
+| RISK | Risk Register |
+| SOBC | Strategic Outline Business Case |
+| DATA | Data Model |
+| ADR | Architecture Decision Record |
+| RSCH | Research Findings |
+| SOW | Statement of Work |
+| EVAL | Evaluation Criteria |
+| HLD | High-Level Design Review |
+| DLD | Detailed-Level Design Review |
+| TRAC | Traceability Matrix |
+| DIAG | Architecture Diagram |
+| WARD | Wardley Map |
+| TCOP | Technology Code of Practice |
+| SECD | Secure by Design |
 
 ## Status
 
@@ -202,21 +238,31 @@ log_success "Project created successfully"
 NEXT_STEPS=()
 TEMPLATES_DIR="$(get_templates_dir "$REPO_ROOT")"
 
-# Check if stakeholder-drivers.md exists in project
-if [[ ! -f "$PROJECT_DIR/stakeholder-drivers.md" ]]; then
+# Helper to check if a document exists (supports both old and new naming)
+has_doc() {
+    local type_code="$1"
+    # Check new naming pattern: ARC-{PID}-{TYPE}-v*.md
+    if ls "$PROJECT_DIR"/ARC-${PROJECT_NUMBER}-${type_code}-v*.md 1>/dev/null 2>&1; then
+        return 0
+    fi
+    return 1
+}
+
+# Check if stakeholder analysis exists in project (old or new naming)
+if ! has_doc "STKE" && [[ ! -f "$PROJECT_DIR/stakeholder-drivers.md" ]]; then
     NEXT_STEPS+=("/arckit.stakeholders - Analyze stakeholder drivers and goals")
-elif [[ ! -f "$PROJECT_DIR/risk-register.md" ]]; then
+elif ! has_doc "RISK" && [[ ! -f "$PROJECT_DIR/risk-register.md" ]]; then
     NEXT_STEPS+=("/arckit.risk - Create risk register")
-elif [[ ! -f "$PROJECT_DIR/sobc.md" ]]; then
+elif ! has_doc "SOBC" && [[ ! -f "$PROJECT_DIR/sobc.md" ]]; then
     NEXT_STEPS+=("/arckit.sobc - Create Strategic Outline Business Case")
-elif [[ ! -f "$PROJECT_DIR/requirements.md" ]]; then
+elif ! has_doc "REQ" && [[ ! -f "$PROJECT_DIR/requirements.md" ]]; then
     NEXT_STEPS+=("/arckit.requirements - Define business and technical requirements")
-elif [[ ! -f "$PROJECT_DIR/data-model.md" ]]; then
+elif ! has_doc "DATA" && [[ ! -f "$PROJECT_DIR/data-model.md" ]]; then
     NEXT_STEPS+=("/arckit.data-model - Design data model")
 elif [[ ! -d "$PROJECT_DIR/wardley-maps" ]] || [[ -z $(ls -A "$PROJECT_DIR/wardley-maps" 2>/dev/null) ]]; then
     NEXT_STEPS+=("/arckit.research - Research technology options")
     NEXT_STEPS+=("/arckit.wardley - Create Wardley maps")
-elif [[ ! -f "$PROJECT_DIR/sow.md" ]]; then
+elif ! has_doc "SOW" && [[ ! -f "$PROJECT_DIR/sow.md" ]]; then
     NEXT_STEPS+=("/arckit.sow - Generate Statement of Work for RFP")
 else
     NEXT_STEPS+=("/arckit.evaluate - Create vendor evaluation framework")
@@ -229,11 +275,18 @@ if [[ "$OUTPUT_JSON" == "true" ]]; then
     echo "  \"project_dir\": \"$PROJECT_DIR\","
     echo "  \"project_number\": \"$PROJECT_NUMBER\","
     echo "  \"project_name\": \"$PROJECT_NAME\","
-    echo "  \"requirements_file\": \"$PROJECT_DIR/requirements.md\","
-    echo "  \"sow_file\": \"$PROJECT_DIR/sow.md\","
-    echo "  \"evaluation_file\": \"$PROJECT_DIR/evaluation-criteria.md\","
+    echo "  \"requirements_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-REQ-v1.0.md\","
+    echo "  \"stakeholders_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-STKE-v1.0.md\","
+    echo "  \"risk_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-RISK-v1.0.md\","
+    echo "  \"sobc_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-SOBC-v1.0.md\","
+    echo "  \"sow_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-SOW-v1.0.md\","
+    echo "  \"evaluation_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-EVAL-v1.0.md\","
+    echo "  \"traceability_file\": \"$PROJECT_DIR/ARC-${PROJECT_NUMBER}-TRAC-v1.0.md\","
+    echo "  \"decisions_dir\": \"$PROJECT_DIR/decisions\","
+    echo "  \"diagrams_dir\": \"$PROJECT_DIR/diagrams\","
+    echo "  \"wardley_maps_dir\": \"$PROJECT_DIR/wardley-maps\","
+    echo "  \"reviews_dir\": \"$PROJECT_DIR/reviews\","
     echo "  \"vendors_dir\": \"$PROJECT_DIR/vendors\","
-    echo "  \"traceability_file\": \"$PROJECT_DIR/traceability-matrix.md\","
     echo -n "  \"next_steps\": "
     output_json_array "${NEXT_STEPS[@]}"
     echo ""

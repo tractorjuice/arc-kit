@@ -1,6 +1,6 @@
 # Platform Strategy Design
 
-> **Template Status**: Experimental | **Version**: 0.11.2 | **Command**: `/arckit.platform-design`
+> **Template Status**: Experimental | **Version**: 1.0.0 | **Command**: `/arckit.platform-design`
 
 ## Document Control
 
@@ -1220,7 +1220,7 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 
 ### 8.4 Strategic Alignment
 
-**Alignment to Stakeholder Goals** (from `stakeholder-drivers.md`):
+**Alignment to Stakeholder Goals** (from `ARC-{PROJECT_ID}-STKE-v*.md`):
 
 | Stakeholder | Goal | How Platform Delivers |
 |-------------|------|----------------------|
@@ -1228,7 +1228,7 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 | [Stakeholder 2] | [Goal from stakeholder doc] | [Platform feature/value] |
 | [Stakeholder 3] | [Goal from stakeholder doc] | [Platform feature/value] |
 
-**Alignment to Requirements** (from `requirements.md`):
+**Alignment to Requirements** (from `ARC-{PROJECT_ID}-REQ-v*.md`):
 
 | Requirement ID | Requirement | Platform Feature |
 |----------------|-------------|------------------|
@@ -1236,7 +1236,7 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 | FR-005 | [Functional requirement] | [Feature that delivers it] |
 | NFR-S-002 | [Scalability requirement] | [Architecture decision] |
 
-**Alignment to Architecture Principles** (from `.arckit/memory/architecture-principles.md`):
+**Alignment to Architecture Principles** (from `projects/000-global/ARC-000-PRIN-v*.md`):
 
 | Principle | How Platform Embodies Principle |
 |-----------|----------------------------------|
@@ -1284,8 +1284,8 @@ This platform operates within Digital Marketplace ecosystem:
 
 | Stakeholder | Driver | Goal | Platform Response |
 |-------------|--------|------|-------------------|
-| [From stakeholder-drivers.md] | [Driver] | [Goal] | [Entity Portrait + Value Proposition] |
-| [From stakeholder-drivers.md] | [Driver] | [Goal] | [Transaction Cost Reduction + Learning Service] |
+| [From ARC-{PROJECT_ID}-STKE-v*.md] | [Driver] | [Goal] | [Entity Portrait + Value Proposition] |
+| [From ARC-{PROJECT_ID}-STKE-v*.md] | [Driver] | [Goal] | [Transaction Cost Reduction + Learning Service] |
 
 ### 9.2 Requirements-to-Platform Traceability
 
@@ -1298,7 +1298,7 @@ This platform operates within Digital Marketplace ecosystem:
 
 ### 9.3 Wardley Map Integration
 
-**From `wardley-maps/*.md`:**
+**From `wardley-maps/ARC-*-WARD-*.md`:**
 
 | Component (from Wardley Map) | Evolution Stage | Platform Strategy |
 |------------------------------|----------------|-------------------|
@@ -1311,7 +1311,7 @@ This platform operates within Digital Marketplace ecosystem:
 
 ### 9.4 Risk Linkage
 
-**From `risk-register.md`:**
+**From `ARC-{PROJECT_ID}-RISK-v*.md`:**
 
 | Risk ID | Risk | Platform Mitigation |
 |---------|------|---------------------|

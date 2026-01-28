@@ -1,6 +1,6 @@
 # Architecture Principles Compliance Assessment
 
-> **Template Status**: Live | **Version**: 0.11.2 | **Command**: `/arckit.principles-compliance`
+> **Template Status**: Live | **Version**: 1.0.0 | **Command**: `/arckit.principles-compliance`
 
 ## Document Control
 
@@ -23,7 +23,7 @@
 | **Assessment Date** | [YYYY-MM-DD] |
 | **Project Phase** | [Discovery / Alpha / Beta / Live] |
 | **Assessor** | ArcKit AI + [USER_NAME] |
-| **Principles Source** | `.arckit/memory/architecture-principles.md` ([DATE]) |
+| **Principles Source** | `projects/000-global/ARC-000-PRIN-v*.md` ([DATE]) |
 
 ## Revision History
 
@@ -35,7 +35,7 @@
 
 ## Executive Summary
 
-**Purpose**: This document assesses project compliance with enterprise architecture principles defined in `.arckit/memory/architecture-principles.md`. This is a point-in-time assessment for the [PHASE] phase gate review.
+**Purpose**: This document assesses project compliance with enterprise architecture principles defined in `projects/000-global/ARC-000-PRIN-v*.md`. This is a point-in-time assessment for the [PHASE] phase gate review.
 
 **Scope**: Assessment covers all [N] architecture principles against available project artifacts.
 
@@ -75,7 +75,7 @@
 
 ### [#]. [Principle Name] - Status: [🔴🟠🟢⚪]
 
-**Principle Statement** (from architecture-principles.md):
+**Principle Statement** (from ARC-000-PRIN-v*.md):
 > [Quote the principle statement verbatim]
 
 **Rationale** (why this principle exists):
@@ -278,14 +278,14 @@
 ## Artifacts Reviewed
 
 **Architecture Principles** (source of truth):
-- ✅ `.arckit/memory/architecture-principles.md` - [DATE] - [N] principles defined
+- ✅ `projects/000-global/ARC-000-PRIN-v*.md` - [DATE] - [N] principles defined
 
 **Project Artifacts** (evidence sources):
-- ✅ `projects/[project-dir]/requirements.md` - [DATE] - [N] requirements
+- ✅ `projects/[project-dir]/ARC-*-REQ-v*.md` - [DATE] - [N] requirements
 - ✅ `projects/[project-dir]/vendors/[vendor]/hld-v1.md` - [DATE] - [N] sections
 - ✅ `projects/[project-dir]/vendors/[vendor]/dld-v1.md` - [DATE] - [N] sections
-- ✅ `projects/[project-dir]/tcop-assessment.md` - [DATE]
-- ✅ `projects/[project-dir]/secure-by-design.md` - [DATE]
+- ✅ `projects/[project-dir]/ARC-*-TCOP-*.md` - [DATE]
+- ✅ `projects/[project-dir]/ARC-*-SECD-*.md` - [DATE]
 - [List all available artifacts]
 
 **Artifacts Not Available** (limits assessment accuracy):

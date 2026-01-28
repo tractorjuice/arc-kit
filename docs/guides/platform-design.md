@@ -1,8 +1,6 @@
 # Platform Strategy Design Guide
 
-**Command**: `/arckit.platform-design`
-**ArcKit Version**: 0.9.1+
-**Purpose**: Design multi-sided platforms using Platform Design Toolkit (PDT) methodology
+`/arckit.platform-design` designs multi-sided platforms using Platform Design Toolkit (PDT) methodology with 8 canvases for ecosystem analysis.
 
 ---
 
@@ -568,10 +566,3 @@ graph TD
 - `/arckit.diagram` - Platform architecture diagrams (C4 model)
 - `/arckit.backlog` - MVP features → user stories → sprints
 - `/arckit.service-assessment` - GDS Service Standard for platform services
-
----
-
-**Document Version**: 1.0
-**ArcKit Version**: 0.9.1
-**Last Updated**: 2025-01-06
-**License**: CC-BY-SA 4.0 (based on PDT v2.2.1)

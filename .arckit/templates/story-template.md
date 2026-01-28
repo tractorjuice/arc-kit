@@ -1,6 +1,6 @@
 # [PROJECT_NAME] - Project Story
 
-> **Template Status**: Live | **Version**: 0.11.2 | **Command**: `/arckit.story`
+> **Template Status**: Live | **Version**: 1.0.0 | **Command**: `/arckit.story`
 
 ## Document Control
 
@@ -164,28 +164,28 @@ flowchart TD
 
 | # | Date | Days from Start | Event Type | Command | Artifact | Description |
 |---|------|-----------------|------------|---------|----------|-------------|
-| 1 | [DATE] | 0 | Foundation | `/arckit.principles` | architecture-principles.md | Established enterprise architecture principles |
-| 2 | [DATE] | [DAYS] | Foundation | `/arckit.stakeholders` | stakeholder-drivers.md | Analyzed [N] stakeholders, [M] goals, [P] outcomes |
-| 3 | [DATE] | [DAYS] | Risk | `/arckit.risk` | risk-register.md | Identified [N] risks ([X] high, [Y] medium, [Z] low) |
-| 4 | [DATE] | [DAYS] | Business Case | `/arckit.sobc` | sobc.md | Strategic Outline Business Case (5-case model) |
-| 5 | [DATE] | [DAYS] | Requirements | `/arckit.requirements` | requirements.md | [BR] business, [FR] functional, [NFR] non-functional reqs |
-| 6 | [DATE] | [DAYS] | Data | `/arckit.data-model` | data-model.md | [N] entities, [M] relationships, GDPR compliance |
-| 7 | [DATE] | [DAYS] | Research | `/arckit.research` | research-findings.md | Evaluated [N] options (build vs buy analysis) |
-| 8 | [DATE] | [DAYS] | Strategy | `/arckit.wardley` | wardley-maps/[NAME].md | Strategic positioning and evolution |
-| 9 | [DATE] | [DAYS] | Architecture | `/arckit.diagram` | diagrams/[TYPE].md | C4 context/container/component diagrams |
-| 10 | [DATE] | [DAYS] | Procurement | `/arckit.sow` | sow.md | Statement of Work for vendor RFP |
-| 11 | [DATE] | [DAYS] | Evaluation | `/arckit.evaluate` | evaluation-criteria.md | Vendor evaluation framework |
-| 12 | [DATE] | [DAYS] | Design Review | `/arckit.hld-review` | vendors/[VENDOR]/reviews/hld-review.md | High-level design assessment |
-| 13 | [DATE] | [DAYS] | Design Review | `/arckit.dld-review` | vendors/[VENDOR]/reviews/dld-review.md | Detailed design assessment |
-| 14 | [DATE] | [DAYS] | Delivery | `/arckit.backlog` | backlog.md | [N] user stories across [M] sprints |
-| 15 | [DATE] | [DAYS] | Operations | `/arckit.servicenow` | servicenow-design.md | CMDB, SLAs, incident management |
-| 16 | [DATE] | [DAYS] | Compliance | `/arckit.tcop` | tcop-review.md | Technology Code of Practice (13 points) |
-| 17 | [DATE] | [DAYS] | Compliance | `/arckit.service-assessment` | service-assessment-readiness.md | GDS Service Standard (14 points) |
-| 18 | [DATE] | [DAYS] | Security | `/arckit.secure` | secure-by-design-assessment.md | NCSC CAF, Cyber Essentials, UK GDPR |
-| 19 | [DATE] | [DAYS] | AI Compliance | `/arckit.ai-playbook` | ai-playbook-assessment.md | Responsible AI deployment |
-| 20 | [DATE] | [DAYS] | Transparency | `/arckit.atrs` | atrs-record.md | Algorithmic Transparency Recording |
-| 21 | [DATE] | [DAYS] | Traceability | `/arckit.traceability` | traceability-matrix.md | End-to-end requirement traceability |
-| 22 | [DATE] | [DAYS] | Governance | `/arckit.analyze` | analysis-report.md | Governance quality assessment |
+| 1 | [DATE] | 0 | Foundation | `/arckit.principles` | ARC-000-PRIN-v*.md | Established enterprise architecture principles |
+| 2 | [DATE] | [DAYS] | Foundation | `/arckit.stakeholders` | ARC-{PROJECT_ID}-STKE-v*.md | Analyzed [N] stakeholders, [M] goals, [P] outcomes |
+| 3 | [DATE] | [DAYS] | Risk | `/arckit.risk` | ARC-{PROJECT_ID}-RISK-v*.md | Identified [N] risks ([X] high, [Y] medium, [Z] low) |
+| 4 | [DATE] | [DAYS] | Business Case | `/arckit.sobc` | ARC-{PROJECT_ID}-SOBC-v*.md | Strategic Outline Business Case (5-case model) |
+| 5 | [DATE] | [DAYS] | Requirements | `/arckit.requirements` | ARC-{PROJECT_ID}-REQ-v*.md | [BR] business, [FR] functional, [NFR] non-functional reqs |
+| 6 | [DATE] | [DAYS] | Data | `/arckit.data-model` | ARC-{PROJECT_ID}-DATA-v*.md | [N] entities, [M] relationships, GDPR compliance |
+| 7 | [DATE] | [DAYS] | Research | `/arckit.research` | ARC-{PROJECT_ID}-RSCH-v*.md | Evaluated [N] options (build vs buy analysis) |
+| 8 | [DATE] | [DAYS] | Strategy | `/arckit.wardley` | wardley-maps/ARC-*-WARD-*.md | Strategic positioning and evolution |
+| 9 | [DATE] | [DAYS] | Architecture | `/arckit.diagram` | diagrams/ARC-*-DIAG-*.md | C4 context/container/component diagrams |
+| 10 | [DATE] | [DAYS] | Procurement | `/arckit.sow` | ARC-*-SOW-*.md | Statement of Work for vendor RFP |
+| 11 | [DATE] | [DAYS] | Evaluation | `/arckit.evaluate` | ARC-*-EVAL-*.md | Vendor evaluation framework |
+| 12 | [DATE] | [DAYS] | Design Review | `/arckit.hld-review` | vendors/[VENDOR]/reviews/ARC-*-HLD-*.md | High-level design assessment |
+| 13 | [DATE] | [DAYS] | Design Review | `/arckit.dld-review` | vendors/[VENDOR]/reviews/ARC-*-DLD-*.md | Detailed design assessment |
+| 14 | [DATE] | [DAYS] | Delivery | `/arckit.backlog` | ARC-*-BKLG-*.md | [N] user stories across [M] sprints |
+| 15 | [DATE] | [DAYS] | Operations | `/arckit.servicenow` | ARC-*-SNOW-*.md | CMDB, SLAs, incident management |
+| 16 | [DATE] | [DAYS] | Compliance | `/arckit.tcop` | ARC-*-TCOP-*.md | Technology Code of Practice (13 points) |
+| 17 | [DATE] | [DAYS] | Compliance | `/arckit.service-assessment` | ARC-*-SVCASS-*.md | GDS Service Standard (14 points) |
+| 18 | [DATE] | [DAYS] | Security | `/arckit.secure` | ARC-*-SECD-*.md | NCSC CAF, Cyber Essentials, UK GDPR |
+| 19 | [DATE] | [DAYS] | AI Compliance | `/arckit.ai-playbook` | ARC-*-AIPB-*.md | Responsible AI deployment |
+| 20 | [DATE] | [DAYS] | Transparency | `/arckit.atrs` | ARC-*-ATRS-*.md | Algorithmic Transparency Recording |
+| 21 | [DATE] | [DAYS] | Traceability | `/arckit.traceability` | ARC-*-TRAC-*.md | End-to-end requirement traceability |
+| 22 | [DATE] | [DAYS] | Governance | `/arckit.analyze` | ARC-*-ANAL-*.md | Governance quality assessment |
 
 ### Phase Duration Analysis
 
@@ -211,7 +211,7 @@ pie title Project Phase Time Distribution
 | **Shortest Phase** | [PHASE_NAME] ([DAYS] days) | [Why this phase was fastest] |
 | **Commands per Week** | [VELOCITY] | [Velocity analysis] |
 | **Artifacts per Week** | [VELOCITY] | [Output rate analysis] |
-| **Time to First Artifact** | [DAYS] days | From project start to architecture-principles.md |
+| **Time to First Artifact** | [DAYS] days | From project start to ARC-000-PRIN-v*.md |
 | **Time to Requirements** | [DAYS] days | Critical milestone for project direction |
 | **Time to Vendor Selection** | [DAYS] days | Critical milestone for procurement |
 | **Time to Design Review** | [DAYS] days | Critical milestone for implementation readiness |
@@ -274,7 +274,7 @@ Following vendor selection, the chosen vendor ([VENDOR_NAME]) provided High-Leve
      - ❌ Gaps: [List gaps]
    - **Verdict**: [APPROVED/APPROVED WITH CONDITIONS/REJECTED]
    - **Conditions**: [List any conditional approval requirements]
-   - Created `projects/{project_id}/vendors/[vendor]/reviews/hld-review.md`
+   - Created `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLD-*.md`
 
 2. **Detailed Design Review** (`/arckit.dld-review` - [DATE])
    - Reviewed DLD document from [VENDOR_NAME]
@@ -289,7 +289,7 @@ Following vendor selection, the chosen vendor ([VENDOR_NAME]) provided High-Leve
      - ⚠️ Needs clarification: [List]
      - ❌ Requires rework: [List]
    - **Verdict**: [APPROVED/APPROVED WITH CONDITIONS/REJECTED]
-   - Created `projects/{project_id}/vendors/[vendor]/reviews/dld-review.md`
+   - Created `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLD-*.md`
 
 **Design Review Traceability**:
 
@@ -328,8 +328,8 @@ Data Requirements → Database Schema Review → DLD Review Findings
 ```
 
 **Artifacts Created**:
-- `projects/{project_id}/vendors/[vendor]/reviews/hld-review.md`
-- `projects/{project_id}/vendors/[vendor]/reviews/dld-review.md`
+- `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLD-*.md`
+- `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLD-*.md`
 
 ---
 
@@ -352,7 +352,7 @@ With approved designs, the project moved into detailed delivery planning, transl
      - Sprint 1-[N]: [M] stories each
      - Estimated duration: [WEEKS] weeks ([MONTHS] months)
    - Velocity assumptions: [STORY_POINTS] points per sprint
-   - Created `projects/{project_id}/backlog.md`
+   - Created `projects/{project_id}/ARC-*-BKLG-*.md`
 
 2. **ServiceNow Design** (`/arckit.servicenow` - [DATE])
    - **CMDB Design**: [N] Configuration Items mapped to architecture components
@@ -364,7 +364,7 @@ With approved designs, the project moved into detailed delivery planning, transl
    - **Incident Management**: Workflows, escalation paths, assignment groups
    - **Change Management**: CAB process, change windows, approval workflows
    - **Service Catalog**: [P] catalog items for self-service
-   - Created `projects/{project_id}/servicenow-design.md`
+   - Created `projects/{project_id}/ARC-*-SNOW-*.md`
 
 **Backlog Summary**:
 
@@ -391,8 +391,8 @@ Stakeholders → ServiceNow Assignment Groups
 ```
 
 **Artifacts Created**:
-- `projects/{project_id}/backlog.md`
-- `projects/{project_id}/servicenow-design.md`
+- `projects/{project_id}/ARC-*-BKLG-*.md`
+- `projects/{project_id}/ARC-*-SNOW-*.md`
 
 ---
 ## Timeline Insights & Analysis
@@ -685,29 +685,29 @@ Complete list of all artifacts generated during this project:
 
 | # | Artifact | Location | Date Created | Command | Status |
 |---|----------|----------|--------------|---------|--------|
-| 1 | Architecture Principles | `.arckit/memory/architecture-principles.md` | [DATE] | `/arckit.principles` | ✅ |
-| 2 | Stakeholder Drivers | `projects/{project_id}/stakeholder-drivers.md` | [DATE] | `/arckit.stakeholders` | ✅ |
-| 3 | Risk Register | `projects/{project_id}/risk-register.md` | [DATE] | `/arckit.risk` | ✅ |
-| 4 | SOBC | `projects/{project_id}/sobc.md` | [DATE] | `/arckit.sobc` | ✅ |
-| 5 | Data Model | `projects/{project_id}/data-model.md` | [DATE] | `/arckit.data-model` | ✅ |
-| 6 | Requirements | `projects/{project_id}/requirements.md` | [DATE] | `/arckit.requirements` | ✅ |
-| 7 | Research Findings | `projects/{project_id}/research-findings.md` | [DATE] | `/arckit.research` | ✅ |
-| 8 | Wardley Maps | `projects/{project_id}/wardley-maps/*.md` | [DATE] | `/arckit.wardley` | ✅ |
-| 9 | Architecture Diagrams | `projects/{project_id}/diagrams/*.md` | [DATE] | `/arckit.diagram` | ✅ |
-| 10 | Statement of Work | `projects/{project_id}/sow.md` | [DATE] | `/arckit.sow` | ✅ |
-| 11 | Evaluation Criteria | `projects/{project_id}/evaluation-criteria.md` | [DATE] | `/arckit.evaluate` | ✅ |
+| 1 | Architecture Principles | `projects/000-global/ARC-000-PRIN-v*.md` | [DATE] | `/arckit.principles` | ✅ |
+| 2 | Stakeholder Drivers | `projects/{project_id}/ARC-{PROJECT_ID}-STKE-v*.md` | [DATE] | `/arckit.stakeholders` | ✅ |
+| 3 | Risk Register | `projects/{project_id}/ARC-{PROJECT_ID}-RISK-v*.md` | [DATE] | `/arckit.risk` | ✅ |
+| 4 | SOBC | `projects/{project_id}/ARC-{PROJECT_ID}-SOBC-v*.md` | [DATE] | `/arckit.sobc` | ✅ |
+| 5 | Data Model | `projects/{project_id}/ARC-{PROJECT_ID}-DATA-v*.md` | [DATE] | `/arckit.data-model` | ✅ |
+| 6 | Requirements | `projects/{project_id}/ARC-{PROJECT_ID}-REQ-v*.md` | [DATE] | `/arckit.requirements` | ✅ |
+| 7 | Research Findings | `projects/{project_id}/ARC-{PROJECT_ID}-RSCH-v*.md` | [DATE] | `/arckit.research` | ✅ |
+| 8 | Wardley Maps | `projects/{project_id}/wardley-maps/ARC-*-WARD-*.md` | [DATE] | `/arckit.wardley` | ✅ |
+| 9 | Architecture Diagrams | `projects/{project_id}/diagrams/ARC-*-DIAG-*.md` | [DATE] | `/arckit.diagram` | ✅ |
+| 10 | Statement of Work | `projects/{project_id}/ARC-*-SOW-*.md` | [DATE] | `/arckit.sow` | ✅ |
+| 11 | Evaluation Criteria | `projects/{project_id}/ARC-*-EVAL-*.md` | [DATE] | `/arckit.evaluate` | ✅ |
 | 12 | Vendor Scoring | `projects/{project_id}/vendors/*/scoring.md` | [DATE] | `/arckit.evaluate` | ✅ |
-| 13 | HLD Review | `projects/{project_id}/vendors/[vendor]/reviews/hld-review.md` | [DATE] | `/arckit.hld-review` | ✅ |
-| 14 | DLD Review | `projects/{project_id}/vendors/[vendor]/reviews/dld-review.md` | [DATE] | `/arckit.dld-review` | ✅ |
-| 15 | Product Backlog | `projects/{project_id}/backlog.md` | [DATE] | `/arckit.backlog` | ✅ |
-| 16 | ServiceNow Design | `projects/{project_id}/servicenow-design.md` | [DATE] | `/arckit.servicenow` | ✅ |
-| 17 | TCoP Review | `projects/{project_id}/tcop-review.md` | [DATE] | `/arckit.tcop` | ✅ |
-| 18 | Service Assessment | `projects/{project_id}/service-assessment-readiness.md` | [DATE] | `/arckit.service-assessment` | ✅ |
-| 19 | Secure by Design | `projects/{project_id}/secure-by-design-assessment.md` | [DATE] | `/arckit.secure` | ✅ |
-| 20 | AI Playbook | `projects/{project_id}/ai-playbook-assessment.md` | [DATE] | `/arckit.ai-playbook` | ✅ |
-| 21 | ATRS Record | `projects/{project_id}/atrs-record.md` | [DATE] | `/arckit.atrs` | ✅ |
-| 22 | Traceability Matrix | `projects/{project_id}/traceability-matrix.md` | [DATE] | `/arckit.traceability` | ✅ |
-| 23 | Analysis Report | `projects/{project_id}/analysis-report.md` | [DATE] | `/arckit.analyze` | ✅ |
+| 13 | HLD Review | `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLD-*.md` | [DATE] | `/arckit.hld-review` | ✅ |
+| 14 | DLD Review | `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLD-*.md` | [DATE] | `/arckit.dld-review` | ✅ |
+| 15 | Product Backlog | `projects/{project_id}/ARC-*-BKLG-*.md` | [DATE] | `/arckit.backlog` | ✅ |
+| 16 | ServiceNow Design | `projects/{project_id}/ARC-*-SNOW-*.md` | [DATE] | `/arckit.servicenow` | ✅ |
+| 17 | TCoP Review | `projects/{project_id}/ARC-*-TCOP-*.md` | [DATE] | `/arckit.tcop` | ✅ |
+| 18 | Service Assessment | `projects/{project_id}/ARC-*-SVCASS-*.md` | [DATE] | `/arckit.service-assessment` | ✅ |
+| 19 | Secure by Design | `projects/{project_id}/ARC-*-SECD-*.md` | [DATE] | `/arckit.secure` | ✅ |
+| 20 | AI Playbook | `projects/{project_id}/ARC-*-AIPB-*.md` | [DATE] | `/arckit.ai-playbook` | ✅ |
+| 21 | ATRS Record | `projects/{project_id}/ARC-*-ATRS-*.md` | [DATE] | `/arckit.atrs` | ✅ |
+| 22 | Traceability Matrix | `projects/{project_id}/ARC-*-TRAC-*.md` | [DATE] | `/arckit.traceability` | ✅ |
+| 23 | Analysis Report | `projects/{project_id}/ARC-*-ANAL-*.md` | [DATE] | `/arckit.analyze` | ✅ |
 
 **Total Artifacts**: [N]
 

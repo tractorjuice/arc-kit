@@ -147,7 +147,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 ```
 
 **What it does**:
-- Creates `.arckit/memory/architecture-principles.md` (global principles)
+- Creates `projects/000-global/ARC-000-PRIN-v1.0.md` (global principles)
 - Defines strategic principles (Cloud-First, API-First, Security by Design)
 - Sets technology standards (approved languages, frameworks, databases)
 - Establishes validation gates for compliance checking
@@ -161,7 +161,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 - Zero Trust Security Model
 - Data Privacy by Design
 
-**Output**: `.arckit/memory/architecture-principles.md`
+**Output**: `projects/000-global/ARC-000-PRIN-v1.0.md`
 
 **Next step**: Run `/arckit.stakeholders` to analyze who cares about this project and why, then create business case.
 
@@ -1059,7 +1059,7 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 
 ### 18. `/arckit.principles-compliance` - Architecture Principles Compliance Assessment
 
-**Purpose**: Assess project compliance with architecture principles defined in `.arckit/memory/architecture-principles.md` and generate evidence-based compliance scorecard with RAG status, gaps, and recommendations.
+**Purpose**: Assess project compliance with architecture principles defined in `projects/000-global/ARC-000-PRIN-v1.0.md` and generate evidence-based compliance scorecard with RAG status, gaps, and recommendations.
 
 **Usage**:
 ```
@@ -1069,7 +1069,7 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 ```
 
 **What it does**:
-- **Dynamic Principle Extraction**: Extracts ALL principles from architecture-principles.md (supports 5, 10, 20+ principles - never assumes fixed count)
+- **Dynamic Principle Extraction**: Extracts ALL principles from ARC-000-PRIN-v1.0.md (supports 5, 10, 20+ principles - never assumes fixed count)
 - **RAG Status Assessment**: Four-level rating system for each principle:
   - 🟢 **GREEN**: Fully compliant with strong evidence across multiple artifact types
   - 🟠 **AMBER**: Partial compliance with identified gaps and remediation plan
@@ -1130,7 +1130,7 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 1. **Executive Summary**: Overall compliance (X/Y principles assessed), RAG distribution, critical issues, gate recommendation
 2. **Compliance Scorecard**: One-line summary per principle with status, evidence count, gaps, next action
 3. **Detailed Principle Assessment**: For each principle:
-   - Principle statement and rationale (quoted from architecture-principles.md)
+   - Principle statement and rationale (quoted from ARC-000-PRIN-v1.0.md)
    - Evidence analysis (requirements, design, implementation, compliance, validation)
    - Validation gates status (PASS/FAIL/N/A with evidence)
    - Assessment justification (why this RAG status)
@@ -1148,7 +1148,7 @@ BR-003 → [NO MAPPING] → [NO MAPPING] → [NO IMPLEMENTATION] → [NO TESTS] 
 - **After Major Changes**: Reassess when technology stack or design changes
 
 **Prerequisites**:
-- **MANDATORY**: `.arckit/memory/architecture-principles.md` must exist (run `/arckit.principles` first)
+- **MANDATORY**: `projects/000-global/ARC-000-PRIN-v1.0.md` must exist (run `/arckit.principles` first)
 - **RECOMMENDED**: More artifacts = better assessment
   - requirements.md
   - HLD/DLD documents
@@ -1496,7 +1496,7 @@ After using all commands, your project structure will look like:
 my-arckit-project/
 ├── .arckit/
 │   ├── memory/
-│   │   └── architecture-principles.md      ← Global principles
+│   │   └── ARC-000-PRIN-v1.0.md      ← Global principles
 │   ├── templates/                           ← Command templates
 │   └── scripts/                             ← Automation scripts
 │

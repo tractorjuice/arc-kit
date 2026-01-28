@@ -57,12 +57,13 @@ $ARGUMENTS
    - **CRITICAL**: The filename MUST be `ARC-000-PRIN-v1.0.md` (NOT `architecture-principles.md`)
    - Generate the document ID using: `.arckit/scripts/bash/generate-document-id.sh 000 PRIN 1.0 --filename`
    - This produces: `ARC-000-PRIN-v1.0.md` (000 indicates global/cross-project document)
-   - Write to: `.arckit/memory/ARC-000-PRIN-v1.0.md`
+   - Write to: `projects/000-global/ARC-000-PRIN-v1.0.md`
    - If this file exists, update it; if not, create it
    - Use the exact template structure
    - Make it ready for immediate use by development teams
 
    > **WARNING**: Do NOT use legacy filename `architecture-principles.md`. Always use the document ID format.
+   > **NOTE**: The `projects/000-global/` directory is for cross-project artifacts like architecture principles.
 
 
 
@@ -114,7 +115,7 @@ You should:
 - Generate comprehensive principles
 - Add financial services specific requirements (SOX, PCI-DSS, transaction integrity, audit trails)
 - Include cloud migration principles (cloud-first, lift-and-shift vs re-architecture)
-- Write to `.arckit/memory/ARC-000-PRIN-v1.0.md`
+- Write to `projects/000-global/ARC-000-PRIN-v1.0.md`
 - Confirm completion with summary
 
 ## Important Notes

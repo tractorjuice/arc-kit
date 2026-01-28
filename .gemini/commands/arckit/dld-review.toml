@@ -18,9 +18,9 @@ You are helping an enterprise architect review a Detailed Design (DLD) document 
    - Location of DLD document
 
 2. **Read the review context**:
-   - Read `projects/{project-dir}/vendors/{vendor}/hld-review.md` - Ensure HLD issues were addressed
-   - Read `.arckit/memory/architecture-principles.md` - Governance rules still apply
-   - Read `projects/{project-dir}/requirements.md` - Technical requirements
+   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-HLD-*.md` - Ensure HLD issues were addressed
+   - Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` - Governance rules still apply
+   - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - Technical requirements
    - Read `.arckit/templates/dld-review-template.md` - Review checklist
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
@@ -32,7 +32,7 @@ You are helping an enterprise architect review a Detailed Design (DLD) document 
 
 4. **Obtain the DLD document**:
    - Ask: \"Please provide the DLD document path or paste key sections\"
-   - Or: \"Is the DLD in `projects/{project-dir}/vendors/{vendor}/dld.md`?\"
+   - Or: \"Is the DLD in `projects/{project-dir}/vendors/{vendor}/dld-v*.md`?\"
    - Or: \"Please share detailed design diagrams, sequence diagrams, ERDs\"
 
 5. **Perform detailed technical review**:
@@ -149,7 +149,7 @@ You are helping an enterprise architect review a Detailed Design (DLD) document 
    - Risk mitigation during implementation
 
 8. **Write outputs**:
-   - `projects/{project-dir}/vendors/{vendor}/dld-review.md` - Full review report
+   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-DLDR-v1.0.md` - Full review report
    - Update traceability matrix with implementation details
    - Create implementation checklist if approved
 
@@ -187,7 +187,7 @@ You should:
 - **Blocking items**:
   - [BLOCKING-01] Specify fraud detection ML model (algorithm, features, thresholds)
   - [BLOCKING-02] Define data retention policy (7 years for PCI compliance)
-- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/dld-review.md`
+- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/reviews/ARC-001-DLD-v1.0.md`
 
 ## Important Notes
 

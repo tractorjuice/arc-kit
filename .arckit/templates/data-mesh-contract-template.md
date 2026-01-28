@@ -1,6 +1,6 @@
 # Data Mesh Contract: {data_product_name}
 
-> **Template Status**: Alpha | **Version**: 0.11.2 | **Command**: `/arckit.data-mesh-contract`
+> **Template Status**: Alpha | **Version**: 1.0.0 | **Command**: `/arckit.data-mesh-contract`
 
 ## Document Control
 
@@ -78,10 +78,10 @@ status: {active|deprecated|retired}
 
 | Artifact | Location | Purpose |
 |----------|----------|---------|
-| **Source Data Model** | `projects/{PROJECT_ID}/data-model.md` | Entity definitions and ERD |
-| **Requirements** | `projects/{PROJECT_ID}/requirements.md` | DR-xxx data requirements |
-| **Stakeholder Analysis** | `projects/{PROJECT_ID}/stakeholder-drivers.md` | Domain owners and consumers |
-| **Architecture Principles** | `.arckit/memory/architecture-principles.md` | Mesh governance principles |
+| **Source Data Model** | `projects/{PROJECT_ID}/ARC-{PROJECT_ID}-DATA-v*.md` | Entity definitions and ERD |
+| **Requirements** | `projects/{PROJECT_ID}/ARC-{PROJECT_ID}-REQ-v*.md` | DR-xxx data requirements |
+| **Stakeholder Analysis** | `projects/{PROJECT_ID}/ARC-{PROJECT_ID}-STKE-v*.md` | Domain owners and consumers |
+| **Architecture Principles** | `projects/000-global/ARC-000-PRIN-v*.md` | Mesh governance principles |
 
 ---
 
@@ -104,7 +104,7 @@ status: {active|deprecated|retired}
 
 **Description**: {What this object represents in the business domain}
 
-**Source Entity**: {Entity ID from data-model.md, e.g., E-001}
+**Source Entity**: {Entity ID from ARC-{PROJECT_ID}-DATA-v*.md, e.g., E-001}
 
 **Object Type**: {TABLE / DOCUMENT / FILE / STREAM / VIEW}
 
@@ -424,7 +424,7 @@ GET /data-products/{product_id}/quality
 | **Cross-Border Transfers** | {Data stored in UK (London region), no transfers outside UK/EEA} |
 | **Retention** | {See Section 4.4 - automated deletion per policy} |
 | **Breach Notification** | {ICO notification within 72 hours if breach affects >100 individuals} |
-| **DPIA Status** | {COMPLETED / NOT_REQUIRED} - Reference: `projects/{PROJECT_ID}/dpia.md` |
+| **DPIA Status** | {COMPLETED / NOT_REQUIRED} - Reference: `projects/{PROJECT_ID}/ARC-{PROJECT_ID}-DPIA-v*.md` |
 
 **PII Processing Details**:
 

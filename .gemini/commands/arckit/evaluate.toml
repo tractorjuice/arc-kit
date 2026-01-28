@@ -21,24 +21,24 @@ You are helping an enterprise architect create a vendor evaluation framework and
 **IMPORTANT**: Check prerequisites before proceeding:
 
 a. **Architecture Principles** (MUST exist):
-   - Check if `.arckit/memory/architecture-principles.md` exists
+   - Check if any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`
    - If NOT found: ERROR \"Run /arckit.principles first to define governance standards\"
    - Vendor evaluation MUST align with organizational governance
 
 b. **Project Requirements** (MUST exist):
    - Check if user specified a project name/number
-   - Look for `projects/{project-dir}/requirements.md`
+   - Look for `projects/{project-dir}/ARC-*-REQ-v*.md`
    - If NOT found: ERROR \"Run /arckit.requirements first to define what you're evaluating\"
 
 c. **Statement of Work** (RECOMMENDED):
-   - Check if `projects/{project-dir}/sow.md` or `projects/{project-dir}/procurement/dos.md` exists
+   - Check if `projects/{project-dir}/ARC-*-SOW-v*.md` or `projects/{project-dir}/procurement/ARC-*-DOS-v*.md` exists
    - If NOT found: WARN \"Consider running /arckit.sow or /arckit.dos to define evaluation criteria\"
    - If exists: Read it to understand pre-defined evaluation criteria
 
 3. **Read project context**:
-   - Read `projects/{project-dir}/requirements.md` to understand what's being evaluated
-   - Read `projects/{project-dir}/sow.md` to understand evaluation criteria already defined
-   - Read `.arckit/memory/architecture-principles.md` to ensure alignment with governance
+   - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` to understand what's being evaluated
+   - Read any `ARC-*-SOW-*.md` file in `projects/{project-dir}/` to understand evaluation criteria already defined
+   - Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` to ensure alignment with governance
 
 4. **Read the template**: Read `.arckit/templates/evaluation-criteria-template.md`
 
@@ -91,7 +91,7 @@ If creating a new framework:
    - Review timeline
    - Decision criteria (e.g., must score >70 to be considered)
 
-4. **Write output** to `projects/{project-dir}/evaluation-criteria.md`
+4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-EVAL-v1.0.md`
 
 ### Task B: Score a Vendor Proposal
 
@@ -106,7 +106,7 @@ If scoring a specific vendor:
    - \"How well does their approach align with requirements?\"
 
 3. **Score each category** based on the evaluation criteria:
-   - Use the point system from evaluation-criteria.md
+   - Use the point system from ARC-{PROJECT_ID}-EVAL-v*.md
    - Provide specific justification for each score
    - Reference requirement IDs where applicable
    - Flag any mandatory qualifications that are missing (instant disqualification)
@@ -122,7 +122,7 @@ If scoring a specific vendor:
 5. **Write outputs**:
    - `projects/{project-dir}/vendors/{vendor-name}/evaluation.md` - Detailed scoring
    - `projects/{project-dir}/vendors/{vendor-name}/notes.md` - Additional notes
-   - Update `projects/{project-dir}/vendor-scoring-summary.md` - Comparative table
+   - Update `projects/{project-dir}/ARC-{PROJECT_ID}-EVAL-v*.md` - Comparative table
 
 ### Task C: Compare Multiple Vendors
 
@@ -142,7 +142,7 @@ If comparing vendors:
    - Risk mitigation for chosen vendor
    - Contract negotiation points
 
-4. **Write output** to `projects/{project-dir}/vendor-comparison.md`
+4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-VEND-v1.0.md`
 
 ## Example Usage
 
@@ -154,7 +154,7 @@ You should:
 - Read requirements and SOW
 - Define mandatory quals: PCI-DSS certified, 5+ years payment processing
 - Create scoring criteria: Technical (35), Project (20), Team (25), Experience (10), Price (10)
-- Write to `projects/001-payment-gateway/evaluation-criteria.md`
+- Write to `projects/001-payment-gateway/ARC-001-EVAL-v1.0.md`
 
 ### Example 2: Score Vendor
 
@@ -176,7 +176,7 @@ You should:
 - Read evaluations for all vendors in projects/001-payment-gateway/vendors/
 - Create comparison: Acme (76), BestPay (82), CloudPayments (71)
 - Recommend: BestPay - highest score, best cloud experience
-- Write to `projects/001-payment-gateway/vendor-comparison.md`
+- Write to `projects/001-payment-gateway/ARC-001-VEND-v1.0.md`
 
 ## Important Notes
 

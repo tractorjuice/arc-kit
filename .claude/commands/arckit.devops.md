@@ -47,14 +47,14 @@ Parse the user input for:
 Read existing project artifacts:
 
 **Required Files**:
-1. `projects/{project-name}/requirements.md` - Deployment, performance, security NFRs
-2. `.arckit/memory/architecture-principles.md` - Technology standards
+1. Any `ARC-*-REQ-*.md` file in `projects/{project-name}/` - Deployment, performance, security NFRs
+2. Any `ARC-000-PRIN-*.md` file in `projects/000-global/` - Technology standards
 
 **Optional Files** (read if available):
 3. `projects/{project-name}/diagrams/` - Deployment architecture
-4. `projects/{project-name}/research-findings.md` - Technology decisions
-5. `projects/{project-name}/data-model.md` - Database requirements
-6. `projects/{project-name}/tcop-review.md` - UK Gov compliance
+4. Any `ARC-*-RSCH-*.md` file in `projects/{project-name}/` - Technology decisions
+5. Any `ARC-*-DATA-*.md` file in `projects/{project-name}/` - Database requirements
+6. Any `ARC-*-TCOP-*.md` file in `projects/{project-name}/` - UK Gov compliance
 
 ### Phase 2: Analysis
 
@@ -210,7 +210,7 @@ Verify before saving:
 
 **CRITICAL - Use Write Tool**: DevOps documents are large. Use Write tool to save.
 
-1. **Save file** to `projects/{project-name}/devops-strategy.md`
+1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-DEVO-v1.0.md`
 
 2. **Provide summary**:
 ```
@@ -240,7 +240,7 @@ Verify before saving:
 - Dependency Scanning: [Enabled]
 - Container Scanning: [Enabled]
 
-**File**: projects/{project-name}/devops-strategy.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-DEVO-v1.0.md
 
 **Next Steps**:
 1. Set up source control repository structure
@@ -254,7 +254,7 @@ Verify before saving:
 ## Error Handling
 
 ### If No Requirements Found:
-"⚠️ Cannot find requirements.md. Please run `/arckit.requirements` first. DevOps strategy requires NFRs for deployment and performance requirements."
+"⚠️ Cannot find requirements document (ARC-*-REQ-*.md). Please run `/arckit.requirements` first. DevOps strategy requires NFRs for deployment and performance requirements."
 
 ### If No Architecture Principles:
 "⚠️ Architecture principles not found. Using cloud-agnostic defaults. Consider running `/arckit.principles` to establish technology standards."
@@ -293,7 +293,7 @@ Verify before saving:
 - `[PROJECT_ID]` → From project path
 - `[VERSION]` → "1.0" for new documents
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-DEVOPS-v[VERSION]` → Document ID
+- `ARC-[PROJECT_ID]-DEVO-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-DEVO-v1.0.md`)
 
 **Generation Metadata Footer**:
 ```markdown

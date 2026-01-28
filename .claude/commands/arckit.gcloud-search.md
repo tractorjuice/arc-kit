@@ -32,11 +32,11 @@ This command:
 
 a. **Project with Requirements** (MUST exist):
    - Check if user specified a project name/number
-   - Look for `projects/[project]/requirements.md`
+   - Look for `projects/[project]/ARC-*-REQ-v*.md`
    - If NOT found: ERROR "Run /arckit.requirements first to define project needs"
 
 b. **Architecture Principles** (RECOMMENDED):
-   - Check if `.arckit/memory/architecture-principles.md` exists
+   - Check if `projects/000-global/ARC-000-PRIN-*.md` exists
    - If exists: Read it for cloud strategy, security requirements
    - If NOT found: WARN "Consider running /arckit.principles to define cloud governance"
 
@@ -44,8 +44,8 @@ b. **Architecture Principles** (RECOMMENDED):
 
 Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, then:
 
-1. Read `projects/[project]/requirements.md`
-2. Read `.arckit/memory/architecture-principles.md` if available
+1. Read `projects/[project]/ARC-*-REQ-v*.md`
+2. Read `projects/000-global/ARC-000-PRIN-*.md` if available
 3. Parse user input for specific service types needed
 
 ### 3. Analyze Cloud Service Needs
@@ -73,7 +73,7 @@ Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, th
 
 Create directory: `projects/[project]/procurement/`
 
-Generate `projects/[project]/procurement/gcloud-requirements.md`:
+Generate `projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md`:
 
 ```markdown
 # UK Digital Marketplace: G-Cloud Service Procurement
@@ -83,7 +83,7 @@ Generate `projects/[project]/procurement/gcloud-requirements.md`:
 **Generated**: [DATE]
 **Project**: [PROJECT_NAME]
 **Project ID**: [PROJECT_ID]
-**Requirements Source**: [Link to requirements.md]
+**Requirements Source**: [Link to ARC-*-REQ-*.md]
 
 ---
 
@@ -91,7 +91,7 @@ Generate `projects/[project]/procurement/gcloud-requirements.md`:
 
 ### 1.1 What We Need
 
-[Describe what cloud service/software is needed - from requirements.md]
+[Describe what cloud service/software is needed - from ARC-*-REQ-*.md]
 
 ### 1.2 Why We Need It
 
@@ -112,7 +112,7 @@ Generate `projects/[project]/procurement/gcloud-requirements.md`:
 
 The service **MUST** provide:
 
-[Extract MUST requirements from requirements.md]
+[Extract MUST requirements from ARC-*-REQ-*.md]
 
 ### 2.1 Functional Requirements
 - **[Requirement 1]**: [From FR-xxx or NFR-xxx]
@@ -124,8 +124,8 @@ The service **MUST** provide:
 - **[Performance Target]**: [From NFR-P-xxx with measurable metric]
 
 ### 2.3 Security Requirements
-- **[Security Requirement]**: [From NFR-S-xxx or architecture-principles.md]
-- **[Security Requirement]**: [From NFR-S-xxx or architecture-principles.md]
+- **[Security Requirement]**: [From NFR-S-xxx or ARC-000-PRIN-*.md]
+- **[Security Requirement]**: [From NFR-S-xxx or ARC-000-PRIN-*.md]
 
 ### 2.4 Compliance Requirements
 - **[Compliance Standard]**: [From NFR-C-xxx]
@@ -142,7 +142,7 @@ The service **MUST** provide:
 
 The service **SHOULD** provide:
 
-[Extract SHOULD requirements from requirements.md]
+[Extract SHOULD requirements from ARC-*-REQ-*.md]
 - [Desirable feature 1]
 - [Desirable feature 2]
 - [Desirable feature 3]
@@ -151,7 +151,7 @@ The service **SHOULD** provide:
 
 ## 4. Success Criteria
 
-[Extract measurable success criteria from requirements.md BR-xxx]
+[Extract measurable success criteria from ARC-*-REQ-*.md BR-xxx]
 
 - [Criterion 1 with metric]
 - [Criterion 2 with metric]
@@ -234,7 +234,7 @@ For each service found:
 
 #### 5.4 Generate Service Shortlist
 
-**Add to gcloud-requirements.md**:
+**Add to gcloud-ARC-*-REQ-*.md**:
 
 ```markdown
 
@@ -382,7 +382,7 @@ For each service found:
 
 ### 7. Final Output Section
 
-Add to end of `gcloud-requirements.md`:
+Add to end of `ARC-{PROJECT_ID}-GCLD-v1.0.md`:
 
 ```markdown
 
@@ -472,7 +472,7 @@ Before committing to a service:
 
 Before finalizing, validate output:
 
-- ✅ All requirements from requirements.md are included
+- ✅ All requirements from ARC-*-REQ-*.md are included
 - ✅ Architecture principles referenced (if available)
 - ✅ WebSearch was executed for each major service type
 - ✅ At least 3 services found and compared (or explanation if fewer)
@@ -491,10 +491,10 @@ Output to user:
 ✅ Generated G-Cloud service search for [PROJECT_NAME]
 
 Framework: G-Cloud
-Document: projects/[project]/procurement/gcloud-requirements.md
+Document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md
 
 Requirements Summary:
-- ✅ Requirements extracted from requirements.md
+- ✅ Requirements extracted from ARC-*-REQ-*.md
 - [✅/⚠️] Architecture principles referenced
 - ✅ Service category identified: [Category]
 
@@ -514,7 +514,7 @@ Alternative Services:
 3. [Service Name] by [Supplier] - [URL]
 
 Next Steps:
-1. Review document: projects/[project]/procurement/gcloud-requirements.md
+1. Review document: projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md
 2. Visit recommended service page: [Link]
 3. Contact supplier for detailed information
 4. Validate integration requirements (INT-xxx)

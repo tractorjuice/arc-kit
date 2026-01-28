@@ -32,18 +32,18 @@ Wardley Mapping is a strategic situational awareness technique that maps:
 First, analyze the existing project artifacts:
 
 1. **Read Architecture Principles** (if available):
-   - File: `.arckit/memory/architecture-principles.md`
+   - File: Any `ARC-000-PRIN-*.md` file in `projects/000-global/`
    - Extract: Strategic principles, technology standards, compliance requirements
 
 2. **Read Requirements** (if available):
-   - File: `projects/{current_project}/requirements.md`
+   - File: Any `ARC-*-REQ-*.md` file in `projects/{current_project}/`
    - Extract: Business requirements, functional requirements, non-functional requirements
    - Identify: User needs, capabilities, technical components
 
 3. **Read UK Government Assessments** (if applicable):
-   - File: `projects/{current_project}/tcop-assessment.md` (Technology Code of Practice)
-   - File: `projects/{current_project}/ai-playbook-assessment.md` (AI Playbook compliance)
-   - File: `projects/{current_project}/atrs-record.md` (ATRS for AI systems)
+   - File: Any `ARC-*-TCOP-*.md` file in `projects/{current_project}/` (Technology Code of Practice)
+   - File: Any `ARC-*-AIPB-*.md` file in `projects/{current_project}/` (AI Playbook compliance)
+   - File: Any `ARC-*-ATRS-*.md` file in `projects/{current_project}/` (ATRS for AI systems)
 
 4. **Read Existing Maps** (if available):
    - Check: `projects/{current_project}/wardley-maps/`
@@ -259,14 +259,12 @@ If project includes AI components:
 
 Create the Wardley Map document using the template:
 
-**File Location**: `projects/{project_number}-{project_name}/wardley-maps/{map_name}.md`
+**File Location**: `projects/{project_number}-{project_name}/wardley-maps/ARC-{PROJECT_ID}-WARD-{NNN}-v1.0.md`
 
-**Naming Convention**:
-- `current-state.md` - Current architecture state
-- `future-state.md` - Desired target architecture
-- `gap-analysis.md` - Current vs future comparison
-- `vendor-{vendor-name}-analysis.md` - Vendor proposal analysis
-- `procurement-strategy.md` - UK Government procurement strategy
+**Naming Convention** (use `generate-document-id.sh` with `--filename --next-num`):
+- `ARC-001-WARD-001-v1.0.md` - First map (e.g., current state)
+- `ARC-001-WARD-002-v1.0.md` - Second map (e.g., future state)
+- `ARC-001-WARD-003-v1.0.md` - Third map (e.g., gap analysis)
 
 **Template**: `.arckit/templates/wardley-map-template.md`
 
@@ -545,7 +543,7 @@ The visualization helps:
 
 Generate a comprehensive Wardley Map document saved to:
 
-**`projects/{project_number}-{project_name}/wardley-maps/{map_name}.md`**
+**`projects/{project_number}-{project_name}/wardley-maps/ARC-{PROJECT_ID}-WARD-{NUM}-v{VERSION}.md`**
 
 The document must be:
 - ✅ Complete with all sections from template
@@ -561,7 +559,7 @@ After creating the map, provide a summary to the user:
 ```
 ✅ Wardley Map Created: {map_name}
 
-📁 Location: projects/{project}/wardley-maps/{map_name}.md
+📁 Location: projects/{project}/wardley-maps/ARC-{PROJECT_ID}-WARD-{NUM}-v{VERSION}.md
 
 🗺️ View Map: Paste the Wardley code into https://create.wardleymaps.ai
 

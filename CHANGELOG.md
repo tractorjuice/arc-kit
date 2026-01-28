@@ -5,6 +5,80 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-01-28
+
+### Release Highlights
+
+**ArcKit reaches 1.0.0** - This release marks ArcKit as production-ready for enterprise architecture governance workflows.
+
+### What's Included
+
+- **40 Slash Commands**: Complete toolkit for architecture governance, vendor procurement, and design review
+- **UK Government Compliance**: TCoP, Service Standard, Secure by Design, AI Playbook, ATRS, JSP 936
+- **HM Treasury Frameworks**: Green Book (SOBC), Orange Book (Risk Management)
+- **Multi-AI Support**: Claude Code, OpenAI Codex CLI, Gemini CLI
+- **Template-Driven Generation**: Comprehensive templates for all document types
+- **Traceability Chain**: Stakeholders → Goals → Requirements → Design → Tests
+
+### Stability
+
+- All 14 Live-status commands extensively tested across 16 test repositories
+- 18 Beta-status commands feature-complete and actively refined
+- 4 Alpha-status commands working with limited testing
+- 5 Experimental commands for early adopters
+
+---
+
+## [0.2.0] - 2026-01-28
+
+### Changed
+
+- **BREAKING: Standardized Document Filenames**: All 40 commands now output files using Document ID pattern
+  - Format: `ARC-{PROJECT_ID}-{TYPE}-v{VERSION}.md` (e.g., `ARC-001-REQ-v1.0.md`)
+  - Multi-instance types (ADR, DIAG, WARD, DMC): `ARC-{PROJECT_ID}-{TYPE}-{NUM}-v{VERSION}.md`
+  - Unified output locations with subdirectories: `decisions/`, `diagrams/`, `wardley-maps/`, `data-contracts/`, `reviews/`
+  - Architecture principles now use `ARC-000-PRIN-v1.0.md` (000 = global document)
+
+- **Updated `generate-document-id.sh`**: Added `--filename` and `--next-num` flags
+  - `--filename`: Returns ID with `.md` extension
+  - `--next-num DIR`: Auto-determines next sequence number for multi-instance types
+
+- **Updated `create-project.sh`**: Project README now documents new filename patterns
+  - JSON output includes new filename patterns
+  - Creates subdirectories for multi-instance types
+
+- **Updated `common.sh`**: `create_project_dir()` now creates all subdirectories
+
+### Added
+
+- **`migrate-filenames.sh`**: Migration script for existing projects
+  - Renames old filenames to new Document ID pattern
+  - Creates backups before changes
+  - Supports `--dry-run`, `--all`, `--force` options
+
+### Removed
+
+- **Duplicate guide**: Removed `docs/guides/wardley-mapping.md` (duplicate of `wardley.md`)
+
+### Type Code Reference
+
+| Command | Type Code | Output Pattern |
+|---------|-----------|----------------|
+| requirements | REQ | `ARC-{PID}-REQ-v1.0.md` |
+| stakeholders | STKE | `ARC-{PID}-STKE-v1.0.md` |
+| risk | RISK | `ARC-{PID}-RISK-v1.0.md` |
+| sobc | SOBC | `ARC-{PID}-SOBC-v1.0.md` |
+| principles | PRIN | `ARC-000-PRIN-v1.0.md` |
+| adr | ADR | `ARC-{PID}-ADR-{NUM}-v1.0.md` |
+| diagram | DIAG | `ARC-{PID}-DIAG-{NUM}-v1.0.md` |
+| wardley | WARD | `ARC-{PID}-WARD-{NUM}-v1.0.md` |
+| data-model | DATA | `ARC-{PID}-DATA-v1.0.md` |
+| research | RSCH | `ARC-{PID}-RSCH-v1.0.md` |
+| traceability | TRAC | `ARC-{PID}-TRAC-v1.0.md` |
+| ... | ... | See full list in CLAUDE.md |
+
+---
+
 ## [0.11.2] - 2026-01-26
 
 ### Added
@@ -1225,6 +1299,7 @@ Deployed to 6 test repositories:
 
 ## Release Links
 
+- [v1.0.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.0.0) - Production Release - Enterprise Architecture Governance Toolkit
 - [v0.3.1](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.1) - Data Modeling with ERD, GDPR Compliance, and Data Governance
 - [v0.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.0) - Green Book & Orange Book Edition (SOBC + Risk Management)
 - [v0.2.2](https://github.com/tractorjuice/arc-kit/releases/tag/v0.2.2) - OpenAI Codex CLI Support & Enhanced Stakeholder Analysis
@@ -1248,5 +1323,4 @@ ArcKit follows [Semantic Versioning](https://semver.org/):
 - v0.2.1 → v0.2.2: Added Codex CLI support (new feature)
 - v0.2.2 → v0.3.0: Added Green Book SOBC + Orange Book risk management (significant new features)
 - v0.3.0 → v0.3.1: Added data modeling command (new feature)
-- Future v0.3.1 → v0.3.2: Bug fixes only (patch)
-- Future v0.3.x → v1.0.0: Breaking changes to workflow or API (major)
+- v0.x.x → v1.0.0: Production release with 40 commands, complete governance toolkit (major)

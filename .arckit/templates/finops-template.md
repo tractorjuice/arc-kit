@@ -1,6 +1,6 @@
 # FinOps Strategy
 
-> **Template Status**: Experimental | **Version**: 0.11.2 | **Command**: `/arckit.finops`
+> **Template Status**: Experimental | **Version**: 1.0.0 | **Command**: `/arckit.finops`
 
 ## Document Control
 

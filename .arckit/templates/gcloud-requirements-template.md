@@ -1,6 +1,6 @@
 # UK Digital Marketplace: G-Cloud Service Procurement
 
-> **Template Status**: Beta | **Version**: 0.11.2 | **Command**: `/arckit.gcloud-search`
+> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.gcloud-search`
 
 ## Document Control
 
@@ -22,7 +22,7 @@
 | **Distribution** | [DISTRIBUTION_LIST] |
 | **Framework** | G-Cloud |
 | **Service Category** | [Cloud Hosting / Cloud Software / Cloud Support] |
-| **Requirements Source** | projects/[PROJECT_ID]/requirements.md |
+| **Requirements Source** | projects/[PROJECT_ID]/ARC-{PROJECT_ID}-REQ-v*.md |
 
 ## Revision History
 
@@ -36,7 +36,7 @@
 
 ### 1.1 What We Need
 
-[Describe what cloud service/software is needed - from requirements.md]
+[Describe what cloud service/software is needed - from ARC-{PROJECT_ID}-REQ-v*.md]
 
 ### 1.2 Why We Need It
 
@@ -57,7 +57,7 @@
 
 The service **MUST** provide:
 
-[Extract MUST requirements from requirements.md]
+[Extract MUST requirements from ARC-{PROJECT_ID}-REQ-v*.md]
 
 ### 2.1 Functional Requirements
 
@@ -78,8 +78,8 @@ The service **MUST** provide:
 
 | ID | Requirement | Evidence Required |
 |----|-------------|-------------------|
-| NFR-S-xxx | [From NFR-S-xxx or architecture-principles.md] | [Certificate/documentation] |
-| NFR-S-xxx | [From NFR-S-xxx or architecture-principles.md] | [Certificate/documentation] |
+| NFR-S-xxx | [From NFR-S-xxx or ARC-000-PRIN-v*.md] | [Certificate/documentation] |
+| NFR-S-xxx | [From NFR-S-xxx or ARC-000-PRIN-v*.md] | [Certificate/documentation] |
 
 ### 2.4 Compliance Requirements
 
@@ -101,7 +101,7 @@ The service **MUST** provide:
 
 The service **SHOULD** provide:
 
-[Extract SHOULD requirements from requirements.md]
+[Extract SHOULD requirements from ARC-{PROJECT_ID}-REQ-v*.md]
 
 | ID | Requirement | Priority |
 |----|-------------|----------|
@@ -113,7 +113,7 @@ The service **SHOULD** provide:
 
 ## 4. Success Criteria
 
-[Extract measurable success criteria from requirements.md BR-xxx]
+[Extract measurable success criteria from ARC-{PROJECT_ID}-REQ-v*.md BR-xxx]
 
 | Criterion | Metric | Target |
 |-----------|--------|--------|
@@ -301,9 +301,9 @@ The service **SHOULD** provide:
 
 ### Project Documents
 
-- **Requirements**: projects/[project]/requirements.md
-- **Architecture Principles**: .arckit/memory/architecture-principles.md
-- **Stakeholder Analysis**: projects/[project]/stakeholder-drivers.md (if exists)
+- **Requirements**: projects/[project]/ARC-*-REQ-v*.md
+- **Architecture Principles**: projects/000-global/ARC-000-PRIN-v*.md
+- **Stakeholder Analysis**: projects/[project]/ARC-*-STKE-v*.md (if exists)
 
 ### Related ArcKit Commands
 

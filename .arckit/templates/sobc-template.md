@@ -1,6 +1,6 @@
 # Strategic Outline Business Case (SOBC)
 
-> **Template Status**: Live | **Version**: 0.11.2 | **Command**: `/arckit.sobc`
+> **Template Status**: Live | **Version**: 1.0.0 | **Command**: `/arckit.sobc`
 
 ## Document Control
 
@@ -98,7 +98,7 @@
 
 ### A1.2 Strategic Drivers
 
-**Link to Stakeholder Analysis**: This business case is informed by stakeholder analysis documented in `stakeholder-drivers.md`.
+**Link to Stakeholder Analysis**: This business case is informed by stakeholder analysis documented in `ARC-{PROJECT_ID}-STKE-v*.md`.
 
 **Primary Drivers** (from Stakeholder Analysis):
 
@@ -591,7 +591,7 @@ ROI = (£[X]M - £[X]M) / £[X]M × 100% = [X]%
 
 ### E1.1 Roles & Responsibilities (RACI)
 
-Derived from stakeholder analysis RACI matrix in `stakeholder-drivers.md`:
+Derived from stakeholder analysis RACI matrix in `ARC-{PROJECT_ID}-STKE-v*.md`:
 
 | Decision/Activity | Responsible | Accountable | Consulted | Informed |
 |-------------------|-------------|-------------|-----------|----------|
@@ -934,7 +934,7 @@ If this SOBC is not approved:
 
 ## Appendix A: Stakeholder Analysis
 
-**Source**: `projects/[NNN-project-name]/stakeholder-drivers.md`
+**Source**: `projects/[NNN-project-name]/ARC-{PROJECT_ID}-STKE-v*.md`
 
 **Summary**: [Brief summary of stakeholder analysis, or reference to full document]
 
@@ -943,7 +943,7 @@ If this SOBC is not approved:
 
 ## Appendix B: Architecture Principles
 
-**Source**: `.arckit/memory/architecture-principles.md`
+**Source**: `projects/000-global/ARC-000-PRIN-v*.md`
 
 **Relevant Principles**:
 - [Principle 1]: [How this project aligns]

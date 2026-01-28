@@ -46,8 +46,8 @@ Generate a comprehensive Secure by Design assessment document using the **contin
    - Current SbD maturity level (self-assessment score)
 
 2. **Check existing documentation**:
-   - Requirements documents in `projects/*/requirements.md`
-   - Risk register in `projects/*/risk-register.md`
+   - Requirements documents: Any `ARC-*-REQ-*.md` file in `projects/*/`
+   - Risk register: Any `ARC-*-RISK-*.md` file in `projects/*/`
    - Architecture diagrams in `projects/*/diagrams/`
    - Any existing security documentation
    - TCoP assessments (if available)
@@ -194,7 +194,7 @@ Generate a comprehensive Secure by Design assessment document using the **contin
    - Medium priority (3-6 months) - continuous improvement
    - Assign owners and due dates
 
-8. **Save the document**: Write to `specs/[project-folder]/mod-secure-by-design.md`
+8. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-MOD-v1.0.md`
 
 ## Assessment Guidelines
 
