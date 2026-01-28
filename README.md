@@ -591,7 +591,7 @@ payment-modernization/
 │       │   ├── ARC-001-WARD-003-v1.0.md   # Gap analysis
 │       │   └── ARC-001-WARD-004-v1.0.md   # Build vs buy decisions
 │       ├── ARC-001-SOW-v1.0.md            # Statement of Work (RFP)
-│       ├── evaluation-criteria.md          # Vendor evaluation framework
+│       ├── ARC-001-EVAL-v1.0.md           # Vendor evaluation framework
 │       ├── vendors/
 │       │   ├── acme-corp/
 │       │   │   ├── proposal.pdf
