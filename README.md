@@ -684,7 +684,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
-| `/arckit.azure-research` | Research Azure services and architecture patterns using [Microsoft Learn MCP](https://www.npmjs.com/package/@anthropic/mcp-server-microsoft-docs) | [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-AZRS-v1.0.md) | 🟣 Experimental |
+| `/arckit.azure-research` | Research Azure services and architecture patterns using [Microsoft Learn MCP](https://www.npmjs.com/package/@anthropic/mcp-server-microsoft-docs) | [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AZRS-v1.0.md) | 🟣 Experimental |
 | `/arckit.aws-research` | Research AWS services and architecture patterns (coming soon) | — | 🔮 Planned |
 | `/arckit.gcp-research` | Research Google Cloud services and architecture patterns (coming soon) | — | 🔮 Planned |
 
