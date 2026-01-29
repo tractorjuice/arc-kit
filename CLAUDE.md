@@ -237,6 +237,8 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
     cp docs/README.md /tmp/$repo/docs/README.md
     # Sync root docs (NOT README.md, docs/index.html, or CLAUDE.md - those are repo-specific)
     cp DEPENDENCY-MATRIX.md CHANGELOG.md WORKFLOW-DIAGRAMS.md VERSION /tmp/$repo/
+    # Sync MCP configuration
+    cp .mcp.json /tmp/$repo/.mcp.json
     # Sync devcontainer
     mkdir -p /tmp/$repo/.devcontainer
     cp -r .devcontainer/ /tmp/$repo/.devcontainer/
@@ -244,7 +246,7 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
 done
 ```
 
-**Note**: `README.md`, `docs/index.html`, and `CLAUDE.md` are NOT synced - these are repo-specific. `docs/README.md` IS synced.
+**Note**: `README.md`, `docs/index.html`, and `CLAUDE.md` are NOT synced - these are repo-specific. `docs/README.md` and `.mcp.json` ARE synced.
 
 ## Key Patterns
 
