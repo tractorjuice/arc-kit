@@ -1,6 +1,6 @@
 # Azure Technology Research: [PROJECT_NAME]
 
-> **Template Status**: Alpha | **Version**: 1.0.0 | **Command**: `/arckit.azure-research`
+> **Template Status**: Experimental | **Version**: 1.0.0 | **Command**: `/arckit.azure-research`
 
 ## Document Control
 
