@@ -56,7 +56,7 @@ Add constraints (budget, classification, region) in the prompt for tailored resu
 /arckit.azure-research Research Azure services for <project>
 ```
 
-Outputs: `projects/<id>/ARC-<id>-AZRS-v1.0.md`
+Outputs: `projects/<id>/research/ARC-<id>-AZRS-v1.0.md`
 
 ---
 

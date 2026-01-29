@@ -334,7 +334,7 @@ Create a Mermaid diagram showing:
 ```
 
 **Write to file**:
-- Write to `projects/{project-dir}/ARC-{PROJECT_ID}-AZRS-v1.0.md`
+- Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v1.0.md`
 - Use the exact template structure from `azure-research-template.md`
 
 **IMPORTANT - Auto-Populate Document Information Fields**:
@@ -361,7 +361,7 @@ Provide a summary:
 ## Azure Research Complete ✅
 
 **Project**: [Project Name]
-**File Created**: `projects/[PROJECT]/ARC-{PROJECT_ID}-AZRS-v1.0.md`
+**File Created**: `projects/[PROJECT]/research/ARC-{PROJECT_ID}-AZRS-v1.0.md`
 
 ### Azure Services Recommended
 
@@ -419,7 +419,7 @@ User: `/arckit.azure-research Research Azure services for microservices platform
 5. Search Azure Architecture Center for microservices patterns
 6. Map to Azure Security Benchmark
 7. Generate Bicep/Terraform examples
-8. Write to `projects/001-platform/ARC-001-AZRS-v1.0.md`
+8. Write to `projects/001-platform/research/ARC-001-AZRS-v1.0.md`
 
 ### Example 2: UK Government Data Platform
 
@@ -482,7 +482,7 @@ To avoid exceeding Claude Code's 32K token output limit:
 
 1. **Check MCP availability first** - stop with installation instructions if not available
 2. **Generate the full Azure research document** following the template structure
-3. **Use the Write tool** to create `projects/[PROJECT]/ARC-{PROJECT_ID}-AZRS-v1.0.md`
+3. **Use the Write tool** to create `projects/[PROJECT]/research/ARC-{PROJECT_ID}-AZRS-v1.0.md`
 4. **DO NOT** output the full document in your response
 5. **Show ONLY the summary** as specified in step 11
 
