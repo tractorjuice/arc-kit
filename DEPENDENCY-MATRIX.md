@@ -73,7 +73,9 @@ These commands can run first:
 
 ### Tier 1: Strategic Context (Depends on Foundation)
 - **stakeholders** → Depends on: principles (R)
-- **risk** → Depends on: principles (R), stakeholders (R)
+
+### Tier 1.5: Risk Assessment (Depends on Stakeholders)
+- **risk** → Depends on: stakeholders (M), principles (R)
 
 ### Tier 2: Business Justification
 - **sobc** → Depends on: stakeholders (M), risk (R), principles (R)
@@ -81,31 +83,40 @@ These commands can run first:
 ### Tier 3: Requirements Definition
 - **requirements** → Depends on: stakeholders (R), sobc (R), principles (R)
 
-### Tier 3.5: Strategic Planning (Platform Strategy)
+### Tier 3.5: Strategic Planning (Platform Strategy & Roadmaps)
 - **platform-design** → Depends on: principles (M), stakeholders (R), requirements (R), wardley (R), risk (O), sobc (O), data-model (O)
   - Note: Designs multi-sided platform strategy using Platform Design Toolkit (PDT) methodology
   - Best run after requirements when designing ecosystem-based platforms (Government as a Platform, marketplaces, data platforms)
   - Can run earlier if stakeholders and principles exist (requirements/wardley are recommended for better auto-population)
+- **roadmap** → Depends on: principles (M), stakeholders (R), requirements (R), wardley (R), risk (R)
+  - Note: Creates strategic architecture roadmap with multi-year timeline and capability evolution
+  - Requires principles as foundation; stakeholders and requirements provide strategic context
 
 ### Tier 4: Detailed Design (Depends on Requirements)
-All these commands REQUIRE ARC-*-REQ-*.md:
+Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 - **data-model** → Depends on: requirements (M), stakeholders (R), sobc (O)
-- **dpia** → Depends on: data-model (M), requirements (R), principles (R), stakeholders (R)
+- **dpia** → Depends on: data-model (M), requirements (M), principles (R), stakeholders (R), risk (R)
 - **research** → Depends on: requirements (M), stakeholders (R), data-model (R), platform-design (R)
 - **azure-research** → Depends on: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
   - Note: Requires Microsoft Learn MCP server to be installed for authoritative Azure documentation
 - **aws-research** → Depends on: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
   - Note: Requires AWS Knowledge MCP server to be installed for authoritative AWS documentation
-- **wardley** → Depends on: requirements (M), research (M), platform-design (R)
+- **wardley** → Depends on: requirements (R), principles (R)
+  - Note: Can create initial map without prerequisites; better maps with requirements and principles
 - **diagram** → Depends on: requirements (M), platform-design (R)
+- **adr** → Depends on: principles (R), requirements (R), stakeholders (O), research (O), wardley (O)
+  - Note: Architecture Decision Records; principles recommended but can create decisions without them
+- **data-mesh-contract** → Depends on: principles (M), data-model (R), stakeholders (R), diagram (R)
+  - Note: Federated data product contracts for mesh architectures; requires principles for governance standards
 
 ### Tier 5: Procurement (Depends on Requirements)
-All procurement commands REQUIRE ARC-*-REQ-*.md:
+Most procurement commands require ARC-*-REQ-*.md:
 - **sow** → Depends on: requirements (M), research (R)
-- **dos** → Depends on: requirements (M), principles (M), stakeholders (R)
-- **gcloud-search** → Depends on: requirements (M), research (R), principles (R)
+- **dos** → Depends on: requirements (M), stakeholders (M), sobc (R), research (R)
+- **gcloud-search** → Depends on: requirements (R), Digital Marketplace access (External)
+  - Note: Requirements recommended for search context but not mandatory
 - **gcloud-clarify** → Depends on: requirements (M), gcloud-search (M)
-- **evaluate** → Depends on: requirements (M), principles (M), sow/dos (R), research (R), gcloud-clarify (R)
+- **evaluate** → Depends on: requirements (M), sow (M), principles (R), research (R), gcloud-clarify (R)
 
 ### Tier 6: Design Reviews (Depends on Design Documents + Requirements)
 - **hld-review** → Depends on: requirements (M), principles (M), HLD (M)
@@ -115,16 +126,16 @@ All procurement commands REQUIRE ARC-*-REQ-*.md:
 - **backlog** → Depends on: requirements (M), HLD (M), stakeholders (R), risk (R)
 
 ### Tier 8: Operations (Depends on Architecture)
-- **servicenow** → Depends on: requirements (M), diagram (R), data-model (R)
-- **devops** → Depends on: requirements (M), diagram (R), research (R), principles (R)
+- **servicenow** → Depends on: requirements (M), diagram (M), principles (R), HLD/DLD (R)
+- **devops** → Depends on: requirements (M), diagram (M), principles (R), HLD/DLD (R)
 - **mlops** → Depends on: requirements (M), data-model (R), ai-playbook (R), research (R) [for AI projects]
 - **finops** → Depends on: requirements (M), devops (R), diagram (R), principles (R)
-- **operationalize** → Depends on: requirements (M), servicenow (R), diagram (R), risk (R)
+- **operationalize** → Depends on: requirements (M), diagram (M), HLD/DLD (R), principles (R), risk (R)
 - **traceability** → Depends on: requirements (M), HLD (M), DLD (M), data-model (R)
 
 ### Tier 9: Quality Assurance (Can Run Before or After Compliance)
-- **analyze** → Depends on: principles (O), stakeholders (O), risk (O), sobc (O), requirements (O), data-model (O), platform-design (O), sow (O), evaluate (O), traceability (O), tcop (O), ai-playbook (O), atrs (O), mod-secure (O)
-  - Note: All dependencies are optional - analyze identifies gaps for missing artifacts
+- **analyze** → Depends on: principles (M), requirements (R), stakeholders (R), all other artifacts (O)
+  - Note: Requires principles as foundation; other dependencies are optional - analyze identifies gaps for missing artifacts
 
 ### Tier 10: Compliance Assessment (Depends on Multiple Artifacts)
 These assess compliance across the project:
@@ -132,17 +143,17 @@ These assess compliance across the project:
   - Note: All dependencies except principles are RECOMMENDED - better assessment with more artifacts
 - **service-assessment** → Depends on: requirements (M), plan (R), data-model (R), platform-design (O), principles (R), stakeholders (R), risk (R), analyze (R), hld-review (R), dld-review (R), diagram (R), traceability (R), wardley (R), tcop (O), ai-playbook (O), atrs (O), secure (O), mod-secure (O), jsp-936 (O), principles-compliance (O)
   - Note: Compliance artifacts are optional - service-assessment identifies them as gaps if missing
-- **tcop** → Depends on: requirements (M), principles (M)
+- **tcop** → Depends on: requirements (M), principles (R), diagram (R)
 - **ai-playbook** → Depends on: requirements (O) [if AI system]
-- **atrs** → Depends on: requirements (O) [if AI system]
+- **atrs** → Depends on: requirements (M), principles (R), data-model (R) [for AI/algorithmic systems]
 - **secure** → Depends on: requirements (M), principles (M), risk (R)
 - **mod-secure** → Depends on: requirements (M), principles (M), risk (R)
-- **jsp-936** → Depends on: requirements (M) [if MOD AI system]
+- **jsp-936** → Depends on: requirements (M), principles (M), mod-secure (R), risk (R) [for MOD AI systems]
 
 ### Tier 11: Project Story & Reporting (Depends on All Artifacts)
 Final reporting command that creates comprehensive project narrative:
-- **story** → Depends on: All artifacts (O)
-  - Note: All dependencies are optional - story scans and reports on whatever artifacts exist in the project
+- **story** → Depends on: principles (M), all other artifacts (R)
+  - Note: Requires principles as foundation; recommends multiple artifacts for comprehensive narrative
   - Generates comprehensive historical record with timeline analysis, traceability chains, governance achievements
   - Best run at project milestones or completion when most/all artifacts are complete
 
@@ -215,14 +226,14 @@ principles-compliance → analyze → service-assessment → story
 
 ### Commands That Are Frequently Consumed (High Fan-In)
 
-**ARC-*-REQ-*.md** - consumed by 27 commands:
-- platform-design (R), data-model (M), research (M), wardley (M), sow (M), dos (M), gcloud-search (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), diagram (M), servicenow (M), devops (M), mlops (M), finops (M), operationalize (M), traceability (M), analyze (O), service-assessment (M), tcop (M), ai-playbook (O), atrs (O), secure (M), mod-secure (M), jsp-936 (M), gcloud-clarify (M - implicit)
+**ARC-*-REQ-*.md** - consumed by 36 commands:
+- data-model (M), data-mesh-contract (M), platform-design (M), dpia (M), research (M), azure-research (M), aws-research (M), wardley (M), roadmap (M), adr (M), sow (M), dos (M), gcloud-search (R), gcloud-clarify (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), diagram (M), servicenow (M), devops (M), mlops (M), finops (M), operationalize (M), traceability (R), analyze (R), principles-compliance (M), service-assessment (M), tcop (M), ai-playbook (M), atrs (M), secure (M), mod-secure (M), jsp-936 (M), story (R), pages (R)
 
-**ARC-000-PRIN-v*.md** - consumed by 17 commands:
-- platform-design (M), stakeholders (R), risk (R), sobc (R), requirements (R), dos (M), gcloud-search (R), evaluate (M), hld-review (M), dld-review (M), devops (R), finops (R), analyze (O), service-assessment (R), tcop (M), secure (M), mod-secure (M)
+**ARC-000-PRIN-v*.md** - consumed by 20 commands:
+- stakeholders (M), risk (R), sobc (R), requirements (R), platform-design (M), dpia (R), wardley (M), roadmap (M), sow (M), dos (R), evaluate (M), hld-review (M), servicenow (R), mlops (R), traceability (R), analyze (M), service-assessment (M), atrs (M), secure (M), story (R)
 
-**ARC-*-STKE-*.md** - consumed by 10 commands:
-- platform-design (R), risk (R), sobc (M), requirements (R), data-model (R), research (R), dos (R), backlog (R), analyze (O), service-assessment (R)
+**ARC-*-STKE-*.md** - consumed by 20 commands:
+- risk (M), sobc (M), requirements (M), data-model (R), data-mesh-contract (O), platform-design (R), dpia (R), research (O), azure-research (R), aws-research (M), wardley (O), roadmap (O), adr (R), hld-review (R), operationalize (R), traceability (R), analyze (R), principles-compliance (R), mod-secure (R), jsp-936 (R)
 
 **HLD** (external document) - consumed by 7 commands:
 - dld-review (M), backlog (M), diagram (R), servicenow (R), traceability (M), hld-review (validates it), service-assessment (M)
@@ -233,9 +244,9 @@ principles-compliance → analyze → service-assessment → story
 
 ### Commands That Produce Critical Artifacts (High Fan-Out)
 
-**requirements** produces ARC-*-REQ-*.md → consumed by 23 commands (highest)
-**principles** produces ARC-000-PRIN-v*.md → consumed by 15 commands
-**stakeholders** produces ARC-*-STKE-*.md → consumed by 10 commands
+**requirements** produces ARC-*-REQ-*.md → consumed by 36 commands (highest)
+**principles** produces ARC-000-PRIN-v*.md → consumed by 20 commands
+**stakeholders** produces ARC-*-STKE-*.md → consumed by 20 commands
 **HLD** (external) → consumed by 7 commands
 **risk** produces ARC-*-RISK-*.md → consumed by 6 commands
 **platform-design** produces ARC-*-PLAT-v*.md → consumed by 6 commands
