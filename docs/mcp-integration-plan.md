@@ -10,9 +10,11 @@
 
 **Resources**: 1 developer
 
-**Version**: v0.5.0
+**Version**: v1.1.0
 
 **Total New Content**: ~3,500-4,500 lines of code and documentation
+
+**Test Repositories**: 17 repos (11 public, 6 private)
 
 ## Background
 
@@ -27,7 +29,13 @@ Model Context Protocol (MCP) is an open protocol created by Anthropic for connec
 
 ### Microsoft Learn MCP Server
 
+> **Official Documentation**: [Microsoft Learn MCP Server overview](https://learn.microsoft.com/en-us/training/support/mcp) | [Developer Reference](https://learn.microsoft.com/en-us/training/support/mcp-developer-reference)
+
 **Endpoint**: https://learn.microsoft.com/api/mcp
+
+**Transport**: Streamable HTTP (SSE deprecated August 2025)
+
+**Authentication**: None required (free to use)
 
 **Available Tools**:
 
@@ -45,6 +53,14 @@ Model Context Protocol (MCP) is an open protocol created by Anthropic for connec
    - Search official Microsoft code samples
    - Parameters: query (string), language (optional)
    - Returns: Code samples with context and links
+
+### Other Microsoft MCP Servers
+
+| Server | Description | Documentation |
+|--------|-------------|---------------|
+| **Microsoft Graph MCP** | Enterprise user/group/app insights (Preview) | [Overview](https://learn.microsoft.com/en-us/graph/mcp-server/overview) |
+| **Azure API Management MCP** | Manage MCP servers in Azure | [Overview](https://learn.microsoft.com/en-us/azure/api-management/mcp-server-overview) |
+| **Windows MCP** | On-device agent registry | [Overview](https://learn.microsoft.com/en-us/windows/ai/mcp/overview) |
 
 ### Current Platform Support
 
@@ -343,27 +359,27 @@ If MCP tools are not available:
 **Day 13**: Update CHANGELOG and version
 
 **Tasks**:
-- [ ] Update `CHANGELOG.md` for v0.5.0
+- [ ] Update `CHANGELOG.md` for v1.1.0
 - [ ] Document all MCP features added
 - [ ] Update version references across all files
-- [ ] Create migration guide from v0.4.1
+- [ ] Create migration guide from v1.0.1
 - [ ] Tag release candidate
 
 **Deliverables**:
 - `CHANGELOG.md` updated
-- Version v0.5.0-rc1 tagged
+- Version v1.1.0-rc1 tagged
 
 **Day 14**: Test repository updates
 
 **Tasks**:
-- [ ] Create test script to update all 6 test repos
-- [ ] Push v0.5.0 to test repos
+- [ ] Create test script to update all 17 test repos
+- [ ] Push v1.1.0 to test repos
 - [ ] Verify MCP configuration in test repos
 - [ ] Test commands in each test repo
 - [ ] Document any issues
 
 **Deliverables**:
-- All test repos updated to v0.5.0-rc1
+- All test repos updated to v1.1.0-rc1
 - Test results documented
 
 ### Phase 5: Deployment (Week 3 Days 4-5)
@@ -372,20 +388,20 @@ If MCP tools are not available:
 
 **Tasks**:
 - [ ] Merge `feature/mcp-integration` to main
-- [ ] Create GitHub release v0.5.0
+- [ ] Create GitHub release v1.1.0
 - [ ] Upload release notes
 - [ ] Update main branch protection
 - [ ] Monitor for issues
 
 **Deliverables**:
-- v0.5.0 released on main branch
+- v1.1.0 released on main branch
 - GitHub release published
 
 **Day 16**: Test repository deployment
 
 **Tasks**:
-- [ ] Run update script for all 6 test repos
-- [ ] Push v0.5.0 to all test repos
+- [ ] Run update script for all 17 test repos
+- [ ] Push v1.1.0 to all test repos
 - [ ] Verify deployment in each repo
 - [ ] Test MCP setup in sample project
 - [ ] Document final deployment
@@ -393,7 +409,7 @@ If MCP tools are not available:
 **Script**: Similar to `/tmp/remove-deprecated-from-test-repos.sh` but for MCP updates
 
 **Deliverables**:
-- All 6 test repos updated to v0.5.0
+- All 17 test repos updated to v1.1.0
 
 ### Phase 6: Launch & Communication (Week 3 Day 5+)
 
@@ -513,11 +529,11 @@ If MCP tools are not available:
 
 **Risk**: Adding too many MCP features delays release
 **Mitigation**: Strict scope (6 commands only), phased approach
-**Severity**: Medium (could delay v0.5.0)
+**Severity**: Medium (could delay v1.1.0)
 
 ## Success Criteria
 
-### Must Have (v0.5.0)
+### Must Have (v1.1.0)
 
 - ✅ All 6 commands updated with MCP support
 - ✅ Documentation complete for all 3 platforms
@@ -525,7 +541,7 @@ If MCP tools are not available:
 - ✅ All test repos updated
 - ✅ GitHub release published
 
-### Should Have (v0.5.0)
+### Should Have (v1.1.0)
 
 - ✅ MCP setup guide with screenshots
 - ✅ Example outputs showing MCP benefits
@@ -663,17 +679,17 @@ If MCP tools are not available:
 ### Deployment Testing
 
 - [ ] Main repo deploys successfully
-- [ ] All 6 test repos deploy successfully
+- [ ] All 17 test repos deploy successfully
 - [ ] Version numbers consistent across all files
 - [ ] CHANGELOG accurate
 - [ ] GitHub release created correctly
 
 ## Appendix C: Communication Templates
 
-### GitHub Release Notes (v0.5.0)
+### GitHub Release Notes (v1.1.0)
 
 ```markdown
-# ArcKit v0.5.0: Microsoft Learn MCP Integration
+# ArcKit v1.1.0: Microsoft Learn MCP Integration
 
 ## 🚀 What's New
 
@@ -745,9 +761,9 @@ Thanks to:
 ### Blog Post Announcement
 
 ```markdown
-# ArcKit v0.5.0: Real-Time Microsoft Documentation in Your Architecture Workflow
+# ArcKit v1.1.0: Real-Time Microsoft Documentation in Your Architecture Workflow
 
-Today we're excited to announce ArcKit v0.5.0, featuring integration with Microsoft Learn's Model Context Protocol (MCP) server.
+Today we're excited to announce ArcKit v1.1.0, featuring integration with Microsoft Learn's Model Context Protocol (MCP) server.
 
 ## What This Means for You
 
@@ -807,7 +823,7 @@ This is the foundation for more MCP integrations. We're exploring:
 
 ## Try It Today
 
-Update to v0.5.0:
+Update to v1.1.0:
 ```bash
 git pull origin main
 ```
@@ -821,6 +837,7 @@ Happy architecting! 🏗️✨
 
 **End of Plan**
 
-**Version**: v0.5.0 Integration Plan
+**Version**: v1.1.0 Integration Plan
 **Created**: 2025-10-29
-**Status**: Planning Complete, Implementation Pending
+**Last Updated**: 2026-01-29
+**Status**: Plan Revised, MCP Server Verified
