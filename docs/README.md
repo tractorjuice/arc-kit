@@ -31,11 +31,17 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 14. [Traceability](guides/traceability.md) - `/arckit.traceability`
 
 ### Research & Analysis
-13. [Research](guides/research.md) - `/arckit.research` ⭐ NEW
-14. [Analyze](guides/analyze.md) - `/arckit.analyze` ⭐ NEW
+13. [Research](guides/research.md) - `/arckit.research`
+14. [Analyze](guides/analyze.md) - `/arckit.analyze`
 15. [Principles Compliance](guides/principles-compliance.md) - `/arckit.principles-compliance` ⭐ NEW
 16. [Diagrams](guides/diagram.md) - `/arckit.diagram` ⭐ NEW
 17. [Architecture Decision Records](guides/adr.md) - `/arckit.adr` ⭐ NEW
+
+### Cloud Research (MCP)
+These commands require [MCP servers](https://modelcontextprotocol.io/) for authoritative cloud documentation:
+- [Azure Research](guides/azure-research.md) - `/arckit.azure-research` ⭐ NEW (Requires Microsoft Learn MCP)
+- AWS Research - `/arckit.aws-research` 🔮 Planned
+- GCP Research - `/arckit.gcp-research` 🔮 Planned
 
 ### Procurement
 17. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
@@ -114,6 +120,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.data-mesh-contract` | [data-mesh-contract.md](guides/data-mesh-contract.md) | ✅ Complete |
 | `/arckit.dpia` | [dpia.md](guides/dpia.md) | ✅ Complete |
 | `/arckit.research` | [research.md](guides/research.md) | ✅ Complete |
+| `/arckit.azure-research` | [azure-research.md](guides/azure-research.md) | ✅ Complete |
 | `/arckit.wardley` | [wardley-mapping.md](guides/wardley-mapping.md) | ✅ Complete |
 | `/arckit.roadmap` | [roadmap.md](guides/roadmap.md) | ✅ Complete |
 | `/arckit.adr` | [adr.md](guides/adr.md) | ✅ Complete |
@@ -144,7 +151,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 | `/arckit.finops` | [finops.md](guides/finops.md) | ✅ Complete |
 | `/arckit.pages` | [pages.md](guides/pages.md) | ✅ Complete |
 
-**Coverage**: 40/40 commands documented (100%)
+**Coverage**: 41/41 commands documented (100%)
 
 ---
 
@@ -156,5 +163,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2026-01-28
-**ArcKit Version**: 1.0.0
+**Last updated**: 2026-01-29
+**ArcKit Version**: 1.0.2

@@ -17,6 +17,7 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.data-mesh-contract` | Create federated data product contracts (ODCS v3.0.2) | When delivering data mesh/federated analytics |
 | `/arckit.dpia` | Generate Data Protection Impact Assessment | After data model when processing personal data |
 | `/arckit.research` | Research technology and services for build vs buy | After requirements, inform procurement decisions |
+| `/arckit.azure-research` | Azure-specific research using Microsoft Learn MCP | When Azure is the target platform |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
 | `/arckit.roadmap` | Produce multi-year capability roadmap with governance gates | After strategy artifacts, before procurement |
 | `/arckit.adr` | Capture MADR-format architectural decisions | Whenever key design choices need approval trail |
@@ -727,7 +728,65 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 **Output**: `projects/NNN-project-name/research-findings.md`
 
-**Next step**: Use findings to inform `/arckit.wardley` mapping or proceed to procurement with `/arckit.gcloud-search`, `/arckit.dos`, or `/arckit.sow`.
+**Next step**: Use findings to inform `/arckit.wardley` mapping or proceed to procurement with `/arckit.gcloud-search`, `/arckit.dos`, or `/arckit.sow`. For Azure-specific research, use `/arckit.azure-research`.
+
+---
+
+### 9a. `/arckit.azure-research` - Azure Technology Research (MCP Required)
+
+**Purpose**: Research Azure services, architecture patterns, and implementation guidance using official Microsoft documentation via the Microsoft Learn MCP server.
+
+**Prerequisites**:
+- **MANDATORY**: Microsoft Learn MCP server must be installed
+- **MANDATORY**: Requirements document (`ARC-*-REQ-*.md`) must exist
+
+**MCP Installation**:
+Add to your MCP configuration (`~/.claude/claude_desktop_config.json` or `.mcp.json`):
+```json
+{
+  "mcpServers": {
+    "microsoft-docs": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-server-microsoft-docs"]
+    }
+  }
+}
+```
+
+**Usage**:
+```
+/arckit.azure-research Research Azure services for SCTS GenAI Programme
+/arckit.azure-research Azure AI services for document processing
+/arckit.azure-research Azure architecture for UK Government data platform
+```
+
+**What it does**:
+- Maps requirements to specific Azure services
+- Provides Azure Architecture Center reference patterns
+- Assesses against Azure Well-Architected Framework (5 pillars)
+- Maps to Azure Security Benchmark (12 control domains)
+- Checks UK region availability (UK South, UK West)
+- Verifies G-Cloud procurement availability
+- Estimates costs with optimization recommendations
+- Provides Bicep/Terraform implementation templates
+
+**MCP Tools Used**:
+- `microsoft_docs_search` - Search Azure documentation
+- `microsoft_docs_fetch` - Retrieve full documentation pages
+- `microsoft_code_sample_search` - Find code samples (Bicep, Terraform, SDKs)
+
+**Key outputs**:
+- Azure service recommendations per requirement category
+- Architecture diagram (Mermaid) with UK region placement
+- Azure Security Benchmark control mapping
+- Well-Architected Framework assessment
+- Cost estimates (monthly and 3-year TCO)
+- Bicep/Terraform templates
+- UK Government compliance details (G-Cloud, NCSC, data residency)
+
+**Output**: `projects/NNN-project-name/ARC-NNN-AZRS-v1.0.md`
+
+**Next step**: Use `/arckit.diagram` for detailed Azure architecture diagrams, `/arckit.secure` for UK Secure by Design validation, or `/arckit.devops` for Azure DevOps pipeline planning.
 
 ---
 

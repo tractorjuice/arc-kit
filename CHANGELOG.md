@@ -5,6 +5,29 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2026-01-29
+
+### Added
+
+- **New Command: `/arckit.azure-research`**: Azure-specific technology research using Microsoft Learn MCP server
+  - Requires Microsoft Learn MCP server (mandatory prerequisite)
+  - Uses official Microsoft documentation via MCP tools (`microsoft_docs_search`, `microsoft_docs_fetch`, `microsoft_code_sample_search`)
+  - Azure service recommendations mapped to requirements
+  - Azure Well-Architected Framework assessment (5 pillars)
+  - Azure Security Benchmark mapping (12 control domains)
+  - UK Government compliance (G-Cloud, UK regions, NCSC principles)
+  - Cost estimates with optimization recommendations
+  - Bicep/Terraform implementation templates
+  - Azure DevOps pipeline examples
+- **New Template**: `azure-research-template.md` for Azure research outputs
+- **New Guide**: `docs/guides/azure-research.md` with usage documentation
+
+### Changed
+
+- Updated command count to 41 (was 40)
+
+---
+
 ## [1.0.1] - 2026-01-28
 
 ### Added

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 40 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
+    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 41 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
     <meta name="keywords" content="enterprise architecture, UK government, GDS, architecture governance, vendor procurement, ArcKit, compliance, TCOP, secure by design">
     <meta name="author" content="ArcKit">
     <title>ArcKit - Enterprise Architecture Governance & Vendor Procurement</title>
@@ -405,7 +405,7 @@
             <div class="govuk-width-container">
                 <h1 class="govuk-heading-xl">ArcKit</h1>
                 <p class="govuk-body-l">Transform architecture chaos into systematic, audit-ready governance.</p>
-                <p class="govuk-body">40 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
+                <p class="govuk-body">41 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
 
                 <div class="govuk-button-group govuk-!-margin-top-6">
                     <a href="https://github.com/tractorjuice/arc-kit" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
@@ -614,7 +614,7 @@ flowchart TD
 
     <!-- Commands Section -->
     <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
-        <h2 class="govuk-heading-l">40 ArcKit Commands</h2>
+        <h2 class="govuk-heading-l">41 ArcKit Commands</h2>
         <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
 
         <!-- Status Legend -->
@@ -657,6 +657,7 @@ flowchart TD
                     <option value="strategic">Strategic Context</option>
                     <option value="requirements">Requirements & Data</option>
                     <option value="research">Research & Strategy</option>
+                    <option value="cloud-mcp">Cloud Research (MCP)</option>
                     <option value="procurement">Procurement</option>
                     <option value="design">Design & Architecture</option>
                     <option value="operations">Operations</option>
@@ -671,7 +672,7 @@ flowchart TD
                 <input type="text" id="search-filter" placeholder="Search commands..." oninput="filterTable()">
             </div>
             <div class="app-command-count">
-                Showing <span id="visible-count">40</span> of 40 commands
+                Showing <span id="visible-count">41</span> of 41 commands
             </div>
         </div>
 
@@ -895,6 +896,31 @@ flowchart TD
                             <a href="https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/decisions/ARC-001-ADR-001-v1.0.md" title="SCTS">v14</a>
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+
+                    <!-- Cloud Research (MCP) -->
+                    <tr data-status="beta" data-category="cloud-mcp">
+                        <td><code>/arckit.azure-research</code></td>
+                        <td class="description">Research Azure services and architecture patterns using Microsoft Learn MCP for authoritative guidance</td>
+                        <td>Cloud Research (MCP)</td>
+                        <td class="examples">
+                            <a href="https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-AZRS-v1.0.md" title="SCTS GenAI">v14</a>
+                        </td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="cloud-mcp">
+                        <td><code>/arckit.aws-research</code></td>
+                        <td class="description">Research AWS services and architecture patterns (coming soon - requires MCP)</td>
+                        <td>Cloud Research (MCP)</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Planned</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="cloud-mcp">
+                        <td><code>/arckit.gcp-research</code></td>
+                        <td class="description">Research Google Cloud services and architecture patterns (coming soon - requires MCP)</td>
+                        <td>Cloud Research (MCP)</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Planned</span></td>
                     </tr>
 
                     <!-- Procurement -->
@@ -1340,7 +1366,7 @@ flowchart TD
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md" class="govuk-link">Changelog</a> - Release history and updates</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md" class="govuk-link">Contributing</a> - How to contribute to ArcKit</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/releases" class="govuk-link">Release Notes</a> - Detailed version information</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/.claude/COMMANDS.md" class="govuk-link">Command Reference</a> - All 40 commands documented</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/.claude/COMMANDS.md" class="govuk-link">Command Reference</a> - All 41 commands documented</li>
                 </ul>
             </div>
         </div>
@@ -1350,7 +1376,7 @@ flowchart TD
                 <h3 class="govuk-heading-s">Workflow & Dependencies</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/WORKFLOW-DIAGRAMS.md" class="govuk-link">Workflow Diagrams</a> - Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI) with Gantt charts and decision trees</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">Dependency Structure Matrix</a> - Complete 40×40 command dependency matrix showing mandatory, recommended, and optional relationships</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">Dependency Structure Matrix</a> - Complete 41×41 command dependency matrix showing mandatory, recommended, and optional relationships</li>
                 </ul>
             </div>
         </div>
