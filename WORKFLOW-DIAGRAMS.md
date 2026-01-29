@@ -687,10 +687,10 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 1.0.0
-- **Document Date**: 2026-01-28
+- **ArcKit Version**: 1.0.2
+- **Document Date**: 2026-01-29
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
-- **Commands Documented**: 40
+- **Commands Documented**: 41
 - **Key Changes**:
   - Added missing style definitions for finops nodes in all workflow diagrams
   - Updated Tier Groupings table to include all 40 commands across 13 tiers
