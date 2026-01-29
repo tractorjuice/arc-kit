@@ -39,7 +39,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v1.0.1](https://github.com/tractorjuice/arc-kit/releases/tag/v1.0.1)
+**Latest Release**: [v1.0.3](https://github.com/tractorjuice/arc-kit/releases/tag/v1.0.3)
 
 ### Initialize a Project
 
@@ -617,7 +617,7 @@ payment-modernization/
 
 ## Complete Command Reference
 
-All 41 ArcKit commands with maturity status and example outputs from public test repositories.
+All 42 ArcKit commands with maturity status and example outputs from public test repositories.
 
 ### Status Legend
 
@@ -685,7 +685,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
 | `/arckit.azure-research` | Research Azure services and architecture patterns using [Microsoft Learn MCP](https://www.npmjs.com/package/@anthropic/mcp-server-microsoft-docs) | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/research/ARC-001-AZRS-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AZRS-v1.0.md) | 🟣 Experimental |
-| `/arckit.aws-research` | Research AWS services and architecture patterns using [AWS Knowledge MCP](https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server) | — | 🟣 Experimental |
+| `/arckit.aws-research` | Research AWS services and architecture patterns using [AWS Knowledge MCP](https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server) | [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AWRS-v1.0.md) | 🟣 Experimental |
 | `/arckit.gcp-research` | Research Google Cloud services and architecture patterns (pending GCP documentation MCP server) | — | 🔮 Planned |
 
 > **Note**: Google Cloud currently offers MCP servers for [resource management](https://docs.cloud.google.com/mcp/overview) (BigQuery, GKE, Compute Engine) but not documentation search. `/arckit.gcp-research` will be implemented when Google releases a documentation-focused MCP server equivalent to Microsoft Learn or AWS Knowledge MCP.
@@ -944,7 +944,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v1.0.1](https://github.com/tractorjuice/arc-kit/releases/tag/v1.0.1)
+- **Latest Version**: [v1.0.3](https://github.com/tractorjuice/arc-kit/releases/tag/v1.0.3)
 
 ---
 
