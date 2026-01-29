@@ -541,7 +541,7 @@ graph TD
 | 2 | Business Justification | sobc |
 | 3 | Requirements | requirements |
 | 3.5 | Platform Strategy | platform-design |
-| 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, wardley, roadmap, diagram |
+| 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, wardley, roadmap, diagram |
 | 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
 | 6 | Design Reviews | hld-review, dld-review, adr |
 | 7 | Implementation | backlog |
@@ -550,7 +550,7 @@ graph TD
 | 11 | Reporting | story |
 | 12 | Publishing | pages |
 
-> **\*** `azure-research` is an alternative to `research` for Azure-specific projects. Requires Microsoft Learn MCP server.
+> **\*** `azure-research` and `aws-research` are alternatives to `research` for cloud-specific projects. Each requires its respective MCP server.
 
 ---
 
@@ -687,10 +687,10 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 1.0.2
+- **ArcKit Version**: 1.0.3
 - **Document Date**: 2026-01-29
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
-- **Commands Documented**: 41
+- **Commands Documented**: 42
 - **Key Changes**:
   - Added missing style definitions for finops nodes in all workflow diagrams
   - Updated Tier Groupings table to include all 40 commands across 13 tiers

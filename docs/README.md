@@ -39,8 +39,8 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 
 ### Cloud Research (MCP)
 These commands require [MCP servers](https://modelcontextprotocol.io/) for authoritative cloud documentation:
-- [Azure Research](guides/azure-research.md) - `/arckit.azure-research` ⭐ NEW (Requires Microsoft Learn MCP)
-- AWS Research - `/arckit.aws-research` 🔮 Planned
+- [Azure Research](guides/azure-research.md) - `/arckit.azure-research` (Requires Microsoft Learn MCP)
+- [AWS Research](guides/aws-research.md) - `/arckit.aws-research` ⭐ NEW (Requires AWS Knowledge MCP)
 - GCP Research - `/arckit.gcp-research` 🔮 Planned
 
 ### Procurement
@@ -121,6 +121,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.dpia` | [dpia.md](guides/dpia.md) | ✅ Complete |
 | `/arckit.research` | [research.md](guides/research.md) | ✅ Complete |
 | `/arckit.azure-research` | [azure-research.md](guides/azure-research.md) | ✅ Complete |
+| `/arckit.aws-research` | [aws-research.md](guides/aws-research.md) | ✅ Complete |
 | `/arckit.wardley` | [wardley-mapping.md](guides/wardley-mapping.md) | ✅ Complete |
 | `/arckit.roadmap` | [roadmap.md](guides/roadmap.md) | ✅ Complete |
 | `/arckit.adr` | [adr.md](guides/adr.md) | ✅ Complete |

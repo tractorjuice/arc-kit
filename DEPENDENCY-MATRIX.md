@@ -17,8 +17,8 @@ This matrix shows which commands depend on outputs from other commands.
 
 ## Dependency Structure Matrix
 
-| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | data-mesh-contract | platform-design | dpia | research | azure-research | wardley | roadmap | adr | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | devops | mlops | finops | operationalize | traceability | analyze | principles-compliance | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story | pages |
-|------------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
+| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | data-mesh-contract | platform-design | dpia | research | azure-research | aws-research | wardley | roadmap | adr | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | devops | mlops | finops | operationalize | traceability | analyze | principles-compliance | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story | pages |
+|------------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
 | **plan** | - | R | R | R | O | O |  |  |  |  |  |  | O | R |  |  | O | O |  |  | R |  |  |  |  |  |  |  |  |  | R |  | M | O |  |  |  |  |  | R | R |
 | **principles** |  | - | M | R | R | R |  |  | M | R |  |  |  | M | M |  | M | R |  |  | M | M |  |  |  | R |  | R |  |  | R | M |  | M |  |  | M | M |  |  | R |
 | **stakeholders** |  | O | - | M | M | M | R | O | R | R | O | R | M | O | O | R |  |  |  |  |  | R |  |  |  |  |  |  |  | R | R | R | R |  |  |  |  |  | R | R |
@@ -30,8 +30,9 @@ This matrix shows which commands depend on outputs from other commands.
 | **platform-design** |  |  |  |  |  |  | O | R | - | O | O |  | R |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  | R |
 | **dpia** |  |  |  |  |  |  |  |  |  | - |  |  |  | O |  | R |  |  |  | O |  |  |  | O |  |  |  |  |  | O | R | R | R |  | R | R | R | R |  | R | R |
 | **research** |  |  |  |  |  |  |  |  |  |  | - |  | R |  |  | R |  | R | O | R |  |  |  |  |  | R | R |  |  |  |  |  |  |  | O |  |  |  |  |  | R |
-| **azure-research** |  |  |  |  |  |  |  |  |  |  |  | - | R |  | R |  |  |  |  |  |  |  | R | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  | R |
-| **wardley** |  |  |  |  |  |  |  |  | R |  | O |  | - | R |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |
+| **azure-research** |  |  |  |  |  |  |  |  |  |  |  | - |  | R |  | R |  |  |  |  |  |  |  | R | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  | R |  |
+| **aws-research** |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  | R |  |  |  |  |  |  |  | R | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  | R |  |
+| **wardley** |  |  |  |  |  |  |  |  | R |  | O |  |  | - | R |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |
 | **roadmap** |  |  |  |  |  |  |  |  | O |  |  |  | O | - |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
 | **adr** |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
 | **sow** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  | O |  | R |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |
@@ -93,6 +94,8 @@ All these commands REQUIRE ARC-*-REQ-*.md:
 - **research** → Depends on: requirements (M), stakeholders (R), data-model (R), platform-design (R)
 - **azure-research** → Depends on: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
   - Note: Requires Microsoft Learn MCP server to be installed for authoritative Azure documentation
+- **aws-research** → Depends on: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
+  - Note: Requires AWS Knowledge MCP server to be installed for authoritative AWS documentation
 - **wardley** → Depends on: requirements (M), research (M), platform-design (R)
 - **diagram** → Depends on: requirements (M), platform-design (R)
 
@@ -253,12 +256,20 @@ principles-compliance → analyze → service-assessment → story
 
 ## Version
 
-- **ArcKit Version**: 1.0.2
-- **Matrix Date**: 2026-01-29 (Added azure-research command)
-- **Commands Documented**: 41
-- **Matrix Rows**: 43 (41 commands + 2 external documents)
+- **ArcKit Version**: 1.0.3
+- **Matrix Date**: 2026-01-29 (Added aws-research command)
+- **Commands Documented**: 42
+- **Matrix Rows**: 44 (42 commands + 2 external documents)
 
 ## Changelog
+
+### 2026-01-29 - Added AWS Research Command
+- **Added**: `/arckit.aws-research` command (42nd ArcKit command) for AWS-specific technology research using AWS Knowledge MCP server
+- **Added**: aws-research row and column to dependency matrix
+- **Updated**: Tier 4 Detailed Design to include aws-research command
+- **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
+- **Consumed by**: diagram (R), devops (R), finops (R), adr (R), pages (R)
+- **Note**: Requires AWS Knowledge MCP server for authoritative AWS documentation
 
 ### 2026-01-29 - Added Azure Research Command
 - **Added**: `/arckit.azure-research` command (41st ArcKit command) for Azure-specific technology research using Microsoft Learn MCP server
