@@ -541,7 +541,7 @@ graph TD
 | 2 | Business Justification | sobc |
 | 3 | Requirements | requirements |
 | 3.5 | Platform Strategy | platform-design |
-| 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, wardley, roadmap, diagram |
+| 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, wardley, roadmap, diagram |
 | 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
 | 6 | Design Reviews | hld-review, dld-review, adr |
 | 7 | Implementation | backlog |
@@ -549,6 +549,8 @@ graph TD
 | 10 | Compliance | service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
 | 11 | Reporting | story |
 | 12 | Publishing | pages |
+
+> **\*** `azure-research` is an alternative to `research` for Azure-specific projects. Requires Microsoft Learn MCP server.
 
 ---
 
