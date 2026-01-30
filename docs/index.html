@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 41 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
+    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 42 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
     <meta name="keywords" content="enterprise architecture, UK government, GDS, architecture governance, vendor procurement, ArcKit, compliance, TCOP, secure by design">
     <meta name="author" content="ArcKit">
+    <meta property="og:title" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement">
+    <meta property="og:description" content="42 AI-assisted commands for systematic, compliant architecture governance following UK Government standards.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://tractorjuice.github.io/arc-kit/">
     <title>ArcKit - Enterprise Architecture Governance & Vendor Procurement</title>
 
     <!-- GOV.UK Frontend v5.13.0 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
 
     <style>
         /*
@@ -381,31 +385,69 @@
             font-weight: 700;
             color: #505a5f;
         }
+
+        /* Category border colours */
+        .app-category-heading {
+            padding-left: 1rem;
+        }
+
+        .app-category-heading--blue {
+            border-left: 4px solid #1d70b8;
+        }
+
+        .app-category-heading--green {
+            border-left: 4px solid #00703c;
+        }
+
+        .app-category-heading--purple {
+            border-left: 4px solid #912b88;
+        }
+
+        .app-category-heading--red {
+            border-left: 4px solid #d4351c;
+        }
+
+        .app-category-heading--orange {
+            border-left: 4px solid #f47738;
+        }
+
+        .app-category-heading--light-blue {
+            border-left: 4px solid #5694ca;
+        }
+
+        /* Phase sub-heading colour */
+        .app-phase-heading {
+            color: #1d70b8;
+        }
     </style>
 </head>
 <body class="govuk-template__body">
-    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <a class="govuk-skip-link" href="#hero">Skip to main content</a>
     <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
 
-    <main class="govuk-main-wrapper" id="main-content" role="main">
+    <header role="banner">
         <!-- Phase Banner -->
         <div class="govuk-phase-banner">
-            <p class="govuk-phase-banner__content">
-                <strong class="govuk-tag govuk-phase-banner__content__tag">
-                    beta
-                </strong>
-                <span class="govuk-phase-banner__text">
-                    This is a new toolkit. <a class="govuk-link" href="https://github.com/tractorjuice/arc-kit/issues">Help us improve it with your feedback</a>.
-                </span>
-            </p>
+            <div class="govuk-width-container">
+                <p class="govuk-phase-banner__content">
+                    <strong class="govuk-tag govuk-phase-banner__content__tag">
+                        beta
+                    </strong>
+                    <span class="govuk-phase-banner__text">
+                        This is a new toolkit. <a class="govuk-link" href="https://github.com/tractorjuice/arc-kit/issues">Help us improve it with your feedback</a>.
+                    </span>
+                </p>
+            </div>
         </div>
+    </header>
 
+    <main class="govuk-main-wrapper" id="main-content" role="main">
         <!-- Hero Section -->
-        <div class="app-hero">
+        <div class="app-hero" id="hero">
             <div class="govuk-width-container">
                 <h1 class="govuk-heading-xl">ArcKit</h1>
                 <p class="govuk-body-l">Transform architecture chaos into systematic, audit-ready governance.</p>
-                <p class="govuk-body">41 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
+                <p class="govuk-body">42 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
 
                 <div class="govuk-button-group govuk-!-margin-top-6">
                     <a href="https://github.com/tractorjuice/arc-kit" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
@@ -462,7 +504,7 @@
 
         <div class="govuk-grid-row govuk-!-margin-top-6">
             <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s" style="border-left: 4px solid #1d70b8; padding-left: 1rem;">Governance & Strategy</h3>
+                <h3 class="govuk-heading-s app-category-heading app-category-heading--blue">Governance & Strategy</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li>Architecture principles enforcement</li>
                     <li>Stakeholder analysis with RACI matrices</li>
@@ -474,7 +516,7 @@
                 </ul>
             </div>
             <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s" style="border-left: 4px solid #00703c; padding-left: 1rem;">Requirements & Data</h3>
+                <h3 class="govuk-heading-s app-category-heading app-category-heading--green">Requirements & Data</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li>Comprehensive requirements documentation</li>
                     <li>Data modelling with ERD diagrams</li>
@@ -487,7 +529,7 @@
 
         <div class="govuk-grid-row govuk-!-margin-top-6">
             <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s" style="border-left: 4px solid #912b88; padding-left: 1rem;">Procurement & Vendors</h3>
+                <h3 class="govuk-heading-s app-category-heading app-category-heading--purple">Procurement & Vendors</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li>Technology research with build vs buy analysis</li>
                     <li>RFP statement of work generation</li>
@@ -497,7 +539,7 @@
                 </ul>
             </div>
             <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s" style="border-left: 4px solid #d4351c; padding-left: 1rem;">Design & Quality</h3>
+                <h3 class="govuk-heading-s app-category-heading app-category-heading--red">Design & Quality</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li>Visual architecture diagrams (Mermaid)</li>
                     <li>Formal design reviews (HLD/DLD)</li>
@@ -510,7 +552,7 @@
 
         <div class="govuk-grid-row govuk-!-margin-top-6">
             <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s" style="border-left: 4px solid #f47738; padding-left: 1rem;">Compliance & Assurance</h3>
+                <h3 class="govuk-heading-s app-category-heading app-category-heading--orange">Compliance & Assurance</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" class="govuk-link">Technology Code of Practice (TCoP)</a> review</li>
                     <li><a href="https://www.gov.uk/service-manual/service-assessments" class="govuk-link">GDS Service Standard</a> assessment</li>
@@ -521,7 +563,7 @@
                 </ul>
             </div>
             <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s" style="border-left: 4px solid #5694ca; padding-left: 1rem;">Operations & Delivery</h3>
+                <h3 class="govuk-heading-s app-category-heading app-category-heading--light-blue">Operations & Delivery</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li>DevOps and CI/CD pipelines</li>
                     <li>MLOps model lifecycle management</li>
@@ -614,7 +656,7 @@ flowchart TD
 
     <!-- Commands Section -->
     <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
-        <h2 class="govuk-heading-l">41 ArcKit Commands</h2>
+        <h2 class="govuk-heading-l">42 ArcKit Commands</h2>
         <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
 
         <!-- Status Legend -->
@@ -641,7 +683,7 @@ flowchart TD
         <div class="app-filter-controls">
             <div>
                 <label for="status-filter">Filter by status:</label>
-                <select id="status-filter" onchange="filterTable()">
+                <select id="status-filter">
                     <option value="all">All statuses</option>
                     <option value="live">Live</option>
                     <option value="beta">Beta</option>
@@ -651,7 +693,7 @@ flowchart TD
             </div>
             <div>
                 <label for="category-filter">Category:</label>
-                <select id="category-filter" onchange="filterTable()">
+                <select id="category-filter">
                     <option value="all">All categories</option>
                     <option value="foundation">Foundation</option>
                     <option value="strategic">Strategic Context</option>
@@ -669,10 +711,10 @@ flowchart TD
             </div>
             <div>
                 <label for="search-filter">Search:</label>
-                <input type="text" id="search-filter" placeholder="Search commands..." oninput="filterTable()">
+                <input type="text" id="search-filter" placeholder="Search commands...">
             </div>
             <div class="app-command-count">
-                Showing <span id="visible-count">41</span> of 42 commands
+                Showing <span id="visible-count">43</span> of 43 commands
             </div>
         </div>
 
@@ -681,11 +723,11 @@ flowchart TD
             <table class="app-command-table" id="command-table">
                 <thead>
                     <tr>
-                        <th onclick="sortTable(0)" data-sort="asc">Command <span class="sort-indicator">↕</span></th>
-                        <th onclick="sortTable(1)">Description <span class="sort-indicator">↕</span></th>
-                        <th onclick="sortTable(2)">Category <span class="sort-indicator">↕</span></th>
+                        <th data-sort="asc" data-sort-col="0">Command <span class="sort-indicator">↕</span></th>
+                        <th data-sort-col="1">Description <span class="sort-indicator">↕</span></th>
+                        <th data-sort-col="2">Category <span class="sort-indicator">↕</span></th>
                         <th>Examples</th>
-                        <th onclick="sortTable(4)">Status <span class="sort-indicator">↕</span></th>
+                        <th data-sort-col="4">Status <span class="sort-indicator">↕</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -1252,7 +1294,7 @@ flowchart TD
             <div class="app-ai-card">
                 <h3 class="govuk-heading-m">Claude Code</h3>
                 <strong class="govuk-tag govuk-tag--green">Primary</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Official CLI from Anthropic. Commands in <code>.claude/prompts/</code> directory.</p>
+                <p class="govuk-body govuk-!-margin-top-3">Official CLI from Anthropic. Commands in <code>.claude/commands/</code> directory.</p>
                 <p class="govuk-body"><strong>Best for:</strong> Complex reasoning, architecture design, comprehensive documentation generation.</p>
                 <p class="govuk-body"><strong>Installation:</strong> <code>brew install claude</code></p>
             </div>
@@ -1268,7 +1310,7 @@ flowchart TD
             <div class="app-ai-card">
                 <h3 class="govuk-heading-m">Gemini CLI</h3>
                 <strong class="govuk-tag govuk-tag--purple">Supported</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Google Gemini CLI. Commands in <code>.gemini/prompts/</code> directory (TOML format).</p>
+                <p class="govuk-body govuk-!-margin-top-3">Google Gemini CLI. Commands in <code>.gemini/commands/</code> directory (TOML format).</p>
                 <p class="govuk-body"><strong>Best for:</strong> Multi-modal analysis, data processing, rapid prototyping.</p>
                 <p class="govuk-body"><strong>Installation:</strong> <code>pip install gemini-cli</code></p>
             </div>
@@ -1410,17 +1452,17 @@ claude</code></pre></div>
 
             <h3 class="govuk-heading-m govuk-!-margin-top-6">5. Follow GDS Phases</h3>
 
-            <h4 class="govuk-heading-s govuk-!-margin-top-4" style="color: #1d70b8;">Discovery</h4>
+            <h4 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Discovery</h4>
             <div class="app-code-block">/arckit.stakeholders Analyze stakeholders for appointment system</div>
             <div class="app-code-block govuk-!-margin-top-2">/arckit.risk Create risk register</div>
             <div class="app-code-block govuk-!-margin-top-2">/arckit.sobc Generate Strategic Outline Business Case</div>
 
-            <h4 class="govuk-heading-s govuk-!-margin-top-4" style="color: #1d70b8;">Alpha</h4>
+            <h4 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Alpha</h4>
             <div class="app-code-block">/arckit.requirements Define requirements</div>
             <div class="app-code-block govuk-!-margin-top-2">/arckit.principles Establish architecture principles</div>
             <div class="app-code-block govuk-!-margin-top-2">/arckit.wardley Create Wardley Map for build vs buy decisions</div>
 
-            <h4 class="govuk-heading-s govuk-!-margin-top-4" style="color: #1d70b8;">Beta</h4>
+            <h4 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Beta</h4>
             <div class="app-code-block">/arckit.hld-review Review High-Level Design</div>
             <div class="app-code-block govuk-!-margin-top-2">/arckit.diagram Create C4 architecture diagrams</div>
             <div class="app-code-block govuk-!-margin-top-2">/arckit.analyze Comprehensive gap analysis</div>
@@ -1442,7 +1484,7 @@ claude</code></pre></div>
                 <div class="govuk-grid-column-two-thirds">
                     <h2 class="govuk-heading-m">ArcKit</h2>
                     <p class="govuk-body">Enterprise Architecture Governance & Vendor Procurement Toolkit</p>
-                    <p class="govuk-body">Version 1.0.2 - January 2026</p>
+                    <p class="govuk-body">Version 1.0.3 - January 2026</p>
                 </div>
 
                 <div class="govuk-grid-column-one-third">
@@ -1464,7 +1506,7 @@ claude</code></pre></div>
     </footer>
 
     <!-- GOV.UK Frontend JavaScript -->
-    <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js" integrity="sha384-DwGEYeDIkSBDH4+n4Z+tY7m0/hKLvETQmD6glhDiHn0lFo3hffImqh39zfNvHVrd" crossorigin="anonymous"></script>
     <script type="module">
         import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
         initAll()
@@ -1543,15 +1585,25 @@ claude</code></pre></div>
             rows.forEach(row => tbody.appendChild(row));
         }
 
-        // Initialize table
+        // Initialize table and bind event listeners
         document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('status-filter').addEventListener('change', filterTable);
+            document.getElementById('category-filter').addEventListener('change', filterTable);
+            document.getElementById('search-filter').addEventListener('input', filterTable);
+
+            document.querySelectorAll('#command-table th[data-sort-col]').forEach(function(th) {
+                th.addEventListener('click', function() {
+                    sortTable(parseInt(th.getAttribute('data-sort-col'), 10));
+                });
+            });
+
             filterTable();
         });
     </script>
 
     <!-- Mermaid for diagram rendering (GitHub doesn't render on mobile) -->
     <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
         mermaid.initialize({ startOnLoad: true });
     </script>
 </body>
