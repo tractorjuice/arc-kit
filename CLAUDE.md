@@ -194,7 +194,7 @@ Every template must start with a **Document Control** table followed by **Revisi
 
 ## Test Repositories
 
-ArcKit maintains 17 test repos on GitHub (pattern: `arckit-test-project-v*`):
+ArcKit maintains 18 test repos on GitHub (pattern: `arckit-test-project-v*`):
 
 | Version | Name | Type | Description |
 |---------|------|------|-------------|
@@ -215,6 +215,7 @@ ArcKit maintains 17 test repos on GitHub (pattern: `arckit-test-project-v*`):
 | v14 | scottish-courts | Public | Scottish Courts and Tribunals Service GenAI strategy |
 | v15 | ipad-framework | Private | Investment Promotion Agency Data Framework |
 | v16 | doctors-appointment | Public | Doctors Online Appointment System |
+| v17 | fuel-prices | Public | UK Government Fuel Price Transparency Service |
 
 **Sync test repos after changes**:
 ```bash
@@ -223,7 +224,7 @@ TOKEN="<github-token>"
 for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
             v6-patent-system v7-nhs-appointment v8-ons-data-platform v9-cabinet-office-genai \
             v10-training-marketplace v11-national-highways-data v12-honky-tonks v13-plymouth-research \
-            v14-scottish-courts v15-ipad-framework v16-doctors-appointment; do
+            v14-scottish-courts v15-ipad-framework v16-doctors-appointment v17-fuel-prices; do
     git clone "https://x-access-token:${TOKEN}@github.com/tractorjuice/arckit-test-project-$repo.git" /tmp/$repo
     # Sync commands and templates
     rsync -av --delete .claude/commands/ /tmp/$repo/.claude/commands/
