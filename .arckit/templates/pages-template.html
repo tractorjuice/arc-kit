@@ -524,22 +524,30 @@
             height: auto;
         }
 
-        /* Mobile Sidebar Toggle */
-        .app-mobile-toggle {
+        /* Mobile header hamburger button */
+        .app-mobile-menu {
             display: none;
-            position: fixed;
-            bottom: 1rem;
-            right: 1rem;
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            color: white;
+            background: transparent;
             border: none;
+            color: white;
             font-size: 1.5rem;
             cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            padding: 0.25rem 0.5rem;
+            line-height: 1;
+        }
+
+        /* Mobile sidebar backdrop */
+        .app-sidebar-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            top: var(--header-height);
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+        }
+
+        .app-sidebar-backdrop.visible {
+            display: block;
         }
 
         /* Sidebar expand button (visible when collapsed) */
@@ -663,7 +671,7 @@
                 left: calc(-1 * var(--sidebar-width));
             }
 
-            .app-mobile-toggle {
+            .app-mobile-menu {
                 display: block;
             }
 
@@ -696,7 +704,7 @@
 
         /* Print Styles */
         @media print {
-            .app-sidebar, .app-mobile-toggle, .app-header, .app-footer, .app-toc, .app-sidebar-expand {
+            .app-sidebar, .app-mobile-menu, .app-header, .app-footer, .app-toc, .app-sidebar-expand, .app-sidebar-backdrop {
                 display: none !important;
             }
 
@@ -725,6 +733,7 @@
     <header class="app-header">
         <div class="app-header-inner">
             <div class="app-header-left">
+                <button class="app-mobile-menu" id="mobile-menu" aria-label="Open navigation menu">&#9776;</button>
                 <a href="#" class="app-header-title" id="header-title">Project Documentation</a>
             </div>
             <div class="app-stats" id="header-stats"></div>
@@ -755,6 +764,9 @@
             </div>
         </nav>
 
+        <!-- Mobile sidebar backdrop -->
+        <div class="app-sidebar-backdrop" id="sidebar-backdrop"></div>
+
         <!-- Content Wrapper -->
         <div class="app-content-wrapper">
             <!-- Sidebar expand button -->
@@ -775,7 +787,7 @@
                 <div class="app-content-inner" id="content">
                     <div class="app-welcome">
                         <h1>Welcome</h1>
-                        <p>Select a document from the sidebar to view its contents. This documentation site supports Mermaid diagrams, full-text search, and keyboard navigation.</p>
+                        <p>Select a document from the navigation menu to view its contents. This documentation site supports Mermaid diagrams, full-text search, and keyboard navigation.</p>
                         <div class="app-welcome-features">
                             <div class="app-welcome-feature">
                                 <h3>Search</h3>
@@ -812,11 +824,6 @@
             <span id="footer-generated"></span>
         </div>
     </footer>
-
-    <!-- Mobile Toggle -->
-    <button class="app-mobile-toggle" id="mobile-toggle" aria-label="Toggle navigation">
-        &#9776;
-    </button>
 
     <script>
         // ============================================
@@ -1032,7 +1039,7 @@
                         });
 
                         // Close mobile sidebar
-                        document.getElementById('sidebar').classList.remove('open');
+                        closeMobileSidebar();
                     });
                 });
             }, 150);
@@ -1149,7 +1156,7 @@
                     link.classList.add('active');
 
                     // Close mobile sidebar
-                    document.getElementById('sidebar').classList.remove('open');
+                    closeMobileSidebar();
                 });
             });
         }
@@ -1452,10 +1459,27 @@
             return count;
         }
 
-        // Mobile toggle
-        document.getElementById('mobile-toggle').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('open');
+        // Mobile menu toggle (header hamburger + backdrop)
+        function openMobileSidebar() {
+            document.getElementById('sidebar').classList.add('open');
+            document.getElementById('sidebar-backdrop').classList.add('visible');
+        }
+
+        function closeMobileSidebar() {
+            document.getElementById('sidebar').classList.remove('open');
+            document.getElementById('sidebar-backdrop').classList.remove('visible');
+        }
+
+        document.getElementById('mobile-menu').addEventListener('click', () => {
+            const sidebar = document.getElementById('sidebar');
+            if (sidebar.classList.contains('open')) {
+                closeMobileSidebar();
+            } else {
+                openMobileSidebar();
+            }
         });
+
+        document.getElementById('sidebar-backdrop').addEventListener('click', closeMobileSidebar);
 
         // Hash change handler
         window.addEventListener('hashchange', () => {
