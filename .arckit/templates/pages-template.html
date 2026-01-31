@@ -572,41 +572,55 @@
         /* Header */
         .app-header {
             background: #0b0c0c;
-            padding: 0;
             height: var(--header-height);
+            display: flex;
+            align-items: center;
             position: sticky;
             top: 0;
             z-index: 50;
         }
 
-        .app-header-inner {
+        .app-header__container {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            height: 100%;
             padding: 0 1.5rem;
+            width: 100%;
         }
 
-        .app-header-left {
+        .app-header__left {
             display: flex;
             align-items: center;
             gap: 1rem;
         }
 
-        .app-header-title {
+        .app-header__link {
             color: white;
             font-size: 1.25rem;
             font-weight: 700;
             text-decoration: none;
         }
 
-        .app-header-title:hover {
+        .app-header__link:hover {
             text-decoration: underline;
         }
 
-        .app-header-meta {
+        .app-header__nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .app-header__nav a,
+        .app-header__stats {
             color: #b1b4b6;
+            text-decoration: none;
             font-size: 0.875rem;
+        }
+
+        .app-header__nav a:hover {
+            color: white;
+            text-decoration: underline;
         }
 
         /* Footer */
@@ -630,16 +644,7 @@
         }
 
         /* Stats */
-        .app-stats {
-            display: flex;
-            gap: 1.5rem;
-        }
-
-        .app-stat {
-            font-size: 0.8125rem;
-        }
-
-        .app-stat-value {
+        .app-header__stats .app-stat-value {
             font-weight: 700;
             color: var(--primary-color);
         }
@@ -683,7 +688,7 @@
                 padding: 1.5rem;
             }
 
-            .app-header-meta {
+            .app-header__nav a {
                 display: none;
             }
         }
@@ -739,13 +744,16 @@
 
     <!-- Header -->
     <header class="app-header">
-        <div class="app-header-inner">
-            <div class="app-header-left">
+        <div class="app-header__container">
+            <div class="app-header__left">
                 <button class="app-mobile-menu" id="mobile-menu" aria-label="Open navigation menu">&#9776;</button>
-                <a href="#" class="app-header-title" id="header-title">Project Documentation</a>
+                <a href="#" class="app-header__link" id="header-title">Project Documentation</a>
             </div>
-            <div class="app-stats" id="header-stats"></div>
-            <span class="app-header-meta" id="header-meta"></span>
+            <nav class="app-header__nav" aria-label="Site navigation">
+                <span class="app-header__stats" id="header-stats"></span>
+                <a href="https://github.com/{{OWNER}}/{{REPO}}" target="_blank" rel="noopener">GitHub</a>
+                <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
+            </nav>
         </div>
     </header>
 
@@ -1390,7 +1398,6 @@
         async function init() {
             // Update header
             document.getElementById('header-title').textContent = `${CONFIG.repo} Documentation`;
-            document.getElementById('header-meta').textContent = `${CONFIG.owner}/${CONFIG.repo}`;
 
             try {
                 // Load manifest
@@ -1410,10 +1417,8 @@
                 // Update header stats
                 const totalDocs = allDocuments.length || countDocuments(manifest);
                 const projectCount = manifest.projects ? manifest.projects.length : 0;
-                document.getElementById('header-stats').innerHTML = `
-                    <span class="app-stat"><span class="app-stat-value">${totalDocs}</span> documents</span>
-                    <span class="app-stat"><span class="app-stat-value">${projectCount}</span> projects</span>
-                `;
+                document.getElementById('header-stats').innerHTML =
+                    `<span class="app-stat-value">${totalDocs}</span> docs · <span class="app-stat-value">${projectCount}</span> projects`;
 
                 // Build search index
                 buildSearchIndex(manifest);
