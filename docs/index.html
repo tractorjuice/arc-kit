@@ -51,6 +51,14 @@
             color: white;
         }
 
+        /* Reduce hero title size on mobile */
+        @media (max-width: 40.0625em) {
+            .app-hero h1 {
+                font-size: 1.5rem;
+                line-height: 1.2;
+            }
+        }
+
         .app-stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
