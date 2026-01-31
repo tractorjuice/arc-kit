@@ -249,7 +249,7 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
 done
 ```
 
-**Note**: `README.md`, `docs/index.html`, and `CLAUDE.md` are NOT synced - these are repo-specific. `docs/README.md` and `.mcp.json` ARE synced.
+**Note**: `README.md`, `docs/index.html`, and `CLAUDE.md` are NOT synced - these are repo-specific. `docs/README.md` and `.mcp.json` ARE synced. After syncing template changes to `pages-template.html`, re-run `/arckit.pages` in each repo that has a `docs/index.html` to regenerate it with the updated template.
 
 ## Key Patterns
 

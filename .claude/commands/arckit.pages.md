@@ -249,91 +249,31 @@ Create `docs/manifest.json` with the discovered structure:
 
 ## Step 3: Generate index.html
 
-Create `docs/index.html` using the template from `.arckit/templates/pages-template.html`.
+### 3.1 Read the template (MANDATORY)
 
-The HTML must include:
+**You MUST use the Read tool to read `.arckit/templates/pages-template.html` before generating `docs/index.html`.** This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.
 
-### 3.1 Core Libraries (CDN)
+1. Read the file `.arckit/templates/pages-template.html` using the Read tool
+2. Copy the **entire** template contents as the base for `docs/index.html`
+3. Replace the placeholder values in the CONFIG block with the actual repository details:
+   - `'{{OWNER}}'` → the GitHub owner/org (e.g. `'tractorjuice'`)
+   - `'{{REPO}}'` → the repository name (e.g. `'arckit-test-project-v17-fuel-prices'`)
+   - `'{{BRANCH}}'` → the branch name (usually `'main'`)
+   - `'{{DEFAULT_DOC}}'` → the default document path (principles if exists, or `''`)
 
-```html
-<!-- GOV.UK Frontend for styling -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css">
+**Do NOT generate HTML from scratch. Do NOT modify the template structure, CSS, or JavaScript. Only replace the `{{...}}` config placeholders.**
 
-<!-- Marked.js for Markdown rendering -->
-<script src="https://cdn.jsdelivr.net/npm/marked@15.0.6/marked.min.js"></script>
+If the template file does not exist, fall back to generating inline HTML using the reference structure below.
 
-<!-- Mermaid.js for diagram rendering -->
-<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
-```
+### 3.2 Fallback reference (only if template is missing)
 
-### 3.2 Layout Structure
+If `.arckit/templates/pages-template.html` does not exist, generate `docs/index.html` inline with these requirements:
 
-```
-+------------------+--------------------------------+
-|     Header       |                                |
-|  (Project Name)  |                                |
-+------------------+--------------------------------+
-|                  |                                |
-|    Sidebar       |         Content Area           |
-|   Navigation     |                                |
-|                  |      (Rendered Markdown)       |
-|  - Global Docs   |                                |
-|  - Project 001   |      (Mermaid Diagrams)        |
-|    - Requirements|                                |
-|    - HLD         |                                |
-|    - Diagrams    |                                |
-|  - Project 002   |                                |
-|    ...           |                                |
-|                  |                                |
-+------------------+--------------------------------+
-|     Footer       |                                |
-+------------------+--------------------------------+
-```
-
-### 3.3 JavaScript Functionality
-
-1. **Manifest Loading**: Fetch and parse `manifest.json`
-2. **Navigation Building**: Generate sidebar from manifest
-3. **Default Document**: **If Architecture Principles (ARC-000-PRIN-*.md) exists in global documents, load it as the default landing page**. Otherwise, show a welcome message.
-4. **Document Fetching**: Fetch markdown from GitHub raw URLs
-5. **Markdown Rendering**: Convert markdown to HTML using marked.js
-6. **Mermaid Rendering**: Detect and render Mermaid code blocks
-7. **URL Routing**: Handle hash-based navigation (#document-path). If no hash is present and principles exist, default to principles.
-
-### 3.4 GitHub Raw URL Pattern
-
-```javascript
-// Construct raw URL for fetching documents
-const rawBase = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/`;
-const documentUrl = rawBase + documentPath;
-```
-
-### 3.5 Mermaid Integration
-
-```javascript
-// Configure marked to handle mermaid blocks
-const renderer = new marked.Renderer();
-renderer.code = function(code, language) {
-  if (language === 'mermaid') {
-    return `<pre class="mermaid">${code}</pre>`;
-  }
-  return `<pre><code class="language-${language}">${escapeHtml(code)}</code></pre>`;
-};
-
-marked.setOptions({ renderer: renderer });
-
-// Initialize mermaid after content loads
-mermaid.initialize({
-  startOnLoad: false,
-  theme: 'default',
-  securityLevel: 'loose'
-});
-
-// Render mermaid diagrams after markdown is inserted
-async function renderMermaid() {
-  await mermaid.run({ querySelector: '.mermaid' });
-}
-```
+- **CDN libraries**: GOV.UK Frontend CSS, marked.js for Markdown, mermaid.js for diagrams
+- **Layout**: Sticky header, collapsible sidebar navigation, main content area, footer
+- **JavaScript**: Manifest loading, sidebar navigation building, document fetching via GitHub raw URLs, Markdown rendering, Mermaid diagram rendering, hash-based URL routing
+- **Default document**: If Architecture Principles (ARC-000-PRIN-*.md) exists, load it as the landing page
+- **GOV.UK styling**: Dark header, accessible focus styles, responsive mobile layout
 
 ## Step 4: Write Output Files
 
@@ -440,12 +380,4 @@ The generated HTML should handle:
 
 ---
 
-## Template Reference
-
-Read the template from: `.arckit/templates/pages-template.html`
-
-If the template doesn't exist, generate the HTML inline following the structure above.
-
----
-
-**Remember**: The goal is a clean, professional documentation site that makes all ArcKit artifacts easily accessible and renders Mermaid diagrams beautifully.
+**Remember**: You MUST read and use `.arckit/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
