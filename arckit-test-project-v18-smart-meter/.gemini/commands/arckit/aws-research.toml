@@ -1,0 +1,506 @@
+description = """
+Research AWS services and architecture patterns using AWS Knowledge MCP for authoritative guidance
+"""
+prompt = """
+# AWS Technology Research
+
+You are helping an enterprise architect research AWS services, architecture patterns, and implementation guidance for a project's requirements using official AWS documentation.
+
+## User Input
+
+```text
+{{args}}
+```
+
+## Context
+
+This command performs **AWS-specific technology research** using the AWS Knowledge MCP server for authoritative, real-time documentation. It provides:
+
+- **AWS service recommendations**: Match requirements to AWS services
+- **Architecture patterns**: Reference architectures from AWS Architecture Center
+- **Well-Architected guidance**: Assess against the 6 pillars
+- **Security alignment**: Map to AWS Security Hub controls
+- **UK Government suitability**: G-Cloud, data residency, classification
+- **Implementation guidance**: CloudFormation/CDK/Terraform templates, code samples
+- **Regional availability**: Real-time checks for eu-west-2 (London)
+
+## AWS Knowledge MCP Requirement
+
+> **CRITICAL**: This command **REQUIRES** the AWS Knowledge MCP Server to be installed. It will not work without it.
+
+### Check for MCP Tools First
+
+**Before doing anything else**, check if the following MCP tools are available:
+- `search_documentation`
+- `read_documentation`
+- `get_regional_availability`
+- `list_regions`
+- `recommend`
+
+**If MCP tools are NOT available, STOP immediately** and display this message:
+
+```
+## AWS Knowledge MCP Server Required
+
+This command requires the **AWS Knowledge MCP Server** to access official AWS documentation.
+
+### Installation Instructions
+
+Add the following to your Claude Code MCP configuration (`~/.claude/claude_desktop_config.json` or project `.mcp.json`):
+
+**Option 1: HTTP Transport (Recommended)**
+```json
+{
+  \"mcpServers\": {
+    \"aws-knowledge\": {
+      \"type\": \"http\",
+      \"url\": \"https://knowledge-mcp.global.api.aws\"
+    }
+  }
+}
+```
+
+**Option 2: Via fastmcp Proxy**
+```bash
+uvx fastmcp run https://knowledge-mcp.global.api.aws
+```
+
+Then add to your MCP config:
+```json
+{
+  \"mcpServers\": {
+    \"aws-knowledge\": {
+      \"command\": \"uvx\",
+      \"args\": [\"fastmcp\", \"run\", \"https://knowledge-mcp.global.api.aws\"]
+    }
+  }
+}
+```
+
+### After Installation
+
+1. Restart Claude Code to load the MCP server
+2. Run `/arckit.aws-research` again
+
+### More Information
+
+- MCP Overview: https://modelcontextprotocol.io/
+- AWS Knowledge MCP: https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server
+```
+
+**Do not proceed with the command if MCP is not available.**
+
+---
+
+### MCP Tools Available
+
+Once MCP is confirmed available, use these tools to gather authoritative AWS documentation:
+
+**1. Search AWS Documentation** (`search_documentation`):
+```
+Query examples:
+- \"[requirement topic] AWS\" (e.g., \"container orchestration AWS\")
+- \"Amazon [service name] best practices\" (e.g., \"Amazon EKS best practices\")
+- \"AWS architecture [pattern]\" (e.g., \"AWS architecture microservices\")
+- \"AWS Well-Architected [pillar]\" (e.g., \"AWS Well-Architected security\")
+- \"AWS Security Hub [control]\" (e.g., \"AWS Security Hub foundational best practices\")
+```
+
+**2. Read Full Documentation** (`read_documentation`):
+- Retrieve complete AWS service documentation pages
+- Fetch AWS Architecture Center reference architectures
+- Get AWS Well-Architected Framework guidance
+- Retrieve AWS Security best practices
+
+**3. Check Regional Availability** (`get_regional_availability`):
+```
+Query examples:
+- Check if a service is available in eu-west-2 (London)
+- Verify feature availability by region
+- Check CloudFormation resource support by region
+```
+
+**4. List Regions** (`list_regions`):
+- Get all AWS regions with identifiers
+- Useful for DR planning and multi-region architectures
+
+**5. Get Recommendations** (`recommend`):
+- Get content recommendations for specific AWS topics
+- Discover related documentation and best practices
+
+## Instructions
+
+### 1. Check MCP Availability (MANDATORY FIRST STEP)
+
+**STOP if MCP tools are not available** - display installation instructions above.
+
+### 2. Check Project Prerequisites
+
+**MANDATORY**:
+- Check if any `ARC-*-REQ-*.md` file exists in `projects/{project}/`
+  - If requirements don't exist, **STOP** and tell user to run `/arckit.requirements` first
+  - Research MUST be based on requirements analysis
+
+**RECOMMENDED**:
+- Check if any `ARC-*-DATA-*.md` file exists (data requirements inform database selection)
+- Check if any `ARC-*-STKE-*.md` file exists (stakeholder priorities)
+- Check if project is UK Government (for G-Cloud, data residency requirements)
+
+### 3. Find the Project
+
+- If user specifies project name or number, use that
+- Otherwise, look for most recent project directory in `projects/`
+- Use the same project directory where the requirements document exists
+
+### 4. Read the Template
+
+Read `.arckit/templates/aws-research-template.md` to understand the output structure
+
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+
+### 5. Extract Requirements for AWS Mapping
+
+**Read the requirements document and identify AWS service needs**:
+
+**A. Compute Requirements** (from FR-xxx, NFR-P-xxx, NFR-S-xxx):
+- Container workloads → EKS, ECS, Fargate
+- Web applications → Elastic Beanstalk, App Runner
+- Serverless → Lambda, Step Functions
+- VMs → EC2, Auto Scaling Groups
+- Batch processing → AWS Batch, Lambda
+
+**B. Data Requirements** (from DR-xxx, NFR-P-xxx):
+- Relational data → RDS (PostgreSQL, MySQL, Aurora)
+- NoSQL/Document → DynamoDB, DocumentDB
+- Caching → ElastiCache (Redis, Memcached)
+- Search → OpenSearch Service
+- Data warehouse → Redshift
+- Data lake → S3, Lake Formation, Athena
+
+**C. Integration Requirements** (from INT-xxx):
+- APIs → API Gateway, AppSync
+- Messaging → SQS, SNS, EventBridge
+- Workflow → Step Functions
+- External systems → EventBridge, AppFlow
+
+**D. Security Requirements** (from NFR-SEC-xxx):
+- Identity → IAM, Cognito, IAM Identity Center
+- Secrets → Secrets Manager, Parameter Store
+- Network → VPC, Security Groups, NACLs, WAF
+- Threat detection → GuardDuty, Security Hub
+
+**E. AI/ML Requirements** (from FR-xxx mentioning AI, ML):
+- AI services → Bedrock, SageMaker
+- ML platform → SageMaker
+- Bot → Amazon Lex
+
+### 6. Research AWS Services Using MCP
+
+For each requirement category, use MCP tools:
+
+#### Step 1: Service Discovery
+
+**Search Query Pattern**:
+```
+search_documentation: \"[requirement] AWS service\"
+```
+
+**Examples**:
+- \"container orchestration AWS service\" → EKS, ECS
+- \"relational database AWS\" → RDS, Aurora
+- \"message queue AWS\" → SQS, SNS
+
+#### Step 2: Service Deep Dive
+
+For each identified service:
+
+**Read Documentation**:
+```
+read_documentation: \"https://docs.aws.amazon.com/[service-name]/\"
+```
+
+**Extract**:
+- Service overview and features
+- Pricing models (On-Demand, Reserved, Savings Plans)
+- SLA and availability
+- Regional availability (confirm eu-west-2)
+- Security features
+- Integration capabilities
+
+#### Step 3: Regional Availability Check
+
+**Use `get_regional_availability` for each service**:
+```
+get_regional_availability: service=\"[service-name]\" region=\"eu-west-2\"
+```
+
+This is critical for UK Government projects to ensure all services are available in London region.
+
+#### Step 4: Architecture Patterns
+
+**Search AWS Architecture Center**:
+```
+search_documentation: \"AWS architecture [pattern type]\"
+```
+
+**Read Reference Architecture**:
+```
+read_documentation: \"https://aws.amazon.com/architecture/reference-architecture-diagrams/\"
+```
+
+#### Step 5: Well-Architected Assessment
+
+**Search Well-Architected Framework**:
+```
+search_documentation: \"AWS Well-Architected [pillar] [service]\"
+```
+
+**Pillars** (AWS has 6):
+- Operational Excellence: CloudWatch, Systems Manager, automation
+- Security: IAM, encryption, VPC, Security Hub
+- Reliability: Multi-AZ, auto-scaling, backup
+- Performance Efficiency: Right-sizing, caching, CDN
+- Cost Optimization: Reserved Instances, Savings Plans, Spot
+- Sustainability: Efficient resources, carbon footprint
+
+#### Step 6: Security Hub Mapping
+
+**Search AWS Security Hub**:
+```
+search_documentation: \"AWS Security Hub [control category]\"
+```
+
+**Control Categories**:
+- AWS Foundational Security Best Practices
+- CIS AWS Foundations Benchmark
+- PCI DSS
+- NIST 800-53
+
+#### Step 7: Code Samples
+
+**Search for Implementation Examples**:
+```
+search_documentation: \"AWS [service] CDK example\"
+search_documentation: \"AWS [service] CloudFormation template\"
+search_documentation: \"AWS [service] Terraform\"
+```
+
+**Languages**: typescript, python, java, csharp (for CDK)
+
+### 7. UK Government Specific Research
+
+If this is a UK Government project:
+
+**G-Cloud Availability**:
+- Search Digital Marketplace for \"Amazon Web Services\"
+- Note G-Cloud framework reference (RM1557.14)
+- Identify service IDs for procurement
+
+**Data Residency**:
+- Confirm eu-west-2 (London) region availability using `get_regional_availability`
+- Check for any service limitations in UK region
+- Verify cross-region replication options (eu-west-1 Ireland for DR)
+
+**Classification Suitability**:
+- OFFICIAL: Standard AWS (public cloud)
+- OFFICIAL-SENSITIVE: Standard AWS with additional controls
+- SECRET: AWS GovCloud (US-only, not available in UK)
+
+**NCSC Cloud Security Principles**:
+- Reference AWS attestation against 14 NCSC principles
+- Search: \"AWS UK NCSC compliance\"
+
+### 8. Cost Estimation
+
+**Use AWS Pricing Information**:
+
+Search for pricing:
+```
+search_documentation: \"AWS [service] pricing\"
+```
+
+**Estimate Costs**:
+- Map requirements to service configurations
+- Calculate based on projected usage
+- Include compute, storage, networking, monitoring
+- Apply eu-west-2 region pricing
+
+**Cost Optimization**:
+- Reserved Instances (1-year, 3-year savings)
+- Savings Plans (Compute, EC2, SageMaker)
+- Spot Instances (for fault-tolerant workloads)
+- Graviton processors (better price/performance)
+- S3 Intelligent-Tiering
+
+### 9. Generate Architecture Diagram
+
+Create a Mermaid diagram showing:
+- AWS services and their relationships
+- UK region placement (eu-west-2 primary, eu-west-1 DR)
+- Network topology (VPC, subnets, NAT gateways)
+- Security boundaries (Security Groups, NACLs, WAF)
+- Data flows
+
+### 10. Write the Output
+
+**Generate Document ID**:
+```bash
+.arckit/scripts/bash/generate-document-id.sh [PROJECT_ID] AWRS --filename
+```
+
+**Write to file**:
+- Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AWRS-v1.0.md`
+- Use the exact template structure from `aws-research-template.md`
+
+**IMPORTANT - Auto-Populate Document Information Fields**:
+
+Before completing the document, populate document information fields:
+
+### Auto-populated fields:
+- `[PROJECT_ID]` → Extract from project path (e.g., \"001\")
+- `[VERSION]` → Start with \"1.0\" for new documents
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `ARC-[PROJECT_ID]-AWRS-v[VERSION]` → Generated document ID
+- `[STATUS]` → \"DRAFT\" for new documents
+- `[CLASSIFICATION]` → Default to \"OFFICIAL\" (UK Gov) or \"PUBLIC\"
+
+### User-provided fields:
+- `[PROJECT_NAME]` → Full project name
+- `[OWNER_NAME_AND_ROLE]` → Document owner
+
+### 11. Summarize What You Created
+
+Provide a summary:
+
+```markdown
+## AWS Research Complete ✅
+
+**Project**: [Project Name]
+**File Created**: `projects/[PROJECT]/research/ARC-{PROJECT_ID}-AWRS-v1.0.md`
+
+### AWS Services Recommended
+
+| Category | AWS Service | Configuration | Monthly Est. |
+|----------|-------------|---------------|--------------|
+| [Compute] | [EKS] | [m6i.large x3] | £[X] |
+| [Database] | [RDS PostgreSQL] | [db.r6g.large Multi-AZ] | £[Y] |
+| [Storage] | [S3] | [Standard] | £[Z] |
+
+### Architecture Pattern
+- **Pattern**: [Pattern name from AWS Architecture Center]
+- **Reference**: [Link to reference architecture]
+
+### Security Alignment
+- **AWS Security Hub**: AWS Foundational Security Best Practices enabled
+- **Well-Architected**: Assessment included for all 6 pillars
+
+### UK Government Suitability
+- **G-Cloud**: ✅ Available on G-Cloud 14
+- **UK Region**: ✅ eu-west-2 (London) - all services available
+- **Classification**: ✅ Suitable for [OFFICIAL/OFFICIAL-SENSITIVE]
+
+### Estimated Monthly Cost: £[TOTAL]
+
+### What's in the Document
+- Detailed AWS service analysis for [X] categories
+- Architecture diagram (Mermaid)
+- AWS Security Hub control mapping
+- Well-Architected Framework assessment (6 pillars)
+- CloudFormation/CDK/Terraform code samples
+- Cost estimates with optimization recommendations
+- UK Government compliance details
+
+### Next Steps
+- Review `ARC-{PROJECT_ID}-AWRS-v1.0.md` for detailed findings
+- Run `/arckit.diagram` for detailed AWS architecture diagrams
+- Run `/arckit.secure` to validate against UK Secure by Design
+- Run `/arckit.devops` to plan CI/CD with AWS CodePipeline
+```
+
+## Example Usage
+
+### Example 1: Microservices Platform
+
+User: `/arckit.aws-research Research AWS services for microservices platform`
+
+**You should**:
+1. Read requirements from `projects/001-platform/ARC-001-REQ-v1.0.md`
+2. Identify needs: container orchestration, API gateway, messaging, databases
+3. Use MCP to search:
+   - `search_documentation: \"Amazon EKS best practices\"`
+   - `search_documentation: \"Amazon API Gateway microservices\"`
+   - `search_documentation: \"Amazon SQS messaging patterns\"`
+4. Check regional availability: `get_regional_availability: service=\"eks\" region=\"eu-west-2\"`
+5. Fetch detailed docs for each service
+6. Search AWS Architecture Center for microservices patterns
+7. Map to AWS Security Hub controls
+8. Generate CDK/Terraform examples
+9. Write to `projects/001-platform/research/ARC-001-AWRS-v1.0.md`
+
+### Example 2: UK Government Data Platform
+
+User: `/arckit.aws-research AWS options for UK Government data analytics platform`
+
+**You should**:
+1. Detect UK Government project
+2. Read requirements
+3. Use MCP to search for:
+   - `search_documentation: \"Amazon Redshift\"`
+   - `search_documentation: \"AWS Lake Formation\"`
+   - `search_documentation: \"Amazon Athena\"`
+4. Check UK region availability for ALL services using `get_regional_availability`
+5. Verify G-Cloud availability
+6. Confirm OFFICIAL-SENSITIVE suitability
+7. Reference NCSC Cloud Security Principles
+8. Include UK-specific compliance details
+9. Write output with UK Government section completed
+
+## Important Notes
+
+- **MCP Required**: This command requires AWS Knowledge MCP - do not proceed without it
+- **Official Sources Only**: Use only AWS documentation via MCP, not third-party blogs
+- **UK Focus**: Always check eu-west-2 (London) availability using `get_regional_availability`
+- **Well-Architected**: Assess every recommendation against the 6 pillars (including Sustainability)
+- **Security Hub**: Map recommendations to AWS Foundational Security Best Practices
+- **Cost Accuracy**: Use AWS Pricing Calculator data where possible
+- **Code Samples**: Prefer CDK (TypeScript/Python) or Terraform for IaC
+
+## Integration with Other Commands
+
+- **Input**: Requires requirements document (`ARC-*-REQ-*.md`)
+- **Input**: Uses data model (`ARC-*-DATA-*.md`) for database selection
+- **Output**: Feeds into `/arckit.diagram` (AWS-specific diagrams)
+- **Output**: Feeds into `/arckit.secure` (validates against Secure by Design)
+- **Output**: Feeds into `/arckit.devops` (AWS CodePipeline design)
+- **Output**: Feeds into `/arckit.finops` (AWS cost management strategy)
+
+## Resources
+
+**AWS Knowledge MCP**:
+- Overview: https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server
+- GitHub: https://github.com/awslabs/mcp
+
+**AWS Documentation**:
+- AWS Architecture Center: https://aws.amazon.com/architecture/
+- AWS Well-Architected Framework: https://aws.amazon.com/architecture/well-architected/
+- AWS Security Best Practices: https://aws.amazon.com/security/
+- AWS Pricing Calculator: https://calculator.aws/
+
+**UK Government**:
+- Digital Marketplace (AWS): https://www.digitalmarketplace.service.gov.uk/g-cloud/search?q=amazon+web+services
+- AWS UK Compliance: https://aws.amazon.com/compliance/uk-data-protection/
+
+## Output Instructions
+
+**CRITICAL - Token Efficiency**:
+
+To avoid exceeding Claude Code's 32K token output limit:
+
+1. **Check MCP availability first** - stop with installation instructions if not available
+2. **Generate the full AWS research document** following the template structure
+3. **Use the Write tool** to create `projects/[PROJECT]/research/ARC-{PROJECT_ID}-AWRS-v1.0.md`
+4. **DO NOT** output the full document in your response
+5. **Show ONLY the summary** as specified in step 11
+
+Generate the AWS research findings now, write to file using Write tool, and show only the summary.
+"""
