@@ -5,6 +5,28 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2026-01-31
+
+### Added
+
+- **v18-smart-meter test project**: UK Smart Meter Data Consumer Mobile App added to test repos
+- **Example links**: Added v17-fuel-prices and v18-smart-meter example links across README command tables (principles, stakeholders, requirements, risk, data-model, research, plan, dpia, diagram, backlog, azure-research, aws-research, secure, pages)
+
+### Changed
+
+- **Pages template header**: Replaced left-title/centre-stats/right-meta header with G-Cloud Kit navigation style — brand link on left, nav links (stats, GitHub, ArcKit) on right using BEM class naming
+- **Pages command**: Rewrote Step 3 to mandate reading `pages-template.html` as the source of truth before generating `docs/index.html` — previously the template was an optional fallback buried at the bottom of the command, causing the AI to generate HTML from scratch instead of using the template
+- **Mobile responsiveness**: Added hamburger navigation with backdrop overlay, reduced heading font sizes on mobile, fixed TOC overlay on small screens
+- **MCP configuration**: Renamed `mcp.json` to `.mcp.json` (dotfile convention), added to test repo sync
+- **DEPENDENCY-MATRIX.md**: Aligned tier descriptions with actual command dependencies
+- **CLAUDE.md**: Added note about re-running `/arckit.pages` after template changes
+
+### Fixed
+
+- Multiple layout issues in `docs/index.html` (mobile navigation, TOC overlay, heading sizes)
+
+---
+
 ## [1.0.3] - 2026-01-29
 
 ### Added

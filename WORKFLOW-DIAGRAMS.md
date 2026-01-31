@@ -687,8 +687,8 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 1.0.3
-- **Document Date**: 2026-01-29
+- **ArcKit Version**: 1.0.4
+- **Document Date**: 2026-01-31
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
 - **Commands Documented**: 42
 - **Key Changes**:

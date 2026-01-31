@@ -267,8 +267,8 @@ principles-compliance → analyze → service-assessment → story
 
 ## Version
 
-- **ArcKit Version**: 1.0.3
-- **Matrix Date**: 2026-01-29 (Added aws-research command)
+- **ArcKit Version**: 1.0.4
+- **Matrix Date**: 2026-01-31
 - **Commands Documented**: 42
 - **Matrix Rows**: 44 (42 commands + 2 external documents)
 
