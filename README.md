@@ -632,7 +632,7 @@ payment-modernization/
 
 ## Complete Command Reference
 
-All 42 ArcKit commands with maturity status and example outputs from public test repositories.
+All 42 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
