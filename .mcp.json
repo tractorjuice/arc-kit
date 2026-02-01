@@ -1,9 +1,5 @@
 {
   "mcpServers": {
-    "microsoft-docs": {
-      "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-microsoft-docs"]
-    },
     "aws-knowledge": {
       "type": "http",
       "url": "https://knowledge-mcp.global.api.aws"
