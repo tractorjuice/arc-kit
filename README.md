@@ -243,6 +243,20 @@ Create data model based on Data Requirements (DR-xxx):
 - Bidirectional links to risk register (DPIA-xxx risk IDs)
 - Links mitigations to Secure by Design security controls
 
+### Phase 5.8: Data Source Discovery
+**`/arckit.datascout`** → Discover external data sources
+
+Discover and evaluate external data sources to fulfil project data requirements:
+- Data needs extraction from DR/FR/INT/NFR requirements
+- UK Government open data portals (data.gov.uk, ONS, NHS Digital, Companies House, OS Data Hub)
+- Commercial API providers and data marketplaces
+- Free/freemium APIs and open source datasets
+- Weighted evaluation scoring (Requirements Fit, Data Quality, License & Cost, API Quality, Compliance, Reliability)
+- Gap analysis for unmet data needs
+- Data model impact assessment (new entities, attributes, sync strategy)
+- Requirements traceability (every DR-xxx mapped to a source or flagged as gap)
+- TCoP Point 10 compliance (Make Better Use of Data)
+
 ### Phase 6: Technology Research
 **`/arckit.research`** → Research technology, services, and products
 
@@ -689,6 +703,12 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit.azure-research` | Research Azure services and architecture patterns using [Microsoft Learn MCP](https://www.npmjs.com/package/@anthropic/mcp-server-microsoft-docs) | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/research/ARC-001-AZRS-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AZRS-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/research/ARC-001-AZRS-v1.0.md) | 🟣 Experimental |
 | `/arckit.aws-research` | Research AWS services and architecture patterns using [AWS Knowledge MCP](https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server) | [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AWRS-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/research/ARC-001-AWRS-v1.0.md) | 🟣 Experimental |
 | `/arckit.gcp-research` | Research Google Cloud services and architecture patterns (pending GCP documentation MCP server) | — | 🔮 Planned |
+
+### Data Source Discovery
+
+| Command | Description | Examples | Status |
+|---------|-------------|----------|--------|
+| `/arckit.datascout` | Discover external data sources (APIs, datasets, open data portals) to fulfil project requirements | — | 🟣 Experimental |
 
 > **Note**: Google Cloud currently offers MCP servers for [resource management](https://docs.cloud.google.com/mcp/overview) (BigQuery, GKE, Compute Engine) but not documentation search. `/arckit.gcp-research` will be implemented when Google releases a documentation-focused MCP server equivalent to Microsoft Learn or AWS Knowledge MCP.
 

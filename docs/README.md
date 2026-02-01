@@ -32,7 +32,8 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 
 ### Research & Analysis
 13. [Research](guides/research.md) - `/arckit.research`
-14. [Analyze](guides/analyze.md) - `/arckit.analyze`
+14. [Data Source Discovery](guides/datascout.md) - `/arckit.datascout` ⭐ NEW
+15. [Analyze](guides/analyze.md) - `/arckit.analyze`
 15. [Principles Compliance](guides/principles-compliance.md) - `/arckit.principles-compliance` ⭐ NEW
 16. [Diagrams](guides/diagram.md) - `/arckit.diagram` ⭐ NEW
 17. [Architecture Decision Records](guides/adr.md) - `/arckit.adr` ⭐ NEW
@@ -122,6 +123,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.research` | [research.md](guides/research.md) | ✅ Complete |
 | `/arckit.azure-research` | [azure-research.md](guides/azure-research.md) | ✅ Complete |
 | `/arckit.aws-research` | [aws-research.md](guides/aws-research.md) | ✅ Complete |
+| `/arckit.datascout` | [datascout.md](guides/datascout.md) | ✅ Complete |
 | `/arckit.wardley` | [wardley-mapping.md](guides/wardley-mapping.md) | ✅ Complete |
 | `/arckit.roadmap` | [roadmap.md](guides/roadmap.md) | ✅ Complete |
 | `/arckit.adr` | [adr.md](guides/adr.md) | ✅ Complete |
@@ -152,7 +154,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.finops` | [finops.md](guides/finops.md) | ✅ Complete |
 | `/arckit.pages` | [pages.md](guides/pages.md) | ✅ Complete |
 
-**Coverage**: 41/41 commands documented (100%)
+**Coverage**: 42/42 commands documented (100%)
 
 ---
 
@@ -164,5 +166,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2026-01-29
-**ArcKit Version**: 1.0.2
+**Last updated**: 2026-02-01
+**ArcKit Version**: 1.0.4

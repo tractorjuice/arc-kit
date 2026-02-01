@@ -31,11 +31,14 @@ graph TD
 
     %% Tier 4: Strategy & Design
     F --> G[platform-design]
+    F --> F1[datascout]
+    F1 -.-> H
     F --> H[data-model]
     G -.-> H
     H --> I[data-mesh-contract]
     H --> J[dpia]
     F --> K[research]
+    F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
     H -.-> N[diagram]
@@ -72,6 +75,7 @@ graph TD
     style D fill:#87CEEB
     style E fill:#90EE90
     style F fill:#90EE90
+    style F1 fill:#90EE90
     style G fill:#90EE90
     style H fill:#90EE90
     style I fill:#90EE90
@@ -118,11 +122,14 @@ graph TD
 
     %% Tier 4: Strategy & Design
     F --> G[platform-design]
+    F --> F1[datascout]
+    F1 -.-> H
     F --> H[data-model]
     G -.-> H
     H --> I[data-mesh-contract]
     H --> J[dpia]
     F --> K[research]
+    F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
     H -.-> V[diagram]
@@ -167,6 +174,7 @@ graph TD
     style D fill:#87CEEB
     style E fill:#90EE90
     style F fill:#90EE90
+    style F1 fill:#90EE90
     style G fill:#90EE90
     style H fill:#90EE90
     style I fill:#90EE90
@@ -218,11 +226,14 @@ graph TD
 
     %% Tier 4: Strategy & Design
     F --> G[platform-design]
+    F --> F1[datascout]
+    F1 -.-> H
     F --> H[data-model]
     G -.-> H
     H --> I[data-mesh-contract]
     H --> J[dpia]
     F --> K[research]
+    F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
     H -.-> W[diagram]
@@ -270,6 +281,7 @@ graph TD
     style D fill:#87CEEB
     style E fill:#90EE90
     style F fill:#90EE90
+    style F1 fill:#90EE90
     style G fill:#90EE90
     style H fill:#90EE90
     style I fill:#90EE90
@@ -328,11 +340,14 @@ graph TD
 
     %% Tier 4: Strategy & Design
     F --> G[platform-design]
+    F --> F1[datascout]
+    F1 -.-> H
     F --> H[data-model]
     G -.-> H
     H --> I[data-mesh-contract]
     H --> J[dpia]
     F --> K[research]
+    F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
     H -.-> U[diagram]
@@ -377,6 +392,7 @@ graph TD
     style D fill:#87CEEB
     style E fill:#90EE90
     style F fill:#90EE90
+    style F1 fill:#90EE90
     style G fill:#90EE90
     style H fill:#90EE90
     style I fill:#90EE90
@@ -431,11 +447,14 @@ graph TD
 
     %% Tier 4: Strategy & Design
     F --> G[platform-design]
+    F --> F1[datascout]
+    F1 -.-> H
     F --> H[data-model]
     G -.-> H
     H --> I[data-mesh-contract]
     H --> J[dpia]
     F --> K[research]
+    F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
     H -.-> V[diagram]
@@ -482,6 +501,7 @@ graph TD
     style D fill:#87CEEB
     style E fill:#90EE90
     style F fill:#90EE90
+    style F1 fill:#90EE90
     style G fill:#90EE90
     style H fill:#90EE90
     style I fill:#90EE90
@@ -541,7 +561,7 @@ graph TD
 | 2 | Business Justification | sobc |
 | 3 | Requirements | requirements |
 | 3.5 | Platform Strategy | platform-design |
-| 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, wardley, roadmap, diagram |
+| 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, datascout, wardley, roadmap, diagram |
 | 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
 | 6 | Design Reviews | hld-review, dld-review, adr |
 | 7 | Implementation | backlog |
@@ -551,6 +571,7 @@ graph TD
 | 12 | Publishing | pages |
 
 > **\*** `azure-research` and `aws-research` are alternatives to `research` for cloud-specific projects. Each requires its respective MCP server.
+> **datascout** discovers external data sources (APIs, datasets, open data portals) and feeds into data-model and research.
 
 ---
 
@@ -570,7 +591,8 @@ gantt
     sobc                    :a5, after a4, 2w
     section Alpha (12 weeks)
     requirements            :b1, after a5, 3w
-    data-model              :b2, after b1, 2w
+    datascout               :b1a, after b1, 1w
+    data-model              :b2, after b1a, 2w
     research                :b3, after b2, 2w
     wardley                 :b4, after b3, 2w
     gcloud-search           :b5, after b4, 2w
@@ -688,9 +710,9 @@ graph LR
 ## Version
 
 - **ArcKit Version**: 1.0.4
-- **Document Date**: 2026-01-31
+- **Document Date**: 2026-02-01
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
-- **Commands Documented**: 42
+- **Commands Documented**: 43
 - **Key Changes**:
   - Added missing style definitions for finops nodes in all workflow diagrams
   - Updated Tier Groupings table to include all 40 commands across 13 tiers

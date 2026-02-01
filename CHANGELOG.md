@@ -5,6 +5,33 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **New Command: `/arckit.datascout`**: Data source discovery command (43rd ArcKit command)
+  - Discovers external data sources (APIs, datasets, open data portals, commercial providers) to fulfil project requirements
+  - Data needs extraction from DR/FR/INT/NFR requirements
+  - Dynamic category detection (Geospatial, Financial, Company, Demographics, Weather, Health, Transport, Energy, Education, Property, Identity, Crime, Reference)
+  - Weighted evaluation scoring (Requirements Fit 25%, Data Quality 20%, License & Cost 15%, API Quality 15%, Compliance 15%, Reliability 10%)
+  - UK Government open data prioritisation (data.gov.uk, ONS, NHS Digital, Companies House, OS Data Hub, Environment Agency, Land Registry, Police API)
+  - TCoP Point 10 compliance (Make Better Use of Data)
+  - Gap analysis for unmet data needs
+  - Data model impact assessment (new entities, attributes, sync strategy)
+  - Requirements traceability (every DR-xxx mapped to a source or flagged as gap)
+  - Bidirectional with data-model command
+- **New Template**: `datascout-template.md` for data source discovery outputs
+- **New Guide**: `docs/guides/datascout.md` with usage documentation
+
+### Changed
+
+- Updated command count to 43 (was 42)
+- Updated DEPENDENCY-MATRIX.md with datascout row/column
+- Updated WORKFLOW-DIAGRAMS.md with datascout node in all 5 workflow paths
+- Updated critical paths in DEPENDENCY-MATRIX.md to include datascout after requirements
+
+---
+
 ## [1.0.4] - 2026-01-31
 
 ### Added
