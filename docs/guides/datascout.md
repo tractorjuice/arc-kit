@@ -89,18 +89,9 @@ For UK Government projects, datascout prioritises open data sources.
 
 ### UK Government API Catalogue (Always Checked)
 
-The command always searches https://www.api.gov.uk/ first — the authoritative directory of **240+ APIs across 34+ public sector organisations** maintained by the Data Standards Authority. This includes APIs from NHS Digital (93), HMRC (31), Land Registry (13), Environment Agency (10), DWP (10), Ordnance Survey (8), DVLA (6), Companies House (2), and many more.
+The command always searches https://www.api.gov.uk/ first — the authoritative directory of UK public sector APIs maintained by the Data Standards Authority. It dynamically discovers available departments, API counts, and developer hubs at runtime rather than relying on a static list.
 
-### Key Developer Hubs
-
-| Hub | URL | Key APIs |
-|-----|-----|----------|
-| HMRC Developer Hub | https://developer.service.hmrc.gov.uk/api-documentation | Tax, VAT, customs, MTD |
-| NHS Digital API Catalogue | https://digital.nhs.uk/developer/api-catalogue | 93 health APIs (FHIR, HL7) |
-| Companies House | https://developer.company-information.service.gov.uk/ | Company search, filings |
-| OS Data Hub | https://osdatahub.os.uk/ | Maps, addresses, geospatial |
-| Defra Developer Portal | https://developer-portal.trade.defra.gov.uk/ | Agriculture, trade, environment |
-| Legislation API | https://www.legislation.gov.uk/developer | UK legislation |
+It also fetches https://www.api.gov.uk/dashboard/ to identify which departments have APIs relevant to the project's requirements, then follows links to discover each department's own developer portal for richer documentation, sandbox environments, and registration details.
 
 ### Key UK Open Data Portals
 
