@@ -223,23 +223,72 @@ Scan requirements for keywords and patterns to identify data source categories:
 
 #### Web Research Strategy
 
-For each identified data source category, perform systematic research:
+For each identified data source category, perform systematic research.
 
-**A. UK Government Open Data (Search First for UK Gov Projects)**
+**MANDATORY FIRST STEP — Always check the UK Government API Catalogue and developer hubs before any other research.**
 
-Use WebSearch to find UK Government data sources:
+#### A. UK Government API Catalogue (MANDATORY — Always Check First)
+
+**CRITICAL**: Before researching individual categories, **always** search the UK Government API Catalogue at https://www.api.gov.uk/ — this is the authoritative directory of 240+ APIs across 34+ public sector organisations.
+
+**Step 1: Search api.gov.uk**
+
+Use WebFetch on https://www.api.gov.uk/ to browse available APIs. Then use WebSearch with:
+- "site:api.gov.uk [topic]" (e.g., "site:api.gov.uk fuel", "site:api.gov.uk health")
+- "api.gov.uk [department]" (e.g., "api.gov.uk environment agency")
+
+The catalogue is organised by department. Key departments with the most APIs:
+
+| Department | APIs | Key Areas |
+|-----------|------|-----------|
+| **NHS Digital** | 93 | Patient records, prescriptions, GP services, FHIR, HL7 |
+| **HMRC** | 31 | Tax, VAT, customs, Making Tax Digital, trade tariffs |
+| **HM Land Registry** | 13 | Property, land charges, title searches |
+| **MHCLG** | 12 | Housing, planning, local government |
+| **Environment Agency** | 10 | Flooding, water quality, ecology, bathing water |
+| **DWP** | 10 | Benefits, citizen services, National Insurance |
+| **Ordnance Survey** | 8 | Maps, addresses, boundaries, terrain |
+| **GDS** | 7 | GOV.UK content, data.gov.uk, Notify |
+| **DVLA** | 6 | Vehicle enquiry, MOT history, driver records |
+| **Companies House** | 2 | Company search, filing history |
+| **ONS** | 2 | Statistics, census data |
+| **Food Standards Agency** | 2 | Hygiene ratings, allergen alerts |
+| **UK Police** | 1 | Crime data, neighbourhood policing |
+
+**Step 2: Check department-specific developer hubs**
+
+Many departments maintain their own developer portals with richer documentation than the central catalogue. **Always check the relevant hub** for any department whose data is needed:
+
+| Developer Hub | URL | Registration |
+|--------------|-----|-------------|
+| **HMRC Developer Hub** | https://developer.service.hmrc.gov.uk/api-documentation | OAuth 2.0, sandbox available |
+| **NHS Digital API Catalogue** | https://digital.nhs.uk/developer/api-catalogue | Varies by API |
+| **NHS Developer Portal** | https://developer.api.nhs.uk | API key |
+| **Companies House** | https://developer.company-information.service.gov.uk/ | Free API key |
+| **OS Data Hub** | https://osdatahub.os.uk/ | Free tier (public sector free) |
+| **Environment Agency** | https://environment.data.gov.uk/ | Open access |
+| **Defra Developer Portal** | https://developer-portal.trade.defra.gov.uk/ | Registration required |
+| **Legislation API** | https://www.legislation.gov.uk/developer | Open access |
+| **GOV.UK Content API** | https://content-api.publishing.service.gov.uk/ | Open access |
+| **Border APIs** | https://www.gov.uk/government/publications/apis | Varies |
+
+**Step 3: Search data.gov.uk for datasets**
+
+Use WebFetch on https://www.data.gov.uk/ to search for bulk datasets (CSV, JSON, SPARQL) in addition to APIs.
+
+#### B. UK Government Open Data (Category-Specific Research)
+
+After checking the central catalogue, do category-specific research:
 
 **Search Queries**:
 - "data.gov.uk [topic]" (e.g., "data.gov.uk fuel prices")
 - "[Department] API" (e.g., "DVLA API", "Companies House API")
 - "[Department] open data" (e.g., "ONS open data", "NHS Digital open data")
-- "site:api.gov.uk [topic]"
 - "[topic] UK Government API"
 
 **Use WebFetch on**:
-- https://www.data.gov.uk/ — search for relevant datasets
-- Department API documentation pages
-- API developer portals (e.g., https://developer.company-information.service.gov.uk/)
+- Department API documentation pages found in the catalogue
+- API developer portals listed above
 
 **Extract per source**:
 - Dataset/API name and URL
@@ -253,7 +302,7 @@ Use WebSearch to find UK Government data sources:
 - Quality indicators (completeness, accuracy, timeliness)
 - Documentation quality
 
-**B. Commercial Data Providers**
+#### C. Commercial Data Providers
 
 Use WebSearch to find commercial options:
 
@@ -278,14 +327,14 @@ Use WebSearch to find commercial options:
 - GDPR compliance and data residency
 - Support and documentation quality
 
-**C. Free/Freemium APIs**
+**D. Free/Freemium APIs**
 
 Use WebSearch:
 - "[topic] free API" (e.g., "weather free API")
 - "[topic] open API" (e.g., "postcode lookup open API")
 - "public APIs [topic]" (e.g., "public APIs financial data")
 
-**D. Open Source Datasets**
+**E. Open Source Datasets**
 
 Use WebSearch:
 - "[topic] open dataset" (e.g., "UK fuel prices open dataset")
@@ -589,19 +638,30 @@ User: `/arckit.datascout Find data sources for smart meter mobile app`
 
 ## Resources
 
-**UK Government Open Data**:
-- **data.gov.uk**: https://www.data.gov.uk/
-- **ONS**: https://www.ons.gov.uk/
-- **NHS Digital**: https://digital.nhs.uk/
-- **Ordnance Survey Data Hub**: https://osdatahub.os.uk/
-- **Companies House API**: https://developer.company-information.service.gov.uk/
-- **Environment Agency**: https://environment.data.gov.uk/
-- **Land Registry**: https://use-land-property-data.service.gov.uk/
-- **Police API**: https://data.police.uk/docs/
-- **Transport API**: https://www.bus-data.dft.gov.uk/
-- **National Grid ESO**: https://carbon-intensity.github.io/api-definitions/
+**UK Government API Catalogues & Developer Hubs** (ALWAYS CHECK THESE):
+- **UK Government API Catalogue**: https://www.api.gov.uk/ — 240+ APIs across 34+ organisations
+- **API Catalogue Dashboard**: https://www.api.gov.uk/dashboard/ — browse by department
+- **API Catalogue GitHub**: https://github.com/co-cddo/api-catalogue — source data, contributions
+- **HMRC Developer Hub**: https://developer.service.hmrc.gov.uk/api-documentation — tax, VAT, customs, MTD
+- **NHS Digital API Catalogue**: https://digital.nhs.uk/developer/api-catalogue — 93 health APIs
+- **NHS Developer Portal**: https://developer.api.nhs.uk — NHS website APIs
+- **Companies House API**: https://developer.company-information.service.gov.uk/ — company data
+- **Ordnance Survey Data Hub**: https://osdatahub.os.uk/ — maps, addresses, geospatial
+- **Defra Developer Portal**: https://developer-portal.trade.defra.gov.uk/ — agriculture, trade, environment
+- **Legislation API**: https://www.legislation.gov.uk/developer — UK legislation
+- **GOV.UK Content API**: https://content-api.publishing.service.gov.uk/ — GOV.UK content
+- **Border APIs**: https://www.gov.uk/government/publications/apis — customs, immigration
 
-**Open Data Portals**:
+**UK Government Open Data Portals**:
+- **data.gov.uk**: https://www.data.gov.uk/ — central open data portal
+- **ONS**: https://www.ons.gov.uk/ — statistics, census, demographics
+- **Environment Agency**: https://environment.data.gov.uk/ — flooding, water quality, ecology
+- **Land Registry**: https://use-land-property-data.service.gov.uk/ — property, land ownership
+- **Police API**: https://data.police.uk/docs/ — crime data
+- **Transport (Bus Open Data)**: https://www.bus-data.dft.gov.uk/ — bus timetables, fares
+- **National Grid ESO**: https://carbon-intensity.github.io/api-definitions/ — carbon intensity
+
+**Open Data Portals (International)**:
 - **European Data Portal**: https://data.europa.eu/
 - **World Bank Open Data**: https://data.worldbank.org/
 - **Public APIs list**: https://github.com/public-apis/public-apis
