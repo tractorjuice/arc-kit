@@ -709,7 +709,7 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 1.0.4
+- **ArcKit Version**: 1.1.0
 - **Document Date**: 2026-02-01
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
 - **Commands Documented**: 43

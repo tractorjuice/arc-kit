@@ -1,6 +1,6 @@
 [project]
 name = "arckit-cli"
-version = "1.0.4"
+version = "1.1.0"
 description = "ArcKit CLI - Enterprise Architecture Governance & Vendor Procurement Toolkit"
 requires-python = ">=3.11"
 dependencies = [

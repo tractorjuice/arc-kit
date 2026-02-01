@@ -271,7 +271,7 @@ principles-compliance → analyze → service-assessment → story
 
 ## Version
 
-- **ArcKit Version**: 1.0.4
+- **ArcKit Version**: 1.1.0
 - **Matrix Date**: 2026-02-01
 - **Commands Documented**: 43
 - **Matrix Rows**: 45 (43 commands + 2 external documents)
