@@ -569,6 +569,15 @@ Publish all project documentation as an interactive website:
 
 Claude Code uses **agents** (`.claude/agents/`) for commands that perform extensive web research (technology research, data source discovery, AWS/Azure cloud research). These agents run autonomously in isolated context windows via the Task tool, keeping the main conversation clean. Codex CLI and Gemini CLI use equivalent inline prompts since they don't support the agent architecture.
 
+### Why Commands, Not Skills
+
+Claude Code automatically exposes ArcKit commands as **skills** (they appear in the skills list and can be matched by natural language). ArcKit intentionally uses **slash commands** rather than standalone skills because:
+
+- **Deliberate invocation required** — Every command generates a heavyweight governance document (requirements spec, risk register, DPIA, etc.). Auto-triggering from conversational intent would waste significant time and tokens.
+- **Dependency ordering** — Commands follow a deliberate sequence (principles → stakeholders → requirements → data-model → etc.). Skills that auto-trigger could run out of order.
+- **User input via `$ARGUMENTS`** — Most commands accept context from the user (project name, scope, constraints). The command system handles this with `$ARGUMENTS` substitution.
+- **Best of both worlds** — Since Claude Code exposes commands as skills automatically, users get explicit `/arckit.requirements` invocation AND natural language matching when Claude recognises intent — no restructuring needed.
+
 ### Using with Codex CLI
 
 For OpenAI Codex CLI users, commands use the `/prompts:` format:

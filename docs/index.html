@@ -1396,6 +1396,21 @@ flowchart TD
         <div class="govuk-inset-text govuk-!-margin-top-6">
             All commands produce identical outputs across AI systems. Claude Code additionally uses <strong>agents</strong> for research-heavy commands (technology research, data source discovery, AWS/Azure cloud research), running them autonomously in isolated context windows. Codex CLI and Gemini CLI use equivalent inline prompts.
         </div>
+
+        <details class="govuk-details govuk-!-margin-top-4">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">Why commands, not skills?</span>
+            </summary>
+            <div class="govuk-details__text">
+                <p class="govuk-body">Claude Code automatically exposes ArcKit commands as <strong>skills</strong> (they appear in the skills list and can be matched by natural language). ArcKit intentionally uses <strong>slash commands</strong> rather than standalone skills because:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><strong>Deliberate invocation required</strong> &mdash; Every command generates a heavyweight governance document (requirements spec, risk register, DPIA, etc.). Auto-triggering from conversational intent would waste significant time and tokens.</li>
+                    <li><strong>Dependency ordering</strong> &mdash; Commands follow a deliberate sequence (principles &rarr; stakeholders &rarr; requirements &rarr; data-model &rarr; etc.). Skills that auto-trigger could run out of order.</li>
+                    <li><strong>User input via <code>$ARGUMENTS</code></strong> &mdash; Most commands accept context from the user (project name, scope, constraints). The command system handles this with <code>$ARGUMENTS</code> substitution.</li>
+                    <li><strong>Best of both worlds</strong> &mdash; Since Claude Code exposes commands as skills automatically, users get explicit <code>/arckit.requirements</code> invocation AND natural language matching when Claude recognises intent &mdash; no restructuring needed.</li>
+                </ul>
+            </div>
+        </details>
     </div>
 
     <!-- Use Cases Section -->
