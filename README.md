@@ -973,7 +973,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v1.1.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.1.0)
+- **Latest Version**: [v1.2.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.2.0)
 
 ---
 
