@@ -5,6 +5,51 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-02-03
+
+### Added
+
+- **External Document Support**: Standardized external document intake across all 39 commands and 4 agents
+  - Commands auto-discover and consume user-provided files (vendor HLDs, policy docs, pen test reports, RFPs, audit reports, existing schemas, architecture diagram images)
+  - Three standard locations: `projects/{project}/external/`, `projects/{project}/vendors/{vendor}/`, `projects/000-global/policies/`
+  - Command-specific extraction guidance for each document type
+  - Non-blocking: external docs enhance output quality but are never required
+  - Generated documents include "External References" table citing consumed external docs
+  - 6 command groups: Vendor (6), Policy & Governance (11), User Specification (8), Research (5), Operational (9), No Changes (4)
+
+- **External References Table**: Added to all corresponding templates in `.arckit/templates/`
+  - Populated when external docs are used, shows "None provided" otherwise
+  - Columns: Document, Type, Source, Key Extractions, Path
+
+- **Standard Directories**: CLI and scripts updated to create external document directories
+  - `arckit init` creates `projects/000-global/policies/` directory
+  - `create-project.sh` creates `external/` subdirectory in each numbered project
+  - `.gitkeep` files ensure directories are tracked by git
+
+- **v20 Test Repository**: `arckit-test-project-v20-uae-moi-ipad` (private) for UAE MOI IPAD Framework
+
+### Changed
+
+- **Dynamic Version Placeholders**: All 44 template metadata lines now use `[VERSION]` placeholder instead of hardcoded version numbers
+  - Template metadata line: `> **Template Status**: [status] | **Version**: [VERSION] | **Command**: [command]`
+  - Commands read the `VERSION` file at generation time and populate the placeholder
+  - Eliminates version drift when bumping ArcKit version — only `VERSION` file needs updating
+
+- **Command Version Fallbacks**: Updated all 13 commands with version fallbacks from `1.0.0` to current version
+  - Commands that read VERSION file now have accurate fallback values
+
+- **Converter Improvements** (`scripts/converter.py`): Enhanced agent-delegating command handling for Gemini TOML generation
+
+- **CLAUDE.md**: Added v20 test repo to table and sync loop, added directory creation to sync script
+
+### Fixed
+
+- Stale `1.0.0` version fallbacks in 13 command files (should have been updated in 1.2.0)
+- Hardcoded `1.0.0` version in all 44 template metadata lines (now dynamic `[VERSION]` placeholder)
+- External document sections incorrectly nested inside "Detect Version" steps in 3 commands (story, adr, platform-design)
+
+---
+
 ## [1.2.0] - 2026-02-03
 
 ### Added
@@ -1459,6 +1504,8 @@ Deployed to 6 test repositories:
 
 ## Release Links
 
+- [v1.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.3.0) - External Document Support & Dynamic Version Placeholders
+- [v1.2.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.2.0) - Autonomous Agent System
 - [v1.0.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.0.0) - Production Release - Enterprise Architecture Governance Toolkit
 - [v0.3.1](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.1) - Data Modeling with ERD, GDPR Compliance, and Data Governance
 - [v0.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v0.3.0) - Green Book & Orange Book Edition (SOBC + Risk Management)
