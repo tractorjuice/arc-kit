@@ -563,9 +563,11 @@ Publish all project documentation as an interactive website:
 
 | Agent | Support | Notes |
 |-------|---------|-------|
-| [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended |
+| [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended. Slash commands + autonomous agents for research-heavy tasks |
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | |
+
+Claude Code uses **agents** (`.claude/agents/`) for commands that perform extensive web research (technology research, data source discovery, AWS/Azure cloud research). These agents run autonomously in isolated context windows via the Task tool, keeping the main conversation clean. Codex CLI and Gemini CLI use equivalent inline prompts since they don't support the agent architecture.
 
 ### Using with Codex CLI
 

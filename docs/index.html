@@ -1371,8 +1371,8 @@ flowchart TD
             <div class="app-ai-card">
                 <h3 class="govuk-heading-m">Claude Code</h3>
                 <strong class="govuk-tag govuk-tag--green">Primary</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Official CLI from Anthropic. Commands in <code>.claude/commands/</code> directory.</p>
-                <p class="govuk-body"><strong>Best for:</strong> Complex reasoning, architecture design, comprehensive documentation generation.</p>
+                <p class="govuk-body govuk-!-margin-top-3">Official CLI from Anthropic. Slash commands in <code>.claude/commands/</code> plus autonomous agents in <code>.claude/agents/</code> for research-heavy tasks.</p>
+                <p class="govuk-body"><strong>Best for:</strong> Complex reasoning, architecture design, comprehensive documentation generation. Agents isolate web research context automatically.</p>
                 <p class="govuk-body"><strong>Installation:</strong> <code>brew install claude</code></p>
             </div>
 
@@ -1394,7 +1394,7 @@ flowchart TD
         </div>
 
         <div class="govuk-inset-text govuk-!-margin-top-6">
-            All commands work identically across AI systems. Choose based on your organisation's AI platform preference.
+            All commands produce identical outputs across AI systems. Claude Code additionally uses <strong>agents</strong> for research-heavy commands (technology research, data source discovery, AWS/Azure cloud research), running them autonomously in isolated context windows. Codex CLI and Gemini CLI use equivalent inline prompts.
         </div>
     </div>
 
