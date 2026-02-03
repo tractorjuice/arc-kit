@@ -53,12 +53,20 @@ $ARGUMENTS
    - **Retail**: Add principles for payment processing, inventory systems, customer data
    - **Government**: Add accessibility (Section 508), public records, security clearances
 
-6. **Write the output**:
-   - **CRITICAL**: The filename MUST be `ARC-000-PRIN-v1.0.md` (NOT `architecture-principles.md`)
-   - Generate the document ID using: `.arckit/scripts/bash/generate-document-id.sh 000 PRIN 1.0 --filename`
-   - This produces: `ARC-000-PRIN-v1.0.md` (000 indicates global/cross-project document)
-   - Write to: `projects/000-global/ARC-000-PRIN-v1.0.md`
-   - If this file exists, update it; if not, create it
+6. **Detect version**: Before generating the document, check if a previous version exists:
+   - Look for existing `ARC-000-PRIN-v*.md` files in `projects/000-global/`
+   - **If no existing file**: Use VERSION="1.0"
+   - **If existing file found**:
+     - Read the existing document to understand its scope
+     - Compare against current inputs
+     - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed content, updated details, corrections
+     - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new principle categories, removed categories, fundamentally different guidance
+   - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
+7. **Write the output**:
+   - Generate the document ID using: `.arckit/scripts/bash/generate-document-id.sh 000 PRIN ${VERSION} --filename`
+   - This produces: `ARC-000-PRIN-v${VERSION}.md` (000 indicates global/cross-project document)
+   - Write to: `projects/000-global/ARC-000-PRIN-v${VERSION}.md`
    - Use the exact template structure
    - Make it ready for immediate use by development teams
 
@@ -74,7 +82,7 @@ Before completing the document, populate document information fields:
 
 ### Auto-populated fields:
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → Determined version from step 6
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-PRIN-v[VERSION]` → Generated document ID
@@ -100,7 +108,7 @@ Before completing the document, populate document information fields:
 ```
 
 
-7. **Summarize what you created**: After writing, provide a brief summary:
+8. **Summarize what you created**: After writing, provide a brief summary:
    - How many principles were defined
    - Key areas covered
    - Any industry-specific additions

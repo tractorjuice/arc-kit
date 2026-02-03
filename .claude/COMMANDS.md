@@ -16,8 +16,10 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.data-model` | Create comprehensive data model with ERD | After requirements, before vendor selection |
 | `/arckit.data-mesh-contract` | Create federated data product contracts (ODCS v3.0.2) | When delivering data mesh/federated analytics |
 | `/arckit.dpia` | Generate Data Protection Impact Assessment | After data model when processing personal data |
-| `/arckit.research` | Research technology and services for build vs buy | After requirements, inform procurement decisions |
-| `/arckit.azure-research` | Azure-specific research using Microsoft Learn MCP | When Azure is the target platform |
+| `/arckit.research` | Research technology and services for build vs buy (agent) | After requirements, inform procurement decisions |
+| `/arckit.datascout` | Discover external data sources, APIs, and open data (agent) | After requirements, before data model |
+| `/arckit.azure-research` | Azure-specific research using Microsoft Learn MCP (agent) | When Azure is the target platform |
+| `/arckit.aws-research` | AWS-specific research using AWS Knowledge MCP (agent) | When AWS is the target platform |
 | `/arckit.wardley` | Create strategic Wardley Maps | Strategic planning, build vs buy decisions |
 | `/arckit.roadmap` | Produce multi-year capability roadmap with governance gates | After strategy artifacts, before procurement |
 | `/arckit.adr` | Capture MADR-format architectural decisions | Whenever key design choices need approval trail |
@@ -698,6 +700,8 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 
 **Purpose**: Research available technologies, services, and products to meet requirements and inform build vs buy decisions.
 
+**Architecture**: This command delegates to the **`arckit-research` agent** (`.claude/agents/arckit-research.md`) which runs as an autonomous subprocess. The agent performs dozens of WebSearch and WebFetch calls to gather vendor pricing, reviews, and compliance data — running in its own context window to avoid polluting the main conversation.
+
 **Usage**:
 ```
 /arckit.research Research payment gateway solutions for project 001
@@ -713,26 +717,75 @@ CFO Driver D-1: Reduce costs (FINANCIAL, HIGH)
 - Maps solutions to requirements
 - Recommends procurement approach (build custom, buy commercial, use open source)
 
-**Research categories**:
+**Research categories** (dynamically identified from requirements):
 - **Commercial Products**: Licensed software, enterprise platforms
 - **SaaS Platforms**: Cloud-based subscription services
 - **Open Source**: Community or commercially-supported OSS
 - **UK Digital Marketplace**: G-Cloud services, DOS suppliers
+- **GOV.UK Platforms**: One Login, Pay, Notify, Forms (UK Gov projects)
 
 **Key outputs**:
 - Solution comparison matrix
-- Build vs Buy analysis with TCO estimates
+- Build vs Buy analysis with 3-year TCO estimates
 - Requirements coverage assessment
 - Risk analysis for each option
 - Procurement recommendations
+- Wardley Map evolution positioning
 
-**Output**: `projects/NNN-project-name/research-findings.md`
+**Output**: `projects/NNN-project-name/ARC-NNN-RSCH-v1.0.md`
 
 **Next step**: Use findings to inform `/arckit.wardley` mapping or proceed to procurement with `/arckit.gcloud-search`, `/arckit.dos`, or `/arckit.sow`. For Azure-specific research, use `/arckit.azure-research`.
 
 ---
 
+### 9b. `/arckit.datascout` - Data Source Discovery
+
+**Purpose**: Discover external data sources — APIs, datasets, open data portals, and commercial providers — that can fulfil the project's data and integration requirements.
+
+**Architecture**: This command delegates to the **`arckit-datascout` agent** (`.claude/agents/arckit-datascout.md`) which runs as an autonomous subprocess. The agent searches api.gov.uk, data.gov.uk, department developer hubs, and commercial API providers in its own context window.
+
+**Usage**:
+```
+/arckit.datascout Discover data sources for fuel price transparency project
+/arckit.datascout Find UK Government open data for smart meter app
+/arckit.datascout Identify APIs and datasets for property analytics platform
+```
+
+**What it does**:
+- Extracts data needs from DR/FR/INT/NFR requirements
+- Searches UK Government API catalogue (api.gov.uk) first
+- Discovers open data (data.gov.uk, ONS, NHS Digital, etc.)
+- Finds commercial and free/freemium APIs
+- Evaluates each source with weighted scoring (6 criteria, 100-point scale)
+- Identifies secondary data uses beyond primary requirements (data utility analysis)
+- Gap analysis for unmet data needs
+- Assesses impact on data model (new entities, attributes, sync strategy)
+
+**Evaluation criteria**:
+- **Requirements Fit** (25%): Coverage of required data fields and scope
+- **Data Quality** (20%): Accuracy, completeness, timeliness
+- **License & Cost** (15%): OGL vs commercial, pricing sustainability
+- **API Quality** (15%): REST, docs, SDKs, versioning
+- **Compliance** (15%): GDPR, UK data residency, DPA 2018
+- **Reliability** (10%): SLA, uptime, vendor stability
+
+**Key outputs**:
+- Per-source evaluation cards with scoring
+- Side-by-side comparison tables per category
+- Gap analysis with recommended actions
+- Data utility analysis (secondary uses, combination opportunities)
+- Data model impact assessment
+- Requirements traceability (every DR-xxx mapped to source or flagged as gap)
+
+**Output**: `projects/NNN-project-name/ARC-NNN-DSCT-v1.0.md`
+
+**Next step**: Update data model with `/arckit.data-model`, record decisions with `/arckit.adr`, assess privacy with `/arckit.dpia`.
+
+---
+
 ### 9a. `/arckit.azure-research` - Azure Technology Research (MCP Required)
+
+> **Architecture**: This command delegates to the `arckit-azure-research` autonomous agent, which runs as a subprocess via the Task tool. The agent makes 15-30+ MCP calls to Microsoft Learn, keeping large documentation chunks isolated from the main conversation context.
 
 **Purpose**: Research Azure services, architecture patterns, and implementation guidance using official Microsoft documentation via the Microsoft Learn MCP server.
 
@@ -787,6 +840,68 @@ Add to your MCP configuration (`~/.claude/claude_desktop_config.json` or `.mcp.j
 **Output**: `projects/NNN-project-name/ARC-NNN-AZRS-v1.0.md`
 
 **Next step**: Use `/arckit.diagram` for detailed Azure architecture diagrams, `/arckit.secure` for UK Secure by Design validation, or `/arckit.devops` for Azure DevOps pipeline planning.
+
+---
+
+### 9b. `/arckit.aws-research` - AWS Technology Research (MCP Required)
+
+> **Architecture**: This command delegates to the `arckit-aws-research` autonomous agent, which runs as a subprocess via the Task tool. The agent makes 15-30+ MCP calls to AWS Knowledge, keeping large documentation chunks isolated from the main conversation context.
+
+**Purpose**: Research AWS services, architecture patterns, and implementation guidance using official AWS documentation via the AWS Knowledge MCP server.
+
+**Prerequisites**:
+- **MANDATORY**: AWS Knowledge MCP server must be installed
+- **MANDATORY**: Requirements document (`ARC-*-REQ-*.md`) must exist
+
+**MCP Installation**:
+Add to your MCP configuration (`.mcp.json`):
+```json
+{
+  "mcpServers": {
+    "aws-knowledge": {
+      "type": "http",
+      "url": "https://knowledge-mcp.global.api.aws"
+    }
+  }
+}
+```
+
+**Usage**:
+```
+/arckit.aws-research Research AWS services for data analytics platform
+/arckit.aws-research AWS AI services for document processing
+/arckit.aws-research AWS architecture for UK Government microservices
+```
+
+**What it does**:
+- Maps requirements to specific AWS services
+- Provides AWS Architecture Center reference patterns
+- Assesses against AWS Well-Architected Framework (6 pillars)
+- Maps to AWS Security Hub controls (Foundational Security Best Practices, CIS, NIST)
+- Checks regional availability (eu-west-2 London for UK projects)
+- Verifies G-Cloud procurement availability
+- Estimates costs with optimization recommendations
+- Provides CDK/Terraform implementation templates
+
+**MCP Tools Used**:
+- `search_documentation` - Search AWS documentation
+- `read_documentation` - Retrieve full documentation pages
+- `get_regional_availability` - Check service availability per region
+- `list_regions` - List AWS regions
+- `recommend` - Get content recommendations
+
+**Key outputs**:
+- AWS service recommendations per requirement category
+- Architecture diagram (Mermaid) with UK region placement
+- Security Hub control mapping
+- Well-Architected Framework assessment (6 pillars)
+- Cost estimates (monthly and 3-year TCO)
+- CDK/Terraform templates
+- UK Government compliance details (G-Cloud, NCSC, data residency)
+
+**Output**: `projects/NNN-project-name/research/ARC-NNN-AWRS-v1.0.md`
+
+**Next step**: Use `/arckit.diagram` for detailed AWS architecture diagrams, `/arckit.secure` for UK Secure by Design validation, or `/arckit.devops` for AWS pipeline planning.
 
 ---
 

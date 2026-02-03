@@ -258,6 +258,8 @@ Is there a supply side AND demand side?
 
 **Output**: Creates `projects/<id>/ARC-<id>-PLAT-v1.0.md` with all 8 canvases
 
+> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
+
 ### Advanced Usage
 
 ```

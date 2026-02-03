@@ -2,6 +2,8 @@
 
 `/arckit.datascout` discovers external data sources — APIs, datasets, open data portals, and commercial providers — that can fulfil a project's data and integration requirements.
 
+> **Agent Architecture**: This command delegates to the `arckit-datascout` autonomous agent (`.claude/agents/arckit-datascout.md`). The agent runs as a subprocess with its own context window, searching api.gov.uk, data.gov.uk, department developer hubs, and commercial API providers without polluting your main conversation. The slash command launches the agent and relays its summary back to you.
+
 ---
 
 ## What is Data Source Discovery?
@@ -53,6 +55,8 @@ Add constraints (budget, data residency, freshness) in the prompt for tailored r
 ```
 
 Outputs: `projects/<id>/ARC-<id>-DSCT-v1.0.md`
+
+> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
 
 ---
 

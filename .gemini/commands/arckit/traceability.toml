@@ -143,9 +143,9 @@ You are helping an enterprise architect create a comprehensive traceability matr
    - Technical debt to track
 
 7. **Write outputs**:
-   - `projects/{project-dir}/ARC-{PROJECT_ID}-TRAC-v1.0.md` - Full traceability matrix
-   - `projects/{project-dir}/ARC-{PROJECT_ID}-COVR-v1.0.md` - Coverage metrics and gaps
-   - `projects/{project-dir}/ARC-{PROJECT_ID}-GAPS-v1.0.md` - Detailed gap analysis with remediation plan
+   - `projects/{project-dir}/ARC-{PROJECT_ID}-TRAC-v${VERSION}.md` - Full traceability matrix
+   - `projects/{project-dir}/ARC-{PROJECT_ID}-COVR-v${VERSION}.md` - Coverage metrics and gaps
+   - `projects/{project-dir}/ARC-{PROJECT_ID}-GAPS-v${VERSION}.md` - Detailed gap analysis with remediation plan
 
    **CRITICAL - Show Summary Only**:
    After writing the file(s), show ONLY a brief summary with coverage metrics and key gaps. Do NOT output the full traceability matrix content in your response, as matrices can be 800+ lines with detailed requirement-to-test mappings.
@@ -156,10 +156,24 @@ You are helping an enterprise architect create a comprehensive traceability matr
 
 Before completing the document, populate ALL document control fields in the header:
 
+### Step 0: Detect Version
+
+Before generating the document ID, check if a previous version exists:
+
+1. Look for existing `ARC-{PROJECT_ID}-TRAC-v*.md` files in the project directory
+2. **If no existing file**: Use VERSION=\"1.0\"
+3. **If existing file found**:
+   - Read the existing document to understand its scope
+   - Compare against current project artifacts and coverage
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed coverage metrics, updated gap analysis, corrected details
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new requirement categories traced, fundamentally different coverage, significant new artifacts added
+4. Use the determined version for document ID, filename, Document Control, and Revision History
+5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
 ### Step 1: Generate Document ID
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"TRAC\" \"1.0\")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"TRAC\" \"${VERSION}\")
 # Example output: ARC-001-TRAC-v1.0
 ```
 
@@ -167,7 +181,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"TRAC\"
 
 **Auto-populated fields** (populate these automatically):
 - `[PROJECT_ID]` → Extract from project path (e.g., \"001\" from \"projects/001-project-name\")
-- `[VERSION]` → Start with \"1.0\" for new documents
+- `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → Use the document purpose (e.g., \"Business and Technical Requirements\")
 - `ARC-[PROJECT_ID]-TRAC-v[VERSION]` → Use generated DOC_ID from Step 1

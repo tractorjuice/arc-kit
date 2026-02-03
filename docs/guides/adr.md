@@ -23,6 +23,8 @@
 
 Output: `projects/<id>/decisions/ARC-<id>-ADR-001-v1.0.md` (uses multi-instance numbering) plus optional summary table appended to `decisions/index.md`.
 
+> **Auto-versioning**: Creating a new ADR auto-increments the ADR number. Updating an existing ADR (e.g., "update ADR-001") auto-increments the version (minor for updated evidence, major for changed decision outcome) instead of overwriting.
+
 ---
 
 ## MADR Structure

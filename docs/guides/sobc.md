@@ -23,6 +23,8 @@
 
 Output: `projects/<id>/ARC-<id>-SOBC-v1.0.md`
 
+> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
+
 ---
 
 ## SOBC Structure (5-Case Model)

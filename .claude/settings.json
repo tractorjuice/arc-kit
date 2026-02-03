@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__aws-knowledge__aws___get_regional_availability",
+      "mcp__aws-knowledge__aws___list_regions",
+      "mcp__aws-knowledge__aws___read_documentation",
+      "mcp__aws-knowledge__aws___recommend",
+      "mcp__aws-knowledge__aws___search_documentation",
+      "mcp__plugin_microsoft-docs_microsoft-learn__microsoft_docs_search",
+      "mcp__plugin_microsoft-docs_microsoft-learn__microsoft_code_sample_search",
+      "mcp__plugin_microsoft-docs_microsoft-learn__microsoft_docs_fetch"
+    ]
+  },
+  "enabledPlugins": {
+    "plugin-dev@claude-plugins-official": true,
+    "agent-sdk-dev@claude-plugins-official": true
+  }
+}

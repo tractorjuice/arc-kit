@@ -174,10 +174,24 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
 Before completing the document, populate ALL document control fields in the header:
 
+### Step 0: Detect Version
+
+Before generating the document ID, check if a previous version exists:
+
+1. Look for existing `ARC-{PROJECT_ID}-SOBC-v*.md` files in the project directory
+2. **If no existing file**: Use VERSION=\"1.0\"
+3. **If existing file found**:
+   - Read the existing document to understand its scope
+   - Compare against current inputs and requirements
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed estimates, updated stakeholder data, corrected details
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new options added, fundamentally different recommendations, significant new stakeholder goals
+4. Use the determined version for document ID, filename, Document Control, and Revision History
+5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
 ### Step 1: Generate Document ID
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"SOBC\" \"1.0\")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"SOBC\" \"${VERSION}\")
 # Example output: ARC-001-SOBC-v1.0
 ```
 
@@ -185,7 +199,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"SOBC\"
 
 **Auto-populated fields** (populate these automatically):
 - `[PROJECT_ID]` → Extract from project path (e.g., \"001\" from \"projects/001-project-name\")
-- `[VERSION]` → Start with \"1.0\" for new documents
+- `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → \"Strategic Outline Business Case (SOBC)\"
 - `[CLASSIFICATION]` → Default to \"OFFICIAL\" for UK Gov, \"INTERNAL\" for private sector
@@ -197,7 +211,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"SOBC\"
 - `[APPROVED_BY]` → Who must approve? (mark as \"PENDING\" if not yet approved)
 
 8. **Write the output**:
-   - Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v1.0.md`
+   - Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v${VERSION}.md`
    - Use project directory structure (create if doesn't exist)
    - File name pattern: `ARC-{PROJECT_ID}-SOBC-v{VERSION}.md`
    - Later stages will be: `ARC-{PROJECT_ID}-OBC-v*.md` (Outline Business Case), `ARC-{PROJECT_ID}-FBC-v*.md` (Full Business Case)
@@ -345,7 +359,7 @@ Create the comprehensive, executive-ready Strategic Outline Business Case follow
 
 ### 2. Write Directly to File
 
-**Use the Write tool** to create `projects/[PROJECT]/ARC-{PROJECT_ID}-SOBC-v1.0.md` with the complete SOBC document.
+**Use the Write tool** to create `projects/[PROJECT]/ARC-{PROJECT_ID}-SOBC-v${VERSION}.md` with the complete SOBC document.
 
 **DO NOT** output the full document in your response. This would exceed token limits.
 

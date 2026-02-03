@@ -206,12 +206,26 @@ Read `projects/000-global/ARC-000-PRIN-*.md`:
 
 ---
 
-### Step 4: Generate Document Control Metadata
+### Step 4: Detect Version
+
+Before generating the document ID, check if a previous version exists:
+
+1. Look for existing `ARC-{PROJECT_ID}-PLAT-v*.md` files in the project directory
+2. **If no existing file**: Use VERSION=\"1.0\"
+3. **If existing file found**:
+   - Read the existing document to understand its scope
+   - Compare against current inputs and requirements
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed content, updated entity details, corrected details
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new ecosystem entities, fundamentally different platform strategy, significant new canvases
+4. Use the determined version for document ID, filename, Document Control, and Revision History
+5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
+### Step 5: Generate Document Control Metadata
 
 Use the bash script to generate document ID:
 
 ```bash
-bash .arckit/scripts/bash/generate-document-id.sh \"$PROJECT_ID\" \"PLAT\" \"1.0\"
+bash .arckit/scripts/bash/generate-document-id.sh \"$PROJECT_ID\" \"PLAT\" \"${VERSION}\"
 ```
 
 This returns a document ID like: `ARC-001-PLAT-v1.0`
@@ -220,7 +234,7 @@ This returns a document ID like: `ARC-001-PLAT-v1.0`
 - `document_id`: From script output
 - `project_id`: From Step 1
 - `project_name`: From Step 1
-- `version`: \"1.0\"
+- `version`: Determined version from Step 4
 - `author`: \"ArcKit Platform Design Command\"
 - `date_created`: Current date (YYYY-MM-DD)
 - `date_updated`: Current date (YYYY-MM-DD)
@@ -229,7 +243,7 @@ This returns a document ID like: `ARC-001-PLAT-v1.0`
 
 ---
 
-### Step 5: Generate Platform Design Using PDT Methodology
+### Step 6: Generate Platform Design Using PDT Methodology
 
 **CRITICAL INSTRUCTIONS FOR QUALITY**:
 
@@ -348,12 +362,12 @@ This returns a document ID like: `ARC-001-PLAT-v1.0`
 
 ---
 
-### Step 6: Write the Document
+### Step 7: Write the Document
 
 **USE THE WRITE TOOL** to create the platform design document:
 
 ```
-File path: projects/{project_id}-{project_name}/ARC-{PROJECT_ID}-PLAT-v1.0.md
+File path: projects/{project_id}-{project_name}/ARC-{PROJECT_ID}-PLAT-v${VERSION}.md
 Content: [Complete platform design following template, all 8 canvases filled out]
 ```
 
@@ -365,7 +379,7 @@ Content: [Complete platform design following template, all 8 canvases filled out
 
 ---
 
-### Step 7: Generate Summary for User
+### Step 8: Generate Summary for User
 
 After writing the file, provide a **concise summary** (NOT the full document):
 

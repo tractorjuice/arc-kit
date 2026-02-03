@@ -2,6 +2,8 @@
 
 `/arckit.research` investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.
 
+> **Agent Architecture**: This command delegates to the `arckit-research` autonomous agent (`.claude/agents/arckit-research.md`). The agent runs as a subprocess with its own context window, performing dozens of WebSearch and WebFetch calls for vendor pricing, reviews, and compliance data without polluting your main conversation. The slash command launches the agent and relays its summary back to you.
+
 ---
 
 ## Scenario Matrix
@@ -25,6 +27,8 @@ Add constraints (budget, data residency, clearance) in the prompt for tailored r
 ```
 
 Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
+
+> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
 
 ---
 

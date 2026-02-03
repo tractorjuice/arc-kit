@@ -98,7 +98,17 @@ Generate a comprehensive Secure by Design assessment document by:
     - High priority (1-3 months) - significant risk reduction
     - Medium priority (3-6 months) - continuous improvement
 
-11. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-v1.0.md`
+11. **Detect version**: Before generating the document ID, check if a previous version exists:
+    - Look for existing `ARC-{PROJECT_ID}-SECD-v*.md` files in the project directory
+    - **If no existing file**: Use VERSION="1.0"
+    - **If existing file found**:
+      - Read the existing document to understand its scope
+      - Compare against current inputs and project state
+      - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed assessments, updated control status, corrected details
+      - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new CAF objectives assessed, fundamentally different security posture, significant architecture changes
+    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
+12. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-v${VERSION}.md`
 
 
 
@@ -110,7 +120,7 @@ Before completing the document, populate ALL document control fields in the head
 ### Step 1: Generate Document ID
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SECD" "1.0")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SECD" "${VERSION}")
 # Example output: ARC-001-SECD-v1.0
 ```
 
@@ -118,7 +128,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SECD" "1.
 
 **Auto-populated fields** (populate these automatically):
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
-- `[VERSION]` → Start with "1.0" for new documents
+- `[VERSION]` → Determined version from step 11
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → Use the document purpose (e.g., "Business and Technical Requirements")
 - `ARC-[PROJECT_ID]-SECD-v[VERSION]` → Use generated DOC_ID from Step 1

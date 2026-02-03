@@ -61,10 +61,10 @@ fi
 
 ### 6. **Generate comprehensive ADR** following MADR v4.0 + UK Gov framework:
 
-   **Document Control** (auto-populate):
-   - Document ID: ARC-{PROJECT_ID}-ADR-{NUM}-v1.0 (use `generate-document-id.sh`)
+   **Document Control** (see "Auto-Populate Document Control Fields" section below for full details):
+   - Document ID: ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION} (use `generate-document-id.sh`)
    - ADR Number: ADR-{NUM} (e.g., ADR-001, ADR-002)
-   - Version: 1.0 (initial draft)
+   - Version: ${VERSION} (from Step 0: Detect Version)
    - Status: Proposed (or as user specified)
    - Date: Current date (YYYY-MM-DD)
    - Escalation Level: Based on decision scope
@@ -204,8 +204,6 @@ fi
    - **Stakeholder consultation log**: Date, stakeholder, feedback, action
    - **Mermaid decision flow diagram**: Visual representation of decision logic
 
-   **Generation Metadata**: Auto-populate ArcKit version, AI model, timestamp
-
 ### 7. **Ensure comprehensive traceability**:
    - Link decision drivers to requirements (BR-xxx, FR-xxx, NFR-xxx)
    - Link to architecture principles (show alignment/conflicts)
@@ -219,19 +217,122 @@ fi
 ### 8. **Create file naming**:
    - **Generate filename**: Use `generate-document-id.sh` with --filename --next-num flags:
      ```bash
-     FILENAME=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ADR" "1.0" --filename --next-num "projects/${PROJECT_DIR}/decisions")
+     FILENAME=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ADR" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/decisions")
      # Example output: ARC-001-ADR-003-v1.0.md
      ```
    - **Format**: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
    - **Example**: `ARC-001-ADR-001-v1.0.md`, `ARC-001-ADR-002-v1.0.md`
-   - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v1.0.md`
-   - ADR number is auto-incremented by --next-num flag
+   - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION}.md`
+   - ADR number is auto-incremented by --next-num flag (for new ADRs)
 
 ### 9. **Use Write tool to create the ADR file**:
    - **CRITICAL**: Because ADRs are very large documents (500+ lines), you MUST use the Write tool to create the file
    - Do NOT output the full ADR content in your response (this will exceed token limits)
    - Use Write tool with the full ADR content
-   - Path: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v1.0.md`
+   - Path: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION}.md`
+
+
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+### Step 0: Detect Version
+
+Before generating the document ID, check if a previous version exists:
+
+ADRs are multi-instance documents. Version detection depends on whether you are creating a **new** ADR or **updating** an existing one:
+
+**Creating a new ADR** (default): Use `VERSION="1.0"` — the ADR number is auto-incremented by `--next-num`.
+
+**Updating an existing ADR** (user explicitly references an existing ADR number, e.g., "update ADR-001", "revise ADR-003"):
+1. Look for existing `ARC-{PROJECT_ID}-ADR-{NUM}-v*.md` files in `projects/{project-dir}/decisions/`
+2. **If no existing file**: Use VERSION="1.0"
+3. **If existing file found**:
+   - Read the existing document to understand its current state
+   - Compare against current inputs and the decision being made
+   - **Minor increment** (e.g., 1.0 → 1.1): Status change, updated evidence, corrected details, same decision outcome
+   - **Major increment** (e.g., 1.0 → 2.0): Decision outcome changed, options re-evaluated, fundamentally different justification
+4. Use the determined version for document ID, filename, Document Control, and Revision History
+5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
+### Step 1: Generate Document ID
+```bash
+# Use the ArcKit document ID generation script
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ADR" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/decisions")
+# Example output: ARC-001-ADR-003-v1.0.md
+```
+
+### Step 2: Populate Required Fields
+
+**Auto-populated fields** (populate these automatically):
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → Determined version from Step 0
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → Use the document purpose (e.g., "Architecture Decision Record")
+- `ARC-[PROJECT_ID]-ADR-[NUM]-v[VERSION]` → Use generated DOC_ID from Step 1
+- `[COMMAND]` → Current command name (e.g., "arckit.adr")
+
+**User-provided fields** (extract from project metadata or user input):
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+**Calculated fields**:
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days (requirements, research, risks)
+- `[YYYY-MM-DD]` for Review Date → Phase gate dates (Alpha/Beta/Live for compliance docs)
+
+**Pending fields** (leave as [PENDING] until manually updated):
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+### Step 3: Populate Revision History
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit.adr` command | [PENDING] | [PENDING] |
+```
+
+### Step 4: Populate Generation Metadata Footer
+
+The footer should be populated with:
+```markdown
+**Generated by**: ArcKit `/arckit.adr` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: [Read from VERSION file or use "1.0.0"]
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+### Example Fully Populated Document Control Section:
+
+```markdown
+## Document Control
+
+| Field | Value |
+|-------|-------|
+| **Document ID** | ARC-001-ADR-003-v1.0 |
+| **Document Type** | Architecture Decision Record |
+| **Project** | Windows 10 to Windows 11 Migration (Project 001) |
+| **Classification** | OFFICIAL-SENSITIVE |
+| **Status** | DRAFT |
+| **Version** | 1.0 |
+| **Created Date** | 2025-10-29 |
+| **Last Modified** | 2025-10-29 |
+| **Review Date** | 2025-11-30 |
+| **Owner** | John Smith (Enterprise Architect) |
+| **Reviewed By** | [PENDING] |
+| **Approved By** | [PENDING] |
+| **Distribution** | PM Team, Architecture Team, Dev Team |
+
+## Revision History
+
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| 1.0 | 2025-10-29 | ArcKit AI | Initial creation from `/arckit.adr` command | [PENDING] | [PENDING] |
+```
+
 
 ### 10. **Show summary to user** (NOT full document):
    ```markdown
@@ -240,7 +341,7 @@ fi
    **ADR Number**: ADR-{NUM}
    **Title**: {Decision title}
    **Status**: {Proposed/Accepted/etc}
-   **File**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v1.0.md`
+   **File**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION}.md`
 
    ### Chosen Option
    {Option name}

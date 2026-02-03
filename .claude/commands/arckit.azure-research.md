@@ -5,449 +5,58 @@ tags: [azure, microsoft, cloud, architecture, mcp, research, well-architected, s
 
 # Azure Technology Research
 
-You are helping an enterprise architect research Azure services, architecture patterns, and implementation guidance for a project's requirements using official Microsoft documentation.
-
 ## User Input
 
 ```text
 $ARGUMENTS
 ```
 
-## Context
-
-This command performs **Azure-specific technology research** using the Microsoft Learn MCP server for authoritative, real-time documentation. It provides:
-
-- **Azure service recommendations**: Match requirements to Azure services
-- **Architecture patterns**: Reference architectures from Azure Architecture Center
-- **Well-Architected guidance**: Assess against the 5 pillars
-- **Security alignment**: Map to Azure Security Benchmark controls
-- **UK Government suitability**: G-Cloud, data residency, classification
-- **Implementation guidance**: Bicep/Terraform templates, code samples
-
-## Microsoft Learn MCP Requirement
-
-> **CRITICAL**: This command **REQUIRES** the Microsoft Learn MCP Server to be installed. It will not work without it.
-
-### Check for MCP Tools First
-
-**Before doing anything else**, check if the following MCP tools are available:
-- `microsoft_docs_search`
-- `microsoft_docs_fetch`
-- `microsoft_code_sample_search`
-
-**If MCP tools are NOT available, STOP immediately** and display this message:
-
-```
-## Microsoft Learn MCP Server Required
-
-This command requires the **Microsoft Learn MCP Server** to access official Azure documentation.
-
-### Installation Instructions
-
-Add the following to your Claude Code MCP configuration (`~/.claude/claude_desktop_config.json` or project `.mcp.json`):
-
-**Option 1: NPX (Recommended)**
-```json
-{
-  "mcpServers": {
-    "microsoft-docs": {
-      "command": "npx",
-      "args": ["-y", "@anthropic/mcp-server-microsoft-docs"]
-    }
-  }
-}
-```
-
-**Option 2: Global Install**
-```bash
-npm install -g @anthropic/mcp-server-microsoft-docs
-```
-
-Then add to your MCP config:
-```json
-{
-  "mcpServers": {
-    "microsoft-docs": {
-      "command": "mcp-server-microsoft-docs"
-    }
-  }
-}
-```
-
-### After Installation
-
-1. Restart Claude Code to load the MCP server
-2. Run `/arckit.azure-research` again
-
-### More Information
-
-- MCP Overview: https://modelcontextprotocol.io/
-- Microsoft Learn MCP: https://learn.microsoft.com/en-us/training/support/mcp
-```
-
-**Do not proceed with the command if MCP is not available.**
-
----
-
-### MCP Tools Available
-
-Once MCP is confirmed available, use these tools to gather authoritative Azure documentation:
-
-**1. Search Microsoft Documentation** (`microsoft_docs_search`):
-```
-Query examples:
-- "[requirement topic] Azure" (e.g., "container orchestration Azure")
-- "Azure [service name] best practices" (e.g., "Azure Kubernetes Service best practices")
-- "Azure architecture [pattern]" (e.g., "Azure architecture microservices")
-- "Azure Well-Architected [pillar]" (e.g., "Azure Well-Architected security")
-- "Azure Security Benchmark [control]" (e.g., "Azure Security Benchmark network security")
-```
-
-**2. Fetch Full Documentation** (`microsoft_docs_fetch`):
-- Retrieve complete Azure service documentation pages
-- Fetch Azure Architecture Center reference architectures
-- Get Azure Well-Architected Framework guidance
-- Retrieve Azure Security Benchmark control details
-
-**3. Search Code Samples** (`microsoft_code_sample_search`):
-```
-Query examples:
-- "Azure [service] bicep" (e.g., "Azure Kubernetes Service bicep")
-- "Azure [service] terraform" (e.g., "Azure SQL terraform")
-- "Azure [pattern] sample" (e.g., "Azure microservices sample")
-Language filters: bicep, terraform, csharp, python, javascript
-```
-
 ## Instructions
 
-### 1. Check MCP Availability (MANDATORY FIRST STEP)
-
-**STOP if MCP tools are not available** - display installation instructions above.
-
-### 2. Check Project Prerequisites
-
-**MANDATORY**:
-- Check if any `ARC-*-REQ-*.md` file exists in `projects/{project}/`
-  - If requirements don't exist, **STOP** and tell user to run `/arckit.requirements` first
-  - Research MUST be based on requirements analysis
-
-**RECOMMENDED**:
-- Check if any `ARC-*-DATA-*.md` file exists (data requirements inform database selection)
-- Check if any `ARC-*-STKE-*.md` file exists (stakeholder priorities)
-- Check if project is UK Government (for G-Cloud, data residency requirements)
-
-### 3. Find the Project
-
-- If user specifies project name or number, use that
-- Otherwise, look for most recent project directory in `projects/`
-- Use the same project directory where the requirements document exists
-
-### 4. Read the Template
-
-Read `.arckit/templates/azure-research-template.md` to understand the output structure
-
-> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-
-### 5. Extract Requirements for Azure Mapping
-
-**Read the requirements document and identify Azure service needs**:
-
-**A. Compute Requirements** (from FR-xxx, NFR-P-xxx, NFR-S-xxx):
-- Container workloads → AKS, Container Apps, Container Instances
-- Web applications → App Service, Static Web Apps
-- Serverless → Azure Functions, Logic Apps
-- VMs → Virtual Machines, VM Scale Sets
-- Batch processing → Azure Batch, Container Instances
-
-**B. Data Requirements** (from DR-xxx, NFR-P-xxx):
-- Relational data → Azure SQL, PostgreSQL, MySQL
-- NoSQL/Document → Cosmos DB, Table Storage
-- Caching → Azure Cache for Redis
-- Search → Azure Cognitive Search, AI Search
-- Data warehouse → Synapse Analytics
-- Data lake → Data Lake Storage Gen2
-
-**C. Integration Requirements** (from INT-xxx):
-- APIs → API Management, Azure Functions
-- Messaging → Service Bus, Event Grid, Event Hubs
-- Workflow → Logic Apps, Durable Functions
-- External systems → Integration Services
-
-**D. Security Requirements** (from NFR-SEC-xxx):
-- Identity → Azure AD, Azure AD B2C
-- Secrets → Key Vault
-- Network → VNet, Private Link, Firewall, WAF
-- Threat detection → Microsoft Defender for Cloud
-
-**E. AI/ML Requirements** (from FR-xxx mentioning AI, ML):
-- AI services → Azure OpenAI, Cognitive Services
-- ML platform → Azure Machine Learning
-- Bot → Azure Bot Service
-
-### 6. Research Azure Services Using MCP
-
-For each requirement category, use MCP tools:
-
-#### Step 1: Service Discovery
-
-**Search Query Pattern**:
-```
-microsoft_docs_search: "[requirement] Azure service"
-```
-
-**Examples**:
-- "container orchestration Azure service" → AKS, Container Apps
-- "relational database Azure" → Azure SQL, PostgreSQL
-- "message queue Azure" → Service Bus, Storage Queues
-
-#### Step 2: Service Deep Dive
-
-For each identified service:
-
-**Fetch Documentation**:
-```
-microsoft_docs_fetch: "https://learn.microsoft.com/azure/[service-name]/"
-```
-
-**Extract**:
-- Service overview and features
-- Pricing tiers (Basic, Standard, Premium)
-- SLA and availability
-- Regional availability (confirm UK South/West)
-- Security features
-- Integration capabilities
-
-#### Step 3: Architecture Patterns
-
-**Search Azure Architecture Center**:
-```
-microsoft_docs_search: "Azure architecture [pattern type]"
-```
-
-**Fetch Reference Architecture**:
-```
-microsoft_docs_fetch: "https://learn.microsoft.com/azure/architecture/reference-architectures/[pattern]"
-```
-
-#### Step 4: Well-Architected Assessment
-
-**Search Well-Architected Framework**:
-```
-microsoft_docs_search: "Azure Well-Architected [pillar] [service]"
-```
-
-**Pillars**:
-- Reliability: SLA, availability zones, disaster recovery
-- Security: Identity, encryption, network security
-- Cost Optimization: Reserved instances, scaling, right-sizing
-- Operational Excellence: Monitoring, automation, DevOps
-- Performance Efficiency: Scaling, caching, CDN
-
-#### Step 5: Security Benchmark Mapping
-
-**Search Azure Security Benchmark**:
-```
-microsoft_docs_search: "Azure Security Benchmark [control domain]"
-```
-
-**Control Domains**:
-- NS: Network Security
-- IM: Identity Management
-- PA: Privileged Access
-- DP: Data Protection
-- AM: Asset Management
-- LT: Logging and Threat Detection
-- IR: Incident Response
-- PV: Posture and Vulnerability Management
-- ES: Endpoint Security
-- BR: Backup and Recovery
-- DS: DevOps Security
-- GS: Governance and Strategy
-
-#### Step 6: Code Samples
-
-**Search for Implementation Examples**:
-```
-microsoft_code_sample_search: "Azure [service] [language]"
-```
-
-**Languages**: bicep, terraform, csharp, python, javascript, powershell
-
-### 7. UK Government Specific Research
-
-If this is a UK Government project:
-
-**G-Cloud Availability**:
-- Search Digital Marketplace for "Microsoft Azure"
-- Note G-Cloud framework reference (RM1557.14)
-- Identify service IDs for procurement
-
-**Data Residency**:
-- Confirm UK South and UK West region availability
-- Check for any service limitations in UK regions
-- Verify geo-replication stays within UK
-
-**Classification Suitability**:
-- OFFICIAL: Standard Azure (public cloud)
-- OFFICIAL-SENSITIVE: Standard Azure with additional controls
-- SECRET: Azure Government UK (separate sovereign cloud)
-
-**NCSC Cloud Security Principles**:
-- Reference Azure attestation against 14 NCSC principles
-- Fetch: https://learn.microsoft.com/azure/compliance/offerings/offering-uk-ncsc
-
-### 8. Cost Estimation
-
-**Use Azure Pricing Information**:
-
-Search for pricing:
-```
-microsoft_docs_search: "Azure [service] pricing"
-```
-
-**Estimate Costs**:
-- Map requirements to service tiers
-- Calculate based on projected usage
-- Include compute, storage, networking, monitoring
-- Apply UK region pricing
-
-**Cost Optimization**:
-- Reserved Instances (1-year, 3-year savings)
-- Azure Hybrid Benefit (existing licenses)
-- Spot VMs (for fault-tolerant workloads)
-- Auto-scaling policies
-
-### 9. Generate Architecture Diagram
-
-Create a Mermaid diagram showing:
-- Azure services and their relationships
-- UK region placement (UK South primary, UK West DR)
-- Network topology (VNet, subnets, private endpoints)
-- Security boundaries (NSGs, WAF, Firewall)
-- Data flows
-
-### 10. Write the Output
-
-**Generate Document ID**:
-```bash
-.arckit/scripts/bash/generate-document-id.sh [PROJECT_ID] AZRS --filename
-```
-
-**Write to file**:
-- Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v1.0.md`
-- Use the exact template structure from `azure-research-template.md`
-
-**IMPORTANT - Auto-Populate Document Information Fields**:
-
-Before completing the document, populate document information fields:
-
-### Auto-populated fields:
-- `[PROJECT_ID]` → Extract from project path (e.g., "001")
-- `[VERSION]` → Start with "1.0" for new documents
-- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
-- `ARC-[PROJECT_ID]-AZRS-v[VERSION]` → Generated document ID
-- `[STATUS]` → "DRAFT" for new documents
-- `[CLASSIFICATION]` → Default to "OFFICIAL" (UK Gov) or "PUBLIC"
-
-### User-provided fields:
-- `[PROJECT_NAME]` → Full project name
-- `[OWNER_NAME_AND_ROLE]` → Document owner
-
-### 11. Summarize What You Created
-
-Provide a summary:
-
-```markdown
-## Azure Research Complete ✅
-
-**Project**: [Project Name]
-**File Created**: `projects/[PROJECT]/research/ARC-{PROJECT_ID}-AZRS-v1.0.md`
-
-### Azure Services Recommended
-
-| Category | Azure Service | Tier | Monthly Est. |
-|----------|---------------|------|--------------|
-| [Compute] | [AKS] | [Standard] | £[X] |
-| [Database] | [Azure SQL] | [Business Critical] | £[Y] |
-| [Storage] | [Blob Storage] | [Hot] | £[Z] |
-
-### Architecture Pattern
-- **Pattern**: [Pattern name from Azure Architecture Center]
-- **Reference**: [Link to reference architecture]
-
-### Security Alignment
-- **Azure Security Benchmark**: [X]/12 control domains addressed
-- **Well-Architected**: Assessment included for all 5 pillars
-
-### UK Government Suitability
-- **G-Cloud**: ✅ Available on G-Cloud 14
-- **UK Regions**: ✅ UK South, UK West available
-- **Classification**: ✅ Suitable for [OFFICIAL/OFFICIAL-SENSITIVE]
-
-### Estimated Monthly Cost: £[TOTAL]
-
-### What's in the Document
-- Detailed Azure service analysis for [X] categories
-- Architecture diagram (Mermaid)
-- Azure Security Benchmark mapping
-- Well-Architected Framework assessment
-- Bicep/Terraform code samples
-- Cost estimates with optimization recommendations
-- UK Government compliance details
-
-### Next Steps
-- Review `ARC-{PROJECT_ID}-AZRS-v1.0.md` for detailed findings
-- Run `/arckit.diagram` for detailed Azure architecture diagrams
-- Run `/arckit.secure` to validate against UK Secure by Design
-- Run `/arckit.devops` to plan CI/CD with Azure DevOps
-```
-
-## Example Usage
-
-### Example 1: Microservices Platform
-
-User: `/arckit.azure-research Research Azure services for microservices platform`
-
-**You should**:
-1. Read requirements from `projects/001-platform/ARC-001-REQ-v1.0.md`
-2. Identify needs: container orchestration, API gateway, messaging, databases
-3. Use MCP to search:
-   - `microsoft_docs_search: "Azure Kubernetes Service best practices"`
-   - `microsoft_docs_search: "Azure API Management microservices"`
-   - `microsoft_docs_search: "Azure Service Bus messaging patterns"`
-4. Fetch detailed docs for each service
-5. Search Azure Architecture Center for microservices patterns
-6. Map to Azure Security Benchmark
-7. Generate Bicep/Terraform examples
-8. Write to `projects/001-platform/research/ARC-001-AZRS-v1.0.md`
-
-### Example 2: UK Government Data Platform
-
-User: `/arckit.azure-research Azure options for UK Government data analytics platform`
-
-**You should**:
-1. Detect UK Government project
-2. Read requirements
-3. Use MCP to search for:
-   - `microsoft_docs_search: "Azure Synapse Analytics"`
-   - `microsoft_docs_search: "Azure Data Lake Gen2"`
-   - `microsoft_docs_search: "Azure Databricks UK"`
-4. Check UK region availability for all services
-5. Verify G-Cloud availability
-6. Confirm OFFICIAL-SENSITIVE suitability
-7. Reference NCSC Cloud Security Principles
-8. Include UK-specific compliance details
-9. Write output with UK Government section completed
-
-## Important Notes
-
-- **MCP Required**: This command requires Microsoft Learn MCP - do not proceed without it
-- **Official Sources Only**: Use only Microsoft Learn documentation via MCP, not third-party blogs
-- **UK Focus**: Always check UK region availability and G-Cloud status
-- **Well-Architected**: Assess every recommendation against the 5 pillars
-- **Security Benchmark**: Map recommendations to Azure Security Benchmark controls
-- **Cost Accuracy**: Use Azure Pricing Calculator data where possible
-- **Code Samples**: Prefer Bicep (Azure-native) or Terraform for IaC
+This command performs Azure-specific technology research using the Microsoft Learn MCP server to match project requirements to Azure services, architecture patterns, Well-Architected guidance, Security Benchmark controls, and UK Government compliance.
+
+**This command delegates to the `arckit-azure-research` agent** which runs as an autonomous subprocess. The agent makes 15-30+ MCP calls (microsoft_docs_search, microsoft_docs_fetch, microsoft_code_sample_search) to gather authoritative Azure documentation — running in its own context window to avoid polluting the main conversation with large documentation chunks.
+
+### What to Do
+
+1. **Determine the project**: If the user specified a project name/number, note it. Otherwise, identify the most recent project in `projects/`.
+
+2. **Launch the agent**: Use the Task tool with `subagent_type: "general-purpose"` and include in the prompt:
+   - The project directory path
+   - The user's arguments
+   - Instruct it to follow the Azure research agent process defined in `.claude/agents/arckit-azure-research.md`
+   - Tell it to read that agent file first for its full instructions
+
+3. **Report the result**: When the agent completes, relay its summary to the user.
+
+### Alternative: Direct Execution
+
+If the Task tool is unavailable or the user prefers inline execution, fall back to the full research process:
+
+1. **Check MCP availability first** — verify `microsoft_docs_search`, `microsoft_docs_fetch`, `microsoft_code_sample_search` tools exist. If not, STOP and show installation instructions:
+   ```
+   Add to .mcp.json:
+   { "mcpServers": { "microsoft-docs": { "command": "npx", "args": ["-y", "@anthropic/mcp-server-microsoft-docs"] } } }
+   ```
+2. Check prerequisites (requirements document must exist)
+3. Read `.arckit/templates/azure-research-template.md` and `VERSION`
+4. Extract Azure service needs from requirements (compute, data, integration, security, AI/ML)
+5. Use MCP tools for each category: service discovery, deep dive, architecture patterns, Well-Architected assessment, Security Benchmark mapping, code samples
+6. UK Government: G-Cloud, UK South/West data residency, NCSC compliance
+7. Cost estimation with optimization (Reserved Instances, Azure Hybrid Benefit, Spot VMs)
+8. Generate Mermaid architecture diagram
+9. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v1.0.md` using Write tool
+10. Show summary only (not full document)
+
+### Output
+
+The agent writes the full research document to file and returns a summary including:
+- Azure services recommended per category
+- Architecture pattern and reference
+- Security alignment (Security Benchmark, Well-Architected)
+- UK Government suitability (G-Cloud, UK regions, classification)
+- Estimated monthly cost
+- Next steps (`/arckit.diagram`, `/arckit.secure`, `/arckit.devops`)
 
 ## Integration with Other Commands
 
@@ -460,30 +69,8 @@ User: `/arckit.azure-research Azure options for UK Government data analytics pla
 
 ## Resources
 
-**Microsoft Learn MCP**:
-- Overview: https://learn.microsoft.com/en-us/training/support/mcp
-- Developer Reference: https://learn.microsoft.com/en-us/training/support/mcp-developer-reference
-
-**Azure Documentation**:
-- Azure Architecture Center: https://learn.microsoft.com/azure/architecture/
-- Azure Well-Architected Framework: https://learn.microsoft.com/azure/well-architected/
-- Azure Security Benchmark: https://learn.microsoft.com/security/benchmark/azure/
-- Azure Pricing Calculator: https://azure.microsoft.com/pricing/calculator/
-
-**UK Government**:
-- Digital Marketplace (Azure): https://www.digitalmarketplace.service.gov.uk/g-cloud/search?q=azure
-- Azure UK Compliance: https://learn.microsoft.com/azure/compliance/offerings/offering-uk-ncsc
-
-## Output Instructions
-
-**CRITICAL - Token Efficiency**:
-
-To avoid exceeding Claude Code's 32K token output limit:
-
-1. **Check MCP availability first** - stop with installation instructions if not available
-2. **Generate the full Azure research document** following the template structure
-3. **Use the Write tool** to create `projects/[PROJECT]/research/ARC-{PROJECT_ID}-AZRS-v1.0.md`
-4. **DO NOT** output the full document in your response
-5. **Show ONLY the summary** as specified in step 11
-
-Generate the Azure research findings now, write to file using Write tool, and show only the summary.
+- **Microsoft Learn MCP**: https://www.npmjs.com/package/@anthropic/mcp-server-microsoft-docs
+- **Azure Architecture Center**: https://learn.microsoft.com/azure/architecture/
+- **Azure Well-Architected**: https://learn.microsoft.com/azure/well-architected/
+- **Azure Security Benchmark**: https://learn.microsoft.com/security/benchmark/azure/
+- **Digital Marketplace (Azure)**: https://www.digitalmarketplace.service.gov.uk/g-cloud/search?q=azure

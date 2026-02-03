@@ -589,13 +589,27 @@ Write comprehensive analysis sections:
 - What could be improved
 - Recommendations for future projects
 
-### Step 11: Generate Document Control Metadata
+### Step 11: Detect Version
+
+Before generating the document ID, check if a previous version exists:
+
+1. Look for existing `ARC-{PROJECT_ID}-STRY-v*.md` files in the project directory
+2. **If no existing file**: Use VERSION="1.0"
+3. **If existing file found**:
+   - Read the existing document to understand its scope
+   - Compare against current project artifacts and timeline
+   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed metrics, updated timeline, corrected details
+   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new project phases covered, fundamentally different achievements, significant new artifacts added
+4. Use the determined version for document ID, filename, Document Control, and Revision History
+5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
+### Step 12: Generate Document Control Metadata
 
 Generate document control fields:
 
 ```bash
 # Generate document ID
-DOCUMENT_ID=$(./.arckit/scripts/bash/generate-document-id.sh "$PROJECT_ID" "STORY" "1.0")
+DOCUMENT_ID=$(./.arckit/scripts/bash/generate-document-id.sh "$PROJECT_ID" "STORY" "${VERSION}")
 
 # Get dates
 DATE_CREATED=$(date +%Y-%m-%d)
@@ -603,13 +617,13 @@ DATE_CREATED=$(date +%Y-%m-%d)
 
 Document control fields:
 - `{document_id}`: Generated doc ID (e.g., ARC-001-STORY-v1.0)
-- `{version}`: v1.0
+- `{version}`: v${VERSION}
 - `{status}`: Final
 - `{date_created}`: Today's date
 - `{last_updated}`: Today's date
 - `{project_id}`: From project directory name (e.g., 001)
 
-### Step 12: Read Template and Populate
+### Step 13: Read Template and Populate
 
 Read the story template:
 
@@ -653,7 +667,7 @@ cat ./.arckit/templates/story-template.md
 - Ensure all tables are complete with real counts
 - Write full narrative paragraphs for each chapter with real project details
 
-### Step 13: Write ARC-{PROJECT_ID}-STRY-v1.0.md Using Write Tool
+### Step 14: Write ARC-{PROJECT_ID}-STRY-v${VERSION}.md Using Write Tool
 
 **CRITICAL**: Use the **Write tool** to create the document. Do NOT output the full content in your response.
 
@@ -675,7 +689,7 @@ The document will be **2000-3000 lines** with:
 - Key outcomes & achievements
 - 5 comprehensive appendices
 
-### Step 14: Show Concise Summary to User
+### Step 15: Show Concise Summary to User
 
 After writing the file, show the user a **concise summary** (NOT the full document):
 

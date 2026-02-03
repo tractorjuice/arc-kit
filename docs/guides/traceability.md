@@ -25,6 +25,8 @@ Run after design reviews or at least once per sprint to maintain coverage.
 
 Output: `projects/<id>/ARC-<id>-TRAC-v1.0.md` (traceability matrix with coverage metrics and gap analysis)
 
+> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
+
 ---
 
 ## Matrix Snapshot

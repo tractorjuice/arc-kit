@@ -154,6 +154,7 @@ def get_data_paths():
             "templates": base_path / ".arckit" / "templates",
             "scripts": base_path / "scripts",
             "claude_commands": base_path / ".claude" / "commands",
+            "claude_agents": base_path / ".claude" / "agents",
             "gemini_commands": base_path / ".gemini" / "commands",
             "codex_root": base_path / ".codex",
             "docs_guides": base_path / "docs" / "guides",
@@ -213,12 +214,15 @@ def create_project_structure(project_path: Path, ai_assistant: str, all_ai: bool
         # Create directories for all AI assistants
         directories.extend([
             ".claude/commands",
+            ".claude/agents",
             ".gemini/commands",
             ".codex/prompts/arckit",
         ])
     else:
         agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
         directories.append(f"{agent_folder}commands")
+        if ai_assistant in ["claude", "codex"]:
+            directories.append(".claude/agents")
 
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
@@ -387,6 +391,21 @@ def init(
                 console.print(f"[green]✓[/green] Gemini commands copied")
             else:
                 console.print(f"[yellow]Warning: Gemini commands not found at {commands_src}[/yellow]")
+
+    # Copy Claude agents (for claude, codex, or all-ai)
+    if all_ai or ai_assistant in ["claude", "codex"]:
+        agents_src = data_paths["claude_agents"]
+        agents_dst = project_path / ".claude" / "agents"
+        agents_dst.mkdir(parents=True, exist_ok=True)
+        if agents_src.exists():
+            agent_count = 0
+            for agent_file in agents_src.glob("*.md"):
+                shutil.copy2(agent_file, agents_dst / agent_file.name)
+                agent_count += 1
+            if agent_count > 0:
+                console.print(f"[green]✓[/green] Copied {agent_count} Claude agents")
+        else:
+            console.print(f"[dim]No agents found at {agents_src}[/dim]")
 
     console.print("[green]✓[/green] Templates configured")
 

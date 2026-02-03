@@ -170,13 +170,23 @@ If the screening shows DPIA NOT REQUIRED, ask the user if they want to proceed a
 
 Generate the DPIA by:
 
-1. **Auto-populate Document Control**:
+1. **Detect version**: Before generating the document ID, check if a previous version exists:
+   - Look for existing `ARC-{PROJECT_ID}-DPIA-v*.md` files in the project directory
+   - **If no existing file**: Use VERSION=\"1.0\"
+   - **If existing file found**:
+     - Read the existing document to understand its scope
+     - Compare against current data model and requirements
+     - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed risk scores, updated mitigations, corrected details
+     - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new data categories, new processing purposes, fundamentally different risk landscape
+   - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
+2. **Auto-populate Document Control**:
    ```bash
    # Generate document ID
-   DOC_ID=$(bash .arckit/scripts/bash/generate-document-id.sh {project_id} DPIA v1.0)
+   DOC_ID=$(bash .arckit/scripts/bash/generate-document-id.sh {project_id} DPIA v${VERSION})
    ```
    - Document ID: `{DOC_ID}` (e.g., ARC-001-DPIA-v1.0)
-   - Version: 1.0
+   - Version: ${VERSION}
    - Status: DRAFT
    - Date Created: {current_date}
    - Assessment Date: {current_date}
@@ -278,7 +288,7 @@ Generate the DPIA by:
 Write the complete DPIA document to:
 
 ```
-projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v1.0.md
+projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v${VERSION}.md
 ```
 
 ### Step 6: Risk Register Integration (Optional)
@@ -416,7 +426,7 @@ If YES:
 
 ## Success Criteria
 
-- ✅ DPIA document created at `projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v1.0.md`
+- ✅ DPIA document created at `projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v${VERSION}.md`
 - ✅ ICO 9-criteria screening performed and documented
 - ✅ All personal data and special category data from data model included
 - ✅ Processing purposes extracted from requirements

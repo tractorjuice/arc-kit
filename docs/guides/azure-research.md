@@ -2,6 +2,8 @@
 
 `/arckit.azure-research` researches Azure services, architecture patterns, and implementation guidance using the Microsoft Learn MCP server for authoritative documentation.
 
+> **Agent Architecture**: This command runs as an autonomous agent (`.claude/agents/arckit-azure-research.md`) via the Task tool. The agent makes 15-30+ MCP calls to gather Azure documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
+
 ---
 
 ## Prerequisites
@@ -57,6 +59,8 @@ Add constraints (budget, classification, region) in the prompt for tailored resu
 ```
 
 Outputs: `projects/<id>/research/ARC-<id>-AZRS-v1.0.md`
+
+> **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
 
 ---
 
