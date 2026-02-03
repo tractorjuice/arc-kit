@@ -5,6 +5,37 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-03
+
+### Added
+
+- **Autonomous Agent System**: Research-heavy commands now delegate to autonomous agents (`.claude/agents/`) that run in isolated context windows via the Task tool
+  - `arckit-research` agent for technology research, vendor evaluation, build vs buy, TCO analysis
+  - `arckit-datascout` agent for data source discovery, API catalogue search, scoring
+  - `arckit-aws-research` agent for AWS service research via AWS Knowledge MCP
+  - `arckit-azure-research` agent for Azure service research via Microsoft Learn MCP
+- **Agent documentation**: CLAUDE.md updated with agent system architecture, file structure, and when to create agents
+- **CLI agent support**: `arckit init` now copies `.claude/agents/` directory to new projects
+
+### Changed
+
+- **Command refactoring**: `/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research` slash commands refactored to thin wrappers that delegate to agents with fallback to direct execution
+- **Template updates**: Research templates updated with document control footer
+- **All command guides**: Updated with agent delegation notes
+- **README.md**: Added agent architecture to Supported AI Agents section, fixed missing example links (stakeholders, risk, sobc, azure-research, aws-research, gcloud-search), fixed broken platform-design v8 link, corrected Wardley Maps/ServiceNow/Diagrams prose references
+- **docs/index.html**: Matching example link fixes, updated Multi-AI Support section with agent information
+- **COMMANDS.md**: Updated command reference
+
+### Fixed
+
+- Broken platform-design v8 example link (pointed to non-existent `gaap-ecosystem-analysis.md` instead of `ARC-001-GAAP-v1.0.md`)
+- Wardley Maps prose incorrectly referenced v1-m365 and v9-cabinet-office (neither has Wardley maps)
+- ServiceNow prose incorrectly referenced v7-nhs and v1-m365 (neither has ServiceNow files)
+- Diagrams prose incorrectly referenced v2-hmrc and v6-patent (neither has diagram folders)
+- Missing example links for 6 commands across README.md and docs/index.html
+
+---
+
 ## [1.1.0] - 2026-02-01
 
 ### Added
