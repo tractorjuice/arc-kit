@@ -655,7 +655,7 @@ Example: `projects/001-nhs-appointment/ARC-001-SASS-v1.0.md`
 **Assessment Phase**: [Alpha/Beta/Live]
 **Assessment Date**: [If provided, else \"Not yet scheduled\"]
 **Report Generated**: [Current date]
-**ArcKit Version**: [Read from VERSION file or use \"1.3.0\"]
+**ArcKit Version**: [Read from VERSION file]
 
 ---
 
