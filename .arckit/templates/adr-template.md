@@ -1,6 +1,6 @@
 # Architecture Decision Record: [DECISION_TITLE]
 
-> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.adr`
+> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.adr`
 
 ## Document Control
 
@@ -530,6 +530,12 @@ graph TD
 - *MADR: https://adr.github.io/madr/*
 - *UK Gov ADR Framework: https://www.gov.uk/government/publications/architectural-decision-record-framework*
 - *ArcKit Documentation: [Link to project README]*
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

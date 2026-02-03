@@ -30,15 +30,54 @@ $ARGUMENTS
    - **MEDIUM-RISK**: Semi-automated with human review, significant resource allocation
    - **LOW-RISK**: Administrative, productivity tools, recommendations with human control
 
-4. **Read relevant project documents**:
-   - Read `projects/000-global/ARC-000-PRIN-*.md` (if exists)
-   - Read `projects/{project-dir}/ARC-*-REQ-*.md` (if exists)
-   - Read any `ARC-*-AIPB-*.md` file in `projects/{project-dir}/` (if exists - for AI systems)
-   - Read `.arckit/templates/uk-gov-atrs-template.md` for structure
+4. **Read Available Documents**:
+
+   Scan the project directory for existing artifacts and read them to inform this record:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+     - Extract: AI governance standards, technology constraints, compliance requirements
+     - If missing: warn user to run `/arckit.principles` first
+   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+     - Extract: AI/ML-related FR requirements, NFR (security, fairness), DR (data requirements)
+     - If missing: warn user to run `/arckit.requirements` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-*-AIPB-*.md` in `projects/{project-dir}/` — AI Playbook assessment
+     - Extract: Risk level, human oversight model, ethical assessment scores, gaps
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-DATA-*.md` in `projects/{project-dir}/` — Data model
+     - Extract: Training data sources, personal data, data quality, storage
+   - `ARC-*-DPIA-*.md` in `projects/{project-dir}/` — DPIA
+     - Extract: Data protection assessment, lawful basis, privacy risks
+
+   **What to extract from each document**:
+   - **Principles**: AI governance standards, compliance constraints
+   - **Requirements**: AI use cases (FR-xxx), fairness requirements, security requirements
+   - **AI Playbook**: Risk level, human oversight model, compliance gaps
+   - **Data Model**: Training data, personal data categories, storage location
+
+   Read `.arckit/templates/uk-gov-atrs-template.md` for structure.
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
-5. **Complete TIER 1 - Summary Information** (for general public):
+5. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **Existing ATRS Records & Algorithmic Documentation**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+   - **What to extract**: Previous ATRS submissions, algorithmic impact assessments, model documentation, fairness testing results
+   - **Examples**: `previous-atrs-record.pdf`, `algorithmic-impact-assessment.docx`
+
+   **User prompt**: If no external ATRS docs found but they would improve the record, ask:
+   "Do you have any existing ATRS records from similar systems or algorithmic documentation? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+
+6. **Complete TIER 1 - Summary Information** (for general public):
    - Use clear, simple, jargon-free language
    - Explain what the tool does in plain English
    - Include basic contact information
@@ -54,7 +93,7 @@ $ARGUMENTS
 - **Phase**: Pre-deployment/Beta/Production/Retired
 - **Geographic Region**: England/Scotland/Wales/NI/UK-wide
 
-6. **Complete TIER 2 - Detailed Information** (for specialists):
+7. **Complete TIER 2 - Detailed Information** (for specialists):
 
 ### Section 1: Owner and Responsibility
 - Organization and team
@@ -156,7 +195,7 @@ $ARGUMENTS
 - Version history
 - Contact for updates
 
-7. **Provide risk-appropriate guidance**:
+8. **Provide risk-appropriate guidance**:
 
 **For HIGH-RISK algorithmic tools** (affecting rights, benefits, healthcare):
 - **CRITICAL**: DPIA is MANDATORY before deployment
@@ -182,13 +221,13 @@ $ARGUMENTS
 - ATRS publication MANDATORY
 - Periodic reviews
 
-8. **Link to existing ArcKit artifacts**:
+9. **Link to existing ArcKit artifacts**:
    - Map to requirements from `ARC-*-REQ-*.md`
    - Reference AI Playbook assessment (if exists)
    - Reference TCoP assessment (if exists)
    - Reference design reviews (HLD/DLD)
 
-9. **Flag missing mandatory items**:
+10. **Flag missing mandatory items**:
 
 **BLOCKERS** (must complete before publication):
 - [ ] DPIA completed (for high-risk)
@@ -205,7 +244,7 @@ $ARGUMENTS
 - [ ] Incident response plan
 - [ ] Review schedule set
 
-10. **Generate comprehensive ATRS record**:
+11. **Generate comprehensive ATRS record**:
 
 Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-ATRS-v1.0.md`
 
@@ -218,7 +257,7 @@ Use the template structure from `uk-gov-atrs-template.md`
 - Links to supporting documentation
 - Publication checklist at end
 
-11. **Provide publication guidance**:
+12. **Provide publication guidance**:
 
 After generating the ATRS record:
 - Summary of completeness (what percentage of fields are complete)

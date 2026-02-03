@@ -1,6 +1,6 @@
 # Product Backlog: [Project Name]
 
-> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.backlog`
+> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.backlog`
 
 ## Document Control
 
@@ -402,6 +402,12 @@ After each sprint, update:
 ⚠️ **Dependencies May Change**: Technical dependencies are identified automatically but may need adjustment based on your team's approach and constraints.
 
 ⚠️ **Regular Refinement Required**: This backlog is a starting point. Teams should refine weekly and adapt based on learnings.
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

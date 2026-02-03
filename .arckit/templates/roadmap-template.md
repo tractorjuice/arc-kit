@@ -1,6 +1,6 @@
 # Architecture Roadmap: [INITIATIVE_NAME]
 
-> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.roadmap`
+> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.roadmap`
 
 ## Document Control
 
@@ -700,6 +700,12 @@ flowchart TD
 | NCSC CAF | Baseline only | Full baseline | Enhanced | Advanced | Advanced |
 | UK GDPR | Compliant | Compliant | Enhanced | Optimized | Optimized |
 | PCI-DSS | Not applicable | N/A | Planning | Certified | Maintained |
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

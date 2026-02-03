@@ -57,6 +57,21 @@ if [ ! -f projects/000-global/ARC-000-PRIN-*.md ]; then
 fi
 ```
 
+### 1b. Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**External Audit Findings & Compliance Certificates**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **What to extract**: Audit findings, compliance gaps, certification evidence, remediation plans
+- **Examples**: `architecture-audit.pdf`, `compliance-certificate.pdf`, `remediation-plan.docx`
+
+**User prompt**: If no external audit docs found but they would improve the compliance assessment, ask:
+"Do you have any external audit findings or compliance certificates? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
+
 ### 2. Extract All Principles Dynamically
 
 Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` and extract ALL principles found.

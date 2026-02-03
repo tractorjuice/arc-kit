@@ -85,12 +85,49 @@ More info: https://www.npmjs.com/package/@anthropic/mcp-server-microsoft-docs
 
 **Do not proceed if MCP is not available.**
 
-### Step 2: Locate and Validate Prerequisites
+### Step 1b: Check for External Documents (optional)
 
-- Find the project directory in `projects/` (user may specify name/number, otherwise use most recent)
-- **MANDATORY**: Read `ARC-*-REQ-*.md` from the project directory. If no requirements exist, STOP and report that `/arckit.requirements` must be run first.
-- **RECOMMENDED**: Read `ARC-*-DATA-*.md`, `ARC-*-STKE-*.md` if they exist
-- Detect if UK Government project (look for "UK Government", "Ministry of", "Department for", "NHS", "MOD")
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Existing Azure Assessments & Cost Reports**:
+- **Look in**: `projects/{project}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv)
+- **What to extract**: Current Azure usage, cost reports, Azure Advisor findings, migration assessments
+- **Examples**: `azure-cost-report.csv`, `azure-advisor-findings.pdf`, `cloud-assessment.docx`
+
+**User prompt**: If no external Azure docs found but they would improve recommendations, ask:
+   "Do you have any existing Azure cost reports, Azure Advisor findings, or cloud assessments? Place them in `projects/{project}/external/` and re-run, or skip."
+
+**Important**: This agent works without external documents. They enhance output quality but are never blocking.
+
+### Step 2: Read Available Documents
+
+Find the project directory in `projects/` (user may specify name/number, otherwise use most recent). Scan for existing artifacts:
+
+**MANDATORY** (warn if missing):
+- `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
+  - Extract: FR (compute/AI), NFR-P (performance), NFR-SEC (security), INT (integration), DR (data) requirements for Azure service matching
+  - If missing: STOP and report that `/arckit.requirements` must be run first
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Cloud policy, approved services, compliance requirements, security standards
+  - If missing: warn user to run `/arckit.principles` first
+
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
+  - Extract: User personas, scalability expectations, compliance stakeholders
+
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-RISK-*.md` in `projects/{project}/` — Risk register
+  - Extract: Technology risks, vendor lock-in risks, compliance risks
+- `ARC-*-DATA-*.md` in `projects/{project}/` — Data model
+  - Extract: Data storage needs, data governance, retention requirements
+
+**What to extract from each document**:
+- **Requirements**: FR/NFR/INT/DR IDs for Azure service category mapping
+- **Principles**: Cloud-first policy, approved platforms, compliance constraints
+- **Stakeholders**: Scale expectations, compliance requirements
+
+Detect if UK Government project (look for "UK Government", "Ministry of", "Department for", "NHS", "MOD").
 
 ### Step 3: Read Template and VERSION
 

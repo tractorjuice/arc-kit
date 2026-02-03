@@ -1,6 +1,6 @@
 # Architecture Principles Compliance Assessment
 
-> **Template Status**: Live | **Version**: 1.0.0 | **Command**: `/arckit.principles-compliance`
+> **Template Status**: Live | **Version**: [VERSION] | **Command**: `/arckit.principles-compliance`
 
 ## Document Control
 
@@ -345,6 +345,12 @@
 - Aspirational statements without implementation details
 - "We plan to..." without concrete requirements or design
 - Vague references without file:section:line specificity
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

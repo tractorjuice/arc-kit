@@ -17,20 +17,67 @@ $ARGUMENTS
    - Vendor name (if applicable)
    - Location of HLD document or diagrams
 
-2. **Read the governance context**:
-   - Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` - These are the rules
-   - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - These must be satisfied
-   - Read `projects/{project-dir}/ARC-*-SOW-*.md` - Check deliverable expectations
-   - Read `.arckit/templates/hld-review-template.md` - Review checklist
+2. **Read Available Documents**:
+
+   Scan the project directory for existing artifacts and read them to inform this review:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles (these are the rules)
+     - Extract: All principles with validation gates for compliance checking
+     - If missing: warn user to run `/arckit.principles` first
+   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification (these must be satisfied)
+     - Extract: All BR/FR/NFR/INT/DR requirements for coverage analysis
+     - If missing: warn user to run `/arckit.requirements` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-*-SOW-*.md` in `projects/{project-dir}/` — Statement of Work
+     - Extract: Deliverable expectations, scope, acceptance criteria
+   - `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+     - Extract: Technical risks that design should mitigate
+   - `ARC-*-DIAG-*.md` in `projects/{project-dir}/diagrams/` — Architecture diagrams
+     - Extract: Component topology for cross-referencing with HLD
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-TCOP-*.md` in `projects/{project-dir}/` — TCoP review
+     - Extract: Technology governance findings relevant to design review
+
+   Read `.arckit/templates/hld-review-template.md` for the review checklist structure.
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
-3. **Obtain the HLD document**:
+   **What to extract from each document**:
+   - **Principles**: Rules and validation gates for compliance checking
+   - **Requirements**: BR/FR/NFR/INT/DR IDs for coverage analysis
+   - **SOW**: Deliverable expectations and acceptance criteria
+   - **Risk**: Technical risks the design should address
+
+3. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **Vendor HLD Submissions**:
+   - **Look in**: `projects/{project-dir}/vendors/{vendor}/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
+   - **What to extract**: Component architecture, technology stack, API specifications, deployment topology, security controls
+   - **Examples**: `hld-v1.0.pdf`, `architecture-overview.docx`, `network-diagram.png`
+
+   **Supporting Design Documents**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF, Word, Markdown, images
+   - **What to extract**: Reference architectures, compliance evidence, performance benchmarks
+   - **Examples**: `reference-architecture.pdf`, `compliance-matrix.xlsx`
+
+   **User prompt**: If no vendor HLD found in standard locations, ask:
+   "Please provide the HLD document path or paste key sections. I can read PDFs, Word docs, and images directly. Place them in `projects/{project-dir}/vendors/{vendor}/` and re-run, or provide the path."
+
+   **Important**: External documents enhance the review but the command works with pasted content or descriptions too.
+
+4. **Obtain the HLD document**:
    - Ask user: "Please provide the HLD document path or paste key sections"
    - Or: "Is the HLD in `projects/{project-dir}/vendors/{vendor}/hld-v*.md`?"
    - Or: "Please share architecture diagrams (I can read images)"
 
-4. **Perform comprehensive review**:
+5. **Perform comprehensive review**:
 
    ### A. Architecture Principles Compliance
 
@@ -105,14 +152,14 @@ $ARGUMENTS
    - Team expertise with chosen stack
    - Vendor lock-in risks
 
-5. **Risk Assessment**:
+6. **Risk Assessment**:
 
    Identify and categorize risks:
    - **HIGH**: Principle violations, missing NFRs, security gaps
    - **MEDIUM**: Suboptimal design, performance concerns, tech debt
    - **LOW**: Minor improvements, documentation gaps
 
-6. **Generate Review Report**:
+7. **Generate Review Report**:
 
    Create a comprehensive review document with:
 
@@ -138,7 +185,7 @@ $ARGUMENTS
    - Timeline for remediation
    - Re-review requirements
 
-7. **Write outputs**:
+8. **Write outputs**:
    - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-HLDR-v1.0.md` - Full review report
    - `projects/{project-dir}/ARC-{PROJECT_ID}-HLDR-SUM-v1.0.md` - Summary if comparing multiple vendors
    - Update traceability matrix with design references

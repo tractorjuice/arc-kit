@@ -1,6 +1,6 @@
 # UK Digital Marketplace: Digital Outcomes and Specialists
 
-> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.dos`
+> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.dos`
 
 ## Document Control
 
@@ -459,6 +459,12 @@ Vendors must provide:
 - No preferential treatment during Q&A
 - Evaluation based solely on published criteria
 - No changes to requirements after publishing (unless necessary and communicated to all)
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

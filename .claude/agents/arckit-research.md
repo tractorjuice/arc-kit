@@ -48,12 +48,50 @@ You are an enterprise architecture market research specialist. You conduct syste
 
 ## Process
 
-### Step 1: Locate and Validate Prerequisites
+### Step 1: Read Available Documents
 
-- Find the project directory in `projects/` (user may specify name/number, otherwise use most recent)
-- **MANDATORY**: Read `ARC-*-REQ-*.md` from the project directory. If no requirements exist, STOP and report that `/arckit.requirements` must be run first.
-- **RECOMMENDED**: Read `ARC-*-DATA-*.md`, `ARC-*-STKE-*.md` if they exist
-- Detect if UK Government project (look for "UK Government", "Ministry of", "Department for", "NHS", "MOD" in project name or requirements)
+Find the project directory in `projects/` (user may specify name/number, otherwise use most recent). Scan for existing artifacts:
+
+**MANDATORY** (warn if missing):
+- `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
+  - Extract: FR (features/capabilities), NFR (performance, security, scalability, compliance), INT (integration), DR (data) requirements
+  - If missing: STOP and report that `/arckit.requirements` must be run first
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Technology standards, approved platforms, compliance requirements, cloud policy
+  - If missing: warn user to run `/arckit.principles` first
+
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
+  - Extract: User personas, stakeholder priorities, success criteria
+- `ARC-*-DATA-*.md` in `projects/{project}/` — Data model
+  - Extract: Data entities, storage needs, data governance requirements
+
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-RISK-*.md` in `projects/{project}/` — Risk register
+  - Extract: Technology risks, vendor risks, compliance risks
+
+**What to extract from each document**:
+- **Requirements**: FR/NFR/INT/DR IDs for research category identification
+- **Principles**: Technology constraints, approved vendors, compliance standards
+- **Stakeholders**: Priorities and success criteria for vendor evaluation
+- **Data Model**: Data storage and processing needs for technology matching
+
+Detect if UK Government project (look for "UK Government", "Ministry of", "Department for", "NHS", "MOD" in project name or requirements).
+
+### Step 1b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Market Research Reports & Analyst Briefings**:
+- **Look in**: `projects/{project}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **What to extract**: Market landscape data, vendor rankings, pricing benchmarks, technology trend analysis
+- **Examples**: `gartner-report.pdf`, `forrester-wave.pdf`, `market-analysis.docx`
+
+**User prompt**: If no external research docs found but they would improve market analysis, ask:
+   "Do you have any market research reports, analyst briefings, or vendor comparisons? Place them in `projects/{project}/external/` and re-run, or skip."
+
+**Important**: This agent works without external documents. They enhance output quality but are never blocking.
 
 ### Step 2: Read Template and VERSION
 

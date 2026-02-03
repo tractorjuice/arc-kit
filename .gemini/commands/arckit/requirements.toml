@@ -12,27 +12,67 @@ You are helping an enterprise architect define comprehensive requirements for a 
 
 ## Instructions
 
-1. **Check for architecture principles and stakeholder analysis**:
-   - First, check if `projects/000-global/ARC-000-PRIN-*.md` exists
-     - If it doesn't exist, suggest running `/arckit.principles` first
-   - Then, check if a stakeholder analysis exists for this project
-     - Look for `projects/*/ARC-*-STKE-v*.md` files
-     - If stakeholder analysis exists, read it to understand stakeholder goals and priorities
-     - If it doesn't exist, strongly recommend running `/arckit.stakeholders` first to understand who cares and what they need
-     - Stakeholder drivers should inform requirement prioritization and success criteria
+1. **Read Available Documents**:
+
+   Scan the project directory for existing artifacts and read them to inform requirements:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
+     - Extract: Stakeholder goals, priorities, drivers, conflict analysis, RACI matrix
+     - If missing: warn user to run `/arckit.stakeholders` first — stakeholder drivers should inform requirement prioritization
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+     - Extract: Technology standards, constraints, compliance requirements for NFR alignment
+     - If missing: suggest running `/arckit.principles` first
+   - `ARC-*-RISK-*.md` in `projects/{project}/` — Risk register
+     - Extract: Risk-driven requirements, mitigations that need NFRs
+   - `ARC-*-SOBC-*.md` in `projects/{project}/` — Business case
+     - Extract: Benefits, cost constraints, ROI targets for BR alignment
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-PLAN-*.md` in `projects/{project}/` — Project plan
+     - Extract: Timeline constraints, phasing for requirement prioritization
+
+   **What to extract from each document**:
+   - **Stakeholders**: Goals, drivers, outcomes, personas, RACI for requirement ownership
+   - **Principles**: Technology constraints, compliance standards for NFR generation
+   - **Risk**: Risks that need mitigating requirements
+   - **SOBC**: Business benefits and cost targets for BR traceability
 
 2. **Create or find the project**:
    - Run `.arckit/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create project structure
    - Parse the JSON output to get the project directory path
    - Or if the user specifies an existing project number (e.g., \"001\"), use that
 
-3. **Read the template**: Read `.arckit/templates/requirements-template.md` to understand the structure
+3. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **RFP/ITT Documents & Legacy System Specs**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+   - **What to extract**: Existing requirements, constraints, scope definitions, acceptance criteria, legacy system interfaces
+   - **Examples**: `rfp-document.pdf`, `legacy-system-spec.docx`, `user-research-report.pdf`
+
+   **Organizational Standards**:
+   - **Look in**: `projects/000-global/policies/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Mandatory compliance requirements, technology constraints, security standards
+   - **Examples**: `security-standards.pdf`, `accessibility-policy.docx`
+
+   **User prompt**: If no external docs found but they would significantly improve requirements, ask:
+   \"Do you have any RFP/ITT documents, legacy system specifications, or user research reports? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
+
+   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+
+4. **Read the template**: Read `.arckit/templates/requirements-template.md` to understand the structure
    - **Update Template Version**: Read the `VERSION` file and replace the version number in the template metadata line:
      ```
      > **Template Status**: [keep] | **Version**: [from VERSION file] | **Command**: [keep]
      ```
 
-4. **Generate comprehensive requirements** based on user input:
+5. **Generate comprehensive requirements** based on user input:
 
    **Business Requirements (BR-xxx)**:
    - Business objectives and success criteria
@@ -65,14 +105,14 @@ You are helping an enterprise architect define comprehensive requirements for a 
    - Data privacy and classification
    - Migration requirements
 
-5. **Ensure traceability**: Each requirement MUST have:
+6. **Ensure traceability**: Each requirement MUST have:
    - Unique ID (BR-001, FR-001, NFR-P-001, etc.)
    - Clear requirement statement
    - Acceptance criteria (testable)
    - Priority (MUST/SHOULD/MAY)
    - Rationale
 
-6. **Align with stakeholder goals and architecture principles**:
+7. **Align with stakeholder goals and architecture principles**:
    - If stakeholder analysis exists, trace requirements back to stakeholder goals:
      - Example: \"BR-001 addresses CFO's goal G-1: Reduce infrastructure costs 40% by end of Year 1\"
      - Example: \"NFR-P-001 supports Operations Director's outcome O-3: Maintain 99.95% uptime\"
@@ -81,7 +121,7 @@ You are helping an enterprise architect define comprehensive requirements for a 
    - Ensure high-priority stakeholder drivers get MUST requirements
    - Document which stakeholder benefits from each requirement
 
-7. **Identify and resolve conflicting requirements**:
+8. **Identify and resolve conflicting requirements**:
    - Review stakeholder analysis `conflict analysis` section for known competing drivers
    - Identify requirement conflicts that arise from stakeholder conflicts:
      - **Speed vs Quality**: CFO wants fast delivery vs Operations wants thorough testing
@@ -105,7 +145,7 @@ You are helping an enterprise architect define comprehensive requirements for a 
      - How losing stakeholder will be managed (communication, future consideration)
    - **Transparency**: Be explicit about trade-offs - don't hide conflicts or pretend both can be satisfied
 
-8. **Write the output**:
+9. **Write the output**:
    - **CRITICAL - Token Efficiency**: Use the **Write tool** to create `projects/{project-dir}/ARC-{PROJECT_ID}-REQ-v${VERSION}.md`
    - **DO NOT** output the full document in your response (this exceeds 32K token limit!)
    - Use the exact template structure
@@ -131,7 +171,7 @@ Before generating the document ID, check if a previous version exists:
    - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed content, updated details, corrections
    - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new requirement categories, removed categories, significant new requirements added
 4. Use the determined version for document ID, filename, Document Control, and Revision History
-5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+5. For v1.1+/v2.0+: Add a Revision History entry
 
 ### Step 1: Generate Document ID
 ```bash
@@ -176,7 +216,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit.requirements` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file or use \"1.0.0\"]
+**ArcKit Version**: [Read from VERSION file or use \"1.2.0\"]
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., \"claude-sonnet-4-5-20250929\"]
 **Generation Context**: [Brief note about source documents used]
@@ -211,7 +251,7 @@ The footer should be populated with:
 ```
 
 
-9. **Show summary only** (NOT the full document):
+10. **Show summary only** (NOT the full document):
 
    After writing the file with Write tool, show ONLY this summary:
 

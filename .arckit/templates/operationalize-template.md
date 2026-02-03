@@ -1,6 +1,6 @@
 # Operational Readiness Pack
 
-> **Template Status**: Experimental | **Version**: 1.0.0 | **Command**: `/arckit.operationalize`
+> **Template Status**: Experimental | **Version**: [VERSION] | **Command**: `/arckit.operationalize`
 
 ## Document Control
 
@@ -846,6 +846,12 @@ curl -f https://[service]/health
 | Technical Lead | | | |
 | Operations Lead | | | |
 | Security Lead | | | |
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

@@ -187,6 +187,7 @@ $PROJECT_DIR_NAME/
 │   ├── ARC-$PROJECT_NUMBER-HLD-v1.0.md      # HLD review (/arckit.hld-review)
 │   └── ARC-$PROJECT_NUMBER-DLD-v1.0.md      # DLD review (/arckit.dld-review)
 │
+├── external/                            # External documents (PDFs, specs, reports)
 └── vendors/                             # Vendor proposals
 \`\`\`
 
@@ -290,6 +291,7 @@ if [[ "$OUTPUT_JSON" == "true" ]]; then
     echo "  \"wardley_maps_dir\": \"$PROJECT_DIR/wardley-maps\","
     echo "  \"reviews_dir\": \"$PROJECT_DIR/reviews\","
     echo "  \"vendors_dir\": \"$PROJECT_DIR/vendors\","
+    echo "  \"external_dir\": \"$PROJECT_DIR/external\","
     echo -n "  \"next_steps\": "
     output_json_array "${NEXT_STEPS[@]}"
     echo ""

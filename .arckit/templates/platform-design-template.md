@@ -1,6 +1,6 @@
 # Platform Strategy Design
 
-> **Template Status**: Experimental | **Version**: 1.0.0 | **Command**: `/arckit.platform-design`
+> **Template Status**: Experimental | **Version**: [VERSION] | **Command**: `/arckit.platform-design`
 
 ## Document Control
 
@@ -1481,6 +1481,12 @@ This platform operates within Digital Marketplace ecosystem:
 
 **Platform Design Toolkit**: Open-source methodology from Boundaryless.io (CC-BY-SA)
 **ArcKit Integration**: Connects PDT strategy design to UK Government governance, procurement, and delivery frameworks
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

@@ -17,40 +17,74 @@ $ARGUMENTS
 
 ## Instructions
 
-### Step 0: Check Prerequisites
+### Step 0: Read Available Documents
 
-**IMPORTANT**: Before generating a project story, verify that foundational governance artifacts exist:
+Scan the project directory for existing artifacts and read them to inform the project story:
 
-1. **Architecture Principles** (REQUIRED):
-   - Check if any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`
-   - If it does NOT exist:
-     ```
-     ❌ Architecture principles not found.
+**MANDATORY** (warn if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Governance standards, technology constraints, compliance framework
+  - If missing: warn user to run `/arckit.principles` first — principles are the foundation of the ArcKit governance framework
 
-     The project story requires architecture principles to be established first.
-     Architecture principles are the foundation of the ArcKit governance framework.
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-STKE-*.md` — Stakeholder analysis (personas, goals, priorities)
+- `ARC-*-RISK-*.md` — Risk register (risks, mitigations, risk appetite)
+- `ARC-*-SOBC-*.md` — Business case (benefits, costs, ROI)
+- `ARC-*-REQ-*.md` — Requirements (BR/FR/NFR/INT/DR traceability)
+- `ARC-*-DATA-*.md` — Data model (entities, relationships, governance)
+- `ARC-*-DIAG-*.md` — Architecture diagrams (C4, deployment, data flow)
+- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` — Technology research
+- `ARC-*-WARD-*.md` — Wardley maps (strategic positioning)
+- `ARC-*-PLAN-*.md` — Project plan (timeline, phases, gates)
+- `ARC-*-SOW-*.md` or `ARC-*-DOS-*.md` — Procurement documents
+- `ARC-*-EVAL-*.md` — Vendor evaluation
+- `ARC-*-HLDR-*.md` or `ARC-*-DLDR-*.md` — Design reviews
+- `ARC-*-TCOP-*.md` — TCoP review
+- `ARC-*-SECD-*.md` or `ARC-*-MSBD-*.md` — Security assessments
+- `ARC-*-DPIA-*.md` — DPIA
+- `ARC-*-AIPB-*.md` — AI Playbook assessment
+- `ARC-*-ATRS-*.md` — ATRS record
+- `ARC-*-BKLG-*.md` — Backlog
+- `ARC-*-DVOP-*.md` — DevOps strategy
+- `ARC-*-TRAC-*.md` — Traceability matrix
+- `ARC-*-ROAD-*.md` — Roadmap
+- `ARC-*-ANLZ-*.md` — Governance analysis
 
-     Please run: /arckit.principles Create enterprise architecture principles
+**Minimum artifact check**: A meaningful project story requires at least 3-5 artifacts. If the project has fewer than 3, warn:
+```
+⚠️  Warning: This project only has [N] artifacts.
 
-     Then return here to generate the project story.
-     ```
-   - If it exists, proceed to Step 1
+A comprehensive story typically requires at least:
+- Architecture principles (global)
+- Stakeholder analysis
+- Requirements or Risk Register
 
-2. **Project Artifacts** (RECOMMENDED):
-   - A meaningful project story requires at least 3-5 artifacts to exist
-   - If the project has fewer than 3 artifacts, warn the user:
-     ```
-     ⚠️  Warning: This project only has [N] artifacts.
+Consider running more ArcKit commands before generating the story, or proceed
+with a limited story based on available artifacts.
+```
 
-     A comprehensive story typically requires at least:
-     - Architecture principles (global)
-     - Stakeholder analysis
-     - Requirements or Risk Register
+**What to extract from each document**:
+- **Principles**: Governance framework foundation
+- **Stakeholders/Requirements**: Traceability chain (stakeholders → goals → requirements)
+- **Risk/SOBC**: Business justification and risk management journey
+- **Design/Diagrams**: Architecture evolution and decisions
+- **Reviews/Assessments**: Governance quality and compliance achievements
+- **Delivery artifacts**: Implementation readiness and operational maturity
 
-     Consider running more ArcKit commands before generating the story, or proceed
-     with a limited story based on available artifacts.
-     ```
-   - Ask the user if they want to proceed or run more commands first
+### Step 0b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Previous Project Reports & User Research**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **What to extract**: Project history, key milestones, lessons learned, user research insights, governance decisions
+- **Examples**: `quarterly-report.pdf`, `user-research-findings.docx`, `lessons-learned.md`
+
+**User prompt**: If no external docs found but they would enrich the project story, ask:
+"Do you have any project reports, user research findings, or governance decision records? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ### Step 1: Identify or Create Project
 

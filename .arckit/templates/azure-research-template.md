@@ -1,6 +1,6 @@
 # Azure Technology Research: [PROJECT_NAME]
 
-> **Template Status**: Experimental | **Version**: 1.0.0 | **Command**: `/arckit.azure-research`
+> **Template Status**: Experimental | **Version**: [VERSION] | **Command**: `/arckit.azure-research`
 
 ## Document Control
 
@@ -530,6 +530,12 @@ For SECRET data classification:
 - Run `/arckit.secure` to validate against UK Secure by Design
 - Run `/arckit.devops` to plan Azure DevOps/GitHub Actions pipelines
 - Run `/arckit.finops` to create Azure cost management strategy
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

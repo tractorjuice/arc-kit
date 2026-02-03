@@ -208,6 +208,7 @@ def create_project_structure(project_path: Path, ai_assistant: str, all_ai: bool
         ".arckit/scripts/bash",
         ".arckit/templates",
         "projects/000-global",
+        "projects/000-global/policies",
     ]
 
     if all_ai:

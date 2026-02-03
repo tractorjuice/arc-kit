@@ -1,6 +1,6 @@
 # Data Source Discovery: [PROJECT_NAME]
 
-> **Template Status**: Alpha | **Version**: 1.0.0 | **Command**: `/arckit.datascout`
+> **Template Status**: Alpha | **Version**: [VERSION] | **Command**: `/arckit.datascout`
 
 ## Document Control
 
@@ -512,6 +512,12 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 - **TTL**: Time To Live (cache expiry)
 - **UPRN**: Unique Property Reference Number
 - **PII**: Personally Identifiable Information
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

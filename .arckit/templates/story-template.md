@@ -1,6 +1,6 @@
 # [PROJECT_NAME] - Project Story
 
-> **Template Status**: Live | **Version**: 1.0.0 | **Command**: `/arckit.story`
+> **Template Status**: Live | **Version**: [VERSION] | **Command**: `/arckit.story`
 
 ## Document Control
 
@@ -860,6 +860,12 @@ ArcKit commands used in this project:
 ---
 
 *This document provides a comprehensive narrative of the project journey through the ArcKit governance framework, with detailed timeline analysis, traceability chains, and governance achievements. It serves as both a historical record and a demonstration of systematic architecture governance.*
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

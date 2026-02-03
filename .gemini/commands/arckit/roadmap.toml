@@ -10,22 +10,51 @@ You are helping an enterprise architect create a **strategic architecture roadma
 {{args}}
 ```
 
-## Prerequisites
+## Prerequisites: Read Available Documents
 
-Before creating the roadmap, verify these strategic inputs exist (roadmap synthesis requires upstream context):
+Scan the project directory for existing artifacts and read them to inform this roadmap:
 
-1. **Architecture Principles**: `projects/000-global/ARC-000-PRIN-*.md` (REQUIRED)
-   - If missing: Ask user to run `/arckit.principles` first
+**MANDATORY** (warn if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Technology standards, strategic direction, compliance requirements
+  - If missing: STOP and ask user to run `/arckit.principles` first. The roadmap must align to approved principles.
+- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+  - Extract: Capability needs, BR/FR/NFR IDs, technology constraints
+  - If missing: warn user to run `/arckit.requirements` first
 
-2. **Stakeholder Drivers**: Check if stakeholder analysis exists for this initiative
-   - If missing: Suggest running `/arckit.stakeholders` for strategic context
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+  - Extract: Business drivers, strategic goals, success metrics, investment appetite
+- `ARC-*-WARD-*.md` in `projects/{project-dir}/wardley-maps/` — Wardley maps
+  - Extract: Technology evolution, build vs buy positioning, evolution velocity
+- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+  - Extract: Strategic risks, risk appetite, mitigation timelines
 
-3. **Optional but Recommended**:
-   - Wardley Maps showing technology evolution
-   - Requirements document for capability needs
-   - Risk register for strategic risk context
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-SOBC-*.md` in `projects/{project-dir}/` — Business case
+  - Extract: Investment figures, ROI targets, payback period, benefits timeline
 
-If architecture principles are missing, STOP and ask the user to create them first. The roadmap must align to approved principles.
+**What to extract from each document**:
+- **Principles**: Strategic direction, technology standards, compliance requirements
+- **Requirements**: Capability needs, BR/FR/NFR IDs, priorities
+- **Stakeholders**: Business drivers, strategic goals, investment appetite
+- **Wardley Maps**: Technology evolution, build vs buy, evolution velocity
+- **Risk**: Strategic risks impacting roadmap sequencing
+
+### Prerequisites 4b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Existing Strategic Roadmaps & Capability Plans**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
+- **What to extract**: Current strategic direction, capability gaps, planned investments, dependency timelines
+- **Examples**: `technology-roadmap.pdf`, `capability-plan.docx`, `strategic-vision.png`
+
+**User prompt**: If no external roadmap docs found but they would improve strategic alignment, ask:
+\"Do you have any existing strategic roadmaps, capability plans, or technology vision documents? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ## Instructions
 
@@ -44,18 +73,7 @@ Parse the JSON response to extract:
 
 ### 2. Gather Strategic Context
 
-Read the following files to understand strategic context (only read files that exist):
-
-**REQUIRED**:
-- `projects/000-global/ARC-000-PRIN-*.md` - Principles to align roadmap to
-
-**If Available**:
-- `projects/[PROJECT_ID]/ARC-*-STKE-*.md` - Business drivers and outcomes
-- `projects/[PROJECT_ID]/ARC-*-REQ-*.md` - Capability requirements
-- `projects/[PROJECT_ID]/ARC-*-RISK-*.md` - Strategic risks
-- `projects/[PROJECT_ID]/wardley-maps/ARC-*-WARD-*.md` - Technology evolution maps
-
-Use this context to inform roadmap themes, timeline, and priorities.
+Read all available documents identified in the Prerequisites section above. Use this context to inform roadmap themes, timeline, and priorities.
 
 ### 3. Read Roadmap Template
 
@@ -325,38 +343,38 @@ After writing the file, show a concise summary (NOT the full document):
 
 ## Important Notes
 
-1. **Use Write Tool**: The roadmap document is typically 400-600 lines. ALWAYS use the Write tool to create it. Never output the full content in chat.
+2. **Use Write Tool**: The roadmap document is typically 400-600 lines. ALWAYS use the Write tool to create it. Never output the full content in chat.
 
-2. **Strategic vs Tactical**:
+3. **Strategic vs Tactical**:
    - Roadmap = Multi-year, multi-initiative, capability-focused, executive communication
    - Plan (arckit.plan) = Single project, detailed tasks, delivery-focused, team execution
 
-3. **Financial Years**:
+4. **Financial Years**:
    - UK Government: Use \"FY 2024/25\" notation (April-March)
    - US/Other: Can use calendar years or fiscal years as appropriate
 
-4. **Capability Maturity**: Use 5-level model (L1: Initial, L2: Repeatable, L3: Defined, L4: Managed, L5: Optimized)
+5. **Capability Maturity**: Use 5-level model (L1: Initial, L2: Repeatable, L3: Defined, L4: Managed, L5: Optimized)
 
-5. **Governance**: Roadmaps require heavier governance than project plans (ARB, Programme Board, Steering Committee, Quarterly reviews)
+6. **Governance**: Roadmaps require heavier governance than project plans (ARB, Programme Board, Steering Committee, Quarterly reviews)
 
-6. **Integration**: Roadmap feeds into:
+7. **Integration**: Roadmap feeds into:
    - `/arckit.plan` - Detailed plans for each phase
    - `/arckit.sobc` - Business case aligned to roadmap investment
    - `/arckit.backlog` - User stories prioritized by roadmap timeline
    - `/arckit.traceability` - Full traceability matrix
 
-7. **Mermaid Diagrams**: Include 2 diagrams minimum:
+8. **Mermaid Diagrams**: Include 2 diagrams minimum:
    - Gantt chart for timeline (shows WHEN)
    - Flowchart for dependencies (shows SEQUENCE)
 
-8. **Realistic Timelines**:
+9. **Realistic Timelines**:
    - Foundation phase: 3-6 months
    - Migration phase: 6-18 months
    - Transformation phase: 12-24 months
    - Optimization phase: 6-12 months
    - Total typical roadmap: 2-5 years
 
-9. **Investment Realism**: Show investment increasing in middle years (migration/transformation), then decreasing in optimization phase
+10. **Investment Realism**: Show investment increasing in middle years (migration/transformation), then decreasing in optimization phase
 
-10. **Traceability**: Link every roadmap theme back to stakeholder drivers and architecture principles to show strategic alignment
+11. **Traceability**: Link every roadmap theme back to stakeholder drivers and architecture principles to show strategic alignment
 """

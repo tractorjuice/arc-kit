@@ -153,6 +153,21 @@ cat .arckit/templates/data-mesh-contract-template.md
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 ```
 
+### Step 4b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Existing Data Contracts & SLA Documents**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), YAML (.yml), JSON (.json)
+- **What to extract**: Existing data product definitions, SLA terms, schema specifications, data quality rules
+- **Examples**: `data-contract-v1.yml`, `data-sla.pdf`, `schema-registry.json`
+
+**User prompt**: If no external data contract docs found but they would improve the output, ask:
+\"Do you have any existing data contracts, data product SLAs, or schema specifications? I can read PDFs, YAML, and JSON files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
+
 ### Step 5: Gather Context from Existing Artifacts
 
 **IF `ARC-*-DATA-*.md` exists in the project**:

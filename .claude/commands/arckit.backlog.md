@@ -88,41 +88,62 @@ Extract project metadata:
 - Current phase (from artifacts)
 - Team size (if documented)
 
-### Step 2: Scan All ArcKit Artifacts
+### Step 2: Read Available Documents
 
-Read these files from `projects/{project-dir}/`:
+Scan the project directory for existing artifacts and read them to inform the backlog:
 
-**Requirements** (primary source):
-- Any `ARC-*-REQ-*.md` file - BRs, FRs, NFRs, INTs, DRs
-- Extract all requirement IDs and details
+**MANDATORY** (warn if missing):
+- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification (primary source)
+  - Extract: All BR/FR/NFR/INT/DR requirement IDs, descriptions, priorities, acceptance criteria
+  - If missing: warn user to run `/arckit.requirements` first — backlog is derived from requirements
 
-**Architecture**:
-- `vendors/{vendor}/hld-v*.md` - Component mapping (vendor submission)
-- `vendors/{vendor}/dld-v*.md` - Detailed component info (vendor submission)
-- Extract component names and responsibilities
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+  - Extract: User personas for "As a..." statements, stakeholder priorities
+- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+  - Extract: Risk priorities for risk-based prioritization, security threats
+- `ARC-*-SOBC-*.md` in `projects/{project-dir}/` — Business case
+  - Extract: Value priorities, ROI targets for value-based prioritization
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Quality standards for Definition of Done
+- `ARC-*-HLDR-*.md` or `ARC-*-DLDR-*.md` in `projects/{project-dir}/` — Design reviews
+  - Extract: Component names and responsibilities for story mapping
+- HLD/DLD in `projects/{project-dir}/vendors/*/hld-v*.md` or `dld-v*.md` — Vendor designs
+  - Extract: Component mapping, detailed component info
 
-**Stakeholders**:
-- Any `ARC-*-STKE-*.md` file - User personas
-- Extract user types for "As a..." statements
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-DPIA-*.md` in `projects/{project-dir}/` — DPIA
+  - Extract: Privacy-related tasks and constraints
+- `test-strategy.md` — Test requirements (optional external document)
+  - Extract: Test types and coverage needs
 
-**Risk and Security**:
-- Any `ARC-*-RISK-*.md` file - Risk priorities
-- `threat-model.md` - Security threats (optional external document)
-- Extract risk levels and mitigations
+**What to extract from each document**:
+- **Requirements**: BR → Epics, FR → User Stories, NFR → Technical Tasks, INT → Integration Stories, DR → Data Tasks
+- **Stakeholders**: User personas for "As a..." statements
+- **Risk**: Risk levels for prioritization
+- **SOBC**: Value priorities for benefit-driven ordering
+- **Principles**: Quality standards for Definition of Done
 
-**Business Context**:
-- Any `ARC-*-SOBC-*.md` file - Value priorities
-- Extract ROI and benefit information
+### Step 2b: Check for External Documents (optional)
 
-**Testing**:
-- `test-strategy.md` - Test requirements (optional external document)
-- Extract test types and coverage needs
+Scan for external (non-ArcKit) documents the user may have provided:
 
-**Principles**:
-- Any `ARC-000-PRIN-*.md` file in `projects/000-global/` - Definition of Done
-- Extract quality standards
+**Vendor HLD/DLD for Component Mapping**:
+- **Look in**: `projects/{project-dir}/vendors/{vendor}/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
+- **What to extract**: Component names, service boundaries, API endpoints, data stores for accurate story mapping
+- **Examples**: `hld-v1.0.pdf`, `component-architecture.png`
 
-**Note**: If any file is missing, continue with available artifacts. The command adapts to what exists.
+**Existing Backlogs or Sprint Plans**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF, Word, Markdown, CSV
+- **What to extract**: Existing user stories, velocity data, sprint history, team capacity
+- **Examples**: `current-backlog.csv`, `sprint-retrospective.md`
+
+**User prompt**: If no external docs found but they would improve backlog accuracy, ask:
+"Do you have any vendor design documents or existing backlog exports? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ### Step 3: Parse Requirements
 
@@ -714,17 +735,17 @@ After sorting by priority, adjust for **mandatory dependencies**:
 
 **Dependency Rules**:
 
-1. **Technical foundation before features**:
+2. **Technical foundation before features**:
    - Auth system before user-facing features
    - Database before data operations
    - API gateway before API endpoints
 
-2. **Integration points before dependent features**:
+3. **Integration points before dependent features**:
    - Stripe API integration before payment UI
    - Email service before notifications
    - Search service before search features
 
-3. **Parent stories before child stories**:
+4. **Parent stories before child stories**:
    - "Create user account" before "Update user profile"
    - "Process payment" before "View payment history"
 

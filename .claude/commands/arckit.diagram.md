@@ -53,6 +53,21 @@ First, analyze existing project artifacts to understand what to diagram:
    - File: Any `ARC-*-ATRS-*.md` file in `projects/{current_project}/` (ATRS)
    - Identify: GOV.UK services, compliance requirements, HIGH-RISK AI components
 
+## Step 1b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Existing Architecture Diagrams**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: Images (.png, .jpg, .svg), PDF (.pdf), Visio (.vsdx)
+- **What to extract**: Component topology, data flows, network boundaries, deployment architecture, integration points
+- **Examples**: `current-architecture.png`, `network-diagram.pdf`, `as-is-design.jpg`
+
+**User prompt**: If no external diagrams found but they would improve the output, ask:
+"Do you have any existing architecture diagrams or design images to reference? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
+
 ## Step 2: Determine the Diagram Type
 
 Based on the user's request and available artifacts, select the appropriate diagram type:

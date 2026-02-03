@@ -1,6 +1,6 @@
 # MLOps Strategy
 
-> **Template Status**: Experimental | **Version**: 1.0.0 | **Command**: `/arckit.mlops`
+> **Template Status**: Experimental | **Version**: [VERSION] | **Command**: `/arckit.mlops`
 
 ## Document Control
 
@@ -699,6 +699,12 @@ flowchart LR
 | Data Science Lead | | | |
 | Product Owner | | | |
 | Ethics Board (if High risk) | | | |
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

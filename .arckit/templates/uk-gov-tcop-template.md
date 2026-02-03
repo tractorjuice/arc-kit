@@ -1,6 +1,6 @@
 # UK Government Technology Code of Practice (TCoP) Assessment
 
-> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.tcop`
+> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.tcop`
 
 ## Document Control
 

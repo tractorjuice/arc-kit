@@ -30,17 +30,32 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
 **Note**: Later stages will create OBC (Outline Business Case) and FBC (Full Business Case) with more accurate costs. This SOBC uses strategic estimates and options analysis.
 
-1. **Check for prerequisites**:
-   - **MANDATORY**: Check if stakeholder analysis exists for this project
-     - Read `projects/000-global/` or `projects/*/ARC-*-STKE-v*.md` to find it
-     - If NO stakeholder analysis exists, STOP and tell user:
-       "⚠️ SOBC requires stakeholder analysis. Run `/arckit.stakeholders` first to identify who benefits and why."
-   - **RECOMMENDED**: Check if architecture principles exist
-     - Read any `ARC-000-PRIN-*.md` file in `projects/000-global/`
-     - If exists, use for strategic alignment
-   - **OPTIONAL**: Check if requirements exist
-     - If exists, use for more accurate estimates
-     - If not, use high-level cost estimates
+1. **Read Available Documents**:
+
+   Scan the project directory for existing artifacts and read them to inform the SOBC:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
+     - Extract: ALL stakeholder goals (become benefits), drivers (explain WHY needed), conflicts (become risks/mitigations), outcomes (become success criteria)
+     - If missing: STOP and warn user to run `/arckit.stakeholders` first — every SOBC benefit MUST trace to a stakeholder goal
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+     - Extract: Strategic alignment, technology standards, compliance requirements
+   - `ARC-*-RISK-*.md` in `projects/{project}/` — Risk register
+     - Extract: Risks for Management Case, risk appetite, mitigations
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
+     - Extract: Detailed requirements for more accurate cost estimates
+   - `ARC-*-PLAN-*.md` in `projects/{project}/` — Project plan
+     - Extract: Timeline, phasing for Commercial Case delivery schedule
+
+   **What to extract from each document**:
+   - **Stakeholders**: Goals → benefits, drivers → strategic case, outcomes → success criteria
+   - **Principles**: Strategic alignment, technology constraints
+   - **Risk**: Risk register for Management Case Part E
+   - **Requirements**: Scope detail for cost estimation accuracy
 
 2. **Understand the request**: The user may be:
    - Creating initial SOBC (most common)
@@ -48,19 +63,40 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - Creating UK Government Green Book 5-case model (automatic for UK projects)
    - Evaluating multiple strategic options
 
-3. **Determine project context**:
+3. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **Budget Documents & Financial Forecasts**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+   - **What to extract**: Budget allocations, cost forecasts, financial constraints, existing spend data, benefit projections
+   - **Examples**: `budget-proposal.pdf`, `financial-forecast.docx`, `market-research.pdf`
+
+   **Organizational Financial Policies**:
+   - **Look in**: `projects/000-global/policies/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Spending thresholds, approval gates, Green Book discount rates, procurement rules
+   - **Examples**: `spending-policy.pdf`, `procurement-thresholds.docx`
+
+   **User prompt**: If no external financial docs found but they would improve the business case, ask:
+   "Do you have any budget documents, financial forecasts, or market research? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+
+4. **Determine project context**:
    - If user mentions "UK Government", "public sector", "department", "ministry" → Use full Green Book format
    - Otherwise → Use Green Book structure but adapt language for private sector
    - Check stakeholder analysis for government-specific stakeholders (Minister, Permanent Secretary, Treasury, NAO)
 
-4. **Read stakeholder analysis carefully**:
+5. **Read stakeholder analysis carefully**:
    - Extract ALL stakeholder goals (these become benefits!)
    - Extract stakeholder drivers (these explain WHY project needed)
    - Extract conflicts (these become risks/mitigations)
    - Extract outcomes (these become success criteria)
    - Note: EVERY benefit in SOBC MUST trace to a stakeholder goal
 
-5. **Generate comprehensive SOBC** following the template at `.arckit/templates/sobc-template.md`:
+6. **Generate comprehensive SOBC** following the template at `.arckit/templates/sobc-template.md`:
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
@@ -149,7 +185,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
      - Mitigation strategies
      - Risk owners (from stakeholder RACI)
 
-6. **Ensure complete traceability**:
+7. **Ensure complete traceability**:
 
    Every element must link back to stakeholder analysis:
 
@@ -162,7 +198,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
              → Success Criterion: CFO Outcome O-1 measured monthly
    ```
 
-7. **Include decision framework**:
+8. **Include decision framework**:
    - **Recommendation**: Which option to proceed with?
    - **Rationale**: Why this option? (reference stakeholder goals met)
    - **Go/No-Go Criteria**: Under what conditions do we proceed?
@@ -210,7 +246,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SOBC" "${
 - `[REVIEWED_BY]` → Who will review? (mark as "PENDING" if not yet reviewed)
 - `[APPROVED_BY]` → Who must approve? (mark as "PENDING" if not yet approved)
 
-8. **Write the output**:
+9. **Write the output**:
    - Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v${VERSION}.md`
    - Use project directory structure (create if doesn't exist)
    - File name pattern: `ARC-{PROJECT_ID}-SOBC-v{VERSION}.md`
@@ -234,12 +270,12 @@ Example populated footer:
 ```
 
 
-9. **Use appropriate language**:
+10. **Use appropriate language**:
    - **UK Government**: Use Green Book terminology (intervention, public value, social benefit, spending controls)
    - **Private Sector**: Adapt to commercial language (investment, shareholder value, competitive advantage)
    - **Always**: Link to stakeholder analysis for credibility
 
-10. **Flag uncertainties**:
+11. **Flag uncertainties**:
     - Mark estimates as "Rough Order of Magnitude (ROM)"
     - Flag where more analysis needed
     - Note dependencies on external factors

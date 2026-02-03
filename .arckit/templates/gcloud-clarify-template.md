@@ -1,6 +1,6 @@
 # G-Cloud Service Clarification Questions
 
-> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.gcloud-clarify`
+> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.gcloud-clarify`
 
 ## Document Control
 

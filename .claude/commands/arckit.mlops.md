@@ -46,20 +46,51 @@ Parse the user input for:
 
 ## Instructions
 
-### Phase 1: Context Gathering
+### Phase 1: Read Available Documents
 
-Read existing project artifacts:
+Scan the project directory for existing artifacts and read them to inform this document:
 
-**Required Files**:
-1. Any `ARC-*-REQ-*.md` file in `projects/{project-name}/` - ML-related requirements (FR/NFR)
-2. Any `ARC-*-DATA-*.md` file in `projects/{project-name}/` - Training data, features
+**MANDATORY** (warn if missing):
+- `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
+  - Extract: ML-related FR requirements, NFR (performance, security), DR (data requirements)
+  - If missing: warn user to run `/arckit.requirements` first
 
-**Optional Files** (read if available):
-3. Any `ARC-000-PRIN-*.md` file in `projects/000-global/` - AI/ML principles
-4. Any `ARC-*-AIPB-*.md` file in `projects/{project-name}/` - Responsible AI context
-5. Any `ARC-*-ATRS-*.md` file in `projects/{project-name}/` - Algorithmic transparency
-6. Any `ARC-*-JSP936-*.md` file in `projects/{project-name}/` - MOD AI assurance
-7. Any `ARC-*-RSCH-*.md` file in `projects/{project-name}/` - ML platform research
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-DATA-*.md` in `projects/{project-name}/` — Data model
+  - Extract: Training data sources, feature definitions, data quality, schemas
+- `ARC-*-AIPB-*.md` in `projects/{project-name}/` — AI Playbook assessment
+  - Extract: Risk level, responsible AI requirements, human oversight model
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: AI/ML principles, technology standards, governance requirements
+
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-name}/` — Technology research
+  - Extract: ML platform choices, serving infrastructure, cost estimates
+- `ARC-*-ATRS-*.md` in `projects/{project-name}/` — Algorithmic transparency
+  - Extract: Transparency requirements, publication obligations
+- `ARC-*-J936-*.md` in `projects/{project-name}/` — MOD AI assurance (JSP 936)
+  - Extract: Defence AI assurance requirements, risk classification
+
+**What to extract from each document**:
+- **Requirements**: ML use cases (FR-xxx), performance targets (NFR-P-xxx), data requirements (DR-xxx)
+- **Data Model**: Training data sources, features, data quality expectations
+- **AI Playbook**: Risk level, human oversight model, responsible AI obligations
+- **Principles**: AI/ML governance standards, approved platforms
+
+### Phase 1b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Existing ML Pipelines & Model Cards**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), YAML (.yml)
+- **What to extract**: Current ML pipeline configurations, model performance metrics, training data specifications, model cards
+- **Examples**: `model-card.md`, `ml-pipeline-config.yml`, `model-evaluation.pdf`
+
+**User prompt**: If no external MLOps docs found but they would improve the strategy, ask:
+"Do you have any existing ML pipeline configurations, model cards, or model evaluation reports? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ### Phase 2: Analysis
 

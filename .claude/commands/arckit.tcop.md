@@ -20,7 +20,36 @@ Generate a comprehensive TCoP review document by:
 1. **Loading the template**: Use the TCoP review template from `.arckit/templates/tcop-review-template.md`
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 
-2. **Understanding the project**: Based on the user's description and any existing project documentation (specs, architecture, requirements), assess compliance against all 13 TCoP points:
+2. **Read Available Documents**:
+
+   Scan the project directory for existing artifacts and read them to inform this assessment:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
+     - Extract: FR/NFR IDs, technology constraints, compliance requirements
+     - If missing: warn user to run `/arckit.requirements` first
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+     - Extract: Technology standards, approved platforms, security requirements
+     - If missing: warn user to run `/arckit.principles` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-*-STKE-*.md` — Stakeholder analysis (for user needs, priorities)
+   - `ARC-*-RISK-*.md` — Risk register (for security and compliance risks)
+   - `ARC-*-DIAG-*.md` in `projects/{project}/diagrams/` — Architecture diagrams (for deployment topology)
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` — Technology research (for technology choices)
+   - `ARC-*-AIPB-*.md` — AI Playbook assessment (for AI/ML systems)
+   - `ARC-*-DPIA-*.md` — DPIA (for data protection context)
+
+   **What to extract from each document**:
+   - **Principles**: Technology standards, constraints, compliance requirements
+   - **Requirements**: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria
+   - **Stakeholders**: User personas, goals, success metrics
+   - **Risk**: High/critical risks, mitigations, risk appetite
+   - **Diagrams**: Component topology, deployment targets, integration points
+
+3. **Assess compliance**: Based on the user's description and any existing project documentation, assess compliance against all 13 TCoP points:
    - Point 1: Define user needs
    - Point 2: Make things accessible and inclusive
    - Point 3: Be open and use open source
@@ -35,29 +64,44 @@ Generate a comprehensive TCoP review document by:
    - Point 12: Make your technology sustainable
    - Point 13: Meet the Service Standard
 
-3. **For each TCoP point**:
+4. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **Departmental TCoP Interpretations & Previous Assessments**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+   - **What to extract**: Previous TCoP assessment results, departmental interpretations of TCoP points, remediation plans
+   - **Examples**: `previous-tcop-assessment.pdf`, `departmental-tcop-guidance.docx`
+
+   **Technology Policies**:
+   - **Look in**: `projects/000-global/policies/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Approved technology lists, procurement policies, cloud-first mandates
+   - **Examples**: `approved-tech-list.pdf`, `cloud-policy.md`
+
+   **User prompt**: If no external docs found but they would improve the TCoP assessment, ask:
+   "Do you have any previous TCoP assessments or departmental technology policy documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+
+5. **For each TCoP point**:
    - Assess status: ✅ Compliant / ⚠️ Partially Compliant / ❌ Non-Compliant / N/A Not Applicable
    - Provide evidence of how the project meets (or fails to meet) the criteria
    - Check relevant checklist items based on project information
    - Identify gaps and required actions
 
-4. **Check for existing documentation**:
-   - Look for requirements documents: Any `ARC-*-REQ-*.md` file in project directory
-   - Look for architecture documents in `specs/*/diagrams/`
-   - Look for any existing compliance documents
-   - Use information from these documents to inform your assessment
-
-5. **Provide realistic assessments**:
+6. **Provide realistic assessments**:
    - Be honest about compliance gaps
    - Mark items as "Partially Compliant" if only some aspects are met
    - Use "N/A" only when truly not applicable
    - Provide actionable recommendations for gaps
 
-6. **Generate compliance scorecard**: Create a summary showing status of all 13 points
+7. **Generate compliance scorecard**: Create a summary showing status of all 13 points
 
-7. **Prioritize actions**: Identify critical issues requiring immediate attention
+8. **Prioritize actions**: Identify critical issues requiring immediate attention
 
-8. **Detect version**: Before generating the document ID, check if a previous version exists:
+9. **Detect version**: Before generating the document ID, check if a previous version exists:
    - Look for existing `ARC-{PROJECT_ID}-TCOP-v*.md` files in the project directory
    - **If no existing file**: Use VERSION="1.0"
    - **If existing file found**:
@@ -67,7 +111,7 @@ Generate a comprehensive TCoP review document by:
      - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new TCoP points assessed, fundamentally different compliance posture, significant project changes
    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-9. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-TCOP-v${VERSION}.md`
+10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-TCOP-v${VERSION}.md`
 
 
 
@@ -119,7 +163,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit.tcop` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file or use "1.0.0"]
+**ArcKit Version**: [Read from VERSION file or use "1.2.0"]
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

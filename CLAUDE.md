@@ -259,6 +259,7 @@ ArcKit maintains 20 test repos on GitHub (pattern: `arckit-test-project-v*`):
 | v17 | fuel-prices | Public | UK Government Fuel Price Transparency Service |
 | v18 | smart-meter | Public | UK Smart Meter Data Consumer Mobile App |
 | v19 | gov-api-aggregator | Public | UK Government API Aggregator |
+| v20 | uae-moi-ipad | Private | UAE MOI IPAD Framework |
 
 **Sync test repos after changes**:
 ```bash
@@ -268,7 +269,7 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
             v6-patent-system v7-nhs-appointment v8-ons-data-platform v9-cabinet-office-genai \
             v10-training-marketplace v11-national-highways-data v12-honky-tonks v13-plymouth-research \
             v14-scottish-courts v15-ipad-framework v16-doctors-appointment v17-fuel-prices \
-            v18-smart-meter v19-gov-api-aggregator; do
+            v18-smart-meter v19-gov-api-aggregator v20-uae-moi-ipad; do
     git clone "https://x-access-token:${TOKEN}@github.com/tractorjuice/arckit-test-project-$repo.git" /tmp/$repo
     # Sync commands, agents, and templates
     rsync -av --delete .claude/commands/ /tmp/$repo/.claude/commands/
@@ -289,6 +290,11 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
     # Sync devcontainer
     mkdir -p /tmp/$repo/.devcontainer
     cp -r .devcontainer/ /tmp/$repo/.devcontainer/
+    # Ensure standard directories exist (external docs support)
+    mkdir -p /tmp/$repo/projects/000-global/policies
+    for proj_dir in /tmp/$repo/projects/[0-9][0-9][0-9]-*/; do
+        [ -d "$proj_dir" ] && mkdir -p "$proj_dir/external"
+    done
     cd /tmp/$repo && git add -A && git commit -m "chore: sync with arc-kit" && git push && cd -
 done
 ```

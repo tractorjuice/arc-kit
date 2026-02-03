@@ -1,6 +1,6 @@
 # Project Plan: [PROJECT_NAME]
 
-> **Template Status**: Beta | **Version**: 1.0.0 | **Command**: `/arckit.plan`
+> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.plan`
 
 ## Document Control
 
@@ -388,6 +388,12 @@ graph TB
 | SRO | Senior Responsible Owner |
 | BA | Business Analyst |
 | NFR | Non-Functional Requirement |
+
+## External References
+
+| Document | Type | Source | Key Extractions | Path |
+|----------|------|--------|-----------------|------|
+| *None provided* | — | — | — | — |
 
 ---
 

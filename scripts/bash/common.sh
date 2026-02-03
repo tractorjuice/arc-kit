@@ -73,6 +73,7 @@ create_project_dir() {
 
     mkdir -p "$project_dir"
     mkdir -p "$project_dir/vendors"
+    mkdir -p "$project_dir/external"
     mkdir -p "$project_dir/final"
     mkdir -p "$project_dir/decisions"
     mkdir -p "$project_dir/diagrams"

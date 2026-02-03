@@ -32,14 +32,75 @@ Generate a comprehensive Secure by Design assessment document by:
    - User base (public-facing, internal staff, both)
    - Hosting approach (cloud, on-premise, hybrid)
 
-3. **Check existing documentation**:
-   - Requirements documents in `specs/*/ARC-*-REQ-*.md`
-   - Architecture diagrams in `specs/*/diagrams/`
-   - Any existing security or compliance documents
-   - TCoP assessments (if available)
-   - Risk registers or threat models
+3. **Read Available Documents**:
 
-4. **Assess security using NCSC CAF (14 principles across 4 objectives)**:
+   Scan the project directory for existing artifacts and read them to inform this assessment:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
+     - Extract: NFR-SEC (security), NFR-P (performance), NFR-A (availability), INT (integration), DR (data) requirements
+     - If missing: warn user to run `/arckit.requirements` first
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+     - Extract: Security standards, approved platforms, compliance requirements, cloud policy
+     - If missing: warn user to run `/arckit.principles` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-*-RISK-*.md` in `projects/{project-name}/` — Risk register
+     - Extract: Security risks, threat model, risk appetite, mitigations
+   - `ARC-*-DPIA-*.md` in `projects/{project-name}/` — Data Protection Impact Assessment
+     - Extract: Personal data processing, lawful basis, data protection risks
+   - `ARC-*-DIAG-*.md` in `projects/{project-name}/diagrams/` — Architecture diagrams
+     - Extract: Deployment topology, network boundaries, data flows, integration points
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-TCOP-*.md` in `projects/{project-name}/` — TCoP review
+     - Extract: Technology governance compliance, Point 6 (Secure) findings
+   - `ARC-*-AIPB-*.md` in `projects/{project-name}/` — AI Playbook assessment
+     - Extract: AI-specific security requirements (prompt injection, data poisoning)
+   - `ARC-*-ATRS-*.md` in `projects/{project-name}/` — ATRS record
+     - Extract: Algorithmic transparency security requirements
+
+   **What to extract from each document**:
+   - **Principles**: Security standards, approved platforms, compliance constraints
+   - **Requirements**: NFR-SEC IDs, data classification, availability targets, integration security
+   - **Risk**: Security threats, risk levels, existing mitigations
+   - **DPIA**: Personal data categories, lawful basis, data protection controls
+   - **Diagrams**: Network topology, trust boundaries, data flow paths
+
+4. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **Security Assessment Reports**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
+   - **What to extract**: Vulnerability findings, risk ratings, remediation recommendations
+   - **Examples**: `pentest-report.pdf`, `vulnerability-scan.pdf`, `red-team-findings.docx`
+
+   **Compliance Certificates & Audit Reports**:
+   - **Look in**: `projects/{project-dir}/external/` or `projects/000-global/policies/`
+   - **File types**: PDF, images (certificate scans)
+   - **What to extract**: Certification scope, validity dates, audit findings, non-conformities
+   - **Examples**: `cyber-essentials-plus-cert.pdf`, `iso27001-audit.pdf`, `soc2-report.pdf`
+
+   **Threat Models**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: Markdown, PDF, images (STRIDE/DREAD diagrams)
+   - **What to extract**: Threat actors, attack vectors, existing mitigations, residual risks
+   - **Examples**: `threat-model.md`, `stride-analysis.pdf`
+
+   **Security Policies**:
+   - **Look in**: `projects/000-global/policies/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Security requirements, acceptable risk levels, mandatory controls
+   - **Examples**: `security-policy.pdf`, `risk-appetite.md`, `incident-response-plan.docx`
+
+   **User prompt**: If no external security docs found, ask:
+   "Do you have any existing security assessments, pen test reports, or threat models? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+
+5. **Assess security using NCSC CAF (14 principles across 4 objectives)**:
 
    **Objective A: Managing Security Risk (4 principles)**
    - A1: Governance - SIRO appointed, security policies, oversight
@@ -63,14 +124,14 @@ Generate a comprehensive Secure by Design assessment document by:
    - D1: Response and Recovery Planning - Incident response, BC/DR, RTO/RPO
    - D2: Improvements - Post-incident reviews, metrics, continuous improvement
 
-5. **Assess Cyber Essentials compliance (5 controls)**:
+6. **Assess Cyber Essentials compliance (5 controls)**:
    - Firewalls - Boundary firewalls configured
    - Secure Configuration - Hardened systems, unnecessary services disabled
    - Access Control - User accounts, MFA, least privilege
    - Malware Protection - Anti-malware on all devices
    - Patch Management - Timely patching (critical within 14 days)
 
-6. **Assess UK GDPR compliance (if processing personal data)**:
+7. **Assess UK GDPR compliance (if processing personal data)**:
    - DPO appointed (if required)
    - Lawful basis identified
    - Privacy notice published
@@ -79,26 +140,26 @@ Generate a comprehensive Secure by Design assessment document by:
    - Data breach notification process (72 hours to ICO)
    - Records of Processing Activities (ROPA)
 
-7. **For each CAF principle and control**:
+8. **For each CAF principle and control**:
    - Assess status: ✅ Achieved / ⚠️ Partially Achieved / ❌ Not Achieved / N/A
    - Gather evidence from project documents
    - Check relevant security controls
    - Identify gaps and risks
    - Provide specific remediation actions with owners and timelines
 
-8. **Calculate overall CAF score**: X/14 principles achieved
+9. **Calculate overall CAF score**: X/14 principles achieved
 
-9. **Identify critical security issues**:
+10. **Identify critical security issues**:
    - Issues that block progression to next phase
    - Unacceptable risk levels
    - Regulatory non-compliance (UK GDPR, Data Protection Act)
 
-10. **Generate actionable recommendations**:
+11. **Generate actionable recommendations**:
     - Critical priority (0-30 days) - blockers for next phase
     - High priority (1-3 months) - significant risk reduction
     - Medium priority (3-6 months) - continuous improvement
 
-11. **Detect version**: Before generating the document ID, check if a previous version exists:
+12. **Detect version**: Before generating the document ID, check if a previous version exists:
     - Look for existing `ARC-{PROJECT_ID}-SECD-v*.md` files in the project directory
     - **If no existing file**: Use VERSION="1.0"
     - **If existing file found**:
@@ -108,7 +169,7 @@ Generate a comprehensive Secure by Design assessment document by:
       - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new CAF objectives assessed, fundamentally different security posture, significant architecture changes
     - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-12. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-v${VERSION}.md`
+13. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-v${VERSION}.md`
 
 
 
@@ -160,7 +221,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit.secure` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file or use "1.0.0"]
+**ArcKit Version**: [Read from VERSION file or use "1.2.0"]
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

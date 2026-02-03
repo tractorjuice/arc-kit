@@ -51,6 +51,21 @@ Read existing project artifacts to tailor the plan:
    - Extract: High risks that need mitigation
    - Impact: High vendor lock-in risk = extra procurement time
 
+## Step 1b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Existing Project Plans & Dependency Maps**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
+- **What to extract**: Existing timelines, milestones, dependencies, resource allocations, constraints
+- **Examples**: `project-plan.pdf`, `gantt-chart.png`, `dependency-map.docx`
+
+**User prompt**: If no external planning docs found but they would improve the plan, ask:
+"Do you have any existing project plans, Gantt charts, or dependency maps? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
+
 ## Step 2: Determine Project Complexity
 
 Based on artifacts and user input, classify the project:

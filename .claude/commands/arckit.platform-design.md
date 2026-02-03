@@ -18,59 +18,38 @@ Generate a comprehensive platform strategy design document using PDT v2.2.1 meth
 
 ## Instructions
 
-### Step 0: Check Prerequisites
+### Step 0: Read Available Documents
 
-**IMPORTANT**: Before generating a platform design, verify that foundational artifacts exist:
+Scan the project directory for existing artifacts and read them to inform this platform design:
 
-1. **Architecture Principles** (REQUIRED):
-   - Check if `projects/000-global/ARC-000-PRIN-*.md` exists
-   - If it does NOT exist:
-     ```
-     ❌ Architecture principles not found.
+**MANDATORY** (warn if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Platform governance principles, ecosystem orchestration standards, technology choices
+  - If missing: STOP — platform designs require architecture principles. Run `/arckit.principles` first.
+- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+  - Extract: Platform capabilities from FR/NFR requirements, scalability, availability, security
+  - If missing: warn user to run `/arckit.requirements` first
 
-     Platform designs require architecture principles to be established first.
-     Principles should guide platform governance, ecosystem orchestration, and technology choices.
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+  - Extract: Ecosystem entities from stakeholder drivers, user personas, goals
+  - If missing: recommend running `/arckit.stakeholders` for better entity portraits
+- `ARC-*-WARD-*.md` in `projects/{project-dir}/wardley-maps/` — Wardley maps
+  - Extract: Evolution analysis for build vs buy decisions, component positioning
 
-     Please run: /arckit.principles Create enterprise architecture principles
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+  - Extract: Platform risks, ecosystem risks, governance risks
+- `ARC-*-DATA-*.md` in `projects/{project-dir}/` — Data model
+  - Extract: Data exchange patterns, entity schemas, data governance
+- `ARC-*-SOBC-*.md` in `projects/{project-dir}/` — Business case
+  - Extract: Investment context, ROI targets, benefits
 
-     Then return here to generate the platform design.
-     ```
-
-2. **Stakeholder Analysis** (HIGHLY RECOMMENDED):
-   - Check if any `projects/*/ARC-*-STKE-*.md` files exist
-   - If stakeholder analysis exists:
-     - Note which project(s) have stakeholder analysis
-     - You will auto-populate entity portraits from stakeholder drivers
-   - If none exist:
-     ```
-     ⚠️ Stakeholder analysis not found.
-
-     While not strictly required, stakeholder analysis provides valuable entity context.
-     Platform designs map stakeholders → ecosystem entities → platform value propositions.
-
-     Recommendation: Run /arckit.stakeholders first for better entity portraits.
-
-     Proceed with platform design? [Type 'yes' to continue without stakeholders, or run /arckit.stakeholders first]
-     ```
-
-3. **Requirements** (RECOMMENDED):
-   - Check if any `projects/*/ARC-*-REQ-*.md` files exist
-   - If requirements exist:
-     - You will auto-populate platform capabilities from FR/NFR requirements
-   - If none exist:
-     ```
-     ℹ️ Requirements not found.
-
-     Requirements help define platform capabilities and non-functional requirements (scalability, availability, security).
-
-     You can still create platform design, but it will be less detailed.
-     ```
-
-4. **Wardley Maps** (OPTIONAL):
-   - Check if any `projects/*/wardley-maps/ARC-*-WARD-*.md` files exist
-   - If Wardley maps exist:
-     - You will use evolution analysis to inform build vs. buy decisions
-   - This is optional but valuable for platform strategy
+**What to extract from each document**:
+- **Principles**: Platform governance, ecosystem orchestration, technology standards
+- **Requirements**: Platform capabilities (FR-xxx), NFRs (scalability, security), integration points
+- **Stakeholders**: Ecosystem entities, user personas, goals, value propositions
+- **Wardley Maps**: Component evolution, build vs buy positioning
 
 ---
 
@@ -206,6 +185,23 @@ Read `projects/000-global/ARC-000-PRIN-*.md`:
 
 ---
 
+### Step 3b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Existing Platform Documentation & Ecosystem Maps**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
+- **What to extract**: Current platform architecture, ecosystem participants, API catalogues, platform metrics
+- **Examples**: `platform-overview.pdf`, `ecosystem-map.png`, `api-catalogue.docx`
+
+**User prompt**: If no external platform docs found but they would improve the design, ask:
+"Do you have any existing platform documentation, ecosystem maps, or API catalogues? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
+
+---
+
 ### Step 4: Detect Version
 
 Before generating the document ID, check if a previous version exists:
@@ -335,25 +331,25 @@ This returns a document ID like: `ARC-001-PLAT-v1.0`
    - Strategic Alignment: Link to stakeholders, requirements, principles, Wardley maps
    - UK Government Context: GaaP, TCoP, Service Standard, Digital Marketplace
 
-4. **Auto-populate from artifacts** (from Step 3):
+5. **Auto-populate from artifacts** (from Step 3):
    - Entity portraits from ARC-*-STKE-*.md
    - Platform capabilities from ARC-*-REQ-*.md
    - Build vs. buy from wardley-maps/ARC-*-WARD-*.md
    - Governance from ARC-000-PRIN-*.md
 
-5. **UK Government Context** (if applicable):
+6. **UK Government Context** (if applicable):
    - Government as a Platform (GaaP) principles
    - Technology Code of Practice (TCoP) alignment
    - GDS Service Standard implications
    - Digital Marketplace positioning (G-Cloud, DOS)
 
-6. **Generate complete traceability** (Section 9):
+7. **Generate complete traceability** (Section 9):
    - Stakeholder → Entity → Value Proposition
    - Requirement → Platform Feature → Implementation
    - Wardley Component → Build/Buy Decision
    - Risk → Platform Mitigation
 
-7. **Provide actionable next steps** (Section 10):
+8. **Provide actionable next steps** (Section 10):
    - Immediate actions (30 days): Validate assumptions, prototype MVP
    - MVP build phase (Months 2-4): Product development, provider acquisition
    - MVP validation phase (Months 5-7): Buyer onboarding, transaction velocity

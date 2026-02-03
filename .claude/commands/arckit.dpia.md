@@ -13,42 +13,56 @@ $ARGUMENTS
 
 ## Instructions
 
-### Step 0: Check Prerequisites
+### Step 0: Read Available Documents
 
-**IMPORTANT**: Before generating a DPIA, verify that foundational artifacts exist:
+Scan the project directory for existing artifacts and read them to inform the DPIA:
 
-1. **Data Model** (REQUIRED):
-   - Check if `projects/*/ARC-*-DATA-v*.md` exists for the target project
-   - If it does NOT exist:
-     ```
-     ❌ Data model not found.
+**MANDATORY** (warn if missing):
+- `ARC-*-DATA-*.md` in `projects/{project}/` — Data model
+  - Extract: All entities with PII/special category data, data subjects, GDPR Article 6 lawful basis, Article 9 conditions, retention periods, data flows, data classifications
+  - If missing: STOP and warn user to run `/arckit.data-model` first — a DPIA requires a data model to identify personal data processing
 
-     A DPIA requires a data model to identify:
-     - Personal data and special category data being processed
-     - Data subjects and vulnerable groups
-     - Processing purposes and lawful basis
-     - Retention periods and data flows
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Privacy by Design principles, data minimization principles, security principles
+  - If missing: warn that DPIAs should be informed by Privacy by Design principles
+- `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
+  - Extract: DR (data requirements), NFR-SEC (security), NFR-C (compliance/GDPR)
+- `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
+  - Extract: Data subject categories, vulnerable groups, RACI for data governance roles (DPO, Data Controller, Data Processors)
 
-     Please run: /arckit.data-model Create data model for [project name]
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-RISK-*.md` in `projects/{project}/` — Risk register
+  - Extract: Data protection risks, privacy risks already identified
+- `ARC-*-SECD-*.md` in `projects/{project}/` — Secure by Design assessment
+  - Extract: Security controls relevant to data protection
 
-     Then return here to generate the DPIA.
-     ```
-   - If it exists, proceed to Step 1
+**What to extract from each document**:
+- **Data Model**: Personal data categories, data subjects, lawful basis, retention, data flows
+- **Principles**: Privacy by Design and data minimization standards
+- **Requirements**: Data requirements, GDPR compliance requirements, security controls
+- **Stakeholders**: Data subjects, vulnerable groups, governance roles
 
-2. **Architecture Principles** (RECOMMENDED):
-   - Check if `projects/000-global/ARC-000-PRIN-*.md` exists
-   - If it does NOT exist, warn:
-     ```
-     ⚠️  Warning: Architecture principles not found.
+### Step 0b: Check for External Documents (optional)
 
-     DPIAs should be informed by Privacy by Design principles.
-     Consider running: /arckit.principles Create enterprise architecture principles
-     ```
-   - Continue anyway if user confirms
+Scan for external (non-ArcKit) documents the user may have provided:
 
-3. **Requirements and Stakeholders** (RECOMMENDED):
-   - Check if `ARC-*-REQ-*.md` and `ARC-*-STKE-*.md` exist for the project
-   - If missing, warn that DPIA will have limited context but can still proceed
+**Existing DPIAs & Data Processing Agreements**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **What to extract**: Previous DPIA findings, data processing agreements, lawful basis assessments, data flow diagrams
+- **Examples**: `existing-dpia.pdf`, `data-processing-agreement.pdf`, `privacy-notice.docx`
+
+**Privacy Policies & Data Protection Standards**:
+- **Look in**: `projects/000-global/policies/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Organizational privacy policy, data retention schedule, data classification scheme
+- **Examples**: `privacy-policy.pdf`, `data-retention-schedule.docx`, `data-classification.md`
+
+**User prompt**: If no external data protection docs found, ask:
+"Do you have any existing DPIAs, data processing agreements, or privacy policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ### Step 1: Identify or Create Project
 
@@ -64,51 +78,7 @@ If the user provided a project ID or name in their request, use that. Otherwise,
 
 ### Step 2: Read Source Artifacts
 
-Read the following artifacts to extract information for auto-population:
-
-1. **Data Model** (REQUIRED):
-   - Read `projects/{project_id}/ARC-*-DATA-*.md`
-   - Extract:
-     - All entities with PII/special category data
-     - Data subjects (User, Customer, Employee, etc.)
-     - GDPR Article 6 lawful basis for each entity
-     - GDPR Article 9 conditions for special category data
-     - Retention periods
-     - Data flows (sources, destinations)
-     - Data classifications
-
-2. **Requirements** (if exists):
-   - Read `projects/{project_id}/ARC-*-REQ-*.md`
-   - Extract:
-     - Data requirements (DR-xxx) describing processing purposes
-     - Security requirements (NFR-SEC-xxx) as potential mitigations
-     - Compliance requirements (NFR-C-xxx) related to GDPR
-
-3. **Stakeholder Analysis** (if exists):
-   - Read `projects/{project_id}/ARC-*-STKE-*.md`
-   - Extract:
-     - Data subject categories from stakeholders
-     - Vulnerable groups (children, elderly, disabled)
-     - RACI for data governance roles (DPO, Data Controller, Data Processors)
-
-4. **Architecture Principles** (if exists):
-   - Read `projects/000-global/ARC-000-PRIN-*.md`
-   - Extract:
-     - Privacy by Design principles
-     - Data minimization principles
-     - Security principles
-
-5. **Risk Register** (if exists):
-   - Read `projects/{project_id}/ARC-*-RISK-*.md`
-   - Extract:
-     - Existing data protection/privacy risks
-     - Check if any risks are already tagged as DPIA-related
-
-6. **Secure by Design Assessment** (if exists):
-   - Read any `ARC-*-SECD-*.md` file in `projects/{project_id}/`
-   - Extract:
-     - Security controls that can serve as DPIA mitigations
-     - NCSC CAF A.1 (Data) and A.2 (Identity & Access) controls
+Read all documents listed in Step 0 above. Use the extracted information for auto-population of the DPIA template.
 
 ### Step 3: DPIA Template Reading
 
@@ -193,11 +163,11 @@ Generate the DPIA by:
    - Next Review Date: {current_date + 12 months}
    - Classification: OFFICIAL-SENSITIVE
 
-2. **Section 1: Need for DPIA**:
+3. **Section 1: Need for DPIA**:
    - Copy screening results from Step 4
    - List all criteria that were met with evidence from data model
 
-3. **Section 2: Description of Processing**:
+4. **Section 2: Description of Processing**:
    - Project Context: Summarize from user input and requirements
    - Processing Purposes: Extract from DR-xxx requirements and data model "Purpose of Processing" fields
    - Nature of Processing: Describe collection, storage, use, disclosure, deletion
@@ -207,19 +177,19 @@ Generate the DPIA by:
    - Data Destinations: Extract from data model "Data Flow Destinations"
    - Retention Periods: Extract from data model retention policies
 
-4. **Section 3: Consultation**:
+5. **Section 3: Consultation**:
    - Internal Stakeholders: Extract from stakeholder RACI (Data Controller, DPO, IT Security)
    - External Stakeholders: Data subjects consultation plans (surveys, focus groups)
    - Data Processors: List any third-party processors from integration requirements
 
-5. **Section 4: Necessity and Proportionality**:
+6. **Section 4: Necessity and Proportionality**:
    - Lawful Basis: Extract GDPR Article 6 basis from each entity in data model
    - Special Category Conditions: Extract GDPR Article 9 conditions from data model
    - Necessity Test: For each processing purpose, justify why it's necessary
    - Proportionality Test: Assess if data collection is proportionate to purpose
    - Data Minimization: Review against architecture principles for minimization
 
-6. **Section 5: Risk Assessment**:
+7. **Section 5: Risk Assessment**:
    - For EACH entity with PII/special category data, identify risks to individuals:
      - Confidentiality risks (data breach, unauthorized access)
      - Integrity risks (data corruption, inaccurate profiling)
@@ -230,7 +200,7 @@ Generate the DPIA by:
      - **Overall Risk**: Low (green), Medium (amber), High (red)
    - Link to existing risks in ARC-*-RISK-*.md if they exist
 
-7. **Section 6: Mitigations**:
+8. **Section 6: Mitigations**:
    - For each high/medium risk, propose mitigations:
      - Technical: Encryption, pseudonymization, access controls (link to secure-by-design controls)
      - Organizational: Policies, training, DPIAs for suppliers
@@ -238,7 +208,7 @@ Generate the DPIA by:
    - Show residual risk after mitigations
    - Extract existing security controls from ARC-*-SECD-*.md as mitigations
 
-8. **Section 7: ICO Consultation**:
+9. **Section 7: ICO Consultation**:
    - If any residual risks remain HIGH after mitigations, flag for ICO prior consultation:
      ```
      ⚠️  ICO Prior Consultation Required:
@@ -246,42 +216,42 @@ Generate the DPIA by:
      - Contact ICO before processing: https://ico.org.uk/make-a-complaint/your-personal-information-concerns/
      ```
 
-9. **Section 8: Sign-off and Approval**:
+10. **Section 8: Sign-off and Approval**:
    - Leave signature fields blank (to be signed by Data Controller, DPO, Senior Responsible Owner)
 
-10. **Section 9: Review and Monitoring**:
+11. **Section 9: Review and Monitoring**:
     - Set review triggers: 12 months, major system changes, data breaches, ICO guidance updates
 
-11. **Section 10: Traceability**:
+12. **Section 10: Traceability**:
     - Link to all source artifacts (ARC-*-DATA-*.md, ARC-*-REQ-*.md, ARC-*-STKE-*.md, ARC-000-PRIN-*.md, ARC-*-RISK-*.md)
     - List all DPIA risks with unique IDs (DPIA-001, DPIA-002, etc.)
 
-12. **Section 11: Data Subject Rights**:
+13. **Section 11: Data Subject Rights**:
     - For each GDPR right (SAR, rectification, erasure, portability, objection, restriction, automated decision-making):
       - Check if data model has implementation mechanism
       - If YES, describe how it's implemented
       - If NO, flag as a risk and recommend implementation
 
-13. **Section 12: International Transfers**:
+14. **Section 12: International Transfers**:
     - Check if data model shows any international destinations
     - If YES, identify safeguards (SCCs, BCRs, adequacy decisions)
     - If NO safeguards, flag as HIGH risk
 
-14. **Section 13: Children's Data**:
+15. **Section 13: Children's Data**:
     - If children identified in stakeholders, generate detailed assessment:
       - Age verification mechanisms
       - Parental consent
       - Child-friendly privacy notices
       - Best interests assessment
 
-15. **Section 14: AI/Algorithmic Processing**:
+16. **Section 14: AI/Algorithmic Processing**:
     - If AI/ML detected in requirements, integrate with ai-playbook assessment:
       - Algorithmic bias risks
       - Explainability/transparency
       - Human oversight
       - Link to ATRS record if it exists
 
-16. **Section 15: Summary and Action Plan**:
+17. **Section 15: Summary and Action Plan**:
     - Summary table: Total risks, high/medium/low breakdown, key mitigations, ICO consultation needed?
     - Action plan: List all recommendations with owners and deadlines
 
@@ -396,29 +366,29 @@ If YES:
 
 ## Important Notes
 
-1. **Legal Requirement**: A DPIA is **mandatory** under UK GDPR Article 35 when processing is likely to result in high risk to individuals. Failure to conduct a DPIA when required can result in ICO enforcement action.
+2. **Legal Requirement**: A DPIA is **mandatory** under UK GDPR Article 35 when processing is likely to result in high risk to individuals. Failure to conduct a DPIA when required can result in ICO enforcement action.
 
-2. **Use Write Tool**: DPIAs are large documents (typically 3,000-10,000 words). You MUST use the Write tool to create the file. Do NOT output the full DPIA in the chat.
+3. **Use Write Tool**: DPIAs are large documents (typically 3,000-10,000 words). You MUST use the Write tool to create the file. Do NOT output the full DPIA in the chat.
 
-3. **Risk Assessment Focus**: DPIA risks focus on **impact on individuals** (privacy harm, discrimination, physical harm, financial loss, reputational damage), NOT organizational risks. This is different from the risk register.
+4. **Risk Assessment Focus**: DPIA risks focus on **impact on individuals** (privacy harm, discrimination, physical harm, financial loss, reputational damage), NOT organizational risks. This is different from the risk register.
 
-4. **Screening is Critical**: Always perform the ICO 9-criteria screening first. If the screening shows DPIA not required, don't generate a full DPIA unless the user explicitly requests it.
+5. **Screening is Critical**: Always perform the ICO 9-criteria screening first. If the screening shows DPIA not required, don't generate a full DPIA unless the user explicitly requests it.
 
-5. **Data Model Dependency**: A DPIA cannot be generated without a data model. The data model is the source of truth for what personal data is being processed.
+6. **Data Model Dependency**: A DPIA cannot be generated without a data model. The data model is the source of truth for what personal data is being processed.
 
-6. **Bidirectional Risk Links**: DPIA risks should be added to the risk register (with "Data Protection" category), and existing privacy risks in the risk register should be referenced in the DPIA.
+7. **Bidirectional Risk Links**: DPIA risks should be added to the risk register (with "Data Protection" category), and existing privacy risks in the risk register should be referenced in the DPIA.
 
-7. **Mitigation Sources**: Extract security controls from the Secure by Design assessment as DPIA mitigations. This creates traceability from risks → mitigations → security controls.
+8. **Mitigation Sources**: Extract security controls from the Secure by Design assessment as DPIA mitigations. This creates traceability from risks → mitigations → security controls.
 
-8. **ICO Consultation Threshold**: If ANY residual risk remains HIGH after mitigations, ICO prior consultation is required before processing can begin.
+9. **ICO Consultation Threshold**: If ANY residual risk remains HIGH after mitigations, ICO prior consultation is required before processing can begin.
 
-9. **Children's Data**: If processing children's data, the DPIA must include additional assessment of age verification, parental consent, best interests, and child-friendly privacy notices.
+10. **Children's Data**: If processing children's data, the DPIA must include additional assessment of age verification, parental consent, best interests, and child-friendly privacy notices.
 
-10. **AI/ML Systems**: If the system uses AI/ML for profiling, automated decision-making, or algorithmic processing, integrate with `/arckit.ai-playbook` assessment and link to ATRS record.
+11. **AI/ML Systems**: If the system uses AI/ML for profiling, automated decision-making, or algorithmic processing, integrate with `/arckit.ai-playbook` assessment and link to ATRS record.
 
-11. **Classification**: DPIAs contain sensitive information about data protection risks and vulnerabilities. Always classify as **OFFICIAL-SENSITIVE** at minimum.
+12. **Classification**: DPIAs contain sensitive information about data protection risks and vulnerabilities. Always classify as **OFFICIAL-SENSITIVE** at minimum.
 
-12. **Review Cycle**: DPIAs must be reviewed regularly (recommended: 12 months) and updated when:
+13. **Review Cycle**: DPIAs must be reviewed regularly (recommended: 12 months) and updated when:
     - New processing activities are added
     - Data protection risks change
     - ICO guidance is updated

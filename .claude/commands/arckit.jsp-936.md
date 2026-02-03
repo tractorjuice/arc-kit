@@ -36,23 +36,62 @@ Generate comprehensive JSP 936 AI assurance documentation following this rigorou
 
 ---
 
-## Step 1: Identify Project Context
+## Step 1: Read Available Documents
 
-**Scan ArcKit Artifacts** (if available in workspace):
-- `.arckit/requirements/*.md` - Functional and non-functional requirements
-- `.arckit/architecture/*.md` - System architecture documentation
-- `.arckit/data-model/*.md` - Data sources and flows
-- `.arckit/diagrams/*.mmd` - Architecture diagrams
-- Any other relevant files mentioned by user
+Scan the project directory for existing artifacts and read them to inform this assessment:
 
-**Extract**:
-- Project name and purpose
-- System components and architecture
-- Data sources and processing
-- User interactions and decision points
-- Existing risk assessments
+**MANDATORY** (warn if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: AI governance standards, defence technology constraints, compliance requirements
+  - If missing: warn user to run `/arckit.principles` first
+- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+  - Extract: AI/ML-related FR requirements, NFR (security, safety), DR (data requirements)
+  - If missing: warn user to run `/arckit.requirements` first
+
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+  - Extract: AI safety risks, operational risks, mitigation strategies
+- `ARC-*-AIPB-*.md` in `projects/{project-dir}/` — AI Playbook assessment
+  - Extract: Risk level, human oversight model, ethical assessment
+
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-MSBD-*.md` in `projects/{project-dir}/` — MOD Secure by Design assessment
+  - Extract: Security classification, MOD security requirements
+- `ARC-*-DATA-*.md` in `projects/{project-dir}/` — Data model
+  - Extract: Training data sources, data flows, data classification
+- `ARC-*-DIAG-*.md` in `projects/{project-dir}/diagrams/` — Architecture diagrams
+  - Extract: System components, deployment topology
+
+**What to extract from each document**:
+- **Principles**: AI governance standards, defence technology constraints
+- **Requirements**: AI use cases (FR-xxx), safety requirements, security requirements
+- **Risk**: AI safety risks, operational risks, ethical risks
+- **AI Playbook**: Risk level, human oversight model, compliance gaps
 
 If no artifacts found, work with user-provided description.
+
+---
+
+## Step 1b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**MOD AI Assurance Reports & DSTL Guidance**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **What to extract**: AI assurance evidence, DSTL guidance documents, test and evaluation results, safety case evidence
+- **Examples**: `ai-assurance-report.pdf`, `dstl-guidance.pdf`, `safety-case.docx`
+
+**MOD AI Policies**:
+- **Look in**: `projects/000-global/policies/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: MOD AI strategy, defence AI ethical principles, JSP 936 compliance requirements
+- **Examples**: `mod-ai-strategy.pdf`, `defence-ai-ethics.docx`
+
+**User prompt**: If no external MOD AI docs found, ask:
+"Do you have any MOD AI assurance reports, DSTL guidance, or safety case documentation? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ---
 
@@ -140,11 +179,11 @@ For **each AI component**, perform ethical risk assessment using JSP 936's **lik
 - International obligations
 
 **Impact Levels**:
-1. **Insignificant**: Minimal impact, easily recovered
-2. **Minor**: Limited impact, manageable within existing processes
-3. **Moderate**: Noticeable impact, requires management attention
-4. **Major**: Severe impact, significant consequences
-5. **Catastrophic**: Extreme impact, loss of life or mission failure
+2. **Insignificant**: Minimal impact, easily recovered
+3. **Minor**: Limited impact, manageable within existing processes
+4. **Moderate**: Noticeable impact, requires management attention
+5. **Major**: Severe impact, significant consequences
+6. **Catastrophic**: Extreme impact, loss of life or mission failure
 
 ### Likelihood Assessment (Scale: 1-5)
 
@@ -156,11 +195,11 @@ For **each AI component**, perform ethical risk assessment using JSP 936's **lik
 - Human factors and training
 
 **Likelihood Levels**:
-1. **Rare**: May occur only in exceptional circumstances (<10%)
-2. **Unlikely**: Could occur but not expected (10-30%)
-3. **Possible**: Might occur at some time (30-50%)
-4. **Likely**: Will probably occur (50-80%)
-5. **Almost Certain**: Expected to occur (>80%)
+2. **Rare**: May occur only in exceptional circumstances (<10%)
+3. **Unlikely**: Could occur but not expected (10-30%)
+4. **Possible**: Might occur at some time (30-50%)
+5. **Likely**: Will probably occur (50-80%)
+6. **Almost Certain**: Expected to occur (>80%)
 
 ### Risk Matrix
 
@@ -218,19 +257,19 @@ For **each AI component**, comprehensively address all 5 JSP 936 ethical princip
 **Requirement**: "Assess and consider the impact of AI on humans, ensuring positive effects outweigh negatives."
 
 **Document**:
-1. **Human Impact Analysis**
+2. **Human Impact Analysis**
    - Who is affected? (operators, civilians, decision-makers)
    - Positive effects (efficiency, safety, capability)
    - Negative effects (job displacement, stress, errors)
    - Net assessment
 
-2. **Human-AI Interaction Design**
+3. **Human-AI Interaction Design**
    - Interface design for operators
    - Cognitive load considerations
    - Trust calibration
    - Error recovery
 
-3. **Stakeholder Engagement**
+4. **Stakeholder Engagement**
    - User consultation process
    - Feedback mechanisms
    - Continuous improvement based on human experience
@@ -274,19 +313,19 @@ For **each AI component**, comprehensively address all 5 JSP 936 ethical princip
 **Requirement**: "Ensure meaningful human control and clear accountability."
 
 **Document**:
-1. **Accountability Mapping**
+2. **Accountability Mapping**
    - Who is responsible for AI outcomes?
    - Role definitions (developer, operator, approver)
    - Chain of command for AI decisions
    - Incident response ownership
 
-2. **Meaningful Human Control**
+3. **Meaningful Human Control**
    - Human-in-loop: Human makes final decision
    - Human-on-loop: Human monitors and can intervene
    - Human-out-of-loop: Human sets parameters, reviews later
    - Justify level of autonomy
 
-3. **Decision Authority**
+4. **Decision Authority**
    - What decisions can AI make autonomously?
    - What requires human approval?
    - Override mechanisms
@@ -326,19 +365,19 @@ For **each AI component**, comprehensively address all 5 JSP 936 ethical princip
 **Requirement**: "Relevant personnel must understand how AI systems function and interpret outputs."
 
 **Document**:
-1. **Explainability Requirements**
+2. **Explainability Requirements**
    - Model transparency
    - Output interpretability
    - Confidence/uncertainty quantification
    - Reasoning traces
 
-2. **Training Programme**
+3. **Training Programme**
    - AI literacy for operators
    - System-specific training
    - Limitations and failure modes
    - Ongoing education
 
-3. **Documentation**
+4. **Documentation**
    - User-friendly system documentation
    - Model cards (data, performance, limitations)
    - Operating procedures
@@ -356,19 +395,19 @@ For **each AI component**, comprehensively address all 5 JSP 936 ethical princip
 - **Feature Importance**: Lists top 5 image features that triggered detection
 
 **Training Programme**:
-1. **AI Literacy Module** (4 hours):
+2. **AI Literacy Module** (4 hours):
    - What is deep learning?
    - How CNNs process images
    - Understanding confidence and uncertainty
    - Common failure modes of AI
 
-2. **System-Specific Training** (8 hours):
+3. **System-Specific Training** (8 hours):
    - Threat Detection Model capabilities and limitations
    - Interpreting heatmaps and confidence scores
    - When to trust vs challenge AI outputs
    - Hands-on practice with historical cases
 
-3. **Ongoing Education** (quarterly):
+4. **Ongoing Education** (quarterly):
    - Model updates and performance changes
    - New failure modes identified
    - Best practice sharing
@@ -391,19 +430,19 @@ For **each AI component**, comprehensively address all 5 JSP 936 ethical princip
 **Requirement**: "Proactively identify and reduce unintended biases and negative consequences."
 
 **Document**:
-1. **Bias Assessment**
+2. **Bias Assessment**
    - Training data representativeness
    - Protected characteristics
    - Performance disparities across groups
    - Fairness metrics
 
-2. **Harm Identification**
+3. **Harm Identification**
    - Direct harms (physical, psychological)
    - Indirect harms (discrimination, unfairness)
    - Systemic harms (societal impact)
    - Unintended consequences
 
-3. **Mitigation Strategies**
+4. **Mitigation Strategies**
    - Data diversification
    - Algorithmic fairness techniques
    - Human oversight and review
@@ -425,33 +464,33 @@ For **each AI component**, comprehensively address all 5 JSP 936 ethical princip
 - Tested across 3 weather conditions: Clear (90%), Overcast (85%), Adverse (75%)
 
 **Identified Harms**:
-1. **False Negative (Missed Threat)**:
+2. **False Negative (Missed Threat)**:
    - Harm: Security breach, potential casualties
    - Likelihood: Low but high-impact
    - Mitigation: Human analyst always reviews, multiple detection systems, regular model updates
 
-2. **False Positive (False Alarm)**:
+3. **False Positive (False Alarm)**:
    - Harm: Wasted resources, operator fatigue, potential civilian harm if action taken
    - Likelihood: Moderate
    - Mitigation: High confidence threshold (0.8), analyst confirmation required, feedback loop
 
-3. **Discrimination**:
+4. **Discrimination**:
    - Harm: Disproportionate surveillance or action against certain regions/groups
    - Likelihood: Possible due to training data bias
    - Mitigation: Geographic performance monitoring, diverse test sets, ethical review board
 
-4. **Over-Trust in Automation**:
+5. **Over-Trust in Automation**:
    - Harm: Reduced critical thinking, missed nuanced threats
    - Likelihood: Moderate over time
    - Mitigation: Training on limitations, mandatory manual analysis exercises, rotation of duties
 
 **Mitigation Strategy**:
-1. **Data Augmentation**: Actively collect training data from under-represented regions (target: 30% each for 3 major regions by 2026)
-2. **Fairness Constraints**: Implement equalized odds constraint to reduce performance disparity <5% across regions
-3. **Human Oversight**: Maintain human-in-loop for all high-confidence detections
-4. **Continuous Monitoring**: Track performance by region/terrain/weather monthly, retrain if disparities emerge
-5. **Red Teaming**: Quarterly adversarial testing to identify failure modes and biases
-6. **Ethical Review**: Annual independent ethics review of deployment and outcomes
+2. **Data Augmentation**: Actively collect training data from under-represented regions (target: 30% each for 3 major regions by 2026)
+3. **Fairness Constraints**: Implement equalized odds constraint to reduce performance disparity <5% across regions
+4. **Human Oversight**: Maintain human-in-loop for all high-confidence detections
+5. **Continuous Monitoring**: Track performance by region/terrain/weather monthly, retrain if disparities emerge
+6. **Red Teaming**: Quarterly adversarial testing to identify failure modes and biases
+7. **Ethical Review**: Annual independent ethics review of deployment and outcomes
 ```
 
 ### Principle 5: Reliability
@@ -459,19 +498,19 @@ For **each AI component**, comprehensively address all 5 JSP 936 ethical princip
 **Requirement**: "Demonstrate robust, secure performance across operational contexts."
 
 **Document**:
-1. **Performance Bounds**
+2. **Performance Bounds**
    - Design domain (where system is valid)
    - Performance metrics (accuracy, precision, recall, F1)
    - Operating conditions
    - Edge case behaviour
 
-2. **Robustness**
+3. **Robustness**
    - Adversarial resilience
    - Graceful degradation
    - Failure modes and effects analysis
    - Error handling
 
-3. **Security**
+4. **Security**
    - AI-specific threats (adversarial examples, data poisoning)
    - Model security (extraction, inversion)
    - Secure deployment
@@ -507,17 +546,17 @@ For **each AI component**, comprehensively address all 5 JSP 936 ethical princip
 | Camouflaged threat | 70% | Known limitation |
 
 **Robustness Testing**:
-1. **Adversarial Resilience**:
+2. **Adversarial Resilience**:
    - Tested against FGSM, PGD, C&W attacks
    - Adversarial accuracy: 78% (acceptable: >70%)
    - Defenses: Input sanitisation, adversarial training, ensemble methods
 
-2. **Out-of-Distribution Detection**:
+3. **Out-of-Distribution Detection**:
    - Uncertainty estimation flags images outside design domain
    - System alerts operator when confidence is unreliable
    - 95% detection rate for OOD images
 
-3. **Graceful Degradation**:
+4. **Graceful Degradation**:
    - Under sub-optimal conditions, system reduces confidence scores appropriately
    - Alerts operator to degraded performance
    - Falls back to human-only analysis if uncertainty exceeds threshold
@@ -531,19 +570,19 @@ For **each AI component**, comprehensively address all 5 JSP 936 ethical princip
 | Adversarial attack | Evasion/poisoning | Critical (9) | Very Low (1) | Moderate (5) | 45 | Input defenses, secure deployment |
 
 **Security Measures**:
-1. **Model Security**:
+2. **Model Security**:
    - Model encrypted at rest and in transit
    - Access controls (need-to-know basis)
    - Model watermarking to detect theft
    - Regular security audits
 
-2. **AI-Specific Threats**:
+3. **AI-Specific Threats**:
    - **Adversarial Examples**: Input preprocessing, adversarial training
    - **Data Poisoning**: Training data provenance and validation
    - **Model Extraction**: API rate limiting, output randomisation
    - **Model Inversion**: Differential privacy during training
 
-3. **Secure Deployment**:
+4. **Secure Deployment**:
    - Isolated execution environment (air-gapped where possible)
    - Principle of least privilege
    - Audit logging of all AI decisions
@@ -761,14 +800,14 @@ graph TB
 ```
 
 **AI Pipeline Architecture**:
-1. **Ingestion**: Receive satellite imagery, validate format/metadata
-2. **Preprocessing**: Resize (1024×1024), normalise, augment (if training)
-3. **OOD Detection**: Check if input is within design domain
-4. **Model Inference**: CNN forward pass, generate predictions
-5. **Uncertainty Quantification**: Bayesian dropout, 10 forward passes
-6. **Explainability**: Grad-CAM heatmap generation
-7. **Postprocessing**: Non-max suppression, confidence filtering (>0.8)
-8. **Output**: Detections with bounding boxes, confidence, heatmaps
+2. **Ingestion**: Receive satellite imagery, validate format/metadata
+3. **Preprocessing**: Resize (1024×1024), normalise, augment (if training)
+4. **OOD Detection**: Check if input is within design domain
+5. **Model Inference**: CNN forward pass, generate predictions
+6. **Uncertainty Quantification**: Bayesian dropout, 10 forward passes
+7. **Explainability**: Grad-CAM heatmap generation
+8. **Postprocessing**: Non-max suppression, confidence filtering (>0.8)
+9. **Output**: Detections with bounding boxes, confidence, heatmaps
 
 **Deployment Architecture**:
 - **Platform**: MOD secure cloud (SECRET environment)
@@ -790,19 +829,19 @@ graph TB
 | SAF-5 (Fail-safe) | OOD Detection + Alert System | Safety testing |
 
 **Failure Modes and Protections**:
-1. **Model Failure** (crash, exception):
+2. **Model Failure** (crash, exception):
    - Protection: Try-catch, fallback to previous model version, alert ML Ops
    - Graceful degradation: Route to human-only analysis queue
-2. **OOD Input** (outside design domain):
+3. **OOD Input** (outside design domain):
    - Protection: Uncertainty check flags OOD, reduces confidence to 0
    - Alert: Notify analyst "AI confidence low, manual analysis recommended"
-3. **GPU Failure**:
+4. **GPU Failure**:
    - Protection: Kubernetes auto-restart, failover to healthy node
    - Degradation: Increased latency (<10 min) until recovery
-4. **High Load** (>100 images/hour):
+5. **High Load** (>100 images/hour):
    - Protection: Queueing with priority (e.g., real-time > batch)
    - Degradation: Increased latency, SLA 95% <5 min
-5. **Data Corruption**:
+6. **Data Corruption**:
    - Protection: Checksum validation, reject corrupted images
    - Alert: Log error, notify ingestion team
 
@@ -872,24 +911,24 @@ graph TB
 - Vision Transformer: State-of-art (94% mAP) but requires 10× more training data - rejected due to data availability
 
 **Design Decisions**:
-1. **Input Resolution**: 1024×1024 pixels
+2. **Input Resolution**: 1024×1024 pixels
    - Trade-off: Higher resolution = better small object detection but slower inference
    - Decision: 1024×1024 meets <5 min latency while detecting objects >10 pixels
 
-2. **Backbone Depth**: ResNet-50 (50 layers)
+3. **Backbone Depth**: ResNet-50 (50 layers)
    - Trade-off: Deeper = more accurate but slower, more parameters
    - Decision: ResNet-50 is sweet spot (ResNet-101 only +2% accuracy for 50% more compute)
 
-3. **Training Strategy**: Transfer learning + fine-tuning
+4. **Training Strategy**: Transfer learning + fine-tuning
    - Pre-train on ImageNet (general image features)
    - Fine-tune on MOD satellite imagery (domain-specific)
    - Rationale: Leverages general knowledge, reduces training data requirement
 
-4. **Loss Function**: Focal Loss (for class imbalance) + IoU Loss (for bounding boxes)
+5. **Loss Function**: Focal Loss (for class imbalance) + IoU Loss (for bounding boxes)
    - Trade-off: Focal Loss handles imbalance but more complex
    - Decision: Dataset has 95% negative (no threat) : 5% positive (threat) - focal loss essential
 
-5. **Confidence Threshold**: 0.8
+6. **Confidence Threshold**: 0.8
    - Trade-off: Higher threshold = fewer false positives but more false negatives
    - Decision: 0.8 balances precision (92%) and recall (86%), acceptable to domain experts
 
@@ -901,10 +940,10 @@ graph TB
 - Data augmentation: Random flip, rotate, brightness/contrast adjustment
 
 **Verification Methods**:
-1. **Unit Testing**: Test individual components (preprocessing, NMS, postprocessing)
-2. **Integration Testing**: Test full pipeline end-to-end
-3. **Gradient Checking**: Verify backpropagation implementation (numerical vs analytical gradients)
-4. **Sanity Checks**:
+2. **Unit Testing**: Test individual components (preprocessing, NMS, postprocessing)
+3. **Integration Testing**: Test full pipeline end-to-end
+4. **Gradient Checking**: Verify backpropagation implementation (numerical vs analytical gradients)
+5. **Sanity Checks**:
    - Overfit to single image (should reach 100% accuracy) - verifies learning capability
    - Random initialisation should give ~50% accuracy (verifies not memorising labels)
    - Shuffle labels should give ~50% accuracy (verifies model learns signal not noise)
@@ -919,12 +958,12 @@ graph TB
   - Slightly perturbed images (±1 pixel, ±1% brightness) should give same detections (robustness)
 
 **Edge Case Handling**:
-1. **Empty Image** (no threats): Should output empty detection list with low aggregate confidence
-2. **Image with >10 threats**: Should detect all, but may degrade to 80% recall
-3. **Cloudy Image** (>50% cloud): OOD detection should flag, reduce confidence to 0
-4. **Night-time Image**: OOD detection should flag (outside design domain)
-5. **Corrupted Image**: Input validation should reject, return error
-6. **Adversarially Perturbed Image**: Should maintain >70% accuracy (adversarial training)
+2. **Empty Image** (no threats): Should output empty detection list with low aggregate confidence
+3. **Image with >10 threats**: Should detect all, but may degrade to 80% recall
+4. **Cloudy Image** (>50% cloud): OOD detection should flag, reduce confidence to 0
+5. **Night-time Image**: OOD detection should flag (outside design domain)
+6. **Corrupted Image**: Input validation should reject, return error
+7. **Adversarially Perturbed Image**: Should maintain >70% accuracy (adversarial training)
 
 **Explainability Design**:
 - **Method**: Grad-CAM (Gradient-weighted Class Activation Mapping)
@@ -1262,23 +1301,23 @@ graph TB
 **Adversarial Testing** (Robustness):
 
 **Attack Methods Tested**:
-1. **FGSM (Fast Gradient Sign Method)**: Single-step gradient-based attack
+2. **FGSM (Fast Gradient Sign Method)**: Single-step gradient-based attack
    - Result: 78% accuracy (baseline 89%) - 11% drop
    - Pass Criteria: ≥70% - **PASS**
 
-2. **PGD (Projected Gradient Descent)**: Multi-step iterative attack
+3. **PGD (Projected Gradient Descent)**: Multi-step iterative attack
    - Result: 74% accuracy - 15% drop
    - Pass Criteria: ≥70% - **PASS**
 
-3. **C&W (Carlini & Wagner)**: Optimisation-based attack (strongest)
+4. **C&W (Carlini & Wagner)**: Optimisation-based attack (strongest)
    - Result: 71% accuracy - 18% drop
    - Pass Criteria: ≥70% - **PASS**
 
-4. **Data Poisoning**: Attempt to inject backdoor during training
+5. **Data Poisoning**: Attempt to inject backdoor during training
    - Result: No backdoor detected, performance unchanged
    - Pass Criteria: No backdoor - **PASS**
 
-5. **Model Extraction**: Attempt to steal model via API queries
+6. **Model Extraction**: Attempt to steal model via API queries
    - Result: 10,000 queries insufficient to replicate model (output randomisation effective)
    - Pass Criteria: >10K queries to extract - **PASS**
 
@@ -1369,8 +1408,8 @@ graph TB
 
 **New Process** (AI-assisted):
 1. Satellite imagery arrives via secure feed → **AI ingestion**
-2. **AI processes image** (< 5 min) → detections, confidence, heatmaps
-3. **Analyst reviews AI output** (10 min/image) → confirm/reject
+3. **AI processes image** (< 5 min) → detections, confidence, heatmaps
+4. **Analyst reviews AI output** (10 min/image) → confirm/reject
 4. Analyst reports to Watch Commander (AI output + analyst judgement)
 5. Commander decides on action (AI-assisted intelligence)
 
@@ -1393,24 +1432,24 @@ graph TB
 - [x] Pilot deployment plan approved (8 Sep 2025)
 
 **Deployment Steps**:
-1. **Infrastructure Setup** (10 Sep 2025):
+2. **Infrastructure Setup** (10 Sep 2025):
    - Provision Kubernetes cluster in MOD secure cloud
    - Deploy model container, monitoring stack, dashboard
    - Configure access controls, encryption, audit logging
    - Test end-to-end connectivity
 
-2. **Pilot Deployment** (12-26 Sep 2025):
+3. **Pilot Deployment** (12-26 Sep 2025):
    - Deploy to 5 analysts (pilot group)
    - Parallel run: AI-assisted + manual analysis for 2 weeks
    - Monitor performance, collect feedback
    - Adjust as needed
 
-3. **Full Deployment** (30 Sep 2025):
+4. **Full Deployment** (30 Sep 2025):
    - Roll out to all 20 analysts
    - Monitor closely for first week
    - Daily check-ins with analysts and ML Ops team
 
-4. **Post-Deployment Review** (14 Oct 2025):
+5. **Post-Deployment Review** (14 Oct 2025):
    - Review 2-week operational performance
    - Address any issues
    - Confirm operational acceptance
@@ -1424,12 +1463,12 @@ graph TB
 **Scope**: All intelligence analysts in Imagery Analysis section.
 
 **Procedure**:
-1. **Image Arrival**:
+2. **Image Arrival**:
    - Satellite imagery arrives via secure feed
    - AI automatically ingests and processes (< 5 min)
    - Analyst receives notification on dashboard
 
-2. **AI Review**:
+3. **AI Review**:
    - Analyst reviews AI detections on dashboard:
      - Left panel: Image with bounding boxes
      - Right panel: Confidence scores, uncertainty, heatmap
@@ -1440,19 +1479,19 @@ graph TB
      - Low confidence (<0.5): Unlikely threat or AI unreliable
      - OOD flag: AI unreliable, manual analysis recommended
 
-3. **Human Analysis**:
+4. **Human Analysis**:
    - Analyst applies expertise:
      - Confirms AI detection (if genuine threat)
      - Rejects AI detection (if false positive) - record reason
      - Adds manual detection (if AI missed threat)
      - Queries heatmap (understand AI reasoning)
 
-4. **Decision and Reporting**:
+5. **Decision and Reporting**:
    - Analyst makes recommendation to Watch Commander
    - Includes: AI confidence, analyst assessment, supporting evidence
    - Commander makes final decision on action
 
-5. **Feedback Loop**:
+6. **Feedback Loop**:
    - Analyst rejections logged for model improvement
    - Manual detections (AI misses) logged for retraining
    - Feedback reviewed monthly by ML Ops team
@@ -1504,30 +1543,30 @@ graph TB
 **Incident Response**:
 
 **Incident Categories**:
-1. **Critical** (immediate response, <1 hour):
+2. **Critical** (immediate response, <1 hour):
    - System unavailable (cannot process any images)
    - Data breach or security incident
    - Catastrophic error (e.g., all detections incorrect)
 
-2. **Major** (urgent response, <4 hours):
+3. **Major** (urgent response, <4 hours):
    - Performance degradation >10% from baseline
    - High false negative rate (>30%, missing threats)
    - Adversarial attack detected
 
-3. **Minor** (standard response, <24 hours):
+4. **Minor** (standard response, <24 hours):
    - Performance degradation 5-10% from baseline
    - UI issues (dashboard not loading)
    - Latency >5 min (but <10 min)
 
 **Incident Response Procedure**:
-1. **Detection**: Automated alert or analyst report
-2. **Triage**: ML Ops team assesses severity
-3. **Response**:
+2. **Detection**: Automated alert or analyst report
+3. **Triage**: ML Ops team assesses severity
+4. **Response**:
    - Critical: Immediate failover to manual-only, notify RAISO and system owner
    - Major: Investigate root cause, temporary mitigations, notify system owner
    - Minor: Log issue, schedule fix
-4. **Resolution**: Fix applied, tested, deployed
-5. **Post-Mortem**: Root cause analysis, preventive actions, documentation
+5. **Resolution**: Fix applied, tested, deployed
+6. **Post-Mortem**: Root cause analysis, preventive actions, documentation
 
 **Incident Response Team**:
 - **On-Call ML Ops Engineer** (24/7, 1-hour response for critical)
@@ -1940,7 +1979,7 @@ Before completing the document, populate document information fields:
 ```markdown
 **Generated by**: ArcKit `/arckit.jsp-936` command
 **Generated on**: {DATE}
-**ArcKit Version**: [VERSION from VERSION or "1.0.0"]
+**ArcKit Version**: [Read from VERSION file or use "1.2.0"]
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Actual model name]
 ```
@@ -1991,26 +2030,26 @@ Based on risk classification, determine approval authority:
 | **Minor** | TLB-Level (delegated) | Lightweight JSP 936 package + TLB approval |
 
 **Approval Process**:
-1. **Initial Approval** (before development starts):
+2. **Initial Approval** (before development starts):
    - AI use case justification
    - Ethical risk assessment
    - Governance structure proposed
    - Approval to proceed with development
 
-2. **Design Approval** (after requirements/architecture):
+3. **Design Approval** (after requirements/architecture):
    - Requirements package (FR/NFR/ETH/SAF/SEC)
    - Architecture design
    - Hazard analysis
    - Approval to proceed with implementation
 
-3. **Deployment Approval** (after V&V):
+4. **Deployment Approval** (after V&V):
    - Full JSP 936 lifecycle documentation (8 phases)
    - V&V report (pass/fail on requirements)
    - UAT results (user acceptance)
    - Operational readiness review
    - **Final approval to deploy**
 
-4. **Annual Re-Approval**:
+5. **Annual Re-Approval**:
    - Annual JSP 936 compliance review
    - Performance report
    - Ethics review
@@ -2058,23 +2097,23 @@ Based on risk classification, determine approval authority:
   - Next: Oct 2026
 
 **Approval History**:
-1. **Initial Approval** (15 Feb 2025):
+2. **Initial Approval** (15 Feb 2025):
    - Approved by: JROC
    - Documents: AI use case justification, ethical risk assessment (MAJOR), governance structure
    - Decision: APPROVE to proceed with development
 
-2. **Design Approval** (15 Apr 2025):
+3. **Design Approval** (15 Apr 2025):
    - Approved by: JROC
    - Documents: Requirements (FR/NFR/ETH/SAF/SEC), architecture design, HAZOP
    - Decision: APPROVE to proceed with implementation
 
-3. **Deployment Approval** (5 Sep 2025):
+4. **Deployment Approval** (5 Sep 2025):
    - Approved by: JROC
    - Documents: Full JSP 936 lifecycle (8 phases), V&V report (pass), UAT 94%, operational readiness
    - Decision: APPROVE for deployment
    - Conditions: Annual review required, continuous monitoring mandatory
 
-4. **Annual Re-Approval** (due Oct 2026):
+5. **Annual Re-Approval** (due Oct 2026):
    - Scheduled: Oct 2026
    - Documents: Annual JSP 936 compliance review, performance report, ethics review, security audit
    - Expected Decision: [pending]
@@ -2111,15 +2150,15 @@ Document how humans and AI will work together effectively.
 
 ### Human-AI Teaming Principles
 
-1. **Complementary Strengths**: AI handles high-volume, pattern-matching tasks; humans handle complex judgement, contextual understanding, ethical decisions
+2. **Complementary Strengths**: AI handles high-volume, pattern-matching tasks; humans handle complex judgement, contextual understanding, ethical decisions
 
-2. **Appropriate Reliance**: Users trust AI when appropriate, challenge when necessary (calibrated trust, not over-trust or under-trust)
+3. **Appropriate Reliance**: Users trust AI when appropriate, challenge when necessary (calibrated trust, not over-trust or under-trust)
 
-3. **Explainable AI**: Users understand why AI made a decision (transparency builds trust and enables oversight)
+4. **Explainable AI**: Users understand why AI made a decision (transparency builds trust and enables oversight)
 
-4. **Human Authority**: Humans maintain decision-making authority, AI provides recommendations (human-in-loop, not human-out-of-loop)
+5. **Human Authority**: Humans maintain decision-making authority, AI provides recommendations (human-in-loop, not human-out-of-loop)
 
-5. **Continuous Learning**: Humans learn from AI (new patterns), AI learns from humans (corrections, edge cases)
+6. **Continuous Learning**: Humans learn from AI (new patterns), AI learns from humans (corrections, edge cases)
 
 ### Human Factors Considerations
 
@@ -2207,10 +2246,10 @@ Document how humans and AI will work together effectively.
 - **Bottom Bar**: Similar examples, model reasoning (secondary info)
 
 **Information Hierarchy**:
-1. **Most Important**: Bounding boxes on image (what AI detected)
-2. **Second**: Confidence scores (how sure is AI?)
-3. **Third**: Heatmap (why did AI detect this?)
-4. **Fourth**: Similar examples (context for decision)
+2. **Most Important**: Bounding boxes on image (what AI detected)
+3. **Second**: Confidence scores (how sure is AI?)
+4. **Third**: Heatmap (why did AI detect this?)
+5. **Fourth**: Similar examples (context for decision)
 
 **Colour Coding** (quick visual cues):
 - **Red bounding box**: High confidence (>0.8) - prioritise review
@@ -2267,10 +2306,10 @@ Document how humans and AI will work together effectively.
 ### Override and Feedback Mechanisms
 
 **Override Actions**:
-1. **Accept Detection**: Analyst confirms threat (Green checkmark button)
-2. **Reject Detection**: Analyst rejects false positive (Red X button) - **must provide reason**
-3. **Manual Detection**: Analyst adds threat AI missed (Draw bounding box) - **flagged for retraining**
-4. **Uncertain**: Analyst unsure, escalate to senior analyst (Yellow ? button)
+2. **Accept Detection**: Analyst confirms threat (Green checkmark button)
+3. **Reject Detection**: Analyst rejects false positive (Red X button) - **must provide reason**
+4. **Manual Detection**: Analyst adds threat AI missed (Draw bounding box) - **flagged for retraining**
+5. **Uncertain**: Analyst unsure, escalate to senior analyst (Yellow ? button)
 
 **Rejection Reasons** (dropdown):
 - False positive (no threat present)
@@ -2293,10 +2332,10 @@ Document how humans and AI will work together effectively.
 ### Escalation Procedures
 
 **Escalation Triggers**:
-1. **High Uncertainty**: Uncertainty >0.3 → AI alerts analyst "Low confidence, manual analysis recommended"
-2. **OOD Input**: Image outside design domain → AI flags, analyst performs manual analysis
-3. **Analyst Uncertain**: Analyst unsure about detection → escalate to senior analyst or Watch Commander
-4. **System Failure**: AI unavailable → fall back to manual-only, notify ML Ops
+2. **High Uncertainty**: Uncertainty >0.3 → AI alerts analyst "Low confidence, manual analysis recommended"
+3. **OOD Input**: Image outside design domain → AI flags, analyst performs manual analysis
+4. **Analyst Uncertain**: Analyst unsure about detection → escalate to senior analyst or Watch Commander
+5. **System Failure**: AI unavailable → fall back to manual-only, notify ML Ops
 
 **Escalation Process**:
 - **Level 1**: AI uncertain → Analyst reviews manually
@@ -2347,16 +2386,16 @@ Document security measures specific to AI systems.
 ### AI-Specific Threat Landscape
 
 **Adversarial Threats**:
-1. **Adversarial Examples**: Carefully crafted inputs that fool AI (e.g., add imperceptible noise to image, AI misclassifies)
-2. **Data Poisoning**: Inject malicious data into training set (e.g., backdoor triggers)
-3. **Model Evasion**: Adversary crafts inputs to avoid detection
-4. **Model Extraction**: Steal model via API queries
-5. **Model Inversion**: Reconstruct training data from model
+2. **Adversarial Examples**: Carefully crafted inputs that fool AI (e.g., add imperceptible noise to image, AI misclassifies)
+3. **Data Poisoning**: Inject malicious data into training set (e.g., backdoor triggers)
+4. **Model Evasion**: Adversary crafts inputs to avoid detection
+5. **Model Extraction**: Steal model via API queries
+6. **Model Inversion**: Reconstruct training data from model
 
 **Operational Threats**:
-6. **Model Drift**: Performance degrades as data distribution shifts
-7. **Insider Threat**: Malicious insider modifies model or data
-8. **Supply Chain**: Compromised third-party components (libraries, pre-trained models)
+7. **Model Drift**: Performance degrades as data distribution shifts
+8. **Insider Threat**: Malicious insider modifies model or data
+9. **Supply Chain**: Compromised third-party components (libraries, pre-trained models)
 
 ### Security Controls for AI
 
@@ -2698,9 +2737,9 @@ Document how AI system will be monitored and re-assessed throughout its operatio
 ### Drift Detection & Retraining
 
 **Types of Drift**:
-1. **Data Drift**: Input distribution changes (e.g., new geographic region, different satellite)
-2. **Concept Drift**: Relationship between input and output changes (e.g., new threat types)
-3. **Performance Drift**: Model accuracy degrades over time
+2. **Data Drift**: Input distribution changes (e.g., new geographic region, different satellite)
+3. **Concept Drift**: Relationship between input and output changes (e.g., new threat types)
+4. **Performance Drift**: Model accuracy degrades over time
 
 **Detection Methods**:
 - Statistical tests (KL divergence, Kolmogorov-Smirnov test)
@@ -2877,15 +2916,15 @@ Document how AI system will be monitored and re-assessed throughout its operatio
 - **Decision**: Continue (re-approve for 2026-2027), modify (with conditions), or retire
 
 **Trigger Events for Early Re-Approval**:
-1. **Major Model Update**: If architecture changes or significant retraining (>50% new data)
+2. **Major Model Update**: If architecture changes or significant retraining (>50% new data)
    - Process: Submit updated documentation to RAISO, RAISO reviews, JROC re-approval
-2. **Change in Operational Context**: If new mission or risk profile changes
+3. **Change in Operational Context**: If new mission or risk profile changes
    - Process: Re-assess ethical risk, update classification if needed, seek appropriate approval
-3. **Major Security Incident**: If breach, adversarial attack, or model theft
+4. **Major Security Incident**: If breach, adversarial attack, or model theft
    - Process: Incident investigation, security remediation, security re-audit, RAISO/JROC review
-4. **Ethical Concerns**: If stakeholders or ethics board raise concerns
+5. **Ethical Concerns**: If stakeholders or ethics board raise concerns
    - Process: Ethics investigation, mitigation plan, ethics board review, RAISO/JROC decision
-5. **Performance Degradation >10%**: If accuracy <79% despite retraining attempts
+6. **Performance Degradation >10%**: If accuracy <79% despite retraining attempts
    - Process: Root cause analysis, mitigation attempts, if unresolved, consider retirement
 
 **Re-Approval History**:
@@ -2902,22 +2941,22 @@ Document how AI system will be monitored and re-assessed throughout its operatio
 - Superseded: New system developed with superior performance and safety
 
 **Retirement Process**:
-1. **Decision to Retire**:
+2. **Decision to Retire**:
    - Recommendation: System Owner, RAISO
    - Approval: JROC (same authority as deployment approval)
    - Rationale documented
 
-2. **Transition Plan** (6-month transition period):
+3. **Transition Plan** (6-month transition period):
    - Fallback to manual-only analysis (existing capability, no disruption)
    - OR: Transition to successor system (if available)
    - Train analysts on manual-only procedures (refresher, 4 hours)
 
-3. **Decommissioning**:
+4. **Decommissioning**:
    - Model deletion: Secure wipe of all model files (backups included)
    - Data handling: Operational data retained per MOD records policy (7 years), training data retained if no privacy concerns
    - Infrastructure: Kubernetes cluster deprovisioned, resources reallocated
 
-4. **Post-Retirement Review**:
+5. **Post-Retirement Review**:
    - Lessons learned: What worked? What didn't? Why retire?
    - Documentation archival: Full JSP 936 documentation archived (project records)
    - Knowledge transfer: Share lessons with Defence AI and Autonomy Unit, inform future AI projects
@@ -3175,13 +3214,13 @@ Now, **compile all documentation** into a comprehensive JSP 936 AI Assurance pac
 - [STRIDE analysis or equivalent, AI-specific threats]
 
 ### AI-Specific Security Controls
-1. **Adversarial Robustness**: [Defenses, testing, results]
-2. **Data Poisoning Prevention**: [Defenses, testing, results]
-3. **Model Extraction Prevention**: [Defenses, testing, results]
-4. **Model Inversion Prevention**: [Defenses, testing, results]
-5. **Model Security (Confidentiality & Integrity)**: [Defenses, testing, results]
-6. **Secure Deployment**: [Defenses, testing, results]
-7. **Monitoring & Incident Response**: [Defenses, testing, results]
+2. **Adversarial Robustness**: [Defenses, testing, results]
+3. **Data Poisoning Prevention**: [Defenses, testing, results]
+4. **Model Extraction Prevention**: [Defenses, testing, results]
+5. **Model Inversion Prevention**: [Defenses, testing, results]
+6. **Model Security (Confidentiality & Integrity)**: [Defenses, testing, results]
+7. **Secure Deployment**: [Defenses, testing, results]
+8. **Monitoring & Incident Response**: [Defenses, testing, results]
 
 ### Security Testing Results
 - [Summary table: test, method, result, pass criteria, status]
@@ -3335,22 +3374,22 @@ Now, **compile all documentation** into a comprehensive JSP 936 AI Assurance pac
 
 ## Final Steps
 
-1. **Generate the document** using this template, populated with all information gathered in Steps 1-10
+2. **Generate the document** using this template, populated with all information gathered in Steps 1-10
 
-2. **Review for completeness**: Check that all JSP 936 requirements are addressed (27 requirements: 5 principles + risk classification + governance + 8 phases + approval + monitoring)
+3. **Review for completeness**: Check that all JSP 936 requirements are addressed (27 requirements: 5 principles + risk classification + governance + 8 phases + approval + monitoring)
 
-3. **Write the document** to the project directory:
+4. **Write the document** to the project directory:
    - **File path**: `projects/{project-name}/ARC-{PROJECT_ID}-JSP936-v1.0.md`
    - **CRITICAL**: Use the Write tool to save the file. Do NOT output the full document in your response (it will exceed token limits).
 
-4. **Format appropriately**:
+5. **Format appropriately**:
    - Use Markdown for easy editing and conversion
    - Generate DOCX if required (for formal submission)
    - Generate PDF for final approval (signed version)
 
-5. **Share summary with user**: Provide a concise summary of the JSP 936 AI Assurance documentation package
+6. **Share summary with user**: Provide a concise summary of the JSP 936 AI Assurance documentation package
 
-5. **Offer follow-up support**: Ask user if they need:
+7. **Offer follow-up support**: Ask user if they need:
    - Specific sections expanded
    - Supporting materials (e.g., presentation slides for approval authority)
    - Assistance with deployment to other projects

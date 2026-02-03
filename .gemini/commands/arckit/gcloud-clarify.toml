@@ -22,42 +22,30 @@ This command analyzes gaps between requirements and service descriptions, then g
 
 ## Instructions
 
-### 1. Prerequisites Check
+### 1. Read Available Documents
 
-**IMPORTANT**: Check prerequisites before proceeding:
+Scan the project directory for existing artifacts and read them to inform this analysis:
 
-a. **Project Requirements** (MUST exist):
-   - Check if user specified a project name/number
-   - Look for `projects/[project]/ARC-*-REQ-v*.md`
-   - If NOT found: ERROR \"Run /arckit.requirements first - need source requirements\"
+**MANDATORY** (warn if missing):
+- `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
+  - Extract: All MUST requirements (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx), SHOULD requirements, compliance (NFR-C-xxx), integration (INT-xxx), performance (NFR-P-xxx), security (NFR-S-xxx)
+  - If missing: ERROR \"Run `/arckit.requirements` first — need source requirements\"
+- `ARC-*-GCLD-*.md` in `projects/{project}/procurement/` — G-Cloud search results
+  - Extract: Shortlisted services (top 3-5), service names, supplier names, service links, key features, Must-Have Match scores, Desirable Features scores, compliance mentions, pricing
+  - If missing: ERROR \"Run `/arckit.gcloud-search` first — need service search results\"
 
-b. **G-Cloud Search Results** (MUST exist):
-   - Look for `projects/[project]/procurement/ARC-*-GCLD-v*.md`
-   - If NOT found: ERROR \"Run /arckit.gcloud-search first - need service search results\"
-   - If exists but no services found: ERROR \"No services to clarify - search returned no results\"
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Technology standards, compliance requirements, approved platforms for gap analysis context
 
-### 2. Load Project Context
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-RSCH-*.md` in `projects/{project}/` — Technology research
+  - Extract: Market landscape, alternative services, technology recommendations
 
-1. Read `projects/[project]/ARC-*-REQ-v*.md`:
-   - Extract all MUST requirements (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx with MUST priority)
-   - Extract all SHOULD requirements
-   - Extract compliance requirements (NFR-C-xxx)
-   - Extract integration requirements (INT-xxx)
-   - Extract performance requirements (NFR-P-xxx)
-   - Extract security requirements (NFR-S-xxx)
-
-2. Read `projects/[project]/procurement/ARC-*-GCLD-v*.md`:
-   - Extract shortlisted services (top 3-5 from Section 6)
-   - For each service extract:
-     - Service name
-     - Supplier name
-     - Service link (URL)
-     - Key features mentioned
-     - Must-Have Match score (X/Y)
-     - Desirable Features score (X/Y)
-     - Compliance mentions
-     - Pricing information
-   - Extract the recommendation if provided
+**What to extract from each document**:
+- **Requirements**: MUST/SHOULD requirements with IDs for systematic gap analysis
+- **G-Cloud Search**: Shortlisted services with features and scores for clarification targeting
+- **Principles**: Technology constraints and compliance standards for gap context
 
 ### 3. Gap Analysis
 
