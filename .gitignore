@@ -44,6 +44,9 @@ htmlcov/
 *.log
 .arckit-debug/
 
+# Projects (created by arckit init, not part of the toolkit itself)
+projects/
+
 # Vendor proposals (may contain sensitive info)
 # Uncomment if you don't want to commit vendor documents
 # projects/*/vendors/*/proposal.pdf
