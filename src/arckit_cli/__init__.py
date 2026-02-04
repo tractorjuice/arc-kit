@@ -161,6 +161,8 @@ def get_data_paths():
             "docs_readme": base_path / "docs" / "README.md",
             "dependency_matrix": base_path / "DEPENDENCY-MATRIX.md",
             "workflow_diagrams": base_path / "WORKFLOW-DIAGRAMS.md",
+            "version": base_path / "VERSION",
+            "changelog": base_path / "CHANGELOG.md",
         }
 
     # First try to find installed package data
@@ -444,6 +446,17 @@ def init(
             console.print(f"[green]✓[/green] Copied WORKFLOW-DIAGRAMS.md")
 
         console.print("[green]✓[/green] Documentation configured")
+
+    # Copy VERSION and CHANGELOG.md (always, not gated by --minimal)
+    version_src = data_paths["version"]
+    if version_src.exists():
+        shutil.copy2(version_src, project_path / "VERSION")
+        console.print(f"[green]✓[/green] Copied VERSION")
+
+    changelog_src = data_paths["changelog"]
+    if changelog_src.exists():
+        shutil.copy2(changelog_src, project_path / "CHANGELOG.md")
+        console.print(f"[green]✓[/green] Copied CHANGELOG.md")
 
     # Create README
     readme_content = f"""# {project_name}

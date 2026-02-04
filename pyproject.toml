@@ -59,3 +59,5 @@ packages = ["src/arckit_cli"]
 "docs" = "share/arckit/docs"
 "DEPENDENCY-MATRIX.md" = "share/arckit/DEPENDENCY-MATRIX.md"
 "WORKFLOW-DIAGRAMS.md" = "share/arckit/WORKFLOW-DIAGRAMS.md"
+"VERSION" = "share/arckit/VERSION"
+"CHANGELOG.md" = "share/arckit/CHANGELOG.md"
