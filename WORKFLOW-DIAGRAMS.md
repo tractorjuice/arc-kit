@@ -57,6 +57,9 @@ graph TD
     %% Tier 7: Implementation
     R --> T[backlog]
 
+    %% Tier 7.5: Backlog Export
+    T --> T1[trello]
+
     %% Tier 8-9: Operations & Quality
     T --> U[servicenow]
     U --> U1[devops]
@@ -150,6 +153,9 @@ graph TD
 
     %% Tier 7: Implementation
     S --> U[backlog]
+
+    %% Tier 7.5: Backlog Export
+    U --> U1t[trello]
 
     %% Tier 8-9: Operations & Quality
     U --> W[servicenow]
@@ -254,6 +260,9 @@ graph TD
 
     %% Tier 7: Implementation
     S --> U[backlog]
+
+    %% Tier 7.5: Backlog Export
+    U --> U1t[trello]
 
     %% Tier 8-9: Operations & Quality
     U --> V[servicenow]
@@ -369,6 +378,9 @@ graph TD
     %% Tier 7: Implementation
     R --> T[backlog]
 
+    %% Tier 7.5: Backlog Export
+    T --> T1t[trello]
+
     %% Tier 8-9: Operations & Quality
     T --> V[servicenow]
     V --> V1[devops]
@@ -476,6 +488,9 @@ graph TD
     %% Tier 7: Implementation
     R --> T[backlog]
 
+    %% Tier 7.5: Backlog Export
+    T --> T1t[trello]
+
     %% Tier 8-9: Operations & Quality
     T --> W[servicenow]
     W --> W1[devops]
@@ -565,6 +580,7 @@ graph TD
 | 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
 | 6 | Design Reviews | hld-review, dld-review, adr |
 | 7 | Implementation | backlog |
+| 7.5 | Backlog Export | trello |
 | 8-9 | Operations & Quality | servicenow, devops, finops, mlops (AI projects), operationalize, traceability, analyze, principles-compliance |
 | 10 | Compliance | service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
 | 11 | Reporting | story |
@@ -671,6 +687,7 @@ graph LR
     D --> E[hld-review]
     E --> F[dld-review]
     F --> G[backlog]
+    G --> H[trello]
 
     style A fill:#90EE90
     style B fill:#90EE90
@@ -679,6 +696,7 @@ graph LR
     style E fill:#FFA500
     style F fill:#FFA500
     style G fill:#FFA500
+    style H fill:#FFA500
 ```
 
 **Duration**: 2-4 months

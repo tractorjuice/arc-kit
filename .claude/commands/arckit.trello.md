@@ -1,0 +1,329 @@
+---
+description: Export product backlog to Trello - create board, lists, cards with labels and checklists from backlog JSON
+alwaysShow: true
+---
+
+# Export Backlog to Trello
+
+You are exporting an ArcKit product backlog to **Trello** by creating a board with sprint lists, labelled cards, and acceptance criteria checklists via the Trello REST API.
+
+## Arguments
+
+**BOARD_NAME** (optional): Override the board name
+- Default: `{Project Name} - Sprint Backlog`
+
+**WORKSPACE_ID** (optional): Trello workspace/organization ID to create board in
+- If omitted, board is created in the user's personal workspace
+
+---
+
+## What This Command Does
+
+Reads the JSON backlog produced by `/arckit.backlog FORMAT=json` and pushes it to Trello:
+
+1. Creates a **board** with sprint-based lists
+2. Creates **labels** for priority (MoSCoW) and item type (Epic/Story/Task)
+3. Creates **lists**: Product Backlog + one per sprint + In Progress + Done
+4. Creates **cards** for each story/task with name, description, labels
+5. Adds **checklists** with acceptance criteria to each card
+6. Returns the board URL and a summary of what was created
+
+**No template needed** - this command exports to an external service, it does not generate a document.
+
+---
+
+## Process
+
+### Step 1: Identify Project and Locate Backlog JSON
+
+Find the project directory:
+- Look in `projects/` for subdirectories
+- If multiple projects, ask which one
+- If single project, use it
+
+Locate the backlog JSON file:
+- Look for `ARC-*-BKLG-*.json` in `projects/{project-dir}/`
+- This is produced by `/arckit.backlog FORMAT=json`
+
+**If no JSON file found**:
+```
+No backlog JSON file found in projects/{project-dir}/
+
+Please generate one first:
+  /arckit.backlog FORMAT=json
+
+Then re-run /arckit.trello
+```
+
+### Step 2: Validate Trello Credentials
+
+Check that Trello API credentials are available as environment variables using Bash:
+
+```bash
+echo "TRELLO_API_KEY=${TRELLO_API_KEY:+SET}" && echo "TRELLO_TOKEN=${TRELLO_TOKEN:+SET}"
+```
+
+**If either is missing**:
+```
+Trello API credentials not found. Set these environment variables:
+
+  export TRELLO_API_KEY="your-api-key"
+  export TRELLO_TOKEN="your-token"
+
+To get credentials:
+  1. API Key: https://trello.com/power-ups/admin (select a Power-Up or create one, then get the API key)
+  2. Token: Visit https://trello.com/1/authorize?expiration=30days&scope=read,write&response_type=token&key=YOUR_API_KEY
+
+Then re-run /arckit.trello
+```
+
+### Step 3: Read and Parse Backlog JSON
+
+Read the `ARC-*-BKLG-*.json` file. Extract:
+- `project` - project name
+- `epics[]` - epic definitions
+- `stories[]` - all stories with sprint assignments, priorities, acceptance criteria
+- `sprints[]` - sprint definitions with themes
+
+### Step 4: Create Trello Board
+
+Use Bash with curl to create the board:
+
+```bash
+curl -s -X POST "https://api.trello.com/1/boards/" \
+  -d "name={BOARD_NAME or '{Project Name} - Sprint Backlog'}" \
+  -d "defaultLists=false" \
+  -d "key=$TRELLO_API_KEY" \
+  -d "token=$TRELLO_TOKEN" \
+  ${WORKSPACE_ID:+-d "idOrganization=$WORKSPACE_ID"}
+```
+
+Extract the `id` and `url` from the response JSON.
+
+**If the API returns an error**, show the error message and stop.
+
+### Step 5: Create Labels
+
+Create 6 labels on the board:
+
+**Priority labels**:
+- `Must Have` - color: `red`
+- `Should Have` - color: `orange`
+- `Could Have` - color: `yellow`
+
+**Type labels**:
+- `Epic` - color: `purple`
+- `Story` - color: `blue`
+- `Task` - color: `green`
+
+For each label:
+```bash
+curl -s -X POST "https://api.trello.com/1/boards/{boardId}/labels" \
+  -d "name={label_name}" \
+  -d "color={color}" \
+  -d "key=$TRELLO_API_KEY" \
+  -d "token=$TRELLO_TOKEN"
+```
+
+Store each label's `id` for later card assignment.
+
+### Step 6: Create Lists
+
+Create lists in **reverse order** (Trello prepends new lists to the left, so create in reverse to get correct left-to-right order):
+
+1. **Done**
+2. **In Progress**
+3. **Sprint N: {Theme}** (for each sprint, from last to first)
+4. **Product Backlog** (for unscheduled/overflow items)
+
+For each list:
+```bash
+curl -s -X POST "https://api.trello.com/1/lists" \
+  -d "name={list_name}" \
+  -d "idBoard={boardId}" \
+  -d "key=$TRELLO_API_KEY" \
+  -d "token=$TRELLO_TOKEN"
+```
+
+Store each list's `id` for card placement. Map sprint numbers to list IDs.
+
+### Step 7: Create Cards
+
+For each story and task in the backlog JSON, create a card on the appropriate list.
+
+**Determine the target list**:
+- If story has a `sprint` number, place on the corresponding sprint list
+- If no sprint assigned, place on "Product Backlog" list
+
+**Card name format**:
+```
+{id}: {title} [{story_points}pts]
+```
+Example: `STORY-001: Create user account [8pts]`
+
+**Card description format**:
+```
+**As a** {as_a}
+**I want** {i_want}
+**So that** {so_that}
+
+**Story Points**: {story_points}
+**Priority**: {priority}
+**Component**: {component}
+**Requirements**: {requirements joined by ', '}
+**Epic**: {epic id} - {epic title}
+**Dependencies**: {dependencies joined by ', ' or 'None'}
+```
+
+For tasks (items without `as_a`/`i_want`/`so_that`), use the description field directly instead of the user story format.
+
+**Card labels**:
+- Assign the matching priority label (Must Have / Should Have / Could Have)
+- Assign the matching type label (Story or Task based on item type, Epic for epic-level items)
+
+```bash
+curl -s -X POST "https://api.trello.com/1/cards" \
+  -d "name={card_name}" \
+  -d "desc={card_description}" \
+  -d "idList={list_id}" \
+  -d "idLabels={label_id1},{label_id2}" \
+  -d "key=$TRELLO_API_KEY" \
+  -d "token=$TRELLO_TOKEN"
+```
+
+Store each card's `id` for checklist creation.
+
+**Rate limiting**: Trello allows 100 requests per 10-second window per token. For large backlogs (80+ stories), add `sleep 0.15` between card creation calls to stay within limits.
+
+### Step 8: Add Acceptance Criteria Checklists
+
+For each card that has `acceptance_criteria` in the JSON:
+
+**Create checklist**:
+```bash
+curl -s -X POST "https://api.trello.com/1/cards/{cardId}/checklists" \
+  -d "name=Acceptance Criteria" \
+  -d "key=$TRELLO_API_KEY" \
+  -d "token=$TRELLO_TOKEN"
+```
+
+**Add each criterion as a check item**:
+```bash
+curl -s -X POST "https://api.trello.com/1/checklists/{checklistId}/checkItems" \
+  -d "name={criterion_text}" \
+  -d "key=$TRELLO_API_KEY" \
+  -d "token=$TRELLO_TOKEN"
+```
+
+### Step 9: Show Summary
+
+After all API calls complete, display:
+
+```
+Backlog exported to Trello successfully!
+
+Board: {board_name}
+URL: {board_url}
+
+Lists created:
+  - Product Backlog
+  - Sprint 1: {theme} ({N} cards)
+  - Sprint 2: {theme} ({N} cards)
+  - ...
+  - In Progress
+  - Done
+
+Labels: Must Have (red), Should Have (orange), Could Have (yellow), Epic (purple), Story (blue), Task (green)
+
+Cards created: {total_cards}
+  - Stories: {N}
+  - Tasks: {N}
+  - With acceptance criteria checklists: {N}
+
+Total API calls: {N}
+
+Next steps:
+  1. Open the board: {board_url}
+  2. Invite team members to the board
+  3. Review card assignments and adjust sprint boundaries
+  4. Begin sprint planning with Sprint 1
+```
+
+---
+
+## Error Handling
+
+**No backlog JSON**:
+```
+No ARC-*-BKLG-*.json file found in projects/{project-dir}/
+
+Please generate one first:
+  /arckit.backlog FORMAT=json
+
+Then re-run /arckit.trello
+```
+
+**Missing credentials**:
+```
+Trello API credentials not set.
+
+Required environment variables:
+  TRELLO_API_KEY - Your Trello API key
+  TRELLO_TOKEN   - Your Trello auth token
+
+See: https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/
+```
+
+**API error (e.g., invalid key, rate limit)**:
+```
+Trello API error: {error_message}
+
+Check:
+  - API key and token are valid and not expired
+  - Workspace ID exists (if specified)
+  - You have not exceeded rate limits (100 req/10s)
+```
+
+**Partial failure (some cards failed)**:
+Continue creating remaining cards. At the end, report:
+```
+Warning: {N} cards failed to create. Errors:
+  - STORY-005: {error}
+  - TASK-012: {error}
+
+Successfully created {M} of {total} cards.
+Board URL: {board_url}
+```
+
+---
+
+## Integration with Other Commands
+
+### Inputs From:
+- `/arckit.backlog FORMAT=json` - Backlog JSON file (MANDATORY)
+
+### Outputs To:
+- Trello board (external) - ready for sprint planning
+
+---
+
+## Important Notes
+
+### Trello API Rate Limits
+
+Trello enforces 100 requests per 10-second window per API token. For a typical backlog:
+- 1 board + 6 labels + ~10 lists + N cards + N checklists + M check items
+- A backlog with 50 stories averaging 4 acceptance criteria = ~260 API calls
+- The command adds `sleep 0.15` between card/checklist calls to stay within limits
+
+### Token Expiration
+
+Trello tokens can be created with different expiration periods (1 day, 30 days, or never). If the token has expired, the user will see an "unauthorized" error and needs to generate a new token.
+
+### Board Cleanup
+
+If you need to re-export, either:
+1. Delete the old board in Trello and re-run
+2. Use a different BOARD_NAME to create a new board
+
+This command always creates a **new board** - it does not update an existing one.

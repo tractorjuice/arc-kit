@@ -17,53 +17,54 @@ This matrix shows which commands depend on outputs from other commands.
 
 ## Dependency Structure Matrix
 
-| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | data-mesh-contract | platform-design | dpia | research | azure-research | aws-research | datascout | wardley | roadmap | adr | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | diagram | servicenow | devops | mlops | finops | operationalize | traceability | analyze | principles-compliance | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story | pages |
-|------------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
-| **plan** | - | R | R | R | O | O |  |  |  |  |  |  | O | | | R |  |  | O | O |  |  | R |  |  |  |  |  |  |  |  |  | R |  | M | O |  |  |  |  |  | R | R |
-| **principles** |  | - | M | R | R | R |  |  | M | R |  |  |  | R | R | M | M |  | M | R |  |  | M | M |  |  |  | R |  | R |  |  | R | M |  | M |  |  | M | M |  |  | R |
-| **stakeholders** |  | O | - | M | M | M | R | O | R | R | O | R | M | R | R | R | O | O | R |  |  |  |  |  | R |  |  |  |  |  |  |  | R | R | R | R |  |  |  |  |  | R | R |
-| **risk** |  |  |  | - | M | R |  |  | O | R |  |  |  | | | R | O |  |  |  |  |  | R | R | R |  |  |  |  |  | R |  | R | R | R |  | R |  | R | R | M | R | R |
-| **sobc** |  |  | O | O | - | M | O |  |  |  |  |  |  | | | R |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  | R |  | R | R |  |  |  |  |  | R | R |
-| **requirements** |  |  |  |  |  | - | M | M | M | M | M | M | M | M | M | M | M | M | M | M | R | M | M | M | M | M | M | M | M | M | M | M | R | R | M | M | M | M | M | M | M | R | R |
-| **data-model** |  |  |  |  |  |  | - | M | O | M | R | R |  | O | O |  |  | O |  |  |  |  |  |  |  | R | R |  | R |  |  | R | R | R | R |  | R |  |  |  |  |  | R |
-| **data-mesh-contract** |  |  |  |  |  |  |  | - |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
-| **platform-design** |  |  |  |  |  |  | O | R | - | O | O |  | R | | |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  | R |
-| **dpia** |  |  |  |  |  |  |  |  |  | - |  |  |  | | | O |  | R |  |  |  | O |  |  |  | O |  |  |  |  |  | O | R | R | R |  | R | R | R | R |  | R | R |
-| **research** |  |  |  |  |  |  |  |  |  |  | - |  | R | | |  |  | R |  | R | O | R |  |  |  |  |  | R | R |  |  |  |  |  |  |  | O |  |  |  |  |  | R |
-| **azure-research** |  |  |  |  |  |  |  |  |  |  |  | - |  | | R |  | R |  |  |  |  |  |  |  | R | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  | R |  |
-| **aws-research** |  |  |  |  |  |  |  |  |  |  |  |  | - | | R |  | R |  |  |  |  |  |  |  | R | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  | R |  |
-| **datascout** | | | | | | | R | | | O | R | | | - | | | R | | | | | | | | | O | | | | | | R | | | | | | | | | | | R |
-| **wardley** |  |  |  |  |  |  |  |  | R |  | O |  |  | | - | R |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |
-| **roadmap** |  |  |  |  |  |  |  |  | O |  |  |  | O | | | - |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
-| **adr** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
-| **sow** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  | - |  | O |  | R |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |
-| **dos** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  | - |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
-| **gcloud-search** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  | - | M |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
-| **gcloud-clarify** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
-| **evaluate** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |
-| **hld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  | R |  |  |  |  |  | - | M | M |  |  |  |  |  |  | M |  | R |  |  |  |  |  |  |  | R | R |
-| **dld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  | O |  |  |  |  |  |  | - | R |  |  |  |  |  |  | M |  | R |  |  |  |  |  |  |  | R | R |
-| **backlog** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
-| **diagram** |  |  |  |  |  |  |  |  |  | O |  |  |  | | |  |  |  |  |  |  |  | R | R |  | - | M | R |  | R | R |  | R |  | R |  |  |  | O | O |  |  | R |
-| **servicenow** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  | R | O |  |  |  |  |  |  |  |  |  |  | R |
-| **devops** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  | - |  | R |  |  |  |  |  |  |  |  |  |  |  | R | R |
-| **mlops** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
-| **finops** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  | R | R |
-| **operationalize** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  | R | R |
-| **traceability** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  | - | R | R |  |  |  |  |  |  |  | R | R |
-| **analyze** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | O | R | O |  |  |  |  |  | O | R |
-| **principles-compliance** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  | R |
-| **service-assessment** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | - |  |  |  |  |  |  | R | R |
-| **tcop** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R | R | - |  |  |  |  |  |  | R |
-| **ai-playbook** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  | O |  | R |  | - | R |  |  | R |  | R |
-| **atrs** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  | - |  |  | R |  | R |
-| **secure** |  |  |  |  |  |  |  |  |  | R |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | R |  | O | O | - | R | O | R | R |
-| **mod-secure** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | O |  |  |  |  | - | R |  | R |
-| **jsp-936** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  | - |  | R |
-| **story** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  |  | - | R |
-| **pages** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |
-| **HLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  | M | O |  |  | R |  |  |  |  | M | O |  | R |  |  |  |  |  |  |  | R |
-| **DLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  | M | M |  |  |  |  |  |  | M |  |  | R |  |  |  |  |  |  |  | R |
+| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | data-mesh-contract | platform-design | dpia | research | azure-research | aws-research | datascout | wardley | roadmap | adr | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | trello | diagram | servicenow | devops | mlops | finops | operationalize | traceability | analyze | principles-compliance | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story | pages |
+|------------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
+| **plan** | - | R | R | R | O | O |  |  |  |  |  |  | O | | | R |  |  | O | O |  |  | R |  |  |  |  |  |  |  |  |  |  | R |  | M | O |  |  |  |  |  | R | R |
+| **principles** |  | - | M | R | R | R |  |  | M | R |  |  |  | R | R | M | M |  | M | R |  |  | M | M |  |  |  |  | R |  | R |  |  | R | M |  | M |  |  | M | M |  |  | R |
+| **stakeholders** |  | O | - | M | M | M | R | O | R | R | O | R | M | R | R | R | O | O | R |  |  |  |  |  | R |  |  |  |  |  |  |  |  | R | R | R | R |  |  |  |  |  | R | R |
+| **risk** |  |  |  | - | M | R |  |  | O | R |  |  |  | | | R | O |  |  |  |  |  | R | R | R |  |  |  |  |  |  | R |  | R | R | R |  | R |  | R | R | M | R | R |
+| **sobc** |  |  | O | O | - | M | O |  |  |  |  |  |  | | | R |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  | R |  | R | R |  |  |  |  |  | R | R |
+| **requirements** |  |  |  |  |  | - | M | M | M | M | M | M | M | M | M | M | M | M | M | M | R | M | M | M | M |  | M | M | M | M | M | M | M | R | R | M | M | M | M | M | M | M | R | R |
+| **data-model** |  |  |  |  |  |  | - | M | O | M | R | R |  | O | O |  |  | O |  |  |  |  |  |  |  |  | R | R |  | R |  |  | R | R | R | R |  | R |  |  |  |  |  | R |
+| **data-mesh-contract** |  |  |  |  |  |  |  | - |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
+| **platform-design** |  |  |  |  |  |  | O | R | - | O | O |  | R | | |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  | R |
+| **dpia** |  |  |  |  |  |  |  |  |  | - |  |  |  | | | O |  | R |  |  |  | O |  |  |  |  | O |  |  |  |  |  | O | R | R | R |  | R | R | R | R |  | R | R |
+| **research** |  |  |  |  |  |  |  |  |  |  | - |  | R | | |  |  | R |  | R | O | R |  |  |  |  |  |  | R | R |  |  |  |  |  |  |  | O |  |  |  |  |  | R |
+| **azure-research** |  |  |  |  |  |  |  |  |  |  |  | - |  | | R |  | R |  |  |  |  |  |  |  | R |  | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  | R |  |
+| **aws-research** |  |  |  |  |  |  |  |  |  |  |  |  | - | | R |  | R |  |  |  |  |  |  |  | R |  | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  | R |  |
+| **datascout** | | | | | | | R | | | O | R | | | - | | | R | | | | | | | | |  | O | | | | | | R | | | | | | | | | | | R |
+| **wardley** |  |  |  |  |  |  |  |  | R |  | O |  |  | | - | R |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |
+| **roadmap** |  |  |  |  |  |  |  |  | O |  |  |  | O | | | - |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
+| **adr** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
+| **sow** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  | - |  | O |  | R |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |
+| **dos** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  | - |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
+| **gcloud-search** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  | - | M |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
+| **gcloud-clarify** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |
+| **evaluate** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  | R |
+| **hld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  | R |  |  |  |  |  | - | M | M |  |  |  |  |  |  |  | M |  | R |  |  |  |  |  |  |  | R | R |
+| **dld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  | O |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  | M |  | R |  |  |  |  |  |  |  | R | R |
+| **backlog** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  | - | M |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |
+| **trello** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |
+| **diagram** |  |  |  |  |  |  |  |  |  | O |  |  |  | | |  |  |  |  |  |  |  | R | R |  |  | - | M | R |  | R | R |  | R |  | R |  |  |  | O | O |  |  | R |
+| **servicenow** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  | R | O |  |  |  |  |  |  |  |  |  |  | R |
+| **devops** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  | R |  |  |  |  |  |  |  |  |  |  |  | R | R |
+| **mlops** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  | R | R |
+| **finops** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  | R | R |
+| **operationalize** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  | R | R |
+| **traceability** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  | - | R | R |  |  |  |  |  |  |  | R | R |
+| **analyze** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | O | R | O |  |  |  |  |  | O | R |
+| **principles-compliance** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  | R |
+| **service-assessment** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | - |  |  |  |  |  |  | R | R |
+| **tcop** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R | R | - |  |  |  |  |  |  | R |
+| **ai-playbook** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  | O |  | R |  | - | R |  |  | R |  | R |
+| **atrs** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  | - |  |  | R |  | R |
+| **secure** |  |  |  |  |  |  |  |  |  | R |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | R |  | O | O | - | R | O | R | R |
+| **mod-secure** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R | O |  |  |  |  | - | R |  | R |
+| **jsp-936** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  | - |  | R |
+| **story** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | O |  |  |  |  |  |  | - | R |
+| **pages** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |
+| **HLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  | M | O |  |  |  | R |  |  |  |  | M | O |  | R |  |  |  |  |  |  |  | R |
+| **DLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  | | |  |  |  |  |  |  |  |  | M | M |  |  |  |  |  |  |  | M |  |  | R |  |  |  |  |  |  |  | R |
 
 ## Command Groups by Dependency Level
 
@@ -128,6 +129,11 @@ Most procurement commands require ARC-*-REQ-*.md:
 
 ### Tier 7: Implementation Planning (Depends on Design Reviews)
 - **backlog** → Depends on: requirements (M), HLD (M), stakeholders (R), risk (R)
+
+### Tier 7.5: Backlog Export (Depends on Backlog)
+- **trello** → Depends on: backlog (M) — specifically the JSON export (`ARC-*-BKLG-*.json`)
+  - Note: Exports backlog to Trello board with sprint lists, labelled cards, and acceptance criteria checklists
+  - Requires `TRELLO_API_KEY` and `TRELLO_TOKEN` environment variables
 
 ### Tier 8: Operations (Depends on Architecture)
 - **servicenow** → Depends on: requirements (M), diagram (M), principles (R), HLD/DLD (R)
@@ -271,12 +277,20 @@ principles-compliance → analyze → service-assessment → story
 
 ## Version
 
-- **ArcKit Version**: 1.1.0
-- **Matrix Date**: 2026-02-01
-- **Commands Documented**: 43
-- **Matrix Rows**: 45 (43 commands + 2 external documents)
+- **ArcKit Version**: 1.3.0
+- **Matrix Date**: 2026-02-04
+- **Commands Documented**: 44
+- **Matrix Rows**: 46 (44 commands + 2 external documents)
 
 ## Changelog
+
+### 2026-02-04 - Added Trello Export Command
+- **Added**: `/arckit.trello` command (44th ArcKit command) for exporting product backlog to Trello boards
+- **Added**: trello row and column to dependency matrix
+- **Added**: Tier 7.5 Backlog Export for trello command
+- **Dependencies**: backlog (M) — reads `ARC-*-BKLG-*.json`
+- **Consumed by**: None (external Trello board output)
+- **Note**: Requires `TRELLO_API_KEY` and `TRELLO_TOKEN` environment variables; uses Trello REST API via curl
 
 ### 2026-02-01 - Added Data Source Discovery Command
 - **Added**: `/arckit.datascout` command (43rd ArcKit command) for discovering external data sources (APIs, datasets, open data portals, commercial providers)

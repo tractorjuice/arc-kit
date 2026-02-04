@@ -411,6 +411,18 @@ Transform requirements into sprint-ready user stories:
 
 **When to run**: After HLD approval, before Sprint 1 (Alpha → Beta transition)
 
+### Phase 10.5: Backlog Export
+**`/arckit.trello`** → Export product backlog to Trello
+
+Push your backlog directly to Trello for sprint execution:
+- Create Trello board with sprint-based lists (Product Backlog + per-sprint + In Progress + Done)
+- Cards with priority labels, story points, and acceptance criteria checklists
+- Colour-coded labels by MoSCoW priority and requirement type
+- Rate-limit-aware Trello API integration
+- Requires `TRELLO_API_KEY` and `TRELLO_TOKEN` environment variables
+
+**When to run**: After `/arckit.backlog` generates the product backlog (requires JSON export)
+
 ### Phase 11: ServiceNow Service Management Design
 **`/arckit.servicenow`** → Generate ServiceNow service design
 
@@ -645,7 +657,7 @@ payment-modernization/
 
 ## Complete Command Reference
 
-All 42 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 44 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
@@ -750,6 +762,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
 | `/arckit.backlog` | Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-BLOG-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-BLOG-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/ARC-003-BLOG-v1.0.md) [v3/004](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/004-conference-facilities-modernization/ARC-004-BLOG-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-BLOG-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-BLOG-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-BKLG-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/ARC-001-BKLG-v1.0.md) | 🔵 Beta |
+| `/arckit.trello` | Export product backlog to Trello - create board, lists, cards with labels and checklists from backlog JSON | — | 🟣 Experimental |
 | `/arckit.servicenow` | Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-SNOW-v1.0.md) | 🔵 Beta |
 | `/arckit.devops` | Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience | [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-DEVOPS-v1.0.md) | 🟣 Experimental |
 | `/arckit.mlops` | Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance | [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-MLOPS-v1.0.md) | 🟣 Experimental |
@@ -894,7 +907,7 @@ arckit init my-project
 Full guidance lives in `docs/` and the static site.
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 42×42 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 44×44 command matrix.
 - Traceability: [docs/guides/traceability.md](docs/guides/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit

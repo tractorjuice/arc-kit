@@ -5,6 +5,29 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **New Command: `/arckit.trello`**: Export product backlog to Trello boards (44th ArcKit command)
+  - Reads JSON output from `/arckit.backlog FORMAT=json`
+  - Creates Trello board with sprint-based lists (Product Backlog + per-sprint + In Progress + Done)
+  - Creates priority labels (Must Have=red, Should Have=orange, Could Have=yellow)
+  - Creates type labels (Epic=purple, Story=blue, Task=green)
+  - Creates cards with GDS user story format descriptions, requirements traceability
+  - Adds acceptance criteria as checklists on each card
+  - Rate-limit-aware (100 req/10s Trello limit)
+  - Requires `TRELLO_API_KEY` and `TRELLO_TOKEN` environment variables
+- **New Guide**: `docs/guides/trello.md` with prerequisites, credential setup, board structure, and troubleshooting
+- **Multi-AI Support**: Trello command available for Gemini CLI (`.gemini/commands/arckit/trello.toml`) and Codex CLI (`.codex/prompts/arckit/trello.md`)
+
+### Changed
+
+- **DEPENDENCY-MATRIX.md**: Added trello row/column, Tier 7.5 Backlog Export
+- Updated command count to 44 (was 43)
+
+---
+
 ## [1.3.0] - 2026-02-03
 
 ### Added

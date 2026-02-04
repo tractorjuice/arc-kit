@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 42 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
+    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 44 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
     <meta name="keywords" content="enterprise architecture, UK government, GDS, architecture governance, vendor procurement, ArcKit, compliance, TCOP, secure by design">
     <meta name="author" content="ArcKit">
     <meta property="og:title" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement">
@@ -455,7 +455,7 @@
             <div class="govuk-width-container">
                 <h1 class="govuk-heading-xl">ArcKit</h1>
                 <p class="govuk-body-l">Transform architecture chaos into systematic, audit-ready governance.</p>
-                <p class="govuk-body">42 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
+                <p class="govuk-body">44 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
 
                 <div class="govuk-button-group govuk-!-margin-top-6">
                     <a href="https://github.com/tractorjuice/arc-kit" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
@@ -628,6 +628,7 @@ flowchart TD
         evaluate[evaluate]
         hld-review[hld-review]
         backlog[backlog]
+        trello[trello]
         diagram[diagram]
     end
 
@@ -650,6 +651,7 @@ flowchart TD
     sow --> evaluate
     evaluate --> hld-review
     hld-review --> backlog
+    backlog --> trello
     backlog --> servicenow
     servicenow --> traceability
     traceability --> story
@@ -664,7 +666,7 @@ flowchart TD
 
     <!-- Commands Section -->
     <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
-        <h2 class="govuk-heading-l">42 ArcKit Commands</h2>
+        <h2 class="govuk-heading-l">44 ArcKit Commands</h2>
         <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
 
         <!-- Status Legend -->
@@ -723,7 +725,7 @@ flowchart TD
                 <input type="text" id="search-filter" placeholder="Search commands...">
             </div>
             <div class="app-command-count">
-                Showing <span id="visible-count">43</span> of 43 commands
+                Showing <span id="visible-count">45</span> of 45 commands
             </div>
         </div>
 
@@ -1136,6 +1138,13 @@ flowchart TD
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
+                    <tr data-status="experimental" data-category="operations">
+                        <td><code>/arckit.trello</code></td>
+                        <td class="description">Export product backlog to Trello - create board, lists, cards with labels and checklists from backlog JSON</td>
+                        <td>Operations</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
                     <tr data-status="beta" data-category="operations">
                         <td><code>/arckit.servicenow</code></td>
                         <td class="description">Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control</td>
@@ -1521,7 +1530,7 @@ flowchart TD
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md" class="govuk-link">Changelog</a> - Release history and updates</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md" class="govuk-link">Contributing</a> - How to contribute to ArcKit</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/releases" class="govuk-link">Release Notes</a> - Detailed version information</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/.claude/COMMANDS.md" class="govuk-link">Command Reference</a> - All 42 commands documented</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/.claude/COMMANDS.md" class="govuk-link">Command Reference</a> - All 44 commands documented</li>
                 </ul>
             </div>
         </div>
@@ -1531,7 +1540,7 @@ flowchart TD
                 <h3 class="govuk-heading-s">Workflow & Dependencies</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/WORKFLOW-DIAGRAMS.md" class="govuk-link">Workflow Diagrams</a> - Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI) with Gantt charts and decision trees</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">Dependency Structure Matrix</a> - Complete 42×42 command dependency matrix showing mandatory, recommended, and optional relationships</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">Dependency Structure Matrix</a> - Complete 44×44 command dependency matrix showing mandatory, recommended, and optional relationships</li>
                 </ul>
             </div>
         </div>
