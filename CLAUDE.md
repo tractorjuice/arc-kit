@@ -260,6 +260,7 @@ ArcKit maintains 20 test repos on GitHub (pattern: `arckit-test-project-v*`):
 | v18 | smart-meter | Public | UK Smart Meter Data Consumer Mobile App |
 | v19 | gov-api-aggregator | Public | UK Government API Aggregator |
 | v20 | uae-moi-ipad | Private | UAE MOI IPAD Framework |
+| v21 | criminal-courts | Public | Independent Review of the Criminal Courts - Technology & AI |
 
 **Sync test repos after changes**:
 ```bash
@@ -269,7 +270,7 @@ for repo in v0-mod-chatbot v1-m365 v2-hmrc-chatbot v3-windows11 v4-ipa v5-dstl \
             v6-patent-system v7-nhs-appointment v8-ons-data-platform v9-cabinet-office-genai \
             v10-training-marketplace v11-national-highways-data v12-honky-tonks v13-plymouth-research \
             v14-scottish-courts v15-ipad-framework v16-doctors-appointment v17-fuel-prices \
-            v18-smart-meter v19-gov-api-aggregator v20-uae-moi-ipad; do
+            v18-smart-meter v19-gov-api-aggregator v20-uae-moi-ipad v21-criminal-courts; do
     git clone "https://x-access-token:${TOKEN}@github.com/tractorjuice/arckit-test-project-$repo.git" /tmp/$repo
     # Sync commands, agents, and templates
     rsync -av --delete .claude/commands/ /tmp/$repo/.claude/commands/
