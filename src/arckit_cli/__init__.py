@@ -231,6 +231,17 @@ def create_project_structure(project_path: Path, ai_assistant: str, all_ai: bool
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
 
+    # Add .gitkeep files to empty directories so git tracks them
+    gitkeep_dirs = [
+        "projects/000-global",
+        "projects/000-global/policies",
+        "projects/000-global/external",
+    ]
+    for directory in gitkeep_dirs:
+        gitkeep = project_path / directory / ".gitkeep"
+        if not gitkeep.exists():
+            gitkeep.touch()
+
     console.print("[green]✓[/green] Project structure created")
 
     return project_path
