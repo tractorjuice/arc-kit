@@ -157,6 +157,7 @@ def get_data_paths():
             "claude_agents": base_path / ".claude" / "agents",
             "gemini_commands": base_path / ".gemini" / "commands",
             "codex_root": base_path / ".codex",
+            "codex_prompts": base_path / ".codex" / "prompts",
             "docs_guides": base_path / "docs" / "guides",
             "docs_readme": base_path / "docs" / "README.md",
             "dependency_matrix": base_path / "DEPENDENCY-MATRIX.md",
@@ -361,7 +362,8 @@ def init(
     # Copy scripts if they exist
     if scripts_src.exists():
         console.print(f"[dim]Copying scripts from: {scripts_src}[/dim]")
-        shutil.copytree(scripts_src, scripts_dst, dirs_exist_ok=True)
+        shutil.copytree(scripts_src, scripts_dst, dirs_exist_ok=True,
+                        ignore=shutil.ignore_patterns('__pycache__', '*.pyc'))
         console.print(f"[green]✓[/green] Scripts copied")
     else:
         console.print(f"[yellow]Warning: Scripts not found at {scripts_src}[/yellow]")
@@ -372,7 +374,7 @@ def init(
         ai_formats = [
             ("claude", data_paths["claude_commands"], project_path / ".claude" / "commands"),
             ("gemini", data_paths["gemini_commands"], project_path / ".gemini" / "commands"),
-            ("codex", data_paths["claude_commands"], project_path / ".codex" / "prompts" / "arckit"),
+            ("codex", data_paths["claude_commands"], project_path / ".codex" / "prompts"),
         ]
         for ai_name, src, dst in ai_formats:
             dst.mkdir(parents=True, exist_ok=True)
@@ -385,6 +387,15 @@ def init(
                 console.print(f"[green]✓[/green] Copied {ai_name} commands")
             else:
                 console.print(f"[yellow]Warning: {ai_name} commands not found[/yellow]")
+        # Copy codex-specific subdirectory prompts (arckit/aws-research.md, etc.)
+        codex_prompts_src = data_paths.get("codex_prompts")
+        if codex_prompts_src and codex_prompts_src.exists():
+            codex_sub = codex_prompts_src / "arckit"
+            if codex_sub.is_dir():
+                codex_sub_dst = project_path / ".codex" / "prompts" / "arckit"
+                codex_sub_dst.mkdir(parents=True, exist_ok=True)
+                for f in codex_sub.glob("*.md"):
+                    shutil.copy2(f, codex_sub_dst / f.name)
     else:
         # Install only selected AI format
         if ai_assistant in ["claude", "codex"]:
