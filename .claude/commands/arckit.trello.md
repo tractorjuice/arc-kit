@@ -91,7 +91,7 @@ Use Bash with curl to create the board:
 
 ```bash
 curl -s -X POST "https://api.trello.com/1/boards/" \
-  -d "name={BOARD_NAME or '{Project Name} - Sprint Backlog'}" \
+  --data-urlencode "name={BOARD_NAME or '{Project Name} - Sprint Backlog'}" \
   -d "defaultLists=false" \
   -d "key=$TRELLO_API_KEY" \
   -d "token=$TRELLO_TOKEN" \
@@ -119,7 +119,7 @@ Create 6 labels on the board:
 For each label:
 ```bash
 curl -s -X POST "https://api.trello.com/1/boards/{boardId}/labels" \
-  -d "name={label_name}" \
+  --data-urlencode "name={label_name}" \
   -d "color={color}" \
   -d "key=$TRELLO_API_KEY" \
   -d "token=$TRELLO_TOKEN"
@@ -139,7 +139,7 @@ Create lists in **reverse order** (Trello prepends new lists to the left, so cre
 For each list:
 ```bash
 curl -s -X POST "https://api.trello.com/1/lists" \
-  -d "name={list_name}" \
+  --data-urlencode "name={list_name}" \
   -d "idBoard={boardId}" \
   -d "key=$TRELLO_API_KEY" \
   -d "token=$TRELLO_TOKEN"
@@ -183,8 +183,8 @@ For tasks (items without `as_a`/`i_want`/`so_that`), use the description field d
 
 ```bash
 curl -s -X POST "https://api.trello.com/1/cards" \
-  -d "name={card_name}" \
-  -d "desc={card_description}" \
+  --data-urlencode "name={card_name}" \
+  --data-urlencode "desc={card_description}" \
   -d "idList={list_id}" \
   -d "idLabels={label_id1},{label_id2}" \
   -d "key=$TRELLO_API_KEY" \
@@ -202,7 +202,7 @@ For each card that has `acceptance_criteria` in the JSON:
 **Create checklist**:
 ```bash
 curl -s -X POST "https://api.trello.com/1/cards/{cardId}/checklists" \
-  -d "name=Acceptance Criteria" \
+  --data-urlencode "name=Acceptance Criteria" \
   -d "key=$TRELLO_API_KEY" \
   -d "token=$TRELLO_TOKEN"
 ```
@@ -210,7 +210,7 @@ curl -s -X POST "https://api.trello.com/1/cards/{cardId}/checklists" \
 **Add each criterion as a check item**:
 ```bash
 curl -s -X POST "https://api.trello.com/1/checklists/{checklistId}/checkItems" \
-  -d "name={criterion_text}" \
+  --data-urlencode "name={criterion_text}" \
   -d "key=$TRELLO_API_KEY" \
   -d "token=$TRELLO_TOKEN"
 ```
