@@ -21,7 +21,7 @@
 /arckit.dld-review Review DLD for <component/service>
 ```
 
-Output: `projects/<id>/reviews/ARC-<id>-DLD-v1.0.md`
+Output: `projects/<id>/reviews/ARC-<id>-DLDR-v1.0.md`
 
 ---
 

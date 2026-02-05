@@ -24,7 +24,7 @@ _Strongly recommended_: risk register (for priority), business case (for value),
 /arckit.backlog PRIORITY=risk        # other options: value, moscow, multi
 ```
 
-Outputs land in `projects/<id>/ARC-<id>-BLOG-v1.0.*`.
+Outputs land in `projects/<id>/ARC-<id>-BKLG-v1.0.*`.
 
 ---
 

@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-STRAT-v1.0 |
+| **Document ID** | ARC-[PROJECT_ID]-STRAT-v[VERSION] |
 | **Document Type** | Architecture Strategy |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
 | **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |

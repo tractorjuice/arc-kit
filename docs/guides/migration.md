@@ -78,8 +78,8 @@ Examples:
 | Old Filename | Type Code | New Filename |
 |--------------|-----------|--------------|
 | `project-plan.md` | PLAN | `ARC-{PID}-PLAN-v1.0.md` |
-| `roadmap.md` | ROADMAP | `ARC-{PID}-ROADMAP-v1.0.md` |
-| `backlog.md` | BLOG | `ARC-{PID}-BLOG-v1.0.md` |
+| `roadmap.md` | ROAD | `ARC-{PID}-ROAD-v1.0.md` |
+| `backlog.md` | BKLG | `ARC-{PID}-BKLG-v1.0.md` |
 | `devops-strategy.md` | DEVOPS | `ARC-{PID}-DEVOPS-v1.0.md` |
 | `mlops-strategy.md` | MLOPS | `ARC-{PID}-MLOPS-v1.0.md` |
 | `finops-strategy.md` | FINOPS | `ARC-{PID}-FINOPS-v1.0.md` |
@@ -118,8 +118,8 @@ Examples:
 
 | Old Filename | Type Code | New Filename |
 |--------------|-----------|--------------|
-| `hld-review.md` | HLD | `ARC-{PID}-HLD-v1.0.md` |
-| `dld-review.md` | DLD | `ARC-{PID}-DLD-v1.0.md` |
+| `hld-review.md` | HLDR | `ARC-{PID}-HLDR-v1.0.md` |
+| `dld-review.md` | DLDR | `ARC-{PID}-DLDR-v1.0.md` |
 
 ### Other
 
@@ -175,7 +175,7 @@ Before:
   projects/001-project/hld-review.md
 
 After:
-  projects/001-project/reviews/ARC-001-HLD-v1.0.md
+  projects/001-project/reviews/ARC-001-HLDR-v1.0.md
 ```
 
 ---

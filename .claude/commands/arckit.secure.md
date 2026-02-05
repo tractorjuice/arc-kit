@@ -202,9 +202,9 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SECD" "${
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → Determined version from step 11
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
-- `[DOCUMENT_TYPE_NAME]` → Use the document purpose (e.g., "Business and Technical Requirements")
+- `[DOCUMENT_TYPE_NAME]` → "Secure by Design Assessment"
 - `ARC-[PROJECT_ID]-SECD-v[VERSION]` → Use generated DOC_ID from Step 1
-- `[COMMAND]` → Current command name (e.g., "arckit.secure")
+- `[COMMAND]` → "arckit.secure"
 
 **User-provided fields** (extract from project metadata or user input):
 - `[PROJECT_NAME]` → Full project name from project metadata or user input

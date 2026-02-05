@@ -354,7 +354,7 @@ graph TD
     D[wardley-maps/] -->|Build vs Buy| H
 
     H -->|Informs| E[diagrams/ARC-id-DIAG-001-v1.0.md]
-    H -->|Informs| F[ARC-id-BLOG-v1.0.md]
+    H -->|Informs| F[ARC-id-BKLG-v1.0.md]
     H -->|Informs| G[ARC-id-SOW-v1.0.md]
 
     style H fill:#e1f5ff
@@ -368,7 +368,7 @@ graph TD
 
 **Output Artifacts** (created after platform-design):
 - `diagrams/ARC-<id>-DIAG-001-v1.0.md` → C4 diagrams of platform technical architecture
-- `ARC-<id>-BLOG-v1.0.md` → MVP features converted to user stories, sprint plan
+- `ARC-<id>-BKLG-v1.0.md` → MVP features converted to user stories, sprint plan
 - `ARC-<id>-SOW-v1.0.md` → RFP for platform development (if procuring vendor)
 - `ARC-<id>-EVAL-v1.0.md` → Vendor scoring (if multiple proposals)
 - `ARC-<id>-TRAC-v1.0.md` → Requirements → Platform components → Tests

@@ -87,9 +87,10 @@ projects/
 │   ├── ARC-001-TRAC-v1.0.md     # Traceability Matrix
 │   ├── ARC-001-SOW-v1.0.md      # Statement of Work
 │   ├── ARC-001-EVAL-v1.0.md     # Evaluation Criteria
-│   ├── ARC-001-BLOG-v1.0.md     # Product Backlog
+│   ├── ARC-001-BKLG-v1.0.md     # Product Backlog
 │   ├── ARC-001-PLAN-v1.0.md     # Project Plan
-│   ├── ARC-001-ROADMAP-v1.0.md  # Roadmap
+│   ├── ARC-001-ROAD-v1.0.md     # Roadmap
+│   ├── ARC-001-STRAT-v1.0.md    # Architecture Strategy
 │   ├── ARC-001-DPIA-v1.0.md     # DPIA
 │   ├── ARC-001-SNOW-v1.0.md     # ServiceNow Design
 │   ├── ARC-001-DEVOPS-v1.0.md   # DevOps Strategy
@@ -113,8 +114,8 @@ projects/
 │   ├── data-contracts/
 │   │   └── ARC-001-DMC-{NNN}-v1.0.md   # Data Mesh Contracts
 │   ├── reviews/
-│   │   ├── ARC-001-HLD-v1.0.md         # HLD Review
-│   │   └── ARC-001-DLD-v1.0.md         # DLD Review
+│   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
+│   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
 │   └── vendors/
 │       └── {vendor-name}/
 │           ├── hld*.md
@@ -138,12 +139,13 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | **Planning** | | | |
 | | SOBC | `ARC-*-SOBC-*.md` | Strategic Outline Business Case |
 | | PLAN | `ARC-*-PLAN-*.md` | Project Plan |
-| | ROADMAP | `ARC-*-ROADMAP-*.md` | Roadmap |
-| | BLOG | `ARC-*-BLOG-*.md` | Product Backlog |
+| | ROAD | `ARC-*-ROAD-*.md` | Roadmap |
+| | STRAT | `ARC-*-STRAT-*.md` | Architecture Strategy |
+| | BKLG | `ARC-*-BKLG-*.md` | Product Backlog |
 | **Architecture** | | | |
 | | PRIN | `ARC-*-PRIN-*.md` | Architecture Principles |
-| | HLD | `ARC-*-HLD-*.md` | High-Level Design Review |
-| | DLD | `ARC-*-DLD-*.md` | Detailed Design Review |
+| | HLDR | `ARC-*-HLDR-*.md` | High-Level Design Review |
+| | DLDR | `ARC-*-DLDR-*.md` | Detailed Design Review |
 | | DATA | `ARC-*-DATA-*.md` | Data Model |
 | | WARD | `ARC-*-WARD-*.md` | Wardley Map |
 | | DIAG | `ARC-*-DIAG-*.md` | Architecture Diagrams |
@@ -176,6 +178,10 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | GCLC | `ARC-*-GCLC-*.md` | G-Cloud Clarifications |
 | | DMC | `ARC-*-DMC-*.md` | Data Mesh Contract |
 | | | `vendors/*/*.md` | Vendor Documents |
+| **Research** | | | |
+| | AWRS | `ARC-*-AWRS-*.md` | AWS Research |
+| | AZRS | `ARC-*-AZRS-*.md` | Azure Research |
+| | DSCT | `ARC-*-DSCT-*.md` | Data Source Discovery |
 | **Other** | | | |
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
 | | ANAL | `ARC-*-ANAL-*.md` | Analysis Report |
@@ -271,14 +277,14 @@ Create `docs/manifest.json` with the discovered structure:
       ],
       "reviews": [
         {
-          "path": "projects/001-project-name/reviews/ARC-001-HLD-v1.0.md",
+          "path": "projects/001-project-name/reviews/ARC-001-HLDR-v1.0.md",
           "title": "High-Level Design Review",
-          "documentId": "ARC-001-HLD-v1.0"
+          "documentId": "ARC-001-HLDR-v1.0"
         },
         {
-          "path": "projects/001-project-name/reviews/ARC-001-DLD-v1.0.md",
+          "path": "projects/001-project-name/reviews/ARC-001-DLDR-v1.0.md",
           "title": "Detailed Design Review",
-          "documentId": "ARC-001-DLD-v1.0"
+          "documentId": "ARC-001-DLDR-v1.0"
         }
       ],
       "vendors": [

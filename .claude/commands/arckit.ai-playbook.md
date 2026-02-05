@@ -364,7 +364,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "AIPB" "${
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
-- `[DOCUMENT_TYPE_NAME]` → "AI Playbook Assessment"
+- `[DOCUMENT_TYPE_NAME]` → "UK Government AI Playbook Assessment"
 - `ARC-[PROJECT_ID]-AIPB-v[VERSION]` → Use generated DOC_ID
 - `[COMMAND]` → "arckit.ai-playbook"
 

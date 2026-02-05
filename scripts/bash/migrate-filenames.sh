@@ -38,13 +38,13 @@ declare -A FILE_MAPPING=(
 
     # Strategy & Operations
     ["project-plan.md"]="PLAN"
-    ["roadmap.md"]="ROADMAP"
+    ["roadmap.md"]="ROAD"
     ["devops-strategy.md"]="DEVOPS"
     ["mlops-strategy.md"]="MLOPS"
     ["finops-strategy.md"]="FINOPS"
     ["operational-readiness.md"]="OPS"
     ["servicenow-design.md"]="SNOW"
-    ["backlog.md"]="BLOG"
+    ["backlog.md"]="BKLG"
     ["platform-design.md"]="PLAT"
 
     # Procurement
@@ -69,10 +69,10 @@ declare -A FILE_MAPPING=(
     ["principles-compliance-assessment.md"]="PRIN-COMP"
 
     # Reviews
-    ["hld-review.md"]="HLD"
-    ["hld.md"]="HLD"  # Alternative name
-    ["dld-review.md"]="DLD"
-    ["dld.md"]="DLD"  # Alternative name
+    ["hld-review.md"]="HLDR"
+    ["hld.md"]="HLDR"  # Alternative name
+    ["dld-review.md"]="DLDR"
+    ["dld.md"]="DLDR"  # Alternative name
 
     # Other
     ["PROJECT-STORY.md"]="STORY"
@@ -329,7 +329,7 @@ migrate_project() {
             local new_name="ARC-${project_id}-${type_code}-v1.0.md"
 
             # Determine subdirectory for reviews
-            if [[ "$type_code" == "HLD" || "$type_code" == "DLD" ]]; then
+            if [[ "$type_code" == "HLDR" || "$type_code" == "DLDR" ]]; then
                 local new_path="$project_dir/reviews/$new_name"
             else
                 local new_path="$project_dir/$new_name"

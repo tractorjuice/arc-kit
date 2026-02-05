@@ -30,7 +30,7 @@ Run `/arckit.hld-review` and `/arckit.dld-review` to apply structured quality ga
 /arckit.dld-review Review <vendor> detailed design for <project>
 ```
 
-Outputs (`reviews/ARC-<id>-HLD-v1.0.md`, `reviews/ARC-<id>-DLD-v1.0.md`) capture compliance results, gaps, and actions.
+Outputs (`reviews/ARC-<id>-HLDR-v1.0.md`, `reviews/ARC-<id>-DLDR-v1.0.md`) capture compliance results, gaps, and actions.
 
 ---
 

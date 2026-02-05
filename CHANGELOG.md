@@ -57,6 +57,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `/arckit.dos`, `/arckit.evaluate`, `/arckit.gcloud-clarify`, `/arckit.gcloud-search`
   - `/arckit.hld-review`, `/arckit.mod-secure`, `/arckit.plan`
   - `/arckit.roadmap`, `/arckit.strategy`, `/arckit.wardley`
+- **Document Type Code Standardization**: Fixed 5 mismatches between commands and templates:
+  - `backlog`: BLOG → BKLG (template aligned to command)
+  - `dld-review`: DLD → DLDR (template aligned to command)
+  - `hld-review`: HLD → HLDR (template aligned to command)
+  - `mod-secure`: SECD → SECD-MOD (template aligned to command)
+  - `roadmap`: ROADMAP → ROAD (template aligned to command)
+- **Document Type Name Fixes**: 8 commands had incorrect or copy-pasted DOCUMENT_TYPE_NAME values:
+  - `tcop`, `sow`, `traceability`, `secure`: Had "Business and Technical Requirements" (copy-paste from requirements)
+  - `ai-playbook`, `dos`, `gcloud-search`, `roadmap`: Mismatched between command and template
+- **Hardcoded Version Fixes**: `roadmap-template.md` and `architecture-strategy-template.md` had hardcoded `v1.0` instead of `v[VERSION]`
+- **Duplicate Footer Removal**: `sobc.md` had both standardized doc control block AND old "Populate Metadata Footer" block with wrong command reference
+- **Pages Command**: Updated doc type codes (BLOG→BKLG, ROADMAP→ROAD, HLD→HLDR, DLD→DLDR), added STRAT, AWRS, AZRS, DSCT types
+- **Cross-Codebase Consistency**: Updated ~85 files across commands, templates, guides, migration scripts, README, docs/index.html, COMMANDS.md, Codex prompts, and Gemini TOMLs to use correct doc type codes
 - **docs/manifest.json**: Added 10 missing templates to manifest (now 45 total)
 - **DEPENDENCY-MATRIX.md**: Added strategy row/column to Tier 3.5 Strategic Planning, added trello row/column to Tier 7.5 Backlog Export
 - Updated command count to 46 (was 45)

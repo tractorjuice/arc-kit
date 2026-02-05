@@ -20,8 +20,8 @@ $ARGUMENTS
    - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - Source of truth for all requirements
    - Read `projects/{project-dir}/vendors/{vendor}/hld-v*.md` - High-level design
    - Read `projects/{project-dir}/vendors/{vendor}/dld-v*.md` - Detailed design
-   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-HLD-*.md` - Review findings
-   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-DLD-*.md` - Review findings
+   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-HLDR-*.md` - Review findings
+   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-DLDR-*.md` - Review findings
    - Read `.arckit/templates/traceability-matrix-template.md` - Template structure
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.

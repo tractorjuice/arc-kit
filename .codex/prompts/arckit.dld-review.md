@@ -18,7 +18,7 @@ $ARGUMENTS
    - Location of DLD document
 
 2. **Read the review context**:
-   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-HLD-*.md` - Ensure HLD issues were addressed
+   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-HLDR-*.md` - Ensure HLD issues were addressed
    - Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` - Governance rules still apply
    - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - Technical requirements
    - Read `.arckit/templates/dld-review-template.md` - Review checklist

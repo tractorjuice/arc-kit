@@ -2625,7 +2625,7 @@ Classification:
 **Prerequisites**:
 - **MANDATORY**: `ARC-000-PRIN-*.md` (principles)
 - **MANDATORY**: `ARC-*-STKE-*.md` (stakeholders)
-- **RECOMMENDED**: `ARC-*-ROADMAP-*.md`, `ARC-*-WARD-*.md`, `ARC-*-SOBC-*.md`
+- **RECOMMENDED**: `ARC-*-ROAD-*.md`, `ARC-*-WARD-*.md`, `ARC-*-SOBC-*.md`
 
 **Output**: `projects/NNN-project-name/ARC-NNN-STGY-v1.0.md`
 

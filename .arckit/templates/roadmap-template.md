@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-ROADMAP-v1.0 |
+| **Document ID** | ARC-[PROJECT_ID]-ROAD-v[VERSION] |
 | **Document Type** | Strategic Architecture Roadmap |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
 | **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |

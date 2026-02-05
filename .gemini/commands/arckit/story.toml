@@ -150,8 +150,8 @@ find \"$PROJECT_DIR\" -type f -name \"*.md\" | sort
 - `vendors/*/scoring.md` - Vendor scoring sheets
 
 **Design Review Artifacts**:
-- `vendors/*/reviews/ARC-*-HLD-*.md` - High-Level Design reviews
-- `vendors/*/reviews/ARC-*-DLD-*.md` - Detailed Design reviews
+- `vendors/*/reviews/ARC-*-HLDR-*.md` - High-Level Design reviews
+- `vendors/*/reviews/ARC-*-DLDR-*.md` - Detailed Design reviews
 
 **Delivery Artifacts**:
 - `ARC-*-BKLG-*.md` - Product backlog with user stories
@@ -318,7 +318,7 @@ For each artifact found, **read the file** and extract key information:
 - Winner: Vendor name and score
 - Score breakdown: Individual vendor scores
 
-**vendors/*/reviews/ARC-*-HLD-*.md**:
+**vendors/*/reviews/ARC-*-HLDR-*.md**:
 - Verdict: APPROVED/APPROVED WITH CONDITIONS/REJECTED
 - Principles compliance: Percentage
 - Requirements coverage: Percentage
@@ -326,7 +326,7 @@ For each artifact found, **read the file** and extract key information:
 - Concerns: Count of concerns
 - Gaps: Count of gaps
 
-**vendors/*/reviews/ARC-*-DLD-*.md**:
+**vendors/*/reviews/ARC-*-DLDR-*.md**:
 - Verdict: APPROVED/APPROVED WITH CONDITIONS/REJECTED
 - Implementation readiness: Assessment
 - Security controls: Status
@@ -564,7 +564,7 @@ For **the 2 key chapters** in the template, write a comprehensive narrative usin
 - Verdict: APPROVED/APPROVED WITH CONDITIONS/REJECTED for each review
 - Decision Points: HLD review decision, DLD review decision
 - Traceability Chain: Principles → HLD, Requirements → HLD/DLD, Risk → DLD
-- Artifacts created: ARC-*-HLD-*.md, ARC-*-DLD-*.md
+- Artifacts created: ARC-*-HLDR-*.md, ARC-*-DLDR-*.md
 
 **Chapter 7: Delivery Planning - From Requirements to Sprints**
 - Timeline context: Dates, duration, percentage of project

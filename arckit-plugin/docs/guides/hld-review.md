@@ -21,7 +21,7 @@
 /arckit.hld-review Review HLD for <project/service>
 ```
 
-Output: `projects/<id>/reviews/ARC-<id>-HLD-v1.0.md`
+Output: `projects/<id>/reviews/ARC-<id>-HLDR-v1.0.md`
 
 ---
 

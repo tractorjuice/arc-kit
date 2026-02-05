@@ -6,7 +6,7 @@
 
 | Field | Value |
 |-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-BLOG-v[VERSION] |
+| **Document ID** | ARC-[PROJECT_ID]-BKLG-v[VERSION] |
 | **Document Type** | Product Backlog |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
 | **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |

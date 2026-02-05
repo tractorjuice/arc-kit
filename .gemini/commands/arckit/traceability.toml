@@ -20,8 +20,8 @@ You are helping an enterprise architect create a comprehensive traceability matr
    - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - Source of truth for all requirements
    - Read `projects/{project-dir}/vendors/{vendor}/hld-v*.md` - High-level design
    - Read `projects/{project-dir}/vendors/{vendor}/dld-v*.md` - Detailed design
-   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-HLD-*.md` - Review findings
-   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-DLD-*.md` - Review findings
+   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-HLDR-*.md` - Review findings
+   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-DLDR-*.md` - Review findings
 
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates-custom/traceability-matrix-template.md` exists (user override)
@@ -209,9 +209,9 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"TRAC\"
 - `[PROJECT_ID]` → Extract from project path (e.g., \"001\" from \"projects/001-project-name\")
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
-- `[DOCUMENT_TYPE_NAME]` → Use the document purpose (e.g., \"Business and Technical Requirements\")
+- `[DOCUMENT_TYPE_NAME]` → \"Requirements Traceability Matrix\"
 - `ARC-[PROJECT_ID]-TRAC-v[VERSION]` → Use generated DOC_ID from Step 1
-- `[COMMAND]` → Current command name (e.g., \"arckit.traceability\")
+- `[COMMAND]` → \"arckit.traceability\"
 
 **User-provided fields** (extract from project metadata or user input):
 - `[PROJECT_NAME]` → Full project name from project metadata or user input

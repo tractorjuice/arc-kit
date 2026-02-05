@@ -175,8 +175,8 @@ flowchart TD
 | 9 | [DATE] | [DAYS] | Architecture | `/arckit.diagram` | diagrams/ARC-*-DIAG-*.md | C4 context/container/component diagrams |
 | 10 | [DATE] | [DAYS] | Procurement | `/arckit.sow` | ARC-*-SOW-*.md | Statement of Work for vendor RFP |
 | 11 | [DATE] | [DAYS] | Evaluation | `/arckit.evaluate` | ARC-*-EVAL-*.md | Vendor evaluation framework |
-| 12 | [DATE] | [DAYS] | Design Review | `/arckit.hld-review` | vendors/[VENDOR]/reviews/ARC-*-HLD-*.md | High-level design assessment |
-| 13 | [DATE] | [DAYS] | Design Review | `/arckit.dld-review` | vendors/[VENDOR]/reviews/ARC-*-DLD-*.md | Detailed design assessment |
+| 12 | [DATE] | [DAYS] | Design Review | `/arckit.hld-review` | vendors/[VENDOR]/reviews/ARC-*-HLDR-*.md | High-level design assessment |
+| 13 | [DATE] | [DAYS] | Design Review | `/arckit.dld-review` | vendors/[VENDOR]/reviews/ARC-*-DLDR-*.md | Detailed design assessment |
 | 14 | [DATE] | [DAYS] | Delivery | `/arckit.backlog` | ARC-*-BKLG-*.md | [N] user stories across [M] sprints |
 | 15 | [DATE] | [DAYS] | Operations | `/arckit.servicenow` | ARC-*-SNOW-*.md | CMDB, SLAs, incident management |
 | 16 | [DATE] | [DAYS] | Compliance | `/arckit.tcop` | ARC-*-TCOP-*.md | Technology Code of Practice (13 points) |
@@ -274,7 +274,7 @@ Following vendor selection, the chosen vendor ([VENDOR_NAME]) provided High-Leve
      - ❌ Gaps: [List gaps]
    - **Verdict**: [APPROVED/APPROVED WITH CONDITIONS/REJECTED]
    - **Conditions**: [List any conditional approval requirements]
-   - Created `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLD-*.md`
+   - Created `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLDR-*.md`
 
 2. **Detailed Design Review** (`/arckit.dld-review` - [DATE])
    - Reviewed DLD document from [VENDOR_NAME]
@@ -289,7 +289,7 @@ Following vendor selection, the chosen vendor ([VENDOR_NAME]) provided High-Leve
      - ⚠️ Needs clarification: [List]
      - ❌ Requires rework: [List]
    - **Verdict**: [APPROVED/APPROVED WITH CONDITIONS/REJECTED]
-   - Created `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLD-*.md`
+   - Created `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLDR-*.md`
 
 **Design Review Traceability**:
 
@@ -328,8 +328,8 @@ Data Requirements → Database Schema Review → DLD Review Findings
 ```
 
 **Artifacts Created**:
-- `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLD-*.md`
-- `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLD-*.md`
+- `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLDR-*.md`
+- `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLDR-*.md`
 
 ---
 
@@ -697,8 +697,8 @@ Complete list of all artifacts generated during this project:
 | 10 | Statement of Work | `projects/{project_id}/ARC-*-SOW-*.md` | [DATE] | `/arckit.sow` | ✅ |
 | 11 | Evaluation Criteria | `projects/{project_id}/ARC-*-EVAL-*.md` | [DATE] | `/arckit.evaluate` | ✅ |
 | 12 | Vendor Scoring | `projects/{project_id}/vendors/*/scoring.md` | [DATE] | `/arckit.evaluate` | ✅ |
-| 13 | HLD Review | `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLD-*.md` | [DATE] | `/arckit.hld-review` | ✅ |
-| 14 | DLD Review | `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLD-*.md` | [DATE] | `/arckit.dld-review` | ✅ |
+| 13 | HLD Review | `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLDR-*.md` | [DATE] | `/arckit.hld-review` | ✅ |
+| 14 | DLD Review | `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLDR-*.md` | [DATE] | `/arckit.dld-review` | ✅ |
 | 15 | Product Backlog | `projects/{project_id}/ARC-*-BKLG-*.md` | [DATE] | `/arckit.backlog` | ✅ |
 | 16 | ServiceNow Design | `projects/{project_id}/ARC-*-SNOW-*.md` | [DATE] | `/arckit.servicenow` | ✅ |
 | 17 | TCoP Review | `projects/{project_id}/ARC-*-TCOP-*.md` | [DATE] | `/arckit.tcop` | ✅ |

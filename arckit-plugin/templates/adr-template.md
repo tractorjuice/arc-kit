@@ -363,7 +363,7 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 **Architecture diagrams**: `projects/XXX/diagrams/ARC-XXX-DIAG-*.md`
 - [List C4/deployment/sequence diagrams showing this decision]
 
-**Strategic roadmap**: `projects/XXX/ARC-*-ROADMAP-*.md`
+**Strategic roadmap**: `projects/XXX/ARC-*-ROAD-*.md`
 - [Theme/initiative this decision supports]
 
 ### 9.3 Design Documents

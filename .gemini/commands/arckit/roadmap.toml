@@ -285,7 +285,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"ROAD\"
 - `[PROJECT_ID]` → Extract from project path (e.g., \"001\" from \"projects/001-project-name\")
 - `[VERSION]` → \"1.0\" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
-- `[DOCUMENT_TYPE_NAME]` → \"Architecture Roadmap\"
+- `[DOCUMENT_TYPE_NAME]` → \"Strategic Architecture Roadmap\"
 - `ARC-[PROJECT_ID]-ROAD-v[VERSION]` → Use generated DOC_ID
 - `[COMMAND]` → \"arckit.roadmap\"
 
