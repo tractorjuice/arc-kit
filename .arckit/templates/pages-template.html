@@ -509,6 +509,34 @@
             margin: 2rem 0;
         }
 
+        /* Guides list */
+        .app-guides-list {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 2rem 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .app-guides-list li {
+            margin: 0;
+        }
+
+        .app-guides-list a {
+            display: block;
+            padding: 0.75rem 1rem;
+            background: var(--background-light);
+            border-left: 4px solid var(--primary-color);
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: background 0.15s;
+        }
+
+        .app-guides-list a:hover {
+            background: #e8e8e8;
+        }
+
         /* Mermaid Diagrams - Full Width */
         .app-markdown .mermaid {
             background: #fff;
@@ -623,6 +651,17 @@
             text-decoration: underline;
         }
 
+        .app-header__guides-link {
+            color: white !important;
+            background: var(--primary-color);
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+        }
+
+        .app-header__guides-link:hover {
+            background: var(--primary-dark);
+        }
+
         /* Footer */
         .app-footer {
             background: var(--background-light);
@@ -640,12 +679,6 @@
         }
 
         .app-footer a {
-            color: var(--primary-color);
-        }
-
-        /* Stats */
-        .app-header__stats .app-stat-value {
-            font-weight: 700;
             color: var(--primary-color);
         }
 
@@ -688,7 +721,7 @@
                 padding: 1.5rem;
             }
 
-            .app-header__nav a {
+            .app-header__nav a:not(.app-header__guides-link) {
                 display: none;
             }
         }
@@ -750,7 +783,7 @@
                 <a href="#" class="app-header__link" id="header-title">Project Documentation</a>
             </div>
             <nav class="app-header__nav" aria-label="Site navigation">
-                <span class="app-header__stats" id="header-stats"></span>
+                <a href="#" id="guides-link" class="app-header__guides-link">Guides</a>
                 <a href="https://github.com/{{OWNER}}/{{REPO}}" target="_blank" rel="noopener">GitHub</a>
                 <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
             </nav>
@@ -944,6 +977,16 @@
         function buildSearchIndex(manifest) {
             allDocuments = [];
 
+            // Add guides
+            if (manifest.guides) {
+                manifest.guides.forEach(doc => {
+                    allDocuments.push({
+                        ...doc,
+                        searchText: `${doc.title} ${doc.category || ''} guide command`.toLowerCase()
+                    });
+                });
+            }
+
             // Add global documents
             if (manifest.global) {
                 manifest.global.forEach(doc => {
@@ -1076,6 +1119,75 @@
                     results.classList.remove('visible');
                 }
             });
+        }
+
+        // ============================================
+        // Guides Index Page
+        // ============================================
+        function showGuidesIndex() {
+            const content = document.getElementById('content');
+            const toc = document.getElementById('toc');
+            toc.style.display = 'none';
+
+            if (!manifest || !manifest.guides || manifest.guides.length === 0) {
+                content.innerHTML = `
+                    <div class="app-welcome">
+                        <h1>Guides</h1>
+                        <p>No guides available. Guides are command usage documentation found in <code>docs/guides/</code>.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // Group guides by category
+            const byCategory = {};
+            manifest.guides.forEach(guide => {
+                const cat = guide.category || 'Other';
+                if (!byCategory[cat]) byCategory[cat] = [];
+                byCategory[cat].push(guide);
+            });
+
+            // Sort categories
+            const categoryOrder = ['Discovery', 'Planning', 'Architecture', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Research', 'Other'];
+            const sortedCategories = Object.keys(byCategory).sort((a, b) => {
+                const aIdx = categoryOrder.indexOf(a);
+                const bIdx = categoryOrder.indexOf(b);
+                return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+            });
+
+            let guidesHtml = '';
+            sortedCategories.forEach(category => {
+                guidesHtml += `<h2>${category}</h2><ul class="app-guides-list">`;
+                byCategory[category].forEach(guide => {
+                    guidesHtml += `<li><a href="#${guide.path}" data-path="${guide.path}">${guide.title}</a></li>`;
+                });
+                guidesHtml += '</ul>';
+            });
+
+            content.innerHTML = `
+                <div class="app-doc-header">
+                    <div class="app-doc-breadcrumb">Documentation</div>
+                    <h1 class="app-doc-title">Command Guides</h1>
+                </div>
+                <div class="app-markdown">
+                    <p>These guides explain how to use each ArcKit command, including prerequisites, expected outputs, and best practices.</p>
+                    ${guidesHtml}
+                </div>
+            `;
+
+            // Add click handlers for guide links
+            content.querySelectorAll('a[data-path]').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const path = link.dataset.path;
+                    window.location.hash = path;
+                    loadDocument(path);
+                });
+            });
+
+            // Clear hash and active states
+            history.pushState(null, '', window.location.pathname);
+            document.querySelectorAll('#nav-container a').forEach(a => a.classList.remove('active'));
         }
 
         // ============================================
@@ -1414,12 +1526,6 @@
                         `Generated: ${date.toLocaleDateString()}`;
                 }
 
-                // Update header stats
-                const totalDocs = allDocuments.length || countDocuments(manifest);
-                const projectCount = manifest.projects ? manifest.projects.length : 0;
-                document.getElementById('header-stats').innerHTML =
-                    `<span class="app-stat-value">${totalDocs}</span> docs · <span class="app-stat-value">${projectCount}</span> projects`;
-
                 // Build search index
                 buildSearchIndex(manifest);
 
@@ -1434,6 +1540,13 @@
 
                 // Setup keyboard shortcuts
                 setupKeyboardShortcuts();
+
+                // Setup guides link
+                document.getElementById('guides-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showGuidesIndex();
+                    closeMobileSidebar();
+                });
 
                 // Handle initial hash
                 if (window.location.hash) {
@@ -1452,24 +1565,6 @@
                     </div>
                 `;
             }
-        }
-
-        function countDocuments(manifest) {
-            let count = 0;
-            if (manifest.global) count += manifest.global.length;
-            if (manifest.projects) {
-                manifest.projects.forEach(p => {
-                    if (p.documents) count += p.documents.length;
-                    if (p.diagrams) count += p.diagrams.length;
-                    if (p.decisions) count += p.decisions.length;
-                    if (p.vendors) {
-                        p.vendors.forEach(v => {
-                            if (v.documents) count += v.documents.length;
-                        });
-                    }
-                });
-            }
-            return count;
         }
 
         // Mobile menu toggle (header hamburger + backdrop)

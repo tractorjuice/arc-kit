@@ -25,7 +25,34 @@ Generate a GitHub Pages site for this ArcKit repository.
 
 Scan the repository to find all ArcKit artifacts:
 
-### 1.1 Global Documents
+### 1.1 Guides (Command Documentation)
+
+Check `docs/guides/` for command usage guides:
+```
+docs/guides/
+├── requirements.md      # How to use /arckit.requirements
+├── principles.md        # How to use /arckit.principles
+├── risk.md              # How to use /arckit.risk
+└── {other guides}
+```
+
+Extract the title from the first `#` heading in each guide file.
+
+**Guide Categories** (based on filename):
+
+| Category | Guide Files |
+|----------|-------------|
+| Discovery | requirements, stakeholders, stakeholder-analysis, research, datascout |
+| Planning | sobc, business-case, plan, roadmap, backlog |
+| Architecture | principles, adr, diagram, wardley, data-model, hld-review, dld-review, design-review, platform-design, data-mesh-contract |
+| Governance | risk, risk-management, traceability, principles-compliance, analyze |
+| Compliance | tcop, secure, mod-secure, dpia, ai-playbook, atrs, jsp-936, service-assessment |
+| Operations | devops, mlops, finops, servicenow, operationalize |
+| Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
+| Research | aws-research, azure-research |
+| Other | pages, story, trello, migration |
+
+### 1.2 Global Documents
 
 Check `projects/000-global/` for global artifacts:
 ```
@@ -34,7 +61,7 @@ projects/000-global/
 └── {other global documents}
 ```
 
-### 1.2 Project Documents
+### 1.3 Project Documents
 
 Check `projects/` for all project folders. Documents use standardized naming: `ARC-{PROJECT_ID}-{TYPE}-v{VERSION}.md`
 
@@ -157,6 +184,18 @@ Create `docs/manifest.json` with the discovered structure:
     \"branch\": \"main\"
   },
   \"defaultDocument\": \"projects/000-global/ARC-000-PRIN-v1.0.md\",
+  \"guides\": [
+    {
+      \"path\": \"docs/guides/requirements.md\",
+      \"title\": \"Requirements Guide\",
+      \"category\": \"Discovery\"
+    },
+    {
+      \"path\": \"docs/guides/principles.md\",
+      \"title\": \"Principles Guide\",
+      \"category\": \"Architecture\"
+    }
+  ],
   \"global\": [
     {
       \"path\": \"projects/000-global/ARC-000-PRIN-v1.0.md\",
@@ -307,6 +346,7 @@ Projects Found: {count}
 Documents Indexed: {total_documents}
 
 Document Breakdown:
+- Guides: {guides_count}
 - Global: {global_count}
 - Project Documents: {project_doc_count}
 - Diagrams: {diagram_count}
