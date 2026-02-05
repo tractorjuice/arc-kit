@@ -22,6 +22,16 @@ Identify inconsistencies, gaps, ambiguities, and compliance issues across all ar
 
 ## Execution Steps
 
+### 0. Read the Template
+
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates/analysis-report-template.md` exists in the project root
+- **If found**: Read the user's customized template (user override takes precedence)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/analysis-report-template.md` (plugin default)
+
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize analyze`
+
 ### 1. Discover Project Context
 
 Identify the project directory to analyze:

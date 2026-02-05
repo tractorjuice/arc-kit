@@ -22,6 +22,16 @@ A project plan shows:
 $ARGUMENTS
 ```
 
+## Step 0: Read the Template
+
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/project-plan-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/project-plan-template.md` (default)
+
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize plan`
+
 ## Step 1: Understand the Context
 
 Read existing project artifacts to tailor the plan:

@@ -477,11 +477,6 @@
           "category": "UK Government"
         },
         {
-          "path": ".arckit/templates/uk-gov-tcop-template.md",
-          "title": "TCoP Review Template",
-          "category": "UK Government"
-        },
-        {
           "path": ".arckit/templates/tcop-review-template.md",
           "title": "TCoP Assessment Template",
           "category": "UK Government"
@@ -535,6 +530,56 @@
           "path": ".arckit/templates/servicenow-design-template.md",
           "title": "ServiceNow Design Template",
           "category": "Operations"
+        },
+        {
+          "path": ".arckit/templates/analysis-report-template.md",
+          "title": "Governance Analysis Report Template",
+          "category": "Governance"
+        },
+        {
+          "path": ".arckit/templates/architecture-strategy-template.md",
+          "title": "Architecture Strategy Template",
+          "category": "Planning"
+        },
+        {
+          "path": ".arckit/templates/aws-research-template.md",
+          "title": "AWS Research Template",
+          "category": "Research"
+        },
+        {
+          "path": ".arckit/templates/azure-research-template.md",
+          "title": "Azure Research Template",
+          "category": "Research"
+        },
+        {
+          "path": ".arckit/templates/datascout-template.md",
+          "title": "Data Source Discovery Template",
+          "category": "Research"
+        },
+        {
+          "path": ".arckit/templates/dos-requirements-template.md",
+          "title": "DOS Requirements Template",
+          "category": "UK Government"
+        },
+        {
+          "path": ".arckit/templates/gcloud-clarify-template.md",
+          "title": "G-Cloud Clarification Template",
+          "category": "UK Government"
+        },
+        {
+          "path": ".arckit/templates/gcloud-requirements-template.md",
+          "title": "G-Cloud Requirements Template",
+          "category": "UK Government"
+        },
+        {
+          "path": ".arckit/templates/pages-template.html",
+          "title": "GitHub Pages Template",
+          "category": "Publishing"
+        },
+        {
+          "path": ".arckit/templates/project-plan-template.md",
+          "title": "Project Plan Template",
+          "category": "Planning"
         }
       ]
     },

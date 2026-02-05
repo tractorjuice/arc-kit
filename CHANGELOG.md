@@ -42,8 +42,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Template References**: 8 commands now explicitly reference their templates with user override support:
+  - `/arckit.analyze` → `analysis-report-template.md`
+  - `/arckit.dos` → `dos-requirements-template.md`
+  - `/arckit.evaluate` → now references both `evaluation-criteria-template.md` and `vendor-scoring-template.md`
+  - `/arckit.jsp-936` → `jsp-936-template.md`
+  - `/arckit.mod-secure` → `mod-secure-by-design-template.md`
+  - `/arckit.plan` → `project-plan-template.md`
+  - `/arckit.principles-compliance` → `principles-compliance-assessment-template.md`
+  - `/arckit.service-assessment` → `service-assessment-prep-template.md`
+- **docs/manifest.json**: Added 10 missing templates to manifest (now 45 total)
 - **DEPENDENCY-MATRIX.md**: Added strategy row/column to Tier 3.5 Strategic Planning, added trello row/column to Tier 7.5 Backlog Export
 - Updated command count to 46 (was 45)
+
+### Removed
+
+- **Orphan Template**: Removed `uk-gov-tcop-template.md` (duplicate of `tcop-review-template.md`)
 
 ---
 

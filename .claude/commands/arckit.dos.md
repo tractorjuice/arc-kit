@@ -21,6 +21,16 @@ This command generates DOS-compliant procurement documentation from your existin
 
 ## Instructions
 
+### 0. Read the Template
+
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/dos-requirements-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/dos-requirements-template.md` (default)
+
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize dos`
+
 ### 1. Read Available Documents
 
 Scan the project directory for existing artifacts and read them to inform this document:

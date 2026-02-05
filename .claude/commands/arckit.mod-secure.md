@@ -37,6 +37,16 @@ Since August 2023, ALL Defence capabilities, technology infrastructure, and digi
 - **Suppliers must attest** that systems are secure
 - Senior Responsible Owners (SROs), capability owners, and delivery teams are **accountable**
 
+## Read the Template
+
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/mod-secure-by-design-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/mod-secure-by-design-template.md` (default)
+
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize mod-secure`
+
 ## Your Task
 
 Generate a comprehensive Secure by Design assessment document using the **continuous risk management** approach by:

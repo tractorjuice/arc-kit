@@ -31,9 +31,19 @@ User request:
 
 ## Your Task
 
-Generate comprehensive JSP 936 AI assurance documentation following this rigorous 10-step process.
+Generate comprehensive JSP 936 AI assurance documentation following this rigorous process.
 
 ---
+
+## Step 0: Read the Template
+
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/jsp-936-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/jsp-936-template.md` (default)
+
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize jsp-936`
 
 ## Step 1: Read Available Documents
 
