@@ -56,10 +56,10 @@ Extract the title from the first `#` heading in each guide file.
 
 | Status | Description | Guide Files |
 |--------|-------------|-------------|
-| live | Production-ready | plan, principles, stakeholders, risk, sobc, requirements, data-model, sow, evaluate, diagram, traceability, principles-compliance, story, customize |
-| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure |
-| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs, pages |
-| experimental | Early adopters | platform-design, wardley, azure-research, aws-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936 |
+| live | Production-ready | plan, principles, stakeholders, risk, sobc, requirements, data-model, diagram, traceability, principles-compliance, story |
+| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, pages |
+| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs |
+| experimental | Early adopters | platform-design, wardley, azure-research, aws-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936, customize, sow, evaluate |
 
 ### 1.2 Global Documents
 
