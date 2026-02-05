@@ -783,7 +783,7 @@
                 <a href="#" class="app-header__link" id="header-title">Project Documentation</a>
             </div>
             <nav class="app-header__nav" aria-label="Site navigation">
-                <a href="#" id="guides-link" class="app-header__guides-link">Guides</a>
+                <a href="#guides" id="guides-link" class="app-header__guides-link">Guides</a>
                 <a href="https://github.com/{{OWNER}}/{{REPO}}" target="_blank" rel="noopener">GitHub</a>
                 <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
             </nav>
@@ -1167,7 +1167,7 @@
             content.innerHTML = `
                 <div class="app-doc-header">
                     <div class="app-doc-breadcrumb">Documentation</div>
-                    <h1 class="app-doc-title">Command Guides</h1>
+                    <h1 class="app-doc-title">AI Command Guides</h1>
                 </div>
                 <div class="app-markdown">
                     <p>These guides explain how to use each ArcKit command, including prerequisites, expected outputs, and best practices.</p>
@@ -1185,8 +1185,7 @@
                 });
             });
 
-            // Clear hash and active states
-            history.pushState(null, '', window.location.pathname);
+            // Clear active states in sidebar
             document.querySelectorAll('#nav-container a').forEach(a => a.classList.remove('active'));
         }
 
@@ -1544,13 +1543,26 @@
                 // Setup guides link
                 document.getElementById('guides-link').addEventListener('click', (e) => {
                     e.preventDefault();
-                    showGuidesIndex();
+                    window.location.hash = 'guides';
                     closeMobileSidebar();
                 });
 
-                // Handle initial hash
+                // Handle initial hash or load default document
                 if (window.location.hash) {
                     const path = window.location.hash.slice(1);
+                    if (path === 'guides') {
+                        showGuidesIndex();
+                    } else {
+                        loadDocument(path);
+
+                        // Mark as active
+                        const link = document.querySelector(`a[data-path="${path}"]`);
+                        if (link) link.classList.add('active');
+                    }
+                } else if (manifest.defaultDocument) {
+                    // Load default document (e.g., Architecture Principles)
+                    const path = manifest.defaultDocument;
+                    window.location.hash = path;
                     loadDocument(path);
 
                     // Mark as active
@@ -1592,7 +1604,9 @@
         // Hash change handler
         window.addEventListener('hashchange', () => {
             const path = window.location.hash.slice(1);
-            if (path) {
+            if (path === 'guides') {
+                showGuidesIndex();
+            } else if (path) {
                 loadDocument(path);
 
                 // Update active state
