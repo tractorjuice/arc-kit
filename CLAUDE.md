@@ -4,7 +4,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** - a Python CLI that provides 45 slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI) to generate architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
+ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing 46 slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI) to generate architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
+
+**Two distribution formats** exist side-by-side in this repo:
+1. **CLI package** (`src/arckit_cli/`) -- Python CLI installed via `pip`/`uv`, runs `arckit init` to scaffold projects and copy commands/templates into them
+2. **Claude Code plugin** (`arckit-plugin/`) -- Standalone plugin loaded directly by Claude Code via `--plugin-dir`, no CLI installation required
+
+Both share the same commands, agents, templates, and scripts but have independent version numbers (CLI: `VERSION` + `pyproject.toml`, Plugin: `arckit-plugin/VERSION` + `arckit-plugin/.claude-plugin/plugin.json`). The CLI copies files into target projects; the plugin references them in-place via `${CLAUDE_PLUGIN_ROOT}`.
 
 ## Build & Development Commands
 
@@ -163,12 +169,15 @@ project/
 
 ### Helper Scripts
 
+**`scripts/bash/common.sh`**: Shared utility functions (find repo root, get paths, slugify, logging) sourced by all other scripts
 **`scripts/bash/create-project.sh`**: Creates numbered project directories (001-*, 002-*), returns JSON with path
 **`scripts/bash/generate-document-id.sh`**: Generates doc IDs (e.g., ARC-001-REQ-v1.0) and filenames
   - `--filename` flag returns the filename with `.md` extension
   - `--next-num` flag returns the next sequential number for multi-instance types (ADR, DIAG, WARD, DMC)
-**`scripts/bash/migrate-filenames.sh`**: Migrates existing project files to new naming convention
-**`scripts/converter.py`**: Converts Claude commands (.md) to Gemini format (.toml)
+**`scripts/bash/check-prerequisites.sh`**: Validates environment (principles exist, tools available)
+**`scripts/bash/list-projects.sh`**: Lists all ArcKit projects with artifact counts (table or JSON output)
+**`scripts/bash/migrate-filenames.sh`**: Migrates existing project files to new naming convention (supports `--dry-run`)
+**`scripts/converter.py`**: Converts Claude commands (.md) to Gemini format (.toml). For agent-delegating commands, extracts the full agent prompt (not the thin wrapper) since Gemini doesn't support the Task/agent architecture
 
 ## Adding a New Slash Command
 
@@ -177,8 +186,9 @@ project/
 3. Create `docs/guides/{name}.md` with usage guide
 4. If command needs heavy web research (>10 WebSearch/WebFetch calls), also create `.claude/agents/arckit-{name}.md` and make the slash command a thin wrapper that delegates to the agent
 5. Run `python scripts/converter.py` to generate Gemini TOML
-6. Test: `arckit init test --ai claude --no-git && cd test && claude`
-7. Update documentation: README.md, docs/index.html, DEPENDENCY-MATRIX.md, CHANGELOG.md
+6. **Mirror to plugin**: Copy command, template, guide, and agent to `arckit-plugin/` (same relative paths but under `arckit-plugin/commands/`, `arckit-plugin/templates/`, etc.)
+7. Test: `arckit init test --ai claude --no-git && cd test && claude`
+8. Update documentation: README.md, docs/index.html, DEPENDENCY-MATRIX.md, CHANGELOG.md
 
 **Command must**:
 - Check prerequisites before generating
@@ -222,8 +232,10 @@ Users can customize document templates to match their organization's requirement
 - Change requirement ID prefixes (BR/FR/NFR → custom)
 - Add branding, headers, footers
 
-**Plugin Version** (`arckit-plugin`):
-- Same pattern: user overrides in `.arckit/templates/`, plugin defaults in `${CLAUDE_PLUGIN_ROOT}/templates/`
+**Plugin Version** (`arckit-plugin/`):
+- Plugin commands reference templates via `${CLAUDE_PLUGIN_ROOT}/templates/`
+- User overrides in `.arckit/templates/` or `.arckit/templates-custom/` take precedence
+- When adding/modifying templates, update both `arckit-plugin/templates/` and `.arckit/templates/`
 
 ### Document Control Standard
 
@@ -264,15 +276,19 @@ Every template must start with a **Document Control** table followed by **Revisi
 
 ## Version Management
 
-**Version defined in 2 places** (keep synchronized):
+**CLI version** (keep synchronized):
 1. `VERSION` file (source of truth)
 2. `pyproject.toml` `version` field
+
+**Plugin version** (independent from CLI, keep synchronized):
+1. `arckit-plugin/VERSION` (source of truth)
+2. `arckit-plugin/.claude-plugin/plugin.json` `version` field
 
 **Adding new package data files**: Update `pyproject.toml` `[tool.hatch.build.targets.wheel.shared-data]`
 
 ## Test Repositories
 
-ArcKit maintains 20 test repos on GitHub (pattern: `arckit-test-project-v*`):
+ArcKit maintains 22 test repos on GitHub (pattern: `arckit-test-project-v*`):
 
 | Version | Name | Type | Description |
 |---------|------|------|-------------|
