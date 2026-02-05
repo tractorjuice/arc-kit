@@ -282,12 +282,18 @@ principles-compliance → analyze → service-assessment → story
 
 ## Version
 
-- **ArcKit Version**: 1.3.0
+- **ArcKit Version**: 1.4.0
 - **Matrix Date**: 2026-02-05
-- **Commands Documented**: 45
-- **Matrix Rows**: 47 (45 commands + 2 external documents)
+- **Commands Documented**: 46
+- **Matrix Rows**: 47 (45 document-generating commands + 2 external documents)
+- **Note**: `/arckit.customize` (46th command) is a utility command not in the matrix — it has no dependencies and produces no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-02-05 - Added Template Customization Command
+- **Added**: `/arckit.customize` command (46th ArcKit command) for copying templates to `.arckit/templates-custom/`
+- **Not in matrix**: Utility command with no dependencies and no outputs consumed by other commands
+- **Purpose**: Enables template customization that persists across `arckit init` updates
 
 ### 2026-02-05 - Added Architecture Strategy Command
 - **Added**: `/arckit.strategy` command (45th ArcKit command) for synthesising strategic artifacts into executive-level Architecture Strategy document
