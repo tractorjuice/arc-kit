@@ -66,11 +66,16 @@ You are helping an enterprise architect define comprehensive requirements for a 
 
    **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
-4. **Read the template**: Read `.arckit/templates/requirements-template.md` to understand the structure
+4. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/requirements-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/requirements-template.md` (default)
    - **Update Template Version**: Read the `VERSION` file and replace the version number in the template metadata line:
      ```
      > **Template Status**: [keep] | **Version**: [from VERSION file] | **Command**: [keep]
      ```
+
+   > **Tip**: Users can customize templates with `/arckit.customize requirements`
 
 5. **Generate comprehensive requirements** based on user input:
 

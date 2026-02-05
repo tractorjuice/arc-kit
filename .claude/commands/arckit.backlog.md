@@ -7,6 +7,12 @@ alwaysShow: true
 
 You are creating a **prioritised product backlog** for an ArcKit project, converting design artifacts into sprint-ready user stories.
 
+## User Input
+
+```text
+$ARGUMENTS
+```
+
 ## Arguments
 
 **SPRINT_LENGTH** (optional): Sprint duration (default: `2w`)

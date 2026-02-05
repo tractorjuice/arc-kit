@@ -6,6 +6,12 @@ prompt = """
 
 You are helping to conduct a **Secure by Design (SbD) assessment** for a UK Ministry of Defence (MOD) technology project, programme, or capability.
 
+## User Input
+
+```text
+{{args}}
+```
+
 ## Context
 
 Since August 2023, ALL Defence capabilities, technology infrastructure, and digital services **MUST** follow the Secure by Design (SbD) approach mandated in JSP 440 Leaflet 5C. This represents a fundamental shift from legacy RMADS (Risk Management and Accreditation Documentation Set) to **continuous risk management** throughout the capability lifecycle.

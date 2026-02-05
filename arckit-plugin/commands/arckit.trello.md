@@ -7,6 +7,12 @@ alwaysShow: true
 
 You are exporting an ArcKit product backlog to **Trello** by creating a board with sprint lists, labelled cards, and acceptance criteria checklists via the Trello REST API.
 
+## User Input
+
+```text
+$ARGUMENTS
+```
+
 ## Arguments
 
 **BOARD_NAME** (optional): Override the board name

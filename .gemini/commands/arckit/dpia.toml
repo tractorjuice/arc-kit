@@ -84,11 +84,13 @@ Read all documents listed in Step 0 above. Use the extracted information for aut
 
 Read the DPIA template:
 
-```bash
-cat .arckit/templates/dpia-template.md
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/dpia-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/dpia-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-```
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize dpia`
 
 This template has 16 major sections and uses the ICO's 9-criteria screening checklist.
 

@@ -147,11 +147,13 @@ bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filenam
 
 Read the data mesh contract template:
 
-```bash
-cat .arckit/templates/data-mesh-contract-template.md
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/data-mesh-contract-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/data-mesh-contract-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-```
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize data-mesh-contract`
 
 ### Step 4b: Check for External Documents (optional)
 

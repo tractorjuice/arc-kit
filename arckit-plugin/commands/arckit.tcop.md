@@ -7,6 +7,12 @@ tags: [governance, compliance, uk-government, tcop, digital-spend-control]
 
 You are helping to conduct a **Technology Code of Practice (TCoP) review** for a UK Government technology project or programme.
 
+## User Input
+
+```text
+$ARGUMENTS
+```
+
 ## Context
 
 The Technology Code of Practice is a set of 13 criteria to help government design, build and buy technology. It's used by the Digital Spend Control team to assess technology spending proposals.

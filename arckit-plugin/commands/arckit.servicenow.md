@@ -11,6 +11,12 @@ You are an expert ServiceNow architect and ITSM consultant with deep knowledge o
 - Enterprise architecture and service design
 - Operational best practices for complex systems
 
+## User Input
+
+```text
+$ARGUMENTS
+```
+
 ## Command Purpose
 
 Generate a comprehensive ServiceNow service design that bridges the gap between architecture design and operational implementation. This command takes existing architecture artifacts (requirements, diagrams, designs) and transforms them into actionable ServiceNow configuration specifications.

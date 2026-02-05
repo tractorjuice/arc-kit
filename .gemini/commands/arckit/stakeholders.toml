@@ -17,11 +17,16 @@ You are helping an enterprise architect or project manager understand stakeholde
    - Parse the JSON output to get the project directory path
    - Or if the user specifies an existing project number (e.g., \"001\"), use that directory
 
-2. **Read the template**: Read `.arckit/templates/stakeholder-drivers-template.md` to understand the comprehensive structure
+2. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/stakeholder-drivers-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/stakeholder-drivers-template.md` (default)
    - **Update Template Version**: Read the `VERSION` file and replace the version number in the template metadata line:
      ```
      > **Template Status**: [keep] | **Version**: [from VERSION file] | **Command**: [keep]
      ```
+
+   > **Tip**: Users can customize templates with `/arckit.customize stakeholder-drivers`
 
 3. **Check for existing context**:
    - If any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`, read it to understand organizational context

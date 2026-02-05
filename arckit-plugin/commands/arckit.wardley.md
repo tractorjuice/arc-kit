@@ -23,9 +23,11 @@ Wardley Mapping is a strategic situational awareness technique that maps:
 | **Product** | 0.50-0.75 | Products with feature differentiation, maturing market | Buy from vendors, compare features, standardize |
 | **Commodity** | 0.75-1.00 | Utility, standardized, industrialized | Always use commodity/cloud, never build |
 
-## Your Task
+## User Input
 
-**User Request**: {user's wardley mapping request}
+```text
+$ARGUMENTS
+```
 
 ## Step 1: Read Available Documents
 

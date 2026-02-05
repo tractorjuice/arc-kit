@@ -14,9 +14,11 @@ Architecture diagrams are visual representations of system structure, components
 - **Document**: Technical decisions and rationale
 - **Trace**: Requirements through design components
 
-## Your Task
+## User Input
 
-**User Request**: {user's diagram request}
+```text
+$ARGUMENTS
+```
 
 ## Step 1: Understand the Context
 

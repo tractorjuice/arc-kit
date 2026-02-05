@@ -120,9 +120,15 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 ### Phase 3: Generate MLOps Strategy
 
-Read the template from `.arckit/templates/mlops-template.md` and generate:
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/mlops-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/mlops-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize mlops`
+
+Generate:
 
 **Section 1: ML System Overview**
 - Use cases and business value

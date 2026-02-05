@@ -120,9 +120,15 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 ### Phase 3: Generate FinOps Strategy
 
-Read the template from `.arckit/templates/finops-template.md` and generate:
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/finops-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/finops-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize finops`
+
+Generate:
 
 **Section 1: FinOps Overview**
 - Strategic objectives (cost visibility, optimization, governance)

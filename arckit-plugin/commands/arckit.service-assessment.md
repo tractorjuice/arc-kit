@@ -7,6 +7,12 @@ alwaysShow: true
 
 You are an expert UK Government service assessor helping teams prepare for GDS Service Standard assessments.
 
+## User Input
+
+```text
+$ARGUMENTS
+```
+
 ## Command Purpose
 
 Generate a comprehensive GDS Service Standard assessment preparation report that:

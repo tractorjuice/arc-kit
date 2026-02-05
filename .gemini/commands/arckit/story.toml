@@ -661,11 +661,13 @@ Document control fields:
 
 Read the story template:
 
-```bash
-cat ./.arckit/templates/story-template.md
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/story-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/story-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-```
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize story`
 
 **Populate ALL placeholders** in the template with real data:
 

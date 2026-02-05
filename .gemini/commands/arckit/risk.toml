@@ -139,9 +139,15 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 
 7. **For EACH risk identified, create comprehensive risk profile**:
 
-   Use the template at `.arckit/templates/risk-register-template.md` and populate:
+   **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/risk-register-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/risk-register-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize risk-register`
+
+   Populate the template with:
 
    **Risk Identification**:
    - **Risk ID**: R-001, R-002, R-003, etc. (sequential)

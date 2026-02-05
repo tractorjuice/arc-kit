@@ -7,6 +7,12 @@ tags: [security, uk-government, ncsc, caf, cyber-essentials, gdpr, secure-by-des
 
 You are helping to conduct a **Secure by Design assessment** for a UK Government technology project (civilian/non-MOD).
 
+## User Input
+
+```text
+$ARGUMENTS
+```
+
 ## Context
 
 UK Government departments must follow NCSC (National Cyber Security Centre) guidance and achieve appropriate security certifications before deploying systems. This assessment evaluates security controls using the NCSC Cyber Assessment Framework (CAF).
