@@ -31,9 +31,7 @@ User's additional context: {$ARGUMENTS}
 Follow your full process: read requirements, identify categories, conduct web research, build vs buy analysis, TCO comparison, write document, return summary.
 ```
 
-Use `subagent_type` of `general-purpose` is NOT correct. Instead provide the full agent instructions by reading `.claude/agents/arckit-research.md` and passing its content as the prompt context, OR simply describe what needs to happen since the agent definition handles the details.
-
-**Actually**: Use the Task tool with `subagent_type: "general-purpose"` and include in the prompt:
+Use the Task tool with `subagent_type: "general-purpose"` and include in the prompt:
 - The project directory path
 - The user's arguments
 - Instruct it to follow the research agent process defined in `.claude/agents/arckit-research.md`
