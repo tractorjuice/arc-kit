@@ -301,7 +301,31 @@ Create strategic roadmap for multi-year transformation programs:
 
 **Use this when**: You have a multi-year transformation program with multiple initiatives running in parallel. Roadmaps are strategic (multi-year, multi-initiative, executive communication) vs project plans which are tactical (single initiative, detailed tasks, team execution).
 
-**Roadmap feeds into**: `/arckit.plan` for detailed phase execution, `/arckit.sobc` for investment business case, `/arckit.backlog` for prioritized user stories.
+**Roadmap feeds into**: `/arckit.plan` for detailed phase execution, `/arckit.sobc` for investment business case, `/arckit.backlog` for prioritized user stories, `/arckit.strategy` for executive-level synthesis.
+
+### Phase 7.6: Architecture Strategy Synthesis
+**`/arckit.strategy`** → Synthesise strategic artifacts into executive-level Architecture Strategy
+
+Create a comprehensive Architecture Strategy document that synthesises multiple strategic artifacts into a single coherent narrative:
+- **Strategic vision**: 2-3 paragraphs articulating the transformation vision and success definition
+- **Strategic drivers**: Summarised from stakeholder analysis with external drivers (regulatory, market, technology)
+- **Guiding principles**: Key principles with strategic implications, compliance summary
+- **Current state assessment**: Technology landscape, capability maturity baseline (L1-L5), technical debt, SWOT
+- **Target state vision**: Future architecture, capability maturity targets, architecture vision diagram
+- **Technology evolution**: Build vs buy decisions, technology radar (Adopt/Trial/Assess/Hold) from Wardley maps
+- **Strategic themes**: 3-5 investment themes with objectives, initiatives, success criteria, principles alignment
+- **Delivery roadmap summary**: Timeline, phases, milestones from roadmap artifact
+- **Investment summary**: CAPEX/OPEX, NPV, IRR, payback period, benefits realisation from SOBC
+- **Strategic risks**: Top risks with heat map, assumptions, constraints from risk register
+- **Success metrics**: KPIs with baselines and year-over-year targets
+- **Governance model**: Forums, decision rights, review cadence
+- **Traceability**: Driver → Goal → Outcome → Theme → Principle → KPI chain
+
+**Use this when**: You have multiple strategic artifacts (principles, stakeholders, wardley, roadmap, sobc) and need to create a single executive-level document that synthesises them into a coherent strategy. Ideal for Strategy Board presentations, executive briefings, or stakeholder communication.
+
+**Unique requirement**: This is the only ArcKit command with TWO mandatory inputs (principles AND stakeholders). Strategy cannot be created without understanding both the decision framework and the stakeholder drivers.
+
+**Strategy feeds into**: `/arckit.requirements` for detailed requirements, `/arckit.roadmap` for expanded timeline, `/arckit.plan` for project delivery.
 
 ### Phase 7.7: Architecture Decision Records
 **`/arckit.adr`** → Document architectural decisions
@@ -718,6 +742,7 @@ All 44 ArcKit commands with maturity status and example outputs from public test
 | `/arckit.platform-design` | Create platform strategy using Platform Design Toolkit (8 canvases for multi-sided ecosystems) | [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-GAAP-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/ARC-001-PLAT-v1.0.md) | 🟣 Experimental |
 | `/arckit.research` | Research technology, services, and products to meet requirements with build vs buy analysis | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-RSCH-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-RSCH-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-RSCH-001-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-RSCH-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-RSCH-v1.0.md) | 🔵 Beta |
 | `/arckit.wardley` | Create strategic Wardley Maps for architecture decisions and build vs buy analysis | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/wardley-maps/ARC-001-WARD-001-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/wardley-maps/ARC-001-WARD-001-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/wardley-maps/ARC-001-WARD-001-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/wardley-maps/ARC-001-WARD-001-v1.0.md) | 🟣 Experimental |
+| `/arckit.strategy` | Synthesise strategic artifacts into executive-level Architecture Strategy document | — | 🔵 Beta |
 | `/arckit.roadmap` | Create strategic architecture roadmap with multi-year timeline, capability evolution, and governance | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-ROADMAP-v1.0.md) | 🔵 Beta |
 | `/arckit.adr` | Document architectural decisions with options analysis and traceability | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/decisions/ARC-001-ADR-001-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/decisions/ARC-002-ADR-001-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/decisions/ARC-003-ADR-001-v1.0.md) [v3/004](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/004-conference-facilities-modernization/decisions/ARC-004-ADR-001-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/decisions/ARC-005-ADR-001-v1.0.md) [v3/007](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/007-vpn-service-windows11-autopilot/decisions/ARC-007-ADR-001-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/decisions/ARC-001-ADR-001-v1.0.md) | 🔵 Beta |
 

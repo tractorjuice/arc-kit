@@ -41,6 +41,7 @@ graph TD
     F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
+    M --> M1[strategy]
     H -.-> N[diagram]
 
     %% Tier 5: Procurement
@@ -86,6 +87,7 @@ graph TD
     style K fill:#90EE90
     style L fill:#90EE90
     style M fill:#90EE90
+    style M1 fill:#90EE90
     style N fill:#90EE90
     style O fill:#90EE90
     style P fill:#90EE90
@@ -135,6 +137,7 @@ graph TD
     F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
+    M --> M1[strategy]
     H -.-> V[diagram]
 
     %% Tier 5: UK Gov Procurement
@@ -188,6 +191,7 @@ graph TD
     style K fill:#90EE90
     style L fill:#90EE90
     style M fill:#90EE90
+    style M1 fill:#90EE90
     style N fill:#90EE90
     style O fill:#90EE90
     style P fill:#90EE90
@@ -242,6 +246,7 @@ graph TD
     F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
+    M --> M1[strategy]
     H -.-> W[diagram]
 
     %% Tier 5: UK Gov Procurement
@@ -298,6 +303,7 @@ graph TD
     style K fill:#90EE90
     style L fill:#90EE90
     style M fill:#90EE90
+    style M1 fill:#90EE90
     style N fill:#90EE90
     style O fill:#90EE90
     style P fill:#90EE90
@@ -359,6 +365,7 @@ graph TD
     F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
+    M --> M1[strategy]
     H -.-> U[diagram]
 
     %% Tier 5: MOD Procurement
@@ -412,6 +419,7 @@ graph TD
     style K fill:#90EE90
     style L fill:#90EE90
     style M fill:#90EE90
+    style M1 fill:#90EE90
     style N fill:#90EE90
     style O fill:#90EE90
     style P fill:#90EE90
@@ -469,6 +477,7 @@ graph TD
     F1 -.-> K
     K --> L[wardley]
     L --> M[roadmap]
+    M --> M1[strategy]
     H -.-> V[diagram]
 
     %% Tier 5: MOD Procurement
@@ -524,6 +533,7 @@ graph TD
     style K fill:#90EE90
     style L fill:#90EE90
     style M fill:#90EE90
+    style M1 fill:#90EE90
     style N fill:#90EE90
     style O fill:#90EE90
     style P fill:#90EE90

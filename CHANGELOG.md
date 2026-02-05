@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **New Command: `/arckit.strategy`**: Synthesise strategic artifacts into executive-level Architecture Strategy document (45th ArcKit command)
+  - Reads and synthesises: principles (M), stakeholders (M), wardley (R), roadmap (R), sobc (R), risk (O)
+  - Creates single coherent strategic narrative for executives
+  - Includes strategic vision, drivers, principles summary, current/target state, themes, investment, risks, KPIs
+  - Unique among ArcKit commands: requires TWO mandatory inputs (principles AND stakeholders)
+  - Template: `.arckit/templates/architecture-strategy-template.md`
+  - Guide: `docs/guides/strategy.md`
 - **New Command: `/arckit.trello`**: Export product backlog to Trello boards (44th ArcKit command)
   - Reads JSON output from `/arckit.backlog FORMAT=json`
   - Creates Trello board with sprint-based lists (Product Backlog + per-sprint + In Progress + Done)
@@ -23,8 +30,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **DEPENDENCY-MATRIX.md**: Added trello row/column, Tier 7.5 Backlog Export
-- Updated command count to 44 (was 43)
+- **DEPENDENCY-MATRIX.md**: Added strategy row/column to Tier 3.5 Strategic Planning, added trello row/column to Tier 7.5 Backlog Export
+- Updated command count to 45 (was 44)
 
 ---
 

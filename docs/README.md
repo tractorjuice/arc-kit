@@ -27,7 +27,8 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 10. [Data Protection Impact Assessment](guides/dpia.md) - `/arckit.dpia` ⭐ NEW
 11. [Wardley Mapping](guides/wardley-mapping.md) - `/arckit.wardley` ⭐ NEW
 12. [Roadmap](guides/roadmap.md) - `/arckit.roadmap` ⭐ NEW
-13. [Design Reviews](guides/design-review.md) - `/arckit.hld-review`, `/arckit.dld-review`
+13. [Architecture Strategy](guides/strategy.md) - `/arckit.strategy` ⭐ NEW
+14. [Design Reviews](guides/design-review.md) - `/arckit.hld-review`, `/arckit.dld-review`
 14. [Traceability](guides/traceability.md) - `/arckit.traceability`
 
 ### Research & Analysis
@@ -126,6 +127,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.datascout` | [datascout.md](guides/datascout.md) | ✅ Complete |
 | `/arckit.wardley` | [wardley-mapping.md](guides/wardley-mapping.md) | ✅ Complete |
 | `/arckit.roadmap` | [roadmap.md](guides/roadmap.md) | ✅ Complete |
+| `/arckit.strategy` | [strategy.md](guides/strategy.md) | ✅ Complete |
 | `/arckit.adr` | [adr.md](guides/adr.md) | ✅ Complete |
 | `/arckit.diagram` | [diagram.md](guides/diagram.md) | ✅ Complete |
 | `/arckit.gcloud-search` | [digital-marketplace.md](guides/uk-government/digital-marketplace.md) | ✅ Complete |
@@ -153,8 +155,9 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.mlops` | [mlops.md](guides/mlops.md) | ✅ Complete |
 | `/arckit.finops` | [finops.md](guides/finops.md) | ✅ Complete |
 | `/arckit.pages` | [pages.md](guides/pages.md) | ✅ Complete |
+| `/arckit.trello` | [trello.md](guides/trello.md) | ✅ Complete |
 
-**Coverage**: 42/42 commands documented (100%)
+**Coverage**: 45/45 commands documented (100%)
 
 ---
 
@@ -166,5 +169,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2026-02-01
-**ArcKit Version**: 1.1.0
+**Last updated**: 2026-02-05
+**ArcKit Version**: 1.3.0
