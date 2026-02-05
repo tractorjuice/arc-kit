@@ -290,9 +290,17 @@ Create `docs/manifest.json` with the discovered structure:
 
 ### 3.1 Read the template (MANDATORY)
 
-**You MUST use the Read tool to read `.arckit/templates/pages-template.html` before generating `docs/index.html`.** This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/pages-template.html` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/pages-template.html` (default)
 
-1. Read the file `.arckit/templates/pages-template.html` using the Read tool
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize pages`
+
+This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.
+
+1. Read the appropriate template file (custom override or default) using the Read tool
 2. Copy the **entire** template contents as the base for `docs/index.html`
 3. Replace the placeholder values in the CONFIG block with the actual repository details:
    - `'{{OWNER}}'` → the GitHub owner/org (e.g. `'tractorjuice'`)

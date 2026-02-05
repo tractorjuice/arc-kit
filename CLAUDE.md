@@ -188,6 +188,43 @@ project/
 - Show only a summary to user
 - Delegate to agent if research-heavy (see Agent System above)
 
+### Template Customization
+
+Users can customize document templates to match their organization's requirements.
+
+**Template locations:**
+- **Defaults**: `.arckit/templates/` (shipped with ArcKit, refreshed by `arckit init`)
+- **User overrides**: `.arckit/templates-custom/` (your customizations, preserved across updates)
+
+**How it works:**
+1. Commands check `.arckit/templates-custom/` first (user override)
+2. Fall back to `.arckit/templates/` if no override exists
+3. User customizations are preserved when ArcKit CLI updates
+
+**Workflow:**
+```bash
+# List available templates
+/arckit.customize list
+
+# Copy a template for customization
+/arckit.customize requirements
+
+# Edit the template
+# (file is now at .arckit/templates-custom/requirements-template.md)
+
+# Run command - uses your customized template
+/arckit.requirements My Project
+```
+
+**Common customizations**:
+- Remove UK Government sections for non-UK Gov projects
+- Add organization-specific Document Control fields
+- Change requirement ID prefixes (BR/FR/NFR → custom)
+- Add branding, headers, footers
+
+**Plugin Version** (`arckit-plugin`):
+- Same pattern: user overrides in `.arckit/templates/`, plugin defaults in `${CLAUDE_PLUGIN_ROOT}/templates/`
+
 ### Document Control Standard
 
 Every template must start with a **Document Control** table followed by **Revision History**:

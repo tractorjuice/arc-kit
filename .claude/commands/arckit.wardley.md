@@ -294,9 +294,13 @@ Create the Wardley Map document using the template:
 - `ARC-001-WARD-002-v1.0.md` - Second map (e.g., future state)
 - `ARC-001-WARD-003-v1.0.md` - Third map (e.g., gap analysis)
 
-**Template**: `.arckit/templates/wardley-map-template.md`
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/wardley-map-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/wardley-map-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize wardley`
 
 ### Output Contents
 

@@ -12,9 +12,13 @@ $ARGUMENTS
 
 ## Instructions
 
-1. **Read the template**: Read `.arckit/templates/architecture-principles-template.md` to understand the structure
+1. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/architecture-principles-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/architecture-principles-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize architecture-principles`
 
 2. **Check for External Documents** (optional):
 

@@ -39,7 +39,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v1.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.3.0)
+**Latest Release**: [v1.4.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.4.0)
 
 ### Initialize a Project
 
@@ -641,7 +641,8 @@ payment-modernization/
 ├── .arckit/
 │   ├── scripts/
 │   │   └── bash/                          # Automation scripts
-│   └── templates/                         # Document templates
+│   ├── templates/                         # Default templates (refreshed by arckit init)
+│   └── templates-custom/                  # Your customizations (preserved across updates)
 ├── projects/
 │   ├── 000-global/
 │   │   └── ARC-000-PRIN-v1.0.md          # Global principles
@@ -679,9 +680,33 @@ payment-modernization/
 
 ---
 
+## Template Customization
+
+Customize ArcKit templates without modifying defaults:
+
+```bash
+# Inside your AI assistant
+/arckit.customize requirements   # Copy requirements template for editing
+/arckit.customize all            # Copy all templates
+/arckit.customize list           # See available templates
+```
+
+**How it works:**
+- Default templates live in `.arckit/templates/` (refreshed by `arckit init`)
+- Your customizations go in `.arckit/templates-custom/` (preserved across updates)
+- Commands automatically check for custom templates first, falling back to defaults
+
+**Common customizations:**
+- Add organization-specific document control fields
+- Include mandatory compliance sections (ISO 27001, PCI-DSS)
+- Add department-specific approval workflows
+- Customize UK Government classification banners
+
+---
+
 ## Complete Command Reference
 
-All 44 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 46 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
@@ -802,6 +827,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit.analyze` | Perform comprehensive governance quality analysis across architecture artifacts | [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-ANAL-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-ANAL-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/ARC-001-ANAL-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-ANAL-v1.0.md) | 🔵 Beta |
 | `/arckit.principles-compliance` | Assess compliance with architecture principles and generate scorecard with evidence, gaps, and recommendations | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-PRIN-COMP-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-PRIN-COMP-v1.0.md) | 🟢 Live |
 | `/arckit.story` | Generate comprehensive project story with timeline analysis, traceability, and governance achievements | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-STORY-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-STORY-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-STORY-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-STORY-v1.0.md) | 🟢 Live |
+| `/arckit.customize` | Copy templates to `.arckit/templates-custom/` for customization (preserved across updates) | — | 🟢 Live |
 
 ### UK Government
 

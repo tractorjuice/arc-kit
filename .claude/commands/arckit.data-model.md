@@ -58,9 +58,13 @@ $ARGUMENTS
 
    **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
-4. **Read the template**: Read `.arckit/templates/data-model-template.md` to understand the structure
+4. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/data-model-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/data-model-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize data-model`
 
 5. **Extract data requirements**:
    - Read the project's requirements document (`ARC-*-REQ-*.md`)

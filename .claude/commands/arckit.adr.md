@@ -82,9 +82,13 @@ else
 fi
 ```
 
-### 4. **Read the template**: Read `.arckit/templates/adr-template.md` to understand the comprehensive structure
+### 4. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/adr-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/adr-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize adr`
 
 ### 5. **Gather decision information from user**:
    - **Decision title**: Short noun phrase (e.g., "Use PostgreSQL for Data Persistence")

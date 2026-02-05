@@ -39,7 +39,12 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
    { "mcpServers": { "microsoft-docs": { "command": "npx", "args": ["-y", "@anthropic/mcp-server-microsoft-docs"] } } }
    ```
 2. Check prerequisites (requirements document must exist)
-3. Read `.arckit/templates/azure-research-template.md` and `VERSION`
+3. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/azure-research-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/azure-research-template.md` (default)
+   - Read the `VERSION` file and update the version in the template metadata line when generating
+   - **Tip**: Users can customize templates with `/arckit.customize azure-research`
 4. Extract Azure service needs from requirements (compute, data, integration, security, AI/ML)
 5. Use MCP tools for each category: service discovery, deep dive, architecture patterns, Well-Architected assessment, Security Benchmark mapping, code samples
 6. UK Government: G-Cloud, UK South/West data residency, NCSC compliance

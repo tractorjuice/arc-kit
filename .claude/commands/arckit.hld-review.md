@@ -41,9 +41,13 @@ $ARGUMENTS
    - `ARC-*-TCOP-*.md` in `projects/{project-dir}/` — TCoP review
      - Extract: Technology governance findings relevant to design review
 
-   Read `.arckit/templates/hld-review-template.md` for the review checklist structure.
+   **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/hld-review-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/hld-review-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize hld-review`
 
    **What to extract from each document**:
    - **Principles**: Rules and validation gates for compliance checking

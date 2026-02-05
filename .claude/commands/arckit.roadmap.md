@@ -79,11 +79,13 @@ Read all available documents identified in the Prerequisites section above. Use 
 
 Load the roadmap template structure:
 
-```bash
-cat .arckit/templates/roadmap-template.md
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/roadmap-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/roadmap-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-```
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize roadmap`
 
 ### 4. Generate Strategic Roadmap
 

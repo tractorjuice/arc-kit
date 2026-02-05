@@ -120,9 +120,15 @@ Extract operational requirements from artifacts:
 
 ### Phase 3: Generate Operational Readiness Pack
 
-Read the template from `.arckit/templates/operationalize-template.md` and generate a comprehensive operational readiness document.
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/operationalize-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/operationalize-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize operationalize`
+
+Generate a comprehensive operational readiness document.
 
 **Section 1: Service Overview**
 - Service name, description, business criticality

@@ -210,6 +210,7 @@ def create_project_structure(project_path: Path, ai_assistant: str, all_ai: bool
     directories = [
         ".arckit/scripts/bash",
         ".arckit/templates",
+        ".arckit/templates-custom",
         "projects/000-global",
         "projects/000-global/policies",
         "projects/000-global/external",
@@ -242,6 +243,42 @@ def create_project_structure(project_path: Path, ai_assistant: str, all_ai: bool
         gitkeep = project_path / directory / ".gitkeep"
         if not gitkeep.exists():
             gitkeep.touch()
+
+    # Create README for templates-custom directory
+    templates_custom_readme = project_path / ".arckit" / "templates-custom" / "README.md"
+    templates_custom_readme.write_text("""# Custom Templates
+
+This directory is for your customized ArcKit templates.
+
+## How Template Customization Works
+
+1. **Default templates** are in `.arckit/templates/` (refreshed by `arckit init`)
+2. **Your customizations** go here in `.arckit/templates-custom/`
+3. Commands automatically check here first, falling back to defaults
+
+## Getting Started
+
+Use the `/arckit.customize` command to copy templates for editing:
+
+```
+/arckit.customize requirements      # Copy requirements template
+/arckit.customize all               # Copy all templates
+/arckit.customize list              # See available templates
+```
+
+## Why This Pattern?
+
+- Your customizations are preserved when running `arckit init` again
+- Default templates can be updated without losing your changes
+- Easy to see what you've customized vs defaults
+
+## Common Customizations
+
+- Add organization-specific document control fields
+- Include mandatory compliance sections (ISO 27001, PCI-DSS)
+- Add department-specific approval workflows
+- Customize UK Government classification banners
+""")
 
     console.print("[green]✓[/green] Project structure created")
 
@@ -531,6 +568,9 @@ Once you start your AI assistant, you'll have access to these commands:
 - `/arckit.traceability` - Generate requirements traceability matrix
 - `/arckit.analyze` - Comprehensive governance quality analysis
 
+#### Template Customization
+- `/arckit.customize` - Copy templates for customization (preserves across updates)
+
 #### UK Government Compliance
 - `/arckit.service-assessment` - GDS Service Standard assessment preparation
 - `/arckit.tcop` - Technology Code of Practice assessment (all 13 points)
@@ -549,7 +589,8 @@ Once you start your AI assistant, you'll have access to these commands:
 ├── .arckit/
 │   ├── scripts/
 │   │   └── bash/
-│   └── templates/
+│   ├── templates/           # Default templates (refreshed by arckit init)
+│   └── templates-custom/    # Your customizations (preserved across updates)
 ├── projects/
 │   ├── 000-global/
 │   │   └── ARC-000-PRIN-v1.0.md (global principles)
@@ -558,6 +599,21 @@ Once you start your AI assistant, you'll have access to these commands:
 │       ├── sow.md
 │       └── vendors/
 └── {AGENT_CONFIG[ai_assistant]['folder']}commands/
+```
+
+## Template Customization
+
+ArcKit templates can be customized without modifying the defaults:
+
+1. Run `/arckit.customize <template-name>` to copy a template for editing
+2. Your customizations are stored in `.arckit/templates-custom/`
+3. Commands automatically use your custom templates when present
+4. Running `arckit init` again preserves your customizations
+
+Example:
+```
+/arckit.customize requirements   # Copy requirements template
+/arckit.customize all            # Copy all templates
 ```
 
 ## Next Steps

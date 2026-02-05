@@ -39,7 +39,12 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
    { "mcpServers": { "aws-knowledge": { "type": "http", "url": "https://knowledge-mcp.global.api.aws" } } }
    ```
 2. Check prerequisites (requirements document must exist)
-3. Read `.arckit/templates/aws-research-template.md` and `VERSION`
+3. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/aws-research-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/aws-research-template.md` (default)
+   - Read the `VERSION` file and update the version in the template metadata line when generating
+   - **Tip**: Users can customize templates with `/arckit.customize aws-research`
 4. Extract AWS service needs from requirements (compute, data, integration, security, AI/ML)
 5. Use MCP tools for each category: service discovery, deep dive, regional availability (eu-west-2), architecture patterns, Well-Architected assessment, Security Hub mapping, code samples
 6. UK Government: G-Cloud, data residency, NCSC compliance

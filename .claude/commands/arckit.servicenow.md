@@ -136,9 +136,15 @@ Analyze the gathered context to extract:
 
 ### Phase 3: Generate ServiceNow Design
 
-Using the template at `.arckit/templates/servicenow-design-template.md`, generate:
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/servicenow-design-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/servicenow-design-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize servicenow`
+
+Generate:
 
 **1. Service Overview**:
 - Service name from user input

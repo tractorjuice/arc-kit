@@ -49,9 +49,13 @@ $ARGUMENTS
    - **Research**: Technology decisions, vendor landscape, TCO data
    - **Stakeholders**: Business drivers, success criteria, evaluation priorities
 
-3. **Read the template**: Read `.arckit/templates/sow-template.md` to understand the structure
+3. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/sow-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/sow-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize sow`
 
 4. **Check for External Documents** (optional):
 

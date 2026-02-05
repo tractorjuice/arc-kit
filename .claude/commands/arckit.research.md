@@ -46,7 +46,12 @@ Use `subagent_type` of `general-purpose` is NOT correct. Instead provide the ful
 If the Task tool is unavailable or the user prefers inline execution, fall back to the full research process:
 
 1. Check prerequisites (requirements document must exist)
-2. Read `.arckit/templates/research-findings-template.md` and `VERSION`
+2. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/research-findings-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/research-findings-template.md` (default)
+   - Read the `VERSION` file and update the version in the template metadata line when generating
+   - **Tip**: Users can customize templates with `/arckit.customize research`
 3. Extract research categories from requirements
 4. Use WebSearch and WebFetch for each category (vendors, pricing, reviews, open source, UK Gov)
 5. Build vs buy analysis with 3-year TCO

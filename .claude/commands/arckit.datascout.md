@@ -44,7 +44,12 @@ Use the Task tool with `subagent_type: "general-purpose"` and include in the pro
 If the Task tool is unavailable or the user prefers inline execution, fall back to the full discovery process:
 
 1. Check prerequisites (requirements document must exist)
-2. Read `.arckit/templates/datascout-template.md` and `VERSION`
+2. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/datascout-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/datascout-template.md` (default)
+   - Read the `VERSION` file and update the version in the template metadata line when generating
+   - **Tip**: Users can customize templates with `/arckit.customize datascout`
 3. Extract data needs from requirements (DR-xxx, FR-xxx, INT-xxx, NFR-xxx)
 4. Check api.gov.uk and data.gov.uk FIRST
 5. Research each category (UK Gov open data, commercial APIs, free APIs, open datasets)

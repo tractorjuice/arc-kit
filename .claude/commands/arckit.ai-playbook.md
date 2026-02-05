@@ -71,9 +71,13 @@ $ARGUMENTS
    - **Data Model**: Training data sources, personal data categories, data quality
    - **Risk**: AI-specific risks, bias risks, mitigation strategies
 
-   Read `.arckit/templates/uk-gov-ai-playbook-template.md` for assessment structure.
+   **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/uk-gov-ai-playbook-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/uk-gov-ai-playbook-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize ai-playbook`
 
 4. **Check for External Documents** (optional):
 

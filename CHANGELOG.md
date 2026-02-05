@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **New Command: `/arckit.customize`**: Copy templates for customization (46th ArcKit command)
+  - Copy individual templates: `/arckit.customize requirements`
+  - Copy all templates: `/arckit.customize all`
+  - List available templates: `/arckit.customize list`
+  - Default templates in `.arckit/templates/` (refreshed by `arckit init`)
+  - User customizations in `.arckit/templates-custom/` (preserved across updates)
+  - Commands automatically check for custom templates first, falling back to defaults
+  - Common use cases: organization-specific document control, compliance sections, approval workflows
+- **Template Customization Support**: All 35 document-generating commands now support template overrides
+  - Two-tier template system: defaults + user customizations
+  - Added "Tip" note to each command pointing to `/arckit.customize`
+- **Init Script Improvements**: `arckit init` now creates `.arckit/templates-custom/` directory with README explaining customization workflow
 - **New Command: `/arckit.strategy`**: Synthesise strategic artifacts into executive-level Architecture Strategy document (45th ArcKit command)
   - Reads and synthesises: principles (M), stakeholders (M), wardley (R), roadmap (R), sobc (R), risk (O)
   - Creates single coherent strategic narrative for executives
@@ -31,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **DEPENDENCY-MATRIX.md**: Added strategy row/column to Tier 3.5 Strategic Planning, added trello row/column to Tier 7.5 Backlog Export
-- Updated command count to 45 (was 44)
+- Updated command count to 46 (was 45)
 
 ---
 

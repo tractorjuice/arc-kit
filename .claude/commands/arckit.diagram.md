@@ -490,9 +490,13 @@ Create the architecture diagram document using the template:
 - `ARC-001-DIAG-002-v1.0.md` - Second diagram (e.g., C4 container)
 - `ARC-001-DIAG-003-v1.0.md` - Third diagram (e.g., C4 component)
 
-**Template**: `.arckit/templates/architecture-diagram-template.md`
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/architecture-diagram-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/architecture-diagram-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize diagram`
 
 ### Output Contents
 

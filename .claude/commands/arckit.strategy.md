@@ -86,11 +86,13 @@ Read all available documents identified in the Prerequisites section above. Buil
 
 Load the strategy template structure:
 
-```bash
-cat .arckit/templates/architecture-strategy-template.md
-```
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/architecture-strategy-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/architecture-strategy-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize strategy`
 
 ### 4. Generate Architecture Strategy
 

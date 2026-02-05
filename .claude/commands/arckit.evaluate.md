@@ -50,9 +50,13 @@ $ARGUMENTS
    - **SOW/DOS**: Pre-defined evaluation criteria, scope, deliverables
    - **Research**: Market context, vendor landscape, technology recommendations
 
-3. **Read the template**: Read `.arckit/templates/evaluation-criteria-template.md`
+3. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/evaluation-criteria-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/evaluation-criteria-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize evaluate`
 
 4. **Check for External Documents** (optional):
 
