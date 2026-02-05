@@ -1771,7 +1771,7 @@ For issues or questions:
 **1. Scans ArcKit Artifacts**:
 - `requirements.md` - BRs, FRs, NFRs, INTs, DRs
 - `hld.md` / `dld.md` - Component mapping
-- `stakeholder-analysis.md` - User personas
+- `stakeholders.md` - User personas
 - `risk-register.md` - Risk levels
 - `business-case.md` - Value priorities
 - `threat-model.md` - Security threats

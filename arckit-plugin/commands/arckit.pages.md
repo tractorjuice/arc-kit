@@ -42,7 +42,7 @@ Extract the title from the first `#` heading in each guide file.
 
 | Category | Guide Files |
 |----------|-------------|
-| Discovery | requirements, stakeholders, stakeholder-analysis, research, datascout |
+| Discovery | requirements, stakeholders, research, datascout |
 | Planning | sobc, business-case, plan, roadmap, backlog |
 | Architecture | principles, adr, diagram, wardley, data-model, hld-review, dld-review, design-review, platform-design, data-mesh-contract |
 | Governance | risk, risk-management, traceability, principles-compliance, analyze |

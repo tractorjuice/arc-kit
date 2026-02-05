@@ -53,13 +53,8 @@
           "category": "Architecture"
         },
         {
-          "path": "docs/guides/stakeholder-analysis.md",
-          "title": "Stakeholder Analysis",
-          "category": "Discovery"
-        },
-        {
           "path": "docs/guides/stakeholders.md",
-          "title": "Stakeholders Command",
+          "title": "Stakeholder Analysis",
           "category": "Discovery"
         },
         {
