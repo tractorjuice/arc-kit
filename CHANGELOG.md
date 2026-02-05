@@ -51,6 +51,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `/arckit.plan` → `project-plan-template.md`
   - `/arckit.principles-compliance` → `principles-compliance-assessment-template.md`
   - `/arckit.service-assessment` → `service-assessment-prep-template.md`
+- **Document Control Standardization**: 17 commands now include the standard "Auto-Populate Document Control Fields" block with Generate Document ID, Populate Required Fields, Revision History, and Generation Metadata Footer:
+  - `/arckit.ai-playbook`, `/arckit.analyze`, `/arckit.atrs`, `/arckit.backlog`
+  - `/arckit.data-mesh-contract`, `/arckit.diagram`, `/arckit.dld-review`
+  - `/arckit.dos`, `/arckit.evaluate`, `/arckit.gcloud-clarify`, `/arckit.gcloud-search`
+  - `/arckit.hld-review`, `/arckit.mod-secure`, `/arckit.plan`
+  - `/arckit.roadmap`, `/arckit.strategy`, `/arckit.wardley`
 - **docs/manifest.json**: Added 10 missing templates to manifest (now 45 total)
 - **DEPENDENCY-MATRIX.md**: Added strategy row/column to Tier 3.5 Strategic Planning, added trello row/column to Tier 7.5 Backlog Export
 - Updated command count to 46 (was 45)
