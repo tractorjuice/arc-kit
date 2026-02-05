@@ -50,7 +50,16 @@ Extract the title from the first `#` heading in each guide file.
 | Operations | devops, mlops, finops, servicenow, operationalize |
 | Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
 | Research | aws-research, azure-research |
-| Other | pages, story, trello, migration |
+| Other | pages, story, trello, migration, customize |
+
+**Guide Status** (from README command maturity):
+
+| Status | Description | Guide Files |
+|--------|-------------|-------------|
+| live | Production-ready | plan, principles, stakeholders, risk, sobc, requirements, data-model, sow, evaluate, diagram, traceability, principles-compliance, story, customize |
+| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure |
+| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs, pages |
+| experimental | Early adopters | platform-design, wardley, azure-research, aws-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936 |
 
 ### 1.2 Global Documents
 
@@ -188,12 +197,14 @@ Create `docs/manifest.json` with the discovered structure:
     {
       "path": "docs/guides/requirements.md",
       "title": "Requirements Guide",
-      "category": "Discovery"
+      "category": "Discovery",
+      "status": "live"
     },
     {
       "path": "docs/guides/principles.md",
       "title": "Principles Guide",
-      "category": "Architecture"
+      "category": "Architecture",
+      "status": "live"
     }
   ],
   "global": [
