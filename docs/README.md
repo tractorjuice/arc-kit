@@ -17,7 +17,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ### Core Workflow
 1. [Project Plan](guides/plan.md) - `/arckit.plan` ⭐ NEW
 2. [Architecture Principles](guides/principles.md) - `/arckit.principles`
-3. [Stakeholder Analysis](guides/stakeholder-analysis.md) - `/arckit.stakeholders`
+3. [Stakeholder Analysis](guides/stakeholders.md) - `/arckit.stakeholders`
 4. [Risk Management](guides/risk-management.md) - `/arckit.risk`
 5. [Business Case](guides/business-case.md) - `/arckit.sobc` ⭐ NEW
 6. [Requirements Definition](guides/requirements.md) - `/arckit.requirements`
@@ -76,7 +76,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 ### "I'm starting a new project"
 1. Start here: [Project Plan](guides/plan.md) - See the full timeline
 2. Then: [Architecture Principles](guides/principles.md)
-3. Then: [Stakeholder Analysis](guides/stakeholder-analysis.md)
+3. Then: [Stakeholder Analysis](guides/stakeholders.md)
 4. Then: [Risk Management](guides/risk-management.md)
 5. Then: [Requirements Definition](guides/requirements.md)
 
@@ -113,7 +113,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 |---------|-------|--------|
 | `/arckit.plan` | [plan.md](guides/plan.md) | ✅ Complete |
 | `/arckit.principles` | [principles.md](guides/principles.md) | ✅ Complete |
-| `/arckit.stakeholders` | [stakeholder-analysis.md](guides/stakeholder-analysis.md) | ✅ Complete |
+| `/arckit.stakeholders` | [stakeholders.md](guides/stakeholders.md) | ✅ Complete |
 | `/arckit.risk` | [risk-management.md](guides/risk-management.md) | ✅ Complete |
 | `/arckit.sobc` | [business-case.md](guides/business-case.md) | ✅ Complete |
 | `/arckit.requirements` | [requirements.md](guides/requirements.md) | ✅ Complete |
@@ -156,8 +156,9 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.finops` | [finops.md](guides/finops.md) | ✅ Complete |
 | `/arckit.pages` | [pages.md](guides/pages.md) | ✅ Complete |
 | `/arckit.trello` | [trello.md](guides/trello.md) | ✅ Complete |
+| `/arckit.customize` | [customize.md](guides/customize.md) | ✅ Complete |
 
-**Coverage**: 45/45 commands documented (100%)
+**Coverage**: 46/46 commands documented (100%)
 
 ---
 
@@ -170,4 +171,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2026-02-05
-**ArcKit Version**: 1.3.0
+**ArcKit Version**: 1.4.0
