@@ -48,7 +48,10 @@ Complete guide to all ArcKit slash commands for Claude Code.
 | `/arckit.mod-secure` | MOD Secure by Design (defence) | UK Ministry of Defence security assessment |
 | `/arckit.jsp-936` | MOD JSP 936 AI assurance | UK Ministry of Defence AI/ML systems |
 | `/arckit.story` | Produce executive-ready programme story | After key milestones, before governance reviews |
+| `/arckit.strategy` | Synthesize strategic artifacts into Architecture Strategy | After principles, stakeholders, roadmap for executive briefings |
+| `/arckit.trello` | Export product backlog to Trello | After backlog generation, push to Trello for sprint execution |
 | `/arckit.pages` | Generate GitHub Pages documentation site | Publish project documentation as website |
+| `/arckit.customize` | Copy templates for organization customization | When you need to customize document templates |
 
 ---
 
@@ -2600,4 +2603,90 @@ Classification:
 
 ---
 
-*Last updated: 2026-01-28 | Version: 1.0.0*
+### 41. `/arckit.strategy` - Architecture Strategy Synthesis
+
+**Purpose**: Synthesize strategic artifacts into executive-level Architecture Strategy document for board presentations and stakeholder communication.
+
+**Usage**:
+```
+/arckit.strategy Create architecture strategy for digital transformation
+/arckit.strategy Synthesize strategy for cloud migration programme
+```
+
+**What it does**:
+- Synthesizes principles, stakeholders, roadmap, Wardley maps, and SOBC into coherent narrative
+- Creates strategic vision with 2-3 paragraph articulation
+- Produces current state assessment with SWOT and capability maturity baseline
+- Defines target state vision with architecture diagrams
+- Maps technology evolution (Build vs Buy, Technology Radar)
+- Summarizes 3-5 strategic investment themes
+- Includes governance model and success metrics
+
+**Prerequisites**:
+- **MANDATORY**: `ARC-000-PRIN-*.md` (principles)
+- **MANDATORY**: `ARC-*-STKE-*.md` (stakeholders)
+- **RECOMMENDED**: `ARC-*-ROADMAP-*.md`, `ARC-*-WARD-*.md`, `ARC-*-SOBC-*.md`
+
+**Output**: `projects/NNN-project-name/ARC-NNN-STGY-v1.0.md`
+
+**Next step**: Present to Strategy Board, use for executive briefings.
+
+---
+
+### 42. `/arckit.trello` - Backlog Export to Trello
+
+**Purpose**: Export product backlog to Trello for sprint execution - create board, lists, cards with labels and checklists.
+
+**Usage**:
+```
+/arckit.trello Export backlog to Trello
+/arckit.trello Create Trello board from product backlog
+```
+
+**What it does**:
+- Creates Trello board with sprint-based lists (Product Backlog + per-sprint + In Progress + Done)
+- Creates cards with priority labels, story points, and acceptance criteria checklists
+- Adds colour-coded labels by MoSCoW priority and requirement type
+- Rate-limit-aware Trello API integration
+
+**Prerequisites**:
+- **MANDATORY**: `ARC-*-BKLG-*.md` with JSON export (run `/arckit.backlog` first)
+- **MANDATORY**: Environment variables `TRELLO_API_KEY` and `TRELLO_TOKEN`
+
+**Output**: Trello board with cards (no file output)
+
+**Next step**: Start sprint execution, assign cards to team members.
+
+---
+
+### 43. `/arckit.customize` - Template Customization
+
+**Purpose**: Copy templates to `.arckit/templates-custom/` for organization-specific customization that persists across ArcKit updates.
+
+**Usage**:
+```
+/arckit.customize list                    # List available templates
+/arckit.customize requirements            # Copy requirements template for customization
+/arckit.customize all                     # Copy all templates
+```
+
+**What it does**:
+- Lists available templates in `.arckit/templates/`
+- Copies selected template(s) to `.arckit/templates-custom/`
+- Commands check custom templates first, fall back to defaults
+- User customizations preserved when ArcKit CLI updates
+
+**Common customizations**:
+- Remove UK Government sections for non-UK Gov projects
+- Add organization-specific Document Control fields
+- Change requirement ID prefixes (BR/FR/NFR → custom)
+- Add branding, headers, footers
+- Include mandatory compliance sections (ISO 27001, PCI-DSS)
+
+**Output**: `.arckit/templates-custom/{template-name}-template.md`
+
+**Next step**: Edit the copied template, then run commands to use customized version.
+
+---
+
+*Last updated: 2026-02-05 | Version: 1.5.0*
