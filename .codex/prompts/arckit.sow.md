@@ -1,5 +1,5 @@
 ---
-description: Generate Statement of Work (SOW) / RFP document for vendor procurement
+description: "Generate Statement of Work (SOW) / RFP document for vendor procurement"
 ---
 
 You are helping an enterprise architect generate a comprehensive Statement of Work (SOW) that will be used as an RFP document for vendor procurement.

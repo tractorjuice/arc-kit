@@ -1,5 +1,5 @@
 ---
-description: Create FinOps strategy with cloud cost management, optimization, governance, and forecasting
+description: "Create FinOps strategy with cloud cost management, optimization, governance, and forecasting"
 ---
 
 # /arckit.finops - FinOps Strategy Command

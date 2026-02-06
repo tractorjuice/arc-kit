@@ -1,5 +1,5 @@
 ---
-description: Review Detailed Design (DLD) for implementation readiness
+description: "Review Detailed Design (DLD) for implementation readiness"
 ---
 
 You are helping an enterprise architect review a Detailed Design (DLD) document to ensure the design is ready for implementation with all technical details properly specified.

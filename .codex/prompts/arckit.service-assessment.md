@@ -1,5 +1,5 @@
 ---
-description: Prepare for GDS Service Standard assessment - analyze evidence against 14 points, identify gaps, generate readiness report
+description: "Prepare for GDS Service Standard assessment - analyze evidence against 14 points, identify gaps, generate readiness report"
 ---
 
 # GDS Service Assessment Preparation

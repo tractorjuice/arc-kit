@@ -1,5 +1,5 @@
 ---
-description: Create project plan with timeline, phases, gates, and Mermaid diagrams
+description: "Create project plan with timeline, phases, gates, and Mermaid diagrams"
 ---
 
 # ArcKit: Project Plan Generation

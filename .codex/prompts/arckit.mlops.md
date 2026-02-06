@@ -1,5 +1,5 @@
 ---
-description: Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance
+description: "Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance"
 ---
 
 # /arckit.mlops - MLOps Strategy Command

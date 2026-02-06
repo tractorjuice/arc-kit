@@ -1,5 +1,5 @@
 ---
-description: Generate MOD JSP 936 AI assurance documentation for defence AI/ML systems
+description: "Generate MOD JSP 936 AI assurance documentation for defence AI/ML systems"
 ---
 
 # ArcKit: JSP 936 AI Assurance Documentation Generator

@@ -1,5 +1,5 @@
 ---
-description: Create Strategic Outline Business Case (SOBC) using UK Government Green Book 5-case model
+description: "Create Strategic Outline Business Case (SOBC) using UK Government Green Book 5-case model"
 ---
 
 You are helping an enterprise architect create a Strategic Outline Business Case (SOBC) to justify investment in a technology project.

@@ -1,5 +1,5 @@
 ---
-description: Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints
+description: "Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints"
 ---
 
 # Generate Product Backlog

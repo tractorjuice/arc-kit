@@ -1,5 +1,5 @@
 ---
-description: Document architectural decisions with options analysis and traceability
+description: "Document architectural decisions with options analysis and traceability"
 ---
 
 You are helping an enterprise architect create an Architecture Decision Record (ADR) following MADR v4.0 format enhanced with UK Government requirements.

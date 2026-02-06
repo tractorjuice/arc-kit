@@ -1,5 +1,5 @@
 ---
-description: Create strategic Wardley Maps for architecture decisions and build vs buy analysis
+description: "Create strategic Wardley Maps for architecture decisions and build vs buy analysis"
 ---
 
 # ArcKit: Wardley Mapping for Strategic Architecture

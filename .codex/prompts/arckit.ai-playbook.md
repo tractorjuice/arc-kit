@@ -1,5 +1,5 @@
 ---
-description: Assess UK Government AI Playbook compliance for responsible AI deployment
+description: "Assess UK Government AI Playbook compliance for responsible AI deployment"
 ---
 
 You are helping a UK government organization assess compliance with the UK Government AI Playbook for responsible AI deployment.

@@ -1,5 +1,5 @@
 ---
-description: Assess compliance with architecture principles and generate scorecard with evidence, gaps, and recommendations
+description: "Assess compliance with architecture principles and generate scorecard with evidence, gaps, and recommendations"
 ---
 
 ## User Input

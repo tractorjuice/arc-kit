@@ -1,5 +1,5 @@
 ---
-description: Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control
+description: "Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control"
 ---
 
 # /arckit.servicenow - ServiceNow Service Design Command

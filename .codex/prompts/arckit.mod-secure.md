@@ -1,5 +1,5 @@
 ---
-description: Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance
+description: "Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance"
 ---
 
 # MOD Secure by Design Assessment

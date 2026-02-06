@@ -1,5 +1,5 @@
 ---
-description: Generate requirements traceability matrix from requirements to design to tests
+description: "Generate requirements traceability matrix from requirements to design to tests"
 ---
 
 You are helping an enterprise architect create a comprehensive traceability matrix that traces requirements through design to implementation and testing.

@@ -1,5 +1,5 @@
 ---
-description: Find G-Cloud services on UK Digital Marketplace with live search and comparison
+description: "Find G-Cloud services on UK Digital Marketplace with live search and comparison"
 ---
 
 You are helping an enterprise architect find and compare G-Cloud services on the UK Digital Marketplace.

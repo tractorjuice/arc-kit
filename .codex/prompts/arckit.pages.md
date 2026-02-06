@@ -1,5 +1,5 @@
 ---
-description: Generate GitHub Pages site to display all project documents with Mermaid diagram support
+description: "Generate GitHub Pages site to display all project documents with Mermaid diagram support"
 ---
 
 # ArcKit: GitHub Pages Generator

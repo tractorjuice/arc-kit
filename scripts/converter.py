@@ -3,10 +3,10 @@ import re
 
 
 def build_agent_map(agents_dir):
-    """Build a map from command name to agent file path.
+    """Build a map from command name to agent file path and content.
 
     Agent files are named arckit-{name}.md. The corresponding command
-    is arckit.{name}.md. Returns {command_filename: agent_path}.
+    is arckit.{name}.md. Returns {command_filename: (agent_path, agent_prompt)}.
     """
     agent_map = {}
     if not os.path.isdir(agents_dir):
@@ -16,7 +16,11 @@ def build_agent_map(agents_dir):
             # arckit-research.md -> arckit.research.md
             name = filename.replace('arckit-', '', 1).replace('.md', '')
             command_filename = f'arckit.{name}.md'
-            agent_map[command_filename] = os.path.join(agents_dir, filename)
+            agent_path = os.path.join(agents_dir, filename)
+            with open(agent_path, 'r') as f:
+                agent_content = f.read()
+            agent_prompt = extract_agent_prompt(agent_content)
+            agent_map[command_filename] = (agent_path, agent_prompt)
     return agent_map
 
 
@@ -70,40 +74,28 @@ def format_toml(description, prompt):
 
 def format_codex(description, prompt):
     """Format description and prompt into Codex markdown with YAML frontmatter."""
-    return f'---\ndescription: {description}\n---\n\n{prompt}\n'
+    # Quote description to handle YAML-special characters (: # [ { * &)
+    escaped = description.replace('\\', '\\\\').replace('"', '\\"')
+    return f'---\ndescription: "{escaped}"\n---\n\n{prompt}\n'
 
 
-def get_prompt_for_target(filename, command_prompt, agent_map):
-    """Get the appropriate prompt for non-Claude targets.
+def convert(claude_dir, agents_dir):
+    """Convert Claude commands to Gemini TOML and Codex Markdown formats.
 
-    For agent-delegating commands, returns the full agent prompt (since
-    Gemini and Codex don't support the Task/agent architecture).
-    For regular commands, returns the command prompt as-is.
-
-    Returns (prompt, source_label).
+    Reads each Claude command once, resolves agent prompts once, then
+    writes both Gemini and Codex output files.
     """
-    claude_path = os.path.join('.claude/commands/', filename)
-    if filename in agent_map:
-        agent_path = agent_map[filename]
-        with open(agent_path, 'r') as f:
-            agent_content = f.read()
-        prompt = extract_agent_prompt(agent_content)
-        source_label = f'{claude_path} (agent: {agent_path})'
-    else:
-        prompt = command_prompt
-        source_label = claude_path
-    return prompt, source_label
-
-
-def generate_gemini(claude_dir, agents_dir):
-    """Generate Gemini TOML commands from Claude source commands."""
     gemini_dir = '.gemini/commands/arckit'
+    codex_dir = '.codex/prompts'
 
-    if not os.path.exists(gemini_dir):
-        os.makedirs(gemini_dir)
+    os.makedirs(gemini_dir, exist_ok=True)
+    os.makedirs(codex_dir, exist_ok=True)
 
+    # Build agent map once (reads agent files once)
     agent_map = build_agent_map(agents_dir)
-    count = 0
+
+    gemini_count = 0
+    codex_count = 0
 
     for filename in sorted(os.listdir(claude_dir)):
         if not filename.endswith('.md'):
@@ -114,56 +106,37 @@ def generate_gemini(claude_dir, agents_dir):
         with open(claude_path, 'r') as f:
             command_content = f.read()
 
+        # Extract description from command (always use command's description)
         description, command_prompt = extract_frontmatter_and_prompt(command_content)
-        prompt, source_label = get_prompt_for_target(filename, command_prompt, agent_map)
 
+        # For agent-delegating commands, use the full agent prompt
+        # (Gemini and Codex don't support the Task/agent architecture)
+        if filename in agent_map:
+            agent_path, agent_prompt = agent_map[filename]
+            prompt = agent_prompt
+            source_label = f'{claude_path} (agent: {agent_path})'
+        else:
+            prompt = command_prompt
+            source_label = claude_path
+
+        # --- Gemini TOML ---
         toml_content = format_toml(description, prompt)
-
-        # Create new filename: arckit.foo.md -> foo.toml
-        new_filename = filename.replace('arckit.', '').replace('.md', '.toml')
-        gemini_path = os.path.join(gemini_dir, new_filename)
-
+        gemini_filename = filename.replace('arckit.', '').replace('.md', '.toml')
+        gemini_path = os.path.join(gemini_dir, gemini_filename)
         with open(gemini_path, 'w') as f:
             f.write(toml_content)
         print(f"  Gemini: {source_label} -> {gemini_path}")
-        count += 1
+        gemini_count += 1
 
-    return count
-
-
-def generate_codex(claude_dir, agents_dir):
-    """Generate Codex markdown prompts from Claude source commands."""
-    codex_dir = '.codex/prompts'
-
-    if not os.path.exists(codex_dir):
-        os.makedirs(codex_dir)
-
-    agent_map = build_agent_map(agents_dir)
-    count = 0
-
-    for filename in sorted(os.listdir(claude_dir)):
-        if not filename.endswith('.md'):
-            continue
-
-        claude_path = os.path.join(claude_dir, filename)
-
-        with open(claude_path, 'r') as f:
-            command_content = f.read()
-
-        description, command_prompt = extract_frontmatter_and_prompt(command_content)
-        prompt, source_label = get_prompt_for_target(filename, command_prompt, agent_map)
-
+        # --- Codex Markdown ---
         codex_content = format_codex(description, prompt)
-
-        # Output filename: arckit.foo.md (same prefix as Claude, root level)
         codex_path = os.path.join(codex_dir, filename)
-
         with open(codex_path, 'w') as f:
             f.write(codex_content)
         print(f"  Codex:  {source_label} -> {codex_path}")
-        count += 1
+        codex_count += 1
 
-    return count
+    return gemini_count, codex_count
 
 
 if __name__ == '__main__':
@@ -172,19 +145,11 @@ if __name__ == '__main__':
 
     print("Converting Claude commands to Gemini and Codex formats...")
     print()
-
     print(f"Source: {claude_dir}")
     print(f"Agents: {agents_dir}")
     print()
 
-    print("--- Gemini TOML ---")
-    gemini_count = generate_gemini(claude_dir, agents_dir)
-    print(f"Generated {gemini_count} Gemini TOML files")
-    print()
+    gemini_count, codex_count = convert(claude_dir, agents_dir)
 
-    print("--- Codex Markdown ---")
-    codex_count = generate_codex(claude_dir, agents_dir)
-    print(f"Generated {codex_count} Codex prompt files")
     print()
-
-    print(f"Done. {gemini_count} Gemini + {codex_count} Codex = {gemini_count + codex_count} total files.")
+    print(f"Generated {gemini_count} Gemini TOML + {codex_count} Codex Markdown = {gemini_count + codex_count} total files.")

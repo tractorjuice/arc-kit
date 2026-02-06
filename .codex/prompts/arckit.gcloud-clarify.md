@@ -1,5 +1,5 @@
 ---
-description: Analyze G-Cloud service gaps and generate supplier clarification questions
+description: "Analyze G-Cloud service gaps and generate supplier clarification questions"
 ---
 
 You are helping an enterprise architect validate G-Cloud services and generate clarification questions for suppliers.

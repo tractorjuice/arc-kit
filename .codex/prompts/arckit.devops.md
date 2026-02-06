@@ -1,5 +1,5 @@
 ---
-description: Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience
+description: "Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience"
 ---
 
 # /arckit.devops - DevOps Strategy Command

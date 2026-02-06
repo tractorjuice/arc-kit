@@ -1,5 +1,5 @@
 ---
-description: Generate Algorithmic Transparency Recording Standard (ATRS) record for AI/algorithmic tools
+description: "Generate Algorithmic Transparency Recording Standard (ATRS) record for AI/algorithmic tools"
 ---
 
 You are helping a UK government organization create an Algorithmic Transparency Recording Standard (ATRS) record for an AI or algorithmic tool.

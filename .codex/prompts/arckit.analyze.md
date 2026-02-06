@@ -1,5 +1,5 @@
 ---
-description: Perform comprehensive governance quality analysis across architecture artifacts (requirements, principles, designs, assessments)
+description: "Perform comprehensive governance quality analysis across architecture artifacts (requirements, principles, designs, assessments)"
 ---
 
 ## User Input

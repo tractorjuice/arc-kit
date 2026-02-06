@@ -1,5 +1,5 @@
 ---
-description: Generate architecture diagrams using Mermaid for visual documentation
+description: "Generate architecture diagrams using Mermaid for visual documentation"
 ---
 
 # ArcKit: Architecture Diagram Generation

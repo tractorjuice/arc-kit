@@ -1,5 +1,5 @@
 ---
-description: Copy plugin templates to project for customization
+description: "Copy plugin templates to project for customization"
 ---
 
 You are helping a user customize ArcKit document templates for their project or organization.

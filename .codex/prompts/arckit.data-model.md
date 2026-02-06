@@ -1,5 +1,5 @@
 ---
-description: Create comprehensive data model with entity relationships, GDPR compliance, and data governance
+description: "Create comprehensive data model with entity relationships, GDPR compliance, and data governance"
 ---
 
 You are helping an enterprise architect create a comprehensive data model for a project that will guide database design, API specifications, and compliance requirements.

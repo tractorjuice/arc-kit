@@ -1,5 +1,5 @@
 ---
-description: Create operational readiness pack with support model, runbooks, DR/BCP, on-call, and handover documentation
+description: "Create operational readiness pack with support model, runbooks, DR/BCP, on-call, and handover documentation"
 ---
 
 # /arckit.operationalize - Operational Readiness Command

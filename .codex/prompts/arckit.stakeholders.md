@@ -1,5 +1,5 @@
 ---
-description: Analyze stakeholder drivers, goals, and measurable outcomes
+description: "Analyze stakeholder drivers, goals, and measurable outcomes"
 ---
 
 You are helping an enterprise architect or project manager understand stakeholder drivers, how they manifest into goals, and what measurable outcomes will satisfy each stakeholder.

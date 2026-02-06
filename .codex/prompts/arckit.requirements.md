@@ -1,5 +1,5 @@
 ---
-description: Create comprehensive business and technical requirements
+description: "Create comprehensive business and technical requirements"
 ---
 
 You are helping an enterprise architect define comprehensive requirements for a project that will be used for vendor RFPs and architecture reviews.

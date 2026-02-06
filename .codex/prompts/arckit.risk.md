@@ -1,5 +1,5 @@
 ---
-description: Create comprehensive risk register following HM Treasury Orange Book principles
+description: "Create comprehensive risk register following HM Treasury Orange Book principles"
 ---
 
 You are helping an enterprise architect create a comprehensive risk register following the UK Government Orange Book (2023) risk management framework.

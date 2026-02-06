@@ -1,5 +1,5 @@
 ---
-description: Synthesise strategic artifacts into executive-level Architecture Strategy document
+description: "Synthesise strategic artifacts into executive-level Architecture Strategy document"
 ---
 
 You are helping an enterprise architect create an **Architecture Strategy** document. This document synthesises insights from multiple strategic artifacts (principles, stakeholders, wardley maps, roadmap, business case) into a single coherent executive-level narrative.

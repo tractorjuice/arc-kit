@@ -1,5 +1,5 @@
 ---
-description: Generate a Secure by Design assessment for UK Government projects (civilian departments)
+description: "Generate a Secure by Design assessment for UK Government projects (civilian departments)"
 ---
 
 # UK Government Secure by Design Assessment

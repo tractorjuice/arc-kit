@@ -1,5 +1,5 @@
 ---
-description: Generate a Technology Code of Practice (TCoP) review document for a UK Government technology project
+description: "Generate a Technology Code of Practice (TCoP) review document for a UK Government technology project"
 ---
 
 # Technology Code of Practice Review
