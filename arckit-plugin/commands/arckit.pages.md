@@ -333,25 +333,9 @@ Create `docs/manifest.json` with the discovered structure:
 }
 ```
 
-## Step 3: Bundle Document Files into docs/
+## Step 3: Generate index.html
 
-**IMPORTANT**: Copy all discovered markdown files into `docs/` so the site works for **private repos** (where `raw.githubusercontent.com` requires authentication). The template fetches documents via relative paths first, falling back to raw GitHub URLs.
-
-For every document path listed in `manifest.json` (global, projects, diagrams, decisions, vendors, reviews, wardley maps, data contracts), copy the source file into `docs/` preserving its relative path:
-
-```bash
-# Example: copy project documents into docs/
-mkdir -p docs/projects/001-project-name
-cp projects/001-project-name/ARC-001-REQ-v1.0.md docs/projects/001-project-name/
-
-# Guides are already in docs/guides/ — no copy needed
-```
-
-Use Bash with `mkdir -p` and `cp` to copy each file. Skip any paths that don't exist on disk. Guide files (`docs/guides/*.md`) are already in the right place and do not need copying.
-
-## Step 4: Generate index.html
-
-### 4.1 Read the template (MANDATORY)
+### 3.1 Read the template (MANDATORY)
 
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/pages-template.html` exists in the project root
@@ -375,23 +359,23 @@ This template is the single source of truth for the pages site — it contains a
 
 **If the template file does not exist, STOP and show an error**: Tell the user to run `arckit init` to install templates, or check that the template exists. Do NOT generate fallback HTML.
 
-## Step 5: Write Output Files
+## Step 4: Write Output Files
 
 **IMPORTANT**: Use the Write tool to create both files.
 
-### 5.1 Write manifest.json
+### 4.1 Write manifest.json
 
 ```
 docs/manifest.json
 ```
 
-### 5.2 Write index.html
+### 4.2 Write index.html
 
 ```
 docs/index.html
 ```
 
-## Step 6: Provide Summary
+## Step 5: Provide Summary
 
 After generating, provide this summary:
 
@@ -401,7 +385,6 @@ GitHub Pages Site Generated
 Files Created:
 - docs/index.html (main page)
 - docs/manifest.json (document index)
-- docs/projects/ (bundled markdown files for private repo support)
 
 Repository: {owner}/{repo}
 Projects Found: {count}
@@ -426,12 +409,12 @@ https://{owner}.github.io/{repo}/
 
 Features:
 - Dashboard view with KPI cards, charts, and governance checklist (default landing page)
-- Private repo support (documents bundled into docs/ for same-origin fetch)
 - Sidebar navigation for all projects
 - Markdown rendering with syntax highlighting
 - Mermaid diagram support (auto-rendered)
 - GOV.UK Design System styling
 - Responsive mobile layout
+- Private repo graceful degradation (links to GitHub for document viewing)
 
 Next Steps:
 - Commit and push the docs/ folder
