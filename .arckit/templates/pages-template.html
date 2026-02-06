@@ -627,6 +627,15 @@
             border-radius: 2px;
         }
 
+        .app-dashboard-link {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .app-dashboard-link:hover {
+            text-decoration: underline;
+        }
+
         .app-dashboard-check {
             color: #00703c;
             font-weight: 700;
@@ -1565,6 +1574,9 @@
                 const corePresent = CORE_ARTIFACTS.filter(t => presentTypes.has(t)).length;
                 const coverage = CORE_ARTIFACTS.length > 0 ? Math.round((corePresent / CORE_ARTIFACTS.length) * 100) : 0;
 
+                // First document path for linking
+                const firstDoc = docs[0] || diagrams[0] || decisions[0] || wardleyMaps[0] || dataContracts[0] || reviews[0];
+
                 projectMetrics.push({
                     name: project.name || project.id,
                     id: project.id,
@@ -1572,7 +1584,8 @@
                     diagrams: diagrams.length,
                     adrs: decisions.length,
                     vendors: vendors.length,
-                    coverage
+                    coverage,
+                    firstDocPath: firstDoc ? firstDoc.path : null
                 });
             });
 
@@ -1613,19 +1626,22 @@
                 'DPIA (DPIA)': 'DPIA',
                 'Principles Compliance': 'PRIN-COMP'
             };
-            const allProjectTypes = new Set();
+            const firstDocByType = {};
             realProjects.forEach(project => {
                 const allDocs = [...(project.documents || []), ...(project.diagrams || []),
                     ...(project.decisions || []), ...(project.wardleyMaps || []),
                     ...(project.dataContracts || []), ...(project.reviews || [])];
                 allDocs.forEach(doc => {
                     const tc = extractTypeCode(doc.path || '');
-                    if (tc) allProjectTypes.add(tc);
+                    if (tc && !firstDocByType[tc]) firstDocByType[tc] = doc.path;
                 });
             });
             const governanceCoverage = {};
             Object.entries(GOVERNANCE_TYPES).forEach(([label, code]) => {
-                governanceCoverage[label] = allProjectTypes.has(code);
+                governanceCoverage[label] = {
+                    present: !!firstDocByType[code],
+                    path: firstDocByType[code] || null
+                };
             });
 
             return {
@@ -1748,9 +1764,12 @@
             // Row 2: Donut chart + Coverage bars
             let coverageBars = '';
             m.projectMetrics.forEach(p => {
+                const barLabel = p.firstDocPath
+                    ? `<a href="#${p.firstDocPath}" class="app-dashboard-link" data-path="${p.firstDocPath}">${escapeHtml(p.name)}</a>`
+                    : escapeHtml(p.name);
                 coverageBars += `
                     <div class="app-dashboard-bar-row">
-                        <div class="app-dashboard-bar-label" title="${p.name}">${p.name}</div>
+                        <div class="app-dashboard-bar-label" title="${escapeHtml(p.name)}">${barLabel}</div>
                         <div class="app-dashboard-bar-track">
                             <div class="app-dashboard-bar-fill" style="width:${p.coverage}%;background:${coverageColor(p.coverage)}"></div>
                         </div>
@@ -1779,8 +1798,11 @@
             if (m.projectMetrics.length > 0) {
                 let tableRows = '';
                 m.projectMetrics.forEach(p => {
+                    const nameCell = p.firstDocPath
+                        ? `<a href="#${p.firstDocPath}" class="app-dashboard-link" data-path="${p.firstDocPath}">${escapeHtml(p.name)}</a>`
+                        : escapeHtml(p.name);
                     tableRows += `<tr>
-                        <td>${escapeHtml(p.name)}</td>
+                        <td>${nameCell}</td>
                         <td>${p.docs}</td>
                         <td>${p.diagrams}</td>
                         <td>${p.adrs}</td>
@@ -1801,11 +1823,14 @@
 
             // Row 4: Guide maturity + Governance checklist
             let checklistHtml = '';
-            Object.entries(m.governanceCoverage).forEach(([label, present]) => {
-                const icon = present
+            Object.entries(m.governanceCoverage).forEach(([label, info]) => {
+                const icon = info.present
                     ? '<span class="app-dashboard-check">&#10003;</span>'
                     : '<span class="app-dashboard-cross">&#10007;</span>';
-                checklistHtml += `<li>${icon} ${escapeHtml(label)}</li>`;
+                const labelHtml = info.path
+                    ? `<a href="#${info.path}" class="app-dashboard-link" data-path="${info.path}">${escapeHtml(label)}</a>`
+                    : escapeHtml(label);
+                checklistHtml += `<li>${icon} ${labelHtml}</li>`;
             });
 
             html += `
@@ -1832,6 +1857,20 @@
             const guideData = Object.entries(guideColors)
                 .map(([label, color]) => ({ label: label.charAt(0).toUpperCase() + label.slice(1), value: m.guideCounts[label] || 0, color }));
             renderDonutChart('dashboard-guide-chart', guideData);
+
+            // Wire up dashboard links to navigate to documents
+            content.querySelectorAll('.app-dashboard-link').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const path = link.dataset.path;
+                    window.location.hash = path;
+                    loadDocument(path);
+                    // Update sidebar active state
+                    document.querySelectorAll('#nav-container a').forEach(a => {
+                        a.classList.toggle('active', a.dataset.path === path);
+                    });
+                });
+            });
 
             // Clear active states in sidebar
             document.querySelectorAll('#nav-container a').forEach(a => a.classList.remove('active'));
