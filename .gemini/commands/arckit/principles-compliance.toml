@@ -77,6 +77,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Audit findings, compliance gaps, certification evidence, remediation plans
 - **Examples**: `architecture-audit.pdf`, `compliance-certificate.pdf`, `remediation-plan.docx`
 
+**Enterprise-Wide Compliance Frameworks**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise compliance frameworks, audit standards, cross-project compliance benchmarks
+
 **User prompt**: If no external audit docs found but they would improve the compliance assessment, ask:
 \"Do you have any external audit findings or compliance certificates? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

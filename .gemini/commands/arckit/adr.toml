@@ -52,6 +52,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Previous architectural decisions, decision rationale, options considered, decision outcomes
 - **Examples**: `legacy-adrs.pdf`, `decision-log.docx`, `architecture-review-notes.md`
 
+**Enterprise-Wide Decision Frameworks**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise decision frameworks, architecture review board templates, cross-project decision logs
+
 **User prompt**: If no external decision docs found but they would improve context, ask:
 \"Do you have any previous ADRs from legacy systems or decision logs? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

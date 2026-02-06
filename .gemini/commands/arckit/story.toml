@@ -81,6 +81,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Project history, key milestones, lessons learned, user research insights, governance decisions
 - **Examples**: `quarterly-report.pdf`, `user-research-findings.docx`, `lessons-learned.md`
 
+**Enterprise-Wide Reporting Templates**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise reporting templates, programme dashboards, cross-project narrative standards
+
 **User prompt**: If no external docs found but they would enrich the project story, ask:
 \"Do you have any project reports, user research findings, or governance decision records? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

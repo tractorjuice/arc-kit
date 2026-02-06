@@ -65,6 +65,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Component topology, data flows, network boundaries, deployment architecture, integration points
 - **Examples**: `current-architecture.png`, `network-diagram.pdf`, `as-is-design.jpg`
 
+**Enterprise-Wide Architecture Blueprints**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown, Images
+- **What to extract**: Enterprise architecture blueprints, reference architecture diagrams, cross-project integration maps
+
 **User prompt**: If no external diagrams found but they would improve the output, ask:
 \"Do you have any existing architecture diagrams or design images to reference? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

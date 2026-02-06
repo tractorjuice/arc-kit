@@ -77,6 +77,11 @@ You are helping an enterprise architect review a Detailed Design (DLD) document 
    - **What to extract**: Performance test results, security scan reports, infrastructure specifications
    - **Examples**: `load-test-results.pdf`, `security-scan.pdf`
 
+   **Enterprise-Wide Design Standards**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise design standards, implementation guidelines, cross-project technical architecture patterns
+
    **User prompt**: If no vendor DLD found in standard locations, ask:
    \"Please provide the DLD document path or paste key sections. I can read PDFs, Word docs, and images directly. Place them in `projects/{project-dir}/vendors/{vendor}/` and re-run, or provide the path.\"
 

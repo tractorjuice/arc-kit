@@ -84,6 +84,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Current pipeline configurations, deployment procedures, environment specifications, infrastructure-as-code patterns
 - **Examples**: `ci-pipeline.yml`, `deployment-runbook.pdf`, `infrastructure-guide.docx`
 
+**Enterprise-Wide CI/CD Standards**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise CI/CD standards, platform engineering guidelines, cross-project DevOps maturity benchmarks
+
 **User prompt**: If no external DevOps docs found but they would improve the strategy, ask:
 \"Do you have any existing CI/CD configurations, deployment runbooks, or infrastructure documentation? I can read PDFs and YAML files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

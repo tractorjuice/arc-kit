@@ -97,6 +97,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: MOD AI strategy, defence AI ethical principles, JSP 936 compliance requirements
 - **Examples**: `mod-ai-strategy.pdf`, `defence-ai-ethics.docx`
 
+**Enterprise-Wide MOD AI Governance**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise MOD AI governance frameworks, defence innovation standards, cross-project AI assurance evidence
+
 **User prompt**: If no external MOD AI docs found, ask:
 \"Do you have any MOD AI assurance reports, DSTL guidance, or safety case documentation? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

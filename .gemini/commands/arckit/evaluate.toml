@@ -75,6 +75,11 @@ You are helping an enterprise architect create a vendor evaluation framework and
    - **What to extract**: Industry benchmarks, analyst reports, reference check notes
    - **Examples**: `gartner-mq-2025.pdf`, `reference-check-notes.md`
 
+   **Enterprise-Wide Evaluation Frameworks**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise evaluation frameworks, procurement scoring templates, cross-project vendor assessment benchmarks
+
    **User prompt**: If no vendor proposals found, ask:
    \"Do you have vendor proposal documents to evaluate? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/vendors/{vendor-name}/` and re-run, or skip to create the evaluation framework only.\"
 

@@ -90,6 +90,11 @@ Generate a comprehensive TCoP review document by:
    - **What to extract**: Approved technology lists, procurement policies, cloud-first mandates
    - **Examples**: `approved-tech-list.pdf`, `cloud-policy.md`
 
+   **Enterprise-Wide Technology Standards**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise technology standards, digital strategy documents, cross-project TCoP compliance evidence
+
    **User prompt**: If no external docs found but they would improve the TCoP assessment, ask:
    \"Do you have any previous TCoP assessments or departmental technology policy documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

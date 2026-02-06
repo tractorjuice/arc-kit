@@ -25,16 +25,56 @@ Generate a GitHub Pages site for this ArcKit repository.
 
 Scan the repository to find all ArcKit artifacts:
 
-### 1.1 Global Documents
+### 1.1 Guides (Command Documentation)
+
+Check `docs/guides/` for command usage guides:
+```
+docs/guides/
+├── requirements.md      # How to use /arckit.requirements
+├── principles.md        # How to use /arckit.principles
+├── risk.md              # How to use /arckit.risk
+└── {other guides}
+```
+
+Extract the title from the first `#` heading in each guide file.
+
+**Guide Categories** (based on filename):
+
+| Category | Guide Files |
+|----------|-------------|
+| Discovery | requirements, stakeholders, research, datascout |
+| Planning | sobc, business-case, plan, roadmap, backlog |
+| Architecture | principles, adr, diagram, wardley, data-model, hld-review, dld-review, design-review, platform-design, data-mesh-contract |
+| Governance | risk, risk-management, traceability, principles-compliance, analyze |
+| Compliance | tcop, secure, mod-secure, dpia, ai-playbook, atrs, jsp-936, service-assessment |
+| Operations | devops, mlops, finops, servicenow, operationalize |
+| Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
+| Research | aws-research, azure-research |
+| Other | pages, story, trello, migration, customize |
+
+**Guide Status** (from README command maturity):
+
+| Status | Description | Guide Files |
+|--------|-------------|-------------|
+| live | Production-ready | plan, principles, stakeholders, risk, sobc, requirements, data-model, diagram, traceability, principles-compliance, story |
+| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, pages |
+| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs |
+| experimental | Early adopters | platform-design, wardley, azure-research, aws-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936, customize, sow, evaluate |
+
+### 1.2 Global Documents
 
 Check `projects/000-global/` for global artifacts:
 ```
 projects/000-global/
 ├── ARC-000-PRIN-v1.0.md    # Architecture Principles (global)
+├── policies/                # Governance policies
+│   └── *.pdf, *.docx, *.md
+├── external/                # Enterprise-wide reference documents
+│   └── *.pdf, *.docx, *.md
 └── {other global documents}
 ```
 
-### 1.2 Project Documents
+### 1.3 Project Documents
 
 Check `projects/` for all project folders. Documents use standardized naming: `ARC-{PROJECT_ID}-{TYPE}-v{VERSION}.md`
 
@@ -80,11 +120,15 @@ projects/
 │   ├── reviews/
 │   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
 │   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
-│   └── vendors/
-│       └── {vendor-name}/
-│           ├── hld*.md
-│           ├── dld*.md
-│           └── proposal*.md
+│   ├── vendors/
+│   │   └── {vendor-name}/
+│   │       ├── hld*.md
+│   │       ├── dld*.md
+│   │       └── proposal*.md
+│   └── external/
+│       ├── README.md             # (excluded from listing)
+│       ├── rfp-document.pdf
+│       └── legacy-spec.docx
 ├── 002-{another-project}/
 │   └── ...
 └── ...
@@ -163,6 +207,20 @@ Create `docs/manifest.json` with the discovered structure:
     "branch": "main"
   },
   "defaultDocument": "projects/000-global/ARC-000-PRIN-v1.0.md",
+  "guides": [
+    {
+      "path": "docs/guides/requirements.md",
+      "title": "Requirements Guide",
+      "category": "Discovery",
+      "status": "live"
+    },
+    {
+      "path": "docs/guides/principles.md",
+      "title": "Principles Guide",
+      "category": "Architecture",
+      "status": "live"
+    }
+  ],
   "global": [
     {
       "path": "projects/000-global/ARC-000-PRIN-v1.0.md",
@@ -170,6 +228,20 @@ Create `docs/manifest.json` with the discovered structure:
       "category": "Architecture",
       "documentId": "ARC-000-PRIN-v1.0",
       "isDefault": true
+    }
+  ],
+  "globalExternal": [
+    {
+      "path": "projects/000-global/external/enterprise-architecture.pdf",
+      "title": "enterprise-architecture.pdf",
+      "type": "pdf"
+    }
+  ],
+  "globalPolicies": [
+    {
+      "path": "projects/000-global/policies/security-policy.pdf",
+      "title": "security-policy.pdf",
+      "type": "pdf"
     }
   ],
   "projects": [
@@ -247,6 +319,13 @@ Create `docs/manifest.json` with the discovered structure:
             }
           ]
         }
+      ],
+      "external": [
+        {
+          "path": "projects/001-project-name/external/rfp-document.pdf",
+          "title": "rfp-document.pdf",
+          "type": "pdf"
+        }
       ]
     }
   ]
@@ -257,9 +336,17 @@ Create `docs/manifest.json` with the discovered structure:
 
 ### 3.1 Read the template (MANDATORY)
 
-**You MUST use the Read tool to read `.arckit/templates/pages-template.html` before generating `docs/index.html`.** This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/pages-template.html` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/pages-template.html` (default)
 
-1. Read the file `.arckit/templates/pages-template.html` using the Read tool
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize pages`
+
+This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.
+
+1. Read the appropriate template file (custom override or default) using the Read tool
 2. Copy the **entire** template contents as the base for `docs/index.html`
 3. Replace the placeholder values in the CONFIG block with the actual repository details:
    - `'{{OWNER}}'` → the GitHub owner/org (e.g. `'tractorjuice'`)
@@ -313,6 +400,7 @@ Projects Found: {count}
 Documents Indexed: {total_documents}
 
 Document Breakdown:
+- Guides: {guides_count}
 - Global: {global_count}
 - Project Documents: {project_doc_count}
 - Diagrams: {diagram_count}

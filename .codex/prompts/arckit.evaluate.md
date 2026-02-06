@@ -16,33 +16,74 @@ $ARGUMENTS
    - Example: "Create evaluation framework for payment gateway project"
    - Example: "Evaluate vendors for project 001"
 
-2. **Prerequisites Check**:
+2. **Read Available Documents**:
 
-**IMPORTANT**: Check prerequisites before proceeding:
+   Scan the project directory for existing artifacts and read them to inform this evaluation:
 
-a. **Architecture Principles** (MUST exist):
-   - Check if any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`
-   - If NOT found: ERROR "Run /arckit.principles first to define governance standards"
-   - Vendor evaluation MUST align with organizational governance
+   **MANDATORY** (warn if missing):
+   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+     - Extract: BR/FR/NFR/INT/DR requirements to evaluate vendors against
+     - If missing: warn user to run `/arckit.requirements` first
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+     - Extract: Technology standards, governance constraints, compliance requirements for evaluation criteria
+     - If missing: warn user to run `/arckit.principles` first
 
-b. **Project Requirements** (MUST exist):
-   - Check if user specified a project name/number
-   - Look for `projects/{project-dir}/ARC-*-REQ-v*.md`
-   - If NOT found: ERROR "Run /arckit.requirements first to define what you're evaluating"
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-*-SOW-*.md` in `projects/{project-dir}/` — Statement of Work
+     - Extract: Pre-defined evaluation criteria, scope, deliverables
+   - `ARC-*-DOS-*.md` in `projects/{project-dir}/` — DOS procurement documentation
+     - Extract: Evaluation criteria, essential/desirable skills, assessment approach
+   - `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-dir}/` — Technology research
+     - Extract: Market landscape, vendor options, technology recommendations
+   - `ARC-*-GCLD-*.md` in `projects/{project-dir}/procurement/` — G-Cloud search results
+     - Extract: Shortlisted services, feature comparisons, compliance matches
 
-c. **Statement of Work** (RECOMMENDED):
-   - Check if `projects/{project-dir}/ARC-*-SOW-v*.md` or `projects/{project-dir}/procurement/ARC-*-DOS-v*.md` exists
-   - If NOT found: WARN "Consider running /arckit.sow or /arckit.dos to define evaluation criteria"
-   - If exists: Read it to understand pre-defined evaluation criteria
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+     - Extract: Evaluation panel composition, stakeholder priorities
+   - `ARC-*-DPIA-*.md` in `projects/{project-dir}/` — DPIA
+     - Extract: Data protection requirements for vendor assessment
 
-3. **Read project context**:
-   - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` to understand what's being evaluated
-   - Read any `ARC-*-SOW-*.md` file in `projects/{project-dir}/` to understand evaluation criteria already defined
-   - Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` to ensure alignment with governance
+   **What to extract from each document**:
+   - **Principles**: Governance standards, technology constraints for evaluation alignment
+   - **Requirements**: BR/FR/NFR/INT/DR IDs and priorities to score vendors against
+   - **SOW/DOS**: Pre-defined evaluation criteria, scope, deliverables
+   - **Research**: Market context, vendor landscape, technology recommendations
 
-4. **Read the template**: Read `.arckit/templates/evaluation-criteria-template.md`
+3. **Read the templates** (with user override support):
+   - **First**, check if `.arckit/templates-custom/evaluation-criteria-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/evaluation-criteria-template.md` (default)
+   - **Also read** the scoring template: check `.arckit/templates-custom/vendor-scoring-template.md` first, then `.arckit/templates/vendor-scoring-template.md`
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize evaluate`
+
+4. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **Vendor Proposals & Capability Statements**:
+   - **Look in**: `projects/{project-dir}/vendors/{vendor}/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+   - **What to extract**: Proposed solution, pricing, team qualifications, case studies, certifications, SLA commitments
+   - **Examples**: `proposal-v1.0.pdf`, `capability-statement.docx`, `pricing-schedule.pdf`
+
+   **Evaluation Reference Documents**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Industry benchmarks, analyst reports, reference check notes
+   - **Examples**: `gartner-mq-2025.pdf`, `reference-check-notes.md`
+
+   **Enterprise-Wide Evaluation Frameworks**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise evaluation frameworks, procurement scoring templates, cross-project vendor assessment benchmarks
+
+   **User prompt**: If no vendor proposals found, ask:
+   "Do you have vendor proposal documents to evaluate? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/vendors/{vendor-name}/` and re-run, or skip to create the evaluation framework only."
+
+   **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 5. **Determine the task**: The user may want to:
    - **Create evaluation framework** (before receiving proposals)
@@ -90,6 +131,63 @@ If creating a new framework:
    - Evaluation team composition
    - Review timeline
    - Decision criteria (e.g., must score >70 to be considered)
+
+
+---
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+**Generate Document ID**:
+```bash
+# Use the ArcKit document ID generation script
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "EVAL" "${VERSION}")
+# Example output: ARC-001-EVAL-v1.0
+```
+
+**Populate Required Fields**:
+
+*Auto-populated fields* (populate these automatically):
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → "Vendor Evaluation Framework"
+- `ARC-[PROJECT_ID]-EVAL-v[VERSION]` → Use generated DOC_ID
+- `[COMMAND]` → "arckit.evaluate"
+
+*User-provided fields* (extract from project metadata or user input):
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+*Calculated fields*:
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+
+*Pending fields* (leave as [PENDING] until manually updated):
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+**Populate Revision History**:
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit.evaluate` command | [PENDING] | [PENDING] |
+```
+
+**Populate Generation Metadata Footer**:
+
+The footer should be populated with:
+```markdown
+**Generated by**: ArcKit `/arckit.evaluate` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: [Read from VERSION file]
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+---
 
 4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-EVAL-v1.0.md`
 

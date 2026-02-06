@@ -328,7 +328,7 @@ The completion percentage is based on 10 standard artifacts:
 
 ### 6. converter.py
 
-**Purpose**: Convert Claude Code commands to Gemini CLI TOML format
+**Purpose**: Convert Claude Code commands to Gemini CLI TOML and Codex CLI Markdown formats
 
 **Usage**:
 ```bash
@@ -337,20 +337,21 @@ python scripts/converter.py
 
 **Description**:
 
-Automatically converts all Claude Code slash commands from `.claude/commands/*.md` format to Gemini CLI `.gemini/commands/arckit/*.toml` format.
+Automatically converts all Claude Code slash commands from `.claude/commands/*.md` to both Gemini CLI (`.gemini/commands/arckit/*.toml`) and Codex CLI (`.codex/prompts/arckit.*.md`) formats.
 
 **Key Features**:
+- Generates **Gemini TOML** and **Codex Markdown** from a single Claude source
 - Extracts YAML frontmatter from Claude markdown commands
-- Converts `description` field to TOML format
-- Replaces `$ARGUMENTS` with `{{args}}` for Gemini syntax
-- Creates `.gemini/commands/arckit/` directory if needed
-- Processes all `.md` files in `.claude/commands/`
+- Replaces `$ARGUMENTS` with `{{args}}` for Gemini; keeps `$ARGUMENTS` for Codex
+- For agent-delegating commands (research, datascout, aws-research, azure-research), inlines the full agent prompt since Gemini and Codex don't support the Task/agent architecture
+- Creates output directories if needed
 
 **Conversion Process**:
 1. Reads each `.claude/commands/arckit.*.md` file
-2. Extracts frontmatter description
-3. Converts prompt body
-4. Writes to `.gemini/commands/arckit/*.toml`
+2. Extracts frontmatter description and prompt body
+3. For agent-delegating commands, reads `.claude/agents/arckit-*.md` and extracts the full agent prompt
+4. Writes Gemini TOML to `.gemini/commands/arckit/*.toml`
+5. Writes Codex Markdown to `.codex/prompts/arckit.*.md`
 
 **Example**:
 ```bash
@@ -358,25 +359,34 @@ Automatically converts all Claude Code slash commands from `.claude/commands/*.m
 python scripts/converter.py
 
 # Output:
-# Converted .claude/commands/arckit.plan.md to .gemini/commands/arckit/plan.toml
-# Converted .claude/commands/arckit.principles.md to .gemini/commands/arckit/principles.toml
-# ... (46 commands total)
+# --- Gemini TOML ---
+#   Gemini: .claude/commands/arckit.plan.md -> .gemini/commands/arckit/plan.toml
+#   ...
+# Generated 46 Gemini TOML files
+#
+# --- Codex Markdown ---
+#   Codex:  .claude/commands/arckit.plan.md -> .codex/prompts/arckit.plan.md
+#   ...
+# Generated 46 Codex prompt files
+#
+# Done. 46 Gemini + 46 Codex = 92 total files.
 ```
 
 **Use Cases**:
 - After adding new Claude commands
-- After updating existing Claude command descriptions
-- Setting up Gemini CLI for the first time
-- Syncing changes from Claude to Gemini
+- After updating existing Claude command content
+- After modifying agent prompts
+- Setting up Gemini or Codex CLI for the first time
 
 **Requirements**:
 - Python 3.6+
 - No external dependencies (uses standard library only)
 
 **Related**:
-- Claude commands: `.claude/commands/`
-- Gemini commands: `.gemini/commands/arckit/`
-- See `.codex/README.md` for multi-AI CLI setup (Claude Code, Codex CLI, Gemini CLI)
+- Claude commands (source): `.claude/commands/`
+- Gemini commands (generated): `.gemini/commands/arckit/`
+- Codex prompts (generated): `.codex/prompts/`
+- See `.codex/README.md` for Codex CLI setup
 
 ---
 

@@ -80,6 +80,11 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
    - **What to extract**: Previous risk findings, mitigation effectiveness, residual risks, lessons learned
    - **Examples**: `previous-risk-register.pdf`, `risk-review-notes.md`
 
+   **Enterprise-Wide Risk Frameworks**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise risk frameworks, threat intelligence reports, cross-project risk benchmarks
+
    **User prompt**: If no external risk docs found but they would improve the assessment, ask:
    \"Do you have a risk appetite statement, previous risk assessments, or external threat reports? I can read PDFs directly. Place them in `projects/000-global/policies/` and re-run, or skip.\"
 

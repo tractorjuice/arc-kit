@@ -1,13 +1,13 @@
-description = """
-Synthesise strategic artifacts into executive-level Architecture Strategy document
-"""
-prompt = """
+---
+description: Synthesise strategic artifacts into executive-level Architecture Strategy document
+---
+
 You are helping an enterprise architect create an **Architecture Strategy** document. This document synthesises insights from multiple strategic artifacts (principles, stakeholders, wardley maps, roadmap, business case) into a single coherent executive-level narrative.
 
 ## User Input
 
 ```text
-{{args}}
+$ARGUMENTS
 ```
 
 ## Prerequisites: Read Strategic Artifacts
@@ -58,7 +58,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Enterprise architecture strategy, digital transformation plans, cross-project strategic alignment documents
 
 **User prompt**: If no external strategy docs found but they would improve the output, ask:
-\"Do you have any existing strategy documents, vision statements, or strategic plans? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
+"Do you have any existing strategy documents, vision statements, or strategic plans? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
@@ -69,7 +69,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 Run the project creation script to get the project directory:
 
 ```bash
-bash .arckit/scripts/bash/create-project.sh --name \"[project-name-from-user-input]\" --json
+bash .arckit/scripts/bash/create-project.sh --name "[project-name-from-user-input]" --json
 ```
 
 Parse the JSON response to extract:
@@ -184,7 +184,7 @@ Create a comprehensive Architecture Strategy document that synthesises insights 
 
 If the user indicates this is a UK Government project, include:
 
-- **Financial Year Notation**: Use \"FY 2024/25\", \"FY 2025/26\" format
+- **Financial Year Notation**: Use "FY 2024/25", "FY 2025/26" format
 - **Spending Review Alignment**: Reference SR periods
 - **GDS Service Standard**: Reference Discovery/Alpha/Beta/Live phases
 - **TCoP (Technology Code of Practice)**: Reference 13 points
@@ -223,24 +223,24 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"STRAT\" \"${VERSION}\")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "STRAT" "${VERSION}")
 # Example output: ARC-001-STRAT-v1.0
 ```
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
-- `[PROJECT_ID]` → Extract from project path (e.g., \"001\" from \"projects/001-project-name\")
-- `[VERSION]` → \"1.0\" (or increment if previous version exists)
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
-- `[DOCUMENT_TYPE_NAME]` → \"Architecture Strategy\"
+- `[DOCUMENT_TYPE_NAME]` → "Architecture Strategy"
 - `ARC-[PROJECT_ID]-STRAT-v[VERSION]` → Use generated DOC_ID
-- `[COMMAND]` → \"arckit.strategy\"
+- `[COMMAND]` → "arckit.strategy"
 
 *User-provided fields* (extract from project metadata or user input):
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
-- `[CLASSIFICATION]` → Default to \"OFFICIAL\" for UK Gov, \"PUBLIC\" otherwise (or prompt user)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
@@ -248,7 +248,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"STRAT\
 *Pending fields* (leave as [PENDING] until manually updated):
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
-- `[DISTRIBUTION_LIST]` → Default to \"Project Team, Architecture Team\" or [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
 
 **Populate Revision History**:
 
@@ -264,7 +264,7 @@ The footer should be populated with:
 **Generated on**: {DATE} {TIME} GMT
 **ArcKit Version**: [Read from VERSION file]
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
-**AI Model**: [Use actual model name, e.g., \"claude-sonnet-4-5-20250929\"]
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]
 ```
 
@@ -357,7 +357,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 5. **Traceability is Critical**: Every element of the strategy should trace back to source documents. This ensures the strategy is grounded in agreed artifacts, not assumptions.
 
-6. **Gap Identification**: If recommended documents are missing, include a \"Gaps\" section noting what additional artifacts would strengthen the strategy (e.g., \"A Wardley Map would improve build vs buy decisions\").
+6. **Gap Identification**: If recommended documents are missing, include a "Gaps" section noting what additional artifacts would strengthen the strategy (e.g., "A Wardley Map would improve build vs buy decisions").
 
 7. **Principles Compliance**: Show how each strategic theme aligns to specific principles. This demonstrates that strategy is principles-driven.
 
@@ -367,5 +367,4 @@ After writing the file, show a concise summary (NOT the full document):
 
 9. **Version Management**: If a strategy already exists (ARC-*-STRAT-v*.md), create a new version (v2.0) rather than overwriting. Strategies should be versioned to track evolution.
 
-10. **Financial Years**: For UK Government, use \"FY 2024/25\" notation (April-March). For US/other contexts, use appropriate fiscal year notation.
-"""
+10. **Financial Years**: For UK Government, use "FY 2024/25" notation (April-March). For US/other contexts, use appropriate fiscal year notation.

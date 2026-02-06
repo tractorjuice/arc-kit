@@ -95,6 +95,11 @@ You are helping a UK government organization assess compliance with the UK Gover
    - **What to extract**: AI governance framework, approved AI/ML platforms, responsible AI guidelines
    - **Examples**: `ai-governance-framework.pdf`, `responsible-ai-guidelines.docx`
 
+   **Enterprise-Wide AI Strategy**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise AI strategy, responsible AI frameworks, cross-project AI maturity assessments
+
    **User prompt**: If no external AI governance docs found, ask:
    \"Do you have any AI governance policies, model cards, or ethical AI assessments? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

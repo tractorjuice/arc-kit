@@ -12,15 +12,55 @@ $ARGUMENTS
 
 ## Instructions
 
-### 1. **Check for prerequisites**:
-   - First, check if any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`
-     - If it doesn't exist, suggest running `/arckit.principles` first
-     - Architecture principles should inform decision drivers
-   - Optionally check for related artifacts that may inform the decision:
-     - `projects/*/ARC-*-STKE-v*.md` - understand stakeholder goals
-     - `projects/*/ARC-*-REQ-v*.md` - decisions address requirements
-     - `projects/*/ARC-*-RSCH-v*.md` - research may have analyzed options
-     - `projects/*/wardley-maps/ARC-*-WARD-*.md` - evolution stage influences choices
+### 1. **Read Available Documents**:
+
+Scan the project directory for existing artifacts and read them to inform this decision:
+
+**MANDATORY** (warn if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Technology standards, constraints, compliance requirements that inform decision drivers
+  - If missing: warn user to run `/arckit.principles` first
+- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+  - Extract: BR/FR/NFR/INT/DR IDs that this decision addresses
+  - If missing: warn user to run `/arckit.requirements` first
+
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+  - Extract: Risks this decision mitigates, risk appetite context
+
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-dir}/` — Technology research
+  - Extract: Options already analyzed, vendor comparisons, TCO data
+- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+  - Extract: Stakeholder goals, decision authority, RACI context
+- `ARC-*-WARD-*.md` in `projects/{project-dir}/wardley-maps/` — Wardley maps
+  - Extract: Evolution stage influences on build vs buy choices
+
+**What to extract from each document**:
+- **Principles**: Technology standards, constraints, compliance requirements
+- **Requirements**: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria
+- **Risk**: Risks this decision mitigates, risk appetite
+- **Research**: Options already analyzed, vendor comparisons, TCO data
+
+### 1b. **Check for External Documents** (optional):
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Previous ADRs & Decision Logs**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **What to extract**: Previous architectural decisions, decision rationale, options considered, decision outcomes
+- **Examples**: `legacy-adrs.pdf`, `decision-log.docx`, `architecture-review-notes.md`
+
+**Enterprise-Wide Decision Frameworks**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise decision frameworks, architecture review board templates, cross-project decision logs
+
+**User prompt**: If no external decision docs found but they would improve context, ask:
+"Do you have any previous ADRs from legacy systems or decision logs? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ### 2. **Create or find the project**:
    - Run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create project structure
@@ -47,9 +87,13 @@ else
 fi
 ```
 
-### 4. **Read the template**: Read `.arckit/templates/adr-template.md` to understand the comprehensive structure
+### 4. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/adr-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/adr-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize adr`
 
 ### 5. **Gather decision information from user**:
    - **Decision title**: Short noun phrase (e.g., "Use PostgreSQL for Data Persistence")
@@ -269,9 +313,9 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ADR" "${V
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
-- `[DOCUMENT_TYPE_NAME]` → Use the document purpose (e.g., "Architecture Decision Record")
+- `[DOCUMENT_TYPE_NAME]` → "Architecture Decision Record"
 - `ARC-[PROJECT_ID]-ADR-[NUM]-v[VERSION]` → Use generated DOC_ID from Step 1
-- `[COMMAND]` → Current command name (e.g., "arckit.adr")
+- `[COMMAND]` → "arckit.adr"
 
 **User-provided fields** (extract from project metadata or user input):
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
@@ -299,7 +343,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit.adr` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file or use "1.0.0"]
+**ArcKit Version**: [Read from VERSION file]
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

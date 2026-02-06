@@ -122,6 +122,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Previous assessment results, assessor feedback, action items, evidence gaps identified
 - **Examples**: `alpha-assessment-report.pdf`, `assessor-feedback.docx`, `evidence-gaps.md`
 
+**Enterprise-Wide Service Standards**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise service standards, previous GDS assessment reports, cross-project assessment benchmarks
+
 **User prompt**: If no external assessment docs found but they would improve preparation, ask:
 \"Do you have any previous GDS assessment reports or assessor feedback? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

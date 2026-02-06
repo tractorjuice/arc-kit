@@ -6,6 +6,8 @@
 
 This directory contains ArcKit slash commands adapted for [OpenAI Codex CLI](https://chatgpt.com/features/codex).
 
+> **Auto-generated**: Codex prompts in `.codex/prompts/` are generated from Claude commands by `python scripts/converter.py`. Do not edit them directly — edit the Claude source in `.claude/commands/` and re-run the converter.
+
 ## Prerequisites
 
 1. **ChatGPT Plan**: Codex CLI is included with ChatGPT Plus, Pro, Business, Edu, or Enterprise plans
@@ -369,38 +371,52 @@ your-project/
 ├── .codex/
 │   ├── README.md (this file)
 │   └── prompts/
-│       ├── arckit.plan.md
-│       ├── arckit.principles.md
-│       ├── arckit.stakeholders.md
-│       ├── arckit.risk.md
-│       ├── arckit.sobc.md
-│       ├── arckit.requirements.md
-│       ├── arckit.data-model.md
-│       ├── arckit.dpia.md
-│       ├── arckit.research.md
-│       ├── arckit.wardley.md
-│       ├── arckit.roadmap.md
 │       ├── arckit.adr.md
-│       ├── arckit.gcloud-search.md
-│       ├── arckit.gcloud-clarify.md
-│       ├── arckit.dos.md
-│       ├── arckit.sow.md
-│       ├── arckit.evaluate.md
-│       ├── arckit.backlog.md
-│       ├── arckit.data-mesh-contract.md
-│       ├── arckit.hld-review.md
-│       ├── arckit.dld-review.md
-│       ├── arckit.traceability.md
-│       ├── arckit.service-assessment.md
-│       ├── arckit.secure.md
-│       ├── arckit.mod-secure.md
-│       ├── arckit.tcop.md
-│       ├── arckit.atrs.md
 │       ├── arckit.ai-playbook.md
 │       ├── arckit.analyze.md
+│       ├── arckit.atrs.md
+│       ├── arckit.aws-research.md
+│       ├── arckit.azure-research.md
+│       ├── arckit.backlog.md
+│       ├── arckit.customize.md
+│       ├── arckit.data-mesh-contract.md
+│       ├── arckit.data-model.md
+│       ├── arckit.datascout.md
+│       ├── arckit.devops.md
 │       ├── arckit.diagram.md
+│       ├── arckit.dld-review.md
+│       ├── arckit.dos.md
+│       ├── arckit.dpia.md
+│       ├── arckit.evaluate.md
+│       ├── arckit.finops.md
+│       ├── arckit.gcloud-clarify.md
+│       ├── arckit.gcloud-search.md
+│       ├── arckit.hld-review.md
+│       ├── arckit.jsp-936.md
+│       ├── arckit.mlops.md
+│       ├── arckit.mod-secure.md
+│       ├── arckit.operationalize.md
+│       ├── arckit.pages.md
+│       ├── arckit.plan.md
+│       ├── arckit.platform-design.md
+│       ├── arckit.principles-compliance.md
+│       ├── arckit.principles.md
+│       ├── arckit.requirements.md
+│       ├── arckit.research.md
+│       ├── arckit.risk.md
+│       ├── arckit.roadmap.md
+│       ├── arckit.secure.md
+│       ├── arckit.service-assessment.md
 │       ├── arckit.servicenow.md
-│       └── arckit.story.md
+│       ├── arckit.sobc.md
+│       ├── arckit.sow.md
+│       ├── arckit.stakeholders.md
+│       ├── arckit.story.md
+│       ├── arckit.strategy.md
+│       ├── arckit.tcop.md
+│       ├── arckit.traceability.md
+│       ├── arckit.trello.md
+│       └── arckit.wardley.md
 ├── .arckit/
 │   ├── scripts/
 │   │   └── bash/

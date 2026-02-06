@@ -21,28 +21,66 @@ This command generates DOS-compliant procurement documentation from your existin
 
 ## Instructions
 
-### 1. Prerequisites Check
+### 0. Read the Template
 
-**IMPORTANT**: Check prerequisites before proceeding:
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/dos-requirements-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/dos-requirements-template.md` (default)
 
-a. **Architecture Principles** (MUST exist):
-   - Check if `projects/000-global/ARC-000-PRIN-*.md` exists
-   - If NOT found: ERROR "Run /arckit.principles first to define governance standards"
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize dos`
 
-b. **Project with Requirements** (MUST exist):
-   - Check if user specified a project name/number
-   - Look for `projects/[project]/ARC-*-REQ-v*.md`
-   - If NOT found: ERROR "Run /arckit.requirements first to define project needs"
+### 1. Read Available Documents
 
-c. **Stakeholder Analysis** (RECOMMENDED):
-   - Check if `projects/[project]/ARC-*-STKE-v*.md` exists
-   - If NOT found: WARN "Consider running /arckit.stakeholders to understand stakeholder priorities"
-   - If exists: Read it to inform procurement priorities
+Scan the project directory for existing artifacts and read them to inform this document:
 
-d. **Existing SOW** (OPTIONAL):
-   - Check if `projects/[project]/ARC-*-SOW-v*.md` exists
-   - If exists: Reference it for additional context
-   - This command generates Digital Marketplace-specific docs alongside general SOW
+**MANDATORY** (warn if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Technology standards, governance constraints for vendor proposals
+  - If missing: ERROR — run `/arckit.principles` first to define governance standards
+- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+  - Extract: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria — source of truth for DOS
+  - If missing: ERROR — run `/arckit.requirements` first to define project needs
+
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+  - Extract: User personas, business drivers, evaluation priorities
+  - If missing: WARN — consider running `/arckit.stakeholders` to understand stakeholder priorities
+- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-dir}/` — Technology research
+  - Extract: Technology decisions informing essential skills requirements
+
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-SOW-*.md` in `projects/{project-dir}/` — Statement of Work
+  - Extract: Additional procurement context, scope definitions
+- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+  - Extract: Risks requiring vendor mitigation, compliance requirements
+
+**What to extract from each document**:
+- **Principles**: Technology standards, governance constraints for vendor proposals
+- **Requirements**: All BR/FR/NFR/INT/DR IDs with MUST/SHOULD/MAY priority
+- **Stakeholders**: User personas, business drivers, evaluation priorities
+- **Research**: Technology landscape informing essential skills
+
+### 1b. Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Contractor CVs & Previous DOS Submissions**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **What to extract**: Team capability evidence, previous submission scores, buyer requirements, evaluation feedback
+- **Examples**: `team-cvs.pdf`, `previous-dos-submission.docx`, `buyer-requirements.pdf`
+
+**Enterprise-Wide Procurement Templates**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Organization-wide procurement templates, DOS framework guidance, approved supplier capabilities
+
+**User prompt**: If no external DOS docs found but they would improve the submission, ask:
+"Do you have any contractor CVs, previous DOS submissions, or buyer requirement documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ### 2. Load Project Context
 
@@ -52,6 +90,63 @@ Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, th
 2. Read `projects/000-global/ARC-000-PRIN-*.md` (governance constraints)
 3. Read `projects/[project]/ARC-*-STKE-v*.md` if available (priorities)
 4. Parse user input for additional context (budget, timeline, specific skills)
+
+
+---
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+**Generate Document ID**:
+```bash
+# Use the ArcKit document ID generation script
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DOS" "${VERSION}")
+# Example output: ARC-001-DOS-v1.0
+```
+
+**Populate Required Fields**:
+
+*Auto-populated fields* (populate these automatically):
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → "DOS Procurement Requirements"
+- `ARC-[PROJECT_ID]-DOS-v[VERSION]` → Use generated DOC_ID
+- `[COMMAND]` → "arckit.dos"
+
+*User-provided fields* (extract from project metadata or user input):
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+*Calculated fields*:
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+
+*Pending fields* (leave as [PENDING] until manually updated):
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+**Populate Revision History**:
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit.dos` command | [PENDING] | [PENDING] |
+```
+
+**Populate Generation Metadata Footer**:
+
+The footer should be populated with:
+```markdown
+**Generated by**: ArcKit `/arckit.dos` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: [Read from VERSION file]
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+---
 
 ### 3. Generate DOS Procurement Documentation
 
@@ -421,30 +516,30 @@ Vendors must provide:
 
 ### 14.1 For Procurement Team
 
-1. **Review & Refine**: Validate this document with stakeholders
-2. **Budget Approval**: Obtain budget sign-off before publishing
-3. **Publish on Digital Marketplace**:
+2. **Review & Refine**: Validate this document with stakeholders
+3. **Budget Approval**: Obtain budget sign-off before publishing
+4. **Publish on Digital Marketplace**:
    - Go to: https://www.digitalmarketplace.service.gov.uk/
    - Select "Digital Outcomes and Specialists"
    - Post requirements (publicly visible)
    - Set closing date for proposals
-4. **Answer Supplier Questions**: Via Digital Marketplace platform (visible to all)
-5. **Evaluate Proposals**: Using criteria in Section 11
-6. **Conduct Assessments**: Interview/technical assessment for shortlisted suppliers
-7. **Award Contract**: To highest-scoring supplier
-8. **Publish Award Details**: On Contracts Finder (legal requirement)
+5. **Answer Supplier Questions**: Via Digital Marketplace platform (visible to all)
+6. **Evaluate Proposals**: Using criteria in Section 11
+7. **Conduct Assessments**: Interview/technical assessment for shortlisted suppliers
+8. **Award Contract**: To highest-scoring supplier
+9. **Publish Award Details**: On Contracts Finder (legal requirement)
 
 ### 14.2 For Architecture Team
 
-1. **Prepare Review Frameworks**:
+2. **Prepare Review Frameworks**:
    - Run `/arckit.hld-review` to set up HLD review process
    - Run `/arckit.dld-review` to set up DLD review process
    - Prepare evaluation scorecards based on Section 11 criteria
-2. **Establish Governance**:
+3. **Establish Governance**:
    - Set up architecture review board
    - Define review gates and approval process
    - Schedule regular checkpoints with vendor
-3. **Traceability Setup**:
+4. **Traceability Setup**:
    - Run `/arckit.traceability` to establish tracking framework
    - Define traceability requirements for vendor
 
@@ -559,14 +654,14 @@ Important: Maintain audit trail of all procurement decisions per Digital Marketp
 
 ## Key Principles
 
-1. **Requirements First**: Always pull from ARC-*-REQ-*.md - don't invent new requirements
-2. **Principle Enforcement**: Ensure architecture principles constrain vendor proposals
-3. **Stakeholder Alignment**: Reflect stakeholder priorities in evaluation criteria
-4. **Technology-Agnostic**: Remove all implementation details from procurement docs
-5. **Traceability**: Maintain requirement IDs (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx) throughout
-6. **Audit-Ready**: Structure supports Digital Marketplace audit requirements
-7. **Gov.uk Aligned**: Use official terminology and link to authoritative guidance
-8. **DOS-Focused**: This is ONLY for custom development - no G-Cloud content
+2. **Requirements First**: Always pull from ARC-*-REQ-*.md - don't invent new requirements
+3. **Principle Enforcement**: Ensure architecture principles constrain vendor proposals
+4. **Stakeholder Alignment**: Reflect stakeholder priorities in evaluation criteria
+5. **Technology-Agnostic**: Remove all implementation details from procurement docs
+6. **Traceability**: Maintain requirement IDs (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx) throughout
+7. **Audit-Ready**: Structure supports Digital Marketplace audit requirements
+8. **Gov.uk Aligned**: Use official terminology and link to authoritative guidance
+9. **DOS-Focused**: This is ONLY for custom development - no G-Cloud content
 
 ## Error Handling
 

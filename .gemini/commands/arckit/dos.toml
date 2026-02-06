@@ -72,6 +72,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Team capability evidence, previous submission scores, buyer requirements, evaluation feedback
 - **Examples**: `team-cvs.pdf`, `previous-dos-submission.docx`, `buyer-requirements.pdf`
 
+**Enterprise-Wide Procurement Templates**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Organization-wide procurement templates, DOS framework guidance, approved supplier capabilities
+
 **User prompt**: If no external DOS docs found but they would improve the submission, ask:
 \"Do you have any contractor CVs, previous DOS submissions, or buyer requirement documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

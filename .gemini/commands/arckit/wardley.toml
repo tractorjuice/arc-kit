@@ -79,6 +79,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Existing component positions, evolution assessments, strategic plays, market context
 - **Examples**: `current-wardley-map.png`, `strategic-analysis.pdf`, `wardley-map.owm`
 
+**Enterprise-Wide Technology Landscape**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown, Images
+- **What to extract**: Enterprise technology landscape maps, market analysis reports, cross-project strategic context
+
 **User prompt**: If no external Wardley maps found but they would improve strategic context, ask:
 \"Do you have any existing Wardley maps (images or OWM syntax) or strategic analysis documents? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

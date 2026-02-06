@@ -1,11 +1,16 @@
 ---
 description: Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance
-tags: [security, mod, defence, jsp-440, jsp-453, secure-by-design, continuous-assurance, caat, continuous-risk-management, isn-2023-09, isn-2023-10]
 ---
 
 # MOD Secure by Design Assessment
 
 You are helping to conduct a **Secure by Design (SbD) assessment** for a UK Ministry of Defence (MOD) technology project, programme, or capability.
+
+## User Input
+
+```text
+$ARGUMENTS
+```
 
 ## Context
 
@@ -31,6 +36,16 @@ Since August 2023, ALL Defence capabilities, technology infrastructure, and digi
 - **Suppliers must attest** that systems are secure
 - Senior Responsible Owners (SROs), capability owners, and delivery teams are **accountable**
 
+## Read the Template
+
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/mod-secure-by-design-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/mod-secure-by-design-template.md` (default)
+
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize mod-secure`
+
 ## Your Task
 
 Generate a comprehensive Secure by Design assessment document using the **continuous risk management** approach by:
@@ -45,13 +60,34 @@ Generate a comprehensive Secure by Design assessment document using the **contin
    - Project Security Officer (PSyO) appointed if SECRET+ (Yes/No)
    - Current SbD maturity level (self-assessment score)
 
-2. **Check existing documentation**:
-   - Requirements documents: Any `ARC-*-REQ-*.md` file in `projects/*/`
-   - Risk register: Any `ARC-*-RISK-*.md` file in `projects/*/`
-   - Architecture diagrams in `projects/*/diagrams/`
-   - Any existing security documentation
-   - TCoP assessments (if available)
-   - Previous SbD self-assessments
+2. **Read Available Documents**:
+
+   Scan the project directory for existing artifacts and read them to inform this assessment:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
+     - Extract: NFR-SEC (security), NFR-A (availability), INT (integration), DR (data) requirements, data classification
+     - If missing: warn user to run `/arckit.requirements` first
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+     - Extract: MOD security standards, approved platforms, classification handling, compliance requirements
+     - If missing: warn user to run `/arckit.principles` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-*-RISK-*.md` in `projects/{project-name}/` — Risk register
+     - Extract: Security risks, threat model, risk appetite, mitigations, MOD-specific threats
+   - `ARC-*-SECD-*.md` in `projects/{project-name}/` — Civilian Secure by Design assessment
+     - Extract: NCSC CAF findings, Cyber Essentials status, existing security controls
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-DIAG-*.md` in `projects/{project-name}/diagrams/` — Architecture diagrams
+     - Extract: Deployment topology, network boundaries, data flows, trust zones
+   - Previous SbD self-assessments (if available in project directory)
+
+   **What to extract from each document**:
+   - **Principles**: MOD security policies, JSP 440 requirements, classification standards
+   - **Requirements**: Security NFRs, data classification, availability targets, integration security
+   - **Risk**: Security threats, risk levels, MOD-specific threat vectors, supply chain risks
+   - **Secure**: Existing NCSC CAF findings to build upon for MOD assessment
 
 3. **Assess against the 7 MOD Secure by Design Principles** (ISN 2023/09):
 
@@ -127,7 +163,39 @@ Generate a comprehensive Secure by Design assessment document using the **contin
      - Security governance continues through-life
      - Decommissioning process includes secure data deletion
 
-4. **Assess using NIST Cybersecurity Framework** (as mandated by SbD):
+4. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **JSP 440 Compliance Reports & CAAT Results**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+   - **What to extract**: CAAT assessment results, security clearance requirements, JSP 440 compliance status, IAMM maturity scores
+   - **Examples**: `caat-assessment.pdf`, `jsp440-compliance.docx`, `iamm-report.pdf`
+
+   **Supplier Security Attestations**:
+   - **Look in**: `projects/{project-dir}/vendors/{vendor}/`
+   - **File types**: PDF, Word
+   - **What to extract**: Supplier security clearances, List X status, DEFCON compliance, SC/DV clearance evidence
+   - **Examples**: `security-attestation.pdf`, `list-x-certificate.pdf`
+
+   **MOD Security Policies**:
+   - **Look in**: `projects/000-global/policies/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: MOD security standards, classification requirements, ITAR restrictions
+   - **Examples**: `mod-security-policy.pdf`, `classification-guide.docx`
+
+   **Enterprise-Wide MOD Security Baselines**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise MOD security baselines, accreditation templates, cross-project security assurance evidence
+
+   **User prompt**: If no external MOD security docs found, ask:
+   "Do you have any JSP 440 compliance reports, CAAT assessment results, or supplier security attestations? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+
+5. **Assess using NIST Cybersecurity Framework** (as mandated by SbD):
 
    **Identify**:
    - Asset inventory (hardware, software, data, people)
@@ -158,7 +226,7 @@ Generate a comprehensive Secure by Design assessment document using the **contin
    - Improvements (post-incident review)
    - Communications and restoration
 
-5. **Assess Three Lines of Defence**:
+6. **Assess Three Lines of Defence**:
 
    **First Line**: Delivery team owns security
    - Delivery Team Security Lead appointed
@@ -175,26 +243,83 @@ Generate a comprehensive Secure by Design assessment document using the **contin
    - Penetration testing by independent teams
    - External audit (NAO, GIAA)
 
-5. **For each domain**:
+7. **For each domain**:
    - Assess status: ✅ Compliant / ⚠️ Partially Compliant / ❌ Non-Compliant
    - Gather evidence from project documents
    - Check relevant security controls
    - Identify critical gaps
    - Provide specific remediation actions with owners and timelines
 
-6. **Determine overall security posture**:
+8. **Determine overall security posture**:
    - Calculate domain compliance scores
    - Identify critical security issues (blockers for deployment)
    - Assess SbD maturity level using CAAT
    - Determine overall risk level (Low/Medium/High/Very High)
 
-7. **Generate actionable recommendations**:
+9. **Generate actionable recommendations**:
    - Critical priority (0-30 days) - must resolve before deployment
    - High priority (1-3 months) - significant risk reduction
    - Medium priority (3-6 months) - continuous improvement
    - Assign owners and due dates
 
-8. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-MOD-v1.0.md`
+
+---
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+**Generate Document ID**:
+```bash
+# Use the ArcKit document ID generation script
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SECD-MOD" "${VERSION}")
+# Example output: ARC-001-SECD-MOD-v1.0
+```
+
+**Populate Required Fields**:
+
+*Auto-populated fields* (populate these automatically):
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → "MOD Secure by Design Assessment"
+- `ARC-[PROJECT_ID]-SECD-MOD-v[VERSION]` → Use generated DOC_ID
+- `[COMMAND]` → "arckit.mod-secure"
+
+*User-provided fields* (extract from project metadata or user input):
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+*Calculated fields*:
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+
+*Pending fields* (leave as [PENDING] until manually updated):
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+**Populate Revision History**:
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit.mod-secure` command | [PENDING] | [PENDING] |
+```
+
+**Populate Generation Metadata Footer**:
+
+The footer should be populated with:
+```markdown
+**Generated by**: ArcKit `/arckit.mod-secure` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: [Read from VERSION file]
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+---
+
+10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-MOD-v1.0.md`
 
 ## Assessment Guidelines
 

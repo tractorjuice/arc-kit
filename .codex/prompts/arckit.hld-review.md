@@ -17,20 +17,76 @@ $ARGUMENTS
    - Vendor name (if applicable)
    - Location of HLD document or diagrams
 
-2. **Read the governance context**:
-   - Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` - These are the rules
-   - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - These must be satisfied
-   - Read `projects/{project-dir}/ARC-*-SOW-*.md` - Check deliverable expectations
-   - Read `.arckit/templates/hld-review-template.md` - Review checklist
+2. **Read Available Documents**:
+
+   Scan the project directory for existing artifacts and read them to inform this review:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles (these are the rules)
+     - Extract: All principles with validation gates for compliance checking
+     - If missing: warn user to run `/arckit.principles` first
+   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification (these must be satisfied)
+     - Extract: All BR/FR/NFR/INT/DR requirements for coverage analysis
+     - If missing: warn user to run `/arckit.requirements` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-*-SOW-*.md` in `projects/{project-dir}/` — Statement of Work
+     - Extract: Deliverable expectations, scope, acceptance criteria
+   - `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+     - Extract: Technical risks that design should mitigate
+   - `ARC-*-DIAG-*.md` in `projects/{project-dir}/diagrams/` — Architecture diagrams
+     - Extract: Component topology for cross-referencing with HLD
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-TCOP-*.md` in `projects/{project-dir}/` — TCoP review
+     - Extract: Technology governance findings relevant to design review
+
+   **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/hld-review-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/hld-review-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize hld-review`
 
-3. **Obtain the HLD document**:
+   **What to extract from each document**:
+   - **Principles**: Rules and validation gates for compliance checking
+   - **Requirements**: BR/FR/NFR/INT/DR IDs for coverage analysis
+   - **SOW**: Deliverable expectations and acceptance criteria
+   - **Risk**: Technical risks the design should address
+
+3. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **Vendor HLD Submissions**:
+   - **Look in**: `projects/{project-dir}/vendors/{vendor}/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
+   - **What to extract**: Component architecture, technology stack, API specifications, deployment topology, security controls
+   - **Examples**: `hld-v1.0.pdf`, `architecture-overview.docx`, `network-diagram.png`
+
+   **Supporting Design Documents**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF, Word, Markdown, images
+   - **What to extract**: Reference architectures, compliance evidence, performance benchmarks
+   - **Examples**: `reference-architecture.pdf`, `compliance-matrix.xlsx`
+
+   **Enterprise-Wide Architecture Standards**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise architecture standards, design review checklists, cross-project reference architectures
+
+   **User prompt**: If no vendor HLD found in standard locations, ask:
+   "Please provide the HLD document path or paste key sections. I can read PDFs, Word docs, and images directly. Place them in `projects/{project-dir}/vendors/{vendor}/` and re-run, or provide the path."
+
+   **Important**: External documents enhance the review but the command works with pasted content or descriptions too.
+
+4. **Obtain the HLD document**:
    - Ask user: "Please provide the HLD document path or paste key sections"
    - Or: "Is the HLD in `projects/{project-dir}/vendors/{vendor}/hld-v*.md`?"
    - Or: "Please share architecture diagrams (I can read images)"
 
-4. **Perform comprehensive review**:
+5. **Perform comprehensive review**:
 
    ### A. Architecture Principles Compliance
 
@@ -105,14 +161,14 @@ $ARGUMENTS
    - Team expertise with chosen stack
    - Vendor lock-in risks
 
-5. **Risk Assessment**:
+6. **Risk Assessment**:
 
    Identify and categorize risks:
    - **HIGH**: Principle violations, missing NFRs, security gaps
    - **MEDIUM**: Suboptimal design, performance concerns, tech debt
    - **LOW**: Minor improvements, documentation gaps
 
-6. **Generate Review Report**:
+7. **Generate Review Report**:
 
    Create a comprehensive review document with:
 
@@ -138,7 +194,64 @@ $ARGUMENTS
    - Timeline for remediation
    - Re-review requirements
 
-7. **Write outputs**:
+
+---
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+**Generate Document ID**:
+```bash
+# Use the ArcKit document ID generation script
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "HLDR" "${VERSION}")
+# Example output: ARC-001-HLDR-v1.0
+```
+
+**Populate Required Fields**:
+
+*Auto-populated fields* (populate these automatically):
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → "High-Level Design Review"
+- `ARC-[PROJECT_ID]-HLDR-v[VERSION]` → Use generated DOC_ID
+- `[COMMAND]` → "arckit.hld-review"
+
+*User-provided fields* (extract from project metadata or user input):
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+*Calculated fields*:
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+
+*Pending fields* (leave as [PENDING] until manually updated):
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+**Populate Revision History**:
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit.hld-review` command | [PENDING] | [PENDING] |
+```
+
+**Populate Generation Metadata Footer**:
+
+The footer should be populated with:
+```markdown
+**Generated by**: ArcKit `/arckit.hld-review` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: [Read from VERSION file]
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+---
+
+8. **Write outputs**:
    - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-HLDR-v1.0.md` - Full review report
    - `projects/{project-dir}/ARC-{PROJECT_ID}-HLDR-SUM-v1.0.md` - Summary if comparing multiple vendors
    - Update traceability matrix with design references

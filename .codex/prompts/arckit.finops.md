@@ -42,19 +42,62 @@ Parse the user input for:
 
 ## Instructions
 
-### Phase 1: Context Gathering
+### Phase 1: Read Available Documents
 
-Read existing project artifacts:
+Scan the project directory for existing artifacts and read them to inform this document:
 
-**Required Files**:
-1. Any `ARC-*-REQ-*.md` file in `projects/{project-name}/` - Scale, performance, budget NFRs
-2. Any `ARC-000-PRIN-*.md` file in `projects/000-global/` - Technology standards
+**MANDATORY** (warn if missing):
+- `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
+  - Extract: NFR-P (performance), NFR-S (scalability), NFR-A (availability), BR (business/budget) requirements
+  - If missing: warn user to run `/arckit.requirements` first
 
-**Optional Files** (read if available):
-3. Any `ARC-*-DEVOPS-*.md` file in `projects/{project-name}/` - Infrastructure patterns
-4. `projects/{project-name}/diagrams/` - Resource architecture
-5. Any `ARC-*-RSCH-*.md` file in `projects/{project-name}/` - Technology decisions
-6. Any `ARC-*-STKE-*.md` file in `projects/{project-name}/` - Business drivers
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Technology standards, cloud-first policy, cost governance principles
+- `ARC-*-DEVO-*.md` in `projects/{project-name}/` — DevOps strategy
+  - Extract: Infrastructure patterns, deployment targets, container orchestration
+- `ARC-*-DIAG-*.md` in `projects/{project-name}/diagrams/` — Architecture diagrams
+  - Extract: Resource architecture, deployment topology
+
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-name}/` — Technology research
+  - Extract: Cloud provider choices, service pricing, platform decisions
+- `ARC-*-STKE-*.md` in `projects/{project-name}/` — Stakeholder analysis
+  - Extract: Business drivers, budget constraints, ROI expectations
+- `ARC-*-SOBC-*.md` in `projects/{project-name}/` — Business case
+  - Extract: Budget allocations, cost targets, ROI commitments
+
+**What to extract from each document**:
+- **Principles**: Technology standards, cost governance, cloud-first policy
+- **Requirements**: NFR-P/NFR-S/NFR-A/BR IDs, budget and scale constraints
+- **DevOps**: Infrastructure patterns, scaling approach, deployment targets
+- **Diagrams**: Resource topology, component inventory
+
+### Phase 1b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Cloud Billing Data & Cost Allocation Reports**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv)
+- **What to extract**: Current cloud spend, cost trends, billing anomalies, reserved instance usage, savings opportunities
+- **Examples**: `aws-cost-report.pdf`, `azure-billing.csv`, `cost-allocation.docx`
+
+**Financial Policies**:
+- **Look in**: `projects/000-global/policies/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Budget thresholds, chargeback models, cost centre mappings, procurement approval limits
+- **Examples**: `cloud-spending-policy.pdf`, `chargeback-model.docx`
+
+**Enterprise-Wide Cost Management**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise cost management policies, cloud spending reports, cross-project FinOps maturity benchmarks
+
+**User prompt**: If no external FinOps docs found but they would improve cost analysis, ask:
+"Do you have any cloud billing reports, cost allocation data, or financial policies? I can read PDFs and CSV files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ### Phase 2: Analysis
 
@@ -82,9 +125,15 @@ Read existing project artifacts:
 
 ### Phase 3: Generate FinOps Strategy
 
-Read the template from `.arckit/templates/finops-template.md` and generate:
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/finops-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/finops-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize finops`
+
+Generate:
 
 **Section 1: FinOps Overview**
 - Strategic objectives (cost visibility, optimization, governance)

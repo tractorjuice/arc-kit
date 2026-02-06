@@ -76,6 +76,11 @@ You are helping a UK government organization create an Algorithmic Transparency 
    - **What to extract**: Previous ATRS submissions, algorithmic impact assessments, model documentation, fairness testing results
    - **Examples**: `previous-atrs-record.pdf`, `algorithmic-impact-assessment.docx`
 
+   **Enterprise-Wide Algorithmic Transparency Policies**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Organization-wide algorithmic transparency policies, AI ethics frameworks, cross-project ATRS standards
+
    **User prompt**: If no external ATRS docs found but they would improve the record, ask:
    \"Do you have any existing ATRS records from similar systems or algorithmic documentation? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

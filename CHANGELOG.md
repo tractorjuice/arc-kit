@@ -40,8 +40,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **New Guide**: `docs/guides/trello.md` with prerequisites, credential setup, board structure, and troubleshooting
 - **Multi-AI Support**: Trello command available for Gemini CLI (`.gemini/commands/arckit/trello.toml`) and Codex CLI (`.codex/prompts/arckit/trello.md`)
 
+- **Converter Codex Generation**: `scripts/converter.py` now generates both Gemini TOML and Codex Markdown from Claude commands
+  - Added `generate_codex()` function alongside existing Gemini generation
+  - Agent-delegating commands (research, datascout, aws-research, azure-research) have full agent prompts inlined for both formats
+  - Codex prompts use YAML frontmatter with `description` field and keep `$ARGUMENTS` syntax
+  - Single `python scripts/converter.py` run produces 92 files (46 Gemini + 46 Codex)
+
 ### Changed
 
+- **Codex Prompt Sync**: All 46 Codex prompts regenerated from Claude source of truth
+  - 5 previously missing commands added: `aws-research`, `customize`, `datascout`, `strategy`, `trello`
+  - All 41 existing prompts updated with latest content (external docs scanning, doc control blocks, doc type codes)
+  - Removed `tags` field from YAML frontmatter (unused by Codex CLI)
+- **Gemini TOML Sync**: All 46 Gemini TOMLs regenerated with latest Claude command content
 - **Template References**: 8 commands now explicitly reference their templates with user override support:
   - `/arckit.analyze` → `analysis-report-template.md`
   - `/arckit.dos` → `dos-requirements-template.md`
@@ -77,6 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - **Orphan Template**: Removed `uk-gov-tcop-template.md` (duplicate of `tcop-review-template.md`)
+- **Orphaned Codex Subdirectory**: Removed 12 files from `.codex/prompts/arckit/` (obsolete naming convention; all prompts now at `.codex/prompts/arckit.*.md`)
 
 ---
 

@@ -130,7 +130,7 @@ You are [role description]...
 
 **When to make a command an agent**: If the command performs heavy WebSearch/WebFetch/MCP calls (>10 calls), reads many artifacts, or produces large intermediate context. The slash command becomes a thin wrapper that launches the agent via Task tool, with a fallback to direct execution.
 
-**Multi-AI note**: Agents are Claude Code only. Codex and Gemini equivalents keep the full inline prompts since they don't support the Task/agent architecture. Do NOT re-run `scripts/converter.py` for agent-delegating commands — the existing Gemini TOMLs and Codex prompts should retain their full instructions.
+**Multi-AI note**: Agents are Claude Code only. Codex and Gemini equivalents keep the full inline prompts since they don't support the Task/agent architecture. The converter (`scripts/converter.py`) automatically extracts agent prompts and inlines them into both Gemini TOML and Codex Markdown formats.
 
 ### Project Structure Created by `arckit init`
 
@@ -185,7 +185,7 @@ project/
 2. Create `.arckit/templates/{name}-template.md` with document control section
 3. Create `docs/guides/{name}.md` with usage guide
 4. If command needs heavy web research (>10 WebSearch/WebFetch calls), also create `.claude/agents/arckit-{name}.md` and make the slash command a thin wrapper that delegates to the agent
-5. Run `python scripts/converter.py` to generate Gemini TOML
+5. Run `python scripts/converter.py` to generate Gemini TOML and Codex Markdown
 6. **Mirror to plugin**: Copy command, template, guide, and agent to `arckit-plugin/` (same relative paths but under `arckit-plugin/commands/`, `arckit-plugin/templates/`, etc.)
 7. Test: `arckit init test --ai claude --no-git && cd test && claude`
 8. Update documentation: README.md, docs/index.html, DEPENDENCY-MATRIX.md, CHANGELOG.md

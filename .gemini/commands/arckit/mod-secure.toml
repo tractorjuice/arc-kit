@@ -185,6 +185,11 @@ Generate a comprehensive Secure by Design assessment document using the **contin
    - **What to extract**: MOD security standards, classification requirements, ITAR restrictions
    - **Examples**: `mod-security-policy.pdf`, `classification-guide.docx`
 
+   **Enterprise-Wide MOD Security Baselines**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise MOD security baselines, accreditation templates, cross-project security assurance evidence
+
    **User prompt**: If no external MOD security docs found, ask:
    \"Do you have any JSP 440 compliance reports, CAAT assessment results, or supplier security attestations? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

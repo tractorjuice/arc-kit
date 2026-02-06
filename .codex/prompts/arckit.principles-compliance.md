@@ -48,6 +48,16 @@ More artifacts = better evidence = more accurate assessment:
 
 ## Execution Steps
 
+### 0. Read the Template
+
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/principles-compliance-assessment-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/principles-compliance-assessment-template.md` (default)
+
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize principles-compliance`
+
 ### 1. Validate Prerequisites
 
 **Check Architecture Principles**:
@@ -56,6 +66,26 @@ if [ ! -f projects/000-global/ARC-000-PRIN-*.md ]; then
     ERROR "Architecture principles not found. Run /arckit.principles first."
 fi
 ```
+
+### 1b. Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**External Audit Findings & Compliance Certificates**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **What to extract**: Audit findings, compliance gaps, certification evidence, remediation plans
+- **Examples**: `architecture-audit.pdf`, `compliance-certificate.pdf`, `remediation-plan.docx`
+
+**Enterprise-Wide Compliance Frameworks**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise compliance frameworks, audit standards, cross-project compliance benchmarks
+
+**User prompt**: If no external audit docs found but they would improve the compliance assessment, ask:
+"Do you have any external audit findings or compliance certificates? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ### 2. Extract All Principles Dynamically
 

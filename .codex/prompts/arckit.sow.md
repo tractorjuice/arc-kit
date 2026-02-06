@@ -21,15 +21,69 @@ $ARGUMENTS
      ```
      Parse the JSON output to get the project path and ID
 
-2. **Read the requirements**: Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/`
-   - If requirements don't exist, suggest running `/arckit.requirements` first
-   - Requirements are the source of truth for the SOW
+2. **Read Available Documents**:
 
-3. **Read the template**: Read `.arckit/templates/sow-template.md` to understand the structure
+   Scan the project directory for existing artifacts and read them to inform this document:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+     - Extract: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria — source of truth for the SOW
+     - If missing: warn user to run `/arckit.requirements` first
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+     - Extract: Technology standards, constraints, compliance requirements for vendor alignment
+     - If missing: warn user to run `/arckit.principles` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-dir}/` — Technology research
+     - Extract: Vendor landscape, technology decisions, TCO estimates
+   - `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+     - Extract: Business drivers, success criteria, evaluation priorities
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+     - Extract: Risks requiring vendor mitigation, risk allocation
+
+   **What to extract from each document**:
+   - **Requirements**: All BR/FR/NFR/INT/DR IDs with MUST/SHOULD/MAY priority
+   - **Principles**: Technology constraints, compliance requirements for vendors
+   - **Research**: Technology decisions, vendor landscape, TCO data
+   - **Stakeholders**: Business drivers, success criteria, evaluation priorities
+
+3. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/sow-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/sow-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize sow`
 
-4. **Generate comprehensive SOW** with these sections:
+4. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **Previous SoW Templates & RFP/ITT Documents**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+   - **What to extract**: Previous procurement terms, evaluation criteria, contractual clauses, deliverable specifications
+   - **Examples**: `previous-sow.pdf`, `rfp-template.docx`, `itt-document.pdf`
+
+   **Procurement Policies**:
+   - **Look in**: `projects/000-global/policies/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Procurement thresholds, mandatory contractual terms, approved supplier lists, framework agreements
+   - **Examples**: `procurement-policy.pdf`, `approved-suppliers.docx`
+
+   **Enterprise-Wide Procurement Templates**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise procurement templates, contract frameworks, cross-project commercial benchmarks
+
+   **User prompt**: If no external procurement docs found but they would improve the SoW, ask:
+   "Do you have any previous SoW templates, RFP/ITT documents, or procurement policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+
+5. **Generate comprehensive SOW** with these sections:
 
    **Executive Summary**:
    - Project overview and objectives
@@ -90,18 +144,18 @@ $ARGUMENTS
    - Warranties and support
    - Termination clauses
 
-5. **Ensure alignment**:
+6. **Ensure alignment**:
    - Cross-reference architecture principles from any `ARC-000-PRIN-*.md` file in `projects/000-global/`
    - Ensure all requirements from the requirements document are included
    - Add validation gates that align with principles
 
-6. **Make it RFP-ready**:
+7. **Make it RFP-ready**:
    - Use formal language appropriate for legal review
    - Be specific and unambiguous
    - Include submission instructions and deadline
    - Specify format requirements (e.g., "proposals must be PDF")
 
-7. **Write the output**:
+8. **Write the output**:
    - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-SOW-v${VERSION}.md`
    - Use the exact template structure
 
@@ -139,9 +193,9 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SOW" "${V
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
-- `[DOCUMENT_TYPE_NAME]` → Use the document purpose (e.g., "Business and Technical Requirements")
+- `[DOCUMENT_TYPE_NAME]` → "Statement of Work"
 - `ARC-[PROJECT_ID]-SOW-v[VERSION]` → Use generated DOC_ID from Step 1
-- `[COMMAND]` → Current command name (e.g., "arckit.sow")
+- `[COMMAND]` → "arckit.sow"
 
 **User-provided fields** (extract from project metadata or user input):
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
@@ -169,7 +223,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit.sow` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file or use "1.0.0"]
+**ArcKit Version**: [Read from VERSION file]
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]
@@ -204,7 +258,7 @@ The footer should be populated with:
 ```
 
 
-8. **Summarize what you created**:
+9. **Summarize what you created**:
    - Key scope items
    - Major deliverables
    - Suggested timeline

@@ -67,6 +67,10 @@ Check `projects/000-global/` for global artifacts:
 ```
 projects/000-global/
 ├── ARC-000-PRIN-v1.0.md    # Architecture Principles (global)
+├── policies/                # Governance policies
+│   └── *.pdf, *.docx, *.md
+├── external/                # Enterprise-wide reference documents
+│   └── *.pdf, *.docx, *.md
 └── {other global documents}
 ```
 
@@ -116,11 +120,15 @@ projects/
 │   ├── reviews/
 │   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
 │   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
-│   └── vendors/
-│       └── {vendor-name}/
-│           ├── hld*.md
-│           ├── dld*.md
-│           └── proposal*.md
+│   ├── vendors/
+│   │   └── {vendor-name}/
+│   │       ├── hld*.md
+│   │       ├── dld*.md
+│   │       └── proposal*.md
+│   └── external/
+│       ├── README.md             # (excluded from listing)
+│       ├── rfp-document.pdf
+│       └── legacy-spec.docx
 ├── 002-{another-project}/
 │   └── ...
 └── ...
@@ -222,6 +230,20 @@ Create `docs/manifest.json` with the discovered structure:
       \"isDefault\": true
     }
   ],
+  \"globalExternal\": [
+    {
+      \"path\": \"projects/000-global/external/enterprise-architecture.pdf\",
+      \"title\": \"enterprise-architecture.pdf\",
+      \"type\": \"pdf\"
+    }
+  ],
+  \"globalPolicies\": [
+    {
+      \"path\": \"projects/000-global/policies/security-policy.pdf\",
+      \"title\": \"security-policy.pdf\",
+      \"type\": \"pdf\"
+    }
+  ],
   \"projects\": [
     {
       \"id\": \"001-project-name\",
@@ -296,6 +318,13 @@ Create `docs/manifest.json` with the discovered structure:
               \"title\": \"HLD v1.0\"
             }
           ]
+        }
+      ],
+      \"external\": [
+        {
+          \"path\": \"projects/001-project-name/external/rfp-document.pdf\",
+          \"title\": \"rfp-document.pdf\",
+          \"type\": \"pdf\"
         }
       ]
     }

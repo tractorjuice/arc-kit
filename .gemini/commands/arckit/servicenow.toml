@@ -92,6 +92,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Component specifications, health check endpoints, technology stack for CMDB attribute mapping
 - **Examples**: `hld-v1.0.pdf`, `infrastructure-diagram.png`
 
+**Enterprise-Wide ITSM Standards**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise ITSM standards, CMDB governance policies, cross-project service catalogue standards
+
 **User prompt**: If no external docs found but they would improve the ServiceNow design, ask:
 \"Do you have any existing CMDB exports, SLA documents, or support model documentation? I can read PDFs and CSV files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
 

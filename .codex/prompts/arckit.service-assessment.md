@@ -1,11 +1,16 @@
 ---
 description: Prepare for GDS Service Standard assessment - analyze evidence against 14 points, identify gaps, generate readiness report
-alwaysShow: true
 ---
 
 # GDS Service Assessment Preparation
 
 You are an expert UK Government service assessor helping teams prepare for GDS Service Standard assessments.
+
+## User Input
+
+```text
+$ARGUMENTS
+```
 
 ## Command Purpose
 
@@ -50,6 +55,13 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 - Read the `VERSION` file and store the value as `ARC_VERSION`.
 - Use this exact value (no hardcoded fallback) anywhere you reference the ArcKit version in the report metadata.
 
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/service-assessment-prep-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/service-assessment-prep-template.md` (default)
+
+> **Tip**: Users can customize templates with `/arckit.customize service-assessment`
+
 ### Step 1: Identify Project Context
 
 Determine which ArcKit project directory to analyze:
@@ -57,41 +69,68 @@ Determine which ArcKit project directory to analyze:
 - Otherwise: Look for most recently modified project in `projects/` directory
 - Extract project name, scope, and phase information
 
-### Step 2: Evidence Discovery - Scan All ArcKit Artifacts
+### Step 2: Read Available Documents
 
-Systematically read and analyze all available ArcKit artifacts in the project directory:
+Scan the project directory for existing artifacts and read them to inform this assessment:
 
-**Core Artifacts**:
-- `ARC-*-PLAN-*.md` - Project phases, timeline, team structure, milestones
-- `ARC-*-STKE-*.md` - Stakeholders, user needs, drivers, RACI matrix, goals
-- `ARC-*-RISK-*.md` - Risks, security considerations, mitigation strategies
-- `ARC-*-SOBC-*.md` - Strategic business case, benefits, success metrics, TCO
-- `ARC-*-REQ-*.md` - Functional requirements, NFRs, user stories, acceptance criteria
-- `ARC-*-DATA-*.md` - Data entities, GDPR compliance, data governance
-- `projects/000-global/ARC-000-PRIN-*.md` - Architecture principles and rationale
+**MANDATORY** (warn if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Technology standards, compliance requirements, governance constraints
+  - If missing: warn user to run `/arckit.principles` first
+- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+  - Extract: User stories, acceptance criteria, NFRs, accessibility requirements
+  - If missing: warn user to run `/arckit.requirements` first
 
-**Design & Review Artifacts**:
-- `reviews/ARC-*-HLDR-*.md` - High-level design reviews, architecture decisions
-- `reviews/ARC-*-DLDR-*.md` - Detailed design reviews, implementation details
-- `ARC-*-ANAL-*.md` - Governance analysis, quality assessment
-- `ARC-*-TRAC-*.md` - Requirements traceability
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-STKE-*.md` — Stakeholder analysis (user needs, personas, RACI)
+- `ARC-*-RISK-*.md` — Risk register (security risks, mitigation strategies)
+- `ARC-*-PLAN-*.md` — Project plan (phases, timeline, team structure)
+- `ARC-*-SOBC-*.md` — Business case (benefits, success metrics)
+- `ARC-*-DATA-*.md` — Data model (GDPR compliance, data governance)
+- `ARC-*-DIAG-*.md` in `diagrams/` — Architecture diagrams (C4, deployment)
+- `ARC-*-DEVO-*.md` — DevOps strategy (deployment, monitoring)
+- `ARC-*-SECD-*.md` — Secure by Design assessment
+- `ARC-*-DPIA-*.md` — DPIA (privacy protection evidence)
+- `ARC-*-HLDR-*.md` or `ARC-*-DLDR-*.md` in `reviews/` — Design reviews
+- `ARC-*-TRAC-*.md` — Traceability matrix
 
-**Compliance Artifacts**:
-- `ARC-*-AIPB-*.md` - AI ethics and governance
-- `ARC-*-ATRS-*.md` - AI transparency and risk standards
-- `ARC-*-TCOP-*.md` - Technology Code of Practice compliance
-- `ARC-*-SECD-*.md` - Security and privacy assessment
-- `ARC-*-SECD-MOD-*.md` - MOD security assessment (if MOD project)
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-TCOP-*.md` — TCoP review (technology compliance)
+- `ARC-*-AIPB-*.md` — AI Playbook assessment (if AI components)
+- `ARC-*-ATRS-*.md` — ATRS record (if algorithmic tools)
+- `ARC-*-SOW-*.md` — Statement of work
+- `ARC-*-EVAL-*.md` — Vendor evaluation
+- `ARC-*-ANLZ-*.md` — Governance analysis
+- `ARC-*-WARD-*.md` in `wardley-maps/` — Strategic analysis
+- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` — Technology research
 
-**Procurement & Research Artifacts**:
-- `ARC-*-SOW-*.md` - Statement of work, RFP, vendor requirements
-- `ARC-*-EVAL-*.md` - Vendor scoring and selection
-- `research/*/` - Technology research findings
-- `wardley-maps/` - Strategic analysis, evolution, build vs buy
+**What to extract from each document**:
+- **Principles**: Technology standards, compliance requirements
+- **Requirements**: User stories, acceptance criteria, accessibility NFRs
+- **Stakeholders**: User needs, personas, research evidence
+- **Risk**: Security considerations, mitigation evidence
+- **Diagrams**: Architecture decisions, technology choices
+- **DevOps**: Deployment strategy, monitoring, reliability evidence
 
-**Architecture Artifacts**:
-- `diagrams/ARC-*-DIAG-*.md` - C4 context, container, component diagrams
-- `diagrams/ARC-*-DIAG-*.md` - Deployment architecture diagrams
+### Step 2b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**GDS Assessment Feedback & Previous Reports**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **What to extract**: Previous assessment results, assessor feedback, action items, evidence gaps identified
+- **Examples**: `alpha-assessment-report.pdf`, `assessor-feedback.docx`, `evidence-gaps.md`
+
+**Enterprise-Wide Service Standards**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise service standards, previous GDS assessment reports, cross-project assessment benchmarks
+
+**User prompt**: If no external assessment docs found but they would improve preparation, ask:
+"Do you have any previous GDS assessment reports or assessor feedback? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ### Step 3: Map Evidence to Service Standard Points
 
@@ -634,7 +673,7 @@ Example: `projects/001-nhs-appointment/ARC-001-SASS-v1.0.md`
 **Assessment Phase**: [Alpha/Beta/Live]
 **Assessment Date**: [If provided, else "Not yet scheduled"]
 **Report Generated**: [Current date]
-**ArcKit Version**: 1.0.0
+**ArcKit Version**: [Read from VERSION file]
 
 ---
 

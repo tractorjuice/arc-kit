@@ -23,36 +23,71 @@ Wardley Mapping is a strategic situational awareness technique that maps:
 | **Product** | 0.50-0.75 | Products with feature differentiation, maturing market | Buy from vendors, compare features, standardize |
 | **Commodity** | 0.75-1.00 | Utility, standardized, industrialized | Always use commodity/cloud, never build |
 
-## Your Task
+## User Input
 
-**User Request**: {user's wardley mapping request}
+```text
+$ARGUMENTS
+```
 
-## Step 1: Understand the Context
+## Step 1: Read Available Documents
 
-First, analyze the existing project artifacts:
+Scan the project directory for existing artifacts and read them to inform this map:
 
-1. **Read Architecture Principles** (if available):
-   - File: Any `ARC-000-PRIN-*.md` file in `projects/000-global/`
-   - Extract: Strategic principles, technology standards, compliance requirements
+**MANDATORY** (warn if missing):
+- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+  - Extract: Strategic principles, technology standards, compliance requirements, cloud-first policy
+  - If missing: warn user to run `/arckit.principles` first
+- `ARC-*-REQ-*.md` in `projects/{current_project}/` — Requirements specification
+  - Extract: Business requirements, functional requirements, non-functional requirements
+  - Identify: User needs, capabilities, technical components
+  - If missing: warn user to run `/arckit.requirements` first
 
-2. **Read Requirements** (if available):
-   - File: Any `ARC-*-REQ-*.md` file in `projects/{current_project}/`
-   - Extract: Business requirements, functional requirements, non-functional requirements
-   - Identify: User needs, capabilities, technical components
+**RECOMMENDED** (read if available, note if missing):
+- `ARC-*-STKE-*.md` in `projects/{current_project}/` — Stakeholder analysis
+  - Extract: Business drivers, stakeholder goals, priorities, success metrics
+- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{current_project}/` — Technology research
+  - Extract: Vendor landscape, build vs buy analysis, TCO comparisons
 
-3. **Read UK Government Assessments** (if applicable):
-   - File: Any `ARC-*-TCOP-*.md` file in `projects/{current_project}/` (Technology Code of Practice)
-   - File: Any `ARC-*-AIPB-*.md` file in `projects/{current_project}/` (AI Playbook compliance)
-   - File: Any `ARC-*-ATRS-*.md` file in `projects/{current_project}/` (ATRS for AI systems)
+**OPTIONAL** (read if available, skip silently if missing):
+- `ARC-*-DATA-*.md` in `projects/{current_project}/` — Data model
+  - Extract: Data components, storage technology, data flow patterns
+- `ARC-*-TCOP-*.md` in `projects/{current_project}/` — TCoP review
+  - Extract: UK Government compliance requirements, reuse opportunities
+- `ARC-*-AIPB-*.md` in `projects/{current_project}/` — AI Playbook assessment
+  - Extract: AI component risk levels, human oversight requirements
+- Existing maps in `projects/{current_project}/wardley-maps/`
+  - Extract: Previous strategic analysis, evolution predictions
 
-4. **Read Existing Maps** (if available):
-   - Check: `projects/{current_project}/wardley-maps/`
-   - Understand: Previous strategic analysis, evolution predictions
+**What to extract from each document**:
+- **Principles**: Technology standards, cloud-first policy, open source requirements
+- **Requirements**: User needs, capabilities, technical components, BR/FR/NFR IDs
+- **Stakeholders**: Business drivers, strategic goals, success metrics
+- **Research**: Vendor landscape, market maturity, pricing
 
-5. **Understand the Mapping Goal**:
-   - What strategic question are we answering?
-   - What decisions need to be made? (Build vs Buy, vendor selection, technology choices)
-   - What time horizon? (Current state, 12 months, 24 months)
+**Understand the Mapping Goal**:
+- What strategic question are we answering?
+- What decisions need to be made? (Build vs Buy, vendor selection, technology choices)
+- What time horizon? (Current state, 12 months, 24 months)
+
+## Step 1b: Check for External Documents (optional)
+
+Scan for external (non-ArcKit) documents the user may have provided:
+
+**Existing Wardley Maps & Strategic Analysis**:
+- **Look in**: `projects/{project-dir}/external/`
+- **File types**: Images (.png, .jpg), Markdown (.md), PDF (.pdf), OWM syntax files (.owm, .txt)
+- **What to extract**: Existing component positions, evolution assessments, strategic plays, market context
+- **Examples**: `current-wardley-map.png`, `strategic-analysis.pdf`, `wardley-map.owm`
+
+**Enterprise-Wide Technology Landscape**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown, Images
+- **What to extract**: Enterprise technology landscape maps, market analysis reports, cross-project strategic context
+
+**User prompt**: If no external Wardley maps found but they would improve strategic context, ask:
+"Do you have any existing Wardley maps (images or OWM syntax) or strategic analysis documents? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+**Important**: This command works without external documents. They enhance output quality but are never blocking.
 
 ## Step 2: Determine the Mapping Mode
 
@@ -266,59 +301,120 @@ Create the Wardley Map document using the template:
 - `ARC-001-WARD-002-v1.0.md` - Second map (e.g., future state)
 - `ARC-001-WARD-003-v1.0.md` - Third map (e.g., gap analysis)
 
-**Template**: `.arckit/templates/wardley-map-template.md`
+**Read the template** (with user override support):
+- **First**, check if `.arckit/templates-custom/wardley-map-template.md` exists (user override)
+- **If found**: Read the user's customized template
+- **If not found**: Read `.arckit/templates/wardley-map-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize wardley`
+
+
+---
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+**Generate Document ID**:
+```bash
+# Use the ArcKit document ID generation script
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${VERSION}")
+# Example output: ARC-001-WARD-v1.0
+```
+
+**Populate Required Fields**:
+
+*Auto-populated fields* (populate these automatically):
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → "Wardley Map"
+- `ARC-[PROJECT_ID]-WARD-v[VERSION]` → Use generated DOC_ID
+- `[COMMAND]` → "arckit.wardley"
+
+*User-provided fields* (extract from project metadata or user input):
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+*Calculated fields*:
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+
+*Pending fields* (leave as [PENDING] until manually updated):
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+**Populate Revision History**:
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit.wardley` command | [PENDING] | [PENDING] |
+```
+
+**Populate Generation Metadata Footer**:
+
+The footer should be populated with:
+```markdown
+**Generated by**: ArcKit `/arckit.wardley` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: [Read from VERSION file]
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+---
 
 ### Output Contents
 
 The Wardley Map document must include:
 
-1. **Map Visualization Code**:
+2. **Map Visualization Code**:
    - Complete Wardley Map in OnlineWardleyMaps syntax
    - URL: https://create.wardleymaps.ai
    - Instructions to paste code into create.wardleymaps.ai
 
-2. **Component Inventory**:
+3. **Component Inventory**:
    - All components with visibility, evolution, stage classification
    - Strategic notes for each component
 
-3. **Evolution Analysis**:
+4. **Evolution Analysis**:
    - Components by evolution stage (Genesis, Custom, Product, Commodity)
    - Strategic recommendations for each stage
 
-4. **Build vs Buy Analysis**:
+5. **Build vs Buy Analysis**:
    - Candidates for building (Genesis/Custom with competitive advantage)
    - Candidates for buying (Product with mature market)
    - Candidates for SaaS/cloud (Commodity)
 
-5. **Inertia and Barriers**:
+6. **Inertia and Barriers**:
    - Components with resistance to change
    - Mitigation strategies
 
-6. **Movement and Predictions**:
+7. **Movement and Predictions**:
    - Evolution velocity (12-month, 24-month predictions)
    - Strategic implications
 
-7. **UK Government Context** (if applicable):
+8. **UK Government Context** (if applicable):
    - GOV.UK services mapping
    - Digital Marketplace procurement strategy
    - TCoP compliance mapping
 
-8. **Dependencies and Value Chain**:
+9. **Dependencies and Value Chain**:
    - Component dependency tree
    - Critical path analysis
 
-9. **Risk Analysis**:
+10. **Risk Analysis**:
    - High-risk areas (single vendor, Genesis components)
    - Opportunities (commoditization, market gaps)
 
-10. **Recommendations**:
+11. **Recommendations**:
     - Immediate actions (0-3 months)
     - Short-term actions (3-12 months)
     - Long-term strategic actions (12-24 months)
 
-11. **Traceability**:
+12. **Traceability**:
     - Link to requirements (BR-001, FR-001, etc.)
     - Link to architecture principles
     - Link to UK Government assessments (TCoP, AI Playbook, ATRS)
@@ -496,24 +592,24 @@ style wardley
 
 ### Common Mistakes to Avoid
 
-1. **Misclassifying Evolution Stage**:
+2. **Misclassifying Evolution Stage**:
    - ❌ Positioning cloud services as "Custom" (they're Commodity 0.90+)
    - ❌ Positioning novel AI models as "Product" (they're Genesis if truly novel)
 
-2. **Ignoring Dependencies**:
+3. **Ignoring Dependencies**:
    - ❌ Not mapping component dependencies
    - ❌ Missing critical path components
 
-3. **Wrong Build vs Buy Decisions**:
+4. **Wrong Build vs Buy Decisions**:
    - ❌ Building commodity components (e.g., custom auth instead of Auth0)
    - ❌ Buying for Genesis needs (no market solutions exist yet)
 
-4. **UK Government Specific Mistakes**:
+5. **UK Government Specific Mistakes**:
    - ❌ Building custom notification service instead of GOV.UK Notify
    - ❌ Not using GOV.UK Design System (accessibility, consistency)
    - ❌ Wrong Digital Marketplace framework for evolution stage
 
-5. **AI Project Mistakes**:
+6. **AI Project Mistakes**:
    - ❌ Not mapping human-in-the-loop as mandatory component
    - ❌ Missing bias testing for HIGH-RISK AI
    - ❌ Not flagging ATRS publication requirement

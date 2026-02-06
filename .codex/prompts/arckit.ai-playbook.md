@@ -41,14 +41,71 @@ $ARGUMENTS
 - Administrative automation
 - Examples: Email categorization, meeting scheduling, document summarization
 
-3. **Read relevant project documents**:
-   - Read `projects/000-global/ARC-000-PRIN-*.md` (if exists)
-   - Read `projects/{project-dir}/ARC-*-REQ-*.md` (if exists)
-   - Read `.arckit/templates/uk-gov-ai-playbook-template.md` for assessment structure
+3. **Read Available Documents**:
+
+   Scan the project directory for existing artifacts and read them to inform this assessment:
+
+   **MANDATORY** (warn if missing):
+   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+     - Extract: AI/ML governance standards, technology constraints, compliance requirements
+     - If missing: warn user to run `/arckit.principles` first
+   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+     - Extract: AI/ML-related FR requirements, NFR (security, compliance, fairness), DR (data requirements)
+     - If missing: warn user to run `/arckit.requirements` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - `ARC-*-DATA-*.md` in `projects/{project-dir}/` — Data model
+     - Extract: Training data sources, personal data, special category data, data quality
+   - `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+     - Extract: AI-specific risks, bias risks, security risks, mitigation strategies
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+     - Extract: Affected populations, decision authority, accountability
+   - `ARC-*-DPIA-*.md` in `projects/{project-dir}/` — DPIA
+     - Extract: Data protection context, lawful basis, privacy risks
+
+   **What to extract from each document**:
+   - **Principles**: AI governance standards, ethical AI requirements, compliance constraints
+   - **Requirements**: AI use cases (FR-xxx), fairness (NFR-E-xxx), security (NFR-SEC-xxx), data (DR-xxx)
+   - **Data Model**: Training data sources, personal data categories, data quality
+   - **Risk**: AI-specific risks, bias risks, mitigation strategies
+
+   **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates-custom/uk-gov-ai-playbook-template.md` exists (user override)
+   - **If found**: Read the user's customized template
+   - **If not found**: Read `.arckit/templates/uk-gov-ai-playbook-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Tip**: Users can customize templates with `/arckit.customize ai-playbook`
 
-4. **Assess the 10 Core Principles**:
+4. **Check for External Documents** (optional):
+
+   Scan for external (non-ArcKit) documents the user may have provided:
+
+   **AI Governance Policies & Ethical AI Frameworks**:
+   - **Look in**: `projects/{project-dir}/external/`
+   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+   - **What to extract**: AI ethics policies, model cards, algorithmic impact assessments, bias testing results
+   - **Examples**: `ai-ethics-policy.pdf`, `model-card.md`, `bias-assessment.pdf`
+
+   **Organizational AI Standards**:
+   - **Look in**: `projects/000-global/policies/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: AI governance framework, approved AI/ML platforms, responsible AI guidelines
+   - **Examples**: `ai-governance-framework.pdf`, `responsible-ai-guidelines.docx`
+
+   **Enterprise-Wide AI Strategy**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise AI strategy, responsible AI frameworks, cross-project AI maturity assessments
+
+   **User prompt**: If no external AI governance docs found, ask:
+   "Do you have any AI governance policies, model cards, or ethical AI assessments? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+
+5. **Assess the 10 Core Principles**:
 
 ### Principle 1: Understanding AI
 - Team understands AI limitations (no reasoning, contextual awareness)
@@ -136,7 +193,7 @@ $ARGUMENTS
 - Assurance team engaged
 - Risk management process followed
 
-5. **Assess the 6 Ethical Themes**:
+6. **Assess the 6 Ethical Themes**:
 
 ### Theme 1: Safety, Security, and Robustness
 - Safety testing (no harmful outputs)
@@ -184,7 +241,7 @@ $ARGUMENTS
 - Negative impacts mitigated
 - Alignment with public values
 
-6. **Generate comprehensive assessment**:
+7. **Generate comprehensive assessment**:
 
 Create detailed report with:
 
@@ -228,7 +285,7 @@ Create detailed report with:
 - Medium priority (within 3 months)
 - Low priority (continuous improvement)
 
-7. **Map to existing ArcKit artifacts**:
+8. **Map to existing ArcKit artifacts**:
 
 **Link to Requirements**:
 - Principle 2 (Lawful) → NFR-C-xxx (GDPR compliance requirements)
@@ -246,7 +303,7 @@ Create detailed report with:
 - TCoP Point 6 (Secure) aligns with Principle 3
 - TCoP Point 7 (Privacy) aligns with Principle 2
 
-8. **Provide risk-appropriate guidance**:
+9. **Provide risk-appropriate guidance**:
 
 **For HIGH-RISK AI systems**:
 - **STOP**: Do NOT deploy without meeting ALL principles
@@ -270,7 +327,7 @@ Create detailed report with:
 - Periodic review (annual)
 - Continuous improvement mindset
 
-9. **Highlight mandatory requirements**:
+10. **Highlight mandatory requirements**:
 
 **ATRS (Algorithmic Transparency Recording Standard)**:
 - MANDATORY for central government departments
@@ -292,13 +349,70 @@ Create detailed report with:
 - Must consider ECHR (European Convention on Human Rights)
 - Document how rights are protected
 
-10. **Write comprehensive output**:
+
+---
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+**Generate Document ID**:
+```bash
+# Use the ArcKit document ID generation script
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "AIPB" "${VERSION}")
+# Example output: ARC-001-AIPB-v1.0
+```
+
+**Populate Required Fields**:
+
+*Auto-populated fields* (populate these automatically):
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → "UK Government AI Playbook Assessment"
+- `ARC-[PROJECT_ID]-AIPB-v[VERSION]` → Use generated DOC_ID
+- `[COMMAND]` → "arckit.ai-playbook"
+
+*User-provided fields* (extract from project metadata or user input):
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+*Calculated fields*:
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+
+*Pending fields* (leave as [PENDING] until manually updated):
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+**Populate Revision History**:
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit.ai-playbook` command | [PENDING] | [PENDING] |
+```
+
+**Populate Generation Metadata Footer**:
+
+The footer should be populated with:
+```markdown
+**Generated by**: ArcKit `/arckit.ai-playbook` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: [Read from VERSION file]
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+---
+
+11. **Write comprehensive output**:
 
 Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-AIPB-v1.0.md`
 
 Use template structure from `uk-gov-ai-playbook-template.md`
 
-11. **Provide next steps**:
+12. **Provide next steps**:
 
 After assessment:
 - Summary of compliance level
