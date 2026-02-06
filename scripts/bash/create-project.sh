@@ -116,6 +116,68 @@ log_info "Creating project: $PROJECT_DIR_NAME"
 # Create project directory structure
 create_project_dir "$PROJECT_DIR"
 
+# Create README for external documents directory
+cat > "$PROJECT_DIR/external/README.md" <<'EXTEOF'
+# External Documents
+
+Place external reference documents here for ArcKit commands to read as context.
+
+## Supported File Types
+- PDF (.pdf)
+- Word (.docx)
+- Markdown (.md)
+- Images (.png, .jpg) - for diagrams and screenshots
+- CSV (.csv) - for data exports
+- SQL (.sql) - for database schemas
+
+## What to Put Here
+- RFP/ITT documents
+- Legacy system specifications
+- User research reports
+- Previous assessments and audits
+- Database schemas and ERD diagrams
+- Compliance evidence and certificates
+- Vendor proposals and technical responses
+- Performance benchmarks and test results
+
+## How It Works
+ArcKit commands automatically scan this directory when generating artifacts.
+External documents enhance output quality but are never blocking.
+
+## See Also
+- `projects/000-global/policies/` - Organization-wide standards and governance documents
+EXTEOF
+
+# Ensure 000-global/policies exists and has a README
+GLOBAL_POLICIES_DIR="$REPO_ROOT/projects/000-global/policies"
+if [[ -d "$REPO_ROOT/projects/000-global" ]]; then
+    mkdir -p "$GLOBAL_POLICIES_DIR"
+    if [[ ! -f "$GLOBAL_POLICIES_DIR/README.md" ]]; then
+        cat > "$GLOBAL_POLICIES_DIR/README.md" <<'POLEOF'
+# Organization Policies
+
+Place organization-wide governance documents here. These are read by commands across ALL projects.
+
+## Supported File Types
+- PDF (.pdf), Word (.docx), Markdown (.md)
+
+## What to Put Here
+- Architecture principles and TOGAF standards
+- Security policies and compliance frameworks
+- Risk appetite statements and threat assessments
+- Technology standards and approved platforms
+- Procurement policies and spending thresholds
+- Cloud-first mandates and approved supplier lists
+- AI governance frameworks and ethical guidelines
+- MOD/Defence security policies (JSP 440, CAAT)
+
+## How It Works
+Commands like /arckit.principles, /arckit.risk, /arckit.secure, and /arckit.sobc
+automatically scan this directory for organizational context.
+POLEOF
+    fi
+fi
+
 # Create a README for the project
 cat > "$PROJECT_DIR/README.md" <<EOF
 # $PROJECT_NAME
@@ -292,6 +354,7 @@ if [[ "$OUTPUT_JSON" == "true" ]]; then
     echo "  \"reviews_dir\": \"$PROJECT_DIR/reviews\","
     echo "  \"vendors_dir\": \"$PROJECT_DIR/vendors\","
     echo "  \"external_dir\": \"$PROJECT_DIR/external\","
+    echo "  \"policies_dir\": \"$REPO_ROOT/projects/000-global/policies\","
     echo -n "  \"next_steps\": "
     output_json_array "${NEXT_STEPS[@]}"
     echo ""

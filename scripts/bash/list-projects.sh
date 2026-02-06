@@ -132,6 +132,18 @@ count_vendors() {
     fi
 }
 
+# Count external documents
+count_external_docs() {
+    local project_dir="$1"
+    if [[ -d "$project_dir/external" ]]; then
+        find "$project_dir/external" -maxdepth 1 -type f \
+            \( -name "*.pdf" -o -name "*.docx" -o -name "*.md" -o -name "*.csv" -o -name "*.sql" -o -name "*.png" -o -name "*.jpg" \) \
+            ! -name "README.md" 2>/dev/null | wc -l
+    else
+        echo "0"
+    fi
+}
+
 # Calculate completion percentage
 calculate_completion() {
     local project_dir="$1"
@@ -208,6 +220,7 @@ if [[ "$JSON_MODE" == "true" ]]; then
             project_name=$(basename "$project_dir")
             project_number=$(get_project_number_from_dir "$project_dir" || echo "")
             vendor_count=$(count_vendors "$project_dir")
+            external_doc_count=$(count_external_docs "$project_dir")
             completion=$(calculate_completion "$project_dir")
 
             echo "    {"
@@ -216,6 +229,7 @@ if [[ "$JSON_MODE" == "true" ]]; then
             echo "      \"path\": \"$project_dir\","
             echo "      \"completion_percentage\": $completion,"
             echo "      \"vendor_count\": $vendor_count,"
+            echo "      \"external_doc_count\": $external_doc_count,"
             echo "      \"artifacts\": {"
             echo "        \"stakeholder_drivers\": $(check_artifact "$project_dir" "stakeholder-drivers.md"),"
             echo "        \"risk_register\": $(check_artifact "$project_dir" "risk-register.md"),"
@@ -251,6 +265,7 @@ for project_dir in "$PROJECTS_DIR"/*; do
         project_name=$(basename "$project_dir")
         project_number=$(get_project_number_from_dir "$project_dir" || echo "")
         vendor_count=$(count_vendors "$project_dir")
+        external_doc_count=$(count_external_docs "$project_dir")
         completion=$(calculate_completion "$project_dir")
         status_emoji=$(get_status_emoji $completion)
 
@@ -319,6 +334,12 @@ for project_dir in "$PROJECTS_DIR"/*; do
                 echo "      ✓ Vendor Proposals ($vendor_count)"
             else
                 echo "      ✗ Vendor Proposals"
+            fi
+
+            if [[ $external_doc_count -gt 0 ]]; then
+                echo "      ✓ External Documents ($external_doc_count)"
+            else
+                echo "      ✗ External Documents"
             fi
 
             echo ""

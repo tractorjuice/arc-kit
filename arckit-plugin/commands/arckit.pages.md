@@ -116,11 +116,15 @@ projects/
 │   ├── reviews/
 │   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
 │   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
-│   └── vendors/
-│       └── {vendor-name}/
-│           ├── hld*.md
-│           ├── dld*.md
-│           └── proposal*.md
+│   ├── vendors/
+│   │   └── {vendor-name}/
+│   │       ├── hld*.md
+│   │       ├── dld*.md
+│   │       └── proposal*.md
+│   └── external/
+│       ├── README.md             # (excluded from listing)
+│       ├── rfp-document.pdf
+│       └── legacy-spec.docx
 ├── 002-{another-project}/
 │   └── ...
 └── ...
@@ -296,6 +300,13 @@ Create `docs/manifest.json` with the discovered structure:
               "title": "HLD v1.0"
             }
           ]
+        }
+      ],
+      "external": [
+        {
+          "path": "projects/001-project-name/external/rfp-document.pdf",
+          "title": "rfp-document.pdf",
+          "type": "pdf"
         }
       ]
     }
