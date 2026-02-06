@@ -89,13 +89,15 @@ Read all available documents identified in the Prerequisites section above. Buil
 
 ### 3. Read Strategy Template
 
+Load the strategy template structure:
+
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/architecture-strategy-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/architecture-strategy-template.md` (plugin default)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/architecture-strategy-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-> **Tip**: Users can customize templates with `/arckit.customize architecture-strategy`
+> **Tip**: Users can customize templates with `/arckit.customize strategy`
 
 ### 4. Generate Architecture Strategy
 
@@ -221,7 +223,7 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "STRAT" "${VERSION}")
+DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "STRAT" "${VERSION}")
 # Example output: ARC-001-STRAT-v1.0
 ```
 

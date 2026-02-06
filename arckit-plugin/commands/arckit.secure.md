@@ -28,13 +28,13 @@ UK Government departments must follow NCSC (National Cyber Security Centre) guid
 
 Generate a comprehensive Secure by Design assessment document by:
 
-1. **Read the template** (with user override support):
+1. **Loading the template** (with user override support):
    - **First**, check if `.arckit/templates/ukgov-secure-by-design-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/ukgov-secure-by-design-template.md` (plugin default)
+   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/ukgov-secure-by-design-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-   > **Tip**: Users can customize templates with `/arckit.customize ukgov-secure-by-design`
+   > **Tip**: Users can customize templates with `/arckit.customize secure`
 
 2. **Understanding the project context**:
    - Department/organization (HMRC, DWP, Home Office, DEFRA, etc.)

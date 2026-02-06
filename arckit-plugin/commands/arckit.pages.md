@@ -339,11 +339,14 @@ Create `docs/manifest.json` with the discovered structure:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/pages-template.html` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` (plugin default)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` (default)
 
-> **Tip**: Users can customize the pages template with `/arckit.customize pages` to add branding, custom styling, or modify the layout.
+> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Tip**: Users can customize templates with `/arckit.customize pages`
 
-1. Read the template file (checking user override first, then plugin default)
+This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.
+
+1. Read the appropriate template file (custom override or default) using the Read tool
 2. Copy the **entire** template contents as the base for `docs/index.html`
 3. Replace the placeholder values in the CONFIG block with the actual repository details:
    - `'{{OWNER}}'` → the GitHub owner/org (e.g. `'tractorjuice'`)
@@ -471,4 +474,4 @@ The generated HTML should handle:
 
 ---
 
-**Remember**: Check for user override at `.arckit/templates/pages-template.html` first, then use `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` as fallback. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
+**Remember**: You MUST read and use `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.

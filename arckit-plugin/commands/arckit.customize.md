@@ -12,7 +12,11 @@ $ARGUMENTS
 
 ## Overview
 
-ArcKit uses document templates to generate consistent architecture artifacts. Users can customize these templates by copying them to their project's `.arckit/templates/` directory. When a template exists in the user's directory, it takes precedence over the plugin's default template.
+ArcKit uses document templates to generate consistent architecture artifacts. Users can customize these templates by copying them to `${CLAUDE_PLUGIN_ROOT}/templates/`. When a template exists in the custom directory, it takes precedence over the default template.
+
+**Template locations:**
+- **Defaults**: `${CLAUDE_PLUGIN_ROOT}/templates/` (shipped with ArcKit, refreshed by `arckit init`)
+- **User overrides**: `${CLAUDE_PLUGIN_ROOT}/templates/` (your customizations, preserved across updates)
 
 ## Instructions
 
@@ -86,7 +90,7 @@ Display as a table:
 
 **Create user templates directory:**
 ```bash
-mkdir -p .arckit/templates
+mkdir -p .arckit/templates-custom
 ```
 
 **Copy specific template:**
@@ -94,12 +98,12 @@ mkdir -p .arckit/templates
 # Map short name to full filename
 TEMPLATE_NAME="$USER_INPUT"  # e.g., "requirements"
 SOURCE="${CLAUDE_PLUGIN_ROOT}/templates/${TEMPLATE_NAME}-template.md"
-DEST=".arckit/templates/${TEMPLATE_NAME}-template.md"
+DEST="${CLAUDE_PLUGIN_ROOT}/templates/${TEMPLATE_NAME}-template.md"
 
 # Check if source exists
 if [[ -f "$SOURCE" ]]; then
     cp "$SOURCE" "$DEST"
-    echo "✅ Copied ${TEMPLATE_NAME}-template.md to .arckit/templates/"
+    echo "✅ Copied ${TEMPLATE_NAME}-template.md to ${CLAUDE_PLUGIN_ROOT}/templates/"
 else
     echo "❌ Template not found: ${TEMPLATE_NAME}"
     echo "Run '/arckit.customize list' to see available templates"
@@ -108,9 +112,9 @@ fi
 
 **Copy all templates:**
 ```bash
-mkdir -p .arckit/templates
-cp ${CLAUDE_PLUGIN_ROOT}/templates/*-template.md .arckit/templates/
-echo "✅ Copied all templates to .arckit/templates/"
+mkdir -p .arckit/templates-custom
+cp ${CLAUDE_PLUGIN_ROOT}/templates/*-template.md ${CLAUDE_PLUGIN_ROOT}/templates/
+echo "✅ Copied all templates to ${CLAUDE_PLUGIN_ROOT}/templates/"
 ```
 
 ### 4. **Show Template Info**
@@ -128,7 +132,15 @@ After copying, explain:
 ```markdown
 ## Template Customization Guide
 
-Your template has been copied to `.arckit/templates/`. You can now customize it.
+Your template has been copied to `${CLAUDE_PLUGIN_ROOT}/templates/`. You can now customize it.
+
+### How It Works
+
+When you run an ArcKit command (e.g., `/arckit.requirements`):
+
+1. Command checks: Does `${CLAUDE_PLUGIN_ROOT}/templates/requirements-template.md` exist?
+2. **If YES** → Uses YOUR customized template
+3. **If NO** → Uses default from `${CLAUDE_PLUGIN_ROOT}/templates/`
 
 ### Common Customizations
 
@@ -151,44 +163,35 @@ Your template has been copied to `.arckit/templates/`. You can now customize it.
 - Include standard headers/footers
 - Add disclaimer text
 
-### How Template Override Works
-
-When you run an ArcKit command (e.g., `/arckit.requirements`):
-
-1. Command checks: Does `.arckit/templates/requirements-template.md` exist?
-2. **If YES** → Uses YOUR customized template
-3. **If NO** → Uses plugin's default template
-
 ### Keeping Templates Updated
 
-When ArcKit plugin updates with new template features:
-- Your customized templates are NOT automatically updated
-- Compare your template with the plugin version periodically
-- Merge new sections you want to adopt
+When ArcKit CLI updates with new template features:
+- Default templates in `${CLAUDE_PLUGIN_ROOT}/templates/` are refreshed by `arckit init`
+- Your customizations in `${CLAUDE_PLUGIN_ROOT}/templates/` are **preserved**
+- Compare your templates with defaults periodically to adopt new features
 
-To see plugin's current template:
+To see the current default template:
 \`\`\`bash
 cat ${CLAUDE_PLUGIN_ROOT}/templates/{name}-template.md
 \`\`\`
 
+To compare with your customization:
+\`\`\`bash
+diff ${CLAUDE_PLUGIN_ROOT}/templates/{name}-template.md ${CLAUDE_PLUGIN_ROOT}/templates/{name}-template.md
+\`\`\`
+
 ### Reverting to Default
 
-To stop using a custom template:
+To stop using a custom template and revert to default:
 \`\`\`bash
-rm .arckit/templates/{name}-template.md
+rm ${CLAUDE_PLUGIN_ROOT}/templates/{name}-template.md
 \`\`\`
 
 ### Git Recommendations
 
-Add to your `.gitignore` if templates are user-specific:
-\`\`\`
-# User-specific template customizations
-# .arckit/templates/
-\`\`\`
-
-Or commit them if they're organization standards:
+Commit your customized templates to share with your team:
 \`\`\`bash
-git add .arckit/templates/
+git add ${CLAUDE_PLUGIN_ROOT}/templates/
 git commit -m "Add organization-specific document templates"
 \`\`\`
 ```
@@ -202,17 +205,17 @@ After completing the request, show:
 
 **Action**: [Listed templates / Copied X template(s)]
 
-**Location**: `.arckit/templates/`
+**Location**: `${CLAUDE_PLUGIN_ROOT}/templates/`
 
 **Files**:
 - [List of files copied or available]
 
 **Next Steps**:
-1. Edit the template(s) in `.arckit/templates/`
+1. Edit the template(s) in `${CLAUDE_PLUGIN_ROOT}/templates/`
 2. Run the corresponding `/arckit.*` command
 3. Your customized template will be used automatically
 
-**Tip**: Use `cat ${CLAUDE_PLUGIN_ROOT}/templates/{name}-template.md` to compare with the original.
+**Tip**: Use `diff ${CLAUDE_PLUGIN_ROOT}/templates/{name}-template.md ${CLAUDE_PLUGIN_ROOT}/templates/{name}-template.md` to compare with the default.
 ```
 
 ## Example Usage

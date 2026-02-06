@@ -44,10 +44,12 @@ Use the Task tool with `subagent_type: "general-purpose"` and include in the pro
 If the Task tool is unavailable or the user prefers inline execution, fall back to the full research process:
 
 1. Check prerequisites (requirements document must exist)
-2. Read the template (with user override support):
-   - First check `.arckit/templates/research-findings-template.md` (user override)
-   - Fall back to `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md` (plugin default)
-   - Also read `VERSION`
+2. **Read the template** (with user override support):
+   - **First**, check if `.arckit/templates/research-findings-template.md` exists in the project root
+   - **If found**: Read the user's customized template (user override takes precedence)
+   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md` (default)
+   - Read the `VERSION` file and update the version in the template metadata line when generating
+   - **Tip**: Users can customize templates with `/arckit.customize research`
 3. Extract research categories from requirements
 4. Use WebSearch and WebFetch for each category (vendors, pricing, reviews, open source, UK Gov)
 5. Build vs buy analysis with 3-year TCO

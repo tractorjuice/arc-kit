@@ -20,7 +20,7 @@ $ARGUMENTS
 2. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/stakeholder-drivers-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/stakeholder-drivers-template.md` (plugin default)
+   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/stakeholder-drivers-template.md` (default)
    - **Update Template Version**: Read the `VERSION` file and replace the version number in the template metadata line:
      ```
      > **Template Status**: [keep] | **Version**: [from VERSION file] | **Command**: [keep]

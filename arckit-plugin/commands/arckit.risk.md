@@ -147,7 +147,7 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/risk-register-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/risk-register-template.md` (plugin default)
+   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/risk-register-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit.customize risk-register`
@@ -527,7 +527,7 @@ If all risks exceed appetite:
 
 ## Template Reference
 
-Use the template (checking `.arckit/templates/risk-register-template.md` first for user overrides, then `${CLAUDE_PLUGIN_ROOT}/templates/risk-register-template.md`). Fill in with:
+Use the template at `${CLAUDE_PLUGIN_ROOT}/templates/risk-register-template.md` as the structure. Fill in with:
 - Stakeholder analysis data (owners, affected parties, concerns)
 - Architecture principles (non-compliance risks)
 - Organizational risk appetite (if exists)

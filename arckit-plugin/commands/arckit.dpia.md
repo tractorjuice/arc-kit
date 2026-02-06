@@ -87,10 +87,12 @@ Read all documents listed in Step 0 above. Use the extracted information for aut
 
 ### Step 3: DPIA Template Reading
 
+Read the DPIA template:
+
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/dpia-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/dpia-template.md` (plugin default)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/dpia-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit.customize dpia`

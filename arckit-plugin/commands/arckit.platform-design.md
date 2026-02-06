@@ -82,10 +82,12 @@ If `status` is "exists":
 
 ### Step 2: Read the Template
 
+Read the platform design template:
+
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/platform-design-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/platform-design-template.md` (plugin default)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/platform-design-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit.customize platform-design`

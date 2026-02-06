@@ -150,10 +150,10 @@ Analyze the gathered context to extract:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/servicenow-design-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/servicenow-design-template.md` (plugin default)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/servicenow-design-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-> **Tip**: Users can customize templates with `/arckit.customize servicenow-design`
+> **Tip**: Users can customize templates with `/arckit.customize servicenow`
 
 Generate:
 
@@ -282,7 +282,7 @@ After generating the ServiceNow design:
 Save output to: `projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v1.0.md`
 
 ### Content Structure
-Use the template (checking `.arckit/templates/servicenow-design-template.md` first for user overrides, then `${CLAUDE_PLUGIN_ROOT}/templates/servicenow-design-template.md`).
+Use the template at `${CLAUDE_PLUGIN_ROOT}/templates/servicenow-design-template.md` as the structure.
 
 Fill in:
 - All bracketed placeholders `[like this]` with actual values

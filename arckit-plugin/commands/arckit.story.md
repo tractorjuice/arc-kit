@@ -664,10 +664,12 @@ Document control fields:
 
 ### Step 13: Read Template and Populate
 
+Read the story template:
+
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/story-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/story-template.md` (plugin default)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/story-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit.customize story`

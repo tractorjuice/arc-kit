@@ -101,15 +101,15 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - Extract outcomes (these become success criteria)
    - Note: EVERY benefit in SOBC MUST trace to a stakeholder goal
 
-6. **Read the template** (with user override support):
+6. **Generate comprehensive SOBC**:
+
+   **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/sobc-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/sobc-template.md` (plugin default)
+   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/sobc-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit.customize sobc`
-
-   **Generate comprehensive SOBC** following the template:
 
    **Five Cases (HM Treasury Green Book Model)**:
 
@@ -369,7 +369,7 @@ If project seems too small for full 5-case:
 
 ## Template Reference
 
-Use the template (checking `.arckit/templates/sobc-template.md` first for user overrides, then `${CLAUDE_PLUGIN_ROOT}/templates/sobc-template.md`). Fill in with:
+Use the template at `${CLAUDE_PLUGIN_ROOT}/templates/sobc-template.md` as the structure. Fill in with:
 - Stakeholder analysis data (goals, drivers, outcomes, conflicts)
 - Architecture principles (strategic alignment)
 - User's project description

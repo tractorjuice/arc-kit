@@ -22,13 +22,14 @@ $ARGUMENTS
    - Read `projects/{project-dir}/vendors/{vendor}/dld-v*.md` - Detailed design
    - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-HLDR-*.md` - Review findings
    - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-DLDR-*.md` - Review findings
+
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/traceability-matrix-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/traceability-matrix-template.md` (plugin default)
+   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/traceability-matrix-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-   > **Tip**: Users can customize templates with `/arckit.customize traceability-matrix`
+   > **Tip**: Users can customize templates with `/arckit.customize traceability`
 
 3. **Check for External Documents** (optional):
 

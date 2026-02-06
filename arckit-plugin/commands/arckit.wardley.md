@@ -304,10 +304,10 @@ Create the Wardley Map document using the template:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/wardley-map-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/wardley-map-template.md` (plugin default)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/wardley-map-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-> **Tip**: Users can customize templates with `/arckit.customize wardley-map`
+> **Tip**: Users can customize templates with `/arckit.customize wardley`
 
 
 ---
@@ -319,7 +319,7 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${VERSION}")
+DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${VERSION}")
 # Example output: ARC-001-WARD-v1.0
 ```
 

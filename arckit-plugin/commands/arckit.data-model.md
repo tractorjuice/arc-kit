@@ -66,7 +66,7 @@ $ARGUMENTS
 4. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/data-model-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/data-model-template.md` (plugin default)
+   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/data-model-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit.customize data-model`

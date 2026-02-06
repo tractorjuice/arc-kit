@@ -128,7 +128,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/finops-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/finops-template.md` (plugin default)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/finops-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit.customize finops`
