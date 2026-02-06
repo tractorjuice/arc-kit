@@ -333,9 +333,25 @@ Create `docs/manifest.json` with the discovered structure:
 }
 ```
 
-## Step 3: Generate index.html
+## Step 3: Bundle Document Files into docs/
 
-### 3.1 Read the template (MANDATORY)
+**IMPORTANT**: Copy all discovered markdown files into `docs/` so the site works for **private repos** (where `raw.githubusercontent.com` requires authentication). The template fetches documents via relative paths first, falling back to raw GitHub URLs.
+
+For every document path listed in `manifest.json` (global, projects, diagrams, decisions, vendors, reviews, wardley maps, data contracts), copy the source file into `docs/` preserving its relative path:
+
+```bash
+# Example: copy project documents into docs/
+mkdir -p docs/projects/001-project-name
+cp projects/001-project-name/ARC-001-REQ-v1.0.md docs/projects/001-project-name/
+
+# Guides are already in docs/guides/ — no copy needed
+```
+
+Use Bash with `mkdir -p` and `cp` to copy each file. Skip any paths that don't exist on disk. Guide files (`docs/guides/*.md`) are already in the right place and do not need copying.
+
+## Step 4: Generate index.html
+
+### 4.1 Read the template (MANDATORY)
 
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates-custom/pages-template.html` exists (user override)
@@ -357,35 +373,25 @@ This template is the single source of truth for the pages site — it contains a
 
 **Do NOT generate HTML from scratch. Do NOT modify the template structure, CSS, or JavaScript. Only replace the `{{...}}` config placeholders.**
 
-If the template file does not exist, fall back to generating inline HTML using the reference structure below.
+**If the template file does not exist, STOP and show an error**: Tell the user to run `arckit init` to install templates, or check that `.arckit/templates/pages-template.html` exists. Do NOT generate fallback HTML.
 
-### 3.2 Fallback reference (only if template is missing)
-
-If `.arckit/templates/pages-template.html` does not exist, generate `docs/index.html` inline with these requirements:
-
-- **CDN libraries**: GOV.UK Frontend CSS, marked.js for Markdown, mermaid.js for diagrams
-- **Layout**: Sticky header, collapsible sidebar navigation, main content area, footer
-- **JavaScript**: Manifest loading, sidebar navigation building, document fetching via GitHub raw URLs, Markdown rendering, Mermaid diagram rendering, hash-based URL routing
-- **Default document**: If Architecture Principles (ARC-000-PRIN-*.md) exists, load it as the landing page
-- **GOV.UK styling**: Dark header, accessible focus styles, responsive mobile layout
-
-## Step 4: Write Output Files
+## Step 5: Write Output Files
 
 **IMPORTANT**: Use the Write tool to create both files.
 
-### 4.1 Write manifest.json
+### 5.1 Write manifest.json
 
 ```
 docs/manifest.json
 ```
 
-### 4.2 Write index.html
+### 5.2 Write index.html
 
 ```
 docs/index.html
 ```
 
-## Step 5: Provide Summary
+## Step 6: Provide Summary
 
 After generating, provide this summary:
 
@@ -395,6 +401,7 @@ GitHub Pages Site Generated
 Files Created:
 - docs/index.html (main page)
 - docs/manifest.json (document index)
+- docs/projects/ (bundled markdown files for private repo support)
 
 Repository: {owner}/{repo}
 Projects Found: {count}
@@ -419,6 +426,7 @@ https://{owner}.github.io/{repo}/
 
 Features:
 - Dashboard view with KPI cards, charts, and governance checklist (default landing page)
+- Private repo support (documents bundled into docs/ for same-origin fetch)
 - Sidebar navigation for all projects
 - Markdown rendering with syntax highlighting
 - Mermaid diagram support (auto-rendered)
