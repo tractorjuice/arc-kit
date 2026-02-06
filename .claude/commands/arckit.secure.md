@@ -106,6 +106,11 @@ Generate a comprehensive Secure by Design assessment document by:
    - **What to extract**: Security requirements, acceptable risk levels, mandatory controls
    - **Examples**: `security-policy.pdf`, `risk-appetite.md`, `incident-response-plan.docx`
 
+   **Enterprise-Wide Security Baselines**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise security baselines, penetration test reports, cross-project security assessment patterns
+
    **User prompt**: If no external security docs found, ask:
    "Do you have any existing security assessments, pen test reports, or threat models? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

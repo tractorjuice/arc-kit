@@ -52,6 +52,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Existing strategies, strategic plans, vision documents
 - **Examples**: `digital-strategy.pdf`, `technology-vision.docx`, `strategic-plan.png`
 
+**Enterprise-Wide Architecture Strategy**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown, Images
+- **What to extract**: Enterprise architecture strategy, digital transformation plans, cross-project strategic alignment documents
+
 **User prompt**: If no external strategy docs found but they would improve the output, ask:
 "Do you have any existing strategy documents, vision statements, or strategic plans? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

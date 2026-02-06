@@ -61,6 +61,11 @@ $ARGUMENTS
    - **What to extract**: Mandatory compliance requirements, technology constraints, security standards
    - **Examples**: `security-standards.pdf`, `accessibility-policy.docx`
 
+   **Enterprise-Wide Requirement Standards**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise requirement standards, business capability models, cross-project requirements patterns
+
    **User prompt**: If no external docs found but they would significantly improve requirements, ask:
    "Do you have any RFP/ITT documents, legacy system specifications, or user research reports? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

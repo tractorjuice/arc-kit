@@ -165,6 +165,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Existing data product definitions, SLA terms, schema specifications, data quality rules
 - **Examples**: `data-contract-v1.yml`, `data-sla.pdf`, `schema-registry.json`
 
+**Enterprise-Wide Data Governance Standards**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise data governance standards, data sharing agreements, cross-project data catalogue conventions
+
 **User prompt**: If no external data contract docs found but they would improve the output, ask:
 "Do you have any existing data contracts, data product SLAs, or schema specifications? I can read PDFs, YAML, and JSON files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

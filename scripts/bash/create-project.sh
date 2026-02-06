@@ -178,6 +178,40 @@ POLEOF
     fi
 fi
 
+# Ensure 000-global/external exists and has a README
+GLOBAL_EXTERNAL_DIR="$REPO_ROOT/projects/000-global/external"
+if [[ -d "$REPO_ROOT/projects/000-global" ]]; then
+    mkdir -p "$GLOBAL_EXTERNAL_DIR"
+    if [[ ! -f "$GLOBAL_EXTERNAL_DIR/README.md" ]]; then
+        cat > "$GLOBAL_EXTERNAL_DIR/README.md" <<'GEXTEOF'
+# Global External Documents
+
+Place organization-wide reference documents here. These are read by commands across ALL projects.
+
+## Supported File Types
+- PDF (.pdf), Word (.docx), Markdown (.md)
+- Images (.png, .jpg) - for diagrams and screenshots
+- CSV (.csv) - for data exports
+- SQL (.sql) - for database schemas
+
+## What to Put Here
+- Enterprise architecture blueprints and reference models
+- Organization-wide technology standards documents
+- Shared compliance evidence and audit reports
+- Cross-project strategy and transformation documents
+- Industry benchmarks and analyst reports
+
+## How It Works
+ArcKit commands automatically scan this directory alongside project-level
+external documents when generating artifacts.
+
+## See Also
+- `projects/000-global/policies/` - Governance policies (risk appetite, security, procurement)
+- `projects/{NNN}-{name}/external/` - Project-specific reference documents
+GEXTEOF
+    fi
+fi
+
 # Create a README for the project
 cat > "$PROJECT_DIR/README.md" <<EOF
 # $PROJECT_NAME
@@ -354,6 +388,7 @@ if [[ "$OUTPUT_JSON" == "true" ]]; then
     echo "  \"reviews_dir\": \"$PROJECT_DIR/reviews\","
     echo "  \"vendors_dir\": \"$PROJECT_DIR/vendors\","
     echo "  \"external_dir\": \"$PROJECT_DIR/external\","
+    echo "  \"global_external_dir\": \"$REPO_ROOT/projects/000-global/external\","
     echo "  \"policies_dir\": \"$REPO_ROOT/projects/000-global/policies\","
     echo -n "  \"next_steps\": "
     output_json_array "${NEXT_STEPS[@]}"

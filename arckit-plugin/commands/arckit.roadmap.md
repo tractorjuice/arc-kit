@@ -51,6 +51,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Current strategic direction, capability gaps, planned investments, dependency timelines
 - **Examples**: `technology-roadmap.pdf`, `capability-plan.docx`, `strategic-vision.png`
 
+**Enterprise-Wide Technology Roadmaps**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown, Images
+- **What to extract**: Enterprise technology roadmaps, strategic transformation plans, cross-project capability evolution timelines
+
 **User prompt**: If no external roadmap docs found but they would improve strategic alignment, ask:
 "Do you have any existing strategic roadmaps, capability plans, or technology vision documents? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

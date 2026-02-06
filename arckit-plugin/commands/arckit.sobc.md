@@ -79,6 +79,11 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - **What to extract**: Spending thresholds, approval gates, Green Book discount rates, procurement rules
    - **Examples**: `spending-policy.pdf`, `procurement-thresholds.docx`
 
+   **Enterprise-Wide Investment Frameworks**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise investment frameworks, strategic business plans, cross-project portfolio investment context
+
    **User prompt**: If no external financial docs found but they would improve the business case, ask:
    "Do you have any budget documents, financial forecasts, or market research? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

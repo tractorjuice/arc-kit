@@ -89,6 +89,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Budget thresholds, chargeback models, cost centre mappings, procurement approval limits
 - **Examples**: `cloud-spending-policy.pdf`, `chargeback-model.docx`
 
+**Enterprise-Wide Cost Management**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise cost management policies, cloud spending reports, cross-project FinOps maturity benchmarks
+
 **User prompt**: If no external FinOps docs found but they would improve cost analysis, ask:
 "Do you have any cloud billing reports, cost allocation data, or financial policies? I can read PDFs and CSV files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

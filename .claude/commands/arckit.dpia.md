@@ -59,6 +59,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Organizational privacy policy, data retention schedule, data classification scheme
 - **Examples**: `privacy-policy.pdf`, `data-retention-schedule.docx`, `data-classification.md`
 
+**Enterprise-Wide Data Protection Standards**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise data protection standards, privacy impact templates, cross-project DPIA benchmarks
+
 **User prompt**: If no external data protection docs found, ask:
 "Do you have any existing DPIAs, data processing agreements, or privacy policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

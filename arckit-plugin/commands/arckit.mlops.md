@@ -87,6 +87,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Current ML pipeline configurations, model performance metrics, training data specifications, model cards
 - **Examples**: `model-card.md`, `ml-pipeline-config.yml`, `model-evaluation.pdf`
 
+**Enterprise-Wide ML Governance**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise ML governance policies, model registry standards, cross-project ML infrastructure patterns
+
 **User prompt**: If no external MLOps docs found but they would improve the strategy, ask:
 "Do you have any existing ML pipeline configurations, model cards, or model evaluation reports? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

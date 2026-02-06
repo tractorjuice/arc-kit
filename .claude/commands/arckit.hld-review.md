@@ -71,6 +71,11 @@ $ARGUMENTS
    - **What to extract**: Reference architectures, compliance evidence, performance benchmarks
    - **Examples**: `reference-architecture.pdf`, `compliance-matrix.xlsx`
 
+   **Enterprise-Wide Architecture Standards**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise architecture standards, design review checklists, cross-project reference architectures
+
    **User prompt**: If no vendor HLD found in standard locations, ask:
    "Please provide the HLD document path or paste key sections. I can read PDFs, Word docs, and images directly. Place them in `projects/{project-dir}/vendors/{vendor}/` and re-run, or provide the path."
 

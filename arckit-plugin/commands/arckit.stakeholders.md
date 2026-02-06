@@ -43,6 +43,11 @@ $ARGUMENTS
    - **What to extract**: Organizational hierarchy, reporting lines, governance boards, decision-making authority
    - **Examples**: `org-chart.pdf`, `governance-structure.png`, `stakeholder-map.docx`
 
+   **Enterprise-Wide Org Charts & Governance Structures**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown, Images
+   - **What to extract**: Enterprise org charts, governance structures, RACI templates, cross-project stakeholder registers
+
    **User prompt**: If no external docs found but they would improve stakeholder analysis, ask:
    "Do you have any organizational charts, governance structures, or existing stakeholder maps? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

@@ -146,6 +146,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Existing user stories, velocity data, sprint history, team capacity
 - **Examples**: `current-backlog.csv`, `sprint-retrospective.md`
 
+**Enterprise-Wide Backlog Standards**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise backlog standards, Definition of Ready/Done templates, cross-project estimation benchmarks
+
 **User prompt**: If no external docs found but they would improve backlog accuracy, ask:
 "Do you have any vendor design documents or existing backlog exports? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

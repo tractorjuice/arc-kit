@@ -89,6 +89,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Current SLA targets, support tier definitions, escalation procedures, DR/BCP plans, on-call rotas
 - **Examples**: `sla-agreement.pdf`, `support-procedures.docx`, `dr-plan.pdf`, `on-call-rota.md`
 
+**Enterprise-Wide Operational Standards**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown
+- **What to extract**: Enterprise operational standards, SLA frameworks, cross-project support model benchmarks
+
 **User prompt**: If no external operational docs found but they would improve the readiness pack, ask:
 "Do you have any existing SLA documents, support procedures, or DR/BCP plans? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

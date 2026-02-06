@@ -197,6 +197,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Current platform architecture, ecosystem participants, API catalogues, platform metrics
 - **Examples**: `platform-overview.pdf`, `ecosystem-map.png`, `api-catalogue.docx`
 
+**Enterprise-Wide Platform Strategy**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown, Images
+- **What to extract**: Enterprise platform strategy, shared service catalogues, cross-project platform integration standards
+
 **User prompt**: If no external platform docs found but they would improve the design, ask:
 "Do you have any existing platform documentation, ecosystem maps, or API catalogues? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

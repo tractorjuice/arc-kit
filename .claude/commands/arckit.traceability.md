@@ -47,6 +47,11 @@ $ARGUMENTS
    - **What to extract**: Test results, code coverage reports, deployment records
    - **Examples**: `test-results.csv`, `code-coverage.pdf`
 
+   **Enterprise-Wide Traceability Standards**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise traceability standards, test strategy documents, cross-project requirements management frameworks
+
    **User prompt**: If no external docs found but they would improve traceability coverage, ask:
    "Do you have any vendor design documents, test plans, or implementation records? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

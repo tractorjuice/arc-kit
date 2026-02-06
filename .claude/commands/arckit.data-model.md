@@ -53,6 +53,11 @@ $ARGUMENTS
    - **What to extract**: Entity definitions, relationships, data types, constraints, existing schemas, migration requirements
    - **Examples**: `database-schema.pdf`, `erd-diagram.png`, `data-dictionary.docx`, `schema.sql`
 
+   **Enterprise-Wide Data Dictionaries**:
+   - **Look in**: `projects/000-global/external/`
+   - **File types**: PDF, Word, Markdown
+   - **What to extract**: Enterprise data dictionaries, master data management standards, cross-project data architecture patterns
+
    **User prompt**: If no external data docs found but they would improve the data model, ask:
    "Do you have any existing database schemas, ERD diagrams, or data dictionaries? I can read PDFs, images, and SQL files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 

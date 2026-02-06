@@ -71,6 +71,11 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - **What to extract**: Existing timelines, milestones, dependencies, resource allocations, constraints
 - **Examples**: `project-plan.pdf`, `gantt-chart.png`, `dependency-map.docx`
 
+**Enterprise-Wide Programme Plans**:
+- **Look in**: `projects/000-global/external/`
+- **File types**: PDF, Word, Markdown, Images
+- **What to extract**: Enterprise programme plans, portfolio roadmaps, cross-project dependency frameworks
+
 **User prompt**: If no external planning docs found but they would improve the plan, ask:
 "Do you have any existing project plans, Gantt charts, or dependency maps? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
