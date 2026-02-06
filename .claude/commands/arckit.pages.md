@@ -67,6 +67,10 @@ Check `projects/000-global/` for global artifacts:
 ```
 projects/000-global/
 ├── ARC-000-PRIN-v1.0.md    # Architecture Principles (global)
+├── policies/                # Governance policies
+│   └── *.pdf, *.docx, *.md
+├── external/                # Enterprise-wide reference documents
+│   └── *.pdf, *.docx, *.md
 └── {other global documents}
 ```
 
@@ -224,6 +228,20 @@ Create `docs/manifest.json` with the discovered structure:
       "category": "Architecture",
       "documentId": "ARC-000-PRIN-v1.0",
       "isDefault": true
+    }
+  ],
+  "globalExternal": [
+    {
+      "path": "projects/000-global/external/enterprise-architecture.pdf",
+      "title": "enterprise-architecture.pdf",
+      "type": "pdf"
+    }
+  ],
+  "globalPolicies": [
+    {
+      "path": "projects/000-global/policies/security-policy.pdf",
+      "title": "security-policy.pdf",
+      "type": "pdf"
     }
   ],
   "projects": [

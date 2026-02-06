@@ -235,6 +235,20 @@
             letter-spacing: 0.05em;
         }
 
+        .app-nav-external {
+            padding: 6px 12px 6px 16px;
+            font-size: 14px;
+            color: #666;
+            font-style: italic;
+        }
+
+        .app-nav-file-type {
+            font-size: 11px;
+            text-transform: uppercase;
+            color: #999;
+            margin-left: 4px;
+        }
+
         /* Main Content - Full Width, Left Aligned */
         .app-content-wrapper {
             flex: 1;
@@ -1289,6 +1303,16 @@
                 html += buildNavSection('Global', manifest.global, 'global');
             }
 
+            // Global external documents (mention only - not clickable)
+            if (manifest.globalExternal && manifest.globalExternal.length > 0) {
+                html += buildExternalNavSection('Global External Documents', manifest.globalExternal);
+            }
+
+            // Global policies (mention only - not clickable)
+            if (manifest.globalPolicies && manifest.globalPolicies.length > 0) {
+                html += buildExternalNavSection('Global Policies', manifest.globalPolicies);
+            }
+
             // Projects
             if (manifest.projects) {
                 manifest.projects.forEach(project => {
@@ -1355,6 +1379,23 @@
             `;
         }
 
+        function buildExternalNavSection(title, files) {
+            if (!files || files.length === 0) return '';
+            let listHtml = '';
+            files.forEach(doc => {
+                listHtml += `<li class="app-nav-external">${doc.title} <span class="app-nav-file-type">${doc.type || ''}</span></li>`;
+            });
+            return `
+                <div class="app-nav-section">
+                    <button class="app-nav-section-header">
+                        ${title}
+                        <span class="chevron">&#9660;</span>
+                    </button>
+                    <ul class="app-nav-list">${listHtml}</ul>
+                </div>
+            `;
+        }
+
         function buildProjectNav(project) {
             let listHtml = '';
 
@@ -1400,6 +1441,14 @@
                             listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${vendor.name}: ${doc.title}</a></li>`;
                         });
                     }
+                });
+            }
+
+            // External Documents (mention only - not clickable)
+            if (project.external && project.external.length > 0) {
+                listHtml += `<li class="app-nav-category">External Documents</li>`;
+                project.external.forEach(doc => {
+                    listHtml += `<li class="app-nav-external">${doc.title} <span class="app-nav-file-type">${doc.type || ''}</span></li>`;
                 });
             }
 
