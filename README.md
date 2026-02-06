@@ -72,6 +72,25 @@ claude  # or your chosen AI assistant
 /arckit.sow Generate RFP for vendor selection
 ```
 
+### Upgrading
+
+To upgrade ArcKit to the latest version:
+
+```bash
+# Step 1: Upgrade the CLI tool
+pip install --upgrade git+https://github.com/tractorjuice/arc-kit.git
+# Or with uv:
+uv tool upgrade arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
+
+# Step 2: Update your existing project (re-run init in place)
+cd /path/to/your-existing-project
+arckit init --here --ai claude
+```
+
+This updates commands, templates, scripts, and agents while **preserving** your project data (`projects/`) and custom templates (`.arckit/templates-custom/`).
+
+If upgrading from v0.x, you may also need to migrate legacy filenames — see the [upgrading guide](docs/guides/upgrading.md) for full details.
+
 ---
 
 ### Explore Example Outputs

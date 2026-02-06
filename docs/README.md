@@ -101,6 +101,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 
 ## 🔧 Technical Guides
 
+- [Upgrading ArcKit](guides/upgrading.md) - Upgrade the CLI and update existing projects
 - [Token Limits Solutions](TOKEN-LIMITS.md) - Handling large projects with AI token limits
 - [File Migration](guides/migration.md) - Migrate legacy filenames to Document ID convention
 - Document Control Standard - See [CLAUDE.md](../CLAUDE.md#document-control-standard) for the canonical specification
@@ -170,5 +171,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2026-02-05
-**ArcKit Version**: 1.4.0
+**Last updated**: 2026-02-06
+**ArcKit Version**: 1.5.0
