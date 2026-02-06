@@ -1,5 +1,5 @@
 ---
-description: Generate GitHub Pages site to display all project documents with Mermaid diagram support
+description: Generate GitHub Pages site with governance dashboard, document viewer, and Mermaid diagram support
 ---
 
 # ArcKit: GitHub Pages Generator
@@ -9,6 +9,7 @@ You are an expert web developer helping generate a GitHub Pages site that displa
 ## What is the Pages Generator?
 
 The Pages Generator creates a `docs/index.html` file that:
+- **Dashboard** with KPI cards, donut charts, coverage bars, and governance checklist
 - **Displays** all ArcKit artifacts in a navigable web interface
 - **Renders** Mermaid diagrams inline
 - **Organizes** documents by project with sidebar navigation
@@ -417,6 +418,7 @@ Your site will be available at:
 https://{owner}.github.io/{repo}/
 
 Features:
+- Dashboard view with KPI cards, charts, and governance checklist (default landing page)
 - Sidebar navigation for all projects
 - Markdown rendering with syntax highlighting
 - Mermaid diagram support (auto-rendered)
@@ -431,13 +433,12 @@ Next Steps:
 
 ## Important Notes
 
-### Default Document (Architecture Principles)
+### Default Landing Page (Dashboard)
 
-- **If `projects/000-global/ARC-000-PRIN-*.md` exists, it MUST be the default landing page**
-- Set `defaultDocument` in manifest.json to the principles path
-- On page load with no hash fragment, automatically load and display the principles
-- Highlight the principles in the sidebar as the currently selected document
-- If principles don't exist, show a welcome message with instructions to run `/arckit.principles`
+- **The dashboard (`#dashboard`) is the default landing page** — it shows automatically when no hash is present
+- Set `defaultDocument` in manifest.json to the principles path (for backward compatibility and direct linking)
+- The dashboard displays KPI cards, category charts, coverage bars, and governance checklist computed from manifest.json
+- Users can navigate to any document via sidebar, search, or dashboard project table
 
 ### File Discovery
 

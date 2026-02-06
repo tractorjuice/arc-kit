@@ -432,6 +432,254 @@
             font-size: 0.7rem;
         }
 
+        /* Dashboard Styles */
+        .app-dashboard-kpis {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-dashboard-kpi {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            padding: 1.25rem;
+        }
+
+        .app-dashboard-kpi-value {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #0b0c0c;
+            line-height: 1.1;
+        }
+
+        .app-dashboard-kpi-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        .app-dashboard-kpi-bar {
+            height: 4px;
+            background: var(--background-light);
+            margin-top: 0.75rem;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .app-dashboard-kpi-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.6s ease;
+        }
+
+        .app-dashboard-panels {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-dashboard-panel {
+            background: #fff;
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+        }
+
+        .app-dashboard-panel h3 {
+            margin: 0 0 1rem 0;
+            font-size: 1rem;
+            color: #0b0c0c;
+        }
+
+        .app-dashboard-chart-container {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .app-dashboard-chart-container svg {
+            flex-shrink: 0;
+        }
+
+        .app-dashboard-legend {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.8125rem;
+        }
+
+        .app-dashboard-legend li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.2rem 0;
+        }
+
+        .app-dashboard-legend-swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .app-dashboard-legend-count {
+            color: var(--text-muted);
+            margin-left: auto;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .app-dashboard-bar-row {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.8125rem;
+        }
+
+        .app-dashboard-bar-label {
+            width: 120px;
+            flex-shrink: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .app-dashboard-bar-track {
+            flex: 1;
+            height: 18px;
+            background: var(--background-light);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .app-dashboard-bar-fill {
+            height: 100%;
+            border-radius: 2px;
+            transition: width 0.6s ease;
+            min-width: 2px;
+        }
+
+        .app-dashboard-bar-value {
+            width: 40px;
+            text-align: right;
+            flex-shrink: 0;
+            font-variant-numeric: tabular-nums;
+            color: var(--text-muted);
+        }
+
+        .app-dashboard-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .app-dashboard-table th,
+        .app-dashboard-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.625rem 0.75rem;
+            text-align: left;
+        }
+
+        .app-dashboard-table th {
+            background: var(--background-light);
+            font-weight: 700;
+            font-size: 0.8125rem;
+        }
+
+        .app-dashboard-table tr:hover {
+            background: #fafafa;
+        }
+
+        .app-dashboard-coverage-bar {
+            display: inline-block;
+            width: 60px;
+            height: 10px;
+            background: var(--background-light);
+            border-radius: 2px;
+            overflow: hidden;
+            vertical-align: middle;
+            margin-right: 0.5rem;
+        }
+
+        .app-dashboard-coverage-fill {
+            height: 100%;
+            border-radius: 2px;
+        }
+
+        .app-dashboard-checklist {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        .app-dashboard-checklist li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.375rem 0.5rem;
+            background: var(--background-light);
+            border-radius: 2px;
+        }
+
+        .app-dashboard-check {
+            color: #00703c;
+            font-weight: 700;
+        }
+
+        .app-dashboard-cross {
+            color: #d4351c;
+            font-weight: 700;
+        }
+
+        .app-header__dashboard-link {
+            color: white !important;
+            background: #00703c;
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+        }
+
+        .app-header__dashboard-link:hover {
+            background: #005a30;
+        }
+
+        @media (max-width: 900px) {
+            .app-dashboard-kpis {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .app-dashboard-panels {
+                grid-template-columns: 1fr;
+            }
+
+            .app-dashboard-checklist {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .app-dashboard-kpis {
+                grid-template-columns: 1fr;
+            }
+
+            .app-dashboard-kpi-value {
+                font-size: 1.75rem;
+            }
+
+            .app-dashboard-chart-container {
+                flex-direction: column;
+            }
+
+            .app-dashboard-bar-label {
+                width: 80px;
+            }
+        }
+
         /* Markdown Content Styles */
         .app-markdown h1 { font-size: 2rem; margin-top: 0; }
         .app-markdown h2 { font-size: 1.5rem; margin-top: 2.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 0.5rem; scroll-margin-top: 1rem; }
@@ -828,9 +1076,10 @@
         <div class="app-header__container">
             <div class="app-header__left">
                 <button class="app-mobile-menu" id="mobile-menu" aria-label="Open navigation menu">&#9776;</button>
-                <a href="#" class="app-header__link" id="header-title">Project Documentation</a>
+                <a href="#dashboard" class="app-header__link" id="header-title">Project Documentation</a>
             </div>
             <nav class="app-header__nav" aria-label="Site navigation">
+                <a href="#dashboard" id="dashboard-link" class="app-header__dashboard-link">Dashboard</a>
                 <a href="#guides" id="guides-link" class="app-header__guides-link">Guides</a>
                 <a href="https://github.com/{{OWNER}}/{{REPO}}" target="_blank" rel="noopener">GitHub</a>
                 <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
@@ -1241,6 +1490,357 @@
         }
 
         // ============================================
+        // Dashboard
+        // ============================================
+        const CORE_ARTIFACTS = ['REQ', 'STKE', 'RISK', 'SOBC', 'PLAN', 'DATA'];
+
+        const TYPE_CATEGORIES = {
+            REQ: 'Discovery', STKE: 'Discovery', RSCH: 'Discovery', DSCT: 'Discovery',
+            SOBC: 'Planning', PLAN: 'Planning', ROAD: 'Planning', STRAT: 'Planning', BKLG: 'Planning',
+            PRIN: 'Architecture', HLDR: 'Architecture', DLDR: 'Architecture', DATA: 'Architecture',
+            WARD: 'Architecture', DIAG: 'Architecture', ADR: 'Architecture', PLAT: 'Architecture',
+            RISK: 'Governance', TRAC: 'Governance', 'PRIN-COMP': 'Governance', ANAL: 'Governance',
+            TCOP: 'Compliance', SECD: 'Compliance', 'SECD-MOD': 'Compliance', AIPB: 'Compliance',
+            ATRS: 'Compliance', DPIA: 'Compliance', JSP936: 'Compliance', SVCASS: 'Compliance',
+            SNOW: 'Operations', DEVOPS: 'Operations', MLOPS: 'Operations', FINOPS: 'Operations', OPS: 'Operations',
+            SOW: 'Procurement', EVAL: 'Procurement', DOS: 'Procurement', GCLD: 'Procurement',
+            GCLC: 'Procurement', DMC: 'Procurement',
+            AWRS: 'Research', AZRS: 'Research',
+            STORY: 'Other'
+        };
+
+        const CATEGORY_COLORS = {
+            Discovery: '#1d70b8',
+            Planning: '#00703c',
+            Architecture: '#f47738',
+            Governance: '#912b88',
+            Compliance: '#5694ca',
+            Operations: '#28a197',
+            Procurement: '#d53880',
+            Research: '#4c6272',
+            Other: '#b1b4b6'
+        };
+
+        function extractTypeCode(path) {
+            const filename = path.split('/').pop();
+            const match = filename.match(/^ARC-\d{3}-([A-Z][A-Z0-9-]+?)-(?:\d{3}-)?v\d/);
+            return match ? match[1] : null;
+        }
+
+        function computeDashboardMetrics(manifest) {
+            const realProjects = (manifest.projects || []).filter(p => /^\d{3}-/.test(p.id));
+            let totalDocs = 0;
+            let totalADRs = 0;
+            const categoryCounts = {};
+            const projectMetrics = [];
+
+            realProjects.forEach(project => {
+                const docs = project.documents || [];
+                const diagrams = project.diagrams || [];
+                const decisions = project.decisions || [];
+                const vendors = project.vendors || [];
+                const wardleyMaps = project.wardleyMaps || [];
+                const dataContracts = project.dataContracts || [];
+                const reviews = project.reviews || [];
+                const allDocs = [...docs, ...diagrams, ...decisions, ...wardleyMaps, ...dataContracts, ...reviews];
+                vendors.forEach(v => { if (v.documents) allDocs.push(...v.documents); });
+
+                const projectDocCount = allDocs.length;
+                totalDocs += projectDocCount;
+                totalADRs += decisions.length;
+
+                // Category counts
+                allDocs.forEach(doc => {
+                    const typeCode = extractTypeCode(doc.path || '');
+                    const category = typeCode ? (TYPE_CATEGORIES[typeCode] || 'Other') : 'Other';
+                    categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+                });
+
+                // Per-project coverage
+                const presentTypes = new Set();
+                allDocs.forEach(doc => {
+                    const tc = extractTypeCode(doc.path || '');
+                    if (tc) presentTypes.add(tc);
+                });
+                const corePresent = CORE_ARTIFACTS.filter(t => presentTypes.has(t)).length;
+                const coverage = CORE_ARTIFACTS.length > 0 ? Math.round((corePresent / CORE_ARTIFACTS.length) * 100) : 0;
+
+                projectMetrics.push({
+                    name: project.name || project.id,
+                    id: project.id,
+                    docs: projectDocCount,
+                    diagrams: diagrams.length,
+                    adrs: decisions.length,
+                    vendors: vendors.length,
+                    coverage
+                });
+            });
+
+            // Add global docs
+            const globalDocs = manifest.global || [];
+            totalDocs += globalDocs.length;
+            globalDocs.forEach(doc => {
+                const typeCode = extractTypeCode(doc.path || '');
+                const category = typeCode ? (TYPE_CATEGORIES[typeCode] || 'Other') : 'Other';
+                categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+            });
+
+            // Average coverage
+            const avgCoverage = projectMetrics.length > 0
+                ? Math.round(projectMetrics.reduce((sum, p) => sum + p.coverage, 0) / projectMetrics.length)
+                : 0;
+
+            // Guide maturity
+            const guideCounts = { live: 0, beta: 0, alpha: 0, experimental: 0 };
+            (manifest.guides || []).forEach(g => {
+                if (g.status && guideCounts.hasOwnProperty(g.status)) {
+                    guideCounts[g.status]++;
+                }
+            });
+
+            // Governance coverage (portfolio-wide)
+            const GOVERNANCE_TYPES = {
+                'Requirements (REQ)': 'REQ',
+                'Stakeholders (STKE)': 'STKE',
+                'Risk Register (RISK)': 'RISK',
+                'Business Case (SOBC)': 'SOBC',
+                'Project Plan (PLAN)': 'PLAN',
+                'Data Model (DATA)': 'DATA',
+                'Traceability (TRAC)': 'TRAC',
+                'Architecture Decisions (ADR)': 'ADR',
+                'Secure by Design (SECD)': 'SECD',
+                'TCoP Assessment (TCOP)': 'TCOP',
+                'DPIA (DPIA)': 'DPIA',
+                'Principles Compliance': 'PRIN-COMP'
+            };
+            const allProjectTypes = new Set();
+            realProjects.forEach(project => {
+                const allDocs = [...(project.documents || []), ...(project.diagrams || []),
+                    ...(project.decisions || []), ...(project.wardleyMaps || []),
+                    ...(project.dataContracts || []), ...(project.reviews || [])];
+                allDocs.forEach(doc => {
+                    const tc = extractTypeCode(doc.path || '');
+                    if (tc) allProjectTypes.add(tc);
+                });
+            });
+            const governanceCoverage = {};
+            Object.entries(GOVERNANCE_TYPES).forEach(([label, code]) => {
+                governanceCoverage[label] = allProjectTypes.has(code);
+            });
+
+            return {
+                totalProjects: realProjects.length,
+                totalDocs,
+                totalADRs,
+                avgCoverage,
+                categoryCounts,
+                projectMetrics,
+                guideCounts,
+                governanceCoverage
+            };
+        }
+
+        function renderDonutChart(containerId, data) {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+
+            const total = data.reduce((sum, d) => sum + d.value, 0);
+            if (total === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted);font-size:0.875rem;">No data</p>';
+                return;
+            }
+
+            const size = 140;
+            const radius = 56;
+            const holeRadius = 36;
+            const cx = size / 2;
+            const cy = size / 2;
+            let currentAngle = -Math.PI / 2;
+
+            let paths = '';
+            data.filter(d => d.value > 0).forEach(d => {
+                const sliceAngle = (d.value / total) * 2 * Math.PI;
+                const endAngle = currentAngle + sliceAngle;
+                const largeArc = sliceAngle > Math.PI ? 1 : 0;
+
+                // Handle full circle (single segment)
+                if (Math.abs(sliceAngle - 2 * Math.PI) < 0.001) {
+                    paths += `<circle cx="${cx}" cy="${cy}" r="${radius}" fill="none" stroke="${d.color}" stroke-width="${radius - holeRadius}"/>`;
+                } else {
+                    const x1 = cx + radius * Math.cos(currentAngle);
+                    const y1 = cy + radius * Math.sin(currentAngle);
+                    const x2 = cx + radius * Math.cos(endAngle);
+                    const y2 = cy + radius * Math.sin(endAngle);
+                    const ix1 = cx + holeRadius * Math.cos(endAngle);
+                    const iy1 = cy + holeRadius * Math.sin(endAngle);
+                    const ix2 = cx + holeRadius * Math.cos(currentAngle);
+                    const iy2 = cy + holeRadius * Math.sin(currentAngle);
+
+                    paths += `<path d="M${x1},${y1} A${radius},${radius} 0 ${largeArc} 1 ${x2},${y2} L${ix1},${iy1} A${holeRadius},${holeRadius} 0 ${largeArc} 0 ${ix2},${iy2} Z" fill="${d.color}"/>`;
+                }
+                currentAngle = endAngle;
+            });
+
+            const svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+                ${paths}
+                <text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="700" fill="#0b0c0c">${total}</text>
+            </svg>`;
+
+            const legendHtml = data.filter(d => d.value > 0).map(d =>
+                `<li><span class="app-dashboard-legend-swatch" style="background:${d.color}"></span>${d.label}<span class="app-dashboard-legend-count">${d.value}</span></li>`
+            ).join('');
+
+            container.innerHTML = `
+                <div class="app-dashboard-chart-container">
+                    ${svg}
+                    <ul class="app-dashboard-legend">${legendHtml}</ul>
+                </div>
+            `;
+        }
+
+        function showDashboard() {
+            const content = document.getElementById('content');
+            const toc = document.getElementById('toc');
+            toc.style.display = 'none';
+
+            if (!manifest) {
+                content.innerHTML = '<div class="app-loading"><div class="app-spinner"></div>Loading...</div>';
+                return;
+            }
+
+            const m = computeDashboardMetrics(manifest);
+
+            function coverageColor(pct) {
+                if (pct >= 80) return '#00703c';
+                if (pct >= 50) return '#f47738';
+                return '#d4351c';
+            }
+
+            // KPI cards
+            let html = `
+                <div class="app-doc-header">
+                    <div class="app-doc-breadcrumb">Portfolio Overview</div>
+                    <h1 class="app-doc-title">Architecture Governance Dashboard</h1>
+                </div>
+                <div class="app-dashboard-kpis">
+                    <div class="app-dashboard-kpi">
+                        <div class="app-dashboard-kpi-value">${m.totalProjects}</div>
+                        <div class="app-dashboard-kpi-label">Total Projects</div>
+                    </div>
+                    <div class="app-dashboard-kpi">
+                        <div class="app-dashboard-kpi-value">${m.totalDocs}</div>
+                        <div class="app-dashboard-kpi-label">Total Documents</div>
+                    </div>
+                    <div class="app-dashboard-kpi">
+                        <div class="app-dashboard-kpi-value">${m.totalADRs}</div>
+                        <div class="app-dashboard-kpi-label">Architecture Decisions</div>
+                    </div>
+                    <div class="app-dashboard-kpi">
+                        <div class="app-dashboard-kpi-value">${m.avgCoverage}%</div>
+                        <div class="app-dashboard-kpi-label">Avg Artifact Coverage</div>
+                        <div class="app-dashboard-kpi-bar">
+                            <div class="app-dashboard-kpi-bar-fill" style="width:${m.avgCoverage}%;background:${coverageColor(m.avgCoverage)}"></div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Row 2: Donut chart + Coverage bars
+            let coverageBars = '';
+            m.projectMetrics.forEach(p => {
+                coverageBars += `
+                    <div class="app-dashboard-bar-row">
+                        <div class="app-dashboard-bar-label" title="${p.name}">${p.name}</div>
+                        <div class="app-dashboard-bar-track">
+                            <div class="app-dashboard-bar-fill" style="width:${p.coverage}%;background:${coverageColor(p.coverage)}"></div>
+                        </div>
+                        <div class="app-dashboard-bar-value">${p.coverage}%</div>
+                    </div>
+                `;
+            });
+            if (m.projectMetrics.length === 0) {
+                coverageBars = '<p style="color:var(--text-muted);font-size:0.875rem;">No projects found</p>';
+            }
+
+            html += `
+                <div class="app-dashboard-panels">
+                    <div class="app-dashboard-panel">
+                        <h3>Documents by Category</h3>
+                        <div id="dashboard-category-chart"></div>
+                    </div>
+                    <div class="app-dashboard-panel">
+                        <h3>Project Artifact Coverage</h3>
+                        ${coverageBars}
+                    </div>
+                </div>
+            `;
+
+            // Row 3: Projects table
+            if (m.projectMetrics.length > 0) {
+                let tableRows = '';
+                m.projectMetrics.forEach(p => {
+                    tableRows += `<tr>
+                        <td>${escapeHtml(p.name)}</td>
+                        <td>${p.docs}</td>
+                        <td>${p.diagrams}</td>
+                        <td>${p.adrs}</td>
+                        <td>${p.vendors}</td>
+                        <td><span class="app-dashboard-coverage-bar"><span class="app-dashboard-coverage-fill" style="width:${p.coverage}%;background:${coverageColor(p.coverage)}"></span></span>${p.coverage}%</td>
+                    </tr>`;
+                });
+                html += `
+                    <div class="app-dashboard-panel" style="margin-bottom:1.5rem;">
+                        <h3>Projects</h3>
+                        <table class="app-dashboard-table">
+                            <thead><tr><th>Project</th><th>Docs</th><th>Diagrams</th><th>ADRs</th><th>Vendors</th><th>Coverage</th></tr></thead>
+                            <tbody>${tableRows}</tbody>
+                        </table>
+                    </div>
+                `;
+            }
+
+            // Row 4: Guide maturity + Governance checklist
+            let checklistHtml = '';
+            Object.entries(m.governanceCoverage).forEach(([label, present]) => {
+                const icon = present
+                    ? '<span class="app-dashboard-check">&#10003;</span>'
+                    : '<span class="app-dashboard-cross">&#10007;</span>';
+                checklistHtml += `<li>${icon} ${escapeHtml(label)}</li>`;
+            });
+
+            html += `
+                <div class="app-dashboard-panels">
+                    <div class="app-dashboard-panel">
+                        <h3>Guide Maturity</h3>
+                        <div id="dashboard-guide-chart"></div>
+                    </div>
+                    <div class="app-dashboard-panel">
+                        <h3>Governance Coverage</h3>
+                        <ul class="app-dashboard-checklist">${checklistHtml}</ul>
+                    </div>
+                </div>
+            `;
+
+            content.innerHTML = html;
+
+            // Render donut charts after DOM is populated
+            const categoryData = Object.entries(CATEGORY_COLORS)
+                .map(([label, color]) => ({ label, value: m.categoryCounts[label] || 0, color }));
+            renderDonutChart('dashboard-category-chart', categoryData);
+
+            const guideColors = { live: '#00703c', beta: '#1d70b8', alpha: '#f47738', experimental: '#912b88' };
+            const guideData = Object.entries(guideColors)
+                .map(([label, color]) => ({ label: label.charAt(0).toUpperCase() + label.slice(1), value: m.guideCounts[label] || 0, color }));
+            renderDonutChart('dashboard-guide-chart', guideData);
+
+            // Clear active states in sidebar
+            document.querySelectorAll('#nav-container a').forEach(a => a.classList.remove('active'));
+
+            // Scroll to top
+            document.getElementById('main-content').scrollTo(0, 0);
+        }
+
+        // ============================================
         // Table of Contents
         // ============================================
         function buildTableOfContents(container) {
@@ -1626,6 +2226,20 @@
                 // Setup keyboard shortcuts
                 setupKeyboardShortcuts();
 
+                // Setup dashboard link
+                document.getElementById('dashboard-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.hash = 'dashboard';
+                    closeMobileSidebar();
+                });
+
+                // Setup header title link (back to dashboard)
+                document.getElementById('header-title').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.hash = 'dashboard';
+                    closeMobileSidebar();
+                });
+
                 // Setup guides link
                 document.getElementById('guides-link').addEventListener('click', (e) => {
                     e.preventDefault();
@@ -1633,10 +2247,12 @@
                     closeMobileSidebar();
                 });
 
-                // Handle initial hash or load default document
+                // Handle initial hash or load dashboard
                 if (window.location.hash) {
                     const path = window.location.hash.slice(1);
-                    if (path === 'guides') {
+                    if (path === 'dashboard') {
+                        showDashboard();
+                    } else if (path === 'guides') {
                         showGuidesIndex();
                     } else {
                         loadDocument(path);
@@ -1645,15 +2261,10 @@
                         const link = document.querySelector(`a[data-path="${path}"]`);
                         if (link) link.classList.add('active');
                     }
-                } else if (manifest.defaultDocument) {
-                    // Load default document (e.g., Architecture Principles)
-                    const path = manifest.defaultDocument;
-                    window.location.hash = path;
-                    loadDocument(path);
-
-                    // Mark as active
-                    const link = document.querySelector(`a[data-path="${path}"]`);
-                    if (link) link.classList.add('active');
+                } else {
+                    // Dashboard is the default landing page
+                    window.location.hash = 'dashboard';
+                    showDashboard();
                 }
 
             } catch (error) {
@@ -1690,7 +2301,9 @@
         // Hash change handler
         window.addEventListener('hashchange', () => {
             const path = window.location.hash.slice(1);
-            if (path === 'guides') {
+            if (path === 'dashboard') {
+                showDashboard();
+            } else if (path === 'guides') {
                 showGuidesIndex();
             } else if (path) {
                 loadDocument(path);

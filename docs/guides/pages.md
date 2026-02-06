@@ -30,6 +30,7 @@ Output:
 
 | Feature | Description |
 |---------|-------------|
+| Dashboard | Governance overview with KPI cards, charts, and coverage metrics (default landing page) |
 | Sidebar Navigation | Collapsible tree of all projects and documents |
 | Markdown Rendering | Full GitHub-flavored markdown support |
 | Mermaid Diagrams | Auto-rendered diagram visualizations |
@@ -142,15 +143,51 @@ All libraries loaded from CDN for easy updates.
 
 ---
 
+## Dashboard
+
+The dashboard (`#dashboard`) is the default landing page, providing an instant portfolio overview computed entirely from `manifest.json` with zero backend.
+
+### KPI Cards (Top Row)
+
+| Card | Metric |
+|------|--------|
+| Total Projects | Count of numbered projects (`001-*`, `002-*`, etc.) |
+| Total Documents | Sum of all documents across projects and global |
+| Architecture Decisions | Total ADRs across all projects |
+| Avg Artifact Coverage | Percentage of 6 core types (REQ, STKE, RISK, SOBC, PLAN, DATA) present per project, averaged |
+
+### Charts and Panels
+
+| Panel | Description |
+|-------|-------------|
+| Documents by Category | SVG donut chart showing document distribution across Discovery, Planning, Architecture, etc. |
+| Project Artifact Coverage | Horizontal bar chart per project with color coding (green >=80%, amber >=50%, red <50%) |
+| Projects Table | Name, Docs, Diagrams, ADRs, Vendors, Coverage mini-bar |
+| Guide Maturity | SVG donut chart showing live/beta/alpha/experimental guide counts |
+| Governance Coverage | Checklist of key artifact types present/absent across portfolio |
+
+### Coverage Calculation
+
+Coverage measures how many of the 6 core artifact types each project has:
+- REQ (Requirements), STKE (Stakeholders), RISK (Risk Register)
+- SOBC (Business Case), PLAN (Project Plan), DATA (Data Model)
+
+A project with 4 of 6 types = 67% coverage.
+
+---
+
 ## URL Routing
 
 Documents use hash-based routing:
 
 ```
-https://org.github.io/repo/#projects/001-name/ARC-001-REQ-v1.0.md
+https://org.github.io/repo/#dashboard                              (dashboard)
+https://org.github.io/repo/#guides                                 (guides index)
+https://org.github.io/repo/#projects/001-name/ARC-001-REQ-v1.0.md (document)
 ```
 
 Benefits:
+- Dashboard is the default view (bare URL with no hash)
 - Shareable links to specific documents
 - Browser back/forward navigation works
 - No server-side configuration needed
