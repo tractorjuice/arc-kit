@@ -1,12 +1,14 @@
 {
-  "SessionStart": [
-    {
-      "hooks": [
-        {
-          "type": "prompt",
-          "prompt": "Check MCP server availability for ArcKit commands:\n\n1. **AWS Knowledge MCP** (required for `/arckit.aws-research`):\n   - Check if `aws-knowledge` server is configured in MCP settings\n   - This should be auto-configured by the plugin's `.mcp.json`\n\n2. **Microsoft Learn MCP** (required for `/arckit.azure-research`):\n   - Check if `microsoft-learn` or `microsoft-docs` server is configured\n   - If missing, note that Azure research features will be limited\n\nIf any required MCP servers are missing, briefly inform the user:\n- Which servers are missing\n- Which commands will be affected\n- How to install (for Microsoft Learn: `claude mcp add microsoft-docs`)\n\nIf all servers are configured, do NOT output anything - stay silent.\n\nIMPORTANT: Only output a message if something is missing. Keep any warnings concise (2-3 lines max)."
-        }
-      ]
-    }
-  ]
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "prompt",
+            "prompt": "Check MCP server availability for ArcKit commands:\n\n1. **AWS Knowledge MCP** (required for `/arckit.aws-research`):\n   - Check if `aws-knowledge` server is configured in MCP settings\n   - This should be auto-configured by the plugin's `.mcp.json`\n\n2. **Microsoft Learn MCP** (required for `/arckit.azure-research`):\n   - Check if `microsoft-learn` or `microsoft-docs` server is configured\n   - If missing, note that Azure research features will be limited\n\nIf any required MCP servers are missing, briefly inform the user:\n- Which servers are missing\n- Which commands will be affected\n- How to install (for Microsoft Learn: `claude mcp add microsoft-docs`)\n\nIf all servers are configured, do NOT output anything - stay silent.\n\nIMPORTANT: Only output a message if something is missing. Keep any warnings concise (2-3 lines max)."
+          }
+        ]
+      }
+    ]
+  }
 }
