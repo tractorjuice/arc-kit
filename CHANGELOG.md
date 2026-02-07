@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [2.0.0] - 2026-02-07
+
 ### Added
 
 - **New Command: `/arckit.customize`**: Copy templates for customization (46th ArcKit command)
@@ -48,6 +52,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Claude Code Plugin Migration**: Claude Code distribution migrated from CLI to standalone plugin (`arckit-plugin/`). Claude Code users should install via `/plugin marketplace add tractorjuice/arc-kit` instead of `arckit init --ai claude`
+- **CLI `--ai claude` Redirect**: CLI `--ai claude` option now shows redirect message to plugin marketplace installation
+- **Plugin MCP Hook Removed**: Removed redundant SessionStart hook that checked for already-bundled MCP servers (AWS Knowledge + Microsoft Learn)
+- **Test Repo Migration**: All 22 test repos migrated from synced command/agent/template files to plugin marketplace
 - **Codex Prompt Sync**: All 46 Codex prompts regenerated from Claude source of truth
   - 5 previously missing commands added: `aws-research`, `customize`, `datascout`, `strategy`, `trello`
   - All 41 existing prompts updated with latest content (external docs scanning, doc control blocks, doc type codes)
@@ -87,6 +95,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- **Claude CLI Directories**: `.claude/commands/` and `.claude/agents/` directories removed from CLI distribution (now exclusively in `arckit-plugin/`)
+- **`--ai claude` CLI Option**: Removed as a valid init target (redirects to plugin installation instructions)
 - **Orphan Template**: Removed `uk-gov-tcop-template.md` (duplicate of `tcop-review-template.md`)
 - **Orphaned Codex Subdirectory**: Removed 12 files from `.codex/prompts/arckit/` (obsolete naming convention; all prompts now at `.codex/prompts/arckit.*.md`)
 

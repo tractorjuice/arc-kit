@@ -39,7 +39,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v1.5.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.5.0)
+**Latest Release**: [v2.0.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.0.0)
 
 ### Initialize a Project
 
@@ -59,8 +59,9 @@ arckit init payment-modernization --ai gemini --minimal
 # Or initialize in current directory
 arckit init . --ai gemini
 
-# For Claude Code, use the plugin instead:
-#   /plugin marketplace add tractorjuice/arc-kit
+# For Claude Code, install the ArcKit plugin:
+# /plugin marketplace add tractorjuice/arc-kit
+# Then install from the Discover tab
 ```
 
 ### Start Using ArcKit
@@ -621,11 +622,11 @@ Publish all project documentation as an interactive website:
 
 | Agent | Support | Notes |
 |-------|---------|-------|
-| [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended. Slash commands + autonomous agents for research-heavy tasks |
-| [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | |
+| [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended. Install via **plugin** (`/plugin marketplace add tractorjuice/arc-kit`) |
+| [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | Install via **CLI** (`arckit init --ai codex`). ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **CLI** (`arckit init --ai gemini`) |
 
-Claude Code uses **agents** for commands that perform extensive web research (technology research, data source discovery, AWS/Azure cloud research). These agents run autonomously in isolated context windows via the Task tool, keeping the main conversation clean. Agents are bundled with the Claude Code plugin. Codex CLI and Gemini CLI use equivalent inline prompts since they don't support the agent architecture.
+Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Codex CLI and Gemini CLI use the CLI package which copies commands and templates into the project directory.
 
 ### Why Commands, Not Skills
 
@@ -1044,10 +1045,13 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 
 ### Common Issues
 
-**Command not found**: Ensure Claude Code is installed and commands are loaded
+**Command not found**: Ensure commands are available
 ```bash
-# Check if commands directory exists (Gemini or Codex)
+# For Gemini or Codex, check if commands directory exists
 ls .gemini/commands/ || ls .codex/prompts/
+
+# For Claude Code, install the ArcKit plugin:
+# /plugin marketplace add tractorjuice/arc-kit
 ```
 
 **Template not found**: Ensure you've run `/arckit.principles` first
@@ -1068,7 +1072,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v1.5.0](https://github.com/tractorjuice/arc-kit/releases/tag/v1.5.0)
+- **Latest Version**: [v2.0.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.0.0)
 
 ---
 

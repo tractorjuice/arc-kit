@@ -46,7 +46,7 @@ Documentation contributions are highly valued:
 
 To add a new ArcKit command:
 
-1. **Create the command file** in `.claude/prompts/`:
+1. **Create the command file** in `arckit-plugin/commands/`:
    ```markdown
    ---
    description: Brief description of what the command does
@@ -68,11 +68,9 @@ To add a new ArcKit command:
    - Include real-world examples
 
 4. **Multi-AI support**:
-   - Add `.codex/prompts/` version (same content)
-   - Convert to `.gemini/prompts/` TOML using `scripts/converter.py`
+   - Run `python scripts/converter.py` to generate Gemini TOML and Codex Markdown from the plugin command
 
 5. **Update documentation**:
-   - Add to `.claude/COMMANDS.md`
    - Update `CHANGELOG.md`
    - Add to `README.md` if major feature
 
@@ -185,8 +183,12 @@ Before submitting:
 
 1. **Test command execution**:
    ```bash
-   claude
+   # Claude Code (requires ArcKit plugin: /plugin marketplace add tractorjuice/arc-kit)
    /arckit.your-command Test description
+
+   # Gemini CLI
+   gemini
+   /arckit:your-command Test description
    ```
 
 2. **Verify output quality**:

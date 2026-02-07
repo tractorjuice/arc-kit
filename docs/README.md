@@ -7,7 +7,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ## 📚 Quick Links
 
 - [Getting Started](../README.md#getting-started)
-- [Command Reference](../.claude/COMMANDS.md)
+- [Command Reference](../README.md#commands)
 - [Token Limits Guide](TOKEN-LIMITS.md)
 
 ---
@@ -172,4 +172,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2026-02-06
-**ArcKit Version**: 1.5.0
+**ArcKit Version**: 2.0.0
