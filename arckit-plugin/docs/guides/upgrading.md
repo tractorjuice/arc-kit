@@ -27,24 +27,25 @@ Navigate to your existing ArcKit project directory and re-run init with `--here`
 cd /path/to/your-existing-project
 
 # Re-initialize in place (updates commands, templates, scripts)
-arckit init --here --ai claude
+arckit init --here --ai gemini
 ```
 
 ### What Gets Updated
 
 | Updated | Preserved |
 |---------|-----------|
-| Slash commands (`.claude/commands/`) | Project data (`projects/`) |
-| Agents (`.claude/agents/`) | Custom templates (`.arckit/templates-custom/`) |
-| Default templates (`.arckit/templates/`) | |
+| Slash commands (`.gemini/commands/` or `.codex/prompts/`) | Project data (`projects/`) |
+| Default templates (`.arckit/templates/`) | Custom templates (`.arckit/templates-custom/`) |
 | Helper scripts (`.arckit/scripts/`) | |
 | Documentation and guides (`docs/`) | |
 | `VERSION`, `CHANGELOG.md` | |
 
+> **Note:** For Claude Code users, commands and agents are provided by the ArcKit plugin and update automatically via the marketplace. No `arckit init` needed.
+
 > **Note:** `README.md` will be overwritten. If you've customized it, back it up first:
 > ```bash
 > cp README.md README.md.bak
-> arckit init --here --ai claude
+> arckit init --here --ai gemini
 > mv README.md.bak README.md
 > ```
 
@@ -52,10 +53,9 @@ arckit init --here --ai claude
 
 | Flag | Description |
 |------|-------------|
-| `--ai claude` | Update Claude Code commands (default) |
-| `--ai gemini` | Update Gemini CLI commands |
+| `--ai gemini` | Update Gemini CLI commands (default) |
 | `--ai codex` | Update Codex CLI commands |
-| `--all-ai` | Update commands for all AI assistants |
+| `--all-ai` | Update commands for all CLI-supported AI assistants (Gemini + Codex) |
 | `--minimal` | Skip updating docs and guides |
 
 ---
@@ -109,8 +109,8 @@ Use `--here` (or `.`) to update an existing project in place:
 
 ```bash
 # These are equivalent:
-arckit init --here --ai claude
-arckit init . --ai claude
+arckit init --here --ai gemini
+arckit init . --ai gemini
 ```
 
 ### Commands not updating

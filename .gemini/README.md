@@ -300,7 +300,7 @@ your-project/
 | Feature | Claude Code | Codex CLI | Gemini CLI |
 |---------|-------------|-----------|------------|
 | **Command format** | `/arckit.plan` | `/prompts:arckit.plan` | `/arckit:plan` |
-| **Command location** | `.claude/commands/` | `.codex/prompts/` | `.gemini/commands/arckit/` |
+| **Command location** | Plugin (`arckit-plugin/commands/`) | `.codex/prompts/` | `.gemini/commands/arckit/` |
 | **Installation** | Built-in | Python CLI | npm package |
 | **Authentication** | Built-in | ChatGPT account | Google account |
 | **Cost** | Claude subscription | ChatGPT Plus/Pro ($20/mo) | Free with Gemini |

@@ -184,15 +184,14 @@ projects/
 
 The plugin includes configuration for:
 - **AWS Knowledge MCP** - Official AWS documentation for `/arckit:aws-research`
-
-For Azure research, install the Microsoft Learn MCP server separately.
+- **Microsoft Learn MCP** - Official Azure documentation for `/arckit:azure-research`
 
 ## Migration from CLI
 
-If you previously used `arckit init`:
+If you previously used `arckit init --ai claude`:
 
 ```bash
-# Remove duplicated files (optional - plugin takes precedence)
+# Remove CLI-generated files (plugin replaces them)
 rm -rf .claude/commands/arckit.*.md
 rm -rf .claude/agents/arckit-*.md
 rm -rf .arckit/templates/
@@ -201,6 +200,8 @@ rm -rf .arckit/scripts/
 # Keep your project data
 # projects/ directory stays (user data)
 ```
+
+> **Note:** The ArcKit CLI no longer distributes Claude Code commands. Claude Code users should use this plugin instead.
 
 ## For Gemini/Codex Users
 

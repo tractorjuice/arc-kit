@@ -31,9 +31,9 @@ Scan the repository to find all ArcKit artifacts:
 Check `docs/guides/` for command usage guides:
 ```
 docs/guides/
-├── requirements.md      # How to use /arckit.requirements
-├── principles.md        # How to use /arckit.principles
-├── risk.md              # How to use /arckit.risk
+├── requirements.md      # How to use /arckit:requirements
+├── principles.md        # How to use /arckit:principles
+├── risk.md              # How to use /arckit:risk
 └── {other guides}
 ```
 
@@ -338,12 +338,12 @@ Create `docs/manifest.json` with the discovered structure:
 ### 3.1 Read the template (MANDATORY)
 
 **Read the template** (with user override support):
-- **First**, check if `.arckit/templates-custom/pages-template.html` exists (user override)
-- **If found**: Read the user's customized template
-- **If not found**: Read `.arckit/templates/pages-template.html` (default)
+- **First**, check if `.arckit/templates/pages-template.html` exists in the project root
+- **If found**: Read the user's customized template (user override takes precedence)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-> **Tip**: Users can customize templates with `/arckit.customize pages`
+> **Tip**: Users can customize templates with `/arckit:customize pages`
 
 This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.
 
@@ -357,7 +357,7 @@ This template is the single source of truth for the pages site — it contains a
 
 **Do NOT generate HTML from scratch. Do NOT modify the template structure, CSS, or JavaScript. Only replace the `{{...}}` config placeholders.**
 
-**If the template file does not exist, STOP and show an error**: Tell the user to run `arckit init` to install templates, or check that `.arckit/templates/pages-template.html` exists. Do NOT generate fallback HTML.
+**If the template file does not exist, STOP and show an error**: Tell the user to run `arckit init` to install templates, or check that the template exists. Do NOT generate fallback HTML.
 
 ## Step 4: Write Output Files
 
@@ -466,4 +466,4 @@ The generated HTML should handle:
 
 ---
 
-**Remember**: You MUST read and use `.arckit/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
+**Remember**: You MUST read and use `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.

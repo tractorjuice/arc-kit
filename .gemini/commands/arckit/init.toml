@@ -1,0 +1,42 @@
+description = """
+Initialize ArcKit project structure for enterprise architecture governance
+"""
+prompt = """
+# ArcKit Project Initialization
+
+## User Input
+
+```text
+{{args}}
+```
+
+## Instructions
+
+1. **Check if project structure already exists**:
+   - Look for `projects/` directory in the current working directory
+   - If it exists, inform the user and ask if they want to continue
+
+2. **Create the project structure**:
+   ```bash
+   mkdir -p projects/000-global/policies
+   mkdir -p projects/000-global/external
+   ```
+
+3. **Provide next steps**:
+
+```
+ArcKit project structure initialized:
+
+projects/
+├── 000-global/
+│   ├── policies/   (organization-wide policies)
+│   └── external/   (external reference documents)
+
+Next steps:
+1. Run /arckit:principles to create architecture principles
+2. Run /arckit:stakeholders to analyze stakeholders for a project
+3. Run /arckit:requirements to create requirements
+
+Individual projects will be created automatically in numbered directories (001-*, 002-*).
+```
+"""

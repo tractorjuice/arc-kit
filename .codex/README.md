@@ -6,7 +6,7 @@
 
 This directory contains ArcKit slash commands adapted for [OpenAI Codex CLI](https://chatgpt.com/features/codex).
 
-> **Auto-generated**: Codex prompts in `.codex/prompts/` are generated from Claude commands by `python scripts/converter.py`. Do not edit them directly — edit the Claude source in `.claude/commands/` and re-run the converter.
+> **Auto-generated**: Codex prompts in `.codex/prompts/` are generated from plugin commands by `python scripts/converter.py`. Do not edit them directly — edit the source in `arckit-plugin/commands/` and re-run the converter.
 
 ## Prerequisites
 
@@ -358,7 +358,7 @@ codex --auto --network
 | Feature | Claude Code | Codex CLI |
 |---------|-------------|-----------|
 | **Command format** | `/arckit.principles` | `/prompts:arckit.principles` |
-| **Command location** | `.claude/commands/` | `.codex/prompts/` |
+| **Command location** | Plugin (`arckit-plugin/commands/`) | `.codex/prompts/` |
 | **Environment variable** | N/A | `CODEX_HOME` |
 | **Approval modes** | Automatic | `--auto`, `--read-only`, `--network` |
 | **Bash scripts** | ✅ Automatic | ✅ With approval (or `--auto`) |

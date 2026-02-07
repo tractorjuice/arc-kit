@@ -26,7 +26,7 @@ $ARGUMENTS
      Data mesh contracts require architecture principles to be established first.
      Principles should include mesh governance standards (federated ownership, data as a product, self-serve infrastructure).
 
-     Please run: /arckit.principles Create enterprise architecture principles
+     Please run: /arckit:principles Create enterprise architecture principles
 
      Then return here to generate the data mesh contract.
      ```
@@ -40,13 +40,13 @@ $ARGUMENTS
 
      Data mesh contracts are typically derived from existing data models (entities become data products).
 
-     Consider running: /arckit.data-model Create data model for [project name]
+     Consider running: /arckit:data-model Create data model for [project name]
 
      You can proceed without a data model, but you'll need to define schema from scratch.
 
      Continue anyway? (yes/no)
      ```
-   - If user says "no", stop here and tell them to run `/arckit.data-model` first
+   - If user says "no", stop here and tell them to run `/arckit:data-model` first
    - If user says "yes" or if ARC-*-DATA-*.md exists, proceed to Step 1
 
 3. **Stakeholder Analysis** (RECOMMENDED):
@@ -60,7 +60,7 @@ $ARGUMENTS
      - Consumers (who will use this data product)
      - Data stewards and governance stakeholders
 
-     Consider running: /arckit.stakeholders Analyze stakeholders for [project name]
+     Consider running: /arckit:stakeholders Analyze stakeholders for [project name]
 
      You can proceed without stakeholder analysis, but ownership roles will be generic placeholders.
 
@@ -98,7 +98,7 @@ Data product name (kebab-case):
 Use the `create-project.sh` script to find or create the project directory:
 
 ```bash
-bash .arckit/scripts/bash/create-project.sh \
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh \
   --name "$DATA_PRODUCT_NAME" \
   --json
 ```
@@ -114,9 +114,9 @@ bash .arckit/scripts/bash/create-project.sh \
    Location: {project_path}
 
 Note: This is a new project. You may want to run these commands first:
-- /arckit.stakeholders - Identify domain owners and consumers
-- /arckit.data-model - Define entities that become data products
-- /arckit.requirements - Capture DR-xxx data requirements
+- /arckit:stakeholders - Identify domain owners and consumers
+- /arckit:data-model - Define entities that become data products
+- /arckit:requirements - Capture DR-xxx data requirements
 ```
 
 If the project ALREADY EXISTS, just acknowledge it:
@@ -140,7 +140,7 @@ The contract file will use the multi-instance naming pattern:
 
 Where `{NNN}` is the next sequential number for contracts in this project. Use the script with `--next-num` flag:
 ```bash
-bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num
 ```
 
 ### Step 4: Read the Template
@@ -148,12 +148,12 @@ bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filenam
 Read the data mesh contract template:
 
 **Read the template** (with user override support):
-- **First**, check if `.arckit/templates-custom/data-mesh-contract-template.md` exists (user override)
-- **If found**: Read the user's customized template
-- **If not found**: Read `.arckit/templates/data-mesh-contract-template.md` (default)
+- **First**, check if `.arckit/templates/data-mesh-contract-template.md` exists in the project root
+- **If found**: Read the user's customized template (user override takes precedence)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/data-mesh-contract-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-> **Tip**: Users can customize templates with `/arckit.customize data-mesh-contract`
+> **Tip**: Users can customize templates with `/arckit:customize data-mesh-contract`
 
 ### Step 4b: Check for External Documents (optional)
 
@@ -345,10 +345,10 @@ Use the `generate-document-id.sh` script with `--next-num` to get the next seque
 
 ```bash
 # Generate document ID with next sequential number
-bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --next-num
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --next-num
 
 # Generate filename with next sequential number
-bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num
 ```
 
 This will generate IDs like:
@@ -367,7 +367,7 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DMC" "${VERSION}")
+DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DMC" "${VERSION}")
 # Example output: ARC-001-DMC-v1.0
 ```
 
@@ -397,14 +397,14 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DMC" "${V
 **Populate Revision History**:
 
 ```markdown
-| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit.data-mesh-contract` command | [PENDING] | [PENDING] |
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit:data-mesh-contract` command | [PENDING] | [PENDING] |
 ```
 
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
 ```markdown
-**Generated by**: ArcKit `/arckit.data-mesh-contract` command
+**Generated by**: ArcKit `/arckit:data-mesh-contract` command
 **Generated on**: {DATE} {TIME} GMT
 **ArcKit Version**: [Read from VERSION file]
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
@@ -492,9 +492,9 @@ After writing the file, show the user a concise summary (do NOT show the full do
 
 ## Related Commands
 
-- `/arckit.traceability` - Link this contract to requirements and consumers
-- `/arckit.analyze` - Score contract completeness and governance quality
-- `/arckit.dpia` - Generate Data Protection Impact Assessment (if PII present)
+- `/arckit:traceability` - Link this contract to requirements and consumers
+- `/arckit:analyze` - Score contract completeness and governance quality
+- `/arckit:dpia` - Generate Data Protection Impact Assessment (if PII present)
 
 ---
 
@@ -507,13 +507,13 @@ Based on what artifacts exist, recommend next steps:
 
 **If no ARC-*-REQ-*.md**:
 ```
-💡 Tip: Run /arckit.requirements to capture DR-xxx data requirements.
+💡 Tip: Run /arckit:requirements to capture DR-xxx data requirements.
    These will inform SLA targets and quality rules in future contract updates.
 ```
 
 **If no ARC-*-STKE-*.md**:
 ```
-💡 Tip: Run /arckit.stakeholders to identify domain owners and consumers.
+💡 Tip: Run /arckit:stakeholders to identify domain owners and consumers.
    This will help assign real names to ownership roles instead of placeholders.
 ```
 
@@ -523,7 +523,7 @@ Based on what artifacts exist, recommend next steps:
 
 UK GDPR Article 35 may require a Data Protection Impact Assessment (DPIA).
 
-Consider running: /arckit.dpia Generate DPIA for {project_name}
+Consider running: /arckit:dpia Generate DPIA for {project_name}
 ```
 
 **If this is a UK Government project**:
@@ -534,8 +534,8 @@ Consider running: /arckit.dpia Generate DPIA for {project_name}
    - Data Quality Framework: 5 dimensions covered ✅
 
 Consider running:
-   - /arckit.tcop - Technology Code of Practice assessment
-   - /arckit.service-assessment - GDS Service Standard (if digital service)
+   - /arckit:tcop - Technology Code of Practice assessment
+   - /arckit:service-assessment - GDS Service Standard (if digital service)
 ```
 
 ## Important Notes
@@ -581,7 +581,7 @@ Consider running:
 
 **Example 1: Simple contract creation**
 ```
-User: /arckit.data-mesh-contract Create contract for customer payments
+User: /arckit:data-mesh-contract Create contract for customer payments
 Assistant:
   - Checks prerequisites ✅
   - Creates project 001-customer-payments
@@ -592,18 +592,18 @@ Assistant:
 
 **Example 2: Contract without data model**
 ```
-User: /arckit.data-mesh-contract seller-analytics contract
+User: /arckit:data-mesh-contract seller-analytics contract
 Assistant:
   - Checks prerequisites ✅
   - Warns: No data model found
   - User confirms to proceed
   - Generates contract with generic schema placeholders
-  - Recommends running /arckit.data-model first
+  - Recommends running /arckit:data-model first
 ```
 
 **Example 3: Contract with full context**
 ```
-User: /arckit.data-mesh-contract fraud-detection-features
+User: /arckit:data-mesh-contract fraud-detection-features
 Assistant:
   - Checks prerequisites ✅
   - Finds ARC-*-DATA-*.md, ARC-*-REQ-*.md, ARC-*-STKE-*.md
@@ -618,7 +618,7 @@ Assistant:
 ## Error Handling
 
 **If architecture principles don't exist**:
-- Stop and tell user to run `/arckit.principles` first
+- Stop and tell user to run `/arckit:principles` first
 - Do NOT proceed without principles
 
 **If user provides unclear data product name**:
@@ -630,7 +630,7 @@ Assistant:
 - Ask user to check permissions or directory structure
 
 **If template file is missing**:
-- Error: "Template not found: .arckit/templates/data-mesh-contract-template.md"
+- Error: "Template not found: ${CLAUDE_PLUGIN_ROOT}/templates/data-mesh-contract-template.md"
 - Ask user to check ArcKit installation
 
 **If file write fails**:

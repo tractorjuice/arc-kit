@@ -51,7 +51,6 @@ build-backend = "hatchling.build"
 packages = ["src/arckit_cli"]
 
 [tool.hatch.build.targets.wheel.shared-data]
-".claude" = "share/arckit/.claude"
 ".codex" = "share/arckit/.codex"
 "scripts" = "share/arckit/scripts"
 ".gemini" = "share/arckit/.gemini"

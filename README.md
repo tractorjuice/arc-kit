@@ -45,26 +45,29 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 
 ```bash
 # Create a new architecture governance project
-arckit init payment-modernization --ai claude
+arckit init payment-modernization --ai gemini
 
 # Or use OpenAI Codex CLI
 arckit init payment-modernization --ai codex
 
-# Install all AI formats (Claude, Gemini, Codex)
+# Install all AI formats (Gemini + Codex)
 arckit init payment-modernization --all-ai
 
 # Minimal install (skip docs and guides)
-arckit init payment-modernization --ai claude --minimal
+arckit init payment-modernization --ai gemini --minimal
 
 # Or initialize in current directory
-arckit init . --ai claude
+arckit init . --ai gemini
+
+# For Claude Code, use the plugin instead:
+#   /plugin marketplace add tractorjuice/arc-kit
 ```
 
 ### Start Using ArcKit
 
 ```bash
 cd payment-modernization
-claude  # or your chosen AI assistant
+gemini  # or your chosen AI assistant
 
 # Inside your AI assistant, use ArcKit commands:
 /arckit.principles Create principles for a financial services company
@@ -84,7 +87,7 @@ uv tool upgrade arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 
 # Step 2: Update your existing project (re-run init in place)
 cd /path/to/your-existing-project
-arckit init --here --ai claude
+arckit init --here --ai gemini
 ```
 
 This updates commands, templates, scripts, and agents while **preserving** your project data (`projects/`) and custom templates (`.arckit/templates-custom/`).
@@ -622,7 +625,7 @@ Publish all project documentation as an interactive website:
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | |
 
-Claude Code uses **agents** (`.claude/agents/`) for commands that perform extensive web research (technology research, data source discovery, AWS/Azure cloud research). These agents run autonomously in isolated context windows via the Task tool, keeping the main conversation clean. Codex CLI and Gemini CLI use equivalent inline prompts since they don't support the agent architecture.
+Claude Code uses **agents** for commands that perform extensive web research (technology research, data source discovery, AWS/Azure cloud research). These agents run autonomously in isolated context windows via the Task tool, keeping the main conversation clean. Agents are bundled with the Claude Code plugin. Codex CLI and Gemini CLI use equivalent inline prompts since they don't support the agent architecture.
 
 ### Why Commands, Not Skills
 
@@ -694,7 +697,7 @@ payment-modernization/
 │           ├── selected-vendor.md
 │           ├── approved-hld.md
 │           └── dld/
-└── .claude/commands/                      # AI assistant commands
+└── .gemini/commands/                      # AI assistant commands (or .codex/prompts/)
 ```
 
 ---
@@ -1043,8 +1046,8 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 
 **Command not found**: Ensure Claude Code is installed and commands are loaded
 ```bash
-# Check if .claude/commands/ directory exists
-ls .claude/commands/
+# Check if commands directory exists (Gemini or Codex)
+ls .gemini/commands/ || ls .codex/prompts/
 ```
 
 **Template not found**: Ensure you've run `/arckit.principles` first

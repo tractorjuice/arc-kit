@@ -25,15 +25,15 @@ Scan the project directory for existing artifacts and read them to inform this p
 **MANDATORY** (warn if missing):
 - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
   - Extract: Platform governance principles, ecosystem orchestration standards, technology choices
-  - If missing: STOP — platform designs require architecture principles. Run `/arckit.principles` first.
+  - If missing: STOP — platform designs require architecture principles. Run `/arckit:principles` first.
 - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
   - Extract: Platform capabilities from FR/NFR requirements, scalability, availability, security
-  - If missing: warn user to run `/arckit.requirements` first
+  - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
 - `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
   - Extract: Ecosystem entities from stakeholder drivers, user personas, goals
-  - If missing: recommend running `/arckit.stakeholders` for better entity portraits
+  - If missing: recommend running `/arckit:stakeholders` for better entity portraits
 - `ARC-*-WARD-*.md` in `projects/{project-dir}/wardley-maps/` — Wardley maps
   - Extract: Evolution analysis for build vs buy decisions, component positioning
 
@@ -60,7 +60,7 @@ Scan the project directory for existing artifacts and read them to inform this p
 Use the bash script to create or find the project:
 
 ```bash
-bash .arckit/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json
 ```
 
 **Parse the JSON response** to get:
@@ -85,12 +85,12 @@ If `status` is \"exists\":
 Read the platform design template:
 
 **Read the template** (with user override support):
-- **First**, check if `.arckit/templates-custom/platform-design-template.md` exists (user override)
-- **If found**: Read the user's customized template
-- **If not found**: Read `.arckit/templates/platform-design-template.md` (default)
+- **First**, check if `.arckit/templates/platform-design-template.md` exists in the project root
+- **If found**: Read the user's customized template (user override takes precedence)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/platform-design-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-> **Tip**: Users can customize templates with `/arckit.customize platform-design`
+> **Tip**: Users can customize templates with `/arckit:customize platform-design`
 
 This template contains the structure for all 8 PDT canvases.
 
@@ -228,7 +228,7 @@ Before generating the document ID, check if a previous version exists:
 Use the bash script to generate document ID:
 
 ```bash
-bash .arckit/scripts/bash/generate-document-id.sh \"$PROJECT_ID\" \"PLAT\" \"${VERSION}\"
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh \"$PROJECT_ID\" \"PLAT\" \"${VERSION}\"
 ```
 
 This returns a document ID like: `ARC-001-PLAT-v1.0`
@@ -516,15 +516,15 @@ After writing the file, provide a **concise summary** (NOT the full document):
 ## Related Commands
 
 **Prerequisites** (should run before platform design):
-- `/arckit.principles` - Architecture principles
-- `/arckit.stakeholders` - Stakeholder analysis (highly recommended)
-- `/arckit.requirements` - Platform requirements (recommended)
-- `/arckit.wardley` - Value chain analysis (recommended)
+- `/arckit:principles` - Architecture principles
+- `/arckit:stakeholders` - Stakeholder analysis (highly recommended)
+- `/arckit:requirements` - Platform requirements (recommended)
+- `/arckit:wardley` - Value chain analysis (recommended)
 
 **Next Steps** (run after platform design):
-- `/arckit.sow` - RFP for platform development vendors
-- `/arckit.hld-review` - Review high-level platform architecture
-- `/arckit.backlog` - Generate sprint backlog from platform features
+- `/arckit:sow` - RFP for platform development vendors
+- `/arckit:hld-review` - Review high-level platform architecture
+- `/arckit:backlog` - Generate sprint backlog from platform features
 
 ## Methodology Reference
 
@@ -585,9 +585,9 @@ The Platform Design Canvas (Section 8) provides a single-page synthesis perfect 
 - Ecosystem orchestration (e.g., vendor ecosystem, partner network, app store)
 
 **Not Suitable for Platform Design**:
-- Single-product SaaS applications (use /arckit.requirements and /arckit.hld-review instead)
-- Internal enterprise systems without multi-sided ecosystem (use /arckit.requirements)
-- Point-to-point integrations (use /arckit.diagram for architecture)
+- Single-product SaaS applications (use /arckit:requirements and /arckit:hld-review instead)
+- Internal enterprise systems without multi-sided ecosystem (use /arckit:requirements)
+- Point-to-point integrations (use /arckit:diagram for architecture)
 
 If user's project doesn't fit platform pattern, recommend appropriate alternative command.
 """

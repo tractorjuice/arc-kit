@@ -5,17 +5,17 @@ import re
 def build_agent_map(agents_dir):
     """Build a map from command name to agent file path and content.
 
-    Agent files are named arckit-{name}.md. The corresponding command
-    is arckit.{name}.md. Returns {command_filename: (agent_path, agent_prompt)}.
+    Agent files are named arckit-{name}.md. The corresponding plugin command
+    is {name}.md. Returns {command_filename: (agent_path, agent_prompt)}.
     """
     agent_map = {}
     if not os.path.isdir(agents_dir):
         return agent_map
     for filename in os.listdir(agents_dir):
         if filename.startswith('arckit-') and filename.endswith('.md'):
-            # arckit-research.md -> arckit.research.md
+            # arckit-research.md -> research.md
             name = filename.replace('arckit-', '', 1).replace('.md', '')
-            command_filename = f'arckit.{name}.md'
+            command_filename = f'{name}.md'
             agent_path = os.path.join(agents_dir, filename)
             with open(agent_path, 'r') as f:
                 agent_content = f.read()
@@ -79,11 +79,15 @@ def format_codex(description, prompt):
     return f'---\ndescription: "{escaped}"\n---\n\n{prompt}\n'
 
 
-def convert(claude_dir, agents_dir):
-    """Convert Claude commands to Gemini TOML and Codex Markdown formats.
+def convert(commands_dir, agents_dir):
+    """Convert plugin commands to Gemini TOML and Codex Markdown formats.
 
-    Reads each Claude command once, resolves agent prompts once, then
+    Reads each plugin command once, resolves agent prompts once, then
     writes both Gemini and Codex output files.
+
+    Plugin command files are named {name}.md (e.g., requirements.md).
+    Gemini output: .gemini/commands/arckit/{name}.toml
+    Codex output:  .codex/prompts/arckit.{name}.md
     """
     gemini_dir = '.gemini/commands/arckit'
     codex_dir = '.codex/prompts'
@@ -97,13 +101,13 @@ def convert(claude_dir, agents_dir):
     gemini_count = 0
     codex_count = 0
 
-    for filename in sorted(os.listdir(claude_dir)):
+    for filename in sorted(os.listdir(commands_dir)):
         if not filename.endswith('.md'):
             continue
 
-        claude_path = os.path.join(claude_dir, filename)
+        command_path = os.path.join(commands_dir, filename)
 
-        with open(claude_path, 'r') as f:
+        with open(command_path, 'r') as f:
             command_content = f.read()
 
         # Extract description from command (always use command's description)
@@ -114,14 +118,17 @@ def convert(claude_dir, agents_dir):
         if filename in agent_map:
             agent_path, agent_prompt = agent_map[filename]
             prompt = agent_prompt
-            source_label = f'{claude_path} (agent: {agent_path})'
+            source_label = f'{command_path} (agent: {agent_path})'
         else:
             prompt = command_prompt
-            source_label = claude_path
+            source_label = command_path
+
+        # Derive base name (e.g., "requirements" from "requirements.md")
+        base_name = filename.replace('.md', '')
 
         # --- Gemini TOML ---
         toml_content = format_toml(description, prompt)
-        gemini_filename = filename.replace('arckit.', '').replace('.md', '.toml')
+        gemini_filename = f'{base_name}.toml'
         gemini_path = os.path.join(gemini_dir, gemini_filename)
         with open(gemini_path, 'w') as f:
             f.write(toml_content)
@@ -130,7 +137,8 @@ def convert(claude_dir, agents_dir):
 
         # --- Codex Markdown ---
         codex_content = format_codex(description, prompt)
-        codex_path = os.path.join(codex_dir, filename)
+        codex_filename = f'arckit.{base_name}.md'
+        codex_path = os.path.join(codex_dir, codex_filename)
         with open(codex_path, 'w') as f:
             f.write(codex_content)
         print(f"  Codex:  {source_label} -> {codex_path}")
@@ -140,10 +148,10 @@ def convert(claude_dir, agents_dir):
 
 
 if __name__ == '__main__':
-    claude_dir = '.claude/commands/'
-    agents_dir = '.claude/agents/'
+    claude_dir = 'arckit-plugin/commands/'
+    agents_dir = 'arckit-plugin/agents/'
 
-    print("Converting Claude commands to Gemini and Codex formats...")
+    print("Converting plugin commands to Gemini and Codex formats...")
     print()
     print(f"Source: {claude_dir}")
     print(f"Agents: {agents_dir}")

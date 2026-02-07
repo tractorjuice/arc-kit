@@ -2,7 +2,7 @@
 
 `/arckit.research` investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.
 
-> **Agent Architecture**: This command delegates to the `arckit-research` autonomous agent (`.claude/agents/arckit-research.md`). The agent runs as a subprocess with its own context window, performing dozens of WebSearch and WebFetch calls for vendor pricing, reviews, and compliance data without polluting your main conversation. The slash command launches the agent and relays its summary back to you.
+> **Agent Architecture**: This command delegates to the `arckit-research` autonomous agent. The agent runs as a subprocess with its own context window, performing dozens of WebSearch and WebFetch calls for vendor pricing, reviews, and compliance data without polluting your main conversation. The slash command launches the agent and relays its summary back to you.
 
 ---
 

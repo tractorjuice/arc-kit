@@ -37,13 +37,9 @@ ssl_context = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 client = httpx.Client(verify=ssl_context)
 
 # Agent configuration for ArcKit
+# Note: Claude Code support has moved to the ArcKit plugin (arckit-plugin/).
+# The CLI now only supports Gemini and Codex.
 AGENT_CONFIG = {
-    "claude": {
-        "name": "Claude Code",
-        "folder": ".claude/",
-        "install_url": "https://docs.anthropic.com/en/docs/claude-code/setup",
-        "requires_cli": True,
-    },
     "gemini": {
         "name": "Gemini CLI",
         "folder": ".gemini/",
@@ -94,11 +90,6 @@ def show_banner():
 
 def check_tool(tool: str) -> bool:
     """Check if a tool is installed."""
-    # Special handling for Claude CLI
-    claude_local_path = Path.home() / ".claude" / "local" / "claude"
-    if tool == "claude" and claude_local_path.exists() and claude_local_path.is_file():
-        return True
-
     return shutil.which(tool) is not None
 
 
@@ -153,8 +144,6 @@ def get_data_paths():
         return {
             "templates": base_path / ".arckit" / "templates",
             "scripts": base_path / "scripts",
-            "claude_commands": base_path / ".claude" / "commands",
-            "claude_agents": base_path / ".claude" / "agents",
             "gemini_commands": base_path / ".gemini" / "commands",
             "codex_root": base_path / ".codex",
             "codex_prompts": base_path / ".codex" / "prompts",
@@ -217,18 +206,17 @@ def create_project_structure(project_path: Path, ai_assistant: str, all_ai: bool
     ]
 
     if all_ai:
-        # Create directories for all AI assistants
+        # Create directories for all AI assistants (Gemini + Codex)
         directories.extend([
-            ".claude/commands",
-            ".claude/agents",
             ".gemini/commands",
-            ".codex/prompts/arckit",
+            ".codex/prompts",
         ])
     else:
         agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
-        directories.append(f"{agent_folder}commands")
-        if ai_assistant in ["claude", "codex"]:
-            directories.append(".claude/agents")
+        if ai_assistant == "codex":
+            directories.append(f"{agent_folder}prompts")
+        else:
+            directories.append(f"{agent_folder}commands")
 
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
@@ -288,10 +276,10 @@ Use the `/arckit.customize` command to copy templates for editing:
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional, use '.' for current directory)"),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: claude, gemini, codex"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: gemini, codex"),
     no_git: bool = typer.Option(False, "--no-git", help="Skip git repository initialization"),
     here: bool = typer.Option(False, "--here", help="Initialize project in the current directory"),
-    all_ai: bool = typer.Option(False, "--all-ai", help="Install commands for all AI assistants (claude, gemini, codex)"),
+    all_ai: bool = typer.Option(False, "--all-ai", help="Install commands for all AI assistants (gemini, codex)"),
     minimal: bool = typer.Option(False, "--minimal", help="Minimal install: skip docs and guides"),
 ):
     """
@@ -306,10 +294,10 @@ def init(
 
     Examples:
         arckit init my-architecture-project
-        arckit init my-project --ai claude
+        arckit init my-project --ai gemini
         arckit init my-project --all-ai
-        arckit init . --ai gemini
-        arckit init --here --ai claude --minimal
+        arckit init . --ai codex
+        arckit init --here --ai gemini --minimal
     """
 
     show_banner()
@@ -348,13 +336,22 @@ def init(
     # Select AI assistant
     if not ai_assistant:
         console.print("\n[cyan]Select your AI assistant:[/cyan]")
-        console.print("1. claude (Claude Code)")
-        console.print("2. gemini (Gemini CLI)")
-        console.print("3. codex (OpenAI Codex CLI)")
+        console.print("1. gemini (Gemini CLI)")
+        console.print("2. codex (OpenAI Codex CLI)")
+        console.print()
+        console.print("[dim]For Claude Code, use the ArcKit plugin instead:[/dim]")
+        console.print("[dim]  /plugin marketplace add tractorjuice/arc-kit[/dim]")
 
         choice = typer.prompt("Enter choice", default="1")
-        ai_map = {"1": "claude", "2": "gemini", "3": "codex"}
-        ai_assistant = ai_map.get(choice, "claude")
+        ai_map = {"1": "gemini", "2": "codex"}
+        ai_assistant = ai_map.get(choice, "gemini")
+
+    if ai_assistant == "claude":
+        console.print("[yellow]Claude Code support has moved to the ArcKit plugin.[/yellow]")
+        console.print("Install in Claude Code with:")
+        console.print("  [cyan]/plugin marketplace add tractorjuice/arc-kit[/cyan]")
+        console.print("\nThen enable the plugin from the Discover tab.")
+        raise typer.Exit(0)
 
     if ai_assistant not in AGENT_CONFIG:
         console.print(f"[red]Error:[/red] Invalid AI assistant '{ai_assistant}'")
@@ -362,7 +359,7 @@ def init(
         raise typer.Exit(1)
 
     if all_ai:
-        console.print(f"[cyan]Selected AI assistant:[/cyan] All (Claude, Gemini, Codex)")
+        console.print(f"[cyan]Selected AI assistant:[/cyan] All (Gemini, Codex)")
     else:
         console.print(f"[cyan]Selected AI assistant:[/cyan] {AGENT_CONFIG[ai_assistant]['name']}")
 
@@ -383,7 +380,10 @@ def init(
     templates_dst = project_path / ".arckit" / "templates"
     scripts_dst = project_path / ".arckit" / "scripts"
     agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
-    commands_dst = project_path / agent_folder / "commands"
+    if ai_assistant == "codex":
+        commands_dst = project_path / agent_folder / "prompts"
+    else:
+        commands_dst = project_path / agent_folder / "commands"
 
     # Copy templates if they exist
     if templates_src.exists():
@@ -407,45 +407,41 @@ def init(
 
     # Copy slash commands
     if all_ai:
-        # Install all AI formats
-        ai_formats = [
-            ("claude", data_paths["claude_commands"], project_path / ".claude" / "commands"),
-            ("gemini", data_paths["gemini_commands"], project_path / ".gemini" / "commands"),
-            ("codex", data_paths["claude_commands"], project_path / ".codex" / "prompts"),
-        ]
-        for ai_name, src, dst in ai_formats:
-            dst.mkdir(parents=True, exist_ok=True)
-            if src.exists():
-                if ai_name == "gemini":
-                    shutil.copytree(src, dst, dirs_exist_ok=True)
-                else:
-                    for cmd_file in src.glob("arckit.*.md"):
-                        shutil.copy2(cmd_file, dst / cmd_file.name)
-                console.print(f"[green]✓[/green] Copied {ai_name} commands")
-            else:
-                console.print(f"[yellow]Warning: {ai_name} commands not found[/yellow]")
-        # Copy codex-specific subdirectory prompts (arckit/aws-research.md, etc.)
-        codex_prompts_src = data_paths.get("codex_prompts")
-        if codex_prompts_src and codex_prompts_src.exists():
-            codex_sub = codex_prompts_src / "arckit"
-            if codex_sub.is_dir():
-                codex_sub_dst = project_path / ".codex" / "prompts" / "arckit"
-                codex_sub_dst.mkdir(parents=True, exist_ok=True)
-                for f in codex_sub.glob("*.md"):
-                    shutil.copy2(f, codex_sub_dst / f.name)
+        # Install all AI formats (Gemini + Codex)
+        # Gemini
+        gemini_src = data_paths["gemini_commands"]
+        gemini_dst = project_path / ".gemini" / "commands"
+        gemini_dst.mkdir(parents=True, exist_ok=True)
+        if gemini_src.exists():
+            shutil.copytree(gemini_src, gemini_dst, dirs_exist_ok=True)
+            console.print(f"[green]✓[/green] Copied gemini commands")
+        else:
+            console.print(f"[yellow]Warning: gemini commands not found[/yellow]")
+        # Codex
+        codex_src = data_paths["codex_prompts"]
+        codex_dst = project_path / ".codex" / "prompts"
+        codex_dst.mkdir(parents=True, exist_ok=True)
+        if codex_src.exists():
+            command_count = 0
+            for cmd_file in codex_src.glob("arckit.*.md"):
+                shutil.copy2(cmd_file, codex_dst / cmd_file.name)
+                command_count += 1
+            console.print(f"[green]✓[/green] Copied {command_count} codex prompts")
+        else:
+            console.print(f"[yellow]Warning: codex prompts not found[/yellow]")
     else:
         # Install only selected AI format
-        if ai_assistant in ["claude", "codex"]:
-            commands_src = data_paths["claude_commands"]
+        if ai_assistant == "codex":
+            commands_src = data_paths["codex_prompts"]
             if commands_src.exists():
-                console.print(f"[dim]Copying Claude commands from: {commands_src}[/dim]")
+                console.print(f"[dim]Copying Codex prompts from: {commands_src}[/dim]")
                 command_count = 0
                 for command_file in commands_src.glob("arckit.*.md"):
                     shutil.copy2(command_file, commands_dst / command_file.name)
                     command_count += 1
-                console.print(f"[green]✓[/green] Copied {command_count} Claude commands")
+                console.print(f"[green]✓[/green] Copied {command_count} Codex prompts")
             else:
-                console.print(f"[yellow]Warning: Claude commands not found at {commands_src}[/yellow]")
+                console.print(f"[yellow]Warning: Codex prompts not found at {commands_src}[/yellow]")
         elif ai_assistant == "gemini":
             commands_src = data_paths["gemini_commands"]
             if commands_src.exists():
@@ -454,21 +450,6 @@ def init(
                 console.print(f"[green]✓[/green] Gemini commands copied")
             else:
                 console.print(f"[yellow]Warning: Gemini commands not found at {commands_src}[/yellow]")
-
-    # Copy Claude agents (for claude, codex, or all-ai)
-    if all_ai or ai_assistant in ["claude", "codex"]:
-        agents_src = data_paths["claude_agents"]
-        agents_dst = project_path / ".claude" / "agents"
-        agents_dst.mkdir(parents=True, exist_ok=True)
-        if agents_src.exists():
-            agent_count = 0
-            for agent_file in agents_src.glob("*.md"):
-                shutil.copy2(agent_file, agents_dst / agent_file.name)
-                agent_count += 1
-            if agent_count > 0:
-                console.print(f"[green]✓[/green] Copied {agent_count} Claude agents")
-        else:
-            console.print(f"[dim]No agents found at {agents_src}[/dim]")
 
     console.print("[green]✓[/green] Templates configured")
 
@@ -598,7 +579,7 @@ Once you start your AI assistant, you'll have access to these commands:
 │       ├── requirements.md
 │       ├── sow.md
 │       └── vendors/
-└── {AGENT_CONFIG[ai_assistant]['folder']}commands/
+└── {commands_dst.relative_to(project_path)}/
 ```
 
 ## Template Customization
@@ -719,7 +700,6 @@ def check():
 
     tools = {
         "git": "Version control",
-        "claude": "Claude Code",
         "code": "Visual Studio Code",
     }
 

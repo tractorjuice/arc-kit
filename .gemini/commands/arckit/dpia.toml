@@ -20,7 +20,7 @@ Scan the project directory for existing artifacts and read them to inform the DP
 **MANDATORY** (warn if missing):
 - `ARC-*-DATA-*.md` in `projects/{project}/` — Data model
   - Extract: All entities with PII/special category data, data subjects, GDPR Article 6 lawful basis, Article 9 conditions, retention periods, data flows, data classifications
-  - If missing: STOP and warn user to run `/arckit.data-model` first — a DPIA requires a data model to identify personal data processing
+  - If missing: STOP and warn user to run `/arckit:data-model` first — a DPIA requires a data model to identify personal data processing
 
 **RECOMMENDED** (read if available, note if missing):
 - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
@@ -74,7 +74,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 Use the `create-project.sh` script to find or create the project directory:
 
 ```bash
-bash .arckit/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json
 ```
 
 This will return JSON with the project path. Parse it to get `project_id` and `project_path`.
@@ -90,12 +90,12 @@ Read all documents listed in Step 0 above. Use the extracted information for aut
 Read the DPIA template:
 
 **Read the template** (with user override support):
-- **First**, check if `.arckit/templates-custom/dpia-template.md` exists (user override)
-- **If found**: Read the user's customized template
-- **If not found**: Read `.arckit/templates/dpia-template.md` (default)
+- **First**, check if `.arckit/templates/dpia-template.md` exists in the project root
+- **If found**: Read the user's customized template (user override takes precedence)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/dpia-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
-> **Tip**: Users can customize templates with `/arckit.customize dpia`
+> **Tip**: Users can customize templates with `/arckit:customize dpia`
 
 This template has 16 major sections and uses the ICO's 9-criteria screening checklist.
 
@@ -160,7 +160,7 @@ Generate the DPIA by:
 2. **Auto-populate Document Control**:
    ```bash
    # Generate document ID
-   DOC_ID=$(bash .arckit/scripts/bash/generate-document-id.sh {project_id} DPIA v${VERSION})
+   DOC_ID=$(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DPIA v${VERSION})
    ```
    - Document ID: `{DOC_ID}` (e.g., ARC-001-DPIA-v1.0)
    - Version: ${VERSION}
@@ -391,7 +391,7 @@ If YES:
 
 10. **Children's Data**: If processing children's data, the DPIA must include additional assessment of age verification, parental consent, best interests, and child-friendly privacy notices.
 
-11. **AI/ML Systems**: If the system uses AI/ML for profiling, automated decision-making, or algorithmic processing, integrate with `/arckit.ai-playbook` assessment and link to ATRS record.
+11. **AI/ML Systems**: If the system uses AI/ML for profiling, automated decision-making, or algorithmic processing, integrate with `/arckit:ai-playbook` assessment and link to ATRS record.
 
 12. **Classification**: DPIAs contain sensitive information about data protection risks and vulnerabilities. Always classify as **OFFICIAL-SENSITIVE** at minimum.
 
@@ -423,10 +423,10 @@ If YES:
 ## Example Usage
 
 ```
-/arckit.dpia Generate DPIA for NHS appointment booking system
+/arckit:dpia Generate DPIA for NHS appointment booking system
 
-/arckit.dpia Create data protection impact assessment for HMRC chatbot handling taxpayer queries
+/arckit:dpia Create data protection impact assessment for HMRC chatbot handling taxpayer queries
 
-/arckit.dpia Assess DPIA necessity for Windows 11 deployment (employee data only)
+/arckit:dpia Assess DPIA necessity for Windows 11 deployment (employee data only)
 ```
 """
