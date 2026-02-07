@@ -333,6 +333,18 @@ is_json_mode() {
 # Path Helper Functions
 # ============================================================================
 
+# Get .arckit directory path
+get_arckit_dir() {
+    local repo_root="${1:-$(find_repo_root)}"
+    echo "$repo_root/.arckit"
+}
+
+# Get templates directory path
+get_templates_dir() {
+    local repo_root="${1:-$(find_repo_root)}"
+    echo "$repo_root/.arckit/templates"
+}
+
 # Get projects directory path
 get_projects_dir() {
     local repo_root="${1:-$(find_repo_root)}"
