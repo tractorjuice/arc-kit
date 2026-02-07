@@ -21,7 +21,7 @@ This command discovers external data sources — APIs, datasets, open data porta
 
 1. **Determine the project**: If the user specified a project name/number, note it. Otherwise, identify the most recent project in `projects/`.
 
-2. **Launch the agent**: Use the Task tool to launch the datascout agent with the following prompt:
+2. **Launch the agent**: Launch the **arckit-datascout** agent with the following prompt:
 
 ```
 Discover external data sources for the project in projects/{project-dir}/.
@@ -30,12 +30,6 @@ User's additional context: {$ARGUMENTS}
 
 Follow your full process: read requirements, check api.gov.uk and data.gov.uk first, discover sources per category, evaluate with weighted scoring, gap analysis, data utility analysis, write document, return summary.
 ```
-
-Use the Task tool with `subagent_type: "general-purpose"` and include in the prompt:
-- The project directory path
-- The user's arguments
-- Instruct it to follow the datascout agent process defined in `.claude/agents/arckit-datascout.md`
-- Tell it to read that agent file first for its full instructions
 
 3. **Report the result**: When the agent completes, relay its summary to the user.
 
