@@ -34,8 +34,8 @@ claude --plugin-dir /path/to/arc-kit/arckit-plugin
 
 - **Claude Code** v1.0.0 or later
 - **Bash** shell (for helper scripts)
-- For `/arckit.aws-research`: AWS Knowledge MCP server (included)
-- For `/arckit.azure-research`: Microsoft Learn MCP server (install separately)
+- For `/arckit:aws-research`: AWS Knowledge MCP server (included)
+- For `/arckit:azure-research`: Microsoft Learn MCP server (install separately)
 
 ## Quick Start
 
@@ -43,17 +43,17 @@ After installing the plugin:
 
 1. **Initialize a project** (optional - commands will create structure automatically):
    ```
-   /arckit.init
+   /arckit:init
    ```
 
 2. **Create architecture principles**:
    ```
-   /arckit.principles
+   /arckit:principles
    ```
 
 3. **Create requirements for a project**:
    ```
-   /arckit.requirements NHS appointment booking system
+   /arckit:requirements NHS appointment booking system
    ```
 
 ## What's Included
@@ -74,19 +74,19 @@ ArcKit templates can be customized per-project to match your organization's requ
 
 1. **User templates override plugin templates**: If a template exists in `.arckit/templates/`, it takes precedence over the plugin's default template.
 
-2. **Copy and customize**: Use `/arckit.customize` to copy templates to your project for editing.
+2. **Copy and customize**: Use `/arckit:customize` to copy templates to your project for editing.
 
 ### Quick Start
 
 ```bash
 # List available templates
-/arckit.customize list
+/arckit:customize list
 
 # Copy a template to customize
-/arckit.customize requirements
+/arckit:customize requirements
 
 # Copy all templates
-/arckit.customize all
+/arckit:customize all
 ```
 
 ### Common Customizations
@@ -125,42 +125,42 @@ When ArcKit plugin updates with new features:
 ## Commands Overview
 
 ### Core Governance
-- `/arckit.principles` - Create architecture principles
-- `/arckit.stakeholders` - Analyze stakeholders and goals
-- `/arckit.requirements` - Generate comprehensive requirements
-- `/arckit.risk` - Create risk register (Orange Book)
-- `/arckit.sobc` - Strategic Outline Business Case (Green Book)
+- `/arckit:principles` - Create architecture principles
+- `/arckit:stakeholders` - Analyze stakeholders and goals
+- `/arckit:requirements` - Generate comprehensive requirements
+- `/arckit:risk` - Create risk register (Orange Book)
+- `/arckit:sobc` - Strategic Outline Business Case (Green Book)
 
 ### Technical Design
-- `/arckit.data-model` - Data model with GDPR compliance
-- `/arckit.diagram` - Architecture diagrams (Mermaid)
-- `/arckit.wardley` - Wardley Maps for strategy
-- `/arckit.adr` - Architecture Decision Records
+- `/arckit:data-model` - Data model with GDPR compliance
+- `/arckit:diagram` - Architecture diagrams (Mermaid)
+- `/arckit:wardley` - Wardley Maps for strategy
+- `/arckit:adr` - Architecture Decision Records
 
 ### Research & Procurement
-- `/arckit.research` - Technology market research
-- `/arckit.aws-research` - AWS service research (MCP)
-- `/arckit.azure-research` - Azure service research (MCP)
-- `/arckit.datascout` - External data source discovery
-- `/arckit.evaluate` - Vendor evaluation framework
-- `/arckit.sow` - Statement of Work / RFP
-- `/arckit.gcloud-search` - G-Cloud marketplace search
-- `/arckit.dos` - Digital Outcomes & Specialists
+- `/arckit:research` - Technology market research
+- `/arckit:aws-research` - AWS service research (MCP)
+- `/arckit:azure-research` - Azure service research (MCP)
+- `/arckit:datascout` - External data source discovery
+- `/arckit:evaluate` - Vendor evaluation framework
+- `/arckit:sow` - Statement of Work / RFP
+- `/arckit:gcloud-search` - G-Cloud marketplace search
+- `/arckit:dos` - Digital Outcomes & Specialists
 
 ### UK Government Compliance
-- `/arckit.tcop` - Technology Code of Practice review
-- `/arckit.secure` - Secure by Design assessment
-- `/arckit.dpia` - Data Protection Impact Assessment
-- `/arckit.ai-playbook` - AI Playbook compliance
-- `/arckit.service-assessment` - GDS Service Standard
+- `/arckit:tcop` - Technology Code of Practice review
+- `/arckit:secure` - Secure by Design assessment
+- `/arckit:dpia` - Data Protection Impact Assessment
+- `/arckit:ai-playbook` - AI Playbook compliance
+- `/arckit:service-assessment` - GDS Service Standard
 
 ### Operations & Delivery
-- `/arckit.devops` - DevOps strategy
-- `/arckit.finops` - FinOps cloud cost management
-- `/arckit.mlops` - MLOps strategy
-- `/arckit.operationalize` - Operational readiness
-- `/arckit.backlog` - Product backlog generation
-- `/arckit.roadmap` - Architecture roadmap
+- `/arckit:devops` - DevOps strategy
+- `/arckit:finops` - FinOps cloud cost management
+- `/arckit:mlops` - MLOps strategy
+- `/arckit:operationalize` - Operational readiness
+- `/arckit:backlog` - Product backlog generation
+- `/arckit:roadmap` - Architecture roadmap
 
 See the full command list with `/help arckit`.
 
@@ -183,7 +183,7 @@ projects/
 ## MCP Servers
 
 The plugin includes configuration for:
-- **AWS Knowledge MCP** - Official AWS documentation for `/arckit.aws-research`
+- **AWS Knowledge MCP** - Official AWS documentation for `/arckit:aws-research`
 
 For Azure research, install the Microsoft Learn MCP server separately.
 
