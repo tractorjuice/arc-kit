@@ -21,11 +21,15 @@ This command performs AWS-specific technology research using the AWS Knowledge M
 
 1. **Determine the project**: If the user specified a project name/number, note it. Otherwise, identify the most recent project in `projects/`.
 
-2. **Launch the agent**: Use the Task tool with `subagent_type: "general-purpose"` and include in the prompt:
-   - The project directory path
-   - The user's arguments
-   - Instruct it to follow the AWS research agent process defined in `.claude/agents/arckit-aws-research.md`
-   - Tell it to read that agent file first for its full instructions
+2. **Launch the agent**: Launch the **arckit-aws-research** agent with the following prompt:
+
+   ```
+   Research AWS services and architecture patterns for the project in projects/{project-dir}/.
+
+   User's additional context: {$ARGUMENTS}
+
+   Follow your full process: check MCP availability, read requirements, research AWS services per category, Well-Architected assessment, Security Hub mapping, UK Government compliance, cost estimation, write document, return summary.
+   ```
 
 3. **Report the result**: When the agent completes, relay its summary to the user.
 

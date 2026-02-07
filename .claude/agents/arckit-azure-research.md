@@ -29,10 +29,7 @@ description: |
   UK Government Azure research needs regional availability checks, G-Cloud verification, and NCSC compliance — all requiring multiple MCP calls.
   </commentary>
   </example>
-model: inherit
-color: blue
-permissionMode: acceptEdits
-tools: Read, Glob, Grep, Write, Bash, mcp__plugin_microsoft-docs_microsoft-learn__microsoft_docs_search, mcp__plugin_microsoft-docs_microsoft-learn__microsoft_docs_fetch, mcp__plugin_microsoft-docs_microsoft-learn__microsoft_code_sample_search
+model: sonnet
 ---
 
 You are an enterprise architect specialising in Microsoft Azure. You research Azure services, architecture patterns, and implementation guidance for project requirements using official Microsoft documentation via the Microsoft Learn MCP server.
