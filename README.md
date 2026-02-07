@@ -26,8 +26,13 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 ### Installation
 
-Install ArcKit CLI:
+**Claude Code** (recommended) — install the ArcKit plugin:
+```
+/plugin marketplace add tractorjuice/arc-kit
+```
+Then install from the Discover tab. The plugin provides all 46 commands, autonomous agents, and bundled MCP servers (AWS Knowledge + Microsoft Learn). Updates are automatic via the marketplace.
 
+**Gemini CLI / Codex CLI** — install the ArcKit CLI:
 ```bash
 # Install with pip
 pip install git+https://github.com/tractorjuice/arc-kit.git
@@ -43,6 +48,9 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 
 ### Initialize a Project
 
+**Claude Code**: No initialization needed — the plugin provides everything.
+
+**Gemini CLI / Codex CLI**:
 ```bash
 # Create a new architecture governance project
 arckit init payment-modernization --ai gemini
@@ -50,7 +58,7 @@ arckit init payment-modernization --ai gemini
 # Or use OpenAI Codex CLI
 arckit init payment-modernization --ai codex
 
-# Install all AI formats (Gemini + Codex)
+# Install all CLI formats (Gemini + Codex)
 arckit init payment-modernization --all-ai
 
 # Minimal install (skip docs and guides)
@@ -58,17 +66,14 @@ arckit init payment-modernization --ai gemini --minimal
 
 # Or initialize in current directory
 arckit init . --ai gemini
-
-# For Claude Code, install the ArcKit plugin:
-# /plugin marketplace add tractorjuice/arc-kit
-# Then install from the Discover tab
 ```
 
 ### Start Using ArcKit
 
 ```bash
+# Gemini CLI / Codex CLI
 cd payment-modernization
-gemini  # or your chosen AI assistant
+gemini  # or codex
 
 # Inside your AI assistant, use ArcKit commands:
 /arckit.principles Create principles for a financial services company
@@ -78,8 +83,9 @@ gemini  # or your chosen AI assistant
 
 ### Upgrading
 
-To upgrade ArcKit to the latest version:
+**Claude Code plugin**: Updates are automatic via the marketplace — no action needed.
 
+**Gemini CLI / Codex CLI**:
 ```bash
 # Step 1: Upgrade the CLI tool
 pip install --upgrade git+https://github.com/tractorjuice/arc-kit.git
@@ -698,7 +704,7 @@ payment-modernization/
 │           ├── selected-vendor.md
 │           ├── approved-hld.md
 │           └── dld/
-└── .gemini/commands/                      # AI assistant commands (or .codex/prompts/)
+└── .gemini/commands/                      # Gemini commands (or .codex/prompts/ for Codex)
 ```
 
 ---
@@ -796,7 +802,7 @@ All 46 ArcKit commands with maturity status and example outputs from public test
 
 ### Cloud Research (MCP)
 
-These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers to access authoritative cloud provider documentation in real-time. Each requires its respective MCP server to be installed.
+These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.io/) servers to access authoritative cloud provider documentation in real-time. The Claude Code plugin bundles both MCP servers automatically. Gemini and Codex users need to install them separately.
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
@@ -955,7 +961,7 @@ Key references live in `docs/` and top-level guides:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: Claude Code, OpenAI Codex CLI, or Gemini CLI
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---
@@ -981,7 +987,7 @@ arckit init my-project
 Full guidance lives in `docs/` and the static site.
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 44×44 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 46×46 command matrix.
 - Traceability: [docs/guides/traceability.md](docs/guides/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit
