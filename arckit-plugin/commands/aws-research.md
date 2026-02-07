@@ -28,7 +28,7 @@ This command performs AWS-specific technology research using the AWS Knowledge M
 
    User's additional context: {$ARGUMENTS}
 
-   Follow your full process: check MCP availability, read requirements, research AWS services per category, Well-Architected assessment, Security Hub mapping, UK Government compliance, cost estimation, write document, return summary.
+   Follow your full process: read requirements, research AWS services per category, Well-Architected assessment, Security Hub mapping, UK Government compliance, cost estimation, write document, return summary.
    ```
 
 3. **Report the result**: When the agent completes, relay its summary to the user.
@@ -37,25 +37,20 @@ This command performs AWS-specific technology research using the AWS Knowledge M
 
 If the Task tool is unavailable or the user prefers inline execution, fall back to the full research process:
 
-1. **Check MCP availability first** — verify `search_documentation`, `read_documentation`, `get_regional_availability`, `list_regions`, `recommend` tools exist. If not, STOP and show installation instructions:
-   ```
-   Add to .mcp.json:
-   { "mcpServers": { "aws-knowledge": { "type": "http", "url": "https://knowledge-mcp.global.api.aws" } } }
-   ```
-2. Check prerequisites (requirements document must exist)
-3. **Read the template** (with user override support):
+1. Check prerequisites (requirements document must exist)
+2. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/aws-research-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/aws-research-template.md` (default)
    - Read the `VERSION` file and update the version in the template metadata line when generating
    - **Tip**: Users can customize templates with `/arckit:customize aws-research`
-4. Extract AWS service needs from requirements (compute, data, integration, security, AI/ML)
-5. Use MCP tools for each category: service discovery, deep dive, regional availability (eu-west-2), architecture patterns, Well-Architected assessment, Security Hub mapping, code samples
-6. UK Government: G-Cloud, data residency, NCSC compliance
-7. Cost estimation with optimization (Reserved Instances, Savings Plans, Spot, Graviton)
-8. Generate Mermaid architecture diagram
-9. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AWRS-v1.0.md` using Write tool
-10. Show summary only (not full document)
+3. Extract AWS service needs from requirements (compute, data, integration, security, AI/ML)
+4. Use MCP tools for each category: service discovery, deep dive, regional availability (eu-west-2), architecture patterns, Well-Architected assessment, Security Hub mapping, code samples
+5. UK Government: G-Cloud, data residency, NCSC compliance
+6. Cost estimation with optimization (Reserved Instances, Savings Plans, Spot, Graviton)
+7. Generate Mermaid architecture diagram
+8. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AWRS-v1.0.md` using Write tool
+9. Show summary only (not full document)
 
 ### Output
 
