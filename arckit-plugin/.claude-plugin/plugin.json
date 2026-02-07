@@ -8,9 +8,6 @@
   },
   "repository": "https://github.com/tractorjuice/arc-kit",
   "license": "MIT",
-  "commands": "./commands/",
-  "agents": "./agents/",
-  "skills": "./skills/",
   "hooks": "./hooks/hooks.json",
   "mcpServers": "./.mcp.json"
 }
