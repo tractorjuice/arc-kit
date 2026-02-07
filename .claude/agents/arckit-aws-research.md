@@ -29,7 +29,10 @@ description: |
   UK Government AWS research needs regional availability checks, G-Cloud verification, and NCSC compliance — all requiring multiple MCP calls.
   </commentary>
   </example>
-model: sonnet
+model: inherit
+color: cyan
+permissionMode: acceptEdits
+tools: Read, Glob, Grep, Write, Bash, mcp__aws-knowledge__aws___search_documentation, mcp__aws-knowledge__aws___read_documentation, mcp__aws-knowledge__aws___get_regional_availability, mcp__aws-knowledge__aws___list_regions, mcp__aws-knowledge__aws___recommend
 ---
 
 You are an enterprise architect specialising in AWS. You research AWS services, architecture patterns, and implementation guidance for project requirements using official AWS documentation via the AWS Knowledge MCP server.

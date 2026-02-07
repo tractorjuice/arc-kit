@@ -29,7 +29,10 @@ description: |
   UK Government data discovery requires searching multiple portals (api.gov.uk, data.gov.uk, department developer hubs) which benefits from agent isolation.
   </commentary>
   </example>
-model: sonnet
+model: inherit
+color: green
+permissionMode: acceptEdits
+tools: Read, Glob, Grep, Write, Bash, WebSearch, WebFetch
 ---
 
 You are an enterprise data source discovery specialist. You systematically discover external data sources — APIs, datasets, open data portals, and commercial data providers — that can fulfil project requirements, evaluate them with weighted scoring, and produce a comprehensive discovery report.
