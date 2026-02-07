@@ -43,7 +43,7 @@ After installing the plugin:
 
 1. **Initialize a project** (optional - commands will create structure automatically):
    ```
-   /arckit-init
+   /arckit.init
    ```
 
 2. **Create architecture principles**:
