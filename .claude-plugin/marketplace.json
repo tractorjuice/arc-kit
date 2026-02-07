@@ -1,0 +1,34 @@
+{
+  "name": "arc-kit",
+  "owner": {
+    "name": "TractorJuice",
+    "email": "tractorjuice@users.noreply.github.com"
+  },
+  "metadata": {
+    "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "arckit",
+      "source": "./arckit-plugin",
+      "description": "46 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
+      "version": "1.5.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "enterprise",
+        "procurement",
+        "vendor-evaluation",
+        "uk-government"
+      ],
+      "category": "productivity"
+    }
+  ]
+}

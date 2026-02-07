@@ -4,8 +4,30 @@ Enterprise Architecture Governance & Vendor Procurement Toolkit - a Claude Code 
 
 ## Installation
 
+### Step 1: Add the marketplace
+
+In Claude Code, run:
+
+```
+/plugin marketplace add tractorjuice/arc-kit
+```
+
+### Step 2: Install the plugin
+
+```
+/plugin
+```
+
+Go to the **Discover** tab, find **arckit**, and install it. Or via CLI:
+
 ```bash
-claude plugin install github:tractorjuice/arc-kit/arckit-plugin
+claude plugin install arckit@arc-kit
+```
+
+### Alternative: Load for a single session
+
+```bash
+claude --plugin-dir /path/to/arc-kit/arckit-plugin
 ```
 
 ## Prerequisites
