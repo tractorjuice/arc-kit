@@ -30,7 +30,6 @@ description: |
   </commentary>
   </example>
 model: inherit
-color: cyan
 permissionMode: acceptEdits
 tools: Read, Glob, Grep, Write, Bash, mcp__aws-knowledge__aws___search_documentation, mcp__aws-knowledge__aws___read_documentation, mcp__aws-knowledge__aws___get_regional_availability, mcp__aws-knowledge__aws___list_regions, mcp__aws-knowledge__aws___recommend
 ---

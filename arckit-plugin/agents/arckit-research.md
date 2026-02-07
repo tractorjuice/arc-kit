@@ -30,7 +30,6 @@ description: |
   </commentary>
   </example>
 model: inherit
-color: cyan
 permissionMode: acceptEdits
 tools: Read, Glob, Grep, Write, Bash, WebSearch, WebFetch
 ---

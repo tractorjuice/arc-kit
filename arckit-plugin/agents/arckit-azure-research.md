@@ -30,7 +30,6 @@ description: |
   </commentary>
   </example>
 model: inherit
-color: blue
 permissionMode: acceptEdits
 tools: Read, Glob, Grep, Write, Bash, mcp__plugin_microsoft-docs_microsoft-learn__microsoft_docs_search, mcp__plugin_microsoft-docs_microsoft-learn__microsoft_docs_fetch, mcp__plugin_microsoft-docs_microsoft-learn__microsoft_code_sample_search
 ---
