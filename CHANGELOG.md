@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.9] - 2026-02-08
+
+### Added
+
+- Interactive configuration using AskUserQuestion for 8 key commands (backlog, diagram, plan, adr, dpia, sow, sobc, roadmap)
+- Commands now prompt users for key decision points before generating documents
+- Questions are automatically skipped when users specify preferences via command arguments
+
+### Changed
+
+- Unified CLI and plugin version numbers (both now 2.1.9)
+
 ## [2.0.0] - 2026-02-07
 
 ### Added
