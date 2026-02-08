@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.1.9] - 2026-02-08
+
+### Added
+
+- Interactive configuration using AskUserQuestion for 8 key commands: backlog, diagram, plan, adr, dpia, sow, sobc, roadmap
+- Commands now ask users about key decision points (prioritization approach, diagram type, contract type, evaluation weighting, etc.) before generating documents
+- Questions are automatically skipped when users specify preferences via command arguments
+
 ## [2.1.8] - 2026-02-07
 
 ### Removed
