@@ -92,6 +92,23 @@ Load the roadmap template structure:
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize roadmap`
 
+### 3b. Interactive Configuration
+
+Before generating the roadmap, use the **AskUserQuestion** tool to gather strategic preferences. **Skip any question the user has already specified in their arguments.**
+
+**Question 1** — header: `Horizon`, multiSelect: false
+> \"What time horizon should the roadmap cover?\"
+- **3 years (Recommended)**: Typical for technology transformation programmes — detailed enough to be actionable, long enough for strategic value
+- **2 years**: Shorter horizon — suited for tactical improvements or fast-moving technology areas
+- **5 years**: Extended horizon — suited for major enterprise transformations, infrastructure programmes, or multi-phase migrations
+
+**Question 2** — header: `Year format`, multiSelect: false
+> \"Which year notation should the roadmap use?\"
+- **UK Financial Year (Recommended)**: FY 2025/26, FY 2026/27 — April to March, standard for UK Government and public sector
+- **Calendar Year**: CY 2025, CY 2026 — January to December, standard for private sector and international
+
+Apply the user's selections: the horizon determines the number of financial years covered, the Gantt chart duration, and the level of detail in later years (nearer years have more detail). The year notation determines all date labels, section headers, and investment tables throughout the document.
+
 ### 4. Generate Strategic Roadmap
 
 Create a comprehensive multi-year architecture roadmap with the following sections:

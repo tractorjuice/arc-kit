@@ -101,7 +101,25 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - Extract outcomes (these become success criteria)
    - Note: EVERY benefit in SOBC MUST trace to a stakeholder goal
 
-6. **Generate comprehensive SOBC**:
+6. **Interactive Configuration**:
+
+   Before generating the SOBC, use the **AskUserQuestion** tool to gather appraisal preferences. **Skip any question the user has already answered in their arguments.**
+
+   **Question 1** — header: `Options`, multiSelect: false
+   > \"How many strategic options should be evaluated in the Economic Case?\"
+   - **4 options (Recommended)**: Do Nothing + Minimal + Balanced + Comprehensive — standard Green Book options appraisal
+   - **3 options**: Do Nothing + two alternatives — suitable for straightforward investment decisions
+   - **5 options**: Do Nothing + four alternatives — for complex programmes with multiple viable approaches
+
+   **Question 2** — header: `Appraisal`, multiSelect: false
+   > \"What level of economic appraisal should be applied?\"
+   - **Strategic estimates (Recommended)**: Rough Order of Magnitude costs and qualitative benefits — appropriate for SOBC stage
+   - **Semi-quantitative**: ROM costs with quantified key benefits and basic NPV — when some financial data is available
+   - **Full quantitative**: Detailed costs, quantified benefits, NPV, BCR, sensitivity analysis — typically for OBC/FBC stage, but may be required for large investments
+
+   Apply the user's selections: the option count determines how many alternatives are analyzed in Part B (Economic Case). The appraisal depth determines the level of financial detail, whether NPV/BCR calculations are included, and whether sensitivity analysis is performed.
+
+7. **Generate comprehensive SOBC**:
 
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/sobc-template.md` exists in the project root
@@ -196,7 +214,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
      - Mitigation strategies
      - Risk owners (from stakeholder RACI)
 
-7. **Ensure complete traceability**:
+8. **Ensure complete traceability**:
 
    Every element must link back to stakeholder analysis:
 
@@ -209,7 +227,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
              → Success Criterion: CFO Outcome O-1 measured monthly
    ```
 
-8. **Include decision framework**:
+9. **Include decision framework**:
    - **Recommendation**: Which option to proceed with?
    - **Rationale**: Why this option? (reference stakeholder goals met)
    - **Go/No-Go Criteria**: Under what conditions do we proceed?
@@ -257,18 +275,18 @@ DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh \"${PROJECT_
 - `[REVIEWED_BY]` → Who will review? (mark as \"PENDING\" if not yet reviewed)
 - `[APPROVED_BY]` → Who must approve? (mark as \"PENDING\" if not yet approved)
 
-9. **Write the output**:
+10. **Write the output**:
    - Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v${VERSION}.md`
    - Use project directory structure (create if doesn't exist)
    - File name pattern: `ARC-{PROJECT_ID}-SOBC-v{VERSION}.md`
    - Later stages will be: `ARC-{PROJECT_ID}-OBC-v*.md` (Outline Business Case), `ARC-{PROJECT_ID}-FBC-v*.md` (Full Business Case)
 
-10. **Use appropriate language**:
+11. **Use appropriate language**:
    - **UK Government**: Use Green Book terminology (intervention, public value, social benefit, spending controls)
    - **Private Sector**: Adapt to commercial language (investment, shareholder value, competitive advantage)
    - **Always**: Link to stakeholder analysis for credibility
 
-11. **Flag uncertainties**:
+12. **Flag uncertainties**:
     - Mark estimates as \"Rough Order of Magnitude (ROM)\"
     - Flag where more analysis needed
     - Note dependencies on external factors

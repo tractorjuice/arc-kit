@@ -155,6 +155,26 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
+### Step 2c: Interactive Configuration
+
+Before generating the backlog, use the **AskUserQuestion** tool to gather user preferences. **Skip any question where the user has already specified their choice via the arguments above** (e.g., if they wrote `PRIORITY=risk`, do not ask about prioritization).
+
+**Question 1** — header: `Priority`, multiSelect: false
+> \"Which prioritization approach should be used for the backlog?\"
+- **Multi-factor (Recommended)**: Combines MoSCoW, risk, value, and dependency scoring for balanced prioritization
+- **MoSCoW**: Must/Should/Could/Won't categorization only
+- **Value vs Effort**: Prioritize by business value relative to implementation effort
+- **Risk-based**: Prioritize highest-risk items first to reduce uncertainty early
+
+**Question 2** — header: `Format`, multiSelect: false
+> \"What output format do you need?\"
+- **All formats (Recommended)**: Markdown report + CSV (Jira/Azure DevOps import) + JSON (API integration)
+- **Markdown only**: Standard report document
+- **CSV only**: For direct import into Jira, Azure DevOps, or GitHub Projects
+- **JSON only**: For programmatic access and custom integrations
+
+Apply the user's selections to the corresponding parameters throughout this command. For example, if they chose \"MoSCoW\", use only MoSCoW prioritization in Step 7 instead of the full multi-factor algorithm. If they chose \"CSV only\", generate only the CSV output in Step 13.
+
 ### Step 3: Parse Requirements
 
 For each requirement in the requirements document (`ARC-*-REQ-*.md`), extract:

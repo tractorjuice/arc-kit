@@ -5,6 +5,9 @@ MODEL=$(echo "$input" | jq -r '.model.display_name')
 DIR=$(echo "$input" | jq -r '.workspace.current_dir')
 PCT=$(echo "$input" | jq -r '.context_window.used_percentage // 0' | cut -d. -f1)
 VERSION=$(echo "$input" | jq -r '.version')
+CONTEXT_SIZE=$(echo "$input" | jq -r '.context_window.context_window_size // 0')
+TOTAL_INPUT=$(echo "$input" | jq -r '.context_window.total_input_tokens // 0')
+TOTAL_OUTPUT=$(echo "$input" | jq -r '.context_window.total_output_tokens // 0')
 
 CYAN='\033[36m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'; BLUE='\033[34m'; RESET='\033[0m'
 
@@ -20,4 +23,6 @@ BRANCH=""
 git rev-parse --git-dir > /dev/null 2>&1 && BRANCH=" | 🌿 $(git branch --show-current 2>/dev/null)"
 
 echo -e "${CYAN}[$MODEL]${RESET} 📁 ${DIR##*/}$BRANCH | ${BLUE}v${VERSION}${RESET}"
-echo -e "${BAR_COLOR}${BAR}${RESET} ${PCT}% context used"
+TOTAL_USED=$((TOTAL_INPUT + TOTAL_OUTPUT))
+CONTEXT_K=$((CONTEXT_SIZE / 1000))
+echo -e "${BAR_COLOR}${BAR}${RESET} ${PCT}% context used (${TOTAL_USED}/${CONTEXT_SIZE} tokens | ${CONTEXT_K}K window)"

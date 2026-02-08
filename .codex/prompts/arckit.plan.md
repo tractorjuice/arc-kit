@@ -81,6 +81,24 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
+## Step 1c: Interactive Configuration
+
+Before determining project parameters, use the **AskUserQuestion** tool to gather user preferences. **Skip any question where the user has already specified their preference in the arguments.**
+
+**Question 1** — header: `Approach`, multiSelect: false
+> "What delivery approach should this project follow?"
+- **Agile GDS (Recommended)**: Discovery, Alpha, Beta, Live phases with iterative sprints — standard for UK Government
+- **Waterfall**: Sequential phases with formal stage gates — suited for fixed-scope, compliance-heavy projects
+- **Hybrid**: Agile delivery within waterfall governance gates — common for large programmes with external vendors
+
+**Question 2** — header: `Complexity`, multiSelect: false
+> "What is the expected project complexity?"
+- **Small (3-6 months)**: Under 30 requirements, 1-2 integrations, standard technology
+- **Medium (6-12 months)**: 30-100 requirements, 3-5 integrations, some custom development
+- **Large (12-24 months)**: 100+ requirements, 5+ integrations, significant custom development, multiple compliance regimes
+
+Apply the user's selections when calculating timeline durations and structuring the Gantt chart. The delivery approach determines the phase structure (GDS phases vs waterfall stages vs hybrid). The complexity tier determines phase durations in Step 2 below.
+
 ## Step 2: Determine Project Complexity
 
 Based on artifacts and user input, classify the project:

@@ -83,7 +83,26 @@ You are helping an enterprise architect generate a comprehensive Statement of Wo
 
    **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
-5. **Generate comprehensive SOW** with these sections:
+5. **Interactive Configuration**:
+
+   Before generating the SOW, use the **AskUserQuestion** tool to gather procurement preferences. **Skip any question the user has already answered in their arguments.**
+
+   **Question 1** — header: `Contract`, multiSelect: false
+   > \"What contract type should the SOW specify?\"
+   - **Fixed-price (Recommended)**: Vendor commits to delivering scope for agreed price — lower risk for buyer, requires well-defined requirements
+   - **Time & Materials**: Pay for actual effort — flexible scope, higher cost risk, suited for discovery/R&D
+   - **Hybrid**: Fixed-price for defined deliverables + T&M for change requests — balanced risk sharing
+
+   **Question 2** — header: `Weighting`, multiSelect: false
+   > \"How should vendor proposals be evaluated?\"
+   - **60% Technical / 40% Cost (Recommended)**: Standard weighting — prioritizes quality while maintaining cost discipline
+   - **70% Technical / 30% Cost**: Quality-first — for complex or high-risk projects where technical excellence is critical
+   - **50% Technical / 50% Cost**: Balanced — for commodity procurements with well-understood requirements
+   - **80% Technical / 20% Cost**: Innovation-focused — for R&D, AI, or cutting-edge technology projects
+
+   Apply the user's selections: the contract type determines the pricing structure, payment terms, and risk allocation sections. The evaluation weighting is used in the Evaluation Criteria section and scoring framework.
+
+6. **Generate comprehensive SOW** with these sections:
 
    **Executive Summary**:
    - Project overview and objectives
@@ -144,18 +163,18 @@ You are helping an enterprise architect generate a comprehensive Statement of Wo
    - Warranties and support
    - Termination clauses
 
-6. **Ensure alignment**:
+7. **Ensure alignment**:
    - Cross-reference architecture principles from any `ARC-000-PRIN-*.md` file in `projects/000-global/`
    - Ensure all requirements from the requirements document are included
    - Add validation gates that align with principles
 
-7. **Make it RFP-ready**:
+8. **Make it RFP-ready**:
    - Use formal language appropriate for legal review
    - Be specific and unambiguous
    - Include submission instructions and deadline
    - Specify format requirements (e.g., \"proposals must be PDF\")
 
-8. **Write the output**:
+9. **Write the output**:
    - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-SOW-v${VERSION}.md`
    - Use the exact template structure
 
@@ -258,7 +277,7 @@ The footer should be populated with:
 ```
 
 
-9. **Summarize what you created**:
+10. **Summarize what you created**:
    - Key scope items
    - Major deliverables
    - Suggested timeline

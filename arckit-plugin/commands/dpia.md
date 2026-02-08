@@ -69,6 +69,25 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
+### Step 0c: Interactive Configuration
+
+Before generating the DPIA, use the **AskUserQuestion** tool to gather the assessment scope. **Skip if the user has already specified scope in their arguments.**
+
+**Question 1** — header: `Scope`, multiSelect: false
+> "What is the scope of this Data Protection Impact Assessment?"
+- **Full system (Recommended)**: Assess all personal data processing across the entire system — required for new systems or major changes
+- **Specific feature or module**: Assess a single feature that introduces new personal data processing (e.g., a new AI profiling feature)
+- **Specific data flow**: Assess a particular data flow involving personal data (e.g., third-party data sharing, international transfer)
+
+**Question 2** — header: `Consultation`, multiSelect: false
+> "How should data subject consultation be approached?"
+- **Surveys (Recommended)**: Online questionnaires to affected user groups — scalable and documented
+- **Interviews**: One-on-one or small group discussions — deeper insights for sensitive processing
+- **Workshops**: Facilitated sessions with representative data subjects — collaborative and thorough
+- **Not applicable**: Data subjects cannot reasonably be consulted (e.g., law enforcement, national security)
+
+Apply the user's selections: the scope determines which data model entities and processing activities to assess. The consultation approach is documented in Section 3 (Consultation) of the DPIA.
+
 ### Step 1: Identify or Create Project
 
 Use the `create-project.sh` script to find or create the project directory:

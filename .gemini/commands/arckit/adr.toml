@@ -62,6 +62,25 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
+### 1c. **Interactive Configuration**:
+
+Before creating the ADR, use the **AskUserQuestion** tool to gather key decision parameters. **Skip any question where the user has already provided a clear answer in their arguments.**
+
+**Question 1** — header: `Escalation`, multiSelect: false
+> \"What escalation level does this architectural decision require?\"
+- **Team**: Local implementation decision (frameworks, libraries, testing approaches)
+- **Cross-team**: Affects multiple teams (integration patterns, shared services, APIs)
+- **Department (Recommended)**: Department-wide impact (technology standards, cloud providers, security frameworks)
+- **Cross-government**: National infrastructure or cross-department interoperability
+
+**Question 2** — header: `Options`, multiSelect: false
+> \"How many options should be evaluated (plus a 'Do Nothing' baseline)?\"
+- **3 options (Recommended)**: Standard analysis — Do Nothing + 2 alternatives provides clear comparison
+- **2 options**: Quick decision — Do Nothing + 1 proposed approach for straightforward choices
+- **4+ options**: Comprehensive analysis — Do Nothing + 3+ alternatives for complex technology selections
+
+Apply the user's selections: the escalation level determines the governance forum and stakeholder RACI in the ADR. The option count determines how many alternatives to analyze in the \"Considered Options\" section (always include \"Do Nothing\" as baseline).
+
 ### 2. **Create or find the project**:
    - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create project structure
    - Parse the JSON output to get the project directory path and project ID

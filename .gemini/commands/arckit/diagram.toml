@@ -75,6 +75,21 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 **Important**: This command works without external documents. They enhance output quality but are never blocking.
 
+## Step 1c: Interactive Configuration
+
+If the user has **not** specified a diagram type in their arguments (e.g., they just ran `/arckit.diagram` without \"context\", \"container\", \"deployment\", etc.), use the **AskUserQuestion** tool to ask:
+
+**Question 1** — header: `Diagram type`, multiSelect: false
+> \"What type of architecture diagram should be generated?\"
+- **C4 Context (Recommended)**: System boundary with users and external systems — best for stakeholder communication
+- **C4 Container**: Technical containers with technology choices — best after HLD phase
+- **Deployment**: Infrastructure topology showing cloud resources and network zones
+- **Sequence**: API interactions and request/response flows for key scenarios
+
+If the user specified a type (e.g., `/arckit.diagram deployment`), skip this question and proceed directly.
+
+Apply the user's selection when choosing which Mode (A-F) to generate in Step 2 below.
+
 ## Step 2: Determine the Diagram Type
 
 Based on the user's request and available artifacts, select the appropriate diagram type:
