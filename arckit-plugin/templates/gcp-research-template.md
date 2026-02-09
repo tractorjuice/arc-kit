@@ -109,7 +109,7 @@ This document presents Google Cloud-specific technology research findings for th
 
 | Pillar | Rating | Notes |
 |--------|--------|-------|
-| **System Design** | ⭐⭐⭐⭐⭐ | [Design for scale, modularity, managed services] |
+| **Sustainability** | ⭐⭐⭐⭐⭐ | [Carbon-aware workloads, efficient resource utilisation, region selection] |
 | **Operational Excellence** | ⭐⭐⭐⭐⭐ | [Cloud Monitoring, Cloud Logging, SRE practices] |
 | **Security, Privacy and Compliance** | ⭐⭐⭐⭐⭐ | [IAM, encryption, VPC Service Controls, SCC] |
 | **Reliability** | ⭐⭐⭐⭐⭐ | [Multi-zone, regional, auto-scaling, backup] |
@@ -488,7 +488,7 @@ options:
 For SECRET data classification:
 - **Google Cloud Government**: US-only (Google Cloud Government is not available in the UK)
 - **Note**: Google Cloud does not offer a UK sovereign cloud
-- **Alternative**: Use AWS GovCloud or Azure Government UK for SECRET workloads
+- **Alternative**: Use AWS GovCloud or Microsoft Cloud for Sovereignty for SECRET workloads
 - **Recommendation**: Google Cloud is suitable for OFFICIAL and OFFICIAL-SENSITIVE with appropriate controls
 
 ### Data Residency

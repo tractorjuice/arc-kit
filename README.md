@@ -30,7 +30,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 ```
 /plugin marketplace add tractorjuice/arc-kit
 ```
-Then install from the Discover tab. The plugin provides all 46 commands, autonomous agents, and bundled MCP servers (AWS Knowledge + Microsoft Learn). Updates are automatic via the marketplace.
+Then install from the Discover tab. The plugin provides all 47 commands, autonomous agents, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Updates are automatic via the marketplace.
 
 **Gemini CLI / Codex CLI** — install the ArcKit CLI:
 ```bash
@@ -44,7 +44,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v2.3.1](https://github.com/tractorjuice/arc-kit/releases/tag/v2.3.1)
+**Latest Release**: [v2.4.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.4.0)
 
 ### Initialize a Project
 
@@ -735,7 +735,7 @@ Customize ArcKit templates without modifying defaults:
 
 ## Complete Command Reference
 
-All 46 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 47 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
@@ -987,7 +987,7 @@ arckit init my-project
 Full guidance lives in `docs/` and the static site.
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 46×46 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 47×47 command matrix.
 - Traceability: [docs/guides/traceability.md](docs/guides/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit
@@ -1078,7 +1078,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v2.3.1](https://github.com/tractorjuice/arc-kit/releases/tag/v2.3.1)
+- **Latest Version**: [v2.4.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.4.0)
 
 ---
 

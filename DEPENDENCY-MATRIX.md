@@ -288,8 +288,8 @@ principles-compliance → analyze → service-assessment → story
 - **ArcKit Version**: 1.5.0
 - **Matrix Date**: 2026-02-09
 - **Commands Documented**: 47
-- **Matrix Rows**: 49 (46 document-generating commands + 2 external documents + 1 utility)
-- **Note**: `/arckit.customize` (47th command) is a utility command not in the matrix — it has no dependencies and produces no outputs consumed by other commands
+- **Matrix Rows**: 48 (46 document-generating commands + 2 external documents)
+- **Note**: `/arckit.customize` is a utility command not in the matrix — it has no dependencies and produces no outputs consumed by other commands
 
 ## Changelog
 

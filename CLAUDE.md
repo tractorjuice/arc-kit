@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing 46 slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI) to generate architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
+ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing 47 slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI) to generate architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
 
 **Two distribution formats** exist side-by-side in this repo:
 1. **CLI package** (`src/arckit_cli/`) -- Python CLI installed via `pip`/`uv`, runs `arckit init` to scaffold projects for **Gemini CLI** and **Codex CLI** (copies templates/commands into them)
@@ -94,6 +94,7 @@ Some commands delegate to **autonomous agents** (`arckit-plugin/agents/arckit-{n
 | `arckit-datascout` | `/arckit.datascout` | Data source discovery, API catalogue search, scoring |
 | `arckit-aws-research` | `/arckit.aws-research` | AWS service research via AWS Knowledge MCP |
 | `arckit-azure-research` | `/arckit.azure-research` | Azure service research via Microsoft Learn MCP |
+| `arckit-gcp-research` | `/arckit.gcp-research` | GCP service research via Google Developer Knowledge MCP |
 
 **Agent file structure** (`arckit-plugin/agents/arckit-{name}.md`):
 ```yaml

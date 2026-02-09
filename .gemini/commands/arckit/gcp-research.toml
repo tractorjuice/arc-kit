@@ -98,7 +98,7 @@ For each requirement category, use MCP tools extensively:
 
 **Architecture Framework Assessment** (all 6 pillars):
 - `search_documents`: \"Google Cloud Architecture Framework [pillar] [service]\"
-- Pillars: System Design, Operational Excellence, Security Privacy and Compliance, Reliability, Cost Optimization, Performance Optimization
+- Pillars: Operational Excellence, Security Privacy and Compliance, Reliability, Cost Optimization, Performance Optimization, Sustainability
 
 **Security Command Center Mapping**:
 - `search_documents`: \"Security Command Center [finding category]\"

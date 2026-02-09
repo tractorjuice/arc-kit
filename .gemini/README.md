@@ -392,12 +392,12 @@ EOF
 
 ## Version
 
-**Current Release: v1.5.0 (46 commands)**
+**Current Release: v1.5.0 (47 commands)**
 
-ArcKit 1.5.0 - Template Customization, Trello Export & Status Badges. All 46 commands available in Gemini CLI.
+ArcKit 1.5.0 - Template Customization, Trello Export & Status Badges. All 47 commands available in Gemini CLI.
 
 **ArcKit 1.5.0 Highlights:**
-- 46 slash commands for complete architecture governance
+- 47 slash commands for complete architecture governance
 - UK Government compliance (TCoP, Service Standard, Secure by Design, AI Playbook)
 - HM Treasury frameworks (Green Book SOBC, Orange Book Risk Management)
 - Multi-AI support (Claude Code, OpenAI Codex CLI, Gemini CLI)
