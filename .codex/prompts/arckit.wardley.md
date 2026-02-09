@@ -330,8 +330,8 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${VERSION}")
-# Example output: ARC-001-WARD-v1.0
+DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/wardley-maps")
+# Example output: ARC-001-WARD-001-v1.0.md
 ```
 
 **Populate Required Fields**:

@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.3.1] - 2026-02-09
+
+### Fixed
+
+- Pass directory argument to `--next-num` in multi-instance commands (wardley, diagram, data-mesh-contract) to prevent unbound variable crash
+- Added guard in `generate-document-id.sh` to give a clear error message when directory is missing
+
+---
+
 ## [2.2.1] - 2026-02-09
 
 ### Fixed
