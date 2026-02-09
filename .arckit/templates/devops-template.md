@@ -108,18 +108,19 @@
 | GitHub Flow | `main` + feature branches + PRs |
 
 ```mermaid
-gitGraph
-    commit id: "Initial"
-    branch develop
-    checkout develop
-    commit id: "Feature work"
-    branch feature/ABC-123
-    checkout feature/ABC-123
-    commit id: "Add feature"
-    checkout develop
-    merge feature/ABC-123
-    checkout main
-    merge develop tag: "v1.0.0"
+flowchart LR
+    subgraph Branches
+        M[main] --- D[develop]
+        D --- F["feature/*"]
+        D --- R["release/*"]
+        M --- H["hotfix/*"]
+    end
+
+    F -->|PR & merge| D
+    D -->|Release cut| R
+    R -->|Merge & tag| M
+    H -->|Hotfix merge| M
+    H -.->|Cherry-pick| D
 ```
 
 ### Branch Protection Rules

@@ -113,6 +113,10 @@ Scan for external (non-ArcKit) documents the user may have provided:
 - NFR-A (Availability) → Deployment strategies (blue-green, canary)
 - FR (Functional) → Environment needs (dev, staging, prod)
 
+### Diagram Guidelines
+
+**IMPORTANT**: Do NOT use Mermaid `gitGraph` diagrams — they have limited renderer support and fail in many viewers (GitHub, VS Code, etc.) with "No diagram type detected" errors. Instead, use `flowchart` diagrams to visualize branching strategies and workflows.
+
 ### Phase 3: Generate DevOps Strategy
 
 **Read the template** (with user override support):
