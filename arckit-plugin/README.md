@@ -61,6 +61,7 @@ After installing the plugin:
 | Component | Count | Description |
 |-----------|-------|-------------|
 | Commands | 46 | Slash commands for architecture artifacts |
+| Skills | 1 | Conversational Wardley Mapping with interactive guidance |
 | Agents | 4 | Autonomous research agents |
 | Templates | 45 | Document templates with UK Government compliance |
 | Scripts | 6 | Helper bash scripts |
@@ -121,6 +122,12 @@ When ArcKit plugin updates with new features:
 - Your customized templates are **not** automatically updated
 - Compare your templates with plugin versions periodically
 - Merge new sections you want to adopt
+
+## Skills
+
+The plugin includes conversational skills that activate automatically when you ask relevant questions:
+
+- **Wardley Mapping** — Ask about evolution stages, doctrine maturity, build vs. buy decisions, gameplay patterns, or create interactive maps. For formal documents, use `/arckit:wardley` instead.
 
 ## Commands Overview
 

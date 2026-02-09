@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.0] - 2026-02-09
+
+### Added
+
+- **Wardley Mapping skill** in plugin (`skills/wardley-mapping/`) for conversational Wardley Mapping with interactive AskUserQuestion guidance
+- 5 shared reference files: evolution stages, doctrine, gameplay patterns, climatic patterns, and mapping examples
+- Enhanced `/arckit:wardley` command reads shared reference files for deeper doctrine, gameplay, and climatic pattern analysis
+
 ## [2.1.9] - 2026-02-08
 
 ### Added

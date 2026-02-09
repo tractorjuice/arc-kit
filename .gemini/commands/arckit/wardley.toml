@@ -241,6 +241,17 @@ For each component, determine:
    - Rapid commoditization risk
    - Skills gap risk
 
+### Enhanced Strategic Analysis
+
+To deepen strategic analysis beyond build vs buy, read and apply these reference files:
+
+- **Doctrine assessment**: Read `${CLAUDE_PLUGIN_ROOT}/skills/wardley-mapping/references/doctrine.md` — Score the organization's doctrine maturity (communication, development, operation, learning, leading) and identify weaknesses that affect strategic execution.
+- **Gameplay patterns**: Read `${CLAUDE_PLUGIN_ROOT}/skills/wardley-mapping/references/gameplay-patterns.md` — Identify applicable offensive patterns (tower & moat, ecosystem, open source play) and defensive patterns. Flag anti-patterns (legacy trap, premature innovation).
+- **Climatic patterns**: Read `${CLAUDE_PLUGIN_ROOT}/skills/wardley-mapping/references/climatic-patterns.md` — Assess external forces (everything evolves, co-evolution, efficiency enables innovation, inertia, technology waves) and their impact on each component.
+- **Mapping examples**: Read `${CLAUDE_PLUGIN_ROOT}/skills/wardley-mapping/references/mapping-examples.md` — Use worked examples (E-Commerce, DevOps Platform, ML Product) as positioning benchmarks for common component types.
+
+Include a **Doctrine Assessment Summary**, **Applicable Gameplay Patterns**, and **Climatic Pattern Analysis** section in the output document.
+
 ## Step 4: UK Government Specific Analysis (if applicable)
 
 If this is a UK Government project, add:

@@ -130,3 +130,11 @@ Visualize at: https://create.wardleymaps.ai
 3. **Position Over Labeling**: Where something is matters more than what it's called.
 4. **Context Specific**: Maps are specific to your organization and time.
 5. **Communication Tool**: Maps facilitate strategic conversations.
+
+---
+
+## Quick Questions? Use the Wardley Mapping Skill
+
+For casual Wardley Mapping questions — evolution stage lookups, doctrine assessments, build vs. buy guidance, or interactive map creation — just ask naturally. The **wardley-mapping** skill activates automatically for conversational queries without generating formal documents.
+
+Use `/arckit:wardley` when you need a **formal architecture artifact** with document control, project integration, and UK Government compliance.
