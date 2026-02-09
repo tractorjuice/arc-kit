@@ -35,6 +35,11 @@ while [[ $# -gt 0 ]]; do
             shift
             ;;
         --next-num)
+            if [[ $# -lt 2 || "$2" == --* ]]; then
+                echo "Error: --next-num requires a directory argument" >&2
+                echo "Usage: $0 PROJECT_ID DOC_TYPE [VERSION] [--filename] [--next-num DIR]" >&2
+                exit 1
+            fi
             NEXT_NUM_DIR="$2"
             shift 2
             ;;

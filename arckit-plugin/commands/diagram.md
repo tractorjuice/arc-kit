@@ -530,8 +530,8 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DIAG" "${VERSION}")
-# Example output: ARC-001-DIAG-v1.0
+DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DIAG" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/diagrams")
+# Example output: ARC-001-DIAG-001-v1.0.md
 ```
 
 **Populate Required Fields**:
