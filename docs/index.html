@@ -1396,7 +1396,7 @@ flowchart TD
             <div class="app-ai-card">
                 <h3 class="govuk-heading-m">Claude Code</h3>
                 <strong class="govuk-tag govuk-tag--green">Primary</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Install via the <strong>ArcKit plugin</strong>. Provides slash commands, autonomous agents for research-heavy tasks, and bundled MCP servers (AWS Knowledge + Microsoft Learn).</p>
+                <p class="govuk-body govuk-!-margin-top-3">Install via the <strong>ArcKit plugin</strong>. Provides slash commands, autonomous agents for research-heavy tasks, a conversational Wardley Mapping skill, and bundled MCP servers (AWS Knowledge + Microsoft Learn).</p>
                 <p class="govuk-body"><strong>Best for:</strong> Complex reasoning, architecture design, comprehensive documentation generation. Agents isolate web research context automatically.</p>
                 <p class="govuk-body"><strong>Installation:</strong> <code>/plugin marketplace add tractorjuice/arc-kit</code></p>
             </div>
@@ -1424,15 +1424,15 @@ flowchart TD
 
         <details class="govuk-details govuk-!-margin-top-4">
             <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">Why commands, not skills?</span>
+                <span class="govuk-details__summary-text">Commands vs. skills</span>
             </summary>
             <div class="govuk-details__text">
-                <p class="govuk-body">Claude Code automatically exposes ArcKit commands as <strong>skills</strong> (they appear in the skills list and can be matched by natural language). ArcKit intentionally uses <strong>slash commands</strong> rather than standalone skills because:</p>
+                <p class="govuk-body">ArcKit uses <strong>slash commands</strong> for formal document generation and a <strong>skill</strong> for conversational guidance:</p>
                 <ul class="govuk-list govuk-list--bullet">
-                    <li><strong>Deliberate invocation required</strong> &mdash; Every command generates a heavyweight governance document (requirements spec, risk register, DPIA, etc.). Auto-triggering from conversational intent would waste significant time and tokens.</li>
-                    <li><strong>Dependency ordering</strong> &mdash; Commands follow a deliberate sequence (principles &rarr; stakeholders &rarr; requirements &rarr; data-model &rarr; etc.). Skills that auto-trigger could run out of order.</li>
-                    <li><strong>User input via <code>$ARGUMENTS</code></strong> &mdash; Most commands accept context from the user (project name, scope, constraints). The command system handles this with <code>$ARGUMENTS</code> substitution.</li>
-                    <li><strong>Best of both worlds</strong> &mdash; Since Claude Code exposes commands as skills automatically, users get explicit <code>/arckit.requirements</code> invocation AND natural language matching when Claude recognises intent &mdash; no restructuring needed.</li>
+                    <li><strong>Commands</strong> (<code>/arckit:requirements</code>, <code>/arckit:wardley</code>, etc.) &mdash; Generate heavyweight governance documents with document control, project integration, and compliance sections. Deliberate invocation prevents accidental triggering.</li>
+                    <li><strong>Wardley Mapping skill</strong> &mdash; Activates automatically for casual questions about evolution stages, doctrine maturity, build vs. buy decisions, and interactive map creation. No formal document output.</li>
+                    <li><strong>Dependency ordering</strong> &mdash; Commands follow a deliberate sequence (principles &rarr; stakeholders &rarr; requirements &rarr; data-model &rarr; etc.). The skill is standalone and order-independent.</li>
+                    <li><strong>Best of both worlds</strong> &mdash; Claude Code also exposes commands as skills automatically, so users get explicit <code>/arckit:requirements</code> invocation AND natural language matching when Claude recognises intent.</li>
                 </ul>
             </div>
         </details>
