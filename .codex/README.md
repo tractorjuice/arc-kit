@@ -507,17 +507,17 @@ chmod +x .arckit/scripts/bash/*.sh
 
 ## Version
 
-**Current Release: v1.5.0 (47 commands)**
+**Current Release: v1.5.0 (48 commands)**
 
 **ArcKit 1.5.0 - Template Customization, Trello Export & Status Badges**
 
 This release marks ArcKit as production-ready for enterprise architecture governance workflows:
-- 47 slash commands for complete architecture lifecycle
+- 48 slash commands for complete architecture lifecycle
 - UK Government compliance (TCoP, Service Standard, Secure by Design, AI Playbook)
 - HM Treasury frameworks (Green Book SOBC, Orange Book Risk Management)
 - Multi-AI support (Claude Code, OpenAI Codex CLI, Gemini CLI)
 
-ArcKit v1.5.0 (47 commands)
+ArcKit v1.5.0 (48 commands)
 
 **What was New in v0.9.0:**
 - 🔄 **New Command**: `/prompts:arckit.data-mesh-contract` – Create federated data product contracts (ODCS v3.0.2)

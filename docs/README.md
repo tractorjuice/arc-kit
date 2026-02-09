@@ -112,6 +112,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 
 | Command | Guide | Status |
 |---------|-------|--------|
+| `/arckit.init` | [upgrading.md](guides/upgrading.md) | ✅ Complete |
 | `/arckit.plan` | [plan.md](guides/plan.md) | ✅ Complete |
 | `/arckit.principles` | [principles.md](guides/principles.md) | ✅ Complete |
 | `/arckit.stakeholders` | [stakeholders.md](guides/stakeholders.md) | ✅ Complete |
@@ -160,7 +161,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.trello` | [trello.md](guides/trello.md) | ✅ Complete |
 | `/arckit.customize` | [customize.md](guides/customize.md) | ✅ Complete |
 
-**Coverage**: 47/47 commands documented (100%)
+**Coverage**: 48/48 commands documented (100%)
 
 ---
 
