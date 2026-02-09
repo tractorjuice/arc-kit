@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Pass directory argument to `--next-num` in multi-instance commands (wardley, diagram, data-mesh-contract) to prevent unbound variable crash
 - Added guard in `generate-document-id.sh` to give a clear error message when directory is missing
+- Replace Mermaid `gitGraph` with `flowchart` in devops template — gitGraph has limited renderer support and fails with "No diagram type detected" errors in GitHub/VS Code
+- Added diagram guidelines to devops command to prevent gitGraph usage in generated documents
 
 ---
 
