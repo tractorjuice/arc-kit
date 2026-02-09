@@ -190,6 +190,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | **Research** | | | |
 | | AWRS | `ARC-*-AWRS-*.md` | AWS Research |
 | | AZRS | `ARC-*-AZRS-*.md` | Azure Research |
+| | GCRS | `ARC-*-GCRS-*.md` | GCP Research |
 | | DSCT | `ARC-*-DSCT-*.md` | Data Source Discovery |
 | **Other** | | | |
 | | STORY | `ARC-*-STORY-*.md` | Project Story |

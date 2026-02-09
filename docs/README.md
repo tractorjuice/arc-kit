@@ -43,7 +43,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 These commands require [MCP servers](https://modelcontextprotocol.io/) for authoritative cloud documentation:
 - [Azure Research](guides/azure-research.md) - `/arckit.azure-research` (Requires Microsoft Learn MCP)
 - [AWS Research](guides/aws-research.md) - `/arckit.aws-research` ⭐ NEW (Requires AWS Knowledge MCP)
-- GCP Research - `/arckit.gcp-research` 🔮 Planned
+- [GCP Research](guides/gcp-research.md) - `/arckit.gcp-research` ⭐ NEW (Requires Google Developer Knowledge MCP)
 
 ### Procurement
 17. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
@@ -125,6 +125,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.research` | [research.md](guides/research.md) | ✅ Complete |
 | `/arckit.azure-research` | [azure-research.md](guides/azure-research.md) | ✅ Complete |
 | `/arckit.aws-research` | [aws-research.md](guides/aws-research.md) | ✅ Complete |
+| `/arckit.gcp-research` | [gcp-research.md](guides/gcp-research.md) | ✅ Complete |
 | `/arckit.datascout` | [datascout.md](guides/datascout.md) | ✅ Complete |
 | `/arckit.wardley` | [wardley-mapping.md](guides/wardley-mapping.md) | ✅ Complete |
 | `/arckit.roadmap` | [roadmap.md](guides/roadmap.md) | ✅ Complete |
@@ -159,7 +160,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.trello` | [trello.md](guides/trello.md) | ✅ Complete |
 | `/arckit.customize` | [customize.md](guides/customize.md) | ✅ Complete |
 
-**Coverage**: 46/46 commands documented (100%)
+**Coverage**: 47/47 commands documented (100%)
 
 ---
 

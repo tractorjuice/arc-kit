@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Google Cloud Research** (`/arckit:gcp-research`) — new command + agent for GCP-specific technology research using the [Google Developer Knowledge MCP](https://developerknowledge.googleapis.com/mcp) server
+  - Mirrors the existing AWS and Azure research commands (thin wrapper + autonomous agent)
+  - Architecture Framework assessment (6 pillars: System Design, Operational Excellence, Security/Privacy/Compliance, Reliability, Cost Optimization, Performance Optimization)
+  - Security Command Center mapping (CIS Benchmark for GCP, vulnerability/misconfiguration/threat findings)
+  - UK Government: G-Cloud procurement, europe-west2 (London) data residency, NCSC alignment
+  - Cost optimization: Committed Use Discounts (CUDs), Sustained Use Discounts (SUDs), Spot VMs, E2 machine types
+  - IaC: Terraform (primary), Cloud Build CI/CD pipelines
+  - Doc type code: `GCRS`
+- Added `google-developer-knowledge` MCP server to plugin `.mcp.json` (requires `GOOGLE_API_KEY` env var)
+- Added GCP research template, guide, and dependency matrix entry
+
 ---
 
 ## [2.3.1] - 2026-02-09
