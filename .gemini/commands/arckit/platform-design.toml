@@ -57,7 +57,13 @@ Scan the project directory for existing artifacts and read them to inform this p
 
 **Project Management:**
 
-Use the bash script to create or find the project:
+First, check for existing projects:
+
+```bash
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json
+```
+
+If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
 
 ```bash
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json

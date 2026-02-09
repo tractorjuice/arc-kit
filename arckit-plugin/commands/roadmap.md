@@ -65,7 +65,13 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 ### 1. Identify or Create Project
 
-Run the project creation script to get the project directory:
+First, check for existing projects:
+
+```bash
+bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json
+```
+
+If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
 
 ```bash
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "[project-name-from-user-input]" --json

@@ -41,9 +41,10 @@ $ARGUMENTS
    - **SOBC**: Business benefits and cost targets for BR traceability
 
 2. **Create or find the project**:
-   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create project structure
+   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to check for existing projects
+   - If the user specifies an existing project number (e.g., "001") or the project name matches an existing project, use that directory
+   - Otherwise, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project
    - Parse the JSON output to get the project directory path
-   - Or if the user specifies an existing project number (e.g., "001"), use that
 
 3. **Check for External Documents** (optional):
 

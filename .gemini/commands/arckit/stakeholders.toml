@@ -13,9 +13,10 @@ You are helping an enterprise architect or project manager understand stakeholde
 ## Instructions
 
 1. **Create or find the project**:
-   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create project structure
+   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to check for existing projects
+   - If the user specifies an existing project number (e.g., \"001\") or the project name matches an existing project, use that directory
+   - Otherwise, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create a new project
    - Parse the JSON output to get the project directory path
-   - Or if the user specifies an existing project number (e.g., \"001\"), use that directory
 
 2. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/stakeholder-drivers-template.md` exists in the project root

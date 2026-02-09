@@ -15,7 +15,9 @@ You are helping an enterprise architect generate a comprehensive Statement of Wo
 1. **Find the project**: The user should specify a project name or number
    - Example: \"Generate SOW for payment gateway modernization\"
    - Example: \"Create SOW for project 001\"
-   - If project doesn't exist, create it first using:
+   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to check for existing projects
+   - If the user specifies an existing project or the name matches, use that directory
+   - If project doesn't exist, create it using:
      ```bash
      ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"project-name\" --json
      ```

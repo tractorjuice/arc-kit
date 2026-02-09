@@ -82,9 +82,10 @@ Before creating the ADR, use the **AskUserQuestion** tool to gather key decision
 Apply the user's selections: the escalation level determines the governance forum and stakeholder RACI in the ADR. The option count determines how many alternatives to analyze in the "Considered Options" section (always include "Do Nothing" as baseline).
 
 ### 2. **Create or find the project**:
-   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create project structure
+   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to check for existing projects
+   - If the user specifies an existing project number (e.g., "001") or the project name matches an existing project, use that directory
+   - Otherwise, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project
    - Parse the JSON output to get the project directory path and project ID
-   - Or if the user specifies an existing project number (e.g., "001"), use that
 
 ### 3. **Create decisions directory and determine ADR number**:
 ```bash

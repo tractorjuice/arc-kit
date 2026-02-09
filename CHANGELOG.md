@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.2.1] - 2026-02-09
+
+### Fixed
+
+- Added explicit `list-projects.sh --json` step to 9 commands (stakeholders, requirements, adr, sow, roadmap, strategy, dpia, platform-design, data-mesh-contract) to prevent wrong script paths in plugin-based repos
+
+---
+
 ## [2.2.0] - 2026-02-09
 
 ### Added
