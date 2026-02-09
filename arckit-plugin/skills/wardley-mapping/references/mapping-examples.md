@@ -113,6 +113,41 @@ e_commerce_analysis:
         rationale: "Enables differentiation in personalization"
 ```
 
+### Quantitative Positioning
+
+Applying evolution scoring and decision metrics (see [Mathematical Models](mathematical-models.md)) to validate the qualitative analysis above.
+
+#### Evolution Scoring
+
+| Component | Ubiquity (U) | Certainty (C) | E(c) = (U+C)/2 | Stage | Qualitative Match? |
+|-----------|-------------|---------------|-----------------|-------|--------------------|
+| Customer Experience | 0.40 | 0.30 | 0.35 | Custom | Yes (0.35 in analysis) |
+| Personalization Engine | 0.25 | 0.35 | 0.30 | Custom | Yes (0.30 in analysis) |
+| Shopping Cart | 0.75 | 0.70 | 0.73 | Product | Close (0.65 in analysis — could revise up) |
+| Payment Gateway | 0.90 | 0.85 | 0.88 | Commodity | Close (0.85 in analysis) |
+| Cloud Compute | 0.95 | 0.90 | 0.93 | Commodity | Close (0.90 in analysis) |
+
+The scoring confirms most qualitative positions. Shopping Cart scores higher (0.73) than the qualitative estimate (0.65) — suggesting it may be further toward commodity than initially assessed.
+
+#### Decision Metrics
+
+| Component | Visibility | Evolution | D(v) Differentiation | K(v) Commodity Leverage | Verdict |
+|-----------|-----------|-----------|----------------------|------------------------|---------|
+| Customer Experience | 0.90 | 0.35 | **0.59** | 0.07 | Invest to differentiate |
+| Personalization Engine | 0.55 | 0.30 | **0.39** | 0.32 | Invest — key differentiator |
+| Shopping Cart | 0.70 | 0.73 | 0.19 | 0.22 | Buy/configure — standard |
+| Payment Gateway | 0.40 | 0.88 | 0.05 | **0.53** | Outsource |
+| Cloud Compute | 0.15 | 0.93 | 0.01 | **0.79** | Consume as utility |
+
+#### Dependency Risk
+
+| Dependency | R(a,b) | Risk Level |
+|-----------|--------|------------|
+| Customer Experience → Personalization Engine | 0.90 × (1 - 0.30) = **0.63** | High — visible component depends on immature tech |
+| Checkout → Payment Gateway | 0.70 × (1 - 0.88) = **0.08** | Low — mature dependency |
+
+The high dependency risk (0.63) between Customer Experience and the Personalization Engine confirms the strategic recommendation to invest in the personalization engine — it's both a differentiator and a risk if left immature.
+
 ## Example 2: DevOps Platform
 
 ### Map

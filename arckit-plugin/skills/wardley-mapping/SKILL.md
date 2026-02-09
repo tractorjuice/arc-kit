@@ -1,6 +1,6 @@
 ---
 name: wardley-mapping
-description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, situational awareness, technology evolution, or competitive landscape. Covers creating maps, gameplay patterns, doctrine, build vs. buy, and inertia. Triggers: create a wardley map, map our value chain, what evolution stage is this component, should we build or buy, assess doctrine maturity, analyze competitive landscape, where should we invest vs outsource."
+description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, situational awareness, technology evolution, or competitive landscape. Covers creating maps, gameplay patterns, doctrine, build vs. buy, inertia, and quantitative analysis. Triggers: create a wardley map, map our value chain, what evolution stage is this component, should we build or buy, assess doctrine maturity, analyze competitive landscape, where should we invest vs outsource, score evolution, calculate ubiquity, quantitative positioning, evolution formula, differentiation pressure, commodity leverage, weak signal detection, readiness score."
 ---
 
 # Wardley Mapping
@@ -109,6 +109,21 @@ Add arrows showing how components are evolving. All components naturally drift r
 After drawing the map, apply the analysis checklist below, then review gameplay patterns in [references/gameplay-patterns.md](references/gameplay-patterns.md) and climatic patterns in [references/climatic-patterns.md](references/climatic-patterns.md) to identify strategic moves.
 
 Use AskUserQuestion to confirm priorities with the user before finalizing recommendations — e.g., "The map suggests these three strategic moves. Which areas are most important to your organization right now?"
+
+### Step 6: Quantitative Analysis (Optional)
+
+When the user asks for numeric precision, scoring, or data-driven positioning, apply the mathematical models from [references/mathematical-models.md](references/mathematical-models.md):
+
+1. **Evolution Scoring** — Score each component's Ubiquity (0-1) and Certainty (0-1), then calculate `E(c) = (U + C) / 2` to get a precise X-axis position. Use the rubrics in [references/evolution-stages.md](references/evolution-stages.md) for scoring guidance.
+
+2. **Decision Metrics** — For each component, calculate:
+   - **Differentiation Pressure**: `D(v) = visibility × (1 - evolution)` — high means invest to differentiate
+   - **Commodity Leverage**: `K(v) = (1 - visibility) × evolution` — high means outsource/consume
+   - **Dependency Risk**: `R(a,b) = visibility(a) × (1 - evolution(b))` — high means critical dependency on immature component
+
+3. **Weak Signal Detection** — When the user asks whether a component is about to transition stages, assess the four readiness factors (Concept, Technology, Suitability, Attitude) and calculate `R(t) = C × T × S × A`. A score above 0.7 signals imminent transition.
+
+Present results as a table alongside the qualitative analysis — the numbers should confirm or challenge the intuitive positioning, not replace it.
 
 ## Analysis Checklist
 
@@ -242,6 +257,7 @@ Consult these reference files for deeper analysis:
 - [Gameplay Patterns](references/gameplay-patterns.md) — Offensive/defensive strategic moves, build vs. buy vs. outsource, anti-patterns
 - [Doctrine](references/doctrine.md) — Universal strategy patterns and organizational maturity assessment
 - [Mapping Examples](references/mapping-examples.md) — Worked examples: E-Commerce, DevOps Platform, ML Product
+- [Mathematical Models](references/mathematical-models.md) — Evolution scoring formulas, decision metrics, weak signal detection
 
 ## ArcKit Integration
 

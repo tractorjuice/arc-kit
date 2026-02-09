@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.3.0] - 2026-02-09
+
+### Added
+
+- **Mathematical models** for Wardley Mapping skill — new `references/mathematical-models.md` with evolution scoring formulas, decision metrics (differentiation pressure, commodity leverage, dependency risk), and weak signal detection framework
+- Quantitative analysis triggers in skill description (score evolution, calculate ubiquity, differentiation pressure, commodity leverage, weak signal detection, readiness score)
+- Optional **Step 6: Quantitative Analysis** in SKILL.md mapping workflow
+- Numeric scoring rubric (ubiquity/certainty scales) added to `references/evolution-stages.md`
+- Quantitative positioning worked example added to E-Commerce Platform in `references/mapping-examples.md`
+
+---
+
 ## [2.2.1] - 2026-02-09
 
 ### Fixed

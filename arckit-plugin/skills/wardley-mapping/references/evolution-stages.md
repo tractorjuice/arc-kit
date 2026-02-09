@@ -81,6 +81,45 @@ evolution_stages:
 | **Failure Mode** | Research | Learning | Differentiation | Operational |
 | **Talent** | Pioneers | Settlers | Settlers-Planners | Town Planners |
 
+## Numeric Scoring
+
+For precise positioning, score a component on two dimensions — **Ubiquity** (how widespread) and **Certainty** (how standardized) — each on a 0.0 to 1.0 scale, then average them:
+
+```
+Evolution Score = (Ubiquity + Certainty) / 2
+```
+
+### Ubiquity Scale
+
+| Score | Label | Markers |
+|-------|-------|---------|
+| 0.0 - 0.2 | Rare/Novel | Only a few organizations; no established market |
+| 0.2 - 0.4 | Emerging | Early adopters; limited vendor options |
+| 0.4 - 0.6 | Common | Multiple vendors; analyst coverage; most large orgs aware |
+| 0.6 - 0.8 | Widespread | Industry standard; assumed capability |
+| 0.8 - 1.0 | Universal | Everywhere; pay-per-use available; not adopting is unusual |
+
+### Certainty Scale
+
+| Score | Label | Markers |
+|-------|-------|---------|
+| 0.0 - 0.2 | Undefined | No established practices; high variation |
+| 0.2 - 0.4 | Emerging | Some patterns forming; vendor-specific approaches |
+| 0.4 - 0.6 | Accepted | Recognized methodologies; training courses available |
+| 0.6 - 0.8 | Well-defined | Industry standards; compliance frameworks |
+| 0.8 - 1.0 | Standardized | ISO/formal standards; commoditized operations |
+
+### Score-to-Stage Mapping
+
+| Evolution Score | Stage |
+|----------------|-------|
+| 0.00 - 0.25 | Genesis |
+| 0.25 - 0.50 | Custom-Built |
+| 0.50 - 0.75 | Product |
+| 0.75 - 1.00 | Commodity |
+
+For detailed formulas (sigmoid variant, decision metrics, weak signals), see [Mathematical Models](mathematical-models.md).
+
 ## Positioning Criteria
 
 When placing a component on the evolution axis, assess:
