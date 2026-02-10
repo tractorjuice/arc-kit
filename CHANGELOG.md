@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Gemini extension workspace sandbox fix**: Extension commands now instruct the model to use `run_shell_command` (e.g., `cat`, `bash`) for accessing extension files at `~/.gemini/extensions/arckit/`, since Gemini CLI's `read_file` tool is restricted to the project workspace. Also rewrites `Read` instructions to `cat` commands in extension TOML output.
 - **CLI/Codex path resolution bug**: `${CLAUDE_PLUGIN_ROOT}` references in generated Gemini CLI TOML and Codex Markdown files are now rewritten to `.arckit` (project-local paths). Previously these paths were never resolved, breaking template and script references for Gemini CLI and Codex users.
 
 ### Changed

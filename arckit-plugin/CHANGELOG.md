@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Extension version tracks plugin version (currently v2.4.0)
 - `scripts/converter.py` now generates extension output alongside CLI and Codex formats, with path rewriting (`${CLAUDE_PLUGIN_ROOT}` -> `~/.gemini/extensions/arckit`)
 
+### Fixed
+
+- **Gemini extension workspace sandbox fix**: Extension commands prepend a file access instruction block telling the model to use `run_shell_command` instead of `read_file` for extension paths (Gemini CLI sandboxes `read_file` to the project directory). `Read` instructions are also rewritten to `cat` commands in extension output.
+
 ---
 
 ## [2.4.0] - 2026-02-09
