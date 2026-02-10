@@ -67,12 +67,40 @@ def rewrite_paths_for_cli(prompt):
     return prompt.replace('${CLAUDE_PLUGIN_ROOT}', '.arckit')
 
 
+EXTENSION_FILE_ACCESS_BLOCK = """\
+**IMPORTANT — Gemini Extension File Access**:
+This command runs as a Gemini CLI extension. The extension directory \
+(`~/.gemini/extensions/arckit/`) is outside the workspace sandbox, so you \
+CANNOT use the read_file tool to access it. Instead:
+- To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arckit/templates/foo-template.md`
+- To list files: use `ls ~/.gemini/extensions/arckit/templates/`
+- To run scripts: use `bash ~/.gemini/extensions/arckit/scripts/bash/create-project.sh --json`
+- To check file existence: use `test -f ~/.gemini/extensions/arckit/templates/foo-template.md && echo exists`
+All extension file access MUST go through shell commands.
+
+"""
+
+
 def rewrite_paths_for_extension(prompt):
     """Rewrite ${CLAUDE_PLUGIN_ROOT} to Gemini extension install path.
 
     Gemini extensions install to ~/.gemini/extensions/{name}/.
+    Also rewrites 'Read `path`' instructions to use shell commands,
+    since the extension directory is outside Gemini's workspace sandbox.
     """
-    return prompt.replace('${CLAUDE_PLUGIN_ROOT}', '~/.gemini/extensions/arckit')
+    result = prompt.replace('${CLAUDE_PLUGIN_ROOT}', '~/.gemini/extensions/arckit')
+
+    # Rewrite "Read `~/.gemini/extensions/arckit/..." instructions to use cat
+    result = re.sub(
+        r'Read `(~/.gemini/extensions/arckit/[^`]+)`',
+        r'Run `cat \1` to read the file',
+        result,
+    )
+
+    # Prepend the file access instruction block
+    result = EXTENSION_FILE_ACCESS_BLOCK + result
+
+    return result
 
 
 def format_toml(description, prompt):
