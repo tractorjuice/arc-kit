@@ -398,7 +398,7 @@ EOF
 
 ## Version
 
-**Current Release: v2.4.0 (48 commands)**
+**Current Release: v2.4.1 (48 commands)**
 
 All 48 commands available in Gemini CLI. For the best experience, consider using the [ArcKit Gemini Extension](https://github.com/tractorjuice/arckit-gemini) instead of project-local commands.
 
