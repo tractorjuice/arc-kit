@@ -1,20 +1,20 @@
 {
   "name": "arckit",
-  "version": "2.4.2",
+  "version": "2.4.3",
   "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 48 commands for architecture artifacts, vendor procurement, and UK Government compliance",
   "contextFileName": "GEMINI.md",
   "mcpServers": {
     "aws-knowledge": {
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://knowledge-mcp.global.api.aws"]
+      "httpUrl": "https://knowledge-mcp.global.api.aws"
     },
     "microsoft-learn": {
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://learn.microsoft.com/api/mcp"]
+      "httpUrl": "https://learn.microsoft.com/api/mcp"
     },
     "google-developer-knowledge": {
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://developerknowledge.googleapis.com/mcp", "--header", "X-Goog-Api-Key:${GOOGLE_API_KEY}"]
+      "httpUrl": "https://developerknowledge.googleapis.com/mcp",
+      "headers": {
+        "X-Goog-Api-Key": "${GOOGLE_API_KEY}"
+      }
     }
   },
   "settings": [
