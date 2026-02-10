@@ -5,7 +5,7 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.4.1] - 2026-02-10
 
 ### Added
 
@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Install: `gemini extensions install https://github.com/tractorjuice/arckit-gemini`
   - Bundled MCP servers (AWS Knowledge, Microsoft Learn via mcp-remote), optional Google Developer Knowledge
   - All 48 commands, templates, scripts, guides, and Wardley Mapping skill included
-  - Extension version tracks plugin version (currently v2.4.0)
+  - Extension version tracks plugin version (v2.4.1)
 - `scripts/converter.py` now generates extension output alongside CLI and Codex formats, with path rewriting (`${CLAUDE_PLUGIN_ROOT}` -> `~/.gemini/extensions/arckit`)
 
 ### Fixed
