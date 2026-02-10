@@ -18,13 +18,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **Gemini extension workspace sandbox fix**: Extension commands now instruct the model to use `run_shell_command` (e.g., `cat`, `bash`) for accessing extension files at `~/.gemini/extensions/arckit/`, since Gemini CLI's `read_file` tool is restricted to the project workspace. Also rewrites `Read` instructions to `cat` commands in extension TOML output.
-- **CLI/Codex path resolution bug**: `${CLAUDE_PLUGIN_ROOT}` references in generated Gemini CLI TOML and Codex Markdown files are now rewritten to `.arckit` (project-local paths). Previously these paths were never resolved, breaking template and script references for Gemini CLI and Codex users.
+- **CLI/Codex path resolution bug**: `${CLAUDE_PLUGIN_ROOT}` references in generated Codex Markdown files are now rewritten to `.arckit` (project-local paths). Previously these paths were never resolved, breaking template and script references for Codex users.
 
 ### Changed
 
-- `scripts/converter.py` now generates 3 output formats: Gemini CLI TOML (`.gemini/`), Codex Markdown (`.codex/`), and Gemini extension TOML (`arckit-gemini/`), with path rewriting for each target
-- Updated distribution model from "Two formats" to "Three formats" in CLAUDE.md
-- Updated `.gemini/README.md`: added extension recommendation, fixed version (v2.4.0), corrected command count (48)
+- **CLI is now Codex-only**: Removed Gemini CLI from the CLI package. Gemini users should use the native extension instead (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`). Running `arckit init --ai gemini` now prints a redirect message pointing to the extension.
+- Deleted `.gemini/` directory from the repo (49 files) — project-local Gemini commands are no longer distributed via the CLI
+- `scripts/converter.py` now generates 2 output formats: Codex Markdown (`.codex/`) and Gemini extension TOML (`arckit-gemini/`), with path rewriting for each target
+- Removed `.gemini` from `pyproject.toml` shared-data
+- Updated all documentation (README, CLAUDE.md, docs/index.html, upgrading guides) to reflect Codex-only CLI
 
 ---
 
