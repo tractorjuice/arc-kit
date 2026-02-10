@@ -328,7 +328,7 @@ The completion percentage is based on 10 standard artifacts:
 
 ### 6. converter.py
 
-**Purpose**: Convert plugin commands to Gemini CLI TOML and Codex CLI Markdown formats
+**Purpose**: Convert plugin commands to Codex CLI Markdown and Gemini extension TOML formats
 
 **Usage**:
 ```bash
@@ -337,10 +337,10 @@ python scripts/converter.py
 
 **Description**:
 
-Automatically converts all plugin slash commands from `arckit-plugin/commands/*.md` to both Gemini CLI (`.gemini/commands/arckit/*.toml`) and Codex CLI (`.codex/prompts/arckit.*.md`) formats. The plugin is the source of truth for all commands.
+Automatically converts all plugin slash commands from `arckit-plugin/commands/*.md` to Codex CLI (`.codex/prompts/arckit.*.md`) and Gemini extension (`arckit-gemini/commands/arckit/*.toml`) formats. The plugin is the source of truth for all commands.
 
 **Key Features**:
-- Generates **Gemini TOML** and **Codex Markdown** from plugin command sources
+- Generates **Codex Markdown** and **Gemini extension TOML** from plugin command sources
 - Extracts YAML frontmatter from markdown commands
 - Replaces `$ARGUMENTS` with `{{args}}` for Gemini; keeps `$ARGUMENTS` for Codex
 - For agent-delegating commands (research, datascout, aws-research, azure-research), inlines the full agent prompt since Gemini and Codex don't support the Task/agent architecture
@@ -350,8 +350,9 @@ Automatically converts all plugin slash commands from `arckit-plugin/commands/*.
 1. Reads each `arckit-plugin/commands/*.md` file
 2. Extracts frontmatter description and prompt body
 3. For agent-delegating commands, reads `arckit-plugin/agents/arckit-*.md` and extracts the full agent prompt
-4. Writes Gemini TOML to `.gemini/commands/arckit/*.toml`
-5. Writes Codex Markdown to `.codex/prompts/arckit.*.md`
+4. Writes Codex Markdown to `.codex/prompts/arckit.*.md`
+5. Writes Gemini extension TOML to `arckit-gemini/commands/arckit/*.toml`
+6. Copies supporting files (templates, scripts, guides, skills) to `arckit-gemini/`
 
 **Example**:
 ```bash
@@ -359,24 +360,17 @@ Automatically converts all plugin slash commands from `arckit-plugin/commands/*.
 python scripts/converter.py
 
 # Output:
-# --- Gemini TOML ---
-#   Gemini: arckit-plugin/commands/plan.md -> .gemini/commands/arckit/plan.toml
+#   Codex:      arckit-plugin/commands/plan.md -> .codex/prompts/arckit.plan.md
+#   Extension:  arckit-plugin/commands/plan.md -> arckit-gemini/commands/arckit/plan.toml
 #   ...
-# Generated 46 Gemini TOML files
-#
-# --- Codex Markdown ---
-#   Codex:  arckit-plugin/commands/plan.md -> .codex/prompts/arckit.plan.md
-#   ...
-# Generated 46 Codex prompt files
-#
-# Done. 46 Gemini + 46 Codex = 92 total files.
+# Generated 48 Codex + 48 Extension = 96 total files.
 ```
 
 **Use Cases**:
 - After adding new plugin commands
 - After updating existing plugin command content
 - After modifying agent prompts in the plugin
-- Setting up Gemini or Codex CLI for the first time
+- Setting up Codex CLI for the first time
 
 **Requirements**:
 - Python 3.6+
@@ -385,8 +379,8 @@ python scripts/converter.py
 **Related**:
 - Plugin commands (source): `arckit-plugin/commands/`
 - Plugin agents (source): `arckit-plugin/agents/`
-- Gemini commands (generated): `.gemini/commands/arckit/`
 - Codex prompts (generated): `.codex/prompts/`
+- Gemini extension (generated): `arckit-gemini/commands/arckit/`
 - See `.codex/README.md` for Codex CLI setup
 
 ---

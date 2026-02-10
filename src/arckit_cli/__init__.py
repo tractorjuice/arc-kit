@@ -38,14 +38,9 @@ client = httpx.Client(verify=ssl_context)
 
 # Agent configuration for ArcKit
 # Note: Claude Code support has moved to the ArcKit plugin (arckit-plugin/).
-# The CLI now only supports Gemini and Codex.
+# Gemini CLI support has moved to the ArcKit Gemini extension (arckit-gemini/).
+# The CLI now only supports Codex.
 AGENT_CONFIG = {
-    "gemini": {
-        "name": "Gemini CLI",
-        "folder": ".gemini/",
-        "install_url": "https://github.com/google-gemini/gemini-cli",
-        "requires_cli": True,
-    },
     "codex": {
         "name": "OpenAI Codex CLI",
         "folder": ".codex/",
@@ -144,7 +139,6 @@ def get_data_paths():
         return {
             "templates": base_path / ".arckit" / "templates",
             "scripts": base_path / "scripts",
-            "gemini_commands": base_path / ".gemini" / "commands",
             "codex_root": base_path / ".codex",
             "codex_prompts": base_path / ".codex" / "prompts",
             "docs_guides": base_path / "docs" / "guides",
@@ -206,17 +200,13 @@ def create_project_structure(project_path: Path, ai_assistant: str, all_ai: bool
     ]
 
     if all_ai:
-        # Create directories for all AI assistants (Gemini + Codex)
+        # Create directories for all AI assistants (Codex only now)
         directories.extend([
-            ".gemini/commands",
             ".codex/prompts",
         ])
     else:
         agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
-        if ai_assistant == "codex":
-            directories.append(f"{agent_folder}prompts")
-        else:
-            directories.append(f"{agent_folder}commands")
+        directories.append(f"{agent_folder}prompts")
 
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
@@ -276,10 +266,10 @@ Use the `/arckit.customize` command to copy templates for editing:
 @app.command()
 def init(
     project_name: str = typer.Argument(None, help="Name for your new project directory (optional, use '.' for current directory)"),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: gemini, codex"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex"),
     no_git: bool = typer.Option(False, "--no-git", help="Skip git repository initialization"),
     here: bool = typer.Option(False, "--here", help="Initialize project in the current directory"),
-    all_ai: bool = typer.Option(False, "--all-ai", help="Install commands for all AI assistants (gemini, codex)"),
+    all_ai: bool = typer.Option(False, "--all-ai", help="Install commands for all CLI-supported AI assistants (codex)"),
     minimal: bool = typer.Option(False, "--minimal", help="Minimal install: skip docs and guides"),
 ):
     """
@@ -294,10 +284,9 @@ def init(
 
     Examples:
         arckit init my-architecture-project
-        arckit init my-project --ai gemini
-        arckit init my-project --all-ai
+        arckit init my-project --ai codex
         arckit init . --ai codex
-        arckit init --here --ai gemini --minimal
+        arckit init --here --ai codex --minimal
     """
 
     show_banner()
@@ -336,15 +325,16 @@ def init(
     # Select AI assistant
     if not ai_assistant:
         console.print("\n[cyan]Select your AI assistant:[/cyan]")
-        console.print("1. gemini (Gemini CLI)")
-        console.print("2. codex (OpenAI Codex CLI)")
+        console.print("1. codex (OpenAI Codex CLI)")
         console.print()
         console.print("[dim]For Claude Code, use the ArcKit plugin instead:[/dim]")
         console.print("[dim]  /plugin marketplace add tractorjuice/arc-kit[/dim]")
+        console.print("[dim]For Gemini CLI, use the ArcKit extension instead:[/dim]")
+        console.print("[dim]  gemini extensions install https://github.com/tractorjuice/arckit-gemini[/dim]")
 
         choice = typer.prompt("Enter choice", default="1")
-        ai_map = {"1": "gemini", "2": "codex"}
-        ai_assistant = ai_map.get(choice, "gemini")
+        ai_map = {"1": "codex"}
+        ai_assistant = ai_map.get(choice, "codex")
 
     if ai_assistant == "claude":
         console.print("[yellow]Claude Code support has moved to the ArcKit plugin.[/yellow]")
@@ -353,13 +343,21 @@ def init(
         console.print("\nThen enable the plugin from the Discover tab.")
         raise typer.Exit(0)
 
+    if ai_assistant == "gemini":
+        console.print("[yellow]Gemini CLI support has moved to the ArcKit Gemini extension.[/yellow]")
+        console.print("Install in Gemini CLI with:")
+        console.print("  [cyan]gemini extensions install https://github.com/tractorjuice/arckit-gemini[/cyan]")
+        console.print("\nThe extension provides all 48 commands with zero config.")
+        console.print("Updates via: [cyan]gemini extensions update arckit[/cyan]")
+        raise typer.Exit(0)
+
     if ai_assistant not in AGENT_CONFIG:
         console.print(f"[red]Error:[/red] Invalid AI assistant '{ai_assistant}'")
         console.print(f"Choose from: {', '.join(AGENT_CONFIG.keys())}")
         raise typer.Exit(1)
 
     if all_ai:
-        console.print(f"[cyan]Selected AI assistant:[/cyan] All (Gemini, Codex)")
+        console.print(f"[cyan]Selected AI assistant:[/cyan] All (Codex)")
     else:
         console.print(f"[cyan]Selected AI assistant:[/cyan] {AGENT_CONFIG[ai_assistant]['name']}")
 
@@ -380,10 +378,7 @@ def init(
     templates_dst = project_path / ".arckit" / "templates"
     scripts_dst = project_path / ".arckit" / "scripts"
     agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
-    if ai_assistant == "codex":
-        commands_dst = project_path / agent_folder / "prompts"
-    else:
-        commands_dst = project_path / agent_folder / "commands"
+    commands_dst = project_path / agent_folder / "prompts"
 
     # Copy templates if they exist
     if templates_src.exists():
@@ -406,50 +401,17 @@ def init(
         console.print(f"[yellow]Warning: Scripts not found at {scripts_src}[/yellow]")
 
     # Copy slash commands
-    if all_ai:
-        # Install all AI formats (Gemini + Codex)
-        # Gemini
-        gemini_src = data_paths["gemini_commands"]
-        gemini_dst = project_path / ".gemini" / "commands"
-        gemini_dst.mkdir(parents=True, exist_ok=True)
-        if gemini_src.exists():
-            shutil.copytree(gemini_src, gemini_dst, dirs_exist_ok=True)
-            console.print(f"[green]✓[/green] Copied gemini commands")
-        else:
-            console.print(f"[yellow]Warning: gemini commands not found[/yellow]")
-        # Codex
-        codex_src = data_paths["codex_prompts"]
-        codex_dst = project_path / ".codex" / "prompts"
-        codex_dst.mkdir(parents=True, exist_ok=True)
-        if codex_src.exists():
-            command_count = 0
-            for cmd_file in codex_src.glob("arckit.*.md"):
-                shutil.copy2(cmd_file, codex_dst / cmd_file.name)
-                command_count += 1
-            console.print(f"[green]✓[/green] Copied {command_count} codex prompts")
-        else:
-            console.print(f"[yellow]Warning: codex prompts not found[/yellow]")
+    # Copy Codex prompts (all_ai and single-AI both install codex)
+    commands_src = data_paths["codex_prompts"]
+    if commands_src.exists():
+        console.print(f"[dim]Copying Codex prompts from: {commands_src}[/dim]")
+        command_count = 0
+        for command_file in commands_src.glob("arckit.*.md"):
+            shutil.copy2(command_file, commands_dst / command_file.name)
+            command_count += 1
+        console.print(f"[green]✓[/green] Copied {command_count} Codex prompts")
     else:
-        # Install only selected AI format
-        if ai_assistant == "codex":
-            commands_src = data_paths["codex_prompts"]
-            if commands_src.exists():
-                console.print(f"[dim]Copying Codex prompts from: {commands_src}[/dim]")
-                command_count = 0
-                for command_file in commands_src.glob("arckit.*.md"):
-                    shutil.copy2(command_file, commands_dst / command_file.name)
-                    command_count += 1
-                console.print(f"[green]✓[/green] Copied {command_count} Codex prompts")
-            else:
-                console.print(f"[yellow]Warning: Codex prompts not found at {commands_src}[/yellow]")
-        elif ai_assistant == "gemini":
-            commands_src = data_paths["gemini_commands"]
-            if commands_src.exists():
-                console.print(f"[dim]Copying Gemini commands from: {commands_src}[/dim]")
-                shutil.copytree(commands_src, commands_dst, dirs_exist_ok=True)
-                console.print(f"[green]✓[/green] Gemini commands copied")
-            else:
-                console.print(f"[yellow]Warning: Gemini commands not found at {commands_src}[/yellow]")
+        console.print(f"[yellow]Warning: Codex prompts not found at {commands_src}[/yellow]")
 
     console.print("[green]✓[/green] Templates configured")
 
@@ -676,18 +638,13 @@ export CODEX_HOME="$PWD/.codex"
         f"1. Navigate to project: [cyan]cd {project_name if not here else '.'}[/cyan]",
     ]
 
-    # Add Codex-specific setup steps
-    if ai_assistant == "codex":
-        next_steps.append("2. Set up CODEX_HOME environment variable:")
-        next_steps.append("   [cyan]RECOMMENDED[/cyan]: Install direnv and run [cyan]direnv allow[/cyan]")
-        next_steps.append("   Alternative: Run [cyan]export CODEX_HOME=\"$PWD/.codex\"[/cyan]")
-        next_steps.append(f"3. Start Codex: [cyan]{ai_assistant}[/cyan]")
-        next_steps.append("4. Establish architecture principles: [cyan]/arckit.principles[/cyan]")
-        next_steps.append("5. Create your first project: [cyan]/arckit.requirements[/cyan]")
-    else:
-        next_steps.append(f"2. Start your AI assistant: [cyan]{ai_assistant}[/cyan]")
-        next_steps.append("3. Establish architecture principles: [cyan]/arckit.principles[/cyan]")
-        next_steps.append("4. Create your first project: [cyan]/arckit.requirements[/cyan]")
+    # Codex-specific setup steps
+    next_steps.append("2. Set up CODEX_HOME environment variable:")
+    next_steps.append("   [cyan]RECOMMENDED[/cyan]: Install direnv and run [cyan]direnv allow[/cyan]")
+    next_steps.append("   Alternative: Run [cyan]export CODEX_HOME=\"$PWD/.codex\"[/cyan]")
+    next_steps.append(f"3. Start Codex: [cyan]{ai_assistant}[/cyan]")
+    next_steps.append("4. Establish architecture principles: [cyan]/arckit.principles[/cyan]")
+    next_steps.append("5. Create your first project: [cyan]/arckit.requirements[/cyan]")
 
     console.print(Panel("\n".join(next_steps), title="Next Steps", border_style="cyan"))
 

@@ -125,27 +125,23 @@ def format_codex(description, prompt):
 
 
 def convert(commands_dir, agents_dir, extension_dir='arckit-gemini/commands/arckit'):
-    """Convert plugin commands to Gemini TOML, Codex Markdown, and Gemini extension formats.
+    """Convert plugin commands to Codex Markdown and Gemini extension formats.
 
     Reads each plugin command once, resolves agent prompts once, then
-    writes all three output formats with appropriate path rewriting.
+    writes both output formats with appropriate path rewriting.
 
     Plugin command files are named {name}.md (e.g., requirements.md).
-    Gemini CLI output:   .gemini/commands/arckit/{name}.toml  (paths -> .arckit)
     Codex output:        .codex/prompts/arckit.{name}.md      (paths -> .arckit)
     Extension output:    arckit-gemini/commands/arckit/{name}.toml (paths -> ~/.gemini/extensions/arckit)
     """
-    gemini_dir = '.gemini/commands/arckit'
     codex_dir = '.codex/prompts'
 
-    os.makedirs(gemini_dir, exist_ok=True)
     os.makedirs(codex_dir, exist_ok=True)
     os.makedirs(extension_dir, exist_ok=True)
 
     # Build agent map once (reads agent files once)
     agent_map = build_agent_map(agents_dir)
 
-    gemini_count = 0
     codex_count = 0
     extension_count = 0
 
@@ -174,16 +170,6 @@ def convert(commands_dir, agents_dir, extension_dir='arckit-gemini/commands/arck
         # Derive base name (e.g., "requirements" from "requirements.md")
         base_name = filename.replace('.md', '')
 
-        # --- Gemini CLI TOML (project-local paths) ---
-        cli_prompt = rewrite_paths_for_cli(prompt)
-        toml_content = format_toml(description, cli_prompt)
-        gemini_filename = f'{base_name}.toml'
-        gemini_path = os.path.join(gemini_dir, gemini_filename)
-        with open(gemini_path, 'w') as f:
-            f.write(toml_content)
-        print(f"  Gemini CLI: {source_label} -> {gemini_path}")
-        gemini_count += 1
-
         # --- Codex Markdown (project-local paths) ---
         codex_prompt = rewrite_paths_for_cli(prompt)
         codex_content = format_codex(description, codex_prompt)
@@ -203,7 +189,7 @@ def convert(commands_dir, agents_dir, extension_dir='arckit-gemini/commands/arck
         print(f"  Extension:  {source_label} -> {ext_path}")
         extension_count += 1
 
-    return gemini_count, codex_count, extension_count
+    return codex_count, extension_count
 
 
 def copy_extension_files(plugin_dir, extension_dir):
@@ -235,14 +221,14 @@ if __name__ == '__main__':
     plugin_dir = 'arckit-plugin'
     extension_dir = 'arckit-gemini'
 
-    print("Converting plugin commands to Gemini CLI, Codex, and Gemini extension formats...")
+    print("Converting plugin commands to Codex and Gemini extension formats...")
     print()
     print(f"Source:    {claude_dir}")
     print(f"Agents:    {agents_dir}")
     print(f"Extension: {extension_dir}/")
     print()
 
-    gemini_count, codex_count, ext_count = convert(
+    codex_count, ext_count = convert(
         claude_dir, agents_dir,
         extension_dir=os.path.join(extension_dir, 'commands/arckit'),
     )
@@ -252,4 +238,4 @@ if __name__ == '__main__':
     copy_extension_files(plugin_dir, extension_dir)
 
     print()
-    print(f"Generated {gemini_count} Gemini CLI + {codex_count} Codex + {ext_count} Extension = {gemini_count + codex_count + ext_count} total files.")
+    print(f"Generated {codex_count} Codex + {ext_count} Extension = {codex_count + ext_count} total files.")

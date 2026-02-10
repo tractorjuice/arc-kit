@@ -208,17 +208,7 @@ MCP servers are bridged via `mcp-remote` (requires Node.js).
 
 ## Alternative Installation: ArcKit CLI
 
-If you prefer project-local commands instead of a global extension:
-
-```bash
-# Install CLI
-pip install git+https://github.com/tractorjuice/arc-kit.git
-
-# Scaffold project with Gemini commands
-arckit init my-project --ai gemini
-```
-
-The CLI copies commands and templates into the project directory. The extension is recommended for most users as it provides automatic updates and a cleaner project structure.
+The extension is recommended for all Gemini CLI users as it provides automatic updates and a clean zero-config experience.
 
 ## Links
 

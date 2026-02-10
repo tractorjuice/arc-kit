@@ -53,7 +53,6 @@ packages = ["src/arckit_cli"]
 [tool.hatch.build.targets.wheel.shared-data]
 ".codex" = "share/arckit/.codex"
 "scripts" = "share/arckit/scripts"
-".gemini" = "share/arckit/.gemini"
 ".arckit" = "share/arckit/.arckit"
 "docs" = "share/arckit/docs"
 "DEPENDENCY-MATRIX.md" = "share/arckit/DEPENDENCY-MATRIX.md"

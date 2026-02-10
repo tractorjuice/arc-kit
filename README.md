@@ -38,7 +38,7 @@ gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 Zero-config: all 48 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
 
-**Gemini CLI / Codex CLI** — or install the ArcKit CLI:
+**Codex CLI** — install the ArcKit CLI:
 ```bash
 # Install with pip
 pip install git+https://github.com/tractorjuice/arc-kit.git
@@ -56,30 +56,24 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 
 **Claude Code**: No initialization needed — the plugin provides everything.
 
-**Gemini CLI / Codex CLI**:
+**Codex CLI**:
 ```bash
 # Create a new architecture governance project
-arckit init payment-modernization --ai gemini
-
-# Or use OpenAI Codex CLI
 arckit init payment-modernization --ai codex
 
-# Install all CLI formats (Gemini + Codex)
-arckit init payment-modernization --all-ai
-
 # Minimal install (skip docs and guides)
-arckit init payment-modernization --ai gemini --minimal
+arckit init payment-modernization --ai codex --minimal
 
 # Or initialize in current directory
-arckit init . --ai gemini
+arckit init . --ai codex
 ```
 
 ### Start Using ArcKit
 
 ```bash
-# Gemini CLI / Codex CLI
+# Codex CLI
 cd payment-modernization
-gemini  # or codex
+codex
 
 # Inside your AI assistant, use ArcKit commands:
 /arckit.principles Create principles for a financial services company
@@ -91,7 +85,9 @@ gemini  # or codex
 
 **Claude Code plugin**: Updates are automatic via the marketplace — no action needed.
 
-**Gemini CLI / Codex CLI**:
+**Gemini CLI extension**: Updates via `gemini extensions update arckit`.
+
+**Codex CLI**:
 ```bash
 # Step 1: Upgrade the CLI tool
 pip install --upgrade git+https://github.com/tractorjuice/arc-kit.git
@@ -100,7 +96,7 @@ uv tool upgrade arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 
 # Step 2: Update your existing project (re-run init in place)
 cd /path/to/your-existing-project
-arckit init --here --ai gemini
+arckit init --here --ai codex
 ```
 
 This updates commands, templates, scripts, and agents while **preserving** your project data (`projects/`) and custom templates (`.arckit/templates-custom/`).
@@ -636,9 +632,9 @@ Publish all project documentation as an interactive website:
 |-------|---------|-------|
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended. Install via **plugin** (`/plugin marketplace add tractorjuice/arc-kit`) |
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | Install via **CLI** (`arckit init --ai codex`). ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **extension** (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`) or **CLI** (`arckit init --ai gemini`) |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **extension** (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`) |
 
-Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Gemini CLI can use the **ArcKit extension** (recommended) for the same zero-config experience, or the CLI package for project-local commands. Codex CLI uses the CLI package which copies commands and templates into the project directory.
+Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Gemini CLI uses the **ArcKit extension** for the same zero-config experience. Codex CLI uses the CLI package which copies commands and templates into the project directory.
 
 ### Why Commands, Not Skills
 
@@ -710,7 +706,7 @@ payment-modernization/
 │           ├── selected-vendor.md
 │           ├── approved-hld.md
 │           └── dld/
-└── .gemini/commands/                      # Gemini commands (or .codex/prompts/ for Codex)
+└── .codex/prompts/                        # Codex CLI prompts
 ```
 
 ---
@@ -968,7 +964,7 @@ Key references live in `docs/` and top-level guides:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---
@@ -1060,11 +1056,14 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 
 **Command not found**: Ensure commands are available
 ```bash
-# For Gemini or Codex, check if commands directory exists
-ls .gemini/commands/ || ls .codex/prompts/
+# For Codex, check if commands directory exists
+ls .codex/prompts/
 
 # For Claude Code, install the ArcKit plugin:
 # /plugin marketplace add tractorjuice/arc-kit
+
+# For Gemini CLI, install the ArcKit extension:
+# gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
 **Template not found**: Ensure you've run `/arckit.principles` first

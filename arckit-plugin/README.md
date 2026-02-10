@@ -212,12 +212,10 @@ rm -rf .arckit/scripts/
 
 ## For Gemini/Codex Users
 
-This plugin is for Claude Code. For Gemini CLI or Codex CLI, continue using the Python CLI:
+This plugin is for Claude Code. For other AI assistants:
 
-```bash
-pip install arckit-cli
-arckit init --ai gemini
-```
+- **Gemini CLI**: Install the [ArcKit Gemini extension](https://github.com/tractorjuice/arckit-gemini) (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`)
+- **Codex CLI**: Install the ArcKit CLI (`pip install arckit-cli && arckit init --ai codex`)
 
 ## Links
 
