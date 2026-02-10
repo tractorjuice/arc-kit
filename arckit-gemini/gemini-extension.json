@@ -11,6 +11,10 @@
     "microsoft-learn": {
       "command": "npx",
       "args": ["-y", "mcp-remote", "https://learn.microsoft.com/api/mcp"]
+    },
+    "google-developer-knowledge": {
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://developerknowledge.googleapis.com/mcp", "--header", "X-Goog-Api-Key:${GOOGLE_API_KEY}"]
     }
   },
   "settings": [
