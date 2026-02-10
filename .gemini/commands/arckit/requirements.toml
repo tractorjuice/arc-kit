@@ -41,9 +41,9 @@ You are helping an enterprise architect define comprehensive requirements for a 
    - **SOBC**: Business benefits and cost targets for BR traceability
 
 2. **Create or find the project**:
-   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to check for existing projects
+   - Run `.arckit/scripts/bash/list-projects.sh --json` to check for existing projects
    - If the user specifies an existing project number (e.g., \"001\") or the project name matches an existing project, use that directory
-   - Otherwise, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create a new project
+   - Otherwise, run `.arckit/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create a new project
    - Parse the JSON output to get the project directory path
 
 3. **Check for External Documents** (optional):
@@ -75,7 +75,7 @@ You are helping an enterprise architect define comprehensive requirements for a 
 4. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/requirements-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/requirements-template.md` (default)
+   - **If not found**: Read `.arckit/templates/requirements-template.md` (default)
    - **Update Template Version**: Read the `VERSION` file and replace the version number in the template metadata line:
      ```
      > **Template Status**: [keep] | **Version**: [from VERSION file] | **Command**: [keep]
@@ -187,7 +187,7 @@ Before generating the document ID, check if a previous version exists:
 ### Step 1: Generate Document ID
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"REQ\" \"${VERSION}\")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"REQ\" \"${VERSION}\")
 # Example output: ARC-001-REQ-v1.0
 ```
 

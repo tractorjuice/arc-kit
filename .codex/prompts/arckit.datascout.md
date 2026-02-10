@@ -63,7 +63,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 ### Step 2: Read Template and VERSION
 
-- Read `${CLAUDE_PLUGIN_ROOT}/templates/datascout-template.md` for output structure
+- Read `.arckit/templates/datascout-template.md` for output structure
 - Read `VERSION` file for ArcKit version number
 
 ### Step 3: Extract Data Needs from Requirements
@@ -295,7 +295,7 @@ EXISTING=$(ls projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md 2>/dev/null | s
 
 Run bash:
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh PROJECT_ID DSCT ${VERSION} --filename
+.arckit/scripts/bash/generate-document-id.sh PROJECT_ID DSCT ${VERSION} --filename
 ```
 
 ### Step 16: Write the Document

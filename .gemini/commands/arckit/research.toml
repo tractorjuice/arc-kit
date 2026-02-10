@@ -62,7 +62,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 ### Step 2: Read Template and VERSION
 
-- Read `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md` for output structure
+- Read `.arckit/templates/research-findings-template.md` for output structure
 - Read `VERSION` file for ArcKit version number
 
 ### Step 3: Extract and Categorize Requirements
@@ -175,7 +175,7 @@ EXISTING=$(ls projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v*.md 2>/dev/null | s
 
 Run bash:
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh PROJECT_ID RSCH ${VERSION} --filename
+.arckit/scripts/bash/generate-document-id.sh PROJECT_ID RSCH ${VERSION} --filename
 ```
 
 ### Step 11: Write the Document

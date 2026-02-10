@@ -109,7 +109,7 @@ fi
 **Option B: User Wants to Select from List**
 If the user didn't specify a project or said "list" or "choose":
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh
+bash .arckit/scripts/bash/list-projects.sh
 ```
 Then ask the user which project number they want to generate a story for.
 
@@ -648,7 +648,7 @@ Generate document control fields:
 
 ```bash
 # Generate document ID
-DOCUMENT_ID=$(./${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "$PROJECT_ID" "STORY" "${VERSION}")
+DOCUMENT_ID=$(./.arckit/scripts/bash/generate-document-id.sh "$PROJECT_ID" "STORY" "${VERSION}")
 
 # Get dates
 DATE_CREATED=$(date +%Y-%m-%d)
@@ -669,7 +669,7 @@ Read the story template:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/story-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/story-template.md` (default)
+- **If not found**: Read `.arckit/templates/story-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize story`

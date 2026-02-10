@@ -64,7 +64,7 @@ Detect if UK Government project (look for "UK Government", "Ministry of", "Depar
 
 ### Step 3: Read Template and VERSION
 
-- Read `${CLAUDE_PLUGIN_ROOT}/templates/azure-research-template.md` for output structure
+- Read `.arckit/templates/azure-research-template.md` for output structure
 - Read `VERSION` file for ArcKit version number
 
 ### Step 4: Extract Requirements for Azure Mapping
@@ -155,7 +155,7 @@ EXISTING=$(ls projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v*.md 2>/dev
 
 Run bash:
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh PROJECT_ID AZRS ${VERSION} --filename
+.arckit/scripts/bash/generate-document-id.sh PROJECT_ID AZRS ${VERSION} --filename
 ```
 
 Create `research/` subdirectory if needed, then **use the Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v${VERSION}.md` following the template structure.

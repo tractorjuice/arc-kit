@@ -98,13 +98,13 @@ Data product name (kebab-case):
 First, check for existing projects:
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json
+bash .arckit/scripts/bash/list-projects.sh --json
 ```
 
 If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh \\
+bash .arckit/scripts/bash/create-project.sh \\
   --name \"$DATA_PRODUCT_NAME\" \\
   --json
 ```
@@ -146,7 +146,7 @@ The contract file will use the multi-instance naming pattern:
 
 Where `{NNN}` is the next sequential number for contracts in this project. Use the script with `--next-num` flag:
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num \"{project_path}/data-mesh-contracts\"
+bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num \"{project_path}/data-mesh-contracts\"
 ```
 
 ### Step 4: Read the Template
@@ -156,7 +156,7 @@ Read the data mesh contract template:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/data-mesh-contract-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/data-mesh-contract-template.md` (default)
+- **If not found**: Read `.arckit/templates/data-mesh-contract-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize data-mesh-contract`
@@ -351,10 +351,10 @@ Use the `generate-document-id.sh` script with `--next-num` to get the next seque
 
 ```bash
 # Generate document ID with next sequential number
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --next-num \"{project_path}/data-mesh-contracts\"
+bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --next-num \"{project_path}/data-mesh-contracts\"
 
 # Generate filename with next sequential number
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num \"{project_path}/data-mesh-contracts\"
+bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num \"{project_path}/data-mesh-contracts\"
 ```
 
 This will generate IDs like:
@@ -373,7 +373,7 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"DMC\" \"${VERSION}\")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"DMC\" \"${VERSION}\")
 # Example output: ARC-001-DMC-v1.0
 ```
 
@@ -636,7 +636,7 @@ Assistant:
 - Ask user to check permissions or directory structure
 
 **If template file is missing**:
-- Error: \"Template not found: ${CLAUDE_PLUGIN_ROOT}/templates/data-mesh-contract-template.md\"
+- Error: \"Template not found: .arckit/templates/data-mesh-contract-template.md\"
 - Ask user to check ArcKit installation
 
 **If file write fails**:

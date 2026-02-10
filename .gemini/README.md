@@ -6,6 +6,12 @@
 
 This directory contains ArcKit commands adapted for [Google Gemini CLI](https://cloud.google.com/gemini/docs/cli).
 
+> **Recommended alternative**: Install the [ArcKit Gemini Extension](https://github.com/tractorjuice/arckit-gemini) for a zero-config experience with automatic updates and bundled MCP servers:
+> ```bash
+> gemini extensions install https://github.com/tractorjuice/arckit-gemini
+> ```
+> The extension provides the same 48 commands without needing the ArcKit CLI or project-local files.
+
 ## Prerequisites
 
 1. **Node.js and npm**: Required to install Gemini CLI
@@ -54,7 +60,7 @@ Key requirements:
 - Append doc-specific metadata (e.g., ADR Number, Financial Years Covered) after the standard rows to keep the header layout identical across deliverables.
 - Always read `.arckit/VERSION` so metadata reflects the current ArcKit release.
 
-## ArcKit Commands (35 Available)
+## ArcKit Commands (48 Available)
 
 ### Phase 0: Project Planning
 
@@ -392,30 +398,9 @@ EOF
 
 ## Version
 
-**Current Release: v1.5.0 (48 commands)**
+**Current Release: v2.4.0 (48 commands)**
 
-ArcKit 1.5.0 - Template Customization, Trello Export & Status Badges. All 48 commands available in Gemini CLI.
-
-**ArcKit 1.5.0 Highlights:**
-- 48 slash commands for complete architecture governance
-- UK Government compliance (TCoP, Service Standard, Secure by Design, AI Playbook)
-- HM Treasury frameworks (Green Book SOBC, Orange Book Risk Management)
-- Multi-AI support (Claude Code, OpenAI Codex CLI, Gemini CLI)
-
-**What was New in v0.3.6:**
-- 🗓️ Added `/arckit:plan` - Project planning with GDS Agile Delivery phases, Mermaid Gantt charts
-- 🤖 Added Gemini CLI support (third AI system!)
-- 🏛️ Added `/arckit:dos` - Digital Outcomes and Specialists procurement
-- 🏛️ Added `/arckit:gcloud-search` and `/arckit:gcloud-clarify` - G-Cloud Framework procurement
-- 📚 Triple-AI documentation (Claude Code + Codex CLI + Gemini CLI)
-
-**What was New in v0.3.0:**
-- 🎯 Added `/arckit:sobc` - HM Treasury Green Book Strategic Outline Business Case
-- 🛡️ Added `/arckit:risk` - HM Treasury Orange Book Risk Management
-- 📊 Added `/arckit:data-model` - Data modelling with ERD, GDPR compliance, data governance
-- 🔄 Updated workflow: Stakeholders → Risk → SOBC → Requirements → Data Model → Vendor selection
-- ✅ Complete UK Government compliance (Green Book + Orange Book)
-- 🔗 End-to-end traceability: Stakeholder → Driver → Goal → Risk → Benefit → Requirement → Entity
+All 48 commands available in Gemini CLI. For the best experience, consider using the [ArcKit Gemini Extension](https://github.com/tractorjuice/arckit-gemini) instead of project-local commands.
 
 ## Support
 

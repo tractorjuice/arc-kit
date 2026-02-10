@@ -64,7 +64,7 @@ Detect if UK Government project (look for \"UK Government\", \"Ministry of\", \"
 
 ### Step 3: Read Template and VERSION
 
-- Read `${CLAUDE_PLUGIN_ROOT}/templates/aws-research-template.md` for output structure
+- Read `.arckit/templates/aws-research-template.md` for output structure
 - Read `VERSION` file for ArcKit version number
 
 ### Step 4: Extract Requirements for AWS Mapping
@@ -159,7 +159,7 @@ EXISTING=$(ls projects/{project-dir}/research/ARC-{PROJECT_ID}-AWRS-v*.md 2>/dev
 
 Run bash:
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh PROJECT_ID AWRS ${VERSION} --filename
+.arckit/scripts/bash/generate-document-id.sh PROJECT_ID AWRS ${VERSION} --filename
 ```
 
 Create `research/` subdirectory if needed, then **use the Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AWRS-v${VERSION}.md` following the template structure.

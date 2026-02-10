@@ -62,5 +62,12 @@ projects/
 # direnv
 .envrc.local
 
+# Gemini extension - generated files (static files are checked in)
+arckit-gemini/commands/
+arckit-gemini/templates/
+arckit-gemini/scripts/
+arckit-gemini/skills/
+arckit-gemini/docs/
+
 # Draft articles (not for version control)
 docs/articles/

@@ -630,9 +630,9 @@ Publish all project documentation as an interactive website:
 |-------|---------|-------|
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended. Install via **plugin** (`/plugin marketplace add tractorjuice/arc-kit`) |
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | Install via **CLI** (`arckit init --ai codex`). ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **CLI** (`arckit init --ai gemini`) |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **extension** (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`) or **CLI** (`arckit init --ai gemini`) |
 
-Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Codex CLI and Gemini CLI use the CLI package which copies commands and templates into the project directory.
+Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Gemini CLI can use the **ArcKit extension** (recommended) for the same zero-config experience, or the CLI package for project-local commands. Codex CLI uses the CLI package which copies commands and templates into the project directory.
 
 ### Why Commands, Not Skills
 

@@ -64,7 +64,7 @@ Detect if UK Government project (look for "UK Government", "Ministry of", "Depar
 
 ### Step 3: Read Template and VERSION
 
-- Read `${CLAUDE_PLUGIN_ROOT}/templates/gcp-research-template.md` for output structure
+- Read `.arckit/templates/gcp-research-template.md` for output structure
 - Read `VERSION` file for ArcKit version number
 
 ### Step 4: Extract Requirements for Google Cloud Mapping
@@ -156,7 +156,7 @@ EXISTING=$(ls projects/{project-dir}/research/ARC-{PROJECT_ID}-GCRS-v*.md 2>/dev
 
 Run bash:
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh PROJECT_ID GCRS ${VERSION} --filename
+.arckit/scripts/bash/generate-document-id.sh PROJECT_ID GCRS ${VERSION} --filename
 ```
 
 Create `research/` subdirectory if needed, then **use the Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCRS-v${VERSION}.md` following the template structure.

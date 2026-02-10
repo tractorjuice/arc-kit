@@ -15,7 +15,7 @@ $ARGUMENTS
 1. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/architecture-principles-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/architecture-principles-template.md` (default)
+   - **If not found**: Read `.arckit/templates/architecture-principles-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize architecture-principles`
@@ -83,7 +83,7 @@ $ARGUMENTS
    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
 8. **Write the output**:
-   - Generate the document ID using: `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh 000 PRIN ${VERSION} --filename`
+   - Generate the document ID using: `.arckit/scripts/bash/generate-document-id.sh 000 PRIN ${VERSION} --filename`
    - This produces: `ARC-000-PRIN-v${VERSION}.md` (000 indicates global/cross-project document)
    - Write to: `projects/000-global/ARC-000-PRIN-v${VERSION}.md`
    - Use the exact template structure

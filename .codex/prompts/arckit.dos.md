@@ -26,7 +26,7 @@ This command generates DOS-compliant procurement documentation from your existin
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/dos-requirements-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/dos-requirements-template.md` (default)
+- **If not found**: Read `.arckit/templates/dos-requirements-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize dos`
@@ -84,7 +84,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 ### 2. Load Project Context
 
-Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to get available projects, then:
+Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, then:
 
 1. Read `projects/[project]/ARC-*-REQ-v*.md` (source of truth)
 2. Read `projects/000-global/ARC-000-PRIN-*.md` (governance constraints)
@@ -101,7 +101,7 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DOS" "${VERSION}")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DOS" "${VERSION}")
 # Example output: ARC-001-DOS-v1.0
 ```
 
@@ -667,5 +667,5 @@ Important: Maintain audit trail of all procurement decisions per Digital Marketp
 
 - **No principles**: ERROR "Run /arckit:principles first - governance standards required"
 - **No requirements**: ERROR "Run /arckit:requirements first - nothing to procure"
-- **No project**: Suggest project creation with `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh`
+- **No project**: Suggest project creation with `.arckit/scripts/bash/create-project.sh`
 - **Wrong framework**: If user mentions G-Cloud or cloud services, suggest `/arckit:gcloud-search` instead

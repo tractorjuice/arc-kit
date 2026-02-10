@@ -82,9 +82,9 @@ Before creating the ADR, use the **AskUserQuestion** tool to gather key decision
 Apply the user's selections: the escalation level determines the governance forum and stakeholder RACI in the ADR. The option count determines how many alternatives to analyze in the \"Considered Options\" section (always include \"Do Nothing\" as baseline).
 
 ### 2. **Create or find the project**:
-   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to check for existing projects
+   - Run `.arckit/scripts/bash/list-projects.sh --json` to check for existing projects
    - If the user specifies an existing project number (e.g., \"001\") or the project name matches an existing project, use that directory
-   - Otherwise, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create a new project
+   - Otherwise, run `.arckit/scripts/bash/create-project.sh --name \"$PROJECT_NAME\" --json` to create a new project
    - Parse the JSON output to get the project directory path and project ID
 
 ### 3. **Create decisions directory and determine ADR number**:
@@ -110,7 +110,7 @@ fi
 ### 4. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/adr-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/adr-template.md` (default)
+   - **If not found**: Read `.arckit/templates/adr-template.md` (default)
 
    > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize adr`
@@ -281,7 +281,7 @@ fi
 ### 8. **Create file naming**:
    - **Generate filename**: Use `generate-document-id.sh` with --filename --next-num flags:
      ```bash
-     FILENAME=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"ADR\" \"${VERSION}\" --filename --next-num \"projects/${PROJECT_DIR}/decisions\")
+     FILENAME=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"ADR\" \"${VERSION}\" --filename --next-num \"projects/${PROJECT_DIR}/decisions\")
      # Example output: ARC-001-ADR-003-v1.0.md
      ```
    - **Format**: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
@@ -323,7 +323,7 @@ ADRs are multi-instance documents. Version detection depends on whether you are 
 ### Step 1: Generate Document ID
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"ADR\" \"${VERSION}\" --filename --next-num \"projects/${PROJECT_DIR}/decisions\")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"ADR\" \"${VERSION}\" --filename --next-num \"projects/${PROJECT_DIR}/decisions\")
 # Example output: ARC-001-ADR-003-v1.0.md
 ```
 

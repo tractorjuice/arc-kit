@@ -245,10 +245,10 @@ For each component, determine:
 
 To deepen strategic analysis beyond build vs buy, read and apply these reference files:
 
-- **Doctrine assessment**: Read `${CLAUDE_PLUGIN_ROOT}/skills/wardley-mapping/references/doctrine.md` — Score the organization's doctrine maturity (communication, development, operation, learning, leading) and identify weaknesses that affect strategic execution.
-- **Gameplay patterns**: Read `${CLAUDE_PLUGIN_ROOT}/skills/wardley-mapping/references/gameplay-patterns.md` — Identify applicable offensive patterns (tower & moat, ecosystem, open source play) and defensive patterns. Flag anti-patterns (legacy trap, premature innovation).
-- **Climatic patterns**: Read `${CLAUDE_PLUGIN_ROOT}/skills/wardley-mapping/references/climatic-patterns.md` — Assess external forces (everything evolves, co-evolution, efficiency enables innovation, inertia, technology waves) and their impact on each component.
-- **Mapping examples**: Read `${CLAUDE_PLUGIN_ROOT}/skills/wardley-mapping/references/mapping-examples.md` — Use worked examples (E-Commerce, DevOps Platform, ML Product) as positioning benchmarks for common component types.
+- **Doctrine assessment**: Read `.arckit/skills/wardley-mapping/references/doctrine.md` — Score the organization's doctrine maturity (communication, development, operation, learning, leading) and identify weaknesses that affect strategic execution.
+- **Gameplay patterns**: Read `.arckit/skills/wardley-mapping/references/gameplay-patterns.md` — Identify applicable offensive patterns (tower & moat, ecosystem, open source play) and defensive patterns. Flag anti-patterns (legacy trap, premature innovation).
+- **Climatic patterns**: Read `.arckit/skills/wardley-mapping/references/climatic-patterns.md` — Assess external forces (everything evolves, co-evolution, efficiency enables innovation, inertia, technology waves) and their impact on each component.
+- **Mapping examples**: Read `.arckit/skills/wardley-mapping/references/mapping-examples.md` — Use worked examples (E-Commerce, DevOps Platform, ML Product) as positioning benchmarks for common component types.
 
 Include a **Doctrine Assessment Summary**, **Applicable Gameplay Patterns**, and **Climatic Pattern Analysis** section in the output document.
 
@@ -315,7 +315,7 @@ Create the Wardley Map document using the template:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/wardley-map-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/wardley-map-template.md` (default)
+- **If not found**: Read `.arckit/templates/wardley-map-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize wardley`
@@ -330,7 +330,7 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/wardley-maps")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/wardley-maps")
 # Example output: ARC-001-WARD-001-v1.0.md
 ```
 

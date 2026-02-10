@@ -42,7 +42,7 @@ b. **Architecture Principles** (RECOMMENDED):
 
 ### 2. Load Project Context
 
-Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to get available projects, then:
+Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, then:
 
 1. Read `projects/[project]/ARC-*-REQ-v*.md`
 2. Read `projects/000-global/ARC-000-PRIN-*.md` if available
@@ -79,7 +79,7 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"GCLD\" \"${VERSION}\")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"GCLD\" \"${VERSION}\")
 # Example output: ARC-001-GCLD-v1.0
 ```
 

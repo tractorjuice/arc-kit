@@ -69,13 +69,13 @@ Scan for external (non-ArcKit) documents the user may have provided:
 First, check for existing projects:
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json
+bash .arckit/scripts/bash/list-projects.sh --json
 ```
 
 If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
 
 ```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name \"[project-name-from-user-input]\" --json
+bash .arckit/scripts/bash/create-project.sh --name \"[project-name-from-user-input]\" --json
 ```
 
 Parse the JSON response to extract:
@@ -100,7 +100,7 @@ Load the strategy template structure:
 **Read the template** (with user override support):
 - **First**, check if `.arckit/templates/architecture-strategy-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/architecture-strategy-template.md` (default)
+- **If not found**: Read `.arckit/templates/architecture-strategy-template.md` (default)
 
 > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize strategy`
@@ -229,7 +229,7 @@ Before completing the document, populate ALL document control fields in the head
 **Generate Document ID**:
 ```bash
 # Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"STRAT\" \"${VERSION}\")
+DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh \"${PROJECT_ID}\" \"STRAT\" \"${VERSION}\")
 # Example output: ARC-001-STRAT-v1.0
 ```
 
