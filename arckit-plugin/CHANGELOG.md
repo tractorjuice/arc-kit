@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Gemini CLI native extension** — ArcKit is now available as a Gemini CLI extension at [`tractorjuice/arckit-gemini`](https://github.com/tractorjuice/arckit-gemini), giving Gemini users the same zero-config experience as the Claude Code plugin
+  - Install: `gemini extensions install https://github.com/tractorjuice/arckit-gemini`
+  - Bundled MCP servers (AWS Knowledge, Microsoft Learn via mcp-remote), optional Google Developer Knowledge
+  - All 48 commands, templates, scripts, guides, and Wardley Mapping skill included
+  - Extension version tracks plugin version (currently v2.4.0)
+- `scripts/converter.py` now generates extension output alongside CLI and Codex formats, with path rewriting (`${CLAUDE_PLUGIN_ROOT}` -> `~/.gemini/extensions/arckit`)
+
 ---
 
 ## [2.4.0] - 2026-02-09
