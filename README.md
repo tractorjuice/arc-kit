@@ -32,7 +32,13 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 ```
 Then install from the Discover tab. The plugin provides all 48 commands, autonomous agents, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Updates are automatic via the marketplace.
 
-**Gemini CLI / Codex CLI** — install the ArcKit CLI:
+**Gemini CLI** — install the ArcKit extension (recommended):
+```bash
+gemini extensions install https://github.com/tractorjuice/arckit-gemini
+```
+Zero-config: all 48 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+
+**Gemini CLI / Codex CLI** — or install the ArcKit CLI:
 ```bash
 # Install with pip
 pip install git+https://github.com/tractorjuice/arc-kit.git
