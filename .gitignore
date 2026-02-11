@@ -59,6 +59,13 @@ projects/
 !.codex/README.md
 !.codex/.gitignore
 
+# OpenCode CLI - exclude auth tokens but include prompts
+.opencode/*
+!.opencode/commands/
+!.opencode/commands/*.md
+!.opencode/README.md
+!.opencode/.gitignore
+
 # direnv
 .envrc.local
 
@@ -71,3 +78,4 @@ arckit-gemini/docs/
 
 # Draft articles (not for version control)
 docs/articles/
+.tmp*
