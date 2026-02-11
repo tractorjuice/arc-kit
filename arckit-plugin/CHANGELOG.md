@@ -5,6 +5,18 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.2] - 2026-02-11
+
+### Added
+
+- **Data Commons MCP server** — bundled as a plugin MCP server for statistical data access (population, economics, health, etc.)
+
+### Fixed
+
+- Version bump to force plugin cache refresh for MCP server testing
+
+---
+
 ## [2.4.1] - 2026-02-10
 
 ### Added
