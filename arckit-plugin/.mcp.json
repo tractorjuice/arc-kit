@@ -14,6 +14,13 @@
       "headers": {
         "X-Goog-Api-Key": "${GOOGLE_API_KEY}"
       }
+    },
+    "datacommons-mcp": {
+      "type": "http",
+      "url": "https://api.datacommons.org/mcp",
+      "headers": {
+        "X-API-Key": "${DATA_COMMONS_API_KEY}"
+      }
     }
   }
 }
