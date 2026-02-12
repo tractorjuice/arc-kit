@@ -5,6 +5,14 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.4] - 2026-02-12
+
+### Fixed
+
+- **Windows cp1252 encoding fix** — added explicit `encoding='utf-8'` to all file I/O operations in `arckit init` to prevent `UnicodeEncodeError` on Windows when writing files containing Unicode box-drawing characters (fixes #49)
+
+---
+
 ## [2.4.3] - 2026-02-11
 
 ### Added

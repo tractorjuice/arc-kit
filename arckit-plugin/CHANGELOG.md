@@ -5,6 +5,18 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.4.4] - 2026-02-12
+
+### Fixed
+
+- **Windows cp1252 encoding fix** — added explicit `encoding='utf-8'` to all file I/O operations in `arckit init` to prevent `UnicodeEncodeError` on Windows (fixes #49)
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, extension, marketplace)
+
+---
+
 ## [2.4.3] - 2026-02-11
 
 ### Added
