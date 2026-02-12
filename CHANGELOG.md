@@ -5,6 +5,17 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## [2.4.3] - 2026-02-11
+
+### Added
+
+- **Data Commons MCP server for Gemini extension** — added `datacommons-mcp` to the Gemini extension MCP configuration
+
+### Changed
+
+- Version bump to 2.4.3 across all distribution formats
+
 ## [2.4.2] - 2026-02-11
 
 ### Added

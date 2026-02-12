@@ -21,7 +21,7 @@ This command performs AWS-specific technology research using the AWS Knowledge M
 
 1. **Determine the project**: If the user specified a project name/number, note it. Otherwise, identify the most recent project in `projects/`.
 
-2. **Launch the agent**: Launch the **arckit-aws-research** agent with the following prompt:
+2. **Launch the agent**: Launch the **arckit-aws-research** agent in `acceptEdits` mode with the following prompt:
 
    ```
    Research AWS services and architecture patterns for the project in projects/{project-dir}/.
