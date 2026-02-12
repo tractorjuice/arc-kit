@@ -294,7 +294,7 @@ Use the `/arckit.customize` command to copy templates for editing:
 - Include mandatory compliance sections (ISO 27001, PCI-DSS)
 - Add department-specific approval workflows
 - Customize UK Government classification banners
-""")
+""", encoding='utf-8')
 
     console.print("[green]✓[/green] Project structure created")
 
@@ -700,7 +700,7 @@ Example:
 - [Vendor Procurement Guide](https://github.com/github/arc-kit/docs/procurement.md)
 """
 
-    (project_path / "README.md").write_text(readme_content)
+    (project_path / "README.md").write_text(readme_content, encoding='utf-8')
     console.print("[green]✓[/green] README created")
 
     # Initialize git if requested
@@ -719,7 +719,7 @@ Example:
 
 export CODEX_HOME="$PWD/.codex"
 """
-        envrc_path.write_text(envrc_content)
+        envrc_path.write_text(envrc_content, encoding='utf-8')
 
         # Copy .codex/README.md if it exists
         codex_src = data_paths.get("codex_root")
@@ -750,12 +750,12 @@ export CODEX_HOME="$PWD/.codex"
         ]
 
         if gitignore_path.exists():
-            existing_content = gitignore_path.read_text()
+            existing_content = gitignore_path.read_text(encoding='utf-8')
             if ".codex" not in existing_content:
-                with open(gitignore_path, "a") as f:
+                with open(gitignore_path, 'a', encoding='utf-8') as f:
                     f.write("\n" + "\n".join(codex_ignore_entries) + "\n")
         else:
-            gitignore_path.write_text("\n".join(codex_ignore_entries) + "\n")
+            gitignore_path.write_text("\n".join(codex_ignore_entries) + "\n", encoding='utf-8')
 
         console.print("[green]✓[/green] Codex environment configured (.envrc created)")
 
