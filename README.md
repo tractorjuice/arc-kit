@@ -1,5 +1,7 @@
 # ArcKit - Enterprise Architecture Governance Toolkit
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tractorjuice/arc-kit)
+
 ![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
 
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
