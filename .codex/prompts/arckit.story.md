@@ -671,7 +671,7 @@ Read the story template:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/story-template.md` (default)
 
-> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `.arckit/VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize story`
 
 **Populate ALL placeholders** in the template with real data:

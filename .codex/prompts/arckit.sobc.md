@@ -126,7 +126,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `.arckit/templates/sobc-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+   > **Note**: Read the `.arckit/VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize sobc`
 
    **Five Cases (HM Treasury Green Book Model)**:
