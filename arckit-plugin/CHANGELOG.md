@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **SessionStart hook for version injection** — new `hooks/arckit-session.sh` fires once at session start (and on resume/clear/compact), injecting the ArcKit plugin version into Claude's context and exporting `ARCKIT_VERSION` as an environment variable; also detects whether a `projects/` directory exists
+- **OpenCode CLI support** — 4th distribution format (`arckit-opencode/`); `scripts/converter.py` now generates OpenCode markdown alongside Codex and Gemini formats
 
 ### Changed
 
