@@ -1,5 +1,7 @@
 # ArcKit - Enterprise Architecture Governance Toolkit
 
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tractorjuice/arc-kit)
+
 ![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
 
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
@@ -50,7 +52,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v2.4.4](https://github.com/tractorjuice/arc-kit/releases/tag/v2.4.4)
+**Latest Release**: [v2.4.5](https://github.com/tractorjuice/arc-kit/releases/tag/v2.4.5)
 
 ### Initialize a Project
 
@@ -1094,7 +1096,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v2.4.4](https://github.com/tractorjuice/arc-kit/releases/tag/v2.4.4)
+- **Latest Version**: [v2.4.5](https://github.com/tractorjuice/arc-kit/releases/tag/v2.4.5)
 
 ---
 

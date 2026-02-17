@@ -81,7 +81,7 @@ PROJECT_ID_CLEAN=${PROJECT_ID_CLEAN:-0}
 PROJECT_ID_PADDED=$(printf "%03d" "$PROJECT_ID_CLEAN")
 
 # Multi-instance document types that require sequence numbers
-MULTI_INSTANCE_TYPES="ADR DIAG WARD DMC"
+MULTI_INSTANCE_TYPES="ADR DIAG WARD DMC DFD"
 
 # Check if this is a multi-instance type
 is_multi_instance() {

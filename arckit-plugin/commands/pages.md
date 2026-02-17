@@ -343,7 +343,7 @@ Create `docs/manifest.json` with the discovered structure:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` (default)
 
-> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize pages`
 
 This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.

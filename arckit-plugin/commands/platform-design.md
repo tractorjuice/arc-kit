@@ -95,7 +95,7 @@ Read the platform design template:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/platform-design-template.md` (default)
 
-> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize platform-design`
 
 This template contains the structure for all 8 PDT canvases.

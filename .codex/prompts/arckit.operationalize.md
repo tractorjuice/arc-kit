@@ -130,7 +130,7 @@ Extract operational requirements from artifacts:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/operationalize-template.md` (default)
 
-> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `.arckit/VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize operationalize`
 
 Generate a comprehensive operational readiness document.

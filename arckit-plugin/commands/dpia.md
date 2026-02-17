@@ -117,7 +117,7 @@ Read the DPIA template:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/dpia-template.md` (default)
 
-> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
+> **Note**: Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize dpia`
 
 This template has 16 major sections and uses the ICO's 9-criteria screening checklist.

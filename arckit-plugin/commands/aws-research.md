@@ -42,7 +42,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
    - **First**, check if `.arckit/templates/aws-research-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/aws-research-template.md` (default)
-   - Read the `VERSION` file and update the version in the template metadata line when generating
+   - Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating
    - **Tip**: Users can customize templates with `/arckit:customize aws-research`
 3. Extract AWS service needs from requirements (compute, data, integration, security, AI/ML)
 4. Use MCP tools for each category: service discovery, deep dive, regional availability (eu-west-2), architecture patterns, Well-Architected assessment, Security Hub mapping, code samples

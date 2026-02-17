@@ -52,7 +52,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 
 ### Step 0: Capture ArcKit Version
 
-- Read the `VERSION` file and store the value as `ARC_VERSION`.
+- Read the `.arckit/VERSION` file and store the value as `ARC_VERSION`.
 - Use this exact value (no hardcoded fallback) anywhere you reference the ArcKit version in the report metadata.
 
 **Read the template** (with user override support):
@@ -673,7 +673,7 @@ Example: `projects/001-nhs-appointment/ARC-001-SASS-v1.0.md`
 **Assessment Phase**: [Alpha/Beta/Live]
 **Assessment Date**: [If provided, else "Not yet scheduled"]
 **Report Generated**: [Current date]
-**ArcKit Version**: [Read from VERSION file]
+**ArcKit Version**: [Read from .arckit/VERSION]
 
 ---
 
