@@ -5,6 +5,19 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.6.0] - 2026-02-17
+
+### Added
+
+- **SessionStart hook for version injection** — new `hooks/arckit-session.sh` fires once at session start, injecting the ArcKit plugin version into Claude's context and exporting `ARCKIT_VERSION` as an environment variable; also detects whether a `projects/` directory exists
+
+### Changed
+
+- **Removed per-command VERSION file reads from 46 commands** — commands no longer instruct Claude to read `${CLAUDE_PLUGIN_ROOT}/VERSION`; the version is now provided via `{ARCKIT_VERSION}` from the SessionStart hook context, eliminating a redundant Read tool call on every command invocation
+- Version bump across all distribution formats (CLI, plugin, extension, marketplace)
+
+---
+
 ## [2.5.1] - 2026-02-17
 
 ### Changed
