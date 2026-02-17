@@ -468,24 +468,24 @@
             font-weight: 400;
             font-family: monospace;
             font-size: 0.6875rem;
-            padding: 0.5rem 0.125rem;
+            padding: 0;
             border: none;
             white-space: nowrap;
-            height: 9rem;
+            height: 10rem;
+            min-width: 2rem;
+            max-width: 2rem;
+            position: relative;
             vertical-align: bottom;
-            text-align: left;
-            min-width: 1.75rem;
-            max-width: 1.75rem;
         }
 
         .app-dep-matrix__col-header span {
-            display: block;
+            position: absolute;
+            left: 0.75rem;
+            bottom: 0.375rem;
+            display: inline-block;
+            transform-origin: left bottom;
             transform: rotate(-55deg);
-            transform-origin: bottom left;
-            width: 1.75rem;
             white-space: nowrap;
-            overflow: visible;
-            padding-bottom: 0.25rem;
         }
 
         .app-dep-matrix__col-header--ext span {
