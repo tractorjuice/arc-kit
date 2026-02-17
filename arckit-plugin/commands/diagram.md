@@ -471,7 +471,7 @@ Create the architecture diagram document using the template:
 
 **File Location**: `projects/{project_number}-{project_name}/diagrams/ARC-{PROJECT_ID}-DIAG-{NNN}-v1.0.md`
 
-**Naming Convention** (use `generate-document-id.sh` with `--filename --next-num`):
+**Naming Convention**:
 - `ARC-001-DIAG-001-v1.0.md` - First diagram (e.g., C4 context)
 - `ARC-001-DIAG-002-v1.0.md` - Second diagram (e.g., C4 container)
 - `ARC-001-DIAG-003-v1.0.md` - Third diagram (e.g., C4 component)
@@ -491,12 +491,9 @@ Create the architecture diagram document using the template:
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DIAG" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/diagrams")
-# Example output: ARC-001-DIAG-001-v1.0.md
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-DIAG-{NNN}-v{VERSION}` (e.g., `ARC-001-DIAG-001-v1.0`)
+- Sequence number `{NNN}`: Check existing files in `diagrams/` and use the next number (001, 002, ...)
 
 **Populate Required Fields**:
 
@@ -505,7 +502,7 @@ DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_I
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Architecture Diagram"
-- `ARC-[PROJECT_ID]-DIAG-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-DIAG-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.diagram"
 
 *User-provided fields* (extract from project metadata or user input):

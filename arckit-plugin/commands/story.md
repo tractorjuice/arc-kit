@@ -597,17 +597,12 @@ Before generating the document ID, check if a previous version exists:
 4. Use the determined version for document ID, filename, Document Control, and Revision History
 5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-### Step 12: Generate Document Control Metadata
+### Step 12: Construct Document Control Metadata
 
-Generate document control fields:
+Construct document control fields:
 
-```bash
-# Generate document ID
-DOCUMENT_ID=$(./${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "$PROJECT_ID" "STORY" "${VERSION}")
-
-# Get dates
-DATE_CREATED=$(date +%Y-%m-%d)
-```
+- **Document ID**: `ARC-{PROJECT_ID}-STRY-v{VERSION}` (e.g., `ARC-001-STRY-v1.0`)
+- **Date Created**: Current date in YYYY-MM-DD format
 
 Document control fields:
 - `{document_id}`: Generated doc ID (e.g., ARC-001-STORY-v1.0)

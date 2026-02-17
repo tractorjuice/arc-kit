@@ -69,12 +69,8 @@ This command generates DOS-compliant procurement documentation from your existin
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DOS" "${VERSION}")
-# Example output: ARC-001-DOS-v1.0
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-DOS-v{VERSION}` (e.g., `ARC-001-DOS-v1.0`)
 
 **Populate Required Fields**:
 
@@ -83,7 +79,7 @@ DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_I
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "DOS Procurement Requirements"
-- `ARC-[PROJECT_ID]-DOS-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-DOS-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.dos"
 
 *User-provided fields* (extract from project metadata or user input):

@@ -239,12 +239,8 @@ $ARGUMENTS
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ATRS" "${VERSION}")
-# Example output: ARC-001-ATRS-v1.0
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-ATRS-v{VERSION}` (e.g., `ARC-001-ATRS-v1.0`)
 
 **Populate Required Fields**:
 
@@ -253,7 +249,7 @@ DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_I
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Algorithmic Transparency Record"
-- `ARC-[PROJECT_ID]-ATRS-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-ATRS-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.atrs"
 
 *User-provided fields* (extract from project metadata or user input):

@@ -174,4 +174,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2026-02-06
-**ArcKit Version**: 2.5.0
+**ArcKit Version**: 2.5.1

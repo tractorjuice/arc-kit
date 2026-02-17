@@ -168,12 +168,8 @@ Before generating the document ID, check if a previous version exists:
 4. Use the determined version for document ID, filename, Document Control, and Revision History
 5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-### Step 1: Generate Document ID
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SOW" "${VERSION}")
-# Example output: ARC-001-SOW-v1.0
-```
+### Step 1: Construct Document ID
+- **Document ID**: `ARC-{PROJECT_ID}-SOW-v{VERSION}` (e.g., `ARC-001-SOW-v1.0`)
 
 ### Step 2: Populate Required Fields
 
@@ -182,7 +178,7 @@ DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_I
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Statement of Work"
-- `ARC-[PROJECT_ID]-SOW-v[VERSION]` → Use generated DOC_ID from Step 1
+- `ARC-[PROJECT_ID]-SOW-v[VERSION]` → Construct using format from Step 1
 - `[COMMAND]` → "arckit.sow"
 
 **User-provided fields** (extract from project metadata or user input):

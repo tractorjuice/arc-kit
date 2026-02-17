@@ -181,18 +181,12 @@ Before generating the document ID, check if a previous version exists:
 4. Use the determined version for document ID, filename, Document Control, and Revision History
 5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-### Step 5: Generate Document Control Metadata
+### Step 5: Construct Document Control Metadata
 
-Use the bash script to generate document ID:
-
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "$PROJECT_ID" "PLAT" "${VERSION}"
-```
-
-This returns a document ID like: `ARC-001-PLAT-v1.0`
+- **Document ID**: `ARC-{PROJECT_ID}-PLAT-v{VERSION}` (e.g., `ARC-001-PLAT-v1.0`)
 
 **Populate document control fields**:
-- `document_id`: From script output
+- `document_id`: Constructed from format above
 - `project_id`: From Step 1
 - `project_name`: From Step 1
 - `version`: Determined version from Step 4

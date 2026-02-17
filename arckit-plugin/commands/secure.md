@@ -155,12 +155,8 @@ Generate a comprehensive Secure by Design assessment document by:
 
 Before completing the document, populate ALL document control fields in the header:
 
-### Step 1: Generate Document ID
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SECD" "${VERSION}")
-# Example output: ARC-001-SECD-v1.0
-```
+### Step 1: Construct Document ID
+- **Document ID**: `ARC-{PROJECT_ID}-SECD-v{VERSION}` (e.g., `ARC-001-SECD-v1.0`)
 
 ### Step 2: Populate Required Fields
 
@@ -169,7 +165,7 @@ DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_I
 - `[VERSION]` → Determined version from step 11
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Secure by Design Assessment"
-- `ARC-[PROJECT_ID]-SECD-v[VERSION]` → Use generated DOC_ID from Step 1
+- `ARC-[PROJECT_ID]-SECD-v[VERSION]` → Construct using format from Step 1
 - `[COMMAND]` → "arckit.secure"
 
 **User-provided fields** (extract from project metadata or user input):

@@ -103,7 +103,7 @@ fi
 ### 6. **Generate comprehensive ADR** following MADR v4.0 + UK Gov framework:
 
    **Document Control** (see "Auto-Populate Document Control Fields" section below for full details):
-   - Document ID: ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION} (use `generate-document-id.sh`)
+   - Document ID: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}` (e.g., `ARC-001-ADR-001-v1.0`)
    - ADR Number: ADR-{NUM} (e.g., ADR-001, ADR-002)
    - Version: ${VERSION} (from Step 0: Detect Version)
    - Status: Proposed (or as user specified)
@@ -256,15 +256,10 @@ fi
    - Create bidirectional traceability chain
 
 ### 8. **Create file naming**:
-   - **Generate filename**: Use `generate-document-id.sh` with --filename --next-num flags:
-     ```bash
-     FILENAME=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ADR" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/decisions")
-     # Example output: ARC-001-ADR-003-v1.0.md
-     ```
    - **Format**: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
    - **Example**: `ARC-001-ADR-001-v1.0.md`, `ARC-001-ADR-002-v1.0.md`
-   - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION}.md`
-   - ADR number is auto-incremented by --next-num flag (for new ADRs)
+   - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
+   - Sequence number auto-assigned from existing files in the directory
 
 ### 9. **Use Write tool to create the ADR file**:
    - **CRITICAL**: Because ADRs are very large documents (500+ lines), you MUST use the Write tool to create the file
@@ -297,12 +292,9 @@ ADRs are multi-instance documents. Version detection depends on whether you are 
 4. Use the determined version for document ID, filename, Document Control, and Revision History
 5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-### Step 1: Generate Document ID
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ADR" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/decisions")
-# Example output: ARC-001-ADR-003-v1.0.md
-```
+### Step 1: Construct Document ID
+- **Document ID**: `ARC-{PROJECT_ID}-ADR-{NNN}-v{VERSION}` (e.g., `ARC-001-ADR-001-v1.0`)
+- Sequence number `{NNN}`: Check existing files in `decisions/` and use the next number (001, 002, ...)
 
 ### Step 2: Populate Required Fields
 
@@ -311,7 +303,7 @@ DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_I
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Architecture Decision Record"
-- `ARC-[PROJECT_ID]-ADR-[NUM]-v[VERSION]` → Use generated DOC_ID from Step 1
+- `ARC-[PROJECT_ID]-ADR-[NUM]-v[VERSION]` → Construct using format from Step 1
 - `[COMMAND]` → "arckit.adr"
 
 **User-provided fields** (extract from project metadata or user input):

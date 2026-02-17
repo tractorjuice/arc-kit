@@ -144,11 +144,7 @@ Generate the DPIA by:
    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
 2. **Auto-populate Document Control**:
-   ```bash
-   # Generate document ID
-   DOC_ID=$(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DPIA v${VERSION})
-   ```
-   - Document ID: `{DOC_ID}` (e.g., ARC-001-DPIA-v1.0)
+   - **Document ID**: `ARC-{PROJECT_ID}-DPIA-v{VERSION}` (e.g., `ARC-001-DPIA-v1.0`)
    - Version: ${VERSION}
    - Status: DRAFT
    - Date Created: {current_date}

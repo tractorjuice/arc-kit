@@ -278,7 +278,7 @@ Create the Wardley Map document using the template:
 
 **File Location**: `projects/{project_number}-{project_name}/wardley-maps/ARC-{PROJECT_ID}-WARD-{NNN}-v1.0.md`
 
-**Naming Convention** (use `generate-document-id.sh` with `--filename --next-num`):
+**Naming Convention**:
 - `ARC-001-WARD-001-v1.0.md` - First map (e.g., current state)
 - `ARC-001-WARD-002-v1.0.md` - Second map (e.g., future state)
 - `ARC-001-WARD-003-v1.0.md` - Third map (e.g., gap analysis)
@@ -298,12 +298,9 @@ Create the Wardley Map document using the template:
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/wardley-maps")
-# Example output: ARC-001-WARD-001-v1.0.md
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-WARD-{NNN}-v{VERSION}` (e.g., `ARC-001-WARD-001-v1.0`)
+- Sequence number `{NNN}`: Check existing files in `wardley-maps/` and use the next number (001, 002, ...)
 
 **Populate Required Fields**:
 
@@ -312,7 +309,7 @@ DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_I
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Wardley Map"
-- `ARC-[PROJECT_ID]-WARD-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-WARD-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.wardley"
 
 *User-provided fields* (extract from project metadata or user input):

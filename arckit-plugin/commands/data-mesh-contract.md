@@ -134,10 +134,7 @@ The contract file will use the multi-instance naming pattern:
 {project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
 ```
 
-Where `{NNN}` is the next sequential number for contracts in this project. Use the script with `--next-num` flag:
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num "{project_path}/data-mesh-contracts"
-```
+Where `{NNN}` is the next sequential number for contracts in this project. Check existing files in `data-contracts/` and use the next number (001, 002, ...).
 
 ### Step 4: Read the Template
 
@@ -320,23 +317,9 @@ Using the template and context gathered, generate a comprehensive data mesh cont
     - Glossary
     - Contact information
 
-### Step 7: Generate Document ID
-
-Use the `generate-document-id.sh` script with `--next-num` to get the next sequential contract number:
-
-```bash
-# Generate document ID with next sequential number
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --next-num "{project_path}/data-mesh-contracts"
-
-# Generate filename with next sequential number
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num "{project_path}/data-mesh-contracts"
-```
-
-This will generate IDs like:
-- First contract: `ARC-{project_id}-DMC-001-v1.0` (filename: `ARC-001-DMC-001-v1.0.md`)
-- Second contract: `ARC-{project_id}-DMC-002-v1.0` (filename: `ARC-001-DMC-002-v1.0.md`)
-
-Replace `{document_id}` placeholder in the document with this value.
+### Step 7: Construct Document ID
+- **Document ID**: `ARC-{PROJECT_ID}-DMC-{NNN}-v{VERSION}` (e.g., `ARC-001-DMC-001-v1.0`)
+- Sequence number `{NNN}`: Check existing files in `data-contracts/` and use the next number (001, 002, ...)
 
 
 ---
@@ -345,12 +328,8 @@ Replace `{document_id}` placeholder in the document with this value.
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DMC" "${VERSION}")
-# Example output: ARC-001-DMC-v1.0
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-DMC-{NNN}-v{VERSION}` (e.g., `ARC-001-DMC-001-v1.0`)
 
 **Populate Required Fields**:
 
@@ -359,7 +338,7 @@ DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_I
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Data Mesh Contract"
-- `ARC-[PROJECT_ID]-DMC-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-DMC-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.data-mesh-contract"
 
 *User-provided fields* (extract from project metadata or user input):
@@ -405,7 +384,7 @@ Write tool:
   content: {full contract content}
 ```
 
-Note: Use the filename returned by `generate-document-id.sh --filename --next-num` for the actual path.
+Note: Use the constructed document ID format for the filename.
 
 ### Step 9: Show Summary to User
 

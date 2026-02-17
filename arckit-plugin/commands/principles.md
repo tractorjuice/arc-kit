@@ -75,8 +75,8 @@ $ARGUMENTS
    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
 8. **Write the output**:
-   - Generate the document ID using: `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh 000 PRIN ${VERSION} --filename`
-   - This produces: `ARC-000-PRIN-v${VERSION}.md` (000 indicates global/cross-project document)
+   - **Document ID**: `ARC-000-PRIN-v{VERSION}` (e.g., `ARC-000-PRIN-v1.0`) — 000 indicates global/cross-project document
+   - **Filename**: `ARC-000-PRIN-v{VERSION}.md`
    - Write to: `projects/000-global/ARC-000-PRIN-v${VERSION}.md`
    - Use the exact template structure
    - Make it ready for immediate use by development teams

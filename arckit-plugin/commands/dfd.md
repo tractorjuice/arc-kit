@@ -233,10 +233,9 @@ flowchart LR
 
 > **Note**: Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating.
 
-**Generate Document ID**:
-```bash
-DOC_ID=$(${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DFD" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/diagrams")
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-DFD-{NNN}-v{VERSION}` (e.g., `ARC-001-DFD-001-v1.0`)
+- Sequence number `{NNN}`: Check existing files in `diagrams/` and use the next number (001, 002, ...)
 
 The output document must include:
 
@@ -281,7 +280,7 @@ Before completing the document, populate ALL document control fields in the head
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Data Flow Diagram"
-- `ARC-[PROJECT_ID]-DFD-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-DFD-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.dfd"
 
 *User-provided fields* (extract from project metadata or user input):
