@@ -58,6 +58,15 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 
 **Claude Code**: No initialization needed — the plugin provides everything.
 
+**OpenCode CLI**:
+```bash
+# Create a new architecture governance project
+arckit init payment-modernization --ai opencode
+
+# Or initialize in current directory
+arckit init . --ai opencode
+```
+
 **Codex CLI**:
 ```bash
 # Create a new architecture governance project
@@ -635,6 +644,7 @@ Publish all project documentation as an interactive website:
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended. Install via **plugin** (`/plugin marketplace add tractorjuice/arc-kit`) |
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | Install via **CLI** (`arckit init --ai codex`). ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **extension** (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`) |
+| [OpenCode CLI](https://opencode.net/cli) | ✅ | Install via **CLI** (`arckit init --ai opencode`) |
 
 Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Gemini CLI uses the **ArcKit extension** for the same zero-config experience. Codex CLI uses the CLI package which copies commands and templates into the project directory.
 
@@ -966,7 +976,7 @@ Key references live in `docs/` and top-level guides:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---

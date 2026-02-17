@@ -1,0 +1,23 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "aws-knowledge": {
+      "type": "remote",
+      "url": "https://knowledge-mcp.global.api.aws/sse",
+      "enabled": true
+    },
+    "microsoft-learn": {
+      "type": "remote",
+      "url": "https://learn.microsoft.com/api/mcp/sse",
+      "enabled": true
+    },
+    "google-developer-knowledge": {
+      "type": "remote",
+      "url": "https://developerknowledge.googleapis.com/mcp/sse",
+      "headers": {
+        "X-Goog-Api-Key": "${GOOGLE_API_KEY}"
+      },
+      "enabled": false
+    }
+  }
+}
