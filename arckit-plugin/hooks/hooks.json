@@ -1,5 +1,5 @@
 {
-  "description": "ArcKit hooks: inject project context before commands run",
+  "description": "ArcKit hooks: project context injection and filename enforcement",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -9,6 +9,18 @@
             "type": "command",
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.sh",
             "timeout": 10
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.sh",
+            "timeout": 5
           }
         ]
       }
