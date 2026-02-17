@@ -649,7 +649,7 @@
             </div>
             <div class="app-feature-card">
                 <h3 class="govuk-heading-m">AI-Assisted</h3>
-                <p class="govuk-body">Works with Claude Code, OpenAI Codex CLI, and Gemini CLI. AI generates first drafts following templates; architects review and refine.</p>
+                <p class="govuk-body">Works with Claude Code, OpenAI Codex CLI, Gemini CLI, and OpenCode CLI. AI generates first drafts following templates; architects review and refine.</p>
             </div>
             <div class="app-feature-card">
                 <h3 class="govuk-heading-m">Traceable</h3>
@@ -4058,10 +4058,18 @@ flowchart TD
                 <p class="govuk-body"><strong>Best for:</strong> Multi-modal analysis, data processing, rapid prototyping.</p>
                 <p class="govuk-body"><strong>Extension:</strong> <code>gemini extensions install https://github.com/tractorjuice/arckit-gemini</code></p>
             </div>
+
+            <div class="app-ai-card">
+                <h3 class="govuk-heading-m">OpenCode CLI</h3>
+                <strong class="govuk-tag govuk-tag--blue">Supported</strong>
+                <p class="govuk-body govuk-!-margin-top-3">OpenCode CLI. Commands in <code>.opencode/commands/</code> directory.</p>
+                <p class="govuk-body"><strong>Best for:</strong> Open-source AI coding workflows with flexible model selection.</p>
+                <p class="govuk-body"><strong>Installation:</strong> <code>arckit init my-project --ai opencode</code></p>
+            </div>
         </div>
 
         <div class="govuk-inset-text govuk-!-margin-top-6">
-            All commands produce identical outputs across AI systems. Claude Code additionally uses <strong>agents</strong> for research-heavy commands (technology research, data source discovery, AWS/Azure cloud research), running them autonomously in isolated context windows. Codex CLI and Gemini CLI use equivalent inline prompts.
+            All commands produce identical outputs across AI systems. Claude Code additionally uses <strong>agents</strong> for research-heavy commands (technology research, data source discovery, AWS/Azure cloud research), running them autonomously in isolated context windows. Codex CLI, OpenCode CLI, and Gemini CLI use equivalent inline prompts.
         </div>
 
         <details class="govuk-details govuk-!-margin-top-4">

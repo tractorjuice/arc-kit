@@ -646,7 +646,7 @@ Publish all project documentation as an interactive website:
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **extension** (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`) |
 | [OpenCode CLI](https://opencode.net/cli) | ✅ | Install via **CLI** (`arckit init --ai opencode`) |
 
-Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Gemini CLI uses the **ArcKit extension** for the same zero-config experience. Codex CLI uses the CLI package which copies commands and templates into the project directory.
+Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Gemini CLI uses the **ArcKit extension** for the same zero-config experience. Codex CLI and OpenCode CLI use the CLI package which copies commands and templates into the project directory.
 
 ### Why Commands, Not Skills
 
@@ -718,7 +718,8 @@ payment-modernization/
 │           ├── selected-vendor.md
 │           ├── approved-hld.md
 │           └── dld/
-└── .codex/prompts/                        # Codex CLI prompts
+├── .codex/prompts/                        # Codex CLI prompts
+└── .opencode/commands/                    # OpenCode CLI commands
 ```
 
 ---
@@ -1076,6 +1077,9 @@ ls .codex/prompts/
 
 # For Gemini CLI, install the ArcKit extension:
 # gemini extensions install https://github.com/tractorjuice/arckit-gemini
+
+# For OpenCode CLI, check if commands directory exists
+ls .opencode/commands/
 ```
 
 **Template not found**: Ensure you've run `/arckit.principles` first
