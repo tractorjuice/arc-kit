@@ -42,7 +42,6 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
    - **First**, check if `.arckit/templates/research-findings-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md` (default)
-   - Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating
    - **Tip**: Users can customize templates with `/arckit:customize research`
 3. Extract research categories from requirements
 4. Use WebSearch and WebFetch for each category (vendors, pricing, reviews, open source, UK Gov)

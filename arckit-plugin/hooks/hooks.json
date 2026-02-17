@@ -1,6 +1,18 @@
 {
-  "description": "ArcKit hooks: project context injection and filename enforcement",
+  "description": "ArcKit hooks: session init, project context injection, and filename enforcement",
   "hooks": {
+    "SessionStart": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-session.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
     "UserPromptSubmit": [
       {
         "matcher": ".*",
