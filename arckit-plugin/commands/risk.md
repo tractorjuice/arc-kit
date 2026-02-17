@@ -22,6 +22,8 @@ $ARGUMENTS
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 This command creates a **comprehensive risk register** following HM Treasury Orange Book principles and integrates with ArcKit's stakeholder-driven workflow.
 
 **When to use this:**
@@ -29,34 +31,20 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 - **Before**: `/arckit:sobc` (SOBC Management Case Part E uses risk register)
 - **Purpose**: Identify, assess, and manage project risks using Orange Book methodology
 
-1. **Read Available Documents**:
-
-   Scan the project directory for existing artifacts and read them to inform the risk register:
+1. **Read existing artifacts** from the project context:
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
-     - Extract: Risk owners from RACI matrix, affected stakeholders, conflict analysis (conflicts ARE risks), stakeholder drivers (drivers under threat = strategic risks)
+   - **STKE** (Stakeholder Analysis) — Extract: risk owners from RACI matrix, affected stakeholders, conflict analysis (conflicts ARE risks), stakeholder drivers (drivers under threat = strategic risks)
      - If missing: STOP and warn user to run `/arckit:stakeholders` first — every risk MUST have an owner
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-     - Extract: Technology standards, compliance requirements — non-compliance creates risks
-   - `projects/000-global/risk-appetite.md` — Organizational risk appetite
-     - Extract: Risk appetite thresholds for assessment calibration
-   - `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
-     - Extract: Complex requirements that create risks, NFRs that mitigate risks
+   - **PRIN** (Architecture Principles, in 000-global) — Extract: technology standards, compliance requirements — non-compliance creates risks
+   - `projects/000-global/risk-appetite.md` — Extract: risk appetite thresholds for assessment calibration
+   - **REQ** (Requirements) — Extract: complex requirements that create risks, NFRs that mitigate risks
 
-   **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-SOBC-*.md` in `projects/{project}/` — Business case
-     - Extract: Financial risks, ROI assumptions at risk
-   - `ARC-*-DPIA-*.md` in `projects/{project}/` — DPIA
-     - Extract: Data protection risks, privacy risks
-
-   **What to extract from each document**:
-   - **Stakeholders**: Risk owners (RACI Accountable), affected parties, conflict-derived risks
-   - **Principles**: Compliance risks from non-adherence
-   - **Requirements**: Technical complexity risks, NFR mitigations
-   - **SOBC**: Financial risks, benefit realization risks
+   **OPTIONAL** (read if available, skip silently):
+   - **SOBC** (Business Case) — Extract: financial risks, ROI assumptions at risk
+   - **DPIA** (Data Protection Impact Assessment) — Extract: data protection risks, privacy risks
 
 2. **Understand the request**: The user may be:
    - Creating initial risk register (most common)
@@ -64,31 +52,11 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
    - Reassessing risks after changes
    - Creating organizational risk appetite (advanced - if user asks for this specifically)
 
-3. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Risk Appetite Statement & External Threat Assessments**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: Organizational risk appetite, risk tolerance thresholds, external threat landscape, industry risk benchmarks
-   - **Examples**: `risk-appetite-statement.pdf`, `threat-assessment-2025.pdf`, `industry-risk-report.docx`
-
-   **Previous Risk Assessments**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Previous risk findings, mitigation effectiveness, residual risks, lessons learned
-   - **Examples**: `previous-risk-register.pdf`, `risk-review-notes.md`
-
-   **Enterprise-Wide Risk Frameworks**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise risk frameworks, threat intelligence reports, cross-project risk benchmarks
-
-   **User prompt**: If no external risk docs found but they would improve the assessment, ask:
-   "Do you have a risk appetite statement, previous risk assessments, or external threat reports? I can read PDFs directly. Place them in `projects/000-global/policies/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+3. **Read external documents and policies**:
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract risk appetite, risk tolerance thresholds, threat landscape, industry benchmarks
+   - Read any **external documents** listed in the project context (`external/` files) — extract previous risk findings, mitigation effectiveness, residual risks, lessons learned
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise risk frameworks, threat intelligence reports
+   - If no external risk docs exist but they would improve the assessment, ask: "Do you have a risk appetite statement, previous risk assessments, or external threat reports? I can read PDFs directly. Place them in `projects/000-global/policies/` and re-run, or skip."
 
 4. **Determine project context**:
    - If user mentions "UK Government", "public sector", "department", "ministry" → Include regulatory/parliamentary risks

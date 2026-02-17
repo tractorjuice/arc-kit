@@ -13,61 +13,30 @@ $ARGUMENTS
 
 ## Instructions
 
-### Step 0: Read Available Documents
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-Scan the project directory for existing artifacts and read them to inform the DPIA:
+### Step 0: Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
-- `ARC-*-DATA-*.md` in `projects/{project}/` — Data model
-  - Extract: All entities with PII/special category data, data subjects, GDPR Article 6 lawful basis, Article 9 conditions, retention periods, data flows, data classifications
+- **DATA** (Data Model) — Extract: all entities with PII/special category data, data subjects, GDPR Article 6 lawful basis, Article 9 conditions, retention periods, data flows, data classifications
   - If missing: STOP and warn user to run `/arckit:data-model` first — a DPIA requires a data model to identify personal data processing
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-  - Extract: Privacy by Design principles, data minimization principles, security principles
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Privacy by Design principles, data minimization principles, security principles
   - If missing: warn that DPIAs should be informed by Privacy by Design principles
-- `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
-  - Extract: DR (data requirements), NFR-SEC (security), NFR-C (compliance/GDPR)
-- `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
-  - Extract: Data subject categories, vulnerable groups, RACI for data governance roles (DPO, Data Controller, Data Processors)
+- **REQ** (Requirements) — Extract: DR (data requirements), NFR-SEC (security), NFR-C (compliance/GDPR)
+- **STKE** (Stakeholder Analysis) — Extract: data subject categories, vulnerable groups, RACI for data governance roles (DPO, Data Controller, Data Processors)
 
-**OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-RISK-*.md` in `projects/{project}/` — Risk register
-  - Extract: Data protection risks, privacy risks already identified
-- `ARC-*-SECD-*.md` in `projects/{project}/` — Secure by Design assessment
-  - Extract: Security controls relevant to data protection
+**OPTIONAL** (read if available, skip silently):
+- **RISK** (Risk Register) — Extract: data protection risks, privacy risks already identified
+- **SECD** (Secure by Design) — Extract: security controls relevant to data protection
 
-**What to extract from each document**:
-- **Data Model**: Personal data categories, data subjects, lawful basis, retention, data flows
-- **Principles**: Privacy by Design and data minimization standards
-- **Requirements**: Data requirements, GDPR compliance requirements, security controls
-- **Stakeholders**: Data subjects, vulnerable groups, governance roles
+### Step 0b: Read external documents and policies
 
-### Step 0b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing DPIAs & Data Processing Agreements**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-- **What to extract**: Previous DPIA findings, data processing agreements, lawful basis assessments, data flow diagrams
-- **Examples**: `existing-dpia.pdf`, `data-processing-agreement.pdf`, `privacy-notice.docx`
-
-**Privacy Policies & Data Protection Standards**:
-- **Look in**: `projects/000-global/policies/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Organizational privacy policy, data retention schedule, data classification scheme
-- **Examples**: `privacy-policy.pdf`, `data-retention-schedule.docx`, `data-classification.md`
-
-**Enterprise-Wide Data Protection Standards**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise data protection standards, privacy impact templates, cross-project DPIA benchmarks
-
-**User prompt**: If no external data protection docs found, ask:
-"Do you have any existing DPIAs, data processing agreements, or privacy policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract previous DPIA findings, data processing agreements, lawful basis assessments, data flow diagrams
+- Read any **global policies** listed in the project context (`000-global/policies/`) — extract organizational privacy policy, data retention schedule, data classification scheme
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise data protection standards, privacy impact templates, cross-project DPIA benchmarks
+- If no external data protection docs exist, ask: "Do you have any existing DPIAs, data processing agreements, or privacy policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Step 0c: Interactive Configuration
 
@@ -90,13 +59,7 @@ Apply the user's selections: the scope determines which data model entities and 
 
 ### Step 1: Identify or Create Project
 
-First, check for existing projects:
-
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json
-```
-
-If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
+Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create it:
 
 ```bash
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json

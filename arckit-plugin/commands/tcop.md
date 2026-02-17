@@ -33,32 +33,23 @@ Generate a comprehensive TCoP review document by:
 
 2. **Read Available Documents**:
 
-   Scan the project directory for existing artifacts and read them to inform this assessment:
+   > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
-     - Extract: FR/NFR IDs, technology constraints, compliance requirements
+   - **REQ** (Requirements) — Extract: FR/NFR IDs, technology constraints, compliance requirements
      - If missing: warn user to run `/arckit:requirements` first
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-     - Extract: Technology standards, approved platforms, security requirements
+   - **PRIN** (Architecture Principles, in 000-global) — Extract: Technology standards, approved platforms, security requirements
      - If missing: warn user to run `/arckit:principles` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-STKE-*.md` — Stakeholder analysis (for user needs, priorities)
-   - `ARC-*-RISK-*.md` — Risk register (for security and compliance risks)
-   - `ARC-*-DIAG-*.md` in `projects/{project}/diagrams/` — Architecture diagrams (for deployment topology)
+   - **STKE** (Stakeholder Analysis) — Extract: User needs, priorities
+   - **RISK** (Risk Register) — Extract: Security and compliance risks
+   - **DIAG** (Architecture Diagrams, in diagrams/) — Extract: Deployment topology
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` — Technology research (for technology choices)
-   - `ARC-*-AIPB-*.md` — AI Playbook assessment (for AI/ML systems)
-   - `ARC-*-DPIA-*.md` — DPIA (for data protection context)
-
-   **What to extract from each document**:
-   - **Principles**: Technology standards, constraints, compliance requirements
-   - **Requirements**: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria
-   - **Stakeholders**: User personas, goals, success metrics
-   - **Risk**: High/critical risks, mitigations, risk appetite
-   - **Diagrams**: Component topology, deployment targets, integration points
+   - **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Technology choices
+   - **AIPB** (AI Playbook) — Extract: AI/ML system assessments
+   - **DPIA** (Data Protection Impact Assessment) — Extract: Data protection context
 
 3. **Assess compliance**: Based on the user's description and any existing project documentation, assess compliance against all 13 TCoP points:
    - Point 1: Define user needs
@@ -75,31 +66,11 @@ Generate a comprehensive TCoP review document by:
    - Point 12: Make your technology sustainable
    - Point 13: Meet the Service Standard
 
-4. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Departmental TCoP Interpretations & Previous Assessments**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: Previous TCoP assessment results, departmental interpretations of TCoP points, remediation plans
-   - **Examples**: `previous-tcop-assessment.pdf`, `departmental-tcop-guidance.docx`
-
-   **Technology Policies**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Approved technology lists, procurement policies, cloud-first mandates
-   - **Examples**: `approved-tech-list.pdf`, `cloud-policy.md`
-
-   **Enterprise-Wide Technology Standards**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise technology standards, digital strategy documents, cross-project TCoP compliance evidence
-
-   **User prompt**: If no external docs found but they would improve the TCoP assessment, ask:
-   "Do you have any previous TCoP assessments or departmental technology policy documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+4. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract previous TCoP assessment results, departmental interpretations of TCoP points, remediation plans
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract approved technology lists, procurement policies, cloud-first mandates
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise technology standards, digital strategy documents, cross-project TCoP compliance evidence
+   - If no external docs found but they would improve the TCoP assessment, ask: "Do you have any previous TCoP assessments or departmental technology policy documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 5. **For each TCoP point**:
    - Assess status: ✅ Compliant / ⚠️ Partially Compliant / ❌ Non-Compliant / N/A Not Applicable

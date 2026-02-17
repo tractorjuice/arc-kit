@@ -1,0 +1,17 @@
+{
+  "description": "ArcKit hooks: inject project context before commands run",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.sh",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

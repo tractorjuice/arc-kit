@@ -22,30 +22,21 @@ This command analyzes gaps between requirements and service descriptions, then g
 
 ## Instructions
 
-### 1. Read Available Documents
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-Scan the project directory for existing artifacts and read them to inform this analysis:
+### 1. Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
-- `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
-  - Extract: All MUST requirements (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx), SHOULD requirements, compliance (NFR-C-xxx), integration (INT-xxx), performance (NFR-P-xxx), security (NFR-S-xxx)
+- **REQ** (Requirements) — Extract: All MUST requirements (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx), SHOULD requirements, compliance (NFR-C-xxx), integration (INT-xxx), performance (NFR-P-xxx), security (NFR-S-xxx)
   - If missing: ERROR "Run `/arckit:requirements` first — need source requirements"
-- `ARC-*-GCLD-*.md` in `projects/{project}/procurement/` — G-Cloud search results
-  - Extract: Shortlisted services (top 3-5), service names, supplier names, service links, key features, Must-Have Match scores, Desirable Features scores, compliance mentions, pricing
+- **GCLD** (G-Cloud Search, in procurement/) — Extract: Shortlisted services (top 3-5), service names, supplier names, service links, key features, Must-Have Match scores, Desirable Features scores, compliance mentions, pricing
   - If missing: ERROR "Run `/arckit:gcloud-search` first — need service search results"
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-  - Extract: Technology standards, compliance requirements, approved platforms for gap analysis context
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Technology standards, compliance requirements, approved platforms for gap analysis context
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-RSCH-*.md` in `projects/{project}/` — Technology research
-  - Extract: Market landscape, alternative services, technology recommendations
-
-**What to extract from each document**:
-- **Requirements**: MUST/SHOULD requirements with IDs for systematic gap analysis
-- **G-Cloud Search**: Shortlisted services with features and scores for clarification targeting
-- **Principles**: Technology constraints and compliance standards for gap context
+- **RSCH** (Research) — Extract: Market landscape, alternative services, technology recommendations
 
 ### 3. Gap Analysis
 

@@ -26,6 +26,8 @@ UK Government departments must follow NCSC (National Cyber Security Centre) guid
 
 ## Your Task
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 Generate a comprehensive Secure by Design assessment document by:
 
 1. **Loading the template** (with user override support):
@@ -43,78 +45,37 @@ Generate a comprehensive Secure by Design assessment document by:
    - User base (public-facing, internal staff, both)
    - Hosting approach (cloud, on-premise, hybrid)
 
-3. **Read Available Documents**:
-
-   Scan the project directory for existing artifacts and read them to inform this assessment:
+3. **Read existing artifacts from the project context:**
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
+   - **REQ** (Requirements) in `projects/{project-name}/`
      - Extract: NFR-SEC (security), NFR-P (performance), NFR-A (availability), INT (integration), DR (data) requirements
      - If missing: warn user to run `/arckit:requirements` first
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+   - **PRIN** (Architecture Principles, in `projects/000-global/`)
      - Extract: Security standards, approved platforms, compliance requirements, cloud policy
      - If missing: warn user to run `/arckit:principles` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-RISK-*.md` in `projects/{project-name}/` — Risk register
+   - **RISK** (Risk Register) in `projects/{project-name}/`
      - Extract: Security risks, threat model, risk appetite, mitigations
-   - `ARC-*-DPIA-*.md` in `projects/{project-name}/` — Data Protection Impact Assessment
+   - **DPIA** (DPIA) in `projects/{project-name}/`
      - Extract: Personal data processing, lawful basis, data protection risks
-   - `ARC-*-DIAG-*.md` in `projects/{project-name}/diagrams/` — Architecture diagrams
+   - **DIAG** (Architecture Diagrams) in `projects/{project-name}/diagrams/`
      - Extract: Deployment topology, network boundaries, data flows, integration points
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-TCOP-*.md` in `projects/{project-name}/` — TCoP review
+   - **TCOP** (TCoP Assessment) in `projects/{project-name}/`
      - Extract: Technology governance compliance, Point 6 (Secure) findings
-   - `ARC-*-AIPB-*.md` in `projects/{project-name}/` — AI Playbook assessment
+   - **AIPB** (AI Playbook) in `projects/{project-name}/`
      - Extract: AI-specific security requirements (prompt injection, data poisoning)
-   - `ARC-*-ATRS-*.md` in `projects/{project-name}/` — ATRS record
+   - **ATRS** (ATRS record) in `projects/{project-name}/`
      - Extract: Algorithmic transparency security requirements
 
-   **What to extract from each document**:
-   - **Principles**: Security standards, approved platforms, compliance constraints
-   - **Requirements**: NFR-SEC IDs, data classification, availability targets, integration security
-   - **Risk**: Security threats, risk levels, existing mitigations
-   - **DPIA**: Personal data categories, lawful basis, data protection controls
-   - **Diagrams**: Network topology, trust boundaries, data flow paths
-
-4. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Security Assessment Reports**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
-   - **What to extract**: Vulnerability findings, risk ratings, remediation recommendations
-   - **Examples**: `pentest-report.pdf`, `vulnerability-scan.pdf`, `red-team-findings.docx`
-
-   **Compliance Certificates & Audit Reports**:
-   - **Look in**: `projects/{project-dir}/external/` or `projects/000-global/policies/`
-   - **File types**: PDF, images (certificate scans)
-   - **What to extract**: Certification scope, validity dates, audit findings, non-conformities
-   - **Examples**: `cyber-essentials-plus-cert.pdf`, `iso27001-audit.pdf`, `soc2-report.pdf`
-
-   **Threat Models**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: Markdown, PDF, images (STRIDE/DREAD diagrams)
-   - **What to extract**: Threat actors, attack vectors, existing mitigations, residual risks
-   - **Examples**: `threat-model.md`, `stride-analysis.pdf`
-
-   **Security Policies**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Security requirements, acceptable risk levels, mandatory controls
-   - **Examples**: `security-policy.pdf`, `risk-appetite.md`, `incident-response-plan.docx`
-
-   **Enterprise-Wide Security Baselines**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise security baselines, penetration test reports, cross-project security assessment patterns
-
-   **User prompt**: If no external security docs found, ask:
-   "Do you have any existing security assessments, pen test reports, or threat models? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+4. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract vulnerability findings, risk ratings, remediation recommendations, threat actors, attack vectors, existing mitigations
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract security requirements, acceptable risk levels, mandatory controls, certification scope, validity dates
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise security baselines, penetration test reports, cross-project security assessment patterns
+   - If no external docs exist but they would improve the assessment, ask: "Do you have any existing security assessments, pen test reports, or threat models? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 5. **Assess security using NCSC CAF (14 principles across 4 objectives)**:
 

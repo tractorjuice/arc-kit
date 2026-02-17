@@ -63,32 +63,21 @@ Generate a comprehensive Secure by Design assessment document using the **contin
 
 2. **Read Available Documents**:
 
-   Scan the project directory for existing artifacts and read them to inform this assessment:
+   > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
-     - Extract: NFR-SEC (security), NFR-A (availability), INT (integration), DR (data) requirements, data classification
+   - **REQ** (Requirements) — Extract: NFR-SEC (security), NFR-A (availability), INT (integration), DR (data) requirements, data classification
      - If missing: warn user to run `/arckit:requirements` first
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-     - Extract: MOD security standards, approved platforms, classification handling, compliance requirements
+   - **PRIN** (Architecture Principles, in 000-global) — Extract: MOD security standards, approved platforms, classification handling, compliance requirements
      - If missing: warn user to run `/arckit:principles` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-RISK-*.md` in `projects/{project-name}/` — Risk register
-     - Extract: Security risks, threat model, risk appetite, mitigations, MOD-specific threats
-   - `ARC-*-SECD-*.md` in `projects/{project-name}/` — Civilian Secure by Design assessment
-     - Extract: NCSC CAF findings, Cyber Essentials status, existing security controls
+   - **RISK** (Risk Register) — Extract: Security risks, threat model, risk appetite, mitigations, MOD-specific threats
+   - **SECD** (Secure by Design) — Extract: NCSC CAF findings, Cyber Essentials status, existing security controls
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-DIAG-*.md` in `projects/{project-name}/diagrams/` — Architecture diagrams
-     - Extract: Deployment topology, network boundaries, data flows, trust zones
+   - **DIAG** (Architecture Diagrams, in diagrams/) — Extract: Deployment topology, network boundaries, data flows, trust zones
    - Previous SbD self-assessments (if available in project directory)
-
-   **What to extract from each document**:
-   - **Principles**: MOD security policies, JSP 440 requirements, classification standards
-   - **Requirements**: Security NFRs, data classification, availability targets, integration security
-   - **Risk**: Security threats, risk levels, MOD-specific threat vectors, supply chain risks
-   - **Secure**: Existing NCSC CAF findings to build upon for MOD assessment
 
 3. **Assess against the 7 MOD Secure by Design Principles** (ISN 2023/09):
 
@@ -164,37 +153,12 @@ Generate a comprehensive Secure by Design assessment document using the **contin
      - Security governance continues through-life
      - Decommissioning process includes secure data deletion
 
-4. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **JSP 440 Compliance Reports & CAAT Results**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: CAAT assessment results, security clearance requirements, JSP 440 compliance status, IAMM maturity scores
-   - **Examples**: `caat-assessment.pdf`, `jsp440-compliance.docx`, `iamm-report.pdf`
-
-   **Supplier Security Attestations**:
-   - **Look in**: `projects/{project-dir}/vendors/{vendor}/`
-   - **File types**: PDF, Word
-   - **What to extract**: Supplier security clearances, List X status, DEFCON compliance, SC/DV clearance evidence
-   - **Examples**: `security-attestation.pdf`, `list-x-certificate.pdf`
-
-   **MOD Security Policies**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: MOD security standards, classification requirements, ITAR restrictions
-   - **Examples**: `mod-security-policy.pdf`, `classification-guide.docx`
-
-   **Enterprise-Wide MOD Security Baselines**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise MOD security baselines, accreditation templates, cross-project security assurance evidence
-
-   **User prompt**: If no external MOD security docs found, ask:
-   "Do you have any JSP 440 compliance reports, CAAT assessment results, or supplier security attestations? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+4. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract CAAT assessment results, security clearance requirements, JSP 440 compliance status, IAMM maturity scores
+   - Read any **vendor security attestations** in `projects/{project-dir}/vendors/{vendor}/` — extract supplier security clearances, List X status, DEFCON compliance, SC/DV clearance evidence
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract MOD security standards, classification requirements, ITAR restrictions
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise MOD security baselines, accreditation templates, cross-project security assurance evidence
+   - If no external MOD security docs found, ask: "Do you have any JSP 440 compliance reports, CAAT assessment results, or supplier security attestations? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 5. **Assess using NIST Cybersecurity Framework** (as mandated by SbD):
 

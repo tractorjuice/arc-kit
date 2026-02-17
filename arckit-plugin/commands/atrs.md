@@ -12,6 +12,8 @@ $ARGUMENTS
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 1. **Understand ATRS requirements**:
    - ATRS is **MANDATORY** for all central government departments and arm's length bodies
    - Two-tier structure: Tier 1 (public summary) + Tier 2 (detailed technical)
@@ -30,33 +32,25 @@ $ARGUMENTS
    - **MEDIUM-RISK**: Semi-automated with human review, significant resource allocation
    - **LOW-RISK**: Administrative, productivity tools, recommendations with human control
 
-4. **Read Available Documents**:
-
-   Scan the project directory for existing artifacts and read them to inform this record:
+4. **Read existing artifacts from the project context:**
 
    **MANDATORY** (warn if missing):
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+   - **PRIN** (Architecture Principles, in 000-global)
      - Extract: AI governance standards, technology constraints, compliance requirements
      - If missing: warn user to run `/arckit:principles` first
-   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+   - **REQ** (Requirements)
      - Extract: AI/ML-related FR requirements, NFR (security, fairness), DR (data requirements)
      - If missing: warn user to run `/arckit:requirements` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-AIPB-*.md` in `projects/{project-dir}/` — AI Playbook assessment
+   - **AIPB** (AI Playbook Assessment)
      - Extract: Risk level, human oversight model, ethical assessment scores, gaps
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-DATA-*.md` in `projects/{project-dir}/` — Data model
+   - **DATA** (Data Model)
      - Extract: Training data sources, personal data, data quality, storage
-   - `ARC-*-DPIA-*.md` in `projects/{project-dir}/` — DPIA
+   - **DPIA** (Data Protection Impact Assessment)
      - Extract: Data protection assessment, lawful basis, privacy risks
-
-   **What to extract from each document**:
-   - **Principles**: AI governance standards, compliance constraints
-   - **Requirements**: AI use cases (FR-xxx), fairness requirements, security requirements
-   - **AI Playbook**: Risk level, human oversight model, compliance gaps
-   - **Data Model**: Training data, personal data categories, storage location
 
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/uk-gov-atrs-template.md` exists in the project root
@@ -66,25 +60,10 @@ $ARGUMENTS
    > **Note**: Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize atrs`
 
-5. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Existing ATRS Records & Algorithmic Documentation**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: Previous ATRS submissions, algorithmic impact assessments, model documentation, fairness testing results
-   - **Examples**: `previous-atrs-record.pdf`, `algorithmic-impact-assessment.docx`
-
-   **Enterprise-Wide Algorithmic Transparency Policies**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Organization-wide algorithmic transparency policies, AI ethics frameworks, cross-project ATRS standards
-
-   **User prompt**: If no external ATRS docs found but they would improve the record, ask:
-   "Do you have any existing ATRS records from similar systems or algorithmic documentation? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+5. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract previous ATRS submissions, algorithmic impact assessments, model documentation, fairness testing results
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract organization-wide algorithmic transparency policies, AI ethics frameworks, cross-project ATRS standards
+   - If no external docs exist but they would improve the record, ask: "Do you have any existing ATRS records from similar systems or algorithmic documentation? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 6. **Complete TIER 1 - Summary Information** (for general public):
    - Use clear, simple, jargon-free language

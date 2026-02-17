@@ -42,10 +42,10 @@ b. **Architecture Principles** (RECOMMENDED):
 
 ### 2. Load Project Context
 
-Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to get available projects, then:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-1. Read `projects/[project]/ARC-*-REQ-v*.md`
-2. Read `projects/000-global/ARC-000-PRIN-*.md` if available
+1. Read the **REQ** (Requirements) artifact for the target project
+2. Read the **PRIN** (Architecture Principles, in 000-global) if available
 3. Parse user input for specific service types needed
 
 ### 3. Analyze Cloud Service Needs

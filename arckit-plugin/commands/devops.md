@@ -42,57 +42,36 @@ Parse the user input for:
 
 ## Instructions
 
-### Phase 1: Read Available Documents
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-Scan the project directory for existing artifacts and read them to inform this document:
+### Phase 1: Read existing artifacts from the project context:
 
 **MANDATORY** (warn if missing):
-- `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
+- **REQ** (Requirements)
   - Extract: NFR-P (performance), NFR-S (scalability), NFR-SEC (security), NFR-A (availability), FR (functional), INT (integration) requirements
   - If missing: warn user to run `/arckit:requirements` first
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+- **PRIN** (Architecture Principles, in 000-global)
   - Extract: Technology standards, approved platforms, security requirements, cloud-first policy
   - If missing: warn user to run `/arckit:principles` first
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-DIAG-*.md` in `projects/{project-name}/diagrams/` — Architecture diagrams
+- **DIAG** (Architecture Diagrams)
   - Extract: Deployment topology, component inventory, integration points
-- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-name}/` — Technology research
+- **RSCH** (Research Findings) or **AWSR** / **AZUR** (Cloud Research)
   - Extract: Recommended services, platform choices, vendor decisions
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-DATA-*.md` in `projects/{project-name}/` — Data model
+- **DATA** (Data Model)
   - Extract: Data stores, schemas, database requirements
-- `ARC-*-RISK-*.md` in `projects/{project-name}/` — Risk register
+- **RISK** (Risk Register)
   - Extract: Technical risks affecting CI/CD and deployment
-- `ARC-*-TCOP-*.md` in `projects/{project-name}/` — TCoP review
+- **TCOP** (TCoP Assessment)
   - Extract: UK Government compliance requirements for DevOps
 
-**What to extract from each document**:
-- **Principles**: Technology standards, approved platforms, security requirements
-- **Requirements**: NFR-P/NFR-S/NFR-SEC/NFR-A IDs, deployment/performance targets
-- **Diagrams**: Component topology, deployment targets, integration points
-- **Research**: Platform choices, recommended services, vendor decisions
-
-### Phase 1b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing CI/CD Configs & Deployment Runbooks**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), YAML (.yml, .yaml)
-- **What to extract**: Current pipeline configurations, deployment procedures, environment specifications, infrastructure-as-code patterns
-- **Examples**: `ci-pipeline.yml`, `deployment-runbook.pdf`, `infrastructure-guide.docx`
-
-**Enterprise-Wide CI/CD Standards**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise CI/CD standards, platform engineering guidelines, cross-project DevOps maturity benchmarks
-
-**User prompt**: If no external DevOps docs found but they would improve the strategy, ask:
-"Do you have any existing CI/CD configurations, deployment runbooks, or infrastructure documentation? I can read PDFs and YAML files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+### Phase 1b: Read external documents and policies:
+   - Read any **external documents** listed in the project context (`external/` files) — extract current pipeline configurations, deployment procedures, environment specifications, infrastructure-as-code patterns
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise CI/CD standards, platform engineering guidelines, cross-project DevOps maturity benchmarks
+   - If no external docs exist but they would improve the strategy, ask: "Do you have any existing CI/CD configurations, deployment runbooks, or infrastructure documentation? I can read PDFs and YAML files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Phase 2: Analysis
 

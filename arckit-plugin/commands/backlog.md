@@ -84,77 +84,46 @@ Scans all ArcKit artifacts and automatically:
 
 ### Step 1: Identify Project Context
 
-Find the project directory:
-- Look in `projects/` for subdirectories
-- If multiple projects, ask which one
-- If single project, use it
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
+Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number). If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output.
 
 Extract project metadata:
 - Project name
 - Current phase (from artifacts)
 - Team size (if documented)
 
-### Step 2: Read Available Documents
-
-Scan the project directory for existing artifacts and read them to inform the backlog:
+### Step 2: Read existing artifacts from the project context:
 
 **MANDATORY** (warn if missing):
-- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification (primary source)
+- **REQ** (Requirements) — primary source
   - Extract: All BR/FR/NFR/INT/DR requirement IDs, descriptions, priorities, acceptance criteria
   - If missing: warn user to run `/arckit:requirements` first — backlog is derived from requirements
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+- **STKE** (Stakeholder Analysis)
   - Extract: User personas for "As a..." statements, stakeholder priorities
-- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+- **RISK** (Risk Register)
   - Extract: Risk priorities for risk-based prioritization, security threats
-- `ARC-*-SOBC-*.md` in `projects/{project-dir}/` — Business case
+- **SOBC** (Business Case)
   - Extract: Value priorities, ROI targets for value-based prioritization
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+- **PRIN** (Architecture Principles, in 000-global)
   - Extract: Quality standards for Definition of Done
-- `ARC-*-HLDR-*.md` or `ARC-*-DLDR-*.md` in `projects/{project-dir}/` — Design reviews
+- **HLDR** (High-Level Design Review) or **DLDR** (Detailed Design Review)
   - Extract: Component names and responsibilities for story mapping
 - HLD/DLD in `projects/{project-dir}/vendors/*/hld-v*.md` or `dld-v*.md` — Vendor designs
   - Extract: Component mapping, detailed component info
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-DPIA-*.md` in `projects/{project-dir}/` — DPIA
+- **DPIA** (Data Protection Impact Assessment)
   - Extract: Privacy-related tasks and constraints
 - `test-strategy.md` — Test requirements (optional external document)
   - Extract: Test types and coverage needs
 
-**What to extract from each document**:
-- **Requirements**: BR → Epics, FR → User Stories, NFR → Technical Tasks, INT → Integration Stories, DR → Data Tasks
-- **Stakeholders**: User personas for "As a..." statements
-- **Risk**: Risk levels for prioritization
-- **SOBC**: Value priorities for benefit-driven ordering
-- **Principles**: Quality standards for Definition of Done
-
-### Step 2b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Vendor HLD/DLD for Component Mapping**:
-- **Look in**: `projects/{project-dir}/vendors/{vendor}/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
-- **What to extract**: Component names, service boundaries, API endpoints, data stores for accurate story mapping
-- **Examples**: `hld-v1.0.pdf`, `component-architecture.png`
-
-**Existing Backlogs or Sprint Plans**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF, Word, Markdown, CSV
-- **What to extract**: Existing user stories, velocity data, sprint history, team capacity
-- **Examples**: `current-backlog.csv`, `sprint-retrospective.md`
-
-**Enterprise-Wide Backlog Standards**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise backlog standards, Definition of Ready/Done templates, cross-project estimation benchmarks
-
-**User prompt**: If no external docs found but they would improve backlog accuracy, ask:
-"Do you have any vendor design documents or existing backlog exports? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+### Step 2b: Read external documents and policies:
+   - Read any **external documents** listed in the project context (`external/` files) — extract existing user stories, velocity data, sprint history, team capacity, component architecture from vendor HLD/DLD documents
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise backlog standards, Definition of Ready/Done templates, cross-project estimation benchmarks
+   - If no external docs exist but they would improve backlog accuracy, ask: "Do you have any vendor design documents or existing backlog exports? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Step 2c: Interactive Configuration
 

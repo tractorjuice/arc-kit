@@ -31,35 +31,31 @@ $ARGUMENTS
 
 ## Step 1: Understand the Context
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 Read existing project artifacts to understand what to diagram:
 
 1. **Read Requirements** (if available):
-   - File: Any `ARC-*-REQ-*.md` file in `projects/{current_project}/`
+   - **REQ** (Requirements)
    - Extract: Data requirements (DR-xxx), integration requirements (INT-xxx), functional requirements (FR-xxx)
    - Identify: External systems, user actors, data flows, data stores
 
 2. **Read Data Model** (if available):
-   - File: Any `ARC-*-DMOD-*.md` file in `projects/{current_project}/`
+   - **DATA** (Data Model)
    - Extract: Entities, relationships, data types
    - Identify: Data stores, data structures
 
 3. **Read Architecture Principles** (if available):
-   - File: Any `ARC-000-PRIN-*.md` file in `projects/000-global/`
+   - **PRIN** (Architecture Principles, in 000-global)
    - Extract: Data governance standards, privacy requirements
 
 4. **Read Existing Diagrams** (if available):
-   - File: Any `ARC-*-DIAG-*.md` file in `projects/{current_project}/diagrams/`
+   - **DIAG** (Architecture Diagrams)
    - Extract: System context, containers, components — use to inform DFD decomposition
 
-## Step 1b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: Images (.png, .jpg, .svg), PDF (.pdf), Markdown (.md)
-- **What to extract**: Existing data flow diagrams, process descriptions, system interfaces
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+## Step 1b: Read external documents and policies:
+   - Read any **external documents** listed in the project context (`external/` files) — extract existing data flow diagrams, process descriptions, system interfaces
+   - If no external docs exist but they would improve the output, ask: "Do you have any existing data flow diagrams or system interface documents? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ## Step 1c: Interactive Configuration
 

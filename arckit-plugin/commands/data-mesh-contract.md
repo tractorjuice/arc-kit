@@ -13,6 +13,8 @@ $ARGUMENTS
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 ### Step 0: Check Prerequisites
 
 **IMPORTANT**: Before generating a data mesh contract, verify that foundational artifacts exist:
@@ -93,21 +95,9 @@ Examples:
 Data product name (kebab-case):
 ```
 
-### Step 2: Find or Create Project
-
-First, check for existing projects:
-
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json
-```
-
-If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
-
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh \
-  --name "$DATA_PRODUCT_NAME" \
-  --json
-```
+### Step 2: Identify the target project
+   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+   - If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$DATA_PRODUCT_NAME" --json` to create a new project and parse the JSON output
 
 **Parse the JSON output** to get:
 - `project_id` (e.g., 001, 002)
@@ -116,7 +106,7 @@ bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh \
 
 **Important**: If the script creates a NEW project, inform the user:
 ```
-✅ Created new project: Project {project_id} - {project_name}
+Created new project: Project {project_id} - {project_name}
    Location: {project_path}
 
 Note: This is a new project. You may want to run these commands first:
@@ -127,7 +117,7 @@ Note: This is a new project. You may want to run these commands first:
 
 If the project ALREADY EXISTS, just acknowledge it:
 ```
-📂 Using existing project: Project {project_id} - {project_name}
+Using existing project: Project {project_id} - {project_name}
    Location: {project_path}
 ```
 
@@ -161,25 +151,10 @@ Read the data mesh contract template:
 > **Note**: Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize data-mesh-contract`
 
-### Step 4b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing Data Contracts & SLA Documents**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), YAML (.yml), JSON (.json)
-- **What to extract**: Existing data product definitions, SLA terms, schema specifications, data quality rules
-- **Examples**: `data-contract-v1.yml`, `data-sla.pdf`, `schema-registry.json`
-
-**Enterprise-Wide Data Governance Standards**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise data governance standards, data sharing agreements, cross-project data catalogue conventions
-
-**User prompt**: If no external data contract docs found but they would improve the output, ask:
-"Do you have any existing data contracts, data product SLAs, or schema specifications? I can read PDFs, YAML, and JSON files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+### Step 4b: Read external documents and policies:
+   - Read any **external documents** listed in the project context (`external/` files) — extract existing data product definitions, SLA terms, schema specifications, data quality rules
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise data governance standards, data sharing agreements, cross-project data catalogue conventions
+   - If no external docs exist but they would improve the output, ask: "Do you have any existing data contracts, data product SLAs, or schema specifications? I can read PDFs, YAML, and JSON files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Step 5: Gather Context from Existing Artifacts
 

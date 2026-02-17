@@ -48,54 +48,27 @@ Parse the user input for:
 
 ### Phase 1: Read Available Documents
 
-Scan the project directory for existing artifacts and read them to inform this document:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 **MANDATORY** (warn if missing):
-- `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
-  - Extract: ML-related FR requirements, NFR (performance, security), DR (data requirements)
+- **REQ** (Requirements) — Extract: ML-related FR requirements, NFR (performance, security), DR (data requirements)
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-DATA-*.md` in `projects/{project-name}/` — Data model
-  - Extract: Training data sources, feature definitions, data quality, schemas
-- `ARC-*-AIPB-*.md` in `projects/{project-name}/` — AI Playbook assessment
-  - Extract: Risk level, responsible AI requirements, human oversight model
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-  - Extract: AI/ML principles, technology standards, governance requirements
+- **DATA** (Data Model) — Extract: Training data sources, feature definitions, data quality, schemas
+- **AIPB** (AI Playbook) — Extract: Risk level, responsible AI requirements, human oversight model
+- **PRIN** (Architecture Principles, in 000-global) — Extract: AI/ML principles, technology standards, governance requirements
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-name}/` — Technology research
-  - Extract: ML platform choices, serving infrastructure, cost estimates
-- `ARC-*-ATRS-*.md` in `projects/{project-name}/` — Algorithmic transparency
-  - Extract: Transparency requirements, publication obligations
-- `ARC-*-J936-*.md` in `projects/{project-name}/` — MOD AI assurance (JSP 936)
-  - Extract: Defence AI assurance requirements, risk classification
+- **RSCH** / **AWRS** / **AZRS** (Research) — Extract: ML platform choices, serving infrastructure, cost estimates
+- **ATRS** (Algorithmic Transparency) — Extract: Transparency requirements, publication obligations
+- **J936** (JSP 936 AI Assurance) — Extract: Defence AI assurance requirements, risk classification
 
-**What to extract from each document**:
-- **Requirements**: ML use cases (FR-xxx), performance targets (NFR-P-xxx), data requirements (DR-xxx)
-- **Data Model**: Training data sources, features, data quality expectations
-- **AI Playbook**: Risk level, human oversight model, responsible AI obligations
-- **Principles**: AI/ML governance standards, approved platforms
+### Phase 1b: Read external documents and policies
 
-### Phase 1b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing ML Pipelines & Model Cards**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), YAML (.yml)
-- **What to extract**: Current ML pipeline configurations, model performance metrics, training data specifications, model cards
-- **Examples**: `model-card.md`, `ml-pipeline-config.yml`, `model-evaluation.pdf`
-
-**Enterprise-Wide ML Governance**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise ML governance policies, model registry standards, cross-project ML infrastructure patterns
-
-**User prompt**: If no external MLOps docs found but they would improve the strategy, ask:
-"Do you have any existing ML pipeline configurations, model cards, or model evaluation reports? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract ML pipeline configurations, model performance metrics, training data specifications, model cards
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise ML governance policies, model registry standards, cross-project ML infrastructure patterns
+- If no external MLOps docs found but they would improve the strategy, ask: "Do you have any existing ML pipeline configurations, model cards, or model evaluation reports? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Phase 2: Analysis
 

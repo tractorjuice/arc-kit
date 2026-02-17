@@ -21,6 +21,8 @@ $ARGUMENTS
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 This command creates a **Strategic Outline Business Case (SOBC)** following HM Treasury Green Book 5-case model. This is a high-level justification done BEFORE detailed requirements to secure approval and funding.
 
 **When to use this:**
@@ -30,32 +32,24 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
 **Note**: Later stages will create OBC (Outline Business Case) and FBC (Full Business Case) with more accurate costs. This SOBC uses strategic estimates and options analysis.
 
-1. **Read Available Documents**:
-
-   Scan the project directory for existing artifacts and read them to inform the SOBC:
+1. **Read existing artifacts from the project context:**
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
+   - **STKE** (Stakeholder Analysis) in `projects/{project}/`
      - Extract: ALL stakeholder goals (become benefits), drivers (explain WHY needed), conflicts (become risks/mitigations), outcomes (become success criteria)
      - If missing: STOP and warn user to run `/arckit:stakeholders` first — every SOBC benefit MUST trace to a stakeholder goal
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+   - **PRIN** (Architecture Principles, in `projects/000-global/`)
      - Extract: Strategic alignment, technology standards, compliance requirements
-   - `ARC-*-RISK-*.md` in `projects/{project}/` — Risk register
+   - **RISK** (Risk Register) in `projects/{project}/`
      - Extract: Risks for Management Case, risk appetite, mitigations
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
+   - **REQ** (Requirements) in `projects/{project}/`
      - Extract: Detailed requirements for more accurate cost estimates
-   - `ARC-*-PLAN-*.md` in `projects/{project}/` — Project plan
+   - **PLAN** (Project Plan) in `projects/{project}/`
      - Extract: Timeline, phasing for Commercial Case delivery schedule
-
-   **What to extract from each document**:
-   - **Stakeholders**: Goals → benefits, drivers → strategic case, outcomes → success criteria
-   - **Principles**: Strategic alignment, technology constraints
-   - **Risk**: Risk register for Management Case Part E
-   - **Requirements**: Scope detail for cost estimation accuracy
 
 2. **Understand the request**: The user may be:
    - Creating initial SOBC (most common)
@@ -63,31 +57,11 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - Creating UK Government Green Book 5-case model (automatic for UK projects)
    - Evaluating multiple strategic options
 
-3. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Budget Documents & Financial Forecasts**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: Budget allocations, cost forecasts, financial constraints, existing spend data, benefit projections
-   - **Examples**: `budget-proposal.pdf`, `financial-forecast.docx`, `market-research.pdf`
-
-   **Organizational Financial Policies**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Spending thresholds, approval gates, Green Book discount rates, procurement rules
-   - **Examples**: `spending-policy.pdf`, `procurement-thresholds.docx`
-
-   **Enterprise-Wide Investment Frameworks**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise investment frameworks, strategic business plans, cross-project portfolio investment context
-
-   **User prompt**: If no external financial docs found but they would improve the business case, ask:
-   "Do you have any budget documents, financial forecasts, or market research? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+3. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract budget allocations, cost forecasts, financial constraints, existing spend data, benefit projections
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract spending thresholds, approval gates, Green Book discount rates, procurement rules
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise investment frameworks, strategic business plans, cross-project portfolio investment context
+   - If no external docs exist but they would improve the business case, ask: "Do you have any budget documents, financial forecasts, or market research? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 4. **Determine project context**:
    - If user mentions "UK Government", "public sector", "department", "ministry" → Use full Green Book format

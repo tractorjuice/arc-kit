@@ -34,52 +34,21 @@ $ARGUMENTS
 
 ## Step 1: Understand the Context
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 Read existing project artifacts to tailor the plan:
 
-1. **Read Stakeholder Analysis** (if available):
-   - File: Any `ARC-*-STKE-*.md` file in `projects/{current_project}/`
-   - Extract: Number of stakeholders, complexity of drivers
-   - Impact: Complex stakeholder landscape = longer Discovery
+1. **STKE** (Stakeholder Analysis) — Extract: Number of stakeholders, complexity of drivers. Impact: Complex stakeholder landscape = longer Discovery
+2. **REQ** (Requirements) — Count: Total requirements (BRs, FRs, NFRs, INTs, DRs). Impact: 100+ requirements = longer Alpha phase
+3. **PRIN** (Architecture Principles, in 000-global) — Extract: Complexity constraints (security, compliance). Impact: PCI-DSS/GDPR = additional time for threat modeling
+4. **SOBC** (Business Case) — Extract: Budget constraints, ROI expectations. Impact: Budget affects team size and timeline
+5. **RISK** (Risk Register) — Extract: High risks that need mitigation. Impact: High vendor lock-in risk = extra procurement time
 
-2. **Read Requirements** (if available):
-   - File: Any `ARC-*-REQ-*.md` file in `projects/{current_project}/`
-   - Count: Total requirements (BRs, FRs, NFRs, INTs, DRs)
-   - Impact: 100+ requirements = longer Alpha phase
+## Step 1b: Read external documents and policies
 
-3. **Read Architecture Principles** (if available):
-   - File: Any `ARC-000-PRIN-*.md` file in `projects/000-global/`
-   - Extract: Complexity constraints (security, compliance)
-   - Impact: PCI-DSS/GDPR = additional time for threat modeling
-
-4. **Read Business Case** (if available):
-   - File: Any `ARC-*-SOBC-*.md` file in `projects/{current_project}/`
-   - Extract: Budget constraints, ROI expectations
-   - Impact: Budget affects team size and timeline
-
-5. **Read Risk Register** (if available):
-   - File: Any `ARC-*-RISK-*.md` file in `projects/{current_project}/`
-   - Extract: High risks that need mitigation
-   - Impact: High vendor lock-in risk = extra procurement time
-
-## Step 1b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing Project Plans & Dependency Maps**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
-- **What to extract**: Existing timelines, milestones, dependencies, resource allocations, constraints
-- **Examples**: `project-plan.pdf`, `gantt-chart.png`, `dependency-map.docx`
-
-**Enterprise-Wide Programme Plans**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown, Images
-- **What to extract**: Enterprise programme plans, portfolio roadmaps, cross-project dependency frameworks
-
-**User prompt**: If no external planning docs found but they would improve the plan, ask:
-"Do you have any existing project plans, Gantt charts, or dependency maps? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract existing timelines, milestones, dependencies, resource allocations, constraints
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise programme plans, portfolio roadmaps, cross-project dependency frameworks
+- If no external planning docs found but they would improve the plan, ask: "Do you have any existing project plans, Gantt charts, or dependency maps? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ## Step 1c: Interactive Configuration
 

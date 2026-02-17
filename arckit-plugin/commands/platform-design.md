@@ -20,69 +20,35 @@ Generate a comprehensive platform strategy design document using PDT v2.2.1 meth
 
 ### Step 0: Read Available Documents
 
-Scan the project directory for existing artifacts and read them to inform this platform design:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 **MANDATORY** (warn if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-  - Extract: Platform governance principles, ecosystem orchestration standards, technology choices
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Platform governance principles, ecosystem orchestration standards, technology choices
   - If missing: STOP — platform designs require architecture principles. Run `/arckit:principles` first.
-- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
-  - Extract: Platform capabilities from FR/NFR requirements, scalability, availability, security
+- **REQ** (Requirements) — Extract: Platform capabilities from FR/NFR requirements, scalability, availability, security
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
-  - Extract: Ecosystem entities from stakeholder drivers, user personas, goals
+- **STKE** (Stakeholder Analysis) — Extract: Ecosystem entities from stakeholder drivers, user personas, goals
   - If missing: recommend running `/arckit:stakeholders` for better entity portraits
-- `ARC-*-WARD-*.md` in `projects/{project-dir}/wardley-maps/` — Wardley maps
-  - Extract: Evolution analysis for build vs buy decisions, component positioning
+- **WARD** (Wardley Maps, in wardley-maps/) — Extract: Evolution analysis for build vs buy decisions, component positioning
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
-  - Extract: Platform risks, ecosystem risks, governance risks
-- `ARC-*-DATA-*.md` in `projects/{project-dir}/` — Data model
-  - Extract: Data exchange patterns, entity schemas, data governance
-- `ARC-*-SOBC-*.md` in `projects/{project-dir}/` — Business case
-  - Extract: Investment context, ROI targets, benefits
-
-**What to extract from each document**:
-- **Principles**: Platform governance, ecosystem orchestration, technology standards
-- **Requirements**: Platform capabilities (FR-xxx), NFRs (scalability, security), integration points
-- **Stakeholders**: Ecosystem entities, user personas, goals, value propositions
-- **Wardley Maps**: Component evolution, build vs buy positioning
+- **RISK** (Risk Register) — Extract: Platform risks, ecosystem risks, governance risks
+- **DATA** (Data Model) — Extract: Data exchange patterns, entity schemas, data governance
+- **SOBC** (Business Case) — Extract: Investment context, ROI targets, benefits
 
 ---
 
 ### Step 1: Identify or Create Project
 
-**Project Management:**
-
-First, check for existing projects:
-
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json
-```
-
-If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
+Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create it:
 
 ```bash
 bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json
 ```
 
-**Parse the JSON response** to get:
-- `project_id` (e.g., "001")
-- `project_path` (e.g., "projects/001-platform-name")
-- `project_name` (e.g., "platform-name")
-- `status` (e.g., "created" or "exists")
-
-If `status` is "created":
-- This is a new project
-- Generate fresh platform design
-
-If `status` is "exists":
-- Project already has artifacts
-- Check for existing `ARC-{PROJECT_ID}-PLAT-v*.md` files
-- If exists, ask user if they want to overwrite or update
+If the project already exists, check for existing `ARC-{PROJECT_ID}-PLAT-v*.md` files. If found, ask user if they want to overwrite or update.
 
 ---
 
@@ -193,25 +159,11 @@ Read `projects/000-global/ARC-000-PRIN-*.md`:
 
 ---
 
-### Step 3b: Check for External Documents (optional)
+### Step 3b: Read external documents and policies
 
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing Platform Documentation & Ecosystem Maps**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
-- **What to extract**: Current platform architecture, ecosystem participants, API catalogues, platform metrics
-- **Examples**: `platform-overview.pdf`, `ecosystem-map.png`, `api-catalogue.docx`
-
-**Enterprise-Wide Platform Strategy**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown, Images
-- **What to extract**: Enterprise platform strategy, shared service catalogues, cross-project platform integration standards
-
-**User prompt**: If no external platform docs found but they would improve the design, ask:
-"Do you have any existing platform documentation, ecosystem maps, or API catalogues? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract current platform architecture, ecosystem participants, API catalogues, platform metrics
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise platform strategy, shared service catalogues, cross-project platform integration standards
+- If no external platform docs found but they would improve the design, ask: "Do you have any existing platform documentation, ecosystem maps, or API catalogues? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ---
 

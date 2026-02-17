@@ -12,11 +12,11 @@ $ARGUMENTS
 
 ## Instructions
 
-1. **Create or find the project**:
-   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to check for existing projects
-   - If the user specifies an existing project number (e.g., "001") or the project name matches an existing project, use that directory
-   - Otherwise, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project
-   - Parse the JSON output to get the project directory path
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
+1. **Identify the target project**:
+   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+   - If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
 2. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/stakeholder-drivers-template.md` exists in the project root
@@ -29,30 +29,15 @@ $ARGUMENTS
 
    > **Tip**: Users can customize templates with `/arckit:customize stakeholder-drivers`
 
-3. **Check for existing context**:
-   - If any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`, read it to understand organizational context
-   - If any `ARC-*-REQ-*.md` file exists in `projects/{project}/`, read it to understand stakeholder mentions
+3. **Read existing artifacts** from the project context:
+   - **PRIN** (Architecture Principles, in 000-global) — read to understand organizational context
+   - **REQ** (Requirements) — read to understand stakeholder mentions
    - Use this context to make the analysis more realistic and aligned
 
-4. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Org Charts & Governance Structures**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
-   - **What to extract**: Organizational hierarchy, reporting lines, governance boards, decision-making authority
-   - **Examples**: `org-chart.pdf`, `governance-structure.png`, `stakeholder-map.docx`
-
-   **Enterprise-Wide Org Charts & Governance Structures**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown, Images
-   - **What to extract**: Enterprise org charts, governance structures, RACI templates, cross-project stakeholder registers
-
-   **User prompt**: If no external docs found but they would improve stakeholder analysis, ask:
-   "Do you have any organizational charts, governance structures, or existing stakeholder maps? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+4. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract organizational hierarchy, reporting lines, governance boards, decision-making authority
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise org charts, governance structures, RACI templates
+   - If no external docs exist but they would improve stakeholder analysis, ask: "Do you have any organizational charts, governance structures, or existing stakeholder maps? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 5. **Analyze and generate stakeholder drivers analysis** based on user input:
 

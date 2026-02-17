@@ -33,37 +33,33 @@ This command should be run **before** implementation begins, so that operational
 
 ## Input Context Required
 
-Before generating the ServiceNow design, scan the project directory for existing artifacts and read them:
+Read existing artifacts from the project context:
 
 **MANDATORY** (warn if missing):
-- `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
+- **REQ** (Requirements) in `projects/{project-name}/`
   - Extract: NFR-A (availability) → SLA targets, NFR-P (performance) → response time SLAs, NFR-SEC (security) → change control, INT (integration) → CMDB dependencies, DR (data) → CMDB attributes
   - If missing: warn user to run `/arckit:requirements` first
-- `ARC-*-DIAG-*.md` in `projects/{project-name}/diagrams/` — Architecture diagrams
+- **DIAG** (Architecture Diagrams) in `projects/{project-name}/diagrams/`
   - Extract: Context diagram → Service CI hierarchy, Container diagram → Application/infrastructure CIs, Data flow → CMDB relationships, Deployment diagram → Infrastructure CIs
   - If missing: warn user to run `/arckit:diagram` first
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+- **PRIN** (Architecture Principles, in `projects/000-global/`)
   - Extract: Operational principles, support requirements, compliance requirements
-- `ARC-*-DATA-*.md` in `projects/{project-name}/` — Data model
+- **DATA** (Data Model) in `projects/{project-name}/`
   - Extract: Data stores, schemas, retention policies → CMDB data attributes
 - HLD/DLD in `projects/{project-name}/vendors/*/hld-v*.md` or `dld-v*.md` — Vendor designs
   - Extract: Component specifications, API contracts → health check endpoints, technology decisions → CMDB attributes
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-TRAC-*.md` in `projects/{project-name}/` — Traceability matrix
+- **TRAC** (Traceability Matrix) in `projects/{project-name}/`
   - Extract: Requirements to design mapping, test coverage → validation criteria
-- `ARC-*-WARD-*.md` in `projects/{project-name}/` — Wardley map
+- **WARD** (Wardley Map) in `projects/{project-name}/`
   - Extract: Component evolution stages → change risk assessment, build vs buy → CMDB sourcing
 
-**What to extract from each document**:
-- **Requirements**: NFR availability/performance/security → SLA definitions, integration → CMDB dependencies
-- **Diagrams**: Component topology → CI hierarchy, data flows → CMDB relationships
-- **Principles**: Operational standards, support model, compliance requirements
-- **Data Model**: Data stores, schemas → CMDB data attributes
-
 ## Command Workflow
+
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 ### Phase 1: Context Gathering
 
@@ -76,31 +72,11 @@ Read all documents listed in the "Read Available Documents" section above before
 - Support requirements (24/7 or business hours)
 - Any specific ServiceNow requirements mentioned
 
-### Phase 1b: Check for External Documents (optional)
+### Phase 1b: Read external documents and policies
 
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing CMDB Exports & SLA Agreements**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv)
-- **What to extract**: Existing CI relationships, SLA targets, support tiers, incident categories, change workflows
-- **Examples**: `cmdb-export.csv`, `sla-agreement.pdf`, `support-model.docx`
-
-**Vendor Designs for CI Mapping**:
-- **Look in**: `projects/{project-dir}/vendors/{vendor}/`
-- **File types**: PDF, Word, Markdown, images
-- **What to extract**: Component specifications, health check endpoints, technology stack for CMDB attribute mapping
-- **Examples**: `hld-v1.0.pdf`, `infrastructure-diagram.png`
-
-**Enterprise-Wide ITSM Standards**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise ITSM standards, CMDB governance policies, cross-project service catalogue standards
-
-**User prompt**: If no external docs found but they would improve the ServiceNow design, ask:
-"Do you have any existing CMDB exports, SLA documents, or support model documentation? I can read PDFs and CSV files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract existing CI relationships, SLA targets, support tiers, incident categories, change workflows
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise ITSM standards, CMDB governance policies, cross-project service catalogue standards
+- If no external docs exist but they would improve the ServiceNow design, ask: "Do you have any existing CMDB exports, SLA documents, or support model documentation? I can read PDFs and CSV files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Phase 2: Analysis and Mapping
 

@@ -43,61 +43,32 @@ Parse the user input for:
 
 ### Phase 1: Read Available Documents
 
-Scan the project directory for existing artifacts and read them to inform this document:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 **MANDATORY** (warn if missing):
-- `ARC-*-REQ-*.md` in `projects/{project-name}/` — Requirements specification
-  - Extract: NFR-A (availability), NFR-P (performance), NFR-S (scalability), NFR-SEC (security), NFR-C (compliance) requirements
+- **REQ** (Requirements) — Extract: NFR-A (availability), NFR-P (performance), NFR-S (scalability), NFR-SEC (security), NFR-C (compliance) requirements
   - If missing: warn user to run `/arckit:requirements` first
-- `ARC-*-DIAG-*.md` in `projects/{project-name}/diagrams/` — Architecture diagrams
-  - Extract: Component inventory, deployment topology, data flows, dependencies
+- **DIAG** (Architecture Diagrams, in diagrams/) — Extract: Component inventory, deployment topology, data flows, dependencies
   - If missing: warn user to run `/arckit:diagram` first
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-  - Extract: Operational standards, resilience requirements, security principles
-- `ARC-*-SNOW-*.md` in `projects/{project-name}/` — ServiceNow design
-  - Extract: ITSM integration, incident management, change control processes
-- `ARC-*-RISK-*.md` in `projects/{project-name}/` — Risk register
-  - Extract: Operational risks, service continuity risks, mitigation strategies
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Operational standards, resilience requirements, security principles
+- **SNOW** (ServiceNow Design) — Extract: ITSM integration, incident management, change control processes
+- **RISK** (Risk Register) — Extract: Operational risks, service continuity risks, mitigation strategies
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-DEVO-*.md` in `projects/{project-name}/` — DevOps strategy
-  - Extract: CI/CD pipeline, deployment strategy, monitoring approach
-- `ARC-*-TRAC-*.md` in `projects/{project-name}/` — Traceability matrix
-  - Extract: Requirements-to-component mapping for runbook coverage
-- `ARC-*-DATA-*.md` in `projects/{project-name}/` — Data model
-  - Extract: Data dependencies, backup requirements, retention policies
-- `ARC-*-STKE-*.md` in `projects/{project-name}/` — Stakeholder analysis
-  - Extract: Stakeholder expectations, SLA requirements, support model preferences
-
-**What to extract from each document**:
-- **Requirements**: NFR-A/NFR-P/NFR-S/NFR-SEC/NFR-C IDs, SLA targets, RTO/RPO
-- **Diagrams**: Component topology, dependencies, data flows
-- **Principles**: Operational standards, resilience requirements
-- **Risk**: Operational risks, business continuity risks
+- **DEVO** (DevOps Strategy) — Extract: CI/CD pipeline, deployment strategy, monitoring approach
+- **TRAC** (Traceability Matrix) — Extract: Requirements-to-component mapping for runbook coverage
+- **DATA** (Data Model) — Extract: Data dependencies, backup requirements, retention policies
+- **STKE** (Stakeholder Analysis) — Extract: Stakeholder expectations, SLA requirements, support model preferences
 
 **IMPORTANT**: Do not proceed until you have read the requirements and architecture files.
 
-### Phase 1b: Check for External Documents (optional)
+### Phase 1b: Read external documents and policies
 
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing SLA Documents & Support Procedures**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-- **What to extract**: Current SLA targets, support tier definitions, escalation procedures, DR/BCP plans, on-call rotas
-- **Examples**: `sla-agreement.pdf`, `support-procedures.docx`, `dr-plan.pdf`, `on-call-rota.md`
-
-**Enterprise-Wide Operational Standards**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise operational standards, SLA frameworks, cross-project support model benchmarks
-
-**User prompt**: If no external operational docs found but they would improve the readiness pack, ask:
-"Do you have any existing SLA documents, support procedures, or DR/BCP plans? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract SLA targets, support tier definitions, escalation procedures, DR/BCP plans, on-call rotas
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise operational standards, SLA frameworks, cross-project support model benchmarks
+- If no external operational docs found but they would improve the readiness pack, ask: "Do you have any existing SLA documents, support procedures, or DR/BCP plans? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Phase 2: Analysis
 

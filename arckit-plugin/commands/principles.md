@@ -20,20 +20,12 @@ $ARGUMENTS
    > **Note**: Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize architecture-principles`
 
-2. **Check for External Documents** (optional):
+2. **Read external documents and policies**:
 
-   Scan for external (non-ArcKit) documents the user may have provided:
+   > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-   **Existing Governance Frameworks**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: Existing architecture principles, TOGAF standards, departmental policies, technology standards
-   - **Examples**: `togaf-principles.pdf`, `department-standards.docx`, `cloud-policy.md`
-
-   **User prompt**: If no external governance documents found, ask:
-   "Do you have any existing architecture principles, governance frameworks, or departmental technology standards? I can read PDFs and Word docs directly. Place them in `projects/000-global/policies/` and re-run, or skip to create principles from scratch."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract existing architecture principles, TOGAF standards, departmental policies, technology standards
+   - If no external governance documents found, ask: "Do you have any existing architecture principles, governance frameworks, or departmental technology standards? I can read PDFs and Word docs directly. Place them in `projects/000-global/policies/` and re-run, or skip to create principles from scratch."
 
 3. **Understand the request**: The user may be:
    - Creating principles from scratch for a new organization

@@ -17,38 +17,38 @@ $ARGUMENTS
 
 ## Instructions
 
-### Step 0: Read Available Documents
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-Scan the project directory for existing artifacts and read them to inform the project story:
+### Step 0: Read existing artifacts from the project context:
 
 **MANDATORY** (warn if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+- **PRIN** (Architecture Principles, in `projects/000-global/`)
   - Extract: Governance standards, technology constraints, compliance framework
   - If missing: warn user to run `/arckit:principles` first — principles are the foundation of the ArcKit governance framework
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-STKE-*.md` — Stakeholder analysis (personas, goals, priorities)
-- `ARC-*-RISK-*.md` — Risk register (risks, mitigations, risk appetite)
-- `ARC-*-SOBC-*.md` — Business case (benefits, costs, ROI)
-- `ARC-*-REQ-*.md` — Requirements (BR/FR/NFR/INT/DR traceability)
-- `ARC-*-DATA-*.md` — Data model (entities, relationships, governance)
-- `ARC-*-DIAG-*.md` — Architecture diagrams (C4, deployment, data flow)
-- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` — Technology research
-- `ARC-*-WARD-*.md` — Wardley maps (strategic positioning)
-- `ARC-*-PLAN-*.md` — Project plan (timeline, phases, gates)
-- `ARC-*-SOW-*.md` or `ARC-*-DOS-*.md` — Procurement documents
-- `ARC-*-EVAL-*.md` — Vendor evaluation
-- `ARC-*-HLDR-*.md` or `ARC-*-DLDR-*.md` — Design reviews
-- `ARC-*-TCOP-*.md` — TCoP review
-- `ARC-*-SECD-*.md` or `ARC-*-MSBD-*.md` — Security assessments
-- `ARC-*-DPIA-*.md` — DPIA
-- `ARC-*-AIPB-*.md` — AI Playbook assessment
-- `ARC-*-ATRS-*.md` — ATRS record
-- `ARC-*-BKLG-*.md` — Backlog
-- `ARC-*-DVOP-*.md` — DevOps strategy
-- `ARC-*-TRAC-*.md` — Traceability matrix
-- `ARC-*-ROAD-*.md` — Roadmap
-- `ARC-*-ANLZ-*.md` — Governance analysis
+- **STKE** (Stakeholder Analysis) — personas, goals, priorities
+- **RISK** (Risk Register) — risks, mitigations, risk appetite
+- **SOBC** (Business Case) — benefits, costs, ROI
+- **REQ** (Requirements) — BR/FR/NFR/INT/DR traceability
+- **DATA** (Data Model) — entities, relationships, governance
+- **DIAG** (Architecture Diagrams) — C4, deployment, data flow
+- **RSCH** / **AWSR** / **AZUR** — technology research
+- **WARD** (Wardley Map) — strategic positioning
+- **PLAN** (Project Plan) — timeline, phases, gates
+- **SOW** / **DOS** — procurement documents
+- **EVAL** (Evaluation Criteria) — vendor evaluation
+- **HLDR** / **DLDR** (Design Reviews)
+- **TCOP** (TCoP Assessment)
+- **SECD** / **MSBD** — security assessments
+- **DPIA** (DPIA)
+- **AIPB** (AI Playbook)
+- **ATRS** (ATRS record)
+- **BKLG** (Product Backlog)
+- **DEVOPS** (DevOps Strategy)
+- **TRAC** (Traceability Matrix)
+- **ROAD** (Roadmap)
+- **ANLZ** (Governance Analysis)
 
 **Minimum artifact check**: A meaningful project story requires at least 3-5 artifacts. If the project has fewer than 3, warn:
 ```
@@ -63,61 +63,16 @@ Consider running more ArcKit commands before generating the story, or proceed
 with a limited story based on available artifacts.
 ```
 
-**What to extract from each document**:
-- **Principles**: Governance framework foundation
-- **Stakeholders/Requirements**: Traceability chain (stakeholders → goals → requirements)
-- **Risk/SOBC**: Business justification and risk management journey
-- **Design/Diagrams**: Architecture evolution and decisions
-- **Reviews/Assessments**: Governance quality and compliance achievements
-- **Delivery artifacts**: Implementation readiness and operational maturity
+### Step 0b: Read external documents and policies
 
-### Step 0b: Check for External Documents (optional)
+- Read any **external documents** listed in the project context (`external/` files) — extract project history, key milestones, lessons learned, user research insights, governance decisions
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise reporting templates, programme dashboards, cross-project narrative standards
+- If no external docs exist but they would enrich the project story, ask: "Do you have any project reports, user research findings, or governance decision records? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
-Scan for external (non-ArcKit) documents the user may have provided:
+### Step 1: Identify the target project
 
-**Previous Project Reports & User Research**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-- **What to extract**: Project history, key milestones, lessons learned, user research insights, governance decisions
-- **Examples**: `quarterly-report.pdf`, `user-research-findings.docx`, `lessons-learned.md`
-
-**Enterprise-Wide Reporting Templates**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise reporting templates, programme dashboards, cross-project narrative standards
-
-**User prompt**: If no external docs found but they would enrich the project story, ask:
-"Do you have any project reports, user research findings, or governance decision records? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
-
-### Step 1: Identify or Create Project
-
-**Option A: User Provided Project Name/Number**
-If the user specified a project name or number:
-```bash
-PROJECT_NAME="$ARGUMENTS"
-PROJECT_DIR=$(find projects/ -maxdepth 1 -type d -name "*${PROJECT_NAME}*" | head -1)
-
-if [ -z "$PROJECT_DIR" ]; then
-    echo "Error: Project not found. Available projects:"
-    ls -1 projects/
-    exit 1
-fi
-```
-
-**Option B: User Wants to Select from List**
-If the user didn't specify a project or said "list" or "choose":
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh
-```
-Then ask the user which project number they want to generate a story for.
-
-**Option C: User Wants Story for Current Working Directory**
-If the user is already in a project directory (e.g., `projects/001-project-name/`):
-```bash
-PROJECT_DIR=$(pwd)
-```
+- Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+- If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
 ### Step 2: Comprehensive Project Artifact Scan
 

@@ -18,21 +18,20 @@ Generate a comprehensive compliance assessment document that measures adherence 
 
 ### Architecture Principles (MANDATORY)
 
-a. **Architecture Principles Document** (MUST exist):
-   - Check if any `ARC-000-PRIN-*.md` file exists in `projects/000-global/`
+a. **PRIN** (Architecture Principles, in `projects/000-global/`) (MUST exist):
    - If NOT found: ERROR "Run /arckit:principles first to define governance standards for your organization"
    - Principles compliance cannot be assessed without defined principles
 
 ### Project Artifacts (RECOMMENDED)
 
 More artifacts = better evidence = more accurate assessment:
-- Any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - Requirements to assess against principles
+- **REQ** (Requirements) in `projects/{project-dir}/` - Requirements to assess against principles
 - `projects/{project-dir}/vendors/{vendor}/hld-v*.md` - High-Level Design
 - `projects/{project-dir}/vendors/{vendor}/dld-v*.md` - Detailed Low-Level Design
-- Any `ARC-*-TCOP-*.md` file in `projects/{project-dir}/` - Technology Code of Practice compliance
-- Any `ARC-*-SECD-*.md` file in `projects/{project-dir}/` - Security assessment
-- Any `ARC-*-DATA-*.md` file in `projects/{project-dir}/` - Data architecture
-- Any `ARC-*-TRAC-*.md` file in `projects/{project-dir}/` - Requirements traceability
+- **TCOP** (TCoP Assessment) in `projects/{project-dir}/` - Technology Code of Practice compliance
+- **SECD** (Secure by Design) in `projects/{project-dir}/` - Security assessment
+- **DATA** (Data Model) in `projects/{project-dir}/` - Data architecture
+- **TRAC** (Traceability Matrix) in `projects/{project-dir}/` - Requirements traceability
 
 **Note**: Assessment is possible with minimal artifacts, but accuracy improves with more evidence.
 
@@ -47,6 +46,8 @@ More artifacts = better evidence = more accurate assessment:
 **Honest Assessment**: Do not inflate scores. AMBER is better than false GREEN. RED principles require immediate attention or exception approval.
 
 ## Execution Steps
+
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 ### 0. Read the Template
 
@@ -67,25 +68,11 @@ if [ ! -f projects/000-global/ARC-000-PRIN-*.md ]; then
 fi
 ```
 
-### 1b. Check for External Documents (optional)
+### 1b. Read external documents and policies
 
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**External Audit Findings & Compliance Certificates**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-- **What to extract**: Audit findings, compliance gaps, certification evidence, remediation plans
-- **Examples**: `architecture-audit.pdf`, `compliance-certificate.pdf`, `remediation-plan.docx`
-
-**Enterprise-Wide Compliance Frameworks**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise compliance frameworks, audit standards, cross-project compliance benchmarks
-
-**User prompt**: If no external audit docs found but they would improve the compliance assessment, ask:
-"Do you have any external audit findings or compliance certificates? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract audit findings, compliance gaps, certification evidence, remediation plans
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise compliance frameworks, audit standards, cross-project compliance benchmarks
+- If no external docs exist but they would improve the compliance assessment, ask: "Do you have any external audit findings or compliance certificates? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### 2. Extract All Principles Dynamically
 
@@ -132,27 +119,10 @@ Principle 3: "Security by Design"
 [However many principles are defined]
 ```
 
-### 3. Discover Project Context
+### 3. Identify the target project
 
-Identify which project to assess:
-- If user specifies project name: Use that project directory
-- If only one project exists in `projects/`: Analyze that project
-- If multiple projects exist: Ask user which project to assess
-
-Expected project structure:
-```
-projects/
-└── {project-dir}/
-    ├── ARC-{PROJECT_ID}-REQ-v*.md
-    ├── ARC-{PROJECT_ID}-DATA-v*.md
-    ├── vendors/
-    │   └── {vendor-name}/
-    │       ├── hld-v1.md
-    │       └── dld-v1.md
-    ├── ARC-*-TCOP-*.md
-    ├── ARC-*-SECD-*.md
-    └── ARC-{PROJECT_ID}-TRAC-v*.md
-```
+- Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+- If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
 ### 4. Load Project Artifacts (Progressive Disclosure)
 

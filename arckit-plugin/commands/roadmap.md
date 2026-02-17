@@ -10,77 +10,42 @@ You are helping an enterprise architect create a **strategic architecture roadma
 $ARGUMENTS
 ```
 
-## Prerequisites: Read Available Documents
-
-Scan the project directory for existing artifacts and read them to inform this roadmap:
+## Prerequisites: Read existing artifacts from the project context:
 
 **MANDATORY** (warn if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+- **PRIN** (Architecture Principles, in `projects/000-global/`)
   - Extract: Technology standards, strategic direction, compliance requirements
   - If missing: STOP and ask user to run `/arckit:principles` first. The roadmap must align to approved principles.
-- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+- **REQ** (Requirements) in `projects/{project-dir}/`
   - Extract: Capability needs, BR/FR/NFR IDs, technology constraints
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+- **STKE** (Stakeholder Analysis) in `projects/{project-dir}/`
   - Extract: Business drivers, strategic goals, success metrics, investment appetite
-- `ARC-*-WARD-*.md` in `projects/{project-dir}/wardley-maps/` — Wardley maps
+- **WARD** (Wardley Map) in `projects/{project-dir}/wardley-maps/`
   - Extract: Technology evolution, build vs buy positioning, evolution velocity
-- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+- **RISK** (Risk Register) in `projects/{project-dir}/`
   - Extract: Strategic risks, risk appetite, mitigation timelines
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-SOBC-*.md` in `projects/{project-dir}/` — Business case
+- **SOBC** (Business Case) in `projects/{project-dir}/`
   - Extract: Investment figures, ROI targets, payback period, benefits timeline
 
-**What to extract from each document**:
-- **Principles**: Strategic direction, technology standards, compliance requirements
-- **Requirements**: Capability needs, BR/FR/NFR IDs, priorities
-- **Stakeholders**: Business drivers, strategic goals, investment appetite
-- **Wardley Maps**: Technology evolution, build vs buy, evolution velocity
-- **Risk**: Strategic risks impacting roadmap sequencing
+### Prerequisites 4b: Read external documents and policies
 
-### Prerequisites 4b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing Strategic Roadmaps & Capability Plans**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
-- **What to extract**: Current strategic direction, capability gaps, planned investments, dependency timelines
-- **Examples**: `technology-roadmap.pdf`, `capability-plan.docx`, `strategic-vision.png`
-
-**Enterprise-Wide Technology Roadmaps**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown, Images
-- **What to extract**: Enterprise technology roadmaps, strategic transformation plans, cross-project capability evolution timelines
-
-**User prompt**: If no external roadmap docs found but they would improve strategic alignment, ask:
-"Do you have any existing strategic roadmaps, capability plans, or technology vision documents? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract current strategic direction, capability gaps, planned investments, dependency timelines
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise technology roadmaps, strategic transformation plans, cross-project capability evolution timelines
+- If no external docs exist but they would improve strategic alignment, ask: "Do you have any existing strategic roadmaps, capability plans, or technology vision documents? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ## Instructions
 
-### 1. Identify or Create Project
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-First, check for existing projects:
+### 1. Identify the target project
 
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json
-```
-
-If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
-
-```bash
-bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "[project-name-from-user-input]" --json
-```
-
-Parse the JSON response to extract:
-- `project_path`: Where to create the roadmap file
-- `project_id`: For document ID generation
-- `project_name`: For document metadata
+- Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+- If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
 ### 2. Gather Strategic Context
 

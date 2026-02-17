@@ -12,44 +12,31 @@ $ARGUMENTS
 
 ## Instructions
 
-1. **Find the project**: The user should specify a project name or number
-   - Example: "Generate SOW for payment gateway modernization"
-   - Example: "Create SOW for project 001"
-   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to check for existing projects
-   - If the user specifies an existing project or the name matches, use that directory
-   - If project doesn't exist, create it using:
-     ```bash
-     ${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "project-name" --json
-     ```
-     Parse the JSON output to get the project path and ID
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-2. **Read Available Documents**:
+1. **Identify the target project**:
+   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+   - If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
-   Scan the project directory for existing artifacts and read them to inform this document:
+2. **Read existing artifacts from the project context:**
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+   - **REQ** (Requirements) in `projects/{project-dir}/`
      - Extract: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria — source of truth for the SOW
      - If missing: warn user to run `/arckit:requirements` first
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+   - **PRIN** (Architecture Principles, in `projects/000-global/`)
      - Extract: Technology standards, constraints, compliance requirements for vendor alignment
      - If missing: warn user to run `/arckit:principles` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-dir}/` — Technology research
+   - **RSCH** / **AWSR** / **AZUR** (Technology Research) in `projects/{project-dir}/`
      - Extract: Vendor landscape, technology decisions, TCO estimates
-   - `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+   - **STKE** (Stakeholder Analysis) in `projects/{project-dir}/`
      - Extract: Business drivers, success criteria, evaluation priorities
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+   - **RISK** (Risk Register) in `projects/{project-dir}/`
      - Extract: Risks requiring vendor mitigation, risk allocation
-
-   **What to extract from each document**:
-   - **Requirements**: All BR/FR/NFR/INT/DR IDs with MUST/SHOULD/MAY priority
-   - **Principles**: Technology constraints, compliance requirements for vendors
-   - **Research**: Technology decisions, vendor landscape, TCO data
-   - **Stakeholders**: Business drivers, success criteria, evaluation priorities
 
 3. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/sow-template.md` exists in the project root
@@ -59,31 +46,11 @@ $ARGUMENTS
    > **Note**: Read the `${CLAUDE_PLUGIN_ROOT}/VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize sow`
 
-4. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Previous SoW Templates & RFP/ITT Documents**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: Previous procurement terms, evaluation criteria, contractual clauses, deliverable specifications
-   - **Examples**: `previous-sow.pdf`, `rfp-template.docx`, `itt-document.pdf`
-
-   **Procurement Policies**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Procurement thresholds, mandatory contractual terms, approved supplier lists, framework agreements
-   - **Examples**: `procurement-policy.pdf`, `approved-suppliers.docx`
-
-   **Enterprise-Wide Procurement Templates**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise procurement templates, contract frameworks, cross-project commercial benchmarks
-
-   **User prompt**: If no external procurement docs found but they would improve the SoW, ask:
-   "Do you have any previous SoW templates, RFP/ITT documents, or procurement policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+4. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract previous procurement terms, evaluation criteria, contractual clauses, deliverable specifications
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract procurement thresholds, mandatory contractual terms, approved supplier lists, framework agreements
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise procurement templates, contract frameworks, cross-project commercial benchmarks
+   - If no external docs exist but they would improve the SoW, ask: "Do you have any previous SoW templates, RFP/ITT documents, or procurement policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 5. **Interactive Configuration**:
 

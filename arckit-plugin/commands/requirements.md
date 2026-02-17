@@ -12,65 +12,32 @@ $ARGUMENTS
 
 ## Instructions
 
-1. **Read Available Documents**:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-   Scan the project directory for existing artifacts and read them to inform requirements:
+1. **Identify the target project**:
+   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+   - If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
+
+2. **Read existing artifacts** from the project context:
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
-     - Extract: Stakeholder goals, priorities, drivers, conflict analysis, RACI matrix
-     - If missing: warn user to run `/arckit:stakeholders` first — stakeholder drivers should inform requirement prioritization
+   - **STKE** (Stakeholder Analysis) — Extract: goals, priorities, drivers, conflict analysis, RACI matrix
+     - If missing: warn user to run `/arckit:stakeholders` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-     - Extract: Technology standards, constraints, compliance requirements for NFR alignment
+   - **PRIN** (Architecture Principles, in 000-global) — Extract: technology standards, constraints, compliance requirements for NFR alignment
      - If missing: suggest running `/arckit:principles` first
-   - `ARC-*-RISK-*.md` in `projects/{project}/` — Risk register
-     - Extract: Risk-driven requirements, mitigations that need NFRs
-   - `ARC-*-SOBC-*.md` in `projects/{project}/` — Business case
-     - Extract: Benefits, cost constraints, ROI targets for BR alignment
+   - **RISK** (Risk Register) — Extract: risk-driven requirements, mitigations that need NFRs
+   - **SOBC** (Business Case) — Extract: benefits, cost constraints, ROI targets for BR alignment
 
-   **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-PLAN-*.md` in `projects/{project}/` — Project plan
-     - Extract: Timeline constraints, phasing for requirement prioritization
+   **OPTIONAL** (read if available, skip silently):
+   - **PLAN** (Project Plan) — Extract: timeline constraints, phasing for requirement prioritization
 
-   **What to extract from each document**:
-   - **Stakeholders**: Goals, drivers, outcomes, personas, RACI for requirement ownership
-   - **Principles**: Technology constraints, compliance standards for NFR generation
-   - **Risk**: Risks that need mitigating requirements
-   - **SOBC**: Business benefits and cost targets for BR traceability
-
-2. **Create or find the project**:
-   - Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to check for existing projects
-   - If the user specifies an existing project number (e.g., "001") or the project name matches an existing project, use that directory
-   - Otherwise, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project
-   - Parse the JSON output to get the project directory path
-
-3. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **RFP/ITT Documents & Legacy System Specs**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: Existing requirements, constraints, scope definitions, acceptance criteria, legacy system interfaces
-   - **Examples**: `rfp-document.pdf`, `legacy-system-spec.docx`, `user-research-report.pdf`
-
-   **Organizational Standards**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Mandatory compliance requirements, technology constraints, security standards
-   - **Examples**: `security-standards.pdf`, `accessibility-policy.docx`
-
-   **Enterprise-Wide Requirement Standards**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise requirement standards, business capability models, cross-project requirements patterns
-
-   **User prompt**: If no external docs found but they would significantly improve requirements, ask:
-   "Do you have any RFP/ITT documents, legacy system specifications, or user research reports? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+3. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract requirements, constraints, scope definitions, acceptance criteria, legacy system interfaces
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract mandatory compliance requirements, technology constraints, security standards
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract cross-project requirements patterns
+   - If no external docs exist but they would significantly improve requirements, ask: "Do you have any RFP/ITT documents, legacy system specifications, or user research reports? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 4. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/requirements-template.md` exists in the project root
