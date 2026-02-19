@@ -270,6 +270,7 @@ You should:
 
 ## Important Notes
 
+- **UK Government procurement**: The [Sourcing Playbook](https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks) expects outcome-based specifications, should-cost modelling, social value weighting (minimum 10%), and SME access. See `docs/guides/codes-of-practice.md` for the full Commercial Playbooks mapping.
 - This SOW becomes the legal basis for vendor contracts
 - Requirements MUST be complete before generating SOW
 - All "MUST" requirements are mandatory; vendors failing to meet them are disqualified

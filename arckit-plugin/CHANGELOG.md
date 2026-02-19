@@ -27,6 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Government Data Quality Framework reference guide** — new `docs/guides/data-quality-framework.md` mapping DQF 5 principles, 6 dimensions, 4 practical tools, maturity model, and data lifecycle to ArcKit artefacts
 - DQF alignment note added to data-model template's existing Data Quality Framework section
 - DQF cross-reference added to data-model command and guide
+- **UK Government Codes of Practice reference guide** — new `docs/guides/codes-of-practice.md` mapping the Rainbow of Books (Magenta, AQuA, Rose, Commercial Playbooks) alongside existing Green/Orange Book coverage to ArcKit commands, with delivery lifecycle mapping
+- Magenta Book and Sourcing Playbook references added to SOBC command
+- Sourcing Playbook and DDaT Playbook references added to DOS command
+- Sourcing Playbook reference added to SOW command
+- Magenta Book, Orange Book, AQuA Book, and Rose Book nodes added to standards map Mermaid diagram
 
 ---
 

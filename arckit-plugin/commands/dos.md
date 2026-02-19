@@ -515,6 +515,9 @@ Vendors must provide:
 
 ### 15.1 Digital Marketplace Guidance
 
+- **Sourcing Playbook**: https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks (market assessment, should-cost modelling, outcome-based specs, social value)
+- **DDaT Playbook**: https://www.gov.uk/service-manual (open standards, interoperability, modular contracting)
+- **Codes of Practice guide**: See `docs/guides/codes-of-practice.md` for the full Rainbow of Books mapping
 - **Digital Marketplace**: https://www.digitalmarketplace.service.gov.uk/
 - **DOS Buyers Guide**: https://www.gov.uk/guidance/digital-outcomes-and-specialists-buyers-guide
 - **General Buying Guide**: https://www.gov.uk/guidance/buying-and-selling-on-the-digital-marketplace

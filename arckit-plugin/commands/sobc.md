@@ -307,6 +307,8 @@ Provide:
 
 ## UK Government Specific Guidance
 
+**Key HM Treasury references**: The Green Book provides the 5-case model, the [Magenta Book](https://www.gov.uk/government/publications/the-magenta-book) provides evaluation design guidance (theory of change, proportionality, impact evaluation), and the [Sourcing Playbook](https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks) covers should-cost modelling and market assessment. See `docs/guides/codes-of-practice.md` for the full Rainbow of Books mapping.
+
 For UK Government/public sector projects, ensure:
 
 1. **Strategic Case includes**:

@@ -28,6 +28,12 @@ flowchart TD
     GOVS002 --> IPA_ASSURANCE["Infrastructure & Projects Authority<br/>GMPP / Project Assessment Review"]
     GOVS002 --> GOVS006
 
+    HM_GREEN_BOOK --> MAGENTA_BOOK["HM Treasury<br/>Magenta Book (Evaluation)"]
+    HM_GREEN_BOOK --> ORANGE_BOOK["HM Treasury<br/>Orange Book (Risk)"]
+
+    GOVS010 --> AQUA_BOOK["HM Treasury<br/>AQuA Book (Analytical QA)"]
+    GOVS005 --> ROSE_BOOK["GOTT<br/>Rose Book (Knowledge Assets)"]
+
     GOVS006 --> MANAGING_PUBLIC_MONEY["Managing Public Money"]
     GOVS006 --> SPEND_CONTROLS["Cabinet Office Digital & Technology Spend Controls"]
 
@@ -90,6 +96,10 @@ flowchart TD
 - [Managing Public Money](https://www.gov.uk/government/publications/managing-public-money)
 - [Sourcing and Consultancy Playbooks](https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks) / [Digital Marketplace](https://www.digitalmarketplace.service.gov.uk/)
 - [HM Treasury Green Book](https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government)
+- [HM Treasury Orange Book](https://www.gov.uk/government/publications/orange-book)
+- [HM Treasury Magenta Book](https://www.gov.uk/government/publications/the-magenta-book)
+- [AQuA Book](https://www.gov.uk/guidance/the-aqua-book)
+- [Rose Book (Knowledge Asset Management)](https://www.gov.uk/government/publications/knowledge-asset-management-in-government)
 - [UK National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy)
 - [Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework)
 
