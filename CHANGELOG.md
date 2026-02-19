@@ -5,6 +5,27 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0] - 2026-02-19
+
+### Added
+
+- **UK Government Cyber Security Standard integration** — `/arckit.secure` template now includes GovAssure Status, Secure by Design Confidence Rating, and CSS Exception Register sections (#13)
+- **GovS 007: Security alignment** — `/arckit.secure` template now includes GovS 007 Alignment Summary with principle-to-CAF mapping and named security roles (SSRO, DSO, SIRO) (#14)
+- **National Data Strategy reference guide** — new `docs/guides/national-data-strategy.md` mapping NDS 5 missions and 4 pillars to ArcKit commands (#15)
+- **Government Data Quality Framework reference guide** — new `docs/guides/data-quality-framework.md` mapping DQF 5 principles, 6 dimensions, and maturity model to ArcKit artefacts (#16)
+- **UK Government Codes of Practice reference guide** — new `docs/guides/codes-of-practice.md` mapping Rainbow of Books (Magenta, AQuA, Rose, Commercial Playbooks) to ArcKit commands (#17)
+- **New `/arckit.presentation` command** — generates MARP-format slide decks from existing project artifacts for governance boards, stakeholder briefings, and gate reviews; supports 4 focus modes (Executive, Technical, Stakeholder, Procurement) with configurable slide counts (#32)
+- **Data Commons MCP integration for `/arckit.datascout`** — datascout agent now uses Data Commons MCP tools to discover and validate UK statistical data before web research (#40)
+- **Pinecone MCP integration for `/arckit.wardley`** — wardley command now searches the Wardley Mapping book corpus via Pinecone for strategic context and case studies (#43)
+- New templates, guides, and reference materials for all above features
+
+### Changed
+
+- Converter output synced across all distribution formats (Codex, OpenCode, Gemini)
+- Version bump across all distribution formats (CLI, plugin, extension, marketplace)
+
+---
+
 ## [2.6.0] - 2026-02-17
 
 ### Added
