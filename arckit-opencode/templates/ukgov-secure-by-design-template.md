@@ -46,6 +46,8 @@
 
 **Cyber Essentials Status**: [Not Started / In Progress / Basic / Plus]
 
+**Cyber Security Standard Compliance**: [Compliant / Partially Compliant / Non-Compliant / Not Assessed]
+
 **Risk Summary**: [Overall security risk level: Low / Medium / High / Very High]
 
 ---
@@ -652,6 +654,102 @@
 
 ---
 
+## 9. UK Government Cyber Security Standard Compliance
+
+> The [UK Government Cyber Security Standard](https://www.gov.uk/government/publications/government-cyber-security-standard) (July 2025, Cabinet Office) mandates CAF Baseline/Enhanced profiles, GovAssure assurance for critical systems, and Secure by Design high-confidence profiles. This section tracks compliance with those mandatory requirements beyond the CAF assessment above.
+
+### 9.1 GovAssure Status
+
+**GovAssure Cycle Year**: [YYYY / N/A]
+
+**Scope**: [Description of critical systems in scope for GovAssure assessment]
+
+| System | GovAssure Status | Assessment Date | Findings Summary | Remediation Status |
+|--------|-----------------|-----------------|------------------|--------------------|
+| [System 1] | [Planned / In Progress / Complete] | [Date / N/A] | [Summary] | [Open / In Progress / Closed] |
+| [System 2] | [Planned / In Progress / Complete] | [Date / N/A] | [Summary] | [Open / In Progress / Closed] |
+
+**Assessment Findings**:
+- [Key finding 1]
+- [Key finding 2]
+
+**Remediation Actions**:
+- [ ] [Action 1 - Owner - Due date]
+- [ ] [Action 2 - Owner - Due date]
+
+> Reference: [NCSC GovAssure guidance](https://www.ncsc.gov.uk/collection/govassure)
+
+### 9.2 Secure by Design Confidence Rating
+
+**Confidence Level**: [Low / Medium / High]
+
+**Secure by Design Principles Checklist**:
+
+| SbD Principle | Status | Evidence |
+|---------------|--------|----------|
+| **Secure Development** | [✅/⚠️/❌] | [Description] |
+| **Secure Deployment** | [✅/⚠️/❌] | [Description] |
+| **Secure Operation** | [✅/⚠️/❌] | [Description] |
+
+**High-Confidence Profile Achievement**:
+- [ ] Security is embedded throughout the development lifecycle
+- [ ] Threat modelling conducted and reviewed regularly
+- [ ] Security testing integrated into CI/CD pipelines
+- [ ] Incident response capabilities tested and proven
+- [ ] Continuous monitoring and improvement demonstrated
+
+**Gap Analysis**:
+
+| Gap | Impact | Improvement Action | Owner | Target Date |
+|-----|--------|--------------------|-------|-------------|
+| [Gap 1] | [High/Med/Low] | [Action] | [Owner] | [Date] |
+| [Gap 2] | [High/Med/Low] | [Action] | [Owner] | [Date] |
+
+### 9.3 Cyber Security Standard Exception Register
+
+> Per CSS clauses 4.3/4.4, departments must formally record and manage exceptions where full compliance cannot be achieved.
+
+| Exception ID | Description | CSS Clause | Risk Assessment | Mitigation in Place | Approval Authority | Review Date | Improvement Plan |
+|-------------|-------------|------------|-----------------|---------------------|--------------------|-------------|------------------|
+| CSS-EXC-001 | [Description] | [Clause ref] | [High/Med/Low] | [Mitigation] | [Authority] | [Date] | [Plan] |
+| CSS-EXC-002 | [Description] | [Clause ref] | [High/Med/Low] | [Mitigation] | [Authority] | [Date] | [Plan] |
+
+**Total Exceptions**: [Number]
+**Exceptions Under Active Improvement Plan**: [Number]
+
+**Gaps/Actions**:
+- [Action 1]
+- [Action 2]
+
+---
+
+## 10. GovS 007: Security — Alignment Summary
+
+> [Government Functional Standard GovS 007: Security](https://www.gov.uk/government/publications/government-functional-standard-govs-007-security) is the cross-government protective security standard. The table below maps its nine principles to evidence captured elsewhere in this assessment and related ArcKit artefacts.
+
+| GovS 007 Principle | Evidence / ArcKit Artefact | Status |
+|---------------------|---------------------------|--------|
+| 1. Governance aligned to organisational purpose | Section 1 (CAF A1 Governance), SIRO sign-off | [✅/⚠️/❌] |
+| 2. Risk-based approach to protective security | Section 1 (CAF A2 Risk Management), `/arckit:risk` | [✅/⚠️/❌] |
+| 3. Security integrated into all activities | Sections 4–5 (Secure Development, Cloud Security) | [✅/⚠️/❌] |
+| 4. Holistic security planning across disciplines | Sections 1–8 (CAF full assessment), `/arckit:plan` | [✅/⚠️/❌] |
+| 5. Security culture embedded in organisation | Section 1 (CAF B6 Staff Awareness) | [✅/⚠️/❌] |
+| 6. Accountability at all levels | Approval & Sign-Off (SSRO, DSO, SIRO roles) | [✅/⚠️/❌] |
+| 7. Proportionate security measures | Executive Summary (data classification → controls) | [✅/⚠️/❌] |
+| 8. Continuous improvement of security posture | Section 1 (CAF D2 Improvements), `/arckit:operationalize` | [✅/⚠️/❌] |
+| 9. Compliance with legal/regulatory obligations | Section 3 (UK GDPR), `/arckit:dpia` | [✅/⚠️/❌] |
+
+### Security Roles (GovS 007)
+
+| Role | Name | Responsibility |
+|------|------|---------------|
+| Accounting Officer | [Name] | Overall accountability for security of the organisation |
+| Senior Security Risk Owner (SSRO) | [Name] | Owns protective security risk at board level |
+| Departmental Security Officer (DSO) | [Name] | Day-to-day security coordination and policy implementation |
+| Senior Information Risk Owner (SIRO) | [Name] | Owns information and cyber security risk |
+
+---
+
 ## Overall Security Assessment Summary
 
 ### NCSC CAF Scorecard
@@ -722,6 +820,8 @@
 |------|------|------|-----------|
 | Project Lead | [Name] | | |
 | Security Architect | [Name] | | |
+| Senior Security Risk Owner (SSRO) | [Name] | | |
+| Departmental Security Officer (DSO) | [Name] | | |
 | Senior Information Risk Owner (SIRO) | [Name] | | |
 | Data Protection Officer (DPO) | [Name] | | |
 
@@ -738,6 +838,8 @@
 
 | Document | Type | Source | Key Extractions | Path |
 |----------|------|--------|-----------------|------|
+| Government Functional Standard GovS 007: Security | Policy | Cabinet Office | 9 security principles, security lifecycle, protective security disciplines | https://www.gov.uk/government/publications/government-functional-standard-govs-007-security |
+| UK Government Cyber Security Standard | Policy | Cabinet Office (July 2025) | CAF profiles, GovAssure, SbD confidence, exception management | https://www.gov.uk/government/publications/government-cyber-security-standard |
 | *None provided* | — | — | — | — |
 
 ---

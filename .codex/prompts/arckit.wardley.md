@@ -31,63 +31,34 @@ $ARGUMENTS
 
 ## Step 1: Read Available Documents
 
-Scan the project directory for existing artifacts and read them to inform this map:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 **MANDATORY** (warn if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-  - Extract: Strategic principles, technology standards, compliance requirements, cloud-first policy
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Strategic principles, technology standards, compliance requirements, cloud-first policy
   - If missing: warn user to run `/arckit:principles` first
-- `ARC-*-REQ-*.md` in `projects/{current_project}/` — Requirements specification
-  - Extract: Business requirements, functional requirements, non-functional requirements
-  - Identify: User needs, capabilities, technical components
+- **REQ** (Requirements) — Extract: Business requirements, functional requirements, non-functional requirements. Identify: User needs, capabilities, technical components
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-STKE-*.md` in `projects/{current_project}/` — Stakeholder analysis
-  - Extract: Business drivers, stakeholder goals, priorities, success metrics
-- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{current_project}/` — Technology research
-  - Extract: Vendor landscape, build vs buy analysis, TCO comparisons
+- **STKE** (Stakeholder Analysis) — Extract: Business drivers, stakeholder goals, priorities, success metrics
+- **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Vendor landscape, build vs buy analysis, TCO comparisons
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-DATA-*.md` in `projects/{current_project}/` — Data model
-  - Extract: Data components, storage technology, data flow patterns
-- `ARC-*-TCOP-*.md` in `projects/{current_project}/` — TCoP review
-  - Extract: UK Government compliance requirements, reuse opportunities
-- `ARC-*-AIPB-*.md` in `projects/{current_project}/` — AI Playbook assessment
-  - Extract: AI component risk levels, human oversight requirements
-- Existing maps in `projects/{current_project}/wardley-maps/`
-  - Extract: Previous strategic analysis, evolution predictions
-
-**What to extract from each document**:
-- **Principles**: Technology standards, cloud-first policy, open source requirements
-- **Requirements**: User needs, capabilities, technical components, BR/FR/NFR IDs
-- **Stakeholders**: Business drivers, strategic goals, success metrics
-- **Research**: Vendor landscape, market maturity, pricing
+- **DATA** (Data Model) — Extract: Data components, storage technology, data flow patterns
+- **TCOP** (TCoP Review) — Extract: UK Government compliance requirements, reuse opportunities
+- **AIPB** (AI Playbook) — Extract: AI component risk levels, human oversight requirements
+- Existing maps in `projects/{current_project}/wardley-maps/` — Extract: Previous strategic analysis, evolution predictions
 
 **Understand the Mapping Goal**:
 - What strategic question are we answering?
 - What decisions need to be made? (Build vs Buy, vendor selection, technology choices)
 - What time horizon? (Current state, 12 months, 24 months)
 
-## Step 1b: Check for External Documents (optional)
+## Step 1b: Read external documents and policies
 
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing Wardley Maps & Strategic Analysis**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: Images (.png, .jpg), Markdown (.md), PDF (.pdf), OWM syntax files (.owm, .txt)
-- **What to extract**: Existing component positions, evolution assessments, strategic plays, market context
-- **Examples**: `current-wardley-map.png`, `strategic-analysis.pdf`, `wardley-map.owm`
-
-**Enterprise-Wide Technology Landscape**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown, Images
-- **What to extract**: Enterprise technology landscape maps, market analysis reports, cross-project strategic context
-
-**User prompt**: If no external Wardley maps found but they would improve strategic context, ask:
-"Do you have any existing Wardley maps (images or OWM syntax) or strategic analysis documents? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract existing component positions, evolution assessments, strategic plays, market context
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise technology landscape maps, market analysis reports, cross-project strategic context
+- If no external Wardley maps found but they would improve strategic context, ask: "Do you have any existing Wardley maps (images or OWM syntax) or strategic analysis documents? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ## Step 2: Determine the Mapping Mode
 
@@ -241,6 +212,18 @@ For each component, determine:
    - Rapid commoditization risk
    - Skills gap risk
 
+### Wardley Book Knowledge (if Pinecone MCP available)
+
+If the `search-records` tool from the Pinecone MCP is available, use it to search the Wardley Mapping book corpus for relevant strategic context. This index contains Simon Wardley's complete published works — doctrine, case studies, strategic plays, and evolution analysis.
+
+For each major strategic question in the map, search for relevant passages:
+1. **Component positioning**: Search for the domain or technology (e.g., "cloud hosting evolution", "authentication commodity") to ground evolution stage placement in Wardley's analysis
+2. **Gameplay patterns**: Search for the strategic situation (e.g., "platform play government", "open source commoditization") to find relevant gameplay examples and case studies
+3. **Inertia and evolution**: Search for inertia patterns relevant to the project (e.g., "legacy migration inertia", "vendor lock-in strategy")
+4. **Doctrine weaknesses**: Search for organisational patterns (e.g., "government IT procurement", "outsourcing risks") to identify applicable doctrine lessons
+
+Cite relevant passages in the strategic analysis sections. If the Pinecone tools are not available, skip this step silently — the local reference files below provide core patterns.
+
 ### Enhanced Strategic Analysis
 
 To deepen strategic analysis beyond build vs buy, read and apply these reference files:
@@ -307,7 +290,7 @@ Create the Wardley Map document using the template:
 
 **File Location**: `projects/{project_number}-{project_name}/wardley-maps/ARC-{PROJECT_ID}-WARD-{NNN}-v1.0.md`
 
-**Naming Convention** (use `generate-document-id.sh` with `--filename --next-num`):
+**Naming Convention**:
 - `ARC-001-WARD-001-v1.0.md` - First map (e.g., current state)
 - `ARC-001-WARD-002-v1.0.md` - Second map (e.g., future state)
 - `ARC-001-WARD-003-v1.0.md` - Third map (e.g., gap analysis)
@@ -317,7 +300,6 @@ Create the Wardley Map document using the template:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/wardley-map-template.md` (default)
 
-> **Note**: Read the `.arckit/VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize wardley`
 
 
@@ -327,12 +309,9 @@ Create the Wardley Map document using the template:
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/wardley-maps")
-# Example output: ARC-001-WARD-001-v1.0.md
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-WARD-{NNN}-v{VERSION}` (e.g., `ARC-001-WARD-001-v1.0`)
+- Sequence number `{NNN}`: Check existing files in `wardley-maps/` and use the next number (001, 002, ...)
 
 **Populate Required Fields**:
 
@@ -341,7 +320,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "WARD" "${
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Wardley Map"
-- `ARC-[PROJECT_ID]-WARD-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-WARD-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.wardley"
 
 *User-provided fields* (extract from project metadata or user input):
@@ -369,7 +348,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:wardley` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from .arckit/VERSION]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

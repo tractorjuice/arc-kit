@@ -61,3 +61,7 @@ Use the output to enrich `/arckit.dpia` (automatic when run afterwards).
 - `/arckit.dpia` - Generate Data Protection Impact Assessment (auto-references data model)
 - `/arckit.data-mesh-contract` - Create federated data product contracts from entities (mesh architecture)
 - `/arckit.traceability` - Link entities to requirements and test cases
+
+## UK Government Data Policy
+
+For UK Government data projects, the data model provides evidence for the [National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy) — particularly the **Data Foundations** pillar (metadata standards, data quality) and **Availability** pillar (data access controls, sharing agreements). The Data Quality Framework section aligns with the [Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) (6 dimensions, 5 principles). See `docs/guides/national-data-strategy.md` and `docs/guides/data-quality-framework.md` for full mappings.

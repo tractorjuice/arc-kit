@@ -22,58 +22,22 @@ $ARGUMENTS
 
 ## Step 1: Understand the Context
 
-First, analyze existing project artifacts to understand what to diagram:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-1. **Read Requirements** (if available):
-   - File: Any `ARC-*-REQ-*.md` file in `projects/{current_project}/`
-   - Extract: Business requirements, functional requirements, integration requirements
-   - Identify: External systems, user actors, data requirements
+Read existing artifacts from the project context to understand what to diagram:
 
-2. **Read HLD** (if available):
-   - File: `projects/{current_project}/vendors/{vendor}/hld-v*.md`
-   - Extract: Technical architecture, containers, technology choices
-   - Identify: Component boundaries, integration patterns
+1. **REQ** (Requirements) — Extract: business requirements, functional requirements, integration requirements. Identify: external systems, user actors, data requirements
+2. **Vendor HLD** (`vendors/{vendor}/hld-v*.md`) — Extract: technical architecture, containers, technology choices. Identify: component boundaries, integration patterns
+3. **Vendor DLD** (`vendors/{vendor}/dld-v*.md`) — Extract: component specifications, API contracts, database schemas. Identify: internal component structure, dependencies
+4. **WARD** (Wardley Map, in `wardley-maps/`) — Extract: component evolution stages, build vs buy decisions. Identify: strategic positioning
+5. **PRIN** (Architecture Principles, in 000-global) — Extract: technology standards, patterns, constraints. Identify: cloud provider, security framework, compliance requirements
+6. **UK Gov Assessments** (if applicable): **TCOP** (TCoP), **AIPB** (AI Playbook), **ATRS** (ATRS Record) — Identify: GOV.UK services, compliance requirements, HIGH-RISK AI components
 
-3. **Read DLD** (if available):
-   - File: `projects/{current_project}/vendors/{vendor}/dld-v*.md`
-   - Extract: Component specifications, API contracts, database schemas
-   - Identify: Internal component structure, dependencies
+## Step 1b: Read external documents and policies
 
-4. **Read Wardley Map** (if available):
-   - File: `projects/{current_project}/wardley-maps/ARC-*-WARD-*.md`
-   - Extract: Component evolution stages, build vs buy decisions
-   - Identify: Strategic positioning (Genesis/Custom/Product/Commodity)
-
-5. **Read Architecture Principles** (if available):
-   - File: Any `ARC-000-PRIN-*.md` file in `projects/000-global/`
-   - Extract: Technology standards, patterns, constraints
-   - Identify: Cloud provider, security framework, compliance requirements
-
-6. **Read UK Government Assessments** (if applicable):
-   - File: Any `ARC-*-TCOP-*.md` file in `projects/{current_project}/` (TCoP)
-   - File: Any `ARC-*-AIPB-*.md` file in `projects/{current_project}/` (AI Playbook)
-   - File: Any `ARC-*-ATRS-*.md` file in `projects/{current_project}/` (ATRS)
-   - Identify: GOV.UK services, compliance requirements, HIGH-RISK AI components
-
-## Step 1b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing Architecture Diagrams**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: Images (.png, .jpg, .svg), PDF (.pdf), Visio (.vsdx)
-- **What to extract**: Component topology, data flows, network boundaries, deployment architecture, integration points
-- **Examples**: `current-architecture.png`, `network-diagram.pdf`, `as-is-design.jpg`
-
-**Enterprise-Wide Architecture Blueprints**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown, Images
-- **What to extract**: Enterprise architecture blueprints, reference architecture diagrams, cross-project integration maps
-
-**User prompt**: If no external diagrams found but they would improve the output, ask:
-"Do you have any existing architecture diagrams or design images to reference? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract component topology, data flows, network boundaries, deployment architecture, integration points
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise architecture blueprints, reference architecture diagrams, cross-project integration maps
+- If no external diagrams exist but they would improve the output, ask: "Do you have any existing architecture diagrams or design images to reference? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ## Step 1c: Interactive Configuration
 
@@ -507,7 +471,7 @@ Create the architecture diagram document using the template:
 
 **File Location**: `projects/{project_number}-{project_name}/diagrams/ARC-{PROJECT_ID}-DIAG-{NNN}-v1.0.md`
 
-**Naming Convention** (use `generate-document-id.sh` with `--filename --next-num`):
+**Naming Convention**:
 - `ARC-001-DIAG-001-v1.0.md` - First diagram (e.g., C4 context)
 - `ARC-001-DIAG-002-v1.0.md` - Second diagram (e.g., C4 container)
 - `ARC-001-DIAG-003-v1.0.md` - Third diagram (e.g., C4 component)
@@ -517,7 +481,6 @@ Create the architecture diagram document using the template:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/architecture-diagram-template.md` (default)
 
-> **Note**: Read the `.arckit/VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize diagram`
 
 
@@ -527,12 +490,9 @@ Create the architecture diagram document using the template:
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DIAG" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/diagrams")
-# Example output: ARC-001-DIAG-001-v1.0.md
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-DIAG-{NNN}-v{VERSION}` (e.g., `ARC-001-DIAG-001-v1.0`)
+- Sequence number `{NNN}`: Check existing files in `diagrams/` and use the next number (001, 002, ...)
 
 **Populate Required Fields**:
 
@@ -541,7 +501,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DIAG" "${
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Architecture Diagram"
-- `ARC-[PROJECT_ID]-DIAG-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-DIAG-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.diagram"
 
 *User-provided fields* (extract from project metadata or user input):
@@ -569,7 +529,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:diagram` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from .arckit/VERSION]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

@@ -12,55 +12,34 @@ $ARGUMENTS
 
 ## Instructions
 
-### 1. **Read Available Documents**:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-Scan the project directory for existing artifacts and read them to inform this decision:
+### 1. **Read existing artifacts from the project context:**
 
 **MANDATORY** (warn if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+- **PRIN** (Architecture Principles, in 000-global)
   - Extract: Technology standards, constraints, compliance requirements that inform decision drivers
   - If missing: warn user to run `/arckit:principles` first
-- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+- **REQ** (Requirements)
   - Extract: BR/FR/NFR/INT/DR IDs that this decision addresses
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+- **RISK** (Risk Register)
   - Extract: Risks this decision mitigates, risk appetite context
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-dir}/` — Technology research
+- **RSCH** (Research Findings) or **AWSR** / **AZUR** (Cloud Research)
   - Extract: Options already analyzed, vendor comparisons, TCO data
-- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+- **STKE** (Stakeholder Analysis)
   - Extract: Stakeholder goals, decision authority, RACI context
-- `ARC-*-WARD-*.md` in `projects/{project-dir}/wardley-maps/` — Wardley maps
+- **WARD** (Wardley Map)
   - Extract: Evolution stage influences on build vs buy choices
 
-**What to extract from each document**:
-- **Principles**: Technology standards, constraints, compliance requirements
-- **Requirements**: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria
-- **Risk**: Risks this decision mitigates, risk appetite
-- **Research**: Options already analyzed, vendor comparisons, TCO data
-
-### 1b. **Check for External Documents** (optional):
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Previous ADRs & Decision Logs**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-- **What to extract**: Previous architectural decisions, decision rationale, options considered, decision outcomes
-- **Examples**: `legacy-adrs.pdf`, `decision-log.docx`, `architecture-review-notes.md`
-
-**Enterprise-Wide Decision Frameworks**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise decision frameworks, architecture review board templates, cross-project decision logs
-
-**User prompt**: If no external decision docs found but they would improve context, ask:
-"Do you have any previous ADRs from legacy systems or decision logs? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+### 1b. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract previous architectural decisions, decision rationale, options considered, decision outcomes
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise decision frameworks, architecture review board templates, cross-project decision logs
+   - If no external docs exist but they would improve context, ask: "Do you have any previous ADRs from legacy systems or decision logs? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### 1c. **Interactive Configuration**:
 
@@ -81,11 +60,9 @@ Before creating the ADR, use the **AskUserQuestion** tool to gather key decision
 
 Apply the user's selections: the escalation level determines the governance forum and stakeholder RACI in the ADR. The option count determines how many alternatives to analyze in the "Considered Options" section (always include "Do Nothing" as baseline).
 
-### 2. **Create or find the project**:
-   - Run `.arckit/scripts/bash/list-projects.sh --json` to check for existing projects
-   - If the user specifies an existing project number (e.g., "001") or the project name matches an existing project, use that directory
-   - Otherwise, run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project
-   - Parse the JSON output to get the project directory path and project ID
+### 2. **Identify the target project**:
+   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+   - If no match, run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
 ### 3. **Create decisions directory and determine ADR number**:
 ```bash
@@ -112,7 +89,6 @@ fi
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `.arckit/templates/adr-template.md` (default)
 
-   > **Note**: Read the `.arckit/VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize adr`
 
 ### 5. **Gather decision information from user**:
@@ -126,7 +102,7 @@ fi
 ### 6. **Generate comprehensive ADR** following MADR v4.0 + UK Gov framework:
 
    **Document Control** (see "Auto-Populate Document Control Fields" section below for full details):
-   - Document ID: ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION} (use `generate-document-id.sh`)
+   - Document ID: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}` (e.g., `ARC-001-ADR-001-v1.0`)
    - ADR Number: ADR-{NUM} (e.g., ADR-001, ADR-002)
    - Version: ${VERSION} (from Step 0: Detect Version)
    - Status: Proposed (or as user specified)
@@ -279,15 +255,10 @@ fi
    - Create bidirectional traceability chain
 
 ### 8. **Create file naming**:
-   - **Generate filename**: Use `generate-document-id.sh` with --filename --next-num flags:
-     ```bash
-     FILENAME=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ADR" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/decisions")
-     # Example output: ARC-001-ADR-003-v1.0.md
-     ```
    - **Format**: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
    - **Example**: `ARC-001-ADR-001-v1.0.md`, `ARC-001-ADR-002-v1.0.md`
-   - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION}.md`
-   - ADR number is auto-incremented by --next-num flag (for new ADRs)
+   - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
+   - Sequence number auto-assigned from existing files in the directory
 
 ### 9. **Use Write tool to create the ADR file**:
    - **CRITICAL**: Because ADRs are very large documents (500+ lines), you MUST use the Write tool to create the file
@@ -320,12 +291,9 @@ ADRs are multi-instance documents. Version detection depends on whether you are 
 4. Use the determined version for document ID, filename, Document Control, and Revision History
 5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-### Step 1: Generate Document ID
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ADR" "${VERSION}" --filename --next-num "projects/${PROJECT_DIR}/decisions")
-# Example output: ARC-001-ADR-003-v1.0.md
-```
+### Step 1: Construct Document ID
+- **Document ID**: `ARC-{PROJECT_ID}-ADR-{NNN}-v{VERSION}` (e.g., `ARC-001-ADR-001-v1.0`)
+- Sequence number `{NNN}`: Check existing files in `decisions/` and use the next number (001, 002, ...)
 
 ### Step 2: Populate Required Fields
 
@@ -334,7 +302,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "ADR" "${V
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Architecture Decision Record"
-- `ARC-[PROJECT_ID]-ADR-[NUM]-v[VERSION]` → Use generated DOC_ID from Step 1
+- `ARC-[PROJECT_ID]-ADR-[NUM]-v[VERSION]` → Construct using format from Step 1
 - `[COMMAND]` → "arckit.adr"
 
 **User-provided fields** (extract from project metadata or user input):
@@ -363,7 +331,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:adr` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from .arckit/VERSION]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

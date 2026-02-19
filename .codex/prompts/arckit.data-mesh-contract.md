@@ -13,6 +13,8 @@ $ARGUMENTS
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 ### Step 0: Check Prerequisites
 
 **IMPORTANT**: Before generating a data mesh contract, verify that foundational artifacts exist:
@@ -93,21 +95,9 @@ Examples:
 Data product name (kebab-case):
 ```
 
-### Step 2: Find or Create Project
-
-First, check for existing projects:
-
-```bash
-bash .arckit/scripts/bash/list-projects.sh --json
-```
-
-If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
-
-```bash
-bash .arckit/scripts/bash/create-project.sh \
-  --name "$DATA_PRODUCT_NAME" \
-  --json
-```
+### Step 2: Identify the target project
+   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+   - If no match, run `.arckit/scripts/bash/create-project.sh --name "$DATA_PRODUCT_NAME" --json` to create a new project and parse the JSON output
 
 **Parse the JSON output** to get:
 - `project_id` (e.g., 001, 002)
@@ -116,7 +106,7 @@ bash .arckit/scripts/bash/create-project.sh \
 
 **Important**: If the script creates a NEW project, inform the user:
 ```
-✅ Created new project: Project {project_id} - {project_name}
+Created new project: Project {project_id} - {project_name}
    Location: {project_path}
 
 Note: This is a new project. You may want to run these commands first:
@@ -127,7 +117,7 @@ Note: This is a new project. You may want to run these commands first:
 
 If the project ALREADY EXISTS, just acknowledge it:
 ```
-📂 Using existing project: Project {project_id} - {project_name}
+Using existing project: Project {project_id} - {project_name}
    Location: {project_path}
 ```
 
@@ -144,10 +134,7 @@ The contract file will use the multi-instance naming pattern:
 {project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
 ```
 
-Where `{NNN}` is the next sequential number for contracts in this project. Use the script with `--next-num` flag:
-```bash
-bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num "{project_path}/data-mesh-contracts"
-```
+Where `{NNN}` is the next sequential number for contracts in this project. Check existing files in `data-contracts/` and use the next number (001, 002, ...).
 
 ### Step 4: Read the Template
 
@@ -158,28 +145,12 @@ Read the data mesh contract template:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/data-mesh-contract-template.md` (default)
 
-> **Note**: Read the `.arckit/VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize data-mesh-contract`
 
-### Step 4b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Existing Data Contracts & SLA Documents**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), YAML (.yml), JSON (.json)
-- **What to extract**: Existing data product definitions, SLA terms, schema specifications, data quality rules
-- **Examples**: `data-contract-v1.yml`, `data-sla.pdf`, `schema-registry.json`
-
-**Enterprise-Wide Data Governance Standards**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Enterprise data governance standards, data sharing agreements, cross-project data catalogue conventions
-
-**User prompt**: If no external data contract docs found but they would improve the output, ask:
-"Do you have any existing data contracts, data product SLAs, or schema specifications? I can read PDFs, YAML, and JSON files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+### Step 4b: Read external documents and policies:
+   - Read any **external documents** listed in the project context (`external/` files) — extract existing data product definitions, SLA terms, schema specifications, data quality rules
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise data governance standards, data sharing agreements, cross-project data catalogue conventions
+   - If no external docs exist but they would improve the output, ask: "Do you have any existing data contracts, data product SLAs, or schema specifications? I can read PDFs, YAML, and JSON files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Step 5: Gather Context from Existing Artifacts
 
@@ -345,23 +316,9 @@ Using the template and context gathered, generate a comprehensive data mesh cont
     - Glossary
     - Contact information
 
-### Step 7: Generate Document ID
-
-Use the `generate-document-id.sh` script with `--next-num` to get the next sequential contract number:
-
-```bash
-# Generate document ID with next sequential number
-bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --next-num "{project_path}/data-mesh-contracts"
-
-# Generate filename with next sequential number
-bash .arckit/scripts/bash/generate-document-id.sh {project_id} DMC 1.0 --filename --next-num "{project_path}/data-mesh-contracts"
-```
-
-This will generate IDs like:
-- First contract: `ARC-{project_id}-DMC-001-v1.0` (filename: `ARC-001-DMC-001-v1.0.md`)
-- Second contract: `ARC-{project_id}-DMC-002-v1.0` (filename: `ARC-001-DMC-002-v1.0.md`)
-
-Replace `{document_id}` placeholder in the document with this value.
+### Step 7: Construct Document ID
+- **Document ID**: `ARC-{PROJECT_ID}-DMC-{NNN}-v{VERSION}` (e.g., `ARC-001-DMC-001-v1.0`)
+- Sequence number `{NNN}`: Check existing files in `data-contracts/` and use the next number (001, 002, ...)
 
 
 ---
@@ -370,12 +327,8 @@ Replace `{document_id}` placeholder in the document with this value.
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DMC" "${VERSION}")
-# Example output: ARC-001-DMC-v1.0
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-DMC-{NNN}-v{VERSION}` (e.g., `ARC-001-DMC-001-v1.0`)
 
 **Populate Required Fields**:
 
@@ -384,7 +337,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DMC" "${V
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Data Mesh Contract"
-- `ARC-[PROJECT_ID]-DMC-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-DMC-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.data-mesh-contract"
 
 *User-provided fields* (extract from project metadata or user input):
@@ -412,7 +365,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:data-mesh-contract` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from .arckit/VERSION]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]
@@ -430,7 +383,7 @@ Write tool:
   content: {full contract content}
 ```
 
-Note: Use the filename returned by `generate-document-id.sh --filename --next-num` for the actual path.
+Note: Use the constructed document ID format for the filename.
 
 ### Step 9: Show Summary to User
 

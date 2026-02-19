@@ -620,6 +620,8 @@ erDiagram
 
 ## Data Quality Framework
 
+> This section aligns with the [UK Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) (DQF) — 5 principles, 6 dimensions, and practical tools for managing data quality. The six dimensions below map directly to the DQF quality dimensions. See `docs/guides/data-quality-framework.md` for the full DQF-to-ArcKit mapping, maturity model, and data lifecycle guidance.
+
 ### Quality Dimensions
 
 #### Accuracy
@@ -923,6 +925,8 @@ erDiagram
 - [PCI Security Standards](https://www.pcisecuritystandards.org/) - Payment card data security
 - [NCSC Cloud Security Principles](https://www.ncsc.gov.uk/collection/cloud/the-cloud-security-principles) - UK government cloud security
 - [GDS Data Standards](https://www.gov.uk/government/collections/data-standards-for-government) - UK government data standards
+- [UK National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy) - Government data vision (5 missions, 4 pillars)
+- [Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework) - Data quality dimensions and assessment
 
 ---
 

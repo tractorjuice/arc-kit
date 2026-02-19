@@ -12,63 +12,41 @@ $ARGUMENTS
 
 ## Instructions
 
-1. **Read Available Documents**:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-   Scan the project directory for existing artifacts and read them to inform the data model:
+1. **Read existing artifacts from the project context:**
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
+   - **REQ** (Requirements)
      - Extract: All DR (data requirements), NFR-SEC (security/privacy), INT (integration/data exchange), BR (data-related business requirements)
      - If missing: STOP and warn user to run `/arckit:requirements` first — data model MUST be based on DR-xxx requirements
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
+   - **STKE** (Stakeholder Analysis)
      - Extract: Data owners from RACI matrix, governance stakeholders, data stewardship responsibilities
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+   - **PRIN** (Architecture Principles, in 000-global)
      - Extract: Data governance standards, privacy by design principles, data sovereignty requirements
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-SOBC-*.md` in `projects/{project}/` — Business case
+   - **SOBC** (Business Case)
      - Extract: Data-related benefits and costs
-   - `ARC-*-RSCH-*.md` in `projects/{project}/` — Technology research
+   - **RSCH** (Research Findings)
      - Extract: Database technology recommendations, data platform choices
 
-   **What to extract from each document**:
-   - **Requirements**: DR-xxx for entity identification, NFR-SEC for privacy/GDPR, INT-xxx for data exchange
-   - **Stakeholders**: Data owners, governance roles, RACI for data stewardship
-   - **Principles**: Data governance standards, classification policies
+2. **Identify the target project**:
+   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+   - If no match, run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
-2. **Find the project**:
-   - If user specifies project name or number, use that
-   - Otherwise, look for most recent project directory in `projects/`
-   - Use the same project directory where the requirements document exists
-
-3. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Existing Database Schemas & Data Dictionaries**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg), SQL (.sql)
-   - **What to extract**: Entity definitions, relationships, data types, constraints, existing schemas, migration requirements
-   - **Examples**: `database-schema.pdf`, `erd-diagram.png`, `data-dictionary.docx`, `schema.sql`
-
-   **Enterprise-Wide Data Dictionaries**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise data dictionaries, master data management standards, cross-project data architecture patterns
-
-   **User prompt**: If no external data docs found but they would improve the data model, ask:
-   "Do you have any existing database schemas, ERD diagrams, or data dictionaries? I can read PDFs, images, and SQL files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+3. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract entity definitions, relationships, data types, constraints, existing schemas, migration requirements
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise data dictionaries, master data management standards, cross-project data architecture patterns
+   - If no external docs exist but they would improve the data model, ask: "Do you have any existing database schemas, ERD diagrams, or data dictionaries? I can read PDFs, images, and SQL files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 4. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/data-model-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `.arckit/templates/data-model-template.md` (default)
 
-   > **Note**: Read the `.arckit/VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize data-model`
 
 5. **Extract data requirements**:
@@ -242,7 +220,7 @@ Before completing the document, populate document information fields:
 ```markdown
 **Generated by**: ArcKit `/arckit:data-model` command
 **Generated on**: {DATE}
-**ArcKit Version**: [Read from .arckit/VERSION]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Actual model name]
 ```
@@ -290,6 +268,7 @@ You should:
 - **Consider data lifecycle**: creation, updates, archival, deletion (GDPR "right to erasure")
 - **Reference architecture principles** from any `ARC-000-PRIN-*.md` file in `projects/000-global/` if they exist
 - **Flag any DR-xxx requirements that cannot be modeled** (gaps for requirements clarification)
+- **UK Government data projects**: The data model supports [National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy) alignment — Data Foundations pillar (metadata, standards, quality) and Availability pillar (data access, sharing). The Data Quality Framework section maps to the [Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) 6 dimensions. See `docs/guides/national-data-strategy.md` and `docs/guides/data-quality-framework.md` for full mappings.
 
 ## Integration with Other Commands
 

@@ -111,6 +111,20 @@ Output: `projects/<id>/ARC-<id>-STKE-v1.0.md`
 | Users | Usability, training, change impact |
 | Finance | Cost, ROI, budget approval |
 
+### UK Government Digital Roles (GovS 005)
+
+For UK Government projects, also consider the mandatory digital governance roles defined by [GovS 005](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital):
+
+| Role | Typical Concerns |
+|------|------------------|
+| SRO (Senior Responsible Owner) | Accountability, spend control, outcomes |
+| Service Owner | End-to-end service quality, user satisfaction |
+| Product Manager | Feature prioritisation, user needs, policy alignment |
+| Delivery Manager | Delivery cadence, risks, dependencies |
+| CDDO | Spend control thresholds, cross-government standards |
+| CDIO | Departmental digital strategy, technology oversight |
+| DDaT Profession Lead | Capability framework, recruitment, career paths |
+
 ---
 
 ## Key Principles

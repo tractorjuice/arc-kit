@@ -12,43 +12,29 @@ $ARGUMENTS
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 1. **Identify the project**: The user should specify a project name or number
    - Example: "Create evaluation framework for payment gateway project"
    - Example: "Evaluate vendors for project 001"
 
-2. **Read Available Documents**:
-
-   Scan the project directory for existing artifacts and read them to inform this evaluation:
+2. **Read existing artifacts** from the project context:
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
-     - Extract: BR/FR/NFR/INT/DR requirements to evaluate vendors against
+   - **REQ** (Requirements) — Extract: BR/FR/NFR/INT/DR requirements to evaluate vendors against
      - If missing: warn user to run `/arckit:requirements` first
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-     - Extract: Technology standards, governance constraints, compliance requirements for evaluation criteria
+   - **PRIN** (Architecture Principles, in 000-global) — Extract: Technology standards, governance constraints, compliance requirements for evaluation criteria
      - If missing: warn user to run `/arckit:principles` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-SOW-*.md` in `projects/{project-dir}/` — Statement of Work
-     - Extract: Pre-defined evaluation criteria, scope, deliverables
-   - `ARC-*-DOS-*.md` in `projects/{project-dir}/` — DOS procurement documentation
-     - Extract: Evaluation criteria, essential/desirable skills, assessment approach
-   - `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-dir}/` — Technology research
-     - Extract: Market landscape, vendor options, technology recommendations
-   - `ARC-*-GCLD-*.md` in `projects/{project-dir}/procurement/` — G-Cloud search results
-     - Extract: Shortlisted services, feature comparisons, compliance matches
+   - **SOW** (Statement of Work) — Extract: Pre-defined evaluation criteria, scope, deliverables
+   - **DOS** (DOS Requirements) — Extract: Evaluation criteria, essential/desirable skills, assessment approach
+   - **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Market landscape, vendor options, technology recommendations
+   - **GCLD** (G-Cloud Search, in procurement/) — Extract: Shortlisted services, feature comparisons, compliance matches
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
-     - Extract: Evaluation panel composition, stakeholder priorities
-   - `ARC-*-DPIA-*.md` in `projects/{project-dir}/` — DPIA
-     - Extract: Data protection requirements for vendor assessment
-
-   **What to extract from each document**:
-   - **Principles**: Governance standards, technology constraints for evaluation alignment
-   - **Requirements**: BR/FR/NFR/INT/DR IDs and priorities to score vendors against
-   - **SOW/DOS**: Pre-defined evaluation criteria, scope, deliverables
-   - **Research**: Market context, vendor landscape, technology recommendations
+   - **STKE** (Stakeholder Analysis) — Extract: Evaluation panel composition, stakeholder priorities
+   - **DPIA** (Data Protection Impact Assessment) — Extract: Data protection requirements for vendor assessment
 
 3. **Read the templates** (with user override support):
    - **First**, check if `.arckit/templates/evaluation-criteria-template.md` exists in the project root
@@ -56,34 +42,13 @@ $ARGUMENTS
    - **If not found**: Read `.arckit/templates/evaluation-criteria-template.md` (default)
    - **Also read** the scoring template: check `.arckit/templates/vendor-scoring-template.md` first, then `.arckit/templates/vendor-scoring-template.md`
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize evaluate`
 
-4. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Vendor Proposals & Capability Statements**:
-   - **Look in**: `projects/{project-dir}/vendors/{vendor}/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: Proposed solution, pricing, team qualifications, case studies, certifications, SLA commitments
-   - **Examples**: `proposal-v1.0.pdf`, `capability-statement.docx`, `pricing-schedule.pdf`
-
-   **Evaluation Reference Documents**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Industry benchmarks, analyst reports, reference check notes
-   - **Examples**: `gartner-mq-2025.pdf`, `reference-check-notes.md`
-
-   **Enterprise-Wide Evaluation Frameworks**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise evaluation frameworks, procurement scoring templates, cross-project vendor assessment benchmarks
-
-   **User prompt**: If no vendor proposals found, ask:
-   "Do you have vendor proposal documents to evaluate? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/vendors/{vendor-name}/` and re-run, or skip to create the evaluation framework only."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+4. **Read external documents and policies**:
+   - Read any **vendor proposals** in `projects/{project-dir}/vendors/{vendor}/` — extract proposed solution, pricing, team qualifications, case studies, certifications, SLA commitments
+   - Read any **external documents** listed in the project context (`external/` files) — extract industry benchmarks, analyst reports, reference check notes
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise evaluation frameworks, procurement scoring templates, cross-project vendor assessment benchmarks
+   - If no vendor proposals found, ask: "Do you have vendor proposal documents to evaluate? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/vendors/{vendor-name}/` and re-run, or skip to create the evaluation framework only."
 
 5. **Determine the task**: The user may want to:
    - **Create evaluation framework** (before receiving proposals)
@@ -139,12 +104,8 @@ If creating a new framework:
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "EVAL" "${VERSION}")
-# Example output: ARC-001-EVAL-v1.0
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-EVAL-v{VERSION}` (e.g., `ARC-001-EVAL-v1.0`)
 
 **Populate Required Fields**:
 
@@ -153,7 +114,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "EVAL" "${
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Vendor Evaluation Framework"
-- `ARC-[PROJECT_ID]-EVAL-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-EVAL-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.evaluate"
 
 *User-provided fields* (extract from project metadata or user input):
@@ -181,7 +142,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:evaluate` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

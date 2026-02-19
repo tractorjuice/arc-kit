@@ -12,67 +12,33 @@ $ARGUMENTS
 
 ## Prerequisites: Read Strategic Artifacts
 
-Scan the project directory for existing strategic artifacts and read them to synthesise this strategy:
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 **MANDATORY** (warn if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-  - Extract: Guiding principles, decision framework, technology standards
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Guiding principles, decision framework, technology standards
   - If missing: STOP and ask user to run `/arckit:principles` first. Strategy must be grounded in principles.
-- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
-  - Extract: Stakeholder drivers, goals, measurable outcomes, conflicts, engagement strategies
+- **STKE** (Stakeholder Analysis) — Extract: Stakeholder drivers, goals, measurable outcomes, conflicts, engagement strategies
   - If missing: STOP and ask user to run `/arckit:stakeholders` first. Strategy must address stakeholder drivers.
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-WARD-*.md` in `projects/{project-dir}/wardley-maps/` — Wardley maps
-  - Extract: Component evolution, build vs buy positioning, technology radar
-- `ARC-*-ROAD-*.md` in `projects/{project-dir}/` — Architecture roadmap
-  - Extract: Timeline, phases, milestones, investment by year, capability evolution
-- `ARC-*-SOBC-*.md` in `projects/{project-dir}/` — Strategic Outline Business Case
-  - Extract: Investment figures, NPV, IRR, payback period, benefits timeline
+- **WARD** (Wardley Maps, in wardley-maps/) — Extract: Component evolution, build vs buy positioning, technology radar
+- **ROAD** (Architecture Roadmap) — Extract: Timeline, phases, milestones, investment by year, capability evolution
+- **SOBC** (Strategic Outline Business Case) — Extract: Investment figures, NPV, IRR, payback period, benefits timeline
 
 **OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
-  - Extract: Strategic risks, mitigations, risk appetite
+- **RISK** (Risk Register) — Extract: Strategic risks, mitigations, risk appetite
 
-**What to extract from each document**:
-- **Principles**: Decision framework, technology standards, governance guardrails
-- **Stakeholders**: Business drivers (SD-*), goals (G-*), outcomes (O-*), stakeholder power/interest grid
-- **Wardley Maps**: Build vs buy decisions, technology evolution stages, strategic positioning
-- **Roadmap**: Timeline, phases, themes, milestones, investment by year
-- **SOBC**: Total investment, ROI, payback period, benefits realisation
-- **Risk**: Top strategic risks, mitigations, assumptions, constraints
+### Prerequisites 1b: Read external documents and policies
 
-### Prerequisites 1b: Check for External Documents (optional)
-
-Scan for external (non-ArcKit) documents the user may have provided:
-
-**Strategy Documents**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
-- **What to extract**: Existing strategies, strategic plans, vision documents
-- **Examples**: `digital-strategy.pdf`, `technology-vision.docx`, `strategic-plan.png`
-
-**Enterprise-Wide Architecture Strategy**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown, Images
-- **What to extract**: Enterprise architecture strategy, digital transformation plans, cross-project strategic alignment documents
-
-**User prompt**: If no external strategy docs found but they would improve the output, ask:
-"Do you have any existing strategy documents, vision statements, or strategic plans? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
+- Read any **external documents** listed in the project context (`external/` files) — extract existing strategies, strategic plans, vision documents
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise architecture strategy, digital transformation plans, cross-project strategic alignment documents
+- If no external strategy docs found but they would improve the output, ask: "Do you have any existing strategy documents, vision statements, or strategic plans? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ## Instructions
 
 ### 1. Identify or Create Project
 
-First, check for existing projects:
-
-```bash
-bash .arckit/scripts/bash/list-projects.sh --json
-```
-
-If the user specifies an existing project or the name matches, use that directory. Otherwise, create a new project:
+Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create it:
 
 ```bash
 bash .arckit/scripts/bash/create-project.sh --name "[project-name-from-user-input]" --json
@@ -102,7 +68,6 @@ Load the strategy template structure:
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/architecture-strategy-template.md` (default)
 
-> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize strategy`
 
 ### 4. Generate Architecture Strategy
@@ -226,12 +191,8 @@ Include at least 2 Mermaid diagrams:
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "STRAT" "${VERSION}")
-# Example output: ARC-001-STRAT-v1.0
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-STRAT-v{VERSION}` (e.g., `ARC-001-STRAT-v1.0`)
 
 **Populate Required Fields**:
 
@@ -240,7 +201,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "STRAT" "$
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Architecture Strategy"
-- `ARC-[PROJECT_ID]-STRAT-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-STRAT-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.strategy"
 
 *User-provided fields* (extract from project metadata or user input):
@@ -268,7 +229,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:strategy` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

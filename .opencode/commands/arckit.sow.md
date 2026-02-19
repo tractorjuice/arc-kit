@@ -12,78 +12,44 @@ $ARGUMENTS
 
 ## Instructions
 
-1. **Find the project**: The user should specify a project name or number
-   - Example: "Generate SOW for payment gateway modernization"
-   - Example: "Create SOW for project 001"
-   - Run `.arckit/scripts/bash/list-projects.sh --json` to check for existing projects
-   - If the user specifies an existing project or the name matches, use that directory
-   - If project doesn't exist, create it using:
-     ```bash
-     .arckit/scripts/bash/create-project.sh --name "project-name" --json
-     ```
-     Parse the JSON output to get the project path and ID
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-2. **Read Available Documents**:
+1. **Identify the target project**:
+   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+   - If no match, run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
-   Scan the project directory for existing artifacts and read them to inform this document:
+2. **Read existing artifacts from the project context:**
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+   - **REQ** (Requirements) in `projects/{project-dir}/`
      - Extract: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria — source of truth for the SOW
      - If missing: warn user to run `/arckit:requirements` first
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+   - **PRIN** (Architecture Principles, in `projects/000-global/`)
      - Extract: Technology standards, constraints, compliance requirements for vendor alignment
      - If missing: warn user to run `/arckit:principles` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-dir}/` — Technology research
+   - **RSCH** / **AWSR** / **AZUR** (Technology Research) in `projects/{project-dir}/`
      - Extract: Vendor landscape, technology decisions, TCO estimates
-   - `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+   - **STKE** (Stakeholder Analysis) in `projects/{project-dir}/`
      - Extract: Business drivers, success criteria, evaluation priorities
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+   - **RISK** (Risk Register) in `projects/{project-dir}/`
      - Extract: Risks requiring vendor mitigation, risk allocation
-
-   **What to extract from each document**:
-   - **Requirements**: All BR/FR/NFR/INT/DR IDs with MUST/SHOULD/MAY priority
-   - **Principles**: Technology constraints, compliance requirements for vendors
-   - **Research**: Technology decisions, vendor landscape, TCO data
-   - **Stakeholders**: Business drivers, success criteria, evaluation priorities
 
 3. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/sow-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `.arckit/templates/sow-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize sow`
 
-4. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Previous SoW Templates & RFP/ITT Documents**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: Previous procurement terms, evaluation criteria, contractual clauses, deliverable specifications
-   - **Examples**: `previous-sow.pdf`, `rfp-template.docx`, `itt-document.pdf`
-
-   **Procurement Policies**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Procurement thresholds, mandatory contractual terms, approved supplier lists, framework agreements
-   - **Examples**: `procurement-policy.pdf`, `approved-suppliers.docx`
-
-   **Enterprise-Wide Procurement Templates**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise procurement templates, contract frameworks, cross-project commercial benchmarks
-
-   **User prompt**: If no external procurement docs found but they would improve the SoW, ask:
-   "Do you have any previous SoW templates, RFP/ITT documents, or procurement policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+4. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract previous procurement terms, evaluation criteria, contractual clauses, deliverable specifications
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract procurement thresholds, mandatory contractual terms, approved supplier lists, framework agreements
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise procurement templates, contract frameworks, cross-project commercial benchmarks
+   - If no external docs exist but they would improve the SoW, ask: "Do you have any previous SoW templates, RFP/ITT documents, or procurement policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 5. **Interactive Configuration**:
 
@@ -201,12 +167,8 @@ Before generating the document ID, check if a previous version exists:
 4. Use the determined version for document ID, filename, Document Control, and Revision History
 5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-### Step 1: Generate Document ID
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SOW" "${VERSION}")
-# Example output: ARC-001-SOW-v1.0
-```
+### Step 1: Construct Document ID
+- **Document ID**: `ARC-{PROJECT_ID}-SOW-v{VERSION}` (e.g., `ARC-001-SOW-v1.0`)
 
 ### Step 2: Populate Required Fields
 
@@ -215,7 +177,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "SOW" "${V
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Statement of Work"
-- `ARC-[PROJECT_ID]-SOW-v[VERSION]` → Use generated DOC_ID from Step 1
+- `ARC-[PROJECT_ID]-SOW-v[VERSION]` → Construct using format from Step 1
 - `[COMMAND]` → "arckit.sow"
 
 **User-provided fields** (extract from project metadata or user input):
@@ -244,7 +206,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:sow` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]
@@ -308,6 +270,7 @@ You should:
 
 ## Important Notes
 
+- **UK Government procurement**: The [Sourcing Playbook](https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks) expects outcome-based specifications, should-cost modelling, social value weighting (minimum 10%), and SME access. See `docs/guides/codes-of-practice.md` for the full Commercial Playbooks mapping.
 - This SOW becomes the legal basis for vendor contracts
 - Requirements MUST be complete before generating SOW
 - All "MUST" requirements are mandatory; vendors failing to meet them are disqualified

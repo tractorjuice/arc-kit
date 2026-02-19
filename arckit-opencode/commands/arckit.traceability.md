@@ -12,50 +12,30 @@ $ARGUMENTS
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 1. **Identify the project**: The user should specify a project name or number
    - Example: "Generate traceability matrix for payment gateway project"
    - Example: "Update traceability for project 001"
 
 2. **Read all project artifacts**:
-   - Read any `ARC-*-REQ-*.md` file in `projects/{project-dir}/` - Source of truth for all requirements
-   - Read `projects/{project-dir}/vendors/{vendor}/hld-v*.md` - High-level design
-   - Read `projects/{project-dir}/vendors/{vendor}/dld-v*.md` - Detailed design
-   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-HLDR-*.md` - Review findings
-   - Read `projects/{project-dir}/vendors/{vendor}/reviews/ARC-*-DLDR-*.md` - Review findings
+   - **REQ** (Requirements) — Source of truth for all requirements
+   - **HLDR** (HLD Reviews, in vendors/{vendor}/reviews/) — Review findings
+   - **DLDR** (DLD Reviews, in vendors/{vendor}/reviews/) — Review findings
+   - Also read vendor HLD/DLD submissions in `projects/{project-dir}/vendors/{vendor}/`
 
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/traceability-matrix-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `.arckit/templates/traceability-matrix-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize traceability`
 
-3. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Vendor Designs for Trace-to-Design Mapping**:
-   - **Look in**: `projects/{project-dir}/vendors/{vendor}/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
-   - **What to extract**: Component-to-requirement mappings, API-to-feature mappings, test coverage evidence
-   - **Examples**: `hld-v1.0.pdf`, `dld-v1.0.pdf`, `test-plan.docx`
-
-   **Test Evidence & Implementation Records**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF, Word, Markdown, CSV
-   - **What to extract**: Test results, code coverage reports, deployment records
-   - **Examples**: `test-results.csv`, `code-coverage.pdf`
-
-   **Enterprise-Wide Traceability Standards**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise traceability standards, test strategy documents, cross-project requirements management frameworks
-
-   **User prompt**: If no external docs found but they would improve traceability coverage, ask:
-   "Do you have any vendor design documents, test plans, or implementation records? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+3. **Read external documents and policies**:
+   - Read any **vendor designs** in `projects/{project-dir}/vendors/{vendor}/` — extract component-to-requirement mappings, API-to-feature mappings, test coverage evidence
+   - Read any **external documents** listed in the project context (`external/` files) — extract test results, code coverage reports, deployment records
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise traceability standards, test strategy documents, cross-project requirements management frameworks
+   - If no external docs found but they would improve traceability coverage, ask: "Do you have any vendor design documents, test plans, or implementation records? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 4. **Build the traceability matrix**:
 
@@ -201,12 +181,8 @@ Before generating the document ID, check if a previous version exists:
 4. Use the determined version for document ID, filename, Document Control, and Revision History
 5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-### Step 1: Generate Document ID
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "TRAC" "${VERSION}")
-# Example output: ARC-001-TRAC-v1.0
-```
+### Step 1: Construct Document ID
+- **Document ID**: `ARC-{PROJECT_ID}-TRAC-v{VERSION}` (e.g., `ARC-001-TRAC-v1.0`)
 
 ### Step 2: Populate Required Fields
 
@@ -215,7 +191,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "TRAC" "${
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Requirements Traceability Matrix"
-- `ARC-[PROJECT_ID]-TRAC-v[VERSION]` → Use generated DOC_ID from Step 1
+- `ARC-[PROJECT_ID]-TRAC-v[VERSION]` → Construct using format from Step 1
 - `[COMMAND]` → "arckit.traceability"
 
 **User-provided fields** (extract from project metadata or user input):
@@ -244,7 +220,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:traceability` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

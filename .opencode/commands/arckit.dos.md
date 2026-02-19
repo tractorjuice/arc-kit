@@ -21,6 +21,8 @@ This command generates DOS-compliant procurement documentation from your existin
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 ### 0. Read the Template
 
 **Read the template** (with user override support):
@@ -28,68 +30,36 @@ This command generates DOS-compliant procurement documentation from your existin
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/dos-requirements-template.md` (default)
 
-> **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
 > **Tip**: Users can customize templates with `/arckit:customize dos`
 
-### 1. Read Available Documents
-
-Scan the project directory for existing artifacts and read them to inform this document:
+### 1. Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
-  - Extract: Technology standards, governance constraints for vendor proposals
+- **PRIN** (Architecture Principles, in 000-global) — Extract: technology standards, governance constraints for vendor proposals
   - If missing: ERROR — run `/arckit:principles` first to define governance standards
-- `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
-  - Extract: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria — source of truth for DOS
+- **REQ** (Requirements) — Extract: BR/FR/NFR/INT/DR IDs, priorities, acceptance criteria — source of truth for DOS
   - If missing: ERROR — run `/arckit:requirements` first to define project needs
 
 **RECOMMENDED** (read if available, note if missing):
-- `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
-  - Extract: User personas, business drivers, evaluation priorities
+- **STKE** (Stakeholder Analysis) — Extract: user personas, business drivers, evaluation priorities
   - If missing: WARN — consider running `/arckit:stakeholders` to understand stakeholder priorities
-- `ARC-*-RSCH-*.md` or `ARC-*-AWSR-*.md` or `ARC-*-AZUR-*.md` in `projects/{project-dir}/` — Technology research
-  - Extract: Technology decisions informing essential skills requirements
+- **RSCH**/**AWRS**/**AZRS** (Technology Research) — Extract: technology decisions informing essential skills requirements
 
-**OPTIONAL** (read if available, skip silently if missing):
-- `ARC-*-SOW-*.md` in `projects/{project-dir}/` — Statement of Work
-  - Extract: Additional procurement context, scope definitions
-- `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
-  - Extract: Risks requiring vendor mitigation, compliance requirements
+**OPTIONAL** (read if available, skip silently):
+- **SOW** (Statement of Work) — Extract: additional procurement context, scope definitions
+- **RISK** (Risk Register) — Extract: risks requiring vendor mitigation, compliance requirements
 
-**What to extract from each document**:
-- **Principles**: Technology standards, governance constraints for vendor proposals
-- **Requirements**: All BR/FR/NFR/INT/DR IDs with MUST/SHOULD/MAY priority
-- **Stakeholders**: User personas, business drivers, evaluation priorities
-- **Research**: Technology landscape informing essential skills
+### 1b. Read external documents and policies
 
-### 1b. Check for External Documents (optional)
+- Read any **external documents** listed in the project context (`external/` files) — extract team capability evidence, previous submission scores, buyer requirements, evaluation feedback
+- Read any **enterprise standards** in `projects/000-global/external/` — extract organization-wide procurement templates, DOS framework guidance, approved supplier capabilities
+- If no external DOS docs exist but they would improve the submission, ask: "Do you have any contractor CVs, previous DOS submissions, or buyer requirement documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
-Scan for external (non-ArcKit) documents the user may have provided:
+### 2. Identify the target project
 
-**Contractor CVs & Previous DOS Submissions**:
-- **Look in**: `projects/{project-dir}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-- **What to extract**: Team capability evidence, previous submission scores, buyer requirements, evaluation feedback
-- **Examples**: `team-cvs.pdf`, `previous-dos-submission.docx`, `buyer-requirements.pdf`
-
-**Enterprise-Wide Procurement Templates**:
-- **Look in**: `projects/000-global/external/`
-- **File types**: PDF, Word, Markdown
-- **What to extract**: Organization-wide procurement templates, DOS framework guidance, approved supplier capabilities
-
-**User prompt**: If no external DOS docs found but they would improve the submission, ask:
-"Do you have any contractor CVs, previous DOS submissions, or buyer requirement documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-**Important**: This command works without external documents. They enhance output quality but are never blocking.
-
-### 2. Load Project Context
-
-Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, then:
-
-1. Read `projects/[project]/ARC-*-REQ-v*.md` (source of truth)
-2. Read `projects/000-global/ARC-000-PRIN-*.md` (governance constraints)
-3. Read `projects/[project]/ARC-*-STKE-v*.md` if available (priorities)
-4. Parse user input for additional context (budget, timeline, specific skills)
+- Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+- If no match, run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
+- Parse user input for additional context (budget, timeline, specific skills)
 
 
 ---
@@ -98,12 +68,8 @@ Run `.arckit/scripts/bash/list-projects.sh --json` to get available projects, th
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DOS" "${VERSION}")
-# Example output: ARC-001-DOS-v1.0
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-DOS-v{VERSION}` (e.g., `ARC-001-DOS-v1.0`)
 
 **Populate Required Fields**:
 
@@ -112,7 +78,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DOS" "${V
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "DOS Procurement Requirements"
-- `ARC-[PROJECT_ID]-DOS-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-DOS-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.dos"
 
 *User-provided fields* (extract from project metadata or user input):
@@ -140,7 +106,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:dos` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]
@@ -549,6 +515,9 @@ Vendors must provide:
 
 ### 15.1 Digital Marketplace Guidance
 
+- **Sourcing Playbook**: https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks (market assessment, should-cost modelling, outcome-based specs, social value)
+- **DDaT Playbook**: https://www.gov.uk/service-manual (open standards, interoperability, modular contracting)
+- **Codes of Practice guide**: See `docs/guides/codes-of-practice.md` for the full Rainbow of Books mapping
 - **Digital Marketplace**: https://www.digitalmarketplace.service.gov.uk/
 - **DOS Buyers Guide**: https://www.gov.uk/guidance/digital-outcomes-and-specialists-buyers-guide
 - **General Buying Guide**: https://www.gov.uk/guidance/buying-and-selling-on-the-digital-marketplace

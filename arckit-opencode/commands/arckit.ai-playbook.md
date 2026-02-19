@@ -12,6 +12,8 @@ $ARGUMENTS
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 1. **Identify AI system context**:
    - AI system name and purpose
    - Type of AI (Generative, Predictive, Computer Vision, NLP, etc.)
@@ -41,69 +43,40 @@ $ARGUMENTS
 - Administrative automation
 - Examples: Email categorization, meeting scheduling, document summarization
 
-3. **Read Available Documents**:
-
-   Scan the project directory for existing artifacts and read them to inform this assessment:
+3. **Read existing artifacts from the project context:**
 
    **MANDATORY** (warn if missing):
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+   - **PRIN** (Architecture Principles, in 000-global)
      - Extract: AI/ML governance standards, technology constraints, compliance requirements
      - If missing: warn user to run `/arckit:principles` first
-   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification
+   - **REQ** (Requirements)
      - Extract: AI/ML-related FR requirements, NFR (security, compliance, fairness), DR (data requirements)
      - If missing: warn user to run `/arckit:requirements` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-DATA-*.md` in `projects/{project-dir}/` — Data model
+   - **DATA** (Data Model)
      - Extract: Training data sources, personal data, special category data, data quality
-   - `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
+   - **RISK** (Risk Register)
      - Extract: AI-specific risks, bias risks, security risks, mitigation strategies
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-STKE-*.md` in `projects/{project-dir}/` — Stakeholder analysis
+   - **STKE** (Stakeholder Analysis)
      - Extract: Affected populations, decision authority, accountability
-   - `ARC-*-DPIA-*.md` in `projects/{project-dir}/` — DPIA
+   - **DPIA** (Data Protection Impact Assessment)
      - Extract: Data protection context, lawful basis, privacy risks
-
-   **What to extract from each document**:
-   - **Principles**: AI governance standards, ethical AI requirements, compliance constraints
-   - **Requirements**: AI use cases (FR-xxx), fairness (NFR-E-xxx), security (NFR-SEC-xxx), data (DR-xxx)
-   - **Data Model**: Training data sources, personal data categories, data quality
-   - **Risk**: AI-specific risks, bias risks, mitigation strategies
 
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/uk-gov-ai-playbook-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `.arckit/templates/uk-gov-ai-playbook-template.md` (default)
 
-   > **Note**: Read the `VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize ai-playbook`
 
-4. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **AI Governance Policies & Ethical AI Frameworks**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
-   - **What to extract**: AI ethics policies, model cards, algorithmic impact assessments, bias testing results
-   - **Examples**: `ai-ethics-policy.pdf`, `model-card.md`, `bias-assessment.pdf`
-
-   **Organizational AI Standards**:
-   - **Look in**: `projects/000-global/policies/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: AI governance framework, approved AI/ML platforms, responsible AI guidelines
-   - **Examples**: `ai-governance-framework.pdf`, `responsible-ai-guidelines.docx`
-
-   **Enterprise-Wide AI Strategy**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise AI strategy, responsible AI frameworks, cross-project AI maturity assessments
-
-   **User prompt**: If no external AI governance docs found, ask:
-   "Do you have any AI governance policies, model cards, or ethical AI assessments? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+4. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract AI ethics policies, model cards, algorithmic impact assessments, bias testing results
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract AI governance framework, approved AI/ML platforms, responsible AI guidelines
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise AI strategy, responsible AI frameworks, cross-project AI maturity assessments
+   - If no external docs exist but they would improve the output, ask: "Do you have any AI governance policies, model cards, or ethical AI assessments? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 5. **Assess the 10 Core Principles**:
 
@@ -356,12 +329,8 @@ Create detailed report with:
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "AIPB" "${VERSION}")
-# Example output: ARC-001-AIPB-v1.0
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-AIPB-v{VERSION}` (e.g., `ARC-001-AIPB-v1.0`)
 
 **Populate Required Fields**:
 
@@ -370,7 +339,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "AIPB" "${
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "UK Government AI Playbook Assessment"
-- `ARC-[PROJECT_ID]-AIPB-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-AIPB-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.ai-playbook"
 
 *User-provided fields* (extract from project metadata or user input):
@@ -398,7 +367,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:ai-playbook` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from VERSION file]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]

@@ -12,80 +12,47 @@ $ARGUMENTS
 
 ## Instructions
 
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
 1. **Identify the context**: The user should specify:
    - Project name/number
    - Vendor name (if applicable)
    - Location of DLD document
 
-2. **Read Available Documents**:
-
-   Scan the project directory for existing artifacts and read them to inform this review:
+2. **Read existing artifacts** from the project context:
 
    **MANDATORY** (warn if missing):
-   - `ARC-*-HLDR-*.md` in `projects/{project-dir}/` — HLD review (ensure HLD issues were addressed)
-     - Extract: HLD review findings, conditions, outstanding actions
+   - **HLDR** (HLD Review) — Extract: HLD review findings, conditions, outstanding actions
      - If missing: warn that DLD review should follow HLD review
-   - `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles (governance rules still apply)
-     - Extract: All principles with validation gates
+   - **PRIN** (Architecture Principles, in 000-global) — Extract: all principles with validation gates
      - If missing: warn user to run `/arckit:principles` first
-   - `ARC-*-REQ-*.md` in `projects/{project-dir}/` — Requirements specification (technical requirements)
-     - Extract: NFR/INT/DR requirements for detailed technical verification
+   - **REQ** (Requirements) — Extract: NFR/INT/DR requirements for detailed technical verification
      - If missing: warn user to run `/arckit:requirements` first
 
    **RECOMMENDED** (read if available, note if missing):
-   - `ARC-*-DATA-*.md` in `projects/{project-dir}/` — Data model
-     - Extract: Entity schemas, data types, relationships for data model review
-   - `ARC-*-RISK-*.md` in `projects/{project-dir}/` — Risk register
-     - Extract: Technical risks that DLD should address
+   - **DATA** (Data Model) — Extract: entity schemas, data types, relationships for data model review
+   - **RISK** (Risk Register) — Extract: technical risks that DLD should address
 
-   **OPTIONAL** (read if available, skip silently if missing):
-   - `ARC-*-SECD-*.md` in `projects/{project-dir}/` — Secure by Design assessment
-     - Extract: Security controls for security implementation review
+   **OPTIONAL** (read if available, skip silently):
+   - **SECD** (Secure by Design) — Extract: security controls for security implementation review
 
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/dld-review-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `.arckit/templates/dld-review-template.md` (default)
 
-   > **Note**: Read the `.arckit/VERSION` file and update the version in the template metadata line when generating.
    > **Tip**: Users can customize templates with `/arckit:customize dld-review`
-
-   **What to extract from each document**:
-   - **HLD Review**: Previous findings and conditions to verify
-   - **Principles**: Governance rules for compliance checking
-   - **Requirements**: NFR/INT/DR IDs for technical verification
-   - **Data Model**: Schemas and relationships for data model review
 
 3. **Verify HLD approval**:
    - Check that HLD was approved (DLD cannot proceed without HLD approval)
    - Verify all HLD conditions were addressed
    - Confirm no new architectural changes were introduced (if yes, needs HLD re-review)
 
-4. **Check for External Documents** (optional):
-
-   Scan for external (non-ArcKit) documents the user may have provided:
-
-   **Vendor DLD Submissions**:
-   - **Look in**: `projects/{project-dir}/vendors/{vendor}/`
-   - **File types**: PDF (.pdf), Word (.docx), Markdown (.md), Images (.png, .jpg)
-   - **What to extract**: Detailed component specifications, API contracts, database schemas, deployment configurations, security implementation details
-   - **Examples**: `dld-v1.0.pdf`, `api-specification.docx`, `database-schema.png`
-
-   **Supporting Technical Documents**:
-   - **Look in**: `projects/{project-dir}/external/`
-   - **File types**: PDF, Word, Markdown, images
-   - **What to extract**: Performance test results, security scan reports, infrastructure specifications
-   - **Examples**: `load-test-results.pdf`, `security-scan.pdf`
-
-   **Enterprise-Wide Design Standards**:
-   - **Look in**: `projects/000-global/external/`
-   - **File types**: PDF, Word, Markdown
-   - **What to extract**: Enterprise design standards, implementation guidelines, cross-project technical architecture patterns
-
-   **User prompt**: If no vendor DLD found in standard locations, ask:
-   "Please provide the DLD document path or paste key sections. I can read PDFs, Word docs, and images directly. Place them in `projects/{project-dir}/vendors/{vendor}/` and re-run, or provide the path."
-
-   **Important**: This command works without external documents. They enhance output quality but are never blocking.
+4. **Read external documents and policies**:
+   - Read any **vendor DLD submissions** in `projects/{project-dir}/vendors/{vendor}/` — extract detailed component specifications, API contracts, database schemas, deployment configurations, security implementation details
+   - Read any **external documents** listed in the project context (`external/` files) — extract performance test results, security scan reports, infrastructure specifications
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise design standards, implementation guidelines, cross-project technical architecture patterns
+   - If no vendor DLD found, ask: "Please provide the DLD document path or paste key sections. I can read PDFs, Word docs, and images directly. Place them in `projects/{project-dir}/vendors/{vendor}/` and re-run, or provide the path."
 
 5. **Obtain the DLD document**:
    - Ask: "Please provide the DLD document path or paste key sections"
@@ -212,12 +179,8 @@ $ARGUMENTS
 
 Before completing the document, populate ALL document control fields in the header:
 
-**Generate Document ID**:
-```bash
-# Use the ArcKit document ID generation script
-DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DLDR" "${VERSION}")
-# Example output: ARC-001-DLDR-v1.0
-```
+**Construct Document ID**:
+- **Document ID**: `ARC-{PROJECT_ID}-DLDR-v{VERSION}` (e.g., `ARC-001-DLDR-v1.0`)
 
 **Populate Required Fields**:
 
@@ -226,7 +189,7 @@ DOC_ID=$(.arckit/scripts/bash/generate-document-id.sh "${PROJECT_ID}" "DLDR" "${
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Detailed Design Review"
-- `ARC-[PROJECT_ID]-DLDR-v[VERSION]` → Use generated DOC_ID
+- `ARC-[PROJECT_ID]-DLDR-v[VERSION]` → Construct using format above
 - `[COMMAND]` → "arckit.dld-review"
 
 *User-provided fields* (extract from project metadata or user input):
@@ -254,7 +217,7 @@ The footer should be populated with:
 ```markdown
 **Generated by**: ArcKit `/arckit:dld-review` command
 **Generated on**: {DATE} {TIME} GMT
-**ArcKit Version**: [Read from .arckit/VERSION]
+**ArcKit Version**: {ARCKIT_VERSION}
 **Project**: {PROJECT_NAME} (Project {PROJECT_ID})
 **AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
 **Generation Context**: [Brief note about source documents used]
