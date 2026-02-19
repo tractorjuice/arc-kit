@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Doc type code: `PRES`
 - New `presentation-template.md` with MARP frontmatter, Document Control, and slide structure
 - New `docs/guides/presentation.md` with rendering instructions and focus option reference
+- **Data Commons MCP integration for `/arckit.datascout`** — datascout agent now uses `search_indicators` and `get_observations` tools from the Data Commons MCP (when available) to discover and validate UK statistical data (population, GDP, health, climate, government spending) before category-specific web research; includes sub-national NUTS2 regional queries; skips gracefully if MCP not configured
 
 ---
 
