@@ -620,6 +620,8 @@ erDiagram
 
 ## Data Quality Framework
 
+> This section aligns with the [UK Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) (DQF) — 5 principles, 6 dimensions, and practical tools for managing data quality. The six dimensions below map directly to the DQF quality dimensions. See `docs/guides/data-quality-framework.md` for the full DQF-to-ArcKit mapping, maturity model, and data lifecycle guidance.
+
 ### Quality Dimensions
 
 #### Accuracy

@@ -24,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **National Data Strategy reference guide** — new `docs/guides/national-data-strategy.md` mapping NDS 5 missions and 4 pillars to ArcKit commands and artefacts, with pillar checklists and National Data Library context
 - NDS added to UK Government standards map (Mermaid diagram, lifecycle table, reference links)
 - NDS cross-reference added to data-model command, template, and guide
+- **Government Data Quality Framework reference guide** — new `docs/guides/data-quality-framework.md` mapping DQF 5 principles, 6 dimensions, 4 practical tools, maturity model, and data lifecycle to ArcKit artefacts
+- DQF alignment note added to data-model template's existing Data Quality Framework section
+- DQF cross-reference added to data-model command and guide
 
 ---
 
