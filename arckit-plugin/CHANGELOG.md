@@ -5,6 +5,25 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **UK Government Cyber Security Standard integration** — `/arckit.secure` template now includes three new sections for CSS compliance (July 2025, Cabinet Office):
+  - **9.1 GovAssure Status** — tracker for critical system assurance (cycle year, per-system status, findings, remediation)
+  - **9.2 Secure by Design Confidence Rating** — self-assessment against SbD high-confidence profile (principles checklist, gap analysis)
+  - **9.3 Cyber Security Standard Exception Register** — non-compliance management per CSS clauses 4.3/4.4 (exception ID, risk assessment, approval authority, improvement plan)
+- CSS reference added to Executive Summary, External References, command prompt, and guide
+- GovAssure and CSS URLs added to command Resources section
+- **GovS 007: Security alignment** — `/arckit.secure` template now includes:
+  - **Section 10: GovS 007 Alignment Summary** — mapping table of 9 principles to CAF sections and ArcKit artefacts, plus named security roles table (SSRO, DSO, SIRO)
+  - SSRO and DSO added to Approval & Sign-Off section
+  - GovS 007 entry added to External References
+- New `docs/guides/govs-007-security.md` reference guide cross-mapping GovS 007 principles, security lifecycle, protective security disciplines, and key roles to ArcKit commands
+- GovS 007 security roles (SSRO, DSO, SIRO, Cyber Security Lead) added to stakeholders template alongside existing GovS 005 digital roles
+
+---
+
 ## [2.6.0] - 2026-02-17
 
 ### Added

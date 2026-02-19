@@ -88,6 +88,17 @@ This document identifies key stakeholders, their underlying drivers (motivations
 | CDIO (Chief Digital Information Officer) | Departmental digital strategy and technology oversight | HIGH / MEDIUM | Keep Satisfied — quarterly strategy alignment |
 | DDaT Profession Lead | Digital, Data & Technology capability and career framework | LOW / MEDIUM | Monitor — capability assessments, recruitment support |
 
+### UK Government Security Roles (GovS 007)
+
+> The [Government Functional Standard for Security (GovS 007)](https://www.gov.uk/government/publications/government-functional-standard-govs-007-security) defines mandatory protective security roles. Include these when the project sits within a UK Government context.
+
+| Role | Responsibility | Typical Power/Interest | Engagement Strategy |
+|------|---------------|----------------------|---------------------|
+| Senior Security Risk Owner (SSRO) | Owns protective security risk at board level | HIGH / MEDIUM | Keep Satisfied — security risk escalation, quarterly review |
+| Departmental Security Officer (DSO) | Day-to-day security coordination and policy implementation | HIGH / MEDIUM | Keep Satisfied — security compliance gates, incident reporting |
+| Senior Information Risk Owner (SIRO) | Owns information and cyber security risk, signs off risk acceptance | HIGH / MEDIUM | Keep Satisfied — information risk decisions, DPIA sign-off |
+| Cyber Security Lead | Operational cyber security, CAF assessment, GovAssure liaison | MEDIUM / HIGH | Keep Informed — security architecture reviews, pen test scheduling |
+
 ### Stakeholder Power-Interest Grid
 
 ```

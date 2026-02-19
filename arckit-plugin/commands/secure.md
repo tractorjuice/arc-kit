@@ -19,6 +19,7 @@ UK Government departments must follow NCSC (National Cyber Security Centre) guid
 
 **Key UK Government Security References**:
 - NCSC Cyber Assessment Framework (CAF)
+- UK Government Cyber Security Standard (July 2025, Cabinet Office)
 - Cyber Essentials / Cyber Essentials Plus
 - UK GDPR and Data Protection Act 2018
 - Government Security Classifications Policy
@@ -125,17 +126,42 @@ Generate a comprehensive Secure by Design assessment document by:
 
 9. **Calculate overall CAF score**: X/14 principles achieved
 
-10. **Identify critical security issues**:
+10. **Assess UK Government Cyber Security Standard compliance**:
+
+    **9.1 GovAssure Status** — For critical systems subject to GovAssure assurance:
+    - Identify which systems are in scope for the current GovAssure cycle
+    - Record assessment status per system (Planned / In Progress / Complete)
+    - Summarize findings and remediation status
+    - Reference NCSC GovAssure guidance
+
+    **9.2 Secure by Design Confidence Rating** — Self-assessment against SbD high-confidence profile:
+    - Assess confidence level (Low / Medium / High)
+    - Evaluate against SbD principles: secure development, secure deployment, secure operation
+    - Document evidence of high-confidence profile achievement
+    - Identify gaps and improvement actions
+
+    **9.3 Cyber Security Standard Exception Register** — Per CSS clauses 4.3/4.4:
+    - Record any exceptions to CSS compliance with clause references
+    - Assess risk for each exception
+    - Document mitigation measures and approval authority
+    - Track improvement plans to achieve compliance
+
+11. **Map GovS 007: Security alignment**:
+    - Complete the GovS 007 principle mapping table (9 principles → CAF sections and ArcKit artefacts)
+    - Identify named security role holders (SSRO, DSO, SIRO) and populate the security roles table
+    - Assess status for each GovS 007 principle based on evidence from sections 1–9
+
+12. **Identify critical security issues**:
    - Issues that block progression to next phase
    - Unacceptable risk levels
    - Regulatory non-compliance (UK GDPR, Data Protection Act)
 
-11. **Generate actionable recommendations**:
+13. **Generate actionable recommendations**:
     - Critical priority (0-30 days) - blockers for next phase
     - High priority (1-3 months) - significant risk reduction
     - Medium priority (3-6 months) - continuous improvement
 
-12. **Detect version**: Before generating the document ID, check if a previous version exists:
+14. **Detect version**: Before generating the document ID, check if a previous version exists:
     - Look for existing `ARC-{PROJECT_ID}-SECD-v*.md` files in the project directory
     - **If no existing file**: Use VERSION="1.0"
     - **If existing file found**:
@@ -145,7 +171,7 @@ Generate a comprehensive Secure by Design assessment document by:
       - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new CAF objectives assessed, fundamentally different security posture, significant architecture changes
     - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-13. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-v${VERSION}.md`
+15. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-v${VERSION}.md`
 
 
 
@@ -433,6 +459,7 @@ Responsibilities:
 ## Related UK Government Standards
 
 - NCSC Cyber Assessment Framework (CAF)
+- UK Government Cyber Security Standard (July 2025, Cabinet Office)
 - Cyber Essentials Scheme
 - UK Government Security Classifications
 - Government Functional Standard GovS 007: Security
@@ -443,6 +470,9 @@ Responsibilities:
 ## Resources
 
 - NCSC CAF: https://www.ncsc.gov.uk/collection/caf
+- UK Government Cyber Security Standard: https://www.gov.uk/government/publications/government-cyber-security-standard
+- GovS 007 Security: https://www.gov.uk/government/publications/government-functional-standard-govs-007-security
+- NCSC GovAssure: https://www.ncsc.gov.uk/collection/govassure
 - Cyber Essentials: https://www.ncsc.gov.uk/cyberessentials
 - UK GDPR: https://ico.org.uk/for-organisations/guide-to-data-protection/
 - Government Security Classifications: https://www.gov.uk/government/publications/government-security-classifications
