@@ -74,6 +74,20 @@ This document identifies key stakeholders, their underlying drivers (motivations
 | [Name] | [End Customers] | Beneficiary | LOW | HIGH |
 | [Name] | [Industry Body] | Standards | LOW | LOW |
 
+### UK Government Digital Roles (GovS 005)
+
+> The [Government Functional Standard for Digital (GovS 005)](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital) defines mandatory digital governance roles. Include these when the project sits within a UK Government context.
+
+| Role | Responsibility | Typical Power/Interest | Engagement Strategy |
+|------|---------------|----------------------|---------------------|
+| Senior Responsible Owner (SRO) | Accountable for digital outcomes and spend controls | HIGH / HIGH | Manage Closely — steering board, decision escalation |
+| Service Owner | Owns the end-to-end service and user outcomes | HIGH / HIGH | Manage Closely — regular service reviews |
+| Product Manager | Prioritises features against user needs and policy | MEDIUM / HIGH | Keep Informed — sprint reviews, roadmap input |
+| Delivery Manager | Manages delivery cadence, risks, and dependencies | MEDIUM / HIGH | Keep Informed — stand-ups, risk log |
+| CDDO (Central Digital & Data Office) | Assurance, spend control, and cross-government standards | HIGH / MEDIUM | Keep Satisfied — spend control submissions, assessment gates |
+| CDIO (Chief Digital Information Officer) | Departmental digital strategy and technology oversight | HIGH / MEDIUM | Keep Satisfied — quarterly strategy alignment |
+| DDaT Profession Lead | Digital, Data & Technology capability and career framework | LOW / MEDIUM | Monitor — capability assessments, recruitment support |
+
 ### Stakeholder Power-Interest Grid
 
 ```

@@ -40,6 +40,7 @@ Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`.
 - Deviations justified and escalated where policy allows.
 - Spend control documentation updated with latest TCoP results.
 - Assessment report shared with SRO, Delivery Manager, Service Owner.
+- GovS 005 governance obligations reviewed (SRO appointment, lifecycle stage, spend control).
 
 ---
 
@@ -56,4 +57,5 @@ Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`.
 ## Useful Links
 
 - Official guidance: [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice)
+- Parent standard: [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital)
 - Align results with `/arckit.plan` gates and `/arckit.story` retrospectives for governance history.

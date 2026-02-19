@@ -191,6 +191,7 @@ The document must include:
 - Critical issues list
 - Prioritized recommendations (High/Medium/Low)
 - Next steps with timeline
+- GovS 005 alignment mapping (TCoP-to-GovS 005 principle traceability and governance obligations)
 - Approval section
 
 ## Assessment Guidelines
@@ -236,6 +237,7 @@ Be aware of:
 - **UK GDPR**: Data protection requirements
 - **Cyber Essentials**: Baseline security certification
 - **Cloud First policy**: Public cloud preferred unless justified otherwise
+- **GovS 005**: TCoP is the implementation guidance for the Government Functional Standard for Digital — include GovS 005 alignment mapping
 
 ## Example Output Structure
 

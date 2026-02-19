@@ -101,7 +101,7 @@ $ARGUMENTS
    - Acknowledge conflicts honestly
    - Provide practical resolution strategies
    - Include both quantitative and qualitative measures
-   - Consider UK Government context if applicable (Minister accountability, public scrutiny, parliamentary questions, transparency requirements)
+   - Consider UK Government context if applicable (Minister accountability, public scrutiny, parliamentary questions, transparency requirements, GovS 005 digital governance roles including SRO, Service Owner, CDDO, and DDaT Profession Lead)
 
 7. **Write the output**:
    - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-STKE-v1.0.md`

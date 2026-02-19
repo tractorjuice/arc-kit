@@ -471,6 +471,38 @@
 
 ---
 
+## GovS 005 (Government Functional Standard for Digital) Alignment
+
+> **Note**: The Technology Code of Practice is the **implementation guidance** for [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital). Completing a TCoP review therefore covers the majority of GovS 005 requirements. The mapping below shows how each GovS 005 principle traces to TCoP points assessed above.
+
+### TCoP-to-GovS 005 Principle Mapping
+
+| GovS 005 Principle | Description | TCoP Points |
+|---------------------|-------------|-------------|
+| User-centred | Services designed around user needs | 1 (Define user needs), 2 (Accessible & inclusive) |
+| Open | Open source, open standards, transparency | 3 (Open source), 4 (Open standards) |
+| Secure | Proportionate security controls | 6 (Make things secure), 7 (Privacy integral) |
+| Technology | Cloud first, sustainable, integrated | 5 (Cloud first), 9 (Integrate & adapt), 12 (Sustainable) |
+| Data-driven | Evidence-based decisions using data | 10 (Make better use of data) |
+| Inclusive | Accessible to all users and communities | 2 (Accessible & inclusive), 13 (Service Standard) |
+| Collaborative | Share, reuse, work across boundaries | 8 (Share, reuse & collaborate) |
+| Commercially aware | Smart procurement, value for money | 11 (Purchasing strategy) |
+| Sustainable delivery | Lifecycle management, long-term viability | 12 (Sustainable), 9 (Integrate & adapt) |
+
+### GovS 005 Governance Obligations
+
+| Obligation | Status | Evidence / Notes |
+|------------|--------|------------------|
+| Senior Responsible Owner (SRO) appointed for digital function | [MET / NOT MET / N/A] | [Name or reference] |
+| Lifecycle stage identified (Discovery / Alpha / Beta / Live) | [MET / NOT MET / N/A] | [Current stage] |
+| CDDO digital spend control thresholds met | [MET / NOT MET / N/A] | [Spend amount and control reference] |
+| DDaT capability framework applied to team roles | [MET / NOT MET / N/A] | [Evidence of DDaT role mapping] |
+| Performance and status reported to the Permanent Secretary | [MET / NOT MET / N/A] | [Reporting cadence and method] |
+
+**Overall GovS 005 Alignment Status**: [ALIGNED / PARTIALLY ALIGNED / NOT ALIGNED]
+
+---
+
 ## Next Steps
 
 **Immediate Actions** (0-30 days):
