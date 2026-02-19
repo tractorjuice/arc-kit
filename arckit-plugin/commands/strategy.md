@@ -120,12 +120,10 @@ Create a comprehensive Architecture Strategy document that synthesises insights 
 - Phase summary table
 - Key milestones
 
-#### Investment Summary (from SOBC)
-- Total investment (CAPEX/OPEX split)
-- Investment by financial year
-- Investment by theme
-- Business case summary (NPV, IRR, payback)
-- Benefits realisation timeline
+#### Investment Summary
+- Cross-reference the SOBC (ARC-[PROJECT_ID]-SOBC-v*.md) if available
+- Include only: total investment envelope (single figure), investment horizon, and a "See SOBC for detailed financial analysis" note
+- Do NOT duplicate NPV, IRR, BCR, payback, benefits realisation, or year-by-year breakdowns — these belong in the SOBC
 
 #### Strategic Risks & Mitigations (from risk register)
 - Top 5-7 strategic risks with mitigations

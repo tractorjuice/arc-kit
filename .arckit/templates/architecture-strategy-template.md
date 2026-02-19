@@ -435,52 +435,15 @@ gantt
 
 ## Investment Summary
 
-> *Synthesised from: ARC-[PROJECT_ID]-SOBC-v*.md (if available)*
+> *For detailed financial analysis, see: ARC-[PROJECT_ID]-SOBC-v*.md*
 
-### Total Investment
+| Item | Value |
+|------|-------|
+| **Total Investment Envelope** | £[AMOUNT] over [N] years |
+| **Investment Horizon** | FY [YEAR] – FY [YEAR+N] |
+| **CAPEX / OPEX Split** | [%]% / [%]% |
 
-| Category | Amount | % of Total |
-|----------|--------|------------|
-| **Capital Expenditure (CAPEX)** | £[AMOUNT] | [%]% |
-| **Operational Expenditure (OPEX)** | £[AMOUNT] | [%]% |
-| **Total Investment** | **£[AMOUNT]** | **100%** |
-
-### Investment by Financial Year
-
-| Financial Year | CAPEX (£) | OPEX (£) | Total (£) | % of Budget |
-|----------------|-----------|----------|-----------|-------------|
-| FY [YEAR] | [AMOUNT] | [AMOUNT] | [AMOUNT] | [%]% |
-| FY [YEAR+1] | [AMOUNT] | [AMOUNT] | [AMOUNT] | [%]% |
-| FY [YEAR+2] | [AMOUNT] | [AMOUNT] | [AMOUNT] | [%]% |
-| FY [YEAR+3] | [AMOUNT] | [AMOUNT] | [AMOUNT] | [%]% |
-| **Total** | **[AMOUNT]** | **[AMOUNT]** | **[AMOUNT]** | **100%** |
-
-### Investment by Theme
-
-| Theme | Investment (£) | % of Total | Expected Benefit |
-|-------|----------------|------------|------------------|
-| Theme 1: [Name] | [AMOUNT] | [%]% | [Benefit summary] |
-| Theme 2: [Name] | [AMOUNT] | [%]% | [Benefit summary] |
-| Theme 3: [Name] | [AMOUNT] | [%]% | [Benefit summary] |
-| Theme 4: [Name] | [AMOUNT] | [%]% | [Benefit summary] |
-
-### Business Case Summary
-
-| Metric | Value |
-|--------|-------|
-| **Net Present Value (NPV)** | £[AMOUNT] |
-| **Internal Rate of Return (IRR)** | [%]% |
-| **Payback Period** | [N] years |
-| **Benefit-Cost Ratio** | [N]:1 |
-
-### Benefits Realisation
-
-| Benefit Category | FY [YEAR] | FY [YEAR+1] | FY [YEAR+2] | FY [YEAR+3] | Total |
-|------------------|-----------|-------------|-------------|-------------|-------|
-| Cost Savings | £[AMOUNT] | £[AMOUNT] | £[AMOUNT] | £[AMOUNT] | £[TOTAL] |
-| Cost Avoidance | £[AMOUNT] | £[AMOUNT] | £[AMOUNT] | £[AMOUNT] | £[TOTAL] |
-| Revenue Enablement | £[AMOUNT] | £[AMOUNT] | £[AMOUNT] | £[AMOUNT] | £[TOTAL] |
-| Productivity Gains | [%]% | [%]% | [%]% | [%]% | [AVG]% |
+> Detailed NPV, IRR, BCR, benefits realisation, and year-by-year investment breakdowns are maintained in the Strategic Outline Business Case (SOBC). Run `/arckit:sobc` to generate or update the financial case.
 
 ---
 
