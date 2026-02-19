@@ -32,13 +32,13 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 ```
 /plugin marketplace add tractorjuice/arc-kit
 ```
-Then install from the Discover tab. The plugin provides all 48 commands, autonomous agents, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Updates are automatic via the marketplace.
+Then install from the Discover tab. The plugin provides all 49 commands, autonomous agents, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Updates are automatic via the marketplace.
 
 **Gemini CLI** — install the ArcKit extension (recommended):
 ```bash
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
-Zero-config: all 48 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+Zero-config: all 49 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
 
 **Codex CLI** — install the ArcKit CLI:
 ```bash
@@ -750,7 +750,7 @@ Customize ArcKit templates without modifying defaults:
 
 ## Complete Command Reference
 
-All 48 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 49 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
@@ -1003,7 +1003,7 @@ arckit init my-project
 Full guidance lives in `docs/` and the static site.
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 48×48 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 49×49 command matrix.
 - Traceability: [docs/guides/traceability.md](docs/guides/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit

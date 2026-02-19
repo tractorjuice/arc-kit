@@ -200,7 +200,7 @@ Storing volatile numbers that change frequently:
 - **3,421 lines** in main.ts
 ```
 
-**Fix**: Only store counts that change with deliberate action (e.g., "48 commands" that only changes when a command is added). Avoid counts that drift with every code change.
+**Fix**: Only store counts that change with deliberate action (e.g., "49 commands" that only changes when a command is added). Avoid counts that drift with every code change.
 
 ### Anti-Pattern: Speculative Memory
 

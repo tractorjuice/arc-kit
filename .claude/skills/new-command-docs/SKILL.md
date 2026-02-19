@@ -19,7 +19,7 @@ If any required file is missing, create it before proceeding. Templates should b
 
 ## Determine the New Count
 
-Read the current count from `arckit-plugin/.claude-plugin/plugin.json` (the `description` field contains the current count, e.g., "48 slash commands"). The new count is current + 1.
+Read the current count from `arckit-plugin/.claude-plugin/plugin.json` (the `description` field contains the current count, e.g., "49 slash commands"). The new count is current + 1.
 
 ## Update Checklist
 
@@ -121,7 +121,7 @@ Insert alphabetically or in the same position as other files in its category. Up
 ### 9. CLAUDE.md
 
 Update if needed:
-- **Command count references**: Search for "48 commands" or similar counts
+- **Command count references**: Search for "49 commands" or similar counts
 - **Multi-instance types list**: If the new command supports multi-instance documents (like ADR, DIAG, WARD, DMC, DFD), add it to the multi-instance list in the `generate-document-id.sh` section
 - **Agent System table**: If the command delegates to an agent, add it to the agent table
 
@@ -163,13 +163,13 @@ Remember to copy the guide to both `docs/guides/` and `arckit-plugin/guides/`.
 
 After completing all updates, verify no old counts remain:
 
-1. **Grep for old count**: Search the entire repo for the old number pattern (e.g., "48 commands", "48 slash commands", "48 AI-assisted"). Any remaining matches are locations you missed.
+1. **Grep for old count**: Search the entire repo for the old number pattern (e.g., "49 commands", "49 slash commands", "49 AI-assisted"). Any remaining matches are locations you missed.
 2. **Grep for new count**: Verify the new count appears in all expected locations.
 3. **Check the command exists in**: README.md table, docs/index.html card, DEPENDENCY-MATRIX.md row/column, docs/README.md coverage table.
 
 ```bash
-# Example verification (replace 48 with old count, 49 with new count)
-grep -rn "48 commands\|48 slash commands\|48 AI-assisted\|48/48" README.md docs/index.html arckit-plugin/.claude-plugin/plugin.json .claude-plugin/marketplace.json docs/README.md DEPENDENCY-MATRIX.md
+# Example verification (replace 49 with old count, 50 with new count)
+grep -rn "49 commands\|49 slash commands\|49 AI-assisted\|49/49" README.md docs/index.html arckit-plugin/.claude-plugin/plugin.json .claude-plugin/marketplace.json docs/README.md DEPENDENCY-MATRIX.md
 ```
 
 ## Run Converter

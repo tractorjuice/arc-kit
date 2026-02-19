@@ -60,7 +60,7 @@ After installing the plugin:
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Commands | 48 | Slash commands for architecture artifacts |
+| Commands | 49 | Slash commands for architecture artifacts |
 | Skills | 1 | Conversational Wardley Mapping with interactive guidance |
 | Agents | 5 | Autonomous research agents |
 | Templates | 45 | Document templates with UK Government compliance |
