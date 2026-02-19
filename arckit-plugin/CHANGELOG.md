@@ -42,6 +42,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New `presentation-template.md` with MARP frontmatter, Document Control, and slide structure
 - New `docs/guides/presentation.md` with rendering instructions and focus option reference
 - **Data Commons MCP integration for `/arckit.datascout`** — datascout agent now uses `search_indicators` and `get_observations` tools from the Data Commons MCP (when available) to discover and validate UK statistical data (population, GDP, health, climate, government spending) before category-specific web research; includes sub-national NUTS2 regional queries; skips gracefully if MCP not configured
+- **Pinecone MCP integration for `/arckit.wardley`** — wardley command now searches the Wardley Mapping book corpus via Pinecone `search-records` (when available) for relevant strategic context, case studies, gameplay patterns, and evolution analysis; complements local reference files with full book depth; skips gracefully if Pinecone MCP not configured
+- New `docs/guides/pinecone-mcp.md` — optional integration guide covering Wardley book knowledge base, configuration, prerequisites, and command integration
 
 ---
 

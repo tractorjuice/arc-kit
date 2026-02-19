@@ -212,6 +212,18 @@ For each component, determine:
    - Rapid commoditization risk
    - Skills gap risk
 
+### Wardley Book Knowledge (if Pinecone MCP available)
+
+If the `search-records` tool from the Pinecone MCP is available, use it to search the Wardley Mapping book corpus for relevant strategic context. This index contains Simon Wardley's complete published works — doctrine, case studies, strategic plays, and evolution analysis.
+
+For each major strategic question in the map, search for relevant passages:
+1. **Component positioning**: Search for the domain or technology (e.g., "cloud hosting evolution", "authentication commodity") to ground evolution stage placement in Wardley's analysis
+2. **Gameplay patterns**: Search for the strategic situation (e.g., "platform play government", "open source commoditization") to find relevant gameplay examples and case studies
+3. **Inertia and evolution**: Search for inertia patterns relevant to the project (e.g., "legacy migration inertia", "vendor lock-in strategy")
+4. **Doctrine weaknesses**: Search for organisational patterns (e.g., "government IT procurement", "outsourcing risks") to identify applicable doctrine lessons
+
+Cite relevant passages in the strategic analysis sections. If the Pinecone tools are not available, skip this step silently — the local reference files below provide core patterns.
+
 ### Enhanced Strategic Analysis
 
 To deepen strategic analysis beyond build vs buy, read and apply these reference files:
