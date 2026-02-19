@@ -208,7 +208,7 @@ If the guide is in a subdirectory (e.g., `uk-government/`, `uk-mod/`), adjust th
 **Search**: `grep -n "[0-9]* commands\|[0-9]* slash" CLAUDE.md`
 
 Update any count references found. Common locations:
-- Overview section ("49 slash commands")
+- Overview section ("50 slash commands")
 - Agent System table (if adding an agent)
 - Multi-instance types in `generate-document-id.sh` section
 
@@ -244,7 +244,7 @@ Same format as root CHANGELOG.md but for the plugin.
 
 ```bash
 # Find ALL remaining old count references (replace 49 with old count)
-grep -rn "\b49 commands\b\|49 slash commands\|49 AI-assisted\|49/49\|of 49 " \
+grep -rn "\b50 commands\b\|50 slash commands\|50 AI-assisted\|50/50\|of 50 " \
   README.md docs/index.html docs/README.md CLAUDE.md \
   arckit-plugin/.claude-plugin/plugin.json \
   arckit-plugin/README.md \

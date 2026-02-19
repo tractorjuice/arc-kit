@@ -66,6 +66,10 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 - [MLOps Strategy](guides/mlops.md) - `/arckit.mlops` ⭐ NEW - ML lifecycle, model monitoring
 - [FinOps Strategy](guides/finops.md) - `/arckit.finops` ⭐ NEW - Cloud cost management, optimization
 
+### Reporting & Presentations
+- [Project Story](guides/story.md) - `/arckit.story` - Comprehensive project narrative
+- [Presentation](guides/presentation.md) - `/arckit.presentation` ⭐ NEW - MARP slide deck from artifacts
+
 ### Documentation & Publishing
 - [GitHub Pages](guides/pages.md) - `/arckit.pages` ⭐ NEW - Generate documentation site
 
@@ -160,8 +164,9 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.pages` | [pages.md](guides/pages.md) | ✅ Complete |
 | `/arckit.trello` | [trello.md](guides/trello.md) | ✅ Complete |
 | `/arckit.customize` | [customize.md](guides/customize.md) | ✅ Complete |
+| `/arckit.presentation` | [presentation.md](guides/presentation.md) | ✅ Complete |
 
-**Coverage**: 49/49 commands documented (100%)
+**Coverage**: 50/50 commands documented (100%)
 
 ---
 

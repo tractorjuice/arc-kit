@@ -32,6 +32,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Sourcing Playbook and DDaT Playbook references added to DOS command
 - Sourcing Playbook reference added to SOW command
 - Magenta Book, Orange Book, AQuA Book, and Rose Book nodes added to standards map Mermaid diagram
+- **New `/arckit:presentation` command** — generates MARP-format slide decks from existing project artifacts for governance boards, stakeholder briefings, and gate reviews
+  - Supports 4 presentation focus modes: Executive, Technical, Stakeholder, Procurement
+  - Configurable slide count (6-8, 10-12, 15-20)
+  - Reads all available project artifacts and extracts key content into slides
+  - Embeds Mermaid diagrams (Gantt, pie, C4, quadrant charts)
+  - MARP output renders to PDF/PPTX/HTML via MARP CLI or VS Code extension
+  - Doc type code: `PRES`
+- New `presentation-template.md` with MARP frontmatter, Document Control, and slide structure
+- New `docs/guides/presentation.md` with rendering instructions and focus option reference
 
 ---
 
