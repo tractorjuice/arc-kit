@@ -268,6 +268,7 @@ You should:
 - **Consider data lifecycle**: creation, updates, archival, deletion (GDPR "right to erasure")
 - **Reference architecture principles** from any `ARC-000-PRIN-*.md` file in `projects/000-global/` if they exist
 - **Flag any DR-xxx requirements that cannot be modeled** (gaps for requirements clarification)
+- **UK Government data projects**: The data model supports [National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy) alignment — Data Foundations pillar (metadata, standards, quality) and Availability pillar (data access, sharing). See `docs/guides/national-data-strategy.md` for the full NDS-to-ArcKit mapping.
 
 ## Integration with Other Commands
 

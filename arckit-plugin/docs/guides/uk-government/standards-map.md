@@ -53,7 +53,11 @@ flowchart TD
     TCOP --> SPEND_CONTROLS
     TCOP --> DIGITAL_MARKETPLACE
 
-    GOVS010 --> DATA_MANAGEMENT["Government Data Quality Framework"]
+    GOVS005 --> NDS["National Data Strategy"]
+    NDS --> NDL["National Data Library"]
+    NDS --> DQF["Government Data Quality Framework"]
+
+    GOVS010 --> DQF
     GOVS013 --> COUNTER_FRAUD_FUN["GovS 013 Guidance & Fraud Functional Standard"]
 ```
 
@@ -65,7 +69,7 @@ flowchart TD
 
 | Delivery Stage | Mandatory / Expected Standards | Key Artefacts |
 |----------------|--------------------------------|---------------|
-| **Strategy & Discovery** | GovS 005 (Digital), GovS 002 (Project Delivery), GovS 006 (Finance), GovS 008 (Commercial) | Problem definition, Strategic Outline Business Case (Green Book), stakeholder analysis, risk register |
+| **Strategy & Discovery** | GovS 005 (Digital), GovS 002 (Project Delivery), GovS 006 (Finance), GovS 008 (Commercial), National Data Strategy (if data project) | Problem definition, Strategic Outline Business Case (Green Book), stakeholder analysis, risk register, NDS mission alignment |
 | **Alpha** | Service Standard (Points 1–7), Technology Code of Practice (baseline), Spend Controls gating, Secure by Design (context) | Alpha assessment pack, architecture principles, DPIA screening, sourcing strategy |
 | **Private/Public Beta** | Service Standard (full 14 points), TCoP compliance, Secure by Design (controls), Cyber Essentials, NCSC CAF for hosting, G-Cloud/DOS procurement, Managing Public Money | Beta assessment evidence, detailed design reviews, procurement evaluation, security accreditation plan |
 | **Live** | Ongoing Service Standard adherence, TCoP updates, spend control renewals, AI Playbook (if applicable), ATRS publication, JSP 936 (MOD AI), internal audit (GovS 009), fraud controls (GovS 013) | Live service assessment, operational metrics, transparency record, assurance logs |
@@ -86,5 +90,7 @@ flowchart TD
 - [Managing Public Money](https://www.gov.uk/government/publications/managing-public-money)
 - [Sourcing and Consultancy Playbooks](https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks) / [Digital Marketplace](https://www.digitalmarketplace.service.gov.uk/)
 - [HM Treasury Green Book](https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government)
+- [UK National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy)
+- [Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework)
 
 Use this map when planning UK government digital or AI services to ensure the correct policies, approvals, and evidence are in scope from the outset.

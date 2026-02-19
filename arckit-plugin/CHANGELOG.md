@@ -21,6 +21,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - GovS 007 entry added to External References
 - New `docs/guides/govs-007-security.md` reference guide cross-mapping GovS 007 principles, security lifecycle, protective security disciplines, and key roles to ArcKit commands
 - GovS 007 security roles (SSRO, DSO, SIRO, Cyber Security Lead) added to stakeholders template alongside existing GovS 005 digital roles
+- **National Data Strategy reference guide** — new `docs/guides/national-data-strategy.md` mapping NDS 5 missions and 4 pillars to ArcKit commands and artefacts, with pillar checklists and National Data Library context
+- NDS added to UK Government standards map (Mermaid diagram, lifecycle table, reference links)
+- NDS cross-reference added to data-model command, template, and guide
 
 ---
 
