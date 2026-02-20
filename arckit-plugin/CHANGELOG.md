@@ -5,6 +5,23 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.3] - 2026-02-20
+
+### Added
+
+- **Dark mode for pages template** — CSS-variable-driven dark theme with sun/moon toggle in header, system preference detection (`prefers-color-scheme`), and localStorage persistence
+- **Auto-sync guides from plugin** — `/arckit:pages` now copies all guides from the plugin to `docs/guides/` before scanning, ensuring repos always have the latest guides
+- **4 missing guides synced to plugin** — `artifact-health`, `c4-layout-science`, `knowledge-compounding`, `security-hooks`
+
+### Changed
+
+- Replaced ~35 hardcoded colour values in pages template with semantic CSS variables
+- Mermaid diagrams switch between default/dark theme based on mode
+- SVG donut chart text colour reads from CSS variable for dark mode compatibility
+- Version bump across all distribution formats
+
+---
+
 ## [2.8.2] - 2026-02-20
 
 ### Added
