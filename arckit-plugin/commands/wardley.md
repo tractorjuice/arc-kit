@@ -1,5 +1,11 @@
 ---
 description: Create strategic Wardley Maps for architecture decisions and build vs buy analysis
+hooks:
+  Stop:
+    - hooks:
+        - type: command
+          command: "bash ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.sh"
+          timeout: 10
 ---
 
 # ArcKit: Wardley Mapping for Strategic Architecture
