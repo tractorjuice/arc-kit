@@ -5,6 +5,17 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Knowledge compounding from research** — research agent now spawns standalone vendor profiles and tech notes from research findings, extracting reusable knowledge that persists beyond the originating project
+- New `vendor-profile-template.md` and `tech-note-template.md` templates for spawned knowledge files
+- `--no-spawn` flag for `/arckit.research` to skip knowledge compounding when only the main research document is needed
+- Documentation: `docs/guides/knowledge-compounding.md` explaining the compound knowledge pattern, deduplication, and directory structure
+
+---
+
 ## [2.7.1] - 2026-02-20
 
 ### Added
