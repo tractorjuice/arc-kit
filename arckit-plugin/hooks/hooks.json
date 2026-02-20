@@ -1,5 +1,5 @@
 {
-  "description": "ArcKit hooks: session init, project context injection, and filename enforcement",
+  "description": "ArcKit hooks: session init, project context injection, filename enforcement, and MCP tool auto-allow",
   "hooks": {
     "SessionStart": [
       {
@@ -32,6 +32,18 @@
           {
             "type": "command",
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "matcher": "mcp__.*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/allow-mcp-tools.sh",
             "timeout": 5
           }
         ]
