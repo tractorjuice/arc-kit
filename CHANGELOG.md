@@ -5,6 +5,21 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.0] - 2026-02-20
+
+### Added
+
+- **Knowledge compounding from research** — `/arckit.research` now spawns standalone vendor profiles (`vendors/`) and tech notes (`tech-notes/`) from research findings; use `--no-spawn` to skip (#59, thanks @DavidROliverBA)
+- **`/arckit.health` command** (51st command) — scans projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift (#60, thanks @DavidROliverBA)
+- **Security hooks** — three new hooks for secret and sensitive file protection: prompt secret detection, file content scanning, and sensitive file path blocking (#56, thanks @DavidROliverBA)
+- **C4 layout science for `/arckit.diagram`** — research-backed layout reference template (Sugiyama algorithm, tier-based ordering, edge crossing targets) and 6-criterion diagram quality gate (#57, thanks @DavidROliverBA)
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, extension, marketplace)
+
+---
+
 ## [2.7.1] - 2026-02-20
 
 ### Added
