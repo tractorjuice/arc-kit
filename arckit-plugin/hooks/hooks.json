@@ -1,5 +1,5 @@
 {
-  "description": "ArcKit hooks: session init, project context injection, filename enforcement, and MCP tool auto-allow",
+  "description": "ArcKit hooks: session init, project context injection, filename enforcement, MCP tool auto-allow, and security protection (file protection, secret detection, secret file scanning)",
   "hooks": {
     "SessionStart": [
       {
@@ -21,6 +21,11 @@
             "type": "command",
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.sh",
             "timeout": 10
+          },
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/secret-detection.py",
+            "timeout": 5
           }
         ]
       }
@@ -32,6 +37,21 @@
           {
             "type": "command",
             "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.sh",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.py",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/secret-file-scanner.py",
             "timeout": 5
           }
         ]
