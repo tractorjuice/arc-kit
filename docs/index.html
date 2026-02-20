@@ -649,7 +649,7 @@
             </div>
             <div class="app-feature-card">
                 <h3 class="govuk-heading-m">AI-Assisted</h3>
-                <p class="govuk-body">Works with Claude Code, OpenAI Codex CLI, Gemini CLI, and OpenCode CLI. AI generates first drafts following templates; architects review and refine.</p>
+                <p class="govuk-body">Works with Claude Code (premier), Gemini CLI, Codex CLI, and OpenCode CLI. Claude Code provides the most complete experience with autonomous agents, automation hooks, and output validation. AI generates first drafts following templates; architects review and refine.</p>
             </div>
             <div class="app-feature-card">
                 <h3 class="govuk-heading-m">Traceable</h3>
@@ -4040,44 +4040,50 @@ flowchart TD
     <!-- Multi-AI Support Section -->
     <div class="govuk-width-container govuk-!-margin-top-9" id="multi-ai">
         <h2 class="govuk-heading-l">Multi-AI System Support</h2>
-        <p class="govuk-body">ArcKit works with three major AI development environments:</p>
+        <p class="govuk-body">ArcKit works with four AI development environments. Claude Code is the <strong>primary development platform</strong> and provides the most complete experience.</p>
 
         <div class="app-ai-grid">
             <div class="app-ai-card">
                 <h3 class="govuk-heading-m">Claude Code</h3>
-                <strong class="govuk-tag govuk-tag--green">Primary</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Install via the <strong>ArcKit plugin</strong>. Provides slash commands, autonomous agents for research-heavy tasks, a conversational Wardley Mapping skill, and bundled MCP servers (AWS Knowledge + Microsoft Learn).</p>
-                <p class="govuk-body"><strong>Best for:</strong> Complex reasoning, architecture design, comprehensive documentation generation. Agents isolate web research context automatically.</p>
+                <strong class="govuk-tag govuk-tag--green">Premier</strong>
+                <p class="govuk-body govuk-!-margin-top-3">The <strong>primary platform</strong> for ArcKit. Install via the <strong>ArcKit plugin</strong> for the full experience: all 50 commands, 5 autonomous research agents, 4 automation hooks, a conversational Wardley Mapping skill, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, DataCommons).</p>
+                <p class="govuk-body"><strong>Exclusive features:</strong></p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><strong>Agents</strong> &mdash; 5 autonomous agents for research-heavy commands (market research, data source discovery, AWS/Azure/GCP cloud research) running in isolated context windows</li>
+                    <li><strong>Hooks</strong> &mdash; SessionStart (version + project detection), UserPromptSubmit (project context injection on every prompt), PreToolUse (ARC filename auto-correction), PermissionRequest (MCP tool auto-approval), per-command Stop hooks (output validation)</li>
+                    <li><strong>Output validation</strong> &mdash; Wardley Map math validation checks stage-evolution alignment, coordinate ranges, and OWM syntax consistency before finalizing documents</li>
+                    <li><strong>Wardley Mapping skill</strong> &mdash; Conversational guidance with Pinecone MCP book corpus search</li>
+                </ul>
                 <p class="govuk-body"><strong>Installation:</strong> <code>/plugin marketplace add tractorjuice/arc-kit</code></p>
             </div>
 
             <div class="app-ai-card">
-                <h3 class="govuk-heading-m">OpenAI Codex CLI</h3>
-                <strong class="govuk-tag govuk-tag--blue">Supported</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Codex CLI for GPT-4. Commands in <code>.codex/prompts/</code> directory.</p>
-                <p class="govuk-body"><strong>Best for:</strong> Code generation, technical implementation, API integration.</p>
-                <p class="govuk-body"><strong>Installation:</strong> <code>npm install -g @openai/codex-cli</code></p>
-            </div>
-
-            <div class="app-ai-card">
                 <h3 class="govuk-heading-m">Gemini CLI</h3>
-                <strong class="govuk-tag govuk-tag--purple">Supported</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Google Gemini CLI. Install as a native extension for zero-config access to all 50 commands, templates, and scripts.</p>
-                <p class="govuk-body"><strong>Best for:</strong> Multi-modal analysis, data processing, rapid prototyping.</p>
+                <strong class="govuk-tag govuk-tag--purple">Full</strong>
+                <p class="govuk-body govuk-!-margin-top-3">Native extension with all 50 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Zero-config with auto-updates.</p>
+                <p class="govuk-body"><strong>Limitations:</strong> No agent delegation or hooks. Research commands use inline prompts instead of isolated agents.</p>
                 <p class="govuk-body"><strong>Extension:</strong> <code>gemini extensions install https://github.com/tractorjuice/arckit-gemini</code></p>
             </div>
 
             <div class="app-ai-card">
+                <h3 class="govuk-heading-m">OpenAI Codex CLI</h3>
+                <strong class="govuk-tag govuk-tag--blue">Core</strong>
+                <p class="govuk-body govuk-!-margin-top-3">Codex CLI for GPT-4. Commands and templates copied into project via <code>arckit init</code>.</p>
+                <p class="govuk-body"><strong>Limitations:</strong> No agents, hooks, or bundled MCP servers. Manual reinstall for updates.</p>
+                <p class="govuk-body"><strong>Installation:</strong> <code>arckit init my-project --ai codex</code></p>
+            </div>
+
+            <div class="app-ai-card">
                 <h3 class="govuk-heading-m">OpenCode CLI</h3>
-                <strong class="govuk-tag govuk-tag--blue">Supported</strong>
-                <p class="govuk-body govuk-!-margin-top-3">OpenCode CLI. Commands in <code>.opencode/commands/</code> directory.</p>
-                <p class="govuk-body"><strong>Best for:</strong> Open-source AI coding workflows with flexible model selection.</p>
+                <strong class="govuk-tag govuk-tag--blue">Core</strong>
+                <p class="govuk-body govuk-!-margin-top-3">OpenCode CLI with flexible model selection. Commands and templates copied into project via <code>arckit init</code>.</p>
+                <p class="govuk-body"><strong>Limitations:</strong> No agents, hooks, or bundled MCP servers. Manual reinstall for updates.</p>
                 <p class="govuk-body"><strong>Installation:</strong> <code>arckit init my-project --ai opencode</code></p>
             </div>
         </div>
 
         <div class="govuk-inset-text govuk-!-margin-top-6">
-            All commands produce identical outputs across AI systems. Claude Code additionally uses <strong>agents</strong> for research-heavy commands (technology research, data source discovery, AWS/Azure cloud research), running them autonomously in isolated context windows. Codex CLI, OpenCode CLI, and Gemini CLI use equivalent inline prompts.
+            All 50 commands produce identical outputs across AI systems. Claude Code provides the richest experience with <strong>agents</strong> that isolate research context, <strong>hooks</strong> that automate governance (filename enforcement, context injection, output validation), and <strong>bundled MCP servers</strong> for authoritative cloud documentation. Gemini CLI offers a strong zero-config experience. Codex and OpenCode provide core command functionality.
         </div>
 
         <details class="govuk-details govuk-!-margin-top-4">
