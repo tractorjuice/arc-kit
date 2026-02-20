@@ -28,16 +28,20 @@ Scan the repository to find all ArcKit artifacts:
 
 ### 1.1 Guides (Command Documentation)
 
-Check `docs/guides/` for command usage guides:
-```
-docs/guides/
-├── requirements.md      # How to use /arckit:requirements
-├── principles.md        # How to use /arckit:principles
-├── risk.md              # How to use /arckit:risk
-└── {other guides}
+**First, sync guides from the plugin to the local repo:**
+
+1. Create `docs/guides/` if it doesn't exist
+2. Use Glob to list all `.md` files in `${CLAUDE_PLUGIN_ROOT}/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`)
+3. Copy every guide file to the corresponding path under `docs/guides/`, creating subdirectories as needed
+4. This ensures the repo always has the latest guides from the plugin
+
+```bash
+# Conceptual flow — use Bash tool to copy:
+mkdir -p docs/guides
+cp -r ${CLAUDE_PLUGIN_ROOT}/docs/guides/* docs/guides/
 ```
 
-Extract the title from the first `#` heading in each guide file.
+After syncing, scan `docs/guides/` for command usage guides and extract the title from the first `#` heading in each guide file.
 
 **Guide Categories** (based on filename):
 
