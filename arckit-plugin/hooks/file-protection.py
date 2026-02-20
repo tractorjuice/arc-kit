@@ -104,6 +104,7 @@ ALLOWED_DIRECTORIES = [
     "arckit-plugin/hooks/",  # Hook scripts (including this one)
     "docs/",  # Documentation files
     ".arckit/templates/",  # Project-level templates
+    "projects/",  # ArcKit governance artifacts may discuss security topics
 ]
 
 

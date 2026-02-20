@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Documentation: `docs/guides/knowledge-compounding.md` explaining the compound knowledge pattern, deduplication, and directory structure
 - **`/arckit:health` command** — scans all projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift
 - Documentation: artifact-health guide
+- **Security hooks** — three new hooks for secret and sensitive file protection:
+  - `file-protection.py` — blocks edits to sensitive files (environment files, credentials, private keys, lock files) with configurable exception lists
+  - `secret-detection.py` — scans user prompts for potential secrets (API keys, tokens, passwords, connection strings) before they reach the model
+  - `secret-file-scanner.py` — scans file content being written for embedded secrets with skip patterns for documentation files
+- Documentation: `docs/guides/security-hooks.md` — three-layer protection model guide
 
 ---
 

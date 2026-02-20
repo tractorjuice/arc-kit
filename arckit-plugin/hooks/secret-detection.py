@@ -33,7 +33,7 @@ SECRET_PATTERNS = [
 
     # Notion tokens (internal integration tokens)
     (r"ntn_[a-zA-Z0-9]{40,}", "Notion integration token"),
-    (r"secret_[a-zA-Z0-9]{40,}", "Notion internal token"),
+    (r"secret_[a-zA-Z0-9]{40,}", "potential secret token"),
 
     # Atlassian/Confluence tokens
     (r"(?i)atlassian[-_]?token\s*[:=]\s*\S+", "Atlassian token"),

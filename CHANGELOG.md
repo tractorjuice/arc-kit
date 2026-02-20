@@ -5,18 +5,6 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
-
-### Added
-
-- **Security hooks** — three new hooks for secret and sensitive file protection:
-  - `file-protection.py` — blocks edits to sensitive files (environment files, credentials, private keys, lock files) with configurable exception lists
-  - `secret-detection.py` — scans user prompts for potential secrets (API keys, tokens, passwords, connection strings) before they reach the model
-  - `secret-file-scanner.py` — scans file content being written for embedded secrets with skip patterns for documentation files
-- Documentation: `docs/guides/security-hooks.md` — three-layer protection model guide
-
----
-
 ## [2.7.1] - 2026-02-20
 
 ### Added

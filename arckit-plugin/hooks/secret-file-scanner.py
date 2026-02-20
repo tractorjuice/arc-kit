@@ -33,7 +33,7 @@ SECRET_PATTERNS = [
 
     # Notion tokens
     (r"ntn_[a-zA-Z0-9]{40,}", "Notion integration token"),
-    (r"secret_[a-zA-Z0-9]{40,}", "Notion internal token"),
+    (r"secret_[a-zA-Z0-9]{40,}", "potential secret token"),
 
     # Atlassian tokens
     (r"(?i)atlassian[-_]?token\s*[:=]\s*\S+", "Atlassian token"),
@@ -135,10 +135,6 @@ def main():
         # Build warning message
         secret_types = [f"{stype} ({count}x)" for stype, count in findings]
         warning = f"Potential secrets detected in file content: {', '.join(secret_types)}"
-
-        print(f"Blocked: {warning}", file=sys.stderr)
-        print(f"   File: {file_path}", file=sys.stderr)
-        print("   Review content before proceeding.", file=sys.stderr)
 
         # Output blocking decision
         output = {
