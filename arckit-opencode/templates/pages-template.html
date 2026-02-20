@@ -1,5 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" class="govuk-template">
+<script>
+    // Prevent flash-of-wrong-theme by applying theme before paint
+    (function() {
+        var stored = localStorage.getItem('arckit-theme');
+        if (stored) {
+            document.documentElement.setAttribute('data-theme', stored);
+        } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+    })();
+</script>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -22,18 +33,107 @@
             --sidebar-collapsed-width: 0px;
             --toc-width: 220px;
             --header-height: 50px;
-            --primary-color: #1d70b8;
-            --primary-dark: #003078;
-            --background-light: #f3f2f1;
-            --border-color: #b1b4b6;
-            --text-muted: #505a5f;
             --transition-speed: 0.3s;
+
+            /* Surfaces */
+            --bg-page: #ffffff;
+            --bg-surface: #ffffff;
+            --bg-surface-alt: #f3f2f1;
+            --bg-sidebar: #f3f2f1;
+            --bg-header: #0b0c0c;
+            --bg-code: #f3f2f1;
+            --bg-code-block: #0b0c0c;
+            --bg-hover: #e8e8e8;
+
+            /* Text */
+            --text-primary: #0b0c0c;
+            --text-secondary: #505a5f;
+            --text-inverse: #ffffff;
+            --text-code-block: #ffffff;
+            --text-link: #1d70b8;
+            --text-link-hover: #003078;
+
+            /* Borders */
+            --border-main: #b1b4b6;
+            --border-light: #e8e8e8;
+
+            /* Status */
+            --color-success: #00703c;
+            --color-warning: #f47738;
+            --color-error: #d4351c;
+            --color-focus: #ffdd00;
+
+            /* Legacy aliases (used throughout) */
+            --primary-color: var(--text-link);
+            --primary-dark: var(--text-link-hover);
+            --background-light: var(--bg-surface-alt);
+            --border-color: var(--border-main);
+            --text-muted: var(--text-secondary);
+        }
+
+        [data-theme="dark"] {
+            --bg-page: #1a1a1a;
+            --bg-surface: #232323;
+            --bg-surface-alt: #2a2a2a;
+            --bg-sidebar: #1e1e1e;
+            --bg-header: #0b0c0c;
+            --bg-code: #2a2a2a;
+            --bg-code-block: #1a1a1a;
+            --bg-hover: #333333;
+
+            --text-primary: #e0e0e0;
+            --text-secondary: #a0a0a0;
+            --text-inverse: #ffffff;
+            --text-code-block: #e0e0e0;
+            --text-link: #6eb0e6;
+            --text-link-hover: #a0cfef;
+
+            --border-main: #444444;
+            --border-light: #333333;
+
+            --color-success: #00a04e;
+            --color-warning: #ff9f5a;
+            --color-error: #e85a4a;
+            --color-focus: #ffdd00;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) {
+                --bg-page: #1a1a1a;
+                --bg-surface: #232323;
+                --bg-surface-alt: #2a2a2a;
+                --bg-sidebar: #1e1e1e;
+                --bg-header: #0b0c0c;
+                --bg-code: #2a2a2a;
+                --bg-code-block: #1a1a1a;
+                --bg-hover: #333333;
+
+                --text-primary: #e0e0e0;
+                --text-secondary: #a0a0a0;
+                --text-inverse: #ffffff;
+                --text-code-block: #e0e0e0;
+                --text-link: #6eb0e6;
+                --text-link-hover: #a0cfef;
+
+                --border-main: #444444;
+                --border-light: #333333;
+
+                --color-success: #00a04e;
+                --color-warning: #ff9f5a;
+                --color-error: #e85a4a;
+                --color-focus: #ffdd00;
+            }
         }
 
         /* Font Override - GDS Transport only for *.gov.uk domains */
         body, .govuk-template, .govuk-template__body, [class*="govuk-"] {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
                          Helvetica, Arial, sans-serif !important;
+        }
+
+        body {
+            background: var(--bg-page);
+            color: var(--text-primary);
         }
 
         html {
@@ -50,7 +150,7 @@
         .app-sidebar {
             width: var(--sidebar-width);
             min-width: var(--sidebar-width);
-            background: var(--background-light);
+            background: var(--bg-sidebar);
             border-right: 1px solid var(--border-color);
             overflow-y: auto;
             position: sticky;
@@ -70,7 +170,7 @@
         .app-sidebar-header {
             padding: 1rem;
             background: var(--primary-color);
-            color: white;
+            color: var(--text-inverse);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -78,7 +178,7 @@
         }
 
         .app-sidebar-header h2 {
-            color: white;
+            color: var(--text-inverse);
             margin: 0;
             font-size: 1.1rem;
         }
@@ -86,7 +186,7 @@
         .app-sidebar-toggle {
             background: transparent;
             border: none;
-            color: white;
+            color: var(--text-inverse);
             cursor: pointer;
             font-size: 1.25rem;
             padding: 0.25rem;
@@ -101,7 +201,7 @@
         /* Search */
         .app-search {
             padding: 0.75rem 1rem;
-            background: white;
+            background: var(--bg-surface);
             border-bottom: 1px solid var(--border-color);
             flex-shrink: 0;
         }
@@ -113,12 +213,14 @@
             border-radius: 0;
             font-size: 0.9rem;
             font-family: inherit;
+            background: var(--bg-surface);
+            color: var(--text-primary);
         }
 
         .app-search-input:focus {
-            outline: 3px solid #ffdd00;
+            outline: 3px solid var(--color-focus);
             outline-offset: 0;
-            border-color: #0b0c0c;
+            border-color: var(--text-primary);
         }
 
         .app-search-results {
@@ -126,7 +228,7 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: white;
+            background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-top: none;
             max-height: 300px;
@@ -174,7 +276,8 @@
             align-items: center;
             justify-content: space-between;
             padding: 0.75rem 1rem;
-            background: #fff;
+            background: var(--bg-surface);
+            color: var(--text-primary);
             cursor: pointer;
             font-weight: 700;
             border: none;
@@ -217,12 +320,12 @@
         }
 
         .app-nav-list a:hover {
-            background: #fff;
+            background: var(--bg-surface);
             border-left-color: var(--primary-color);
         }
 
         .app-nav-list a.active {
-            background: #fff;
+            background: var(--bg-surface);
             border-left-color: var(--primary-color);
             font-weight: 700;
         }
@@ -238,14 +341,14 @@
         .app-nav-external {
             padding: 6px 12px 6px 16px;
             font-size: 14px;
-            color: #666;
+            color: var(--text-secondary);
             font-style: italic;
         }
 
         .app-nav-file-type {
             font-size: 11px;
             text-transform: uppercase;
-            color: #999;
+            color: var(--text-secondary);
             margin-left: 4px;
         }
 
@@ -368,8 +471,8 @@
 
         /* Error State */
         .app-error {
-            background: #f47738;
-            color: white;
+            background: var(--color-warning);
+            color: var(--text-inverse);
             padding: 1rem;
             margin-bottom: 1rem;
         }
@@ -424,7 +527,7 @@
         }
 
         .app-keyboard-hint kbd {
-            background: white;
+            background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-radius: 3px;
             padding: 0.125rem 0.375rem;
@@ -441,7 +544,7 @@
         }
 
         .app-dashboard-kpi {
-            background: #fff;
+            background: var(--bg-surface);
             border: 1px solid var(--border-color);
             border-top: 4px solid var(--primary-color);
             padding: 1.25rem;
@@ -450,7 +553,7 @@
         .app-dashboard-kpi-value {
             font-size: 2.25rem;
             font-weight: 700;
-            color: #0b0c0c;
+            color: var(--text-primary);
             line-height: 1.1;
         }
 
@@ -482,7 +585,7 @@
         }
 
         .app-dashboard-panel {
-            background: #fff;
+            background: var(--bg-surface);
             border: 1px solid var(--border-color);
             padding: 1.25rem;
         }
@@ -490,7 +593,7 @@
         .app-dashboard-panel h3 {
             margin: 0 0 1rem 0;
             font-size: 1rem;
-            color: #0b0c0c;
+            color: var(--text-primary);
         }
 
         .app-dashboard-chart-container {
@@ -589,7 +692,7 @@
         }
 
         .app-dashboard-table tr:hover {
-            background: #fafafa;
+            background: var(--bg-surface-alt);
         }
 
         .app-dashboard-coverage-bar {
@@ -637,24 +740,24 @@
         }
 
         .app-dashboard-check {
-            color: #00703c;
+            color: var(--color-success);
             font-weight: 700;
         }
 
         .app-dashboard-cross {
-            color: #d4351c;
+            color: var(--color-error);
             font-weight: 700;
         }
 
         .app-header__dashboard-link {
-            color: white !important;
-            background: #00703c;
+            color: var(--text-inverse) !important;
+            background: var(--color-success);
             padding: 0.25rem 0.75rem;
             border-radius: 3px;
         }
 
         .app-header__dashboard-link:hover {
-            background: #005a30;
+            background: #005a30;  /* darker green — no variable needed */
         }
 
         @media (max-width: 900px) {
@@ -723,11 +826,11 @@
         }
 
         .app-markdown tr:hover {
-            background: #fafafa;
+            background: var(--bg-surface-alt);
         }
 
         .app-markdown code {
-            background: var(--background-light);
+            background: var(--bg-code);
             padding: 0.125rem 0.375rem;
             font-family: 'SF Mono', 'Consolas', 'Liberation Mono', monospace;
             font-size: 0.875em;
@@ -735,8 +838,8 @@
         }
 
         .app-markdown pre {
-            background: #0b0c0c;
-            color: #fff;
+            background: var(--bg-code-block);
+            color: var(--text-code-block);
             padding: 1.25rem;
             overflow-x: auto;
             margin: 1.5rem 0;
@@ -807,7 +910,7 @@
         }
 
         .app-guides-list a:hover {
-            background: #e8e8e8;
+            background: var(--bg-hover);
         }
 
         /* Guide status badges */
@@ -824,27 +927,27 @@
 
         .guide-status.live {
             background: #00703c;
-            color: white;
+            color: var(--text-inverse);
         }
 
         .guide-status.beta {
             background: #1d70b8;
-            color: white;
+            color: var(--text-inverse);
         }
 
         .guide-status.alpha {
             background: #f47738;
-            color: white;
+            color: var(--text-inverse);
         }
 
         .guide-status.experimental {
             background: #912b88;
-            color: white;
+            color: var(--text-inverse);
         }
 
         /* Mermaid Diagrams - Full Width */
         .app-markdown .mermaid {
-            background: #fff;
+            background: var(--bg-surface);
             padding: 1.5rem;
             margin: 1.5rem 0;
             border: 1px solid var(--border-color);
@@ -862,7 +965,7 @@
             display: none;
             background: transparent;
             border: none;
-            color: white;
+            color: var(--text-inverse);
             font-size: 1.5rem;
             cursor: pointer;
             padding: 0.25rem 0.5rem;
@@ -890,7 +993,7 @@
             left: 0;
             top: calc(var(--header-height) + 1rem);
             background: var(--primary-color);
-            color: white;
+            color: var(--text-inverse);
             border: none;
             padding: 0.5rem 0.75rem;
             cursor: pointer;
@@ -904,7 +1007,7 @@
 
         /* Header */
         .app-header {
-            background: #0b0c0c;
+            background: var(--bg-header);
             height: var(--header-height);
             display: flex;
             align-items: center;
@@ -928,7 +1031,7 @@
         }
 
         .app-header__link {
-            color: white;
+            color: var(--text-inverse);
             font-size: 1.25rem;
             font-weight: 700;
             text-decoration: none;
@@ -946,18 +1049,18 @@
 
         .app-header__nav a,
         .app-header__stats {
-            color: #b1b4b6;
+            color: var(--border-main);
             text-decoration: none;
             font-size: 0.875rem;
         }
 
         .app-header__nav a:hover {
-            color: white;
+            color: var(--text-inverse);
             text-decoration: underline;
         }
 
         .app-header__guides-link {
-            color: white !important;
+            color: var(--text-inverse) !important;
             background: var(--primary-color);
             padding: 0.25rem 0.75rem;
             border-radius: 3px;
@@ -1069,9 +1172,35 @@
             }
         }
 
+        /* Theme Toggle */
+        .app-theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-inverse);
+            cursor: pointer;
+            padding: 0.25rem;
+            display: flex;
+            align-items: center;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+
+        .app-theme-toggle:hover {
+            opacity: 1;
+        }
+
+        .theme-sun { display: none; }
+        .theme-moon { display: inline; }
+        [data-theme="dark"] .theme-sun { display: inline; }
+        [data-theme="dark"] .theme-moon { display: none; }
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .theme-sun { display: inline; }
+            :root:not([data-theme="light"]) .theme-moon { display: none; }
+        }
+
         /* Focus styles for accessibility */
         *:focus-visible {
-            outline: 3px solid #ffdd00;
+            outline: 3px solid var(--color-focus);
             outline-offset: 0;
         }
     </style>
@@ -1092,6 +1221,20 @@
                 <a href="#guides" id="guides-link" class="app-header__guides-link">Guides</a>
                 <a href="https://github.com/{{OWNER}}/{{REPO}}" target="_blank" rel="noopener">GitHub</a>
                 <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
+                <button class="app-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+                    <svg class="app-theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle class="theme-sun" cx="12" cy="12" r="5"/>
+                        <line class="theme-sun" x1="12" y1="1" x2="12" y2="3"/>
+                        <line class="theme-sun" x1="12" y1="21" x2="12" y2="23"/>
+                        <line class="theme-sun" x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line class="theme-sun" x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line class="theme-sun" x1="1" y1="12" x2="3" y2="12"/>
+                        <line class="theme-sun" x1="21" y1="12" x2="23" y2="12"/>
+                        <line class="theme-sun" x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line class="theme-sun" x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                        <path class="theme-moon" d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
             </nav>
         </div>
     </header>
@@ -1194,6 +1337,7 @@
         // State
         // ============================================
         let manifest = null;
+        let healthData = null;
         let documentCache = new Map();
         let allDocuments = [];
         let currentTocObserver = null;
@@ -1275,11 +1419,34 @@
         // ============================================
         mermaid.initialize({
             startOnLoad: false,
-            theme: 'default',
+            theme: isDarkMode() ? 'dark' : 'default',
             securityLevel: 'loose',
             flowchart: { useMaxWidth: true },
             sequence: { useMaxWidth: true }
         });
+
+        // ============================================
+        // Theme Toggle
+        // ============================================
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', next);
+            localStorage.setItem('arckit-theme', next);
+            mermaid.initialize({
+                startOnLoad: false,
+                theme: next === 'dark' ? 'dark' : 'default',
+                securityLevel: 'loose',
+                flowchart: { useMaxWidth: true },
+                sequence: { useMaxWidth: true }
+            });
+        }
+
+        function isDarkMode() {
+            return document.documentElement.getAttribute('data-theme') === 'dark' ||
+                (!document.documentElement.getAttribute('data-theme') &&
+                 window.matchMedia('(prefers-color-scheme: dark)').matches);
+        }
 
         // ============================================
         // Search Functionality
@@ -1356,6 +1523,28 @@
                                     });
                                 });
                             }
+                        });
+                    }
+
+                    if (project.vendorProfiles) {
+                        project.vendorProfiles.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Vendor Profiles',
+                                searchText: `${doc.title} vendor profile ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.techNotes) {
+                        project.techNotes.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Tech Notes',
+                                searchText: `${doc.title} tech note technology ${projectName}`.toLowerCase()
+                            });
                         });
                     }
                 });
@@ -1555,7 +1744,9 @@
                 const wardleyMaps = project.wardleyMaps || [];
                 const dataContracts = project.dataContracts || [];
                 const reviews = project.reviews || [];
-                const allDocs = [...docs, ...diagrams, ...decisions, ...wardleyMaps, ...dataContracts, ...reviews];
+                const vendorProfiles = project.vendorProfiles || [];
+                const techNotes = project.techNotes || [];
+                const allDocs = [...docs, ...diagrams, ...decisions, ...wardleyMaps, ...dataContracts, ...reviews, ...vendorProfiles, ...techNotes];
                 vendors.forEach(v => { if (v.documents) allDocs.push(...v.documents); });
 
                 const projectDocCount = allDocs.length;
@@ -1588,6 +1779,8 @@
                     diagrams: diagrams.length,
                     adrs: decisions.length,
                     vendors: vendors.length,
+                    vendorProfiles: vendorProfiles.length,
+                    techNotes: techNotes.length,
                     coverage,
                     firstDocPath: firstDoc ? firstDoc.path : null
                 });
@@ -1634,7 +1827,8 @@
             realProjects.forEach(project => {
                 const allDocs = [...(project.documents || []), ...(project.diagrams || []),
                     ...(project.decisions || []), ...(project.wardleyMaps || []),
-                    ...(project.dataContracts || []), ...(project.reviews || [])];
+                    ...(project.dataContracts || []), ...(project.reviews || []),
+                    ...(project.vendorProfiles || []), ...(project.techNotes || [])];
                 allDocs.forEach(doc => {
                     const tc = extractTypeCode(doc.path || '');
                     if (tc && !firstDocByType[tc]) firstDocByType[tc] = doc.path;
@@ -1701,9 +1895,10 @@
                 currentAngle = endAngle;
             });
 
+            const textColor = getComputedStyle(document.documentElement).getPropertyValue('--text-primary').trim() || '#0b0c0c';
             const svg = `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
                 ${paths}
-                <text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="700" fill="#0b0c0c">${total}</text>
+                <text x="${cx}" y="${cy}" text-anchor="middle" dominant-baseline="central" font-size="20" font-weight="700" fill="${textColor}">${total}</text>
             </svg>`;
 
             const legendHtml = data.filter(d => d.value > 0).map(d =>
@@ -1718,7 +1913,7 @@
             `;
         }
 
-        function showDashboard() {
+        function showDashboard(healthData) {
             const content = document.getElementById('content');
             const toc = document.getElementById('toc');
             toc.style.display = 'none';
@@ -1799,18 +1994,38 @@
             `;
 
             // Row 3: Projects table
+            // Build per-project health lookup
+            const healthByProject = {};
+            if (healthData && healthData.projects) {
+                healthData.projects.forEach(hp => { healthByProject[hp.id] = hp; });
+            }
+
             if (m.projectMetrics.length > 0) {
                 let tableRows = '';
                 m.projectMetrics.forEach(p => {
                     const nameCell = p.firstDocPath
                         ? `<a href="#${p.firstDocPath}" class="app-dashboard-link" data-path="${p.firstDocPath}">${escapeHtml(p.name)}</a>`
                         : escapeHtml(p.name);
+                    let healthCell = '\u2014';
+                    if (healthData) {
+                        const hp = healthByProject[p.id];
+                        if (hp && hp.findings && hp.findings.length > 0) {
+                            const hasHigh = hp.findings.some(f => f.severity === 'HIGH');
+                            const hasMedium = hp.findings.some(f => f.severity === 'MEDIUM');
+                            const color = hasHigh ? '#d4351c' : hasMedium ? '#f47738' : '#b1b4b6';
+                            healthCell = `<span style="color:${color};font-weight:bold">${hp.findings.length}</span>`;
+                        } else {
+                            healthCell = '<span style="color:#00703c">&#10003;</span>';
+                        }
+                    }
                     tableRows += `<tr>
                         <td>${nameCell}</td>
                         <td>${p.docs}</td>
                         <td>${p.diagrams}</td>
                         <td>${p.adrs}</td>
                         <td>${p.vendors}</td>
+                        <td>${(p.vendorProfiles || 0) + (p.techNotes || 0)}</td>
+                        <td>${healthCell}</td>
                         <td><span class="app-dashboard-coverage-bar"><span class="app-dashboard-coverage-fill" style="width:${p.coverage}%;background:${coverageColor(p.coverage)}"></span></span>${p.coverage}%</td>
                     </tr>`;
                 });
@@ -1818,7 +2033,7 @@
                     <div class="app-dashboard-panel" style="margin-bottom:1.5rem;">
                         <h3>Projects</h3>
                         <table class="app-dashboard-table">
-                            <thead><tr><th>Project</th><th>Docs</th><th>Diagrams</th><th>ADRs</th><th>Vendors</th><th>Coverage</th></tr></thead>
+                            <thead><tr><th>Project</th><th>Docs</th><th>Diagrams</th><th>ADRs</th><th>Vendors</th><th>Knowledge</th><th>Health</th><th>Coverage</th></tr></thead>
                             <tbody>${tableRows}</tbody>
                         </table>
                     </div>
@@ -1850,6 +2065,75 @@
                 </div>
             `;
 
+            // Row 5: Artifact Health (only if healthData exists)
+            if (healthData) {
+                const hs = healthData.summary || { HIGH: 0, MEDIUM: 0, LOW: 0, total: 0 };
+                let healthLeftHtml = '';
+                if (hs.total === 0) {
+                    healthLeftHtml = '<p style="color:#00703c;font-weight:bold;margin:1rem 0;">&#10003; All clear &mdash; no findings</p>';
+                } else {
+                    const maxCount = Math.max(hs.HIGH, hs.MEDIUM, hs.LOW, 1);
+                    const bars = [
+                        { label: 'HIGH', count: hs.HIGH, color: '#d4351c' },
+                        { label: 'MEDIUM', count: hs.MEDIUM, color: '#f47738' },
+                        { label: 'LOW', count: hs.LOW, color: '#b1b4b6' }
+                    ];
+                    bars.forEach(b => {
+                        const pct = Math.round((b.count / maxCount) * 100);
+                        healthLeftHtml += `
+                            <div class="app-dashboard-bar-row">
+                                <div class="app-dashboard-bar-label" style="min-width:70px">${b.label}</div>
+                                <div class="app-dashboard-bar-track">
+                                    <div class="app-dashboard-bar-fill" style="width:${pct}%;background:${b.color}"></div>
+                                </div>
+                                <div class="app-dashboard-bar-value">${b.count}</div>
+                            </div>
+                        `;
+                    });
+                }
+                const scanDate = healthData.generated ? new Date(healthData.generated).toLocaleDateString() : 'Unknown';
+                const scanArtifacts = healthData.scanned ? healthData.scanned.artifacts : '?';
+                const scanProjects = healthData.scanned ? healthData.scanned.projects : '?';
+                healthLeftHtml += `<p style="color:var(--text-muted);font-size:0.75rem;margin-top:0.75rem;">Scanned: ${scanDate} \u2014 ${scanArtifacts} artifacts across ${scanProjects} projects</p>`;
+
+                const typeLabels = {
+                    'STALE-RSCH': 'Stale Research',
+                    'FORGOTTEN-ADR': 'Forgotten ADRs',
+                    'UNRESOLVED-COND': 'Unresolved Conditions',
+                    'ORPHAN-REQ': 'Orphaned Requirements',
+                    'MISSING-TRACE': 'Missing Traceability',
+                    'VERSION-DRIFT': 'Version Drift'
+                };
+                let healthRightHtml = '<ul class="app-dashboard-checklist">';
+                const bt = healthData.byType || {};
+                Object.entries(typeLabels).forEach(([key, label]) => {
+                    const count = bt[key] || 0;
+                    if (count > 0) {
+                        healthRightHtml += `<li><span class="app-dashboard-cross">&#10007;</span> ${escapeHtml(label)}: ${count}</li>`;
+                    }
+                });
+                if (Object.values(bt).every(v => !v)) {
+                    healthRightHtml += '<li><span class="app-dashboard-check">&#10003;</span> No issues detected</li>';
+                }
+                healthRightHtml += '</ul>';
+
+                html += `
+                    <div class="app-dashboard-panels">
+                        <div class="app-dashboard-panel">
+                            <h3>Artifact Health</h3>
+                            ${healthLeftHtml}
+                        </div>
+                        <div class="app-dashboard-panel">
+                            <h3>Findings by Type</h3>
+                            ${healthRightHtml}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Note: innerHTML is used here with data sourced from local manifest.json
+            // and health.json files (both generated by ArcKit commands, not user input).
+            // All user-facing text passes through escapeHtml() above.
             content.innerHTML = html;
 
             // Render donut charts after DOM is populated
@@ -2087,6 +2371,22 @@
                 });
             }
 
+            // Vendor Profiles
+            if (project.vendorProfiles && project.vendorProfiles.length > 0) {
+                listHtml += `<li class="app-nav-category">Vendor Profiles</li>`;
+                project.vendorProfiles.forEach(doc => {
+                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
+                });
+            }
+
+            // Tech Notes
+            if (project.techNotes && project.techNotes.length > 0) {
+                listHtml += `<li class="app-nav-category">Tech Notes</li>`;
+                project.techNotes.forEach(doc => {
+                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
+                });
+            }
+
             // External Documents (mention only - not clickable)
             if (project.external && project.external.length > 0) {
                 listHtml += `<li class="app-nav-category">External Documents</li>`;
@@ -2189,7 +2489,7 @@
                                 : error.message}
                         </p>
                         <a href="${githubUrl}" target="_blank" rel="noopener"
-                           style="display:inline-block;background:var(--primary-color);color:#fff;padding:0.5rem 1rem;text-decoration:none;font-weight:700;">
+                           style="display:inline-block;background:var(--primary-color);color:var(--text-inverse);padding:0.5rem 1rem;text-decoration:none;font-weight:700;">
                             View on GitHub &rarr;
                         </a>
                     </div>
@@ -2251,6 +2551,23 @@
             // Update header
             document.getElementById('header-title').textContent = `${CONFIG.repo} Documentation`;
 
+            // Setup theme toggle
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+
+            // Listen for system preference changes (only apply if no stored preference)
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+                if (!localStorage.getItem('arckit-theme')) {
+                    document.documentElement.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+                    mermaid.initialize({
+                        startOnLoad: false,
+                        theme: e.matches ? 'dark' : 'default',
+                        securityLevel: 'loose',
+                        flowchart: { useMaxWidth: true },
+                        sequence: { useMaxWidth: true }
+                    });
+                }
+            });
+
             try {
                 // Load manifest
                 const response = await fetch('manifest.json');
@@ -2258,6 +2575,16 @@
                     throw new Error('manifest.json not found');
                 }
                 manifest = await response.json();
+
+                // Optionally load health data (graceful if missing)
+                try {
+                    const healthResponse = await fetch('health.json');
+                    if (healthResponse.ok) {
+                        healthData = await healthResponse.json();
+                    }
+                } catch (e) {
+                    // health.json not available — dashboard renders without health panel
+                }
 
                 // Update footer
                 if (manifest.generated) {
@@ -2306,7 +2633,7 @@
                 if (window.location.hash) {
                     const path = window.location.hash.slice(1);
                     if (path === 'dashboard') {
-                        showDashboard();
+                        showDashboard(healthData);
                     } else if (path === 'guides') {
                         showGuidesIndex();
                     } else {
@@ -2319,7 +2646,7 @@
                 } else {
                     // Dashboard is the default landing page
                     window.location.hash = 'dashboard';
-                    showDashboard();
+                    showDashboard(healthData);
                 }
 
             } catch (error) {
@@ -2357,7 +2684,7 @@
         window.addEventListener('hashchange', () => {
             const path = window.location.hash.slice(1);
             if (path === 'dashboard') {
-                showDashboard();
+                showDashboard(healthData);
             } else if (path === 'guides') {
                 showGuidesIndex();
             } else if (path) {

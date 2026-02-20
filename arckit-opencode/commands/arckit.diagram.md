@@ -54,6 +54,24 @@ If the user specified a type (e.g., `/arckit.diagram deployment`), skip this que
 
 Apply the user's selection when choosing which Mode (A-F) to generate in Step 2 below.
 
+## Step 1d: Load Layout Science Reference
+
+Read `.arckit/templates/c4-diagram-reference.md` for research-backed graph drawing guidance. This reference covers:
+
+- **Sugiyama algorithm** — why declaration order affects the Dagre layout engine's crossing minimisation stage
+- **Tier-based declaration ordering** — declare elements from actors (left) to external systems (right) to give the layout engine an optimal starting position
+- **Edge crossing targets** — Purchase et al. research on comprehension: 0 crossings for simple diagrams (6 or fewer elements), fewer than 3 for medium (7-12), fewer than 5 for complex (more than 12)
+- **C4 colour standards** — hex codes for Person (#08427B), System (#1168BD), Container (#438DD5), Component (#85BBF0), External (#999999)
+- **PlantUML directional hints** — `Rel_Right`, `Rel_Down`, `Lay_Right`, `Lay_Down` for complex diagrams exceeding Mermaid's layout capabilities
+- **Prompt antipatterns** — common mistakes (random element order, relationships before elements, mixed abstraction levels) and their fixes
+
+Apply these principles when generating diagrams in Step 3. In particular:
+
+1. **Declare all elements before any relationships**
+2. **Order element declarations** to match the intended reading direction (left-to-right for `flowchart LR`, top-to-bottom for `flowchart TB`)
+3. **Apply `classDef` styling** using the C4 colour palette for visual consistency
+4. **Use `subgraph`** to group related elements within architectural boundaries
+
 ## Step 2: Determine the Diagram Type
 
 Based on the user's request and available artifacts, select the appropriate diagram type:
@@ -641,6 +659,28 @@ Before finalizing, validate the diagram:
 - [ ] Grouping (subgraphs) is logical
 - [ ] Complexity is appropriate for audience
 - [ ] Split into multiple diagrams if too complex
+
+## Step 5b: Diagram Quality Gate
+
+After generating the diagram, evaluate it against the following quality criteria derived from graph drawing research (Purchase et al.) and C4 best practices. Report the results as part of the output:
+
+| Criterion | Target | Result | Status |
+|-----------|--------|--------|--------|
+| Edge crossings | fewer than 5 for complex diagrams, 0 for simple (6 or fewer elements) | {count or estimate} | {PASS/FAIL} |
+| Visual hierarchy | System boundary is the most prominent visual element | {assessment} | {PASS/FAIL} |
+| Grouping | Related elements are proximate (Gestalt proximity principle) | {assessment} | {PASS/FAIL} |
+| Flow direction | Consistent left-to-right or top-to-bottom throughout | {direction} | {PASS/FAIL} |
+| Relationship traceability | Each line can be followed from source to target without ambiguity | {assessment} | {PASS/FAIL} |
+| Abstraction level | One C4 level per diagram (context, container, component, or code) | {level} | {PASS/FAIL} |
+
+**If any criterion fails:**
+
+1. **Reorder element declarations** to match the intended tier layout (actors first, external systems last)
+2. **Add `subgraph` containers** for related elements to improve visual grouping
+3. **For PlantUML:** use directional hints (`Rel_Right`, `Rel_Down`, `Lay_Right`, `Lay_Down`) to control placement
+4. **Re-generate and re-evaluate** until all criteria pass or document accepted trade-offs in the Architecture Decisions section
+
+**Accepted trade-offs:** If a crossing or layout imperfection cannot be eliminated without sacrificing clarity elsewhere, document the trade-off explicitly. For example: "One edge crossing between the Payment API and Cache is accepted to maintain the left-to-right tier ordering of all other elements."
 
 ## Step 6: Integration with ArcKit Workflow
 

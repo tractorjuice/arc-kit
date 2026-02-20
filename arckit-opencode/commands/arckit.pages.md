@@ -28,39 +28,43 @@ Scan the repository to find all ArcKit artifacts:
 
 ### 1.1 Guides (Command Documentation)
 
-Check `docs/guides/` for command usage guides:
-```
-docs/guides/
-├── requirements.md      # How to use /arckit:requirements
-├── principles.md        # How to use /arckit:principles
-├── risk.md              # How to use /arckit:risk
-└── {other guides}
+**First, sync guides from the plugin to the local repo:**
+
+1. Create `docs/guides/` if it doesn't exist
+2. Use Glob to list all `.md` files in `.arckit/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`)
+3. Copy every guide file to the corresponding path under `docs/guides/`, creating subdirectories as needed
+4. This ensures the repo always has the latest guides from the plugin
+
+```bash
+# Conceptual flow — use Bash tool to copy:
+mkdir -p docs/guides
+cp -r .arckit/docs/guides/* docs/guides/
 ```
 
-Extract the title from the first `#` heading in each guide file.
+After syncing, scan `docs/guides/` for command usage guides and extract the title from the first `#` heading in each guide file.
 
 **Guide Categories** (based on filename):
 
 | Category | Guide Files |
 |----------|-------------|
-| Discovery | requirements, stakeholders, research, datascout |
-| Planning | sobc, business-case, plan, roadmap, backlog |
-| Architecture | principles, adr, diagram, wardley, data-model, hld-review, dld-review, design-review, platform-design, data-mesh-contract |
-| Governance | risk, risk-management, traceability, principles-compliance, analyze |
-| Compliance | tcop, secure, mod-secure, dpia, ai-playbook, atrs, jsp-936, service-assessment |
+| Discovery | requirements, stakeholders, stakeholder-analysis, research, datascout |
+| Planning | sobc, business-case, plan, roadmap, backlog, strategy |
+| Architecture | principles, adr, diagram, wardley, data-model, hld-review, dld-review, design-review, platform-design, data-mesh-contract, c4-layout-science |
+| Governance | risk, risk-management, traceability, principles-compliance, analyze, artifact-health, data-quality-framework, knowledge-compounding |
+| Compliance | tcop, secure, mod-secure, dpia, ai-playbook, atrs, jsp-936, service-assessment, govs-007-security, national-data-strategy, codes-of-practice, security-hooks |
 | Operations | devops, mlops, finops, servicenow, operationalize |
 | Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
-| Research | aws-research, azure-research |
-| Other | pages, story, trello, migration, customize |
+| Research | aws-research, azure-research, gcp-research |
+| Other | pages, story, presentation, trello, migration, customize, upgrading, pinecone-mcp |
 
 **Guide Status** (from README command maturity):
 
 | Status | Description | Guide Files |
 |--------|-------------|-------------|
-| live | Production-ready | plan, principles, stakeholders, risk, sobc, requirements, data-model, diagram, traceability, principles-compliance, story |
-| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, pages |
-| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs |
-| experimental | Early adopters | platform-design, wardley, azure-research, aws-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936, customize, sow, evaluate |
+| live | Production-ready | plan, principles, stakeholders, stakeholder-analysis, risk, sobc, requirements, data-model, diagram, traceability, principles-compliance, story, sow, evaluate, customize, risk-management, business-case |
+| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, presentation, artifact-health, design-review, procurement, knowledge-compounding, c4-layout-science, security-hooks, codes-of-practice, data-quality-framework, govs-007-security, national-data-strategy, upgrading |
+| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs, pages |
+| experimental | Early adopters | platform-design, wardley, azure-research, aws-research, gcp-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936, migration, pinecone-mcp |
 
 ### 1.2 Global Documents
 
@@ -122,10 +126,13 @@ projects/
 │   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
 │   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
 │   ├── vendors/
-│   │   └── {vendor-name}/
+│   │   ├── {vendor-slug}-profile.md      # Vendor profiles (flat)
+│   │   └── {vendor-name}/               # Vendor documents (nested)
 │   │       ├── hld*.md
 │   │       ├── dld*.md
 │   │       └── proposal*.md
+│   ├── tech-notes/                       # Tech notes
+│   │   └── {topic-slug}.md
 │   └── external/
 │       ├── README.md             # (excluded from listing)
 │       ├── rfp-document.pdf
@@ -322,6 +329,18 @@ Create `docs/manifest.json` with the discovered structure:
           ]
         }
       ],
+      "vendorProfiles": [
+        {
+          "path": "projects/001-project-name/vendors/aws-profile.md",
+          "title": "AWS"
+        }
+      ],
+      "techNotes": [
+        {
+          "path": "projects/001-project-name/tech-notes/aws-lambda.md",
+          "title": "AWS Lambda"
+        }
+      ],
       "external": [
         {
           "path": "projects/001-project-name/external/rfp-document.pdf",
@@ -397,6 +416,8 @@ Document Breakdown:
 - Diagrams: {diagram_count}
 - ADRs: {adr_count}
 - Vendor Documents: {vendor_doc_count}
+- Vendor Profiles: {vendor_profile_count}
+- Tech Notes: {tech_note_count}
 
 To Enable GitHub Pages:
 1. Go to repository Settings > Pages
@@ -415,6 +436,10 @@ Features:
 - GOV.UK Design System styling
 - Responsive mobile layout
 - Private repo graceful degradation (links to GitHub for document viewing)
+
+Health Integration:
+- Run `/arckit:health JSON=true` to generate docs/health.json
+- Re-run `/arckit:pages` to display health data on the dashboard
 
 Next Steps:
 - Commit and push the docs/ folder

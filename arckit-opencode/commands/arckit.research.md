@@ -200,6 +200,74 @@ Include the generation metadata footer:
 
 **DO NOT output the full document.** Write it to file only.
 
+### Step 11b: Spawn Reusable Knowledge
+
+> **Skip this step** if the user passed `--no-spawn` in the original command arguments.
+
+After writing the main research document, extract reusable knowledge into standalone files so that findings persist beyond this project and can be discovered by future research runs.
+
+**Slug Generation Rule:**
+To ensure consistent deduplication, slugs must be generated deterministically:
+1. Take the vendor/topic name (e.g., "Amazon Web Services", "Event-Driven Architecture")
+2. Convert to lowercase: "amazon web services"
+3. Replace spaces with hyphens: "amazon-web-services"
+4. Remove special characters (slashes, ampersands, periods — omit or replace with hyphens)
+5. Remove leading/trailing hyphens
+6. Collapse multiple consecutive hyphens to single
+
+Examples:
+- "AWS" → "aws"
+- "Auth0" → "auth0"
+- "Event-Driven Architecture" → "event-driven-architecture"
+- "SAP SuccessFactors" → "sap-successfactors"
+- ".NET Core" → "net-core"
+
+**Vendor Profiles:**
+
+1. For each vendor evaluated in depth (3+ data points gathered — e.g., pricing, features, compliance), check whether a vendor profile already exists:
+   ```bash
+   ls projects/{project-dir}/vendors/*{vendor-slug}* 2>/dev/null
+   ```
+2. **If no profile exists**: Read the vendor profile template at `.arckit/templates/vendor-profile-template.md` and create a new file at `projects/{project-dir}/vendors/{vendor-slug}-profile.md`. Populate all sections from the research findings. Set `Confidence` based on the depth of data gathered (high = 5+ data points, medium = 3-4, low = fewer).
+3. **If a profile exists**: Read the existing profile and apply these merge rules per section:
+   - **Overview**: Keep existing text; append new strategic insights only if vendor positioning has materially changed
+   - **Products & Services**: Merge new product lines; do not remove old ones (append "(deprecated as of YYYY-MM-DD)" if a product is no longer available)
+   - **Pricing Model**: Replace with current pricing; note the date of change (e.g., "Updated YYYY-MM-DD — previously X, now Y")
+   - **UK Government Presence**: Update only if new research confirms a change in G-Cloud/DOS listing or data centre status
+   - **Strengths/Weaknesses**: Append new items; do not remove old ones (append "(addressed as of YYYY-MM-DD)" if a weakness has been resolved or a strength is no longer relevant)
+   - **Projects Referenced In**: Add this project if not already listed
+   - **Last Researched**: Update to today's date
+
+**Tech Notes:**
+
+4. For each significant technology finding (a technology, protocol, or standard researched with 2+ substantive facts), check whether a tech note already exists:
+   ```bash
+   ls projects/{project-dir}/tech-notes/*{topic-slug}* 2>/dev/null
+   ```
+5. **If no tech note exists**: Read the tech note template at `.arckit/templates/tech-note-template.md` and create a new file at `projects/{project-dir}/tech-notes/{topic-slug}.md`. Populate from research findings.
+6. **If a tech note exists**: Read the existing note and apply these merge rules per section:
+   - **Summary**: Update only if understanding has significantly changed; otherwise keep existing
+   - **Key Findings**: Append new findings; mark outdated ones with "(superseded as of YYYY-MM-DD)" rather than removing
+   - **Relevance to Projects**: Add this project if not already listed
+   - **Last Updated**: Update to today's date
+
+**Traceability:**
+
+7. Append a `## Spawned Knowledge` section at the end of the main research document listing all created or updated files:
+   ```markdown
+   ## Spawned Knowledge
+
+   The following standalone knowledge files were created or updated from this research:
+
+   ### Vendor Profiles
+   - `vendors/{vendor-slug}-profile.md` — {Created | Updated}
+
+   ### Tech Notes
+   - `tech-notes/{topic-slug}.md` — {Created | Updated}
+   ```
+
+**Deduplication rule:** Always search for existing coverage before creating. Use filename glob patterns: `projects/{project-dir}/vendors/*{vendor-name}*` and `projects/{project-dir}/tech-notes/*{topic}*`. Slugs must be lowercase with hyphens (e.g., `aws-profile.md`, `event-driven-architecture.md`).
+
 ### Step 12: Return Summary
 
 Return ONLY a concise summary including:
@@ -211,6 +279,7 @@ Return ONLY a concise summary including:
 - Requirements coverage percentage
 - Top 3 recommended vendors
 - Key findings (3-5 bullet points)
+- Spawned knowledge (number of vendor profiles and tech notes created/updated, unless `--no-spawn` was used)
 - Next steps (run `/arckit:wardley`, `/arckit:sobc`, `/arckit:sow`)
 
 ## Quality Standards
