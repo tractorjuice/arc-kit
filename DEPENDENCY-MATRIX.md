@@ -293,11 +293,16 @@ principles-compliance → analyze → service-assessment → story
 
 - **ArcKit Version**: 1.5.0
 - **Matrix Date**: 2026-02-09
-- **Commands Documented**: 50
+- **Commands Documented**: 51
 - **Matrix Rows**: 50 (48 document-generating commands + 2 external documents)
-- **Note**: `/arckit.customize` is a utility command not in the matrix — it has no dependencies and produces no outputs consumed by other commands
+- **Note**: `/arckit.customize` and `/arckit.health` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-02-20 - Added Health Check Command
+- **Added**: `/arckit.health` command (51st ArcKit command) for scanning projects for stale research, forgotten ADRs, unresolved conditions, orphaned requirements, missing traceability, and version drift
+- **Not in matrix**: Diagnostic command with console-only output — no dependencies and no outputs consumed by other commands
+- **Updated**: Commands Documented count from 50 to 51
 
 ### 2026-02-20 - Research Knowledge Compounding
 - **Updated**: `/arckit.research` now spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` from research findings

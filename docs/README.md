@@ -165,8 +165,9 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.trello` | [trello.md](guides/trello.md) | ✅ Complete |
 | `/arckit.customize` | [customize.md](guides/customize.md) | ✅ Complete |
 | `/arckit.presentation` | [presentation.md](guides/presentation.md) | ✅ Complete |
+| `/arckit.health` | [artifact-health.md](guides/artifact-health.md) | ✅ Complete |
 
-**Coverage**: 50/50 commands documented (100%)
+**Coverage**: 51/51 commands documented (100%)
 
 ---
 
