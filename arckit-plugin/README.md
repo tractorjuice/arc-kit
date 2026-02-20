@@ -32,7 +32,7 @@ claude --plugin-dir /path/to/arc-kit/arckit-plugin
 
 ## Prerequisites
 
-- **Claude Code** v1.0.0 or later
+- **Claude Code** v2.14.9 or later
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (install separately)
