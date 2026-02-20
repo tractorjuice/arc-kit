@@ -106,6 +106,7 @@ Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 - **data-model** → Depends on: requirements (M), stakeholders (R), sobc (O)
 - **dpia** → Depends on: data-model (M), requirements (M), principles (R), stakeholders (R), risk (R)
 - **research** → Depends on: requirements (M), stakeholders (R), data-model (R), platform-design (R)
+  - Note: Also spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` for reusable knowledge (use `--no-spawn` to skip)
 - **azure-research** → Depends on: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
   - Note: Requires Microsoft Learn MCP server to be installed for authoritative Azure documentation
 - **aws-research** → Depends on: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
@@ -297,6 +298,11 @@ principles-compliance → analyze → service-assessment → story
 - **Note**: `/arckit.customize` is a utility command not in the matrix — it has no dependencies and produces no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-02-20 - Research Knowledge Compounding
+- **Updated**: `/arckit.research` now spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` from research findings
+- **Note**: New output files are standalone knowledge — not consumed by other commands via the dependency matrix
+- **Flag**: `--no-spawn` skips knowledge compounding
 
 ### 2026-02-19 - Added Presentation Command
 - **Added**: `/arckit.presentation` command (50th ArcKit command) for generating MARP-format slide decks from project artifacts
