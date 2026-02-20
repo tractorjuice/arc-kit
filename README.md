@@ -28,13 +28,13 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 ### Installation
 
-**Claude Code** (recommended) — install the ArcKit plugin:
+**Claude Code** (premier experience) — install the ArcKit plugin:
 ```
 /plugin marketplace add tractorjuice/arc-kit
 ```
-Then install from the Discover tab. The plugin provides all 50 commands, autonomous agents, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Updates are automatic via the marketplace.
+Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 50 commands, 5 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-**Gemini CLI** — install the ArcKit extension (recommended):
+**Gemini CLI** — install the ArcKit extension:
 ```bash
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
@@ -649,16 +649,39 @@ Publish all project documentation as an interactive website:
 
 ---
 
-## Supported AI Agents
+## Supported AI Assistants
 
-| Agent | Support | Notes |
-|-------|---------|-------|
-| [Claude Code](https://www.anthropic.com/claude-code) | ✅ | Recommended. Install via **plugin** (`/plugin marketplace add tractorjuice/arc-kit`) |
-| [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ | Install via **CLI** (`arckit init --ai codex`). ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ | Install via **extension** (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`) |
-| [OpenCode CLI](https://opencode.net/cli) | ✅ | Install via **CLI** (`arckit init --ai opencode`) |
+| Assistant | Support | Notes |
+|-----------|---------|-------|
+| [Claude Code](https://www.anthropic.com/claude-code) | ✅ Premier | **Primary platform.** Plugin with agents, hooks, MCP servers, and auto-updates |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ Full | Extension with commands, MCP servers, and auto-updates |
+| [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ Core | CLI with commands and templates. ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
+| [OpenCode CLI](https://opencode.net/cli) | ✅ Core | CLI with commands and templates |
 
-Claude Code uses the **ArcKit plugin** (not the CLI). The plugin provides slash commands, autonomous agents for research-heavy tasks, bundled MCP servers (AWS Knowledge + Microsoft Learn), and automatic updates via the marketplace. Gemini CLI uses the **ArcKit extension** for the same zero-config experience. Codex CLI and OpenCode CLI use the CLI package which copies commands and templates into the project directory.
+### Why Claude Code?
+
+Claude Code is the **primary development platform** for ArcKit and provides capabilities not available in other formats:
+
+| Feature | Claude Code | Gemini CLI | Codex / OpenCode |
+|---------|:-----------:|:----------:|:----------------:|
+| 50 slash commands | ✅ | ✅ | ✅ |
+| Templates & scripts | ✅ | ✅ | ✅ |
+| Bundled MCP servers (AWS, Azure, GCP, DataCommons) | ✅ | ✅ (3 servers) | Manual setup |
+| **Autonomous research agents** (5 agents for research, datascout, cloud research) | ✅ | — | — |
+| **SessionStart hook** (auto-detect version + projects) | ✅ | — | — |
+| **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | — | — |
+| **PreToolUse hook** (ARC filename auto-correction) | ✅ | — | — |
+| **PermissionRequest hook** (auto-allow MCP documentation tools) | ✅ | — | — |
+| **Per-command Stop hooks** (output validation, e.g. Wardley Map math checks) | ✅ | — | — |
+| Wardley Mapping skill (with Pinecone MCP book corpus) | ✅ | — | — |
+| Automatic marketplace updates | ✅ | ✅ | Manual reinstall |
+| Zero-config installation | ✅ | ✅ | `arckit init` required |
+
+**Agents** run research-heavy commands (market research, data source discovery, cloud service evaluation) in isolated context windows, keeping the main conversation clean and enabling dozens of WebSearch/WebFetch/MCP calls without context bloat.
+
+**Hooks** provide automated governance: filenames are auto-corrected to ArcKit conventions, project context is injected into every prompt so commands know what artifacts exist, MCP tools are auto-approved, and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
+
+Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
 
 ### Why Commands, Not Skills
 
