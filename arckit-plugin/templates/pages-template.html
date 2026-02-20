@@ -1358,6 +1358,28 @@
                             }
                         });
                     }
+
+                    if (project.vendorProfiles) {
+                        project.vendorProfiles.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Vendor Profiles',
+                                searchText: `${doc.title} vendor profile ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.techNotes) {
+                        project.techNotes.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Tech Notes',
+                                searchText: `${doc.title} tech note technology ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
                 });
             }
         }
@@ -1555,7 +1577,9 @@
                 const wardleyMaps = project.wardleyMaps || [];
                 const dataContracts = project.dataContracts || [];
                 const reviews = project.reviews || [];
-                const allDocs = [...docs, ...diagrams, ...decisions, ...wardleyMaps, ...dataContracts, ...reviews];
+                const vendorProfiles = project.vendorProfiles || [];
+                const techNotes = project.techNotes || [];
+                const allDocs = [...docs, ...diagrams, ...decisions, ...wardleyMaps, ...dataContracts, ...reviews, ...vendorProfiles, ...techNotes];
                 vendors.forEach(v => { if (v.documents) allDocs.push(...v.documents); });
 
                 const projectDocCount = allDocs.length;
@@ -1588,6 +1612,8 @@
                     diagrams: diagrams.length,
                     adrs: decisions.length,
                     vendors: vendors.length,
+                    vendorProfiles: vendorProfiles.length,
+                    techNotes: techNotes.length,
                     coverage,
                     firstDocPath: firstDoc ? firstDoc.path : null
                 });
@@ -1634,7 +1660,8 @@
             realProjects.forEach(project => {
                 const allDocs = [...(project.documents || []), ...(project.diagrams || []),
                     ...(project.decisions || []), ...(project.wardleyMaps || []),
-                    ...(project.dataContracts || []), ...(project.reviews || [])];
+                    ...(project.dataContracts || []), ...(project.reviews || []),
+                    ...(project.vendorProfiles || []), ...(project.techNotes || [])];
                 allDocs.forEach(doc => {
                     const tc = extractTypeCode(doc.path || '');
                     if (tc && !firstDocByType[tc]) firstDocByType[tc] = doc.path;
@@ -1811,6 +1838,7 @@
                         <td>${p.diagrams}</td>
                         <td>${p.adrs}</td>
                         <td>${p.vendors}</td>
+                        <td>${(p.vendorProfiles || 0) + (p.techNotes || 0)}</td>
                         <td><span class="app-dashboard-coverage-bar"><span class="app-dashboard-coverage-fill" style="width:${p.coverage}%;background:${coverageColor(p.coverage)}"></span></span>${p.coverage}%</td>
                     </tr>`;
                 });
@@ -1818,7 +1846,7 @@
                     <div class="app-dashboard-panel" style="margin-bottom:1.5rem;">
                         <h3>Projects</h3>
                         <table class="app-dashboard-table">
-                            <thead><tr><th>Project</th><th>Docs</th><th>Diagrams</th><th>ADRs</th><th>Vendors</th><th>Coverage</th></tr></thead>
+                            <thead><tr><th>Project</th><th>Docs</th><th>Diagrams</th><th>ADRs</th><th>Vendors</th><th>Knowledge</th><th>Coverage</th></tr></thead>
                             <tbody>${tableRows}</tbody>
                         </table>
                     </div>
@@ -2084,6 +2112,22 @@
                             listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${vendor.name}: ${doc.title}</a></li>`;
                         });
                     }
+                });
+            }
+
+            // Vendor Profiles
+            if (project.vendorProfiles && project.vendorProfiles.length > 0) {
+                listHtml += `<li class="app-nav-category">Vendor Profiles</li>`;
+                project.vendorProfiles.forEach(doc => {
+                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
+                });
+            }
+
+            // Tech Notes
+            if (project.techNotes && project.techNotes.length > 0) {
+                listHtml += `<li class="app-nav-category">Tech Notes</li>`;
+                project.techNotes.forEach(doc => {
+                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
                 });
             }
 

@@ -122,10 +122,13 @@ projects/
 │   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
 │   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
 │   ├── vendors/
-│   │   └── {vendor-name}/
+│   │   ├── {vendor-slug}-profile.md      # Vendor profiles (flat)
+│   │   └── {vendor-name}/               # Vendor documents (nested)
 │   │       ├── hld*.md
 │   │       ├── dld*.md
 │   │       └── proposal*.md
+│   ├── tech-notes/                       # Tech notes
+│   │   └── {topic-slug}.md
 │   └── external/
 │       ├── README.md             # (excluded from listing)
 │       ├── rfp-document.pdf
@@ -322,6 +325,18 @@ Create `docs/manifest.json` with the discovered structure:
           ]
         }
       ],
+      "vendorProfiles": [
+        {
+          "path": "projects/001-project-name/vendors/aws-profile.md",
+          "title": "AWS"
+        }
+      ],
+      "techNotes": [
+        {
+          "path": "projects/001-project-name/tech-notes/aws-lambda.md",
+          "title": "AWS Lambda"
+        }
+      ],
       "external": [
         {
           "path": "projects/001-project-name/external/rfp-document.pdf",
@@ -397,6 +412,8 @@ Document Breakdown:
 - Diagrams: {diagram_count}
 - ADRs: {adr_count}
 - Vendor Documents: {vendor_doc_count}
+- Vendor Profiles: {vendor_profile_count}
+- Tech Notes: {tech_note_count}
 
 To Enable GitHub Pages:
 1. Go to repository Settings > Pages
