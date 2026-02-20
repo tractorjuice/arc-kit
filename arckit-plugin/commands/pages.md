@@ -43,24 +43,24 @@ Extract the title from the first `#` heading in each guide file.
 
 | Category | Guide Files |
 |----------|-------------|
-| Discovery | requirements, stakeholders, research, datascout |
-| Planning | sobc, business-case, plan, roadmap, backlog |
-| Architecture | principles, adr, diagram, wardley, data-model, hld-review, dld-review, design-review, platform-design, data-mesh-contract |
-| Governance | risk, risk-management, traceability, principles-compliance, analyze |
-| Compliance | tcop, secure, mod-secure, dpia, ai-playbook, atrs, jsp-936, service-assessment |
+| Discovery | requirements, stakeholders, stakeholder-analysis, research, datascout |
+| Planning | sobc, business-case, plan, roadmap, backlog, strategy |
+| Architecture | principles, adr, diagram, wardley, data-model, hld-review, dld-review, design-review, platform-design, data-mesh-contract, c4-layout-science |
+| Governance | risk, risk-management, traceability, principles-compliance, analyze, artifact-health, data-quality-framework, knowledge-compounding |
+| Compliance | tcop, secure, mod-secure, dpia, ai-playbook, atrs, jsp-936, service-assessment, govs-007-security, national-data-strategy, codes-of-practice, security-hooks |
 | Operations | devops, mlops, finops, servicenow, operationalize |
 | Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
-| Research | aws-research, azure-research |
-| Other | pages, story, trello, migration, customize |
+| Research | aws-research, azure-research, gcp-research |
+| Other | pages, story, presentation, trello, migration, customize, upgrading, pinecone-mcp |
 
 **Guide Status** (from README command maturity):
 
 | Status | Description | Guide Files |
 |--------|-------------|-------------|
-| live | Production-ready | plan, principles, stakeholders, risk, sobc, requirements, data-model, diagram, traceability, principles-compliance, story |
-| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, pages |
-| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs |
-| experimental | Early adopters | platform-design, wardley, azure-research, aws-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936, customize, sow, evaluate |
+| live | Production-ready | plan, principles, stakeholders, stakeholder-analysis, risk, sobc, requirements, data-model, diagram, traceability, principles-compliance, story, sow, evaluate, customize, risk-management, business-case |
+| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, presentation, artifact-health, design-review, procurement, knowledge-compounding, c4-layout-science, security-hooks, codes-of-practice, data-quality-framework, govs-007-security, national-data-strategy, upgrading |
+| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs, pages |
+| experimental | Early adopters | platform-design, wardley, azure-research, aws-research, gcp-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936, migration, pinecone-mcp |
 
 ### 1.2 Global Documents
 
@@ -432,6 +432,10 @@ Features:
 - GOV.UK Design System styling
 - Responsive mobile layout
 - Private repo graceful degradation (links to GitHub for document viewing)
+
+Health Integration:
+- Run `/arckit:health JSON=true` to generate docs/health.json
+- Re-run `/arckit:pages` to display health data on the dashboard
 
 Next Steps:
 - Commit and push the docs/ folder

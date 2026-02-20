@@ -29,6 +29,11 @@ $ARGUMENTS
 - Valid: ISO date `YYYY-MM-DD`
 - Useful for "what would be stale as of date X" scenarios
 
+**JSON** (optional): Write machine-readable output to `docs/health.json` for dashboard integration
+- Example: `JSON=true`
+- Default: console output only
+- When enabled: writes `docs/health.json` AND still shows console output
+
 ---
 
 ## What This Command Does
@@ -346,6 +351,64 @@ If no findings are detected across all projects:
 All clear. No stale artifacts, forgotten decisions, or traceability gaps detected.
 ```
 
+### Step 5: Write JSON Output (if JSON=true)
+
+If the user specified `JSON=true`, write a machine-readable `docs/health.json` file using the Write tool. This file is consumed by the `/arckit:pages` dashboard.
+
+**Schema**:
+
+```json
+{
+  "generated": "2026-02-20T14:30:00Z",
+  "scanned": {
+    "projects": 3,
+    "artifacts": 42
+  },
+  "summary": {
+    "HIGH": 2,
+    "MEDIUM": 5,
+    "LOW": 1,
+    "total": 8
+  },
+  "byType": {
+    "STALE-RSCH": 1,
+    "FORGOTTEN-ADR": 1,
+    "UNRESOLVED-COND": 0,
+    "ORPHAN-REQ": 3,
+    "MISSING-TRACE": 2,
+    "VERSION-DRIFT": 1
+  },
+  "projects": [
+    {
+      "id": "001-project-name",
+      "artifacts": 15,
+      "findings": [
+        {
+          "severity": "HIGH",
+          "rule": "STALE-RSCH",
+          "file": "ARC-001-RSCH-v1.0.md",
+          "message": "Last modified: 2025-06-15 (250 days ago)",
+          "action": "Re-run /arckit:research to refresh pricing and vendor data"
+        }
+      ]
+    }
+  ]
+}
+```
+
+**Field definitions**:
+- `generated` — ISO 8601 timestamp of when the scan was run
+- `scanned.projects` — number of projects scanned
+- `scanned.artifacts` — total number of artifacts scanned across all projects
+- `summary` — finding counts by severity level (HIGH, MEDIUM, LOW) plus total
+- `byType` — finding counts per detection rule (always include all 6 rule IDs, using 0 for rules with no findings)
+- `projects[]` — per-project breakdown; each entry includes the project directory ID, artifact count, and an array of findings
+- Each finding includes: `severity`, `rule` (detection rule ID), `file` (artifact filename), `message` (human-readable detail), and `action` (suggested remediation)
+
+**Important**: Still show the console report (Step 4) even when JSON=true. The JSON file is an additional output, not a replacement.
+
+**Dashboard integration**: Run `/arckit:health JSON=true` then `/arckit:pages` to see health data on the governance dashboard.
+
 ---
 
 ## Error Handling
@@ -442,9 +505,16 @@ The health check is a **diagnostic tool**, not a governance artifact. Unlike `/a
 | ADR traceability | Any age | Traceability is a governance best practice; missing references should be added when convenient |
 | Version drift | 3 months | Multiple versions indicate active iteration; 3 months of inactivity suggests the iteration has stalled |
 
+### Example 5: Generate JSON for Dashboard
+
+```bash
+/arckit:health JSON=true
+```
+
+Writes `docs/health.json` for the pages dashboard, in addition to the console report.
+
 ### Future Enhancements
 
 - **Custom thresholds**: Allow `.arckit/health-config.yaml` to override default thresholds
 - **Trend tracking**: Compare current scan against previous scan to show improvement/regression
 - **CI integration**: Exit code 1 if HIGH findings exist (for pipeline gates)
-- **JSON output**: Machine-readable format for dashboard integration

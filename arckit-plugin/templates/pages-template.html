@@ -1194,6 +1194,7 @@
         // State
         // ============================================
         let manifest = null;
+        let healthData = null;
         let documentCache = new Map();
         let allDocuments = [];
         let currentTocObserver = null;
@@ -1745,7 +1746,7 @@
             `;
         }
 
-        function showDashboard() {
+        function showDashboard(healthData) {
             const content = document.getElementById('content');
             const toc = document.getElementById('toc');
             toc.style.display = 'none';
@@ -1826,12 +1827,30 @@
             `;
 
             // Row 3: Projects table
+            // Build per-project health lookup
+            const healthByProject = {};
+            if (healthData && healthData.projects) {
+                healthData.projects.forEach(hp => { healthByProject[hp.id] = hp; });
+            }
+
             if (m.projectMetrics.length > 0) {
                 let tableRows = '';
                 m.projectMetrics.forEach(p => {
                     const nameCell = p.firstDocPath
                         ? `<a href="#${p.firstDocPath}" class="app-dashboard-link" data-path="${p.firstDocPath}">${escapeHtml(p.name)}</a>`
                         : escapeHtml(p.name);
+                    let healthCell = '\u2014';
+                    if (healthData) {
+                        const hp = healthByProject[p.id];
+                        if (hp && hp.findings && hp.findings.length > 0) {
+                            const hasHigh = hp.findings.some(f => f.severity === 'HIGH');
+                            const hasMedium = hp.findings.some(f => f.severity === 'MEDIUM');
+                            const color = hasHigh ? '#d4351c' : hasMedium ? '#f47738' : '#b1b4b6';
+                            healthCell = `<span style="color:${color};font-weight:bold">${hp.findings.length}</span>`;
+                        } else {
+                            healthCell = '<span style="color:#00703c">&#10003;</span>';
+                        }
+                    }
                     tableRows += `<tr>
                         <td>${nameCell}</td>
                         <td>${p.docs}</td>
@@ -1839,6 +1858,7 @@
                         <td>${p.adrs}</td>
                         <td>${p.vendors}</td>
                         <td>${(p.vendorProfiles || 0) + (p.techNotes || 0)}</td>
+                        <td>${healthCell}</td>
                         <td><span class="app-dashboard-coverage-bar"><span class="app-dashboard-coverage-fill" style="width:${p.coverage}%;background:${coverageColor(p.coverage)}"></span></span>${p.coverage}%</td>
                     </tr>`;
                 });
@@ -1846,7 +1866,7 @@
                     <div class="app-dashboard-panel" style="margin-bottom:1.5rem;">
                         <h3>Projects</h3>
                         <table class="app-dashboard-table">
-                            <thead><tr><th>Project</th><th>Docs</th><th>Diagrams</th><th>ADRs</th><th>Vendors</th><th>Knowledge</th><th>Coverage</th></tr></thead>
+                            <thead><tr><th>Project</th><th>Docs</th><th>Diagrams</th><th>ADRs</th><th>Vendors</th><th>Knowledge</th><th>Health</th><th>Coverage</th></tr></thead>
                             <tbody>${tableRows}</tbody>
                         </table>
                     </div>
@@ -1878,6 +1898,75 @@
                 </div>
             `;
 
+            // Row 5: Artifact Health (only if healthData exists)
+            if (healthData) {
+                const hs = healthData.summary || { HIGH: 0, MEDIUM: 0, LOW: 0, total: 0 };
+                let healthLeftHtml = '';
+                if (hs.total === 0) {
+                    healthLeftHtml = '<p style="color:#00703c;font-weight:bold;margin:1rem 0;">&#10003; All clear &mdash; no findings</p>';
+                } else {
+                    const maxCount = Math.max(hs.HIGH, hs.MEDIUM, hs.LOW, 1);
+                    const bars = [
+                        { label: 'HIGH', count: hs.HIGH, color: '#d4351c' },
+                        { label: 'MEDIUM', count: hs.MEDIUM, color: '#f47738' },
+                        { label: 'LOW', count: hs.LOW, color: '#b1b4b6' }
+                    ];
+                    bars.forEach(b => {
+                        const pct = Math.round((b.count / maxCount) * 100);
+                        healthLeftHtml += `
+                            <div class="app-dashboard-bar-row">
+                                <div class="app-dashboard-bar-label" style="min-width:70px">${b.label}</div>
+                                <div class="app-dashboard-bar-track">
+                                    <div class="app-dashboard-bar-fill" style="width:${pct}%;background:${b.color}"></div>
+                                </div>
+                                <div class="app-dashboard-bar-value">${b.count}</div>
+                            </div>
+                        `;
+                    });
+                }
+                const scanDate = healthData.generated ? new Date(healthData.generated).toLocaleDateString() : 'Unknown';
+                const scanArtifacts = healthData.scanned ? healthData.scanned.artifacts : '?';
+                const scanProjects = healthData.scanned ? healthData.scanned.projects : '?';
+                healthLeftHtml += `<p style="color:var(--text-muted);font-size:0.75rem;margin-top:0.75rem;">Scanned: ${scanDate} \u2014 ${scanArtifacts} artifacts across ${scanProjects} projects</p>`;
+
+                const typeLabels = {
+                    'STALE-RSCH': 'Stale Research',
+                    'FORGOTTEN-ADR': 'Forgotten ADRs',
+                    'UNRESOLVED-COND': 'Unresolved Conditions',
+                    'ORPHAN-REQ': 'Orphaned Requirements',
+                    'MISSING-TRACE': 'Missing Traceability',
+                    'VERSION-DRIFT': 'Version Drift'
+                };
+                let healthRightHtml = '<ul class="app-dashboard-checklist">';
+                const bt = healthData.byType || {};
+                Object.entries(typeLabels).forEach(([key, label]) => {
+                    const count = bt[key] || 0;
+                    if (count > 0) {
+                        healthRightHtml += `<li><span class="app-dashboard-cross">&#10007;</span> ${escapeHtml(label)}: ${count}</li>`;
+                    }
+                });
+                if (Object.values(bt).every(v => !v)) {
+                    healthRightHtml += '<li><span class="app-dashboard-check">&#10003;</span> No issues detected</li>';
+                }
+                healthRightHtml += '</ul>';
+
+                html += `
+                    <div class="app-dashboard-panels">
+                        <div class="app-dashboard-panel">
+                            <h3>Artifact Health</h3>
+                            ${healthLeftHtml}
+                        </div>
+                        <div class="app-dashboard-panel">
+                            <h3>Findings by Type</h3>
+                            ${healthRightHtml}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Note: innerHTML is used here with data sourced from local manifest.json
+            // and health.json files (both generated by ArcKit commands, not user input).
+            // All user-facing text passes through escapeHtml() above.
             content.innerHTML = html;
 
             // Render donut charts after DOM is populated
@@ -2303,6 +2392,16 @@
                 }
                 manifest = await response.json();
 
+                // Optionally load health data (graceful if missing)
+                try {
+                    const healthResponse = await fetch('health.json');
+                    if (healthResponse.ok) {
+                        healthData = await healthResponse.json();
+                    }
+                } catch (e) {
+                    // health.json not available — dashboard renders without health panel
+                }
+
                 // Update footer
                 if (manifest.generated) {
                     const date = new Date(manifest.generated);
@@ -2350,7 +2449,7 @@
                 if (window.location.hash) {
                     const path = window.location.hash.slice(1);
                     if (path === 'dashboard') {
-                        showDashboard();
+                        showDashboard(healthData);
                     } else if (path === 'guides') {
                         showGuidesIndex();
                     } else {
@@ -2363,7 +2462,7 @@
                 } else {
                     // Dashboard is the default landing page
                     window.location.hash = 'dashboard';
-                    showDashboard();
+                    showDashboard(healthData);
                 }
 
             } catch (error) {
@@ -2401,7 +2500,7 @@
         window.addEventListener('hashchange', () => {
             const path = window.location.hash.slice(1);
             if (path === 'dashboard') {
-                showDashboard();
+                showDashboard(healthData);
             } else if (path === 'guides') {
                 showGuidesIndex();
             } else if (path) {
