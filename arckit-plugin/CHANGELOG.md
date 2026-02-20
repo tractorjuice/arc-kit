@@ -5,6 +5,18 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.1] - 2026-02-20
+
+### Added
+
+- **Wardley Map validation Stop hook** — new `validate-wardley-math.sh` hook fires on Stop for the `/arckit.wardley` command, validating stage-evolution alignment, coordinate ranges [0,1], and OWM code block consistency against Component Inventory tables; blocks stop with actionable error details on failure
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
 ## [2.7.0] - 2026-02-19
 
 ### Added
