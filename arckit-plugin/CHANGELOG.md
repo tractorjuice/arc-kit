@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Knowledge compounding from research** — research agent now spawns standalone vendor profiles and tech notes from research findings, extracting reusable knowledge that persists beyond the originating project
+- New `vendor-profile-template.md` and `tech-note-template.md` templates for spawned knowledge files
+- `--no-spawn` flag for `/arckit.research` to skip knowledge compounding when only the main research document is needed
+- Documentation: `docs/guides/knowledge-compounding.md` explaining the compound knowledge pattern, deduplication, and directory structure
+- **`/arckit:health` command** — scans all projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift
+- Documentation: artifact-health guide
+- **Security hooks** — three new hooks for secret and sensitive file protection:
+  - `file-protection.py` — blocks edits to sensitive files (environment files, credentials, private keys, lock files) with configurable exception lists
+  - `secret-detection.py` — scans user prompts for potential secrets (API keys, tokens, passwords, connection strings) before they reach the model
+  - `secret-file-scanner.py` — scans file content being written for embedded secrets with skip patterns for documentation files
+- Documentation: `docs/guides/security-hooks.md` — three-layer protection model guide
 - **C4 layout science reference template** — `c4-diagram-reference.md` with research-backed graph drawing guidance: Sugiyama algorithm, tier-based declaration ordering, edge crossing targets (Purchase et al.), C4 colour standards, node shape reference, PlantUML directional hints, prompt antipatterns, and iterative refinement process
 - **Diagram quality gate** — structured 6-criterion validation checklist added to `/arckit:diagram` command (edge crossings, visual hierarchy, grouping, flow direction, traceability, abstraction level)
 - **C4 layout science guide** — `docs/guides/c4-layout-science.md` standalone reference for C4 diagram best practices

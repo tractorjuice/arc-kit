@@ -30,6 +30,12 @@ Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
 
 > **Auto-versioning**: Re-running this command when a document already exists automatically increments the version (minor for refreshed content, major for changed scope) instead of overwriting.
 
+### Flags
+
+| Flag | Effect |
+|------|--------|
+| `--no-spawn` | Skip knowledge compounding — produce the research document only, without spawning vendor profiles or tech notes. |
+
 ---
 
 ## Output Highlights
@@ -39,6 +45,17 @@ Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
 - Risk considerations (lock-in, data sovereignty, accessibility).
 - Recommendation with rationale and next steps (PoC, procurement, or custom build).
 
+### Knowledge Compounding
+
+In addition to the main research document, the agent automatically spawns standalone files for reusable knowledge:
+
+- **Vendor profiles** at `projects/<id>/vendors/<vendor-slug>-profile.md` — one per vendor evaluated in depth (3+ data points).
+- **Tech notes** at `projects/<id>/tech-notes/<topic-slug>.md` — one per significant technology finding (2+ substantive facts).
+
+Existing profiles and notes are updated rather than duplicated. A `## Spawned Knowledge` section is appended to the research document listing everything created or updated. Use `--no-spawn` to skip this behaviour.
+
+See the [Knowledge Compounding Guide](knowledge-compounding.md) for full details on deduplication, merge rules, and directory structure.
+
 ---
 
 ## Follow-on Actions
@@ -47,3 +64,6 @@ Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
 - Update Wardley Maps with evolution stage insights.
 - Add identified risks to `/arckit.risk` and mitigations to project backlog.
 - Cite findings in business case and design reviews.
+- Review spawned vendor profiles and tech notes for accuracy before sharing.
+- Reference vendor profiles from `/arckit.evaluate` scoring summaries.
+- Use tech notes as input for `/arckit.adr` when making technology decisions.

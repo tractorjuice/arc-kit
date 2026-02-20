@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 50 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
+    <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 51 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
     <meta name="keywords" content="enterprise architecture, UK government, GDS, architecture governance, vendor procurement, ArcKit, compliance, TCOP, secure by design">
     <meta name="author" content="ArcKit">
     <meta property="og:title" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement">
-    <meta property="og:description" content="50 AI-assisted commands for systematic, compliant architecture governance following UK Government standards.">
+    <meta property="og:description" content="51 AI-assisted commands for systematic, compliant architecture governance following UK Government standards.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://tractorjuice.github.io/arc-kit/">
     <title>ArcKit - Enterprise Architecture Governance & Vendor Procurement</title>
@@ -612,7 +612,7 @@
             <div class="govuk-width-container">
                 <h1 class="govuk-heading-xl">ArcKit</h1>
                 <p class="govuk-body-l">Transform architecture chaos into systematic, audit-ready governance.</p>
-                <p class="govuk-body">50 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
+                <p class="govuk-body">51 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
 
                 <div class="govuk-button-group govuk-!-margin-top-6">
                     <a href="https://github.com/tractorjuice/arc-kit" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
@@ -827,7 +827,7 @@ flowchart TD
 
     <!-- Commands Section -->
     <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
-        <h2 class="govuk-heading-l">50 ArcKit Commands</h2>
+        <h2 class="govuk-heading-l">51 ArcKit Commands</h2>
         <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
 
         <!-- Status Legend -->
@@ -886,7 +886,7 @@ flowchart TD
                 <input type="text" id="search-filter" placeholder="Search commands...">
             </div>
             <div class="app-command-count">
-                Showing <span id="visible-count">50</span> of 50 commands
+                Showing <span id="visible-count">51</span> of 51 commands
             </div>
         </div>
 
@@ -1527,6 +1527,15 @@ flowchart TD
                     <tr data-status="beta" data-category="governance">
                         <td><code>/arckit.presentation</code></td>
                         <td class="description">Generate MARP slide deck from project artifacts for governance boards and stakeholder briefings</td>
+                        <td>Quality & Governance</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-beta">Beta</span></td>
+                    </tr>
+
+                    <!-- Diagnostics -->
+                    <tr data-status="beta" data-category="governance">
+                        <td><code>/arckit.health</code></td>
+                        <td class="description">Scan projects for stale research, forgotten ADRs, unresolved review conditions, orphaned requirements, missing traceability, and version drift</td>
                         <td>Quality & Governance</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
@@ -4050,7 +4059,7 @@ flowchart TD
             <div class="app-ai-card">
                 <h3 class="govuk-heading-m">Claude Code</h3>
                 <strong class="govuk-tag govuk-tag--green">Premier</strong>
-                <p class="govuk-body govuk-!-margin-top-3">The <strong>primary platform</strong> for ArcKit. Install via the <strong>ArcKit plugin</strong> for the full experience: all 50 commands, 5 autonomous research agents, 4 automation hooks, a conversational Wardley Mapping skill, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, DataCommons).</p>
+                <p class="govuk-body govuk-!-margin-top-3">The <strong>primary platform</strong> for ArcKit. Install via the <strong>ArcKit plugin</strong> for the full experience: all 51 commands, 5 autonomous research agents, 4 automation hooks, a conversational Wardley Mapping skill, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, DataCommons).</p>
                 <p class="govuk-body"><strong>Exclusive features:</strong></p>
                 <ul class="govuk-list govuk-list--bullet">
                     <li><strong>Agents</strong> &mdash; 5 autonomous agents for research-heavy commands (market research, data source discovery, AWS/Azure/GCP cloud research) running in isolated context windows</li>
@@ -4064,7 +4073,7 @@ flowchart TD
             <div class="app-ai-card">
                 <h3 class="govuk-heading-m">Gemini CLI</h3>
                 <strong class="govuk-tag govuk-tag--purple">Full</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Native extension with all 50 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Zero-config with auto-updates.</p>
+                <p class="govuk-body govuk-!-margin-top-3">Native extension with all 51 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Zero-config with auto-updates.</p>
                 <p class="govuk-body"><strong>Limitations:</strong> No agent delegation or hooks. Research commands use inline prompts instead of isolated agents.</p>
                 <p class="govuk-body"><strong>Extension:</strong> <code>gemini extensions install https://github.com/tractorjuice/arckit-gemini</code></p>
             </div>
@@ -4087,7 +4096,7 @@ flowchart TD
         </div>
 
         <div class="govuk-inset-text govuk-!-margin-top-6">
-            All 50 commands produce identical outputs across AI systems. Claude Code provides the richest experience with <strong>agents</strong> that isolate research context, <strong>hooks</strong> that automate governance (filename enforcement, context injection, output validation), and <strong>bundled MCP servers</strong> for authoritative cloud documentation. Gemini CLI offers a strong zero-config experience. Codex and OpenCode provide core command functionality.
+            All 51 commands produce identical outputs across AI systems. Claude Code provides the richest experience with <strong>agents</strong> that isolate research context, <strong>hooks</strong> that automate governance (filename enforcement, context injection, output validation), and <strong>bundled MCP servers</strong> for authoritative cloud documentation. Gemini CLI offers a strong zero-config experience. Codex and OpenCode provide core command functionality.
         </div>
 
         <details class="govuk-details govuk-!-margin-top-4">
@@ -4215,7 +4224,7 @@ flowchart TD
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md" class="govuk-link">Changelog</a> - Release history and updates</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md" class="govuk-link">Contributing</a> - How to contribute to ArcKit</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/releases" class="govuk-link">Release Notes</a> - Detailed version information</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/README.md#complete-command-reference" class="govuk-link">Command Reference</a> - All 50 commands documented</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/README.md#complete-command-reference" class="govuk-link">Command Reference</a> - All 51 commands documented</li>
                 </ul>
             </div>
         </div>
