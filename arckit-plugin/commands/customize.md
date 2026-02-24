@@ -85,6 +85,7 @@ Display as a table:
 | `ukgov-secure-by-design` | `/arckit:secure` | UK Gov Secure by Design |
 | `vendor-scoring` | `/arckit:evaluate` | Vendor scoring matrix |
 | `wardley-map` | `/arckit:wardley` | Wardley Map documentation |
+| `pages` | `/arckit:pages` | GitHub Pages site (HTML/CSS/JS) |
 
 ### 3. **Copy Template(s)**
 
@@ -97,13 +98,21 @@ mkdir -p .arckit/templates-custom
 ```bash
 # Map short name to full filename
 TEMPLATE_NAME="$USER_INPUT"  # e.g., "requirements"
-SOURCE="${CLAUDE_PLUGIN_ROOT}/templates/${TEMPLATE_NAME}-template.md"
-DEST="${CLAUDE_PLUGIN_ROOT}/templates/${TEMPLATE_NAME}-template.md"
+
+# Determine file extension — pages template is HTML, all others are Markdown
+if [[ "$TEMPLATE_NAME" == "pages" ]]; then
+    EXT="html"
+else
+    EXT="md"
+fi
+
+SOURCE="${CLAUDE_PLUGIN_ROOT}/templates/${TEMPLATE_NAME}-template.${EXT}"
+DEST=".arckit/templates/${TEMPLATE_NAME}-template.${EXT}"
 
 # Check if source exists
 if [[ -f "$SOURCE" ]]; then
     cp "$SOURCE" "$DEST"
-    echo "✅ Copied ${TEMPLATE_NAME}-template.md to ${CLAUDE_PLUGIN_ROOT}/templates/"
+    echo "✅ Copied ${TEMPLATE_NAME}-template.${EXT} to .arckit/templates/"
 else
     echo "❌ Template not found: ${TEMPLATE_NAME}"
     echo "Run '/arckit:customize list' to see available templates"
@@ -112,9 +121,10 @@ fi
 
 **Copy all templates:**
 ```bash
-mkdir -p .arckit/templates-custom
-cp ${CLAUDE_PLUGIN_ROOT}/templates/*-template.md ${CLAUDE_PLUGIN_ROOT}/templates/
-echo "✅ Copied all templates to ${CLAUDE_PLUGIN_ROOT}/templates/"
+mkdir -p .arckit/templates
+cp ${CLAUDE_PLUGIN_ROOT}/templates/*-template.md .arckit/templates/
+cp ${CLAUDE_PLUGIN_ROOT}/templates/*-template.html .arckit/templates/
+echo "✅ Copied all templates to .arckit/templates/"
 ```
 
 ### 4. **Show Template Info**
@@ -162,6 +172,14 @@ When you run an ArcKit command (e.g., `/arckit:requirements`):
 - Add logo placeholder
 - Include standard headers/footers
 - Add disclaimer text
+
+**Customize the Pages template** (`pages-template.html`):
+- Replace GOV.UK Design System CSS with neutral or organization-specific styling
+- Change the color palette (header, sidebar, accent colors)
+- Remove or rename UK-specific guide categories (e.g., "UK Government" section)
+- Adjust the governance dashboard checklist items to match your framework
+- Add organization logo or branding to the header
+- Modify the footer text and links
 
 ### Keeping Templates Updated
 
