@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [2.8.5] - 2026-02-24
+
 ### Added
 
 - **PlantUML C4 output format for `/arckit.diagram`** (#65) — C4 diagram types (Context, Container, Component) now offer PlantUML C4 as an alternative to Mermaid, with directional layout hints (`Rel_Right`, `Rel_Down`, `Lay_Right`, `Lay_Down`) for precise control on complex diagrams with more than 12 elements
@@ -16,6 +20,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **PlantUML validation checks** — Step 5 validates directional variants, `Lay_Right`/`Lay_Down` constraints, `@startuml`/`@enduml` wrappers
 - **Template PlantUML section** — architecture diagram template includes PlantUML code block, syntax reference, and directional hints quick-reference table
 - **Guide update** — diagram guide includes format comparison table (Mermaid vs PlantUML) and PlantUML example
+- **Platform support documentation** (#71) — README and docs/index.html note that ArcKit targets Linux, with devcontainer/WSL2 recommended for Windows
+- **Pages template support for `/arckit:customize`** (#72) — users can now customize the pages HTML template
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, Gemini extension, OpenCode extension, marketplace)
 
 ---
 

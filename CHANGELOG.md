@@ -5,6 +5,20 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.5] - 2026-02-24
+
+### Added
+
+- **PlantUML C4 output format for `/arckit.diagram`** (#65) — C4 diagram types now offer PlantUML C4 as an alternative to Mermaid
+- **Platform support documentation** (#71) — README and docs note Linux as primary platform, devcontainer/WSL2 for Windows
+- **Pages template support for `/arckit:customize`** (#72)
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, Gemini extension, OpenCode extension, marketplace)
+
+---
+
 ## [2.8.4] - 2026-02-24
 
 ### Added
