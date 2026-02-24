@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArcKit — Partnership Proposal</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0f0f0f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px;
+  }
+
+  .card {
+    width: 1200px;
+    height: 628px;
+    background: linear-gradient(145deg, #1a0a28 0%, #1f0d3c 40%, #2d1352 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(168, 85, 247, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(168, 85, 247, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+  }
+
+  .card::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -80px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(52, 168, 83, 0.06) 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    padding: 40px 56px 44px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(168, 85, 247, 0.12);
+    border: 1px solid rgba(168, 85, 247, 0.3);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #a855f7;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .programme-tag {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.5px;
+  }
+
+  .title-area {
+    margin-bottom: 24px;
+  }
+
+  .headline {
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+
+  .headline .accent {
+    background: linear-gradient(135deg, #a855f7, #34a853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.5;
+    max-width: 800px;
+  }
+
+  /* Two-column layout */
+  .columns {
+    display: flex;
+    gap: 32px;
+    flex: 1;
+  }
+
+  /* Left: Implementation phases */
+  .phases {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .phase {
+    display: flex;
+    align-items: stretch;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 16px 20px;
+    flex: 1;
+  }
+
+  .phase-marker {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    min-width: 48px;
+  }
+
+  .phase-num {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .phase-num.p1 { background: rgba(66, 133, 244, 0.25); color: #4285f4; }
+  .phase-num.p2 { background: rgba(168, 85, 247, 0.25); color: #a855f7; }
+  .phase-num.p3 { background: rgba(52, 168, 83, 0.25); color: #34a853; }
+
+  .phase-months {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .phase-details {
+    flex: 1;
+  }
+
+  .phase-title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+  }
+
+  .phase-desc {
+    font-size: 16px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.45;
+  }
+
+  /* Right: Impact metrics */
+  .impact {
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .impact-header {
+    font-size: 13px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+  }
+
+  .metric {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 14px 18px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .metric-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    margin-bottom: 2px;
+  }
+
+  .metric-value {
+    font-size: 26px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .metric-value.blue { color: #4285f4; }
+  .metric-value.green { color: #34a853; }
+  .metric-value.amber { color: #fbbc04; }
+  .metric-value.purple { color: #a855f7; }
+
+  .metric-unit {
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  .metric-label {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.3px;
+  }
+
+  /* Footer */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 18px;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+  }
+
+  .logo-text .version {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.3);
+    margin-left: 8px;
+  }
+
+  .tags {
+    display: flex;
+    gap: 8px;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 4px 12px;
+    letter-spacing: 0.3px;
+  }
+
+  .footer-right {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .footer-right .highlight {
+    color: #a855f7;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="content">
+
+    <div class="top-bar">
+      <div class="badge">Joint Application Proposal</div>
+      <div class="programme-tag">Focus Area: Economy &mdash; Protecting Public Investment in Digital Infrastructure</div>
+    </div>
+
+    <div class="title-area">
+      <div class="headline">
+        Democratising Government Governance<br>
+        with <span class="accent">Open-Source AI</span>
+      </div>
+      <div class="subtitle">
+        18-month programme to deploy AI-assisted architecture governance across 15+ government departments,
+        rigorously measure impact, and prepare for international replication.
+      </div>
+    </div>
+
+    <div class="columns">
+
+      <div class="phases">
+        <div class="phase">
+          <div class="phase-marker">
+            <div class="phase-num p1">1</div>
+            <div class="phase-months">M 1-6</div>
+          </div>
+          <div class="phase-details">
+            <div class="phase-title">Foundation</div>
+            <div class="phase-desc">Pilot with 3-5 government departments. Establish baseline metrics and training curriculum.</div>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="phase-marker">
+            <div class="phase-num p2">2</div>
+            <div class="phase-months">M 7-12</div>
+          </div>
+          <div class="phase-details">
+            <div class="phase-title">Scale</div>
+            <div class="phase-desc">Expand to 10-15 departments. Add international compliance modules and launch community platform.</div>
+          </div>
+        </div>
+        <div class="phase">
+          <div class="phase-marker">
+            <div class="phase-num p3">3</div>
+            <div class="phase-months">M 13-18</div>
+          </div>
+          <div class="phase-details">
+            <div class="phase-title">Sustain</div>
+            <div class="phase-desc">Community-led growth. International adaptation pilots. Publish peer-reviewed impact research.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="impact">
+        <div class="impact-header">Target Impact</div>
+        <div class="metric">
+          <div class="metric-row">
+            <div class="metric-value blue">15+</div>
+            <div class="metric-unit">departments</div>
+          </div>
+          <div class="metric-label">Government teams onboarded</div>
+        </div>
+        <div class="metric">
+          <div class="metric-row">
+            <div class="metric-value green">90%+</div>
+          </div>
+          <div class="metric-label">Compliance coverage (from 40-60%)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-row">
+            <div class="metric-value amber">3-5</div>
+            <div class="metric-unit">days</div>
+          </div>
+          <div class="metric-label">Governance cycle (from 4-6 weeks)</div>
+        </div>
+        <div class="metric">
+          <div class="metric-row">
+            <div class="metric-value purple">$1.5-2.5M</div>
+          </div>
+          <div class="metric-label">Funding request (18 months)</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer">
+      <div class="footer-left">
+        <div class="logo-text">ArcKit <span class="version">v2.8.5</span></div>
+        <div class="tags">
+          <span class="tag">MIT License</span>
+          <span class="tag">14+ Case Studies</span>
+          <span class="tag">Production Ready</span>
+        </div>
+      </div>
+      <div class="footer-right">
+        <span class="highlight">$30M Google.org Challenge</span> &middot; Deadline 3 April 2026
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArcKit — Google.org AI for Government Innovation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: #0f0f0f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px;
+  }
+
+  .card {
+    width: 1200px;
+    height: 628px;
+    background: linear-gradient(145deg, #0a1628 0%, #0d1f3c 40%, #132d52 100%);
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Subtle grid pattern */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    z-index: 0;
+  }
+
+  /* Accent glow */
+  .card::after {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+    padding: 48px 56px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  /* Top bar */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(52, 168, 83, 0.12);
+    border: 1px solid rgba(52, 168, 83, 0.3);
+    border-radius: 100px;
+    padding: 8px 20px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #34a853;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .badge .dot {
+    width: 8px;
+    height: 8px;
+    background: #34a853;
+    border-radius: 50%;
+  }
+
+  .programme-tag {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.5px;
+  }
+
+  /* Title area */
+  .title-area {
+    margin-bottom: 36px;
+  }
+
+  .headline {
+    font-size: 38px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+
+  .headline .accent {
+    background: linear-gradient(135deg, #4285f4, #34a853);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .subtitle {
+    font-size: 17px;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.55);
+    line-height: 1.5;
+    max-width: 750px;
+  }
+
+  /* Stats row */
+  .stats-row {
+    display: flex;
+    gap: 0;
+    flex: 1;
+    align-items: stretch;
+  }
+
+  .stat {
+    flex: 1;
+    padding: 24px 28px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .stat:first-child {
+    border-radius: 12px 0 0 12px;
+  }
+
+  .stat:last-child {
+    border-radius: 0 12px 12px 0;
+  }
+
+  .stat + .stat {
+    border-left: none;
+  }
+
+  .stat-value {
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-value .unit {
+    font-size: 20px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .stat-value.blue { color: #4285f4; }
+  .stat-value.green { color: #34a853; }
+  .stat-value.amber { color: #fbbc04; }
+  .stat-value.red { color: #ea4335; }
+
+  .stat-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.35);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    line-height: 1.4;
+  }
+
+  /* Footer */
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 28px;
+  }
+
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .logo-text {
+    font-size: 22px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+  }
+
+  .logo-text .version {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.3);
+    margin-left: 8px;
+  }
+
+  .tags {
+    display: flex;
+    gap: 8px;
+  }
+
+  .tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 6px;
+    padding: 4px 12px;
+    letter-spacing: 0.3px;
+  }
+
+  .footer-right {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .footer-right .mit {
+    color: #34a853;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="content">
+
+    <div class="top-bar">
+      <div class="badge"><span class="dot"></span> Seeking Partner Organisation</div>
+      <div class="programme-tag">Google.org Impact Challenge &mdash; AI for Government Innovation</div>
+    </div>
+
+    <div class="title-area">
+      <div class="headline">
+        AI-Powered Architecture Governance<br>
+        for <span class="accent">Every Government Team</span>
+      </div>
+      <div class="subtitle">
+        Making comprehensive governance possible for the first time &mdash; not just faster.
+        A team of 3 architects can now deliver what previously required 20.
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-value blue">51</div>
+        <div class="stat-label">Governance<br>Commands</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value green">75-85<span class="unit">%</span></div>
+        <div class="stat-label">Time<br>Compression</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value amber">90<span class="unit">%+</span></div>
+        <div class="stat-label">Compliance<br>Coverage</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value red">14<span class="unit">+</span></div>
+        <div class="stat-label">UK Gov Case<br>Studies</div>
+      </div>
+      <div class="stat">
+        <div class="stat-value" style="color: #a78bfa;">$1-3<span class="unit">M</span></div>
+        <div class="stat-label">Funding<br>Available</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="footer-left">
+        <div class="logo-text">ArcKit <span class="version">v2.8.5</span></div>
+        <div class="tags">
+          <span class="tag">Open Source</span>
+          <span class="tag">4 AI Platforms</span>
+          <span class="tag">16 Workflow Phases</span>
+        </div>
+      </div>
+      <div class="footer-right">
+        <span class="mit">MIT License</span> &middot; Deadline 3 April 2026
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
