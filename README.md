@@ -658,6 +658,8 @@ Publish all project documentation as an interactive website:
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ Core | CLI with commands and templates. ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
 | [OpenCode CLI](https://opencode.net/cli) | ✅ Core | CLI with commands and templates |
 
+> **Platform Support**: ArcKit is developed and tested on **Linux**. Windows has limited support — hooks (session init, project context, filename validation, MCP auto-allow) require bash and jq which are not available on stock Windows. For the best experience on Windows, use a **devcontainer** or **WSL2**.
+
 ### Why Claude Code?
 
 Claude Code is the **primary development platform** for ArcKit and provides capabilities not available in other formats:
