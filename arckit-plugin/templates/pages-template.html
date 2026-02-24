@@ -26,6 +26,9 @@
     <!-- Mermaid.js for Diagrams -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
 
+    <!-- SVG Pan Zoom for interactive diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+
     <style>
         /* CSS Variables for theming */
         :root {
@@ -960,6 +963,104 @@
             height: auto;
         }
 
+        /* Interactive Diagram Containers (svg-pan-zoom) */
+        .mermaid-container {
+            position: relative;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+        }
+
+        .mermaid-viewport {
+            overflow: hidden;
+            cursor: grab;
+            max-height: 70vh;
+            min-height: 200px;
+        }
+
+        .mermaid-viewport:active {
+            cursor: grabbing;
+        }
+
+        .mermaid-container .mermaid {
+            padding: 0;
+            margin: 0;
+            border: none;
+            overflow: visible;
+            background: transparent;
+        }
+
+        .mermaid-container .mermaid svg {
+            max-width: none;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .mermaid-controls {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .mermaid-container:hover .mermaid-controls,
+        .mermaid-container:focus-within .mermaid-controls {
+            opacity: 1;
+        }
+
+        .mermaid-ctrl-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 0;
+            line-height: 1;
+        }
+
+        .mermaid-ctrl-btn:hover {
+            background: var(--hover-bg);
+        }
+
+        .mermaid-ctrl-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .mermaid-container.fullscreen {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            margin: 0;
+            border: none;
+            border-radius: 0;
+        }
+
+        .mermaid-container.fullscreen .mermaid-viewport {
+            max-height: 100vh;
+            height: 100vh;
+        }
+
+        .mermaid-container.fullscreen .mermaid-controls {
+            opacity: 1;
+            top: 1rem;
+            right: 1rem;
+        }
+
         /* Mobile header hamburger button */
         .app-mobile-menu {
             display: none;
@@ -1156,6 +1257,23 @@
             }
         }
 
+        /* Touch devices: always show diagram controls */
+        @media (max-width: 900px) {
+            .mermaid-controls {
+                opacity: 1;
+            }
+
+            .mermaid-ctrl-btn {
+                width: 36px;
+                height: 36px;
+            }
+
+            .mermaid-ctrl-btn svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
         /* Print Styles */
         @media print {
             .app-sidebar, .app-mobile-menu, .app-header, .app-footer, .app-toc, .app-sidebar-expand, .app-sidebar-backdrop {
@@ -1169,6 +1287,25 @@
 
             .app-markdown .mermaid {
                 page-break-inside: avoid;
+            }
+
+            .mermaid-container {
+                page-break-inside: avoid;
+            }
+
+            .mermaid-controls {
+                display: none !important;
+            }
+
+            .mermaid-viewport {
+                overflow: visible;
+                max-height: none;
+                cursor: default;
+            }
+
+            .mermaid-container .mermaid svg {
+                max-width: 100% !important;
+                height: auto !important;
             }
         }
 
@@ -2414,6 +2551,9 @@
             const content = document.getElementById('content');
             const toc = document.getElementById('toc');
 
+            // Clean up interactive diagram instances before replacing content
+            destroyPanZoomInstances();
+
             // Hide TOC while loading
             toc.style.display = 'none';
 
@@ -2469,6 +2609,9 @@
 
                 // Render mermaid diagrams
                 await mermaid.run({ querySelector: '.mermaid' });
+
+                // Initialize interactive pan/zoom on rendered diagrams
+                initDiagramPanZoom();
 
                 // Scroll to top
                 document.getElementById('main-content').scrollTo(0, 0);
@@ -2543,6 +2686,237 @@
                 }
             });
         }
+
+        // ============================================
+        // Interactive Diagram Pan/Zoom
+        // ============================================
+        let activePanZoomInstances = [];
+
+        function destroyPanZoomInstances() {
+            activePanZoomInstances.forEach(instance => {
+                try { instance.destroy(); } catch (e) { /* already destroyed */ }
+            });
+            activePanZoomInstances = [];
+        }
+
+        function initDiagramPanZoom() {
+            // Clean up previous instances
+            destroyPanZoomInstances();
+
+            // Check library loaded
+            if (typeof svgPanZoom === 'undefined') return;
+
+            const diagrams = document.querySelectorAll('.app-markdown .mermaid');
+            if (!diagrams.length) return;
+
+            diagrams.forEach(diagram => {
+                const svg = diagram.querySelector('svg');
+                if (!svg) return;
+
+                // Skip if already wrapped
+                if (diagram.parentElement && diagram.parentElement.classList.contains('mermaid-viewport')) return;
+
+                // Ensure SVG has explicit dimensions
+                if (!svg.getAttribute('width') || !svg.getAttribute('height')) {
+                    const bbox = svg.getBBox();
+                    if (bbox.width && bbox.height) {
+                        svg.setAttribute('width', bbox.width);
+                        svg.setAttribute('height', bbox.height);
+                    }
+                }
+
+                // Create wrapper structure
+                const container = document.createElement('div');
+                container.className = 'mermaid-container';
+
+                const viewport = document.createElement('div');
+                viewport.className = 'mermaid-viewport';
+                viewport.tabIndex = 0;
+                viewport.setAttribute('role', 'img');
+                viewport.setAttribute('aria-label', 'Interactive diagram — scroll to zoom, drag to pan');
+
+                const controls = document.createElement('div');
+                controls.className = 'mermaid-controls';
+
+                // Button definitions: action, title, SVG icon path
+                const buttonDefs = [
+                    { action: 'zoom-in', title: 'Zoom in (+)', icon: 'line:12,5,12,19|line:5,12,19,12' },
+                    { action: 'zoom-out', title: 'Zoom out (-)', icon: 'line:5,12,19,12' },
+                    { action: 'reset', title: 'Reset view (0)', icon: 'path:M3 12a9 9 0 1 0 9-9 4.5 4.5 0 0 0-4.5 4.5|path:M3 3v4.5h4.5' },
+                    { action: 'fullscreen', title: 'Fullscreen (f)', icon: 'polyline:15 3 21 3 21 9|polyline:9 21 3 21 3 15|line:21,3,14,10|line:3,21,10,14' }
+                ];
+
+                buttonDefs.forEach(def => {
+                    const button = document.createElement('button');
+                    button.className = 'mermaid-ctrl-btn';
+                    button.dataset.action = def.action;
+                    button.title = def.title;
+
+                    const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    svgEl.setAttribute('viewBox', '0 0 24 24');
+
+                    def.icon.split('|').forEach(part => {
+                        const [type, data] = part.split(':');
+                        if (type === 'line') {
+                            const [x1, y1, x2, y2] = data.split(',');
+                            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                            line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+                            line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+                            svgEl.appendChild(line);
+                        } else if (type === 'path') {
+                            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                            p.setAttribute('d', data);
+                            svgEl.appendChild(p);
+                        } else if (type === 'polyline') {
+                            const pl = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+                            pl.setAttribute('points', data);
+                            svgEl.appendChild(pl);
+                        }
+                    });
+
+                    button.appendChild(svgEl);
+                    controls.appendChild(button);
+                });
+
+                // Reparent diagram into viewport
+                diagram.parentNode.insertBefore(container, diagram);
+                viewport.appendChild(diagram);
+                container.appendChild(viewport);
+                container.appendChild(controls);
+
+                // Initialize svg-pan-zoom
+                try {
+                    const panZoomInstance = svgPanZoom(svg, {
+                        fit: true,
+                        center: true,
+                        minZoom: 0.25,
+                        maxZoom: 10,
+                        zoomScaleSensitivity: 0.3,
+                        dblClickZoomEnabled: true,
+                        controlIconsEnabled: false,
+                        mouseWheelZoomEnabled: true,
+                        preventMouseEventsDefault: true
+                    });
+
+                    activePanZoomInstances.push(panZoomInstance);
+
+                    // Wire up control buttons
+                    controls.addEventListener('click', (e) => {
+                        const btn = e.target.closest('.mermaid-ctrl-btn');
+                        if (!btn) return;
+
+                        const action = btn.dataset.action;
+                        if (action === 'zoom-in') {
+                            panZoomInstance.zoomIn();
+                        } else if (action === 'zoom-out') {
+                            panZoomInstance.zoomOut();
+                        } else if (action === 'reset') {
+                            panZoomInstance.resetZoom();
+                            panZoomInstance.resetPan();
+                            panZoomInstance.fit();
+                            panZoomInstance.center();
+                        } else if (action === 'fullscreen') {
+                            container.classList.toggle('fullscreen');
+                            // Resize after layout change
+                            setTimeout(() => panZoomInstance.resize(), 50);
+                            setTimeout(() => {
+                                panZoomInstance.fit();
+                                panZoomInstance.center();
+                            }, 100);
+                        }
+                    });
+
+                    // Keyboard handlers on viewport
+                    viewport.addEventListener('keydown', (e) => {
+                        if (e.key === '+' || e.key === '=') {
+                            e.preventDefault();
+                            panZoomInstance.zoomIn();
+                        } else if (e.key === '-') {
+                            e.preventDefault();
+                            panZoomInstance.zoomOut();
+                        } else if (e.key === '0') {
+                            e.preventDefault();
+                            panZoomInstance.resetZoom();
+                            panZoomInstance.resetPan();
+                            panZoomInstance.fit();
+                            panZoomInstance.center();
+                        } else if (e.key === 'f') {
+                            e.preventDefault();
+                            container.classList.toggle('fullscreen');
+                            setTimeout(() => panZoomInstance.resize(), 50);
+                            setTimeout(() => {
+                                panZoomInstance.fit();
+                                panZoomInstance.center();
+                            }, 100);
+                        } else if (e.key === 'Escape' && container.classList.contains('fullscreen')) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            container.classList.remove('fullscreen');
+                            setTimeout(() => panZoomInstance.resize(), 50);
+                            setTimeout(() => {
+                                panZoomInstance.fit();
+                                panZoomInstance.center();
+                            }, 100);
+                        }
+                    });
+
+                    // Touch pinch-to-zoom
+                    let lastTouchDistance = null;
+                    viewport.addEventListener('touchstart', (e) => {
+                        if (e.touches.length === 2) {
+                            lastTouchDistance = Math.hypot(
+                                e.touches[0].clientX - e.touches[1].clientX,
+                                e.touches[0].clientY - e.touches[1].clientY
+                            );
+                        }
+                    }, { passive: true });
+
+                    viewport.addEventListener('touchmove', (e) => {
+                        if (e.touches.length === 2 && lastTouchDistance !== null) {
+                            const distance = Math.hypot(
+                                e.touches[0].clientX - e.touches[1].clientX,
+                                e.touches[0].clientY - e.touches[1].clientY
+                            );
+                            const scale = distance / lastTouchDistance;
+                            if (scale > 1.02) {
+                                panZoomInstance.zoomIn();
+                                lastTouchDistance = distance;
+                            } else if (scale < 0.98) {
+                                panZoomInstance.zoomOut();
+                                lastTouchDistance = distance;
+                            }
+                        }
+                    }, { passive: true });
+
+                    viewport.addEventListener('touchend', () => {
+                        lastTouchDistance = null;
+                    }, { passive: true });
+
+                } catch (err) {
+                    // If svg-pan-zoom fails, leave diagram functional without interactivity
+                    console.warn('svg-pan-zoom init failed for diagram:', err);
+                }
+            });
+        }
+
+        // Global Escape to exit fullscreen diagrams
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const fs = document.querySelector('.mermaid-container.fullscreen');
+                if (fs) {
+                    fs.classList.remove('fullscreen');
+                    const containers = Array.from(document.querySelectorAll('.mermaid-container'));
+                    const idx = containers.indexOf(fs);
+                    if (idx >= 0 && activePanZoomInstances[idx]) {
+                        setTimeout(() => activePanZoomInstances[idx].resize(), 50);
+                        setTimeout(() => {
+                            activePanZoomInstances[idx].fit();
+                            activePanZoomInstances[idx].center();
+                        }, 100);
+                    }
+                }
+            }
+        });
 
         // ============================================
         // Initialization
