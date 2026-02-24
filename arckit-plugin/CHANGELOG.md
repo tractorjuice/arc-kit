@@ -5,6 +5,20 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **PlantUML C4 output format for `/arckit.diagram`** (#65) — C4 diagram types (Context, Container, Component) now offer PlantUML C4 as an alternative to Mermaid, with directional layout hints (`Rel_Right`, `Rel_Down`, `Lay_Right`, `Lay_Down`) for precise control on complex diagrams with more than 12 elements
+- **Format selector** — interactive prompt (Question 2) lets users choose Mermaid or PlantUML C4 for C4 types; skip with `/arckit.diagram context plantuml`
+- **PlantUML C4 examples** — Modes A, B, C include PlantUML examples alongside Mermaid
+- **PlantUML syntax guidelines** — include URLs, element syntax, directional relationships, invisible layout constraints
+- **PlantUML validation checks** — Step 5 validates directional variants, `Lay_Right`/`Lay_Down` constraints, `@startuml`/`@enduml` wrappers
+- **Template PlantUML section** — architecture diagram template includes PlantUML code block, syntax reference, and directional hints quick-reference table
+- **Guide update** — diagram guide includes format comparison table (Mermaid vs PlantUML) and PlantUML example
+
+---
+
 ## [2.8.4] - 2026-02-24
 
 ### Added
