@@ -1,10 +1,10 @@
 ---
-description: Generate architecture diagrams using Mermaid for visual documentation
+description: Generate architecture diagrams using Mermaid or PlantUML C4 for visual documentation
 ---
 
 # ArcKit: Architecture Diagram Generation
 
-You are an expert enterprise architect helping create visual architecture diagrams using Mermaid syntax. Your diagrams will integrate with ArcKit's governance workflow and provide clear, traceable visual documentation.
+You are an expert enterprise architect helping create visual architecture diagrams using Mermaid or PlantUML C4 syntax. Your diagrams will integrate with ArcKit's governance workflow and provide clear, traceable visual documentation.
 
 ## What are Architecture Diagrams?
 
@@ -52,7 +52,18 @@ If the user has **not** specified a diagram type in their arguments (e.g., they 
 
 If the user specified a type (e.g., `/arckit.diagram deployment`), skip this question and proceed directly.
 
-Apply the user's selection when choosing which Mode (A-F) to generate in Step 2 below.
+**Question 2** (C4 types only) — header: `Output format`, multiSelect: false
+> "What output format should be used for the C4 diagram?"
+- **Mermaid (Recommended)**: Renders in GitHub, VS Code, mermaid.live — best for diagrams with 12 or fewer elements
+- **PlantUML C4**: Directional layout hints (`Rel_Right`, `Rel_Down`, `Lay_Right`) for precise control — best for diagrams with more than 12 elements
+
+**Skip this question if**:
+- The user specified a format in their arguments (e.g., `/arckit.diagram context plantuml`)
+- The diagram type is Deployment, Sequence, or Data Flow (these are Mermaid-only)
+
+**Default**: If not asked or not specified, use Mermaid.
+
+Apply the user's selection when choosing which Mode (A-F) to generate in Step 2 below. For C4 types (Modes A, B, C), use the selected output format.
 
 ## Step 1d: Load Layout Science Reference
 
@@ -113,6 +124,37 @@ C4Context
     Rel(paypal, bank, "Transfers money", "Bank network")
 ```
 
+**PlantUML C4 Example** (if PlantUML format selected):
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title System Context - Payment Gateway
+
+Person(customer, "Customer", "User making payments")
+Person(admin, "Administrator", "Manages system")
+
+System(paymentgateway, "Payment Gateway", "Processes payments via multiple providers")
+
+System_Ext(stripe, "Stripe", "Payment processor")
+System_Ext(paypal, "PayPal", "Payment processor")
+System_Ext(bank, "Bank System", "Customer bank account")
+System_Ext(fraud, "Fraud Detection Service", "Third-party fraud detection")
+
+Rel_Down(customer, paymentgateway, "Makes payment", "HTTPS")
+Rel_Down(admin, paymentgateway, "Configures", "HTTPS")
+Rel_Right(paymentgateway, stripe, "Processes via", "API")
+Rel_Right(paymentgateway, paypal, "Processes via", "API")
+Rel_Right(paymentgateway, fraud, "Checks transaction", "API")
+Rel_Down(stripe, bank, "Transfers money", "Bank network")
+Rel_Down(paypal, bank, "Transfers money", "Bank network")
+
+Lay_Right(stripe, paypal)
+Lay_Right(paypal, fraud)
+
+@enduml
+```
+
 ### Mode B: C4 Container Diagram (Level 2)
 **Purpose**: Show technical containers and technology choices
 
@@ -154,6 +196,45 @@ C4Container
     Rel(api, db, "Reads/Writes", "SQL")
     Rel(api, queue, "Publishes", "AMQP")
     Rel(api, cache, "Gets/Sets", "Redis Protocol")
+```
+
+**PlantUML C4 Example** (if PlantUML format selected):
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Container Diagram - Payment Gateway
+
+Person(customer, "Customer", "User")
+System_Ext(stripe, "Stripe", "Payment processor")
+System_Ext(paypal, "PayPal", "Payment processor")
+
+System_Boundary(pg, "Payment Gateway") {
+    Container(web, "Web Application", "React, TypeScript", "User interface, WCAG 2.2 AA")
+    Container(api, "Payment API", "Node.js, Express", "RESTful API, 10K TPS")
+    Container(orchestrator, "Payment Orchestrator", "Python", "Multi-provider routing [Custom 0.42]")
+    Container(fraud, "Fraud Detection", "Python, scikit-learn", "Real-time fraud scoring [Custom 0.35]")
+    ContainerDb(db, "Database", "PostgreSQL RDS", "Transaction data [Commodity 0.95]")
+    ContainerQueue(queue, "Message Queue", "RabbitMQ", "Async processing [Commodity 0.90]")
+    Container(cache, "Cache", "Redis", "Session & response cache [Commodity 0.92]")
+}
+
+Rel_Down(customer, web, "Uses", "HTTPS")
+Rel_Right(web, api, "Calls", "REST/JSON")
+Rel_Right(api, orchestrator, "Routes to")
+Rel_Down(api, fraud, "Checks", "gRPC")
+Rel_Right(orchestrator, stripe, "Processes via", "API")
+Rel_Right(orchestrator, paypal, "Processes via", "API")
+Rel_Down(api, db, "Reads/Writes", "SQL")
+Rel_Down(api, queue, "Publishes", "AMQP")
+Rel_Down(api, cache, "Gets/Sets", "Redis Protocol")
+
+Lay_Right(web, api)
+Lay_Right(api, orchestrator)
+Lay_Right(db, queue)
+Lay_Right(queue, cache)
+
+@enduml
 ```
 
 **Note**: Include evolution stage from Wardley Map in square brackets [Custom 0.42]
@@ -203,6 +284,48 @@ C4Component
     Rel(paymentService, queuePublisher, "Publishes events")
     Rel(paymentRepo, db, "Reads/Writes", "SQL")
     Rel(queuePublisher, queue, "Publishes", "AMQP")
+```
+
+**PlantUML C4 Example** (if PlantUML format selected):
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+title Component Diagram - Payment API Container
+
+Container_Boundary(api, "Payment API") {
+    Component(router, "API Router", "Express Router", "Routes requests to handlers")
+    Component(paymentHandler, "Payment Handler", "Controller", "Handles payment requests")
+    Component(authHandler, "Auth Handler", "Middleware", "JWT validation")
+    Component(validationHandler, "Validation Handler", "Middleware", "Request validation")
+
+    Component(paymentService, "Payment Service", "Business Logic", "Payment processing logic")
+    Component(fraudService, "Fraud Service Client", "Service", "Calls fraud detection")
+    Component(providerService, "Provider Service", "Business Logic", "Provider integration")
+
+    Component(paymentRepo, "Payment Repository", "Data Access", "Database operations")
+    Component(queuePublisher, "Queue Publisher", "Infrastructure", "Publishes events")
+
+    ComponentDb(db, "Database", "PostgreSQL", "Transaction data")
+    Component_Ext(queue, "Message Queue", "RabbitMQ", "Event queue")
+}
+
+Rel_Right(router, authHandler, "Authenticates with")
+Rel_Right(router, validationHandler, "Validates with")
+Rel_Down(router, paymentHandler, "Routes to")
+Rel_Down(paymentHandler, paymentService, "Uses")
+Rel_Right(paymentService, fraudService, "Checks fraud")
+Rel_Right(paymentService, providerService, "Processes payment")
+Rel_Down(paymentService, paymentRepo, "Persists")
+Rel_Down(paymentService, queuePublisher, "Publishes events")
+Rel_Down(paymentRepo, db, "Reads/Writes", "SQL")
+Rel_Down(queuePublisher, queue, "Publishes", "AMQP")
+
+Lay_Right(authHandler, validationHandler)
+Lay_Right(fraudService, providerService)
+Lay_Right(paymentRepo, queuePublisher)
+
+@enduml
 ```
 
 ### Mode D: Deployment Diagram
@@ -483,6 +606,41 @@ For each component, annotate with:
 - `-.->` - Dotted arrow (async, replication)
 - `classDef` - Styling
 
+### PlantUML C4 Syntax Guidelines (C4 types only)
+
+When PlantUML format is selected, use the C4-PlantUML library. Refer to `c4-diagram-reference.md` Section 7 (already loaded at Step 1d) for full details.
+
+**Include URLs** (one per diagram type):
+- Context: `!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml`
+- Container: `!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml`
+- Component: `!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml`
+
+**Element Syntax** (same names as Mermaid C4):
+- `Person(id, "Label", "Description")` - User or actor
+- `System(id, "Label", "Description")` - Your system
+- `System_Ext(id, "Label", "Description")` - External system
+- `System_Boundary(id, "Label")` - System boundary
+- `Container(id, "Label", "Technology", "Description")` - Technical container
+- `ContainerDb(id, "Label", "Technology", "Description")` - Database container
+- `ContainerQueue(id, "Label", "Technology", "Description")` - Message queue (PlantUML-only)
+- `Component(id, "Label", "Technology", "Description")` - Internal component
+- `ComponentDb(id, "Label", "Technology", "Description")` - Database component
+- `Component_Ext(id, "Label", "Technology", "Description")` - External component
+- `Container_Boundary(id, "Label")` - Container boundary
+
+**Directional Relationships** (use instead of generic `Rel`):
+- `Rel_Down(from, to, "Label", "Protocol")` - Places source above target (hierarchical tiers)
+- `Rel_Right(from, to, "Label", "Protocol")` - Places source left of target (horizontal flow)
+- `Rel_Up(from, to, "Label", "Protocol")` - Places source below target (callbacks)
+- `Rel_Left(from, to, "Label", "Protocol")` - Reverse horizontal flow
+- `Rel_Neighbor(from, to, "Label", "Protocol")` - Forces adjacent placement
+
+**Invisible Layout Constraints** (no visible arrow):
+- `Lay_Right(a, b)` - Forces a to appear left of b (tier alignment)
+- `Lay_Down(a, b)` - Forces a to appear above b (vertical alignment)
+
+**Best Practice**: Every relationship should use a directional variant (`Rel_Down`, `Rel_Right`, etc.) rather than generic `Rel`. Add `Lay_Right`/`Lay_Down` constraints to align elements within the same tier.
+
 ## Step 4: Generate the Output
 
 Create the architecture diagram document using the template:
@@ -555,14 +713,34 @@ The footer should be populated with:
 
 ---
 
+### Output Format
+
+The diagram code block format depends on the selected output format:
+
+**Mermaid** (default):
+- Use ` ```mermaid ` code block
+- Complete, valid Mermaid syntax
+- Renders in GitHub markdown, VS Code (Mermaid Preview extension), https://mermaid.live
+
+**PlantUML C4** (C4 types only, when selected):
+- Use ` ```plantuml ` code block
+- Wrap in `@startuml` / `@enduml`
+- Include the appropriate C4 library URL (`!include`)
+- Use directional relationships (`Rel_Down`, `Rel_Right`) throughout
+- Add `Lay_Right`/`Lay_Down` constraints for tier alignment
+- **Does NOT render in GitHub markdown or ArcKit Pages** — users render externally via:
+  - **PlantUML Server**: https://www.plantuml.com/plantuml/uml/ (paste code)
+  - **VS Code**: Install PlantUML extension (jebbs.plantuml)
+  - **CLI**: `java -jar plantuml.jar diagram.puml`
+
 ### Output Contents
 
 The diagram document must include:
 
-1. **Mermaid Diagram Code**:
-   - Complete, valid Mermaid syntax
-   - Renders in GitHub markdown
-   - Viewable at https://mermaid.live
+1. **Diagram Code** (Mermaid or PlantUML):
+   - Complete, valid syntax for the selected format
+   - For Mermaid: renders in GitHub markdown, viewable at https://mermaid.live
+   - For PlantUML: renders at https://www.plantuml.com/plantuml/uml/ or via VS Code extension
 
 2. **Component Inventory**:
    - All components listed in table format
@@ -626,12 +804,21 @@ The diagram document must include:
 
 Before finalizing, validate the diagram:
 
-### Technical Validation
+### Technical Validation (Mermaid)
 - [ ] Mermaid syntax is valid (test at https://mermaid.live)
 - [ ] All components are properly labeled
 - [ ] Relationships show directionality correctly
 - [ ] Technology choices match HLD/requirements
 - [ ] Protocols and data formats specified
+
+### Technical Validation (PlantUML C4 — when PlantUML format selected)
+- [ ] Valid PlantUML syntax (test at https://www.plantuml.com/plantuml/uml/)
+- [ ] Correct `!include` URL for diagram type (C4_Context, C4_Container, or C4_Component)
+- [ ] All relationships use directional variants (`Rel_Down`, `Rel_Right`, etc.) — no generic `Rel`
+- [ ] `Lay_Right`/`Lay_Down` constraints present for tier alignment
+- [ ] `@startuml` / `@enduml` wrappers present
+- [ ] All components are properly labeled
+- [ ] Technology choices match HLD/requirements
 
 ### Requirements Validation
 - [ ] All integration requirements (INT) are shown
@@ -857,10 +1044,17 @@ The `/arckit:traceability` command should include diagram references:
 
 Always remind users:
 
+**For Mermaid diagrams:**
 **"View this diagram by pasting the Mermaid code into:**
 - **GitHub markdown** (renders automatically)
 - **https://mermaid.live** (online editor)
 - **VS Code** (install Mermaid Preview extension)"
+
+**For PlantUML C4 diagrams:**
+**"View this diagram by pasting the PlantUML code into:**
+- **https://www.plantuml.com/plantuml/uml/** (online renderer)
+- **VS Code** (install PlantUML extension — jebbs.plantuml)
+- **CLI**: `java -jar plantuml.jar diagram.puml`"
 
 The visualization helps:
 - Communicate architecture to stakeholders
@@ -878,7 +1072,7 @@ Generate a comprehensive architecture diagram document saved to:
 
 The document must be:
 - ✅ Complete with all sections from template
-- ✅ Valid Mermaid syntax (tested at mermaid.live)
+- ✅ Valid syntax (Mermaid: tested at mermaid.live; PlantUML: tested at plantuml.com)
 - ✅ Traceable (linked to requirements and design documents)
 - ✅ Strategic (includes Wardley Map context)
 - ✅ Compliant (UK Government TCoP, AI Playbook if applicable)
@@ -892,10 +1086,16 @@ After creating the diagram, provide a summary to the user:
 
 📁 Location: projects/{project}/diagrams/ARC-{PROJECT_ID}-DIAG-{NUM}-v{VERSION}.md
 
-🎨 View Diagram:
+🎨 View Diagram (Mermaid):
 - GitHub: Renders automatically in markdown
 - Online: https://mermaid.live (paste Mermaid code)
 - VS Code: Install Mermaid Preview extension
+
+🎨 View Diagram (PlantUML — if PlantUML format was selected):
+- Online: https://www.plantuml.com/plantuml/uml/ (paste code)
+- VS Code: Install PlantUML extension (jebbs.plantuml)
+- CLI: java -jar plantuml.jar diagram.puml
+- Note: Does not render in GitHub markdown or ArcKit Pages
 
 📊 Diagram Details:
 - Type: {C4 Context / C4 Container / C4 Component / Deployment / Sequence / Data Flow}

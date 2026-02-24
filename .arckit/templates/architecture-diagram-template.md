@@ -31,6 +31,10 @@
 
 ## Diagram
 
+<!-- Use ONE of the following code blocks depending on the selected output format -->
+
+### Mermaid Format
+
 ```mermaid
 {mermaid_code}
 ```
@@ -40,6 +44,32 @@
 - **VS Code**: Install Mermaid Preview extension
 - **Online**: https://mermaid.live (paste code above)
 - **Export**: Use mermaid.live to export as PNG/SVG/PDF
+
+### PlantUML C4 Format (Alternative — for C4 diagram types only)
+
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_{Context|Container|Component}.puml
+
+title {diagram_title}
+
+' Elements
+{plantuml_elements}
+
+' Directional Relationships
+{plantuml_relationships}
+
+' Layout Constraints
+{plantuml_layout}
+
+@enduml
+```
+
+**View this diagram** (PlantUML does NOT render in GitHub markdown):
+- **Online**: https://www.plantuml.com/plantuml/uml/ (paste code above)
+- **VS Code**: Install PlantUML extension (jebbs.plantuml)
+- **CLI**: `java -jar plantuml.jar diagram.puml`
+- **Export**: Use PlantUML Server to export as PNG/SVG/PDF
 
 ---
 
@@ -481,11 +511,72 @@ erDiagram
 
 ---
 
+## PlantUML C4 Syntax Reference
+
+### C4 Context Diagram (PlantUML)
+
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+title System Context diagram for Internet Banking System
+
+Person(customer, "Personal Banking Customer", "A customer of the bank")
+System(banking, "Internet Banking System", "Allows customers to view information")
+System_Ext(email, "E-mail system", "The internal Microsoft Exchange system")
+
+Rel_Down(customer, banking, "Uses")
+Rel_Right(banking, email, "Sends e-mails", "SMTP")
+
+@enduml
+```
+
+### C4 Container Diagram (PlantUML)
+
+```plantuml
+@startuml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Container diagram for Internet Banking System
+
+Person(customer, "Customer", "A customer")
+
+System_Boundary(c1, "Internet Banking") {
+    Container(web, "Web Application", "Java, Spring MVC", "Delivers static content")
+    ContainerDb(db, "Database", "Relational Database Schema", "Stores user info")
+    Container(api, "API Application", "Java, Docker", "Provides functionality via API")
+}
+
+Rel_Down(customer, web, "Uses", "HTTPS")
+Rel_Right(web, api, "Uses", "JSON/HTTPS")
+Rel_Down(api, db, "Reads/Writes", "SQL/TCP")
+
+Lay_Right(web, api)
+
+@enduml
+```
+
+### PlantUML Directional Hints Quick Reference
+
+| Hint | Effect | Use For |
+|------|--------|---------|
+| `Rel_Down(a, b, ...)` | Places a above b | Hierarchical tiers |
+| `Rel_Right(a, b, ...)` | Places a left of b | Horizontal data flow |
+| `Rel_Up(a, b, ...)` | Places a below b | Callbacks |
+| `Rel_Left(a, b, ...)` | Reverse horizontal | Reverse flow |
+| `Rel_Neighbor(a, b, ...)` | Adjacent placement | Tightly coupled |
+| `Lay_Right(a, b)` | Invisible: a left of b | Tier alignment |
+| `Lay_Down(a, b)` | Invisible: a above b | Vertical alignment |
+
+---
+
 ## Additional Resources
 
 - **Mermaid Documentation**: https://mermaid.js.org/
 - **Mermaid Live Editor**: https://mermaid.live
 - **C4 Model**: https://c4model.com/
+- **C4-PlantUML Library**: https://github.com/plantuml-stdlib/C4-PlantUML
+- **PlantUML Server**: https://www.plantuml.com/plantuml/uml/
 - **ArcKit Repository**: https://github.com/tractorjuice/arc-kit
 
 ## External References
