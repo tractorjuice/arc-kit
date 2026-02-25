@@ -36,6 +36,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 14. [Data Source Discovery](guides/datascout.md) - `/arckit.datascout` ⭐ NEW
 15. [Analyze](guides/analyze.md) - `/arckit.analyze`
 15. [Principles Compliance](guides/principles-compliance.md) - `/arckit.principles-compliance` ⭐ NEW
+15. [Conformance Assessment](guides/conformance.md) - `/arckit.conformance` ⭐ NEW
 16. [Diagrams](guides/diagram.md) - `/arckit.diagram` ⭐ NEW
 17. [Architecture Decision Records](guides/adr.md) - `/arckit.adr` ⭐ NEW
 
@@ -149,6 +150,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.traceability` | [traceability.md](guides/traceability.md) | ✅ Complete |
 | `/arckit.analyze` | [analyze.md](guides/analyze.md) | ✅ Complete |
 | `/arckit.principles-compliance` | [principles-compliance.md](guides/principles-compliance.md) | ✅ Complete |
+| `/arckit.conformance` | [conformance.md](guides/conformance.md) | ✅ Complete |
 | `/arckit.service-assessment` | [service-assessment.md](guides/service-assessment.md) | ✅ Complete |
 | `/arckit.tcop` | [technology-code-of-practice.md](guides/uk-government/technology-code-of-practice.md) | ✅ Complete |
 | `/arckit.ai-playbook` | [ai-playbook.md](guides/uk-government/ai-playbook.md) | ✅ Complete |
@@ -167,7 +169,7 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 | `/arckit.presentation` | [presentation.md](guides/presentation.md) | ✅ Complete |
 | `/arckit.health` | [artifact-health.md](guides/artifact-health.md) | ✅ Complete |
 
-**Coverage**: 51/51 commands documented (100%)
+**Coverage**: 52/52 commands documented (100%)
 
 ---
 
@@ -179,5 +181,5 @@ Found a gap or want to improve documentation?
 
 ---
 
-**Last updated**: 2026-02-06
-**ArcKit Version**: 2.8.8
+**Last updated**: 2026-02-25
+**ArcKit Version**: 2.9.0

@@ -5,6 +5,23 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.0] - 2026-02-25
+
+### Added
+
+- **Architecture Conformance Assessment** (`/arckit.conformance`) (#55) — new command for systematic decided-vs-designed conformance checking with 12 conformance rules: ADR decision implementation, cross-ADR consistency, superseded ADR enforcement, principles-to-design alignment, review condition resolution, exception register expiry/remediation, technology stack drift, architecture pattern drift, custom constraint rules (ArchCNL-style via `.arckit/conformance-rules.md`), known and untracked architecture technical debt
+- New template: `conformance-assessment-template.md`
+- New guide: `conformance.md`
+- New doc type code: `CONF` (added to filename validation hook and context hook)
+- Added `CONF` migration entry to `migrate-filenames.sh`
+- Updated DEPENDENCY-MATRIX.md with conformance row/column and critical paths
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
 ## [2.8.8] - 2026-02-25
 
 ### Fixed

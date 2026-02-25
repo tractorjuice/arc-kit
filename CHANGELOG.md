@@ -5,6 +5,18 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.9.0] - 2026-02-25
+
+### Added
+
+- `/arckit.conformance` command for architecture conformance assessment — validates ADR decisions against designs, checks architecture drift, tracks technical debt, and enforces custom constraint rules (#55)
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
 ## [2.8.8] - 2026-02-25
 
 ### Fixed

@@ -67,6 +67,7 @@ declare -A FILE_MAPPING=(
     ["jsp936.md"]="JSP936"  # Alternative name
     ["dpia.md"]="DPIA"
     ["principles-compliance-assessment.md"]="PRIN-COMP"
+    ["conformance-assessment.md"]="CONF"
 
     # Reviews
     ["hld-review.md"]="HLDR"

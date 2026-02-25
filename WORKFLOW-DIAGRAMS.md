@@ -68,7 +68,8 @@ graph TD
     U1a --> U2[operationalize]
     U2 --> V[traceability]
     V --> V1[principles-compliance]
-    V1 --> W[analyze]
+    V1 --> V2[conformance]
+    V2 --> W[analyze]
 
     %% Tier 11: Reporting
     W --> X[story]
@@ -101,6 +102,7 @@ graph TD
     style U2 fill:#9370DB
     style V fill:#9370DB
     style V1 fill:#9370DB
+    style V2 fill:#FF6B6B
     style W fill:#9370DB
     style X fill:#FFD700
 ```
@@ -171,7 +173,8 @@ graph TD
     X --> X1[tcop]
     X1 --> X2[secure]
     X2 --> X3[principles-compliance]
-    X3 --> Y[analyze]
+    X3 --> X4[conformance]
+    X4 --> Y[analyze]
     Y --> Z[service-assessment]
 
     %% Tier 11: Reporting
@@ -209,6 +212,7 @@ graph TD
     style X1 fill:#FF6B6B
     style X2 fill:#FF6B6B
     style X3 fill:#9370DB
+    style X4 fill:#FF6B6B
     style Y fill:#9370DB
     style Z fill:#FF6B6B
     style AA fill:#FFD700
@@ -283,7 +287,8 @@ graph TD
     X2 --> X3[atrs]
     X3 --> X4[secure]
     X4 --> X5[principles-compliance]
-    X5 --> Y[analyze]
+    X5 --> X6[conformance]
+    X6 --> Y[analyze]
     Y --> Z[service-assessment]
 
     %% Tier 11: Reporting
@@ -324,6 +329,7 @@ graph TD
     style X3 fill:#FF6B6B
     style X4 fill:#FF6B6B
     style X5 fill:#9370DB
+    style X6 fill:#FF6B6B
     style Y fill:#9370DB
     style Z fill:#FF6B6B
     style AA fill:#FFD700
@@ -399,7 +405,8 @@ graph TD
     W --> W1[tcop]
     W1 --> W2[mod-secure]
     W2 --> W3[principles-compliance]
-    W3 --> X[analyze]
+    W3 --> W4[conformance]
+    W4 --> X[analyze]
     X --> Y[service-assessment]
 
     %% Tier 11: Reporting
@@ -436,6 +443,7 @@ graph TD
     style W1 fill:#FF6B6B
     style W2 fill:#FF6B6B
     style W3 fill:#9370DB
+    style W4 fill:#FF6B6B
     style X fill:#9370DB
     style Y fill:#FF6B6B
     style Z fill:#FFD700
@@ -513,7 +521,8 @@ graph TD
     X1 --> X2[mod-secure]
     X2 --> X3[jsp-936]
     X3 --> X4[principles-compliance]
-    X4 --> Y[analyze]
+    X4 --> X5[conformance]
+    X5 --> Y[analyze]
     Y --> Z[service-assessment]
 
     %% Tier 11: Reporting
@@ -552,6 +561,7 @@ graph TD
     style X2 fill:#FF6B6B
     style X3 fill:#FF6B6B
     style X4 fill:#9370DB
+    style X5 fill:#FF6B6B
     style Y fill:#9370DB
     style Z fill:#FF6B6B
     style AA fill:#FFD700
@@ -592,7 +602,7 @@ graph TD
 | 7 | Implementation | backlog |
 | 7.5 | Backlog Export | trello |
 | 8-9 | Operations & Quality | servicenow, devops, finops, mlops (AI projects), operationalize, traceability, analyze, principles-compliance |
-| 10 | Compliance | service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
+| 10 | Compliance | conformance, service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
 | 11 | Reporting | story |
 | 12 | Publishing | pages |
 
@@ -637,7 +647,8 @@ gantt
     traceability            :d2, after d1d, 1w
     analyze                 :d3, after d2, 1w
     principles-compliance   :d3a, after d3, 1w
-    service-assessment      :d4, after d3a, 2w
+    conformance             :d3b, after d3a, 1w
+    service-assessment      :d4, after d3b, 2w
     tcop                    :d5, after d4, 1w
     ai-playbook             :d6, after d5, 1w
     atrs                    :d7, after d6, 1w
@@ -720,14 +731,16 @@ For auditing existing projects:
 graph LR
     A[tcop] --> B[secure]
     B --> C[principles-compliance]
-    C --> D[analyze]
-    D --> E[service-assessment]
+    C --> D[conformance]
+    D --> E[analyze]
+    E --> F[service-assessment]
 
     style A fill:#FF6B6B
     style B fill:#FF6B6B
     style C fill:#9370DB
-    style D fill:#9370DB
-    style E fill:#FF6B6B
+    style D fill:#FF6B6B
+    style E fill:#9370DB
+    style F fill:#FF6B6B
 ```
 
 **Duration**: 2-4 weeks
@@ -737,13 +750,14 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 1.1.0
-- **Document Date**: 2026-02-01
+- **ArcKit Version**: 1.2.0
+- **Document Date**: 2026-02-25
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
-- **Commands Documented**: 43
+- **Commands Documented**: 44
 - **Key Changes**:
-  - Added missing style definitions for finops nodes in all workflow diagrams
-  - Updated Tier Groupings table to include all 40 commands across 13 tiers
-  - Added principles-compliance to Operations & Quality tier
-  - Updated Gantt chart to include devops, finops, mlops, operationalize, principles-compliance
-  - Updated date references from 2025 to 2026
+  - Added conformance node to all 5 workflow paths (between principles-compliance and analyze)
+  - Added conformance to Compliance-Only Path and Gantt chart
+  - Updated Tier 10 Compliance to include conformance
+  - Previous: Added missing style definitions for finops nodes in all workflow diagrams
+  - Previous: Updated Tier Groupings table to include all 40 commands across 13 tiers
+  - Previous: Added principles-compliance to Operations & Quality tier

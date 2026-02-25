@@ -93,6 +93,7 @@ doc_type_name() {
     STORY)    echo "Project Story" ;;
     ANAL)     echo "Analysis Report" ;;
     PRIN-COMP) echo "Principles Compliance" ;;
+    CONF)     echo "Conformance Assessment" ;;
     *)        echo "$1" ;;
   esac
 }

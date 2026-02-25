@@ -14,7 +14,7 @@ The key distinction: **your session never leaves your machine**. Claude Code con
 
 This means:
 - Your `projects/` directory, templates, and generated artifacts stay local
-- All 51 ArcKit commands and 5 research agents remain fully available
+- All 52 ArcKit commands and 5 research agents remain fully available
 - MCP servers for cloud research (AWS, Azure, GCP) keep working
 - Automation hooks (session init, project context injection, filename enforcement) continue to fire
 - You can send messages from terminal, browser, and phone interchangeably — the conversation stays in sync
