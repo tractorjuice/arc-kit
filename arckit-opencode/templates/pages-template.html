@@ -1471,6 +1471,7 @@
             <nav class="app-header__nav" aria-label="Site navigation">
                 <a href="#dashboard" id="dashboard-link" class="app-header__dashboard-link">Dashboard</a>
                 <a href="#guides" id="guides-link" class="app-header__guides-link">Guides</a>
+                <a href="#roles" id="roles-link" class="app-header__guides-link">Roles</a>
                 <a href="https://github.com/{{OWNER}}/{{REPO}}" target="_blank" rel="noopener">GitHub</a>
                 <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
                 <button class="app-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
@@ -1740,6 +1741,16 @@
                 });
             }
 
+            // Add role guides
+            if (manifest.roleGuides) {
+                manifest.roleGuides.forEach(doc => {
+                    allDocuments.push({
+                        ...doc,
+                        searchText: `${doc.title} ${doc.family || ''} role ddat`.toLowerCase()
+                    });
+                });
+            }
+
             // Add global documents
             if (manifest.global) {
                 manifest.global.forEach(doc => {
@@ -1965,6 +1976,73 @@
 
             // Clear active states in sidebar
             document.querySelectorAll('#nav-container a').forEach(a => a.classList.remove('active'));
+        }
+
+        // ============================================
+        // Roles Index Page (DDaT Role Guides)
+        // ============================================
+        function showRolesIndex() {
+            const content = document.getElementById('content');
+            const toc = document.getElementById('toc');
+            toc.style.display = 'none';
+
+            if (!manifest || !manifest.roleGuides || manifest.roleGuides.length === 0) {
+                content.innerHTML = '<div class="app-welcome"><h1>DDaT Role Guides</h1>' +
+                    '<p>No role guides available. Role guides map ArcKit commands to ' +
+                    '<a href="https://ddat-capability-framework.service.gov.uk/" target="_blank" rel="noopener">DDaT Capability Framework</a> roles.</p></div>';
+                return;
+            }
+
+            // Group role guides by family
+            const byFamily = {};
+            manifest.roleGuides.forEach(function(guide) {
+                const family = guide.family || 'Other';
+                if (!byFamily[family]) byFamily[family] = [];
+                byFamily[family].push(guide);
+            });
+
+            // Sort families in logical order
+            const familyOrder = ['Architecture', 'Chief Digital and Data', 'Product and Delivery', 'Data', 'IT Operations', 'Software Development', 'Other'];
+            const sortedFamilies = Object.keys(byFamily).sort(function(a, b) {
+                const aIdx = familyOrder.indexOf(a);
+                const bIdx = familyOrder.indexOf(b);
+                return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+            });
+
+            // Build role guide HTML using safe string concatenation from manifest data
+            let rolesHtml = '';
+            sortedFamilies.forEach(function(family) {
+                rolesHtml += '<h2>' + family + '</h2><ul class="app-guides-list">';
+                byFamily[family].forEach(function(guide) {
+                    const cmdCount = guide.commandCount
+                        ? '<span class="guide-status beta">' + guide.commandCount + ' commands</span>'
+                        : '';
+                    rolesHtml += '<li><a href="#' + encodeURIComponent(guide.path) + '" data-path="' + guide.path + '"><span>' + guide.title + '</span>' + cmdCount + '</a></li>';
+                });
+                rolesHtml += '</ul>';
+            });
+
+            content.innerHTML = '<div class="app-doc-header">' +
+                '<div class="app-doc-breadcrumb">Documentation</div>' +
+                '<h1 class="app-doc-title">DDaT Role Guides</h1></div>' +
+                '<div class="app-markdown">' +
+                '<p>Which ArcKit commands should <strong>you</strong> use? These guides map ArcKit commands to ' +
+                '<a href="https://ddat-capability-framework.service.gov.uk/" target="_blank" rel="noopener">UK Government DDaT Capability Framework</a> ' +
+                'roles, so you can focus on the commands relevant to your job.</p>' +
+                rolesHtml + '</div>';
+
+            // Add click handlers for role guide links
+            content.querySelectorAll('a[data-path]').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const path = link.dataset.path;
+                    window.location.hash = path;
+                    loadDocument(path);
+                });
+            });
+
+            // Clear active states in sidebar
+            document.querySelectorAll('#nav-container a').forEach(function(a) { a.classList.remove('active'); });
         }
 
         // ============================================
@@ -3300,6 +3378,13 @@
                     closeMobileSidebar();
                 });
 
+                // Setup roles link
+                document.getElementById('roles-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.hash = 'roles';
+                    closeMobileSidebar();
+                });
+
                 // Handle initial hash or load dashboard
                 if (window.location.hash) {
                     const path = window.location.hash.slice(1);
@@ -3307,6 +3392,8 @@
                         showDashboard(healthData);
                     } else if (path === 'guides') {
                         showGuidesIndex();
+                    } else if (path === 'roles') {
+                        showRolesIndex();
                     } else {
                         loadDocument(path);
 
@@ -3358,6 +3445,8 @@
                 showDashboard(healthData);
             } else if (path === 'guides') {
                 showGuidesIndex();
+            } else if (path === 'roles') {
+                showRolesIndex();
             } else if (path) {
                 loadDocument(path);
 

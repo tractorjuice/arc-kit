@@ -26,6 +26,9 @@
     <!-- Mermaid.js for Diagrams -->
     <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
 
+    <!-- SVG Pan Zoom for interactive diagrams -->
+    <script src="https://cdn.jsdelivr.net/npm/svg-pan-zoom@3.6.2/dist/svg-pan-zoom.min.js"></script>
+
     <style>
         /* CSS Variables for theming */
         :root {
@@ -960,6 +963,193 @@
             height: auto;
         }
 
+        /* PlantUML Diagrams */
+        .app-markdown .plantuml-diagram {
+            background: var(--bg-surface);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        .app-markdown .plantuml-diagram img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        [data-theme="dark"] .app-markdown .plantuml-diagram img {
+            filter: invert(1) hue-rotate(180deg);
+        }
+
+        /* Interactive Diagram Containers (svg-pan-zoom) */
+        .mermaid-container {
+            position: relative;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+        }
+
+        .mermaid-viewport {
+            overflow: hidden;
+            cursor: grab;
+            max-height: 70vh;
+            min-height: 200px;
+        }
+
+        .mermaid-viewport:active {
+            cursor: grabbing;
+        }
+
+        .mermaid-container .mermaid {
+            padding: 0;
+            margin: 0;
+            border: none;
+            overflow: visible;
+            background: transparent;
+        }
+
+        .mermaid-container .mermaid svg {
+            max-width: none;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        .mermaid-controls {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .mermaid-container:hover .mermaid-controls,
+        .mermaid-container:focus-within .mermaid-controls {
+            opacity: 1;
+        }
+
+        .mermaid-ctrl-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 0;
+            line-height: 1;
+        }
+
+        .mermaid-ctrl-btn:hover {
+            background: var(--hover-bg);
+        }
+
+        .mermaid-ctrl-btn svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .mermaid-container.fullscreen {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            margin: 0;
+            border: none;
+            border-radius: 0;
+        }
+
+        .mermaid-container.fullscreen .mermaid-viewport {
+            max-height: 100vh;
+            height: 100vh;
+        }
+
+        .mermaid-container.fullscreen .mermaid-controls {
+            opacity: 1;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        /* PlantUML Interactive Containers (reuse mermaid-container pattern) */
+        .plantuml-container {
+            position: relative;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+            background: var(--bg-surface);
+        }
+
+        .plantuml-viewport {
+            overflow: hidden;
+            cursor: grab;
+            max-height: 70vh;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .plantuml-viewport:active {
+            cursor: grabbing;
+        }
+
+        .plantuml-container .plantuml-diagram {
+            padding: 0;
+            margin: 0;
+            border: none;
+            overflow: visible;
+            background: transparent;
+        }
+
+        .plantuml-container .plantuml-diagram img {
+            max-width: none;
+        }
+
+        .plantuml-container .plantuml-controls {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            z-index: 10;
+        }
+
+        .plantuml-container:hover .plantuml-controls,
+        .plantuml-container:focus-within .plantuml-controls {
+            opacity: 1;
+        }
+
+        .plantuml-container.fullscreen {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            margin: 0;
+            border: none;
+            border-radius: 0;
+        }
+
+        .plantuml-container.fullscreen .plantuml-viewport {
+            max-height: 100vh;
+            height: 100vh;
+        }
+
+        .plantuml-container.fullscreen .plantuml-controls {
+            opacity: 1;
+            top: 1rem;
+            right: 1rem;
+        }
+
         /* Mobile header hamburger button */
         .app-mobile-menu {
             display: none;
@@ -1156,6 +1346,26 @@
             }
         }
 
+        /* Touch devices: always show diagram controls */
+        @media (max-width: 900px) {
+            .mermaid-controls,
+            .plantuml-controls {
+                opacity: 1;
+            }
+
+            .mermaid-ctrl-btn,
+            .plantuml-controls button {
+                width: 36px;
+                height: 36px;
+            }
+
+            .mermaid-ctrl-btn svg,
+            .plantuml-controls button svg {
+                width: 18px;
+                height: 18px;
+            }
+        }
+
         /* Print Styles */
         @media print {
             .app-sidebar, .app-mobile-menu, .app-header, .app-footer, .app-toc, .app-sidebar-expand, .app-sidebar-backdrop {
@@ -1169,6 +1379,48 @@
 
             .app-markdown .mermaid {
                 page-break-inside: avoid;
+            }
+
+            .mermaid-container {
+                page-break-inside: avoid;
+            }
+
+            .mermaid-controls {
+                display: none !important;
+            }
+
+            .mermaid-viewport {
+                overflow: visible;
+                max-height: none;
+                cursor: default;
+            }
+
+            .mermaid-container .mermaid svg {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+
+            .app-markdown .plantuml-diagram {
+                page-break-inside: avoid;
+            }
+
+            .plantuml-container {
+                page-break-inside: avoid;
+            }
+
+            .plantuml-controls {
+                display: none !important;
+            }
+
+            .plantuml-viewport {
+                overflow: visible;
+                max-height: none;
+                cursor: default;
+            }
+
+            .plantuml-container .plantuml-diagram img {
+                max-width: 100% !important;
+                height: auto !important;
             }
         }
 
@@ -1219,6 +1471,7 @@
             <nav class="app-header__nav" aria-label="Site navigation">
                 <a href="#dashboard" id="dashboard-link" class="app-header__dashboard-link">Dashboard</a>
                 <a href="#guides" id="guides-link" class="app-header__guides-link">Guides</a>
+                <a href="#roles" id="roles-link" class="app-header__guides-link">Roles</a>
                 <a href="https://github.com/{{OWNER}}/{{REPO}}" target="_blank" rel="noopener">GitHub</a>
                 <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
                 <button class="app-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
@@ -1379,6 +1632,26 @@
         }
 
         // ============================================
+        // PlantUML Text Encoding
+        // ============================================
+        // PlantUML supports ~h (hex) prefix for hex-encoded source text.
+        // This avoids needing a deflate library while keeping URLs valid.
+        // See: https://plantuml.com/text-encoding
+        function plantumlEncodeHex(text) {
+            const bytes = new TextEncoder().encode(text);
+            let hex = '';
+            for (let i = 0; i < bytes.length; i++) {
+                hex += bytes[i].toString(16).padStart(2, '0');
+            }
+            return '~h' + hex;
+        }
+
+        function plantumlGetUrl(source, format) {
+            format = format || 'svg';
+            return 'https://www.plantuml.com/plantuml/' + format + '/' + plantumlEncodeHex(source);
+        }
+
+        // ============================================
         // Marked Configuration
         // ============================================
         const renderer = new marked.Renderer();
@@ -1392,6 +1665,10 @@
 
             if (language === 'mermaid') {
                 return `<pre class="mermaid">${escapeHtml(code)}</pre>`;
+            }
+            if (language === 'plantuml') {
+                const encoded = btoa(unescape(encodeURIComponent(code)));
+                return `<div class="plantuml-diagram" data-plantuml-source="${encoded}"><pre><code>${escapeHtml(code)}</code></pre></div>`;
             }
             const langClass = language ? `language-${language}` : '';
             return `<pre><code class="${langClass}">${escapeHtml(code)}</code></pre>`;
@@ -1460,6 +1737,16 @@
                     allDocuments.push({
                         ...doc,
                         searchText: `${doc.title} ${doc.category || ''} guide command`.toLowerCase()
+                    });
+                });
+            }
+
+            // Add role guides
+            if (manifest.roleGuides) {
+                manifest.roleGuides.forEach(doc => {
+                    allDocuments.push({
+                        ...doc,
+                        searchText: `${doc.title} ${doc.family || ''} role ddat`.toLowerCase()
                     });
                 });
             }
@@ -1689,6 +1976,73 @@
 
             // Clear active states in sidebar
             document.querySelectorAll('#nav-container a').forEach(a => a.classList.remove('active'));
+        }
+
+        // ============================================
+        // Roles Index Page (DDaT Role Guides)
+        // ============================================
+        function showRolesIndex() {
+            const content = document.getElementById('content');
+            const toc = document.getElementById('toc');
+            toc.style.display = 'none';
+
+            if (!manifest || !manifest.roleGuides || manifest.roleGuides.length === 0) {
+                content.innerHTML = '<div class="app-welcome"><h1>DDaT Role Guides</h1>' +
+                    '<p>No role guides available. Role guides map ArcKit commands to ' +
+                    '<a href="https://ddat-capability-framework.service.gov.uk/" target="_blank" rel="noopener">DDaT Capability Framework</a> roles.</p></div>';
+                return;
+            }
+
+            // Group role guides by family
+            const byFamily = {};
+            manifest.roleGuides.forEach(function(guide) {
+                const family = guide.family || 'Other';
+                if (!byFamily[family]) byFamily[family] = [];
+                byFamily[family].push(guide);
+            });
+
+            // Sort families in logical order
+            const familyOrder = ['Architecture', 'Chief Digital and Data', 'Product and Delivery', 'Data', 'IT Operations', 'Software Development', 'Other'];
+            const sortedFamilies = Object.keys(byFamily).sort(function(a, b) {
+                const aIdx = familyOrder.indexOf(a);
+                const bIdx = familyOrder.indexOf(b);
+                return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+            });
+
+            // Build role guide HTML using safe string concatenation from manifest data
+            let rolesHtml = '';
+            sortedFamilies.forEach(function(family) {
+                rolesHtml += '<h2>' + family + '</h2><ul class="app-guides-list">';
+                byFamily[family].forEach(function(guide) {
+                    const cmdCount = guide.commandCount
+                        ? '<span class="guide-status beta">' + guide.commandCount + ' commands</span>'
+                        : '';
+                    rolesHtml += '<li><a href="#' + encodeURIComponent(guide.path) + '" data-path="' + guide.path + '"><span>' + guide.title + '</span>' + cmdCount + '</a></li>';
+                });
+                rolesHtml += '</ul>';
+            });
+
+            content.innerHTML = '<div class="app-doc-header">' +
+                '<div class="app-doc-breadcrumb">Documentation</div>' +
+                '<h1 class="app-doc-title">DDaT Role Guides</h1></div>' +
+                '<div class="app-markdown">' +
+                '<p>Which ArcKit commands should <strong>you</strong> use? These guides map ArcKit commands to ' +
+                '<a href="https://ddat-capability-framework.service.gov.uk/" target="_blank" rel="noopener">UK Government DDaT Capability Framework</a> ' +
+                'roles, so you can focus on the commands relevant to your job.</p>' +
+                rolesHtml + '</div>';
+
+            // Add click handlers for role guide links
+            content.querySelectorAll('a[data-path]').forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const path = link.dataset.path;
+                    window.location.hash = path;
+                    loadDocument(path);
+                });
+            });
+
+            // Clear active states in sidebar
+            document.querySelectorAll('#nav-container a').forEach(function(a) { a.classList.remove('active'); });
         }
 
         // ============================================
@@ -2414,6 +2768,9 @@
             const content = document.getElementById('content');
             const toc = document.getElementById('toc');
 
+            // Clean up interactive diagram instances before replacing content
+            destroyPanZoomInstances();
+
             // Hide TOC while loading
             toc.style.display = 'none';
 
@@ -2469,6 +2826,23 @@
 
                 // Render mermaid diagrams
                 await mermaid.run({ querySelector: '.mermaid' });
+
+                // Render PlantUML diagrams (via PlantUML server)
+                renderPlantUMLDiagrams();
+
+                // Initialize interactive pan/zoom on rendered diagrams
+                initDiagramPanZoom();
+
+                // PlantUML images load async — init pan/zoom once they're ready
+                const plantumlImages = document.querySelectorAll('.plantuml-diagram img');
+                if (plantumlImages.length) {
+                    Promise.all(Array.from(plantumlImages).map(img =>
+                        img.complete ? Promise.resolve() : new Promise(resolve => {
+                            img.addEventListener('load', resolve, { once: true });
+                            img.addEventListener('error', resolve, { once: true });
+                        })
+                    )).then(() => initPlantUMLPanZoom());
+                }
 
                 // Scroll to top
                 document.getElementById('main-content').scrollTo(0, 0);
@@ -2543,6 +2917,381 @@
                 }
             });
         }
+
+        // ============================================
+        // Interactive Diagram Pan/Zoom
+        // ============================================
+        let activePanZoomInstances = [];
+
+        function destroyPanZoomInstances() {
+            activePanZoomInstances.forEach(instance => {
+                try { instance.destroy(); } catch (e) { /* already destroyed */ }
+            });
+            activePanZoomInstances = [];
+        }
+
+        // ============================================
+        // PlantUML Diagram Rendering
+        // ============================================
+        function renderPlantUMLDiagrams() {
+            const diagrams = document.querySelectorAll('.app-markdown .plantuml-diagram');
+            if (!diagrams.length) return;
+
+            diagrams.forEach(diagram => {
+                // Skip if already rendered
+                if (diagram.querySelector('img')) return;
+
+                // Get base64-encoded source from data attribute
+                const encoded = diagram.dataset.plantumlSource;
+                if (!encoded) return;
+
+                // Decode base64 back to raw text
+                const rawSource = decodeURIComponent(escape(atob(encoded)));
+
+                // Build PlantUML server URL
+                const url = plantumlGetUrl(rawSource, 'svg');
+
+                // Replace code block with rendered image
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'PlantUML Diagram';
+                img.loading = 'lazy';
+
+                // Show fallback on error
+                img.onerror = function() {
+                    while (diagram.firstChild) diagram.removeChild(diagram.firstChild);
+                    const errorP = document.createElement('p');
+                    errorP.style.cssText = 'color:var(--color-error);padding:1rem;';
+                    errorP.textContent = 'PlantUML rendering failed. Check diagram syntax or try ';
+                    const link = document.createElement('a');
+                    link.href = 'https://www.plantuml.com/plantuml/uml/';
+                    link.target = '_blank';
+                    link.rel = 'noopener';
+                    link.textContent = 'plantuml.com';
+                    errorP.appendChild(link);
+                    errorP.appendChild(document.createTextNode('.'));
+                    diagram.appendChild(errorP);
+                    const pre = document.createElement('pre');
+                    const code = document.createElement('code');
+                    code.textContent = rawSource;
+                    pre.appendChild(code);
+                    diagram.appendChild(pre);
+                };
+
+                while (diagram.firstChild) diagram.removeChild(diagram.firstChild);
+                diagram.appendChild(img);
+            });
+        }
+
+        function initPlantUMLPanZoom() {
+            if (typeof svgPanZoom === 'undefined') return;
+
+            const diagrams = document.querySelectorAll('.app-markdown .plantuml-diagram');
+            if (!diagrams.length) return;
+
+            diagrams.forEach(diagram => {
+                const img = diagram.querySelector('img');
+                if (!img) return;
+
+                // Skip if already wrapped
+                if (diagram.parentElement && diagram.parentElement.classList.contains('plantuml-viewport')) return;
+
+                // Create wrapper structure
+                const container = document.createElement('div');
+                container.className = 'plantuml-container';
+
+                const viewport = document.createElement('div');
+                viewport.className = 'plantuml-viewport';
+                viewport.tabIndex = 0;
+                viewport.setAttribute('role', 'img');
+                viewport.setAttribute('aria-label', 'Interactive PlantUML diagram — use controls to zoom');
+
+                const controls = document.createElement('div');
+                controls.className = 'plantuml-controls';
+
+                // Zoom/fullscreen controls
+                const buttonDefs = [
+                    { action: 'zoom-in', title: 'Zoom in', icon: '+' },
+                    { action: 'zoom-out', title: 'Zoom out', icon: '\u2212' },
+                    { action: 'reset', title: 'Reset view', icon: '\u21ba' },
+                    { action: 'fullscreen', title: 'Fullscreen', icon: '\u26f6' }
+                ];
+
+                let currentScale = 1;
+
+                buttonDefs.forEach(def => {
+                    const button = document.createElement('button');
+                    button.className = 'mermaid-ctrl-btn';
+                    button.dataset.action = def.action;
+                    button.title = def.title;
+                    button.textContent = def.icon;
+                    controls.appendChild(button);
+                });
+
+                // Reparent diagram into viewport
+                diagram.parentNode.insertBefore(container, diagram);
+                viewport.appendChild(diagram);
+                container.appendChild(viewport);
+                container.appendChild(controls);
+
+                // CSS-based zoom for raster/img (svg-pan-zoom needs inline SVG)
+                function applyScale(scale) {
+                    currentScale = Math.max(0.25, Math.min(10, scale));
+                    img.style.transform = 'scale(' + currentScale + ')';
+                    img.style.transformOrigin = 'center center';
+                }
+
+                controls.addEventListener('click', (e) => {
+                    const btn = e.target.closest('.mermaid-ctrl-btn');
+                    if (!btn) return;
+                    const action = btn.dataset.action;
+                    if (action === 'zoom-in') applyScale(currentScale * 1.3);
+                    else if (action === 'zoom-out') applyScale(currentScale / 1.3);
+                    else if (action === 'reset') applyScale(1);
+                    else if (action === 'fullscreen') {
+                        container.classList.toggle('fullscreen');
+                        setTimeout(() => applyScale(1), 50);
+                    }
+                });
+
+                viewport.addEventListener('keydown', (e) => {
+                    if (e.key === '+' || e.key === '=') { e.preventDefault(); applyScale(currentScale * 1.3); }
+                    else if (e.key === '-') { e.preventDefault(); applyScale(currentScale / 1.3); }
+                    else if (e.key === '0') { e.preventDefault(); applyScale(1); }
+                    else if (e.key === 'f') { e.preventDefault(); container.classList.toggle('fullscreen'); setTimeout(() => applyScale(1), 50); }
+                    else if (e.key === 'Escape' && container.classList.contains('fullscreen')) { e.preventDefault(); container.classList.remove('fullscreen'); setTimeout(() => applyScale(1), 50); }
+                });
+
+                // Scroll-to-zoom
+                viewport.addEventListener('wheel', (e) => {
+                    e.preventDefault();
+                    applyScale(currentScale * (e.deltaY < 0 ? 1.1 : 0.9));
+                }, { passive: false });
+            });
+        }
+
+        function initDiagramPanZoom() {
+            // Clean up previous instances
+            destroyPanZoomInstances();
+
+            // Check library loaded
+            if (typeof svgPanZoom === 'undefined') return;
+
+            const diagrams = document.querySelectorAll('.app-markdown .mermaid');
+            if (!diagrams.length) return;
+
+            diagrams.forEach(diagram => {
+                const svg = diagram.querySelector('svg');
+                if (!svg) return;
+
+                // Skip if already wrapped
+                if (diagram.parentElement && diagram.parentElement.classList.contains('mermaid-viewport')) return;
+
+                // Ensure SVG has explicit dimensions
+                if (!svg.getAttribute('width') || !svg.getAttribute('height')) {
+                    const bbox = svg.getBBox();
+                    if (bbox.width && bbox.height) {
+                        svg.setAttribute('width', bbox.width);
+                        svg.setAttribute('height', bbox.height);
+                    }
+                }
+
+                // Create wrapper structure
+                const container = document.createElement('div');
+                container.className = 'mermaid-container';
+
+                const viewport = document.createElement('div');
+                viewport.className = 'mermaid-viewport';
+                viewport.tabIndex = 0;
+                viewport.setAttribute('role', 'img');
+                viewport.setAttribute('aria-label', 'Interactive diagram — scroll to zoom, drag to pan');
+
+                const controls = document.createElement('div');
+                controls.className = 'mermaid-controls';
+
+                // Button definitions: action, title, SVG icon path
+                const buttonDefs = [
+                    { action: 'zoom-in', title: 'Zoom in (+)', icon: 'line:12,5,12,19|line:5,12,19,12' },
+                    { action: 'zoom-out', title: 'Zoom out (-)', icon: 'line:5,12,19,12' },
+                    { action: 'reset', title: 'Reset view (0)', icon: 'path:M3 12a9 9 0 1 0 9-9 4.5 4.5 0 0 0-4.5 4.5|path:M3 3v4.5h4.5' },
+                    { action: 'fullscreen', title: 'Fullscreen (f)', icon: 'polyline:15 3 21 3 21 9|polyline:9 21 3 21 3 15|line:21,3,14,10|line:3,21,10,14' }
+                ];
+
+                buttonDefs.forEach(def => {
+                    const button = document.createElement('button');
+                    button.className = 'mermaid-ctrl-btn';
+                    button.dataset.action = def.action;
+                    button.title = def.title;
+
+                    const svgEl = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                    svgEl.setAttribute('viewBox', '0 0 24 24');
+
+                    def.icon.split('|').forEach(part => {
+                        const [type, data] = part.split(':');
+                        if (type === 'line') {
+                            const [x1, y1, x2, y2] = data.split(',');
+                            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                            line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+                            line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+                            svgEl.appendChild(line);
+                        } else if (type === 'path') {
+                            const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                            p.setAttribute('d', data);
+                            svgEl.appendChild(p);
+                        } else if (type === 'polyline') {
+                            const pl = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+                            pl.setAttribute('points', data);
+                            svgEl.appendChild(pl);
+                        }
+                    });
+
+                    button.appendChild(svgEl);
+                    controls.appendChild(button);
+                });
+
+                // Reparent diagram into viewport
+                diagram.parentNode.insertBefore(container, diagram);
+                viewport.appendChild(diagram);
+                container.appendChild(viewport);
+                container.appendChild(controls);
+
+                // Initialize svg-pan-zoom
+                try {
+                    const panZoomInstance = svgPanZoom(svg, {
+                        fit: true,
+                        center: true,
+                        minZoom: 0.25,
+                        maxZoom: 10,
+                        zoomScaleSensitivity: 0.3,
+                        dblClickZoomEnabled: true,
+                        controlIconsEnabled: false,
+                        mouseWheelZoomEnabled: true,
+                        preventMouseEventsDefault: true
+                    });
+
+                    activePanZoomInstances.push(panZoomInstance);
+
+                    // Wire up control buttons
+                    controls.addEventListener('click', (e) => {
+                        const btn = e.target.closest('.mermaid-ctrl-btn');
+                        if (!btn) return;
+
+                        const action = btn.dataset.action;
+                        if (action === 'zoom-in') {
+                            panZoomInstance.zoomIn();
+                        } else if (action === 'zoom-out') {
+                            panZoomInstance.zoomOut();
+                        } else if (action === 'reset') {
+                            panZoomInstance.resetZoom();
+                            panZoomInstance.resetPan();
+                            panZoomInstance.fit();
+                            panZoomInstance.center();
+                        } else if (action === 'fullscreen') {
+                            container.classList.toggle('fullscreen');
+                            // Resize after layout change
+                            setTimeout(() => panZoomInstance.resize(), 50);
+                            setTimeout(() => {
+                                panZoomInstance.fit();
+                                panZoomInstance.center();
+                            }, 100);
+                        }
+                    });
+
+                    // Keyboard handlers on viewport
+                    viewport.addEventListener('keydown', (e) => {
+                        if (e.key === '+' || e.key === '=') {
+                            e.preventDefault();
+                            panZoomInstance.zoomIn();
+                        } else if (e.key === '-') {
+                            e.preventDefault();
+                            panZoomInstance.zoomOut();
+                        } else if (e.key === '0') {
+                            e.preventDefault();
+                            panZoomInstance.resetZoom();
+                            panZoomInstance.resetPan();
+                            panZoomInstance.fit();
+                            panZoomInstance.center();
+                        } else if (e.key === 'f') {
+                            e.preventDefault();
+                            container.classList.toggle('fullscreen');
+                            setTimeout(() => panZoomInstance.resize(), 50);
+                            setTimeout(() => {
+                                panZoomInstance.fit();
+                                panZoomInstance.center();
+                            }, 100);
+                        } else if (e.key === 'Escape' && container.classList.contains('fullscreen')) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            container.classList.remove('fullscreen');
+                            setTimeout(() => panZoomInstance.resize(), 50);
+                            setTimeout(() => {
+                                panZoomInstance.fit();
+                                panZoomInstance.center();
+                            }, 100);
+                        }
+                    });
+
+                    // Touch pinch-to-zoom
+                    let lastTouchDistance = null;
+                    viewport.addEventListener('touchstart', (e) => {
+                        if (e.touches.length === 2) {
+                            lastTouchDistance = Math.hypot(
+                                e.touches[0].clientX - e.touches[1].clientX,
+                                e.touches[0].clientY - e.touches[1].clientY
+                            );
+                        }
+                    }, { passive: true });
+
+                    viewport.addEventListener('touchmove', (e) => {
+                        if (e.touches.length === 2 && lastTouchDistance !== null) {
+                            const distance = Math.hypot(
+                                e.touches[0].clientX - e.touches[1].clientX,
+                                e.touches[0].clientY - e.touches[1].clientY
+                            );
+                            const scale = distance / lastTouchDistance;
+                            if (scale > 1.02) {
+                                panZoomInstance.zoomIn();
+                                lastTouchDistance = distance;
+                            } else if (scale < 0.98) {
+                                panZoomInstance.zoomOut();
+                                lastTouchDistance = distance;
+                            }
+                        }
+                    }, { passive: true });
+
+                    viewport.addEventListener('touchend', () => {
+                        lastTouchDistance = null;
+                    }, { passive: true });
+
+                } catch (err) {
+                    // If svg-pan-zoom fails, leave diagram functional without interactivity
+                    console.warn('svg-pan-zoom init failed for diagram:', err);
+                }
+            });
+        }
+
+        // Global Escape to exit fullscreen diagrams
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const fs = document.querySelector('.mermaid-container.fullscreen');
+                if (fs) {
+                    fs.classList.remove('fullscreen');
+                    const containers = Array.from(document.querySelectorAll('.mermaid-container'));
+                    const idx = containers.indexOf(fs);
+                    if (idx >= 0 && activePanZoomInstances[idx]) {
+                        setTimeout(() => activePanZoomInstances[idx].resize(), 50);
+                        setTimeout(() => {
+                            activePanZoomInstances[idx].fit();
+                            activePanZoomInstances[idx].center();
+                        }, 100);
+                    }
+                }
+                const pfs = document.querySelector('.plantuml-container.fullscreen');
+                if (pfs) {
+                    pfs.classList.remove('fullscreen');
+                }
+            }
+        });
 
         // ============================================
         // Initialization
@@ -2629,6 +3378,13 @@
                     closeMobileSidebar();
                 });
 
+                // Setup roles link
+                document.getElementById('roles-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.hash = 'roles';
+                    closeMobileSidebar();
+                });
+
                 // Handle initial hash or load dashboard
                 if (window.location.hash) {
                     const path = window.location.hash.slice(1);
@@ -2636,6 +3392,8 @@
                         showDashboard(healthData);
                     } else if (path === 'guides') {
                         showGuidesIndex();
+                    } else if (path === 'roles') {
+                        showRolesIndex();
                     } else {
                         loadDocument(path);
 
@@ -2687,6 +3445,8 @@
                 showDashboard(healthData);
             } else if (path === 'guides') {
                 showGuidesIndex();
+            } else if (path === 'roles') {
+                showRolesIndex();
             } else if (path) {
                 loadDocument(path);
 

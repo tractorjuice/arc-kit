@@ -5,6 +5,30 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.10.0] - 2026-02-25
+
+### Added
+
+- **DDaT Role Guides** (#75) — 18 new role-based guides mapping ArcKit commands to [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/) roles, so users can find the commands relevant to their job
+  - **Architecture** (7): Enterprise Architect, Solution Architect, Data Architect, Security Architect, Business Architect, Technical Architect, Network Architect
+  - **Chief Digital and Data** (3): CTO/CDIO, CDO, CISO
+  - **Product and Delivery** (4): Product Manager, Delivery Manager, Business Analyst, Service Owner
+  - **Data** (2): Data Governance Manager, Performance Analyst
+  - **IT Operations** (1): IT Service Manager
+  - **Software Development** (1): DevOps Engineer
+- Each guide includes primary commands, secondary commands, typical workflow, key artifacts, and related roles
+- **"Roles" nav link** in GitHub Pages template — new top-level navigation alongside Dashboard and Guides
+- `showRolesIndex()` function in pages template — renders role guides grouped by DDaT family with command counts
+- Role guides added to search index in pages template
+- `roleGuides` array in `manifest.json` schema — separate from command guides
+- Updated `/arckit.pages` command to sync and index role guides from `docs/guides/roles/`
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
 ## [2.9.0] - 2026-02-25
 
 ### Added

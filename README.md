@@ -52,7 +52,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v2.9.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.9.0)
+**Latest Release**: [v2.10.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.10.0)
 
 ### Initialize a Project
 
@@ -995,6 +995,7 @@ Key references live in `docs/` and top-level guides:
 - Lifecycle visuals: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover command flow and relationships.
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
 - Traceability: [docs/guides/traceability.md](docs/guides/traceability.md) documents end-to-end coverage patterns.
+- **DDaT Role Guides**: [docs/guides/roles/](docs/guides/roles/) — 18 guides mapping ArcKit commands to [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/) roles (Enterprise Architect, Solution Architect, Product Manager, etc.).
 
 ---
 
@@ -1140,7 +1141,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v2.9.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.9.0)
+- **Latest Version**: [v2.10.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.10.0)
 
 ---
 

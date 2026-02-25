@@ -5,6 +5,20 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.10.0] - 2026-02-25
+
+### Added
+
+- **DDaT Role Guides** (#75) — 18 role-based guides mapping ArcKit commands to UK Government DDaT Capability Framework roles (Architecture, Chief Digital and Data, Product and Delivery, Data, IT Operations, Software Development)
+- "Roles" nav link in GitHub Pages template with dedicated roles index page
+- `roleGuides` array in manifest.json for role guide discovery
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
 ## [2.9.0] - 2026-02-25
 
 ### Added
