@@ -267,6 +267,8 @@ Navigate to **Discover** > **anthropic-agent-skills** > **document-skills** and 
 
 > **Note**: The document skills are maintained by Anthropic in a separate marketplace (`anthropics/skills`). They are not part of the ArcKit plugin but complement it well. They work in both Claude Code and Claude Cowork.
 
+For detailed workflows and real-world examples, see the [Architecture Productivity Guide](productivity.md).
+
 ---
 
 ## Resources
