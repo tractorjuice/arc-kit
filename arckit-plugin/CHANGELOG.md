@@ -5,6 +5,18 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.7] - 2026-02-25
+
+### Added
+
+- **PlantUML rendering in Pages** — `pages-template.html` now renders ` ```plantuml ``` ` code blocks as SVG diagrams via the PlantUML server (`plantuml.com/plantuml/svg/`), with interactive pan/zoom controls, dark mode support (CSS invert filter), fullscreen, scroll-to-zoom, keyboard shortcuts, and error fallback; no new JS dependencies required
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, Gemini extension, OpenCode extension, marketplace)
+
+---
+
 ## [2.8.6] - 2026-02-25
 
 ### Fixed
