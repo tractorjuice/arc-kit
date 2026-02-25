@@ -31,7 +31,7 @@ Scan the repository to find all ArcKit artifacts:
 **First, sync guides from the plugin to the local repo:**
 
 1. Create `docs/guides/` if it doesn't exist
-2. Use Glob to list all `.md` files in `.arckit/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`)
+2. Use Glob to list all `.md` files in `.arckit/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`, `roles/`)
 3. Copy every guide file to the corresponding path under `docs/guides/`, creating subdirectories as needed
 4. This ensures the repo always has the latest guides from the plugin
 
@@ -41,7 +41,7 @@ mkdir -p docs/guides
 cp -r .arckit/docs/guides/* docs/guides/
 ```
 
-After syncing, scan `docs/guides/` for command usage guides and extract the title from the first `#` heading in each guide file.
+After syncing, scan `docs/guides/` (top-level `.md` files only, **excluding** the `roles/` subdirectory) for command usage guides and extract the title from the first `#` heading in each guide file. Role guides in `docs/guides/roles/` are scanned separately and added to the `roleGuides` array in manifest.json (see DDaT Role Guides section below).
 
 **Guide Categories** (based on filename):
 
@@ -56,6 +56,44 @@ After syncing, scan `docs/guides/` for command usage guides and extract the titl
 | Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
 | Research | aws-research, azure-research, gcp-research |
 | Other | pages, story, presentation, trello, migration, customize, upgrading, pinecone-mcp |
+
+**DDaT Role Guides** (in `docs/guides/roles/`):
+
+Role guides map ArcKit commands to [DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/) roles. These are stored separately from command guides.
+
+| DDaT Family | Role Guide Files |
+|-------------|-----------------|
+| Architecture | enterprise-architect, solution-architect, data-architect, security-architect, business-architect, technical-architect, network-architect |
+| Chief Digital and Data | cto-cdio, cdo, ciso |
+| Product and Delivery | product-manager, delivery-manager, business-analyst, service-owner |
+| Data | data-governance-manager, performance-analyst |
+| IT Operations | it-service-manager |
+| Software Development | devops-engineer |
+
+Scan `docs/guides/roles/` for role guide files (excluding `README.md`) and add them to a separate `roleGuides` array in manifest.json (not the `guides` array). Extract the title from the first `#` heading (strip " — ArcKit Command Guide" suffix). Map the DDaT family from the filename using the table above. Count the rows in the "Primary Commands" table to populate `commandCount`.
+
+**Role guide commandCount reference**:
+
+| File | commandCount |
+|------|-------------|
+| enterprise-architect | 12 |
+| solution-architect | 10 |
+| data-architect | 4 |
+| security-architect | 5 |
+| business-architect | 5 |
+| technical-architect | 5 |
+| network-architect | 3 |
+| cto-cdio | 5 |
+| cdo | 4 |
+| ciso | 5 |
+| product-manager | 5 |
+| delivery-manager | 6 |
+| business-analyst | 4 |
+| service-owner | 3 |
+| data-governance-manager | 4 |
+| performance-analyst | 4 |
+| it-service-manager | 3 |
+| devops-engineer | 3 |
 
 **Guide Status** (from README command maturity):
 
@@ -228,6 +266,20 @@ Create `docs/manifest.json` with the discovered structure:
       "title": "Principles Guide",
       "category": "Architecture",
       "status": "live"
+    }
+  ],
+  "roleGuides": [
+    {
+      "path": "docs/guides/roles/enterprise-architect.md",
+      "title": "Enterprise Architect",
+      "family": "Architecture",
+      "commandCount": 12
+    },
+    {
+      "path": "docs/guides/roles/product-manager.md",
+      "title": "Product Manager",
+      "family": "Product and Delivery",
+      "commandCount": 5
     }
   ],
   "global": [
@@ -411,6 +463,7 @@ Documents Indexed: {total_documents}
 
 Document Breakdown:
 - Guides: {guides_count}
+- DDaT Role Guides: {role_guides_count}
 - Global: {global_count}
 - Project Documents: {project_doc_count}
 - Diagrams: {diagram_count}

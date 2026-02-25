@@ -1,6 +1,6 @@
 # ArcKit DDaT Role Guides
 
-Which ArcKit commands should **you** use? These guides map ArcKit's 52 commands to UK Government [DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/) roles, so you can focus on the commands relevant to your job.
+Which ArcKit commands should **you** use? These guides map ArcKit's 53 commands to UK Government [DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/) roles, so you can focus on the commands relevant to your job.
 
 ## Architecture Roles
 

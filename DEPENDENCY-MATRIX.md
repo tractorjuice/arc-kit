@@ -74,6 +74,7 @@ This matrix shows which commands depend on outputs from other commands.
 
 ### Tier 0: Foundation (No Mandatory Dependencies)
 These commands can run first:
+- **start** - Onboarding and navigation (console-only diagnostic, no file output; recommends `init` and `principles`)
 - **plan** - Project planning and timeline (can optionally read: stakeholders, requirements, principles, sobc, risk if they exist)
 - **principles** - Architecture principles
 
@@ -297,9 +298,9 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 1.5.0
 - **Matrix Date**: 2026-02-25
-- **Commands Documented**: 52
+- **Commands Documented**: 53
 - **Matrix Rows**: 52 (50 document-generating commands + 2 external documents)
-- **Note**: `/arckit.customize` and `/arckit.health` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
+- **Note**: `/arckit.customize`, `/arckit.health`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
 

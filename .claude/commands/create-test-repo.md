@@ -156,7 +156,7 @@ projects/
 
 ## Available Commands
 
-This project uses the ArcKit plugin which provides 52 slash commands for architecture governance. See the [full command reference](https://tractorjuice.github.io/arc-kit/).
+This project uses the ArcKit plugin which provides 53 slash commands for architecture governance. See the [full command reference](https://tractorjuice.github.io/arc-kit/).
 
 ## Links
 

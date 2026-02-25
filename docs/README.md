@@ -15,7 +15,8 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ## 📖 Guides
 
 ### Core Workflow
-1. [Project Plan](guides/plan.md) - `/arckit.plan` ⭐ NEW
+0. [Getting Started](guides/start.md) - `/arckit.start` ⭐ NEW
+1. [Project Plan](guides/plan.md) - `/arckit.plan`
 2. [Architecture Principles](guides/principles.md) - `/arckit.principles`
 3. [Stakeholder Analysis](guides/stakeholders.md) - `/arckit.stakeholders`
 4. [Risk Management](guides/risk-management.md) - `/arckit.risk`
@@ -181,8 +182,9 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit.customize` | [customize.md](guides/customize.md) | ✅ Complete |
 | `/arckit.presentation` | [presentation.md](guides/presentation.md) | ✅ Complete |
 | `/arckit.health` | [artifact-health.md](guides/artifact-health.md) | ✅ Complete |
+| `/arckit.start` | [start.md](guides/start.md) | ✅ Complete |
 
-**Coverage**: 52/52 commands documented (100%)
+**Coverage**: 53/53 commands documented (100%)
 
 ---
 
