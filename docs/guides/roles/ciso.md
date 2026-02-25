@@ -11,23 +11,23 @@ The CISO sets security strategy and risk appetite for the organisation. You use 
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.secure` | Review Secure by Design assessments across projects | [Guide](../secure.md) |
-| `/arckit.mod-secure` | Review MOD Secure by Design assessments (if MOD) | [Guide](../mod-secure.md) |
-| `/arckit.dpia` | Oversee DPIAs for data protection compliance | [Guide](../dpia.md) |
-| `/arckit.risk` | Set risk appetite and review risk registers | [Guide](../risk.md) |
-| `/arckit.conformance` | Monitor security conformance across the portfolio | [Guide](../conformance.md) |
+| `/arckit.secure` | Review Secure by Design assessments across projects | [Guide](#docs/guides/secure.md) |
+| `/arckit.mod-secure` | Review MOD Secure by Design assessments (if MOD) | [Guide](#docs/guides/mod-secure.md) |
+| `/arckit.dpia` | Oversee DPIAs for data protection compliance | [Guide](#docs/guides/dpia.md) |
+| `/arckit.risk` | Set risk appetite and review risk registers | [Guide](#docs/guides/risk.md) |
+| `/arckit.conformance` | Monitor security conformance across the portfolio | [Guide](#docs/guides/conformance.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.principles` | Define security principles (Zero Trust, defence in depth) | [Guide](../principles.md) |
-| `/arckit.requirements` | Review NFR-SEC security requirements standards | [Guide](../requirements.md) |
-| `/arckit.tcop` | Review TCoP compliance for security-related points | [Guide](../tcop.md) |
-| `/arckit.analyze` | Review governance quality for security gaps | [Guide](../analyze.md) |
-| `/arckit.health` | Monitor for stale security artifacts | [Guide](../artifact-health.md) |
-| `/arckit.ai-playbook` | Review AI safety and security controls | [Guide](../ai-playbook.md) |
-| `/arckit.jsp-936` | Review MOD AI assurance (if applicable) | [Guide](../jsp-936.md) |
+| `/arckit.principles` | Define security principles (Zero Trust, defence in depth) | [Guide](#docs/guides/principles.md) |
+| `/arckit.requirements` | Review NFR-SEC security requirements standards | [Guide](#docs/guides/requirements.md) |
+| `/arckit.tcop` | Review TCoP compliance for security-related points | [Guide](#docs/guides/tcop.md) |
+| `/arckit.analyze` | Review governance quality for security gaps | [Guide](#docs/guides/analyze.md) |
+| `/arckit.health` | Monitor for stale security artifacts | [Guide](#docs/guides/artifact-health.md) |
+| `/arckit.ai-playbook` | Review AI safety and security controls | [Guide](#docs/guides/ai-playbook.md) |
+| `/arckit.jsp-936` | Review MOD AI assurance (if applicable) | [Guide](#docs/guides/jsp-936.md) |
 
 ## Typical Workflow
 
@@ -53,7 +53,7 @@ principles (security) → risk → secure / mod-secure → conformance → analy
 
 ## Related Roles
 
-- [Security Architect](security-architect.md) — implements your security strategy at project level
-- [CTO/CDIO](cto-cdio.md) — aligns security and technology strategy
-- [CDO](cdo.md) — co-owns data protection
-- [Enterprise Architect](enterprise-architect.md) — ensures security principles are embedded in governance
+- [Security Architect](#docs/guides/roles/security-architect.md) — implements your security strategy at project level
+- [CTO/CDIO](#docs/guides/roles/cto-cdio.md) — aligns security and technology strategy
+- [CDO](#docs/guides/roles/cdo.md) — co-owns data protection
+- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — ensures security principles are embedded in governance

@@ -11,21 +11,21 @@ The Chief Data Officer sets data strategy and governance policy. You use ArcKit'
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.data-model` | Review and approve data models for governance compliance | [Guide](../data-model.md) |
-| `/arckit.dpia` | Oversee Data Protection Impact Assessments for regulatory compliance | [Guide](../dpia.md) |
-| `/arckit.datascout` | Discover and catalogue external data sources across the organisation | [Guide](../datascout.md) |
-| `/arckit.data-mesh-contract` | Define data governance standards for federated data products | [Guide](../data-mesh-contract.md) |
+| `/arckit.data-model` | Review and approve data models for governance compliance | [Guide](#docs/guides/data-model.md) |
+| `/arckit.dpia` | Oversee Data Protection Impact Assessments for regulatory compliance | [Guide](#docs/guides/dpia.md) |
+| `/arckit.datascout` | Discover and catalogue external data sources across the organisation | [Guide](#docs/guides/datascout.md) |
+| `/arckit.data-mesh-contract` | Define data governance standards for federated data products | [Guide](#docs/guides/data-mesh-contract.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.principles` | Define data governance principles | [Guide](../principles.md) |
-| `/arckit.requirements` | Review data requirements (DR-xxx) for strategic alignment | [Guide](../requirements.md) |
-| `/arckit.strategy` | Contribute data strategy to Architecture Strategy | [Guide](../strategy.md) |
-| `/arckit.analyze` | Review governance quality for data completeness | [Guide](../analyze.md) |
-| `/arckit.platform-design` | Oversee data platform strategy for data marketplaces | [Guide](../platform-design.md) |
-| `/arckit.atrs` | Review algorithmic transparency records for data ethics | [Guide](../atrs.md) |
+| `/arckit.principles` | Define data governance principles | [Guide](#docs/guides/principles.md) |
+| `/arckit.requirements` | Review data requirements (DR-xxx) for strategic alignment | [Guide](#docs/guides/requirements.md) |
+| `/arckit.strategy` | Contribute data strategy to Architecture Strategy | [Guide](#docs/guides/strategy.md) |
+| `/arckit.analyze` | Review governance quality for data completeness | [Guide](#docs/guides/analyze.md) |
+| `/arckit.platform-design` | Oversee data platform strategy for data marketplaces | [Guide](#docs/guides/platform-design.md) |
+| `/arckit.atrs` | Review algorithmic transparency records for data ethics | [Guide](#docs/guides/atrs.md) |
 
 ## Typical Workflow
 
@@ -51,7 +51,7 @@ principles → requirements (DR-xxx) → datascout → data-model → data-mesh-
 
 ## Related Roles
 
-- [Data Architect](data-architect.md) — implements your data strategy at project level
-- [Data Governance Manager](data-governance-manager.md) — enforces the policies you define
-- [CTO/CDIO](cto-cdio.md) — aligns technology and data strategy
-- [CISO](ciso.md) — co-owns data protection with you
+- [Data Architect](#docs/guides/roles/data-architect.md) — implements your data strategy at project level
+- [Data Governance Manager](#docs/guides/roles/data-governance-manager.md) — enforces the policies you define
+- [CTO/CDIO](#docs/guides/roles/cto-cdio.md) — aligns technology and data strategy
+- [CISO](#docs/guides/roles/ciso.md) — co-owns data protection with you

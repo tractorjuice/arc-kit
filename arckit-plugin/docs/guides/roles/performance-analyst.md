@@ -11,20 +11,20 @@ The Performance Analyst measures service performance and identifies improvement 
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.analyze` | Run governance quality analysis — coverage, completeness, and gaps | [Guide](../analyze.md) |
-| `/arckit.health` | Scan for stale artifacts, orphaned requirements, version drift | [Guide](../artifact-health.md) |
-| `/arckit.conformance` | Check ADR implementation, architecture drift, and technical debt | [Guide](../conformance.md) |
-| `/arckit.traceability` | Measure requirements coverage — requirements to design to tests | [Guide](../traceability.md) |
+| `/arckit.analyze` | Run governance quality analysis — coverage, completeness, and gaps | [Guide](#docs/guides/analyze.md) |
+| `/arckit.health` | Scan for stale artifacts, orphaned requirements, version drift | [Guide](#docs/guides/artifact-health.md) |
+| `/arckit.conformance` | Check ADR implementation, architecture drift, and technical debt | [Guide](#docs/guides/conformance.md) |
+| `/arckit.traceability` | Measure requirements coverage — requirements to design to tests | [Guide](#docs/guides/traceability.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.requirements` | Understand the requirements being measured | [Guide](../requirements.md) |
-| `/arckit.principles` | Understand the principles being assessed against | [Guide](../principles.md) |
-| `/arckit.principles-compliance` | Review principles compliance scores | [Guide](../principles-compliance.md) |
-| `/arckit.story` | Contribute metrics and findings to the project narrative | [Guide](../story.md) |
-| `/arckit.service-assessment` | Provide performance data for service assessments | [Guide](../service-assessment.md) |
+| `/arckit.requirements` | Understand the requirements being measured | [Guide](#docs/guides/requirements.md) |
+| `/arckit.principles` | Understand the principles being assessed against | [Guide](#docs/guides/principles.md) |
+| `/arckit.principles-compliance` | Review principles compliance scores | [Guide](#docs/guides/principles-compliance.md) |
+| `/arckit.story` | Contribute metrics and findings to the project narrative | [Guide](#docs/guides/story.md) |
+| `/arckit.service-assessment` | Provide performance data for service assessments | [Guide](#docs/guides/service-assessment.md) |
 
 ## Typical Workflow
 
@@ -59,7 +59,7 @@ requirements → traceability → analyze → health → conformance
 
 ## Related Roles
 
-- [Enterprise Architect](enterprise-architect.md) — sets the governance standards you measure
-- [Delivery Manager](delivery-manager.md) — uses your metrics for delivery assurance
-- [Service Owner](service-owner.md) — uses your metrics for service performance reporting
-- [Business Analyst](business-analyst.md) — provides the requirements you measure coverage for
+- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — sets the governance standards you measure
+- [Delivery Manager](#docs/guides/roles/delivery-manager.md) — uses your metrics for delivery assurance
+- [Service Owner](#docs/guides/roles/service-owner.md) — uses your metrics for service performance reporting
+- [Business Analyst](#docs/guides/roles/business-analyst.md) — provides the requirements you measure coverage for

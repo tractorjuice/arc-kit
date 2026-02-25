@@ -6,49 +6,49 @@ Which ArcKit commands should **you** use? These guides map ArcKit's 52 commands 
 
 | Role | Primary Commands | Guide |
 |------|-----------------|-------|
-| [Enterprise Architect](enterprise-architect.md) | All 52 — owns the governance framework | Full lifecycle |
-| [Solution Architect](solution-architect.md) | requirements, research, adr, diagram, hld-review, wardley | Technical design |
-| [Data Architect](data-architect.md) | data-model, data-mesh-contract, dpia, datascout | Data governance |
-| [Security Architect](security-architect.md) | secure, mod-secure, dpia, risk, conformance | Security & compliance |
-| [Business Architect](business-architect.md) | stakeholders, sobc, strategy, roadmap, platform-design | Business alignment |
-| [Technical Architect](technical-architect.md) | diagram, devops, hld-review, dld-review, operationalize | Implementation |
-| [Network Architect](network-architect.md) | diagram, secure, hld-review | Infrastructure |
+| [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) | All 52 — owns the governance framework | Full lifecycle |
+| [Solution Architect](#docs/guides/roles/solution-architect.md) | requirements, research, adr, diagram, hld-review, wardley | Technical design |
+| [Data Architect](#docs/guides/roles/data-architect.md) | data-model, data-mesh-contract, dpia, datascout | Data governance |
+| [Security Architect](#docs/guides/roles/security-architect.md) | secure, mod-secure, dpia, risk, conformance | Security & compliance |
+| [Business Architect](#docs/guides/roles/business-architect.md) | stakeholders, sobc, strategy, roadmap, platform-design | Business alignment |
+| [Technical Architect](#docs/guides/roles/technical-architect.md) | diagram, devops, hld-review, dld-review, operationalize | Implementation |
+| [Network Architect](#docs/guides/roles/network-architect.md) | diagram, secure, hld-review | Infrastructure |
 
 ## Chief Digital and Data Roles
 
 | Role | Primary Commands | Guide |
 |------|-----------------|-------|
-| [CTO / CDIO](cto-cdio.md) | strategy, roadmap, principles, wardley, presentation | Strategic direction |
-| [CDO](cdo.md) | data-model, dpia, datascout, data-mesh-contract | Data strategy |
-| [CISO](ciso.md) | secure, mod-secure, dpia, risk, conformance | Security posture |
+| [CTO / CDIO](#docs/guides/roles/cto-cdio.md) | strategy, roadmap, principles, wardley, presentation | Strategic direction |
+| [CDO](#docs/guides/roles/cdo.md) | data-model, dpia, datascout, data-mesh-contract | Data strategy |
+| [CISO](#docs/guides/roles/ciso.md) | secure, mod-secure, dpia, risk, conformance | Security posture |
 
 ## Product and Delivery Roles
 
 | Role | Primary Commands | Guide |
 |------|-----------------|-------|
-| [Product Manager](product-manager.md) | plan, requirements, backlog, trello, story | Delivery planning |
-| [Delivery Manager](delivery-manager.md) | plan, risk, backlog, trello, traceability, health | Tracking & assurance |
-| [Business Analyst](business-analyst.md) | requirements, stakeholders, data-model, traceability | Analysis |
-| [Service Owner](service-owner.md) | servicenow, operationalize, service-assessment | Live service |
+| [Product Manager](#docs/guides/roles/product-manager.md) | plan, requirements, backlog, trello, story | Delivery planning |
+| [Delivery Manager](#docs/guides/roles/delivery-manager.md) | plan, risk, backlog, trello, traceability, health | Tracking & assurance |
+| [Business Analyst](#docs/guides/roles/business-analyst.md) | requirements, stakeholders, data-model, traceability | Analysis |
+| [Service Owner](#docs/guides/roles/service-owner.md) | servicenow, operationalize, service-assessment | Live service |
 
 ## Data Roles
 
 | Role | Primary Commands | Guide |
 |------|-----------------|-------|
-| [Data Governance Manager](data-governance-manager.md) | dpia, data-model, principles-compliance, data-mesh-contract | Data governance |
+| [Data Governance Manager](#docs/guides/roles/data-governance-manager.md) | dpia, data-model, principles-compliance, data-mesh-contract | Data governance |
 | [Performance Analyst](performance-analyst.md) | analyze, health, conformance, traceability | Quality metrics |
 
 ## IT Operations Roles
 
 | Role | Primary Commands | Guide |
 |------|-----------------|-------|
-| [IT Service Manager](it-service-manager.md) | servicenow, operationalize, finops | Service management |
+| [IT Service Manager](#docs/guides/roles/it-service-manager.md) | servicenow, operationalize, finops | Service management |
 
 ## Software Development Roles
 
 | Role | Primary Commands | Guide |
 |------|-----------------|-------|
-| [DevOps Engineer](devops-engineer.md) | devops, mlops, diagram | CI/CD & pipelines |
+| [DevOps Engineer](#docs/guides/roles/devops-engineer.md) | devops, mlops, diagram | CI/CD & pipelines |
 
 ---
 

@@ -11,22 +11,22 @@ The Service Owner is accountable for the quality and performance of a live servi
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.servicenow` | Design ServiceNow service management — CMDB, SLAs, incident, change, problem | [Guide](../servicenow.md) |
-| `/arckit.operationalize` | Create operational readiness pack — support model, runbooks, DR/BCP, handover | [Guide](../operationalize.md) |
-| `/arckit.service-assessment` | Prepare for GDS Service Standard assessment (14 points) | [Guide](../service-assessment.md) |
+| `/arckit.servicenow` | Design ServiceNow service management — CMDB, SLAs, incident, change, problem | [Guide](#docs/guides/servicenow.md) |
+| `/arckit.operationalize` | Create operational readiness pack — support model, runbooks, DR/BCP, handover | [Guide](#docs/guides/operationalize.md) |
+| `/arckit.service-assessment` | Prepare for GDS Service Standard assessment (14 points) | [Guide](#docs/guides/service-assessment.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.plan` | Review project plan for go-live milestones | [Guide](../plan.md) |
-| `/arckit.stakeholders` | Ensure service users and support teams are captured | [Guide](../stakeholder-analysis.md) |
-| `/arckit.requirements` | Review service-level requirements (NFR-A availability, NFR-P performance) | [Guide](../requirements.md) |
-| `/arckit.risk` | Review operational risks and service continuity | [Guide](../risk.md) |
-| `/arckit.backlog` | Review backlog for operational stories | [Guide](../backlog.md) |
-| `/arckit.finops` | Review cloud cost management for the service | [Guide](../finops.md) |
-| `/arckit.story` | Generate service narrative for governance boards | [Guide](../story.md) |
-| `/arckit.health` | Monitor artifact health for the service | [Guide](../artifact-health.md) |
+| `/arckit.plan` | Review project plan for go-live milestones | [Guide](#docs/guides/plan.md) |
+| `/arckit.stakeholders` | Ensure service users and support teams are captured | [Guide](#docs/guides/stakeholder-analysis.md) |
+| `/arckit.requirements` | Review service-level requirements (NFR-A availability, NFR-P performance) | [Guide](#docs/guides/requirements.md) |
+| `/arckit.risk` | Review operational risks and service continuity | [Guide](#docs/guides/risk.md) |
+| `/arckit.backlog` | Review backlog for operational stories | [Guide](#docs/guides/backlog.md) |
+| `/arckit.finops` | Review cloud cost management for the service | [Guide](#docs/guides/finops.md) |
+| `/arckit.story` | Generate service narrative for governance boards | [Guide](#docs/guides/story.md) |
+| `/arckit.health` | Monitor artifact health for the service | [Guide](#docs/guides/artifact-health.md) |
 
 ## Typical Workflow
 
@@ -50,7 +50,7 @@ requirements → servicenow → operationalize → service-assessment → story
 
 ## Related Roles
 
-- [IT Service Manager](it-service-manager.md) — manages day-to-day service operations you're accountable for
-- [Technical Architect](technical-architect.md) — designs the infrastructure your service runs on
-- [Product Manager](product-manager.md) — hands off the product for you to run as a live service
-- [Delivery Manager](delivery-manager.md) — manages the transition to live service
+- [IT Service Manager](#docs/guides/roles/it-service-manager.md) — manages day-to-day service operations you're accountable for
+- [Technical Architect](#docs/guides/roles/technical-architect.md) — designs the infrastructure your service runs on
+- [Product Manager](#docs/guides/roles/product-manager.md) — hands off the product for you to run as a live service
+- [Delivery Manager](#docs/guides/roles/delivery-manager.md) — manages the transition to live service

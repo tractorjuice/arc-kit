@@ -11,23 +11,23 @@ The Product Manager defines what to build and why. You own the planning, require
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.plan` | Create project plan with timeline, phases, gates, and Mermaid diagrams | [Guide](../plan.md) |
-| `/arckit.requirements` | Define business and technical requirements (co-own with Business Analyst) | [Guide](../requirements.md) |
-| `/arckit.backlog` | Generate prioritised product backlog — user stories organised into sprints | [Guide](../backlog.md) |
-| `/arckit.trello` | Export backlog to Trello board with sprint lists, labels, and checklists | [Guide](../trello.md) |
-| `/arckit.story` | Generate project story for stakeholder communication | [Guide](../story.md) |
+| `/arckit.plan` | Create project plan with timeline, phases, gates, and Mermaid diagrams | [Guide](#docs/guides/plan.md) |
+| `/arckit.requirements` | Define business and technical requirements (co-own with Business Analyst) | [Guide](#docs/guides/requirements.md) |
+| `/arckit.backlog` | Generate prioritised product backlog — user stories organised into sprints | [Guide](#docs/guides/backlog.md) |
+| `/arckit.trello` | Export backlog to Trello board with sprint lists, labels, and checklists | [Guide](#docs/guides/trello.md) |
+| `/arckit.story` | Generate project story for stakeholder communication | [Guide](#docs/guides/story.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.stakeholders` | Identify and prioritise stakeholders for product decisions | [Guide](../stakeholder-analysis.md) |
-| `/arckit.risk` | Review product and delivery risks | [Guide](../risk.md) |
-| `/arckit.research` | Review technology research for product feasibility | [Guide](../research.md) |
-| `/arckit.traceability` | Verify all requirements are covered in the backlog | [Guide](../traceability.md) |
-| `/arckit.health` | Check for orphaned requirements or stale artifacts | [Guide](../artifact-health.md) |
-| `/arckit.presentation` | Present product vision and progress to stakeholders | [Guide](../presentation.md) |
-| `/arckit.service-assessment` | Prepare for GDS Service Standard assessment (if UK Gov) | [Guide](../service-assessment.md) |
+| `/arckit.stakeholders` | Identify and prioritise stakeholders for product decisions | [Guide](#docs/guides/stakeholder-analysis.md) |
+| `/arckit.risk` | Review product and delivery risks | [Guide](#docs/guides/risk.md) |
+| `/arckit.research` | Review technology research for product feasibility | [Guide](#docs/guides/research.md) |
+| `/arckit.traceability` | Verify all requirements are covered in the backlog | [Guide](#docs/guides/traceability.md) |
+| `/arckit.health` | Check for orphaned requirements or stale artifacts | [Guide](#docs/guides/artifact-health.md) |
+| `/arckit.presentation` | Present product vision and progress to stakeholders | [Guide](#docs/guides/presentation.md) |
+| `/arckit.service-assessment` | Prepare for GDS Service Standard assessment (if UK Gov) | [Guide](#docs/guides/service-assessment.md) |
 
 ## Typical Workflow
 
@@ -54,7 +54,7 @@ plan → stakeholders → requirements → backlog → trello → traceability �
 
 ## Related Roles
 
-- [Business Analyst](business-analyst.md) — co-owns requirements, provides detailed analysis
-- [Delivery Manager](delivery-manager.md) — manages delivery of the backlog you prioritise
-- [Business Architect](business-architect.md) — provides the strategic context for your product
-- [Service Owner](service-owner.md) — takes ownership when the product goes live
+- [Business Analyst](#docs/guides/roles/business-analyst.md) — co-owns requirements, provides detailed analysis
+- [Delivery Manager](#docs/guides/roles/delivery-manager.md) — manages delivery of the backlog you prioritise
+- [Business Architect](#docs/guides/roles/business-architect.md) — provides the strategic context for your product
+- [Service Owner](#docs/guides/roles/service-owner.md) — takes ownership when the product goes live

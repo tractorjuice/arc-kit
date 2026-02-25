@@ -11,22 +11,22 @@ The Business Analyst elicits, analyses, and documents requirements. You are the 
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.requirements` | Create comprehensive business and technical requirements (BR, FR, NFR, INT, DR) | [Guide](../requirements.md) |
-| `/arckit.stakeholders` | Analyse stakeholder drivers, goals, and measurable outcomes | [Guide](../stakeholder-analysis.md) |
-| `/arckit.data-model` | Model data entities, relationships, and governance (with Data Architect) | [Guide](../data-model.md) |
-| `/arckit.traceability` | Generate requirements traceability matrix — requirements to design to tests | [Guide](../traceability.md) |
+| `/arckit.requirements` | Create comprehensive business and technical requirements (BR, FR, NFR, INT, DR) | [Guide](#docs/guides/requirements.md) |
+| `/arckit.stakeholders` | Analyse stakeholder drivers, goals, and measurable outcomes | [Guide](#docs/guides/stakeholder-analysis.md) |
+| `/arckit.data-model` | Model data entities, relationships, and governance (with Data Architect) | [Guide](#docs/guides/data-model.md) |
+| `/arckit.traceability` | Generate requirements traceability matrix — requirements to design to tests | [Guide](#docs/guides/traceability.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.plan` | Contribute to project planning (requirements phase estimation) | [Guide](../plan.md) |
-| `/arckit.sobc` | Provide requirements analysis for business case | [Guide](../sobc.md) |
-| `/arckit.backlog` | Review backlog for requirements coverage | [Guide](../backlog.md) |
-| `/arckit.research` | Provide requirements context for technology research | [Guide](../research.md) |
-| `/arckit.risk` | Identify requirements-related risks (scope creep, ambiguity) | [Guide](../risk.md) |
-| `/arckit.story` | Review project story for requirements accuracy | [Guide](../story.md) |
-| `/arckit.analyze` | Review governance analysis for requirements gaps | [Guide](../analyze.md) |
+| `/arckit.plan` | Contribute to project planning (requirements phase estimation) | [Guide](#docs/guides/plan.md) |
+| `/arckit.sobc` | Provide requirements analysis for business case | [Guide](#docs/guides/sobc.md) |
+| `/arckit.backlog` | Review backlog for requirements coverage | [Guide](#docs/guides/backlog.md) |
+| `/arckit.research` | Provide requirements context for technology research | [Guide](#docs/guides/research.md) |
+| `/arckit.risk` | Identify requirements-related risks (scope creep, ambiguity) | [Guide](#docs/guides/risk.md) |
+| `/arckit.story` | Review project story for requirements accuracy | [Guide](#docs/guides/story.md) |
+| `/arckit.analyze` | Review governance analysis for requirements gaps | [Guide](#docs/guides/analyze.md) |
 
 ## Typical Workflow
 
@@ -62,7 +62,7 @@ As the requirements author, you'll use these ID prefixes:
 
 ## Related Roles
 
-- [Product Manager](product-manager.md) — prioritises the requirements you define
-- [Solution Architect](solution-architect.md) — designs solutions to meet your requirements
-- [Data Architect](data-architect.md) — models data from your DR-xxx requirements
-- [Business Architect](business-architect.md) — provides the strategic context for your analysis
+- [Product Manager](#docs/guides/roles/product-manager.md) — prioritises the requirements you define
+- [Solution Architect](#docs/guides/roles/solution-architect.md) — designs solutions to meet your requirements
+- [Data Architect](#docs/guides/roles/data-architect.md) — models data from your DR-xxx requirements
+- [Business Architect](#docs/guides/roles/business-architect.md) — provides the strategic context for your analysis

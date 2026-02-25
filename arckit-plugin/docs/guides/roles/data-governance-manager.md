@@ -11,21 +11,21 @@ The Data Governance Manager ensures data is managed according to organisational 
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.dpia` | Generate Data Protection Impact Assessment for UK GDPR compliance | [Guide](../dpia.md) |
-| `/arckit.data-model` | Review data models for governance compliance (classification, retention, lineage) | [Guide](../data-model.md) |
-| `/arckit.principles-compliance` | Assess compliance with data governance principles | [Guide](../principles-compliance.md) |
-| `/arckit.data-mesh-contract` | Review and enforce data product contracts and SLAs | [Guide](../data-mesh-contract.md) |
+| `/arckit.dpia` | Generate Data Protection Impact Assessment for UK GDPR compliance | [Guide](#docs/guides/dpia.md) |
+| `/arckit.data-model` | Review data models for governance compliance (classification, retention, lineage) | [Guide](#docs/guides/data-model.md) |
+| `/arckit.principles-compliance` | Assess compliance with data governance principles | [Guide](#docs/guides/principles-compliance.md) |
+| `/arckit.data-mesh-contract` | Review and enforce data product contracts and SLAs | [Guide](#docs/guides/data-mesh-contract.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.principles` | Define data governance principles | [Guide](../principles.md) |
-| `/arckit.requirements` | Review data requirements (DR-xxx) for governance standards | [Guide](../requirements.md) |
-| `/arckit.datascout` | Review external data sources for compliance and licensing | [Guide](../datascout.md) |
-| `/arckit.traceability` | Verify data requirements trace through to governance controls | [Guide](../traceability.md) |
-| `/arckit.analyze` | Review governance quality for data governance gaps | [Guide](../analyze.md) |
-| `/arckit.atrs` | Review algorithmic transparency for data ethics compliance | [Guide](../atrs.md) |
+| `/arckit.principles` | Define data governance principles | [Guide](#docs/guides/principles.md) |
+| `/arckit.requirements` | Review data requirements (DR-xxx) for governance standards | [Guide](#docs/guides/requirements.md) |
+| `/arckit.datascout` | Review external data sources for compliance and licensing | [Guide](#docs/guides/datascout.md) |
+| `/arckit.traceability` | Verify data requirements trace through to governance controls | [Guide](#docs/guides/traceability.md) |
+| `/arckit.analyze` | Review governance quality for data governance gaps | [Guide](#docs/guides/analyze.md) |
+| `/arckit.atrs` | Review algorithmic transparency for data ethics compliance | [Guide](#docs/guides/atrs.md) |
 
 ## Typical Workflow
 
@@ -51,7 +51,7 @@ principles → requirements (DR-xxx) → data-model → dpia → data-mesh-contr
 
 ## Related Roles
 
-- [CDO](cdo.md) — sets the data strategy you enforce
-- [Data Architect](data-architect.md) — designs the data models you govern
-- [Security Architect](security-architect.md) — co-owns data protection compliance
-- [Enterprise Architect](enterprise-architect.md) — aligns data governance with architecture governance
+- [CDO](#docs/guides/roles/cdo.md) — sets the data strategy you enforce
+- [Data Architect](#docs/guides/roles/data-architect.md) — designs the data models you govern
+- [Security Architect](#docs/guides/roles/security-architect.md) — co-owns data protection compliance
+- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — aligns data governance with architecture governance

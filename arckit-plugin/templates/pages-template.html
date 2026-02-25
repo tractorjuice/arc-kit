@@ -2821,6 +2821,29 @@
                     <div class="app-markdown">${html}</div>
                 `;
 
+                // Rewrite relative .md links to SPA hash routes
+                const docDir = path.substring(0, path.lastIndexOf('/') + 1);
+                content.querySelectorAll('.app-markdown a[href]').forEach(a => {
+                    const href = a.getAttribute('href');
+                    if (!href || href.startsWith('http') || href.startsWith('#') || href.startsWith('mailto:')) return;
+                    if (!href.endsWith('.md') && !href.includes('.md#')) return;
+                    // Resolve relative path against current document directory
+                    const parts = (docDir + href.split('#')[0]).split('/');
+                    const resolved = [];
+                    parts.forEach(p => {
+                        if (p === '..') resolved.pop();
+                        else if (p && p !== '.') resolved.push(p);
+                    });
+                    const fragment = href.includes('#') ? '#' + href.split('#').slice(1).join('#') : '';
+                    const resolvedPath = resolved.join('/') + fragment;
+                    a.href = '#' + resolvedPath;
+                    a.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        window.location.hash = resolvedPath;
+                        loadDocument(resolved.join('/'));
+                    });
+                });
+
                 // Build table of contents
                 buildTableOfContents(content.querySelector('.app-markdown'));
 

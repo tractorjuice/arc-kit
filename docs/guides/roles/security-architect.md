@@ -11,25 +11,25 @@ The Security Architect ensures solutions meet security and compliance requiremen
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.risk` | Create risk register following HM Treasury Orange Book principles | [Guide](../risk.md) |
-| `/arckit.secure` | Generate Secure by Design assessment (NCSC CAF, Cyber Essentials, UK GDPR) | [Guide](../secure.md) |
-| `/arckit.mod-secure` | MOD Secure by Design assessment (JSP 440, IAMM, CAAT) | [Guide](../mod-secure.md) |
-| `/arckit.dpia` | Data Protection Impact Assessment for UK GDPR Article 35 | [Guide](../dpia.md) |
-| `/arckit.conformance` | Check architecture drift and security control implementation | [Guide](../conformance.md) |
+| `/arckit.risk` | Create risk register following HM Treasury Orange Book principles | [Guide](#docs/guides/risk.md) |
+| `/arckit.secure` | Generate Secure by Design assessment (NCSC CAF, Cyber Essentials, UK GDPR) | [Guide](#docs/guides/secure.md) |
+| `/arckit.mod-secure` | MOD Secure by Design assessment (JSP 440, IAMM, CAAT) | [Guide](#docs/guides/mod-secure.md) |
+| `/arckit.dpia` | Data Protection Impact Assessment for UK GDPR Article 35 | [Guide](#docs/guides/dpia.md) |
+| `/arckit.conformance` | Check architecture drift and security control implementation | [Guide](#docs/guides/conformance.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.principles` | Define security principles (confidentiality, integrity, availability) | [Guide](../principles.md) |
-| `/arckit.requirements` | Review NFR-SEC-xxx security requirements | [Guide](../requirements.md) |
-| `/arckit.tcop` | Review TCoP compliance for security-related points | [Guide](../tcop.md) |
-| `/arckit.ai-playbook` | Assess AI safety and security controls | [Guide](../ai-playbook.md) |
-| `/arckit.atrs` | Review algorithmic transparency for security implications | [Guide](../atrs.md) |
-| `/arckit.jsp-936` | MOD AI assurance for defence AI/ML systems | [Guide](../jsp-936.md) |
-| `/arckit.hld-review` | Review HLD for security architecture patterns | [Guide](../hld-review.md) |
-| `/arckit.diagram` | Review network and data flow diagrams for security boundaries | [Guide](../diagram.md) |
-| `/arckit.analyze` | Review governance quality for security gaps | [Guide](../analyze.md) |
+| `/arckit.principles` | Define security principles (confidentiality, integrity, availability) | [Guide](#docs/guides/principles.md) |
+| `/arckit.requirements` | Review NFR-SEC-xxx security requirements | [Guide](#docs/guides/requirements.md) |
+| `/arckit.tcop` | Review TCoP compliance for security-related points | [Guide](#docs/guides/tcop.md) |
+| `/arckit.ai-playbook` | Assess AI safety and security controls | [Guide](#docs/guides/ai-playbook.md) |
+| `/arckit.atrs` | Review algorithmic transparency for security implications | [Guide](#docs/guides/atrs.md) |
+| `/arckit.jsp-936` | MOD AI assurance for defence AI/ML systems | [Guide](#docs/guides/jsp-936.md) |
+| `/arckit.hld-review` | Review HLD for security architecture patterns | [Guide](#docs/guides/hld-review.md) |
+| `/arckit.diagram` | Review network and data flow diagrams for security boundaries | [Guide](#docs/guides/diagram.md) |
+| `/arckit.analyze` | Review governance quality for security gaps | [Guide](#docs/guides/analyze.md) |
 
 ## Typical Workflow
 
@@ -69,7 +69,7 @@ principles → risk → requirements (NFR-SEC) → dpia → mod-secure → jsp-9
 
 ## Related Roles
 
-- [CISO](ciso.md) — sets security strategy you implement at project level
-- [Enterprise Architect](enterprise-architect.md) — governs the principles your assessments validate against
-- [Data Architect](data-architect.md) — co-owns DPIA with you
-- [Solution Architect](solution-architect.md) — designs the solution you assess for security
+- [CISO](#docs/guides/roles/ciso.md) — sets security strategy you implement at project level
+- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — governs the principles your assessments validate against
+- [Data Architect](#docs/guides/roles/data-architect.md) — co-owns DPIA with you
+- [Solution Architect](#docs/guides/roles/solution-architect.md) — designs the solution you assess for security

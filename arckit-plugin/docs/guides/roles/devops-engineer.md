@@ -11,21 +11,21 @@ The DevOps Engineer designs and implements CI/CD pipelines, infrastructure as co
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.devops` | Create DevOps strategy — CI/CD pipelines, IaC, container orchestration, developer experience | [Guide](../devops.md) |
-| `/arckit.mlops` | Create MLOps strategy — model lifecycle, training pipelines, serving, monitoring (for AI projects) | [Guide](../mlops.md) |
-| `/arckit.diagram` | Create deployment, infrastructure, and pipeline architecture diagrams | [Guide](../diagram.md) |
+| `/arckit.devops` | Create DevOps strategy — CI/CD pipelines, IaC, container orchestration, developer experience | [Guide](#docs/guides/devops.md) |
+| `/arckit.mlops` | Create MLOps strategy — model lifecycle, training pipelines, serving, monitoring (for AI projects) | [Guide](#docs/guides/mlops.md) |
+| `/arckit.diagram` | Create deployment, infrastructure, and pipeline architecture diagrams | [Guide](#docs/guides/diagram.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.requirements` | Review NFR requirements (deployment frequency, MTTR, change failure rate) | [Guide](../requirements.md) |
-| `/arckit.operationalize` | Contribute to runbooks, monitoring, and alerting | [Guide](../operationalize.md) |
-| `/arckit.finops` | Review cloud cost implications of infrastructure choices | [Guide](../finops.md) |
-| `/arckit.backlog` | Review backlog for DevOps and infrastructure stories | [Guide](../backlog.md) |
-| `/arckit.adr` | Record infrastructure and tooling decisions | [Guide](../adr.md) |
-| `/arckit.azure-research` | Research Azure DevOps and infrastructure services | [Guide](../azure-research.md) |
-| `/arckit.aws-research` | Research AWS DevOps and infrastructure services | [Guide](../aws-research.md) |
+| `/arckit.requirements` | Review NFR requirements (deployment frequency, MTTR, change failure rate) | [Guide](#docs/guides/requirements.md) |
+| `/arckit.operationalize` | Contribute to runbooks, monitoring, and alerting | [Guide](#docs/guides/operationalize.md) |
+| `/arckit.finops` | Review cloud cost implications of infrastructure choices | [Guide](#docs/guides/finops.md) |
+| `/arckit.backlog` | Review backlog for DevOps and infrastructure stories | [Guide](#docs/guides/backlog.md) |
+| `/arckit.adr` | Record infrastructure and tooling decisions | [Guide](#docs/guides/adr.md) |
+| `/arckit.azure-research` | Research Azure DevOps and infrastructure services | [Guide](#docs/guides/azure-research.md) |
+| `/arckit.aws-research` | Research AWS DevOps and infrastructure services | [Guide](#docs/guides/aws-research.md) |
 
 ## Typical Workflow
 
@@ -48,6 +48,6 @@ requirements → diagram → devops → mlops → operationalize
 
 ## Related Roles
 
-- [Technical Architect](technical-architect.md) — designs the infrastructure you automate
-- [IT Service Manager](it-service-manager.md) — manages the services you deploy to
-- [Solution Architect](solution-architect.md) — defines the architecture your pipelines build
+- [Technical Architect](#docs/guides/roles/technical-architect.md) — designs the infrastructure you automate
+- [IT Service Manager](#docs/guides/roles/it-service-manager.md) — manages the services you deploy to
+- [Solution Architect](#docs/guides/roles/solution-architect.md) — defines the architecture your pipelines build

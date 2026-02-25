@@ -11,21 +11,21 @@ The Network Architect designs network infrastructure, connectivity, and security
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.diagram` | Create network topology, data flow, and security boundary diagrams | [Guide](../diagram.md) |
-| `/arckit.secure` | Contribute network security controls to Secure by Design assessment | [Guide](../secure.md) |
-| `/arckit.hld-review` | Review HLD for network architecture patterns and connectivity | [Guide](../hld-review.md) |
+| `/arckit.diagram` | Create network topology, data flow, and security boundary diagrams | [Guide](#docs/guides/diagram.md) |
+| `/arckit.secure` | Contribute network security controls to Secure by Design assessment | [Guide](#docs/guides/secure.md) |
+| `/arckit.hld-review` | Review HLD for network architecture patterns and connectivity | [Guide](#docs/guides/hld-review.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.requirements` | Define network NFRs (bandwidth, latency, availability, connectivity) | [Guide](../requirements.md) |
-| `/arckit.risk` | Identify network-specific risks (single points of failure, DDoS, connectivity) | [Guide](../risk.md) |
-| `/arckit.dld-review` | Review DLD for network implementation details | [Guide](../dld-review.md) |
-| `/arckit.adr` | Record network technology decisions (SD-WAN, VPN, CDN, load balancing) | [Guide](../adr.md) |
-| `/arckit.azure-research` | Research Azure networking services (VNet, ExpressRoute, Front Door) | [Guide](../azure-research.md) |
-| `/arckit.aws-research` | Research AWS networking services (VPC, Direct Connect, CloudFront) | [Guide](../aws-research.md) |
-| `/arckit.operationalize` | Contribute to network monitoring and DR/BCP sections | [Guide](../operationalize.md) |
+| `/arckit.requirements` | Define network NFRs (bandwidth, latency, availability, connectivity) | [Guide](#docs/guides/requirements.md) |
+| `/arckit.risk` | Identify network-specific risks (single points of failure, DDoS, connectivity) | [Guide](#docs/guides/risk.md) |
+| `/arckit.dld-review` | Review DLD for network implementation details | [Guide](#docs/guides/dld-review.md) |
+| `/arckit.adr` | Record network technology decisions (SD-WAN, VPN, CDN, load balancing) | [Guide](#docs/guides/adr.md) |
+| `/arckit.azure-research` | Research Azure networking services (VNet, ExpressRoute, Front Door) | [Guide](#docs/guides/azure-research.md) |
+| `/arckit.aws-research` | Research AWS networking services (VPC, Direct Connect, CloudFront) | [Guide](#docs/guides/aws-research.md) |
+| `/arckit.operationalize` | Contribute to network monitoring and DR/BCP sections | [Guide](#docs/guides/operationalize.md) |
 
 ## Typical Workflow
 
@@ -51,6 +51,6 @@ requirements (NFR-NET) → cloud-research → adr → diagram → secure → hld
 
 ## Related Roles
 
-- [Technical Architect](technical-architect.md) — designs the infrastructure your network supports
-- [Security Architect](security-architect.md) — sets security controls for network boundaries
-- [Solution Architect](solution-architect.md) — defines the solution topology you implement
+- [Technical Architect](#docs/guides/roles/technical-architect.md) — designs the infrastructure your network supports
+- [Security Architect](#docs/guides/roles/security-architect.md) — sets security controls for network boundaries
+- [Solution Architect](#docs/guides/roles/solution-architect.md) — defines the solution topology you implement

@@ -11,26 +11,26 @@ The Technical Architect translates high-level designs into implementable archite
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.diagram` | Create architecture diagrams (C4, sequence, dataflow) | [Guide](../diagram.md) |
-| `/arckit.hld-review` | Review High-Level Design against principles and requirements | [Guide](../hld-review.md) |
-| `/arckit.dld-review` | Review Detailed Design for implementation readiness | [Guide](../dld-review.md) |
-| `/arckit.devops` | Create DevOps strategy with CI/CD, IaC, and container orchestration | [Guide](../devops.md) |
-| `/arckit.operationalize` | Create operational readiness pack — runbooks, DR/BCP, on-call, handover | [Guide](../operationalize.md) |
+| `/arckit.diagram` | Create architecture diagrams (C4, sequence, dataflow) | [Guide](#docs/guides/diagram.md) |
+| `/arckit.hld-review` | Review High-Level Design against principles and requirements | [Guide](#docs/guides/hld-review.md) |
+| `/arckit.dld-review` | Review Detailed Design for implementation readiness | [Guide](#docs/guides/dld-review.md) |
+| `/arckit.devops` | Create DevOps strategy with CI/CD, IaC, and container orchestration | [Guide](#docs/guides/devops.md) |
+| `/arckit.operationalize` | Create operational readiness pack — runbooks, DR/BCP, on-call, handover | [Guide](#docs/guides/operationalize.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.requirements` | Review NFR requirements (performance, scalability, availability) | [Guide](../requirements.md) |
-| `/arckit.research` | Evaluate technology options and implementation feasibility | [Guide](../research.md) |
-| `/arckit.azure-research` | Deep-dive Azure infrastructure services | [Guide](../azure-research.md) |
-| `/arckit.aws-research` | Deep-dive AWS infrastructure services | [Guide](../aws-research.md) |
-| `/arckit.gcp-research` | Deep-dive GCP infrastructure services | [Guide](../gcp-research.md) |
-| `/arckit.adr` | Record infrastructure and technology decisions | [Guide](../adr.md) |
-| `/arckit.servicenow` | Design ITSM integration (CMDB, incident, change) | [Guide](../servicenow.md) |
-| `/arckit.mlops` | Design ML pipeline infrastructure (for AI projects) | [Guide](../mlops.md) |
-| `/arckit.finops` | Review cloud cost architecture | [Guide](../finops.md) |
-| `/arckit.backlog` | Review backlog for technical feasibility and effort estimation | [Guide](../backlog.md) |
+| `/arckit.requirements` | Review NFR requirements (performance, scalability, availability) | [Guide](#docs/guides/requirements.md) |
+| `/arckit.research` | Evaluate technology options and implementation feasibility | [Guide](#docs/guides/research.md) |
+| `/arckit.azure-research` | Deep-dive Azure infrastructure services | [Guide](#docs/guides/azure-research.md) |
+| `/arckit.aws-research` | Deep-dive AWS infrastructure services | [Guide](#docs/guides/aws-research.md) |
+| `/arckit.gcp-research` | Deep-dive GCP infrastructure services | [Guide](#docs/guides/gcp-research.md) |
+| `/arckit.adr` | Record infrastructure and technology decisions | [Guide](#docs/guides/adr.md) |
+| `/arckit.servicenow` | Design ITSM integration (CMDB, incident, change) | [Guide](#docs/guides/servicenow.md) |
+| `/arckit.mlops` | Design ML pipeline infrastructure (for AI projects) | [Guide](#docs/guides/mlops.md) |
+| `/arckit.finops` | Review cloud cost architecture | [Guide](#docs/guides/finops.md) |
+| `/arckit.backlog` | Review backlog for technical feasibility and effort estimation | [Guide](#docs/guides/backlog.md) |
 
 ## Typical Workflow
 
@@ -60,7 +60,7 @@ hld-review → dld-review → devops → operationalize
 
 ## Related Roles
 
-- [Solution Architect](solution-architect.md) — provides the HLD you detail into implementable design
-- [DevOps Engineer](devops-engineer.md) — implements the CI/CD pipelines you design
-- [IT Service Manager](it-service-manager.md) — receives the operational handover you prepare
-- [Network Architect](network-architect.md) — collaborates on infrastructure and network design
+- [Solution Architect](#docs/guides/roles/solution-architect.md) — provides the HLD you detail into implementable design
+- [DevOps Engineer](#docs/guides/roles/devops-engineer.md) — implements the CI/CD pipelines you design
+- [IT Service Manager](#docs/guides/roles/it-service-manager.md) — receives the operational handover you prepare
+- [Network Architect](#docs/guides/roles/network-architect.md) — collaborates on infrastructure and network design

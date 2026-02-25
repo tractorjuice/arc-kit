@@ -11,30 +11,30 @@ The Solution Architect designs technical solutions to meet business requirements
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.requirements` | Define comprehensive business and technical requirements (with Business Analyst) | [Guide](../requirements.md) |
-| `/arckit.research` | Research technologies and services with build vs buy analysis | [Guide](../research.md) |
-| `/arckit.azure-research` | Deep-dive Azure services via Microsoft Learn MCP | [Guide](../azure-research.md) |
-| `/arckit.aws-research` | Deep-dive AWS services via AWS Knowledge MCP | [Guide](../aws-research.md) |
-| `/arckit.gcp-research` | Deep-dive GCP services via Google Developer Knowledge MCP | [Guide](../gcp-research.md) |
-| `/arckit.wardley` | Map strategic landscape for build vs buy decisions | [Guide](../wardley.md) |
-| `/arckit.adr` | Document architecture decisions with options analysis | [Guide](../adr.md) |
-| `/arckit.diagram` | Create architecture diagrams (C4 context, container, sequence, dataflow) | [Guide](../diagram.md) |
-| `/arckit.hld-review` | Review High-Level Design against principles and requirements | [Guide](../hld-review.md) |
-| `/arckit.dld-review` | Review Detailed Design for implementation readiness | [Guide](../dld-review.md) |
+| `/arckit.requirements` | Define comprehensive business and technical requirements (with Business Analyst) | [Guide](#docs/guides/requirements.md) |
+| `/arckit.research` | Research technologies and services with build vs buy analysis | [Guide](#docs/guides/research.md) |
+| `/arckit.azure-research` | Deep-dive Azure services via Microsoft Learn MCP | [Guide](#docs/guides/azure-research.md) |
+| `/arckit.aws-research` | Deep-dive AWS services via AWS Knowledge MCP | [Guide](#docs/guides/aws-research.md) |
+| `/arckit.gcp-research` | Deep-dive GCP services via Google Developer Knowledge MCP | [Guide](#docs/guides/gcp-research.md) |
+| `/arckit.wardley` | Map strategic landscape for build vs buy decisions | [Guide](#docs/guides/wardley.md) |
+| `/arckit.adr` | Document architecture decisions with options analysis | [Guide](#docs/guides/adr.md) |
+| `/arckit.diagram` | Create architecture diagrams (C4 context, container, sequence, dataflow) | [Guide](#docs/guides/diagram.md) |
+| `/arckit.hld-review` | Review High-Level Design against principles and requirements | [Guide](#docs/guides/hld-review.md) |
+| `/arckit.dld-review` | Review Detailed Design for implementation readiness | [Guide](#docs/guides/dld-review.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.stakeholders` | Contribute to stakeholder analysis (technical stakeholders) | [Guide](../stakeholder-analysis.md) |
-| `/arckit.data-model` | Review data model for technical feasibility | [Guide](../data-model.md) |
-| `/arckit.datascout` | Review external data source options | [Guide](../datascout.md) |
-| `/arckit.platform-design` | Design platform strategy for multi-sided ecosystems | [Guide](../platform-design.md) |
-| `/arckit.sow` | Contribute technical sections to Statement of Work | [Guide](../sow.md) |
-| `/arckit.evaluate` | Lead technical evaluation of vendor proposals | [Guide](../evaluate.md) |
-| `/arckit.backlog` | Review backlog for technical feasibility | [Guide](../backlog.md) |
-| `/arckit.traceability` | Verify requirements trace through to design and tests | [Guide](../traceability.md) |
-| `/arckit.devops` | Input on CI/CD and infrastructure patterns | [Guide](../devops.md) |
+| `/arckit.stakeholders` | Contribute to stakeholder analysis (technical stakeholders) | [Guide](#docs/guides/stakeholder-analysis.md) |
+| `/arckit.data-model` | Review data model for technical feasibility | [Guide](#docs/guides/data-model.md) |
+| `/arckit.datascout` | Review external data source options | [Guide](#docs/guides/datascout.md) |
+| `/arckit.platform-design` | Design platform strategy for multi-sided ecosystems | [Guide](#docs/guides/platform-design.md) |
+| `/arckit.sow` | Contribute technical sections to Statement of Work | [Guide](#docs/guides/sow.md) |
+| `/arckit.evaluate` | Lead technical evaluation of vendor proposals | [Guide](#docs/guides/evaluate.md) |
+| `/arckit.backlog` | Review backlog for technical feasibility | [Guide](#docs/guides/backlog.md) |
+| `/arckit.traceability` | Verify requirements trace through to design and tests | [Guide](#docs/guides/traceability.md) |
+| `/arckit.devops` | Input on CI/CD and infrastructure patterns | [Guide](#docs/guides/devops.md) |
 
 ## Typical Workflow
 
@@ -67,7 +67,7 @@ diagram → hld-review → dld-review → traceability
 
 ## Related Roles
 
-- [Enterprise Architect](enterprise-architect.md) — governs the principles your designs must follow
-- [Technical Architect](technical-architect.md) — takes your HLD into detailed implementation
-- [Data Architect](data-architect.md) — owns the data layer of your solution
-- [Business Analyst](business-analyst.md) — co-owns requirements with you
+- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — governs the principles your designs must follow
+- [Technical Architect](#docs/guides/roles/technical-architect.md) — takes your HLD into detailed implementation
+- [Data Architect](#docs/guides/roles/data-architect.md) — owns the data layer of your solution
+- [Business Analyst](#docs/guides/roles/business-analyst.md) — co-owns requirements with you

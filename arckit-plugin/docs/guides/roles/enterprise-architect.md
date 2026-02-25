@@ -13,18 +13,18 @@ Commands you typically own and drive:
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.init` | Set up project structure with numbered directories and global artifacts | [Guide](../plan.md) |
-| `/arckit.principles` | Define enterprise architecture principles that govern all projects | [Guide](../principles.md) |
-| `/arckit.strategy` | Synthesise strategic artifacts into executive-level Architecture Strategy | [Guide](../strategy.md) |
-| `/arckit.roadmap` | Create multi-year strategic roadmap with capability evolution | [Guide](../roadmap.md) |
-| `/arckit.wardley` | Map strategic landscape with Wardley Maps for build vs buy decisions | [Guide](../wardley.md) |
-| `/arckit.analyze` | Run governance quality analysis across all architecture artifacts | [Guide](../analyze.md) |
-| `/arckit.principles-compliance` | Score compliance against architecture principles | [Guide](../principles-compliance.md) |
-| `/arckit.conformance` | Assess ADR implementation, architecture drift, and technical debt | [Guide](../conformance.md) |
-| `/arckit.health` | Scan for stale research, orphaned requirements, and version drift | [Guide](../artifact-health.md) |
-| `/arckit.story` | Generate comprehensive project narrative for governance reporting | [Guide](../story.md) |
-| `/arckit.presentation` | Create MARP slide deck for Architecture Review Boards | [Guide](../presentation.md) |
-| `/arckit.pages` | Publish architecture documentation as a GitHub Pages site | [Guide](../pages.md) |
+| `/arckit.init` | Set up project structure with numbered directories and global artifacts | [Guide](#docs/guides/plan.md) |
+| `/arckit.principles` | Define enterprise architecture principles that govern all projects | [Guide](#docs/guides/principles.md) |
+| `/arckit.strategy` | Synthesise strategic artifacts into executive-level Architecture Strategy | [Guide](#docs/guides/strategy.md) |
+| `/arckit.roadmap` | Create multi-year strategic roadmap with capability evolution | [Guide](#docs/guides/roadmap.md) |
+| `/arckit.wardley` | Map strategic landscape with Wardley Maps for build vs buy decisions | [Guide](#docs/guides/wardley.md) |
+| `/arckit.analyze` | Run governance quality analysis across all architecture artifacts | [Guide](#docs/guides/analyze.md) |
+| `/arckit.principles-compliance` | Score compliance against architecture principles | [Guide](#docs/guides/principles-compliance.md) |
+| `/arckit.conformance` | Assess ADR implementation, architecture drift, and technical debt | [Guide](#docs/guides/conformance.md) |
+| `/arckit.health` | Scan for stale research, orphaned requirements, and version drift | [Guide](#docs/guides/artifact-health.md) |
+| `/arckit.story` | Generate comprehensive project narrative for governance reporting | [Guide](#docs/guides/story.md) |
+| `/arckit.presentation` | Create MARP slide deck for Architecture Review Boards | [Guide](#docs/guides/presentation.md) |
+| `/arckit.pages` | Publish architecture documentation as a GitHub Pages site | [Guide](#docs/guides/pages.md) |
 
 ## Secondary Commands
 
@@ -32,18 +32,18 @@ Commands you delegate to specialists but review or consume outputs from:
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.plan` | Review project plans for alignment with architecture governance | [Guide](../plan.md) |
-| `/arckit.stakeholders` | Review stakeholder analysis, ensure all architecture forums captured | [Guide](../stakeholder-analysis.md) |
-| `/arckit.risk` | Review architecture risks, ensure mitigations align with principles | [Guide](../risk.md) |
-| `/arckit.sobc` | Review business case for strategic alignment | [Guide](../sobc.md) |
-| `/arckit.requirements` | Review requirements for completeness, traceability | [Guide](../requirements.md) |
-| `/arckit.research` | Review technology research and build vs buy recommendations | [Guide](../research.md) |
-| `/arckit.adr` | Chair ADR reviews, ensure decisions align with principles | [Guide](../adr.md) |
-| `/arckit.hld-review` | Lead HLD review against principles and requirements | [Guide](../hld-review.md) |
-| `/arckit.dld-review` | Lead DLD review for implementation readiness | [Guide](../dld-review.md) |
-| `/arckit.service-assessment` | Support GDS Service Standard assessment preparation | [Guide](../service-assessment.md) |
-| `/arckit.tcop` | Review TCoP compliance | [Guide](../tcop.md) |
-| `/arckit.customize` | Tailor templates to organisational standards | [Guide](../customize.md) |
+| `/arckit.plan` | Review project plans for alignment with architecture governance | [Guide](#docs/guides/plan.md) |
+| `/arckit.stakeholders` | Review stakeholder analysis, ensure all architecture forums captured | [Guide](#docs/guides/stakeholder-analysis.md) |
+| `/arckit.risk` | Review architecture risks, ensure mitigations align with principles | [Guide](#docs/guides/risk.md) |
+| `/arckit.sobc` | Review business case for strategic alignment | [Guide](#docs/guides/sobc.md) |
+| `/arckit.requirements` | Review requirements for completeness, traceability | [Guide](#docs/guides/requirements.md) |
+| `/arckit.research` | Review technology research and build vs buy recommendations | [Guide](#docs/guides/research.md) |
+| `/arckit.adr` | Chair ADR reviews, ensure decisions align with principles | [Guide](#docs/guides/adr.md) |
+| `/arckit.hld-review` | Lead HLD review against principles and requirements | [Guide](#docs/guides/hld-review.md) |
+| `/arckit.dld-review` | Lead DLD review for implementation readiness | [Guide](#docs/guides/dld-review.md) |
+| `/arckit.service-assessment` | Support GDS Service Standard assessment preparation | [Guide](#docs/guides/service-assessment.md) |
+| `/arckit.tcop` | Review TCoP compliance | [Guide](#docs/guides/tcop.md) |
+| `/arckit.customize` | Tailor templates to organisational standards | [Guide](#docs/guides/customize.md) |
 
 ## Typical Workflow
 
@@ -76,7 +76,7 @@ analyze → story → presentation → pages
 
 ## Related Roles
 
-- [Solution Architect](solution-architect.md) — designs the technical solution you govern
-- [Business Architect](business-architect.md) — provides the business context you synthesise
-- [CTO/CDIO](cto-cdio.md) — consumes your strategy and roadmap outputs
-- [Security Architect](security-architect.md) — owns the security compliance you review
+- [Solution Architect](#docs/guides/roles/solution-architect.md) — designs the technical solution you govern
+- [Business Architect](#docs/guides/roles/business-architect.md) — provides the business context you synthesise
+- [CTO/CDIO](#docs/guides/roles/cto-cdio.md) — consumes your strategy and roadmap outputs
+- [Security Architect](#docs/guides/roles/security-architect.md) — owns the security compliance you review
