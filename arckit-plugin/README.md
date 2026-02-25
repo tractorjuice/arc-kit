@@ -1,6 +1,6 @@
 # ArcKit Plugin for Claude Code
 
-Enterprise Architecture Governance & Vendor Procurement Toolkit - a Claude Code plugin providing 45 slash commands for generating architecture artifacts.
+Enterprise Architecture Governance & Vendor Procurement Toolkit - a Claude Code plugin providing 51 slash commands for generating architecture artifacts.
 
 ## Installation
 
@@ -35,7 +35,8 @@ claude --plugin-dir /path/to/arc-kit/arckit-plugin
 - **Claude Code** v2.1.50 or later
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
-- For `/arckit:azure-research`: Microsoft Learn MCP server (install separately)
+- For `/arckit:azure-research`: Microsoft Learn MCP server (included)
+- For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
 ## Quick Start
 
@@ -60,7 +61,7 @@ After installing the plugin:
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Commands | 50 | Slash commands for architecture artifacts |
+| Commands | 51 | Slash commands for architecture artifacts |
 | Skills | 1 | Conversational Wardley Mapping with interactive guidance |
 | Agents | 5 | Autonomous research agents |
 | Templates | 45 | Document templates with UK Government compliance |
@@ -189,9 +190,26 @@ projects/
 
 ## MCP Servers
 
-The plugin includes configuration for:
-- **AWS Knowledge MCP** - Official AWS documentation for `/arckit:aws-research`
-- **Microsoft Learn MCP** - Official Azure documentation for `/arckit:azure-research`
+The plugin includes 4 MCP (Model Context Protocol) servers for cloud research:
+
+| MCP Server | API Key Required | Used By |
+|------------|-----------------|---------|
+| AWS Knowledge | No | `/arckit:aws-research` |
+| Microsoft Learn | No | `/arckit:azure-research` |
+| Google Developer Knowledge | Yes (`GOOGLE_API_KEY`) | `/arckit:gcp-research` |
+| Data Commons | Yes (`DATA_COMMONS_API_KEY`) | Data statistics lookups |
+
+AWS Knowledge and Microsoft Learn work out of the box with no configuration. The Google and Data Commons servers require API keys — if you don't set them, you'll see errors in the plugin UI, but **all other commands work normally**.
+
+### Setting up optional API keys
+
+**Google Developer Knowledge** (for `/arckit:gcp-research`):
+1. Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey)
+2. Set the environment variable: `export GOOGLE_API_KEY="your-key-here"`
+
+**Data Commons** (for data statistics lookups):
+1. Get an API key from [datacommons.org](https://datacommons.org)
+2. Set the environment variable: `export DATA_COMMONS_API_KEY="your-key-here"`
 
 ## Migration from CLI
 
