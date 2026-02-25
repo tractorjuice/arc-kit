@@ -48,6 +48,6 @@ requirements → diagram → devops → mlops → operationalize
 
 ## Related Roles
 
-- [Technical Architect](#docs/guides/roles/technical-architect.md) — designs the infrastructure you automate
-- [IT Service Manager](#docs/guides/roles/it-service-manager.md) — manages the services you deploy to
-- [Solution Architect](#docs/guides/roles/solution-architect.md) — defines the architecture your pipelines build
+- [Technical Architect](technical-architect.md) — designs the infrastructure you automate
+- [IT Service Manager](it-service-manager.md) — manages the services you deploy to
+- [Solution Architect](solution-architect.md) — defines the architecture your pipelines build

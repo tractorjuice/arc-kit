@@ -67,7 +67,7 @@ diagram → hld-review → dld-review → traceability
 
 ## Related Roles
 
-- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — governs the principles your designs must follow
-- [Technical Architect](#docs/guides/roles/technical-architect.md) — takes your HLD into detailed implementation
-- [Data Architect](#docs/guides/roles/data-architect.md) — owns the data layer of your solution
-- [Business Analyst](#docs/guides/roles/business-analyst.md) — co-owns requirements with you
+- [Enterprise Architect](enterprise-architect.md) — governs the principles your designs must follow
+- [Technical Architect](technical-architect.md) — takes your HLD into detailed implementation
+- [Data Architect](data-architect.md) — owns the data layer of your solution
+- [Business Analyst](business-analyst.md) — co-owns requirements with you

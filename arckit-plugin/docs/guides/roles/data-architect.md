@@ -59,7 +59,7 @@ ArcKit's data commands are designed for UK public sector data governance:
 
 ## Related Roles
 
-- [Data Governance Manager](#docs/guides/roles/data-governance-manager.md) — enforces the policies your model defines
-- [CDO](#docs/guides/roles/cdo.md) — sets the data strategy you implement
-- [Solution Architect](#docs/guides/roles/solution-architect.md) — integrates your data model into the solution design
-- [Business Analyst](#docs/guides/roles/business-analyst.md) — provides the data requirements you model
+- [Data Governance Manager](data-governance-manager.md) — enforces the policies your model defines
+- [CDO](cdo.md) — sets the data strategy you implement
+- [Solution Architect](solution-architect.md) — integrates your data model into the solution design
+- [Business Analyst](business-analyst.md) — provides the data requirements you model

@@ -53,7 +53,7 @@ principles (security) → risk → secure / mod-secure → conformance → analy
 
 ## Related Roles
 
-- [Security Architect](#docs/guides/roles/security-architect.md) — implements your security strategy at project level
-- [CTO/CDIO](#docs/guides/roles/cto-cdio.md) — aligns security and technology strategy
-- [CDO](#docs/guides/roles/cdo.md) — co-owns data protection
-- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — ensures security principles are embedded in governance
+- [Security Architect](security-architect.md) — implements your security strategy at project level
+- [CTO/CDIO](cto-cdio.md) — aligns security and technology strategy
+- [CDO](cdo.md) — co-owns data protection
+- [Enterprise Architect](enterprise-architect.md) — ensures security principles are embedded in governance

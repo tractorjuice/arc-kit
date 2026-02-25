@@ -54,7 +54,7 @@ plan → stakeholders → requirements → backlog → trello → traceability �
 
 ## Related Roles
 
-- [Business Analyst](#docs/guides/roles/business-analyst.md) — co-owns requirements, provides detailed analysis
-- [Delivery Manager](#docs/guides/roles/delivery-manager.md) — manages delivery of the backlog you prioritise
-- [Business Architect](#docs/guides/roles/business-architect.md) — provides the strategic context for your product
-- [Service Owner](#docs/guides/roles/service-owner.md) — takes ownership when the product goes live
+- [Business Analyst](business-analyst.md) — co-owns requirements, provides detailed analysis
+- [Delivery Manager](delivery-manager.md) — manages delivery of the backlog you prioritise
+- [Business Architect](business-architect.md) — provides the strategic context for your product
+- [Service Owner](service-owner.md) — takes ownership when the product goes live

@@ -60,7 +60,7 @@ hld-review → dld-review → devops → operationalize
 
 ## Related Roles
 
-- [Solution Architect](#docs/guides/roles/solution-architect.md) — provides the HLD you detail into implementable design
-- [DevOps Engineer](#docs/guides/roles/devops-engineer.md) — implements the CI/CD pipelines you design
-- [IT Service Manager](#docs/guides/roles/it-service-manager.md) — receives the operational handover you prepare
-- [Network Architect](#docs/guides/roles/network-architect.md) — collaborates on infrastructure and network design
+- [Solution Architect](solution-architect.md) — provides the HLD you detail into implementable design
+- [DevOps Engineer](devops-engineer.md) — implements the CI/CD pipelines you design
+- [IT Service Manager](it-service-manager.md) — receives the operational handover you prepare
+- [Network Architect](network-architect.md) — collaborates on infrastructure and network design

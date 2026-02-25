@@ -76,7 +76,7 @@ analyze → story → presentation → pages
 
 ## Related Roles
 
-- [Solution Architect](#docs/guides/roles/solution-architect.md) — designs the technical solution you govern
-- [Business Architect](#docs/guides/roles/business-architect.md) — provides the business context you synthesise
-- [CTO/CDIO](#docs/guides/roles/cto-cdio.md) — consumes your strategy and roadmap outputs
-- [Security Architect](#docs/guides/roles/security-architect.md) — owns the security compliance you review
+- [Solution Architect](solution-architect.md) — designs the technical solution you govern
+- [Business Architect](business-architect.md) — provides the business context you synthesise
+- [CTO/CDIO](cto-cdio.md) — consumes your strategy and roadmap outputs
+- [Security Architect](security-architect.md) — owns the security compliance you review

@@ -62,7 +62,7 @@ As the requirements author, you'll use these ID prefixes:
 
 ## Related Roles
 
-- [Product Manager](#docs/guides/roles/product-manager.md) — prioritises the requirements you define
-- [Solution Architect](#docs/guides/roles/solution-architect.md) — designs solutions to meet your requirements
-- [Data Architect](#docs/guides/roles/data-architect.md) — models data from your DR-xxx requirements
-- [Business Architect](#docs/guides/roles/business-architect.md) — provides the strategic context for your analysis
+- [Product Manager](product-manager.md) — prioritises the requirements you define
+- [Solution Architect](solution-architect.md) — designs solutions to meet your requirements
+- [Data Architect](data-architect.md) — models data from your DR-xxx requirements
+- [Business Architect](business-architect.md) — provides the strategic context for your analysis

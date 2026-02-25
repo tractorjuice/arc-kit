@@ -50,7 +50,7 @@ requirements → servicenow → operationalize → service-assessment → story
 
 ## Related Roles
 
-- [IT Service Manager](#docs/guides/roles/it-service-manager.md) — manages day-to-day service operations you're accountable for
-- [Technical Architect](#docs/guides/roles/technical-architect.md) — designs the infrastructure your service runs on
-- [Product Manager](#docs/guides/roles/product-manager.md) — hands off the product for you to run as a live service
-- [Delivery Manager](#docs/guides/roles/delivery-manager.md) — manages the transition to live service
+- [IT Service Manager](it-service-manager.md) — manages day-to-day service operations you're accountable for
+- [Technical Architect](technical-architect.md) — designs the infrastructure your service runs on
+- [Product Manager](product-manager.md) — hands off the product for you to run as a live service
+- [Delivery Manager](delivery-manager.md) — manages the transition to live service

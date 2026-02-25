@@ -51,7 +51,7 @@ principles → wardley → strategy → roadmap → presentation
 
 ## Related Roles
 
-- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — implements the governance framework under your direction
-- [Business Architect](#docs/guides/roles/business-architect.md) — provides the business context for your strategy
-- [CISO](#docs/guides/roles/ciso.md) — advises on security strategy and risk appetite
-- [CDO](#docs/guides/roles/cdo.md) — advises on data strategy and governance
+- [Enterprise Architect](enterprise-architect.md) — implements the governance framework under your direction
+- [Business Architect](business-architect.md) — provides the business context for your strategy
+- [CISO](ciso.md) — advises on security strategy and risk appetite
+- [CDO](cdo.md) — advises on data strategy and governance

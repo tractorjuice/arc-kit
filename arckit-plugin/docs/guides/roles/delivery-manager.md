@@ -55,7 +55,7 @@ traceability → health → story
 
 ## Related Roles
 
-- [Product Manager](#docs/guides/roles/product-manager.md) — sets priorities you deliver against
-- [Business Analyst](#docs/guides/roles/business-analyst.md) — maintains the requirements you track
-- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — sets the governance gates you manage
-- [Service Owner](#docs/guides/roles/service-owner.md) — receives the service you deliver
+- [Product Manager](product-manager.md) — sets priorities you deliver against
+- [Business Analyst](business-analyst.md) — maintains the requirements you track
+- [Enterprise Architect](enterprise-architect.md) — sets the governance gates you manage
+- [Service Owner](service-owner.md) — receives the service you deliver

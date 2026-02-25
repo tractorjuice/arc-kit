@@ -51,6 +51,6 @@ requirements (NFR-NET) → cloud-research → adr → diagram → secure → hld
 
 ## Related Roles
 
-- [Technical Architect](#docs/guides/roles/technical-architect.md) — designs the infrastructure your network supports
-- [Security Architect](#docs/guides/roles/security-architect.md) — sets security controls for network boundaries
-- [Solution Architect](#docs/guides/roles/solution-architect.md) — defines the solution topology you implement
+- [Technical Architect](technical-architect.md) — designs the infrastructure your network supports
+- [Security Architect](security-architect.md) — sets security controls for network boundaries
+- [Solution Architect](solution-architect.md) — defines the solution topology you implement

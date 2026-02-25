@@ -51,7 +51,7 @@ principles → requirements (DR-xxx) → data-model → dpia → data-mesh-contr
 
 ## Related Roles
 
-- [CDO](#docs/guides/roles/cdo.md) — sets the data strategy you enforce
-- [Data Architect](#docs/guides/roles/data-architect.md) — designs the data models you govern
-- [Security Architect](#docs/guides/roles/security-architect.md) — co-owns data protection compliance
-- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — aligns data governance with architecture governance
+- [CDO](cdo.md) — sets the data strategy you enforce
+- [Data Architect](data-architect.md) — designs the data models you govern
+- [Security Architect](security-architect.md) — co-owns data protection compliance
+- [Enterprise Architect](enterprise-architect.md) — aligns data governance with architecture governance

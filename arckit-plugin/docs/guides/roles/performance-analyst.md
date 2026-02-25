@@ -59,7 +59,7 @@ requirements → traceability → analyze → health → conformance
 
 ## Related Roles
 
-- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — sets the governance standards you measure
-- [Delivery Manager](#docs/guides/roles/delivery-manager.md) — uses your metrics for delivery assurance
-- [Service Owner](#docs/guides/roles/service-owner.md) — uses your metrics for service performance reporting
-- [Business Analyst](#docs/guides/roles/business-analyst.md) — provides the requirements you measure coverage for
+- [Enterprise Architect](enterprise-architect.md) — sets the governance standards you measure
+- [Delivery Manager](delivery-manager.md) — uses your metrics for delivery assurance
+- [Service Owner](service-owner.md) — uses your metrics for service performance reporting
+- [Business Analyst](business-analyst.md) — provides the requirements you measure coverage for

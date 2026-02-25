@@ -69,7 +69,7 @@ principles → risk → requirements (NFR-SEC) → dpia → mod-secure → jsp-9
 
 ## Related Roles
 
-- [CISO](#docs/guides/roles/ciso.md) — sets security strategy you implement at project level
-- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — governs the principles your assessments validate against
-- [Data Architect](#docs/guides/roles/data-architect.md) — co-owns DPIA with you
-- [Solution Architect](#docs/guides/roles/solution-architect.md) — designs the solution you assess for security
+- [CISO](ciso.md) — sets security strategy you implement at project level
+- [Enterprise Architect](enterprise-architect.md) — governs the principles your assessments validate against
+- [Data Architect](data-architect.md) — co-owns DPIA with you
+- [Solution Architect](solution-architect.md) — designs the solution you assess for security

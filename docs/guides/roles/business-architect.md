@@ -61,7 +61,7 @@ plan → principles → stakeholders → risk → sobc → requirements → plat
 
 ## Related Roles
 
-- [Enterprise Architect](#docs/guides/roles/enterprise-architect.md) — uses your strategic context for governance decisions
-- [Product Manager](#docs/guides/roles/product-manager.md) — translates your strategy into delivery plans
-- [CTO/CDIO](#docs/guides/roles/cto-cdio.md) — consumes your strategy and roadmap at executive level
-- [Solution Architect](#docs/guides/roles/solution-architect.md) — designs solutions aligned to your business case
+- [Enterprise Architect](enterprise-architect.md) — uses your strategic context for governance decisions
+- [Product Manager](product-manager.md) — translates your strategy into delivery plans
+- [CTO/CDIO](cto-cdio.md) — consumes your strategy and roadmap at executive level
+- [Solution Architect](solution-architect.md) — designs solutions aligned to your business case

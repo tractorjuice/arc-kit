@@ -51,7 +51,7 @@ principles → requirements (DR-xxx) → datascout → data-model → data-mesh-
 
 ## Related Roles
 
-- [Data Architect](#docs/guides/roles/data-architect.md) — implements your data strategy at project level
-- [Data Governance Manager](#docs/guides/roles/data-governance-manager.md) — enforces the policies you define
-- [CTO/CDIO](#docs/guides/roles/cto-cdio.md) — aligns technology and data strategy
-- [CISO](#docs/guides/roles/ciso.md) — co-owns data protection with you
+- [Data Architect](data-architect.md) — implements your data strategy at project level
+- [Data Governance Manager](data-governance-manager.md) — enforces the policies you define
+- [CTO/CDIO](cto-cdio.md) — aligns technology and data strategy
+- [CISO](ciso.md) — co-owns data protection with you

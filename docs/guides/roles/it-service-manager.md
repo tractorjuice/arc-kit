@@ -47,7 +47,7 @@ requirements → servicenow → finops → operationalize
 
 ## Related Roles
 
-- [Service Owner](#docs/guides/roles/service-owner.md) — accountable for the service you manage
-- [Technical Architect](#docs/guides/roles/technical-architect.md) — designs the infrastructure you operate
-- [DevOps Engineer](#docs/guides/roles/devops-engineer.md) — automates the deployments you manage changes for
-- [Delivery Manager](#docs/guides/roles/delivery-manager.md) — manages the transition to your operational support
+- [Service Owner](service-owner.md) — accountable for the service you manage
+- [Technical Architect](technical-architect.md) — designs the infrastructure you operate
+- [DevOps Engineer](devops-engineer.md) — automates the deployments you manage changes for
+- [Delivery Manager](delivery-manager.md) — manages the transition to your operational support
