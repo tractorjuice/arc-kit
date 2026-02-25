@@ -293,7 +293,8 @@ You should:
 ## Important Notes
 
 - Requirements drive everything: SOW, vendor evaluation, design reviews, testing
-- Be specific and measurable (avoid "fast", use "<2 seconds")
+- Be specific and measurable (avoid "fast", use "< 2 seconds")
 - Include WHY (rationale) not just WHAT
 - Make acceptance criteria testable
 - Flag compliance requirements clearly (PCI-DSS, HIPAA, SOX, GDPR, etc.)
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

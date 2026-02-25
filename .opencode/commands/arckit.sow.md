@@ -279,6 +279,8 @@ You should:
 - Consider adding penalty clauses for SLA violations
 - Include provisions for IP ownership and source code escrow
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Output Instructions
 
 **CRITICAL - Token Efficiency**:

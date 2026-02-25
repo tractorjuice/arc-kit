@@ -1266,3 +1266,7 @@ Generates: `projects/002-payment-gateway/ARC-002-SVCASS-v1.0.md`
 ---
 
 *Transform ArcKit documentation into Service Standard compliance evidence. Demonstrate governance excellence.* ✨
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

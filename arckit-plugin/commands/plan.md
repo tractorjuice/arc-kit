@@ -481,6 +481,8 @@ After writing the plan, provide a summary:
 - **Mermaid Syntax**: Must be valid - test locally before delivering
 - **Realistic Timelines**: Don't compress phases unrealistically - use typical durations
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Examples of Timeline Adjustments
 
 - **Vendor Procurement**: Alpha increases by 6-8 weeks (SOW + evaluation + selection)

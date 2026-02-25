@@ -527,6 +527,8 @@ The Platform Design Canvas (Section 8) provides a single-page synthesis perfect 
 
 ---
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Example Use Cases
 
 **Good Use Cases for Platform Design**:

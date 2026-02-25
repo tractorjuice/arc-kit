@@ -331,3 +331,7 @@ Return ONLY a concise summary including:
 - **Reviews scarce**: Note "Limited public reviews available"
 - **UK Gov project with no Digital Marketplace results**: Document the gap, suggest alternatives
 - **Category with no suitable products**: Recommend "Build Custom" with effort estimate
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

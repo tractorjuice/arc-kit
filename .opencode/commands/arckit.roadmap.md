@@ -424,3 +424,4 @@ After writing the file, show a concise summary (NOT the full document):
 10. **Investment Realism**: Show investment increasing in middle years (migration/transformation), then decreasing in optimization phase
 
 11. **Traceability**: Link every roadmap theme back to stakeholder drivers and architecture principles to show strategic alignment
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

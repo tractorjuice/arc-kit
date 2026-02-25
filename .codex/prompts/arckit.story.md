@@ -793,6 +793,8 @@ The story demonstrates systematic architecture governance from stakeholder needs
 
 11. **Quality**: This is a showcase document. Make it comprehensive, accurate, and professionally written.
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Example Usage
 
 ```bash

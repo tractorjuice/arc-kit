@@ -358,6 +358,8 @@ You should:
 - Regular reviews required (annually minimum, quarterly for high-risk)
 - Contact algorithmic-transparency@dsit.gov.uk for guidance
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Related Frameworks
 
 - **AI Playbook** - responsible AI deployment (use `/arckit:ai-playbook` first for AI systems)

@@ -77,3 +77,7 @@ The agent writes the full research document to file and returns a summary includ
 - **AWS Architecture Center**: https://aws.amazon.com/architecture/
 - **AWS Well-Architected**: https://aws.amazon.com/architecture/well-architected/
 - **Digital Marketplace (AWS)**: https://www.digitalmarketplace.service.gov.uk/g-cloud/search?q=amazon+web+services
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

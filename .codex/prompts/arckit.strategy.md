@@ -333,3 +333,4 @@ After writing the file, show a concise summary (NOT the full document):
 9. **Version Management**: If a strategy already exists (ARC-*-STRAT-v*.md), create a new version (v2.0) rather than overwriting. Strategies should be versioned to track evolution.
 
 10. **Financial Years**: For UK Government, use "FY 2024/25" notation (April-March). For US/other contexts, use appropriate fiscal year notation.
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

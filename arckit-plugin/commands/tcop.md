@@ -275,3 +275,7 @@ Be aware of:
 - Provide specific, actionable recommendations rather than generic advice
 
 Generate the TCoP review now based on the project information provided.
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

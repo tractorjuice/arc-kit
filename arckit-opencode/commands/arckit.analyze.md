@@ -1421,6 +1421,8 @@ Example output: "Architecture Governance Analysis Report" with 18 findings (3 CR
 - Re-run after fixing issues to verify improvements
 - Target: 90%+ governance health score before proceeding
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Related Commands
 
 After analysis, you may need:

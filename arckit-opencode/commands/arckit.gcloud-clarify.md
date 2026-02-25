@@ -504,3 +504,7 @@ Important: Do not award contracts to services with CRITICAL gaps until gaps are 
 7. *Contract award* → Select winning service
 
 This command is the **critical validation step** between finding services and evaluating them.
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

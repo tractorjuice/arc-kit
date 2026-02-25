@@ -205,3 +205,7 @@ Return ONLY a concise summary including:
 - **No requirements found**: Stop, tell user to run `/arckit:requirements`
 - **Service not in europe-west2**: Flag as a blocker for UK Government projects, suggest alternatives
 - **SECRET classification**: Note that Google Cloud does not have a UK sovereign cloud — it is not suitable for SECRET classification in UK Government projects
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

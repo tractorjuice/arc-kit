@@ -638,3 +638,7 @@ Important: Maintain audit trail of all procurement decisions per Digital Marketp
 - **No requirements**: ERROR "Run /arckit:requirements first - nothing to procure"
 - **No project**: Suggest project creation with `.arckit/scripts/bash/create-project.sh`
 - **Wrong framework**: If user mentions G-Cloud or cloud services, suggest `/arckit:gcloud-search` instead
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

@@ -76,3 +76,7 @@ The agent writes the full research document to file and returns a summary includ
 - **Google Cloud Architecture Center**: https://cloud.google.com/architecture
 - **Google Cloud Architecture Framework**: https://cloud.google.com/architecture/framework
 - **Digital Marketplace (Google Cloud)**: https://www.digitalmarketplace.service.gov.uk/g-cloud/search?q=google+cloud
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

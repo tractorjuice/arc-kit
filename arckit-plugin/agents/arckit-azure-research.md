@@ -234,3 +234,7 @@ Return ONLY a concise summary including:
 - **No requirements found**: Stop, tell user to run `/arckit:requirements`
 - **Service not in UK regions**: Flag as a blocker for UK Government projects, suggest alternatives
 - **SECRET classification**: Note that standard Azure is not suitable, suggest Azure Government UK
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

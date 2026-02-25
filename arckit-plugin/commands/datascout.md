@@ -74,3 +74,7 @@ The agent writes the full discovery document to file and returns a summary inclu
 - **Output**: Feeds into `/arckit:dpia` (third-party data sources with personal data)
 - **Output**: Feeds into `/arckit:diagram` (data flow diagrams)
 - **Output**: Feeds into `/arckit:traceability` (DR-xxx mapped to sources)
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

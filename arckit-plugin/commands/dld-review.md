@@ -277,3 +277,4 @@ You should:
 - Test strategy must be comprehensive
 - DLD approval means "ready to code" - no ambiguity allowed
 - This is the last chance to catch design issues before expensive code changes
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

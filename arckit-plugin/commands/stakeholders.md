@@ -214,6 +214,8 @@ Include UK-specific outcomes like:
 - **Stakeholders are people**: They have careers, fears, ambitions - not just "business needs"
 - **Update regularly**: This is a living document - stakeholders' drivers evolve as context changes
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Success Criteria
 
 A good stakeholder drivers analysis will:

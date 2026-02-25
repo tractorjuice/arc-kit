@@ -333,3 +333,4 @@ If you need to re-export, either:
 2. Use a different BOARD_NAME to create a new board
 
 This command always creates a **new board** - it does not update an existing one.
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

@@ -270,6 +270,8 @@ You should:
 - **Flag any DR-xxx requirements that cannot be modeled** (gaps for requirements clarification)
 - **UK Government data projects**: The data model supports [National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy) alignment — Data Foundations pillar (metadata, standards, quality) and Availability pillar (data access, sharing). The Data Quality Framework section maps to the [Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) 6 dimensions. See `docs/guides/national-data-strategy.md` and `docs/guides/data-quality-framework.md` for full mappings.
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Integration with Other Commands
 
 - **Input**: Requires requirements document (`ARC-*-REQ-*.md`) for DR-xxx requirements

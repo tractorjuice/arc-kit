@@ -294,3 +294,4 @@ You should:
   - Test coverage verification
 - A requirement is only "done" when it's implemented AND tested
 - Missing traceability = missing accountability
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

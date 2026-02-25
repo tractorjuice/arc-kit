@@ -492,3 +492,4 @@ The generated HTML should handle:
 ---
 
 **Remember**: You MUST read and use `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

@@ -146,6 +146,8 @@ You should:
 - Make them specific enough to be enforceable but flexible enough to allow innovation
 - Include validation gates so reviews can be objective
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Examples of Good vs Bad Principles
 
 **❌ BAD** (Technology-Specific):

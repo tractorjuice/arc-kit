@@ -168,7 +168,7 @@ Generate:
 
 **6. SLA Definitions**:
 - Availability SLA: From NFR-Availability (e.g., "99.9% uptime")
-- Performance SLA: From NFR-Performance (e.g., "<500ms p95 response time")
+- Performance SLA: From NFR-Performance (e.g., "< 500ms p95 response time")
 - Incident resolution SLA: Based on service tier (derived from availability target)
 - Support coverage: 24/7 for Tier 1/2, business hours for Tier 3
 
@@ -562,3 +562,7 @@ You are designing the **operational implementation** of the architecture. This i
 **Be specific. Be accurate. Be actionable.**
 
 Good luck! 🎯
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

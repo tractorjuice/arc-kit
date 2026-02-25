@@ -414,3 +414,7 @@ Return ONLY a concise summary including:
 - **API requires registration**: Note registration process and lead time
 - **Data contains PII**: Flag for DPIA review, note GDPR requirements
 - **Rate limits too restrictive**: Note caching strategy needed, suggest paid tier
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

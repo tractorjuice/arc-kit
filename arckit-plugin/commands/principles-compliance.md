@@ -896,3 +896,7 @@ After generating the assessment document:
 7. **Actionable Recommendations**: Every AMBER/RED principle needs specific, actionable remediation steps with owners and dates. Avoid vague advice like "improve security".
 
 8. **Exception Handling**: If RED principle cannot be remediated, guide user through exception request process with CTO/CIO approval.
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

@@ -458,3 +458,7 @@ After writing the file, show ONLY a concise summary:
 - Number of key risks identified
 
 Generate the SOBC now, write to file using Write tool, and show only the summary above.
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

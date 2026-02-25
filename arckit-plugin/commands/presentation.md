@@ -241,6 +241,8 @@ You should:
 - Keep slides concise: 3-5 bullets per slide, one table or diagram per slide
 - For UK Government projects, include GDS Service Standard and TCoP compliance status
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Resources
 
 - [MARP Official Documentation](https://marp.app/)

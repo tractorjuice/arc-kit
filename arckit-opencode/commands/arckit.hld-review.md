@@ -259,3 +259,4 @@ You should:
 - Document any assumptions or questions for vendor
 - HLD approval is NOT final sign-off (DLD review comes next)
 - Keep a paper trail for audit purposes
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

@@ -358,3 +358,7 @@ Next Steps:
 - /arckit:diagram — Generate C4 or deployment diagrams
 - /arckit:data-model — Create formal data model from data stores
 ```
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

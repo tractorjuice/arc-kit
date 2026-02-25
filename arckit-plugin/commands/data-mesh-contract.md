@@ -536,6 +536,8 @@ Consider running:
    - Access controls are enforced via API gateway
    - Audit logs are captured automatically
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Example User Interactions
 
 **Example 1: Simple contract creation**

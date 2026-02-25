@@ -442,6 +442,8 @@ You should:
 - "Move fast and break things" does NOT apply to government AI
 - When in doubt, err on side of caution (add more safeguards)
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Related Frameworks
 
 - **Technology Code of Practice** (TCoP) - broader technology governance

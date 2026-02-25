@@ -208,3 +208,7 @@ Return ONLY a concise summary including:
 - **No requirements found**: Stop, tell user to run `/arckit:requirements`
 - **Service not in eu-west-2**: Flag as a blocker for UK Government projects, suggest alternatives
 - **SECRET classification**: Note that public AWS is not suitable, suggest AWS GovCloud or alternatives
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

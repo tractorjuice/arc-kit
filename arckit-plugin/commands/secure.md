@@ -456,6 +456,8 @@ Responsibilities:
 - **Incident response** - 72-hour reporting to ICO for personal data breaches
 - **Cloud First** - prefer cloud hosting, assess against NCSC Cloud Security Principles
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Related UK Government Standards
 
 - NCSC Cyber Assessment Framework (CAF)

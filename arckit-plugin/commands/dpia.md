@@ -382,6 +382,8 @@ If YES:
     - ICO guidance is updated
     - A data breach occurs
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Success Criteria
 
 - ✅ DPIA document created at `projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v${VERSION}.md`

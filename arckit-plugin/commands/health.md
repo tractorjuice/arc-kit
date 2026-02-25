@@ -518,3 +518,7 @@ Writes `docs/health.json` for the pages dashboard, in addition to the console re
 - **Custom thresholds**: Allow `.arckit/health-config.yaml` to override default thresholds
 - **Trend tracking**: Compare current scan against previous scan to show improvement/regression
 - **CI integration**: Exit code 1 if HIGH findings exist (for pipeline gates)
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

@@ -87,3 +87,7 @@ Existing profiles and notes are updated rather than duplicated. A `## Spawned Kn
 - **Output**: Feeds into `/arckit:hld-review` (validates technology choices)
 - **Output**: Spawns `vendors/{slug}-profile.md` (reusable vendor knowledge)
 - **Output**: Spawns `tech-notes/{slug}.md` (reusable technology knowledge)
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

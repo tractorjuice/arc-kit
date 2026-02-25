@@ -503,3 +503,7 @@ Use the template at `${CLAUDE_PLUGIN_ROOT}/templates/risk-register-template.md` 
 - UK Government risks (if applicable)
 
 Generate a comprehensive, Orange Book-compliant risk register that enables informed decision-making and effective risk management.
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

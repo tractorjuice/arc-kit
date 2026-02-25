@@ -492,6 +492,8 @@ Target Level 3+ for operational systems.
 - Operational security (OPSEC) essential for operational systems
 - **Cyber security is a "licence to operate"** - cannot be traded out or descoped
 
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
 ## Related MOD Standards
 
 - JSP 440: Defence Information Assurance Policy
