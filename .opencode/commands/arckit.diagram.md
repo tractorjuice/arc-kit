@@ -51,9 +51,9 @@ Read existing artifacts from the project context to understand what to diagram:
 - **Sequence**: API interactions and request/response flows for key scenarios
 
 **Question 2** — header: `Output format`, multiSelect: false
-> "What output format should be used? (Applies to C4 Context and C4 Container only — Deployment and Sequence always use Mermaid)"
+> "What output format should be used? (Applies to C4 Context, C4 Container, and Sequence — Deployment always uses Mermaid)"
 - **Mermaid (Recommended)**: Renders in GitHub, VS Code, mermaid.live — best for diagrams with 12 or fewer elements
-- **PlantUML C4**: Directional layout hints (`Rel_Right`, `Rel_Down`, `Lay_Right`) for precise control — best for diagrams with more than 12 elements
+- **PlantUML**: Directional layout hints and richer styling — best for complex diagrams; renders in ArcKit Pages, PlantUML server, VS Code extension
 
 **Skip rules** (only skip questions the user already answered in their arguments):
 - User specified type only (e.g., `/arckit.diagram context`): skip Question 1, **still ask Question 2**
@@ -61,9 +61,9 @@ Read existing artifacts from the project context to understand what to diagram:
 - User specified both (e.g., `/arckit.diagram context plantuml`): skip both questions
 - If neither is specified, ask both questions together in one call
 
-If the user selects Deployment or Sequence for Question 1, ignore the Question 2 answer — these types are Mermaid-only.
+If the user selects Deployment for Question 1, ignore the Question 2 answer — Deployment is Mermaid-only.
 
-Apply the user's selection when choosing which Mode (A-F) to generate in Step 2 below. For C4 types (Modes A, B, C), use the selected output format.
+Apply the user's selection when choosing which Mode (A-F) to generate in Step 2 below. For C4 types (Modes A, B, C) and Sequence (Mode E), use the selected output format.
 
 ## Step 1d: Load Layout Science Reference
 
@@ -410,7 +410,7 @@ flowchart TB
 
 **Mermaid Syntax**: Use `sequenceDiagram`
 
-**Example**:
+**Mermaid Example**:
 ```mermaid
 sequenceDiagram
     participant Customer
@@ -458,6 +458,61 @@ sequenceDiagram
         API-->>WebApp: 402 Payment Required
         WebApp-->>Customer: Payment failed, try again
     end
+```
+
+**PlantUML Syntax**: Use `@startuml` / `@enduml` with `actor`, `participant`, `database` stereotypes
+
+**PlantUML Example**:
+```plantuml
+@startuml
+title Payment Processing Flow
+
+actor Customer
+participant "Web App" as WebApp
+participant "Payment API" as API
+participant "Fraud Detection" as FraudDetection
+participant "Payment Orchestrator" as PaymentOrchestrator
+participant "Stripe" as Stripe
+database "Database" as Database
+queue "Message Queue" as MessageQueue
+
+Customer -> WebApp: Enter payment details
+WebApp -> API: POST /api/v1/payments\n{amount, card, merchant}
+
+API -> API: Validate request (JWT, schema)
+
+alt Invalid request
+    API --> WebApp: 400 Bad Request
+    WebApp --> Customer: Show error
+end
+
+API -> FraudDetection: POST /fraud/check\n{card, amount, customer}
+FraudDetection --> API: {risk_score: 0.15, approved: true}
+
+alt High fraud risk
+    API --> WebApp: 403 Forbidden (fraud detected)
+    WebApp --> Customer: Transaction blocked
+end
+
+API -> PaymentOrchestrator: processPayment(details)
+PaymentOrchestrator -> Stripe: POST /v1/charges\n{amount, token}
+
+alt Stripe success
+    Stripe --> PaymentOrchestrator: {charge_id, status: succeeded}
+    PaymentOrchestrator --> API: {success: true, transaction_id}
+    API -> Database: INSERT INTO transactions
+    Database --> API: Transaction saved
+    API -> MessageQueue: PUBLISH payment.completed
+    API --> WebApp: 200 OK {transaction_id}
+    WebApp --> Customer: Payment successful
+else Stripe failure
+    Stripe --> PaymentOrchestrator: {error, status: failed}
+    PaymentOrchestrator --> API: {success: false, error}
+    API -> Database: INSERT INTO failed_transactions
+    API --> WebApp: 402 Payment Required
+    WebApp --> Customer: Payment failed, try again
+end
+@enduml
 ```
 
 ### Mode F: Data Flow Diagram

@@ -32,7 +32,7 @@ For C4 diagram types (Context, Container, Component), you can choose between two
 
 Specify the format in arguments: `/arckit.diagram context plantuml` or select when prompted.
 
-Deployment, Sequence, and Data Flow diagrams use Mermaid only.
+Deployment and Data Flow diagrams use Mermaid only. Sequence diagrams support both Mermaid and PlantUML.
 
 ---
 
