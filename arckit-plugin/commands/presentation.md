@@ -100,7 +100,7 @@ Build the slide deck by extracting key content from each artifact:
 
 **Stakeholder Landscape** (from STKE):
 - Key stakeholders with roles, interest, and influence
-- Mermaid quadrant chart if data available
+- Mermaid quadrant chart if data available (see Mermaid label rules below)
 
 **Architecture Overview** (from DIAG, STRAT):
 - Current state summary and pain points
@@ -147,6 +147,12 @@ Build the slide deck by extracting key content from each artifact:
 - Use Mermaid diagrams where data supports them (Gantt, pie, C4, quadrant)
 - Use `<!-- fit -->` for headings that need auto-sizing
 - Tables should have no more than 5 rows per slide
+
+**Mermaid label rules** (applies to ALL Mermaid diagrams, especially `quadrantChart`):
+- **No accented characters**: Use ASCII only in labels — replace é→e, í→i, ó→o, ñ→n, ü→u, etc.
+- **No hyphens in data point labels**: Use spaces instead — e.g., `DST Cybersecurity` not `DST-Cybersecurity`
+- **No special characters**: Avoid colons, parentheses, brackets, or quotes in labels
+- These restrictions exist because Mermaid's parser breaks on non-ASCII and certain punctuation
 
 ### Step 7: Write the output
 

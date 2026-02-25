@@ -41,7 +41,7 @@ Read existing artifacts from the project context to understand what to diagram:
 
 ## Step 1c: Interactive Configuration
 
-If the user has **not** specified a diagram type in their arguments (e.g., they just ran `/arckit.diagram` without "context", "container", "deployment", etc.), use the **AskUserQuestion** tool to ask:
+**IMPORTANT**: Ask **both** questions below in a **single AskUserQuestion call** so the user sees them together. Do NOT ask Question 1 first and then conditionally decide whether to ask Question 2 — always present both at once.
 
 **Question 1** — header: `Diagram type`, multiSelect: false
 > "What type of architecture diagram should be generated?"
@@ -50,18 +50,18 @@ If the user has **not** specified a diagram type in their arguments (e.g., they 
 - **Deployment**: Infrastructure topology showing cloud resources and network zones
 - **Sequence**: API interactions and request/response flows for key scenarios
 
-If the user specified a type (e.g., `/arckit.diagram deployment`), skip this question and proceed directly.
-
-**Question 2** (C4 types only) — header: `Output format`, multiSelect: false
-> "What output format should be used for the C4 diagram?"
+**Question 2** — header: `Output format`, multiSelect: false
+> "What output format should be used? (Applies to C4 Context and C4 Container only — Deployment and Sequence always use Mermaid)"
 - **Mermaid (Recommended)**: Renders in GitHub, VS Code, mermaid.live — best for diagrams with 12 or fewer elements
 - **PlantUML C4**: Directional layout hints (`Rel_Right`, `Rel_Down`, `Lay_Right`) for precise control — best for diagrams with more than 12 elements
 
-**Skip this question if**:
-- The user specified a format in their arguments (e.g., `/arckit.diagram context plantuml`)
-- The diagram type is Deployment, Sequence, or Data Flow (these are Mermaid-only)
+**Skip rules** (only skip questions the user already answered in their arguments):
+- User specified type only (e.g., `/arckit.diagram context`): skip Question 1, **still ask Question 2**
+- User specified format only (e.g., `/arckit.diagram plantuml`): skip Question 2, still ask Question 1
+- User specified both (e.g., `/arckit.diagram context plantuml`): skip both questions
+- If neither is specified, ask both questions together in one call
 
-**Default**: If not asked or not specified, use Mermaid.
+If the user selects Deployment or Sequence for Question 1, ignore the Question 2 answer — these types are Mermaid-only.
 
 Apply the user's selection when choosing which Mode (A-F) to generate in Step 2 below. For C4 types (Modes A, B, C), use the selected output format.
 

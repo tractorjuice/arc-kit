@@ -5,6 +5,24 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.8.6] - 2026-02-25
+
+### Fixed
+
+- **Mermaid label compatibility for presentations** (#73, #70) — ASCII-only, no-hyphens, no-special-characters rules for Mermaid labels
+- **Diagram command UX** (#71, #65) — ask both questions in single prompt, clarified skip rules
+
+### Added
+
+- **Mermaid Compatibility section** in presentation guide
+- **Plugin setup guide and Productivity Guide** synced to OpenCode extension
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, Gemini extension, OpenCode extension, marketplace)
+
+---
+
 ## [2.8.5] - 2026-02-24
 
 ### Added

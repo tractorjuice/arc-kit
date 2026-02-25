@@ -5,7 +5,21 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.8.6] - 2026-02-25
+
+### Fixed
+
+- **Mermaid label compatibility for presentations** (#73, #70) — added ASCII-only, no-hyphens, no-special-characters rules to `/arckit.presentation` command, template, and guide; Mermaid's parser breaks on accented characters (é, í, ó) and hyphens in `quadrantChart` data point labels
+- **Diagram command UX** (#71, #65) — `/arckit.diagram` now asks both diagram type and output format in a single `AskUserQuestion` call instead of sequentially; skip rules clarified for partial arguments
+
+### Added
+
+- **Mermaid Compatibility section** in presentation guide — documents label restrictions with troubleshooting advice
+- **OpenCode extension guides** — MCP servers setup guide and Architecture Productivity Guide synced to OpenCode extension
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, Gemini extension, OpenCode extension, marketplace)
 
 ---
 

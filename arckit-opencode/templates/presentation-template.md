@@ -94,6 +94,7 @@ footer: 'ARC-[PROJECT_ID]-PRES-v[VERSION] | [CLASSIFICATION] | [DATE]'
 
 ### Stakeholder Priorities
 
+<!-- Mermaid labels: ASCII only, no accents (e→e, i→i), no hyphens in data points, no special chars -->
 ```mermaid
 quadrantChart
     title Stakeholder Influence vs Interest
