@@ -74,6 +74,19 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 ### Documentation & Publishing
 - [GitHub Pages](guides/pages.md) - `/arckit.pages` ⭐ NEW - Generate documentation site
 
+### DDaT Role Guides
+
+Which commands should **you** use? Guides for 18 [DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/) roles:
+
+- **Architecture**: [Enterprise Architect](guides/roles/enterprise-architect.md) | [Solution Architect](guides/roles/solution-architect.md) | [Data Architect](guides/roles/data-architect.md) | [Security Architect](guides/roles/security-architect.md) | [Business Architect](guides/roles/business-architect.md) | [Technical Architect](guides/roles/technical-architect.md) | [Network Architect](guides/roles/network-architect.md)
+- **Chief Digital and Data**: [CTO/CDIO](guides/roles/cto-cdio.md) | [CDO](guides/roles/cdo.md) | [CISO](guides/roles/ciso.md)
+- **Product and Delivery**: [Product Manager](guides/roles/product-manager.md) | [Delivery Manager](guides/roles/delivery-manager.md) | [Business Analyst](guides/roles/business-analyst.md) | [Service Owner](guides/roles/service-owner.md)
+- **Data**: [Data Governance Manager](guides/roles/data-governance-manager.md) | [Performance Analyst](guides/roles/performance-analyst.md)
+- **IT Operations**: [IT Service Manager](guides/roles/it-service-manager.md)
+- **Software Development**: [DevOps Engineer](guides/roles/devops-engineer.md)
+
+See the [full index](guides/roles/README.md) for details.
+
 ---
 
 ## 🎯 By Use Case
