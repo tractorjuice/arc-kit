@@ -65,6 +65,21 @@
             border-bottom-color: #1d70b8;
         }
 
+        .app-nav-bar__brand {
+            color: #ffffff;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            display: block;
+        }
+
+        .app-nav-bar__brand:hover,
+        .app-nav-bar__brand:focus {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
         .app-nav-bar__toggle {
             display: none;
             background: none;
@@ -158,10 +173,11 @@
 
     <nav class="app-nav-bar" aria-label="Main navigation">
         <div class="govuk-width-container app-nav-bar__inner">
+            <a href="index.html" class="app-nav-bar__brand">ArcKit</a>
             <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
             <ul class="app-nav-bar__list" id="nav-menu">
                 <li class="app-nav-bar__item"><a href="index.html">Home</a></li>
-                <li class="app-nav-bar__item"><a href="index.html#commands">Commands</a></li>
+                <li class="app-nav-bar__item"><a href="commands.html">Commands</a></li>
                 <li class="app-nav-bar__item"><a href="use-cases.html">Example Projects</a></li>
                 <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
                 <li class="app-nav-bar__item app-nav-bar__item--active"><a href="roles.html">Roles</a></li>
