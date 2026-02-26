@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="ArcKit Real-World Use Cases - Browse actual architecture governance outputs from 12 UK Government scenarios.">
+    <title>Use Cases - ArcKit</title>
+
+    <!-- GOV.UK Frontend v5.13.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+
+    <style>
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
+        /* Nav Bar */
+        .app-nav-bar {
+            background: #0b0c0c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__item--active a {
+            border-bottom-color: #1d70b8;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle { display: block; }
+            .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+            .app-nav-bar__list--open { display: flex; }
+            .app-nav-bar__inner { flex-wrap: wrap; }
+            .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+            .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+        }
+
+        /* Use Case Cards */
+        .app-use-case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-use-case-card {
+            background: #f3f2f1;
+            padding: 1.5rem;
+            border-top: 4px solid #00703c;
+        }
+
+        .app-use-case-card:hover {
+            background: #e8e6e3;
+        }
+
+        .app-use-case-card__domain {
+            display: inline-block;
+            background: #1d70b8;
+            color: white;
+            font-size: 0.6875rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-use-case-card__domain--health { background: #00703c; }
+        .app-use-case-card__domain--cloud { background: #1d70b8; }
+        .app-use-case-card__domain--ai { background: #912b88; }
+        .app-use-case-card__domain--data { background: #f47738; }
+        .app-use-case-card__domain--digital { background: #003078; }
+        .app-use-case-card__domain--enterprise { background: #505a5f; }
+
+        /* Footer */
+        .app-footer {
+            background: #0b0c0c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .app-footer a { color: white; text-decoration: underline; }
+        .app-footer a:hover { color: #5694ca; }
+    </style>
+</head>
+<body class="govuk-template__body">
+    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="index.html">Home</a></li>
+                <li class="app-nav-bar__item"><a href="index.html#commands">Commands</a></li>
+                <li class="app-nav-bar__item app-nav-bar__item--active"><a href="use-cases.html">Use Cases</a></li>
+                <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item"><a href="index.html#getting-started">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-width-container">
+            <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
+
+            <h1 class="govuk-heading-xl">Real-World Use Cases</h1>
+            <p class="govuk-body-l">ArcKit generates complete architecture documentation. Browse actual outputs from these 12 UK Government scenarios &mdash; each with stakeholder analysis, risk registers, requirements, design reviews, and more.</p>
+
+            <div class="govuk-inset-text">
+                Every use case below links to a live GitHub Pages site showing the full set of artifacts generated by ArcKit commands. These are real outputs, not mockups.
+            </div>
+
+            <div class="app-use-case-grid">
+                <!-- Health -->
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--health">Health</span>
+                    <h2 class="govuk-heading-s">NHS Appointment Booking</h2>
+                    <p class="govuk-body-s">Digital health platform with patient portal, NHS Spine integration, IG Toolkit compliance, accessibility (WCAG 2.1 AA), GDPR data handling.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--health">Health</span>
+                    <h2 class="govuk-heading-s">Doctors Appointment System</h2>
+                    <p class="govuk-body-s">Online appointment booking system with GDS Service Standard assessment, Secure by Design compliance, NHS integration patterns, and DPIA for patient data handling.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <!-- AI & GenAI -->
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--ai">AI</span>
+                    <h2 class="govuk-heading-s">HMRC Tax Assistant</h2>
+                    <p class="govuk-body-s">Conversational AI for tax guidance with PII handling, HMRC integration, compliance with Government Security Classification, Welsh language support.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--ai">AI</span>
+                    <h2 class="govuk-heading-s">Cabinet Office GenAI Platform</h2>
+                    <p class="govuk-body-s">Cross-government generative AI service with multi-tenant architecture, AI Playbook compliance, ATRS publication, responsible AI governance, departmental isolation for OFFICIAL to OFFICIAL-SENSITIVE data.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--ai">AI</span>
+                    <h2 class="govuk-heading-s">Scottish Courts GenAI Strategy</h2>
+                    <p class="govuk-body-s">Scottish Courts and Tribunals Service GenAI programme with comprehensive MLOps, FinOps, DevOps strategies, AI Playbook compliance, and ATRS transparency records.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <!-- Cloud & Enterprise -->
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--cloud">Cloud</span>
+                    <h2 class="govuk-heading-s">M365 GCC-H Migration</h2>
+                    <p class="govuk-body-s">Government cloud migration from on-premise to Microsoft 365 GCC High with data sovereignty, compliance mapping, user training, rollback planning.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v1-m365/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--enterprise">Enterprise</span>
+                    <h2 class="govuk-heading-s">Windows 11 Deployment</h2>
+                    <p class="govuk-body-s">Enterprise OS upgrade with hardware compatibility assessment, Group Policy migration, security baseline configuration, pilot testing framework.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <!-- Digital Services -->
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--digital">Digital</span>
+                    <h2 class="govuk-heading-s">Patent Application System</h2>
+                    <p class="govuk-body-s">Intellectual property platform with document management, workflow automation, GOV.UK Pay integration, Notify for status updates.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v6-patent-system/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--digital">Digital</span>
+                    <h2 class="govuk-heading-s">UK Fuel Price Transparency</h2>
+                    <p class="govuk-body-s">UK Government fuel price transparency service with real-time pricing data, stakeholder analysis, comprehensive risk register, data model, and technology research.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--digital">Digital</span>
+                    <h2 class="govuk-heading-s">UK Smart Meter Consumer App</h2>
+                    <p class="govuk-body-s">UK smart meter data consumer mobile app with architecture principles, stakeholder analysis, requirements specification, risk register, and technology research.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <!-- Data -->
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--data">Data</span>
+                    <h2 class="govuk-heading-s">ONS Data Platform</h2>
+                    <p class="govuk-body-s">Official statistics analytics environment with secure data pipelines, Five Safes governance, reproducible research workflows, and cross-government data sharing.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+
+                <div class="app-use-case-card">
+                    <span class="app-use-case-card__domain app-use-case-card__domain--data">Data</span>
+                    <h2 class="govuk-heading-s">UK Government API Aggregator</h2>
+                    <p class="govuk-body-s">Unified platform aggregating 240+ UK Government APIs across 34+ departments with data source discovery, cloud research (AWS &amp; Azure), Secure by Design assessment, and architecture diagrams.</p>
+                    <a href="https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
+                </div>
+            </div>
+
+            <div class="govuk-warning-text govuk-!-margin-top-6">
+                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong class="govuk-warning-text__text">
+                    <span class="govuk-visually-hidden">Warning</span>
+                    AI generates first drafts following templates. Always review, validate, and refine AI output with human expertise.
+                </strong>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="govuk-width-container">
+            <p class="govuk-body-s">Built with <a href="https://design-system.service.gov.uk/" class="govuk-link">GOV.UK Design System</a> | <a href="index.html" class="govuk-link">Back to ArcKit</a> | <a href="https://github.com/tractorjuice/arc-kit" class="govuk-link">GitHub</a> | MIT License</p>
+        </div>
+    </footer>
+</body>
+</html>
