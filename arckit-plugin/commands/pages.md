@@ -55,7 +55,7 @@ After syncing, scan `docs/guides/` (top-level `.md` files only, **excluding** th
 | Operations | devops, mlops, finops, servicenow, operationalize |
 | Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
 | Research | aws-research, azure-research, gcp-research |
-| Other | pages, story, presentation, trello, migration, customize, upgrading, pinecone-mcp |
+| Other | pages, story, presentation, trello, migration, customize, upgrading, pinecone-mcp, start, conformance, productivity, remote-control, mcp-servers |
 
 **DDaT Role Guides** (in `docs/guides/roles/`):
 
@@ -100,7 +100,7 @@ Scan `docs/guides/roles/` for role guide files (excluding `README.md`) and add t
 | Status | Description | Guide Files |
 |--------|-------------|-------------|
 | live | Production-ready | plan, principles, stakeholders, stakeholder-analysis, risk, sobc, requirements, data-model, diagram, traceability, principles-compliance, story, sow, evaluate, customize, risk-management, business-case |
-| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, presentation, artifact-health, design-review, procurement, knowledge-compounding, c4-layout-science, security-hooks, codes-of-practice, data-quality-framework, govs-007-security, national-data-strategy, upgrading |
+| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, presentation, artifact-health, design-review, procurement, knowledge-compounding, c4-layout-science, security-hooks, codes-of-practice, data-quality-framework, govs-007-security, national-data-strategy, upgrading, start, conformance, productivity, remote-control, mcp-servers |
 | alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs, pages |
 | experimental | Early adopters | platform-design, wardley, azure-research, aws-research, gcp-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936, migration, pinecone-mcp |
 
