@@ -584,6 +584,84 @@
         .app-dep-matrix-legend__swatch--r { background: #1d70b8; }
         .app-dep-matrix-legend__swatch--o { background: #b1b4b6; }
         .app-dep-matrix-legend__swatch--self { background: #0b0c0c; }
+
+        /* Sticky Navigation Bar */
+        .app-nav-bar {
+            background: #0b0c0c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle {
+                display: block;
+            }
+            .app-nav-bar__list {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+            }
+            .app-nav-bar__list--open {
+                display: flex;
+            }
+            .app-nav-bar__inner {
+                flex-wrap: wrap;
+            }
+            .app-nav-bar__item a {
+                padding: 0.75rem 1rem;
+                border-bottom: none;
+                border-left: 3px solid transparent;
+            }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus {
+                border-left-color: #1d70b8;
+                border-bottom: none;
+            }
+        }
+
     </style>
 </head>
 <body class="govuk-template__body">
@@ -605,6 +683,20 @@
             </div>
         </div>
     </header>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="#hero">Home</a></li>
+                <li class="app-nav-bar__item"><a href="#commands">Commands</a></li>
+                <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item"><a href="#getting-started">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <!-- Hero Section -->
@@ -4225,50 +4317,40 @@ flowchart TD
     <!-- Documentation Section -->
     <div class="govuk-width-container govuk-!-margin-top-9" id="documentation">
         <h2 class="govuk-heading-l">Documentation</h2>
-        <p class="govuk-body">Comprehensive guides for every aspect of ArcKit usage:</p>
+        <p class="govuk-body">Comprehensive guides for every aspect of ArcKit usage.</p>
 
         <div class="govuk-grid-row govuk-!-margin-top-6">
             <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s">Command Guides</h3>
+                <h3 class="govuk-heading-m"><a href="guides.html" class="govuk-link">Command Guides</a></h3>
+                <p class="govuk-body">69 usage guides organized into 9 categories:</p>
                 <ul class="govuk-list govuk-list--bullet">
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/analyze.md" class="govuk-link">Analysis Guide</a> - Gap analysis across artifacts</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/design-review.md" class="govuk-link">Design Review Guide</a> - 10-section assessment checklist</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/diagram.md" class="govuk-link">Architecture Diagrams</a> - C4 Model visualization</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/platform-design.md" class="govuk-link">Platform Design Guide</a> - Multi-sided platform strategy using PDT methodology</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roadmap.md" class="govuk-link">Roadmap Guide</a> - Multi-year capability evolution with funding and governance gates</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/adr.md" class="govuk-link">Architecture Decision Records</a> - MADR v4.0 decisions with approvals</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/traceability.md" class="govuk-link">Traceability Guide</a> - Requirements traceability matrix</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/wardley.md" class="govuk-link">Wardley Mapping</a> - Strategic analysis and build vs buy</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/procurement.md" class="govuk-link">Procurement Guide</a> - Digital Marketplace frameworks</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/customize.md" class="govuk-link">Template Customization</a> - Customize templates for your organization</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/presentation.md" class="govuk-link">Presentation Guide</a> - MARP slide deck generation for governance boards</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/artifact-health.md" class="govuk-link">Artifact Health</a> - Project health scanning and diagnostics</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/knowledge-compounding.md" class="govuk-link">Knowledge Compounding</a> - Reusable vendor profiles and tech notes from research</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/c4-layout-science.md" class="govuk-link">C4 Layout Science</a> - Research-backed diagram layout best practices</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/security-hooks.md" class="govuk-link">Security Hooks</a> - Three-layer secret and file protection</li>
+                    <li><strong>Discovery</strong> (5) &mdash; Requirements, stakeholders, research</li>
+                    <li><strong>Planning</strong> (6) &mdash; Business cases, strategy, roadmaps</li>
+                    <li><strong>Architecture</strong> (11) &mdash; Principles, diagrams, ADRs, design reviews</li>
+                    <li><strong>Governance</strong> (8) &mdash; Risk, traceability, compliance checking</li>
+                    <li><strong>Compliance</strong> (12) &mdash; TCoP, Secure by Design, DPIA, service assessment</li>
+                    <li><strong>Operations</strong> (5) &mdash; DevOps, MLOps, FinOps, ServiceNow</li>
+                    <li><strong>Procurement</strong> (6) &mdash; SOW, evaluation, G-Cloud, DOS</li>
+                    <li><strong>Research</strong> (3) &mdash; AWS, Azure, GCP via MCP servers</li>
+                    <li><strong>Other</strong> (13) &mdash; Presentations, pages, migration, setup</li>
                 </ul>
-
-                <h3 class="govuk-heading-s">UK Government Reference Guides</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/govs-007-security.md" class="govuk-link">GovS 007 Security</a> - Security principles and role mapping</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/national-data-strategy.md" class="govuk-link">National Data Strategy</a> - NDS missions and pillars mapped to ArcKit</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/data-quality-framework.md" class="govuk-link">Data Quality Framework</a> - DQF principles and dimensions</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/codes-of-practice.md" class="govuk-link">Codes of Practice</a> - Rainbow of Books mapped to ArcKit commands</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/pinecone-mcp.md" class="govuk-link">Pinecone MCP Integration</a> - Wardley Mapping book corpus search</li>
-                </ul>
-
-                <h3 class="govuk-heading-s">DDaT Role Guides</h3>
-                <p class="govuk-body-s">Which commands should you use? 18 guides mapped to <a href="https://ddat-capability-framework.service.gov.uk/" class="govuk-link" target="_blank" rel="noopener">DDaT Capability Framework</a> roles:</p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><strong>Architecture</strong>: <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/enterprise-architect.md" class="govuk-link">Enterprise</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/solution-architect.md" class="govuk-link">Solution</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/data-architect.md" class="govuk-link">Data</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/security-architect.md" class="govuk-link">Security</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/business-architect.md" class="govuk-link">Business</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/technical-architect.md" class="govuk-link">Technical</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/network-architect.md" class="govuk-link">Network</a></li>
-                    <li><strong>Chief Digital &amp; Data</strong>: <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/cto-cdio.md" class="govuk-link">CTO/CDIO</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/cdo.md" class="govuk-link">CDO</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/ciso.md" class="govuk-link">CISO</a></li>
-                    <li><strong>Product &amp; Delivery</strong>: <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/product-manager.md" class="govuk-link">Product Manager</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/delivery-manager.md" class="govuk-link">Delivery Manager</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/business-analyst.md" class="govuk-link">Business Analyst</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/service-owner.md" class="govuk-link">Service Owner</a></li>
-                    <li><strong>Data / IT Ops / Dev</strong>: <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/data-governance-manager.md" class="govuk-link">Data Governance</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/performance-analyst.md" class="govuk-link">Performance Analyst</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/it-service-manager.md" class="govuk-link">IT Service Manager</a> | <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/devops-engineer.md" class="govuk-link">DevOps Engineer</a></li>
-                </ul>
+                <a href="guides.html" class="govuk-button govuk-button--secondary govuk-!-margin-top-2" data-module="govuk-button">Browse all 69 guides</a>
             </div>
 
             <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s">Technical Documentation</h3>
+                <h3 class="govuk-heading-m"><a href="roles.html" class="govuk-link">DDaT Role Guides</a></h3>
+                <p class="govuk-body">18 guides mapped to <a href="https://ddat-capability-framework.service.gov.uk/" class="govuk-link" target="_blank" rel="noopener">DDaT Capability Framework</a> roles:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li><strong>Architecture</strong> (7) &mdash; Enterprise, Solution, Data, Security, Business, Technical, Network</li>
+                    <li><strong>Chief Digital &amp; Data</strong> (3) &mdash; CTO/CDIO, CDO, CISO</li>
+                    <li><strong>Product &amp; Delivery</strong> (4) &mdash; Product Manager, Delivery Manager, Business Analyst, Service Owner</li>
+                    <li><strong>Data</strong> (2) &mdash; Data Governance, Performance Analyst</li>
+                    <li><strong>IT Operations</strong> (1) &mdash; IT Service Manager</li>
+                    <li><strong>Software Development</strong> (1) &mdash; DevOps Engineer</li>
+                </ul>
+                <a href="roles.html" class="govuk-button govuk-button--secondary govuk-!-margin-top-2" data-module="govuk-button">Browse all 18 role guides</a>
+
+                <h3 class="govuk-heading-s govuk-!-margin-top-6">Technical Documentation</h3>
                 <ul class="govuk-list govuk-list--bullet">
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/README.md" class="govuk-link">README</a> - Quick start and overview</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md" class="govuk-link">Changelog</a> - Release history and updates</li>
@@ -4276,15 +4358,11 @@ flowchart TD
                     <li><a href="https://github.com/tractorjuice/arc-kit/releases" class="govuk-link">Release Notes</a> - Detailed version information</li>
                     <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/README.md#complete-command-reference" class="govuk-link">Command Reference</a> - All 53 commands documented</li>
                 </ul>
-            </div>
-        </div>
 
-        <div class="govuk-grid-row govuk-!-margin-top-6">
-            <div class="govuk-grid-column-full">
-                <h3 class="govuk-heading-s">Workflow & Dependencies</h3>
+                <h3 class="govuk-heading-s govuk-!-margin-top-4">Workflow &amp; Dependencies</h3>
                 <ul class="govuk-list govuk-list--bullet">
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/WORKFLOW-DIAGRAMS.md" class="govuk-link">Workflow Diagrams</a> - Visual Mermaid diagrams for all 5 project paths (Standard, UK Gov, UK Gov AI, MOD, MOD AI) with Gantt charts and decision trees</li>
-                    <li><a href="#dependencies" class="govuk-link">Dependency Structure Matrix</a> - Visual 47-command dependency matrix showing mandatory, recommended, and optional relationships (<a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">raw data</a>)</li>
+                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/WORKFLOW-DIAGRAMS.md" class="govuk-link">Workflow Diagrams</a> - Visual Mermaid diagrams for all 5 project paths</li>
+                    <li><a href="#dependencies" class="govuk-link">Dependency Structure Matrix</a> - 47-command dependency matrix (<a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">raw data</a>)</li>
                 </ul>
             </div>
         </div>

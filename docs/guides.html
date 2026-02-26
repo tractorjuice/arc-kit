@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="ArcKit Command Guides - 69 usage guides for enterprise architecture governance commands organized by category.">
+    <title>Command Guides - ArcKit</title>
+
+    <!-- GOV.UK Frontend v5.13.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+
+    <style>
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
+        /* Nav Bar */
+        .app-nav-bar {
+            background: #0b0c0c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__item--active a {
+            border-bottom-color: #1d70b8;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle { display: block; }
+            .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+            .app-nav-bar__list--open { display: flex; }
+            .app-nav-bar__inner { flex-wrap: wrap; }
+            .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+            .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+        }
+
+        /* Status Tags */
+        .app-status-tag {
+            display: inline-block;
+            padding: 0.125rem 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 2px;
+        }
+
+        .app-status-live { background: #00703c; color: white; }
+        .app-status-beta { background: #1d70b8; color: white; }
+        .app-status-alpha { background: #f47738; color: white; }
+        .app-status-experimental { background: #912b88; color: white; }
+
+        /* Guide Categories */
+        .app-guide-category {
+            margin-bottom: 1rem;
+            border: 1px solid #b1b4b6;
+        }
+
+        .app-guide-category__heading {
+            cursor: pointer;
+            user-select: none;
+            padding: 0.75rem 1rem;
+            background: #f3f2f1;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .app-guide-category__heading:hover { background: #e8e6e3; }
+
+        .app-guide-category__toggle {
+            font-size: 0.75rem;
+            transition: transform 0.2s;
+            display: inline-block;
+            width: 1rem;
+            text-align: center;
+        }
+
+        .app-guide-category__toggle--collapsed { transform: rotate(-90deg); }
+
+        .app-guide-category__count {
+            font-weight: 400;
+            color: #505a5f;
+            font-size: 0.875rem;
+            margin-left: auto;
+        }
+
+        .app-guide-category__body { padding: 0; }
+        .app-guide-category__body--collapsed { display: none; }
+
+        .app-guide-list { list-style: none; padding: 0; margin: 0; }
+
+        .app-guide-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #f3f2f1;
+        }
+
+        .app-guide-item:hover { background: #f8f8f8; }
+        .app-guide-item a { font-weight: 700; white-space: nowrap; }
+
+        .app-guide-item .app-status-tag {
+            flex-shrink: 0;
+            font-size: 0.625rem;
+            padding: 0.0625rem 0.375rem;
+        }
+
+        .app-guide-desc { color: #505a5f; font-size: 0.8125rem; }
+
+        @media (max-width: 48em) {
+            .app-guide-item { flex-wrap: wrap; }
+            .app-guide-desc { width: 100%; }
+        }
+
+        /* Footer */
+        .app-footer {
+            background: #0b0c0c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .app-footer a { color: white; text-decoration: underline; }
+        .app-footer a:hover { color: #5694ca; }
+
+        .app-status-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .app-status-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body class="govuk-template__body">
+    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="index.html">Home</a></li>
+                <li class="app-nav-bar__item"><a href="index.html#commands">Commands</a></li>
+                <li class="app-nav-bar__item app-nav-bar__item--active"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item"><a href="index.html#getting-started">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-width-container">
+            <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
+
+            <h1 class="govuk-heading-xl">Command Guides</h1>
+            <p class="govuk-body-l">69 usage guides organized into 9 categories. Each guide covers prerequisites, workflow steps, and real-world examples.</p>
+
+            <div class="app-status-legend govuk-!-margin-bottom-6">
+                <div class="app-status-legend-item"><span class="app-status-tag app-status-live">LIVE</span> Production-ready</div>
+                <div class="app-status-legend-item"><span class="app-status-tag app-status-beta">BETA</span> Feature-complete</div>
+                <div class="app-status-legend-item"><span class="app-status-tag app-status-alpha">ALPHA</span> Working, limited testing</div>
+                <div class="app-status-legend-item"><span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> Early adopters</div>
+            </div>
+
+            <p class="govuk-body-s"><button onclick="toggleAllCategories(true)" class="govuk-link" style="background:none;border:none;cursor:pointer;text-decoration:underline;font-size:inherit;padding:0;">Expand all</button> | <button onclick="toggleAllCategories(false)" class="govuk-link" style="background:none;border:none;cursor:pointer;text-decoration:underline;font-size:inherit;padding:0;">Collapse all</button></p>
+
+            <!-- Discovery -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Discovery
+                    <span class="app-guide-category__count">5 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/requirements.md" class="govuk-link">Requirements Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Requirements specification with BR/FR/NFR traceability</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/stakeholders.md" class="govuk-link">Stakeholder Analysis Playbook</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Stakeholder identification and influence mapping</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/stakeholder-analysis.md" class="govuk-link">Stakeholder Analysis Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Detailed stakeholder mapping and engagement strategy</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/research.md" class="govuk-link">Technology Research Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Technology and vendor research via web search</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/datascout.md" class="govuk-link">Data Source Discovery Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Data source discovery and API catalogue search</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Planning -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Planning
+                    <span class="app-guide-category__count">6 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/plan.md" class="govuk-link">Project Plan Playbook</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Project planning and milestone tracking</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/sobc.md" class="govuk-link">Strategic Outline Business Case</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">SOBC generation following Green Book methodology</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/business-case.md" class="govuk-link">Business Case Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Full business case development</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/strategy.md" class="govuk-link">Architecture Strategy Playbook</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Architecture strategy and vision definition</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roadmap.md" class="govuk-link">Architecture Roadmap Playbook</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Multi-year capability evolution roadmap</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/backlog.md" class="govuk-link">Product Backlog Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Product backlog generation from requirements</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Architecture -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Architecture
+                    <span class="app-guide-category__count">11 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/principles.md" class="govuk-link">Architecture Principles Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Define and manage architecture principles</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/diagram.md" class="govuk-link">Architecture Diagram Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">C4 Model architecture visualization</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/data-model.md" class="govuk-link">Data Model Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Logical and physical data modelling</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/adr.md" class="govuk-link">Architecture Decision Record Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">MADR v4.0 decisions with approvals</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/design-review.md" class="govuk-link">Design Review Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">10-section design assessment checklist</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/hld-review.md" class="govuk-link">High-Level Design Review</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">HLD review and assessment</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/dld-review.md" class="govuk-link">Detailed Design Review</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Detailed low-level design review</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/c4-layout-science.md" class="govuk-link">C4 Layout Science Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Research-backed diagram layout best practices</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/platform-design.md" class="govuk-link">Platform Strategy Design Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Multi-sided platform strategy using PDT methodology</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/wardley.md" class="govuk-link">Wardley Mapping Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Strategic analysis and build-vs-buy decisions</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/data-mesh-contract.md" class="govuk-link">Data Mesh Contract Guide</a> <span class="app-status-tag app-status-alpha">ALPHA</span> <span class="app-guide-desc">Data mesh contract definitions</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Governance -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Governance
+                    <span class="app-guide-category__count">8 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/risk.md" class="govuk-link">Risk Register Playbook</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Risk register creation and management</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/risk-management.md" class="govuk-link">Risk Management Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Risk management strategy framework</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/traceability.md" class="govuk-link">Traceability Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Requirements traceability matrix</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/principles-compliance.md" class="govuk-link">Principles Compliance Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Check artifacts against architecture principles</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/analyze.md" class="govuk-link">Project Analysis Playbook</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Comprehensive gap analysis across artifacts</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/artifact-health.md" class="govuk-link">Artifact Health Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Project health scanning and diagnostics</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/knowledge-compounding.md" class="govuk-link">Knowledge Compounding Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Reusable vendor profiles from research</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/data-quality-framework.md" class="govuk-link">Data Quality Framework Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">UK Government data quality dimensions</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Compliance -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Compliance
+                    <span class="app-guide-category__count">12 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/tcop.md" class="govuk-link">Technology Code of Practice</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">TCoP compliance assessment</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/secure.md" class="govuk-link">Secure by Design Playbook</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">NCSC Secure by Design compliance</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/dpia.md" class="govuk-link">DPIA Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Data Protection Impact Assessment</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/service-assessment.md" class="govuk-link">GDS Service Assessment Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">GDS Service Standard assessment preparation</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/govs-007-security.md" class="govuk-link">GovS 007 Security Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Security principles and role mapping</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/national-data-strategy.md" class="govuk-link">National Data Strategy Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">NDS missions and pillars mapped to ArcKit</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/codes-of-practice.md" class="govuk-link">Codes of Practice Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Rainbow of Books mapped to ArcKit commands</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/security-hooks.md" class="govuk-link">Security Hooks Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Three-layer secret and file protection</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/ai-playbook.md" class="govuk-link">AI Playbook Assessment</a> <span class="app-status-tag app-status-alpha">ALPHA</span> <span class="app-guide-desc">AI Ethics Framework and CDEI guidelines</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/atrs.md" class="govuk-link">Algorithmic Transparency</a> <span class="app-status-tag app-status-alpha">ALPHA</span> <span class="app-guide-desc">Algorithmic Transparency Recording Standard</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/mod-secure.md" class="govuk-link">MOD Secure by Design</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">MOD-specific Secure by Design playbook</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/jsp-936.md" class="govuk-link">JSP 936 AI Assurance</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Defence AI assurance compliance</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Operations -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Operations
+                    <span class="app-guide-category__count">5 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/servicenow.md" class="govuk-link">ServiceNow Service Design</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">ServiceNow service catalogue design</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/devops.md" class="govuk-link">DevOps Strategy Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">DevOps pipeline and practices strategy</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/mlops.md" class="govuk-link">MLOps Strategy Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">ML model lifecycle and operations</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/finops.md" class="govuk-link">FinOps Strategy Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Cloud financial operations strategy</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/operationalize.md" class="govuk-link">Operational Readiness Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Operational readiness and runbook generation</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Procurement -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Procurement
+                    <span class="app-guide-category__count">6 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/sow.md" class="govuk-link">Statement of Work Playbook</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Statement of Work generation</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/evaluate.md" class="govuk-link">Vendor Evaluation Playbook</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Vendor evaluation and scoring framework</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/procurement.md" class="govuk-link">Procurement Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Digital Marketplace procurement frameworks</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/dos.md" class="govuk-link">Digital Outcomes &amp; Specialists</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">DOS framework procurement</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/gcloud-search.md" class="govuk-link">G-Cloud Search Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">G-Cloud service search and comparison</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/gcloud-clarify.md" class="govuk-link">G-Cloud Clarification Questions</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">G-Cloud vendor clarification questions</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Research -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Research
+                    <span class="app-guide-category__count">3 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/aws-research.md" class="govuk-link">AWS Technology Research</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">AWS service research via MCP server</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/azure-research.md" class="govuk-link">Azure Technology Research</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Azure service research via MCP server</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/gcp-research.md" class="govuk-link">Google Cloud Research</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">GCP service research via MCP server</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Other -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Other
+                    <span class="app-guide-category__count">13 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/story.md" class="govuk-link">Project Story Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Project narrative for stakeholder communication</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/customize.md" class="govuk-link">Template Customization Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Customize templates for your organization</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/presentation.md" class="govuk-link">Presentation Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">MARP slide deck generation for governance boards</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/upgrading.md" class="govuk-link">Upgrading ArcKit</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Version upgrade instructions</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/start.md" class="govuk-link">Getting Started with ArcKit</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Onboarding and first project setup</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/conformance.md" class="govuk-link">Architecture Conformance Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Architecture conformance checking</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/productivity.md" class="govuk-link">Architecture Productivity Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Productivity tips and workflow optimization</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/remote-control.md" class="govuk-link">Remote Control Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Remote architecture governance with Claude Code</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/mcp-servers.md" class="govuk-link">MCP Server Setup Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Plugin MCP server configuration</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/pages.md" class="govuk-link">GitHub Pages Generator</a> <span class="app-status-tag app-status-alpha">ALPHA</span> <span class="app-guide-desc">Generate GitHub Pages site for project artifacts</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/trello.md" class="govuk-link">Trello Export Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Export backlog to Trello board</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/migration.md" class="govuk-link">File Migration Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Migrate files to new naming convention</span></li>
+                        <li class="app-guide-item"><a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/pinecone-mcp.md" class="govuk-link">Pinecone MCP Integration</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Wardley Mapping book corpus search</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="govuk-width-container">
+            <p class="govuk-body-s">Built with <a href="https://design-system.service.gov.uk/" class="govuk-link">GOV.UK Design System</a> | <a href="index.html" class="govuk-link">Back to ArcKit</a> | <a href="https://github.com/tractorjuice/arc-kit" class="govuk-link">GitHub</a> | MIT License</p>
+        </div>
+    </footer>
+
+    <script>
+        function toggleCategory(heading) {
+            var body = heading.nextElementSibling;
+            var toggle = heading.querySelector('.app-guide-category__toggle');
+            body.classList.toggle('app-guide-category__body--collapsed');
+            toggle.classList.toggle('app-guide-category__toggle--collapsed');
+        }
+
+        function toggleAllCategories(expand) {
+            document.querySelectorAll('.app-guide-category__body').forEach(function(body) {
+                if (expand) {
+                    body.classList.remove('app-guide-category__body--collapsed');
+                    body.previousElementSibling.querySelector('.app-guide-category__toggle').classList.remove('app-guide-category__toggle--collapsed');
+                } else {
+                    body.classList.add('app-guide-category__body--collapsed');
+                    body.previousElementSibling.querySelector('.app-guide-category__toggle').classList.add('app-guide-category__toggle--collapsed');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

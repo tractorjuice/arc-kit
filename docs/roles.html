@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="ArcKit DDaT Role Guides - 18 guides mapped to UK Government DDaT Capability Framework roles.">
+    <title>DDaT Role Guides - ArcKit</title>
+
+    <!-- GOV.UK Frontend v5.13.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+
+    <style>
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
+        /* Nav Bar */
+        .app-nav-bar {
+            background: #0b0c0c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__item--active a {
+            border-bottom-color: #1d70b8;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle { display: block; }
+            .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+            .app-nav-bar__list--open { display: flex; }
+            .app-nav-bar__inner { flex-wrap: wrap; }
+            .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+            .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+        }
+
+        /* Role Family */
+        .app-role-family {
+            margin-bottom: 2.5rem;
+        }
+
+        .app-role-family__heading {
+            border-left: 4px solid #1d70b8;
+            padding-left: 1rem;
+        }
+
+        .app-role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+        }
+
+        .app-role-card {
+            border: 2px solid #b1b4b6;
+            padding: 1.25rem;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: border-color 0.15s;
+        }
+
+        .app-role-card:hover {
+            border-color: #1d70b8;
+            background: #f8f8f8;
+        }
+
+        .app-role-card__title {
+            font-weight: 700;
+            color: #1d70b8;
+            font-size: 1.125rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-role-card__badge {
+            display: inline-block;
+            background: #1d70b8;
+            color: white;
+            font-size: 0.75rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 2px;
+            font-weight: 700;
+        }
+
+        .app-role-card__desc {
+            color: #505a5f;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Footer */
+        .app-footer {
+            background: #0b0c0c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .app-footer a { color: white; text-decoration: underline; }
+        .app-footer a:hover { color: #5694ca; }
+    </style>
+</head>
+<body class="govuk-template__body">
+    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="index.html">Home</a></li>
+                <li class="app-nav-bar__item"><a href="index.html#commands">Commands</a></li>
+                <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item app-nav-bar__item--active"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item"><a href="index.html#getting-started">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-width-container">
+            <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
+
+            <h1 class="govuk-heading-xl">DDaT Role Guides</h1>
+            <p class="govuk-body-l">18 guides mapped to <a href="https://ddat-capability-framework.service.gov.uk/" class="govuk-link" target="_blank" rel="noopener">DDaT Capability Framework</a> roles. Find which ArcKit commands are most relevant to your role in UK Government digital delivery.</p>
+
+            <div class="govuk-inset-text">
+                Each guide lists the primary ArcKit commands for that role, explains how they fit into your day-to-day responsibilities, and provides recommended workflows for common tasks.
+            </div>
+
+            <!-- Architecture Family -->
+            <div class="app-role-family">
+                <h2 class="govuk-heading-l app-role-family__heading">Architecture</h2>
+                <p class="govuk-body">7 roles covering enterprise, solution, data, security, business, technical, and network architecture.</p>
+                <div class="app-role-grid">
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/enterprise-architect.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Enterprise Architect</div>
+                        <span class="app-role-card__badge">12 commands</span>
+                        <div class="app-role-card__desc">Cross-cutting architecture governance, strategy, and standards across the organisation</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/solution-architect.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Solution Architect</div>
+                        <span class="app-role-card__badge">10 commands</span>
+                        <div class="app-role-card__desc">Design and delivery of specific solution architectures aligned to requirements</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/technical-architect.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Technical Architect</div>
+                        <span class="app-role-card__badge">5 commands</span>
+                        <div class="app-role-card__desc">Technical platform decisions, infrastructure design, and technology selection</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/business-architect.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Business Architect</div>
+                        <span class="app-role-card__badge">5 commands</span>
+                        <div class="app-role-card__desc">Business capability modelling, process design, and strategic alignment</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/security-architect.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Security Architect</div>
+                        <span class="app-role-card__badge">5 commands</span>
+                        <div class="app-role-card__desc">Security design, threat modelling, and compliance with NCSC and GovS 007</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/data-architect.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Data Architect</div>
+                        <span class="app-role-card__badge">4 commands</span>
+                        <div class="app-role-card__desc">Data modelling, data strategy, and information architecture</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/network-architect.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Network Architect</div>
+                        <span class="app-role-card__badge">3 commands</span>
+                        <div class="app-role-card__desc">Network design, connectivity patterns, and infrastructure topology</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Chief Digital and Data Family -->
+            <div class="app-role-family">
+                <h2 class="govuk-heading-l app-role-family__heading">Chief Digital &amp; Data</h2>
+                <p class="govuk-body">3 senior leadership roles covering technology strategy, data governance, and cyber security.</p>
+                <div class="app-role-grid">
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/cto-cdio.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">CTO / CDIO</div>
+                        <span class="app-role-card__badge">5 commands</span>
+                        <div class="app-role-card__desc">Technology strategy, architecture governance, and digital transformation leadership</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/ciso.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">CISO</div>
+                        <span class="app-role-card__badge">5 commands</span>
+                        <div class="app-role-card__desc">Cyber security strategy, risk management, and security compliance oversight</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/cdo.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">CDO</div>
+                        <span class="app-role-card__badge">4 commands</span>
+                        <div class="app-role-card__desc">Data strategy, data quality, and organisational data governance</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product and Delivery Family -->
+            <div class="app-role-family">
+                <h2 class="govuk-heading-l app-role-family__heading">Product &amp; Delivery</h2>
+                <p class="govuk-body">4 roles covering product management, delivery, business analysis, and service ownership.</p>
+                <div class="app-role-grid">
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/delivery-manager.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Delivery Manager</div>
+                        <span class="app-role-card__badge">6 commands</span>
+                        <div class="app-role-card__desc">Agile delivery, planning, risk management, and team coordination</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/product-manager.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Product Manager</div>
+                        <span class="app-role-card__badge">5 commands</span>
+                        <div class="app-role-card__desc">Product strategy, backlog management, stakeholder engagement, and roadmaps</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/business-analyst.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Business Analyst</div>
+                        <span class="app-role-card__badge">4 commands</span>
+                        <div class="app-role-card__desc">Requirements elicitation, stakeholder analysis, and process mapping</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/service-owner.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Service Owner</div>
+                        <span class="app-role-card__badge">3 commands</span>
+                        <div class="app-role-card__desc">End-to-end service accountability, GDS assessments, and service strategy</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Data Family -->
+            <div class="app-role-family">
+                <h2 class="govuk-heading-l app-role-family__heading">Data</h2>
+                <p class="govuk-body">2 roles covering data governance and performance analysis.</p>
+                <div class="app-role-grid">
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/data-governance-manager.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Data Governance Manager</div>
+                        <span class="app-role-card__badge">4 commands</span>
+                        <div class="app-role-card__desc">Data quality frameworks, DPIA compliance, and data standards enforcement</div>
+                    </a>
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/performance-analyst.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">Performance Analyst</div>
+                        <span class="app-role-card__badge">4 commands</span>
+                        <div class="app-role-card__desc">Service performance measurement, KPIs, and data-driven decision making</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- IT Operations Family -->
+            <div class="app-role-family">
+                <h2 class="govuk-heading-l app-role-family__heading">IT Operations</h2>
+                <p class="govuk-body">1 role covering IT service management and operational readiness.</p>
+                <div class="app-role-grid">
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/it-service-manager.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">IT Service Manager</div>
+                        <span class="app-role-card__badge">3 commands</span>
+                        <div class="app-role-card__desc">ITIL service design, operational readiness, and service catalogue management</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Software Development Family -->
+            <div class="app-role-family">
+                <h2 class="govuk-heading-l app-role-family__heading">Software Development</h2>
+                <p class="govuk-body">1 role covering DevOps practices and deployment pipelines.</p>
+                <div class="app-role-grid">
+                    <a href="https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/roles/devops-engineer.md" class="app-role-card govuk-link--no-visited-state">
+                        <div class="app-role-card__title">DevOps Engineer</div>
+                        <span class="app-role-card__badge">3 commands</span>
+                        <div class="app-role-card__desc">CI/CD pipelines, infrastructure as code, and deployment automation</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="govuk-width-container">
+            <p class="govuk-body-s">Built with <a href="https://design-system.service.gov.uk/" class="govuk-link">GOV.UK Design System</a> | <a href="index.html" class="govuk-link">Back to ArcKit</a> | <a href="https://github.com/tractorjuice/arc-kit" class="govuk-link">GitHub</a> | MIT License</p>
+        </div>
+    </footer>
+</body>
+</html>
