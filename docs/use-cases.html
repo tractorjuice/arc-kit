@@ -2,12 +2,30 @@
 <html lang="en" class="govuk-template">
 <head>
     <meta charset="UTF-8">
+    <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="ArcKit Example Projects - Browse AI-generated architecture documentation from 18 public test scenarios covering health, AI, cloud, digital services, and more.">
     <title>Example Projects - ArcKit</title>
+    <meta name="keywords" content="ArcKit examples, architecture documentation examples, AI-generated architecture, UK government projects, test projects">
+    <meta name="author" content="ArcKit">
+    <meta property="og:title" content="Example Projects - ArcKit">
+    <meta property="og:description" content="Browse 18 AI-generated architecture documentation projects across health, AI, cloud, digital services, and more.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arckit.org/use-cases.html">
+    <meta property="og:site_name" content="ArcKit">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Example Projects - ArcKit">
+    <meta name="twitter:description" content="Browse 18 AI-generated architecture documentation projects across health, AI, cloud, digital services, and more.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <link rel="canonical" href="https://arckit.org/use-cases.html">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <!-- GOV.UK Frontend v5.13.0 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="heroes.css">
 
     <style>
         body,
@@ -154,6 +172,27 @@
         .app-footer a { color: white; text-decoration: underline; }
         .app-footer a:hover { color: #5694ca; }
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "CollectionPage",
+                "@id": "https://arckit.org/use-cases.html",
+                "name": "Example Projects - ArcKit",
+                "description": "18 AI-generated architecture documentation projects across health, AI, cloud, digital services, and more.",
+                "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arckit.org/" },
+                    { "@type": "ListItem", "position": 2, "name": "Example Projects", "item": "https://arckit.org/use-cases.html" }
+                ]
+            }
+        ]
+    }
+    </script>
 </head>
 <body class="govuk-template__body">
     <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
@@ -172,15 +211,21 @@
                 <li class="app-nav-bar__item"><a href="index.html#getting-started">Getting Started</a></li>
                 <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
             </ul>
+            <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
         </div>
     </nav>
+
+    <div class="app-page-hero app-page-hero--projects">
+        <div class="govuk-width-container app-page-hero__content">
+            <span class="app-page-hero__stat">18 Example Projects</span>
+            <h1 class="app-page-hero__title">Example Projects</h1>
+            <p class="app-page-hero__description">Browse AI-generated architecture documentation across health, AI, cloud, digital services, data, and more. Each project links to a live GitHub Pages site.</p>
+        </div>
+    </div>
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
             <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
-
-            <h1 class="govuk-heading-xl">Example Projects</h1>
-            <p class="govuk-body-l">Browse 18 public test projects showing AI-generated architecture documentation across health, AI, cloud, digital services, data, and more. Each project links to a live GitHub Pages site with the full set of artifacts.</p>
 
             <div class="govuk-inset-text">
                 These are <strong>demonstration projects</strong> created to showcase ArcKit's capabilities. Every artifact was AI-generated using ArcKit commands &mdash; they are test outputs, not real client deliverables. Always review, validate, and refine AI output with human expertise before use.
@@ -344,5 +389,6 @@
         import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
         initAll()
     </script>
+<script src="theme.js"></script>
 </body>
 </html>

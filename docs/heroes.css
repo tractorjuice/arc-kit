@@ -1,0 +1,200 @@
+/*
+ * ArcKit Page Hero Banners
+ * Each page gets a unique gradient + geometric pattern overlay.
+ * Designed for the GOV.UK institutional aesthetic with added depth.
+ */
+
+/* ============================================================
+   Base Hero
+   ============================================================ */
+.app-page-hero {
+    position: relative;
+    padding: 2.5rem 0 2rem;
+    overflow: hidden;
+}
+
+/* Geometric pattern overlay — each variant sets its own background */
+.app-page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* Bottom accent line */
+.app-page-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Content above pattern */
+.app-page-hero__content {
+    position: relative;
+    z-index: 1;
+}
+
+/* Stat / count badge */
+.app-page-hero__stat {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.14);
+    color: #fff;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 2px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+}
+
+/* Title — semantic <h1>, styled large */
+.app-page-hero__title {
+    color: #fff;
+    font-size: 2.25rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+/* Description text */
+.app-page-hero__description {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 1.0625rem;
+    line-height: 1.55;
+    margin: 0;
+    max-width: 46rem;
+}
+
+/* ============================================================
+   Entry Animation
+   ============================================================ */
+@keyframes heroReveal {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.app-page-hero__stat,
+.app-page-hero__title,
+.app-page-hero__description {
+    animation: heroReveal 0.45s ease-out both;
+}
+
+.app-page-hero__stat        { animation-delay: 0.04s; }
+.app-page-hero__title       { animation-delay: 0.09s; }
+.app-page-hero__description { animation-delay: 0.14s; }
+
+/* ============================================================
+   Responsive
+   ============================================================ */
+@media (max-width: 40.0625em) {
+    .app-page-hero {
+        padding: 1.5rem 0 1.25rem;
+    }
+
+    .app-page-hero__title {
+        font-size: 1.5rem;
+        line-height: 1.2;
+    }
+
+    .app-page-hero__description {
+        font-size: 0.9375rem;
+    }
+}
+
+/* ============================================================
+   Variant: Commands  — blue, grid pattern
+   ============================================================ */
+.app-page-hero--commands {
+    background: linear-gradient(135deg, #1d70b8 0%, #003078 100%);
+}
+
+.app-page-hero--commands::before {
+    background:
+        repeating-linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 1px,
+            transparent 1px, transparent 56px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 1px,
+            transparent 1px, transparent 56px
+        );
+}
+
+/* ============================================================
+   Variant: Guides  — green, horizontal rules
+   ============================================================ */
+.app-page-hero--guides {
+    background: linear-gradient(135deg, #00703c 0%, #004025 100%);
+}
+
+.app-page-hero--guides::before {
+    background:
+        repeating-linear-gradient(
+            0deg,
+            rgba(255, 255, 255, 0.05) 0px, rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px, transparent 18px
+        );
+}
+
+/* ============================================================
+   Variant: Roles  — purple, crosshatch
+   ============================================================ */
+.app-page-hero--roles {
+    background: linear-gradient(135deg, #912b88 0%, #5c1a56 100%);
+}
+
+.app-page-hero--roles::before {
+    background:
+        repeating-linear-gradient(
+            60deg,
+            rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px, transparent 28px
+        ),
+        repeating-linear-gradient(
+            -60deg,
+            rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px, transparent 28px
+        );
+}
+
+/* ============================================================
+   Variant: Projects  — warm orange→red, diagonal stripes
+   ============================================================ */
+.app-page-hero--projects {
+    background: linear-gradient(135deg, #f47738 0%, #c62d14 100%);
+}
+
+.app-page-hero--projects::before {
+    background:
+        repeating-linear-gradient(
+            -45deg,
+            rgba(255, 255, 255, 0.045) 0px, rgba(255, 255, 255, 0.045) 1px,
+            transparent 1px, transparent 18px
+        );
+}
+
+/* ============================================================
+   Variant: Guide Viewer  — deep navy, dot grid
+   ============================================================ */
+.app-page-hero--viewer {
+    background: linear-gradient(135deg, #003078 0%, #001440 100%);
+    padding: 1.75rem 0 1.5rem;
+}
+
+.app-page-hero--viewer::before {
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.06) 1px,
+            transparent 1px
+        );
+    background-size: 20px 20px;
+}

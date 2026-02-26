@@ -2,12 +2,30 @@
 <html lang="en" class="govuk-template">
 <head>
     <meta charset="UTF-8">
+    <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="ArcKit DDaT Role Guides - 18 guides mapped to UK Government DDaT Capability Framework roles.">
     <title>DDaT Role Guides - ArcKit</title>
+    <meta name="keywords" content="DDaT roles, digital data technology, UK government roles, architecture roles, capability framework, ArcKit role guides">
+    <meta name="author" content="ArcKit">
+    <meta property="og:title" content="DDaT Role Guides - ArcKit">
+    <meta property="og:description" content="18 guides mapped to UK Government DDaT Capability Framework roles with tailored ArcKit command recommendations.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arckit.org/roles.html">
+    <meta property="og:site_name" content="ArcKit">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="DDaT Role Guides - ArcKit">
+    <meta name="twitter:description" content="18 guides mapped to UK Government DDaT Capability Framework roles with tailored ArcKit command recommendations.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <link rel="canonical" href="https://arckit.org/roles.html">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <!-- GOV.UK Frontend v5.13.0 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="heroes.css">
 
     <style>
         body,
@@ -166,6 +184,27 @@
         .app-footer a { color: white; text-decoration: underline; }
         .app-footer a:hover { color: #5694ca; }
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "CollectionPage",
+                "@id": "https://arckit.org/roles.html",
+                "name": "DDaT Role Guides - ArcKit",
+                "description": "18 guides mapped to UK Government DDaT Capability Framework roles with tailored ArcKit command recommendations.",
+                "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arckit.org/" },
+                    { "@type": "ListItem", "position": 2, "name": "Roles", "item": "https://arckit.org/roles.html" }
+                ]
+            }
+        ]
+    }
+    </script>
 </head>
 <body class="govuk-template__body">
     <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
@@ -184,15 +223,21 @@
                 <li class="app-nav-bar__item"><a href="index.html#getting-started">Getting Started</a></li>
                 <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
             </ul>
+            <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
         </div>
     </nav>
+
+    <div class="app-page-hero app-page-hero--roles">
+        <div class="govuk-width-container app-page-hero__content">
+            <span class="app-page-hero__stat">18 Role Guides</span>
+            <h1 class="app-page-hero__title">DDaT Role Guides</h1>
+            <p class="app-page-hero__description">Tailored command recommendations mapped to <a href="https://ddat-capability-framework.service.gov.uk/" style="color: rgba(255,255,255,0.9); text-decoration: underline;" target="_blank" rel="noopener">DDaT Capability Framework</a> roles for UK Government digital delivery.</p>
+        </div>
+    </div>
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
             <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
-
-            <h1 class="govuk-heading-xl">DDaT Role Guides</h1>
-            <p class="govuk-body-l">18 guides mapped to <a href="https://ddat-capability-framework.service.gov.uk/" class="govuk-link" target="_blank" rel="noopener">DDaT Capability Framework</a> roles. Find which ArcKit commands are most relevant to your role in UK Government digital delivery.</p>
 
             <div class="govuk-inset-text">
                 Each guide lists the primary ArcKit commands for that role, explains how they fit into your day-to-day responsibilities, and provides recommended workflows for common tasks.
@@ -350,5 +395,6 @@
         import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
         initAll()
     </script>
+<script src="theme.js"></script>
 </body>
 </html>

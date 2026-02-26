@@ -2,12 +2,30 @@
 <html lang="en" class="govuk-template">
 <head>
     <meta charset="UTF-8">
+    <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="ArcKit Command Guides - 69 usage guides for enterprise architecture governance commands organized by category.">
     <title>Command Guides - ArcKit</title>
+    <meta name="keywords" content="ArcKit guides, architecture governance guides, command usage, workflow steps, UK government architecture">
+    <meta name="author" content="ArcKit">
+    <meta property="og:title" content="Command Guides - ArcKit">
+    <meta property="og:description" content="69 step-by-step usage guides for ArcKit enterprise architecture governance commands, organised by category.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arckit.org/guides.html">
+    <meta property="og:site_name" content="ArcKit">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Command Guides - ArcKit">
+    <meta name="twitter:description" content="69 step-by-step usage guides for ArcKit enterprise architecture governance commands, organised by category.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <link rel="canonical" href="https://arckit.org/guides.html">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <!-- GOV.UK Frontend v5.13.0 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="heroes.css">
 
     <style>
         body,
@@ -208,6 +226,27 @@
             font-size: 0.875rem;
         }
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "CollectionPage",
+                "@id": "https://arckit.org/guides.html",
+                "name": "Command Guides - ArcKit",
+                "description": "69 step-by-step usage guides for ArcKit enterprise architecture governance commands, organised by category.",
+                "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arckit.org/" },
+                    { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://arckit.org/guides.html" }
+                ]
+            }
+        ]
+    }
+    </script>
 </head>
 <body class="govuk-template__body">
     <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
@@ -226,15 +265,21 @@
                 <li class="app-nav-bar__item"><a href="index.html#getting-started">Getting Started</a></li>
                 <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
             </ul>
+            <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
         </div>
     </nav>
+
+    <div class="app-page-hero app-page-hero--guides">
+        <div class="govuk-width-container app-page-hero__content">
+            <span class="app-page-hero__stat">69 Guides</span>
+            <h1 class="app-page-hero__title">Command Guides</h1>
+            <p class="app-page-hero__description">Step-by-step usage guides organised into 9 categories. Each covers prerequisites, workflow steps, and real-world examples.</p>
+        </div>
+    </div>
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <div class="govuk-width-container">
             <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
-
-            <h1 class="govuk-heading-xl">Command Guides</h1>
-            <p class="govuk-body-l">69 usage guides organized into 9 categories. Each guide covers prerequisites, workflow steps, and real-world examples.</p>
 
             <div class="app-status-legend govuk-!-margin-bottom-6">
                 <div class="app-status-legend-item"><span class="app-status-tag app-status-live">LIVE</span> Production-ready</div>
@@ -457,5 +502,6 @@
             });
         }
     </script>
+<script src="theme.js"></script>
 </body>
 </html>

@@ -2,6 +2,7 @@
 <html lang="en" class="govuk-template">
 <head>
     <meta charset="UTF-8">
+    <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement Toolkit. 53 AI-assisted commands for systematic, compliant project delivery following UK Government standards.">
     <meta name="keywords" content="enterprise architecture, UK government, GDS, architecture governance, vendor procurement, ArcKit, compliance, TCOP, secure by design">
@@ -10,10 +11,21 @@
     <meta property="og:description" content="53 AI-assisted commands for systematic, compliant architecture governance following UK Government standards.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arckit.org/">
+    <meta property="og:site_name" content="ArcKit">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ArcKit - Enterprise Architecture Governance & Vendor Procurement">
+    <meta name="twitter:description" content="53 AI-assisted commands for systematic, compliant architecture governance following UK Government standards.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <title>ArcKit - Enterprise Architecture Governance & Vendor Procurement</title>
+    <link rel="canonical" href="https://arckit.org/">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
 
     <!-- GOV.UK Frontend v5.13.0 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="heroes.css">
 
     <style>
         /*
@@ -336,6 +348,32 @@
         }
 
     </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Organization",
+                "name": "ArcKit",
+                "url": "https://arckit.org",
+                "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit"
+            },
+            {
+                "@type": "WebSite",
+                "name": "ArcKit",
+                "url": "https://arckit.org",
+                "description": "53 AI-assisted commands for systematic, compliant architecture governance following UK Government standards."
+            },
+            {
+                "@type": "WebPage",
+                "@id": "https://arckit.org/",
+                "name": "ArcKit - Enterprise Architecture Governance & Vendor Procurement",
+                "description": "53 AI-assisted commands for systematic, compliant project delivery following UK Government standards.",
+                "isPartOf": { "@id": "https://arckit.org" }
+            }
+        ]
+    }
+    </script>
 </head>
 <body class="govuk-template__body">
     <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
@@ -370,6 +408,7 @@
                 <li class="app-nav-bar__item"><a href="#getting-started">Getting Started</a></li>
                 <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
             </ul>
+            <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
         </div>
     </nav>
 
@@ -911,5 +950,6 @@ claude</code></pre></div>
         import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
         mermaid.initialize({ startOnLoad: true });
     </script>
+<script src="theme.js"></script>
 </body>
 </html>

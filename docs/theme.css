@@ -1,0 +1,502 @@
+/*
+ * ArcKit Dark Mode Theme
+ * Additive CSS overrides — existing inline styles remain untouched.
+ * Dark mode activates via html.dark-mode class (set by inline FOUC script).
+ */
+
+/* ============================================================
+   Theme Toggle Button
+   ============================================================ */
+.app-theme-toggle {
+    background: none;
+    border: 2px solid #505a5f;
+    color: #ffffff;
+    padding: 0.25rem 0.5rem;
+    cursor: pointer;
+    font-size: 1.125rem;
+    line-height: 1;
+    border-radius: 4px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.app-theme-toggle:hover,
+.app-theme-toggle:focus {
+    border-color: #ffffff;
+    outline: 3px solid #ffdd00;
+    outline-offset: 0;
+}
+
+@media (max-width: 48em) {
+    .app-theme-toggle {
+        position: absolute;
+        right: 0.5rem;
+        top: 0.5rem;
+    }
+
+    .app-nav-bar__inner {
+        position: relative;
+    }
+}
+
+/* ============================================================
+   GOV.UK Framework Overrides
+   ============================================================ */
+html.dark-mode {
+    background: #1a1a1a;
+}
+
+html.dark-mode .govuk-template {
+    background: #1a1a1a;
+}
+
+html.dark-mode .govuk-template__body {
+    background: #1a1a1a;
+    color: #f0f0f0;
+}
+
+html.dark-mode .govuk-heading-xl,
+html.dark-mode .govuk-heading-l,
+html.dark-mode .govuk-heading-m,
+html.dark-mode .govuk-heading-s,
+html.dark-mode .govuk-caption-xl,
+html.dark-mode .govuk-caption-l,
+html.dark-mode .govuk-caption-m,
+html.dark-mode .govuk-body-l,
+html.dark-mode .govuk-body,
+html.dark-mode .govuk-body-s,
+html.dark-mode h1,
+html.dark-mode h2,
+html.dark-mode h3,
+html.dark-mode h4,
+html.dark-mode p,
+html.dark-mode li {
+    color: #f0f0f0;
+}
+
+html.dark-mode .govuk-link,
+html.dark-mode .govuk-link:link {
+    color: #4da3ff;
+}
+
+html.dark-mode .govuk-link:visited {
+    color: #c060b8;
+}
+
+html.dark-mode .govuk-link:hover {
+    color: #7ab4e8;
+}
+
+html.dark-mode .govuk-phase-banner {
+    border-bottom-color: #555555;
+}
+
+html.dark-mode .govuk-phase-banner__text {
+    color: #f0f0f0;
+}
+
+html.dark-mode .govuk-inset-text {
+    border-left-color: #555555;
+}
+
+html.dark-mode .govuk-section-break--visible {
+    border-bottom-color: #555555;
+}
+
+html.dark-mode .govuk-details__summary {
+    color: #4da3ff;
+}
+
+html.dark-mode .govuk-details__text {
+    border-left-color: #555555;
+}
+
+html.dark-mode .govuk-warning-text__icon {
+    border-color: #f0f0f0;
+    color: #f0f0f0;
+}
+
+html.dark-mode .govuk-main-wrapper {
+    background: #1a1a1a;
+}
+
+/* ============================================================
+   Hero Section (index.html)
+   ============================================================ */
+html.dark-mode .app-hero {
+    background: linear-gradient(135deg, #0f4c81 0%, #001a40 100%);
+}
+
+/* ============================================================
+   Stat Cards (index.html)
+   ============================================================ */
+html.dark-mode .app-stat-card {
+    background: #2a2a2a;
+    border-left-color: #4da3ff;
+}
+
+html.dark-mode .app-stat-number {
+    color: #4da3ff;
+}
+
+html.dark-mode .app-stat-label {
+    color: #f0f0f0;
+}
+
+/* ============================================================
+   Feature Cards (index.html)
+   ============================================================ */
+html.dark-mode .app-feature-card {
+    border-color: #555555;
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
+/* ============================================================
+   Phase Flow (index.html)
+   ============================================================ */
+html.dark-mode .app-phase-flow {
+    background: #2a2a2a;
+}
+
+html.dark-mode .app-phase-box {
+    background: #1a1a1a;
+    border-color: #4da3ff;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-phase-arrow {
+    color: #4da3ff;
+}
+
+html.dark-mode .app-phase-heading {
+    color: #4da3ff;
+}
+
+/* ============================================================
+   Command Sections (index.html)
+   ============================================================ */
+html.dark-mode .app-command-section {
+    background: #2a2a2a;
+}
+
+html.dark-mode .app-command-list li {
+    background: #1a1a1a;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-command-code {
+    background: #333333;
+    color: #f0f0f0;
+}
+
+/* ============================================================
+   AI Cards (index.html)
+   ============================================================ */
+html.dark-mode .app-ai-card {
+    border-color: #4da3ff;
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
+/* ============================================================
+   Use Case Cards (index.html & use-cases.html)
+   ============================================================ */
+html.dark-mode .app-use-case-card {
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-use-case-card:hover {
+    background: #333333;
+}
+
+/* ============================================================
+   Command Table (commands.html)
+   ============================================================ */
+html.dark-mode .app-command-table th {
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-command-table th:hover {
+    background: #333333;
+}
+
+html.dark-mode .app-command-table td {
+    border-bottom-color: #555555;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-command-table tbody tr:hover {
+    background: #252525;
+}
+
+html.dark-mode .app-command-table code {
+    background: #333333;
+    color: #f0f0f0;
+}
+
+/* Sticky first column */
+html.dark-mode .app-command-table th:first-child {
+    background: #2a2a2a;
+}
+
+html.dark-mode .app-command-table td:first-child {
+    background: #1a1a1a;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.3);
+}
+
+html.dark-mode .app-command-table tbody tr:hover td:first-child {
+    background: #252525;
+}
+
+/* Sticky last column */
+html.dark-mode .app-command-table th:last-child {
+    background: #2a2a2a;
+}
+
+html.dark-mode .app-command-table td:last-child {
+    background: #1a1a1a;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.3);
+}
+
+html.dark-mode .app-command-table tbody tr:hover td:last-child {
+    background: #252525;
+}
+
+html.dark-mode .app-command-table .examples a {
+    color: #4da3ff;
+}
+
+html.dark-mode .app-command-count {
+    color: #a0a8b0;
+}
+
+/* ============================================================
+   Filter Controls (commands.html)
+   ============================================================ */
+html.dark-mode .app-filter-controls {
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-filter-controls label {
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-filter-controls select,
+html.dark-mode .app-filter-controls input[type="text"] {
+    background: #1a1a1a;
+    color: #f0f0f0;
+    border-color: #555555;
+}
+
+/* ============================================================
+   Dependency Matrix (commands.html)
+   ============================================================ */
+html.dark-mode .app-dep-matrix-container {
+    border-color: #555555;
+}
+
+html.dark-mode .app-dep-matrix {
+    background: #555555;
+}
+
+html.dark-mode .app-dep-matrix__row-label {
+    background: #1a1a1a;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-dep-matrix__cell {
+    background: #1a1a1a;
+}
+
+html.dark-mode .app-dep-matrix tbody tr:hover .app-dep-matrix__row-label,
+html.dark-mode .app-dep-matrix tbody tr:hover .app-dep-matrix__cell:not(.app-dep-matrix__cell--m):not(.app-dep-matrix__cell--r):not(.app-dep-matrix__cell--o):not(.app-dep-matrix__cell--self) {
+    background: #3a3520;
+}
+
+html.dark-mode .app-dep-matrix__tier-label {
+    background: #2a2a2a;
+    color: #a0a8b0;
+}
+
+html.dark-mode .app-status-legend-item {
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-dep-matrix-legend__swatch {
+    border-color: #555555;
+}
+
+/* ============================================================
+   Guide Categories (guides.html)
+   ============================================================ */
+html.dark-mode .app-guide-category {
+    border-color: #555555;
+}
+
+html.dark-mode .app-guide-category__heading {
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-guide-category__heading:hover {
+    background: #333333;
+}
+
+html.dark-mode .app-guide-category__count {
+    color: #a0a8b0;
+}
+
+html.dark-mode .app-guide-item {
+    border-top-color: #333333;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-guide-item:hover {
+    background: #252525;
+}
+
+html.dark-mode .app-guide-item a {
+    color: #4da3ff;
+}
+
+html.dark-mode .app-guide-desc {
+    color: #a0a8b0;
+}
+
+/* ============================================================
+   Role Cards (roles.html)
+   ============================================================ */
+html.dark-mode .app-role-card {
+    border-color: #555555;
+    background: #2a2a2a;
+}
+
+html.dark-mode .app-role-card:hover {
+    border-color: #4da3ff;
+    background: #333333;
+}
+
+html.dark-mode .app-role-card__title {
+    color: #4da3ff;
+}
+
+html.dark-mode .app-role-card__desc {
+    color: #a0a8b0;
+}
+
+/* ============================================================
+   Guide Viewer Markdown (guide-viewer.html)
+   ============================================================ */
+html.dark-mode .app-markdown h1,
+html.dark-mode .app-markdown h2,
+html.dark-mode .app-markdown h3,
+html.dark-mode .app-markdown h4 {
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-markdown h2 {
+    border-bottom-color: #555555;
+}
+
+html.dark-mode .app-markdown p,
+html.dark-mode .app-markdown li {
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-markdown a {
+    color: #4da3ff;
+}
+
+html.dark-mode .app-markdown th,
+html.dark-mode .app-markdown td {
+    border-color: #555555;
+}
+
+html.dark-mode .app-markdown th {
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-markdown td {
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-markdown tr:hover {
+    background: #252525;
+}
+
+html.dark-mode .app-markdown code {
+    background: #333333;
+    color: #f0f0f0;
+}
+
+/* pre blocks already dark-themed, no override needed */
+
+html.dark-mode .app-markdown blockquote {
+    background: #2a2a2a;
+    border-left-color: #4da3ff;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-markdown hr {
+    border-top-color: #555555;
+}
+
+html.dark-mode .app-spinner {
+    border-color: #555555;
+    border-top-color: #4da3ff;
+}
+
+html.dark-mode .app-error {
+    border-color: #ff6b52;
+    background: #2a2a2a;
+}
+
+html.dark-mode .app-error__heading {
+    color: #ff6b52;
+}
+
+/* ============================================================
+   Page Hero Banners — dark mode
+   ============================================================ */
+html.dark-mode .app-page-hero--commands {
+    background: linear-gradient(135deg, #0f4c81 0%, #001a40 100%);
+}
+
+html.dark-mode .app-page-hero--guides {
+    background: linear-gradient(135deg, #004d2a 0%, #002816 100%);
+}
+
+html.dark-mode .app-page-hero--roles {
+    background: linear-gradient(135deg, #6b1d65 0%, #3d1038 100%);
+}
+
+html.dark-mode .app-page-hero--projects {
+    background: linear-gradient(135deg, #c45a20 0%, #8c1f0e 100%);
+}
+
+html.dark-mode .app-page-hero--viewer {
+    background: linear-gradient(135deg, #001a40 0%, #000d20 100%);
+}
+
+/* ============================================================
+   No-JS Fallback: system dark preference
+   ============================================================ */
+@media (prefers-color-scheme: dark) {
+    html:not(.light-mode):not(.dark-mode) {
+        background: #1a1a1a;
+    }
+
+    html:not(.light-mode):not(.dark-mode) .govuk-template {
+        background: #1a1a1a;
+    }
+
+    html:not(.light-mode):not(.dark-mode) .govuk-template__body {
+        background: #1a1a1a;
+        color: #f0f0f0;
+    }
+}
