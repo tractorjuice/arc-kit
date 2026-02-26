@@ -504,6 +504,10 @@ html.dark-mode .app-page-hero--projects {
     background: linear-gradient(135deg, #c45a20 0%, #8c1f0e 100%);
 }
 
+html.dark-mode .app-page-hero--getting-started {
+    background: linear-gradient(135deg, #0a504b 0%, #042e2b 100%);
+}
+
 html.dark-mode .app-page-hero--viewer {
     background: linear-gradient(135deg, #001a40 0%, #000d20 100%);
 }

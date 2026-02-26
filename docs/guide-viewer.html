@@ -268,7 +268,7 @@
             <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
             <ul class="app-nav-bar__list" id="nav-menu">
                 <li class="app-nav-bar__item"><a href="index.html">Home</a></li>
-                <li class="app-nav-bar__item"><a href="index.html#commands">Commands</a></li>
+                <li class="app-nav-bar__item"><a href="commands.html">Commands</a></li>
                 <li class="app-nav-bar__item"><a href="use-cases.html">Example Projects</a></li>
                 <li class="app-nav-bar__item app-nav-bar__item--active"><a href="guides.html">Guides</a></li>
                 <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
@@ -281,7 +281,8 @@
 
     <div class="app-page-hero app-page-hero--viewer">
         <div class="govuk-width-container app-page-hero__content">
-            <h1 class="app-page-hero__title">Guide Viewer</h1>
+            <span class="app-page-hero__stat">Guide Viewer</span>
+            <h1 class="app-page-hero__title" id="guide-title">Guide Viewer</h1>
             <p class="app-page-hero__description">Rendered command and role guide documentation.</p>
         </div>
     </div>

@@ -182,11 +182,31 @@
 }
 
 /* ============================================================
+   Variant: Getting Started  — teal, chevron pattern
+   ============================================================ */
+.app-page-hero--getting-started {
+    background: linear-gradient(135deg, #10706a 0%, #064540 100%);
+}
+
+.app-page-hero--getting-started::before {
+    background:
+        repeating-linear-gradient(
+            -30deg,
+            rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 1px,
+            transparent 1px, transparent 22px
+        ),
+        repeating-linear-gradient(
+            30deg,
+            rgba(255, 255, 255, 0.04) 0px, rgba(255, 255, 255, 0.04) 1px,
+            transparent 1px, transparent 22px
+        );
+}
+
+/* ============================================================
    Variant: Guide Viewer  — deep navy, dot grid
    ============================================================ */
 .app-page-hero--viewer {
     background: linear-gradient(135deg, #003078 0%, #001440 100%);
-    padding: 1.75rem 0 1.5rem;
 }
 
 .app-page-hero--viewer::before {
