@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.12.1] - 2026-02-26
+
+### Changed
+
+- **Pages template: relative paths instead of GitHub raw URLs** (#79) — `docs/index.html` now loads documents via `../${path}` relative paths instead of `raw.githubusercontent.com`, making the site deployable to any static hosting provider (GitHub Pages, Netlify, Vercel, S3, etc.)
+- **Pages command: hosting-agnostic language** (#79) — description and summary updated from "GitHub Pages" to generic "documentation site" terminology with multi-provider deployment instructions
+- **Pages error handling: safe DOM methods** (#79) — error display refactored from innerHTML to safe DOM construction (`createElement`/`textContent`), simplified to generic "Document not found" message
+- Version bump across all distribution formats
+
+---
+
 ## [2.12.0] - 2026-02-26
 
 ### Added

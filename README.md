@@ -52,7 +52,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v2.12.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.12.0)
+**Latest Release**: [v2.12.1](https://github.com/tractorjuice/arc-kit/releases/tag/v2.12.1)
 
 ### Initialize a Project
 
@@ -636,10 +636,10 @@ Create presentation slides from existing architecture artifacts:
 **When to use**: Before governance boards, stakeholder briefings, gate reviews, or quarterly portfolio presentations. Run after creating most project artifacts for the richest slide deck.
 
 ### Phase 16: Documentation Publishing
-**`/arckit.pages`** → Generate GitHub Pages documentation site
+**`/arckit.pages`** → Generate documentation site
 
 Publish all project documentation as an interactive website:
-- **GitHub Pages Integration**: Generates `docs/index.html` and `docs/manifest.json` for GitHub Pages hosting
+- **Static Site Generation**: Generates `docs/index.html` and `docs/manifest.json` — deployable to any static host (GitHub Pages, Netlify, Vercel, S3, etc.)
 - **Mermaid Diagram Rendering**: All architecture diagrams render inline with mermaid.js
 - **Project Navigation**: Sidebar with collapsible project tree and document categories
 - **GOV.UK Styling**: Professional government design system styling
@@ -937,7 +937,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
-| `/arckit.pages` | Generate GitHub Pages documentation site with Mermaid diagram support | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/) [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/) [v7](https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/) | 🟠 Alpha |
+| `/arckit.pages` | Generate documentation site with Mermaid diagram support | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/) [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/) [v7](https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/) | 🟠 Alpha |
 
 ---
 
@@ -1143,7 +1143,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v2.12.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.12.0)
+- **Latest Version**: [v2.12.1](https://github.com/tractorjuice/arc-kit/releases/tag/v2.12.1)
 
 ---
 
