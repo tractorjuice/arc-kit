@@ -20,6 +20,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Getting Started guide** now covers both `/arckit.start` and `/arckit.init` in a single combined guide with a quick-start section, replacing the previous start-only guide
+- **GitHub Pages Getting Started section** updated with new steps 4 (`/arckit.start`) and 5 (`/arckit.init`) before the GDS phases workflow
+- **`/arckit.pages` command** — added 5 missing guides to category and status tables: `start`, `conformance`, `productivity`, `remote-control`, `mcp-servers`
 - Moved `c4-diagram-reference.md` from `templates/` to `skills/mermaid-syntax/references/c4-layout-science.md` — `/arckit.diagram` Step 1d path updated
 - Version bump across all distribution formats
 

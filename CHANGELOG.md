@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Getting Started guide now covers both `/arckit.start` and `/arckit.init` in a single combined guide
+- GitHub Pages Getting Started section updated with `/arckit.start` and `/arckit.init` steps
+- `/arckit.pages` command — added 5 missing guides to category and status tables
 - Moved `c4-diagram-reference.md` to `skills/mermaid-syntax/references/c4-layout-science.md`
 - Version bump across all distribution formats
 
