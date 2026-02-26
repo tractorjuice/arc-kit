@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="ArcKit Guide Viewer - View command and role guides directly on the site.">
+    <title>Guide - ArcKit</title>
+
+    <!-- GOV.UK Frontend v5.13.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+
+    <!-- marked.js v15.0.6 + DOMPurify -->
+    <script src="https://cdn.jsdelivr.net/npm/marked@15.0.6/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.4/dist/purify.min.js"></script>
+
+    <style>
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
+        /* Nav Bar */
+        .app-nav-bar {
+            background: #0b0c0c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__item--active a {
+            border-bottom-color: #1d70b8;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle { display: block; }
+            .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+            .app-nav-bar__list--open { display: flex; }
+            .app-nav-bar__inner { flex-wrap: wrap; }
+            .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+            .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+        }
+
+        /* Loading spinner */
+        .app-loading {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .app-spinner {
+            display: inline-block;
+            width: 2rem;
+            height: 2rem;
+            border: 3px solid #b1b4b6;
+            border-top-color: #1d70b8;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Error panel */
+        .app-error {
+            border: 4px solid #d4351c;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-error__heading {
+            color: #d4351c;
+            margin-top: 0;
+        }
+
+        /* Markdown Content Styles */
+        .app-markdown h1 { font-size: 2rem; margin-top: 0; }
+        .app-markdown h2 { font-size: 1.5rem; margin-top: 2.5rem; border-bottom: 1px solid #b1b4b6; padding-bottom: 0.5rem; }
+        .app-markdown h3 { font-size: 1.25rem; margin-top: 2rem; }
+        .app-markdown h4 { font-size: 1.1rem; margin-top: 1.5rem; }
+
+        .app-markdown p { margin: 1rem 0; line-height: 1.6; }
+
+        .app-markdown ul, .app-markdown ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+
+        .app-markdown li { margin: 0.5rem 0; line-height: 1.5; }
+
+        .app-markdown table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .app-markdown th, .app-markdown td {
+            border: 1px solid #b1b4b6;
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .app-markdown th {
+            background: #f3f2f1;
+            font-weight: 700;
+        }
+
+        .app-markdown tr:hover {
+            background: #f8f8f8;
+        }
+
+        .app-markdown code {
+            background: #f3f2f1;
+            padding: 0.125rem 0.375rem;
+            font-family: 'SF Mono', 'Consolas', 'Liberation Mono', monospace;
+            font-size: 0.875em;
+            border-radius: 2px;
+        }
+
+        .app-markdown pre {
+            background: #1d1d1d;
+            color: #f8f8f8;
+            padding: 1.25rem;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 0;
+        }
+
+        .app-markdown pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+            border-radius: 0;
+        }
+
+        .app-markdown blockquote {
+            border-left: 4px solid #1d70b8;
+            margin: 1.5rem 0;
+            padding: 0.75rem 1.25rem;
+            background: #f3f2f1;
+        }
+
+        .app-markdown blockquote p:first-child { margin-top: 0; }
+        .app-markdown blockquote p:last-child { margin-bottom: 0; }
+
+        .app-markdown a { color: #1d70b8; }
+
+        .app-markdown img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .app-markdown hr {
+            border: none;
+            border-top: 1px solid #b1b4b6;
+            margin: 2rem 0;
+        }
+
+        /* Footer */
+        .app-footer {
+            background: #0b0c0c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .app-footer a { color: white; text-decoration: underline; }
+        .app-footer a:hover { color: #5694ca; }
+    </style>
+</head>
+<body class="govuk-template__body">
+    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="index.html">Home</a></li>
+                <li class="app-nav-bar__item"><a href="index.html#commands">Commands</a></li>
+                <li class="app-nav-bar__item"><a href="use-cases.html">Example Projects</a></li>
+                <li class="app-nav-bar__item app-nav-bar__item--active"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item"><a href="index.html#getting-started">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-width-container">
+            <a id="back-link" href="guides.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to Guides</a>
+
+            <div id="loading" class="app-loading">
+                <div class="app-spinner"></div>
+                <p class="govuk-body">Loading guide...</p>
+            </div>
+
+            <div id="error" style="display:none">
+                <div class="app-error">
+                    <h2 class="govuk-heading-m app-error__heading">Guide not found</h2>
+                    <p class="govuk-body" id="error-message">The requested guide could not be loaded.</p>
+                    <a href="guides.html" class="govuk-link">Browse all guides</a>
+                </div>
+            </div>
+
+            <div id="content" class="app-markdown" style="display:none"></div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="govuk-width-container">
+            <p class="govuk-body-s">Built with <a href="https://design-system.service.gov.uk/" class="govuk-link">GOV.UK Design System</a> | <a href="index.html" class="govuk-link">Back to ArcKit</a> | <a href="https://github.com/tractorjuice/arc-kit" class="govuk-link">GitHub</a> | MIT License</p>
+        </div>
+    </footer>
+
+    <script>
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var guide = params.get('guide');
+
+            if (!guide) {
+                window.location.replace('guides.html');
+                return;
+            }
+
+            // Sanitise: allow only alphanumeric, hyphens, slashes (for roles/)
+            if (!/^[a-z0-9\-\/]+$/.test(guide)) {
+                showError('Invalid guide name.');
+                return;
+            }
+
+            // Set back link: role guides go back to roles.html
+            var backLink = document.getElementById('back-link');
+            if (guide.indexOf('roles/') === 0) {
+                backLink.href = 'roles.html';
+                backLink.textContent = 'Back to Roles';
+            }
+
+            var rawUrl = 'https://raw.githubusercontent.com/tractorjuice/arc-kit/main/docs/guides/' + guide + '.md';
+
+            fetch(rawUrl)
+                .then(function(res) {
+                    if (!res.ok) throw new Error(res.status === 404 ? 'Guide not found' : 'Failed to load guide (HTTP ' + res.status + ')');
+                    return res.text();
+                })
+                .then(function(md) {
+                    // Extract title from first # heading
+                    var titleMatch = md.match(/^#\s+(.+)$/m);
+                    if (titleMatch) {
+                        document.title = titleMatch[1] + ' - ArcKit';
+                    }
+
+                    var rawHtml = marked.parse(md);
+                    var safeHtml = DOMPurify.sanitize(rawHtml);
+                    var contentEl = document.getElementById('content');
+                    contentEl.innerHTML = safeHtml;
+                    document.getElementById('loading').style.display = 'none';
+                    contentEl.style.display = 'block';
+                })
+                .catch(function(err) {
+                    showError(err.message);
+                });
+
+            function showError(msg) {
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('error-message').textContent = msg;
+                document.getElementById('error').style.display = 'block';
+            }
+        })();
+    </script>
+</body>
+</html>
