@@ -224,12 +224,6 @@
         );
 }
 
-.app-page-hero__actions {
-    margin-top: 1.5rem;
-    animation: heroReveal 0.45s ease-out both;
-    animation-delay: 0.19s;
-}
-
 /* ============================================================
    Variant: Guide Viewer  — deep navy, dot grid
    ============================================================ */
