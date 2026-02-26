@@ -430,6 +430,13 @@
         </div>
     </footer>
 
+    <!-- GOV.UK Frontend JavaScript -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js" integrity="sha384-DwGEYeDIkSBDH4+n4Z+tY7m0/hKLvETQmD6glhDiHn0lFo3hffImqh39zfNvHVrd" crossorigin="anonymous"></script>
+    <script type="module">
+        import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
+        initAll()
+    </script>
+
     <script>
         function toggleCategory(heading) {
             var body = heading.nextElementSibling;
