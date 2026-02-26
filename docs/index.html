@@ -405,7 +405,7 @@
                 <li class="app-nav-bar__item"><a href="use-cases.html">Example Projects</a></li>
                 <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
                 <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
-                <li class="app-nav-bar__item"><a href="#getting-started">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="getting-started.html">Getting Started</a></li>
                 <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
             </ul>
             <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
@@ -430,7 +430,7 @@
                     <a href="#documentation" class="govuk-button govuk-button--secondary" data-module="govuk-button">
                         View documentation
                     </a>
-                    <a href="#getting-started" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                    <a href="getting-started.html" class="govuk-button govuk-button--secondary" data-module="govuk-button">
                         Quick start guide
                     </a>
                 </div>
@@ -855,57 +855,17 @@ flowchart TD
         </div>
     </div>
 
-        <!-- Getting Started Section -->
+        <!-- Getting Started CTA -->
         <div class="govuk-width-container govuk-!-margin-top-9" id="getting-started">
-            <h2 class="govuk-heading-l">Getting Started (5 Minutes)</h2>
-
-            <h3 class="govuk-heading-m">1. Install Claude Code</h3>
-            <p class="govuk-body">macOS & Linux (Homebrew):</p>
-            <div class="app-code-block">brew install --cask claude-code</div>
-            <p class="govuk-body govuk-!-margin-top-3">macOS, Linux & WSL (Shell script):</p>
-            <div class="app-code-block">curl -fsSL https://claude.ai/install.sh | bash</div>
-            <p class="govuk-body govuk-!-margin-top-3">Windows (PowerShell):</p>
-            <div class="app-code-block">irm https://claude.ai/install.ps1 | iex</div>
-
-            <h3 class="govuk-heading-m govuk-!-margin-top-6">2. Install ArcKit Plugin</h3>
-            <div class="app-code-block">/plugin marketplace add tractorjuice/arc-kit</div>
-            <p class="govuk-body govuk-!-margin-top-3">Then install from the Discover tab.</p>
-
-            <h3 class="govuk-heading-m govuk-!-margin-top-6">3. Open Your Project</h3>
-            <div class="app-code-block"><pre><code>cd my-project
-claude</code></pre></div>
-
-            <h3 class="govuk-heading-m govuk-!-margin-top-6">4. Get Oriented</h3>
-            <div class="app-code-block">/arckit.start</div>
-            <p class="govuk-body govuk-!-margin-top-3">Shows project status, connected tools, command decision tree, and recommended next steps.</p>
-
-            <h3 class="govuk-heading-m govuk-!-margin-top-6">5. Initialize Project Structure</h3>
-            <div class="app-code-block">/arckit.init</div>
-            <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
-
-            <h3 class="govuk-heading-m govuk-!-margin-top-6">6. Follow GDS Phases</h3>
-
-            <h4 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Discovery</h4>
-            <div class="app-code-block">/arckit.stakeholders Analyze stakeholders for appointment system</div>
-            <div class="app-code-block govuk-!-margin-top-2">/arckit.risk Create risk register</div>
-            <div class="app-code-block govuk-!-margin-top-2">/arckit.sobc Generate Strategic Outline Business Case</div>
-
-            <h4 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Alpha</h4>
-            <div class="app-code-block">/arckit.requirements Define requirements</div>
-            <div class="app-code-block govuk-!-margin-top-2">/arckit.principles Establish architecture principles</div>
-            <div class="app-code-block govuk-!-margin-top-2">/arckit.wardley Create Wardley Map for build vs buy decisions</div>
-
-            <h4 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Beta</h4>
-            <div class="app-code-block">/arckit.hld-review Review High-Level Design</div>
-            <div class="app-code-block govuk-!-margin-top-2">/arckit.diagram Create C4 architecture diagrams</div>
-            <div class="app-code-block govuk-!-margin-top-2">/arckit.analyze Comprehensive gap analysis</div>
-
-            <div class="govuk-warning-text govuk-!-margin-top-6">
-                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
-                <strong class="govuk-warning-text__text">
-                    <span class="govuk-visually-hidden">Warning</span>
-                    AI generates first drafts following templates. Always review, validate, and refine AI output with human expertise.
-                </strong>
+            <div class="app-feature-card" style="text-align: center; padding: 2.5rem;">
+                <h2 class="govuk-heading-l" style="margin-bottom: 1rem;">Ready to get started?</h2>
+                <p class="govuk-body-l">Set up ArcKit in 5 minutes and generate your first architecture artifact.</p>
+                <a href="getting-started.html" role="button" draggable="false" class="govuk-button govuk-button--start govuk-!-margin-top-4" data-module="govuk-button">
+                    Getting started guide
+                    <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
+                        <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
+                    </svg>
+                </a>
             </div>
         </div>
     </main>

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="Get started with ArcKit in 5 minutes. Install Claude Code, add the ArcKit plugin, and begin generating architecture governance artifacts following UK Government standards.">
+    <meta name="keywords" content="ArcKit getting started, install ArcKit, Claude Code plugin, architecture governance setup, quick start guide">
+    <meta name="author" content="ArcKit">
+    <title>Getting Started - ArcKit</title>
+    <meta property="og:title" content="Getting Started - ArcKit">
+    <meta property="og:description" content="Get started with ArcKit in 5 minutes. Install Claude Code, add the plugin, and begin generating architecture governance artifacts.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arckit.org/getting-started.html">
+    <meta property="og:site_name" content="ArcKit">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Getting Started - ArcKit">
+    <meta name="twitter:description" content="Get started with ArcKit in 5 minutes. Install Claude Code, add the plugin, and begin generating architecture governance artifacts.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <link rel="canonical" href="https://arckit.org/getting-started.html">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- GOV.UK Frontend v5.13.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="heroes.css">
+
+    <style>
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
+        /* Nav Bar */
+        .app-nav-bar {
+            background: #0b0c0c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__item--active a {
+            border-bottom-color: #1d70b8;
+        }
+
+        .app-nav-bar__brand {
+            color: #ffffff;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            display: block;
+        }
+
+        .app-nav-bar__brand:hover,
+        .app-nav-bar__brand:focus {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle { display: block; }
+            .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+            .app-nav-bar__list--open { display: flex; }
+            .app-nav-bar__inner { flex-wrap: wrap; }
+            .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+            .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+        }
+
+        /* Step cards */
+        .app-step {
+            position: relative;
+            padding-left: 3.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .app-step__number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: #1d70b8;
+            color: #fff;
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+
+        .app-step__title {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Code blocks */
+        .app-code-block {
+            background: #0b0c0c;
+            color: #00ff00;
+            padding: 1rem;
+            font-family: 'SF Mono', 'Consolas', 'Liberation Mono', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            margin: 0.75rem 0;
+        }
+
+        .app-code-block pre {
+            margin: 0;
+        }
+
+        .app-code-block code {
+            color: inherit;
+            background: none;
+            padding: 0;
+        }
+
+        /* Phase heading colours */
+        .app-phase-heading { color: #1d70b8; }
+
+        /* Next steps grid */
+        .app-next-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .app-next-card {
+            border: 2px solid #b1b4b6;
+            padding: 1.25rem;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: border-color 0.15s;
+        }
+
+        .app-next-card:hover {
+            border-color: #1d70b8;
+            background: #f8f8f8;
+        }
+
+        .app-next-card__title {
+            font-weight: 700;
+            color: #1d70b8;
+            font-size: 1.125rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .app-next-card__desc {
+            color: #505a5f;
+            font-size: 0.875rem;
+            margin: 0;
+        }
+
+        /* Footer */
+        .app-footer {
+            background: #0b0c0c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .app-footer a { color: white; text-decoration: underline; }
+        .app-footer a:hover { color: #5694ca; }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "HowTo",
+                "@id": "https://arckit.org/getting-started.html",
+                "name": "Getting Started with ArcKit",
+                "description": "Install Claude Code, add the ArcKit plugin, and begin generating architecture governance artifacts in 5 minutes.",
+                "totalTime": "PT5M",
+                "step": [
+                    { "@type": "HowToStep", "position": 1, "name": "Install Claude Code", "text": "Install Claude Code using Homebrew, shell script, or PowerShell." },
+                    { "@type": "HowToStep", "position": 2, "name": "Install ArcKit Plugin", "text": "Run /plugin marketplace add tractorjuice/arc-kit in Claude Code." },
+                    { "@type": "HowToStep", "position": 3, "name": "Open Your Project", "text": "Navigate to your project directory and launch Claude Code." },
+                    { "@type": "HowToStep", "position": 4, "name": "Get Oriented", "text": "Run /arckit.start to see project status and recommended next steps." },
+                    { "@type": "HowToStep", "position": 5, "name": "Initialize Project Structure", "text": "Run /arckit.init to create the projects directory structure." },
+                    { "@type": "HowToStep", "position": 6, "name": "Follow GDS Phases", "text": "Use ArcKit commands to generate artifacts for Discovery, Alpha, and Beta phases." }
+                ],
+                "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arckit.org/" },
+                    { "@type": "ListItem", "position": 2, "name": "Getting Started", "item": "https://arckit.org/getting-started.html" }
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body class="govuk-template__body">
+    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <a href="index.html" class="app-nav-bar__brand">ArcKit</a>
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="index.html">Home</a></li>
+                <li class="app-nav-bar__item"><a href="commands.html">Commands</a></li>
+                <li class="app-nav-bar__item"><a href="use-cases.html">Example Projects</a></li>
+                <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item app-nav-bar__item--active"><a href="getting-started.html">Getting Started</a></li>
+                <li class="app-nav-bar__item"><a href="https://github.com/tractorjuice/arc-kit">GitHub</a></li>
+            </ul>
+            <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
+        </div>
+    </nav>
+
+    <div class="app-page-hero app-page-hero--commands">
+        <div class="govuk-width-container app-page-hero__content">
+            <span class="app-page-hero__stat">5 Minutes</span>
+            <h1 class="app-page-hero__title">Getting Started</h1>
+            <p class="app-page-hero__description">Install Claude Code, add the ArcKit plugin, and start generating architecture governance artifacts.</p>
+        </div>
+    </div>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-width-container">
+            <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
+
+            <!-- Step 1 -->
+            <div class="app-step">
+                <span class="app-step__number">1</span>
+                <h2 class="govuk-heading-m app-step__title">Install Claude Code</h2>
+                <p class="govuk-body">macOS &amp; Linux (Homebrew):</p>
+                <div class="app-code-block">brew install --cask claude-code</div>
+                <p class="govuk-body govuk-!-margin-top-3">macOS, Linux &amp; WSL (Shell script):</p>
+                <div class="app-code-block">curl -fsSL https://claude.ai/install.sh | bash</div>
+                <p class="govuk-body govuk-!-margin-top-3">Windows (PowerShell):</p>
+                <div class="app-code-block">irm https://claude.ai/install.ps1 | iex</div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="app-step">
+                <span class="app-step__number">2</span>
+                <h2 class="govuk-heading-m app-step__title">Install ArcKit Plugin</h2>
+                <div class="app-code-block">/plugin marketplace add tractorjuice/arc-kit</div>
+                <p class="govuk-body govuk-!-margin-top-3">Then install from the Discover tab.</p>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="app-step">
+                <span class="app-step__number">3</span>
+                <h2 class="govuk-heading-m app-step__title">Open Your Project</h2>
+                <div class="app-code-block"><pre><code>cd my-project
+claude</code></pre></div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="app-step">
+                <span class="app-step__number">4</span>
+                <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
+                <div class="app-code-block">/arckit.start</div>
+                <p class="govuk-body govuk-!-margin-top-3">Shows project status, connected tools, command decision tree, and recommended next steps.</p>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="app-step">
+                <span class="app-step__number">5</span>
+                <h2 class="govuk-heading-m app-step__title">Initialize Project Structure</h2>
+                <div class="app-code-block">/arckit.init</div>
+                <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="app-step">
+                <span class="app-step__number">6</span>
+                <h2 class="govuk-heading-m app-step__title">Follow GDS Phases</h2>
+
+                <h3 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Discovery</h3>
+                <div class="app-code-block">/arckit.stakeholders Analyze stakeholders for appointment system</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit.risk Create risk register</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit.sobc Generate Strategic Outline Business Case</div>
+
+                <h3 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Alpha</h3>
+                <div class="app-code-block">/arckit.requirements Define requirements</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit.principles Establish architecture principles</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit.wardley Create Wardley Map for build vs buy decisions</div>
+
+                <h3 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Beta</h3>
+                <div class="app-code-block">/arckit.hld-review Review High-Level Design</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit.diagram Create C4 architecture diagrams</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit.analyze Comprehensive gap analysis</div>
+            </div>
+
+            <div class="govuk-warning-text govuk-!-margin-top-4">
+                <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                <strong class="govuk-warning-text__text">
+                    <span class="govuk-visually-hidden">Warning</span>
+                    AI generates first drafts following templates. Always review, validate, and refine AI output with human expertise.
+                </strong>
+            </div>
+
+            <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible">
+
+            <!-- Next Steps -->
+            <h2 class="govuk-heading-l">Next Steps</h2>
+            <div class="app-next-grid">
+                <a href="commands.html" class="app-next-card">
+                    <p class="app-next-card__title">Command Reference</p>
+                    <p class="app-next-card__desc">Browse all 53 commands with filters and dependency matrix.</p>
+                </a>
+                <a href="guides.html" class="app-next-card">
+                    <p class="app-next-card__title">Command Guides</p>
+                    <p class="app-next-card__desc">Step-by-step guides with prerequisites and real-world examples.</p>
+                </a>
+                <a href="roles.html" class="app-next-card">
+                    <p class="app-next-card__title">DDaT Role Guides</p>
+                    <p class="app-next-card__desc">Find commands tailored to your UK Government DDaT role.</p>
+                </a>
+                <a href="use-cases.html" class="app-next-card">
+                    <p class="app-next-card__title">Example Projects</p>
+                    <p class="app-next-card__desc">See AI-generated architecture documentation from 18 real scenarios.</p>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="govuk-width-container">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h2 class="govuk-heading-m">ArcKit</h2>
+                    <p class="govuk-body">Enterprise Architecture Governance &amp; Vendor Procurement Toolkit</p>
+                </div>
+                <div class="govuk-grid-column-one-third">
+                    <h3 class="govuk-heading-s">Links</h3>
+                    <ul class="govuk-list">
+                        <li><a href="https://github.com/tractorjuice/arc-kit">GitHub Repository</a></li>
+                        <li><a href="https://github.com/tractorjuice/arc-kit/issues">Report Issues</a></li>
+                        <li><a href="https://github.com/tractorjuice/arc-kit/releases">Releases</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="govuk-section-break govuk-section-break--m govuk-section-break--visible">
+            <p class="govuk-body-s">Built with <a href="https://design-system.service.gov.uk/" class="govuk-link">GOV.UK Design System</a> | MIT License</p>
+        </div>
+    </footer>
+
+    <!-- GOV.UK Frontend JavaScript -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js" integrity="sha384-DwGEYeDIkSBDH4+n4Z+tY7m0/hKLvETQmD6glhDiHn0lFo3hffImqh39zfNvHVrd" crossorigin="anonymous"></script>
+    <script type="module">
+        import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
+        initAll()
+    </script>
+<script src="theme.js"></script>
+</body>
+</html>

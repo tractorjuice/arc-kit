@@ -461,6 +461,31 @@ html.dark-mode .app-error__heading {
 }
 
 /* ============================================================
+   Getting Started Steps (getting-started.html)
+   ============================================================ */
+html.dark-mode .app-step__number {
+    background: #4da3ff;
+}
+
+html.dark-mode .app-next-card {
+    border-color: #555555;
+    background: #2a2a2a;
+}
+
+html.dark-mode .app-next-card:hover {
+    border-color: #4da3ff;
+    background: #333333;
+}
+
+html.dark-mode .app-next-card__title {
+    color: #4da3ff;
+}
+
+html.dark-mode .app-next-card__desc {
+    color: #a0a8b0;
+}
+
+/* ============================================================
    Page Hero Banners — dark mode
    ============================================================ */
 html.dark-mode .app-page-hero--commands {
