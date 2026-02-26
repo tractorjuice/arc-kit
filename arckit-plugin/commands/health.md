@@ -38,7 +38,7 @@ $ARGUMENTS
 
 ## What This Command Does
 
-Scans the `projects/` directory for all `ARC-*` artifacts and applies six detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action.
+Scans the `projects/` directory for all `ARC-*` artifacts and applies seven detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action.
 
 **This command does NOT modify any files.** It is a read-only diagnostic.
 
@@ -52,6 +52,7 @@ Scans the `projects/` directory for all `ARC-*` artifacts and applies six detect
 | ORPHAN-REQ | Orphaned Requirements | MEDIUM | REQ documents not referenced by any ADR in the same project |
 | MISSING-TRACE | Missing Traceability | MEDIUM | ADR documents that do not reference any requirement (REQ, FR-xxx, NFR-xxx, BR-xxx) |
 | VERSION-DRIFT | Version Drift | LOW | Multiple versions of the same artifact type where the latest version is >3 months old |
+| STALE-EXT | Unincorporated External Files | HIGH | External file in `external/` newer than all ARC-* artifacts in the same project |
 
 ---
 
@@ -238,6 +239,43 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
   Action: Confirm the latest version is current, or archive superseded versions
 ```
 
+#### Rule 7: STALE-EXT — Unincorporated External Files
+
+**Scan**: All files in `projects/*/external/` directories (including `000-global/external/`)
+
+**Logic**:
+1. For each project that has an `external/` directory:
+   a. Find the newest `ARC-*` artifact modification time across the project directory and its subdirectories (`decisions/`, `diagrams/`, `wardley-maps/`, `data-contracts/`, `reviews/`)
+   b. For each file in `external/` (excluding `README.md`):
+      - Compare the file's modification time against the newest artifact modification time
+      - If the external file is newer than the newest artifact (or no artifacts exist): **flag as HIGH severity**
+2. For each flagged file, match the filename against known patterns to recommend specific commands:
+
+| Pattern | Recommended Commands |
+|---------|---------------------|
+| `*api*`, `*swagger*`, `*openapi*` | `/arckit:requirements`, `/arckit:data-model`, `/arckit:diagram` |
+| `*schema*`, `*erd*`, `*.sql` | `/arckit:data-model`, `/arckit:data-mesh-contract` |
+| `*security*`, `*pentest*`, `*vuln*` | `/arckit:secure`, `/arckit:dpia` |
+| `*compliance*`, `*audit*` | `/arckit:tcop`, `/arckit:conformance` |
+| `*cost*`, `*pricing*`, `*budget*` | `/arckit:sobc`, `/arckit:finops` |
+| `*pipeline*`, `*ci*`, `*deploy*` | `/arckit:devops` |
+| `*rfp*`, `*itt*`, `*tender*` | `/arckit:sow`, `/arckit:evaluate` |
+| `*risk*`, `*threat*` | `/arckit:risk`, `/arckit:secure` |
+| `*policy*`, `*standard*` | `/arckit:principles`, `/arckit:tcop` |
+| (default) | `/arckit:requirements`, `/arckit:analyze` |
+
+**Rationale**: External files (PoC results, API specs, compliance reports, vendor documents) are placed in `external/` to inform architecture decisions. If these files are newer than all existing artifacts, the architecture may not yet reflect their content — creating a governance gap.
+
+**Output per finding**:
+```
+[HIGH] STALE-EXT: {project-dir}
+  Unincorporated external files: {count}
+  Files:
+    - {filename} → Recommended: {matched commands}
+    - {filename} → Recommended: {matched commands}
+  Action: Re-run recommended commands to incorporate external file content into architecture artifacts
+```
+
 ### Step 4: Compile Health Report
 
 Produce the health report as **console output only** (do NOT write a file). Structure the report as follows:
@@ -264,6 +302,7 @@ FINDINGS BY TYPE
   STALE-RSCH:       {count}
   FORGOTTEN-ADR:    {count}
   UNRESOLVED-COND:  {count}
+  STALE-EXT:        {count}
   ORPHAN-REQ:       {count}
   MISSING-TRACE:    {count}
   VERSION-DRIFT:    {count}
@@ -322,16 +361,20 @@ RECOMMENDED ACTIONS (prioritised)
    Update review documents with resolution evidence
    Why: Unresolved conditions may indicate unaddressed design gaps
 
-4. [MEDIUM] Check {count} orphaned requirements
+4. [HIGH] Incorporate {count} new external files
+   Run the recommended commands listed per file to update architecture artifacts
+   Why: External files (API specs, compliance reports, PoC results) contain information not yet reflected in governance artifacts
+
+5. [MEDIUM] Check {count} orphaned requirements
    Run: /arckit:adr for requirements needing architectural decisions
    Why: Requirements without ADR coverage may lack governance
 
-5. [MEDIUM] Add traceability to {count} ADRs
+6. [MEDIUM] Add traceability to {count} ADRs
    Update ADRs with requirement references
    Run: /arckit:traceability to generate full traceability matrix
    Why: Untraceable decisions reduce audit confidence
 
-6. [LOW] Review {count} artifacts with version drift
+7. [LOW] Review {count} artifacts with version drift
    Confirm latest versions are current or archive old versions
    Why: Stale multi-version artifacts may indicate abandoned work
 ```
@@ -374,6 +417,7 @@ If the user specified `JSON=true`, write a machine-readable `docs/health.json` f
     "STALE-RSCH": 1,
     "FORGOTTEN-ADR": 1,
     "UNRESOLVED-COND": 0,
+    "STALE-EXT": 0,
     "ORPHAN-REQ": 3,
     "MISSING-TRACE": 2,
     "VERSION-DRIFT": 1
@@ -401,7 +445,7 @@ If the user specified `JSON=true`, write a machine-readable `docs/health.json` f
 - `scanned.projects` — number of projects scanned
 - `scanned.artifacts` — total number of artifacts scanned across all projects
 - `summary` — finding counts by severity level (HIGH, MEDIUM, LOW) plus total
-- `byType` — finding counts per detection rule (always include all 6 rule IDs, using 0 for rules with no findings)
+- `byType` — finding counts per detection rule (always include all 7 rule IDs, using 0 for rules with no findings)
 - `projects[]` — per-project breakdown; each entry includes the project directory ID, artifact count, and an array of findings
 - Each finding includes: `severity`, `rule` (detection rule ID), `file` (artifact filename), `message` (human-readable detail), and `action` (suggested remediation)
 
@@ -480,6 +524,7 @@ Useful for planning — "what will be stale by June?"
 - `/arckit:adr` — create ADRs for orphaned requirements
 - `/arckit:traceability` — fix missing traceability links
 - `/arckit:hld-review` or `/arckit:dld-review` — follow up on unresolved conditions
+- Various commands per STALE-EXT findings — incorporate new external files (see filename-to-command mapping)
 
 ---
 
@@ -504,6 +549,7 @@ The health check is a **diagnostic tool**, not a governance artifact. Unlike `/a
 | Requirements orphaned | Any age | Flagged for awareness, not urgency; architect decides if ADR coverage is needed |
 | ADR traceability | Any age | Traceability is a governance best practice; missing references should be added when convenient |
 | Version drift | 3 months | Multiple versions indicate active iteration; 3 months of inactivity suggests the iteration has stalled |
+| External file staleness | Any age | External files newer than all artifacts indicate unincorporated content; no safe window to ignore since governance may be based on outdated information |
 
 ### Example 5: Generate JSON for Dashboard
 

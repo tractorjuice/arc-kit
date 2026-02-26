@@ -67,19 +67,33 @@ Apply the user's selection when choosing which Mode (A-F) to generate in Step 2 
 
 ## Step 1d: Load Syntax References
 
-Read `.arckit/skills/mermaid-syntax/references/c4-layout-science.md` for research-backed graph drawing guidance — Sugiyama algorithm, tier-based declaration ordering, edge crossing targets, C4 colour standards, PlantUML directional hints, and prompt antipatterns.
+Load format-specific syntax references based on the output format selected in Step 1c:
 
-Then read the type-specific Mermaid syntax reference based on the diagram type selected in Step 1c:
-- **C4 Context / C4 Container / C4 Component**: Read `.arckit/skills/mermaid-syntax/references/c4.md`
-- **Deployment**: Read `.arckit/skills/mermaid-syntax/references/flowchart.md`
-- **Sequence**: Read `.arckit/skills/mermaid-syntax/references/sequenceDiagram.md`
+**If Mermaid format selected (default):**
+
+1. Read `.arckit/skills/mermaid-syntax/references/c4-layout-science.md` for research-backed graph drawing guidance — Sugiyama algorithm, tier-based declaration ordering, edge crossing targets, C4 colour standards, and prompt antipatterns.
+2. Read the type-specific Mermaid syntax reference:
+   - **C4 Context / C4 Container / C4 Component**: Read `.arckit/skills/mermaid-syntax/references/c4.md`
+   - **Deployment**: Read `.arckit/skills/mermaid-syntax/references/flowchart.md`
+   - **Sequence**: Read `.arckit/skills/mermaid-syntax/references/sequenceDiagram.md`
+   - **Data Flow with ER content**: Also read `.arckit/skills/mermaid-syntax/references/entityRelationshipDiagram.md`
+
+**If PlantUML format selected:**
+
+1. Read `.arckit/skills/plantuml-syntax/references/c4-plantuml.md` for C4-PlantUML element syntax, directional relationships, layout constraints, and **layout conflict rules** (critical for preventing `Rel_Down`/`Lay_Right` contradictions).
+2. For Sequence diagrams: also read `.arckit/skills/plantuml-syntax/references/sequence-diagrams.md`
+
+**Mermaid ERD Rules** (when generating any ER content in Mermaid):
+- Valid key types: `PK`, `FK`, `UK` only. For combined primary-and-foreign key, use `PK, FK` (comma-separated). **Never use `PK_FK`** — it is invalid Mermaid syntax.
+- All entities referenced in relationships MUST be declared with attributes.
 
 Apply these principles when generating diagrams in Step 3. In particular:
 
 1. **Declare all elements before any relationships**
 2. **Order element declarations** to match the intended reading direction (left-to-right for `flowchart LR`, top-to-bottom for `flowchart TB`)
-3. **Apply `classDef` styling** using the C4 colour palette for visual consistency
-4. **Use `subgraph`** to group related elements within architectural boundaries
+3. **Apply `classDef` styling** using the C4 colour palette for visual consistency (Mermaid) or use the C4-PlantUML library's built-in styling (PlantUML)
+4. **Use `subgraph`** (Mermaid) or **boundaries** (PlantUML) to group related elements within architectural boundaries
+5. **For PlantUML**: Ensure every `Rel_*` direction is consistent with any `Lay_*` constraint on the same element pair (see layout conflict rules in c4-plantuml.md)
 
 ## Step 2: Determine the Diagram Type
 

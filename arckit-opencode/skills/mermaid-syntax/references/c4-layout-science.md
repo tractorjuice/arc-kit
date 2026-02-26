@@ -210,6 +210,8 @@ PayGateway["<b>Government Payment Gateway</b><br/><i>[Software System]</i>"]
 
 ## 7. PlantUML Directional Hints
 
+> **Cross-reference**: For the full C4-PlantUML syntax reference including element macros, boundary syntax, layout conflict rules, and worked examples, see the PlantUML syntax skill at `skills/plantuml-syntax/references/c4-plantuml.md`. This section provides a summary of directional hints only.
+
 For complex diagrams that exceed Mermaid's layout capabilities (typically more than 12-15 elements), PlantUML with the C4-PlantUML library provides directional relationship hints that give explicit control over layout.
 
 ### Directional Relationship Functions

@@ -103,6 +103,24 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 
 ---
 
+### STALE-EXT — Unincorporated External Files
+
+**Severity**: HIGH
+
+**What it means**: One or more files in a project's `external/` directory have a modification time newer than the most recent `ARC-*` artifact in the same project. These external files — API specifications, compliance reports, PoC results, vendor documents — contain information that has not yet been reflected in the project's architecture artifacts.
+
+**Why it matters**: External files are placed in `external/` specifically to inform architecture decisions. When a new API spec arrives or a compliance report is updated, the existing requirements, diagrams, risk registers, and other artifacts may no longer accurately represent the current state. Governance decisions made on outdated artifacts create risk — particularly for procurement, security, and compliance.
+
+**How to resolve**:
+1. Review each flagged external file to understand what changed
+2. The health report includes recommended commands per file based on filename patterns (e.g., `*api*` files suggest `/arckit:requirements`, `/arckit:data-model`, `/arckit:diagram`)
+3. Re-run the recommended commands, pointing them to the new external content
+4. After updating artifacts, the external files will no longer be flagged (their mtime will be older than the newly generated artifacts)
+
+**Example scenario**: A penetration test report (`pentest-report-q1.pdf`) is added to `external/` after the security assessment was written. The existing `ARC-001-SECD-v1.0.md` does not account for the findings in the new report. The STALE-EXT finding flags this gap and recommends re-running `/arckit:secure` and `/arckit:dpia` to incorporate the pentest results.
+
+---
+
 ### VERSION-DRIFT — Version Drift
 
 **Severity**: LOW
@@ -130,6 +148,7 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 | Unresolved Conditions | Any age | Conditions are requirements for the approval to be valid. There is no safe period to defer them. |
 | Orphaned Requirements | Any age | Flagged for awareness. The architect decides whether ADR coverage is needed based on requirement complexity. |
 | Missing Traceability | Any age | Traceability is a best practice for auditability. Missing references should be added as part of regular governance hygiene. |
+| Unincorporated External Files | Any age | External files newer than all artifacts indicate content not yet reflected in governance artifacts. No safe deferral window. |
 | Version Drift | 3 months | Multiple versions indicate active iteration. Three months of inactivity suggests the iteration has stalled or been abandoned. |
 
 ---

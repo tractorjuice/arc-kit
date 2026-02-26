@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **STALE-EXT detection rule for `/arckit:health`** (#77) — 7th detection rule flags external files in `external/` that are newer than a project's latest artifact, with filename-to-command mapping (e.g., `*api*` → `/arckit:requirements`, `/arckit:data-model`, `/arckit:diagram`) for targeted remediation
+- **SessionStart hook external file detection** (#77) — auto-detects new external files at session start and reports them in context with project name and file count
+- **UserPromptSubmit hook external file flagging** (#77) — context hook now marks external files as `(**NEW** — newer than latest artifact)` when they are newer than the project's most recent ARC-* artifact
+- **PlantUML Syntax Reference skill** (`plantuml-syntax`) (#78) — 10 reference files covering C4-PlantUML (with layout conflict rules), sequence diagrams, class diagrams, activity diagrams, state diagrams, ER diagrams, component diagrams, use case diagrams, common syntax errors, and styling guide
+- **C4-PlantUML layout conflict rules** (#78) — explicit rules preventing `Rel_Down`/`Lay_Right` contradictions: directional consistency, vertical consistency, all-pairs agreement, and coverage requirements with validation checklist
+- **Format-specific syntax loading in `/arckit:diagram`** (#78) — Step 1d now conditionally loads PlantUML or Mermaid references based on selected output format; PlantUML format loads `c4-plantuml.md` with layout conflict rules
+- **Mermaid ERD syntax rules in `/arckit:diagram`** (#78) — explicit rules preventing invalid `PK_FK` key type (must use `PK, FK` comma-separated); loads `entityRelationshipDiagram.md` reference for ER content
+
 ---
 
 ## [2.11.0] - 2026-02-26

@@ -148,6 +148,7 @@ for project_dir in "$PROJECTS_DIR"/*/; do
   # Scan for ARC-* artifacts in main project dir
   ARTIFACT_LIST=""
   ARTIFACT_COUNT=0
+  NEWEST_ARTIFACT_MTIME=0
   for f in "$project_dir"ARC-*.md; do
     [[ -f "$f" ]] || continue
     fname=$(basename "$f")
@@ -155,6 +156,8 @@ for project_dir in "$PROJECTS_DIR"/*/; do
     dname=$(doc_type_name "$dtype")
     ARTIFACT_LIST+="  - \`${fname}\` (${dname})\n"
     ARTIFACT_COUNT=$((ARTIFACT_COUNT + 1))
+    amtime=$(stat -c %Y "$f" 2>/dev/null || echo 0)
+    [[ $amtime -gt $NEWEST_ARTIFACT_MTIME ]] && NEWEST_ARTIFACT_MTIME=$amtime
   done
 
   # Also scan subdirectories: decisions/, diagrams/, wardley-maps/
@@ -167,6 +170,8 @@ for project_dir in "$PROJECTS_DIR"/*/; do
         dname=$(doc_type_name "$dtype")
         ARTIFACT_LIST+="  - \`${subdir}/${fname}\` (${dname})\n"
         ARTIFACT_COUNT=$((ARTIFACT_COUNT + 1))
+        amtime=$(stat -c %Y "$f" 2>/dev/null || echo 0)
+        [[ $amtime -gt $NEWEST_ARTIFACT_MTIME ]] && NEWEST_ARTIFACT_MTIME=$amtime
       done
     fi
   done
@@ -199,7 +204,12 @@ for project_dir in "$PROJECTS_DIR"/*/; do
       [[ -f "$f" ]] || continue
       fname=$(basename "$f")
       [[ "$fname" == "README.md" ]] && continue
-      EXT_LIST+="  - \`${fname}\`\n"
+      ext_mtime=$(stat -c %Y "$f" 2>/dev/null || echo 0)
+      if [[ $ext_mtime -gt $NEWEST_ARTIFACT_MTIME ]]; then
+        EXT_LIST+="  - \`${fname}\` (**NEW** — newer than latest artifact)\n"
+      else
+        EXT_LIST+="  - \`${fname}\`\n"
+      fi
       EXT_COUNT=$((EXT_COUNT + 1))
     done
     if [[ $EXT_COUNT -gt 0 ]]; then
