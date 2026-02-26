@@ -1581,7 +1581,8 @@
         // Configuration - UPDATE THESE VALUES
         // ============================================
         const CONFIG = {
-            repo: '{{REPO}}'              // Repository name
+            repo: '{{REPO}}',             // Repository name
+            contentBaseUrl: '{{CONTENT_BASE_URL}}'  // Fallback base URL for GitHub Pages (raw.githubusercontent.com)
         };
 
         // ============================================
@@ -1604,6 +1605,10 @@
 
         function getRawUrl(path) {
             return `../${path}`;
+        }
+
+        function getFallbackUrl(path) {
+            return CONFIG.contentBaseUrl ? `${CONFIG.contentBaseUrl}/${path}` : null;
         }
 
         function getDocumentId(path) {
@@ -2783,7 +2788,13 @@
                 if (documentCache.has(path)) {
                     markdown = documentCache.get(path);
                 } else {
-                    const response = await fetch(getRawUrl(path));
+                    let response = await fetch(getRawUrl(path));
+                    if (!response.ok) {
+                        const fallback = getFallbackUrl(path);
+                        if (fallback) {
+                            response = await fetch(fallback);
+                        }
+                    }
                     if (!response.ok) {
                         throw new Error(response.status === 404 ? 'not_found' : `fetch_error_${response.status}`);
                     }
