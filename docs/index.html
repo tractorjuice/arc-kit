@@ -136,58 +136,57 @@
             font-weight: 700;
         }
 
-        .app-command-section {
-            background: #f3f2f1;
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .app-command-list {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
-        }
-
-        .app-command-list li {
-            background: white;
-            border-left: 4px solid #00703c;
-            padding: 0.75rem 1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .app-command-code {
-            font-family: monospace;
-            background: #f3f2f1;
-            padding: 0.25rem 0.5rem;
-            font-weight: 700;
-        }
-
-        .app-ai-grid {
+        .app-phase-descriptions {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .app-phase-desc {
+            border-top: 3px solid #1d70b8;
+            padding-top: 0.75rem;
+        }
+
+        .app-ai-compact {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 1.5rem;
             margin: 2rem 0;
         }
 
-        .app-ai-card {
-            border: 3px solid #1d70b8;
-            padding: 1.5rem;
-            background: white;
-            overflow-wrap: break-word;
+        .app-ai-compact-card {
+            border: 2px solid #b1b4b6;
+            padding: 1.25rem;
         }
 
-        .app-use-case-grid {
+        .app-ai-compact-card code {
+            display: block;
+            background: #0b0c0c;
+            color: #00ff00;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8125rem;
+            margin-top: 0.75rem;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .app-explore-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 1.5rem;
             margin: 2rem 0;
         }
 
-        .app-use-case-card {
+        .app-explore-card {
             background: #f3f2f1;
             padding: 1.5rem;
-            border-top: 4px solid #00703c;
+            border-top: 4px solid #1d70b8;
         }
+
+        .app-explore-card:nth-child(2) { border-top-color: #00703c; }
+        .app-explore-card:nth-child(3) { border-top-color: #912b88; }
+        .app-explore-card:nth-child(4) { border-top-color: #f47738; }
 
         .app-code-block {
             background: #0b0c0c;
@@ -218,42 +217,6 @@
         .app-footer a:hover {
             color: #5694ca;
         }
-
-
-        /* Category border colours */
-        .app-category-heading {
-            padding-left: 1rem;
-        }
-
-        .app-category-heading--blue {
-            border-left: 4px solid #1d70b8;
-        }
-
-        .app-category-heading--green {
-            border-left: 4px solid #00703c;
-        }
-
-        .app-category-heading--purple {
-            border-left: 4px solid #912b88;
-        }
-
-        .app-category-heading--red {
-            border-left: 4px solid #d4351c;
-        }
-
-        .app-category-heading--orange {
-            border-left: 4px solid #f47738;
-        }
-
-        .app-category-heading--light-blue {
-            border-left: 4px solid #5694ca;
-        }
-
-        /* Phase sub-heading colour */
-        .app-phase-heading {
-            color: #1d70b8;
-        }
-
 
         /* Sticky Navigation Bar */
         .app-nav-bar {
@@ -412,449 +375,168 @@
     </nav>
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
-        <!-- Hero Section -->
+        <!-- 1. Hero -->
         <div class="app-hero" id="hero">
             <div class="govuk-width-container">
                 <h1 class="govuk-heading-xl">ArcKit</h1>
                 <p class="govuk-body-l">Transform architecture chaos into systematic, audit-ready governance.</p>
-                <p class="govuk-body">53 AI-assisted commands that generate complete governance documents. From stakeholder analysis and risk registers to design reviews and traceability matrices—each command produces template-driven, audit-ready artifacts. Navigate discovery to delivery with built-in UK Government compliance: GDS Service Manual, Technology Code of Practice, Secure by Design.</p>
 
                 <div class="govuk-button-group govuk-!-margin-top-6">
-                    <a href="https://github.com/tractorjuice/arc-kit" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
-                        Get started on GitHub
+                    <a href="getting-started.html" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
+                        Get started
                         <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">
                             <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z"/>
                         </svg>
                     </a>
-                    <a href="#documentation" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-                        View documentation
-                    </a>
-                    <a href="getting-started.html" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-                        Quick start guide
+                    <a href="https://github.com/tractorjuice/arc-kit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                        View on GitHub
                     </a>
                 </div>
             </div>
         </div>
 
-    <!-- Features Section -->
-    <div class="govuk-width-container govuk-!-margin-top-9">
-        <h2 class="govuk-heading-l">Features</h2>
-        <div class="app-feature-grid">
-            <div class="app-feature-card">
-                <h3 class="govuk-heading-m">Systematic</h3>
-                <p class="govuk-body">Follow GDS Agile Delivery phases (Discovery → Alpha → Beta → Live) with structured command workflow ensuring complete, auditable project artifacts.</p>
-            </div>
-            <div class="app-feature-card">
-                <h3 class="govuk-heading-m">Compliant</h3>
-                <p class="govuk-body">Built-in compliance with Technology Code of Practice (TCoP), Secure by Design principles, GDS Service Standard, and UK Government procurement frameworks.</p>
-            </div>
-            <div class="app-feature-card">
-                <h3 class="govuk-heading-m">Auditable</h3>
-                <p class="govuk-body">Every artifact includes version control, traceability matrices, design review checklists, and comprehensive gap analysis for audit readiness.</p>
-            </div>
-            <div class="app-feature-card">
-                <h3 class="govuk-heading-m">AI-Assisted</h3>
-                <p class="govuk-body">Works with Claude Code (premier), Gemini CLI, Codex CLI, and OpenCode CLI. Claude Code provides the most complete experience with autonomous agents, automation hooks, and output validation. AI generates first drafts following templates; architects review and refine. Developed and tested on Linux; on Windows use a devcontainer or WSL2 for full hook support.</p>
-            </div>
-            <div class="app-feature-card">
-                <h3 class="govuk-heading-m">Traceable</h3>
-                <p class="govuk-body">Complete traceability chains from stakeholder goals through risks and requirements to design decisions. Every artifact links back to business drivers and outcomes.</p>
-            </div>
-            <div class="app-feature-card">
-                <h3 class="govuk-heading-m">Open Source</h3>
-                <p class="govuk-body">Free and open under MIT licence. Full transparency, community contributions welcome, and no vendor lock-in. Adapt and extend for your organisation's needs.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Capabilities Section -->
-    <div class="govuk-width-container govuk-!-margin-top-9">
-        <h2 class="govuk-heading-l">What ArcKit Does</h2>
-        <p class="govuk-body">Transform scattered documents into systematic, auditable architecture governance across six key areas:</p>
-
-        <div class="govuk-grid-row govuk-!-margin-top-6">
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--blue">Governance & Strategy</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>Architecture principles enforcement</li>
-                    <li>Stakeholder analysis with RACI matrices</li>
-                    <li>Risk management (HM Treasury Orange Book)</li>
-                    <li>Business case justification (Green Book SOBC)</li>
-                    <li>Strategic planning with Wardley Mapping</li>
-                    <li>Architecture Decision Records (ADRs)</li>
-                    <li>Multi-year roadmap planning</li>
-                    <li>Knowledge compounding (vendor profiles &amp; tech notes)</li>
-                </ul>
-            </div>
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--green">Requirements & Data</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>Comprehensive requirements documentation</li>
-                    <li>Data modelling with ERD diagrams</li>
-                    <li>GDPR compliance and data governance</li>
-                    <li>Complete requirements traceability</li>
-                    <li>Data source discovery (APIs, open data portals)</li>
-                    <li>Data mesh contracts for federated architectures</li>
-                </ul>
+        <!-- 2. Stats bar -->
+        <div class="govuk-width-container govuk-!-margin-top-6">
+            <div class="app-stats-grid">
+                <div class="app-stat-card">
+                    <div class="app-stat-number">53</div>
+                    <div class="app-stat-label">Commands</div>
+                </div>
+                <div class="app-stat-card">
+                    <div class="app-stat-number">13</div>
+                    <div class="app-stat-label">Categories</div>
+                </div>
+                <div class="app-stat-card">
+                    <div class="app-stat-number">5</div>
+                    <div class="app-stat-label">Autonomous Agents</div>
+                </div>
+                <div class="app-stat-card">
+                    <div class="app-stat-number">47</div>
+                    <div class="app-stat-label">Dependencies Mapped</div>
+                </div>
             </div>
         </div>
 
-        <div class="govuk-grid-row govuk-!-margin-top-6">
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--purple">Procurement & Vendors</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>Technology research with build vs buy analysis</li>
-                    <li>RFP statement of work generation</li>
-                    <li>Vendor evaluation and selection</li>
-                    <li>G-Cloud service search and clarification</li>
-                    <li>Digital Outcomes and Specialists (DOS)</li>
-                    <li>Cloud research via MCP (AWS, Azure, GCP)</li>
-                </ul>
-            </div>
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--red">Design & Quality</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>Visual architecture diagrams (Mermaid) with C4 quality gates</li>
-                    <li>Data Flow Diagrams (DFD)</li>
-                    <li>Formal design reviews (HLD/DLD)</li>
-                    <li>Secure by Design compliance checks</li>
-                    <li>Platform design for multi-sided ecosystems</li>
-                    <li>Artifact health scanning and diagnostics</li>
-                    <li>ServiceNow service management integration</li>
-                </ul>
+        <!-- 3. What is ArcKit? -->
+        <div class="govuk-width-container govuk-!-margin-top-9">
+            <h2 class="govuk-heading-l">What is ArcKit?</h2>
+            <p class="govuk-body">53 AI-assisted commands that generate complete governance documents &mdash; from stakeholder analysis and risk registers to design reviews and traceability matrices. Each command produces template-driven, audit-ready artifacts aligned to UK Government standards.</p>
+
+            <div class="app-feature-grid">
+                <div class="app-feature-card">
+                    <h3 class="govuk-heading-m">Systematic</h3>
+                    <p class="govuk-body">Follow GDS Agile Delivery phases with a structured command workflow. Every artifact is version-controlled, traceable, and linked to business drivers.</p>
+                </div>
+                <div class="app-feature-card">
+                    <h3 class="govuk-heading-m">Compliant</h3>
+                    <p class="govuk-body">Built-in compliance with the Technology Code of Practice, Secure by Design, GDS Service Standard, and UK Government procurement frameworks.</p>
+                </div>
+                <div class="app-feature-card">
+                    <h3 class="govuk-heading-m">AI-Assisted</h3>
+                    <p class="govuk-body">Works with Claude Code, Gemini CLI, Codex CLI, and OpenCode CLI. AI generates first drafts from templates; architects review and refine.</p>
+                </div>
             </div>
         </div>
 
-        <div class="govuk-grid-row govuk-!-margin-top-6">
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--orange">Compliance & Assurance</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><a href="https://www.gov.uk/guidance/the-technology-code-of-practice" class="govuk-link">Technology Code of Practice (TCoP)</a> review</li>
-                    <li><a href="https://www.gov.uk/service-manual/service-assessments" class="govuk-link">GDS Service Standard</a> assessment</li>
-                    <li><a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/" class="govuk-link">Data Protection Impact Assessment (DPIA)</a></li>
-                    <li><a href="https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government" class="govuk-link">AI Playbook</a> compliance</li>
-                    <li><a href="https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub" class="govuk-link">Algorithmic Transparency (ATRS)</a></li>
-                    <li><a href="https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive" class="govuk-link">MOD JSP-936</a> AI assurance</li>
-                </ul>
+        <!-- 4. How it works -->
+        <div class="govuk-width-container govuk-!-margin-top-9">
+            <h2 class="govuk-heading-l">How it works</h2>
+            <p class="govuk-body">ArcKit follows the UK Government's GDS Agile Delivery framework, with commands mapped to each phase:</p>
+
+            <div class="app-phase-flow">
+                <div class="app-phase-box">Phase 0<br>Planning</div>
+                <div class="app-phase-arrow">&rarr;</div>
+                <div class="app-phase-box">Discovery</div>
+                <div class="app-phase-arrow">&rarr;</div>
+                <div class="app-phase-box">Alpha</div>
+                <div class="app-phase-arrow">&rarr;</div>
+                <div class="app-phase-box">Beta</div>
+                <div class="app-phase-arrow">&rarr;</div>
+                <div class="app-phase-box">Live</div>
             </div>
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--light-blue">Operations & Delivery</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li>DevOps and CI/CD pipelines</li>
-                    <li>MLOps model lifecycle management</li>
-                    <li>FinOps cloud cost optimization</li>
-                    <li>Operational readiness (runbooks, DR/BCP)</li>
-                    <li>Agile backlog generation</li>
-                    <li>Presentation slide decks (MARP format)</li>
-                    <li>Project story and timeline reporting</li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
-    <!-- GDS Workflow Section -->
-    <div class="govuk-width-container govuk-!-margin-top-9">
-        <h2 class="govuk-heading-l">GDS Agile Delivery Workflow</h2>
-        <p class="govuk-body">ArcKit follows the UK Government's GDS Service Manual Agile Delivery framework:</p>
-
-        <div class="app-phase-flow">
-            <div class="app-phase-box">Phase 0<br>Planning</div>
-            <div class="app-phase-arrow">→</div>
-            <div class="app-phase-box">Discovery</div>
-            <div class="app-phase-arrow">→</div>
-            <div class="app-phase-box">Alpha</div>
-            <div class="app-phase-arrow">→</div>
-            <div class="app-phase-box">Beta</div>
-            <div class="app-phase-arrow">→</div>
-            <div class="app-phase-box">Live</div>
-        </div>
-
-        <h3 class="govuk-heading-m govuk-!-margin-top-6">ArcKit Command Workflow</h3>
-        <p class="govuk-body">Commands flow from governance through requirements to delivery:</p>
-
-        <pre class="mermaid">
-flowchart TD
-    subgraph Foundation[Foundation]
-        plan[plan]
-        principles[principles]
-    end
-
-    subgraph Discovery[Discovery]
-        stakeholders[stakeholders]
-        risk[risk]
-        sobc[sobc]
-    end
-
-    subgraph Alpha[Alpha]
-        requirements[requirements]
-        data-model[data-model]
-        research[research]
-        wardley[wardley]
-    end
-
-    subgraph Beta[Beta]
-        sow[sow]
-        evaluate[evaluate]
-        hld-review[hld-review]
-        backlog[backlog]
-        trello[trello]
-        diagram[diagram]
-    end
-
-    subgraph Live[Live]
-        servicenow[servicenow]
-        traceability[traceability]
-        story[story]
-    end
-
-    plan --> principles
-    principles --> stakeholders
-    stakeholders --> risk
-    risk --> sobc
-    sobc --> requirements
-    requirements --> data-model
-    requirements --> research
-    research --> wardley
-    wardley --> sow
-    data-model --> diagram
-    sow --> evaluate
-    evaluate --> hld-review
-    hld-review --> backlog
-    backlog --> trello
-    backlog --> servicenow
-    servicenow --> traceability
-    traceability --> story
-
-    style Foundation fill:#1d70b8,color:#fff
-    style Discovery fill:#f47738,color:#fff
-    style Alpha fill:#912b88,color:#fff
-    style Beta fill:#00703c,color:#fff
-    style Live fill:#d4351c,color:#fff
-        </pre>
-    </div>
-
-    <!-- Commands Summary Section -->
-    <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
-        <h2 class="govuk-heading-l">53 ArcKit Commands</h2>
-        <p class="govuk-body">Complete command coverage across 13 categories — from project setup and governance through requirements, research, procurement, and delivery:</p>
-
-        <div class="app-stats-grid">
-            <div class="app-stat-card">
-                <div class="app-stat-number">53</div>
-                <div class="app-stat-label">Commands</div>
-            </div>
-            <div class="app-stat-card">
-                <div class="app-stat-number">13</div>
-                <div class="app-stat-label">Categories</div>
-            </div>
-            <div class="app-stat-card">
-                <div class="app-stat-number">5</div>
-                <div class="app-stat-label">Autonomous Agents</div>
-            </div>
-            <div class="app-stat-card">
-                <div class="app-stat-number">47</div>
-                <div class="app-stat-label">Dependencies Mapped</div>
+            <div class="app-phase-descriptions">
+                <div class="app-phase-desc">
+                    <h3 class="govuk-heading-s">Planning</h3>
+                    <p class="govuk-body-s">Define architecture principles and create your project structure.</p>
+                </div>
+                <div class="app-phase-desc">
+                    <h3 class="govuk-heading-s">Discovery</h3>
+                    <p class="govuk-body-s">Identify stakeholders, assess risks, and build the strategic outline business case.</p>
+                </div>
+                <div class="app-phase-desc">
+                    <h3 class="govuk-heading-s">Alpha</h3>
+                    <p class="govuk-body-s">Gather requirements, model data, research technology options, and map strategy.</p>
+                </div>
+                <div class="app-phase-desc">
+                    <h3 class="govuk-heading-s">Beta</h3>
+                    <p class="govuk-body-s">Procure services, evaluate vendors, review designs, and generate the delivery backlog.</p>
+                </div>
+                <div class="app-phase-desc">
+                    <h3 class="govuk-heading-s">Live</h3>
+                    <p class="govuk-body-s">Verify traceability, ensure operational readiness, and tell the project story.</p>
+                </div>
             </div>
         </div>
 
+        <!-- 5. Works with your AI -->
+        <div class="govuk-width-container govuk-!-margin-top-9" id="multi-ai">
+            <h2 class="govuk-heading-l">Works with your AI</h2>
+            <p class="govuk-body">All 53 commands produce identical outputs across AI systems. Choose the platform that fits your workflow.</p>
 
-        <div class="govuk-grid-row govuk-!-margin-top-6">
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--blue">Foundation & Governance</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><code>/arckit.init</code>, <code>/arckit.start</code>, <code>/arckit.plan</code>, <code>/arckit.principles</code></li>
-                    <li><code>/arckit.stakeholders</code>, <code>/arckit.risk</code>, <code>/arckit.sobc</code></li>
-                    <li><code>/arckit.traceability</code>, <code>/arckit.analyze</code>, <code>/arckit.status</code></li>
-                </ul>
-
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--green">Requirements & Data</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><code>/arckit.requirements</code>, <code>/arckit.data-model</code>, <code>/arckit.dpia</code></li>
-                    <li><code>/arckit.data-mesh-contract</code></li>
-                </ul>
-
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--purple">Research & Strategy</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><code>/arckit.research</code>, <code>/arckit.wardley</code>, <code>/arckit.roadmap</code></li>
-                    <li><code>/arckit.adr</code>, <code>/arckit.strategy</code>, <code>/arckit.platform-design</code></li>
-                    <li>Cloud: <code>/arckit.aws-research</code>, <code>/arckit.azure-research</code>, <code>/arckit.gcp-research</code></li>
-                    <li>Data: <code>/arckit.datascout</code></li>
-                </ul>
-            </div>
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--red">Procurement & Delivery</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><code>/arckit.sow</code>, <code>/arckit.evaluate</code>, <code>/arckit.gcloud</code>, <code>/arckit.dos</code></li>
-                    <li><code>/arckit.backlog</code>, <code>/arckit.story</code></li>
-                </ul>
-
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--orange">Design & Architecture</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><code>/arckit.diagram</code>, <code>/arckit.hld-review</code>, <code>/arckit.dld-review</code></li>
-                    <li><code>/arckit.devops</code>, <code>/arckit.mlops</code>, <code>/arckit.finops</code></li>
-                    <li><code>/arckit.servicenow</code>, <code>/arckit.trello</code></li>
-                </ul>
-
-                <h3 class="govuk-heading-s app-category-heading app-category-heading--light-blue">UK Government & MOD</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><code>/arckit.tcop</code>, <code>/arckit.service-assessment</code>, <code>/arckit.secure</code></li>
-                    <li><code>/arckit.ai-playbook</code>, <code>/arckit.atrs</code></li>
-                    <li>MOD: <code>/arckit.mod-secure</code>, <code>/arckit.jsp-936</code></li>
-                </ul>
+            <div class="app-ai-compact">
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Claude Code</h3>
+                    <strong class="govuk-tag govuk-tag--green">Premier</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Full experience with agents, hooks, MCP servers, and output validation.</p>
+                    <code>/plugin marketplace add tractorjuice/arc-kit</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">Gemini CLI</h3>
+                    <strong class="govuk-tag govuk-tag--purple">Full</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Native extension with all commands, templates, scripts, and MCP servers.</p>
+                    <code>gemini extensions install tractorjuice/arckit-gemini</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">OpenAI Codex CLI</h3>
+                    <strong class="govuk-tag govuk-tag--blue">Core</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Commands and templates copied into your project via CLI.</p>
+                    <code>arckit init my-project --ai codex</code>
+                </div>
+                <div class="app-ai-compact-card">
+                    <h3 class="govuk-heading-s">OpenCode CLI</h3>
+                    <strong class="govuk-tag govuk-tag--blue">Core</strong>
+                    <p class="govuk-body-s govuk-!-margin-top-2">Commands and templates with flexible model selection.</p>
+                    <code>arckit init my-project --ai opencode</code>
+                </div>
             </div>
         </div>
 
-        <a href="commands.html" class="govuk-button govuk-button--secondary govuk-!-margin-top-4" data-module="govuk-button">Browse all 53 commands with examples and dependency matrix</a>
-    </div>
+        <!-- 6. Explore -->
+        <div class="govuk-width-container govuk-!-margin-top-9" id="documentation">
+            <h2 class="govuk-heading-l">Explore</h2>
 
-    <!-- Multi-AI Support Section -->
-    <div class="govuk-width-container govuk-!-margin-top-9" id="multi-ai">
-        <h2 class="govuk-heading-l">Multi-AI System Support</h2>
-        <p class="govuk-body">ArcKit works with four AI development environments. Claude Code is the <strong>primary development platform</strong> and provides the most complete experience.</p>
-
-        <div class="app-ai-grid">
-            <div class="app-ai-card">
-                <h3 class="govuk-heading-m">Claude Code</h3>
-                <strong class="govuk-tag govuk-tag--green">Premier</strong>
-                <p class="govuk-body govuk-!-margin-top-3">The <strong>primary platform</strong> for ArcKit. Install via the <strong>ArcKit plugin</strong> for the full experience: all 53 commands, 5 autonomous research agents, 8 automation hooks, a conversational Wardley Mapping skill, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, DataCommons).</p>
-                <p class="govuk-body"><strong>Exclusive features:</strong></p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><strong>Agents</strong> &mdash; 5 autonomous agents for research-heavy commands (market research, data source discovery, AWS/Azure/GCP cloud research) running in isolated context windows</li>
-                    <li><strong>Hooks</strong> &mdash; 8 hook scripts across 5 event types: SessionStart (version + project detection), UserPromptSubmit (project context injection + prompt secret detection), PreToolUse (ARC filename auto-correction, sensitive file protection, secret file scanning), PermissionRequest (MCP tool auto-approval), per-command Stop hooks (output validation)</li>
-                    <li><strong>Security hooks</strong> &mdash; Three-layer protection: prompt secret detection, sensitive file path blocking, and file content secret scanning</li>
-                    <li><strong>Output validation</strong> &mdash; Wardley Map math validation checks stage-evolution alignment, coordinate ranges, and OWM syntax consistency before finalizing documents</li>
-                    <li><strong>Knowledge compounding</strong> &mdash; Research automatically spawns reusable vendor profiles and tech notes for cross-project knowledge</li>
-                    <li><strong>Wardley Mapping skill</strong> &mdash; Conversational guidance with Pinecone MCP book corpus search</li>
-                </ul>
-                <p class="govuk-body"><strong>Installation:</strong> <code>/plugin marketplace add tractorjuice/arc-kit</code></p>
-            </div>
-
-            <div class="app-ai-card">
-                <h3 class="govuk-heading-m">Gemini CLI</h3>
-                <strong class="govuk-tag govuk-tag--purple">Full</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Native extension with all 53 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge). Zero-config with auto-updates.</p>
-                <p class="govuk-body"><strong>Limitations:</strong> No agent delegation or hooks. Research commands use inline prompts instead of isolated agents.</p>
-                <p class="govuk-body"><strong>Extension:</strong> <code>gemini extensions install https://github.com/tractorjuice/arckit-gemini</code></p>
-            </div>
-
-            <div class="app-ai-card">
-                <h3 class="govuk-heading-m">OpenAI Codex CLI</h3>
-                <strong class="govuk-tag govuk-tag--blue">Core</strong>
-                <p class="govuk-body govuk-!-margin-top-3">Codex CLI for GPT-4. Commands and templates copied into project via <code>arckit init</code>.</p>
-                <p class="govuk-body"><strong>Limitations:</strong> No agents, hooks, or bundled MCP servers. Manual reinstall for updates.</p>
-                <p class="govuk-body"><strong>Installation:</strong> <code>arckit init my-project --ai codex</code></p>
-            </div>
-
-            <div class="app-ai-card">
-                <h3 class="govuk-heading-m">OpenCode CLI</h3>
-                <strong class="govuk-tag govuk-tag--blue">Core</strong>
-                <p class="govuk-body govuk-!-margin-top-3">OpenCode CLI with flexible model selection. Commands and templates copied into project via <code>arckit init</code>.</p>
-                <p class="govuk-body"><strong>Limitations:</strong> No agents, hooks, or bundled MCP servers. Manual reinstall for updates.</p>
-                <p class="govuk-body"><strong>Installation:</strong> <code>arckit init my-project --ai opencode</code></p>
+            <div class="app-explore-grid">
+                <div class="app-explore-card">
+                    <h3 class="govuk-heading-m"><a href="commands.html" class="govuk-link">Commands</a></h3>
+                    <p class="govuk-body-s">Browse all 53 commands across 13 categories with examples and the full dependency matrix.</p>
+                </div>
+                <div class="app-explore-card">
+                    <h3 class="govuk-heading-m"><a href="guides.html" class="govuk-link">Guides</a></h3>
+                    <p class="govuk-body-s">69 usage guides covering discovery, planning, architecture, governance, compliance, and operations.</p>
+                </div>
+                <div class="app-explore-card">
+                    <h3 class="govuk-heading-m"><a href="roles.html" class="govuk-link">Role Guides</a></h3>
+                    <p class="govuk-body-s">18 guides mapped to the DDaT Capability Framework for architects, CTOs, product managers, and more.</p>
+                </div>
+                <div class="app-explore-card">
+                    <h3 class="govuk-heading-m"><a href="use-cases.html" class="govuk-link">Example Projects</a></h3>
+                    <p class="govuk-body-s">AI-generated architecture documentation from 18 public test projects spanning health, AI, cloud, and data.</p>
+                </div>
             </div>
         </div>
 
-        <div class="govuk-inset-text govuk-!-margin-top-6">
-            All 53 commands produce identical outputs across AI systems. Claude Code provides the richest experience with <strong>agents</strong> that isolate research context, <strong>hooks</strong> that automate governance (filename enforcement, context injection, output validation, secret protection), and <strong>bundled MCP servers</strong> for authoritative cloud documentation. Gemini CLI offers a strong zero-config experience. Codex and OpenCode provide core command functionality.
-        </div>
-
-        <details class="govuk-details govuk-!-margin-top-4">
-            <summary class="govuk-details__summary">
-                <span class="govuk-details__summary-text">Commands vs. skills</span>
-            </summary>
-            <div class="govuk-details__text">
-                <p class="govuk-body">ArcKit uses <strong>slash commands</strong> for formal document generation and a <strong>skill</strong> for conversational guidance:</p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><strong>Commands</strong> (<code>/arckit:requirements</code>, <code>/arckit:wardley</code>, etc.) &mdash; Generate heavyweight governance documents with document control, project integration, and compliance sections. Deliberate invocation prevents accidental triggering.</li>
-                    <li><strong>Wardley Mapping skill</strong> &mdash; Activates automatically for casual questions about evolution stages, doctrine maturity, build vs. buy decisions, and interactive map creation. No formal document output.</li>
-                    <li><strong>Dependency ordering</strong> &mdash; Commands follow a deliberate sequence (principles &rarr; stakeholders &rarr; requirements &rarr; data-model &rarr; etc.). The skill is standalone and order-independent.</li>
-                    <li><strong>Best of both worlds</strong> &mdash; Claude Code also exposes commands as skills automatically, so users get explicit <code>/arckit:requirements</code> invocation AND natural language matching when Claude recognises intent.</li>
-                </ul>
-            </div>
-        </details>
-    </div>
-
-    <!-- Example Projects Section -->
-    <div class="govuk-width-container govuk-!-margin-top-9" id="use-cases">
-        <h2 class="govuk-heading-l">Example Projects</h2>
-        <p class="govuk-body">Browse AI-generated architecture documentation from 18 public test projects spanning health, AI, cloud, digital services, data, and more:</p>
-
-        <div class="app-use-case-grid">
-            <div class="app-use-case-card">
-                <h3 class="govuk-heading-s">NHS Appointment Booking</h3>
-                <p class="govuk-body-s">Digital health platform with NHS Spine integration, IG Toolkit compliance, and GDPR data handling.</p>
-                <a href="https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
-            </div>
-            <div class="app-use-case-card">
-                <h3 class="govuk-heading-s">Cabinet Office GenAI Platform</h3>
-                <p class="govuk-body-s">Cross-government GenAI service with AI Playbook compliance and responsible AI governance.</p>
-                <a href="https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
-            </div>
-            <div class="app-use-case-card">
-                <h3 class="govuk-heading-s">NS&amp;I Digital Modernisation</h3>
-                <p class="govuk-body-s">Project Rainbow with core banking migration, digital channels, and programme governance across 3 workstreams.</p>
-                <a href="https://tractorjuice.github.io/arckit-test-project-v45-nsi-rainbow/" class="govuk-link govuk-body-s">View example outputs &rarr;</a>
-            </div>
-        </div>
-
-        <a href="use-cases.html" class="govuk-button govuk-button--secondary govuk-!-margin-top-4" data-module="govuk-button">Browse all 18 example projects</a>
-    </div>
-
-    <!-- Documentation Section -->
-    <div class="govuk-width-container govuk-!-margin-top-9" id="documentation">
-        <h2 class="govuk-heading-l">Documentation</h2>
-        <p class="govuk-body">Comprehensive guides for every aspect of ArcKit usage.</p>
-
-        <div class="govuk-grid-row govuk-!-margin-top-6">
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-m"><a href="guides.html" class="govuk-link">Command Guides</a></h3>
-                <p class="govuk-body">69 usage guides organized into 9 categories:</p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><strong>Discovery</strong> (5) &mdash; Requirements, stakeholders, research</li>
-                    <li><strong>Planning</strong> (6) &mdash; Business cases, strategy, roadmaps</li>
-                    <li><strong>Architecture</strong> (11) &mdash; Principles, diagrams, ADRs, design reviews</li>
-                    <li><strong>Governance</strong> (8) &mdash; Risk, traceability, compliance checking</li>
-                    <li><strong>Compliance</strong> (12) &mdash; TCoP, Secure by Design, DPIA, service assessment</li>
-                    <li><strong>Operations</strong> (5) &mdash; DevOps, MLOps, FinOps, ServiceNow</li>
-                    <li><strong>Procurement</strong> (6) &mdash; SOW, evaluation, G-Cloud, DOS</li>
-                    <li><strong>Research</strong> (3) &mdash; AWS, Azure, GCP via MCP servers</li>
-                    <li><strong>Other</strong> (13) &mdash; Presentations, pages, migration, setup</li>
-                </ul>
-                <a href="guides.html" class="govuk-button govuk-button--secondary govuk-!-margin-top-2" data-module="govuk-button">Browse all 69 guides</a>
-            </div>
-
-            <div class="govuk-grid-column-one-half">
-                <h3 class="govuk-heading-m"><a href="roles.html" class="govuk-link">DDaT Role Guides</a></h3>
-                <p class="govuk-body">18 guides mapped to <a href="https://ddat-capability-framework.service.gov.uk/" class="govuk-link" target="_blank" rel="noopener">DDaT Capability Framework</a> roles:</p>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><strong>Architecture</strong> (7) &mdash; Enterprise, Solution, Data, Security, Business, Technical, Network</li>
-                    <li><strong>Chief Digital &amp; Data</strong> (3) &mdash; CTO/CDIO, CDO, CISO</li>
-                    <li><strong>Product &amp; Delivery</strong> (4) &mdash; Product Manager, Delivery Manager, Business Analyst, Service Owner</li>
-                    <li><strong>Data</strong> (2) &mdash; Data Governance, Performance Analyst</li>
-                    <li><strong>IT Operations</strong> (1) &mdash; IT Service Manager</li>
-                    <li><strong>Software Development</strong> (1) &mdash; DevOps Engineer</li>
-                </ul>
-                <a href="roles.html" class="govuk-button govuk-button--secondary govuk-!-margin-top-2" data-module="govuk-button">Browse all 18 role guides</a>
-
-                <h3 class="govuk-heading-s govuk-!-margin-top-6">Technical Documentation</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/README.md" class="govuk-link">README</a> - Quick start and overview</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md" class="govuk-link">Changelog</a> - Release history and updates</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md" class="govuk-link">Contributing</a> - How to contribute to ArcKit</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/releases" class="govuk-link">Release Notes</a> - Detailed version information</li>
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/README.md#complete-command-reference" class="govuk-link">Command Reference</a> - All 53 commands documented</li>
-                </ul>
-
-                <h3 class="govuk-heading-s govuk-!-margin-top-4">Workflow &amp; Dependencies</h3>
-                <ul class="govuk-list govuk-list--bullet">
-                    <li><a href="https://github.com/tractorjuice/arc-kit/blob/main/WORKFLOW-DIAGRAMS.md" class="govuk-link">Workflow Diagrams</a> - Visual Mermaid diagrams for all 5 project paths</li>
-                    <li><a href="commands.html#dependencies" class="govuk-link">Dependency Structure Matrix</a> - 47-command dependency matrix (<a href="https://github.com/tractorjuice/arc-kit/blob/main/DEPENDENCY-MATRIX.md" class="govuk-link">raw data</a>)</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-        <!-- Getting Started CTA -->
+        <!-- 7. Getting Started CTA -->
         <div class="govuk-width-container govuk-!-margin-top-9" id="getting-started">
             <div class="app-feature-card" style="text-align: center; padding: 2.5rem;">
                 <h2 class="govuk-heading-l" style="margin-bottom: 1rem;">Ready to get started?</h2>
@@ -902,12 +584,6 @@ flowchart TD
     <script type="module">
         import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
         initAll()
-    </script>
-
-    <!-- Mermaid for diagram rendering (GitHub doesn't render on mobile) -->
-    <script type="module">
-        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
-        mermaid.initialize({ startOnLoad: true });
     </script>
 <script src="theme.js"></script>
 </body>
