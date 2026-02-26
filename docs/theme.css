@@ -121,10 +121,10 @@ html.dark-mode .govuk-main-wrapper {
 }
 
 /* ============================================================
-   Hero Section (index.html)
+   Phase Descriptions (index.html)
    ============================================================ */
-html.dark-mode .app-hero {
-    background: linear-gradient(135deg, #0f4c81 0%, #001a40 100%);
+html.dark-mode .app-phase-desc {
+    border-top-color: #4da3ff;
 }
 
 /* ============================================================
@@ -169,38 +169,29 @@ html.dark-mode .app-phase-arrow {
     color: #4da3ff;
 }
 
-html.dark-mode .app-phase-heading {
-    color: #4da3ff;
-}
-
 /* ============================================================
-   Command Sections (index.html)
+   AI Compact Cards (index.html)
    ============================================================ */
-html.dark-mode .app-command-section {
+html.dark-mode .app-ai-compact-card {
+    border-color: #555555;
     background: #2a2a2a;
-}
-
-html.dark-mode .app-command-list li {
-    background: #1a1a1a;
     color: #f0f0f0;
 }
 
-html.dark-mode .app-command-code {
-    background: #333333;
-    color: #f0f0f0;
+html.dark-mode .app-ai-compact-card code {
+    background: #111111;
 }
 
 /* ============================================================
-   AI Cards (index.html)
+   Explore Cards (index.html)
    ============================================================ */
-html.dark-mode .app-ai-card {
-    border-color: #4da3ff;
+html.dark-mode .app-explore-card {
     background: #2a2a2a;
     color: #f0f0f0;
 }
 
 /* ============================================================
-   Use Case Cards (index.html & use-cases.html)
+   Use Case Cards (use-cases.html)
    ============================================================ */
 html.dark-mode .app-use-case-card {
     background: #2a2a2a;
@@ -488,6 +479,10 @@ html.dark-mode .app-next-card__desc {
 /* ============================================================
    Page Hero Banners — dark mode
    ============================================================ */
+html.dark-mode .app-page-hero--home {
+    background: linear-gradient(135deg, #0f4c81 0%, #001a40 100%);
+}
+
 html.dark-mode .app-page-hero--commands {
     background: linear-gradient(135deg, #0f4c81 0%, #001a40 100%);
 }
