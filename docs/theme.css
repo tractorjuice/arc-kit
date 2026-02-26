@@ -5,8 +5,36 @@
  */
 
 /* ============================================================
-   Theme Toggle Button
+   Nav Bar Icon Group (GitHub + Theme Toggle)
    ============================================================ */
+.app-nav-bar__icons {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+.app-icon-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    border: 2px solid #505a5f;
+    border-radius: 4px;
+    padding: 0.25rem 0.5rem;
+    line-height: 1;
+    text-decoration: none;
+}
+
+.app-icon-link:hover,
+.app-icon-link:focus {
+    border-color: #ffffff;
+    outline: 3px solid #ffdd00;
+    outline-offset: 0;
+    color: #ffffff;
+}
+
 .app-theme-toggle {
     background: none;
     border: 2px solid #505a5f;
@@ -16,7 +44,6 @@
     font-size: 1.125rem;
     line-height: 1;
     border-radius: 4px;
-    margin-left: auto;
     flex-shrink: 0;
 }
 
@@ -28,7 +55,7 @@
 }
 
 @media (max-width: 48em) {
-    .app-theme-toggle {
+    .app-nav-bar__icons {
         position: absolute;
         right: 0.5rem;
         top: 0.5rem;
