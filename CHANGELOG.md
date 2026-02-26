@@ -5,6 +5,21 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.11.0] - 2026-02-26
+
+### Added
+
+- **Mermaid Syntax Reference skill** (`mermaid-syntax`) — 30 official Mermaid syntax reference files covering all 23 diagram types plus configuration and theming
+- `/arckit.start` onboarding command with project detection and workflow routing
+- 10 Mermaid-generating commands now read type-specific syntax references before generating Mermaid code
+
+### Changed
+
+- Moved `c4-diagram-reference.md` to `skills/mermaid-syntax/references/c4-layout-science.md`
+- Version bump across all distribution formats
+
+---
+
 ## [2.10.0] - 2026-02-25
 
 ### Added

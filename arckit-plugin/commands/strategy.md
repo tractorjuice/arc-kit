@@ -170,7 +170,11 @@ If this is a Ministry of Defence project, include:
 - **IAMM**: Security maturity progression
 - **JSP 936**: AI assurance (if applicable)
 
-### 7. Mermaid Diagram Requirements
+### 7. Load Mermaid Syntax References
+
+Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/flowchart.md` and `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/gantt.md` for official Mermaid syntax — node shapes, edge labels, date formats, task statuses, and styling options.
+
+### 8. Mermaid Diagram Requirements
 
 Include at least 2 Mermaid diagrams:
 
@@ -235,7 +239,7 @@ The footer should be populated with:
 
 ---
 
-### 8. Write the Strategy File
+### 9. Write the Strategy File
 
 **IMPORTANT**: The strategy document will be a LARGE document (typically 350-500 lines). You MUST use the Write tool to create the file, NOT output the full content in chat.
 
@@ -246,7 +250,7 @@ projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v1.0.md
 
 Use the Write tool with the complete strategy content following the template structure.
 
-### 9. Show Summary to User
+### 10. Show Summary to User
 
 After writing the file, show a concise summary (NOT the full document):
 

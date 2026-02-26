@@ -1026,6 +1026,10 @@ Create comprehensive traceability table:
 - Remaining for Future Sprints: {N} ({X}%)
 ```
 
+### Step 9b: Load Mermaid Syntax Reference
+
+Read `.arckit/skills/mermaid-syntax/references/flowchart.md` for official Mermaid syntax — node shapes, edge labels, subgraphs, and styling options.
+
 ### Step 10: Generate Dependency Graph
 
 Create visual dependency representation:

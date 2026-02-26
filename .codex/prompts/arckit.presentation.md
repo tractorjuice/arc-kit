@@ -88,6 +88,10 @@ Apply the user's selections: the focus determines which artifacts are emphasised
 
 > **Tip**: Users can customize templates with `/arckit:customize presentation`
 
+### Step 4b: Load Mermaid Syntax References
+
+Read `.arckit/skills/mermaid-syntax/references/quadrantChart.md`, `.arckit/skills/mermaid-syntax/references/c4.md`, `.arckit/skills/mermaid-syntax/references/pie.md`, and `.arckit/skills/mermaid-syntax/references/gantt.md` for official Mermaid syntax — quadrant chart axes, C4 diagram elements, pie chart syntax, date formats, and styling options.
+
 ### Step 5: Generate the MARP presentation
 
 Build the slide deck by extracting key content from each artifact:

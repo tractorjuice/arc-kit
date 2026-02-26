@@ -52,7 +52,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v2.10.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.10.0)
+**Latest Release**: [v2.11.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.11.0)
 
 ### Initialize a Project
 
@@ -676,6 +676,7 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 | **PermissionRequest hook** (auto-allow MCP documentation tools) | ✅ | — | — |
 | **Per-command Stop hooks** (output validation, e.g. Wardley Map math checks) | ✅ | — | — |
 | Wardley Mapping skill (with Pinecone MCP book corpus) | ✅ | — | — |
+| Mermaid Syntax Reference skill (23 diagram types + config) | ✅ | ✅ | ✅ |
 | Automatic marketplace updates | ✅ | ✅ | Manual reinstall |
 | Zero-config installation | ✅ | ✅ | `arckit init` required |
 
@@ -1142,7 +1143,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v2.10.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.10.0)
+- **Latest Version**: [v2.11.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.11.0)
 
 ---
 

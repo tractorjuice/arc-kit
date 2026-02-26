@@ -114,6 +114,10 @@ Based on artifacts and user input, classify the project:
 - Beta: 24-52 weeks
 - **Total**: 12-24+ months
 
+## Step 2b: Load Mermaid Syntax References
+
+Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/gantt.md` and `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/flowchart.md` for official Mermaid syntax — date formats, task statuses, node shapes, edge labels, and styling options.
+
 ## Step 3: Create the Project Plan
 
 ### Part A: Executive Summary

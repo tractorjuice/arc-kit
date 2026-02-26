@@ -70,6 +70,10 @@ If the user has **not** specified a DFD level in their arguments, use the **AskU
 
 If the user specified a level (e.g., `/arckit:dfd level 1`), skip this question and proceed directly.
 
+## Step 1d: Load Mermaid Syntax Reference
+
+Read `.arckit/skills/mermaid-syntax/references/flowchart.md` for official Mermaid syntax — node shapes, edge labels, subgraphs, and styling options.
+
 ## Step 2: Generate the DFD
 
 Based on the selected level and project context, generate the Data Flow Diagram.

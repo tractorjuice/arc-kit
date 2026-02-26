@@ -354,6 +354,10 @@ Using the data extracted from artifacts, map the traceability chains:
 - Architecture Principles → Design Reviews
 - Risk Register → Security Assessments
 
+### Step 5b: Load Mermaid Syntax References
+
+Read `.arckit/skills/mermaid-syntax/references/gantt.md`, `.arckit/skills/mermaid-syntax/references/flowchart.md`, `.arckit/skills/mermaid-syntax/references/pie.md`, `.arckit/skills/mermaid-syntax/references/timeline.md`, and `.arckit/skills/mermaid-syntax/references/mindmap.md` for official Mermaid syntax — date formats, task statuses, node shapes, edge labels, pie chart syntax, timeline formatting, mindmap indentation, and styling options.
+
 ### Step 6: Generate Timeline Visualizations
 
 Create **4 types of timeline visualizations** using the timeline data extracted:

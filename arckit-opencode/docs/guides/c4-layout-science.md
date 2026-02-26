@@ -2,7 +2,7 @@
 
 A research-backed guide to creating readable C4 architecture diagrams with minimal edge crossings and clear visual hierarchy. This guide covers the graph drawing theory behind layout engines, practical declaration ordering strategies, quality targets from empirical research, and a structured validation checklist.
 
-For the full reference template used by the `/arckit:diagram` command, see `arckit-plugin/templates/c4-diagram-reference.md`.
+For the full reference used by the `/arckit:diagram` command, see `arckit-plugin/skills/mermaid-syntax/references/c4-layout-science.md`.
 
 ---
 
@@ -275,4 +275,4 @@ Choose the right format based on diagram complexity and requirements:
 
 ---
 
-*This guide is part of the ArcKit documentation. For the template used by the diagram command, see `arckit-plugin/templates/c4-diagram-reference.md`. For the diagram command itself, see `/arckit:diagram`.*
+*This guide is part of the ArcKit documentation. For the reference used by the diagram command, see `arckit-plugin/skills/mermaid-syntax/references/c4-layout-science.md`. For the diagram command itself, see `/arckit:diagram`.*

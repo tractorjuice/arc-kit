@@ -65,16 +65,14 @@ If the user selects Deployment for Question 1, ignore the Question 2 answer — 
 
 Apply the user's selection when choosing which Mode (A-F) to generate in Step 2 below. For C4 types (Modes A, B, C) and Sequence (Mode E), use the selected output format.
 
-## Step 1d: Load Layout Science Reference
+## Step 1d: Load Syntax References
 
-Read `${CLAUDE_PLUGIN_ROOT}/templates/c4-diagram-reference.md` for research-backed graph drawing guidance. This reference covers:
+Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/c4-layout-science.md` for research-backed graph drawing guidance — Sugiyama algorithm, tier-based declaration ordering, edge crossing targets, C4 colour standards, PlantUML directional hints, and prompt antipatterns.
 
-- **Sugiyama algorithm** — why declaration order affects the Dagre layout engine's crossing minimisation stage
-- **Tier-based declaration ordering** — declare elements from actors (left) to external systems (right) to give the layout engine an optimal starting position
-- **Edge crossing targets** — Purchase et al. research on comprehension: 0 crossings for simple diagrams (6 or fewer elements), fewer than 3 for medium (7-12), fewer than 5 for complex (more than 12)
-- **C4 colour standards** — hex codes for Person (#08427B), System (#1168BD), Container (#438DD5), Component (#85BBF0), External (#999999)
-- **PlantUML directional hints** — `Rel_Right`, `Rel_Down`, `Lay_Right`, `Lay_Down` for complex diagrams exceeding Mermaid's layout capabilities
-- **Prompt antipatterns** — common mistakes (random element order, relationships before elements, mixed abstraction levels) and their fixes
+Then read the type-specific Mermaid syntax reference based on the diagram type selected in Step 1c:
+- **C4 Context / C4 Container / C4 Component**: Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/c4.md`
+- **Deployment**: Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/flowchart.md`
+- **Sequence**: Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/sequenceDiagram.md`
 
 Apply these principles when generating diagrams in Step 3. In particular:
 
@@ -663,7 +661,7 @@ For each component, annotate with:
 
 ### PlantUML C4 Syntax Guidelines (C4 types only)
 
-When PlantUML format is selected, use the C4-PlantUML library. Refer to `c4-diagram-reference.md` Section 7 (already loaded at Step 1d) for full details.
+When PlantUML format is selected, use the C4-PlantUML library. Refer to `c4-layout-science.md` Section 7 (already loaded at Step 1d) for full details.
 
 **Include URLs** (one per diagram type):
 - Context: `!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml`

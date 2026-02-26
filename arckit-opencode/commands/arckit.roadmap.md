@@ -244,7 +244,11 @@ If this is a Ministry of Defence project, include:
 - **IAMM (Information Assurance Maturity Model)**: Security maturity progression
 - **JSP 936**: If AI/ML involved, reference AI assurance timeline
 
-### 7. Mermaid Diagram Syntax - CRITICAL RULES
+### 7. Load Mermaid Syntax References
+
+Read `.arckit/skills/mermaid-syntax/references/gantt.md` and `.arckit/skills/mermaid-syntax/references/flowchart.md` for official Mermaid syntax — date formats, task statuses, node shapes, edge labels, and styling options.
+
+### 8. Mermaid Diagram Syntax - CRITICAL RULES
 
 **Gantt Charts**:
 - ✅ Use descriptive task names without `<br/>` tags
@@ -310,7 +314,7 @@ The footer should be populated with:
 
 ---
 
-### 8. Write the Roadmap File
+### 9. Write the Roadmap File
 
 **IMPORTANT**: The roadmap will be a LARGE document (typically 400-600 lines). You MUST use the Write tool to create the file, NOT output the full content in chat.
 
@@ -321,7 +325,7 @@ projects/[PROJECT_ID]/ARC-{PROJECT_ID}-ROAD-v1.0.md
 
 Use the Write tool with the complete roadmap content following the template structure.
 
-### 9. Show Summary to User
+### 10. Show Summary to User
 
 After writing the file, show a concise summary (NOT the full document):
 

@@ -56,7 +56,10 @@ $ARGUMENTS
    - Identify integration requirements (INT-xxx) that involve data exchange
    - Note any data-related business requirements (BR-xxx)
 
-6. **Generate comprehensive data model**:
+6. **Load Mermaid Syntax Reference**:
+   - Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/entityRelationshipDiagram.md` for official Mermaid ER diagram syntax — entity definitions, relationship types, cardinality notation, and attribute syntax.
+
+7. **Generate comprehensive data model**:
 
    **A. Executive Summary**:
    - Total number of entities identified
@@ -177,14 +180,14 @@ $ARGUMENTS
    - **Data Archival**: When to move data from hot to cold storage
    - **Testing Data**: Anonymization/pseudonymization for test environments
 
-7. **UK Government Compliance** (if applicable):
+8. **UK Government Compliance** (if applicable):
    - **Government Security Classifications**: OFFICIAL, SECRET, TOP SECRET
    - **Data Standards**: Use GDS Data Standards Catalogue where applicable
    - **Open Standards**: Preference for open data formats (JSON, CSV, OData)
    - **ICO Data Protection**: Reference ICO guidance for public sector
    - **National Cyber Security Centre (NCSC)**: Data security patterns
 
-8. **Write the output**:
+9. **Write the output**:
    - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-DATA-v1.0.md`
    - Use the exact template structure from `data-model-template.md`
    - Include Mermaid ERD at the top for quick visualization
@@ -226,7 +229,7 @@ Before completing the document, populate document information fields:
 ```
 
 
-9. **Summarize what you created**:
+10. **Summarize what you created**:
    - How many entities defined (E-001, E-002, etc.)
    - How many total attributes across all entities
    - How many entities contain PII (privacy-sensitive)

@@ -7,9 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+---
+
+## [2.11.0] - 2026-02-26
+
 ### Added
 
 - **`/arckit.start` onboarding command** — guided entry point with project detection, tool survey, command decision tree, and context-aware workflow routing
+- **Mermaid Syntax Reference skill** (`mermaid-syntax`) — 30 official Mermaid syntax reference files (auto-synced from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill)) covering all 23 diagram types plus configuration and theming, bundled with ArcKit's existing C4 layout science reference
+  - 10 Mermaid-generating commands (`diagram`, `roadmap`, `plan`, `story`, `dfd`, `backlog`, `strategy`, `presentation`, `data-model`, `jsp-936`) now read type-specific syntax references before generating Mermaid code
+  - Conversational skill triggers on Mermaid syntax questions (e.g., "what Mermaid diagram types can I use?", "gantt chart date format")
+
+### Changed
+
+- Moved `c4-diagram-reference.md` from `templates/` to `skills/mermaid-syntax/references/c4-layout-science.md` — `/arckit.diagram` Step 1d path updated
+- Version bump across all distribution formats
 
 ---
 
