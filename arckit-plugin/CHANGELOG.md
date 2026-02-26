@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.12.3] - 2026-02-26
+
+### Changed
+
+- **Pages header: Repository icon** — replaced "Repository" text link with a GitHub icon positioned next to the dark/light mode toggle
+- **Pages header: version badge** — added ArcKit version badge (`v{{VERSION}}`) to the header menu, populated from the plugin's VERSION file via new `{{VERSION}}` placeholder
+- Version bump across all distribution formats
+
+---
+
 ## [2.12.2] - 2026-02-26
 
 ### Fixed
