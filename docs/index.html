@@ -52,25 +52,6 @@
         }
 
         /* Minimal custom styles for ArcKit-specific components not in GDS */
-        .app-hero {
-            background: linear-gradient(135deg, #1d70b8 0%, #003078 100%);
-            color: white;
-            padding: 3rem 0;
-        }
-
-        .app-hero h1,
-        .app-hero p {
-            color: white;
-        }
-
-        /* Reduce hero title size on mobile */
-        @media (max-width: 40.0625em) {
-            .app-hero h1 {
-                font-size: 1.5rem;
-                line-height: 1.2;
-            }
-        }
-
         .app-stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -360,12 +341,13 @@
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
         <!-- 1. Hero -->
-        <div class="app-hero" id="hero">
-            <div class="govuk-width-container">
-                <h1 class="govuk-heading-xl">ArcKit</h1>
-                <p class="govuk-body-l">Transform architecture chaos into systematic, audit-ready governance.</p>
+        <div class="app-page-hero app-page-hero--home" id="hero">
+            <div class="govuk-width-container app-page-hero__content">
+                <span class="app-page-hero__stat">Enterprise Architecture Toolkit</span>
+                <h1 class="app-page-hero__title">ArcKit</h1>
+                <p class="app-page-hero__description">Transform architecture chaos into systematic, audit-ready governance.</p>
 
-                <div class="govuk-button-group govuk-!-margin-top-6">
+                <div class="app-page-hero__actions govuk-button-group">
                     <a href="getting-started.html" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
                         Get started
                         <svg class="govuk-button__start-icon" xmlns="http://www.w3.org/2000/svg" width="17.5" height="19" viewBox="0 0 33 40" aria-hidden="true" focusable="false">

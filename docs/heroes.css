@@ -203,6 +203,34 @@
 }
 
 /* ============================================================
+   Variant: Home  — blue, diamond lattice
+   ============================================================ */
+.app-page-hero--home {
+    background: linear-gradient(135deg, #1d70b8 0%, #003078 100%);
+    padding: 3rem 0 2.5rem;
+}
+
+.app-page-hero--home::before {
+    background:
+        repeating-linear-gradient(
+            45deg,
+            rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px, transparent 32px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            rgba(255, 255, 255, 0.035) 0px, rgba(255, 255, 255, 0.035) 1px,
+            transparent 1px, transparent 32px
+        );
+}
+
+.app-page-hero__actions {
+    margin-top: 1.5rem;
+    animation: heroReveal 0.45s ease-out both;
+    animation-delay: 0.19s;
+}
+
+/* ============================================================
    Variant: Guide Viewer  — deep navy, dot grid
    ============================================================ */
 .app-page-hero--viewer {
