@@ -507,7 +507,7 @@ html.dark-mode .app-next-card__desc {
    Page Hero Banners — dark mode
    ============================================================ */
 html.dark-mode .app-page-hero--home {
-    background: linear-gradient(135deg, #111133 0%, #1a1540 100%);
+    background: linear-gradient(135deg, #1a1c20 0%, #232528 100%);
 }
 
 html.dark-mode .app-page-hero--commands {

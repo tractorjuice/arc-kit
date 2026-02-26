@@ -203,10 +203,10 @@
 }
 
 /* ============================================================
-   Variant: Home  — blue, diamond lattice
+   Variant: Home  — charcoal, diamond lattice
    ============================================================ */
 .app-page-hero--home {
-    background: linear-gradient(135deg, #1b1b4b 0%, #2a2356 100%);
+    background: linear-gradient(135deg, #222428 0%, #2c2e34 100%);
     padding: 3rem 0 2.5rem;
 }
 
