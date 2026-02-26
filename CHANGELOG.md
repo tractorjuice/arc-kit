@@ -5,6 +5,22 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.12.0] - 2026-02-26
+
+### Added
+
+- **STALE-EXT detection rule for `/arckit:health`** (#77) — flags external files newer than project artifacts with command recommendations
+- **External file detection hooks** (#77) — SessionStart hook auto-detects new external files; context hook flags them as **NEW**
+- **PlantUML Syntax Reference skill** (`plantuml-syntax`) (#78) — 10 reference files with C4-PlantUML layout conflict rules
+- **Format-specific syntax loading in `/arckit:diagram`** (#78) — loads PlantUML or Mermaid references based on selected format
+- **Mermaid ERD syntax rules** (#78) — prevents invalid `PK_FK` key type
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
 ## [2.11.0] - 2026-02-26
 
 ### Added

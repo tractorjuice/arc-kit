@@ -52,7 +52,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v2.11.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.11.0)
+**Latest Release**: [v2.12.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.12.0)
 
 ### Initialize a Project
 
@@ -1143,7 +1143,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v2.11.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.11.0)
+- **Latest Version**: [v2.12.0](https://github.com/tractorjuice/arc-kit/releases/tag/v2.12.0)
 
 ---
 
