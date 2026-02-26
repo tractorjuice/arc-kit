@@ -206,7 +206,7 @@
    Variant: Home  — blue, diamond lattice
    ============================================================ */
 .app-page-hero--home {
-    background: linear-gradient(135deg, #1d70b8 0%, #003078 100%);
+    background: linear-gradient(135deg, #003078 0%, #0b2e4a 60%, #0a3d46 100%);
     padding: 3rem 0 2.5rem;
 }
 
