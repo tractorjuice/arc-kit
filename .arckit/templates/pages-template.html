@@ -1472,7 +1472,7 @@
                 <a href="#dashboard" id="dashboard-link" class="app-header__dashboard-link">Dashboard</a>
                 <a href="#guides" id="guides-link" class="app-header__guides-link">Guides</a>
                 <a href="#roles" id="roles-link" class="app-header__guides-link">Roles</a>
-                <a href="https://github.com/{{OWNER}}/{{REPO}}" target="_blank" rel="noopener">GitHub</a>
+                <a href="{{REPO_URL}}" target="_blank" rel="noopener">Repository</a>
                 <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
                 <button class="app-theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
                     <svg class="app-theme-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1581,9 +1581,7 @@
         // Configuration - UPDATE THESE VALUES
         // ============================================
         const CONFIG = {
-            owner: '{{OWNER}}',           // GitHub username/org
-            repo: '{{REPO}}',             // Repository name
-            branch: '{{BRANCH}}'          // Branch name (usually 'main')
+            repo: '{{REPO}}'              // Repository name
         };
 
         // ============================================
@@ -1605,11 +1603,7 @@
         }
 
         function getRawUrl(path) {
-            return `https://raw.githubusercontent.com/${CONFIG.owner}/${CONFIG.repo}/${CONFIG.branch}/${path}`;
-        }
-
-        function getGitHubUrl(path) {
-            return `https://github.com/${CONFIG.owner}/${CONFIG.repo}/blob/${CONFIG.branch}/${path}`;
+            return `../${path}`;
         }
 
         function getDocumentId(path) {
@@ -2871,26 +2865,36 @@
                 document.getElementById('main-content').scrollTo(0, 0);
 
             } catch (error) {
-                const githubUrl = getGitHubUrl(path);
-                const isPrivateRepo = error.message === 'not_found' || error.message.startsWith('fetch_error');
-                content.innerHTML = `
-                    <div class="app-doc-header">
-                        <div class="app-doc-breadcrumb">${path.split('/').slice(0, -1).join(' / ')}</div>
-                        <h1 class="app-doc-title">${extractTitle(path)}</h1>
-                    </div>
-                    <div style="background:var(--background-light);border-left:4px solid var(--primary-color);padding:1.25rem;margin:1.5rem 0;">
-                        <p style="margin:0 0 0.75rem 0;font-weight:700;">This document cannot be displayed inline</p>
-                        <p style="margin:0 0 1rem 0;color:var(--text-muted);">
-                            ${isPrivateRepo
-                                ? 'This is likely a private repository. Documents from private repos require GitHub authentication, which is not available to the browser on GitHub Pages.'
-                                : error.message}
-                        </p>
-                        <a href="${githubUrl}" target="_blank" rel="noopener"
-                           style="display:inline-block;background:var(--primary-color);color:var(--text-inverse);padding:0.5rem 1rem;text-decoration:none;font-weight:700;">
-                            View on GitHub &rarr;
-                        </a>
-                    </div>
-                `;
+                // Build error UI using safe DOM methods
+                const header = document.createElement('div');
+                header.className = 'app-doc-header';
+                const breadcrumb = document.createElement('div');
+                breadcrumb.className = 'app-doc-breadcrumb';
+                breadcrumb.textContent = path.split('/').slice(0, -1).join(' / ');
+                const title = document.createElement('h1');
+                title.className = 'app-doc-title';
+                title.textContent = extractTitle(path);
+                header.appendChild(breadcrumb);
+                header.appendChild(title);
+
+                const notice = document.createElement('div');
+                notice.style.cssText = 'background:var(--background-light);border-left:4px solid var(--primary-color);padding:1.25rem;margin:1.5rem 0;';
+                const heading = document.createElement('p');
+                heading.style.cssText = 'margin:0 0 0.75rem 0;font-weight:700;';
+                heading.textContent = 'Document not found';
+                const detail = document.createElement('p');
+                detail.style.cssText = 'margin:0;color:var(--text-muted);';
+                const detailText = document.createTextNode('The file ');
+                const code = document.createElement('code');
+                code.textContent = path;
+                const detailText2 = document.createTextNode(' could not be loaded. Check that the file exists and the site has been deployed correctly.');
+                detail.appendChild(detailText);
+                detail.appendChild(code);
+                detail.appendChild(detailText2);
+                notice.appendChild(heading);
+                notice.appendChild(detail);
+
+                content.replaceChildren(header, notice);
             }
         }
 

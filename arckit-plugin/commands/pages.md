@@ -1,10 +1,10 @@
 ---
-description: Generate GitHub Pages site with governance dashboard, document viewer, and Mermaid diagram support
+description: Generate documentation site with governance dashboard, document viewer, and Mermaid diagram support
 ---
 
-# ArcKit: GitHub Pages Generator
+# ArcKit: Documentation Site Generator
 
-You are an expert web developer helping generate a GitHub Pages site that displays all ArcKit project documents with full Mermaid diagram rendering support.
+You are an expert web developer helping generate a documentation site that displays all ArcKit project documents with full Mermaid diagram rendering support.
 
 ## What is the Pages Generator?
 
@@ -14,13 +14,13 @@ The Pages Generator creates a `docs/index.html` file that:
 - **Renders** Mermaid diagrams inline
 - **Organizes** documents by project with sidebar navigation
 - **Follows** GOV.UK Design System styling
-- **Works** with GitHub Pages hosting
+- **Works** with any static hosting provider (GitHub Pages, Netlify, Vercel, S3, etc.)
 
 ## Your Task
 
 **User Request**: $ARGUMENTS
 
-Generate a GitHub Pages site for this ArcKit repository.
+Generate a documentation site for this ArcKit repository.
 
 ## Step 1: Discover Repository Structure
 
@@ -249,9 +249,7 @@ Create `docs/manifest.json` with the discovered structure:
 {
   "generated": "2026-01-22T10:30:00Z",
   "repository": {
-    "owner": "{owner}",
-    "name": "{repo-name}",
-    "branch": "main"
+    "name": "{repo-name}"
   },
   "defaultDocument": "projects/000-global/ARC-000-PRIN-v1.0.md",
   "guides": [
@@ -420,10 +418,9 @@ This template is the single source of truth for the pages site — it contains a
 
 1. Read the appropriate template file (custom override or default) using the Read tool
 2. Copy the **entire** template contents as the base for `docs/index.html`
-3. Replace the placeholder values in the CONFIG block with the actual repository details:
-   - `'{{OWNER}}'` → the GitHub owner/org (e.g. `'tractorjuice'`)
+3. Replace the placeholder values with the actual repository details:
    - `'{{REPO}}'` → the repository name (e.g. `'arckit-test-project-v17-fuel-prices'`)
-   - `'{{BRANCH}}'` → the branch name (usually `'main'`)
+   - `'{{REPO_URL}}'` → the full repository URL (e.g. `'https://github.com/tractorjuice/arckit-test-project-v17-fuel-prices'`)
    - `'{{DEFAULT_DOC}}'` → the default document path (principles if exists, or `''`)
 
 **Do NOT generate HTML from scratch. Do NOT modify the template structure, CSS, or JavaScript. Only replace the `{{...}}` config placeholders.**
@@ -451,13 +448,13 @@ docs/index.html
 After generating, provide this summary:
 
 ```
-GitHub Pages Site Generated
+Documentation Site Generated
 
 Files Created:
 - docs/index.html (main page)
 - docs/manifest.json (document index)
 
-Repository: {owner}/{repo}
+Repository: {repo}
 Projects Found: {count}
 Documents Indexed: {total_documents}
 
@@ -472,15 +469,6 @@ Document Breakdown:
 - Vendor Profiles: {vendor_profile_count}
 - Tech Notes: {tech_note_count}
 
-To Enable GitHub Pages:
-1. Go to repository Settings > Pages
-2. Set Source to "Deploy from a branch"
-3. Set Branch to "main" and folder to "/docs"
-4. Save
-
-Your site will be available at:
-https://{owner}.github.io/{repo}/
-
 Features:
 - Dashboard view with KPI cards, charts, and governance checklist (default landing page)
 - Sidebar navigation for all projects
@@ -488,15 +476,21 @@ Features:
 - Mermaid diagram support (auto-rendered)
 - GOV.UK Design System styling
 - Responsive mobile layout
-- Private repo graceful degradation (links to GitHub for document viewing)
+- Uses relative paths — works on any static hosting provider
 
 Health Integration:
 - Run `/arckit:health JSON=true` to generate docs/health.json
 - Re-run `/arckit:pages` to display health data on the dashboard
 
+Deployment:
+The site uses relative paths and can be deployed to any static hosting provider:
+- **GitHub Pages**: Settings > Pages > Source "Deploy from branch" > Branch "main", folder "/docs"
+- **Netlify/Vercel**: Set publish directory to the repo root (docs/index.html references ../projects/)
+- **Any static host**: Serve the entire repo directory; docs/index.html loads files via relative paths
+
 Next Steps:
 - Commit and push the docs/ folder
-- Enable GitHub Pages in repository settings
+- Deploy to your hosting provider of choice
 - Access your documentation site
 ```
 
