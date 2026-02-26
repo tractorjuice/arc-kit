@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.12.2] - 2026-02-26
+
+### Fixed
+
+- **Pages template: GitHub Pages fallback** (#80) — relative paths (`../`) don't work on GitHub Pages because only the `/docs` folder is published; template now tries relative paths first (works for local/full-repo hosting), then falls back to `raw.githubusercontent.com` (works for GitHub Pages public repos)
+- **New `{{CONTENT_BASE_URL}}` placeholder** — `/arckit:pages` command sets this to the raw.githubusercontent.com base URL for GitHub repos, enabling the fallback; non-GitHub hosting can set it to empty string
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
 ## [2.12.1] - 2026-02-26
 
 ### Changed
