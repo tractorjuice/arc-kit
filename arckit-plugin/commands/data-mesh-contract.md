@@ -123,11 +123,7 @@ Using existing project: Project {project_id} - {project_name}
 
 ### Step 3: Create Contract Directory
 
-Data mesh contracts should be organized in a subdirectory:
-
-```bash
-mkdir -p {project_path}/data-mesh-contracts
-```
+Data mesh contracts should be organized in a subdirectory. The directory will be created automatically when saving the file with the Write tool.
 
 The contract file will use the multi-instance naming pattern:
 ```

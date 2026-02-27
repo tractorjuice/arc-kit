@@ -18,10 +18,7 @@ $ARGUMENTS
    - If it exists, inform the user and ask if they want to continue
 
 2. **Create the project structure**:
-   ```bash
-   mkdir -p projects/000-global/policies
-   mkdir -p projects/000-global/external
-   ```
+   - Create directories `projects/000-global/policies/` and `projects/000-global/external/` (these will be created automatically when saving files with the Write tool, or use Bash `mkdir` if needed)
 
 3. **Provide next steps**:
 

@@ -317,9 +317,7 @@ Coverage Summary: ✅ [X] fully matched, ⚠️ [Y] partial, ❌ [Z] gaps.
 
 Check if a previous version of this document exists in the project directory:
 
-```bash
-EXISTING=$(ls projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md 2>/dev/null | sort -V | tail -1)
-```
+Use Glob to find existing `projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md` files. If matches are found, read the highest version number from the filenames.
 
 **If no existing file**: Use VERSION="1.0"
 
@@ -330,7 +328,7 @@ EXISTING=$(ls projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md 2>/dev/null | s
    - **Minor increment** (e.g., 1.0 → 1.1, 2.1 → 2.2): Use when the scope is unchanged — refreshed data, updated API details, corrected details, minor additions within existing categories
    - **Major increment** (e.g., 1.0 → 2.0, 1.3 → 2.0): Use when scope has materially changed — new data categories, removed categories, fundamentally different source recommendations, significant new requirements added since last version
 4. Use the determined version for ALL subsequent references:
-   - Document ID and filename (passed to generate-document-id.sh)
+   - Document ID and filename (passed to generate-document-id.py)
    - Document Control: Version field
    - Revision History: Add new row with version, date, "AI Agent", description of changes, "PENDING", "PENDING"
 

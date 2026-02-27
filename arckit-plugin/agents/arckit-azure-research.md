@@ -164,9 +164,7 @@ Create a Mermaid diagram showing:
 
 Check if a previous version of this document exists in the project directory:
 
-```bash
-EXISTING=$(ls projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v*.md 2>/dev/null | sort -V | tail -1)
-```
+Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v*.md` files. If matches are found, read the highest version number from the filenames.
 
 **If no existing file**: Use VERSION="1.0"
 
@@ -177,7 +175,7 @@ EXISTING=$(ls projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v*.md 2>/dev
    - **Minor increment** (e.g., 1.0 → 1.1, 2.1 → 2.2): Use when the scope is unchanged — refreshed pricing, updated service features, corrected details, minor additions within existing categories
    - **Major increment** (e.g., 1.0 → 2.0, 1.3 → 2.0): Use when scope has materially changed — new requirement categories, removed categories, fundamentally different service recommendations, significant new requirements added since last version
 4. Use the determined version for ALL subsequent references:
-   - Document ID and filename (passed to generate-document-id.sh)
+   - Document ID and filename (passed to generate-document-id.py)
    - Document Control: Version field
    - Revision History: Add new row with version, date, "AI Agent", description of changes, "PENDING", "PENDING"
 

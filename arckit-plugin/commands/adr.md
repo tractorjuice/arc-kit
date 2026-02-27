@@ -65,24 +65,10 @@ Apply the user's selections: the escalation level determines the governance foru
    - If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
 ### 3. **Create decisions directory and determine ADR number**:
-```bash
-PROJECT_SLUG=$(basename "$project_path")            # e.g., 001-payment-modernization
-PROJECT_DIR="projects/${PROJECT_SLUG}"
-
-# Ensure decisions directory exists
-mkdir -p "${PROJECT_DIR}/decisions"
-cd "${PROJECT_DIR}/decisions"
-
-# Determine next ADR number
-LAST_ADR=$(ls -1 ADR-*.md 2>/dev/null | grep -o 'ADR-[0-9]*' | sort -V | tail -1)
-if [ -z "$LAST_ADR" ]; then
-  NEXT_ADR="ADR-001"
-else
-  NUM=${LAST_ADR#ADR-}
-  NEXT_NUM=$(printf "%03d" $((10#$NUM + 1)))
-  NEXT_ADR="ADR-${NEXT_NUM}"
-fi
-```
+   - Use Glob to find existing `projects/{project-slug}/decisions/ADR-*.md` files
+   - If none found, the next ADR number is `ADR-001`
+   - If found, extract the highest ADR number and increment by 1 (e.g., `ADR-003` → `ADR-004`), zero-padded to 3 digits
+   - The decisions directory will be created automatically when saving the file with the Write tool
 
 ### 4. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/adr-template.md` exists in the project root

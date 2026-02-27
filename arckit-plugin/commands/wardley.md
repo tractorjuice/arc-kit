@@ -4,7 +4,7 @@ hooks:
   Stop:
     - hooks:
         - type: command
-          command: "bash ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.sh"
+          command: "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.py"
           timeout: 10
 ---
 

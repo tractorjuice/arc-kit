@@ -27,7 +27,7 @@ Generate a documentation site for this ArcKit repository.
 Determine the repository name and URL:
 1. Run `git remote get-url origin` (single Bash command, no pipes or `&&`) to get the remote URL
 2. Extract the repo name and owner from the URL (e.g. `https://github.com/owner/repo-name` → repo name is `repo-name`, owner is `owner`)
-3. If no git remote, use the current directory name as the repo name (read it from the working directory path, do NOT use `basename` or `$(pwd)` in bash)
+3. If no git remote, use the current directory name as the repo name (extract it from the working directory path using string manipulation — do NOT use shell commands like `basename` or `$(pwd)`)
 
 ## Step 1: Discover Repository Structure
 

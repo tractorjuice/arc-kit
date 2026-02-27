@@ -2,6 +2,8 @@
 
 `migrate-filenames.sh` converts legacy ArcKit filenames to the standardized Document ID naming convention.
 
+> **Platform note**: This migration script requires a bash shell (Linux, macOS, or Windows via Git Bash / WSL). It is a one-time migration utility and does not affect day-to-day ArcKit command usage.
+
 ---
 
 ## Overview

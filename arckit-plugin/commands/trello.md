@@ -66,15 +66,20 @@ Then re-run /arckit:trello
 Check that Trello API credentials are available as environment variables using Bash:
 
 ```bash
-echo "TRELLO_API_KEY=${TRELLO_API_KEY:+SET}" && echo "TRELLO_TOKEN=${TRELLO_TOKEN:+SET}"
+python3 -c "import os; print('TRELLO_API_KEY=' + ('SET' if os.environ.get('TRELLO_API_KEY') else 'NOT SET')); print('TRELLO_TOKEN=' + ('SET' if os.environ.get('TRELLO_TOKEN') else 'NOT SET'))"
 ```
 
 **If either is missing**:
 ```
 Trello API credentials not found. Set these environment variables:
 
+  # macOS/Linux:
   export TRELLO_API_KEY="your-api-key"
   export TRELLO_TOKEN="your-token"
+
+  # Windows PowerShell:
+  $env:TRELLO_API_KEY="your-api-key"
+  $env:TRELLO_TOKEN="your-token"
 
 To get credentials:
   1. API Key: https://trello.com/power-ups/admin (select a Power-Up or create one, then get the API key)

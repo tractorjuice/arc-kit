@@ -154,9 +154,7 @@ Map every requirement to a recommended solution or flag as a gap.
 
 Check if a previous version of this document exists in the project directory:
 
-```bash
-EXISTING=$(ls projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v*.md 2>/dev/null | sort -V | tail -1)
-```
+Use Glob to find existing `projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v*.md` files. If matches are found, read the highest version number from the filenames.
 
 **If no existing file**: Use VERSION="1.0"
 
@@ -167,15 +165,15 @@ EXISTING=$(ls projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v*.md 2>/dev/null | s
    - **Minor increment** (e.g., 1.0 → 1.1, 2.1 → 2.2): Use when the scope is unchanged — refreshed data, updated pricing, corrected details, minor additions within existing categories
    - **Major increment** (e.g., 1.0 → 2.0, 1.3 → 2.0): Use when scope has materially changed — new requirement categories, removed categories, fundamentally different recommendations, significant new requirements added since last version
 4. Use the determined version for ALL subsequent references:
-   - Document ID and filename (passed to generate-document-id.sh)
+   - Document ID and filename (passed to generate-document-id.py)
    - Document Control: Version field
    - Revision History: Add new row with version, date, "AI Agent", description of changes, "PENDING", "PENDING"
 
 ### Step 10: Generate Document ID
 
-Run bash:
-```bash
-.arckit/scripts/python/generate-document-id.py PROJECT_ID RSCH ${VERSION} --filename
+Run:
+```
+python3 .arckit/scripts/python/generate-document-id.py PROJECT_ID RSCH ${VERSION} --filename
 ```
 
 ### Step 11: Write the Document
@@ -225,9 +223,7 @@ Examples:
 **Vendor Profiles:**
 
 1. For each vendor evaluated in depth (3+ data points gathered — e.g., pricing, features, compliance), check whether a vendor profile already exists:
-   ```bash
-   ls projects/{project-dir}/vendors/*{vendor-slug}* 2>/dev/null
-   ```
+   Use Glob to check for existing `projects/{project-dir}/vendors/*{vendor-slug}*` files.
 2. **If no profile exists**: Read the vendor profile template at `.arckit/templates/vendor-profile-template.md` and create a new file at `projects/{project-dir}/vendors/{vendor-slug}-profile.md`. Populate all sections from the research findings. Set `Confidence` based on the depth of data gathered (high = 5+ data points, medium = 3-4, low = fewer).
 3. **If a profile exists**: Read the existing profile and apply these merge rules per section:
    - **Overview**: Keep existing text; append new strategic insights only if vendor positioning has materially changed
@@ -241,9 +237,7 @@ Examples:
 **Tech Notes:**
 
 4. For each significant technology finding (a technology, protocol, or standard researched with 2+ substantive facts), check whether a tech note already exists:
-   ```bash
-   ls projects/{project-dir}/tech-notes/*{topic-slug}* 2>/dev/null
-   ```
+   Use Glob to check for existing `projects/{project-dir}/tech-notes/*{topic-slug}*` files.
 5. **If no tech note exists**: Read the tech note template at `.arckit/templates/tech-note-template.md` and create a new file at `projects/{project-dir}/tech-notes/{topic-slug}.md`. Populate from research findings.
 6. **If a tech note exists**: Read the existing note and apply these merge rules per section:
    - **Summary**: Update only if understanding has significantly changed; otherwise keep existing

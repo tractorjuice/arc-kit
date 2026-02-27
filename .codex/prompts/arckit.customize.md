@@ -30,11 +30,7 @@ The user may request:
 
 ### 2. **List Available Templates**
 
-If user wants to see available templates, list them from `.arckit/templates/`:
-
-```bash
-ls -1 .arckit/templates/*.md | xargs -n1 basename | sed 's/-template\.md$//'
-```
+If user wants to see available templates, use Glob to find `.arckit/templates/*-template.md` and `.arckit/templates/*-template.html`, then extract the template name from each filename (strip the `-template.md`/`.html` suffix).
 
 Display as a table:
 
@@ -89,43 +85,15 @@ Display as a table:
 
 ### 3. **Copy Template(s)**
 
-**Create user templates directory:**
-```bash
-mkdir -p .arckit/templates-custom
-```
-
 **Copy specific template:**
-```bash
-# Map short name to full filename
-TEMPLATE_NAME="$USER_INPUT"  # e.g., "requirements"
-
-# Determine file extension — pages template is HTML, all others are Markdown
-if [[ "$TEMPLATE_NAME" == "pages" ]]; then
-    EXT="html"
-else
-    EXT="md"
-fi
-
-SOURCE=".arckit/templates/${TEMPLATE_NAME}-template.${EXT}"
-DEST=".arckit/templates/${TEMPLATE_NAME}-template.${EXT}"
-
-# Check if source exists
-if [[ -f "$SOURCE" ]]; then
-    cp "$SOURCE" "$DEST"
-    echo "✅ Copied ${TEMPLATE_NAME}-template.${EXT} to .arckit/templates/"
-else
-    echo "❌ Template not found: ${TEMPLATE_NAME}"
-    echo "Run '/arckit:customize list' to see available templates"
-fi
-```
+1. Map the user's short name to the full filename (e.g., "requirements" → `requirements-template.md`, "pages" → `pages-template.html`)
+2. Use the Read tool to read the source template from `.arckit/templates/{name}-template.{ext}`
+3. Use the Write tool to save it to `.arckit/templates/{name}-template.{ext}` (the directory will be created automatically)
+4. If the source template does not exist, inform the user and suggest running `/arckit:customize list`
 
 **Copy all templates:**
-```bash
-mkdir -p .arckit/templates
-cp .arckit/templates/*-template.md .arckit/templates/
-cp .arckit/templates/*-template.html .arckit/templates/
-echo "✅ Copied all templates to .arckit/templates/"
-```
+1. Use Glob to find all `.arckit/templates/*-template.md` and `.arckit/templates/*-template.html` files
+2. For each template found, use Read to load it and Write to save it to `.arckit/templates/`
 
 ### 4. **Show Template Info**
 
@@ -188,27 +156,18 @@ When ArcKit CLI updates with new template features:
 - Your customizations in `.arckit/templates/` are **preserved**
 - Compare your templates with defaults periodically to adopt new features
 
-To see the current default template:
-\`\`\`bash
-cat .arckit/templates/{name}-template.md
-\`\`\`
+To see the current default template, use the Read tool on `.arckit/templates/{name}-template.md`.
 
-To compare with your customization:
-\`\`\`bash
-diff .arckit/templates/{name}-template.md .arckit/templates/{name}-template.md
-\`\`\`
+To compare your customization with the default, read both files and compare the content.
 
 ### Reverting to Default
 
-To stop using a custom template and revert to default:
-\`\`\`bash
-rm .arckit/templates/{name}-template.md
-\`\`\`
+To stop using a custom template and revert to default, delete `.arckit/templates/{name}-template.md`.
 
 ### Git Recommendations
 
 Commit your customized templates to share with your team:
-\`\`\`bash
+\`\`\`
 git add .arckit/templates/
 git commit -m "Add organization-specific document templates"
 \`\`\`
@@ -233,7 +192,7 @@ After completing the request, show:
 2. Run the corresponding `/arckit:*` command
 3. Your customized template will be used automatically
 
-**Tip**: Use `diff .arckit/templates/{name}-template.md .arckit/templates/{name}-template.md` to compare with the default.
+**Tip**: Read both the default and your custom template to compare differences.
 ```
 
 ## Example Usage
