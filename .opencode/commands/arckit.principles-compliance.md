@@ -121,7 +121,7 @@ Principle 3: "Security by Design"
 ### 3. Identify the target project
 
 - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
-- If no match, run `.arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
+- If no match, run `.arckit/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
 ### 4. Load Project Artifacts (Progressive Disclosure)
 

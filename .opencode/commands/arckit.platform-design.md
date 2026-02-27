@@ -45,7 +45,7 @@ Generate a comprehensive platform strategy design document using PDT v2.2.1 meth
 Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create it:
 
 ```bash
-bash .arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json
+python3 .arckit/scripts/python/create-project.py --name "$PROJECT_NAME" --json
 ```
 
 If the project already exists, check for existing `ARC-{PROJECT_ID}-PLAT-v*.md` files. If found, ask user if they want to overwrite or update.

@@ -308,7 +308,7 @@ EXISTING=$(ls projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md 2>/dev/null | s
 
 Run bash:
 ```bash
-.arckit/scripts/bash/generate-document-id.sh PROJECT_ID DSCT ${VERSION} --filename
+.arckit/scripts/python/generate-document-id.py PROJECT_ID DSCT ${VERSION} --filename
 ```
 
 ### Step 16: Write the Document

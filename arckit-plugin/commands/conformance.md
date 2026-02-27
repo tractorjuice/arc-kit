@@ -93,7 +93,7 @@ c. `.arckit/conformance-rules.md` in the project root (if exists):
 ### 2. Identify the Target Project
 
 - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
-- If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
+- If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
 ### 3. Load All Relevant Artifacts
 
@@ -321,7 +321,7 @@ Use the document ID `ARC-{PROJECT_ID}-CONF-v{VERSION}` (e.g., `ARC-001-CONF-v1.0
 
 **Generate the document ID**:
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh --project-id {PROJECT_ID} --type CONF --filename
+${CLAUDE_PLUGIN_ROOT}/scripts/python/generate-document-id.py --project-id {PROJECT_ID} --type CONF --filename
 ```
 
 **Use the Write tool** to save the document to `projects/{project-dir}/ARC-{PROJECT_ID}-CONF-v{VERSION}.md`.

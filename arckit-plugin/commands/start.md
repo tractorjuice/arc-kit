@@ -34,7 +34,7 @@ Replace `X.Y.Z` with the actual version from the VERSION file.
 
 ### Step 2: Detect Project State
 
-Run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/list-projects.sh --json` to get a machine-readable project inventory. Parse the JSON output and display a compact summary:
+Run `${CLAUDE_PLUGIN_ROOT}/scripts/python/list-projects.py --json` to get a machine-readable project inventory. Parse the JSON output and display a compact summary:
 
 ```
 Projects

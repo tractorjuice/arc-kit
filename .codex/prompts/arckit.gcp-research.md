@@ -156,7 +156,7 @@ EXISTING=$(ls projects/{project-dir}/research/ARC-{PROJECT_ID}-GCRS-v*.md 2>/dev
 
 Run bash:
 ```bash
-.arckit/scripts/bash/generate-document-id.sh PROJECT_ID GCRS ${VERSION} --filename
+.arckit/scripts/python/generate-document-id.py PROJECT_ID GCRS ${VERSION} --filename
 ```
 
 Create `research/` subdirectory if needed, then **use the Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCRS-v${VERSION}.md` following the template structure.

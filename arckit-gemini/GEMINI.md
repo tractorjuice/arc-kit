@@ -72,7 +72,7 @@ Version | Date | Author | Changes | Approved By | Approval Date
 
 Use the helper script:
 ```bash
-~/.gemini/extensions/arckit/scripts/bash/generate-document-id.sh <PROJECT_ID> <DOC_CODE> <VERSION>
+python3 ~/.gemini/extensions/arckit/scripts/python/generate-document-id.py <PROJECT_ID> <DOC_CODE> <VERSION>
 ```
 
 With `--filename` flag for the full filename with `.md` extension. With `--next-num` for multi-instance types (ADR, DIAG, WARD, DMC).
@@ -101,13 +101,13 @@ project/
 
 Use the helper script to create numbered project directories:
 ```bash
-~/.gemini/extensions/arckit/scripts/bash/create-project.sh --name "Project Name" --json
+python3 ~/.gemini/extensions/arckit/scripts/python/create-project.py --name "Project Name" --json
 ```
 
 ### Listing Projects
 
 ```bash
-~/.gemini/extensions/arckit/scripts/bash/list-projects.sh --json
+python3 ~/.gemini/extensions/arckit/scripts/python/list-projects.py --json
 ```
 
 ## Requirement ID Prefixes

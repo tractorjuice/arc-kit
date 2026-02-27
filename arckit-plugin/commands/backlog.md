@@ -86,7 +86,7 @@ Scans all ArcKit artifacts and automatically:
 
 > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number). If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output.
+Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number). If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output.
 
 Extract project metadata:
 - Project name

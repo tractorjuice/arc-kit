@@ -82,7 +82,7 @@ This command runs as a Gemini CLI extension. The extension directory \
 CANNOT use the read_file tool to access it. Instead:
 - To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arckit/templates/foo-template.md`
 - To list files: use `ls ~/.gemini/extensions/arckit/templates/`
-- To run scripts: use `bash ~/.gemini/extensions/arckit/scripts/bash/create-project.sh --json`
+- To run scripts: use `python3 ~/.gemini/extensions/arckit/scripts/python/create-project.py --json`
 - To check file existence: use `test -f ~/.gemini/extensions/arckit/templates/foo-template.md && echo exists`
 All extension file access MUST go through shell commands.
 
@@ -229,6 +229,7 @@ def copy_extension_files(plugin_dir, extension_dir, opencode_dir="arckit-opencod
     copies = [
         ("templates", "templates"),
         ("scripts/bash", "scripts/bash"),
+        ("scripts/python", "scripts/python"),
         ("docs/guides", "docs/guides"),
         ("skills", "skills"),
     ]

@@ -175,7 +175,7 @@ EXISTING=$(ls projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v*.md 2>/dev/null | s
 
 Run bash:
 ```bash
-.arckit/scripts/bash/generate-document-id.sh PROJECT_ID RSCH ${VERSION} --filename
+.arckit/scripts/python/generate-document-id.py PROJECT_ID RSCH ${VERSION} --filename
 ```
 
 ### Step 11: Write the Document

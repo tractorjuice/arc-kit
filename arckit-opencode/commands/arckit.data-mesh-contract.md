@@ -97,7 +97,7 @@ Data product name (kebab-case):
 
 ### Step 2: Identify the target project
    - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
-   - If no match, run `.arckit/scripts/bash/create-project.sh --name "$DATA_PRODUCT_NAME" --json` to create a new project and parse the JSON output
+   - If no match, run `.arckit/scripts/python/create-project.py --name "$DATA_PRODUCT_NAME" --json` to create a new project and parse the JSON output
 
 **Parse the JSON output** to get:
 - `project_id` (e.g., 001, 002)

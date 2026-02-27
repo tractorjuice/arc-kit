@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-session.sh",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-session.py",
             "timeout": 5
           }
         ]
@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.sh",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.py",
             "timeout": 10
           },
           {
@@ -36,7 +36,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.sh",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.py",
             "timeout": 5
           }
         ]
@@ -63,7 +63,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/allow-mcp-tools.sh",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/allow-mcp-tools.py",
             "timeout": 5
           }
         ]

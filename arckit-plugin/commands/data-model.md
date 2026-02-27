@@ -35,7 +35,7 @@ $ARGUMENTS
 
 2. **Identify the target project**:
    - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
-   - If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
+   - If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
 3. **Read external documents and policies**:
    - Read any **external documents** listed in the project context (`external/` files) — extract entity definitions, relationships, data types, constraints, existing schemas, migration requirements

@@ -338,7 +338,7 @@ EXISTING=$(ls projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md 2>/dev/null | s
 
 Run bash:
 ```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh PROJECT_ID DSCT ${VERSION} --filename
+${CLAUDE_PLUGIN_ROOT}/scripts/python/generate-document-id.py PROJECT_ID DSCT ${VERSION} --filename
 ```
 
 ### Step 16: Write the Document

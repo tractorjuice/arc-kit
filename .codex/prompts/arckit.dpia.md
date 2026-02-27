@@ -62,7 +62,7 @@ Apply the user's selections: the scope determines which data model entities and 
 Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create it:
 
 ```bash
-bash .arckit/scripts/bash/create-project.sh --name "$PROJECT_NAME" --json
+python3 .arckit/scripts/python/create-project.py --name "$PROJECT_NAME" --json
 ```
 
 Parse the JSON output to get `project_id` and `project_path`.

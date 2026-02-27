@@ -41,7 +41,7 @@ $ARGUMENTS
 Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create it:
 
 ```bash
-bash .arckit/scripts/bash/create-project.sh --name "[project-name-from-user-input]" --json
+python3 .arckit/scripts/python/create-project.py --name "[project-name-from-user-input]" --json
 ```
 
 Parse the JSON response to extract:
