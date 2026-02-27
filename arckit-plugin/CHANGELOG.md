@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.13.1] - 2026-02-27
+
+### Fixed
+
+- **Cross-platform commands** — removed bash-only patterns (`ls|sort|tail`, `mkdir -p`, `basename`, `sed`, `xargs`) from 7 commands (adr, customize, data-mesh-contract, init, pages, trello, wardley) replacing with Glob/Read/Write tool instructions
+- **Cross-platform agents** — replaced `ls|sort -V|tail` version detection with Glob instructions and `generate-document-id.sh` references with `.py` across all 5 agents (research, aws-research, azure-research, gcp-research, datascout)
+- **Wardley hook** — changed from bash to python3 for validate-wardley-math hook
+- **Trello command** — added Windows PowerShell alternatives for environment variable checks
+- **Migration guide** — added platform note that migrate-filenames.sh requires bash (Git Bash / WSL on Windows)
+- Regenerated all Codex/OpenCode/Gemini formats via converter
+
+---
+
 ## [2.13.0] - 2026-02-27
 
 ### Added
