@@ -54,6 +54,17 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 
 **Latest Release**: [v2.12.3](https://github.com/tractorjuice/arc-kit/releases/tag/v2.12.3)
 
+### Platform Support
+
+| Platform | Claude Code Plugin | Gemini CLI Extension | Codex / OpenCode CLI |
+|----------|-------------------|---------------------|---------------------|
+| macOS | Full support | Full support | Full support |
+| Linux | Full support | Full support | Full support |
+| Windows (WSL2) | Full support | Full support | Full support |
+| Windows (native) | Full support | Full support | Partial |
+
+**Windows users**: The Claude Code plugin and Gemini CLI extension work natively on all platforms — all hooks and scripts are Python-based. For Codex CLI / OpenCode CLI on native Windows (without WSL), some commands containing inline bash snippets may require [Git Bash](https://git-scm.com/downloads/win) or [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). We recommend WSL2 for the best experience.
+
 ### Initialize a Project
 
 **Claude Code**: No initialization needed — the plugin provides everything.

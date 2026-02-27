@@ -131,7 +131,7 @@
 
         .app-ai-compact {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 1.5rem;
             margin: 2rem 0;
         }
@@ -295,9 +295,6 @@
                 border-left-color: #1d70b8;
                 border-bottom: none;
             }
-            .app-ai-compact {
-                grid-template-columns: 1fr;
-            }
         }
 
     </style>
@@ -453,7 +450,7 @@
 
             <div class="app-ai-compact">
                 <div class="app-ai-compact-card app-ai-compact-card--premier">
-                    <h3 class="govuk-heading-s">Claude Code on Linux</h3>
+                    <h3 class="govuk-heading-s">Claude Code</h3>
                     <strong class="govuk-tag govuk-tag--green">Premier</strong>
                     <p class="govuk-body-s govuk-!-margin-top-2">Full experience with agents, hooks, MCP servers, and output validation.</p>
                     <code>/plugin marketplace add tractorjuice/arc-kit</code>
