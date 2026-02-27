@@ -131,7 +131,7 @@
 
         .app-ai-compact {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
             margin: 2rem 0;
         }
@@ -139,6 +139,12 @@
         .app-ai-compact-card {
             border: 2px solid #b1b4b6;
             padding: 1.25rem;
+        }
+
+        .app-ai-compact-card--premier {
+            grid-column: 1 / -1;
+            border-color: #00703c;
+            border-width: 2px;
         }
 
         .app-ai-compact-card code {
@@ -288,6 +294,9 @@
             .app-nav-bar__item a:focus {
                 border-left-color: #1d70b8;
                 border-bottom: none;
+            }
+            .app-ai-compact {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -443,7 +452,7 @@
             <p class="govuk-body">All 53 commands produce identical outputs across AI systems. Choose the platform that fits your workflow.</p>
 
             <div class="app-ai-compact">
-                <div class="app-ai-compact-card">
+                <div class="app-ai-compact-card app-ai-compact-card--premier">
                     <h3 class="govuk-heading-s">Claude Code</h3>
                     <strong class="govuk-tag govuk-tag--green">Premier</strong>
                     <p class="govuk-body-s govuk-!-margin-top-2">Full experience with agents, hooks, MCP servers, and output validation.</p>
