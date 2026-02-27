@@ -22,26 +22,28 @@ The Pages Generator creates a `docs/index.html` file that:
 
 Generate a documentation site for this ArcKit repository.
 
+## Step 0: Determine Repository Info
+
+Determine the repository name and URL:
+1. Run `git remote get-url origin` (single Bash command, no pipes or `&&`) to get the remote URL
+2. Extract the repo name and owner from the URL (e.g. `https://github.com/owner/repo-name` → repo name is `repo-name`, owner is `owner`)
+3. If no git remote, use the current directory name as the repo name (read it from the working directory path, do NOT use `basename` or `$(pwd)` in bash)
+
 ## Step 1: Discover Repository Structure
 
-Scan the repository to find all ArcKit artifacts:
+Use **Glob** and **Read** tools to scan the repository. Do NOT use `ls`, `find`, `for` loops, `head`, `grep`, `sed`, or any Bash commands for file discovery.
 
 ### 1.1 Guides (Command Documentation)
 
 **First, sync guides from the plugin to the local repo:**
 
-1. Create `docs/guides/` if it doesn't exist
-2. Use Glob to list all `.md` files in `${CLAUDE_PLUGIN_ROOT}/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`, `roles/`)
-3. Copy every guide file to the corresponding path under `docs/guides/`, creating subdirectories as needed
-4. This ensures the repo always has the latest guides from the plugin
+1. Use **Glob** to list all `.md` files in `${CLAUDE_PLUGIN_ROOT}/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`, `roles/`)
+2. For each guide file, **Read** from the plugin path and **Write** to the corresponding path under `docs/guides/`, creating subdirectories as needed
+3. This ensures the repo always has the latest guides from the plugin
 
-```bash
-# Conceptual flow — use Bash tool to copy:
-mkdir -p docs/guides
-cp -r ${CLAUDE_PLUGIN_ROOT}/docs/guides/* docs/guides/
-```
+**IMPORTANT**: Do NOT use `cp`, `mkdir`, or any Bash commands for guide syncing. Use the Glob tool to discover files, then Read + Write tools to copy them. This ensures cross-platform compatibility (Windows, macOS, Linux) without triggering permission prompts.
 
-After syncing, scan `docs/guides/` (top-level `.md` files only, **excluding** the `roles/` subdirectory) for command usage guides and extract the title from the first `#` heading in each guide file. Role guides in `docs/guides/roles/` are scanned separately and added to the `roleGuides` array in manifest.json (see DDaT Role Guides section below).
+After syncing, use **Glob** to scan `docs/guides/*.md` (top-level only, **excluding** the `roles/` subdirectory) for command usage guides. Use **Read** (with `limit: 5`) to extract the title from the first `#` heading in each guide file. Role guides in `docs/guides/roles/` are scanned separately and added to the `roleGuides` array in manifest.json (see DDaT Role Guides section below).
 
 **Guide Categories** (based on filename):
 
@@ -70,7 +72,7 @@ Role guides map ArcKit commands to [DDaT Capability Framework](https://ddat-capa
 | IT Operations | it-service-manager |
 | Software Development | devops-engineer |
 
-Scan `docs/guides/roles/` for role guide files (excluding `README.md`) and add them to a separate `roleGuides` array in manifest.json (not the `guides` array). Extract the title from the first `#` heading (strip " — ArcKit Command Guide" suffix). Map the DDaT family from the filename using the table above. Count the rows in the "Primary Commands" table to populate `commandCount`.
+Use **Glob** to scan `docs/guides/roles/*.md` for role guide files (excluding `README.md`) and add them to a separate `roleGuides` array in manifest.json (not the `guides` array). Use **Read** (with `limit: 5`) to extract the title from the first `#` heading (strip " — ArcKit Command Guide" suffix). Map the DDaT family from the filename using the table above. Count the rows in the "Primary Commands" table to populate `commandCount`.
 
 **Role guide commandCount reference**:
 
@@ -106,7 +108,7 @@ Scan `docs/guides/roles/` for role guide files (excluding `README.md`) and add t
 
 ### 1.2 Global Documents
 
-Check `projects/000-global/` for global artifacts:
+Use **Glob** to check `projects/000-global/` for global artifacts:
 ```
 projects/000-global/
 ├── ARC-000-PRIN-v1.0.md    # Architecture Principles (global)
@@ -119,7 +121,7 @@ projects/000-global/
 
 ### 1.3 Project Documents
 
-Check `projects/` for all project folders. Documents use standardized naming: `ARC-{PROJECT_ID}-{TYPE}-v{VERSION}.md`
+Use **Glob** to check `projects/` for all project folders. Documents use standardized naming: `ARC-{PROJECT_ID}-{TYPE}-v{VERSION}.md`
 
 ```
 projects/
@@ -416,14 +418,17 @@ Create `docs/manifest.json` with the discovered structure:
 
 This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.
 
-1. Read the appropriate template file (custom override or default) using the Read tool
-2. Copy the **entire** template contents as the base for `docs/index.html`
-3. Replace the placeholder values with the actual repository details:
+1. Read the appropriate template file (custom override or default) using the **Read** tool
+2. Store the entire template content in memory
+3. Replace the placeholder values **in memory** (string replacement) with actual repository details:
    - `'{{REPO}}'` → the repository name (e.g. `'arckit-test-project-v17-fuel-prices'`)
    - `'{{REPO_URL}}'` → the full repository URL (e.g. `'https://github.com/tractorjuice/arckit-test-project-v17-fuel-prices'`)
    - `'{{CONTENT_BASE_URL}}'` → the raw content base URL for fallback loading (e.g. `'https://raw.githubusercontent.com/tractorjuice/arckit-test-project-v17-fuel-prices/main'`). For GitHub repos use `https://raw.githubusercontent.com/{owner}/{repo}/{branch}`. For non-GitHub hosting set to `''` (empty string).
    - `'{{VERSION}}'` → the ArcKit version from the plugin's VERSION file (`${CLAUDE_PLUGIN_ROOT}/VERSION`)
    - `'{{DEFAULT_DOC}}'` → the default document path (principles if exists, or `''`)
+4. Write the final HTML to `docs/index.html` using the **Write** tool
+
+**IMPORTANT**: Do NOT use `sed`, `cp`, or any Bash commands for template processing. Read the template with the Read tool, perform all placeholder replacements in memory, then write the result with the Write tool. This ensures cross-platform compatibility (Windows, macOS, Linux).
 
 **Do NOT generate HTML from scratch. Do NOT modify the template structure, CSS, or JavaScript. Only replace the `{{...}}` config placeholders.**
 
@@ -505,10 +510,21 @@ Next Steps:
 - The dashboard displays KPI cards, category charts, coverage bars, and governance checklist computed from manifest.json
 - Users can navigate to any document via sidebar, search, or dashboard project table
 
+### Cross-Platform Compatibility
+
+**This command MUST work on Windows, macOS, and Linux without modification.** To achieve this:
+
+- Use **Glob** for all file discovery (never `ls`, `find`, or `for` loops in bash)
+- Use **Read** + **Write** for all file copying (never `cp`, `cp -r`, or `mkdir -p` in bash)
+- Use **Read** + in-memory string replacement + **Write** for template processing (never `sed`)
+- Use **Grep** for content searching (never `grep` or `head` in bash)
+- The **only** acceptable Bash use is a single simple command like `git remote get-url origin` — never compound commands with `&&`, pipes, or `$()` substitution
+- Avoid Bash entirely if possible — all file operations can be done with Glob/Read/Write/Grep
+
 ### File Discovery
 
 - Only include files that actually exist in the repository
-- Use Glob or file system commands to discover files
+- Use **Glob** to discover files (never bash commands)
 - Don't include placeholder entries for missing files
 
 ### Error Handling
@@ -541,4 +557,5 @@ The generated HTML should handle:
 ---
 
 **Remember**: You MUST read and use `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
+- **Cross-platform**: Do NOT use Bash for file operations. Use Glob/Read/Write/Grep tools exclusively. The only acceptable Bash use is a single simple `git` command (no pipes, no `&&`, no `$()`).
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
