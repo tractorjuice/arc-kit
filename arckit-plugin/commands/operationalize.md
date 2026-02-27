@@ -147,6 +147,7 @@ Generate runbooks for:
 - **Performance Degradation** - Steps when response times exceed SLO
 - **Capacity Issues** - Scaling procedures (manual and automatic)
 - **Security Incident** - Initial response for security events
+- **Critical Vulnerability Remediation** - Response when critical CVEs or VMS alerts require urgent patching
 - **Dependency Failure** - What to do when upstream services fail
 
 Each runbook must include:
@@ -193,8 +194,9 @@ Each runbook must include:
 **Section 11: Security Operations**
 - Access management (who can access what, how to request)
 - Secret/credential rotation procedures
-- Security patching schedule
-- Vulnerability scanning frequency
+- **11.3 Vulnerability Scanning** — scanning tools, configuration, NCSC VMS integration
+- **11.4 Vulnerability Remediation SLAs** — severity-based SLAs with VMS benchmarks (8-day domain, 32-day general), remediation process, current status
+- **11.5 Patch Management** — patching schedule, patching process, emergency patching, compliance metrics
 - Penetration testing schedule
 - Security incident response contacts
 
@@ -226,6 +228,9 @@ Comprehensive checklist for production handover:
 - [ ] Access provisioned for support team
 - [ ] Documentation in knowledge base
 - [ ] SLOs agreed with stakeholders
+- [ ] VMS enrolled and scanning active (UK Government)
+- [ ] Vulnerability remediation SLAs documented and agreed
+- [ ] Critical vulnerability remediation runbook tested
 
 **Section 15: Operational Metrics**
 - MTTR (Mean Time to Recovery) target
@@ -237,6 +242,7 @@ Comprehensive checklist for production handover:
 **Section 16: UK Government Considerations** (if applicable)
 - GDS Service Standard Point 14 (operate a reliable service)
 - NCSC operational security guidance
+- NCSC Vulnerability Monitoring Service (VMS) enrollment and benchmark compliance
 - Cross-government service dependencies (GOV.UK Notify, Pay, Verify)
 - Cabinet Office Technology Code of Practice compliance
 

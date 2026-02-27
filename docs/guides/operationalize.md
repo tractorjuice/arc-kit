@@ -39,7 +39,7 @@ Output: `projects/<id>/ARC-<id>-OPS-v1.0.md`
 | Business Continuity | Impact analysis, workarounds, communication plan |
 | Backup & Restore | Schedule, retention, verification, restore procedures |
 | Capacity Planning | Baseline, projections, scaling thresholds |
-| Security Operations | Access management, patching, vulnerability scanning |
+| Security Operations | Access management, vulnerability scanning (11.3 with VMS), remediation SLAs (11.4 with VMS benchmarks), patch management (11.5) |
 | Deployment & Release | Windows, rollback, feature flags, migrations |
 | Knowledge Transfer | Training materials, SME contacts, onboarding |
 | Handover Checklist | Comprehensive go-live checklist |
@@ -84,6 +84,7 @@ Each runbook must include:
 | Performance Degradation | Response when SLOs are breached |
 | Capacity Issues | Scaling procedures (manual and automatic) |
 | Security Incident | Initial response for security events |
+| Critical Vulnerability Remediation | Response when critical CVEs or VMS alerts require urgent patching |
 | Dependency Failure | Response when upstream services fail |
 
 ---
@@ -113,6 +114,9 @@ Each runbook must include:
 - [ ] Access provisioned for support team
 - [ ] Documentation in knowledge base
 - [ ] SLOs agreed with stakeholders
+- [ ] VMS enrolled and scanning active (UK Government)
+- [ ] Vulnerability remediation SLAs documented and agreed
+- [ ] Critical vulnerability remediation runbook tested
 
 ---
 

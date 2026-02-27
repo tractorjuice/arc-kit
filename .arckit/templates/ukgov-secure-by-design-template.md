@@ -302,10 +302,16 @@
 **Proactive Measures**:
 - [ ] Threat hunting activities
 - [ ] Vulnerability scanning (weekly/monthly)
+- [ ] NCSC VMS enrolled and alerts actioned
 - [ ] Penetration testing (annual minimum)
 - [ ] Red team exercises
 - [ ] Security posture reviews
 - [ ] Threat modeling
+
+**NCSC Vulnerability Monitoring Service (VMS)**:
+- **VMS Enrollment Status**: [Enrolled / Not Enrolled / In Progress]
+- **VMS Coverage**: [Number of domains/IPs monitored]
+- **VMS Alert Handling**: [Process for triaging and actioning VMS alerts]
 
 **Last Penetration Test**: [Date / Not Conducted]
 **Pen Test Findings**: [Critical: X, High: Y, Medium: Z, Low: W]
@@ -544,6 +550,28 @@
 - Medium vulnerabilities: [Within X days]
 - Low vulnerabilities: [Within X days]
 
+#### VMS Integration
+
+**NCSC Vulnerability Monitoring Service (VMS) Status**:
+- [ ] Department enrolled in VMS
+- [ ] All internet-facing domains registered with VMS
+- [ ] VMS alerts integrated into vulnerability management workflow
+- [ ] VMS remediation benchmarks adopted as departmental targets
+- [ ] Regular review of VMS dashboard and reports
+
+**VMS Remediation Benchmarks**:
+
+| Metric | NCSC Benchmark | Departmental Target | Current Performance |
+|--------|---------------|---------------------|---------------------|
+| Domain-specific vulnerability fix time | 8 days | [Target] | [Current] |
+| General vulnerability fix time | 32 days | [Target] | [Current] |
+
+**VMS Coverage Metrics**:
+- Domains monitored: [Number]
+- IP ranges monitored: [Number]
+- Coverage of internet-facing assets: [X%]
+- Open VMS alerts: [Number]
+
 **Current Vulnerability Status**:
 - Critical: [Number]
 - High: [Number]
@@ -721,6 +749,30 @@
 - [Action 1]
 - [Action 2]
 
+### 9.4 Cyber Action Plan Alignment
+
+> The [£210m Government Cyber Action Plan](https://www.gov.uk/government/publications/government-cyber-action-plan) (February 2026) is a cross-government investment programme across four pillars. This section tracks departmental and project alignment.
+
+**Departmental Status**: [Participating / Not Yet Enrolled / N/A]
+
+**Pillar Alignment**:
+
+| Cyber Action Plan Pillar | Departmental Activities | Project Alignment | Status |
+|--------------------------|------------------------|-------------------|--------|
+| **Skills & Workforce** | [Cyber Academy enrollment, CCP certification, training programmes] | [Project security training activities] | [✅/⚠️/❌] |
+| **Tooling & Infrastructure** | [Security tooling investments, VMS adoption, SIEM upgrades] | [Project security tooling] | [✅/⚠️/❌] |
+| **Resilience & Response** | [Incident response capability, DR improvements, threat intelligence] | [Project resilience measures] | [✅/⚠️/❌] |
+| **Collaboration & Sharing** | [Cross-government threat sharing, sector collaboration] | [Project information sharing] | [✅/⚠️/❌] |
+
+**Investment Alignment**:
+- [ ] Department has submitted Cyber Action Plan investment case
+- [ ] Project security budget aligns with Cyber Action Plan priorities
+- [ ] Funding opportunities identified for project security improvements
+
+**Gaps/Actions**:
+- [Action 1]
+- [Action 2]
+
 ---
 
 ## 10. GovS 007: Security — Alignment Summary
@@ -733,10 +785,10 @@
 | 2. Risk-based approach to protective security | Section 1 (CAF A2 Risk Management), `/arckit:risk` | [✅/⚠️/❌] |
 | 3. Security integrated into all activities | Sections 4–5 (Secure Development, Cloud Security) | [✅/⚠️/❌] |
 | 4. Holistic security planning across disciplines | Sections 1–8 (CAF full assessment), `/arckit:plan` | [✅/⚠️/❌] |
-| 5. Security culture embedded in organisation | Section 1 (CAF B6 Staff Awareness) | [✅/⚠️/❌] |
+| 5. Security culture embedded in organisation | Section 1 (CAF B6 Staff Awareness), Section 11 (Cyber Security Profession) | [✅/⚠️/❌] |
 | 6. Accountability at all levels | Approval & Sign-Off (SSRO, DSO, SIRO roles) | [✅/⚠️/❌] |
 | 7. Proportionate security measures | Executive Summary (data classification → controls) | [✅/⚠️/❌] |
-| 8. Continuous improvement of security posture | Section 1 (CAF D2 Improvements), `/arckit:operationalize` | [✅/⚠️/❌] |
+| 8. Continuous improvement of security posture | Section 1 (CAF D2 Improvements), Section 9.4 (Cyber Action Plan), `/arckit:operationalize` | [✅/⚠️/❌] |
 | 9. Compliance with legal/regulatory obligations | Section 3 (UK GDPR), `/arckit:dpia` | [✅/⚠️/❌] |
 
 ### Security Roles (GovS 007)
@@ -747,6 +799,57 @@
 | Senior Security Risk Owner (SSRO) | [Name] | Owns protective security risk at board level |
 | Departmental Security Officer (DSO) | [Name] | Day-to-day security coordination and policy implementation |
 | Senior Information Risk Owner (SIRO) | [Name] | Owns information and cyber security risk |
+
+---
+
+## 11. Government Cyber Security Profession
+
+> The [Government Cyber Security Profession](https://www.gov.uk/government/publications/government-cyber-security-profession) establishes a career framework, Certified Cyber Professional (CCP) certification, and the Government Cyber Academy for building cyber security capability across government. This section assesses the project's alignment with profession requirements.
+
+### 11.1 Profession Participation
+
+**Department Enrolled in Cyber Security Profession**: [Yes / No / In Progress]
+
+| Metric | Value |
+|--------|-------|
+| **CCP-certified staff in department** | [Number] |
+| **CCP-certified staff on this project** | [Number] |
+| **Cyber Academy completions (department)** | [Number] |
+| **Cyber Academy completions (project team)** | [Number] |
+
+### 11.2 Project Security Role Mapping
+
+| Security Role | Role Holder | CCP Status | DDaT Role Alignment | Notes |
+|---------------|-------------|------------|---------------------|-------|
+| Security Architect | [Name] | [Certified / In Progress / Not Started] | [DDaT role] | |
+| Security Engineer | [Name] | [Certified / In Progress / Not Started] | [DDaT role] | |
+| Security Operations Lead | [Name] | [Certified / In Progress / Not Started] | [DDaT role] | |
+| Penetration Tester | [Name] | [Certified / In Progress / Not Started] | [DDaT role] | |
+| Incident Responder | [Name] | [Certified / In Progress / Not Started] | [DDaT role] | |
+
+### 11.3 Government Cyber Academy Engagement
+
+| Learning Area | Completions | Target | Status |
+|---------------|-------------|--------|--------|
+| Cyber Security Fundamentals | [Number] | [Target] | [✅/⚠️/❌] |
+| Secure Development | [Number] | [Target] | [✅/⚠️/❌] |
+| Security Operations | [Number] | [Target] | [✅/⚠️/❌] |
+| Incident Response | [Number] | [Target] | [✅/⚠️/❌] |
+| Risk Management | [Number] | [Target] | [✅/⚠️/❌] |
+
+### 11.4 Workforce Development Plan
+
+**Workforce Development Checklist**:
+- [ ] Security roles mapped to DDaT profession framework
+- [ ] CCP certification targets set for project security staff
+- [ ] Cyber Academy learning paths assigned to team members
+- [ ] Security skills gap analysis completed
+- [ ] Training budget allocated for cyber security upskilling
+- [ ] Succession planning for key security roles
+
+**Actions**:
+- [ ] [Action 1 - Owner - Due date]
+- [ ] [Action 2 - Owner - Due date]
 
 ---
 
@@ -840,6 +943,10 @@
 |----------|------|--------|-----------------|------|
 | Government Functional Standard GovS 007: Security | Policy | Cabinet Office | 9 security principles, security lifecycle, protective security disciplines | https://www.gov.uk/government/publications/government-functional-standard-govs-007-security |
 | UK Government Cyber Security Standard | Policy | Cabinet Office (July 2025) | CAF profiles, GovAssure, SbD confidence, exception management | https://www.gov.uk/government/publications/government-cyber-security-standard |
+| NCSC Vulnerability Monitoring Service (VMS) | Service | NCSC | Vulnerability scanning, 8-day domain / 32-day general remediation benchmarks | https://www.ncsc.gov.uk/information/vulnerability-monitoring-service |
+| Government Cyber Action Plan | Policy | Cabinet Office (February 2026) | £210m investment, four pillars: Skills, Tooling, Resilience, Collaboration | https://www.gov.uk/government/publications/government-cyber-action-plan |
+| Government Cyber Security Profession | Framework | Cabinet Office | CCP certification, DDaT alignment, career framework | https://www.gov.uk/government/publications/government-cyber-security-profession |
+| Government Cyber Academy | Training | Cabinet Office | Cyber security learning areas, professional development | https://www.gov.uk/government/publications/government-cyber-academy |
 | *None provided* | — | — | — | — |
 
 ---

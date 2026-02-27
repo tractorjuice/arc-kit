@@ -20,6 +20,8 @@ UK Government departments must follow NCSC (National Cyber Security Centre) guid
 **Key UK Government Security References**:
 - NCSC Cyber Assessment Framework (CAF)
 - UK Government Cyber Security Standard (July 2025, Cabinet Office)
+- NCSC Vulnerability Monitoring Service (VMS)
+- Government Cyber Security Profession & Cyber Academy
 - Cyber Essentials / Cyber Essentials Plus
 - UK GDPR and Data Protection Act 2018
 - Government Security Classifications Policy
@@ -95,7 +97,7 @@ Generate a comprehensive Secure by Design assessment document by:
 
    **Objective C: Detecting Cyber Security Events (2 principles)**
    - C1: Security Monitoring - SIEM, alerting, logging, threat intelligence
-   - C2: Proactive Security Event Discovery - Vulnerability scanning, pen testing, threat hunting
+   - C2: Proactive Security Event Discovery - Vulnerability scanning (including NCSC VMS enrollment), pen testing, threat hunting
 
    **Objective D: Minimising the Impact of Incidents (2 principles)**
    - D1: Response and Recovery Planning - Incident response, BC/DR, RTO/RPO
@@ -146,10 +148,25 @@ Generate a comprehensive Secure by Design assessment document by:
     - Document mitigation measures and approval authority
     - Track improvement plans to achieve compliance
 
+    **9.4 Cyber Action Plan Alignment** — Assess alignment with the £210m cross-government Cyber Action Plan (February 2026):
+    - Determine departmental enrollment and participation status
+    - Map project activities to the four Cyber Action Plan pillars: Skills & Workforce, Tooling & Infrastructure, Resilience & Response, Collaboration & Sharing
+    - Identify investment alignment and funding opportunities
+    - Record gaps where the project or department does not yet meet Cyber Action Plan expectations
+
+10. **Assess Government Cyber Security Profession alignment**:
+    - Determine whether the department participates in the Government Cyber Security Profession
+    - Record Certified Cyber Professional (CCP) certification status for project security roles
+    - Map security roles to DDaT (Digital, Data and Technology) profession framework
+    - Assess engagement with the Government Cyber Academy (learning areas, completions)
+    - Identify workforce development gaps and training actions
+
 11. **Map GovS 007: Security alignment**:
     - Complete the GovS 007 principle mapping table (9 principles → CAF sections and ArcKit artefacts)
+    - For principle 5 (Security culture), reference Section 11 (Government Cyber Security Profession) in addition to CAF B6
+    - For principle 8 (Continuous improvement), reference Section 9.4 (Cyber Action Plan Alignment) in addition to CAF D2
     - Identify named security role holders (SSRO, DSO, SIRO) and populate the security roles table
-    - Assess status for each GovS 007 principle based on evidence from sections 1–9
+    - Assess status for each GovS 007 principle based on evidence from sections 1–9 and the Cyber Action Plan / Profession sections
 
 12. **Identify critical security issues**:
    - Issues that block progression to next phase
@@ -160,6 +177,7 @@ Generate a comprehensive Secure by Design assessment document by:
     - Critical priority (0-30 days) - blockers for next phase
     - High priority (1-3 months) - significant risk reduction
     - Medium priority (3-6 months) - continuous improvement
+    - Include VMS enrollment and Cyber Action Plan alignment actions where applicable
 
 14. **Detect version**: Before generating the document ID, check if a previous version exists:
     - Look for existing `ARC-{PROJECT_ID}-SECD-v*.md` files in the project directory
@@ -462,6 +480,9 @@ Responsibilities:
 
 - NCSC Cyber Assessment Framework (CAF)
 - UK Government Cyber Security Standard (July 2025, Cabinet Office)
+- NCSC Vulnerability Monitoring Service (VMS)
+- Government Cyber Security Profession & Cyber Academy
+- £210m Cyber Action Plan (February 2026)
 - Cyber Essentials Scheme
 - UK Government Security Classifications
 - Government Functional Standard GovS 007: Security
@@ -475,6 +496,9 @@ Responsibilities:
 - UK Government Cyber Security Standard: https://www.gov.uk/government/publications/government-cyber-security-standard
 - GovS 007 Security: https://www.gov.uk/government/publications/government-functional-standard-govs-007-security
 - NCSC GovAssure: https://www.ncsc.gov.uk/collection/govassure
+- NCSC Vulnerability Monitoring Service: https://www.ncsc.gov.uk/information/vulnerability-monitoring-service
+- Government Cyber Security Profession: https://www.gov.uk/government/publications/government-cyber-security-profession
+- Government Cyber Action Plan: https://www.gov.uk/government/publications/government-cyber-action-plan
 - Cyber Essentials: https://www.ncsc.gov.uk/cyberessentials
 - UK GDPR: https://ico.org.uk/for-organisations/guide-to-data-protection/
 - Government Security Classifications: https://www.gov.uk/government/publications/government-security-classifications
