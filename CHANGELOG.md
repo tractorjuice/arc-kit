@@ -5,6 +5,22 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.13.0] - 2026-02-27
+
+### Added
+
+- **NCSC VMS, Cyber Action Plan & Cyber Profession** — `/arckit:secure` updated with VMS enrollment (CAF C2, Section 6.1), Cyber Action Plan Alignment (Section 9.4), and Government Cyber Security Profession (Section 11)
+- **Structured vulnerability management** — `/arckit:operationalize` Section 11 expanded with vulnerability scanning (VMS integration), remediation SLAs, and patch management subsections
+- **Critical Vulnerability Remediation runbook** (6.7) — new runbook in `/arckit:operationalize` for critical CVEs and VMS alerts
+
+### Changed
+
+- GovS 007 mapping updated for principles 5 and 8 in `/arckit:secure`
+- Handover checklist and NCSC guidance include VMS items in `/arckit:operationalize`
+- Version bump across all distribution formats
+
+---
+
 ## [2.12.3] - 2026-02-26
 
 ### Changed

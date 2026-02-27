@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.13.0] - 2026-02-27
+
+### Added
+
+- **NCSC Vulnerability Monitoring Service (VMS)** — `/arckit:secure` now assesses VMS enrollment in CAF C2 and includes a VMS Integration subsection (Section 6.1) with 8-day domain / 32-day general remediation benchmarks
+- **Cyber Action Plan Alignment** (Section 9.4) — `/arckit:secure` template tracks departmental alignment with the £210m cross-government Cyber Action Plan across four pillars (Skills, Tooling, Resilience, Collaboration)
+- **Government Cyber Security Profession** (Section 11) — `/arckit:secure` template assesses CCP certification, DDaT role mapping, Cyber Academy engagement, and workforce development planning
+- **Structured vulnerability management** — `/arckit:operationalize` Section 11 expanded with 11.3 Vulnerability Scanning (VMS integration), 11.4 Remediation SLAs (severity-based + VMS benchmarks), and 11.5 Patch Management
+- **Critical Vulnerability Remediation runbook** (6.7) — `/arckit:operationalize` template includes full runbook for critical CVEs and VMS alerts
+
+### Changed
+
+- `/arckit:secure` GovS 007 mapping updated: principle 5 (Security culture) references Cyber Security Profession, principle 8 (Continuous improvement) references Cyber Action Plan
+- `/arckit:operationalize` handover checklist and NCSC guidance sections include VMS enrollment items
+- Version bump across all distribution formats
+
+---
+
 ## [2.12.3] - 2026-02-26
 
 ### Changed
