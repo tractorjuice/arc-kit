@@ -107,7 +107,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 - **ATRS** (ATRS record) — if algorithmic tools
 - **SOW** (Statement of Work)
 - **EVAL** (Evaluation Criteria)
-- **ANLZ** (Governance Analysis)
+- **ANAL** (Governance Analysis)
 - **WARD** (Wardley Map) — strategic analysis
 - **RSCH** / **AWSR** / **AZUR** — technology research
 

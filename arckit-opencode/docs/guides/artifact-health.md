@@ -195,7 +195,7 @@ The health check and the analyse command serve different purposes:
 | Aspect | `/arckit:health` | `/arckit:analyze` |
 |--------|------------------|-------------------|
 | **Scope** | Cross-project staleness and hygiene | Single-project deep governance analysis |
-| **Output** | Console only (diagnostic) | Saved to `ARC-*-ANLZ-*.md` (governance artifact) |
+| **Output** | Console only (diagnostic) | Saved to `ARC-*-ANAL-*.md` (governance artifact) |
 | **Depth** | Metadata scan (dates, statuses, references) | Content analysis (quality, compliance, traceability) |
 | **Speed** | Quick (seconds) | Thorough (minutes) |
 | **Use case** | Regular hygiene, pre-gate checks | Formal governance reviews, audit preparation |

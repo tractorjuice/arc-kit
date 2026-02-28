@@ -52,7 +52,7 @@ $ARGUMENTS
 - **DEVOPS** (DevOps Strategy)
 - **TRAC** (Traceability Matrix)
 - **ROAD** (Roadmap)
-- **ANLZ** (Governance Analysis)
+- **ANAL** (Governance Analysis)
 
 **Minimum artifact check**: A meaningful project story requires at least 3-5 artifacts. If the project has fewer than 3, warn:
 

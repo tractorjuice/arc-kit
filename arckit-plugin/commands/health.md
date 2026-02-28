@@ -522,7 +522,7 @@ Useful for planning — "what will be stale by June?"
 
 ### Why Console Output, Not a File?
 
-The health check is a **diagnostic tool**, not a governance artifact. Unlike `/arckit:analyze` which produces a formal analysis report (saved as `ARC-*-ANLZ-*.md`), the health check is:
+The health check is a **diagnostic tool**, not a governance artifact. Unlike `/arckit:analyze` which produces a formal analysis report (saved as `ARC-*-ANAL-*.md`), the health check is:
 
 - **Ephemeral**: Results change every time you run it
 - **Actionable**: Designed to trigger other commands, not to be filed

@@ -61,62 +61,17 @@ Scans the `projects/` directory for all `ARC-*` artifacts and applies seven dete
 
 ## Process
 
-### Step 1: Identify Scan Scope
+### Steps 1-3: Pre-processed by Hook
 
-> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
-
-Use the **ArcKit Project Context** (above) to determine which projects to scan:
-
-- If `PROJECT` argument is provided: scan only that project directory
-- If no argument: scan all project directories under `projects/` (excluding `000-global`)
-
-For each project, build an inventory of all `ARC-*` artifacts, noting:
-
-- Document type code (RSCH, ADR, REQ, HLDR, DLDR, TRAC, etc.)
-- Version number
-- File path
-
-### Step 2: Read Artifact Metadata
-
-For each artifact discovered, read the file and extract:
-
-**For all artifacts:**
-
-- Created/modified dates (from Document Control section or frontmatter)
-- Version number (from filename pattern `ARC-{ID}-{TYPE}-v{VERSION}.md`)
-- Status (from Document Control or content headings)
-
-**For RSCH (Research) documents:**
-
-- Created date and last modified date
-- Any pricing data, vendor comparisons, or market analysis sections
-- Whether the document references current-year data
-
-**For ADR (Architecture Decision Record) documents:**
-
-- Status field: look for "Proposed", "Accepted", "Deprecated", "Superseded"
-- Date proposed / date accepted
-- Whether any review comments or decision rationale exists
-- References to requirements (FR-xxx, NFR-xxx, BR-xxx, INT-xxx, DR-xxx)
-
-**For HLDR/DLDR (HLD Review / DLD Review) documents:**
-
-- Overall verdict: "APPROVED", "APPROVED WITH CONDITIONS", "REJECTED", "PENDING"
-- If "APPROVED WITH CONDITIONS": extract the specific conditions listed
-- Whether conditions have resolution text (e.g., "Resolved", "Addressed in v2", "Condition met")
-
-**For REQ (Requirements) documents:**
-
-- Requirement IDs (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx)
-- Whether any ADR in the same project references these requirement IDs
-
-**For TRAC (Traceability) documents:**
-
-- Whether traceability matrix exists for the project
-
-### Step 3: Apply Detection Rules
-
-Apply each rule against the collected metadata. Use today's date (or the `SINCE` override) as the baseline for all staleness calculations.
+> **Note**: The **Health Pre-processor Hook** (`health-scan.mjs`) has already completed Steps 1-3 automatically:
+>
+> 1. **Scan Scope** — identified all projects and ARC-* artifacts
+> 2. **Metadata Extraction** — read every artifact and extracted dates, statuses, requirement IDs, review verdicts, and conditions
+> 3. **Rule Application** — applied all 7 detection rules and generated findings with severities
+>
+> The hook's `systemMessage` above contains all findings — use them directly. **Do NOT re-read any artifact files.** Proceed to Step 4 to format the console output.
+>
+> If the hook data is not present (systemMessage missing), fall back to manual scanning: read each ARC-* artifact, extract Document Control fields, and apply the detection rules described below.
 
 #### Rule 1: STALE-RSCH — Stale Research
 
@@ -564,7 +519,7 @@ Useful for planning — "what will be stale by June?"
 
 ### Why Console Output, Not a File?
 
-The health check is a **diagnostic tool**, not a governance artifact. Unlike `/arckit:analyze` which produces a formal analysis report (saved as `ARC-*-ANLZ-*.md`), the health check is:
+The health check is a **diagnostic tool**, not a governance artifact. Unlike `/arckit:analyze` which produces a formal analysis report (saved as `ARC-*-ANAL-*.md`), the health check is:
 
 - **Ephemeral**: Results change every time you run it
 - **Actionable**: Designed to trigger other commands, not to be filed

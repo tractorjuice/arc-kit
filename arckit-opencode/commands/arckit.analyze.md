@@ -643,7 +643,7 @@ Use this heuristic to prioritise findings:
 
 ### 6. Produce Comprehensive Analysis Report
 
-Generate a comprehensive Markdown report and save it to `projects/{project-dir}/ARC-{PROJECT_ID}-ANLZ-v1.0.md` with the following structure:
+Generate a comprehensive Markdown report and save it to `projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md` with the following structure:
 
 ```markdown
 # Architecture Governance Analysis Report
@@ -1352,7 +1352,7 @@ Before writing the file, read `.arckit/references/quality-checklist.md` and veri
 
 Save the complete analysis report generated in Step 6 to:
 
-**`projects/{project-dir}/ARC-{PROJECT_ID}-ANLZ-v1.0.md`**
+**`projects/{project-dir}/ARC-{PROJECT_ID}-ANAL-v1.0.md`**
 
 The saved report must include:
 
