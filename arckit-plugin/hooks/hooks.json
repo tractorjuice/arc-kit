@@ -40,6 +40,16 @@
             "timeout": 15
           }
         ]
+      },
+      {
+        "matcher": "/arckit:health",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/health-scan.mjs",
+            "timeout": 30
+          }
+        ]
       }
     ],
     "PreToolUse": [
