@@ -1,6 +1,6 @@
 ---
 description: Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 ---
 
 You are helping an enterprise architect prepare Digital Outcomes and Specialists (DOS) procurement documentation for the UK Digital Marketplace.
@@ -64,7 +64,13 @@ This command generates DOS-compliant procurement documentation from your existin
 ### 2. Identify the target project
 
 - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
-- If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
+- If no match, create a new project:
+  1. Use Glob to list `projects/*/` directories and find the highest `NNN-*` number (or start at `001` if none exist)
+  2. Calculate the next number (zero-padded to 3 digits, e.g., `002`)
+  3. Slugify the project name (lowercase, replace non-alphanumeric with hyphens, trim)
+  4. Use the Write tool to create `projects/{NNN}-{slug}/README.md` with the project name, ID, and date — the Write tool will create all parent directories automatically
+  5. Also create `projects/{NNN}-{slug}/external/README.md` with a note to place external reference documents here
+  6. Set `PROJECT_ID` = the 3-digit number, `PROJECT_PATH` = the new directory path
 - Parse user input for additional context (budget, timeline, specific skills)
 
 ---
@@ -647,7 +653,7 @@ Important: Maintain audit trail of all procurement decisions per Digital Marketp
 
 - **No principles**: ERROR "Run /arckit:principles first - governance standards required"
 - **No requirements**: ERROR "Run /arckit:requirements first - nothing to procure"
-- **No project**: Suggest project creation with `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py`
+- **No project**: Suggest the user run `/arckit:init` or provide a project name to create one
 - **Wrong framework**: If user mentions G-Cloud or cloud services, suggest `/arckit:gcloud-search` instead
 
 ## Important Notes

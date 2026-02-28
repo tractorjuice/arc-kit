@@ -1,6 +1,6 @@
 ---
 description: Get oriented with ArcKit — check project status, explore available commands, and choose your next step
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 argument-hint: "[workflow focus, e.g. 'new project', 'procurement', 'governance review']"
 tags: [start, onboarding, getting-started, welcome, help, overview, guide]
 ---
@@ -35,7 +35,7 @@ Replace `X.Y.Z` with the actual version from the VERSION file.
 
 ### Step 2: Detect Project State
 
-Run `${CLAUDE_PLUGIN_ROOT}/scripts/python/list-projects.py --json` to get a machine-readable project inventory. Parse the JSON output and display a compact summary:
+Use the **ArcKit Project Context** (above) to get the project inventory. Display a compact summary:
 
 ```text
 Projects

@@ -1,6 +1,6 @@
 ---
 description: Generate Data Protection Impact Assessment (DPIA) for UK GDPR Article 35 compliance
-allowed-tools: Read, Write, Bash, AskUserQuestion
+allowed-tools: Read, Write, AskUserQuestion
 ---
 
 You are helping an enterprise architect generate a **Data Protection Impact Assessment (DPIA)** following UK GDPR Article 35 requirements and ICO guidance.
@@ -66,13 +66,14 @@ Apply the user's selections: the scope determines which data model entities and 
 
 ### Step 1: Identify or Create Project
 
-Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create it:
+Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create a new project:
 
-```bash
-python3 ${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$PROJECT_NAME" --json
-```
-
-Parse the JSON output to get `project_id` and `project_path`.
+1. Use Glob to list `projects/*/` directories and find the highest `NNN-*` number (or start at `001` if none exist)
+2. Calculate the next number (zero-padded to 3 digits, e.g., `002`)
+3. Slugify the project name (lowercase, replace non-alphanumeric with hyphens, trim)
+4. Use the Write tool to create `projects/{NNN}-{slug}/README.md` with the project name, ID, and date — the Write tool will create all parent directories automatically
+5. Also create `projects/{NNN}-{slug}/external/README.md` with a note to place external reference documents here
+6. Set `PROJECT_ID` = the 3-digit number, `PROJECT_PATH` = the new directory path
 
 ### Step 2: Read Source Artifacts
 

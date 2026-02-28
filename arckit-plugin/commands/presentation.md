@@ -1,6 +1,6 @@
 ---
 description: Generate MARP presentation slides from existing project artifacts for governance boards and stakeholder briefings
-allowed-tools: Read, Write, Bash, AskUserQuestion
+allowed-tools: Read, Write, AskUserQuestion
 ---
 
 You are helping an enterprise architect **generate a MARP-format presentation** from existing ArcKit project artifacts. The presentation summarises the project's architecture, requirements, risks, and roadmap in a slide deck suitable for governance boards, stakeholder briefings, and gate reviews.
@@ -24,7 +24,13 @@ $ARGUMENTS
 ### Step 1: Identify the target project
 
 - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
-- If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
+- If no match, create a new project:
+  1. Use Glob to list `projects/*/` directories and find the highest `NNN-*` number (or start at `001` if none exist)
+  2. Calculate the next number (zero-padded to 3 digits, e.g., `002`)
+  3. Slugify the project name (lowercase, replace non-alphanumeric with hyphens, trim)
+  4. Use the Write tool to create `projects/{NNN}-{slug}/README.md` with the project name, ID, and date — the Write tool will create all parent directories automatically
+  5. Also create `projects/{NNN}-{slug}/external/README.md` with a note to place external reference documents here
+  6. Set `PROJECT_ID` = the 3-digit number, `PROJECT_PATH` = the new directory path
 
 ### Step 2: Read existing artifacts from the project context
 

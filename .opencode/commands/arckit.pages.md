@@ -27,9 +27,9 @@ Generate a documentation site for this ArcKit repository.
 
 Determine the repository name and URL:
 
-1. Run `git remote get-url origin` (single Bash command, no pipes or `&&`) to get the remote URL
+1. Read the `.git/config` file and find the `[remote "origin"]` section to get the remote URL
 2. Extract the repo name and owner from the URL (e.g. `https://github.com/owner/repo-name` → repo name is `repo-name`, owner is `owner`)
-3. If no git remote, use the current directory name as the repo name (extract it from the working directory path using string manipulation — do NOT use shell commands like `basename` or `$(pwd)`)
+3. If `.git/config` doesn't exist or has no remote, use the current directory name as the repo name
 
 ## Step 1: Discover Repository Structure
 
@@ -522,8 +522,7 @@ Next Steps:
 - Use **Read** + **Write** for all file copying (never `cp`, `cp -r`, or `mkdir -p` in bash)
 - Use **Read** + in-memory string replacement + **Write** for template processing (never `sed`)
 - Use **Grep** for content searching (never `grep` or `head` in bash)
-- The **only** acceptable Bash use is a single simple command like `git remote get-url origin` — never compound commands with `&&`, pipes, or `$()` substitution
-- Avoid Bash entirely if possible — all file operations can be done with Glob/Read/Write/Grep
+- Do NOT use Bash at all — all operations can be done with Glob/Read/Write/Grep
 
 ### File Discovery
 

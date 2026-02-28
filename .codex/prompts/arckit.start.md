@@ -32,7 +32,7 @@ Replace `X.Y.Z` with the actual version from the VERSION file.
 
 ### Step 2: Detect Project State
 
-Run `.arckit/scripts/python/list-projects.py --json` to get a machine-readable project inventory. Parse the JSON output and display a compact summary:
+Use the **ArcKit Project Context** (above) to get the project inventory. Display a compact summary:
 
 ```text
 Projects

@@ -169,13 +169,6 @@ To compare your customization with the default, read both files and compare the 
 
 To stop using a custom template and revert to default, delete `.arckit/templates/{name}-template.md`.
 
-### Git Recommendations
-
-Commit your customized templates to share with your team:
-\`\`\`
-git add .arckit/templates/
-git commit -m "Add organization-specific document templates"
-\`\`\`
 ```
 
 ## Output Summary

@@ -1,6 +1,6 @@
 ---
 description: Create federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees (project)
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 ---
 
 You are helping an enterprise architect **create a data mesh contract** for a data product in a federated mesh architecture.
@@ -109,13 +109,13 @@ Data product name (kebab-case):
 ### Step 2: Identify the target project
 
 - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
-- If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$DATA_PRODUCT_NAME" --json` to create a new project and parse the JSON output
-
-**Parse the JSON output** to get:
-
-- `project_id` (e.g., 001, 002)
-- `project_path` (e.g., `projects/001-customer-payments/`)
-- `project_name` (e.g., `customer-payments`)
+- If no match, create a new project:
+  1. Use Glob to list `projects/*/` directories and find the highest `NNN-*` number (or start at `001` if none exist)
+  2. Calculate the next number (zero-padded to 3 digits, e.g., `002`)
+  3. Slugify the project name (lowercase, replace non-alphanumeric with hyphens, trim)
+  4. Use the Write tool to create `projects/{NNN}-{slug}/README.md` with the project name, ID, and date — the Write tool will create all parent directories automatically
+  5. Also create `projects/{NNN}-{slug}/external/README.md` with a note to place external reference documents here
+  6. Set `PROJECT_ID` = the 3-digit number, `PROJECT_PATH` = the new directory path
 
 **Important**: If the script creates a NEW project, inform the user:
 
