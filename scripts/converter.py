@@ -59,22 +59,6 @@ def extract_agent_prompt(content):
     return content
 
 
-def rewrite_paths_for_cli(prompt):
-    """Rewrite ${CLAUDE_PLUGIN_ROOT} to project-local .arckit paths for CLI distribution.
-
-    CLI projects (created by arckit init) have templates and scripts at .arckit/.
-    """
-    return prompt.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
-
-
-def rewrite_paths_for_opencode(prompt):
-    """Rewrite ${CLAUDE_PLUGIN_ROOT} to project-local .arckit paths for OpenCode.
-
-    OpenCode projects have templates and scripts at .arckit/.
-    """
-    return prompt.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
-
-
 EXTENSION_FILE_ACCESS_BLOCK = """\
 **IMPORTANT — Gemini Extension File Access**:
 This command runs as a Gemini CLI extension. The extension directory \
@@ -89,79 +73,83 @@ All extension file access MUST go through shell commands.
 """
 
 
-def rewrite_paths_for_extension(prompt):
-    """Rewrite ${CLAUDE_PLUGIN_ROOT} to Gemini extension install path.
+# --- Agent configuration: adding a new AI target = adding a dictionary entry ---
 
-    Gemini extensions install to ~/.gemini/extensions/{name}/.
-    Also rewrites 'Read `path`' instructions to use shell commands,
-    since the extension directory is outside Gemini's workspace sandbox.
-    """
-    result = prompt.replace("${CLAUDE_PLUGIN_ROOT}", "~/.gemini/extensions/arckit")
+AGENT_CONFIG = {
+    "codex": {
+        "name": "Codex CLI",
+        "output_dir": ".codex/prompts",
+        "filename_pattern": "arckit.{name}.md",
+        "format": "markdown",
+        "path_prefix": ".arckit",
+    },
+    "opencode": {
+        "name": "OpenCode CLI",
+        "output_dir": ".opencode/commands",
+        "filename_pattern": "arckit.{name}.md",
+        "format": "markdown",
+        "path_prefix": ".arckit",
+        "extension_dir": "arckit-opencode",
+        "copy_commands_to_extension": True,
+        "copy_agents_to_extension": True,
+    },
+    "gemini": {
+        "name": "Gemini CLI",
+        "output_dir": "arckit-gemini/commands/arckit",
+        "filename_pattern": "{name}.toml",
+        "format": "toml",
+        "path_prefix": "~/.gemini/extensions/arckit",
+        "arg_placeholder": "{{args}}",
+        "extension_dir": "arckit-gemini",
+        "prepend_block": EXTENSION_FILE_ACCESS_BLOCK,
+        "rewrite_read_instructions": True,
+    },
+}
 
-    # Rewrite "Read `~/.gemini/extensions/arckit/..." instructions to use cat
-    result = re.sub(
-        r"Read `(~/.gemini/extensions/arckit/[^`]+)`",
-        r"Run `cat \1` to read the file",
-        result,
-    )
 
-    # Prepend the file access instruction block
-    result = EXTENSION_FILE_ACCESS_BLOCK + result
+def rewrite_paths(prompt, config):
+    """Rewrite ${CLAUDE_PLUGIN_ROOT} paths using agent config."""
+    result = prompt.replace("${CLAUDE_PLUGIN_ROOT}", config["path_prefix"])
+
+    if config.get("rewrite_read_instructions"):
+        result = re.sub(
+            r"Read `(" + re.escape(config["path_prefix"]) + r"/[^`]+)`",
+            r"Run `cat \1` to read the file",
+            result,
+        )
+
+    if config.get("prepend_block"):
+        result = config["prepend_block"] + result
+
+    if config.get("arg_placeholder"):
+        result = result.replace("$ARGUMENTS", config["arg_placeholder"])
 
     return result
 
 
-def format_toml(description, prompt):
-    """Format description and prompt into Gemini TOML content."""
-    # Escape for TOML triple-quoted strings
-    prompt_escaped = prompt.replace("\\", "\\\\").replace('"', '\\"')
-    prompt_formatted = '"""\n' + prompt_escaped + '\n"""'
-
-    # Replace $ARGUMENTS with {{args}}
-    prompt_formatted = prompt_formatted.replace("$ARGUMENTS", "{{args}}")
-
-    description_formatted = '"""\n' + description + '\n"""'
-
-    return f"description = {description_formatted}\nprompt = {prompt_formatted}\n"
+def format_output(description, prompt, fmt):
+    """Format into target format: 'markdown' or 'toml'."""
+    if fmt == "toml":
+        prompt_escaped = prompt.replace("\\", "\\\\").replace('"', '\\"')
+        prompt_formatted = '"""\n' + prompt_escaped + '\n"""'
+        description_formatted = '"""\n' + description + '\n"""'
+        return f"description = {description_formatted}\nprompt = {prompt_formatted}\n"
+    else:
+        escaped = description.replace("\\", "\\\\").replace('"', '\\"')
+        return f'---\ndescription: "{escaped}"\n---\n\n{prompt}\n'
 
 
-def format_codex(description, prompt):
-    """Format description and prompt into Codex markdown with YAML frontmatter."""
-    # Quote description to handle YAML-special characters (: # [ { * &)
-    escaped = description.replace("\\", "\\\\").replace('"', '\\"')
-    return f'---\ndescription: "{escaped}"\n---\n\n{prompt}\n'
-
-
-def format_opencode(description, prompt):
-    """Format description and prompt into OpenCode markdown with YAML frontmatter."""
-    # Reuse Codex formatting for now as it matches standard markdown + frontmatter
-    return format_codex(description, prompt)
-
-
-def convert(commands_dir, agents_dir, extension_dir="arckit-gemini/commands/arckit"):
-    """Convert plugin commands to Codex, OpenCode, and Gemini extension formats.
+def convert(commands_dir, agents_dir):
+    """Convert plugin commands to all configured AI agent formats.
 
     Reads each plugin command once, resolves agent prompts once, then
-    writes output formats with appropriate path rewriting.
-
-    Plugin command files are named {name}.md (e.g., requirements.md).
-    Codex output:        .codex/prompts/arckit.{name}.md      (paths -> .arckit)
-    OpenCode output:     .opencode/prompts/arckit.{name}.md   (paths -> .arckit)
-    Extension output:    arckit-gemini/commands/arckit/{name}.toml (paths -> ~/.gemini/extensions/arckit)
+    writes output formats with appropriate path rewriting driven by AGENT_CONFIG.
     """
-    codex_dir = ".codex/prompts"
-    opencode_dir = ".opencode/commands"
+    for config in AGENT_CONFIG.values():
+        os.makedirs(config["output_dir"], exist_ok=True)
 
-    os.makedirs(codex_dir, exist_ok=True)
-    os.makedirs(opencode_dir, exist_ok=True)
-    os.makedirs(extension_dir, exist_ok=True)
-
-    # Build agent map once (reads agent files once)
     agent_map = build_agent_map(agents_dir)
-
-    codex_count = 0
-    opencode_count = 0
-    extension_count = 0
+    counts = {agent_id: 0 for agent_id in AGENT_CONFIG}
 
     for filename in sorted(os.listdir(commands_dir)):
         if not filename.endswith(".md"):
@@ -176,7 +164,7 @@ def convert(commands_dir, agents_dir, extension_dir="arckit-gemini/commands/arck
         description, command_prompt = extract_frontmatter_and_prompt(command_content)
 
         # For agent-delegating commands, use the full agent prompt
-        # (Gemini and Codex don't support the Task/agent architecture)
+        # (non-Claude targets don't support the Task/agent architecture)
         if filename in agent_map:
             agent_path, agent_prompt = agent_map[filename]
             prompt = agent_prompt
@@ -185,43 +173,23 @@ def convert(commands_dir, agents_dir, extension_dir="arckit-gemini/commands/arck
             prompt = command_prompt
             source_label = command_path
 
-        # Derive base name (e.g., "requirements" from "requirements.md")
         base_name = filename.replace(".md", "")
 
-        # --- Codex Markdown (project-local paths) ---
-        codex_prompt = rewrite_paths_for_cli(prompt)
-        codex_content = format_codex(description, codex_prompt)
-        codex_filename = f"arckit.{base_name}.md"
-        codex_path = os.path.join(codex_dir, codex_filename)
-        with open(codex_path, "w") as f:
-            f.write(codex_content)
-        print(f"  Codex:      {source_label} -> {codex_path}")
-        codex_count += 1
+        for agent_id, config in AGENT_CONFIG.items():
+            rewritten = rewrite_paths(prompt, config)
+            content = format_output(description, rewritten, config["format"])
+            out_filename = config["filename_pattern"].format(name=base_name)
+            out_path = os.path.join(config["output_dir"], out_filename)
+            with open(out_path, "w") as f:
+                f.write(content)
+            print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
+            counts[agent_id] += 1
 
-        # --- OpenCode Markdown (project-local paths) ---
-        opencode_prompt = rewrite_paths_for_opencode(prompt)
-        opencode_content = format_opencode(description, opencode_prompt)
-        opencode_filename = f"arckit.{base_name}.md"
-        opencode_path = os.path.join(opencode_dir, opencode_filename)
-        with open(opencode_path, "w") as f:
-            f.write(opencode_content)
-        print(f"  OpenCode:   {source_label} -> {opencode_path}")
-        opencode_count += 1
-
-        # --- Gemini Extension TOML (extension install paths) ---
-        ext_prompt = rewrite_paths_for_extension(prompt)
-        ext_content = format_toml(description, ext_prompt)
-        ext_path = os.path.join(extension_dir, f"{base_name}.toml")
-        with open(ext_path, "w") as f:
-            f.write(ext_content)
-        print(f"  Extension:  {source_label} -> {ext_path}")
-        extension_count += 1
-
-    return codex_count, opencode_count, extension_count
+    return counts
 
 
-def copy_extension_files(plugin_dir, extension_dir, opencode_dir="arckit-opencode"):
-    """Copy supporting files from plugin to extension directories (Gemini & OpenCode).
+def copy_extension_files(plugin_dir):
+    """Copy supporting files from plugin to all extension directories.
 
     Copies templates, scripts, guides, and skills so the extensions are
     self-contained when published as separate repos.
@@ -234,98 +202,93 @@ def copy_extension_files(plugin_dir, extension_dir, opencode_dir="arckit-opencod
         ("skills", "skills"),
     ]
 
-    # Copy to Gemini extension
-    print(f"Copying to Gemini extension ({extension_dir})...")
-    for src_rel, dst_rel in copies:
-        src = os.path.join(plugin_dir, src_rel)
-        dst = os.path.join(extension_dir, dst_rel)
-        if os.path.isdir(src):
-            if os.path.isdir(dst):
-                shutil.rmtree(dst)
-            shutil.copytree(src, dst)
-            file_count = sum(len(files) for _, _, files in os.walk(dst))
-            print(f"  Copied: {src} -> {dst} ({file_count} files)")
-
-    # Copy to OpenCode extension
-    print(f"Copying to OpenCode extension ({opencode_dir})...")
-    for src_rel, dst_rel in copies:
-        src = os.path.join(plugin_dir, src_rel)
-        dst = os.path.join(opencode_dir, dst_rel)
-        if os.path.isdir(src):
-            if os.path.isdir(dst):
-                shutil.rmtree(dst)
-            shutil.copytree(src, dst)
-            file_count = sum(len(files) for _, _, files in os.walk(dst))
-            print(f"  Copied: {src} -> {dst} ({file_count} files)")
+    for config in AGENT_CONFIG.values():
+        ext_dir = config.get("extension_dir")
+        if not ext_dir:
+            continue
+        print(f"Copying to {config['name']} extension ({ext_dir})...")
+        for src_rel, dst_rel in copies:
+            src = os.path.join(plugin_dir, src_rel)
+            dst = os.path.join(ext_dir, dst_rel)
+            if os.path.isdir(src):
+                if os.path.isdir(dst):
+                    shutil.rmtree(dst)
+                shutil.copytree(src, dst)
+                file_count = sum(len(files) for _, _, files in os.walk(dst))
+                print(f"  Copied: {src} -> {dst} ({file_count} files)")
 
 
 if __name__ == "__main__":
-    claude_dir = "arckit-plugin/commands/"
+    commands_dir = "arckit-plugin/commands/"
     agents_dir = "arckit-plugin/agents/"
     plugin_dir = "arckit-plugin"
-    extension_dir = "arckit-gemini"
-
-    opencode_ext_dir = "arckit-opencode"
 
     print(
         "Converting plugin commands to Codex, OpenCode, and Gemini extension formats..."
     )
     print()
-    print(f"Source:       {claude_dir}")
+    print(f"Source:       {commands_dir}")
     print(f"Agents:       {agents_dir}")
-    print(f"Gemini Ext:   {extension_dir}/")
-    print(f"OpenCode Ext: {opencode_ext_dir}/")
+    for config in AGENT_CONFIG.values():
+        ext_dir = config.get("extension_dir")
+        if ext_dir:
+            print(f"{config['name'] + ' Ext:':14s}{ext_dir}/")
     print()
 
-    codex_count, opencode_count, ext_count = convert(
-        claude_dir,
-        agents_dir,
-        extension_dir=os.path.join(extension_dir, "commands/arckit"),
-    )
+    counts = convert(commands_dir, agents_dir)
 
-    # Also copy generated OpenCode commands to the extension directory
-    # The convert() function generates .opencode/commands (for CLI usage)
-    # We need to copy these to arckit-opencode/commands (for extension usage)
-    # OpenCode format for extension is arckit.command.md directly in commands/
-    opencode_ext_commands_dir = os.path.join(opencode_ext_dir, "commands")
-    opencode_ext_agents_dir = os.path.join(opencode_ext_dir, "agents")
-    os.makedirs(opencode_ext_commands_dir, exist_ok=True)
-    os.makedirs(opencode_ext_agents_dir, exist_ok=True)
+    # Post-processing: copy commands and agents to extension directories
+    for agent_id, config in AGENT_CONFIG.items():
+        ext_dir = config.get("extension_dir")
+        if not ext_dir:
+            continue
 
-    cli_opencode_dir = ".opencode/commands"
-    cli_opencode_agents_dir = ".opencode/agents"
-    os.makedirs(cli_opencode_agents_dir, exist_ok=True)
-
-    # Copy agents to .opencode/agents (for CLI) and arckit-opencode/agents (for extension)
-    # We copy them as-is from arckit-plugin/agents
-    if os.path.isdir(agents_dir):
-        for filename in os.listdir(agents_dir):
-            if filename.endswith(".md"):
-                src_agent = os.path.join(agents_dir, filename)
-                # Copy to CLI dir
-                shutil.copy2(src_agent, os.path.join(cli_opencode_agents_dir, filename))
-                # Copy to Extension dir
-                shutil.copy2(src_agent, os.path.join(opencode_ext_agents_dir, filename))
-        print(
-            f"  Copied agents to {cli_opencode_agents_dir} and {opencode_ext_agents_dir}"
-        )
-
-    if os.path.isdir(cli_opencode_dir):
-        for filename in os.listdir(cli_opencode_dir):
-            if filename.endswith(".md"):
-                shutil.copy2(
-                    os.path.join(cli_opencode_dir, filename),
-                    os.path.join(opencode_ext_commands_dir, filename),
+        if config.get("copy_commands_to_extension"):
+            ext_commands_dir = os.path.join(ext_dir, "commands")
+            os.makedirs(ext_commands_dir, exist_ok=True)
+            src_dir = config["output_dir"]
+            if os.path.isdir(src_dir):
+                for filename in sorted(os.listdir(src_dir)):
+                    if filename.endswith(".md"):
+                        shutil.copy2(
+                            os.path.join(src_dir, filename),
+                            os.path.join(ext_commands_dir, filename),
+                        )
+                print(
+                    f"  Copied {counts[agent_id]} commands to {config['name']} extension: {ext_commands_dir}"
                 )
-        print(
-            f"  Copied {opencode_count} commands to OpenCode extension: {opencode_ext_commands_dir}"
-        )
+
+        if config.get("copy_agents_to_extension"):
+            # Copy agents to local dir (sibling of output_dir) and extension dir
+            local_agents_dir = os.path.join(
+                os.path.dirname(config["output_dir"]), "agents"
+            )
+            ext_agents_dir = os.path.join(ext_dir, "agents")
+            os.makedirs(local_agents_dir, exist_ok=True)
+            os.makedirs(ext_agents_dir, exist_ok=True)
+            if os.path.isdir(agents_dir):
+                for filename in sorted(os.listdir(agents_dir)):
+                    if filename.endswith(".md"):
+                        src_agent = os.path.join(agents_dir, filename)
+                        shutil.copy2(
+                            src_agent,
+                            os.path.join(local_agents_dir, filename),
+                        )
+                        shutil.copy2(
+                            src_agent,
+                            os.path.join(ext_agents_dir, filename),
+                        )
+                print(
+                    f"  Copied agents to {local_agents_dir} and {ext_agents_dir}"
+                )
 
     print()
     print("Copying extension supporting files...")
-    copy_extension_files(plugin_dir, extension_dir, opencode_ext_dir)
+    copy_extension_files(plugin_dir)
 
     print()
-    print(
-        f"Generated {codex_count} Codex + {opencode_count} OpenCode + {ext_count} Extension = {codex_count + opencode_count + ext_count} total files."
+    total = sum(counts.values())
+    parts = " + ".join(
+        f"{counts[aid]} {cfg['name']}" for aid, cfg in AGENT_CONFIG.items()
     )
+    print(f"Generated {parts} = {total} total files.")
