@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.14.0] - 2026-02-28
+
+### Added
+
+- **Handoffs frontmatter** — 16 plugin commands now declare `handoffs:` in YAML frontmatter for machine-readable workflow navigation (requirements, stakeholders, risk, sobc, research, datascout, data-model, wardley, adr, sow, roadmap, aws/azure/gcp-research, strategy, backlog)
+- **Release automation** — `scripts/generate-release-notes.sh` parses git log into Keep a Changelog sections; `.github/workflows/release.yml` creates GitHub Releases on tag push
+- **Version automation** — `scripts/bump-version.sh` updates all 11 version files in one command
+
+### Changed
+
+- **Converter uses PyYAML** — `extract_frontmatter_and_prompt()` now uses `yaml.safe_load()` instead of regex, enabling parsing of complex frontmatter fields like `handoffs:`
+- **Converter renders handoffs** — `render_handoffs_section()` appends a `## Suggested Next Steps` section to Codex/OpenCode/Gemini output for commands with handoffs
+- **Config-driven converter** — refactored `scripts/converter.py` to use `AGENT_CONFIG` dictionary; adding a new AI target only requires a new dict entry
+
+---
+
 ## [2.13.2] - 2026-02-28
 
 ### Fixed

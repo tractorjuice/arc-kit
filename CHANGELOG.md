@@ -5,6 +5,20 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.14.0] - 2026-02-28
+
+### Added
+
+- **Handoffs frontmatter** — 16 plugin commands declare `handoffs:` for machine-readable workflow navigation; converter renders as `## Suggested Next Steps` in Codex/OpenCode/Gemini output
+- **Release automation** — `generate-release-notes.sh` + GitHub Actions workflow for automatic releases on tag push
+- **Version automation** — `bump-version.sh` updates all version files in one command
+
+### Changed
+
+- **Config-driven converter** — `scripts/converter.py` refactored to use `AGENT_CONFIG` dictionary and PyYAML for frontmatter parsing
+
+---
+
 ## [2.13.2] - 2026-02-28
 
 ### Fixed
