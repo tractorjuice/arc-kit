@@ -7,8 +7,9 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-session.py",
-            "timeout": 5
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-session.mjs",
+            "timeout": 5,
+            "async": true
           }
         ]
       }
@@ -19,12 +20,13 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.py",
-            "timeout": 10
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.mjs",
+            "timeout": 10,
+            "async": true
           },
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/secret-detection.py",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/secret-detection.mjs",
             "timeout": 5
           }
         ]
@@ -36,7 +38,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.py",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.mjs",
             "timeout": 5
           }
         ]
@@ -46,12 +48,12 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.py",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.mjs",
             "timeout": 5
           },
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/secret-file-scanner.py",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/secret-file-scanner.mjs",
             "timeout": 5
           }
         ]
@@ -63,7 +65,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/allow-mcp-tools.py",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/allow-mcp-tools.mjs",
             "timeout": 5
           }
         ]
