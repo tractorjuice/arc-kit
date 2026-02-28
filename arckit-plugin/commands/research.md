@@ -1,6 +1,15 @@
 ---
 description: Research technology, services, and products to meet requirements with build vs buy analysis
 tags: [research, build-vs-buy, vendor, procurement, digital-marketplace, tco, saas, open-source]
+handoffs:
+  - command: wardley
+    description: Create Wardley Map from research evolution positioning
+  - command: sobc
+    description: Feed TCO data into Economic Case
+  - command: sow
+    description: Create RFP from vendor requirements
+  - command: hld-review
+    description: Validate technology choices against HLD
 ---
 
 # Technology and Service Research

@@ -207,3 +207,13 @@ Return ONLY a concise summary including:
 ## Important Notes
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `/arckit:diagram` -- Create Google Cloud architecture diagrams
+- `/arckit:devops` -- Design Cloud Build pipeline
+- `/arckit:finops` -- Create Google Cloud cost management strategy
+- `/arckit:adr` -- Record Google Cloud service selection decisions
+

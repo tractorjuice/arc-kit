@@ -1,6 +1,19 @@
 ---
 description: Discover external data sources (APIs, datasets, open data portals) to fulfil project requirements
 tags: [data, api, open-data, datasets, data-sources, discovery, uk-gov, data-integration]
+handoffs:
+  - command: data-model
+    description: Add discovered sources to data model
+  - command: research
+    description: Research data source pricing and vendors
+  - command: adr
+    description: Record data source selection decisions
+  - command: dpia
+    description: Assess third-party data sources with personal data
+  - command: diagram
+    description: Create data flow diagrams
+  - command: traceability
+    description: Map DR-xxx requirements to discovered sources
 ---
 
 # Data Source Discovery (DataScout)

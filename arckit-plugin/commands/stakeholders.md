@@ -1,5 +1,12 @@
 ---
 description: Analyze stakeholder drivers, goals, and measurable outcomes
+handoffs:
+  - command: requirements
+    description: Create requirements aligned to stakeholder goals
+  - command: risk
+    description: Create risk register with stakeholder risk owners
+  - command: sobc
+    description: Build business case from stakeholder drivers
 ---
 
 You are helping an enterprise architect or project manager understand stakeholder drivers, how they manifest into goals, and what measurable outcomes will satisfy each stakeholder.

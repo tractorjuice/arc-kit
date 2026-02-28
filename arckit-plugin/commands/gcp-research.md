@@ -1,6 +1,15 @@
 ---
 description: Research Google Cloud services and architecture patterns using Google Developer Knowledge MCP for authoritative guidance
 tags: [gcp, google, cloud, architecture, mcp, research, architecture-framework]
+handoffs:
+  - command: diagram
+    description: Create Google Cloud architecture diagrams
+  - command: devops
+    description: Design Cloud Build pipeline
+  - command: finops
+    description: Create Google Cloud cost management strategy
+  - command: adr
+    description: Record Google Cloud service selection decisions
 ---
 
 # Google Cloud Technology Research

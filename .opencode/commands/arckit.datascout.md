@@ -386,3 +386,15 @@ Return ONLY a concise summary including:
 ## Important Notes
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `/arckit:data-model` -- Add discovered sources to data model
+- `/arckit:research` -- Research data source pricing and vendors
+- `/arckit:adr` -- Record data source selection decisions
+- `/arckit:dpia` -- Assess third-party data sources with personal data
+- `/arckit:diagram` -- Create data flow diagrams
+- `/arckit:traceability` -- Map DR-xxx requirements to discovered sources
+

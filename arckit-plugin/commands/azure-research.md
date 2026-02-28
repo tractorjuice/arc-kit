@@ -1,6 +1,15 @@
 ---
 description: Research Azure services and architecture patterns using Microsoft Learn MCP for authoritative guidance
 tags: [azure, microsoft, cloud, architecture, mcp, research, well-architected, security-benchmark]
+handoffs:
+  - command: diagram
+    description: Create Azure architecture diagrams
+  - command: devops
+    description: Design Azure DevOps pipeline
+  - command: finops
+    description: Create Azure cost management strategy
+  - command: adr
+    description: Record Azure service selection decisions
 ---
 
 # Azure Technology Research

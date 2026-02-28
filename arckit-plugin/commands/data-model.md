@@ -1,5 +1,14 @@
 ---
 description: Create comprehensive data model with entity relationships, GDPR compliance, and data governance
+handoffs:
+  - command: hld-review
+    description: Validate database technology choices
+  - command: dld-review
+    description: Validate schema design and query patterns
+  - command: sow
+    description: Include data migration and governance in RFP
+  - command: traceability
+    description: Map DR-xxx to entities and attributes
 ---
 
 You are helping an enterprise architect create a comprehensive data model for a project that will guide database design, API specifications, and compliance requirements.

@@ -1,5 +1,13 @@
 ---
 description: Create strategic Wardley Maps for architecture decisions and build vs buy analysis
+handoffs:
+  - command: roadmap
+    description: Create strategic roadmap from evolution analysis
+  - command: strategy
+    description: Synthesise Wardley insights into architecture strategy
+  - command: research
+    description: Research vendors for Custom-Built components
+    condition: "Custom-Built components identified that need market research"
 hooks:
   Stop:
     - hooks:

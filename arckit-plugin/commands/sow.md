@@ -1,5 +1,10 @@
 ---
 description: Generate Statement of Work (SOW) / RFP document for vendor procurement
+handoffs:
+  - command: evaluate
+    description: Create vendor evaluation framework
+  - command: dos
+    description: Generate Digital Marketplace DOS opportunity
 ---
 
 You are helping an enterprise architect generate a comprehensive Statement of Work (SOW) that will be used as an RFP document for vendor procurement.

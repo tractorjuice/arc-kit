@@ -236,3 +236,12 @@ This document becomes the foundation for:
 - Change management (address resistance rooted in threatened drivers)
 - Success metrics (measure what stakeholders actually care about)
 - Governance (give decision rights to stakeholders with most at stake)
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `/arckit:requirements` -- Create requirements aligned to stakeholder goals
+- `/arckit:risk` -- Create risk register with stakeholder risk owners
+- `/arckit:sobc` -- Build business case from stakeholder drivers
+

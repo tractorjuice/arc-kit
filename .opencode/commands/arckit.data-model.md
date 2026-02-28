@@ -373,3 +373,13 @@ After writing the file, show ONLY a concise summary:
 - Compliance frameworks applicable
 
 Generate the data model now, write to file using Write tool, and show only the summary above.
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `/arckit:hld-review` -- Validate database technology choices
+- `/arckit:dld-review` -- Validate schema design and query patterns
+- `/arckit:sow` -- Include data migration and governance in RFP
+- `/arckit:traceability` -- Map DR-xxx to entities and attributes
+

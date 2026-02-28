@@ -679,3 +679,12 @@ After creating the map, provide a summary to the user:
 ---
 
 **Remember**: Wardley Mapping is about situational awareness and strategic decision-making. The map quality matters less than the strategic insights and decisions it enables.
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `/arckit:roadmap` -- Create strategic roadmap from evolution analysis
+- `/arckit:strategy` -- Synthesise Wardley insights into architecture strategy
+- `/arckit:research` -- Research vendors for Custom-Built components *(when Custom-Built components identified that need market research)*
+

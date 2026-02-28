@@ -479,3 +479,12 @@ The footer should be populated with:
 | **Cross-team** | Technical Architects, Lead Engineers | Integration patterns, API standards, shared libraries | Architecture Forum, Technical Design Review |
 | **Department** | Enterprise Architects, CTO, Architecture Board | Cloud provider, security framework, technology standards | Architecture Review Board, Enterprise Architecture Board |
 | **Cross-government** | Technical Design Authority, GDS | National infrastructure, cross-department APIs, GOV.UK standards | Technical Design Council, GDS Architecture Community |
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `/arckit:hld-review` -- Reflect decision in High-Level Design
+- `/arckit:diagram` -- Update architecture diagrams
+- `/arckit:traceability` -- Update traceability matrix with decision links
+

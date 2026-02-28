@@ -1,6 +1,15 @@
 ---
 description: Research AWS services and architecture patterns using AWS Knowledge MCP for authoritative guidance
 tags: [aws, amazon, cloud, architecture, mcp, research, well-architected, security-hub]
+handoffs:
+  - command: diagram
+    description: Create AWS architecture diagrams
+  - command: devops
+    description: Design AWS CodePipeline CI/CD
+  - command: finops
+    description: Create AWS cost management strategy
+  - command: adr
+    description: Record AWS service selection decisions
 ---
 
 # AWS Technology Research

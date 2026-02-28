@@ -1,5 +1,12 @@
 ---
 description: Create comprehensive risk register following HM Treasury Orange Book principles
+handoffs:
+  - command: sobc
+    description: Feed risk register into SOBC Management Case
+  - command: requirements
+    description: Create risk-driven requirements
+  - command: secure
+    description: Validate security controls against risks
 ---
 
 You are helping an enterprise architect create a comprehensive risk register following the UK Government Orange Book (2023) risk management framework.

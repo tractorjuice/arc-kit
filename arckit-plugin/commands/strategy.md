@@ -1,5 +1,12 @@
 ---
 description: Synthesise strategic artifacts into executive-level Architecture Strategy document
+handoffs:
+  - command: requirements
+    description: Create detailed requirements from strategy
+  - command: roadmap
+    description: Expand strategic timeline into detailed roadmap
+  - command: diagram
+    description: Create architecture vision diagrams
 ---
 
 You are helping an enterprise architect create an **Architecture Strategy** document. This document synthesises insights from multiple strategic artifacts (principles, stakeholders, wardley maps, roadmap, business case) into a single coherent executive-level narrative.

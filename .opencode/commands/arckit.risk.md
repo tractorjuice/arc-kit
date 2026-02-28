@@ -507,3 +507,12 @@ Generate a comprehensive, Orange Book-compliant risk register that enables infor
 ## Important Notes
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `/arckit:sobc` -- Feed risk register into SOBC Management Case
+- `/arckit:requirements` -- Create risk-driven requirements
+- `/arckit:secure` -- Validate security controls against risks
+

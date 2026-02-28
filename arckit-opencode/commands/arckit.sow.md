@@ -391,3 +391,11 @@ After writing the file, show ONLY a concise summary:
 - Page count
 
 Generate the SOW now, write to file using Write tool, and show only the summary above.
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `/arckit:evaluate` -- Create vendor evaluation framework
+- `/arckit:dos` -- Generate Digital Marketplace DOS opportunity
+

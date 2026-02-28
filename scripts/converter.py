@@ -2,6 +2,8 @@ import os
 import re
 import shutil
 
+import yaml
+
 
 def build_agent_map(agents_dir):
     """Build a map from command name to agent file path and content.
@@ -26,28 +28,18 @@ def build_agent_map(agents_dir):
 
 
 def extract_frontmatter_and_prompt(content):
-    """Extract YAML frontmatter description and prompt body from markdown."""
-    description = ""
+    """Extract YAML frontmatter dict and prompt body from markdown."""
+    frontmatter = {}
     prompt = content
     if content.startswith("---"):
         parts = content.split("---", 2)
-        if len(parts) > 1:
-            frontmatter = parts[1]
+        if len(parts) > 2:
+            try:
+                frontmatter = yaml.safe_load(parts[1]) or {}
+            except yaml.YAMLError:
+                frontmatter = {}
             prompt = parts[2].strip()
-            desc_match = re.search(r"description:\s*(.*)", frontmatter)
-            if desc_match:
-                description = desc_match.group(1).strip()
-                # Remove surrounding quotes if present (from YAML)
-                if description.startswith('"') and description.endswith('"'):
-                    description = description[1:-1]
-                elif description.startswith("'") and description.endswith("'"):
-                    description = description[1:-1]
-                # Handle multi-line YAML (e.g. description: |) by taking
-                # only the first non-empty content line
-                if description in ("|", ">"):
-                    # Multi-line block — skip it, we'll use command description
-                    description = ""
-    return description, prompt
+    return frontmatter, prompt
 
 
 def extract_agent_prompt(content):
@@ -57,6 +49,31 @@ def extract_agent_prompt(content):
         if len(parts) > 2:
             return parts[2].strip()
     return content
+
+
+def render_handoffs_section(handoffs):
+    """Render handoffs list as a markdown Suggested Next Steps section."""
+    if not handoffs:
+        return ""
+    lines = [
+        "",
+        "## Suggested Next Steps",
+        "",
+        "After completing this command, consider running:",
+        "",
+    ]
+    for h in handoffs:
+        cmd = h.get("command", "")
+        desc = h.get("description", "")
+        cond = h.get("condition", "")
+        line = f"- `/arckit:{cmd}`"
+        if desc:
+            line += f" -- {desc}"
+        if cond:
+            line += f" *(when {cond})*"
+        lines.append(line)
+    lines.append("")
+    return "\n".join(lines)
 
 
 EXTENSION_FILE_ACCESS_BLOCK = """\
@@ -160,8 +177,10 @@ def convert(commands_dir, agents_dir):
         with open(command_path, "r") as f:
             command_content = f.read()
 
-        # Extract description from command (always use command's description)
-        description, command_prompt = extract_frontmatter_and_prompt(command_content)
+        # Extract frontmatter from command (always use command's description)
+        frontmatter, command_prompt = extract_frontmatter_and_prompt(command_content)
+        description = frontmatter.get("description", "")
+        handoffs = frontmatter.get("handoffs", [])
 
         # For agent-delegating commands, use the full agent prompt
         # (non-Claude targets don't support the Task/agent architecture)
@@ -172,6 +191,11 @@ def convert(commands_dir, agents_dir):
         else:
             prompt = command_prompt
             source_label = command_path
+
+        # Append rendered handoffs section to prompt for all output formats
+        handoffs_section = render_handoffs_section(handoffs)
+        if handoffs_section:
+            prompt = prompt + "\n" + handoffs_section
 
         base_name = filename.replace(".md", "")
 

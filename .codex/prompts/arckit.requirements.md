@@ -298,3 +298,13 @@ You should:
 - Make acceptance criteria testable
 - Flag compliance requirements clearly (PCI-DSS, HIPAA, SOX, GDPR, etc.)
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `/arckit:data-model` -- Create data model from data requirements *(when DR-xxx data requirements were generated)*
+- `/arckit:research` -- Research technology options
+- `/arckit:risk` -- Create risk register from requirements
+- `/arckit:dpia` -- Assess data protection impact
+

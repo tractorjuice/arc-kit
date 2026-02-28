@@ -1,5 +1,12 @@
 ---
 description: Document architectural decisions with options analysis and traceability
+handoffs:
+  - command: hld-review
+    description: Reflect decision in High-Level Design
+  - command: diagram
+    description: Update architecture diagrams
+  - command: traceability
+    description: Update traceability matrix with decision links
 ---
 
 You are helping an enterprise architect create an Architecture Decision Record (ADR) following MADR v4.0 format enhanced with UK Government requirements.

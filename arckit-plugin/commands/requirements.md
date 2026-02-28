@@ -1,5 +1,15 @@
 ---
 description: Create comprehensive business and technical requirements
+handoffs:
+  - command: data-model
+    description: Create data model from data requirements
+    condition: "DR-xxx data requirements were generated"
+  - command: research
+    description: Research technology options
+  - command: risk
+    description: Create risk register from requirements
+  - command: dpia
+    description: Assess data protection impact
 ---
 
 You are helping an enterprise architect define comprehensive requirements for a project that will be used for vendor RFPs and architecture reviews.
