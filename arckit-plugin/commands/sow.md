@@ -306,6 +306,8 @@ You should:
 
 Create the comprehensive Statement of Work following the template structure.
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SOW** per-type checks pass. Fix any failures before proceeding.
+
 ### 2. Write Directly to File
 
 **Use the Write tool** to create `projects/[PROJECT]/ARC-{PROJECT_ID}-SOW-v${VERSION}.md` with the complete SOW.

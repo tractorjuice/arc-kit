@@ -263,6 +263,8 @@ The footer should be populated with:
 
 ---
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **STRAT** per-type checks pass. Fix any failures before proceeding.
+
 ### 9. Write the Strategy File
 
 **IMPORTANT**: The strategy document will be a LARGE document (typically 350-500 lines). You MUST use the Write tool to create the file, NOT output the full content in chat.

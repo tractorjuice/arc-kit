@@ -449,6 +449,8 @@ The footer should be populated with:
 
 ## Step 4: Write the Plan
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PLAN** per-type checks pass. Fix any failures before proceeding.
+
 1. **Determine output location**:
    - If project exists: `projects/{project-name}/ARC-{PROJECT_ID}-PLAN-v1.0.md`
    - If no project: `ARC-XXX-PLAN-v1.0.md` (root directory)

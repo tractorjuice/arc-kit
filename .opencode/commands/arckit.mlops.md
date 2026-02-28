@@ -247,6 +247,8 @@ Verify before saving:
 
 **CRITICAL - Use Write Tool**: MLOps documents are large. Use Write tool to save.
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **MLOP** per-type checks pass. Fix any failures before proceeding.
+
 1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-MLOP-v1.0.md`
 
 2. **Provide summary**:

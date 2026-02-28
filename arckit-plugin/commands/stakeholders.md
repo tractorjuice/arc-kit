@@ -118,6 +118,8 @@ $ARGUMENTS
    - Include both quantitative and qualitative measures
    - Consider UK Government context if applicable (Minister accountability, public scrutiny, parliamentary questions, transparency requirements, GovS 005 digital governance roles including SRO, Service Owner, CDDO, and DDaT Profession Lead)
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **STKE** per-type checks pass. Fix any failures before proceeding.
+
 7. **Write the output**:
    - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-STKE-v1.0.md`
    - Use the exact template structure

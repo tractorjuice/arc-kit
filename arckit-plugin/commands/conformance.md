@@ -344,6 +344,8 @@ For EACH architecture principle:
 
 Use the document ID `ARC-{PROJECT_ID}-CONF-v{VERSION}` (e.g., `ARC-001-CONF-v1.0`).
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **CONF** per-type checks pass. Fix any failures before proceeding.
+
 **Use the Write tool** to save the document to `projects/{project-dir}/ARC-{PROJECT_ID}-CONF-v{VERSION}.md`.
 
 Populate the template with all conformance check results, following the structure defined in the template.

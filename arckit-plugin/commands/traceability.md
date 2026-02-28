@@ -156,6 +156,8 @@ $ARGUMENTS
    - Non-blocking gaps (fix in next sprint)
    - Technical debt to track
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **TRAC** per-type checks pass. Fix any failures before proceeding.
+
 8. **Write outputs**:
    - `projects/{project-dir}/ARC-{PROJECT_ID}-TRAC-v${VERSION}.md` - Full traceability matrix
    - `projects/{project-dir}/ARC-{PROJECT_ID}-COVR-v${VERSION}.md` - Coverage metrics and gaps

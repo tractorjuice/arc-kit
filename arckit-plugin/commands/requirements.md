@@ -139,6 +139,9 @@ $ARGUMENTS
    - **Transparency**: Be explicit about trade-offs - don't hide conflicts or pretend both can be satisfied
 
 9. **Write the output**:
+
+   Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **REQ** per-type checks pass. Fix any failures before proceeding.
+
    - **CRITICAL - Token Efficiency**: Use the **Write tool** to create `projects/{project-dir}/ARC-{PROJECT_ID}-REQ-v${VERSION}.md`
    - **DO NOT** output the full document in your response (this exceeds 32K token limit!)
    - Use the exact template structure

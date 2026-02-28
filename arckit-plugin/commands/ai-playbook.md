@@ -418,6 +418,8 @@ The footer should be populated with:
 
 ---
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AIPB** per-type checks pass. Fix any failures before proceeding.
+
 11. **Write comprehensive output**:
 
 Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-AIPB-v1.0.md`

@@ -193,7 +193,11 @@ Generate a comprehensive Secure by Design assessment document by:
       - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new CAF objectives assessed, fundamentally different security posture, significant architecture changes
     - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
-15. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-v${VERSION}.md`
+15. **Save the document**:
+
+    Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SECD** per-type checks pass. Fix any failures before proceeding.
+
+    Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-v${VERSION}.md`
 
 **CRITICAL - Auto-Populate Document Control Fields**:
 

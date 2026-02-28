@@ -59,6 +59,8 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 3. Extract research categories from requirements
 4. Use WebSearch and WebFetch for each category (vendors, pricing, reviews, open source, UK Gov)
 5. Build vs buy analysis with 3-year TCO
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **RSCH** per-type checks pass. Fix any failures before proceeding.
+
 6. Write to `projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v1.0.md` using Write tool
 7. Show summary only (not full document)
 

@@ -287,6 +287,8 @@ Apply the user's selections: the escalation level determines the governance foru
 - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
 - Sequence number auto-assigned from existing files in the directory
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **ADR** per-type checks pass. Fix any failures before proceeding.
+
 ### 9. **Use Write tool to create the ADR file**
 
 - **CRITICAL**: Because ADRs are very large documents (500+ lines), you MUST use the Write tool to create the file

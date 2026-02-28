@@ -569,6 +569,8 @@ Before presenting the ServiceNow design to the user, verify:
 
 ## Output Instructions
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **SNOW** per-type checks pass. Fix any failures before proceeding.
+
 **CRITICAL - Use Write Tool for Large Documents**:
 
 ServiceNow designs are typically very large documents (500+ lines) due to the comprehensive nature of CMDB structures, SLAs, incident management, and runbooks.

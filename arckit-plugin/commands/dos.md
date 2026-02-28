@@ -136,6 +136,8 @@ The footer should be populated with:
 
 Create directory: `projects/[project]/procurement/`
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DOS** per-type checks pass. Fix any failures before proceeding.
+
 Generate `projects/[project]/procurement/ARC-{PROJECT_ID}-DOS-v1.0.md`:
 
 ```markdown

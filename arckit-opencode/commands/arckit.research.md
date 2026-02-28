@@ -193,6 +193,8 @@ Run:
 python3 .arckit/scripts/python/generate-document-id.py PROJECT_ID RSCH ${VERSION} --filename
 ```
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **RSCH** per-type checks pass. Fix any failures before proceeding.
+
 ### Step 11: Write the Document
 
 **Use the Write tool** to save the complete document to `projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v${VERSION}.md` following the template structure.

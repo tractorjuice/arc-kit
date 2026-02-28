@@ -1346,6 +1346,8 @@ The footer should be populated with:
 
 ---
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **ANAL** per-type checks pass. Fix any failures before proceeding.
+
 ### 7. Write Analysis Report to File
 
 Save the complete analysis report generated in Step 6 to:

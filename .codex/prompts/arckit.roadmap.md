@@ -355,6 +355,8 @@ The footer should be populated with:
 
 ### 9. Write the Roadmap File
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **ROAD** per-type checks pass. Fix any failures before proceeding.
+
 **IMPORTANT**: The roadmap will be a LARGE document (typically 400-600 lines). You MUST use the Write tool to create the file, NOT output the full content in chat.
 
 Create the file at:

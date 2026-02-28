@@ -341,6 +341,8 @@ Run bash:
 .arckit/scripts/python/generate-document-id.py PROJECT_ID DSCT ${VERSION} --filename
 ```
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **DSCT** per-type checks pass. Fix any failures before proceeding.
+
 ### Step 16: Write the Document
 
 **Use the Write tool** to save the complete document to `projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v${VERSION}.md` following the template structure.

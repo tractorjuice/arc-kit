@@ -261,6 +261,8 @@ Verify before saving:
 - [ ] Secret management defined
 - [ ] Rollback procedures documented
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DEVO** per-type checks pass. Fix any failures before proceeding.
+
 ### Phase 5: Output
 
 **CRITICAL - Use Write Tool**: DevOps documents are large. Use Write tool to save.

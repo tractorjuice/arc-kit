@@ -722,6 +722,8 @@ Read the story template:
 - Ensure all tables are complete with real counts
 - Write full narrative paragraphs for each chapter with real project details
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **STRY** per-type checks pass. Fix any failures before proceeding.
+
 ### Step 14: Write ARC-{PROJECT_ID}-STRY-v${VERSION}.md Using Write Tool
 
 **CRITICAL**: Use the **Write tool** to create the document. Do NOT output the full content in your response.

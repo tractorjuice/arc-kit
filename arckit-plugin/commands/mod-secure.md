@@ -289,6 +289,8 @@ The footer should be populated with:
 
 ---
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SECD-MOD** per-type checks pass. Fix any failures before proceeding.
+
 10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-MOD-v1.0.md`
 
 ## Assessment Guidelines

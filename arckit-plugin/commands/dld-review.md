@@ -232,6 +232,8 @@ The footer should be populated with:
 
 ---
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DLDR** per-type checks pass. Fix any failures before proceeding.
+
 9. **Write outputs**:
    - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-DLDR-v1.0.md` - Full review report
    - Update traceability matrix with implementation details

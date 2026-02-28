@@ -713,6 +713,8 @@ Provide practical guidance for the assessment day:
 - Demonstrate user-centered thinking
 - Show iteration and learning
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SASS** per-type checks pass. Fix any failures before proceeding.
+
 ### Step 8: Write Assessment Preparation Report
 
 Generate a comprehensive markdown report saved to:

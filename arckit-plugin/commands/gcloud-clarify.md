@@ -254,6 +254,8 @@ The footer should be populated with:
 
 ### 6. Generate Output Document
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLC** per-type checks pass. Fix any failures before proceeding.
+
 Create `projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v1.0.md`:
 
 ```markdown

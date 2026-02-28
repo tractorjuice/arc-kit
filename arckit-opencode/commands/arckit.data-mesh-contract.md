@@ -396,6 +396,8 @@ The footer should be populated with:
 
 ---
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **DMC** per-type checks pass. Fix any failures before proceeding.
+
 ### Step 8: Write the Contract File
 
 **IMPORTANT**: Use the **Write tool** to create the file. Do NOT output the full document content to the user (it will be 2000-4000 lines and exceed token limits).

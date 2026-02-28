@@ -162,6 +162,8 @@ Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS
    - Document Control: Version field
    - Revision History: Add new row with version, date, "AI Agent", description of changes, "PENDING", "PENDING"
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **AZRS** per-type checks pass. Fix any failures before proceeding.
+
 ### Step 10: Generate Document ID and Write Output
 
 Run bash:

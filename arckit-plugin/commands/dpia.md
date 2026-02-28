@@ -256,6 +256,8 @@ Generate the DPIA by:
     - Summary table: Total risks, high/medium/low breakdown, key mitigations, ICO consultation needed?
     - Action plan: List all recommendations with owners and deadlines
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DPIA** per-type checks pass. Fix any failures before proceeding.
+
 Write the complete DPIA document to:
 
 ```text

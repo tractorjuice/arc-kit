@@ -155,6 +155,8 @@ The footer should be populated with:
 
 ---
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **EVAL** per-type checks pass. Fix any failures before proceeding.
+
 4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-EVAL-v1.0.md`
 
 ### Task B: Score a Vendor Proposal

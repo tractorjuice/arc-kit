@@ -210,6 +210,8 @@ $ARGUMENTS
    - **ICO Data Protection**: Reference ICO guidance for public sector
    - **National Cyber Security Centre (NCSC)**: Data security patterns
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DATA** per-type checks pass. Fix any failures before proceeding.
+
 9. **Write the output**:
    - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-DATA-v1.0.md`
    - Use the exact template structure from `data-model-template.md`

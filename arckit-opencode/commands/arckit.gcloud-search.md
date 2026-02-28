@@ -138,6 +138,8 @@ The footer should be populated with:
 
 Create directory: `projects/[project]/procurement/`
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLD** per-type checks pass. Fix any failures before proceeding.
+
 Generate `projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md`:
 
 ```markdown

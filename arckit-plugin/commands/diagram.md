@@ -1197,6 +1197,8 @@ The visualization helps:
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DIAG** per-type checks pass. Fix any failures before proceeding.
+
 ## Final Output
 
 Generate a comprehensive architecture diagram document saved to:

@@ -60,6 +60,8 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 5. UK Government: G-Cloud, data residency, NCSC compliance
 6. Cost estimation with optimization (Reserved Instances, Savings Plans, Spot, Graviton)
 7. Generate Mermaid architecture diagram
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AWRS** per-type checks pass. Fix any failures before proceeding.
+
 8. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AWRS-v1.0.md` using Write tool
 9. Show summary only (not full document)
 

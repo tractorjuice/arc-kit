@@ -76,6 +76,9 @@ $ARGUMENTS
    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
 8. **Write the output**:
+
+   Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PRIN** per-type checks pass. Fix any failures before proceeding.
+
    - **Document ID**: `ARC-000-PRIN-v{VERSION}` (e.g., `ARC-000-PRIN-v1.0`) — 000 indicates global/cross-project document
    - **Filename**: `ARC-000-PRIN-v{VERSION}.md`
    - Write to: `projects/000-global/ARC-000-PRIN-v${VERSION}.md`

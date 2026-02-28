@@ -183,6 +183,8 @@ Build the slide deck by extracting key content from each artifact:
 
 ### Step 7: Write the output
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **PRES** per-type checks pass. Fix any failures before proceeding.
+
 - Write to `projects/{project-dir}/ARC-{PROJECT_ID}-PRES-v${VERSION}.md`
 - Use the exact template structure with MARP frontmatter
 

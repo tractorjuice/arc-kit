@@ -3453,6 +3453,8 @@ Now, **compile all documentation** into a comprehensive JSP 936 AI Assurance pac
 
 3. **Review for completeness**: Check that all JSP 936 requirements are addressed (27 requirements: 5 principles + risk classification + governance + 8 phases + approval + monitoring)
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **JSP936** per-type checks pass. Fix any failures before proceeding.
+
 4. **Write the document** to the project directory:
    - **File path**: `projects/{project-name}/ARC-{PROJECT_ID}-JSP936-v1.0.md`
    - **CRITICAL**: Use the Write tool to save the file. Do NOT output the full document in your response (it will exceed token limits).

@@ -361,6 +361,9 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 - **Unmitigated high risks**: High risks with no treatment plan
 
 11. **Write the output**:
+
+    Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **RISK** per-type checks pass. Fix any failures before proceeding.
+
     - Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-RISK-v1.0.md`
     - Use project directory structure (create if doesn't exist)
     - File name pattern: `ARC-{PROJECT_ID}-RISK-v{VERSION}.md`

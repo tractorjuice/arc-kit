@@ -64,6 +64,8 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 5. Research each category (UK Gov open data, commercial APIs, free APIs, open datasets)
 6. Evaluate with weighted scoring (requirements fit, data quality, license, API quality, compliance, reliability)
 7. Gap analysis, data utility analysis, data model impact
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DSCT** per-type checks pass. Fix any failures before proceeding.
+
 8. Write to `projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v1.0.md` using Write tool
 9. Show summary only (not full document)
 

@@ -229,6 +229,8 @@ flowchart LR
 | Data Store (parallel lines) | `[("label")]` | `D1[("D1: Transactions")]` |
 | Data Flow (arrow) | `-->│label│` | `A -->│data│ B` |
 
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **DFD** per-type checks pass. Fix any failures before proceeding.
+
 ## Step 4: Generate the Output Document
 
 **File Location**: `projects/{project_number}-{project_name}/diagrams/ARC-{PROJECT_ID}-DFD-{NNN}-v1.0.md`

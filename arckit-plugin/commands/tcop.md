@@ -99,6 +99,8 @@ Generate a comprehensive TCoP review document by:
      - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new TCoP points assessed, fundamentally different compliance posture, significant project changes
    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **TCOP** per-type checks pass. Fix any failures before proceeding.
+
 10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-TCOP-v${VERSION}.md`
 
 **CRITICAL - Auto-Populate Document Control Fields**:

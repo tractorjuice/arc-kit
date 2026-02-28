@@ -397,6 +397,8 @@ To avoid exceeding Claude Code's 32K token output limit, you MUST use the follow
 
 Create the comprehensive, executive-ready Strategic Outline Business Case following the 5-case model template structure.
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SOBC** per-type checks pass. Fix any failures before proceeding.
+
 ### 2. Write Directly to File
 
 **Use the Write tool** to create `projects/[PROJECT]/ARC-{PROJECT_ID}-SOBC-v${VERSION}.md` with the complete SOBC document.

@@ -302,6 +302,8 @@ Before saving, verify:
 
 ### Phase 5: Output
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **OPER** per-type checks pass. Fix any failures before proceeding.
+
 **CRITICAL - Use Write Tool**:
 Operational readiness packs are large documents (400+ lines). Use the Write tool to save the document to avoid token limits.
 

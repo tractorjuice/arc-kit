@@ -1529,6 +1529,8 @@ The footer should be populated with:
 
 ---
 
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **BKLG** per-type checks pass. Fix any failures before proceeding.
+
 ### Step 14: Final Output
 
 Write all files to `projects/{project-dir}/`:
