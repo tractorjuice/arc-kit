@@ -1,5 +1,6 @@
 ---
 description: Create FinOps strategy with cloud cost management, optimization, governance, and forecasting
+allowed-tools: Read, Write, Bash
 ---
 
 # /arckit:finops - FinOps Strategy Command

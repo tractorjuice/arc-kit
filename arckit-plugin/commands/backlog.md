@@ -1,5 +1,6 @@
 ---
 description: Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints
+allowed-tools: Read, Write, Bash, AskUserQuestion
 alwaysShow: true
 handoffs:
   - command: trello

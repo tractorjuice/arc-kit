@@ -1,5 +1,6 @@
 ---
 description: Synthesise strategic artifacts into executive-level Architecture Strategy document
+allowed-tools: Read, Write, Bash
 handoffs:
   - command: requirements
     description: Create detailed requirements from strategy

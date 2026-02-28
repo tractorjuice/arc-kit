@@ -1,5 +1,6 @@
 ---
 description: Prepare for GDS Service Standard assessment - analyze evidence against 14 points, identify gaps, generate readiness report
+allowed-tools: Read, Write, Bash
 alwaysShow: true
 ---
 

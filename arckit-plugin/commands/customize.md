@@ -1,5 +1,6 @@
 ---
 description: Copy plugin templates to project for customization
+allowed-tools: Read, Write, Bash, Glob
 ---
 
 You are helping a user customize ArcKit document templates for their project or organization.

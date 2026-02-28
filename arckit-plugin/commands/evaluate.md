@@ -1,5 +1,6 @@
 ---
 description: Create vendor evaluation framework and score vendor proposals
+allowed-tools: Read, Write, Bash
 ---
 
 You are helping an enterprise architect create a vendor evaluation framework and score vendor proposals against requirements.

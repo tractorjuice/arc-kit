@@ -1,5 +1,6 @@
 ---
 description: Export product backlog to Trello - create board, lists, cards with labels and checklists from backlog JSON
+allowed-tools: Read, Write, Bash
 alwaysShow: true
 ---
 

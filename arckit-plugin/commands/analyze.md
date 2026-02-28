@@ -1,5 +1,6 @@
 ---
 description: Perform comprehensive governance quality analysis across architecture artifacts (requirements, principles, designs, assessments)
+allowed-tools: Read, Write, Bash
 ---
 
 ## User Input

@@ -1,5 +1,6 @@
 ---
 description: Research technology, services, and products to meet requirements with build vs buy analysis
+allowed-tools: Read, Write, Bash, Agent, WebSearch, WebFetch
 tags: [research, build-vs-buy, vendor, procurement, digital-marketplace, tco, saas, open-source]
 handoffs:
   - command: wardley

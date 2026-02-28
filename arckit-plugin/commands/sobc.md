@@ -1,5 +1,6 @@
 ---
 description: Create Strategic Outline Business Case (SOBC) using UK Government Green Book 5-case model
+allowed-tools: Read, Write, Bash, AskUserQuestion
 handoffs:
   - command: requirements
     description: Define detailed requirements after SOBC approval

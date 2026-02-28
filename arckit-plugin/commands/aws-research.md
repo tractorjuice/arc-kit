@@ -1,5 +1,6 @@
 ---
 description: Research AWS services and architecture patterns using AWS Knowledge MCP for authoritative guidance
+allowed-tools: Read, Write, Bash, Agent
 tags: [aws, amazon, cloud, architecture, mcp, research, well-architected, security-hub]
 handoffs:
   - command: diagram

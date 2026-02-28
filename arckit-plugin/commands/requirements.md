@@ -1,5 +1,6 @@
 ---
 description: Create comprehensive business and technical requirements
+allowed-tools: Read, Write, Bash
 handoffs:
   - command: data-model
     description: Create data model from data requirements

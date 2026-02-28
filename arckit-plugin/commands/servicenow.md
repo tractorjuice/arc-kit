@@ -1,5 +1,6 @@
 ---
 description: Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control
+allowed-tools: Read, Write, Bash
 ---
 
 # /arckit:servicenow - ServiceNow Service Design Command

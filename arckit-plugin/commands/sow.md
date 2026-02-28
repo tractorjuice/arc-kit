@@ -1,5 +1,6 @@
 ---
 description: Generate Statement of Work (SOW) / RFP document for vendor procurement
+allowed-tools: Read, Write, Bash, AskUserQuestion
 handoffs:
   - command: evaluate
     description: Create vendor evaluation framework

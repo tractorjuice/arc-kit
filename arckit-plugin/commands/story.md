@@ -1,5 +1,6 @@
 ---
 description: Generate comprehensive project story with timeline analysis, traceability, and governance achievements (project)
+allowed-tools: Read, Write, Bash, Grep
 ---
 
 You are helping an enterprise architect **generate a comprehensive project story** that documents the journey of an ArcKit-managed project from inception to completion, with heavy emphasis on timeline analysis and governance achievements.

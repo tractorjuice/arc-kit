@@ -1,5 +1,6 @@
 ---
 description: Create comprehensive data model with entity relationships, GDPR compliance, and data governance
+allowed-tools: Read, Write, Bash
 handoffs:
   - command: hld-review
     description: Validate database technology choices

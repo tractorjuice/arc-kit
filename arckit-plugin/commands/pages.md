@@ -1,5 +1,6 @@
 ---
 description: Generate documentation site with governance dashboard, document viewer, and Mermaid diagram support
+allowed-tools: Read, Write, Bash, Glob, Grep
 ---
 
 # ArcKit: Documentation Site Generator

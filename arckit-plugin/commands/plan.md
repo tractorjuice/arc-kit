@@ -1,5 +1,6 @@
 ---
 description: Create project plan with timeline, phases, gates, and Mermaid diagrams
+allowed-tools: Read, Write, Bash, AskUserQuestion
 ---
 
 # ArcKit: Project Plan Generation

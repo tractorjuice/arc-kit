@@ -1,5 +1,6 @@
 ---
 description: Analyze stakeholder drivers, goals, and measurable outcomes
+allowed-tools: Read, Write, Bash
 handoffs:
   - command: requirements
     description: Create requirements aligned to stakeholder goals

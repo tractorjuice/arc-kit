@@ -1,5 +1,6 @@
 ---
 description: Generate architecture diagrams using Mermaid or PlantUML C4 for visual documentation
+allowed-tools: Read, Write, Bash, AskUserQuestion
 ---
 
 # ArcKit: Architecture Diagram Generation

@@ -1,5 +1,6 @@
 ---
 description: Initialize ArcKit project structure for enterprise architecture governance
+allowed-tools: Read, Write, Bash
 tags: [init, setup, project, start]
 ---
 

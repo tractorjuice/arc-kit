@@ -1,5 +1,6 @@
 ---
 description: Assess compliance with architecture principles and generate scorecard with evidence, gaps, and recommendations
+allowed-tools: Read, Write, Bash
 ---
 
 ## User Input

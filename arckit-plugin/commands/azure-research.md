@@ -1,5 +1,6 @@
 ---
 description: Research Azure services and architecture patterns using Microsoft Learn MCP for authoritative guidance
+allowed-tools: Read, Write, Bash, Agent
 tags: [azure, microsoft, cloud, architecture, mcp, research, well-architected, security-benchmark]
 handoffs:
   - command: diagram

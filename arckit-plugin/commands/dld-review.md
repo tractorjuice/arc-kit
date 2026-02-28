@@ -1,5 +1,6 @@
 ---
 description: Review Detailed Design (DLD) for implementation readiness
+allowed-tools: Read, Write, Bash
 ---
 
 You are helping an enterprise architect review a Detailed Design (DLD) document to ensure the design is ready for implementation with all technical details properly specified.

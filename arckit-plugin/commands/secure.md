@@ -1,5 +1,6 @@
 ---
 description: Generate a Secure by Design assessment for UK Government projects (civilian departments)
+allowed-tools: Read, Write, Bash
 tags: [security, uk-government, ncsc, caf, cyber-essentials, gdpr, secure-by-design]
 ---
 

@@ -1,5 +1,6 @@
 ---
 description: Get oriented with ArcKit — check project status, explore available commands, and choose your next step
+allowed-tools: Read, Write, Bash
 argument-hint: "[workflow focus, e.g. 'new project', 'procurement', 'governance review']"
 tags: [start, onboarding, getting-started, welcome, help, overview, guide]
 ---

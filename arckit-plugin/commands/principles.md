@@ -1,5 +1,6 @@
 ---
 description: Create or update enterprise architecture principles
+allowed-tools: Read, Write, Bash
 ---
 
 You are helping an enterprise architect define architecture principles that will govern all technology decisions in the organisation.

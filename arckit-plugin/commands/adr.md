@@ -1,5 +1,6 @@
 ---
 description: Document architectural decisions with options analysis and traceability
+allowed-tools: Read, Write, Bash, AskUserQuestion, Glob
 handoffs:
   - command: hld-review
     description: Reflect decision in High-Level Design

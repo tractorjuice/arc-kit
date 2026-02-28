@@ -1,5 +1,6 @@
 ---
 description: Research Google Cloud services and architecture patterns using Google Developer Knowledge MCP for authoritative guidance
+allowed-tools: Read, Write, Bash, Agent
 tags: [gcp, google, cloud, architecture, mcp, research, architecture-framework]
 handoffs:
   - command: diagram
