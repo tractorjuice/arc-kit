@@ -39,13 +39,12 @@ Use **Glob** and **Read** tools to scan the repository. Do NOT use `ls`, `find`,
 
 ### 1.1 Guides (Command Documentation)
 
-**First, sync guides from the plugin to the local repo:**
+**Guide sync is handled automatically by the `sync-guides` hook** which runs before this command executes. The hook copies all guide `.md` files from the plugin to `docs/guides/` using native file operations (zero tool round-trips, smart mtime-based skipping).
 
-1. Use **Glob** to list all `.md` files in `${CLAUDE_PLUGIN_ROOT}/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`, `roles/`)
-2. For each guide file, **Read** from the plugin path and **Write** to the corresponding path under `docs/guides/`, creating subdirectories as needed
-3. This ensures the repo always has the latest guides from the plugin
-
-**IMPORTANT**: Do NOT use `cp`, `mkdir`, or any Bash commands for guide syncing. Use the Glob tool to discover files, then Read + Write tools to copy them. This ensures cross-platform compatibility (Windows, macOS, Linux) without triggering permission prompts.
+- **If the hook systemMessage is present** (mentions "Guide Sync Complete"): guides are already synced — skip directly to title scanning below
+- **If no hook message** (hook unavailable or failed): fall back to manual sync:
+  1. Use **Glob** to list all `.md` files in `${CLAUDE_PLUGIN_ROOT}/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`, `roles/`)
+  2. For each guide file, **Read** from the plugin path and **Write** to the corresponding path under `docs/guides/`, creating subdirectories as needed
 
 After syncing, use **Glob** to scan `docs/guides/*.md` (top-level only, **excluding** the `roles/` subdirectory) for command usage guides. Use **Read** (with `limit: 5`) to extract the title from the first `#` heading in each guide file. Role guides in `docs/guides/roles/` are scanned separately and added to the `roleGuides` array in manifest.json (see DDaT Role Guides section below).
 

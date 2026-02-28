@@ -30,6 +30,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "/arckit:pages",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/sync-guides.mjs",
+            "timeout": 15
+          }
+        ]
       }
     ],
     "PreToolUse": [
