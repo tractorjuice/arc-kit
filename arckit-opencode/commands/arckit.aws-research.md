@@ -86,7 +86,16 @@ Use `search_documentation` to discover which AWS services match each requirement
 
 ### Step 5: Research AWS Services Using MCP
 
-For each requirement category, use MCP tools extensively:
+**Mode detection**: Attempt a single `search_documentation` call. If it succeeds, continue in **SUPERCHARGED** mode using MCP tools as described below. If MCP tools are unavailable, switch to **STANDALONE** mode using these substitutions for ALL research in this step:
+
+| MCP tool (SUPERCHARGED) | Web fallback (STANDALONE) |
+|---|---|
+| `search_documentation` | `WebSearch` with query prefixed by `site:docs.aws.amazon.com` |
+| `read_documentation` | `WebFetch` on the documentation URL |
+| `get_regional_availability` | `WebSearch` for `"[service] regional availability eu-west-2"` or `WebFetch` on `https://aws.amazon.com/about-aws/global-infrastructure/regional-product-services/` |
+| `recommend` | `WebSearch` for `"[service] related AWS services"` |
+
+For each requirement category, use MCP tools extensively (or their STANDALONE equivalents):
 
 **Service Discovery**:
 
@@ -214,7 +223,7 @@ Return ONLY a concise summary including:
 
 ## Quality Standards
 
-- **Official Sources Only**: Use only AWS documentation via MCP, not third-party blogs
+- **Official Sources Only**: Prefer AWS documentation via MCP (SUPERCHARGED mode). If MCP is unavailable, use WebSearch/WebFetch targeting `docs.aws.amazon.com` (STANDALONE mode). Avoid third-party blogs in both modes
 - **UK Focus**: Always check eu-west-2 (London) availability using `get_regional_availability`
 - **Well-Architected**: Assess every recommendation against all 6 pillars (including Sustainability)
 - **Security Hub**: Map recommendations to AWS Foundational Security Best Practices

@@ -56,7 +56,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 
    - **Tip**: Users can customize templates with `/arckit:customize aws-research`
 3. Extract AWS service needs from requirements (compute, data, integration, security, AI/ML)
-4. Use MCP tools for each category: service discovery, deep dive, regional availability (eu-west-2), architecture patterns, Well-Architected assessment, Security Hub mapping, code samples
+4. Use MCP tools for each category: service discovery, deep dive, regional availability (eu-west-2), architecture patterns, Well-Architected assessment, Security Hub mapping, code samples. If MCP tools are unavailable, use WebSearch with `site:docs.aws.amazon.com` and WebFetch on result URLs for equivalent research (STANDALONE mode)
 5. UK Government: G-Cloud, data residency, NCSC compliance
 6. Cost estimation with optimization (Reserved Instances, Savings Plans, Spot, Graviton)
 7. Generate Mermaid architecture diagram

@@ -55,7 +55,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/gcp-research-template.md` (default)
    - **Tip**: Users can customize templates with `/arckit:customize gcp-research`
 3. Extract Google Cloud service needs from requirements (compute, data, integration, security, AI/ML)
-4. Use MCP tools for each category: service discovery, deep dive, architecture patterns, Architecture Framework assessment, Security Command Center mapping, code samples
+4. Use MCP tools for each category: service discovery, deep dive, architecture patterns, Architecture Framework assessment, Security Command Center mapping, code samples. If MCP tools are unavailable, use WebSearch with `site:cloud.google.com` and WebFetch on result URLs for equivalent research (STANDALONE mode)
 5. UK Government: G-Cloud, europe-west2 data residency, NCSC compliance
 6. Cost estimation with optimization (Committed Use Discounts, Sustained Use Discounts, Spot VMs)
 7. Generate Mermaid architecture diagram

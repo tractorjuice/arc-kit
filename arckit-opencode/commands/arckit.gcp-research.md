@@ -86,7 +86,15 @@ Use `search_documents` to discover which Google Cloud services match each requir
 
 ### Step 5: Research Google Cloud Services Using MCP
 
-For each requirement category, use MCP tools extensively:
+**Mode detection**: Attempt a single `search_documents` call. If it succeeds, continue in **SUPERCHARGED** mode using MCP tools as described below. If MCP tools are unavailable, switch to **STANDALONE** mode using these substitutions for ALL research in this step:
+
+| MCP tool (SUPERCHARGED) | Web fallback (STANDALONE) |
+|---|---|
+| `search_documents` | `WebSearch` with query prefixed by `site:cloud.google.com` |
+| `get_document` | `WebFetch` on the documentation URL |
+| `batch_get_documents` | Multiple `WebFetch` calls on each documentation URL |
+
+For each requirement category, use MCP tools extensively (or their STANDALONE equivalents):
 
 **Service Discovery**:
 
@@ -210,7 +218,7 @@ Return ONLY a concise summary including:
 
 ## Quality Standards
 
-- **Official Sources Only**: Use only Google Cloud documentation via MCP, not third-party blogs
+- **Official Sources Only**: Prefer Google Cloud documentation via MCP (SUPERCHARGED mode). If MCP is unavailable, use WebSearch/WebFetch targeting `cloud.google.com` (STANDALONE mode). Avoid third-party blogs in both modes
 - **UK Focus**: Always check europe-west2 (London) availability
 - **Architecture Framework**: Assess every recommendation against all 6 pillars
 - **Security Command Center**: Map recommendations to SCC finding categories and CIS Benchmark for GCP

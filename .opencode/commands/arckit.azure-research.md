@@ -86,7 +86,15 @@ Use `microsoft_docs_search` to discover which Azure services match each requirem
 
 ### Step 5: Research Azure Services Using MCP
 
-For each requirement category, use MCP tools extensively:
+**Mode detection**: Attempt a single `microsoft_docs_search` call. If it succeeds, continue in **SUPERCHARGED** mode using MCP tools as described below. If MCP tools are unavailable, switch to **STANDALONE** mode using these substitutions for ALL research in this step:
+
+| MCP tool (SUPERCHARGED) | Web fallback (STANDALONE) |
+|---|---|
+| `microsoft_docs_search` | `WebSearch` with query prefixed by `site:learn.microsoft.com` |
+| `microsoft_docs_fetch` | `WebFetch` on the documentation URL |
+| `microsoft_code_sample_search` | `WebSearch` for `site:learn.microsoft.com "[service] code sample [language]"` |
+
+For each requirement category, use MCP tools extensively (or their STANDALONE equivalents):
 
 **Service Discovery**:
 
@@ -209,7 +217,7 @@ Return ONLY a concise summary including:
 
 ## Quality Standards
 
-- **Official Sources Only**: Use only Microsoft Learn documentation via MCP, not third-party blogs
+- **Official Sources Only**: Prefer Microsoft Learn documentation via MCP (SUPERCHARGED mode). If MCP is unavailable, use WebSearch/WebFetch targeting `learn.microsoft.com` (STANDALONE mode). Avoid third-party blogs in both modes
 - **UK Focus**: Always check UK South/West region availability
 - **Well-Architected**: Assess every recommendation against all 5 pillars
 - **Security Benchmark**: Map recommendations to Azure Security Benchmark controls (12 domains)
