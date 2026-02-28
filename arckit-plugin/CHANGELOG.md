@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.20.1] - 2026-02-28
+
+### Fixed
+
+- **Analysis report type code** — standardized `ANLZ` → `ANAL` across all commands (analyze, health, story, service-assessment) and guides. Files named `ARC-*-ANLZ-*.md` were invisible to the manifest scanner and health hook because metadata tables only recognized `ANAL`.
+
+---
+
 ## [2.20.0] - 2026-02-28
 
 ### Added
