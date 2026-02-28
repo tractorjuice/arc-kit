@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.20.0] - 2026-02-28
+
+### Added
+
+- **Health pre-processor hook** (`health-scan.mjs`) — new `UserPromptSubmit` hook pre-extracts all artifact metadata and applies all 7 detection rules (STALE-RSCH, FORGOTTEN-ADR, UNRESOLVED-COND, ORPHAN-REQ, MISSING-TRACE, VERSION-DRIFT, STALE-EXT) in Node.js, eliminating 20-50+ Read tool calls. The `/arckit:health` command now just formats the console output from hook findings.
+
+---
+
 ## [2.19.0] - 2026-02-28
 
 ### Added
