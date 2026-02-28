@@ -542,8 +542,8 @@ try {
   process.exit(0);
 }
 
-const userPrompt = data.user_prompt || '';
-if (!/\/arckit[.:]+pages\b/i.test(userPrompt)) process.exit(0);
+// hooks.json matcher already gates this hook to /arckit:pages only.
+// No redundant user_prompt check needed here.
 
 // Resolve roots
 const __dirname_hook = dirname(fileURLToPath(import.meta.url));

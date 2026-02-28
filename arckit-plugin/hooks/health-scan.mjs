@@ -550,10 +550,9 @@ try {
   process.exit(0);
 }
 
+// hooks.json matcher already gates this hook to /arckit:health only.
+// No redundant user_prompt check needed here.
 const userPrompt = data.user_prompt || '';
-
-// Self-filter: only fire for /arckit:health or /arckit.health
-if (!/\/arckit[.:]+health\b/i.test(userPrompt)) process.exit(0);
 
 // Parse arguments
 const args = parseArguments(userPrompt);

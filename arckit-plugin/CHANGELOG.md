@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.20.3] - 2026-02-28
+
+### Fixed
+
+- **Hooks fail via Skill tool** — removed redundant `user_prompt` regex guards from `sync-guides.mjs` and `health-scan.mjs`. The `hooks.json` matcher already gates each hook; the internal guard silently aborted when the Skill tool passed the expanded command body instead of the raw slash command.
+
+---
+
 ## [2.20.2] - 2026-02-28
 
 ### Fixed
