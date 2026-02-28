@@ -163,7 +163,7 @@ const DOC_TYPE_META = {
   'DSCT':      { category: 'Research',      title: 'Data Source Discovery' },
   // Other
   'STORY':     { category: 'Other',         title: 'Project Story' },
-  'ANAL':      { category: 'Other',         title: 'Analysis Report' },
+  'ANAL':      { category: 'Governance',    title: 'Analysis Report' },
 };
 
 const GUIDE_CATEGORIES = {

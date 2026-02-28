@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.20.2] - 2026-02-28
+
+### Fixed
+
+- **ANAL files missing from pages manifest** — removed Write from `/arckit:pages` allowed-tools so the AI cannot overwrite the hook-generated manifest; strengthened instruction to skip all tool use. Fixed ANAL category mismatch: `sync-guides.mjs` and `pages.md` reference table now map ANAL to Governance (matching `pages-template.html`).
+
+---
+
 ## [2.20.1] - 2026-02-28
 
 ### Fixed

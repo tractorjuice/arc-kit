@@ -1,6 +1,6 @@
 ---
 description: Generate documentation site with governance dashboard, document viewer, and Mermaid diagram support
-allowed-tools: Read, Write, Glob, Grep
+allowed-tools: Read, Glob, Grep
 argument-hint: "<project ID or 'all', e.g. '001', 'all'>"
 ---
 
@@ -36,7 +36,7 @@ Generate a documentation site for this ArcKit repository.
 5. Processes `pages-template.html` → writes `docs/index.html`
 6. Scans all projects, artifacts, vendors, external files → writes `docs/manifest.json`
 
-**The hook's systemMessage contains all stats needed for the summary. Do NOT use Glob, Read, or Write tools — go directly to Step 5.**
+**The hook's systemMessage contains all stats needed for the summary. Do NOT use Glob, Read, Write, or any other tools — go directly to Step 5. The hook has already written docs/index.html and docs/manifest.json. Do NOT regenerate or overwrite these files.**
 
 The following reference sections document the manifest structure and data tables used by the hook. They are preserved here for maintenance reference only — the command does not need to process them.
 
@@ -210,6 +210,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | RISK | `ARC-*-RISK-*.md` | Risk Register |
 | | TRAC | `ARC-*-TRAC-*.md` | Traceability Matrix |
 | | PRIN-COMP | `ARC-*-PRIN-COMP-*.md` | Principles Compliance |
+| | ANAL | `ARC-*-ANAL-*.md` | Analysis Report |
 | **Compliance** | | | |
 | | TCOP | `ARC-*-TCOP-*.md` | TCoP Assessment |
 | | SECD | `ARC-*-SECD-*.md` | Secure by Design |
@@ -241,7 +242,6 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | DSCT | `ARC-*-DSCT-*.md` | Data Source Discovery |
 | **Other** | | | |
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
-| | ANAL | `ARC-*-ANAL-*.md` | Analysis Report |
 
 ### Reference: Manifest Structure
 
