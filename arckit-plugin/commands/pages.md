@@ -39,14 +39,15 @@ Use **Glob** and **Read** tools to scan the repository. Do NOT use `ls`, `find`,
 
 ### 1.1 Guides (Command Documentation)
 
-**Guide sync is handled automatically by the `sync-guides` hook** which runs before this command executes. The hook copies all guide `.md` files from the plugin to `docs/guides/` using native file operations (zero tool round-trips, smart mtime-based skipping).
+**Guide sync and title extraction are handled automatically by the `sync-guides` hook** which runs before this command executes. The hook copies all guide `.md` files from the plugin to `docs/guides/` and extracts the first `#` heading from each file — zero tool round-trips.
 
-- **If the hook systemMessage is present** (mentions "Guide Sync Complete"): guides are already synced — skip directly to title scanning below
-- **If no hook message** (hook unavailable or failed): fall back to manual sync:
+- **If the hook systemMessage is present** (mentions "Guide Sync Complete" and contains a `guideTitles` JSON map): guides are synced and titles are pre-extracted. Use the `guideTitles` map directly — do NOT use Glob or Read on guide files. The map keys are repo-relative paths (e.g., `docs/guides/requirements.md`, `docs/guides/roles/enterprise-architect.md`) and values are the extracted titles (with " — ArcKit Command Guide" suffix already stripped for role guides).
+- **If no hook message** (hook unavailable or failed): fall back to manual sync and title extraction:
   1. Use **Glob** to list all `.md` files in `${CLAUDE_PLUGIN_ROOT}/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`, `roles/`)
   2. For each guide file, **Read** from the plugin path and **Write** to the corresponding path under `docs/guides/`, creating subdirectories as needed
+  3. Use **Glob** to scan `docs/guides/*.md` then **Read** (with `limit: 5`) each file to extract the `#` title
 
-After syncing, use **Glob** to scan `docs/guides/*.md` (top-level only, **excluding** the `roles/` subdirectory) for command usage guides. Use **Read** (with `limit: 5`) to extract the title from the first `#` heading in each guide file. Role guides in `docs/guides/roles/` are scanned separately and added to the `roleGuides` array in manifest.json (see DDaT Role Guides section below).
+Use the titles (from hook or manual extraction) to build the `guides` array for top-level guides (excluding `roles/` subdirectory) and the `roleGuides` array for role guides. Role guides in `docs/guides/roles/` are added to a separate `roleGuides` array in manifest.json (see DDaT Role Guides section below).
 
 **Guide Categories** (based on filename):
 
@@ -75,7 +76,7 @@ Role guides map ArcKit commands to [DDaT Capability Framework](https://ddat-capa
 | IT Operations | it-service-manager |
 | Software Development | devops-engineer |
 
-Use **Glob** to scan `docs/guides/roles/*.md` for role guide files (excluding `README.md`) and add them to a separate `roleGuides` array in manifest.json (not the `guides` array). Use **Read** (with `limit: 5`) to extract the title from the first `#` heading (strip " — ArcKit Command Guide" suffix). Map the DDaT family from the filename using the table above. Count the rows in the "Primary Commands" table to populate `commandCount`.
+Add role guides to a separate `roleGuides` array in manifest.json (not the `guides` array). If the hook provided `guideTitles`, use titles from the map for `docs/guides/roles/*.md` paths (suffix already stripped). Otherwise, use **Glob** to scan `docs/guides/roles/*.md` (excluding `README.md`) and **Read** (with `limit: 5`) to extract the title from the first `#` heading (strip " — ArcKit Command Guide" suffix). Map the DDaT family from the filename using the table above. Count the rows in the "Primary Commands" table to populate `commandCount`.
 
 **Role guide commandCount reference**:
 

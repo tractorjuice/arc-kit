@@ -6,11 +6,15 @@
  * Copies all guide .md files from the plugin to the repo's docs/guides/
  * directory using native fs operations — zero tool round-trips.
  *
+ * Also extracts the first # heading from each guide file and includes
+ * a title map in the systemMessage, eliminating ~95 Read tool calls
+ * that the pages command would otherwise need for title extraction.
+ *
  * Smart sync: skips files where destination mtime >= source mtime.
  *
  * Hook Type: UserPromptSubmit (sync, not async)
  * Input (stdin): JSON with user_prompt, cwd, etc.
- * Output (stdout): JSON with systemMessage containing sync stats
+ * Output (stdout): JSON with systemMessage containing sync stats + title map
  */
 
 import { readFileSync, writeFileSync, mkdirSync, statSync, readdirSync } from 'node:fs';
@@ -61,6 +65,26 @@ function walkMdFiles(baseDir, currentDir = baseDir) {
   return results;
 }
 
+/**
+ * Extract the first # heading from file content.
+ * For role guides, strips the " — ArcKit Command Guide" suffix.
+ */
+function extractTitle(content, relPath) {
+  const lines = content.split('\n', 10);
+  for (const line of lines) {
+    const m = line.match(/^#\s+(.+)/);
+    if (m) {
+      let title = m[1].trim();
+      // Role guides have a suffix to strip
+      if (relPath.startsWith('roles/')) {
+        title = title.replace(/\s*[—–-]\s*ArcKit Command Guide\s*$/i, '');
+      }
+      return title;
+    }
+  }
+  return null;
+}
+
 // --- Main ---
 let raw = '';
 try {
@@ -104,6 +128,7 @@ let copied = 0;
 let skipped = 0;
 let dirsCreated = 0;
 const createdDirs = new Set();
+const guideTitles = {}; // relPath -> extracted title
 
 for (const { abs: srcPath, rel: relPath } of sourceFiles) {
   const destPath = join(destDir, relPath);
@@ -118,6 +143,15 @@ for (const { abs: srcPath, rel: relPath } of sourceFiles) {
     createdDirs.add(destDirPath);
   }
 
+  // Read source content (needed for both copy and title extraction)
+  const content = readFileSync(srcPath, 'utf8');
+
+  // Extract title from first # heading
+  const title = extractTitle(content, relPath);
+  if (title) {
+    guideTitles[`docs/guides/${relPath}`] = title;
+  }
+
   // Smart sync: skip if destination is at least as new as source
   const srcMtime = mtimeMs(srcPath);
   const destMtime = mtimeMs(destPath);
@@ -126,13 +160,13 @@ for (const { abs: srcPath, rel: relPath } of sourceFiles) {
     continue;
   }
 
-  // Copy file
-  const content = readFileSync(srcPath);
-  writeFileSync(destPath, content);
+  // Write file
+  writeFileSync(destPath, content, 'utf8');
   copied = copied + 1;
 }
 
 const total = copied + skipped;
+const titleCount = Object.keys(guideTitles).length;
 const message = [
   `## Guide Sync Complete (hook)`,
   ``,
@@ -141,8 +175,13 @@ const message = [
   `- **${copied}** copied (new or updated)`,
   `- **${skipped}** skipped (already up to date)`,
   copied > 0 ? `- **${dirsCreated}** directories created` : null,
+  `- **${titleCount}** titles extracted`,
   ``,
-  `**Skip Step 1.1** — guides are already synced. Proceed directly to scanning \`docs/guides/\` for title extraction.`,
+  `**Skip Step 1.1 entirely** — guides are synced and titles are pre-extracted below. Do NOT use Read tool on guide files for title extraction. Use the guideTitles JSON map directly when building the guides and roleGuides arrays in manifest.json.`,
+  ``,
+  '```json',
+  JSON.stringify({ guideTitles }, null, 2),
+  '```',
 ].filter(Boolean).join('\n');
 
 const output = {
