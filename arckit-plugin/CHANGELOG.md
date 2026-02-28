@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.19.0] - 2026-02-28
+
+### Added
+
+- **Pages pre-processor hook** — the `sync-guides` hook now handles the entire `/arckit:pages` pipeline (guide sync, title extraction, repo info, template processing, project scanning, manifest generation), reducing the command from ~310 tool calls to zero. The 134KB HTML template and ~95 guide files never enter the context window.
+
+---
+
 ## [2.18.0] - 2026-02-28
 
 ### Added

@@ -23,28 +23,24 @@ The Pages Generator creates a `docs/index.html` file that:
 
 Generate a documentation site for this ArcKit repository.
 
-## Step 0: Determine Repository Info
+## Steps 0–4: Handled by Hook
 
-Determine the repository name and URL:
+**The `sync-guides` hook runs before this command and handles everything:**
 
-1. Read the `.git/config` file and find the `[remote "origin"]` section to get the remote URL
-2. Extract the repo name and owner from the URL (e.g. `https://github.com/owner/repo-name` → repo name is `repo-name`, owner is `owner`)
-3. If `.git/config` doesn't exist or has no remote, use the current directory name as the repo name
+1. Syncs all guide `.md` files from plugin to `docs/guides/`
+2. Extracts titles from each guide
+3. Reads `.git/config` for repo name, owner, URL
+4. Reads plugin VERSION
+5. Processes `pages-template.html` → writes `docs/index.html`
+6. Scans all projects, artifacts, vendors, external files → writes `docs/manifest.json`
 
-## Step 1: Discover Repository Structure
+**The hook's systemMessage contains all stats needed for the summary. Do NOT use Glob, Read, or Write tools — go directly to Step 5.**
 
-Use **Glob** and **Read** tools to scan the repository. Do NOT use `ls`, `find`, `for` loops, `head`, `grep`, `sed`, or any Bash commands for file discovery.
+The following reference sections document the manifest structure and data tables used by the hook. They are preserved here for maintenance reference only — the command does not need to process them.
 
-### 1.1 Guides (Command Documentation)
+---
 
-**Guide sync is handled automatically by the `sync-guides` hook** which runs before this command executes. The hook copies all guide `.md` files from the plugin to `docs/guides/` using native file operations (zero tool round-trips, smart mtime-based skipping).
-
-- **If the hook systemMessage is present** (mentions "Guide Sync Complete"): guides are already synced — skip directly to title scanning below
-- **If no hook message** (hook unavailable or failed): fall back to manual sync:
-  1. Use **Glob** to list all `.md` files in `.arckit/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`, `roles/`)
-  2. For each guide file, **Read** from the plugin path and **Write** to the corresponding path under `docs/guides/`, creating subdirectories as needed
-
-After syncing, use **Glob** to scan `docs/guides/*.md` (top-level only, **excluding** the `roles/` subdirectory) for command usage guides. Use **Read** (with `limit: 5`) to extract the title from the first `#` heading in each guide file. Role guides in `docs/guides/roles/` are scanned separately and added to the `roleGuides` array in manifest.json (see DDaT Role Guides section below).
+### Reference: Guide Categories
 
 **Guide Categories** (based on filename):
 
@@ -73,7 +69,7 @@ Role guides map ArcKit commands to [DDaT Capability Framework](https://ddat-capa
 | IT Operations | it-service-manager |
 | Software Development | devops-engineer |
 
-Use **Glob** to scan `docs/guides/roles/*.md` for role guide files (excluding `README.md`) and add them to a separate `roleGuides` array in manifest.json (not the `guides` array). Use **Read** (with `limit: 5`) to extract the title from the first `#` heading (strip " — ArcKit Command Guide" suffix). Map the DDaT family from the filename using the table above. Count the rows in the "Primary Commands" table to populate `commandCount`.
+Add role guides to a separate `roleGuides` array in manifest.json (not the `guides` array). Use titles from the hook's `guideTitles` map for `docs/guides/roles/*.md` paths (suffix already stripped). Map the DDaT family from the filename using the table above. Use the commandCount reference table below to populate `commandCount`.
 
 **Role guide commandCount reference**:
 
@@ -245,9 +241,9 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
 | | ANAL | `ARC-*-ANAL-*.md` | Analysis Report |
 
-## Step 2: Generate manifest.json
+### Reference: Manifest Structure
 
-Create `docs/manifest.json` with the discovered structure:
+The hook generates `docs/manifest.json` with this structure:
 
 ```json
 {
@@ -407,55 +403,9 @@ Create `docs/manifest.json` with the discovered structure:
 }
 ```
 
-## Step 3: Generate index.html
-
-### 3.1 Read the template (MANDATORY)
-
-**Read the template** (with user override support):
-
-- **First**, check if `.arckit/templates/pages-template.html` exists in the project root
-- **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `.arckit/templates/pages-template.html` (default)
-
-> **Tip**: Users can customize templates with `/arckit:customize pages`
-
-This template is the single source of truth for the pages site — it contains all HTML structure, CSS styling, and JavaScript functionality.
-
-1. Read the appropriate template file (custom override or default) using the **Read** tool
-2. Store the entire template content in memory
-3. Replace the placeholder values **in memory** (string replacement) with actual repository details:
-   - `'{{REPO}}'` → the repository name (e.g. `'arckit-test-project-v17-fuel-prices'`)
-   - `'{{REPO_URL}}'` → the full repository URL (e.g. `'https://github.com/tractorjuice/arckit-test-project-v17-fuel-prices'`)
-   - `'{{CONTENT_BASE_URL}}'` → the raw content base URL for fallback loading (e.g. `'https://raw.githubusercontent.com/tractorjuice/arckit-test-project-v17-fuel-prices/main'`). For GitHub repos use `https://raw.githubusercontent.com/{owner}/{repo}/{branch}`. For non-GitHub hosting set to `''` (empty string).
-   - `'{{VERSION}}'` → the ArcKit version from the plugin's VERSION file (`.arckit/VERSION`)
-   - `'{{DEFAULT_DOC}}'` → the default document path (principles if exists, or `''`)
-4. Write the final HTML to `docs/index.html` using the **Write** tool
-
-**IMPORTANT**: Do NOT use `sed`, `cp`, or any Bash commands for template processing. Read the template with the Read tool, perform all placeholder replacements in memory, then write the result with the Write tool. This ensures cross-platform compatibility (Windows, macOS, Linux).
-
-**Do NOT generate HTML from scratch. Do NOT modify the template structure, CSS, or JavaScript. Only replace the `{{...}}` config placeholders.**
-
-**If the template file does not exist, STOP and show an error**: Tell the user to run `arckit init` to install templates, or check that the template exists. Do NOT generate fallback HTML.
-
-## Step 4: Write Output Files
-
-**IMPORTANT**: Use the Write tool to create both files.
-
-### 4.1 Write manifest.json
-
-```text
-docs/manifest.json
-```
-
-### 4.2 Write index.html
-
-```text
-docs/index.html
-```
-
 ## Step 5: Provide Summary
 
-After generating, provide this summary:
+Use the stats from the hook's systemMessage (under "Document Stats") to fill in the summary:
 
 ```text
 Documentation Site Generated
@@ -513,53 +463,6 @@ Next Steps:
 - The dashboard displays KPI cards, category charts, coverage bars, and governance checklist computed from manifest.json
 - Users can navigate to any document via sidebar, search, or dashboard project table
 
-### Cross-Platform Compatibility
-
-**This command MUST work on Windows, macOS, and Linux without modification.** To achieve this:
-
-- Use **Glob** for all file discovery (never `ls`, `find`, or `for` loops in bash)
-- Use **Read** + **Write** for all file copying (never `cp`, `cp -r`, or `mkdir -p` in bash)
-- Use **Read** + in-memory string replacement + **Write** for template processing (never `sed`)
-- Use **Grep** for content searching (never `grep` or `head` in bash)
-- Do NOT use Bash at all — all operations can be done with Glob/Read/Write/Grep
-
-### File Discovery
-
-- Only include files that actually exist in the repository
-- Use **Glob** to discover files (never bash commands)
-- Don't include placeholder entries for missing files
-
-### Error Handling
-
-The generated HTML should handle:
-
-- Missing documents gracefully (show "Document not found")
-- Failed fetch requests (show error message)
-- Invalid markdown (display raw content)
-- Invalid mermaid syntax (show error, display raw code)
-
-### Mobile Responsiveness
-
-- Sidebar should collapse on mobile
-- Content should be readable on all screen sizes
-- Touch-friendly navigation
-
-### Accessibility
-
-- Proper heading hierarchy
-- ARIA labels for navigation
-- Keyboard navigation support
-- Skip to content link
-
-### Performance
-
-- Lazy load documents (only fetch when selected)
-- Cache fetched documents in memory
-- Show loading indicator during fetch
-
 ---
 
-**Remember**: You MUST read and use `.arckit/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
-
-- **Cross-platform**: Do NOT use Bash for file operations. Use Glob/Read/Write/Grep tools exclusively. The only acceptable Bash use is a single simple `git` command (no pipes, no `&&`, no `$()`).
-- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+**Remember**: The `sync-guides` hook handles ALL I/O before this command runs — guide sync, title extraction, repo info, template processing, project scanning, and manifest generation. The command only needs to output the Step 5 summary using stats from the hook's systemMessage.
