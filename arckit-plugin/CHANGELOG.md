@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.18.0] - 2026-02-28
+
+### Added
+
+- **Guide sync hook** (`sync-guides.mjs`) — new `UserPromptSubmit` hook replaces ~190 Read+Write tool round-trips in `/arckit:pages` with native `fs.copyFileSync`, mtime-based smart skipping, zero tool calls
+
+---
+
 ## [2.17.0] - 2026-02-28
 
 ### Added
