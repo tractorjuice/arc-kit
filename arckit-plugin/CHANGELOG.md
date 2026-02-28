@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.13.2] - 2026-02-28
+
+### Fixed
+
+- **Node.js hooks** — rewrote all 7 plugin hooks from Python to Node.js (.mjs) for Windows compatibility; `python3` doesn't exist on Windows but Node.js is guaranteed on every Claude Code installation (#86)
+- Deleted 8 legacy `.py` hook files and 5 legacy `.sh` hook files (13 files removed)
+- Added `async: true` to non-blocking hooks (arckit-session, arckit-context) for faster session start
+- Version bump across all distribution formats
+
+---
+
 ## [2.13.1] - 2026-02-27
 
 ### Fixed

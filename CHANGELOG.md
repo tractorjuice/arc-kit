@@ -5,6 +5,15 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.13.2] - 2026-02-28
+
+### Fixed
+
+- **Node.js hooks** — rewrote all 7 plugin hooks from Python to Node.js (.mjs) for Windows compatibility (#86)
+- Version bump across all distribution formats
+
+---
+
 ## [2.13.1] - 2026-02-27
 
 ### Fixed
