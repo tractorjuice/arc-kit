@@ -18,11 +18,19 @@ $ARGUMENTS
    - Example: "Generate traceability matrix for payment gateway project"
    - Example: "Update traceability for project 001"
 
-2. **Read all project artifacts**:
-   - **REQ** (Requirements) — Source of truth for all requirements
-   - **HLDR** (HLD Reviews, in vendors/{vendor}/reviews/) — Review findings
-   - **DLDR** (DLD Reviews, in vendors/{vendor}/reviews/) — Review findings
-   - Also read vendor HLD/DLD submissions in `projects/{project-dir}/vendors/{vendor}/`
+2. **Artifacts pre-extracted by hook**:
+
+   > **Note**: The **Traceability Pre-processor Hook** has already:
+   > 1. Extracted all requirement IDs with categories, priorities, and descriptions from REQ files
+   > 2. Scanned all ADRs, vendor HLD/DLD files, and HLDR/DLDR reviews for requirement ID references
+   > 3. Computed coverage analysis: covered vs orphan requirements, coverage by category and priority
+   > 4. Detected existing TRAC version for version numbering
+   >
+   > Use the hook's `systemMessage` data directly. **Do NOT re-read REQ, ADR, or review files for requirement IDs.**
+   >
+   > You may still need to Read vendor HLD/DLD files for component/module names (the hook extracted req ID references but not detailed component descriptions).
+   >
+   > If the hook data is not present (systemMessage missing), fall back to reading all artifacts manually.
 
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/traceability-matrix-template.md` exists in the project root
@@ -31,11 +39,10 @@ $ARGUMENTS
 
    > **Tip**: Users can customize templates with `/arckit:customize traceability`
 
-3. **Read external documents and policies**:
-   - Read any **vendor designs** in `projects/{project-dir}/vendors/{vendor}/` — extract component-to-requirement mappings, API-to-feature mappings, test coverage evidence
-   - Read any **external documents** listed in the project context (`external/` files) — extract test results, code coverage reports, deployment records
-   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise traceability standards, test strategy documents, cross-project requirements management frameworks
-   - If no external docs found but they would improve traceability coverage, ask: "Do you have any vendor design documents, test plans, or implementation records? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+3. **Read external documents** (if needed):
+   - The hook has NOT read external documents or vendor prose — Read these if needed for component names, test evidence, or implementation details
+   - Read any **enterprise standards** in `projects/000-global/external/` if relevant
+   - If no external docs found but they would improve traceability coverage, ask the user
 
 4. **Build the traceability matrix**:
 

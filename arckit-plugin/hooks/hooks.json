@@ -50,6 +50,16 @@
             "timeout": 30
           }
         ]
+      },
+      {
+        "matcher": "/arckit:traceability",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/traceability-scan.mjs",
+            "timeout": 20
+          }
+        ]
       }
     ],
     "PreToolUse": [
