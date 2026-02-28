@@ -5,6 +5,14 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.20.4] - 2026-02-28
+
+### Fixed
+
+- **Pages command ignores hook stats** — removed all tools from allowed-tools and strengthened hook output to prevent AI from reading manifest
+
+---
+
 ## [2.20.3] - 2026-02-28
 
 ### Fixed

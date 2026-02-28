@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.20.4] - 2026-02-28
+
+### Fixed
+
+- **Pages command ignores hook stats and reads manifest** — removed all tools from `allowed-tools` (was `Read, Glob, Grep`), reformatted hook stats as a markdown table with explicit heading, and added triple-layered "do not call any tools" instructions to prevent the AI from second-guessing the hook's output.
+
+---
+
 ## [2.20.3] - 2026-02-28
 
 ### Fixed

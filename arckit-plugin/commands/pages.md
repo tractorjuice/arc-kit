@@ -1,6 +1,6 @@
 ---
 description: Generate documentation site with governance dashboard, document viewer, and Mermaid diagram support
-allowed-tools: Read, Glob, Grep
+allowed-tools: ""
 argument-hint: "<project ID or 'all', e.g. '001', 'all'>"
 ---
 
@@ -36,7 +36,7 @@ Generate a documentation site for this ArcKit repository.
 5. Processes `pages-template.html` → writes `docs/index.html`
 6. Scans all projects, artifacts, vendors, external files → writes `docs/manifest.json`
 
-**The hook's systemMessage contains all stats needed for the summary. Do NOT use Glob, Read, Write, or any other tools — go directly to Step 5. The hook has already written docs/index.html and docs/manifest.json. Do NOT regenerate or overwrite these files.**
+**CRITICAL: The hook's systemMessage contains ALL document stats you need. Use ONLY those stats for the Step 5 summary. Do NOT call any tools — no Read, Write, Glob, Grep, or Bash. Do NOT read manifest.json or any other file. The hook has already written docs/index.html and docs/manifest.json with correct data. Go directly to Step 5 and output the summary using the stats from the systemMessage.**
 
 The following reference sections document the manifest structure and data tables used by the hook. They are preserved here for maintenance reference only — the command does not need to process them.
 
@@ -467,4 +467,4 @@ Next Steps:
 
 ---
 
-**Remember**: The `sync-guides` hook handles ALL I/O before this command runs — guide sync, title extraction, repo info, template processing, project scanning, and manifest generation. The command only needs to output the Step 5 summary using stats from the hook's systemMessage.
+**Remember**: The `sync-guides` hook handles ALL I/O before this command runs — guide sync, title extraction, repo info, template processing, project scanning, and manifest generation. The command MUST output the Step 5 summary using ONLY the stats from the hook's systemMessage. Do NOT call any tools — no Read, no Glob, no Write, no Bash. The hook's stats are the single source of truth.
