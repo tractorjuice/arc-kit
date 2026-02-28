@@ -9,6 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.15.1] - 2026-02-28
+
+### Added
+
+- **`allowed-tools` frontmatter** on all 53 plugin commands — explicit tool permissions per command for tighter security and predictability
+
+### Fixed
+
+- Replace Python script calls (`create-project.py`, `generate-document-id.py`, `list-projects.py`) with inline Glob/Write instructions in 20 commands — commands no longer shell out to scripts
+- Remove `Bash` from `allowed-tools` in 50 commands that don't need it (down from 53 to only 3: `story`, `init`, `trello`)
+- Markdown lint CI now recurses into subdirectories correctly
+- Suppress MD038 false positive for intentional space-in-code-span in DEPENDENCY-MATRIX.md
+
+---
+
 ## [2.15.0] - 2026-02-28
 
 ### Added
