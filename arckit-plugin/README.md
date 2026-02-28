@@ -32,11 +32,13 @@ claude --plugin-dir /path/to/arc-kit/arckit-plugin
 
 ## Prerequisites
 
-- **Claude Code** v2.1.50 or later
+- **Claude Code** v2.1.63 or later (recommended minimum)
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
+
+> **Why v2.1.63?** This version includes memory leak fixes for subagents and long-running sessions, which directly improves stability for ArcKit's 5 research agents. It also fixes MCP server cache leaks (important for the 4 bundled MCP servers), resolves stale skill caching after `/clear`, and adds worktree config sharing for multi-repo workflows.
 
 ## Quick Start
 

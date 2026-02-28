@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" class="govuk-template">
+<head>
+    <meta charset="UTF-8">
+    <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="description" content="ArcKit Contributors - Meet the community members who have shaped ArcKit through code contributions, feature requests, and bug reports.">
+    <title>Contributors - ArcKit</title>
+    <meta name="keywords" content="ArcKit contributors, open source community, architecture toolkit contributors">
+    <meta name="author" content="ArcKit">
+    <meta property="og:title" content="Contributors - ArcKit">
+    <meta property="og:description" content="Meet the community members who have shaped ArcKit through code contributions, feature requests, and bug reports.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://arckit.org/contributors.html">
+    <meta property="og:site_name" content="ArcKit">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contributors - ArcKit">
+    <meta name="twitter:description" content="Meet the community members who have shaped ArcKit through code contributions, feature requests, and bug reports.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
+    <link rel="canonical" href="https://arckit.org/contributors.html">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+
+    <!-- GOV.UK Frontend v5.13.0 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.css" integrity="sha384-AceDY4oHkY81f+xCeKu8Quexo66/gUuQDs73S9k0dLlVZCL4YKg/pEJtw4dxL4wY" crossorigin="anonymous">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="heroes.css">
+
+    <style>
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+
+        [class*="govuk-"] {
+            font-family: inherit;
+        }
+
+        /* Nav Bar */
+        .app-nav-bar {
+            background: #0b0c0c;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid #505a5f;
+        }
+
+        .app-nav-bar__inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .app-nav-bar__list {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-nav-bar__item a {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            border-bottom: 3px solid transparent;
+        }
+
+        .app-nav-bar__item a:hover,
+        .app-nav-bar__item a:focus {
+            background: #1d1d1d;
+            border-bottom-color: #1d70b8;
+            color: #ffffff;
+        }
+
+        .app-nav-bar__item--active a {
+            border-bottom-color: #1d70b8;
+        }
+
+        .app-nav-bar__brand {
+            color: #ffffff;
+            font-size: 1.125rem;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 0.75rem 1.25rem;
+            display: block;
+        }
+
+        .app-nav-bar__brand:hover,
+        .app-nav-bar__brand:focus {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .app-nav-bar__toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.125rem;
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        @media (max-width: 48em) {
+            .app-nav-bar__toggle { display: block; }
+            .app-nav-bar__list { display: none; flex-direction: column; width: 100%; }
+            .app-nav-bar__list--open { display: flex; }
+            .app-nav-bar__inner { flex-wrap: wrap; }
+            .app-nav-bar__item a { padding: 0.75rem 1rem; border-bottom: none; border-left: 3px solid transparent; }
+            .app-nav-bar__item a:hover,
+            .app-nav-bar__item a:focus { border-left-color: #1d70b8; border-bottom: none; }
+            .app-nav-bar__item--active a { border-left-color: #1d70b8; border-bottom: none; }
+        }
+
+        /* Contributor Cards */
+        .app-contributor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .app-contributor-card {
+            background: #f3f2f1;
+            padding: 1.5rem;
+            border-top: 4px solid #b58900;
+        }
+
+        .app-contributor-card:hover {
+            background: #e8e6e3;
+        }
+
+        .app-contributor-card__header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-contributor-card__avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: #b58900;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .app-contributor-card__name {
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .app-contributor-card__name a {
+            color: #0b0c0c;
+            text-decoration: none;
+        }
+
+        .app-contributor-card__name a:hover {
+            text-decoration: underline;
+        }
+
+        .app-contributor-card__role {
+            display: inline-block;
+            font-size: 0.6875rem;
+            padding: 0.125rem 0.5rem;
+            border-radius: 2px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 0.25rem;
+        }
+
+        .app-contributor-card__role--code {
+            background: #00703c;
+            color: white;
+        }
+
+        .app-contributor-card__role--feature {
+            background: #1d70b8;
+            color: white;
+        }
+
+        .app-contributor-card__role--bug {
+            background: #d4351c;
+            color: white;
+        }
+
+        .app-contributor-card__highlights {
+            list-style: none;
+            padding: 0;
+            margin: 0.75rem 0 0;
+        }
+
+        .app-contributor-card__highlights li {
+            font-size: 0.875rem;
+            color: #505a5f;
+            padding: 0.25rem 0;
+            padding-left: 1.25rem;
+            position: relative;
+        }
+
+        .app-contributor-card__highlights li::before {
+            content: '\2713';
+            position: absolute;
+            left: 0;
+            color: #00703c;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .app-footer {
+            background: #0b0c0c;
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .app-footer a { color: white; text-decoration: underline; }
+        .app-footer a:hover { color: #5694ca; }
+    </style>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": "https://arckit.org/contributors.html",
+                "name": "Contributors - ArcKit",
+                "description": "Meet the community members who have shaped ArcKit through code contributions, feature requests, and bug reports.",
+                "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://arckit.org/" },
+                    { "@type": "ListItem", "position": 2, "name": "Contributors", "item": "https://arckit.org/contributors.html" }
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body class="govuk-template__body">
+    <a class="govuk-skip-link" href="#main-content">Skip to main content</a>
+    <script>document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');</script>
+
+    <nav class="app-nav-bar" aria-label="Main navigation">
+        <div class="govuk-width-container app-nav-bar__inner">
+            <a href="index.html" class="app-nav-bar__brand">ArcKit</a>
+            <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
+            <ul class="app-nav-bar__list" id="nav-menu">
+                <li class="app-nav-bar__item"><a href="commands.html">AI Commands</a></li>
+                <li class="app-nav-bar__item"><a href="use-cases.html">Example Projects</a></li>
+                <li class="app-nav-bar__item"><a href="guides.html">Guides</a></li>
+                <li class="app-nav-bar__item"><a href="roles.html">Roles</a></li>
+                <li class="app-nav-bar__item"><a href="getting-started.html">Getting Started</a></li>
+                <li class="app-nav-bar__item app-nav-bar__item--active"><a href="contributors.html">Contributors</a></li>
+            </ul>
+            <div class="app-nav-bar__icons">
+                <a href="https://github.com/tractorjuice/arc-kit" class="app-icon-link" aria-label="GitHub repository" title="GitHub repository">
+                    <svg width="20" height="20" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+                </a>
+                <button class="app-theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme"></button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="app-page-hero app-page-hero--contributors">
+        <div class="govuk-width-container app-page-hero__content">
+            <span class="app-page-hero__stat">7 Contributors</span>
+            <h1 class="app-page-hero__title">Contributors</h1>
+            <p class="app-page-hero__description">Meet the community members who have shaped ArcKit through code contributions, feature requests, and bug reports. Every contribution matters.</p>
+        </div>
+    </div>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+        <div class="govuk-width-container">
+            <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
+
+            <!-- Code Contributors -->
+            <h2 class="govuk-heading-l">Code Contributors</h2>
+            <p class="govuk-body">These contributors have submitted code changes that were merged into ArcKit, directly improving the toolkit for everyone.</p>
+
+            <div class="app-contributor-grid">
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">U</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/umag">@umag</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--code">Code Contributor</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">First external code contributor to ArcKit. Fixed document generation issues and improved output quality across multiple commands.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Fixed stakeholder analysis generation</li>
+                        <li>Improved template formatting consistency</li>
+                        <li>Multiple merged pull requests</li>
+                    </ul>
+                </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">D</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/DavidROliverBA">@DavidROliverBA</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--code">Code Contributor</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Contributed improvements to business architecture commands and documentation quality enhancements.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Business architecture improvements</li>
+                        <li>Documentation quality enhancements</li>
+                    </ul>
+                </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">A</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/alefbt">@alefbt</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--code">Code Contributor</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Contributed cross-platform compatibility fixes ensuring ArcKit works reliably on Windows alongside macOS and Linux.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Windows compatibility fixes</li>
+                        <li>Cross-platform script improvements</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Feature Requesters & Bug Reporters -->
+            <h2 class="govuk-heading-l govuk-!-margin-top-8">Feature Requesters &amp; Bug Reporters</h2>
+            <p class="govuk-body">These contributors identified improvements and issues that made ArcKit better. Feature requests and bug reports are vital contributions &mdash; they shape the roadmap and improve reliability.</p>
+
+            <div class="app-contributor-grid">
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">J</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/johnfelipe">@johnfelipe</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--feature">Feature Requester</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Requested multi-AI support, helping drive ArcKit's expansion beyond Claude Code to Codex CLI, Gemini CLI, and OpenCode CLI.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Requested multi-AI assistant support</li>
+                        <li>Influenced the quad-distribution model</li>
+                    </ul>
+                </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">B</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/brettderry">@brettderry</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--bug">Bug Reporter</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Identified and reported issues with command execution, helping improve reliability and error handling.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Reported command execution issues</li>
+                        <li>Helped improve error handling</li>
+                    </ul>
+                </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">E</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/elasticdotventures">@elasticdotventures</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--feature">Feature Requester</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Suggested improvements to cloud research capabilities and integration patterns for enterprise workflows.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Cloud research improvement suggestions</li>
+                        <li>Enterprise workflow feedback</li>
+                    </ul>
+                </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">A</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/anyulled">@anyulled</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--bug">Bug Reporter</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Reported documentation and usability issues, contributing to a smoother onboarding experience for new users.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Reported documentation issues</li>
+                        <li>Improved onboarding experience</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Community Summary -->
+            <h2 class="govuk-heading-l govuk-!-margin-top-8">Community Impact</h2>
+            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 3 code contributors, 2 feature requesters, and 2 bug reporters, these 7 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, and documentation quality.</p>
+
+            <!-- Contributing CTA -->
+            <div class="govuk-inset-text govuk-!-margin-top-6">
+                <h3 class="govuk-heading-m">Want to contribute?</h3>
+                <p class="govuk-body">ArcKit welcomes contributions of all kinds &mdash; code, documentation, feature requests, bug reports, and feedback. Every contribution helps make enterprise architecture governance more accessible.</p>
+                <p class="govuk-body"><a href="https://github.com/tractorjuice/arc-kit" class="govuk-link">Visit the ArcKit GitHub repository</a> to get started.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="app-footer">
+        <div class="govuk-width-container">
+            <p class="govuk-body-s">Built with <a href="https://design-system.service.gov.uk/" class="govuk-link">GOV.UK Design System</a> | <a href="index.html" class="govuk-link">Back to ArcKit</a> | <a href="https://github.com/tractorjuice/arc-kit" class="govuk-link">GitHub</a> | MIT License</p>
+        </div>
+    </footer>
+
+    <!-- GOV.UK Frontend JavaScript -->
+    <script type="module" src="https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js" integrity="sha384-DwGEYeDIkSBDH4+n4Z+tY7m0/hKLvETQmD6glhDiHn0lFo3hffImqh39zfNvHVrd" crossorigin="anonymous"></script>
+    <script type="module">
+        import { initAll } from 'https://cdn.jsdelivr.net/npm/govuk-frontend@5.13.0/dist/govuk/govuk-frontend.min.js'
+        initAll()
+    </script>
+<script src="theme.js"></script>
+</body>
+</html>

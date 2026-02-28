@@ -240,3 +240,30 @@
         );
     background-size: 20px 20px;
 }
+
+/* ============================================================
+   Variant: Contributors  — warm gold/amber, connected-nodes
+   ============================================================ */
+.app-page-hero--contributors {
+    background: linear-gradient(135deg, #b58900 0%, #7a5c00 100%);
+}
+
+.app-page-hero--contributors::before {
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.08) 3px,
+            transparent 3px
+        ),
+        repeating-linear-gradient(
+            60deg,
+            rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px, transparent 40px
+        ),
+        repeating-linear-gradient(
+            -60deg,
+            rgba(255, 255, 255, 0.03) 0px, rgba(255, 255, 255, 0.03) 1px,
+            transparent 1px, transparent 40px
+        );
+    background-size: 40px 40px, auto, auto;
+}
