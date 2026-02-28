@@ -25,21 +25,24 @@ The Pages Generator creates a `docs/index.html` file that:
 
 Generate a documentation site for this ArcKit repository.
 
-## Step 0: Determine Repository Info
+## Steps 0–4: Handled by Hook
 
-Repository info is pre-computed by the `sync-guides` hook. Use the repo name, owner, URL, and content base URL from the hook's systemMessage (under "Repository Info").
+**The `sync-guides` hook runs before this command and handles everything:**
 
-## Step 1: Discover Repository Structure
+1. Syncs all guide `.md` files from plugin to `docs/guides/`
+2. Extracts titles from each guide
+3. Reads `.git/config` for repo name, owner, URL
+4. Reads plugin VERSION
+5. Processes `pages-template.html` → writes `docs/index.html`
+6. Scans all projects, artifacts, vendors, external files → writes `docs/manifest.json`
 
-Use **Glob** and **Read** tools to scan the repository. Do NOT use `ls`, `find`, `for` loops, `head`, `grep`, `sed`, or any Bash commands for file discovery.
+**The hook's systemMessage contains all stats needed for the summary. Do NOT use Glob, Read, or Write tools — go directly to Step 5.**
 
-### 1.1 Guides (Command Documentation)
+The following reference sections document the manifest structure and data tables used by the hook. They are preserved here for maintenance reference only — the command does not need to process them.
 
-**Guide sync and title extraction are handled automatically by the `sync-guides` hook** which runs before this command executes. The hook copies all guide `.md` files from the plugin to `docs/guides/` and extracts the first `#` heading from each file — zero tool round-trips.
+---
 
-Use the `guideTitles` JSON map from the hook's systemMessage directly — do NOT use Glob or Read on guide files. The map keys are repo-relative paths (e.g., `docs/guides/requirements.md`, `docs/guides/roles/enterprise-architect.md`) and values are the extracted titles (with " — ArcKit Command Guide" suffix already stripped for role guides).
-
-Build the `guides` array for top-level guides (excluding `roles/` subdirectory) and the `roleGuides` array for role guides from the guideTitles map. Role guides in `docs/guides/roles/` are added to a separate `roleGuides` array in manifest.json (see DDaT Role Guides section below).
+### Reference: Guide Categories
 
 **Guide Categories** (based on filename):
 
@@ -240,9 +243,9 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
 | | ANAL | `ARC-*-ANAL-*.md` | Analysis Report |
 
-## Step 2: Generate manifest.json
+### Reference: Manifest Structure
 
-Create `docs/manifest.json` with the discovered structure:
+The hook generates `docs/manifest.json` with this structure:
 
 ```json
 {
@@ -402,17 +405,9 @@ Create `docs/manifest.json` with the discovered structure:
 }
 ```
 
-## Step 3: Generate index.html
-
-**The hook has already written `docs/index.html`** with all `{{...}}` placeholders replaced (repo name, URL, content base URL, version). Skip this step entirely — proceed to Step 4.
-
-## Step 4: Write manifest.json
-
-Use the **Write** tool to create `docs/manifest.json`. The hook already wrote `docs/index.html`.
-
 ## Step 5: Provide Summary
 
-After generating, provide this summary:
+Use the stats from the hook's systemMessage (under "Document Stats") to fill in the summary:
 
 ```text
 Documentation Site Generated
@@ -470,52 +465,6 @@ Next Steps:
 - The dashboard displays KPI cards, category charts, coverage bars, and governance checklist computed from manifest.json
 - Users can navigate to any document via sidebar, search, or dashboard project table
 
-### Cross-Platform Compatibility
-
-**This command MUST work on Windows, macOS, and Linux without modification.** To achieve this:
-
-- Use **Glob** for all file discovery (never `ls`, `find`, or `for` loops in bash)
-- Use **Read** + **Write** for all file copying (never `cp`, `cp -r`, or `mkdir -p` in bash)
-- Use **Read** + in-memory string replacement + **Write** for template processing (never `sed`)
-- Use **Grep** for content searching (never `grep` or `head` in bash)
-- Do NOT use Bash at all — all operations can be done with Glob/Read/Write/Grep
-
-### File Discovery
-
-- Only include files that actually exist in the repository
-- Use **Glob** to discover files (never bash commands)
-- Don't include placeholder entries for missing files
-
-### Error Handling
-
-The generated HTML should handle:
-
-- Missing documents gracefully (show "Document not found")
-- Failed fetch requests (show error message)
-- Invalid markdown (display raw content)
-- Invalid mermaid syntax (show error, display raw code)
-
-### Mobile Responsiveness
-
-- Sidebar should collapse on mobile
-- Content should be readable on all screen sizes
-- Touch-friendly navigation
-
-### Accessibility
-
-- Proper heading hierarchy
-- ARIA labels for navigation
-- Keyboard navigation support
-- Skip to content link
-
-### Performance
-
-- Lazy load documents (only fetch when selected)
-- Cache fetched documents in memory
-- Show loading indicator during fetch
-
 ---
 
-**Remember**: The `sync-guides` hook handles guide syncing, title extraction, repo info, and template processing before this command runs. The command only needs to scan project artifacts, build manifest.json, and write it.
-
-- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+**Remember**: The `sync-guides` hook handles ALL I/O before this command runs — guide sync, title extraction, repo info, template processing, project scanning, and manifest generation. The command only needs to output the Step 5 summary using stats from the hook's systemMessage.
