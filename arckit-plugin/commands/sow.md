@@ -68,6 +68,11 @@ $ARGUMENTS
 
    Before generating the SOW, use the **AskUserQuestion** tool to gather procurement preferences. **Skip any question the user has already answered in their arguments.**
 
+   **Gathering rules** (apply to all questions in this section):
+   - Ask the most important question first; fill in secondary details from context or reasonable defaults.
+   - **Maximum 2 rounds of questions.** After that, pick the best option from available context.
+   - If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
    **Question 1** — header: `Contract`, multiSelect: false
    > "What contract type should the SOW specify?"
    - **Fixed-price (Recommended)**: Vendor commits to delivering scope for agreed price — lower risk for buyer, requires well-defined requirements

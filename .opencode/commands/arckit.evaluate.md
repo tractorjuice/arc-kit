@@ -50,6 +50,12 @@ $ARGUMENTS
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise evaluation frameworks, procurement scoring templates, cross-project vendor assessment benchmarks
    - If no vendor proposals found, ask: "Do you have vendor proposal documents to evaluate? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/vendors/{vendor-name}/` and re-run, or skip to create the evaluation framework only."
 
+**Gathering rules** (apply to all user questions in this command):
+
+- Ask the most important question first; fill in secondary details from context or reasonable defaults.
+- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
+- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
 5. **Determine the task**: The user may want to:
    - **Create evaluation framework** (before receiving proposals)
    - **Score a specific vendor** (after receiving proposal)

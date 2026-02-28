@@ -60,6 +60,12 @@ This command generates DOS-compliant procurement documentation from your existin
 - Read any **enterprise standards** in `projects/000-global/external/` — extract organization-wide procurement templates, DOS framework guidance, approved supplier capabilities
 - If no external DOS docs exist but they would improve the submission, ask: "Do you have any contractor CVs, previous DOS submissions, or buyer requirement documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
+**Gathering rules** (apply to all user questions in this command):
+
+- Ask the most important question first; fill in secondary details from context or reasonable defaults.
+- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
+- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
 ### 2. Identify the target project
 
 - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)

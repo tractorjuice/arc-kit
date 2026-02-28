@@ -154,6 +154,12 @@ Extract project metadata:
 
 Before generating the backlog, use the **AskUserQuestion** tool to gather user preferences. **Skip any question where the user has already specified their choice via the arguments above** (e.g., if they wrote `PRIORITY=risk`, do not ask about prioritization).
 
+**Gathering rules** (apply to all questions in this section):
+
+- Ask the most important question first; fill in secondary details from context or reasonable defaults.
+- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
+- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
 **Question 1** — header: `Priority`, multiSelect: false
 > "Which prioritization approach should be used for the backlog?"
 

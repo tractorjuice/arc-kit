@@ -44,6 +44,12 @@ Read existing artifacts from the project context to understand what to diagram:
 
 **IMPORTANT**: Ask **both** questions below in a **single AskUserQuestion call** so the user sees them together. Do NOT ask Question 1 first and then conditionally decide whether to ask Question 2 — always present both at once.
 
+**Gathering rules** (apply to all questions in this section):
+
+- Ask the most important question first; fill in secondary details from context or reasonable defaults.
+- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
+- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
 **Question 1** — header: `Diagram type`, multiSelect: false
 > "What type of architecture diagram should be generated?"
 

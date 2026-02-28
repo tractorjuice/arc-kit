@@ -58,6 +58,12 @@ Identify the target project from the hook context. If the user specifies a proje
 
 If the project already exists, check for existing `ARC-{PROJECT_ID}-PLAT-v*.md` files. If found, ask user if they want to overwrite or update.
 
+**Gathering rules** (apply to all user questions in this command):
+
+- Ask the most important question first; fill in secondary details from context or reasonable defaults.
+- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
+- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
 ---
 
 ### Step 2: Read the Template

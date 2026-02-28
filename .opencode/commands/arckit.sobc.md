@@ -81,6 +81,11 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
    Before generating the SOBC, use the **AskUserQuestion** tool to gather appraisal preferences. **Skip any question the user has already answered in their arguments.**
 
+   **Gathering rules** (apply to all questions in this section):
+   - Ask the most important question first; fill in secondary details from context or reasonable defaults.
+   - **Maximum 2 rounds of questions.** After that, pick the best option from available context.
+   - If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
    **Question 1** — header: `Options`, multiSelect: false
    > "How many strategic options should be evaluated in the Economic Case?"
    - **4 options (Recommended)**: Do Nothing + Minimal + Balanced + Comprehensive — standard Green Book options appraisal

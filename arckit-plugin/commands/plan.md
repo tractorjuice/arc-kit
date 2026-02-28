@@ -57,6 +57,12 @@ Read existing project artifacts to tailor the plan:
 
 Before determining project parameters, use the **AskUserQuestion** tool to gather user preferences. **Skip any question where the user has already specified their preference in the arguments.**
 
+**Gathering rules** (apply to all questions in this section):
+
+- Ask the most important question first; fill in secondary details from context or reasonable defaults.
+- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
+- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
 **Question 1** — header: `Approach`, multiSelect: false
 > "What delivery approach should this project follow?"
 

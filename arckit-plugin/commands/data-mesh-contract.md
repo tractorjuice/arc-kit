@@ -80,6 +80,12 @@ $ARGUMENTS
    - If user says "no", stop here
    - If user says "yes" or if ARC-*-STKE-*.md exists, proceed to Step 1
 
+**Gathering rules** (apply to all user questions in this command):
+
+- Ask the most important question first; fill in secondary details from context or reasonable defaults.
+- **Maximum 2 rounds of questions total.** After that, infer the best answer from available context.
+- If still ambiguous after 2 rounds, make a reasonable choice and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
 ### Step 1: Parse User Input
 
 Extract the **data product name** from the user's message. Examples:

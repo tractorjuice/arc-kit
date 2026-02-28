@@ -64,6 +64,12 @@ Read existing project artifacts to understand what to diagram:
 
 If the user has **not** specified a DFD level in their arguments, use the **AskUserQuestion** tool to ask:
 
+**Gathering rules** (apply to all questions in this section):
+
+- Ask the most important question first; fill in secondary details from context or reasonable defaults.
+- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
+- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+
 **Question 1** — header: `DFD Level`, multiSelect: false
 > "What level of Data Flow Diagram should be generated?"
 
