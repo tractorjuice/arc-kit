@@ -79,11 +79,13 @@
 ### Key Findings and Recommendations
 
 **Key Findings:**
+
 - [Finding 1: e.g., "Heavy concentration of technology risks with single owner (CTO)"]
 - [Finding 2: e.g., "3 critical risks have no mitigations in place"]
 - [Finding 3: e.g., "Financial risks exceed appetite by average of 40%"]
 
 **Recommendations:**
+
 1. [Recommendation 1: e.g., "Escalate R-001, R-002, R-005 to Steering Committee immediately"]
 2. [Recommendation 2: e.g., "Implement automated monitoring for technology risks"]
 3. [Recommendation 3: e.g., "Obtain Board approval for risks exceeding financial appetite"]
@@ -96,7 +98,7 @@
 
 **5×5 Likelihood × Impact Matrix**
 
-```
+```text
                                     IMPACT
               1-Minimal   2-Minor    3-Moderate   4-Major    5-Severe
            ┌───────────┬───────────┬───────────┬───────────┬───────────┐
@@ -120,6 +122,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 ```
 
 **Risk Zones:**
+
 - **Critical (20-25)**: R-001, R-003, R-004 - Immediate escalation required
 - **High (13-19)**: R-005, R-007, R-009 - Senior management attention
 - **Medium (6-12)**: R-002, R-006, R-008, R-010 - Management monitoring
@@ -129,7 +132,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 
 **5×5 Likelihood × Impact Matrix - After Controls Applied**
 
-```
+```text
                                     IMPACT
               1-Minimal   2-Minor    3-Moderate   4-Major    5-Severe
            ┌───────────┬───────────┬───────────┬───────────┬───────────┐
@@ -153,6 +156,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 ```
 
 **Risk Movement Analysis:**
+
 - **Significant Improvement**: R-001 (25→6), R-004 (20→4) - Controls very effective
 - **Moderate Improvement**: R-002 (9→9), R-005 (16→12) - Additional controls needed
 - **Limited Improvement**: R-003 (15→12) - Current controls insufficient
@@ -195,22 +199,26 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 [What underlying issue creates this risk?]
 
 **Trigger Events:**
+
 - [Event 1 that would cause this risk to materialize]
 - [Event 2 that would cause this risk to materialize]
 - [Event 3 that would cause this risk to materialize]
 
 **Consequences if Realized:**
 [What happens if this risk occurs? Tangible impacts:]
+
 - [Impact 1: e.g., "£2M budget overrun"]
 - [Impact 2: e.g., "6-month project delay"]
 - [Impact 3: e.g., "Loss of stakeholder confidence"]
 
 **Affected Stakeholders:**
+
 - **[Stakeholder 1]** (from ARC-{PROJECT_ID}-STKE-v*.md): [How they are affected]
 - **[Stakeholder 2]**: [How they are affected]
 - **[Stakeholder 3]**: [How they are affected]
 
 **Related Objectives:**
+
 - [Stakeholder Goal G-001]: [How this risk threatens the goal]
 - [Stakeholder Goal G-005]: [How this risk threatens the goal]
 
@@ -227,6 +235,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 #### Current Controls and Mitigations
 
 **Existing Controls:**
+
 1. **[Control 1]**: [Description of control]
    - Owner: [Name]
    - Effectiveness: Weak | Adequate | **Strong**
@@ -258,6 +267,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 [Why this response was chosen - e.g., "Risk exceeds appetite but can be mitigated through additional controls at reasonable cost"]
 
 **Alternative Responses Considered:**
+
 - **Tolerate**: Rejected - Risk score too high, exceeds appetite
 - **Transfer**: Considered - Would require £X insurance, cost-prohibitive
 - **Terminate**: Not viable - Activity essential to strategic objectives
@@ -292,15 +302,18 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
    - Expected Impact: Reduce impact from 4 to 3
 
 **Target Residual Risk After Mitigations:**
+
 - Target Likelihood: 3 (Possible)
 - Target Impact: 3 (Moderate)
 - Target Score: 9 (Medium) ✅ Within appetite (≤ 12)
 
 **Success Criteria:**
+
 - [Criterion 1: How we'll know mitigations are working]
 - [Criterion 2: Measurable indicator]
 
 **Monitoring Plan:**
+
 - **Frequency:** Weekly review in Steering Committee
 - **Key Indicators:**
   - [KPI 1 to monitor]
@@ -332,11 +345,13 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 **Control Effectiveness:** 31% reduction
 
 **Risk List:**
+
 - R-001: [Title] - Residual: 16 (High)
 - R-005: [Title] - Residual: 12 (Medium)
 - R-010: [Title] - Residual: 3 (Low)
 
 **Key Themes:**
+
 - [Theme 1: e.g., "Strategic direction uncertainty from policy changes"]
 - [Theme 2: e.g., "Stakeholder alignment challenges"]
 
@@ -352,10 +367,12 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 **Control Effectiveness:** 41% reduction
 
 **Risk List:**
+
 - R-006: [Title] - Residual: 6 (Medium)
 - R-008: [Title] - Residual: 4 (Low)
 
 **Key Themes:**
+
 - [Theme 1: e.g., "Resource availability and skills gaps"]
 - [Theme 2: e.g., "Process maturity issues"]
 
@@ -371,10 +388,12 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 **Control Effectiveness:** 29% reduction
 
 **Risk List:**
+
 - R-004: [Title] - Residual: 9 (Medium)
 - R-009: [Title] - Residual: 8 (Medium)
 
 **Key Themes:**
+
 - [Theme 1: e.g., "Cost estimation uncertainty"]
 - [Theme 2: e.g., "Funding dependency on external approval"]
 
@@ -390,9 +409,11 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 **Control Effectiveness:** 29% reduction
 
 **Risk List:**
+
 - R-003: [Title] - Residual: 16 (High)
 
 **Key Themes:**
+
 - [Theme 1: e.g., "GDPR/DPA 2018 compliance complexity"]
 - [Theme 2: e.g., "Regulatory change during project"]
 
@@ -408,9 +429,11 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 **Control Effectiveness:** 26% reduction
 
 **Risk List:**
+
 - R-005: [Title] - Residual: 12 (Medium)
 
 **Key Themes:**
+
 - [Theme 1: e.g., "Public/media scrutiny of government IT projects"]
 - [Theme 2: e.g., "Service failure visibility"]
 
@@ -426,10 +449,12 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 **Control Effectiveness:** 38% reduction
 
 **Risk List:**
+
 - R-002: [Title] - Residual: 12 (Medium)
 - R-007: [Title] - Residual: 8 (Medium)
 
 **Key Themes:**
+
 - [Theme 1: e.g., "Legacy system integration challenges"]
 - [Theme 2: e.g., "Technology maturity and scaling"]
 
@@ -450,11 +475,13 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 | COO | Operations Lead | R-006, R-008 | 0 | 0 | 1 | 1 | 10 | Low |
 
 **Risk Concentration Analysis:**
+
 - ⚠️ **CEO owns 3 risks totaling 31 points** - Consider delegating some risks
 - **CTO concentration on technology risks** - Expected and appropriate
 - **Good distribution across financial and operational risks**
 
 **Escalation Paths:**
+
 - **Critical/High Strategic Risks** → CEO → Board
 - **Critical/High Technology Risks** → CTO → Steering Committee
 - **All Compliance Risks** → CCO → Audit Committee
@@ -485,6 +512,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 | TECHNOLOGY | 0 | 2 | 0 | 0 | Treat (100%) |
 
 **Key Insights:**
+
 - **60% of risks require active treatment** - Significant mitigation effort needed
 - **Only 20% can be tolerated** - Indicates challenging risk environment
 - **Limited transfer opportunities** - Most risks internal to project
@@ -527,6 +555,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 | R-001 | STRATEGIC | 12 | 16 | +4 | 33% | ⚠️ Board approval pending |
 
 **Recommendations:**
+
 1. **URGENT**: Escalate R-003 (COMPLIANCE) to Audit Committee - 300% over appetite
 2. **HIGH PRIORITY**: Obtain Board approval for R-001 (STRATEGIC) - pending approval
 3. **MONITOR**: R-005 (REPUTATIONAL) - CEO approval obtained, monitor closely
@@ -571,6 +600,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 **Expected Risk Reduction:** 6 points total
 
 **Overall Action Plan Summary:**
+
 - **Total Actions:** 6
 - **Total Investment:** £130K
 - **Expected Risk Reduction:** 31 points (34% reduction)
@@ -583,22 +613,26 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 **How this Risk Register feeds into Strategic Outline Business Case (SOBC):**
 
 ### SOBC Strategic Case (Part A)
+
 - **"Why Now?" section** uses strategic risks to demonstrate urgency
 - **R-001** (STRATEGIC, 16): Demonstrates need for immediate action to address [strategic driver]
 
 ### SOBC Economic Case (Part B)
+
 - **Risk-adjusted costs** use financial risks + HM Treasury optimism bias
 - **R-004** (FINANCIAL, 9): £2M budget risk → Add 15% contingency (£300K)
 - **R-009** (FINANCIAL, 8): Cost escalation risk → Add 10% contingency (£200K)
 - **Total risk contingency:** £500K added to Economic Case costs
 
 ### SOBC Management Case (Part E - Risk Management)
+
 - **Full risk register** included in Management Case Part E
 - **Top 10 risks** highlighted with mitigation plans
 - **Risk ownership matrix** demonstrates clear accountability
 - **Monitoring framework** shows ongoing risk management capability
 
 ### SOBC Recommendation
+
 - **High-risk profile** (60% exceeding appetite) may influence:
   - Option selection (prefer lower-risk options)
   - Phasing strategy (de-risk early phases first)
@@ -620,17 +654,20 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 ### Key Risk Indicators (KRIs)
 
 **Leading Indicators** (predict future risk changes):
+
 - [KRI 1: e.g., "Team turnover rate > 10% → increases operational risk"]
 - [KRI 2: e.g., "Vendor SLA breaches → increases technology risk"]
 - [KRI 3: e.g., "Budget variance > 5% → increases financial risk"]
 
 **Lagging Indicators** (confirm risk materialization):
+
 - [KRI 4: e.g., "Defect rate > 5 per release → technology risk realized"]
 - [KRI 5: e.g., "Schedule delay > 2 weeks → operational risk realized"]
 
 ### Escalation Criteria
 
 **Automatic Escalation Triggers:**
+
 1. Any risk increases by 5+ points
 2. Any new Critical risk (score 20-25) identified
 3. Any risk exceeds appetite and no mitigation plan
@@ -640,17 +677,20 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 ### Reporting Requirements
 
 **Weekly** (Critical Risks Only):
+
 - Dashboard to Steering Committee
 - Narrative update on top 3 critical risks
 - Action plan progress
 
 **Monthly** (All Risks):
+
 - Full risk register to Project Board
 - Risk matrix visualization
 - Risk appetite compliance summary
 - Action plan status
 
 **Quarterly** (Strategic Review):
+
 - Risk register to Audit Committee (if applicable)
 - Risk trend analysis (improving/deteriorating)
 - Risk appetite threshold review
@@ -661,6 +701,7 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 **Risk Register Owner:** [Name, Role]
 
 **Responsibilities:**
+
 - Maintain accuracy of risk register
 - Coordinate risk reviews with risk owners
 - Update risk scores based on evidence
@@ -669,12 +710,14 @@ Legend: ██ Critical (20-25)  ▓▓ High (13-19)  ░░ Medium (6-12)  ··
 - Produce risk reports
 
 **Update Process:**
+
 1. Risk owners submit updates weekly (critical/high) or monthly (medium/low)
 2. Risk register owner validates and updates register
 3. PMO reviews for consistency and completeness
 4. Steering Committee approves material changes
 
 **Version Control:**
+
 - Version increments with each update
 - Change log maintained in Document Control section
 - Previous versions archived for audit trail
@@ -835,4 +878,3 @@ This risk register demonstrates compliance with HM Treasury Orange Book (2023):
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

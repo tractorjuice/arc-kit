@@ -45,18 +45,21 @@ Example: "Use PostgreSQL for Data Persistence" or "Adopt API Gateway Pattern"
 ## 2. Stakeholders
 
 ### 2.1 Deciders (RACI: Accountable)
+
 Final decision makers with authority to approve this ADR.
 
 - [Name, Role] - [Justification for involvement]
 - [Name, Role]
 
 ### 2.2 Consulted (RACI: Consulted)
+
 Subject matter experts providing input through two-way communication.
 
 - [Name, Role, Expertise area]
 - [Name, Role, Expertise area]
 
 ### 2.3 Informed (RACI: Informed)
+
 Stakeholders kept up-to-date with one-way communication.
 
 - [Name, Role]
@@ -67,6 +70,7 @@ Stakeholders kept up-to-date with one-way communication.
 **Decision Level**: [Team / Cross-team / Department / Cross-government]
 
 **Escalation Rationale**:
+
 - [ ] **Team**: Local implementation choice (frameworks, libraries, testing)
 - [ ] **Cross-team**: Integration patterns, shared services, API standards
 - [ ] **Department**: Technology standards, cloud providers, security frameworks
@@ -155,21 +159,25 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 **Wardley Evolution Stage**: [Genesis (Novel) / Custom-Built / Product (Off-the-shelf) / Commodity (Utility)]
 
 #### Good (Pros)
+
 - ✅ **[Benefit]**: [Explanation, links to requirements met]
 - ✅ **[Benefit]**: [Explanation, links to principles supported]
 - ✅ **[Benefit]**: [Quantified where possible - performance metrics, cost savings]
 
 #### Bad (Cons)
+
 - ❌ **[Drawback]**: [Explanation, links to requirements not met]
 - ❌ **[Risk]**: [What could go wrong? Mitigation strategies]
 - ❌ **[Trade-off]**: [Accepted negative consequences]
 
 #### Cost Analysis
+
 - **CAPEX**: [One-time costs: licenses, hardware, migration]
 - **OPEX**: [Ongoing costs: support, training, maintenance per year]
 - **TCO (3-year)**: [Total cost of ownership]
 
 #### GDS Service Standard Impact
+
 | Point | Impact | Notes |
 |-------|--------|-------|
 | 4. Open standards | [Positive/Negative/Neutral] | [Explanation] |
@@ -189,10 +197,12 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 **Description**: Continue with current approach or defer the decision.
 
 #### Good
+
 - ✅ **No immediate cost**: No investment required
 - ✅ **No risk**: No implementation risk
 
 #### Bad
+
 - ❌ **Technical debt accumulates**: [What problems persist?]
 - ❌ **Opportunity cost**: [What benefits are missed?]
 - ❌ **Compliance risk**: [Any regulatory issues?]
@@ -225,6 +235,7 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 [Explain why this option was chosen over the alternatives. Reference decision drivers and stakeholder input.]
 
 **Key reasons**:
+
 1. **[Reason]**: [Explanation with evidence]
 2. **[Reason]**: [Quantified benefits where possible]
 3. **[Reason]**: [Risk mitigation]
@@ -244,6 +255,7 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 - ✅ **[Compliance]**: [Regulatory/standard compliance achieved]
 
 **Measurable outcomes**:
+
 - [Metric]: [Baseline] → [Target] (e.g., API response time: 500ms → 100ms)
 - [Metric]: [Improvement]
 
@@ -254,6 +266,7 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 - ❌ **[Technical debt]**: [Future work needed]
 
 **Mitigation strategies**:
+
 - **[Trade-off]**: [How will we address this in future?]
 - **[Limitation]**: [Workarounds or future ADRs]
 
@@ -280,16 +293,19 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 ### 8.1 How Will Implementation Be Verified?
 
 **Design review**:
+
 - [ ] High-Level Design (HLD) review includes this decision
 - [ ] Detailed Design (DLD) shows implementation details
 - [ ] Architecture diagrams reflect this decision
 
 **Code review**:
+
 - [ ] Pull request checklist includes ADR compliance
 - [ ] Architecture patterns match decision
 - [ ] Configuration matches decision parameters
 
 **Testing strategy**:
+
 - [ ] Unit tests verify implementation
 - [ ] Integration tests validate decision outcome
 - [ ] Performance tests confirm non-functional requirements met
@@ -298,28 +314,34 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 ### 8.2 Monitoring & Observability
 
 **Success metrics** (how to measure if decision achieved goals):
+
 - **[Metric]**: [Target value, measurement method]
 - **[Metric]**: [Baseline vs target, monitoring tool]
 
 **Alerts and dashboards**:
+
 - [What metrics will be monitored?]
 - [What thresholds trigger alerts?]
 
 ### 8.3 Compliance Verification
 
 **GDS Service Assessment**:
+
 - [ ] Point [X]: [How this decision addresses Service Standard point]
 - [ ] Evidence prepared for assessment
 
 **Technology Code of Practice**:
+
 - [ ] Point [X]: [How this decision addresses TCoP point]
 
 **Security assurance**:
+
 - [ ] NCSC Cloud Security Principles: [Which principles apply?]
 - [ ] Cyber Essentials controls: [Impact on 5 controls]
 - [ ] Security testing completed: [Pen test, vulnerability scan]
 
 **Data protection**:
+
 - [ ] DPIA updated if processing personal data
 - [ ] Data flow diagrams updated
 - [ ] Privacy notice updated if needed
@@ -331,14 +353,17 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 ### 9.1 Requirements Traceability
 
 **Business Requirements**:
+
 - BR-XXX: [Requirement title] - [How decision addresses it]
 - BR-XXX: [Requirement title]
 
 **Functional Requirements**:
+
 - FR-XXX: [Requirement title]
 - FR-XXX: [Requirement title]
 
 **Non-Functional Requirements**:
+
 - NFR-P-XXX: [Performance requirement]
 - NFR-SEC-XXX: [Security requirement]
 - NFR-S-XXX: [Scalability requirement]
@@ -346,55 +371,69 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 ### 9.2 Architecture Artifacts
 
 **Architecture principles**: `projects/000-global/ARC-000-PRIN-v*.md`
+
 - [List which principles influenced this decision]
 
 **Stakeholder drivers**: `projects/XXX/ARC-XXX-STKE-v*.md`
+
 - [Link to stakeholder goals this decision supports]
 
 **Risk register**: `projects/XXX/ARC-XXX-RISK-v*.md`
+
 - RISK-XXX: [Risk this decision mitigates]
 
 **Research findings**: `projects/XXX/ARC-XXX-RSCH-v*.md`
+
 - [Section/page that analyzed these options]
 
 **Wardley Maps**: `projects/XXX/wardley-maps/ARC-XXX-WARD-*.md`
+
 - [Map showing evolution stage of chosen components]
 
 **Architecture diagrams**: `projects/XXX/diagrams/ARC-XXX-DIAG-*.md`
+
 - [List C4/deployment/sequence diagrams showing this decision]
 
 **Strategic roadmap**: `projects/XXX/ARC-*-ROAD-*.md`
+
 - [Theme/initiative this decision supports]
 
 ### 9.3 Design Documents
 
 **High-Level Design**: `projects/XXX/vendors/[vendor]/hld-v*.md`
+
 - [Section showing implementation of this decision]
 
 **Detailed Design**: `projects/XXX/vendors/[vendor]/dld-v*.md`
+
 - [Detailed implementation specifications]
 
 **Data model**: `projects/XXX/ARC-XXX-DATA-v*.md`
+
 - [If decision affects data structure]
 
 ### 9.4 External References
 
 **Standards and RFCs**:
+
 - [RFC number/link]
 - [ISO/IEC standard]
 - [W3C specification]
 
 **Vendor documentation**:
+
 - [Product documentation links]
 - [API references]
 - [Best practice guides]
 
 **UK Government guidance**:
+
 - [GDS Service Manual link]
 - [NCSC guidance link]
 - [GOV.UK Architecture patterns]
 
 **Research and evidence**:
+
 - [Academic papers]
 - [Industry benchmarks]
 - [Proof of concept results]
@@ -406,12 +445,15 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 ### 10.1 Dependencies
 
 **Prerequisite decisions**:
+
 - ADR-XXX: [Must be implemented first]
 
 **Infrastructure dependencies**:
+
 - [Cloud services, environments, accounts needed]
 
 **Team dependencies**:
+
 - [Skills, training, team capacity]
 
 ### 10.2 Implementation Timeline
@@ -428,6 +470,7 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 **Rollback trigger**: [What conditions require rollback?]
 
 **Rollback procedure**:
+
 1. [Step-by-step rollback process]
 2. [Data migration back if needed]
 3. [Communication plan]
@@ -445,6 +488,7 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 **Periodic review**: [Frequency - annually, or triggered by events]
 
 **Review criteria**:
+
 - Are success metrics being met?
 - Have assumptions changed?
 - Is this decision still optimal?
@@ -492,6 +536,7 @@ Reference architecture principles from `projects/000-global/ARC-000-PRIN-v*.md`:
 ### Appendix C: Alternative Formats
 
 **Mermaid Decision Flow Diagram** (optional):
+
 ```mermaid
 graph TD
     A[Problem: Need data persistence] --> B{Decision Drivers}
@@ -527,6 +572,7 @@ graph TD
 *This ADR follows the MADR v4.0 format enhanced with UK Government requirements and ArcKit governance standards.*
 
 *For more information:*
+
 - *MADR: https://adr.github.io/madr/*
 - *UK Gov ADR Framework: https://www.gov.uk/government/publications/architectural-decision-record-framework*
 - *ArcKit Documentation: [Link to project README]*

@@ -62,6 +62,7 @@ This document defines the criteria, scoring methodology, and process for evaluat
 ### 1.4 Conflict of Interest
 
 All evaluators must disclose any conflicts of interest with vendors:
+
 - [ ] Personal relationships with vendor employees
 - [ ] Financial interests in vendor companies
 - [ ] Prior employment with vendor (within 2 years)
@@ -132,6 +133,7 @@ Before scoring, vendors must meet ALL mandatory qualifications. Failure on any i
 | **MQ-10** | Key personnel resumes included | [ ] Pass [ ] Fail | |
 
 **Disqualification Procedure**:
+
 1. Evaluator identifies mandatory qualification failure
 2. Evaluation lead confirms failure
 3. Vendor notified of disqualification with specific reason
@@ -336,16 +338,19 @@ Cost proposals are opened **only for shortlisted vendors** after technical evalu
 **Method**: [SELECT ONE]
 
 #### Option A: Lowest Price Best Value (Recommended)
+
 - Lowest cost proposal receives 100 points
 - Other proposals scaled proportionally
 - Formula: `Cost Score = (Lowest Price / Vendor Price) × 100`
 
 #### Option B: Fixed Weight
+
 - Cost is [30]% of total score
 - Technical is [70]% of total score
 - Final Score = (Technical Score × 0.70) + (Cost Score × 0.30)
 
 #### Option C: Cost Reasonableness
+
 - Each vendor scored on cost reasonableness (not purely lowest)
 - Scoring based on value for money, not absolute price
 - Consider: total cost, cost breakdown, value provided
@@ -388,6 +393,7 @@ Cost proposals are opened **only for shortlisted vendors** after technical evalu
 **Final Score = (Technical Score × [0.70]) + (Cost Score × [0.30])**
 
 Adjust weights based on organizational priorities:
+
 - High technical complexity: 80% technical, 20% cost
 - Cost-sensitive: 60% technical, 40% cost
 - Balanced: 70% technical, 30% cost
@@ -409,15 +415,18 @@ Shortlisted vendors present their proposals to the evaluation committee.
 ### 7.1 Presentation Format
 
 **Duration**: [2 hours]
+
 - Vendor presentation: [60 minutes]
 - Q&A: [60 minutes]
 
 **Attendees**:
+
 - Evaluation committee (all members)
 - Key stakeholders (business sponsors, technical leads)
 - Note-taker (non-voting)
 
 **Presentation Content**:
+
 1. Company overview (5 min)
 2. Team introductions (5 min)
 3. Solution overview (15 min)
@@ -429,11 +438,13 @@ Shortlisted vendors present their proposals to the evaluation committee.
 ### 7.2 Presentation Evaluation
 
 Presentations are NOT separately scored but may adjust existing scores based on:
+
 - Clarifications that resolve concerns (improve scores)
 - Red flags or concerning answers (lower scores)
 - Team chemistry and communication effectiveness
 
 **Post-Presentation Actions**:
+
 1. Evaluation committee discusses each vendor
 2. Scores adjusted if significant new information emerged
 3. Updated scores documented with rationale
@@ -449,6 +460,7 @@ For each shortlisted vendor, contact **all provided references** (minimum 3).
 **Reference Check Template**:
 
 **Reference Information**:
+
 - Client Organization: _______________
 - Contact Name: _______________
 - Contact Role: _______________
@@ -496,6 +508,7 @@ For each shortlisted vendor, contact **all provided references** (minimum 3).
     - Notes: _______________
 
 **Reference Check Summary**:
+
 - [ ] Highly Positive (enthusiastic, would rehire, exceeded expectations)
 - [ ] Positive (satisfied, met expectations, would consider again)
 - [ ] Mixed (some concerns, met most expectations, might rehire with reservations)
@@ -504,6 +517,7 @@ For each shortlisted vendor, contact **all provided references** (minimum 3).
 ### 8.2 Reference Check Impact on Scoring
 
 Reference checks do NOT add points but may **disqualify** or **lower scores**:
+
 - **Disqualification**: Multiple negative references or single highly negative reference
 - **Score Adjustment**: Concerning patterns (e.g., always over budget) may lower relevant subcriteria scores by 10-20%
 
@@ -516,11 +530,13 @@ Reference checks do NOT add points but may **disqualify** or **lower scores**:
 The highest scoring vendor is typically selected, but decision may also consider:
 
 **Quantitative (Objective)**:
+
 - Final combined score
 - Cost relative to budget
 - Technical score threshold (minimum 70/100 technical required)
 
 **Qualitative (Subjective)**:
+
 - Cultural fit and communication style
 - Confidence in delivery based on presentations and references
 - Strategic partnership potential
@@ -539,6 +555,7 @@ The highest scoring vendor is typically selected, but decision may also consider
 **Decision Authority**: [CTO/CIO | Procurement Committee | Steering Committee]
 
 **Approval Requirements**:
+
 - Evaluation summary presented to decision authority
 - Rationale for selection documented
 - Risks and mitigation strategies outlined
@@ -552,11 +569,13 @@ The highest scoring vendor is typically selected, but decision may also consider
 [Summary of why this vendor was selected]
 
 **Key Strengths**:
+
 - [Strength 1]
 - [Strength 2]
 - [Strength 3]
 
 **Risks and Mitigations**:
+
 - [Risk 1]: [Mitigation strategy]
 - [Risk 2]: [Mitigation strategy]
 
@@ -576,6 +595,7 @@ The highest scoring vendor is typically selected, but decision may also consider
 ### 10.1 Award Notification
 
 **Selected Vendor**:
+
 - Notify within [1 business day] of decision
 - Schedule contract negotiation kickoff
 - Provide high-level feedback on their strengths
@@ -585,11 +605,13 @@ The highest scoring vendor is typically selected, but decision may also consider
 **Notification Timeline**: Within [2 business days] of decision
 
 **Notification Content**:
+
 - Thank vendor for their proposal
 - Inform them they were not selected
 - Offer optional debrief call (no obligation)
 
 **Debrief Guidelines** (if vendor requests):
+
 - Schedule within 2 weeks of request
 - Provide constructive feedback on their proposal
 - Do NOT disclose other vendors' scores or details
@@ -605,12 +627,14 @@ Vendors may appeal selection decision if they believe process was unfair.
 ### 11.1 Grounds for Appeal
 
 Appeals accepted only for:
+
 - [ ] Evaluation process not followed as documented
 - [ ] Scoring errors or mathematical mistakes
 - [ ] Evaluator conflict of interest not disclosed
 - [ ] Vendor information misrepresented by evaluation team
 
 Appeals NOT accepted for:
+
 - [ ] Disagreement with evaluation criteria
 - [ ] Disagreement with scores or subjective judgments
 - [ ] "We should have won because we're cheaper"
@@ -630,6 +654,7 @@ Appeals NOT accepted for:
 ### 12.1 Required Documentation
 
 All evaluation materials must be retained for [3 years]:
+
 - [ ] RFP/SOW document
 - [ ] All vendor proposals (technical and cost)
 - [ ] Individual scoring sheets
@@ -642,6 +667,7 @@ All evaluation materials must be retained for [3 years]:
 ### 12.2 Confidentiality
 
 Evaluation materials are confidential:
+
 - Evaluators sign non-disclosure agreement
 - Proposals not shared outside evaluation committee
 - Scores and vendor comparisons remain confidential

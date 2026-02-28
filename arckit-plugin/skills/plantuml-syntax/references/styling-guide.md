@@ -160,6 +160,7 @@ PlantUML includes several built-in themes:
 ```
 
 Usage:
+
 ```plantuml
 @startuml
 !theme cerulean

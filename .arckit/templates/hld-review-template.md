@@ -60,6 +60,7 @@ This document captures the Architecture Review Board's evaluation of the High-Le
 ### 1.4 Review Criteria
 
 The HLD will be evaluated against:
+
 - **Architecture Principles**: Compliance with enterprise architecture principles
 - **Requirements Alignment**: Coverage of functional and non-functional requirements
 - **Technical Feasibility**: Soundness and implementability of design
@@ -94,10 +95,12 @@ The HLD will be evaluated against:
 ### 2.4 Conditions for Approval
 
 **MUST Address Before Detailed Design**:
+
 1. [BLOCKING-01]: [Critical issue that MUST be resolved]
 2. [BLOCKING-02]: [Critical issue that MUST be resolved]
 
 **SHOULD Address During Detailed Design**:
+
 1. [ADVISORY-01]: [Important issue that should be clarified]
 2. [ADVISORY-02]: [Important issue that should be clarified]
 
@@ -138,15 +141,18 @@ Evaluate HLD compliance with enterprise architecture principles.
 **Assessment**: [✅ Compliant | ⚠️ Partial | ❌ Non-Compliant]
 
 **Evidence**:
+
 - [List specific design decisions that demonstrate compliance]
 - [E.g., "Uses AWS Lambda for event processing, eliminating server management"]
 - [E.g., "Leverages managed RDS for database, avoiding self-hosted database"]
 
 **Concerns**:
+
 - [List any deviations or concerns]
 - [E.g., "Proposes self-hosted Kafka instead of managed MSK without clear justification"]
 
 **Recommendation**:
+
 - [Action items to achieve full compliance]
 
 ---
@@ -156,14 +162,17 @@ Evaluate HLD compliance with enterprise architecture principles.
 **Assessment**: [✅ Compliant | ⚠️ Partial | ❌ Non-Compliant]
 
 **Evidence**:
+
 - [E.g., "All services expose RESTful APIs with OpenAPI 3.0 specifications"]
 - [E.g., "No direct database access across service boundaries"]
 - [E.g., "Authentication via OAuth 2.0 with JWT tokens"]
 
 **Concerns**:
+
 - [E.g., "Integration with legacy System X appears to use direct database access"]
 
 **Recommendation**:
+
 - [E.g., "Replace direct database access with API gateway pattern or CDC (Change Data Capture)"]
 
 ---
@@ -185,10 +194,12 @@ Review how HLD addresses functional requirements from requirements document.
 | FR-3 | [Requirement] | [ ] Yes [ ] Partial [ ] No | [Service/component] | [✅ | ⚠️ | ❌] |
 
 **Gaps Identified**:
+
 - [FR-X not addressed: [Description and impact]]
 - [FR-Y partially addressed: [What's missing]]
 
 **Recommendation**:
+
 - [How to address gaps in detailed design]
 
 ---
@@ -244,11 +255,13 @@ Review how HLD addresses functional requirements from requirements document.
 **Assessment**: [✅ Clear | ⚠️ Needs improvement | ❌ Inadequate]
 
 **Comments**:
+
 - [Is the system boundary clear?]
 - [Are all external actors and systems identified?]
 - [Are data flows and interactions logical?]
 
 **Issues**:
+
 - [Issue 1]
 - [Issue 2]
 
@@ -261,6 +274,7 @@ Review how HLD addresses functional requirements from requirements document.
 **Assessment**: [✅ Clear | ⚠️ Needs improvement | ❌ Inadequate]
 
 **Comments**:
+
 - [Are all major components/services identified?]
 - [Are technologies chosen for each container appropriate?]
 - [Are inter-container communication patterns clear?]
@@ -273,6 +287,7 @@ Review how HLD addresses functional requirements from requirements document.
 | [Service 2] | [What it does] | [Tech stack] | [✅ | ⚠️ | ❌] | |
 
 **Concerns**:
+
 - [Service boundaries unclear between X and Y]
 - [Service Z appears to be a "god service" with too many responsibilities]
 
@@ -292,9 +307,11 @@ Review how HLD addresses functional requirements from requirements document.
 | **Monitoring** | [Prometheus, Grafana, DataDog] | [✅ | ⚠️ | ❌] | [✅ | ⚠️ | ❌] | |
 
 **Non-Approved Technologies**:
+
 - [Technology X]: [Justification provided? Is it acceptable?]
 
 **Technology Risks**:
+
 - [Risk 1: e.g., "Team lacks expertise in Technology Y"]
 - [Risk 2: e.g., "Technology Z is bleeding edge with limited community support"]
 
@@ -315,6 +332,7 @@ Review how HLD addresses functional requirements from requirements document.
 | [Entity 2] | [Service B] | [MongoDB] | [✅ | ⚠️ | ❌] |
 
 **Concerns**:
+
 - [Shared database pattern detected between Services X and Y]
 - [Data consistency strategy for distributed transactions not clear]
 
@@ -323,6 +341,7 @@ Review how HLD addresses functional requirements from requirements document.
 **Assessment**: [✅ Clear | ⚠️ Needs improvement | ❌ Inadequate]
 
 **Comments**:
+
 - [Are data flows between services clearly defined?]
 - [Is data synchronization strategy clear (sync vs. async, eventual consistency)?]
 - [Are data lifecycle and retention policies addressed?]
@@ -350,12 +369,14 @@ Review how HLD addresses functional requirements from requirements document.
 | [Legacy System X] | [???] | [???] | [???] | [✅ | ⚠️ | ❌] | |
 
 **Concerns**:
+
 - [Integration with Legacy System X not well-defined]
 - [Error handling and retry logic not specified]
 
 #### API Design
 
 **API Standards Compliance**:
+
 - [ ] OpenAPI 3.0 specifications mentioned
 - [ ] RESTful design principles followed
 - [ ] Versioning strategy defined
@@ -381,6 +402,7 @@ Review how HLD addresses functional requirements from requirements document.
 | [Threat 2] | [H/M/L] | [H/M/L] | [Control] | [✅ | ⚠️ | ❌] |
 
 **Missing Threat Analysis**:
+
 - [Threat X not considered]
 
 ---
@@ -436,6 +458,7 @@ Review how HLD addresses functional requirements from requirements document.
 | SOC 2 Type II | [Controls aligned with trust principles] | [✅ | ⚠️ | ❌] | |
 
 **Gaps**:
+
 - [Compliance requirement X not addressed]
 
 ---
@@ -457,6 +480,7 @@ Review how HLD addresses functional requirements from requirements document.
 **Bottlenecks Identified and Mitigated**: [ ] Yes [ ] No
 
 **Concerns**:
+
 - [Database may become bottleneck; sharding strategy not detailed]
 
 ---
@@ -490,6 +514,7 @@ Review how HLD addresses functional requirements from requirements document.
 **Failure Modes Analyzed**: [ ] Yes [ ] No
 
 **Single Points of Failure (SPOFs)**:
+
 - [SPOF 1: [Description and mitigation]]
 - [SPOF 2: [Description and mitigation]]
 
@@ -524,6 +549,7 @@ Review how HLD addresses functional requirements from requirements document.
 **DR Runbook Provided**: [ ] Yes [ ] No [ ] Deferred to DLD
 
 **Concerns**:
+
 - [Failover procedure not detailed - must be documented in DLD]
 
 ---
@@ -589,6 +615,7 @@ Review how HLD addresses functional requirements from requirements document.
 | **Total** | **$[X]** | **$[X]** | |
 
 **Cost Optimization Strategies**:
+
 - [ ] Right-sizing of resources
 - [ ] Reserved instances for predictable workloads
 - [ ] Spot instances for batch jobs
@@ -655,11 +682,13 @@ Suggestions for improvement, not required for approval.
 **Effective Date**: [DATE]
 
 **Conditions** (if conditional approval):
+
 1. [BLOCKING-01 must be resolved by [DATE]]
 2. [BLOCKING-02 must be resolved by [DATE]]
 3. [Revised HLD section X.Y resubmitted for review]
 
 **Next Steps**:
+
 - [ ] Vendor addresses blocking issues
 - [ ] Revised HLD sections submitted for re-review (if applicable)
 - [ ] Re-review meeting scheduled (if needed): [DATE]

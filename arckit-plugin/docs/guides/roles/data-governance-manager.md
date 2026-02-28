@@ -29,7 +29,7 @@ The Data Governance Manager ensures data is managed according to organisational 
 
 ## Typical Workflow
 
-```
+```text
 principles → requirements (DR-xxx) → data-model → dpia → data-mesh-contract → principles-compliance
 ```
 

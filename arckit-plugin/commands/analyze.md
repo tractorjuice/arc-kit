@@ -25,6 +25,7 @@ Identify inconsistencies, gaps, ambiguities, and compliance issues across all ar
 ### 0. Read the Template
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/analysis-report-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/analysis-report-template.md` (default)
@@ -34,12 +35,14 @@ Identify inconsistencies, gaps, ambiguities, and compliance issues across all ar
 ### 1. Discover Project Context
 
 Identify the project directory to analyze:
+
 - If user specifies project: Use specified project directory
 - If only one project exists: Analyze that project
 - If multiple projects: Ask user which project to analyze
 
 Expected structure:
-```
+
+```text
 projects/
 └── {project-dir}/
     ├── ARC-{PROJECT_ID}-STKE-v*.md (RECOMMENDED - stakeholder analysis)
@@ -66,6 +69,7 @@ projects/
 Load only minimal necessary context from each artifact:
 
 **From any `ARC-000-PRIN-*.md` file in `projects/000-global/`** (if exists):
+
 - Strategic principles (Cloud-First, API-First, etc.)
 - Security principles
 - Data principles
@@ -73,6 +77,7 @@ Load only minimal necessary context from each artifact:
 - Compliance requirements
 
 **From any `ARC-*-STKE-*.md` file in `projects/{project-dir}/`** (if exists):
+
 - Stakeholder roster with power-interest grid
 - Driver types (STRATEGIC, OPERATIONAL, FINANCIAL, COMPLIANCE, PERSONAL, RISK, CUSTOMER)
 - Driver → Goal → Outcome traceability
@@ -80,6 +85,7 @@ Load only minimal necessary context from each artifact:
 - RACI matrix for governance
 
 **From any `ARC-*-RISK-*.md` file in `projects/{project-dir}/`** (if exists):
+
 - Risk categories (Strategic, Operational, Financial, Compliance, Reputational, Technology)
 - Inherent vs Residual risk scores (5×5 matrix)
 - Risk responses (4Ts: Tolerate, Treat, Transfer, Terminate)
@@ -87,6 +93,7 @@ Load only minimal necessary context from each artifact:
 - Risk appetite and tolerance levels
 
 **From any `ARC-*-SOBC-*.md` file in `projects/{project-dir}/`** (if exists):
+
 - Strategic Case (problem, drivers, stakeholder goals)
 - Economic Case (options, benefits, NPV, ROI)
 - Commercial Case (procurement strategy)
@@ -94,6 +101,7 @@ Load only minimal necessary context from each artifact:
 - Management Case (governance, delivery, change, risks, benefits realization)
 
 **From any `ARC-*-REQ-*.md` file in `projects/{project-dir}/`** (if exists):
+
 - Business requirements (BR-xxx)
 - Functional requirements (FR-xxx)
 - Non-functional requirements (NFR-xxx)
@@ -106,6 +114,7 @@ Load only minimal necessary context from each artifact:
 - Success criteria
 
 **From any `ARC-*-DATA-*.md` file in `projects/{project-dir}/`** (if exists):
+
 - Entity-Relationship Diagram (ERD)
 - Entity catalog (E-001, E-002, etc.)
 - PII identification and GDPR compliance
@@ -115,12 +124,14 @@ Load only minimal necessary context from each artifact:
 - DR-xxx requirement traceability to entities
 
 **From `projects/{project-dir}/ARC-*-SOW-*.md`** (if exists):
+
 - Scope of work
 - Deliverables
 - Technical requirements
 - Timeline and budget
 
 **From `projects/{project-dir}/vendors/{vendor}/hld-v*.md`** (if exists):
+
 - Architecture overview
 - Component design
 - Technology stack
@@ -128,17 +139,20 @@ Load only minimal necessary context from each artifact:
 - Data architecture
 
 **From `projects/{project-dir}/vendors/{vendor}/dld-v*.md`** (if exists):
+
 - Component specifications
 - API contracts
 - Database schemas
 - Security implementation
 
 **From UK Government Assessments** (if exist):
+
 - `ARC-*-TCOP-*.md`: TCoP compliance status
 - `ARC-*-AIPB-*.md`: AI Playbook compliance status
 - `ARC-*-ATRS-*.md`: ATRS record completeness
 
 **From MOD Assessment** (if exists):
+
 - `ARC-*-SECD-MOD-*.md`: MOD SbD compliance status
   - 7 SbD Principles assessment
   - NIST CSF (Identify, Protect, Detect, Respond, Recover)
@@ -152,49 +166,58 @@ Load only minimal necessary context from each artifact:
 Create internal representations (do not include raw artifacts in output):
 
 **Stakeholder Traceability Matrix** (if ARC-*-STKE-*.md exists):
+
 - Each stakeholder with drivers, goals, outcomes
 - RACI roles for governance
 - Conflicts and resolutions
 - Which requirements trace to which stakeholder goals?
 
 **Risk Coverage Matrix** (if ARC-*-RISK-*.md exists):
+
 - Each risk with category, inherent/residual scores, response
 - Risk owners from RACI matrix
 - Which requirements address risk mitigation?
 - Which design elements mitigate risks?
 
 **Business Case Alignment Matrix** (if ARC-*-SOBC-*.md exists):
+
 - Benefits mapping to stakeholder goals
 - Benefits mapping to requirements
 - Costs mapping to requirements scope
 - Risks from risk register reflected in Management Case
 
 **Requirements Inventory**:
+
 - Each requirement with ID, type, priority (MUST/SHOULD/MAY)
 - Map to principles (which principles does this requirement satisfy?)
 - Map to stakeholder goals (which goals does this requirement address?)
 - Map to success criteria
 
 **Data Model Coverage Matrix** (if ARC-*-DATA-*.md exists):
+
 - Each DR-xxx requirement mapped to entities
 - Each entity with PII flags, governance owners, CRUD access
 - Data owners from stakeholder RACI matrix
 - Database schema in DLD matches data model entities
 
 **Principles Compliance Matrix**:
+
 - Each principle with validation criteria
 - Which requirements/designs satisfy each principle?
 
 **Design Coverage Matrix**:
+
 - Which requirements are addressed in HLD/DLD?
 - Which components implement which requirements?
 
 **UK Government Compliance Matrix** (if applicable):
+
 - TCoP: 13 points with compliance status
 - AI Playbook: 10 principles + 6 themes with compliance status
 - ATRS: Mandatory fields completion status
 
 **MOD Compliance Matrix** (if ARC-*-SECD-MOD-*.md exists):
+
 - 7 SbD Principles with compliance status
 - NIST CSF functions (Identify, Protect, Detect, Respond, Recover)
 - CAAT registration status
@@ -207,21 +230,25 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 #### A. Requirements Quality Analysis
 
 **Duplication Detection**:
+
 - Near-duplicate requirements across BR/FR/NFR categories
 - Redundant requirements that should be consolidated
 
 **Ambiguity Detection**:
+
 - Vague adjectives lacking measurable criteria ("fast", "secure", "scalable", "intuitive")
 - Missing acceptance criteria for functional requirements
 - Unresolved placeholders (TODO, TBD, TBC, ???, `<placeholder>`)
 
 **Underspecification**:
+
 - Requirements with verbs but missing measurable outcomes
 - Missing non-functional requirements (no security, no performance, no compliance)
 - Missing data requirements (system handles sensitive data but no DR-xxx)
 - Missing integration requirements (integrates with external systems but no INT-xxx)
 
 **Priority Issues**:
+
 - All requirements marked as MUST (no prioritization)
 - No MUST requirements (everything is optional)
 - Conflicting priorities
@@ -229,21 +256,25 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 #### B. Architecture Principles Alignment
 
 **Principle Violations** (CRITICAL):
+
 - Requirements or designs that violate architecture principles
 - Technology choices that conflict with approved stack
 - Security approaches that violate security-by-design principle
 - Cloud architecture that violates Cloud-First principle
 
 **Missing Principle Coverage**:
+
 - Principles not reflected in requirements
 - Principles not validated in design reviews
 
 **Principle Drift**:
+
 - Inconsistent interpretation of principles across artifacts
 
 #### C. Requirements → Design Traceability
 
 **Coverage Gaps**:
+
 - Requirements with zero design coverage (not addressed in HLD/DLD)
 - Critical MUST requirements not covered
 - Security requirements (NFR-S-xxx) not reflected in security architecture
@@ -251,11 +282,13 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Compliance requirements (NFR-C-xxx) not addressed
 
 **Orphan Design Elements**:
+
 - Components in HLD/DLD not mapped to any requirement
 - Technology choices not justified by requirements
 - Architecture complexity not justified by requirements
 
 **Traceability Completeness**:
+
 - Does traceability matrix exist?
 - Are all requirements mapped?
 - Are all design elements mapped?
@@ -263,17 +296,20 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 #### D. Vendor Procurement Analysis (if applicable)
 
 **SOW Quality**:
+
 - SOW requirements match ARC-*-REQ-*.md?
 - All technical requirements from ARC-*-REQ-*.md included in SOW?
 - Missing evaluation criteria?
 - Ambiguous acceptance criteria?
 
 **Vendor Evaluation**:
+
 - Evaluation criteria align with requirements priorities?
 - Scoring methodology fair and unbiased?
 - All critical requirements included in evaluation?
 
 **Vendor Design Review**:
+
 - HLD addresses all SOW requirements?
 - Technology stack matches approved standards?
 - Security architecture meets NFR-S requirements?
@@ -282,107 +318,127 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 #### E. Stakeholder Traceability Analysis (if ARC-*-STKE-*.md exists)
 
 **Stakeholder Coverage**:
+
 - All requirements traced to stakeholder goals?
 - Orphan requirements (not linked to any stakeholder goal)?
 - Requirements missing stakeholder justification?
 
 **Conflict Resolution**:
+
 - Requirement conflicts documented and resolved?
 - Stakeholder impact of conflict resolutions documented?
 - Decision authority identified for conflicting requirements?
 
 **RACI Governance Alignment**:
+
 - Risk owners from stakeholder RACI matrix?
 - Data owners from stakeholder RACI matrix?
 - Delivery roles aligned with RACI assignments?
 
 **Missing Stakeholder Analysis**:
+
 - Project has requirements but no stakeholder analysis document (RECOMMENDED to run `/arckit:stakeholders`)
 
 #### F. Risk Management Analysis (if ARC-*-RISK-*.md exists)
 
 **Risk Coverage**:
+
 - High/Very High inherent risks have mitigation requirements?
 - Risks reflected in design (risk mitigation controls in HLD/DLD)?
 - Risk owners assigned and aligned with RACI matrix?
 - Risk responses appropriate (4Ts: Tolerate, Treat, Transfer, Terminate)?
 
 **Risk-SOBC Alignment** (if ARC-*-SOBC-*.md exists):
+
 - Strategic risks reflected in Strategic Case urgency?
 - Financial risks reflected in Economic Case cost contingency?
 - Risks from risk register included in Management Case Part E?
 
 **Risk-Requirements Alignment**:
+
 - Risk mitigation actions translated into requirements?
 - Security risks addressed by NFR-S-xxx requirements?
 - Compliance risks addressed by NFR-C-xxx requirements?
 
 **Missing Risk Assessment**:
+
 - Project has requirements but no risk register document (RECOMMENDED to run `/arckit:risk`)
 
 #### G. Business Case Alignment (if ARC-*-SOBC-*.md exists)
 
 **Benefits Traceability**:
+
 - All benefits in Economic Case mapped to stakeholder goals?
 - All benefits supported by requirements?
 - Benefits measurable and verifiable?
 - Benefits realization plan in Management Case?
 
 **Option Analysis Quality**:
+
 - Do Nothing baseline included?
 - Options analysis covers build vs buy?
 - Recommended option justified by requirements scope?
 - Costs realistic for requirements complexity?
 
 **SOBC-Requirements Alignment**:
+
 - Strategic Case drivers reflected in requirements?
 - Economic Case benefits delivered by requirements?
 - Financial Case budget adequate for requirements scope?
 - Management Case delivery plan realistic for requirements?
 
 **SOBC-Risk Alignment**:
+
 - Risks from risk register included in Management Case?
 - Cost contingency reflects financial risks?
 - Strategic risks justify urgency ("Why Now?")?
 
 **Missing Business Case**:
+
 - Project has requirements but no SOBC (RECOMMENDED for major investments to run `/arckit:sobc`)
 
 #### H. Data Model Consistency (if ARC-*-DATA-*.md exists)
 
 **DR-xxx Requirements Coverage**:
+
 - All DR-xxx requirements mapped to entities?
 - All entities traced back to DR-xxx requirements?
 - Missing data requirements (system handles data but no DR-xxx)?
 
 **Data Model-Design Alignment**:
+
 - Database schemas in DLD match data model entities?
 - CRUD matrix aligns with component design in HLD?
 - Data integration flows in HLD match data model upstream/downstream mappings?
 
 **Data Governance Alignment**:
+
 - Data owners from stakeholder RACI matrix?
 - Data stewards and custodians assigned?
 - PII identified and GDPR compliance documented?
 
 **Data Model Quality**:
+
 - ERD exists and renderable (Mermaid syntax)?
 - Entities have complete attribute specifications?
 - Relationships properly defined (cardinality, foreign keys)?
 - Data quality metrics defined and measurable?
 
 **Missing Data Model**:
+
 - Project has DR-xxx requirements but no data model (RECOMMENDED to run `/arckit:data-model`)
 
 #### I. UK Government Compliance (if applicable)
 
 **Technology Code of Practice (TCoP)**:
+
 - Assessment exists?
 - All 13 points assessed?
 - Critical issues resolved?
 - Evidence provided for each point?
 
 **AI Playbook** (for AI systems):
+
 - Assessment exists for AI/ML systems?
 - Risk level determined (High/Medium/Low)?
 - All 10 principles assessed?
@@ -392,6 +448,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Human oversight model defined?
 
 **ATRS** (for AI systems):
+
 - ATRS record exists for algorithmic tools?
 - Tier 1 (public summary) completed?
 - Tier 2 (technical details) completed?
@@ -399,6 +456,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Ready for GOV.UK publication?
 
 **Compliance Alignment**:
+
 - Requirements aligned with TCoP?
 - Design complies with TCoP (Cloud First, Open Standards, Secure)?
 - AI requirements comply with AI Playbook?
@@ -407,6 +465,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 #### J. MOD Secure by Design Compliance (if ARC-*-SECD-MOD-*.md exists)
 
 **7 SbD Principles Assessment**:
+
 - Principle 1 (Understand and Define Context): Context documented, data classification determined?
 - Principle 2 (Apply Security from the Start): Security embedded from inception, not bolt-on?
 - Principle 3 (Apply Defence in Depth): Layered security controls implemented?
@@ -416,6 +475,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Principle 7 (Enable Through-Life Assurance): Continuous monitoring, incident response capability?
 
 **NIST Cybersecurity Framework Coverage**:
+
 - **Identify**: Asset inventory, business environment, governance, risk assessment?
 - **Protect**: Access control, data security, protective technology, training?
 - **Detect**: Continuous monitoring, anomaly detection, security testing?
@@ -423,6 +483,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - **Recover**: Recovery planning, backup/DR/BC, post-incident improvements?
 
 **Continuous Assurance Process** (replaced RMADS August 2023):
+
 - CAAT (Cyber Activity and Assurance Tracker) registration completed?
 - CAAT self-assessment question sets completed based on 7 SbD Principles?
 - CAAT continuously updated (not one-time submission)?
@@ -431,22 +492,26 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Project Security Officer (PSyO) appointed for SECRET+ systems?
 
 **Three Lines of Defence Implementation**:
+
 - **First Line**: Delivery team owns security, DTSL leads day-to-day management?
 - **Second Line**: Technical Coherence assurance, security policies, independent reviews?
 - **Third Line**: Independent audit, penetration testing, external audit (NAO, GIAA)?
 
 **Supplier Attestation** (if vendor-delivered system):
+
 - Suppliers attest systems are secure (ISN 2023/10)?
 - Supplier-owned continuous assurance (not MOD accreditation)?
 - Supplier security requirements in contracts?
 
 **Classification-Specific Requirements**:
+
 - OFFICIAL: Cyber Essentials baseline, basic access controls?
 - OFFICIAL-SENSITIVE: Cyber Essentials Plus, MFA, enhanced logging, DPIA?
 - SECRET: SC personnel, CESG crypto, air-gap/assured network, enhanced physical security?
 - TOP SECRET: DV personnel, compartmented security, strict access control?
 
 **Critical Issues (Deployment Blockers)**:
+
 - SECRET+ data without appropriate controls?
 - No encryption at rest or in transit?
 - Personnel lacking security clearances?
@@ -454,26 +519,31 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Critical vulnerabilities unpatched?
 
 **Missing MOD SbD Assessment**:
+
 - Project for MOD but no SbD assessment (MANDATORY to run `/arckit:mod-secure`)
 
 #### K. Consistency Across Artifacts
 
 **Terminology Drift**:
+
 - Same concept named differently across files
 - Inconsistent capitalization/formatting of terms
 - Conflicting definitions
 
 **Data Model Consistency**:
+
 - Data entities referenced in requirements match design
 - Database schemas in DLD match data requirements (DR-xxx)
 - Data sharing agreements align across artifacts
 
 **Technology Stack Consistency**:
+
 - Stack choices in HLD match principles
 - Technology in DLD matches HLD
 - Third-party dependencies consistently listed
 
 **Timeline/Budget Consistency** (if vendor procurement):
+
 - SOW timeline realistic for requirements scope?
 - Budget adequate for requirements complexity?
 - Vendor proposal timeline/budget match SOW?
@@ -481,6 +551,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 #### G. Security & Compliance Analysis
 
 **Security Coverage**:
+
 - Security requirements (NFR-S-xxx) exist?
 - Threat model documented?
 - Security architecture in HLD?
@@ -488,12 +559,14 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - Security testing plan?
 
 **Compliance Coverage**:
+
 - Compliance requirements (NFR-C-xxx) exist?
 - Regulatory requirements identified (GDPR, PCI-DSS, HIPAA, etc.)?
 - Compliance validated in design?
 - Audit requirements addressed?
 
 **Data Protection**:
+
 - Personal data handling defined?
 - GDPR/UK GDPR compliance addressed?
 - Data retention policy defined?
@@ -504,6 +577,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 Use this heuristic to prioritise findings:
 
 **CRITICAL**:
+
 - Violates architecture principles (MUST)
 - Missing core artifact (no ARC-*-REQ-*.md)
 - MUST requirement with zero design coverage
@@ -526,6 +600,7 @@ Use this heuristic to prioritise findings:
 - Compliance requirement with no validation
 
 **HIGH**:
+
 - Duplicate or conflicting requirements
 - Ambiguous security/performance attribute
 - Untestable acceptance criterion
@@ -544,6 +619,7 @@ Use this heuristic to prioritise findings:
 - MOD: NIST CSF functions not fully covered
 
 **MEDIUM**:
+
 - Terminology drift
 - Missing optional non-functional requirement coverage
 - Underspecified edge case
@@ -559,6 +635,7 @@ Use this heuristic to prioritise findings:
 - MOD: Third Line of Defence not fully implemented
 
 **LOW**:
+
 - Style/wording improvements
 - Minor redundancy not affecting execution
 - Documentation formatting
@@ -1124,7 +1201,7 @@ Based on findings, consider running:
 After making changes, re-run analysis:
 ```bash
 /arckit:analyze
-```
+```text
 
 Expected improvement in scores after addressing findings.
 
@@ -1139,7 +1216,8 @@ Expected improvement in scores after addressing findings.
 **Location**: `ARC-*-REQ-*.md:L45-52` and `ARC-*-REQ-*.md:L120-125`
 
 **Details**:
-```
+
+```text
 NFR-S-001: System MUST encrypt data at rest using AES-256
 NFR-S-005: All stored data SHALL be encrypted with AES-256 encryption
 ```
@@ -1149,6 +1227,7 @@ NFR-S-005: All stored data SHALL be encrypted with AES-256 encryption
 **Impact**: Confuses implementation team, wastes evaluation points in vendor scoring.
 
 **Recommendation**:
+
 1. Keep NFR-S-001 (clearer wording)
 2. Delete NFR-S-005
 3. Update traceability matrix
@@ -1162,7 +1241,8 @@ NFR-S-005: All stored data SHALL be encrypted with AES-256 encryption
 **Location**: `ARC-*-REQ-*.md:L120`, Architecture Principles violation
 
 **Details**:
-```
+
+```text
 FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 ```
 
@@ -1171,6 +1251,7 @@ FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 **Impact**: Architecture doesn't align with organization standards. Blocks procurement approval.
 
 **Recommendation**:
+
 1. Change FR-025 to require AWS/Azure/GCP deployment
 2. OR: Document formal exception with justification (security, regulatory, etc.)
 3. Get exception approved by Architecture Review Board
@@ -1186,9 +1267,11 @@ FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 ## Appendix: Analysis Methodology
 
 **Artifacts Analyzed**:
+
 - {list of files}
 
 **Detection Rules Applied**:
+
 - {count} duplication checks
 - {count} ambiguity patterns
 - {count} principle validations
@@ -1201,8 +1284,9 @@ FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 ---
 
 **END OF ANALYSIS REPORT**
-```
 
+<!-- markdownlint-disable-next-line MD040 -->
+```
 
 ---
 
@@ -1211,11 +1295,13 @@ FR-025: System SHALL deploy to on-premise servers in corporate datacenter
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-ANAL-v{VERSION}` (e.g., `ARC-001-ANAL-v1.0`)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -1224,14 +1310,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.analyze"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -1245,6 +1334,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:analyze` command
 **Generated on**: {DATE} {TIME} GMT
@@ -1263,6 +1353,7 @@ Save the complete analysis report generated in Step 6 to:
 **`projects/{project-dir}/ARC-{PROJECT_ID}-ANLZ-v1.0.md`**
 
 The saved report must include:
+
 - ✅ All sections from Executive Summary to Detailed Findings
 - ✅ Complete metrics dashboard
 - ✅ Actionable recommendations with priorities
@@ -1274,7 +1365,7 @@ After writing the file, show ONLY the concise summary below. Do NOT output the f
 
 After writing the file, provide a summary message to the user:
 
-```
+```text
 ✅ Governance Analysis Complete
 
 **Project**: {project-name}
@@ -1320,6 +1411,7 @@ After outputting the report, ask:
 > **Would you like me to suggest concrete remediation steps for the top {N} critical/high priority issues?**
 >
 > I can provide:
+>
 > 1. Specific edits to fix requirements
 > 2. Design review guidance
 > 3. Command sequences to address gaps
@@ -1352,6 +1444,7 @@ After outputting the report, ask:
 ### Enterprise Architecture Focus
 
 Unlike Spec Kit's focus on code implementation, ArcKit analyze focuses on:
+
 - **Governance compliance**: Principles, standards, policies
 - **Requirements quality**: Completeness, testability, traceability
 - **Procurement readiness**: SOW quality, vendor evaluation fairness
@@ -1365,6 +1458,7 @@ Unlike Spec Kit's focus on code implementation, ArcKit analyze focuses on:
 User: `/arckit:analyze`
 
 You should:
+
 1. Identify project (if multiple, ask which)
 2. Load artifacts progressively:
    - Architecture principles
@@ -1428,27 +1522,33 @@ Example output: "Architecture Governance Analysis Report" with 18 findings (3 CR
 After analysis, you may need:
 
 **Governance Foundation**:
+
 - `/arckit:principles` - Create/update architecture principles
 - `/arckit:stakeholders` - Analyze stakeholder drivers and conflicts
 - `/arckit:risk` - Create Orange Book risk register
 - `/arckit:sobc` - Create Green Book business case
 
 **Requirements & Data**:
+
 - `/arckit:requirements` - Fix requirements issues
 - `/arckit:data-model` - Create data model with ERD and GDPR compliance
 
 **Design Reviews**:
+
 - `/arckit:hld-review` - Re-review high-level design
 - `/arckit:dld-review` - Re-review detailed design
 
 **UK Government Compliance**:
+
 - `/arckit:tcop` - Complete TCoP assessment
 - `/arckit:ai-playbook` - Complete AI Playbook assessment
 - `/arckit:atrs` - Generate ATRS record
 - `/arckit:secure` - UK Government Secure by Design review
 
 **MOD Compliance**:
+
 - `/arckit:mod-secure` - MOD Secure by Design assessment with CAAT
 
 **Traceability**:
+
 - `/arckit:traceability` - Update traceability matrix

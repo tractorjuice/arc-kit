@@ -24,7 +24,7 @@ Deadline: 3 April 2026. The platform is ready — we need the right partner.
 
 If this resonates — or you know someone it might — I'd welcome a conversation.
 
-#GovTech #OpenSource #AIforGood #DigitalGovernment #GoogleOrg
+# GovTech #OpenSource #AIforGood #DigitalGovernment #GoogleOrg
 
 ---
 
@@ -42,7 +42,7 @@ We need a university, nonprofit, think tank, or innovation lab with government r
 
 Interested? DM me or comment below.
 
-#AIforGovernment #GovTech #OpenSource #PublicSector #GoogleOrg
+# AIforGovernment #GovTech #OpenSource #PublicSector #GoogleOrg
 
 ---
 
@@ -60,4 +60,4 @@ We need an eligible lead applicant — a university, nonprofit, think tank, or g
 
 Five weeks to submit. The technology is ready. Let's talk.
 
-#GoogleOrg #AIforGood #GovTech #DigitalTransformation #OpenSource
+# GoogleOrg #AIforGood #GovTech #DigitalTransformation #OpenSource

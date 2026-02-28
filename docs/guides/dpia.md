@@ -17,6 +17,7 @@
 ## Trigger Checklist
 
 Tick any that apply (two or more = DPIA mandatory per ICO):
+
 - Evaluation or scoring (profiling, ranking, credit risk)
 - Automated decisions with legal/significant effect
 - Systematic monitoring or surveillance

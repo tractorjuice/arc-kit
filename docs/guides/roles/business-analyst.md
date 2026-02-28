@@ -30,7 +30,7 @@ The Business Analyst elicits, analyses, and documents requirements. You are the 
 
 ## Typical Workflow
 
-```
+```text
 stakeholders → requirements → data-model → traceability
 ```
 

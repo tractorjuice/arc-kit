@@ -5,6 +5,7 @@
 The ArcKit monorepo (`tractorjuice/arc-kit`) contains three distribution formats side-by-side: CLI, Claude Code plugin, and Gemini extension. The plugin (`arckit-plugin/`) has grown into the primary distribution (48 commands, 5 agents, 1 skill, 4 MCP servers) and deserves its own repo for cleaner separation, independent versioning, and marketplace identity. The CLI is being considered for deprecation, making this a natural time to extract.
 
 **Key decisions:**
+
 - New repo: `tractorjuice/arckit-claude`
 - Converter stays in main repo, reads from git submodule at `arckit-plugin/` (same path, zero converter changes)
 - All 44 test repos migrated to new marketplace
@@ -23,6 +24,7 @@ The ArcKit monorepo (`tractorjuice/arc-kit`) contains three distribution formats
 ## Phase 1: Create New Repo (`tractorjuice/arckit-claude`)
 
 ### Step 1.1: Create the GitHub repository
+
 ```bash
 gh repo create tractorjuice/arckit-claude --public \
   --description "ArcKit - Claude Code Plugin for Enterprise Architecture Governance" \
@@ -30,6 +32,7 @@ gh repo create tractorjuice/arckit-claude --public \
 ```
 
 ### Step 1.2: Copy plugin contents to new repo
+
 ```bash
 git clone git@github.com:tractorjuice/arckit-claude.git /tmp/arckit-claude
 cp -r arckit-plugin/* /tmp/arckit-claude/
@@ -40,6 +43,7 @@ cp arckit-plugin/.mcp.json /tmp/arckit-claude/
 ### Step 1.3: Create marketplace.json at new repo root
 
 Create `/tmp/arckit-claude/.claude-plugin/marketplace.json`:
+
 ```json
 {
   "name": "arckit-claude",
@@ -73,6 +77,7 @@ Key differences from `arc-kit` marketplace: `name` = `"arckit-claude"`, `source`
 ### Step 1.4: Update plugin.json in new repo
 
 Edit `.claude-plugin/plugin.json` — only change `repository`:
+
 ```json
 "repository": "https://github.com/tractorjuice/arckit-claude"
 ```
@@ -86,15 +91,18 @@ Edit `.claude-plugin/plugin.json` — only change `repository`:
 ### Step 1.6: Update repo references in plugin files
 
 **Change to `arckit-claude`** (plugin-specific references):
+
 - `commands/service-assessment.md`: issue link
 - Any other command/guide that references plugin issues or plugin installation
 
 **Keep as `arc-kit`** (project-level references):
+
 - `templates/pages-template.html`: main project link
 - `templates/architecture-diagram-template.md`: main project link
 - `docs/guides/upgrading.md`: CLI upgrade instructions
 
 ### Step 1.7: Commit and push
+
 ```bash
 cd /tmp/arckit-claude
 git add -A
@@ -103,6 +111,7 @@ git push origin main
 ```
 
 ### Step 1.8: Verify
+
 - [ ] Repo accessible at `https://github.com/tractorjuice/arckit-claude`
 - [ ] `.claude-plugin/marketplace.json` exists at root
 - [ ] Test: `/plugin marketplace add tractorjuice/arckit-claude` works
@@ -113,11 +122,13 @@ git push origin main
 ## Phase 2: Update Main Repo (`tractorjuice/arc-kit`)
 
 ### Step 2.1: Remove `arckit-plugin/` directory
+
 ```bash
 git rm -r arckit-plugin/
 ```
 
 ### Step 2.2: Add git submodule at same path
+
 ```bash
 git submodule add git@github.com:tractorjuice/arckit-claude.git arckit-plugin
 ```
@@ -125,18 +136,22 @@ git submodule add git@github.com:tractorjuice/arckit-claude.git arckit-plugin
 This creates `.gitmodules` and checks out plugin at `arckit-plugin/`. **Same path = zero converter changes.**
 
 ### Step 2.3: Verify converter works unchanged
+
 ```bash
 python scripts/converter.py
 ```
+
 Paths `arckit-plugin/commands/`, `arckit-plugin/agents/` resolve through the submodule identically.
 
 ### Step 2.4: Update root `.claude-plugin/marketplace.json`
 
 Keep the marketplace working (backward compatibility). Update `homepage`/`repository` to `arckit-claude`:
+
 ```json
 "homepage": "https://github.com/tractorjuice/arckit-claude",
 "repository": "https://github.com/tractorjuice/arckit-claude"
 ```
+
 Keep `source: "./arckit-plugin"` (resolves through submodule).
 
 ### Step 2.5: Update documentation in main repo
@@ -151,6 +166,7 @@ Keep `source: "./arckit-plugin"` (resolves through submodule).
 | `arckit-gemini/README.md` | Update Claude Code plugin install reference |
 
 ### Step 2.6: Commit
+
 ```bash
 git add .gitmodules arckit-plugin .claude-plugin/marketplace.json
 git add CLAUDE.md README.md CONTRIBUTING.md src/arckit_cli/__init__.py
@@ -159,6 +175,7 @@ git commit -m "refactor: extract plugin to tractorjuice/arckit-claude, add as su
 ```
 
 ### Step 2.7: Verify
+
 - [ ] Fresh clone with `--recurse-submodules` works
 - [ ] `ls arckit-plugin/commands/` lists 48 files
 - [ ] `python scripts/converter.py` generates output successfully
@@ -172,6 +189,7 @@ git commit -m "refactor: extract plugin to tractorjuice/arckit-claude, add as su
 ### Step 3.1: Bulk update `.claude/settings.json`
 
 Change from:
+
 ```json
 {
   "extraKnownMarketplaces": {
@@ -182,6 +200,7 @@ Change from:
 ```
 
 To:
+
 ```json
 {
   "extraKnownMarketplaces": {
@@ -192,6 +211,7 @@ To:
 ```
 
 ### Step 3.2: Execute bulk script
+
 ```bash
 mkdir -p /tmp/arckit-sync
 for i in $(seq 0 43); do
@@ -211,6 +231,7 @@ rm -rf /tmp/arckit-sync
 ```
 
 ### Step 3.3: Verify
+
 - [ ] Spot-check 3-4 repos (mix of public/private)
 - [ ] Open in Claude Code, restart, verify plugin loads
 - [ ] Run a command (e.g., `/arckit:init`) to confirm
@@ -220,11 +241,13 @@ rm -rf /tmp/arckit-sync
 ## Phase 4: Update Memory and Changelogs
 
 ### Step 4.1: Update MEMORY.md
+
 - Triple Distribution Model: plugin lives at `tractorjuice/arckit-claude`, submodule in main repo
 - Test Repo Setup: new settings.json format
 - Release Process: add submodule update step
 
 ### Step 4.2: Update changelogs
+
 - `arc-kit/CHANGELOG.md`: "Plugin extracted to tractorjuice/arckit-claude, added as submodule"
 - `arckit-claude/CHANGELOG.md`: "Repository migrated from tractorjuice/arc-kit/arckit-plugin/ to tractorjuice/arckit-claude"
 
@@ -233,6 +256,7 @@ rm -rf /tmp/arckit-sync
 ## Post-Extraction: Version Bump Workflow
 
 **Plugin-only change** (command fix, template update):
+
 1. Commit + push to `tractorjuice/arckit-claude`
 2. Bump version in `arckit-claude`: `VERSION`, `plugin.json`, `marketplace.json`, `CHANGELOG.md`
 3. In `arc-kit`: `cd arckit-plugin && git pull origin main && cd .. && git add arckit-plugin && git commit -m "chore: update plugin submodule to vX.Y.Z"`
@@ -268,13 +292,15 @@ rm -rf /tmp/arckit-sync
 
 ## Files Modified
 
-### New repo (`tractorjuice/arckit-claude`) — created from `arckit-plugin/` contents:
+### New repo (`tractorjuice/arckit-claude`) — created from `arckit-plugin/` contents
+
 - `.claude-plugin/marketplace.json` (new — makes repo a marketplace)
 - `.claude-plugin/plugin.json` (update `repository` field)
 - `README.md` (update install commands and repo links)
 - Select commands/guides (update issue links)
 
-### Main repo (`tractorjuice/arc-kit`):
+### Main repo (`tractorjuice/arc-kit`)
+
 - `arckit-plugin/` — removed as directory, added as submodule
 - `.gitmodules` — new file (submodule config)
 - `.claude-plugin/marketplace.json` — update `homepage`/`repository`
@@ -285,5 +311,6 @@ rm -rf /tmp/arckit-sync
 - `docs/index.html` — update install commands
 - `arckit-gemini/README.md` — update plugin reference
 
-### Test repos (44 repos, v0-v43 excluding v22):
+### Test repos (44 repos, v0-v43 excluding v22)
+
 - `.claude/settings.json` — marketplace name + repo URL

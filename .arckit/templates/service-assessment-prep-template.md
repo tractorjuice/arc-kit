@@ -38,6 +38,7 @@
 **Readiness Score**: [X]/14 points ready
 
 **Breakdown**:
+
 - 🟢 Green: [X] points
 - 🟡 Amber: [X] points
 - 🔴 Red: [X] points
@@ -46,11 +47,13 @@
 [2-3 paragraph summary of overall readiness, highlighting strengths and critical gaps]
 
 **Critical Gaps** (Must address before assessment):
+
 - [Gap 1 with Service Standard point number]
 - [Gap 2 with Service Standard point number]
 - [Gap 3 with Service Standard point number]
 
 **Key Strengths**:
+
 - [Strength 1]
 - [Strength 2]
 - [Strength 3]
@@ -74,6 +77,7 @@
 [1-2 sentences on importance]
 
 **Evidence Required for [Alpha/Beta/Live]**:
+
 - [Evidence requirement 1 for this phase]
 - [Evidence requirement 2 for this phase]
 - [Evidence requirement 3 for this phase]
@@ -81,12 +85,14 @@
 **Evidence Found in ArcKit Artifacts**:
 
 ✅ **ARC-{PROJECT_ID}-REQ-v*.md** (lines XX-YY)
-   - [Specific evidence found]
-   - [What this demonstrates]
+
+- [Specific evidence found]
+- [What this demonstrates]
 
 ✅ **ARC-{PROJECT_ID}-STKE-v*.md** (Section X)
-   - [Specific evidence found]
-   - [What this demonstrates]
+
+- [Specific evidence found]
+- [What this demonstrates]
 
 ❌ **Missing**: [Specific gap 1]
 ❌ **Missing**: [Specific gap 2]
@@ -98,10 +104,12 @@
 **Readiness Rating**: [🟢 Green / 🟡 Amber / 🔴 Red]
 
 **Strengths**:
+
 - [Strength 1]
 - [Strength 2]
 
 **Weaknesses**:
+
 - [Weakness 1]
 - [Weakness 2]
 
@@ -118,6 +126,7 @@
    - Evidence to create: [What this will produce]
 
 **Assessment Day Guidance**:
+
 - **Prepare**: [What to prepare for presenting this point]
 - **Show**: [What to demonstrate/show]
 - **Bring**: [Who should be ready to present]
@@ -154,6 +163,7 @@
 | 14. Reliable service | [artifacts] | [🟢/🟡/🔴] | [gaps] |
 
 **Summary**:
+
 - ✅ Strong evidence: Points [X, Y, Z]
 - ⚠️ Adequate but needs strengthening: Points [A, B, C]
 - ❌ Critical gaps: Points [D, E]
@@ -208,12 +218,14 @@ Priority: Strengthens overall case but not blocking
 [Assessment of whether ready to book now, or need to complete critical actions first]
 
 **Recommended Booking Timeline**:
+
 - Complete critical actions: [X weeks]
 - Complete high priority actions: [X weeks]
 - Buffer for preparation: 1 week
 - **Ready to book after**: [Date]
 
 **How to Book**:
+
 1. Contact GDS Central Digital & Data Office assessment team
 2. Book 5 weeks in advance minimum
 3. Assessments typically on Tuesday, Wednesday, or Thursday
@@ -225,15 +237,18 @@ Priority: Strengthens overall case but not blocking
 **Send 1 week before assessment**:
 
 Required documentation:
+
 - [ ] Project overview (1-2 pages)
 - [ ] User research repository or summary
 - [ ] Service architecture diagrams
 - [ ] Prototype/demo environment URL (if applicable)
 
 Recommended documentation:
+
 - [ ] Key ArcKit artifacts: [list specific files]
 
 Optional supplementary:
+
 - [ ] Design history
 - [ ] Research findings
 - [ ] Technical documentation
@@ -242,6 +257,7 @@ Optional supplementary:
 ### Who Should Attend
 
 **Core Team** (required):
+
 - ✅ Product Manager / Service Owner
 - ✅ Lead User Researcher
 - ✅ Technical Architect / Lead Developer
@@ -251,6 +267,7 @@ Optional supplementary:
 [List additional roles needed for this specific phase]
 
 **Optional Attendees**:
+
 - Senior Responsible Owner
 - Business owner
 - Specialists (as needed)
@@ -260,34 +277,42 @@ Optional supplementary:
 **4-Hour Assessment Timeline**:
 
 **0:00-0:15 - Introductions and Context**
+
 - Team introductions
 - Service overview
 - Project context
 
 **0:15-1:00 - User Research and Needs (Points 1, 2, 3, 4)**
+
 - User Researcher presents research findings and methodology
 
 **1:00-1:45 - Service Demonstration (Points 2, 3, 4, 5)**
+
 - Show the service or prototype
 - End-to-end journey
 - Accessibility features
 
 **1:45-2:30 - Technical Architecture and Security (Points 9, 11, 12, 13, 14)**
+
 - Tech Lead presents architecture and technology choices
 
 **2:30-3:00 - Team and Ways of Working (Points 6, 7, 8, 10)**
+
 - Delivery Manager presents team and agile practices
 
 **3:00-3:45 - Open Q&A**
+
 - Panel asks questions
 - Team responds with evidence
 
 **3:45-4:00 - Panel Deliberation**
+
 - Team steps out
 
 ### Tips for Success
 
 **Do**:
+
 - ✅ Show real work, not polished presentations
 - ✅ Have people who did the work present it
 - ✅ Be honest about what you don't know yet
@@ -295,6 +320,7 @@ Optional supplementary:
 - ✅ Demonstrate iteration based on learning
 
 **Don't**:
+
 - ❌ Over-prepare presentations
 - ❌ Hide problems
 - ❌ Use jargon
@@ -302,6 +328,7 @@ Optional supplementary:
 - ❌ Argue with panel feedback
 
 **Materials to Have Ready**:
+
 - Prototype or working service
 - Laptops for team
 - Backup plan if demo breaks
@@ -316,6 +343,7 @@ Optional supplementary:
 ### If You Pass (Green)
 
 **Immediate Actions**:
+
 - [ ] Celebrate with the team
 - [ ] Share assessment report with stakeholders
 - [ ] Plan for next phase
@@ -324,6 +352,7 @@ Optional supplementary:
 ### If You Get Amber
 
 **Immediate Actions**:
+
 - [ ] Create "tracking amber evidence" document
 - [ ] Assign owners to each amber point
 - [ ] Set deadlines (within 3 months)
@@ -332,6 +361,7 @@ Optional supplementary:
 ### If You Fail (Red)
 
 **Immediate Actions**:
+
 - [ ] Review assessment report with team
 - [ ] Identify root causes
 - [ ] Create action plan for each red point
@@ -343,19 +373,23 @@ Optional supplementary:
 ## Next Steps
 
 ### This Week
+
 1. [Action from critical list]
 2. [Action from critical list]
 3. [Action from critical list]
 
 ### Next 2 Weeks
+
 1. [Action from critical/high priority]
 2. [Action from critical/high priority]
 
 ### Next 4 Weeks
+
 1. [Action from high priority]
 2. [Action from high priority]
 
 ### Continuous Improvement
+
 - [ ] Re-run `/arckit.service-assessment PHASE=[phase]` weekly
 - [ ] Update this report as evidence gathered
 - [ ] Review checklist and mark completed items
@@ -368,12 +402,14 @@ Optional supplementary:
 ### GDS Service Standard Resources
 
 **Official Guidance**:
+
 - [Service Standard](https://www.gov.uk/service-manual/service-standard)
 - [What happens at assessment](https://www.gov.uk/service-manual/service-assessments/how-service-assessments-work)
 - [Book assessment](https://www.gov.uk/service-manual/service-assessments/book-a-service-assessment)
 - [Service Standard Reports](https://www.gov.uk/service-standard-reports)
 
 **Phase-Specific Guidance**:
+
 - [Alpha phase](https://www.gov.uk/service-manual/agile-delivery/how-the-alpha-phase-works)
 - [Beta phase](https://www.gov.uk/service-manual/agile-delivery/how-the-beta-phase-works)
 - [Live phase](https://www.gov.uk/service-manual/agile-delivery/how-the-live-phase-works)
@@ -400,6 +436,7 @@ Optional supplementary:
 **Model**: [AI_MODEL]
 
 **Next Actions**:
+
 1. Review this report with your team
 2. Prioritize critical actions in sprint planning
 3. Re-run `/arckit.service-assessment PHASE=[phase]` weekly to track progress

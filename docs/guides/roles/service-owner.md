@@ -30,7 +30,7 @@ The Service Owner is accountable for the quality and performance of a live servi
 
 ## Typical Workflow
 
-```
+```text
 requirements → servicenow → operationalize → service-assessment → story
 ```
 

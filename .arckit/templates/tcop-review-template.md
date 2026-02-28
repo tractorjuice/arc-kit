@@ -38,6 +38,7 @@
 **Overall TCoP Compliance**: [Compliant / Partially Compliant / Non-Compliant]
 
 **Key Findings**:
+
 - [Summary of major compliance gaps]
 - [Summary of strengths]
 - [Critical actions required]
@@ -58,6 +59,7 @@
 [Describe how user needs have been identified and documented]
 
 **User Research Conducted**:
+
 - [ ] User interviews completed
 - [ ] User personas created
 - [ ] User journey mapping done
@@ -65,6 +67,7 @@
 - [ ] Digital inclusion considerations documented
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -84,6 +87,7 @@
 [Describe accessibility measures implemented]
 
 **Accessibility Standards**:
+
 - [ ] WCAG 2.2 Level AA compliance target set
 - [ ] Accessibility audit completed
 - [ ] Assistive technology testing done
@@ -91,6 +95,7 @@
 - [ ] Regular accessibility testing scheduled
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -110,6 +115,7 @@
 [Describe open source usage and code publication plans]
 
 **Open Source Practices**:
+
 - [ ] Code published in open repositories
 - [ ] Open source libraries used where appropriate
 - [ ] Contribution guidelines published
@@ -117,6 +123,7 @@
 - [ ] Proprietary software justified where used
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -136,6 +143,7 @@
 [Describe open standards adopted]
 
 **Open Standards Used**:
+
 - [ ] RESTful APIs with OpenAPI/Swagger specs
 - [ ] JSON/XML for data interchange
 - [ ] OAuth 2.0/OIDC for authentication
@@ -143,6 +151,7 @@
 - [ ] Open standards documented in architecture
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -162,6 +171,7 @@
 [Describe cloud hosting approach]
 
 **Cloud First Considerations**:
+
 - [ ] Public cloud considered as first option
 - [ ] Cloud hosting decision documented
 - [ ] If not public cloud, justification documented
@@ -174,6 +184,7 @@
 [Explanation of why public cloud is not suitable]
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -193,6 +204,7 @@
 [Describe security measures implemented]
 
 **Security Controls**:
+
 - [ ] Threat modelling completed
 - [ ] Security by design principles applied
 - [ ] Penetration testing planned/completed
@@ -205,6 +217,7 @@
 **Data Sensitivity**: [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -224,6 +237,7 @@
 [Describe privacy measures]
 
 **Privacy Controls**:
+
 - [ ] Data Protection Impact Assessment (DPIA) completed
 - [ ] Privacy by design principles applied
 - [ ] UK GDPR compliance assessed
@@ -236,6 +250,7 @@
 **Personal Data Processed**: [Yes / No]
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -255,6 +270,7 @@
 [Describe reuse and collaboration]
 
 **Reuse and Collaboration**:
+
 - [ ] Existing government services reviewed (GOV.UK, Notify, Pay, etc.)
 - [ ] Cross-government platforms used where appropriate
 - [ ] Technology components documented for reuse
@@ -262,6 +278,7 @@
 - [ ] Collaboration with other departments documented
 
 **Common Platforms Used**:
+
 - [ ] GOV.UK Notify
 - [ ] GOV.UK Pay
 - [ ] GOV.UK PaaS
@@ -269,6 +286,7 @@
 - [ ] Other: [Specify]
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -288,6 +306,7 @@
 [Describe integration approach]
 
 **Integration Considerations**:
+
 - [ ] Existing systems inventory completed
 - [ ] Integration points identified and documented
 - [ ] API strategy defined
@@ -296,10 +315,12 @@
 - [ ] Technology roadmap aligned with organisational strategy
 
 **Key Integrations**:
+
 - [System 1]: [Integration method]
 - [System 2]: [Integration method]
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -319,6 +340,7 @@
 [Describe data strategy]
 
 **Data Management**:
+
 - [ ] Data architecture documented
 - [ ] Data quality standards defined
 - [ ] Master data management approach defined
@@ -328,6 +350,7 @@
 - [ ] Data lineage tracked
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -347,6 +370,7 @@
 [Describe procurement approach]
 
 **Procurement Strategy**:
+
 - [ ] Market research conducted
 - [ ] Build vs buy decision documented
 - [ ] Digital Marketplace considered
@@ -359,6 +383,7 @@
 **Procurement Route**: [G-Cloud / DOS / Crown Commercial Service / Open Tender / Other]
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -378,6 +403,7 @@
 [Describe sustainability measures]
 
 **Sustainability Considerations**:
+
 - [ ] Carbon footprint assessed
 - [ ] Energy-efficient infrastructure chosen
 - [ ] Device lifecycle management plan
@@ -387,11 +413,13 @@
 - [ ] Remote/hybrid working enabled to reduce travel
 
 **Sustainability Metrics**:
+
 - Estimated carbon footprint: [kgCO2e per year]
 - Device refresh cycle: [Years]
 - Hosting energy source: [Renewable % / Grid mix]
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -413,6 +441,7 @@
 [Describe Service Standard compliance]
 
 **Service Standard Compliance**:
+
 - [ ] Service assessments planned/completed
 - [ ] Agile, user-centered approach used
 - [ ] Performance metrics defined (KPIs)
@@ -423,6 +452,7 @@
 **Service Assessment Status**: [Not required / Planned / Alpha passed / Beta passed / Live passed]
 
 **Gaps/Actions Required**:
+
 - [Action 1]
 - [Action 2]
 
@@ -458,14 +488,17 @@
 ### Recommendations
 
 **High Priority**:
+
 - [Recommendation 1]
 - [Recommendation 2]
 
 **Medium Priority**:
+
 - [Recommendation 1]
 - [Recommendation 2]
 
 **Low Priority**:
+
 - [Recommendation 1]
 - [Recommendation 2]
 
@@ -506,14 +539,17 @@
 ## Next Steps
 
 **Immediate Actions** (0-30 days):
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
 **Short-term Actions** (1-3 months):
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
 **Long-term Actions** (3-12 months):
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
@@ -533,6 +569,7 @@
 ---
 
 **Document Control**:
+
 - **Version**: 1.0
 - **Last Reviewed**: [Date]
 - **Next Review**: [Date, suggest quarterly]

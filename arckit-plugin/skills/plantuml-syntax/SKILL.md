@@ -32,6 +32,7 @@ Select the appropriate diagram type and read the corresponding reference file:
 ## C4-PlantUML (Primary Use Case)
 
 The C4-PlantUML reference is the most important file for ArcKit users. It covers:
+
 - Include URLs for C4 libraries
 - Element syntax (Person, System, Container, Component, and their variants)
 - Boundary syntax (System_Boundary, Container_Boundary)

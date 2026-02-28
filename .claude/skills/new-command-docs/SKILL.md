@@ -36,6 +36,7 @@ Update **4 count locations** and add a **command table row**:
 - **Command table**: Add a row in the appropriate category section (Foundation, Strategic Context, Requirements & Data, Research & Strategy, Cloud Research, Data Source Discovery, Procurement, Design & Architecture, Implementation, Quality & Governance, UK Government, UK MOD, Documentation & Publishing). Insert alphabetically within the category.
 
 **Table row format**:
+
 ```markdown
 | `/arckit.{name}` | Description of what the command does | [v1](link) [v2](link) | Status |
 ```
@@ -47,6 +48,7 @@ Status values: `Live`, `Beta`, `Experimental`
 Update **8 count locations** and add an **HTML command card**. See [references/html-patterns.md](references/html-patterns.md) for the full HTML template.
 
 Count locations (search for the old number):
+
 - `<meta name="description">` tag (~line 6)
 - `<meta property="og:description">` tag (~line 10)
 - Intro paragraph "{N} AI-assisted commands" (~line 459)
@@ -60,6 +62,7 @@ Count locations (search for the old number):
 ### 3. arckit-plugin/.claude-plugin/plugin.json
 
 Update the `description` field count:
+
 ```json
 "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - {N} slash commands for generating architecture artifacts"
 ```
@@ -67,6 +70,7 @@ Update the `description` field count:
 ### 4. .claude-plugin/marketplace.json (root)
 
 Update the `description` field count:
+
 ```json
 "description": "{N} slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance"
 ```
@@ -80,7 +84,8 @@ Check for any command count references and update. Look for patterns like "{N} c
 This is the most complex update. See [references/dependency-matrix-format.md](references/dependency-matrix-format.md) for detailed format.
 
 Steps:
-1. **Add column**: Add `| {name} ` to the header row (line 20) in alphabetical position among existing commands
+
+1. **Add column**: Add `| {name}` to the header row (line 20) in alphabetical position among existing commands
 2. **Add cells**: Add `|  |` (empty cell) to every existing row at the same column position
 3. **Fill dependencies**: In each existing command's row, fill in M/R/O if the new command consumes that command's output
 4. **Add row**: Add a new row for the command with its dependencies on other commands
@@ -90,6 +95,7 @@ Steps:
 8. **Add changelog entry**: Add a dated entry at the top of the Changelog section
 
 **Changelog entry format**:
+
 ```markdown
 ### YYYY-MM-DD - Added {Command Name} Command
 - **Added**: `/arckit.{name}` command ({N}th ArcKit command) for {description}
@@ -114,6 +120,7 @@ Add a row to the **Documentation Coverage** table and update the **coverage coun
 ```
 
 Insert alphabetically or in the same position as other files in its category. Update the coverage line:
+
 ```markdown
 **Coverage**: {N}/{N} commands documented (100%)
 ```
@@ -121,6 +128,7 @@ Insert alphabetically or in the same position as other files in its category. Up
 ### 9. CLAUDE.md
 
 Update if needed:
+
 - **Command count references**: Search for "50 commands" or similar counts
 - **Multi-instance types list**: If the new command supports multi-instance documents (like ADR, DIAG, WARD, DMC, DFD), add it to the multi-instance list in the `generate-document-id.sh` section
 - **Agent System table**: If the command delegates to an agent, add it to the agent table
@@ -128,6 +136,7 @@ Update if needed:
 ### 10. CHANGELOG.md (root - CLI changelog)
 
 Add an entry under a new or existing version section:
+
 ```markdown
 ### Added
 - `/arckit.{name}` command for {description}
@@ -136,6 +145,7 @@ Add an entry under a new or existing version section:
 ### 11. arckit-plugin/CHANGELOG.md (plugin changelog)
 
 Add an entry under a new or existing version section:
+
 ```markdown
 ### Added
 - `/arckit.{name}` command for {description}
@@ -151,6 +161,7 @@ If `docs/guides/{name}.md` doesn't exist, create one based on an existing guide 
 - **Operations command**: `docs/guides/devops.md`
 
 A guide should contain:
+
 1. Title and description
 2. Prerequisites (which artifacts should exist first)
 3. Usage examples with sample arguments

@@ -19,45 +19,53 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 **Key Functions**:
 
 **Logging**:
+
 - `log_info()` - Blue info messages
 - `log_success()` - Green success messages
 - `log_warning()` - Yellow warning messages
 - `log_error()` - Red error messages
 
 **Repository Management**:
+
 - `find_repo_root()` - Find ArcKit repository root (.arckit directory)
 - `get_repo_root()` - Get repository root using git or .arckit
 - `get_next_project_number()` - Get next project number (001, 002, etc.)
 - `create_project_dir()` - Create project directory structure
 
 **Git Integration**:
+
 - `has_git()` - Check if git is available
 - `get_current_branch()` - Get current git branch
 - `check_git_clean()` - Check if working directory is clean
 
 **Project Finding**:
+
 - `find_project_dir_by_prefix()` - Find project by number or name prefix
 - `list_projects()` - List all available projects
 - `get_project_number_from_dir()` - Extract project number from directory name
 
 **Validation Helpers**:
+
 - `check_file()` - Check if file exists and print status
 - `check_dir()` - Check if directory exists and is not empty
 - `require_file()` - Require file to exist (exit if not)
 - `require_dir()` - Require directory to exist (exit if not)
 
 **JSON Helpers**:
+
 - `json_escape()` - Escape string for JSON
 - `output_json_array()` - Output bash array as JSON array
 - `is_json_mode()` - Check if running in JSON mode
 
 **Path Helpers**:
+
 - `get_arckit_dir()` - Get .arckit directory path
 - `get_projects_dir()` - Get projects directory path
 - `get_memory_dir()` - Get memory directory path
 - `get_templates_dir()` - Get templates directory path
 
 **Utilities**:
+
 - `slugify()` - Convert string to kebab-case
 - `output_json()` - Output project JSON for AI agents
 
@@ -66,11 +74,13 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 **Purpose**: Validate environment and check for required files
 
 **Usage**:
+
 ```bash
 ./scripts/bash/check-prerequisites.sh [OPTIONS]
 ```
 
 **Options**:
+
 - `--json` - Output in JSON format
 - `--project <prefix>` - Specify project by number or name prefix
 - `--require-file <file>` - Require specific file to exist (can be used multiple times)
@@ -79,6 +89,7 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 - `--help, -h` - Show help message
 
 **Examples**:
+
 ```bash
 # Check prerequisites in JSON mode
 ./scripts/bash/check-prerequisites.sh --json
@@ -97,6 +108,7 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 ```
 
 **JSON Output Format**:
+
 ```json
 {
   "REPO_ROOT": "/workspaces/arc-kit",
@@ -115,6 +127,7 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 ```
 
 **Detected Artifacts**:
+
 - stakeholder-drivers.md
 - risk-register.md
 - sobc.md
@@ -133,17 +146,20 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 **Purpose**: Create a new ArcKit project with proper structure
 
 **Usage**:
+
 ```bash
 ./scripts/bash/create-project.sh [OPTIONS]
 ```
 
 **Options**:
+
 - `--name "PROJECT_NAME"` - Name of the project (optional - will prompt if not provided)
 - `--json` - Output JSON for AI agent consumption
 - `--force` - Skip prerequisites check (not recommended)
 - `--help, -h` - Show help message
 
 **Examples**:
+
 ```bash
 # Create project with name
 ./scripts/bash/create-project.sh --name "Payment Gateway Modernization"
@@ -159,16 +175,19 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 ```
 
 **Prerequisites**:
+
 - Must have `projects/000-global/ARC-000-PRIN-*.md` file (architecture principles)
 - Use `--force` to skip this check
 
 **What It Creates**:
+
 - Project directory: `projects/NNN-project-name/`
 - Subdirectories: `vendors/`, `final/`
 - Placeholder files: `requirements.md`, `sow.md`, `evaluation-criteria.md`, `traceability-matrix.md`
 - Project README with status checklist
 
 **JSON Output Format**:
+
 ```json
 {
   "success": true,
@@ -188,6 +207,7 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 
 **Smart Next Steps**:
 The script automatically determines the next steps based on what artifacts exist:
+
 1. /arckit.stakeholders (if stakeholder-drivers.md missing)
 2. /arckit.risk (if risk-register.md missing)
 3. /arckit.sobc (if sobc.md missing)
@@ -202,11 +222,13 @@ The script automatically determines the next steps based on what artifacts exist
 **Purpose**: Generate consistent ArcKit document IDs (`ARC-<PROJECT>-<TYPE>-vX.Y`) for traceability.
 
 **Usage**:
+
 ```bash
 ./scripts/bash/generate-document-id.sh PROJECT_ID DOC_TYPE [VERSION]
 ```
 
 **Examples**:
+
 ```bash
 # Default version v1.0
 ./scripts/bash/generate-document-id.sh 001 REQ
@@ -216,6 +238,7 @@ The script automatically determines the next steps based on what artifacts exist
 ```
 
 **Notes**:
+
 - Pads project numbers to three digits automatically.
 - Accepts any doc type (REQ, HLD, DPIA, ATRS, etc.).
 - Emits the ID to stdout so it can be piped into editors or JSON payloads.
@@ -225,16 +248,19 @@ The script automatically determines the next steps based on what artifacts exist
 **Purpose**: List all projects with status indicators
 
 **Usage**:
+
 ```bash
 ./scripts/bash/list-projects.sh [OPTIONS]
 ```
 
 **Options**:
+
 - `--json` - Output in JSON format
 - `--verbose, -v` - Show detailed artifact status
 - `--help, -h` - Show help message
 
 **Examples**:
+
 ```bash
 # List all projects
 ./scripts/bash/list-projects.sh
@@ -247,7 +273,8 @@ The script automatically determines the next steps based on what artifacts exist
 ```
 
 **Text Output**:
-```
+
+```text
 ArcKit Projects
 ===============
 
@@ -260,7 +287,8 @@ Projects found: 3
 ```
 
 **Verbose Output**:
-```
+
+```text
 🟢 [001] payment-gateway-modernization (87% complete)
     Path: /workspaces/arc-kit/projects/001-payment-gateway-modernization
     Artifacts:
@@ -277,6 +305,7 @@ Projects found: 3
 ```
 
 **Status Legend**:
+
 - ✅ Complete (100%)
 - 🟢 Mostly complete (75-99%)
 - 🟡 In progress (50-74%)
@@ -284,6 +313,7 @@ Projects found: 3
 - 🔴 Not started (0-24%)
 
 **JSON Output Format**:
+
 ```json
 {
   "repository_root": "/workspaces/arc-kit",
@@ -315,6 +345,7 @@ Projects found: 3
 
 **Completion Calculation**:
 The completion percentage is based on 10 standard artifacts:
+
 1. Stakeholder Drivers (stakeholder-drivers.md)
 2. Risk Register (risk-register.md)
 3. Strategic Outline Business Case (sobc.md)
@@ -331,6 +362,7 @@ The completion percentage is based on 10 standard artifacts:
 **Purpose**: Convert plugin commands to Codex CLI Markdown and Gemini extension TOML formats
 
 **Usage**:
+
 ```bash
 python scripts/converter.py
 ```
@@ -340,6 +372,7 @@ python scripts/converter.py
 Automatically converts all plugin slash commands from `arckit-plugin/commands/*.md` to Codex CLI (`.codex/prompts/arckit.*.md`) and Gemini extension (`arckit-gemini/commands/arckit/*.toml`) formats. The plugin is the source of truth for all commands.
 
 **Key Features**:
+
 - Generates **Codex Markdown** and **Gemini extension TOML** from plugin command sources
 - Extracts YAML frontmatter from markdown commands
 - Replaces `$ARGUMENTS` with `{{args}}` for Gemini; keeps `$ARGUMENTS` for Codex
@@ -347,6 +380,7 @@ Automatically converts all plugin slash commands from `arckit-plugin/commands/*.
 - Creates output directories if needed
 
 **Conversion Process**:
+
 1. Reads each `arckit-plugin/commands/*.md` file
 2. Extracts frontmatter description and prompt body
 3. For agent-delegating commands, reads `arckit-plugin/agents/arckit-*.md` and extracts the full agent prompt
@@ -355,6 +389,7 @@ Automatically converts all plugin slash commands from `arckit-plugin/commands/*.
 6. Copies supporting files (templates, scripts, guides, skills) to `arckit-gemini/`
 
 **Example**:
+
 ```bash
 # From repository root
 python scripts/converter.py
@@ -367,16 +402,19 @@ python scripts/converter.py
 ```
 
 **Use Cases**:
+
 - After adding new plugin commands
 - After updating existing plugin command content
 - After modifying agent prompts in the plugin
 - Setting up Codex CLI for the first time
 
 **Requirements**:
+
 - Python 3.6+
 - No external dependencies (uses standard library only)
 
 **Related**:
+
 - Plugin commands (source): `arckit-plugin/commands/`
 - Plugin agents (source): `arckit-plugin/agents/`
 - Codex prompts (generated): `.codex/prompts/`
@@ -418,6 +456,7 @@ cd /path/to/arc-kit
 All scripts use `set -e` (exit on error) and `set -u` (error on undefined variables) for safety.
 
 **Common Exit Codes**:
+
 - `0` - Success
 - `1` - General error (missing files, validation failed, etc.)
 
@@ -463,6 +502,7 @@ When creating new bash scripts:
 6. **Document**: Update this README
 
 **Template**:
+
 ```bash
 #!/usr/bin/env bash
 
@@ -555,11 +595,13 @@ print(f"Total projects: {projects['project_count']}")
 ## Platform Support
 
 **Tested Platforms**:
+
 - ✅ Linux (Ubuntu, Debian, RHEL, etc.)
 - ✅ macOS
 - ⚠️ Windows (WSL2 or Git Bash required)
 
 **Requirements**:
+
 - Bash 4.0+
 - Standard Unix utilities
 - Git (optional)
@@ -571,6 +613,7 @@ print(f"Total projects: {projects['project_count']}")
 **Problem**: Script can't find .arckit directory
 
 **Solution**:
+
 ```bash
 # Ensure you're in an ArcKit project
 cd /path/to/your/arc-kit-project
@@ -583,6 +626,7 @@ cd /path/to/your/arc-kit-project
 **Problem**: create-project.sh requires architecture principles in `projects/000-global/ARC-000-PRIN-*.md`
 
 **Solution**:
+
 ```bash
 # Run /arckit.principles first
 # Or use --force flag (not recommended)
@@ -594,6 +638,7 @@ cd /path/to/your/arc-kit-project
 **Problem**: list-projects.sh shows no projects
 
 **Solution**:
+
 ```bash
 # Create a project first
 ./scripts/bash/create-project.sh --name "My First Project"

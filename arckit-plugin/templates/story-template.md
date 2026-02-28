@@ -34,6 +34,7 @@
 **Project**: [PROJECT_NAME]
 
 **Timeline Snapshot**:
+
 - **Project Start**: [START_DATE]
 - **Project End**: [END_DATE] (or "Ongoing")
 - **Total Duration**: [TOTAL_DAYS] days ([TOTAL_WEEKS] weeks)
@@ -42,11 +43,13 @@
 - **Phases Completed**: [PHASE_COUNT]
 
 **Key Outcomes**:
+
 - [Outcome 1]
 - [Outcome 2]
 - [Outcome 3]
 
 **Governance Achievements**:
+
 - ✅ Architecture Principles Established
 - ✅ Stakeholder Analysis Completed
 - ✅ Risk Register Maintained
@@ -248,7 +251,6 @@ timeline
 
 ---
 
-
 ## Design & Delivery Review
 
 ### Chapter 6: Design Review - Validating the Solution
@@ -315,12 +317,13 @@ flowchart LR
 Design reviews took [DAYS] days ([PERCENTAGE]% of project timeline). [Analysis: "Multiple review iterations were required to address security concerns" or "Streamlined review process due to vendor's strong initial submission."]
 
 **Decision Points**:
+
 - HLD Review: [APPROVED/CONDITIONAL/REJECTED] on [DATE]
 - DLD Review: [APPROVED/CONDITIONAL/REJECTED] on [DATE]
 
 **Traceability Chain**:
 
-```
+```text
 Architecture Principles → HLD Assessment Criteria → HLD Review Findings
 Requirements → HLD Coverage Analysis → HLD Review Findings
 Risk Register → DLD Risk Mitigation Verification → DLD Review Findings
@@ -328,6 +331,7 @@ Data Requirements → Database Schema Review → DLD Review Findings
 ```
 
 **Artifacts Created**:
+
 - `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-HLDR-*.md`
 - `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLDR-*.md`
 
@@ -382,7 +386,7 @@ Delivery planning took [DAYS] days ([PERCENTAGE]% of project). This phase establ
 
 **Traceability Chain**:
 
-```
+```text
 Requirements (BR/FR) → User Stories → Sprint Backlog
 Architecture Components → CMDB Configuration Items
 NFR-A-xxx (Availability) → SLA Targets
@@ -391,10 +395,12 @@ Stakeholders → ServiceNow Assignment Groups
 ```
 
 **Artifacts Created**:
+
 - `projects/{project_id}/ARC-*-BKLG-*.md`
 - `projects/{project_id}/ARC-*-SNOW-*.md`
 
 ---
+
 ## Timeline Insights & Analysis
 
 ### Pacing Analysis
@@ -413,13 +419,14 @@ The project timeline shows [PATTERN: "consistent progress across all phases" / "
 
 The critical path through this project was:
 
-```
+```text
 [START] → Architecture Principles → Stakeholders → Risk → SOBC → Requirements → Research →
 Wardley Maps → SOW → Vendor Selection → HLD Review → DLD Review → Backlog →
 Traceability → [END]
 ```
 
 **Longest Dependencies**:
+
 1. [ACTIVITY_1] → [ACTIVITY_2]: [DAYS] days (rationale: [WHY])
 2. [ACTIVITY_2] → [ACTIVITY_3]: [DAYS] days (rationale: [WHY])
 3. [ACTIVITY_3] → [ACTIVITY_4]: [DAYS] days (rationale: [WHY])
@@ -427,6 +434,7 @@ Traceability → [END]
 **Parallel Workstreams**:
 
 Some activities could have been parallelized:
+
 - [ACTIVITY_A] and [ACTIVITY_B] (no dependencies)
 - [ACTIVITY_C] and [ACTIVITY_D] (no dependencies)
 
@@ -441,6 +449,7 @@ Some activities could have been parallelized:
 | [PHASE_3] | [DAYS] days | [DAYS] days | [+/-DAYS] days | [REASON] |
 
 **Key Factors Affecting Timeline**:
+
 1. [FACTOR_1: e.g., "Extended stakeholder engagement due to organizational complexity"]
 2. [FACTOR_2: e.g., "Accelerated requirements definition due to clear business drivers"]
 3. [FACTOR_3: e.g., "Multiple design review iterations due to security concerns"]
@@ -448,6 +457,7 @@ Some activities could have been parallelized:
 ### Velocity Metrics
 
 **Command Execution Velocity**:
+
 - Average: [COMMANDS_PER_WEEK] commands per week
 - Peak: [MAX_COMMANDS] commands in week [N] ([DATE] to [DATE])
 - Slowest: [MIN_COMMANDS] commands in week [M] ([DATE] to [DATE])
@@ -665,12 +675,14 @@ mindmap
 ### Benefits Realization
 
 **Economic Benefits** (from SOBC):
+
 - **NPV**: [VALUE] over [YEARS] years
 - **ROI**: [PERCENTAGE]%
 - **Payback Period**: [MONTHS] months
 - **Benefit-Cost Ratio**: [BCR]
 
 **Non-Economic Benefits**:
+
 - [BENEFIT_1: e.g., "Improved citizen satisfaction"]
 - [BENEFIT_2: e.g., "Reduced operational risk"]
 - [BENEFIT_3: e.g., "Enhanced data security"]
@@ -715,7 +727,7 @@ Complete list of all artifacts generated during this project:
 
 Complete chronological log of all project activities extracted from git history:
 
-```
+```text
 [DATE] [TIME] - /arckit.principles - Architecture Principles Established
 [DATE] [TIME] - /arckit.stakeholders - Stakeholder Analysis: [N] stakeholders, [M] goals, [P] outcomes
 [DATE] [TIME] - /arckit.risk - Risk Register: [TOTAL] risks identified ([HIGH] high, [MEDIUM] medium, [LOW] low)

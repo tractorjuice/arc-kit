@@ -28,7 +28,7 @@ The Performance Analyst measures service performance and identifies improvement 
 
 ## Typical Workflow
 
-```
+```text
 requirements → traceability → analyze → health → conformance
 ```
 

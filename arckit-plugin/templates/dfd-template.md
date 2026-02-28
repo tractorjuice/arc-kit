@@ -109,6 +109,7 @@ View at [mermaid.live](https://mermaid.live) or in GitHub/VS Code markdown previ
 | {element} | {Process/Store/Flow/Entity} | {req_id} | {description} | {status} |
 
 **Coverage Summary**:
+
 - Total Requirements Mapped: {total}
 - Fully Covered: {covered}
 - Partially Covered: {partial}

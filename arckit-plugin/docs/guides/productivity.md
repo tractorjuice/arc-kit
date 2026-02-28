@@ -6,7 +6,7 @@ ArcKit generates architecture artifacts in Markdown, but governance boards, proc
 
 ## Installing the Document Skills
 
-```
+```text
 /plugin marketplace add anthropics/skills
 /plugin
 ```
@@ -31,7 +31,7 @@ Create sealed, read-only documents for compliance evidence and formal sign-off.
 
 **Example** — compliance evidence pack from a Scottish Courts AI governance project:
 
-```
+```text
 Read projects/014-scottish-courts/ARC-014-SECD-v1.0.md and
 projects/014-scottish-courts/ARC-014-DPIA-v1.0.md and
 projects/014-scottish-courts/ARC-014-TCOP-v1.0.md then use /pdf
@@ -56,7 +56,7 @@ Create editable Word documents for governance boards that mark up and comment on
 
 **Example** — board submission from a Windows 11 deployment project:
 
-```
+```text
 Read projects/003-windows11/ARC-003-SOBC-v1.0.md then use /docx
 to create a Word document with Document Control table on page 1,
 executive summary on page 2, and all sections following.
@@ -80,7 +80,7 @@ Create slide decks for steering committees, show-and-tells, and stakeholder brie
 
 **Example** — steering committee deck from a fuel price transparency project:
 
-```
+```text
 Read projects/017-fuel-prices/ARC-017-PRES-v1.0.md then use /pptx
 to create a 12-slide deck with: title slide, problem statement,
 proposed architecture, key risks, roadmap, and next steps.
@@ -104,7 +104,7 @@ Create sortable, filterable spreadsheets for analysis workflows and tool imports
 
 **Example** — vendor evaluation matrix from a Windows 11 deployment project:
 
-```
+```text
 Read projects/003-windows11/ARC-003-EVAL-v1.0.md then use /xlsx
 to create a spreadsheet with: Sheet 1 "Scoring Matrix" with
 weighted scores and conditional formatting (green/amber/red),

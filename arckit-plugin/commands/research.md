@@ -32,7 +32,7 @@ This command performs market research to identify available technologies, servic
 
 2. **Launch the agent**: Launch the **arckit-research** agent in `acceptEdits` mode with the following prompt:
 
-```
+```text
 Research technology and service options for the project in projects/{project-dir}/.
 
 User's additional context: {$ARGUMENTS}
@@ -69,6 +69,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 ### Output
 
 The agent writes the full research document to file and returns a summary including:
+
 - Categories researched and options found
 - Build vs buy recommendations
 - 3-year TCO range

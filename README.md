@@ -7,6 +7,7 @@
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
 
 ArcKit is a toolkit for enterprise architects that transforms architecture governance from scattered documents into a systematic, AI-assisted workflow for:
+
 - 🏛️ Establishing and enforcing architecture principles
 - 👥 Analyzing stakeholder drivers, goals, and outcomes
 - 🛡️ Risk management (HM Treasury Orange Book)
@@ -29,20 +30,25 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 ### Installation
 
 **Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.63+**):
-```
+
+```text
 /plugin marketplace add tractorjuice/arc-kit
 ```
+
 Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 53 commands, 5 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
 > **Why v2.1.63?** This version fixes memory leaks in subagents and long-running sessions (critical for ArcKit's 5 research agents), resolves MCP server cache leaks on reconnect (affects all 4 bundled MCP servers), fixes stale skill caching after `/clear`, and adds worktree config sharing.
 
 **Gemini CLI** — install the ArcKit extension:
+
 ```bash
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
+
 Zero-config: all 53 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
 
 **Codex CLI** — install the ArcKit CLI:
+
 ```bash
 # Install with pip
 pip install git+https://github.com/tractorjuice/arc-kit.git
@@ -72,6 +78,7 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 **Claude Code**: No initialization needed — the plugin provides everything.
 
 **OpenCode CLI**:
+
 ```bash
 # Create a new architecture governance project
 arckit init payment-modernization --ai opencode
@@ -81,6 +88,7 @@ arckit init . --ai opencode
 ```
 
 **Codex CLI**:
+
 ```bash
 # Create a new architecture governance project
 arckit init payment-modernization --ai codex
@@ -112,6 +120,7 @@ codex
 **Gemini CLI extension**: Updates via `gemini extensions update arckit`.
 
 **Codex CLI**:
+
 ```bash
 # Step 1: Upgrade the CLI tool
 pip install --upgrade git+https://github.com/tractorjuice/arc-kit.git
@@ -132,6 +141,7 @@ If upgrading from v0.x, you may also need to migrate legacy filenames — see th
 ### Explore Example Outputs
 
 Public demonstration repositories showcase complete ArcKit deliverables:
+
 - **NHS Appointment Booking** — [arckit-test-project-v7-nhs-appointment](https://github.com/tractorjuice/arckit-test-project-v7-nhs-appointment): Digital health platform with NHS Spine integration and GDPR safeguards.
 - **M365 GCC-H Migration** — [arckit-test-project-v1-m365](https://github.com/tractorjuice/arckit-test-project-v1-m365): Government cloud migration with compliance mapping and change management.
 - **HMRC Tax Assistant** — [arckit-test-project-v2-hmrc-chatbot](https://github.com/tractorjuice/arckit-test-project-v2-hmrc-chatbot): Conversational AI service covering PII protection and bilingual support.
@@ -154,6 +164,7 @@ Public demonstration repositories showcase complete ArcKit deliverables:
 ### Problem: Architecture Governance is Broken
 
 Traditional enterprise architecture suffers from:
+
 - ❌ Scattered documents across tools (Word, Confluence, PowerPoint)
 - ❌ Inconsistent governance enforcement
 - ❌ Manual vendor evaluation with bias
@@ -163,6 +174,7 @@ Traditional enterprise architecture suffers from:
 ### Solution: Structured, AI-Assisted Governance
 
 ArcKit provides:
+
 - ✅ **Template-Driven Quality**: Comprehensive templates ensure nothing is forgotten
 - ✅ **Systematic Workflows**: Clear processes from requirements → procurement → design review
 - ✅ **AI Assistance**: Let AI handle document generation, you focus on decisions
@@ -174,6 +186,7 @@ ArcKit provides:
 ## UK Government Compliance
 
 ArcKit includes dedicated commands for UK public sector delivery:
+
 - `/arckit.tcop` — Assess all 13 Technology Code of Practice points across delivery phases.
 - `/arckit.ai-playbook` — Produce responsible AI assessments aligned to the UK Government AI Playbook and ATRS.
 - `/arckit.secure` — Generate Secure by Design artefacts covering NCSC CAF, Cyber Essentials, and UK GDPR controls.
@@ -189,9 +202,11 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 ArcKit guides you through the enterprise architecture lifecycle:
 
 ### Phase 0: Project Planning
+
 **`/arckit.plan`** → Create project plan with timeline, phases, and gates
 
 Visualize your entire project delivery:
+
 - GDS Agile Delivery phases (Discovery → Alpha → Beta → Live)
 - Mermaid Gantt chart with timeline, dependencies, and milestones
 - Workflow diagram showing gates and decision points
@@ -200,18 +215,22 @@ Visualize your entire project delivery:
 - Gate approval criteria for governance
 
 ### Phase 1: Establish Governance
+
 **`/arckit.principles`** → Create enterprise architecture principles
 
 Define your organisation's architecture standards:
+
 - Cloud strategy (AWS/Azure/GCP)
 - Security frameworks (Zero Trust, compliance)
 - Technology standards
 - FinOps and cost governance
 
 ### Phase 2: Stakeholder Analysis
+
 **`/arckit.stakeholders`** → Analyze stakeholder drivers, goals, and outcomes
 
 **Do this BEFORE business case** to understand who cares about the project and why:
+
 - Identify all stakeholders (internal and external)
 - Document underlying drivers (strategic, operational, financial, compliance, risk, personal)
 - Map drivers to SMART goals
@@ -221,9 +240,11 @@ Define your organisation's architecture standards:
 - Define engagement and communication strategies
 
 ### Phase 3: Risk Assessment
+
 **`/arckit.risk`** → Create comprehensive risk register (Orange Book)
 
 **Do this BEFORE business case** to identify and assess risks systematically:
+
 - Follow HM Treasury Orange Book 2023 framework
 - Identify risks across 6 categories (Strategic, Operational, Financial, Compliance, Reputational, Technology)
 - Assess inherent risk (before controls) and residual risk (after controls)
@@ -233,9 +254,11 @@ Define your organisation's architecture standards:
 - Feed into SOBC Management Case Part E
 
 ### Phase 4: Business Case Justification
+
 **`/arckit.sobc`** → Create Strategic Outline Business Case (SOBC)
 
 **Do this BEFORE requirements** to justify investment and secure approval:
+
 - Use HM Treasury Green Book 5-case model (Strategic, Economic, Commercial, Financial, Management)
 - Analyze strategic options (Do Nothing, Minimal, Balanced, Comprehensive)
 - Map benefits to stakeholder goals (complete traceability)
@@ -246,9 +269,11 @@ Define your organisation's architecture standards:
 - Enable go/no-go decision BEFORE detailed requirements work
 
 ### Phase 5: Define Requirements
+
 **`/arckit.requirements`** → Document comprehensive requirements
 
 Create detailed requirements **informed by stakeholder goals** (if SOBC approved):
+
 - Business requirements with rationale
 - Functional requirements with acceptance criteria
 - Non-functional requirements (performance, security, scalability, compliance)
@@ -257,9 +282,11 @@ Create detailed requirements **informed by stakeholder goals** (if SOBC approved
 - Success criteria and KPIs
 
 ### Phase 5.3: Platform Strategy Design (Optional - for Multi-Sided Platforms)
+
 **`/arckit.platform-design`** → Design multi-sided platform strategy using Platform Design Toolkit
 
 Use this phase when designing **ecosystem-based platforms** (Government as a Platform, marketplaces, data platforms):
+
 - **Ecosystem Canvas**: Map supply side, demand side, supporting entities with relationship diagrams
 - **Entity-Role Portraits**: Deep dive into 3-5 key entities (context, pressures, goals, gains)
 - **Motivations Matrix**: Identify synergies and conflicts across entities with mitigation strategies
@@ -273,9 +300,11 @@ Use this phase when designing **ecosystem-based platforms** (Government as a Pla
 **Use Cases**: NHS appointment booking, local authority data marketplaces, training procurement platforms, citizen services portals
 
 ### Phase 5.5: Data Modeling
+
 **`/arckit.data-model`** → Create comprehensive data model with ERD
 
 Create data model based on Data Requirements (DR-xxx):
+
 - Visual Entity-Relationship Diagram (ERD) using Mermaid
 - Detailed entity catalog with attributes, types, validation rules
 - PII identification and GDPR/DPA 2018 compliance
@@ -286,9 +315,11 @@ Create data model based on Data Requirements (DR-xxx):
 - Requirements traceability (DR-xxx → Entity → Attribute)
 
 ### Phase 5.7: Data Protection Impact Assessment
+
 **`/arckit.dpia`** → Generate [DPIA](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/) for UK GDPR Article 35 compliance
 
 **MANDATORY for high-risk processing** - assess privacy risks before technology selection:
+
 - ICO 9-criteria automated screening (sensitive data, large scale, vulnerable subjects, AI/ML, etc.)
 - Auto-populated from data model (entities, PII, special category data, lawful basis)
 - Risk assessment focused on impact on individuals (privacy harm, discrimination)
@@ -301,9 +332,11 @@ Create data model based on Data Requirements (DR-xxx):
 - Links mitigations to Secure by Design security controls
 
 ### Phase 5.8: Data Source Discovery
+
 **`/arckit.datascout`** → Discover external data sources
 
 Discover and evaluate external data sources to fulfil project data requirements:
+
 - Data needs extraction from DR/FR/INT/NFR requirements
 - UK Government open data portals (data.gov.uk, ONS, NHS Digital, Companies House, OS Data Hub)
 - Commercial API providers and data marketplaces
@@ -315,9 +348,11 @@ Discover and evaluate external data sources to fulfil project data requirements:
 - TCoP Point 10 compliance (Make Better Use of Data)
 
 ### Phase 6: Technology Research
+
 **`/arckit.research`** → Research technology, services, and products
 
 Research available solutions to meet requirements with build vs buy analysis:
+
 - Dynamic category detection from requirements (authentication, payments, databases, etc.)
 - Commercial SaaS options with pricing, reviews, and ratings (WebSearch)
 - Open source alternatives with GitHub stats and community maturity
@@ -330,9 +365,11 @@ Research available solutions to meet requirements with build vs buy analysis:
 - Feeds into SOBC Economic Case (cost data, options analysis)
 
 ### Phase 7: Strategic Planning with Wardley Mapping
+
 **`/arckit.wardley`** → Create strategic Wardley Maps
 
 Visualize strategic positioning with:
+
 - Component evolution analysis (Genesis → Custom → Product → Commodity)
 - Build vs Buy decision framework
 - Vendor comparison and procurement strategy
@@ -340,9 +377,11 @@ Visualize strategic positioning with:
 - Evolution predictions and strategic gameplay
 
 ### Phase 7.5: Strategic Roadmap
+
 **`/arckit.roadmap`** → Create multi-year architecture roadmap
 
 Create strategic roadmap for multi-year transformation programs:
+
 - **Multi-year timeline**: 3-5 year roadmap with Mermaid Gantt chart aligned to financial years (FY 2024/25, etc.)
 - **Strategic themes**: Cloud migration, data modernization, security & compliance, DevOps transformation
 - **Capability evolution**: Maturity progression from L1 (Initial) to L5 (Optimized) over time
@@ -359,9 +398,11 @@ Create strategic roadmap for multi-year transformation programs:
 **Roadmap feeds into**: `/arckit.plan` for detailed phase execution, `/arckit.sobc` for investment business case, `/arckit.backlog` for prioritized user stories, `/arckit.strategy` for executive-level synthesis.
 
 ### Phase 7.6: Architecture Strategy Synthesis
+
 **`/arckit.strategy`** → Synthesise strategic artifacts into executive-level Architecture Strategy
 
 Create a comprehensive Architecture Strategy document that synthesises multiple strategic artifacts into a single coherent narrative:
+
 - **Strategic vision**: 2-3 paragraphs articulating the transformation vision and success definition
 - **Strategic drivers**: Summarised from stakeholder analysis with external drivers (regulatory, market, technology)
 - **Guiding principles**: Key principles with strategic implications, compliance summary
@@ -383,9 +424,11 @@ Create a comprehensive Architecture Strategy document that synthesises multiple 
 **Strategy feeds into**: `/arckit.requirements` for detailed requirements, `/arckit.roadmap` for expanded timeline, `/arckit.plan` for project delivery.
 
 ### Phase 7.7: Architecture Decision Records
+
 **`/arckit.adr`** → Document architectural decisions
 
 Create Architecture Decision Records (ADRs) following MADR v4.0 format enhanced with UK Government requirements:
+
 - **Decision metadata**: Sequential numbering (ADR-001, ADR-002), status (Proposed/Accepted/Superseded), escalation level (Team/Cross-team/Department/Cross-government)
 - **Stakeholder RACI**: Deciders (accountable), Consulted (SMEs, two-way), Informed (one-way communication)
 - **Context and problem statement**: Why this decision is needed, business/technical/regulatory drivers
@@ -402,9 +445,11 @@ Create Architecture Decision Records (ADRs) following MADR v4.0 format enhanced 
 **ADR feeds into**: `/arckit.diagram` (architecture diagrams reflect decisions), `/arckit.hld-review` and `/arckit.dld-review` (reviews verify decisions implemented), `/arckit.traceability` (decisions are key traceability artifacts).
 
 ### Phase 8: Vendor Procurement (if needed)
+
 **`/arckit.sow`** → Generate Statement of Work (RFP)
 
 Create RFP-ready documents with:
+
 - Scope of work and deliverables
 - Technical requirements
 - Vendor qualifications
@@ -414,6 +459,7 @@ Create RFP-ready documents with:
 **`/arckit.dos`** → Digital Outcomes and Specialists (DOS) procurement 🇬🇧
 
 For UK public sector organizations needing custom development:
+
 - Generate DOS-compliant procurement documentation
 - Extract requirements from project artifacts (BR/FR/NFR/INT/DR)
 - Essential vs desirable skills from requirements
@@ -424,6 +470,7 @@ For UK public sector organizations needing custom development:
 **`/arckit.gcloud-search`** → G-Cloud service search with live marketplace search 🇬🇧
 
 For UK public sector organizations needing off-the-shelf cloud services:
+
 - Generate G-Cloud requirements document
 - **Live Digital Marketplace search** using WebSearch
 - Find actual services with suppliers, prices, features, links
@@ -434,6 +481,7 @@ For UK public sector organizations needing off-the-shelf cloud services:
 **`/arckit.gcloud-clarify`** → G-Cloud service validation and gap analysis 🇬🇧
 
 Validate G-Cloud services and generate supplier clarification questions:
+
 - **Systematic gap analysis** (MUST/SHOULD requirements vs service descriptions)
 - Detect gaps: ✅ Confirmed, ⚠️ Ambiguous, ❌ Not mentioned
 - Generate prioritised questions (🔴 Critical / 🟠 High / 🔵 Medium / 🟢 Low)
@@ -445,6 +493,7 @@ Validate G-Cloud services and generate supplier clarification questions:
 **`/arckit.evaluate`** → Create vendor evaluation framework
 
 Set up systematic scoring:
+
 - Technical evaluation criteria (100 points)
 - Cost evaluation methodology
 - Reference check templates
@@ -453,15 +502,18 @@ Set up systematic scoring:
 **`/arckit.evaluate`** (compare mode) → Compare vendor proposals
 
 Side-by-side analysis of:
+
 - Technical approaches
 - Cost breakdowns
 - Risk assessments
 - Value propositions
 
 ### Phase 9: Design Review
+
 **`/arckit.hld-review`** → Review High-Level Design
 
 Validate designs against:
+
 - Architecture principles compliance
 - Requirements coverage
 - Security and compliance
@@ -471,6 +523,7 @@ Validate designs against:
 **`/arckit.dld-review`** → Review Detailed Design
 
 Implementation-ready validation:
+
 - Component specifications
 - API contracts (OpenAPI)
 - Database schemas
@@ -478,9 +531,11 @@ Implementation-ready validation:
 - Test strategy
 
 ### Phase 10: Sprint Planning
+
 **`/arckit.backlog`** → Generate prioritised product backlog
 
 Transform requirements into sprint-ready user stories:
+
 - Convert requirements (BR/FR/NFR/INT/DR) to GDS-format user stories
 - Multi-factor prioritization (MoSCoW + risk + value + dependencies)
 - Organise into sprint plan with capacity balancing
@@ -491,9 +546,11 @@ Transform requirements into sprint-ready user stories:
 **When to run**: After HLD approval, before Sprint 1 (Alpha → Beta transition)
 
 ### Phase 10.5: Backlog Export
+
 **`/arckit.trello`** → Export product backlog to Trello
 
 Push your backlog directly to Trello for sprint execution:
+
 - Create Trello board with sprint-based lists (Product Backlog + per-sprint + In Progress + Done)
 - Cards with priority labels, story points, and acceptance criteria checklists
 - Colour-coded labels by MoSCoW priority and requirement type
@@ -503,9 +560,11 @@ Push your backlog directly to Trello for sprint execution:
 **When to run**: After `/arckit.backlog` generates the product backlog (requires JSON export)
 
 ### Phase 11: ServiceNow Service Management Design
+
 **`/arckit.servicenow`** → Generate ServiceNow service design
 
 Bridge architecture to operations:
+
 - CMDB design (derived from architecture diagrams)
 - SLA definitions (derived from NFRs)
 - Incident management design
@@ -514,18 +573,22 @@ Bridge architecture to operations:
 - Service transition plan
 
 ### Phase 12: Traceability
+
 **`/arckit.traceability`** → Generate traceability matrix
 
 Ensure complete coverage:
+
 - Requirements → Design mapping
 - Design → Test mapping
 - Gap analysis and orphan detection
 - Change impact tracking
 
 ### Phase 13: Quality Assurance
+
 **`/arckit.analyze`** → Comprehensive governance quality analysis
 
 Periodically assess governance quality across all artifacts:
+
 - Architecture principles compliance
 - Requirements coverage and traceability
 - Stakeholder alignment verification
@@ -537,11 +600,13 @@ Periodically assess governance quality across all artifacts:
 **When to use**: Run periodically (before milestones, design reviews, or procurement decisions) to identify gaps and ensure governance standards are maintained.
 
 ### Phase 14: Compliance Assessment (UK Government)
+
 For UK Government and public sector projects:
 
 **`/arckit.service-assessment`** → [GDS Service Standard](https://www.gov.uk/service-manual/service-assessments) assessment preparation
 
 Prepare for mandatory GDS Service Standard assessments:
+
 - Analyze evidence against all 14 Service Standard points
 - Identify gaps for alpha, beta, or live assessments
 - Generate RAG (Red/Amber/Green) ratings and overall readiness score
@@ -554,6 +619,7 @@ Run at end of Discovery (for alpha prep), mid-Beta (for beta prep), or before Li
 **`/arckit.tcop`** → [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) assessment
 
 Assess compliance with all 13 TCoP points:
+
 - Point 1: Define user needs
 - Point 2: Make things accessible
 - Point 3: Be open and use open source
@@ -571,6 +637,7 @@ Assess compliance with all 13 TCoP points:
 **`/arckit.secure`** → UK Government Secure by Design assessment
 
 Security compliance assessment:
+
 - NCSC Cloud Security Principles
 - NCSC Cyber Assessment Framework (CAF)
 - Cyber Essentials / Cyber Essentials Plus
@@ -581,6 +648,7 @@ Security compliance assessment:
 **`/arckit.ai-playbook`** → [UK Government AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government) compliance (for AI systems)
 
 Responsible AI assessment:
+
 - AI ethics principles
 - Transparency and explainability
 - Fairness and bias mitigation
@@ -591,6 +659,7 @@ Responsible AI assessment:
 **`/arckit.atrs`** → [Algorithmic Transparency Recording Standard](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub)
 
 Generate ATRS record for algorithmic decision-making:
+
 - Algorithm details and logic
 - Purpose and use case
 - Data sources and data quality
@@ -602,6 +671,7 @@ Generate ATRS record for algorithmic decision-making:
 **`/arckit.mod-secure`** → MOD Secure by Design assessment
 
 MOD-specific security compliance:
+
 - JSP 440 (Defence Project & Programme Management)
 - Information Assurance Maturity Model (IAMM)
 - MOD Security clearances and vetting
@@ -612,6 +682,7 @@ MOD-specific security compliance:
 **`/arckit.jsp-936`** → [MOD JSP 936](https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive) AI Assurance Documentation
 
 For defence projects using AI/ML systems:
+
 - JSP 936 (Dependable Artificial Intelligence in Defence)
 - 5 Ethical Principles (Human-Centricity, Responsibility, Understanding, Bias & Harm Mitigation, Reliability)
 - 5 Risk Classification Levels (Critical to Minor)
@@ -621,9 +692,11 @@ For defence projects using AI/ML systems:
 - Human-AI teaming strategy and continuous monitoring
 
 ### Phase 15: Project Story & Reporting
+
 **`/arckit.story`** → Generate comprehensive project story
 
 Create narrative historical record with complete timeline analysis:
+
 - **Timeline Analysis**: 4 visualization types (Gantt chart, linear flowchart, detailed table, phase duration pie chart)
 - **Timeline Metrics**: Project duration, velocity, phase analysis, critical path identification
 - **Complete Timeline**: All events from git log or file modification dates with days-from-start
@@ -639,6 +712,7 @@ Create narrative historical record with complete timeline analysis:
 **`/arckit.presentation`** → Generate MARP slide deck from project artifacts
 
 Create presentation slides from existing architecture artifacts:
+
 - **MARP Format**: Markdown-based slides with `---` separators — exports to PDF, PPTX, or HTML
 - **Focus Modes**: Executive (board-level), Technical (architecture detail), Stakeholder (benefits-focused), Procurement (RFP briefings)
 - **Artifact-Driven**: Reads all available project artifacts and extracts key content into slides
@@ -649,9 +723,11 @@ Create presentation slides from existing architecture artifacts:
 **When to use**: Before governance boards, stakeholder briefings, gate reviews, or quarterly portfolio presentations. Run after creating most project artifacts for the richest slide deck.
 
 ### Phase 16: Documentation Publishing
+
 **`/arckit.pages`** → Generate documentation site
 
 Publish all project documentation as an interactive website:
+
 - **Static Site Generation**: Generates `docs/index.html` and `docs/manifest.json` — deployable to any static host (GitHub Pages, Netlify, Vercel, S3, etc.)
 - **Mermaid Diagram Rendering**: All architecture diagrams render inline with mermaid.js
 - **Project Navigation**: Sidebar with collapsible project tree and document categories
@@ -725,12 +801,11 @@ codex --auto
 
 See [.codex/README.md](.codex/README.md) for full Codex CLI setup and usage.
 
-
 ## Project Structure
 
 ArcKit creates this structure:
 
-```
+```text
 payment-modernization/
 ├── .arckit/
 │   ├── scripts/
@@ -787,11 +862,13 @@ Customize ArcKit templates without modifying defaults:
 ```
 
 **How it works:**
+
 - Default templates live in `.arckit/templates/` (refreshed by `arckit init`)
 - Your customizations go in `.arckit/templates-custom/` (preserved across updates)
 - Commands automatically check for custom templates first, falling back to defaults
 
 **Common customizations:**
+
 - Add organization-specific document control fields
 - Include mandatory compliance sections (ISO 27001, PCI-DSS)
 - Add department-specific approval workflows
@@ -957,6 +1034,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 ## Wardley Mapping for Strategic Architecture
 
 ArcKit uses Wardley Maps to expose the strategic position of every component before you commit to a solution. The `/arckit.wardley` command produces ready-to-visualise maps that:
+
 - Trace user needs through the supporting value chain so gaps and duplicated effort are obvious.
 - Plot evolution from Genesis → Commodity to reveal when to build, buy, reuse, or retire capabilities.
 - Feed procurement, vendor evaluation, and design reviews with shared situational awareness.
@@ -972,6 +1050,7 @@ Maps are emitted in the Open Wardley Map format — paste them straight into [ht
 ### What are Architecture Diagrams?
 
 Architecture diagrams visualize system structure, interactions, and deployment for:
+
 - **Technical Communication**: Share architecture with stakeholders
 - **Design Documentation**: Document current and future state
 - **Vendor Evaluation**: Compare vendor technical approaches
@@ -995,6 +1074,7 @@ Use `/arckit.diagram` directly, or supply an explicit type such as `context`, `c
 ## ServiceNow Service Management Design
 
 ArcKit turns architecture artefacts into an operations-ready ServiceNow pack. The `/arckit.servicenow` command builds:
+
 - CMDB hierarchies, SLAs, and change risk straight from requirements, diagrams, and Wardley Maps.
 - ITIL-aligned runbooks covering incident, change, monitoring, and transition activities.
 - UK government extras such as GDS Service Standard, Technology Code of Practice, and GOV.UK Pay/Notify dependencies when relevant.
@@ -1006,6 +1086,7 @@ For full outputs, explore the public demos (for example `arckit-test-project-v3-
 ## Documentation
 
 Key references live in `docs/` and top-level guides:
+
 - Quick tour: [docs/index.html](docs/index.html) mirrors the public landing page.
 - Lifecycle visuals: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover command flow and relationships.
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
@@ -1057,6 +1138,7 @@ arckit init my-project
 ## Documentation
 
 Full guidance lives in `docs/` and the static site.
+
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
 - Reference packs: [WORKFLOW-DIAGRAMS.md](WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 53×53 command matrix.
@@ -1080,6 +1162,7 @@ ArcKit is inspired by [Spec Kit](https://github.com/github/spec-kit) but targets
 We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 **Areas we need help**:
+
 - Integration with enterprise tools (Jira, Azure DevOps)
 - Additional AI agent support
 - Template improvements based on real-world usage
@@ -1097,24 +1180,28 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 **The Problem**: ArcKit generates large documents that can exceed Claude's 32K token output limit.
 
 **⚠️ IMPORTANT**: Your Claude subscription plan determines the maximum tokens:
+
 - 🔴 Free/Pro plans: **32K max** (cannot be increased)
 - ✅ Team/Enterprise plans: Can increase to 64K via environment variable
 
 **Solutions**:
 
 1. **For Team/Enterprise plans** - Increase token limit:
+
    ```bash
    export CLAUDE_CODE_MAX_OUTPUT_TOKENS=64000
    ```
 
 2. **For ALL plans** (including Free/Pro) - Use **Write tool strategy**:
-   ```
+
+   ```text
    User: /arckit.requirements but write directly to file using Write tool, show me only a summary
    ```
 
    This tells Claude to use the Write tool to create the file (doesn't count toward output tokens) and only show you a summary.
 
 **Which commands are affected?**
+
 - 🔴 HIGH RISK: `/arckit.sobc`, `/arckit.requirements`, `/arckit.data-model`, `/arckit.sow`
 - 🟢 MITIGATED (agent): `/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research`, `/arckit.gcp-research` — run as autonomous agents in separate context windows
 - 🟡 MEDIUM RISK: `/arckit.risk`, `/arckit.evaluate`, `/arckit.principles`
@@ -1124,6 +1211,7 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 ### Common Issues
 
 **Command not found**: Ensure commands are available
+
 ```bash
 # For Codex, check if commands directory exists
 ls .codex/prompts/
@@ -1139,12 +1227,14 @@ ls .opencode/commands/
 ```
 
 **Template not found**: Ensure you've run `/arckit.principles` first
+
 ```bash
 # Check if templates exist
 ls templates/
 ```
 
 **Project creation fails**: Ensure you have an ArcKit repository initialized
+
 ```bash
 # Initialize if needed
 arckit init .

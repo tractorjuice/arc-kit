@@ -38,6 +38,7 @@
 **Overall Security Posture**: [Strong / Adequate / Needs Improvement / Inadequate]
 
 **Key Security Findings**:
+
 - [Summary of critical security gaps]
 - [Summary of security strengths]
 - [Blocking security issues]
@@ -58,6 +59,7 @@
 [Explain why this classification level is required]
 
 **Data Types Processed**:
+
 - [ ] Personal data (UK GDPR)
 - [ ] Special category data (biometric, health, etc.)
 - [ ] Classified military information
@@ -74,6 +76,7 @@
 | [e.g., Operational plans] | SECRET | [High/Med/Low] | [Location] | [RBAC/MFA/etc] |
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -91,6 +94,7 @@
 [Describe layered security controls implemented]
 
 **Security Layers Implemented**:
+
 - [ ] Physical security (data center, building access)
 - [ ] Network security (firewalls, segmentation, IDS/IPS)
 - [ ] Host security (hardened OS, endpoint protection)
@@ -100,6 +104,7 @@
 - [ ] Monitoring and detection (SIEM, SOC)
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -113,6 +118,7 @@
 [Describe default security configurations]
 
 **Default Security Configurations**:
+
 - [ ] Strong authentication required by default
 - [ ] Encryption enabled by default
 - [ ] Least privilege access model
@@ -122,6 +128,7 @@
 - [ ] Logging enabled by default
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -135,6 +142,7 @@
 [Describe access control implementation]
 
 **Access Controls**:
+
 - [ ] Role-Based Access Control (RBAC) implemented
 - [ ] Principle of least privilege enforced
 - [ ] Privileged access management (PAM) in place
@@ -143,6 +151,7 @@
 - [ ] Separation of duties enforced
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -156,6 +165,7 @@
 [Describe breach detection and response capabilities]
 
 **Breach Readiness**:
+
 - [ ] Security monitoring and alerting
 - [ ] Incident response plan documented and tested
 - [ ] Forensic capabilities available
@@ -164,6 +174,7 @@
 - [ ] Regular red team/penetration testing
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -178,6 +189,7 @@
 **Accreditation Type**: [Full Accreditation / Interim Accreditation / Risk Managed Accreditation]
 
 **Accreditation Progress**:
+
 - [ ] Business Impact Assessment (BIA) completed
 - [ ] Risk Management and Accreditation Documentation Set (RMADS) initiated
 - [ ] Security Aspects Letter (SAL) issued
@@ -193,6 +205,7 @@
 **Target Accreditation Date**: [Date]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -216,6 +229,7 @@
 | Incident Management | [0-5] | [0-5] | [Gap description] |
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -230,6 +244,7 @@
 **Threat Model Completed**: [Yes / No / In Progress]
 
 **Identified Threat Actors**:
+
 - [ ] Nation state actors
 - [ ] Terrorist organizations
 - [ ] Organized crime
@@ -245,6 +260,7 @@
 | [e.g., Ransomware] | [H/M/L] | [H/M/L] | [Critical/High/Med/Low] | [Control description] |
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -264,6 +280,7 @@
 **Residual Risks**: [Number of risks accepted by IAO/IAA]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -276,6 +293,7 @@
 **Cryptographic Standards**: [CESG / NCSC approved algorithms]
 
 **Encryption Implementation**:
+
 - [ ] Data at rest encrypted (AES-256 minimum)
 - [ ] Data in transit encrypted (TLS 1.3 minimum)
 - [ ] Database encryption enabled
@@ -285,11 +303,13 @@
 - [ ] Crypto key lifecycle managed
 
 **Key Management**:
+
 - Key storage: [HSM / Cloud KMS / Other]
 - Key rotation frequency: [e.g., 90 days]
 - Key backup and recovery: [Yes / No]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -300,6 +320,7 @@
 **Identity Provider**: [MOD Active Directory / Azure AD / Other]
 
 **Authentication Controls**:
+
 - [ ] Multi-factor authentication (MFA) enforced
 - [ ] Password complexity requirements (12+ chars, complexity)
 - [ ] Smart card (CAC/PIV) authentication for classified systems
@@ -309,6 +330,7 @@
 - [ ] Privileged access management (PAM)
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -317,6 +339,7 @@
 **Network Architecture**: [Segmented / Flat / DMZ / Zero Trust]
 
 **Network Security Controls**:
+
 - [ ] Network segmentation by security zone
 - [ ] Firewalls at zone boundaries
 - [ ] Intrusion Detection/Prevention Systems (IDS/IPS)
@@ -327,6 +350,7 @@
 - [ ] Air-gapped for SECRET and above (if applicable)
 
 **Network Zones**:
+
 - [ ] Public zone (internet-facing)
 - [ ] DMZ (semi-trusted)
 - [ ] Internal zone (trusted)
@@ -334,6 +358,7 @@
 - [ ] Classified zone (SECRET and above)
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -344,6 +369,7 @@
 **Scanning Tools**: [Nessus / Qualys / Rapid7 / Other]
 
 **Vulnerability Management Process**:
+
 - [ ] Automated vulnerability scanning
 - [ ] Manual penetration testing (annual minimum)
 - [ ] Patch management process defined
@@ -356,6 +382,7 @@
 **Penetration Test Findings**: [Critical: X, High: Y, Medium: Z]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -366,6 +393,7 @@
 **SIEM Solution**: [Splunk / ArcSight / Sentinel / Other]
 
 **Logging and Monitoring**:
+
 - [ ] Centralized log collection (SIEM)
 - [ ] Real-time security alerting
 - [ ] Log retention (minimum 12 months)
@@ -375,12 +403,14 @@
 - [ ] Integration with MOD Cyber Defence Operations
 
 **Security Alerts**:
+
 - Failed authentication attempts: [Monitored / Not monitored]
 - Privilege escalation: [Monitored / Not monitored]
 - Data exfiltration attempts: [Monitored / Not monitored]
 - Malware detection: [Monitored / Not monitored]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -393,6 +423,7 @@
 **Secure Coding Standards**: [OWASP / CERT / MOD Secure Coding Guidelines]
 
 **Secure Development Practices**:
+
 - [ ] Secure coding training for developers
 - [ ] Code review process includes security review
 - [ ] Static Application Security Testing (SAST)
@@ -402,6 +433,7 @@
 - [ ] Security testing in CI/CD pipeline
 
 **OWASP Top 10 Mitigation**:
+
 - [ ] Injection flaws prevented (SQLi, XSS, etc.)
 - [ ] Broken authentication prevented
 - [ ] Sensitive data exposure prevented
@@ -414,12 +446,14 @@
 - [ ] Insufficient logging and monitoring addressed
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
 ### 6.2 DevSecOps Integration
 
 **CI/CD Security Gates**:
+
 - [ ] Automated security scanning in pipeline
 - [ ] Secrets scanning (no hardcoded credentials)
 - [ ] Dependency vulnerability scanning
@@ -428,6 +462,7 @@
 - [ ] Build artifact signing and verification
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -438,6 +473,7 @@
 ### 7.1 Third-Party Risk Management
 
 **Vendor Security Assessment**:
+
 - [ ] Vendor security questionnaires completed
 - [ ] Vendor security certifications verified (ISO 27001, Cyber Essentials+)
 - [ ] Vendor access controls defined and enforced
@@ -452,6 +488,7 @@
 | [e.g., Software library] | [Vendor] | [High/Med/Low] | [H/M/L] | [Controls] |
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -460,6 +497,7 @@
 **Open Source Components**: [Number of OSS dependencies]
 
 **OSS Security Controls**:
+
 - [ ] Software Bill of Materials (SBOM) generated
 - [ ] Known vulnerabilities scanned (CVE database)
 - [ ] License compliance verified
@@ -467,6 +505,7 @@
 - [ ] Alternative components evaluated for high-risk OSS
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -479,6 +518,7 @@
 **Backup Strategy**: [3-2-1 rule / Continuous replication / Other]
 
 **Backup Controls**:
+
 - [ ] Regular backups scheduled (RPO: [X hours])
 - [ ] Backup encryption enabled
 - [ ] Offsite/offline backups stored
@@ -490,6 +530,7 @@
 **Recovery Point Objective (RPO)**: [X hours]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -500,6 +541,7 @@
 **Incident Response Team**: [24/7 / Business Hours / Ad-hoc]
 
 **Incident Response Capabilities**:
+
 - [ ] Incident response plan documented and tested
 - [ ] Incident response team trained
 - [ ] Incident detection capabilities
@@ -511,6 +553,7 @@
 **Recent Incident Response Exercise**: [Date / Not Conducted]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -521,6 +564,7 @@
 **Business Continuity Plan**: [Documented / In Development / Not Started]
 
 **DR/BC Capabilities**:
+
 - [ ] DR plan documented and tested
 - [ ] Alternative processing site identified
 - [ ] Critical system identification completed
@@ -532,6 +576,7 @@
 **DR Test Results**: [Successful / Issues identified]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -550,6 +595,7 @@
 | [End User] | [BPSS / SC / DV] | [Active / Pending / Expired] |
 
 **Security Vetting Compliance**:
+
 - [ ] All personnel appropriately vetted
 - [ ] Clearance levels match data classification
 - [ ] Clearance renewal process managed
@@ -557,12 +603,14 @@
 - [ ] Contractor clearances verified
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
 ### 9.2 Security Awareness
 
 **Security Training**:
+
 - [ ] Mandatory security awareness training completed
 - [ ] Role-based security training provided
 - [ ] Phishing awareness training
@@ -573,6 +621,7 @@
 **Training Completion Rate**: [X%]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -583,6 +632,7 @@
 ### 10.1 Regulatory Compliance
 
 **Applicable Regulations**:
+
 - [ ] UK GDPR and Data Protection Act 2018
 - [ ] Official Secrets Act
 - [ ] Defence Reform Act
@@ -598,12 +648,14 @@
 | [JSP 440] | [Compliant / Partial / Non-Compliant] | [Date] | [Date] |
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
 ### 10.2 Security Policies and Procedures
 
 **Security Documentation**:
+
 - [ ] Information Security Policy
 - [ ] Acceptable Use Policy
 - [ ] Access Control Policy
@@ -617,6 +669,7 @@
 **Last Documentation Review**: [Date]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -656,14 +709,17 @@
 ### Recommendations
 
 **Critical Priority** (0-30 days):
+
 - [Recommendation 1]
 - [Recommendation 2]
 
 **High Priority** (1-3 months):
+
 - [Recommendation 1]
 - [Recommendation 2]
 
 **Medium Priority** (3-6 months):
+
 - [Recommendation 1]
 - [Recommendation 2]
 
@@ -672,14 +728,17 @@
 ## Next Steps and Action Plan
 
 **Immediate Actions** (0-30 days):
+
 - [ ] [Action 1 - Owner - Due date]
 - [ ] [Action 2 - Owner - Due date]
 
 **Short-term Actions** (1-3 months):
+
 - [ ] [Action 1 - Owner - Due date]
 - [ ] [Action 2 - Owner - Due date]
 
 **Long-term Actions** (3-12 months):
+
 - [ ] [Action 1 - Owner - Due date]
 - [ ] [Action 2 - Owner - Due date]
 
@@ -700,6 +759,7 @@
 ---
 
 **Document Control**:
+
 - **Version**: 1.0
 - **Classification**: [OFFICIAL / OFFICIAL-SENSITIVE]
 - **Last Reviewed**: [Date]

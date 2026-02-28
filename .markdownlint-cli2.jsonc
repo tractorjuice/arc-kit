@@ -1,0 +1,70 @@
+// ArcKit markdownlint configuration
+// Tuned for AI prompt files, templates, and documentation
+{
+  "config": {
+    // Heading style: ATX (#)
+    "MD003": { "style": "atx" },
+    // List marker: dash
+    "MD004": { "style": "dash" },
+    // Disable line length — prompt files and tables have intentionally long lines
+    "MD013": false,
+    // Disable dollar-sign-before-commands — shell examples use $ prefix
+    "MD014": false,
+    // Disable no-duplicate-heading — commands reuse headings like "Instructions", "Process"
+    "MD024": false,
+    // Disable single-h1 — files with frontmatter + embedded examples
+    "MD025": false,
+    // Allow ? in heading punctuation
+    "MD026": { "punctuation": ".,;:!" },
+    // Disable no-blanks-blockquote — commands use blank lines in blockquotes
+    "MD028": false,
+    // Disable ordered-list-prefix — numbered steps use explicit numbering
+    "MD029": false,
+    // Disable no-inline-html — files use <br/>, <details>, <summary>
+    "MD033": false,
+    // Disable no-bare-urls — template placeholders and examples
+    "MD034": false,
+    // Disable no-emphasis-as-heading — bold text as structural markers in prompts
+    "MD036": false,
+    // Code fence language required
+    "MD040": true,
+    // Disable first-line-h1 — YAML frontmatter files
+    "MD041": false,
+    // Disable required-headings
+    "MD043": false,
+    // Disable proper-names
+    "MD044": false,
+    // Backtick code fences
+    "MD048": { "style": "backtick" },
+    // Asterisk emphasis
+    "MD049": { "style": "asterisk" },
+    // Asterisk strong
+    "MD050": { "style": "asterisk" },
+    // Disable link-fragments — template placeholders don't have valid anchors
+    "MD051": false,
+    // Disable reference-links-images
+    "MD052": false,
+    // Disable link-image-reference-definitions — unused definitions in templates
+    "MD053": false,
+    // Disable link-image-style
+    "MD054": false,
+    // Table pipe style: leading and trailing
+    "MD055": { "style": "leading_and_trailing" },
+    // Disable table-column-count
+    "MD056": false,
+    // Disable table-pipe-style (handled by MD055)
+    "MD058": false,
+    // Disable table-row-style
+    "MD059": false,
+    // Disable table-column-style
+    "MD060": false
+  },
+  "ignores": [
+    ".codex/**",
+    ".opencode/**",
+    "arckit-opencode/**",
+    "arckit-gemini/skills/**",
+    "node_modules/**",
+    "docs/articles/**"
+  ]
+}

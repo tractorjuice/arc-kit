@@ -37,6 +37,7 @@
 **Purpose**: Validate G-Cloud services against requirements before procurement decision.
 
 **Status**:
+
 - Services Analyzed: [N]
 - Critical Gaps Found: [N]
 - High Priority Gaps: [N]
@@ -71,11 +72,13 @@
 
 **Question**:
 > [Specific question to supplier]
+>
 > - [Sub-question or specific aspect]
 > - [Sub-question or specific aspect]
 > - [Sub-question or specific aspect]
 
 **Evidence Needed**:
+
 - [Specific document or proof required]
 - [Additional evidence needed]
 
@@ -93,10 +96,12 @@
 
 **Question**:
 > [Specific question to supplier]
+>
 > - [Sub-question or specific aspect]
 > - [Sub-question or specific aspect]
 
 **Evidence Needed**:
+
 - [Specific document or proof required]
 
 **Priority**: 🟠 HIGH
@@ -115,6 +120,7 @@
 > [Specific question to supplier]
 
 **Evidence Needed**:
+
 - [Specific document or proof required]
 
 **Priority**: 🔵 MEDIUM
@@ -150,6 +156,7 @@
 **Overall Risk**: [🔴 CRITICAL / 🟠 HIGH / 🔵 MEDIUM / 🟢 LOW]
 
 **Risk Calculation**:
+
 - ❌ [N] MUST requirements NOT confirmed
 - ⚠️ [N] MUST requirements AMBIGUOUS
 - 🔵 [N] SHOULD requirements missing
@@ -175,6 +182,7 @@ We are evaluating [Service Name] (Service ID: [ID]) for procurement via the Digi
 [List Q-numbers for high priority questions]
 
 Could you please provide:
+
 - Written responses to questions [Q1-QN]
 - Supporting documentation ([list evidence needed])
 - Access to demo/trial environment for technical validation
@@ -202,6 +210,7 @@ Thank you,
 | [Service 3] | [Supplier 3] | [N] | [N] | [N] | [🔴/🟠/🔵/🟢] | [Action] |
 
 **Recommended Priority Order**:
+
 1. **[Service Name]** - [Risk Level] - [Action]
 2. **[Service Name]** - [Risk Level] - [Action]
 3. **[Service Name]** - [Risk Level] - [Action]
@@ -263,6 +272,7 @@ Thank you,
 ### Ambiguous Claims Detection
 
 Common vague marketing language requiring clarification:
+
 - "Industry-standard" → Which specific standards?
 - "High availability" → What specific SLA percentage?
 - "Scalable" → To what capacity? What are the limits?
@@ -275,23 +285,27 @@ Common vague marketing language requiring clarification:
 ### Priority Levels
 
 **🔴 CRITICAL** (Blocking):
+
 - MUST requirement not confirmed at all (❌ NOT MENTIONED)
 - Compliance requirement without evidence
 - Blocker for procurement
 
 **🟠 HIGH** (Affects Scoring):
+
 - MUST requirement mentioned ambiguously (⚠️ AMBIGUOUS)
 - Integration requirement unclear
 - SLA not specified
 - Certification mentioned but not confirmed
 
 **🔵 MEDIUM** (Due Diligence):
+
 - SHOULD requirement not mentioned
 - Pricing details incomplete
 - Data residency not confirmed
 - Support terms unclear
 
 **🟢 LOW** (Nice to Know):
+
 - Nice-to-have features
 - Future roadmap questions
 - General support questions

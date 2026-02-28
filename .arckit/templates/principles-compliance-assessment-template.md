@@ -64,6 +64,7 @@
 | 2 | [Principle Name] | [🔴🟠🟢⚪] | [N] artifacts | [Gap summary] | [Action summary] |
 
 **Legend**:
+
 - 🔴 RED: Non-compliant, principle violated or no compliance plan
 - 🟠 AMBER: Partial compliance, gaps identified with remediation plan
 - 🟢 GREEN: Fully compliant with strong evidence
@@ -88,6 +89,7 @@
 **Evidence Found**:
 
 **Requirements Coverage**:
+
 - ✅ [N] requirements address this principle:
   - [REQ-ID]: "[Requirement text]" (line [N])
   - [List relevant requirements with file:line references]
@@ -95,6 +97,7 @@
 - ❌ No requirements found addressing this principle
 
 **Design Evidence**:
+
 - ✅ **HLD Section [N] "[Section Title]"** (lines [N-M]):
   - [Brief description of how design addresses principle]
   - [Quote key design decisions]
@@ -102,6 +105,7 @@
 - ❌ No design evidence found in HLD
 
 **Implementation Evidence**:
+
 - ✅ Infrastructure as Code: `[file path]` (lines [N-M])
 - ✅ CI/CD pipeline: `[file path]`
 - ✅ Test results: `[file path]` - [pass/fail status]
@@ -109,12 +113,14 @@
 - ⚪ Implementation not yet started (project in [phase])
 
 **Compliance Assessment Evidence**:
+
 - ✅ **TCoP Point [N]**: [Assessment result]
 - ✅ **Secure by Design - [Control]**: [Assessment result]
 - [OR]
 - ⚪ Compliance assessments not yet performed
 
 **Validation Evidence**:
+
 - ✅ Load test results: [summary]
 - ✅ Penetration test: [summary]
 - ✅ Monitoring dashboard: [link/description]
@@ -146,6 +152,7 @@
 [IF AMBER OR RED - LIST ALL GAPS]
 
 **Gap [#]: [Gap Title]**
+
 - **Description**: [What is missing or wrong]
 - **Impact**: [Business/technical risk this gap creates]
 - **Evidence Missing**: [What artifact/proof is absent]
@@ -163,12 +170,14 @@
 #### Recommendations
 
 **Immediate Actions** [IF RED]:
+
 1. [Action] - Owner: [Role] - Deadline: [Date]
 2. [List critical remediations]
 
 **OR**
 
 **Exception Request** [IF RED AND compliance impossible]:
+
 - If compliance is not feasible, submit formal exception request including:
   - Justification for non-compliance
   - Compensating controls (if any)
@@ -177,15 +186,18 @@
   - Remediation plan for future compliance
 
 **Before Next Gate** [IF AMBER]:
+
 1. [Action] - Owner: [Role] - Deadline: [Next gate date]
 2. [List actions to achieve GREEN status]
 
 **Continuous Monitoring** [IF GREEN]:
+
 - Maintain compliance through [monitoring approach]
 - Reassess at [next gate or quarterly]
 - Key metrics to track: [metric list]
 
 **Next Assessment Trigger** [IF NOT ASSESSED]:
+
 - Reassess during [phase] gate after [artifacts] are created
 - Expected assessment date: [date]
 
@@ -204,6 +216,7 @@
 | EXC-[NNN] | [Principle Name] | [REQUESTED / APPROVED / EXPIRED / REMEDIATED] | [Why exception needed] | [Name + Role] | [YYYY-MM-DD] | [YYYY-MM-DD] | [How/when achieve compliance] |
 
 **Exception Process**:
+
 1. **Request**: Document justification in this assessment
 2. **Approval**: Requires CTO/CIO sign-off for all architecture principle exceptions
 3. **Expiry**: All exceptions are time-bound (typically 3-6 months max)
@@ -248,12 +261,15 @@
 ### Actions Required Before Next Gate
 
 **Priority 1 - CRITICAL** (RED principles - BLOCKING):
+
 1. [Action] - Owner: [Role] - Due: [ASAP date]
 
 **Priority 2 - HIGH** (AMBER principles - required for next gate):
+
 1. [Action] - Owner: [Role] - Due: [Next gate date]
 
 **Priority 3 - MEDIUM** (Enhancements - improve compliance):
+
 1. [Action] - Owner: [Role] - Due: [Future date]
 
 ### Next Assessment
@@ -261,6 +277,7 @@
 **Recommended Next Assessment**: [Phase name] gate review on [target date]
 
 **Reassessment Triggers**:
+
 - Major architecture changes or design revisions
 - New compliance requirements introduced
 - Technology stack changes
@@ -269,6 +286,7 @@
 - Remediation actions completed
 
 **Expected Progress by Next Assessment**:
+
 - RED principles → AMBER or GREEN (with remediation)
 - AMBER principles → GREEN (gaps closed)
 - NOT ASSESSED principles → Assessed (artifacts now available)
@@ -278,9 +296,11 @@
 ## Artifacts Reviewed
 
 **Architecture Principles** (source of truth):
+
 - ✅ `projects/000-global/ARC-000-PRIN-v*.md` - [DATE] - [N] principles defined
 
 **Project Artifacts** (evidence sources):
+
 - ✅ `projects/[project-dir]/ARC-*-REQ-v*.md` - [DATE] - [N] requirements
 - ✅ `projects/[project-dir]/vendors/[vendor]/hld-v1.md` - [DATE] - [N] sections
 - ✅ `projects/[project-dir]/vendors/[vendor]/dld-v1.md` - [DATE] - [N] sections
@@ -289,10 +309,12 @@
 - [List all available artifacts]
 
 **Artifacts Not Available** (limits assessment accuracy):
+
 - ❌ `[artifact]` - [Reason not available]
 - [List artifacts that would improve assessment if present]
 
 **Assessment Limitations**:
+
 - [Phase] phase - [limitation description]
 - [Missing artifact] not available - [impact on assessment]
 
@@ -303,24 +325,28 @@
 ### RAG Status Criteria
 
 **🟢 GREEN (Fully Compliant)**:
+
 - Evidence in multiple artifact types (requirements + design + implementation/validation)
 - Most or all validation gates satisfied
 - No significant gaps identified
 - Principle demonstrably satisfied with proof
 
 **🟠 AMBER (Partial Compliance)**:
+
 - Some evidence exists (typically requirements or design)
 - Clear gaps identified but remediation plan exists
 - Work in progress with target completion dates
 - Path to GREEN status clear and achievable
 
 **🔴 RED (Non-Compliant)**:
+
 - Principle directly violated by design decisions
 - No evidence of compliance and no plan to comply
 - Critical gaps with no remediation plan
 - Requires immediate attention or exception approval
 
 **⚪ NOT ASSESSED (Insufficient Evidence)**:
+
 - Project phase too early for meaningful assessment
 - Required artifacts don't exist yet (by design)
 - Assessment deferred to appropriate later gate
@@ -329,6 +355,7 @@
 ### Evidence Types
 
 **Primary Evidence** (strongest):
+
 - Requirements with acceptance criteria
 - Design documentation with specific technical decisions
 - Implementation artifacts (IaC code, configs, CI/CD pipelines)
@@ -336,12 +363,14 @@
 - Operational metrics (monitoring dashboards, SLA reports)
 
 **Secondary Evidence** (supporting):
+
 - Compliance assessments (TCoP, Secure by Design, AI Playbook)
 - Architecture diagrams showing principle implementation
 - Traceability matrices linking requirements to design
 - Stakeholder requirements driving principle adherence
 
 **Weak Evidence** (insufficient alone):
+
 - Aspirational statements without implementation details
 - "We plan to..." without concrete requirements or design
 - Vague references without file:section:line specificity

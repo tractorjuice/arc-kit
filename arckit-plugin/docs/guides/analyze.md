@@ -13,7 +13,7 @@ Use `/arckit.analyze` as a recurring quality health check. The command inspects 
 | After major change | New requirements, design shifts, supplier change | Confirms nothing regressed |
 | On request | Sponsors, audit, governance board | Provides transparent status in minutes |
 
-_Command:_ `arckit.analyze --project <path>` or run inside the project root.
+*Command:* `arckit.analyze --project <path>` or run inside the project root.
 
 ---
 

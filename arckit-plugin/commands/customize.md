@@ -15,6 +15,7 @@ $ARGUMENTS
 ArcKit uses document templates to generate consistent architecture artifacts. Users can customize these templates by copying them to `${CLAUDE_PLUGIN_ROOT}/templates/`. When a template exists in the custom directory, it takes precedence over the default template.
 
 **Template locations:**
+
 - **Defaults**: `${CLAUDE_PLUGIN_ROOT}/templates/` (shipped with ArcKit, refreshed by `arckit init`)
 - **User overrides**: `${CLAUDE_PLUGIN_ROOT}/templates/` (your customizations, preserved across updates)
 
@@ -23,6 +24,7 @@ ArcKit uses document templates to generate consistent architecture artifacts. Us
 ### 1. **Parse User Request**
 
 The user may request:
+
 - **List templates**: Show all available templates (no arguments or "list")
 - **Copy specific template**: Copy one template (e.g., "requirements", "risk", "adr")
 - **Copy all templates**: Copy all templates ("all")
@@ -86,18 +88,21 @@ Display as a table:
 ### 3. **Copy Template(s)**
 
 **Copy specific template:**
+
 1. Map the user's short name to the full filename (e.g., "requirements" → `requirements-template.md`, "pages" → `pages-template.html`)
 2. Use the Read tool to read the source template from `${CLAUDE_PLUGIN_ROOT}/templates/{name}-template.{ext}`
 3. Use the Write tool to save it to `.arckit/templates/{name}-template.{ext}` (the directory will be created automatically)
 4. If the source template does not exist, inform the user and suggest running `/arckit:customize list`
 
 **Copy all templates:**
+
 1. Use Glob to find all `${CLAUDE_PLUGIN_ROOT}/templates/*-template.md` and `${CLAUDE_PLUGIN_ROOT}/templates/*-template.html` files
 2. For each template found, use Read to load it and Write to save it to `.arckit/templates/`
 
 ### 4. **Show Template Info**
 
 If user asks about a specific template (e.g., "info requirements"), read and summarize:
+
 - What document it generates
 - Key sections included
 - UK Government frameworks referenced
@@ -198,26 +203,31 @@ After completing the request, show:
 ## Example Usage
 
 **List all templates:**
-```
+
+```text
 /arckit:customize list
 ```
 
 **Copy requirements template:**
-```
+
+```text
 /arckit:customize requirements
 ```
 
 **Copy multiple templates:**
-```
+
+```text
 /arckit:customize requirements risk adr
 ```
 
 **Copy all templates:**
-```
+
+```text
 /arckit:customize all
 ```
 
 **Get info about a template:**
-```
+
+```text
 /arckit:customize info requirements
 ```

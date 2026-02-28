@@ -59,11 +59,13 @@
 **What Success Looks Like**:
 
 [Extract success criteria from ARC-{PROJECT_ID}-REQ-v*.md - ensure technology-agnostic]
+
 - [Outcome 1 with measurable metric]
 - [Outcome 2 with measurable metric]
 - [Outcome 3 with measurable metric]
 
 **Compliance with Architecture Principles**:
+
 - [Principle Name]: [How outcome must comply]
 - [Principle Name]: [How outcome must comply]
 
@@ -76,6 +78,7 @@
 ### 3.1 Technical Capabilities (MUST Have)
 
 From Functional Requirements (FR-xxx):
+
 - **[Capability Area 1]**: [Skill needed to deliver FR-xxx requirements]
 - **[Capability Area 2]**: [Skill needed to deliver FR-xxx requirements]
 - **[Capability Area 3]**: [Skill needed to deliver FR-xxx requirements]
@@ -83,6 +86,7 @@ From Functional Requirements (FR-xxx):
 ### 3.2 Non-Functional Expertise (MUST Have)
 
 From Non-Functional Requirements (NFR-xxx):
+
 - **Security**: [Skills for NFR-S-xxx requirements, reference security principles]
 - **Performance**: [Skills for NFR-P-xxx requirements]
 - **Compliance**: [Skills for NFR-C-xxx requirements, reference compliance principles]
@@ -91,6 +95,7 @@ From Non-Functional Requirements (NFR-xxx):
 ### 3.3 Architecture Governance (MUST Have)
 
 From ARC-000-PRIN-v*.md:
+
 - **[Principle Category]**: Experience with [specific technology/approach mandated by principles]
 - **Design Reviews**: Experience with HLD/DLD review processes
 - **Documentation**: Ability to produce architecture diagrams (Mermaid, C4)
@@ -103,6 +108,7 @@ From ARC-000-PRIN-v*.md:
 [Nice-to-have skills that would enhance delivery]
 
 From SHOULD requirements:
+
 - [Desirable skill 1]
 - [Desirable skill 2]
 - [Desirable skill 3]
@@ -117,6 +123,7 @@ From SHOULD requirements:
 [List personas from Functional Requirements section]
 
 **Key User Journeys**:
+
 1. [Journey 1 summary]
 2. [Journey 2 summary]
 3. [Journey 3 summary]
@@ -139,10 +146,12 @@ From SHOULD requirements:
 [Extract all FR-xxx from ARC-{PROJECT_ID}-REQ-v*.md - group by capability area]
 
 **[Capability Area 1]**:
+
 - **FR-001** (MUST): [requirement] - [acceptance criteria]
 - **FR-002** (MUST): [requirement] - [acceptance criteria]
 
 **[Capability Area 2]**:
+
 - **FR-003** (MUST): [requirement] - [acceptance criteria]
 
 ### 6.3 Non-Functional Requirements
@@ -150,18 +159,23 @@ From SHOULD requirements:
 [Extract all NFR-xxx from ARC-{PROJECT_ID}-REQ-v*.md - organize by category]
 
 **Performance (NFR-P-xxx)**:
+
 - [requirement with measurable targets]
 
 **Security (NFR-S-xxx)**:
+
 - [requirement with compliance references]
 
 **Compliance (NFR-C-xxx)**:
+
 - [requirement with standards/regulations]
 
 **Scalability (NFR-SC-xxx)**:
+
 - [requirement with capacity targets]
 
 **Reliability (NFR-R-xxx)**:
+
 - [requirement with uptime/availability targets]
 
 ### 6.4 Integration Requirements
@@ -169,12 +183,15 @@ From SHOULD requirements:
 [Extract all INT-xxx from ARC-{PROJECT_ID}-REQ-v*.md]
 
 **Upstream Systems**:
+
 - INT-xxx: [system and integration method]
 
 **Downstream Systems**:
+
 - INT-xxx: [system and integration method]
 
 **Data Requirements (DR-xxx)**:
+
 - [Extract any DR-xxx data requirements relevant to integration]
 
 ---
@@ -184,6 +201,7 @@ From SHOULD requirements:
 ### 7.1 In Scope
 
 [Extract from ARC-{PROJECT_ID}-REQ-v*.md scope section OR infer from MUST requirements]
+
 - [Scope item 1]
 - [Scope item 2]
 - [Scope item 3]
@@ -191,6 +209,7 @@ From SHOULD requirements:
 ### 7.2 Out of Scope
 
 [Extract from ARC-{PROJECT_ID}-REQ-v*.md OR infer from explicitly excluded items]
+
 - [Exclusion 1]
 - [Exclusion 2]
 
@@ -201,18 +220,21 @@ From SHOULD requirements:
 ### 8.1 Architecture Constraints
 
 [From ARC-000-PRIN-v*.md - what vendors MUST comply with]
+
 - **[Constraint Type]**: [Specific constraint from principles]
 - **[Constraint Type]**: [Specific constraint from principles]
 
 ### 8.2 Technical Dependencies
 
 [From ARC-{PROJECT_ID}-REQ-v*.md dependencies section or INT-xxx]
+
 - [Dependency 1]
 - [Dependency 2]
 
 ### 8.3 Timelines
 
 [If specified in user input or requirements]
+
 - **Project Duration**: [timeline]
 - **Key Milestones**: [milestones]
 - **Critical Deadlines**: [deadlines if any]
@@ -224,6 +246,7 @@ From SHOULD requirements:
 ### 9.1 Architecture Review Gates
 
 **Mandatory Reviews**:
+
 - [ ] **High-Level Design (HLD) Review** - before detailed design
 - [ ] **Detailed Design (DLD) Review** - before implementation
 - [ ] **Code Review** - ongoing during implementation
@@ -235,12 +258,14 @@ Reference: Run `/arckit.hld-review` and `/arckit.dld-review` for formal review p
 ### 9.2 Compliance Requirements
 
 [From ARC-000-PRIN-v*.md and NFR-C-xxx requirements]
+
 - [Compliance requirement 1]
 - [Compliance requirement 2]
 
 ### 9.3 Requirements Traceability
 
 Vendor must maintain requirements traceability throughout delivery:
+
 - Requirements → High-Level Design
 - Requirements → Detailed Design
 - Requirements → Test Cases
@@ -269,12 +294,14 @@ Suppliers will be evaluated according to Digital Marketplace guidelines:
 ### 11.1 Technical Capability (40%)
 
 **Essential Criteria** (Pass/Fail):
+
 - [ ] Meets ALL MUST requirements (from section 6)
 - [ ] Meets ALL essential skills (from section 3.1-3.3)
 - [ ] Demonstrates architecture governance experience
 - [ ] Demonstrates requirements traceability capabilities
 
 **Scoring Criteria**:
+
 - **Technical Approach** (20%): Quality of proposed solution, alignment with architecture principles
 - **Evidence of Delivery** (10%): Similar projects delivered, relevant domain experience
 - **Understanding of Requirements** (10%): Depth of requirements understanding, risk identification
@@ -439,22 +466,26 @@ Vendors must provide:
 ## 16. Important Compliance Notes
 
 **Audit Trail**:
+
 - All procurement decisions must be documented and auditable
 - Evaluation scoring must be recorded with justification
 - Supplier questions and answers must be visible to all bidders
 - Changes to requirements must be published to all suppliers
 
 **GDS Approval**:
+
 - New or redesigned services may require formal GDS approval
 - Check if spend control process applies to your organisation
 - Consult with digital/technology leadership before publishing
 
 **Transparency**:
+
 - Requirements are published publicly on Digital Marketplace
 - Evaluation criteria must be published before receiving proposals
 - Award details must be published on Contracts Finder after completion
 
 **Fair Competition**:
+
 - All suppliers have equal access to information
 - No preferential treatment during Q&A
 - Evaluation based solely on published criteria

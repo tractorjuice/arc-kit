@@ -256,10 +256,12 @@ flowchart TD
 **Purpose**: Gracefully start or stop the service
 
 **Prerequisites**:
+
 - SSH access to servers or kubectl access to cluster
 - Deployment credentials
 
 **Start Procedure**:
+
 ```bash
 # 1. Verify dependencies are available
 curl -f https://[dependency]/health
@@ -277,6 +279,7 @@ curl -f https://[service]/health
 ```
 
 **Stop Procedure**:
+
 ```bash
 # 1. Remove from load balancer (graceful drain)
 [kubectl annotate service [service] "drain=true"]
@@ -304,6 +307,7 @@ curl -f https://[service]/health
 **Detection**: Alert "[Service] Health Check Failed"
 
 **Steps**:
+
 ```bash
 # 1. Check service status
 [kubectl get pods -l app=[service]]
@@ -338,6 +342,7 @@ curl -f https://[cache-host]:[port]/health
 **Detection**: Alert "Error Rate > [X]%"
 
 **Steps**:
+
 ```bash
 # 1. Check error breakdown by type
 # In [Logging Tool], search:
@@ -375,6 +380,7 @@ curl -f https://[cache-host]:[port]/health
 **Detection**: Alert "Latency p95 > [X]ms"
 
 **Steps**:
+
 ```bash
 # 1. Check current resource usage
 [kubectl top pods -l app=[service]]
@@ -412,6 +418,7 @@ curl -f https://[cache-host]:[port]/health
 **Detection**: Errors indicate dependency unavailable
 
 **Steps**:
+
 ```bash
 # 1. Confirm dependency is down
 curl -f https://[dependency]/health
@@ -445,6 +452,7 @@ curl -f https://[dependency]/health
 **Detection**: Security alert from SIEM or manual report
 
 **Steps**:
+
 ```bash
 # 1. DO NOT modify evidence - preserve logs and state
 
@@ -477,6 +485,7 @@ curl -f https://[dependency]/health
 **Purpose**: Respond to critical CVEs or NCSC VMS alerts requiring urgent patching
 
 **Prerequisites**:
+
 - Access to vulnerability scanner / VMS dashboard
 - Deployment credentials for affected systems
 - Emergency change approval authority (Security Lead + Service Owner)
@@ -484,6 +493,7 @@ curl -f https://[dependency]/health
 **Detection**: Critical CVE published, VMS critical alert, or vulnerability scanner finding with CVSS >= 9.0
 
 **Steps**:
+
 ```bash
 # 1. Confirm vulnerability applies to this service
 # Check affected software/library versions against inventory
@@ -563,6 +573,7 @@ flowchart TB
 **Trigger Criteria**: Primary site unavailable for >[X] minutes
 
 **Steps**:
+
 1. **Declare DR Event**: Incident Commander authorizes failover
 2. **Verify DR Readiness**: Check DR site health and replication lag
 3. **Stop Primary** (if possible): Prevent split-brain
@@ -729,12 +740,14 @@ curl -f https://[service]/health
 | [Tool 3] | Dependencies (SCA) | [Continuous / Daily] | [Team] |
 
 **Scanning Configuration**:
+
 - [ ] All production systems in scanning scope
 - [ ] Authenticated scanning enabled for web applications
 - [ ] Scanning schedules aligned with change windows
 - [ ] False positive suppression rules documented
 
 **NCSC Vulnerability Monitoring Service (VMS) Integration** (UK Government):
+
 - [ ] Department enrolled in NCSC VMS
 - [ ] All internet-facing domains registered with VMS
 - [ ] VMS alerts routed to vulnerability management workflow
@@ -754,6 +767,7 @@ curl -f https://[service]/health
 | VMS General | — | 32 days | 32 days | [Current] |
 
 **Remediation Process**:
+
 1. Vulnerability identified (scanner / VMS alert / manual report)
 2. Triage and severity classification
 3. Assign to remediation owner
@@ -763,6 +777,7 @@ curl -f https://[service]/health
 7. Close vulnerability ticket
 
 **Current Vulnerability Status**:
+
 - Critical open: [Number]
 - High open: [Number]
 - Medium open: [Number]
@@ -780,6 +795,7 @@ curl -f https://[service]/health
 | Firmware updates | [Quarterly] | [Maintenance window] | [Manual] |
 
 **Patching Process**:
+
 1. Patch released by vendor
 2. Assessed for applicability and risk
 3. Tested in non-production environment
@@ -787,11 +803,13 @@ curl -f https://[service]/health
 5. Compliance verified
 
 **Emergency Patching**:
+
 - **Critical CVEs**: Within 24 hours of CVE publication
 - **Approval**: Security Lead + Service Owner
 - **Process**: Follow Critical Vulnerability Remediation runbook (Section 6.7)
 
 **Patch Compliance Metrics**:
+
 - Patch compliance rate: [X%]
 - Average patch lag (days): [X]
 - Systems with overdue patches: [Number]
@@ -876,29 +894,34 @@ curl -f https://[service]/health
 ## 14. Handover Checklist
 
 ### Documentation
+
 - [ ] All runbooks written and reviewed
 - [ ] Architecture documentation complete
 - [ ] API documentation published
 - [ ] Knowledge base articles created
 
 ### Monitoring & Alerting
+
 - [ ] Dashboards created and tested
 - [ ] Alerts configured and tested
 - [ ] On-call rotation staffed and documented
 - [ ] Escalation paths confirmed
 
 ### Operations
+
 - [ ] Support team trained
 - [ ] Access provisioned for support team
 - [ ] Runbooks tested by support team
 - [ ] Communication channels established
 
 ### DR & Backup
+
 - [ ] DR tested within last 6 months
 - [ ] Backup restore tested
 - [ ] RTO/RPO validated
 
 ### Security
+
 - [ ] Security review completed
 - [ ] Penetration test completed
 - [ ] Access controls verified
@@ -908,6 +931,7 @@ curl -f https://[service]/health
 - [ ] Critical vulnerability remediation runbook tested
 
 ### Sign-off
+
 - [ ] Service Owner approval
 - [ ] Technical Lead approval
 - [ ] Operations Lead approval

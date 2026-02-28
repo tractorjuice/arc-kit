@@ -24,6 +24,7 @@ $ARGUMENTS
 2. **Determine risk level**:
 
 **HIGH-RISK AI** (requires strictest oversight):
+
 - Fully automated decisions affecting:
   - Health and safety
   - Fundamental rights
@@ -34,11 +35,13 @@ $ARGUMENTS
 - Examples: Benefit eligibility, immigration decisions, medical diagnosis, predictive policing
 
 **MEDIUM-RISK AI** (significant impact with human oversight):
+
 - Semi-automated decisions with human review
 - Significant resource allocation
 - Examples: Case prioritization, fraud detection scoring, resource allocation
 
 **LOW-RISK AI** (productivity/administrative):
+
 - Recommendation systems with human control
 - Administrative automation
 - Examples: Email categorization, meeting scheduling, document summarization
@@ -81,11 +84,13 @@ $ARGUMENTS
 5. **Assess the 10 Core Principles**:
 
 ### Principle 1: Understanding AI
+
 - Team understands AI limitations (no reasoning, contextual awareness)
 - Realistic expectations (hallucinations, biases, edge cases)
 - Appropriate use case for AI capabilities
 
 ### Principle 2: Lawful and Ethical Use
+
 - **CRITICAL**: DPIA, EqIA, Human Rights assessment completed
 - UK GDPR compliance
 - Equality Act 2010 compliance
@@ -93,6 +98,7 @@ $ARGUMENTS
 - Legal/compliance team engaged early
 
 ### Principle 3: Security
+
 - Cyber security assessment (NCSC guidance)
 - AI-specific threats assessed:
   - Prompt injection
@@ -104,6 +110,7 @@ $ARGUMENTS
 - Red teaming conducted (for high-risk)
 
 ### Principle 4: Human Control
+
 - **CRITICAL for HIGH-RISK**: Human-in-the-loop required
 - Human override capability
 - Escalation process documented
@@ -111,12 +118,14 @@ $ARGUMENTS
 - Clear responsibilities assigned
 
 **Human Oversight Models**:
+
 - **Human-in-the-loop**: Review EVERY decision (required for high-risk)
 - **Human-on-the-loop**: Periodic/random review
 - **Human-in-command**: Can override at any time
 - **Fully automated**: AI acts autonomously (HIGH-RISK - justify!)
 
 ### Principle 5: Lifecycle Management
+
 - Lifecycle plan documented (selection → decommissioning)
 - Model versioning and change management
 - Monitoring and performance tracking
@@ -125,6 +134,7 @@ $ARGUMENTS
 - Decommissioning plan
 
 ### Principle 6: Right Tool Selection
+
 - Problem clearly defined
 - Alternatives considered (non-AI, simpler solutions)
 - Cost-benefit analysis
@@ -133,12 +143,14 @@ $ARGUMENTS
 - NOT using AI just because it's trendy
 
 ### Principle 7: Collaboration
+
 - Cross-government collaboration (GDS, CDDO, AI Standards Hub)
 - Academia, industry, civil society engagement
 - Knowledge sharing
 - Contributing to government AI community
 
 ### Principle 8: Commercial Partnership
+
 - Procurement team engaged early
 - Contract includes AI-specific terms:
   - Performance metrics and SLAs
@@ -149,6 +161,7 @@ $ARGUMENTS
   - Liability for AI failures
 
 ### Principle 9: Skills and Expertise
+
 - Team composition verified:
   - AI/ML technical expertise
   - Data science
@@ -160,6 +173,7 @@ $ARGUMENTS
 - Training provided on AI fundamentals, ethics, bias
 
 ### Principle 10: Organizational Alignment
+
 - AI Governance Board approval
 - AI strategy alignment
 - Senior Responsible Owner (SRO) assigned
@@ -169,18 +183,21 @@ $ARGUMENTS
 6. **Assess the 6 Ethical Themes**:
 
 ### Theme 1: Safety, Security, and Robustness
+
 - Safety testing (no harmful outputs)
 - Robustness testing (edge cases)
 - Fail-safe mechanisms
 - Incident response plan
 
 ### Theme 2: Transparency and Explainability
+
 - **MANDATORY**: Algorithmic Transparency Recording Standard (ATRS) published
 - System documented publicly (where appropriate)
 - Decision explanations available to affected persons
 - Model card/factsheet published
 
 ### Theme 3: Fairness, Bias, and Discrimination
+
 - Bias assessment completed
 - Training data reviewed for bias
 - Fairness metrics calculated across protected characteristics:
@@ -194,6 +211,7 @@ $ARGUMENTS
 - Ongoing monitoring for bias drift
 
 ### Theme 4: Accountability and Responsibility
+
 - Clear ownership (SRO, Product Owner)
 - Decision-making process documented
 - Audit trail of all AI decisions
@@ -201,6 +219,7 @@ $ARGUMENTS
 - Accountability for errors defined
 
 ### Theme 5: Contestability and Redress
+
 - Right to contest AI decisions enabled
 - Human review process for contested decisions
 - Appeal mechanism documented
@@ -208,6 +227,7 @@ $ARGUMENTS
 - Response times defined (e.g., 28 days)
 
 ### Theme 6: Societal Wellbeing and Public Good
+
 - Positive societal impact assessment
 - Environmental impact considered (carbon footprint)
 - Benefits distributed fairly
@@ -219,6 +239,7 @@ $ARGUMENTS
 Create detailed report with:
 
 **Executive Summary**:
+
 - Overall score (X/160 points, Y%)
 - Risk level (High/Medium/Low)
 - Compliance status (Excellent/Good/Adequate/Poor)
@@ -226,6 +247,7 @@ Create detailed report with:
 - Go/No-Go decision
 
 **10 Principles Assessment** (each 0-10):
+
 - Compliance status (✅/⚠️/❌)
 - Evidence gathered
 - Findings
@@ -233,6 +255,7 @@ Create detailed report with:
 - Score
 
 **6 Ethical Themes Assessment** (each 0-10):
+
 - Compliance status
 - Evidence
 - Findings
@@ -240,11 +263,13 @@ Create detailed report with:
 - Score
 
 **Risk-Based Decision**:
+
 - **HIGH-RISK**: MUST score ≥90%, ALL principles met, human-in-the-loop REQUIRED
 - **MEDIUM-RISK**: SHOULD score ≥75%, critical principles met
 - **LOW-RISK**: SHOULD score ≥60%, basic safeguards in place
 
 **Mandatory Documentation Checklist**:
+
 - [ ] ATRS (Algorithmic Transparency Recording Standard)
 - [ ] DPIA (Data Protection Impact Assessment)
 - [ ] EqIA (Equality Impact Assessment)
@@ -254,6 +279,7 @@ Create detailed report with:
 - [ ] User Research Report
 
 **Action Plan**:
+
 - High priority (before deployment)
 - Medium priority (within 3 months)
 - Low priority (continuous improvement)
@@ -261,17 +287,20 @@ Create detailed report with:
 8. **Map to existing ArcKit artifacts**:
 
 **Link to Requirements**:
+
 - Principle 2 (Lawful) → NFR-C-xxx (GDPR compliance requirements)
 - Principle 3 (Security) → NFR-S-xxx (security requirements)
 - Principle 4 (Human Control) → FR-xxx (human review features)
 - Theme 3 (Fairness) → NFR-E-xxx (equity/fairness requirements)
 
 **Link to Design Reviews**:
+
 - Check HLD addresses AI Playbook principles
 - Verify DLD includes human oversight mechanisms
 - Ensure security controls for AI-specific threats
 
 **Link to TCoP**:
+
 - AI Playbook complements TCoP
 - TCoP Point 6 (Secure) aligns with Principle 3
 - TCoP Point 7 (Privacy) aligns with Principle 2
@@ -279,6 +308,7 @@ Create detailed report with:
 9. **Provide risk-appropriate guidance**:
 
 **For HIGH-RISK AI systems**:
+
 - **STOP**: Do NOT deploy without meeting ALL principles
 - Human-in-the-loop MANDATORY (review every decision)
 - ATRS publication MANDATORY
@@ -288,6 +318,7 @@ Create detailed report with:
 - Senior leadership sign-off REQUIRED
 
 **For MEDIUM-RISK AI**:
+
 - Strong human oversight required
 - Critical principles must be met (2, 3, 4)
 - ATRS recommended
@@ -295,6 +326,7 @@ Create detailed report with:
 - Annual audits
 
 **For LOW-RISK AI**:
+
 - Basic safeguards sufficient
 - Human oversight recommended
 - Periodic review (annual)
@@ -303,25 +335,28 @@ Create detailed report with:
 10. **Highlight mandatory requirements**:
 
 **ATRS (Algorithmic Transparency Recording Standard)**:
+
 - MANDATORY for central government departments
 - MANDATORY for arm's length bodies
 - Publish on department website
 - Update when system changes significantly
 
 **DPIAs (Data Protection Impact Assessments)**:
+
 - MANDATORY for AI processing personal data
 - Must be completed BEFORE deployment
 - Must be reviewed and updated regularly
 
 **Equality Impact Assessments (EqIA)**:
+
 - MANDATORY to assess impact on protected characteristics
 - Must document how discrimination is prevented
 
 **Human Rights Assessments**:
+
 - MANDATORY for decisions affecting rights
 - Must consider ECHR (European Convention on Human Rights)
 - Document how rights are protected
-
 
 ---
 
@@ -330,11 +365,13 @@ Create detailed report with:
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-AIPB-v{VERSION}` (e.g., `ARC-001-AIPB-v1.0`)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -343,14 +380,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.ai-playbook"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -364,6 +404,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:ai-playbook` command
 **Generated on**: {DATE} {TIME} GMT
@@ -384,6 +425,7 @@ Use template structure from `uk-gov-ai-playbook-template.md`
 12. **Provide next steps**:
 
 After assessment:
+
 - Summary of compliance level
 - Critical blocking issues
 - Recommended actions with priorities
@@ -395,6 +437,7 @@ After assessment:
 User: `/arckit:ai-playbook Assess AI Playbook compliance for benefits eligibility chatbot using GPT-4`
 
 You should:
+
 - Identify system: Benefits eligibility chatbot, Generative AI (LLM)
 - Determine risk: **HIGH-RISK** (affects access to benefits - fundamental right)
 - Assess 10 principles:

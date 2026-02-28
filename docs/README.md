@@ -15,6 +15,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 ## 📖 Guides
 
 ### Core Workflow
+
 0. [Getting Started](guides/start.md) - `/arckit.start` ⭐ NEW
 1. [Project Plan](guides/plan.md) - `/arckit.plan`
 2. [Architecture Principles](guides/principles.md) - `/arckit.principles`
@@ -33,6 +34,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 14. [Traceability](guides/traceability.md) - `/arckit.traceability`
 
 ### Research & Analysis
+
 13. [Research](guides/research.md) - `/arckit.research`
 14. [Data Source Discovery](guides/datascout.md) - `/arckit.datascout` ⭐ NEW
 15. [Analyze](guides/analyze.md) - `/arckit.analyze`
@@ -42,15 +44,19 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 17. [Architecture Decision Records](guides/adr.md) - `/arckit.adr` ⭐ NEW
 
 ### Cloud Research (MCP)
+
 These commands require [MCP servers](https://modelcontextprotocol.io/) for authoritative cloud documentation:
+
 - [Azure Research](guides/azure-research.md) - `/arckit.azure-research` (Requires Microsoft Learn MCP)
 - [AWS Research](guides/aws-research.md) - `/arckit.aws-research` ⭐ NEW (Requires AWS Knowledge MCP)
 - [GCP Research](guides/gcp-research.md) - `/arckit.gcp-research` ⭐ NEW (Requires Google Developer Knowledge MCP)
 
 ### Procurement
+
 17. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
 
 ### UK Government
+
 - [Service Assessment](guides/service-assessment.md) - `/arckit.service-assessment` ⭐ NEW
 - [Digital Marketplace](guides/uk-government/digital-marketplace.md) - `/arckit.gcloud-search`, `/arckit.gcloud-clarify`, `/arckit.dos`
 - [Technology Code of Practice](guides/uk-government/technology-code-of-practice.md) - `/arckit.tcop` ⭐ NEW
@@ -59,20 +65,24 @@ These commands require [MCP servers](https://modelcontextprotocol.io/) for autho
 - [Secure by Design](guides/uk-government/secure-by-design.md) - `/arckit.secure` ⭐ NEW
 
 ### UK MOD (Ministry of Defence)
+
 - [MOD Secure by Design](guides/uk-mod/secure-by-design.md) - `/arckit.mod-secure` ⭐ NEW
 - [JSP 936 AI Assurance](guides/jsp-936.md) - `/arckit.jsp-936` ⭐ NEW
 
 ### DevOps & Operations
+
 - [Operationalize](guides/operationalize.md) - `/arckit.operationalize` ⭐ NEW - SRE operational readiness
 - [DevOps Strategy](guides/devops.md) - `/arckit.devops` ⭐ NEW - CI/CD, IaC, containers
 - [MLOps Strategy](guides/mlops.md) - `/arckit.mlops` ⭐ NEW - ML lifecycle, model monitoring
 - [FinOps Strategy](guides/finops.md) - `/arckit.finops` ⭐ NEW - Cloud cost management, optimization
 
 ### Reporting & Presentations
+
 - [Project Story](guides/story.md) - `/arckit.story` - Comprehensive project narrative
 - [Presentation](guides/presentation.md) - `/arckit.presentation` ⭐ NEW - MARP slide deck from artifacts
 
 ### Documentation & Publishing
+
 - [GitHub Pages](guides/pages.md) - `/arckit.pages` ⭐ NEW - Generate documentation site
 
 ### DDaT Role Guides
@@ -93,6 +103,7 @@ See the [full index](guides/roles/README.md) for details.
 ## 🎯 By Use Case
 
 ### "I'm starting a new project"
+
 1. Start here: [Project Plan](guides/plan.md) - See the full timeline
 2. Then: [Architecture Principles](guides/principles.md)
 3. Then: [Stakeholder Analysis](guides/stakeholders.md)
@@ -100,14 +111,17 @@ See the [full index](guides/roles/README.md) for details.
 5. Then: [Requirements Definition](guides/requirements.md)
 
 ### "I need to procure a vendor"
+
 1. Define needs: [Requirements Definition](guides/requirements.md)
 2. Create RFP: [Vendor Procurement](guides/procurement.md)
 3. UK Gov: [Digital Marketplace](guides/uk-government/digital-marketplace.md)
 
 ### "I'm reviewing a design"
+
 - [Design Reviews Guide](guides/design-review.md)
 
 ### "I need audit traceability"
+
 - [Traceability Guide](guides/traceability.md)
 
 ---
@@ -191,6 +205,7 @@ See the [full index](guides/roles/README.md) for details.
 ## 🤝 Contributing
 
 Found a gap or want to improve documentation?
+
 - [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - [Pull Requests Welcome](https://github.com/tractorjuice/arc-kit/pulls)
 

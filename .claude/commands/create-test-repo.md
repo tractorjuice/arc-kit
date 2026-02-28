@@ -20,7 +20,7 @@ If no arguments are provided, ask the user for a project slug.
 
 Run this Bash command to find the highest existing version number:
 
-```
+```text
 gh repo list tractorjuice --limit 200 --json name --jq '.[].name' | grep -oP 'arckit-test-project-v\K\d+' | sort -n | tail -1
 ```
 
@@ -148,7 +148,7 @@ This repository uses **ArcKit v${VERSION}** for enterprise architecture governan
 
 ## Project Structure
 
-```
+```text
 projects/
 ├── 000-global/          # Cross-project artifacts (principles, standards)
 └── 001-${project-slug}/ # Project-specific artifacts (created by commands)
@@ -163,6 +163,8 @@ This project uses the ArcKit plugin which provides 53 slash commands for archite
 - [ArcKit Documentation](https://tractorjuice.github.io/arc-kit/)
 - [ArcKit Repository](https://github.com/tractorjuice/arc-kit)
 - [ArcKit Plugin Marketplace](https://github.com/tractorjuice/arc-kit)
+
+<!-- markdownlint-disable-next-line MD040 -->
 ```
 
 ### 4g. `CLAUDE.md`
@@ -222,6 +224,7 @@ The same version string read from the main repo's `VERSION` file.
 ### 4j. `DEPENDENCY-MATRIX.md`
 
 Copy the file from `/workspaces/arc-kit/DEPENDENCY-MATRIX.md` using Bash:
+
 ```bash
 cp /workspaces/arc-kit/DEPENDENCY-MATRIX.md /tmp/arckit-test-setup/${REPO_NAME}/DEPENDENCY-MATRIX.md
 ```
@@ -229,6 +232,7 @@ cp /workspaces/arc-kit/DEPENDENCY-MATRIX.md /tmp/arckit-test-setup/${REPO_NAME}/
 ### 4k. `WORKFLOW-DIAGRAMS.md`
 
 Copy the file from `/workspaces/arc-kit/WORKFLOW-DIAGRAMS.md` using Bash:
+
 ```bash
 cp /workspaces/arc-kit/WORKFLOW-DIAGRAMS.md /tmp/arckit-test-setup/${REPO_NAME}/WORKFLOW-DIAGRAMS.md
 ```
@@ -256,7 +260,7 @@ rm -rf /tmp/arckit-test-setup/
 
 Output a summary like this:
 
-```
+```text
 Test repo created successfully!
 
   Repo:    https://github.com/tractorjuice/arckit-test-project-v${NEXT_VERSION}-${project-slug}

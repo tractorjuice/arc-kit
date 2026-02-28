@@ -5,24 +5,28 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 ## Available Logo Files
 
 ### Horizontal Logos (Wide Format)
+
 - **`ArcKit_Logo_Horizontal_Dark.svg`** - Dark logo on light backgrounds
 - **`ArcKit_Logo_Horizontal_Light.svg`** - Light logo on dark backgrounds
 
 **Aspect Ratio:** ~3:1 (wide)
 
 ### Stacked Logos (Square Format)
+
 - **`ArcKit_Logo_Stacked_Dark.svg`** - Dark logo on light backgrounds
 - **`ArcKit_Logo_Stacked_Light.svg`** - Light logo on dark backgrounds
 
 **Aspect Ratio:** ~1:1 (square)
 
 ### Mark/Icon (Icon Only)
+
 - **`ArcKit_Mark_Dark.svg`** - Dark icon on light backgrounds
 - **`ArcKit_Mark_Light.svg`** - Light icon on dark backgrounds
 
 **Aspect Ratio:** 1:1 (square, compact)
 
 ### Banner Images
+
 - **`arckit-banner-light.svg`** - Version-agnostic SVG banner (1600x400px)
 
 ---
@@ -58,29 +62,37 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 ### Documentation (Markdown/HTML)
 
 **README.md header:**
+
 ```markdown
 ![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
 ```
+
 → Use: `arckit-banner-light.svg` (version-agnostic SVG, recommended)
 
 **Inline logo in documentation:**
+
 ```markdown
 ![ArcKit Logo](docs/assets/ArcKit_Logo_Horizontal_Dark.svg)
 ```
+
 → Use: `ArcKit_Logo_Horizontal_Dark.svg` (assumes light background)
 
 ### Website Headers/Footers
 
 **Website header (light theme):**
+
 ```html
 <img src="assets/ArcKit_Logo_Horizontal_Dark.svg" alt="ArcKit" height="40">
 ```
+
 → Use: `ArcKit_Logo_Horizontal_Dark.svg`
 
 **Website footer (dark theme):**
+
 ```html
 <img src="assets/ArcKit_Logo_Horizontal_Light.svg" alt="ArcKit" height="32">
 ```
+
 → Use: `ArcKit_Logo_Horizontal_Light.svg`
 
 ### Social Media
@@ -130,9 +142,11 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 → Use: `ArcKit_Mark_Dark.svg` or `ArcKit_Stacked_Dark.svg`
 
 **README.md badge/icon:**
+
 ```markdown
 ![ArcKit](docs/assets/ArcKit_Mark_Dark.svg)
 ```
+
 → Use: `ArcKit_Mark_Dark.svg` (small, inline)
 
 ### VS Code Extension
@@ -195,6 +209,7 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
    - Use `ArcKit_Mark_Dark.svg` for small thumbnails
 
 5. **Generate HTML/CSS:**
+
    ```html
    <!-- Light background -->
    <img src="docs/assets/ArcKit_Logo_Horizontal_Dark.svg" alt="ArcKit" class="logo">
@@ -221,10 +236,12 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 ## Color Values
 
 ### Dark Logos
+
 - Primary: `#1A1A1A` (near black)
 - Secondary: `#4A4A4A` (dark gray)
 
 ### Light Logos
+
 - Primary: `#FFFFFF` (white)
 - Secondary: `#F5F5F5` (off-white)
 
@@ -245,6 +262,7 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 ## Examples of Correct Usage
 
 ### ✅ Good: README Header
+
 ```markdown
 # ArcKit - Enterprise Architecture Governance Toolkit
 
@@ -252,6 +270,7 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 ```
 
 ### ✅ Good: Website Navigation
+
 ```html
 <nav style="background: white;">
   <img src="assets/ArcKit_Logo_Horizontal_Dark.svg" height="40" alt="ArcKit">
@@ -259,6 +278,7 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 ```
 
 ### ✅ Good: Dark Mode Website
+
 ```html
 <header style="background: #1a1a1a;">
   <img src="assets/ArcKit_Logo_Horizontal_Light.svg" height="40" alt="ArcKit">
@@ -266,12 +286,14 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 ```
 
 ### ✅ Good: Social Media Profile
+
 ```html
 <!-- 400x400 square space -->
 <img src="assets/ArcKit_Stacked_Dark.svg" alt="ArcKit Profile">
 ```
 
 ### ✅ Good: Favicon
+
 ```html
 <link rel="icon" type="image/svg+xml" href="assets/ArcKit_Mark_Dark.svg">
 ```

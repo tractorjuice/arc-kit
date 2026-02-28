@@ -163,6 +163,7 @@ The service **SHOULD** provide:
 ### Search Strategy
 
 **Search Terms Used**:
+
 - Primary: [main service category]
 - Secondary: [specific capabilities]
 - Filters: [UK data centers, certifications, etc.]
@@ -185,15 +186,18 @@ The service **SHOULD** provide:
 **Desirable Match**: [X]/[Y] features
 
 **Key Features**:
+
 - [Feature 1 matching requirements]
 - [Feature 2 matching requirements]
 - [Feature 3 matching requirements]
 
 **Compliance Mentions**:
+
 - [Certification 1]
 - [Certification 2]
 
 **Gaps Identified**:
+
 - [Gap 1 - requirement not mentioned]
 - [Gap 2 - ambiguous claim]
 
@@ -240,6 +244,7 @@ The service **SHOULD** provide:
 **Primary Recommendation**: [Service Name] by [Supplier Name]
 
 **Rationale**:
+
 - [Reason 1 - best match for MUST requirements]
 - [Reason 2 - compliance/security]
 - [Reason 3 - value/support]
@@ -247,16 +252,19 @@ The service **SHOULD** provide:
 **Risk Level**: [Risk Level]
 
 **Gaps to Clarify**:
+
 - [Gap 1 - run /arckit.gcloud-clarify]
 - [Gap 2]
 
 ### Alternative Options
 
 **Second Choice**: [Service Name]
+
 - Rationale: [Why this is second choice]
 - Trade-offs: [What you gain/lose vs primary]
 
 **Third Choice**: [Service Name]
+
 - Rationale: [Why this is third choice]
 - Trade-offs: [What you gain/lose vs primary]
 
@@ -318,6 +326,7 @@ The service **SHOULD** provide:
 **Search Date**: [DATE]
 
 **Digital Marketplace Filters Applied**:
+
 - Lot: [Cloud Hosting / Cloud Software / Cloud Support]
 - Categories: [Selected categories]
 - Capabilities: [Selected capabilities]
@@ -325,6 +334,7 @@ The service **SHOULD** provide:
 - Data location: [UK only / EU / etc.]
 
 **Search Queries**:
+
 1. `[Primary search term]` - [N] results
 2. `[Secondary search term]` - [N] results
 3. `[Filtered search]` - [N] results

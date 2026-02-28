@@ -96,6 +96,7 @@ This document presents research findings for technology, services, and products 
 **Technology Stack**: [Languages, frameworks, libraries]
 
 **Effort Estimate**:
+
 - **Development**: [X] person-months
 - **Skills Required**: [Backend, frontend, DevOps, etc.]
 - **Timeline**: [X] months to production-ready
@@ -110,20 +111,24 @@ This document presents research findings for technology, services, and products 
 | **3-Year TCO** | | | **£[TOTAL]** | |
 
 **Pros**:
+
 - ✅ [Benefit 1]
 - ✅ [Benefit 2]
 - ✅ [Benefit 3]
 
 **Cons**:
+
 - ❌ [Drawback 1]
 - ❌ [Drawback 2]
 - ❌ [Drawback 3]
 
 **Risks**:
+
 - [Risk 1]: [Mitigation]
 - [Risk 2]: [Mitigation]
 
 **When to Build**:
+
 - Unique competitive advantage or IP
 - No suitable commercial products exist
 - Long-term TCO favors build over SaaS subscriptions
@@ -150,6 +155,7 @@ This document presents research findings for technology, services, and products 
 | **3-Year TCO** | | | **£[TOTAL]** | |
 
 **Pricing Tiers**:
+
 - **Starter**: £[X]/month - [Features, limits]
 - **Professional**: £[Y]/month - [Features, limits]
 - **Enterprise**: £[Z]/month - [Features, limits, SLA]
@@ -157,27 +163,32 @@ This document presents research findings for technology, services, and products 
 **Estimated Tier for This Project**: [Tier name] based on [usage projection]
 
 **Pros**:
+
 - ✅ [Benefit 1]
 - ✅ [Benefit 2]
 - ✅ [Benefit 3]
 
 **Cons**:
+
 - ❌ [Limitation 1]
 - ❌ [Limitation 2]
 - ❌ [Limitation 3]
 
 **Key Features**:
+
 - [Feature 1]: [Description]
 - [Feature 2]: [Description]
 - [Feature 3]: [Description]
 
 **Integration**:
+
 - **APIs**: REST, GraphQL, webhooks
 - **SDKs**: JavaScript, Python, Ruby, Go
 - **Authentication**: OAuth 2.0, API keys
 - **Documentation**: [Quality rating: Excellent/Good/Fair/Poor]
 
 **Compliance & Security**:
+
 - ✅ GDPR compliant
 - ✅ ISO 27001 certified
 - ✅ SOC 2 Type II
@@ -185,6 +196,7 @@ This document presents research findings for technology, services, and products 
 - ✅ Encryption at rest and in transit
 
 **Vendor Maturity**:
+
 - **Founded**: [Year]
 - **Funding**: [Series X, $YM raised] OR [Public company]
 - **Customers**: [Notable customers or customer count]
@@ -192,16 +204,19 @@ This document presents research findings for technology, services, and products 
 - **Financial Stability**: [Strong/Moderate/Weak]
 
 **Support**:
+
 - **Support Tiers**: Email, chat, phone, dedicated support engineer
 - **SLA**: [Uptime guarantee, response times]
 - **Community**: [Active community, forum, Stack Overflow]
 
 **Exit Strategy**:
+
 - **Data Export**: [CSV, JSON, API export]
 - **Migration Effort**: [Estimated person-weeks to migrate away]
 - **Lock-in Risk**: [LOW | MEDIUM | HIGH]
 
 **References**:
+
 - [Customer case study 1]
 - [Customer case study 2]
 - [G2/Gartner rating]
@@ -219,6 +234,7 @@ This document presents research findings for technology, services, and products 
 **Description**: [What it does, key features]
 
 **Project Details**:
+
 - **License**: [MIT, Apache 2.0, GPL, AGPL]
 - **GitHub**: [URL, star count, fork count]
 - **Maturity**: [Mature/Stable/Emerging/Experimental]
@@ -227,6 +243,7 @@ This document presents research findings for technology, services, and products 
 - **Contributors**: [X] contributors
 
 **Hosting Options**:
+
 - **Self-hosted**: Deploy on own infrastructure
 - **Managed Service**: [If available, e.g., Redis Labs for Redis]
 
@@ -249,27 +266,32 @@ This document presents research findings for technology, services, and products 
 | **3-Year TCO** | | | **£[TOTAL]** | |
 
 **Pros**:
+
 - ✅ [Benefit 1]
 - ✅ [Benefit 2]
 - ✅ [Benefit 3]
 
 **Cons**:
+
 - ❌ [Limitation 1]
 - ❌ [Limitation 2]
 - ❌ [Limitation 3]
 
 **Technical Considerations**:
+
 - **Skills Required**: [Technologies team needs to know]
 - **Operational Burden**: [Backup, monitoring, scaling, patching]
 - **Community Support**: [Stack Overflow questions, Discord/Slack community]
 - **Commercial Support Available**: [Company offering paid support, SLA, cost]
 
 **License Considerations**:
+
 - [License name and key terms]
 - [Any restrictions on commercial use, modifications, redistribution]
 - [Copyleft requirements if GPL/AGPL]
 
 **Maturity Assessment**:
+
 - [Production-ready OR needs additional work]
 - [Used by major companies: list examples]
 - [Security track record: CVE history]
@@ -285,6 +307,7 @@ This document presents research findings for technology, services, and products 
 **Eligibility**: [Who can use it: all public sector, central government only, etc.]
 
 **Cost Model**:
+
 - **Setup**: Free OR £[X] one-time
 - **Usage**: Free OR [pricing model]
 - **Transaction Fees**: [If applicable, e.g., GOV.UK Pay 1.5%]
@@ -298,6 +321,7 @@ This document presents research findings for technology, services, and products 
 | **3-Year TCO** | | | **£[TOTAL]** | Significantly lower than commercial |
 
 **Pros**:
+
 - ✅ Free or subsidized for public sector
 - ✅ GDPR compliant, UK data residency
 - ✅ Meets Government Service Standard
@@ -305,21 +329,25 @@ This document presents research findings for technology, services, and products 
 - ✅ TCoP compliant (use common platforms)
 
 **Cons**:
+
 - ❌ Only for public sector
 - ❌ [Any feature limitations]
 - ❌ [Any integration constraints]
 
 **Support**:
+
 - **Documentation**: [URL to docs]
 - **Support**: [Email, Slack, ticketing system]
 - **SLA**: [If provided]
 
 **Technology Code of Practice Alignment**:
+
 - ✅ **Point 8**: Share, reuse and collaborate (common platform)
 - ✅ **Point 6**: Make things secure (security by design)
 - ✅ **Point 7**: Make privacy integral (GDPR by design)
 
 **Mandate**:
+
 - [MANDATORY for public-facing services OR RECOMMENDED but not required]
 
 ---
@@ -333,15 +361,18 @@ This document presents research findings for technology, services, and products 
 [2-3 paragraphs explaining why this is the best approach given requirements, budget, timeline, team capabilities, strategic importance]
 
 **Key Decision Factors**:
+
 - ✅ **[Factor 1]**: [Why this matters and how chosen option addresses it]
 - ✅ **[Factor 2]**: [Why this matters and how chosen option addresses it]
 - ✅ **[Factor 3]**: [Why this matters and how chosen option addresses it]
 
 **Shortlist for Further Evaluation**:
+
 1. **[Vendor/Product 1]**: [Why shortlisted]
 2. **[Vendor/Product 2]**: [Why shortlisted]
 
 **Next Steps**:
+
 - [ ] Schedule vendor demos for shortlisted options
 - [ ] Request pricing quotes based on projected usage
 - [ ] Technical proof-of-concept (POC) for top 2 options
@@ -374,21 +405,25 @@ This document presents research findings for technology, services, and products 
 ### Alternative Scenarios
 
 **Scenario A: Build Everything**:
+
 - 3-Year TCO: £[X]
 - Pros: Maximum control and flexibility
 - Cons: Highest cost, longest time to market, highest risk
 
 **Scenario B: Buy Everything (Commercial SaaS)**:
+
 - 3-Year TCO: £[Y]
 - Pros: Fastest time to market, managed services
 - Cons: Vendor lock-in, ongoing subscription costs, less control
 
 **Scenario C: Open Source Everything**:
+
 - 3-Year TCO: £[Z]
 - Pros: Lower licensing costs, flexibility
 - Cons: Operational burden, skills required, support limitations
 
 **Scenario D: Recommended Blended Approach**:
+
 - 3-Year TCO: £[W]
 - Pros: Balance of cost, speed, control, and risk
 - Cons: [Any trade-offs]
@@ -428,6 +463,7 @@ This document presents research findings for technology, services, and products 
 ### Coverage Summary
 
 **Requirements with Identified Solutions**:
+
 - ✅ **[X] requirements ([Y%])** have recommended commercial or open source solutions
 - 🔨 **[Z] requirements ([W%])** require custom development (no suitable off-the-shelf)
 - 🔍 **[A] requirements ([B%])** need further research or clarification
@@ -435,6 +471,7 @@ This document presents research findings for technology, services, and products 
 **Gaps and Concerns**:
 
 **GAP-1**: [Requirement ID]: [Gap description]
+
 - **Impact**: [What can't be done without this]
 - **Options**: [Build custom | Wait for market | Workaround]
 - **Recommendation**: [What to do]
@@ -478,6 +515,7 @@ Assessment against 13 TCoP points relevant to technology selection:
 | GOV.UK Publishing | Content | ⚠️ If applicable | For gov.uk domain content |
 
 **Benefits of GOV.UK Platforms**:
+
 - ✅ Free or subsidized for public sector
 - ✅ Pre-built, well-tested, accessible
 - ✅ GDPR compliant, UK data residency
@@ -487,14 +525,17 @@ Assessment against 13 TCoP points relevant to technology selection:
 ### Digital Marketplace Procurement Strategy
 
 **G-Cloud 14** (Cloud hosting, software, support):
+
 - [X] suppliers found for [category]
 - Top suppliers: [List with day rates or pricing]
 
 **Digital Outcomes and Specialists (DOS)**:
+
 - [X] suppliers found for [specialist role or outcome]
 - Top suppliers: [List with day rates]
 
 **Procurement Approach**:
+
 1. Search Digital Marketplace for relevant categories
 2. Shortlist 3-5 suppliers based on capability, price, past performance
 3. Request further information or quotes
@@ -502,6 +543,7 @@ Assessment against 13 TCoP points relevant to technology selection:
 5. Use framework terms (no custom contract negotiation)
 
 **Benefits**:
+
 - ✅ Pre-approved suppliers (due diligence done)
 - ✅ SME-friendly (1/3 spend with SMEs target)
 - ✅ Fast procurement (no OJEU if under threshold)
@@ -514,21 +556,25 @@ Assessment against 13 TCoP points relevant to technology selection:
 **Hosting Requirements**:
 
 **For OFFICIAL**:
+
 - ✅ Public cloud (AWS, Azure, GCP) acceptable
 - ✅ UK regions preferred but not required
 - ✅ No special accreditation needed
 
 **For OFFICIAL-SENSITIVE**:
+
 - ✅ Public cloud acceptable with additional controls (encryption, logging, MFA)
 - ⚠️ UK data residency may be required by department policy
 - ⚠️ Consider Government Cloud (IL2) if mandated
 
 **For SECRET**:
+
 - ❌ Public cloud NOT acceptable
 - ✅ Government Cloud (IL3+) OR air-gapped infrastructure required
 - ✅ Security-cleared personnel required
 
 **Recommended Approach for This Project**:
+
 - [Public cloud (AWS UK region) | Government Cloud | Air-gapped]
 - [Rationale based on data classification]
 
@@ -548,17 +594,20 @@ Research findings inform Wardley Map value chain positioning and evolution:
 | [Component 4] | Commodity | Use Managed Service | Standard infrastructure (AWS S3, RDS) |
 
 **Evolution Axis Guidance**:
+
 - **Genesis** (left): Novel, rare, uncertain → Build if strategic, otherwise wait
 - **Custom** (mid-left): Bespoke, emerging → Build if no product, buy if available
 - **Product** (mid-right): Off-the-shelf, stabilizing → Buy SaaS unless strong rationale to build
 - **Commodity** (right): Standard, ubiquitous → Use cloud/open source, don't build
 
 **Strategic Insights**:
+
 - [Insight 1]: [e.g., "Payments are commoditized - use Stripe, don't build"]
 - [Insight 2]: [e.g., "ML recommendation engine is novel IP - build in-house"]
 - [Insight 3]: [e.g., "Authentication is product - use Auth0 or GOV.UK One Login"]
 
 **Next Steps**:
+
 - Run `/arckit.wardley` to create Wardley Map with research findings
 - Position components on evolution axis based on build/buy decisions
 - Identify strategic plays (e.g., componentize novel features once mature)
@@ -572,29 +621,34 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 ### Options Analysis for SOBC
 
 **Option 0: Do Nothing (Baseline)**
+
 - Cost: £0
 - Benefits: None
 - Risk: [Current pain points persist]
 
 **Option 1: Build Everything Custom**
+
 - 3-Year TCO: £[X]
 - Benefits: [Maximum control, flexibility, IP ownership]
 - Risks: [Highest cost, longest delivery, skill dependencies]
 - NPV: £[Y] (if benefits quantified)
 
 **Option 2: Buy Commercial SaaS (Recommended)**
+
 - 3-Year TCO: £[Z]
 - Benefits: [Fast delivery, managed services, proven solutions]
 - Risks: [Vendor lock-in, subscription costs, less control]
 - NPV: £[W] (if benefits quantified)
 
 **Option 3: Open Source + Managed Services**
+
 - 3-Year TCO: £[A]
 - Benefits: [Lower costs, flexibility, avoid lock-in]
 - Risks: [Operational burden, skills required, support limitations]
 - NPV: £[B] (if benefits quantified)
 
 **Option 4: Hybrid (Build Custom for Core, Buy for Commodity)**
+
 - 3-Year TCO: £[C]
 - Benefits: [Balance cost, speed, control, and risk]
 - Risks: [Complexity of integration]
@@ -607,12 +661,14 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 ### Cost Data for SOBC
 
 **CAPEX (Initial Investment)**:
+
 - Development: £[X]
 - Setup/Integration: £[Y]
 - Infrastructure: £[Z]
 - **Total CAPEX**: £[TOTAL]
 
 **OPEX (Ongoing Annual)**:
+
 - Subscriptions: £[X]/year
 - Infrastructure: £[Y]/year
 - Maintenance: £[Z]/year
@@ -629,6 +685,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 - **Quality**: [Reduce defects by X%, reduce downtime by Y hours/year = £[B] saved]
 
 **Qualitative Benefits**:
+
 - Improved user experience (CSAT, NPS)
 - Faster time to market
 - Scalability for growth
@@ -650,15 +707,18 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 **Overall Rating**: ⭐⭐⭐⭐⭐ (5/5) OR ⭐⭐⭐⭐☆ (4/5)
 
 **Strengths**:
+
 - [Key strength 1]
 - [Key strength 2]
 - [Key strength 3]
 
 **Concerns**:
+
 - [Concern 1 if any]
 - [Concern 2 if any]
 
 **Next Steps**:
+
 - [ ] Schedule demo for [date]
 - [ ] Request formal pricing quote
 - [ ] Technical POC ([duration])
@@ -666,6 +726,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 - [ ] Check 3 customer references
 
 **Decision Criteria**:
+
 - [ ] Meets all MUST requirements
 - [ ] [X]% of SHOULD requirements met
 - [ ] Pricing within budget (£[X])
@@ -688,6 +749,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 ### Vendor Risks
 
 **VR-1: Vendor Lock-in**
+
 - **Risk**: Difficult or expensive to switch vendors after commitment
 - **Impact**: HIGH - Could lead to price increases, feature stagnation
 - **Likelihood**: MEDIUM
@@ -698,6 +760,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
   - Annual vendor performance review with exit planning
 
 **VR-2: Vendor Viability**
+
 - **Risk**: Startup vendor fails or gets acquired
 - **Impact**: HIGH - Service discontinuation, forced migration
 - **Likelihood**: LOW (if established vendor) / MEDIUM (if startup)
@@ -707,6 +770,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
   - Maintain ability to self-host if open core model
 
 **VR-3: Price Increases**
+
 - **Risk**: SaaS prices increase beyond budget over time
 - **Impact**: MEDIUM - Budget overruns, forced migration
 - **Likelihood**: MEDIUM - SaaS vendors regularly increase prices 10-20%/year
@@ -718,6 +782,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 ### Technical Risks
 
 **TR-1: Integration Complexity**
+
 - **Risk**: Integration more complex than anticipated
 - **Impact**: MEDIUM - Delays, cost overruns
 - **Likelihood**: MEDIUM
@@ -727,6 +792,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
   - Engage vendor professional services for initial setup
 
 **TR-2: Performance at Scale**
+
 - **Risk**: Solution doesn't meet performance requirements at projected scale
 - **Impact**: HIGH - SLA breaches, poor user experience
 - **Likelihood**: LOW (if vendor proven) / MEDIUM (if unproven)
@@ -736,6 +802,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
   - Phased rollout to validate performance
 
 **TR-3: Skills Gap**
+
 - **Risk**: Team lacks skills to operate/maintain chosen technology
 - **Impact**: MEDIUM - Operational issues, delays
 - **Likelihood**: MEDIUM (for open source) / LOW (for SaaS)
@@ -747,6 +814,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 ### Compliance Risks
 
 **CR-1: Data Residency**
+
 - **Risk**: Vendor doesn't support UK data residency (required for GDPR, UK Gov)
 - **Impact**: HIGH - Compliance blocker
 - **Likelihood**: LOW (most major vendors support UK/EU regions)
@@ -795,6 +863,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 ### Appendix A: Research Methodology
 
 **Data Sources**:
+
 - Vendor websites and documentation
 - G2, Gartner, Forrester reviews and ratings
 - UK Government Digital Marketplace
@@ -803,6 +872,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 - Customer case studies and references
 
 **Evaluation Criteria**:
+
 - Requirements fit (MUST/SHOULD/COULD)
 - Pricing and TCO (3-year projection)
 - Vendor maturity and financial stability
@@ -812,6 +882,7 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 - Customer references and reputation
 
 **Limitations**:
+
 - Pricing based on list prices (discounts may be available)
 - TCO projections include assumptions (see TCO section)
 - Market rapidly evolves (research valid for ~6 months)
@@ -863,4 +934,3 @@ Research findings feed into Strategic Outline Business Case (SOBC) Economic Case
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

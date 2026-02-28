@@ -29,7 +29,7 @@ The DevOps Engineer designs and implements CI/CD pipelines, infrastructure as co
 
 ## Typical Workflow
 
-```
+```text
 requirements → diagram → devops → mlops → operationalize
 ```
 

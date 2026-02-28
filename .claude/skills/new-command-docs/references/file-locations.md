@@ -27,6 +27,7 @@ The README has a "Complete Command Reference" section with commands grouped by c
 ```
 
 **Categories and their approximate locations** (search for the `###` heading):
+
 - `### Foundation` - init, plan, principles
 - `### Strategic Context` - stakeholders, risk, sobc
 - `### Requirements & Data` - requirements, data-model, data-mesh-contract, dpia
@@ -42,6 +43,7 @@ The README has a "Complete Command Reference" section with commands grouped by c
 - `### Documentation & Publishing` - story, pages, customize
 
 **Row format**:
+
 ```markdown
 | `/arckit.{name}` | {Description} | [{label}]({url}) | {Status} |
 ```
@@ -89,7 +91,8 @@ See [html-patterns.md](html-patterns.md) for the full HTML template.
 **Search**: `grep -n "slash commands" arckit-plugin/.claude-plugin/plugin.json`
 
 **Replace pattern**:
-```
+
+```text
 OLD: "{N} slash commands for generating architecture artifacts"
 NEW: "{N+1} slash commands for generating architecture artifacts"
 ```
@@ -107,7 +110,8 @@ NEW: "{N+1} slash commands for generating architecture artifacts"
 **Search**: `grep -n "slash commands" .claude-plugin/marketplace.json`
 
 **Replace pattern**:
-```
+
+```text
 OLD: "{N} slash commands for enterprise architecture artifacts"
 NEW: "{N+1} slash commands for enterprise architecture artifacts"
 ```
@@ -129,7 +133,8 @@ Check for count references. This file may or may not have explicit counts. Updat
 The header row lists all commands as columns. Insert the new command name alphabetically.
 
 **Current header format**:
-```
+
+```text
 | PRODUCES -> | plan | principles | stakeholders | risk | sobc | requirements | ... | pages |
 ```
 
@@ -148,6 +153,7 @@ Add a new row at the alphabetically correct position among existing command rows
 ### Tier Groupings (Lines 71-184)
 
 Find the appropriate tier and add a bullet point:
+
 ```markdown
 - **{name}** -> Depends on: {dep1} (M), {dep2} (R)
 ```
@@ -183,6 +189,7 @@ See [dependency-matrix-format.md](dependency-matrix-format.md) for Mermaid node 
 ### Coverage Table (~Lines 113-163)
 
 Add a row for the new command:
+
 ```markdown
 | `/arckit.{name}` | [{name}.md](guides/{name}.md) | Complete |
 ```
@@ -208,6 +215,7 @@ If the guide is in a subdirectory (e.g., `uk-government/`, `uk-mod/`), adjust th
 **Search**: `grep -n "[0-9]* commands\|[0-9]* slash" CLAUDE.md`
 
 Update any count references found. Common locations:
+
 - Overview section ("50 slash commands")
 - Agent System table (if adding an agent)
 - Multi-instance types in `generate-document-id.sh` section

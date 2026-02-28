@@ -49,6 +49,7 @@ This table shows which ArcKit artefacts provide evidence for each NDS mission du
 Use this checklist when reviewing ArcKit artefacts for NDS alignment.
 
 ### Data Foundations
+
 - [ ] Data standards defined (naming, formats, reference data)
 - [ ] Metadata captured for all entities (data dictionary/catalogue)
 - [ ] Interoperability requirements documented (APIs, open standards)
@@ -56,17 +57,20 @@ Use this checklist when reviewing ArcKit artefacts for NDS alignment.
 - [ ] Data quality monitoring and remediation process in place
 
 ### Skills
+
 - [ ] Data ownership roles assigned (Owner, Steward, Custodian)
 - [ ] Data literacy requirements identified for key stakeholders
 - [ ] Training plan for data governance processes
 
 ### Availability
+
 - [ ] Data access controls defined (CRUD matrix)
 - [ ] Data sharing agreements documented (internal/external)
 - [ ] Data products defined with SLAs (if data mesh architecture)
 - [ ] Open data obligations assessed
 
 ### Responsibility
+
 - [ ] DPIA completed for personal data processing
 - [ ] Data ethics considerations documented
 - [ ] Data governance accountability clear (RACI)

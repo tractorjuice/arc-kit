@@ -23,17 +23,20 @@ Generate a comprehensive platform strategy design document using PDT v2.2.1 meth
 > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 **MANDATORY** (warn if missing):
+
 - **PRIN** (Architecture Principles, in 000-global) — Extract: Platform governance principles, ecosystem orchestration standards, technology choices
   - If missing: STOP — platform designs require architecture principles. Run `/arckit:principles` first.
 - **REQ** (Requirements) — Extract: Platform capabilities from FR/NFR requirements, scalability, availability, security
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **STKE** (Stakeholder Analysis) — Extract: Ecosystem entities from stakeholder drivers, user personas, goals
   - If missing: recommend running `/arckit:stakeholders` for better entity portraits
 - **WARD** (Wardley Maps, in wardley-maps/) — Extract: Evolution analysis for build vs buy decisions, component positioning
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **RISK** (Risk Register) — Extract: Platform risks, ecosystem risks, governance risks
 - **DATA** (Data Model) — Extract: Data exchange patterns, entity schemas, data governance
 - **SOBC** (Business Case) — Extract: Investment context, ROI targets, benefits
@@ -57,6 +60,7 @@ If the project already exists, check for existing `ARC-{PROJECT_ID}-PLAT-v*.md` 
 Read the platform design template:
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/platform-design-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/platform-design-template.md` (default)
@@ -76,6 +80,7 @@ This template contains the structure for all 8 PDT canvases.
 If `projects/{project_id}/ARC-*-STKE-*.md` exists:
 
 **Read the file** and extract:
+
 - **Stakeholders** → Map to **Entities** in ecosystem
   - Example: "CFO" stakeholder → "Enterprise Buyer" entity (demand side)
   - Example: "Service Provider" stakeholder → "Independent Consultant" entity (supply side)
@@ -91,7 +96,8 @@ If `projects/{project_id}/ARC-*-STKE-*.md` exists:
   - Example: "Accountable" roles → Demand-side entities or regulators
 
 **Extraction Logic**:
-```
+
+```text
 For each stakeholder in ARC-*-STKE-*.md:
   - Determine entity type (Supply/Demand/Supporting)
   - Create Entity Portrait (Section 2.2, 2.3, 2.4)
@@ -106,6 +112,7 @@ For each stakeholder in ARC-*-STKE-*.md:
 If `projects/{project_id}/ARC-*-REQ-*.md` exists:
 
 **Read the file** and extract:
+
 - **BR (Business Requirements)** → Map to **Value Creation** and **Revenue Model**
   - Example: "BR-001: Reduce vendor onboarding time by 80%" → Transaction T-002 cost reduction
 
@@ -120,7 +127,8 @@ If `projects/{project_id}/ARC-*-REQ-*.md` exists:
   - Example: "DR-005: Performance analytics data" → Learning Service 1
 
 **Extraction Logic**:
-```
+
+```text
 For each requirement in ARC-*-REQ-*.md:
   - Map BR-xxx to business model and value creation
   - Map FR-xxx to platform features and transactions
@@ -133,6 +141,7 @@ For each requirement in ARC-*-REQ-*.md:
 If `projects/{project_id}/wardley-maps/ARC-*-WARD-*.md` exists:
 
 **Read Wardley map(s)** and extract:
+
 - **Components** and their **Evolution Stages**:
   - Genesis (0.00-0.25) → **Build** (novel, differentiating)
   - Custom (0.25-0.50) → **Build or Partner** (emerging, core capability)
@@ -140,6 +149,7 @@ If `projects/{project_id}/wardley-maps/ARC-*-WARD-*.md` exists:
   - Commodity (0.75-1.00) → **Use Utility** (cloud, SaaS, APIs)
 
 **Use evolution analysis** in Platform Design Canvas (Section 8.3):
+
 - Identify which platform components to build (Custom/Genesis)
 - Identify which to buy/use (Product/Commodity)
 - Example: "Service matching algorithm" at Custom (0.35) → Build as core differentiator
@@ -150,6 +160,7 @@ If `projects/{project_id}/wardley-maps/ARC-*-WARD-*.md` exists:
 Read `projects/000-global/ARC-000-PRIN-*.md`:
 
 **Extract principles** that apply to platform strategy:
+
 - Example: Principle "API-First" → Platform must expose APIs for ecosystem integrations
 - Example: Principle "Data Privacy by Design" → Learning engine must anonymize entity data
 - Example: Principle "Cloud-Native" → Platform runs on AWS/Azure, serverless where possible
@@ -185,6 +196,7 @@ Before generating the document ID, check if a previous version exists:
 - **Document ID**: `ARC-{PROJECT_ID}-PLAT-v{VERSION}` (e.g., `ARC-001-PLAT-v1.0`)
 
 **Populate document control fields**:
+
 - `document_id`: Constructed from format above
 - `project_id`: From Step 1
 - `project_name`: From Step 1
@@ -320,12 +332,13 @@ Before generating the document ID, check if a previous version exists:
 
 **USE THE WRITE TOOL** to create the platform design document:
 
-```
+```text
 File path: projects/{project_id}-{project_name}/ARC-{PROJECT_ID}-PLAT-v${VERSION}.md
 Content: [Complete platform design following template, all 8 canvases filled out]
 ```
 
 **IMPORTANT**:
+
 - This document will be 1,500-2,500 lines
 - DO NOT output the full document in chat (token limit)
 - Use Write tool to create file
@@ -532,12 +545,14 @@ The Platform Design Canvas (Section 8) provides a single-page synthesis perfect 
 ## Example Use Cases
 
 **Good Use Cases for Platform Design**:
+
 - Multi-sided marketplaces (e.g., supplier-buyer platforms, G-Cloud)
 - Data sharing platforms (e.g., cross-government data mesh, NHS data sharing)
 - Service platforms (e.g., GOV.UK services ecosystem, local government platforms)
 - Ecosystem orchestration (e.g., vendor ecosystem, partner network, app store)
 
 **Not Suitable for Platform Design**:
+
 - Single-product SaaS applications (use /arckit:requirements and /arckit:hld-review instead)
 - Internal enterprise systems without multi-sided ecosystem (use /arckit:requirements)
 - Point-to-point integrations (use /arckit:diagram for architecture)

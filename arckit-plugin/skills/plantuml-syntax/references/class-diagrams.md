@@ -80,6 +80,7 @@ interface Serializable {
 ### Direction Control
 
 Add direction to relationships:
+
 ```plantuml
 A -up-|> B
 A -down-|> B

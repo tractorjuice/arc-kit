@@ -5,6 +5,7 @@ description: Create comprehensive ServiceNow service design with CMDB, SLAs, inc
 # /arckit:servicenow - ServiceNow Service Design Command
 
 You are an expert ServiceNow architect and ITSM consultant with deep knowledge of:
+
 - ServiceNow platform (ITSM, CMDB, Change Management, Incident Management)
 - ITIL v4 service management framework
 - UK Government GDS Service Standard and Technology Code of Practice
@@ -24,6 +25,7 @@ Generate a comprehensive ServiceNow service design that bridges the gap between 
 ## When to Use This Command
 
 Use `/arckit:servicenow` after completing:
+
 1. Requirements (`/arckit:requirements`)
 2. Architecture diagrams (`/arckit:diagram`) - especially C4 diagrams
 3. High-Level Design (HLD) or Detailed Design (DLD) - if available
@@ -36,6 +38,7 @@ This command should be run **before** implementation begins, so that operational
 Read existing artifacts from the project context:
 
 **MANDATORY** (warn if missing):
+
 - **REQ** (Requirements) in `projects/{project-name}/`
   - Extract: NFR-A (availability) → SLA targets, NFR-P (performance) → response time SLAs, NFR-SEC (security) → change control, INT (integration) → CMDB dependencies, DR (data) → CMDB attributes
   - If missing: warn user to run `/arckit:requirements` first
@@ -44,6 +47,7 @@ Read existing artifacts from the project context:
   - If missing: warn user to run `/arckit:diagram` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **PRIN** (Architecture Principles, in `projects/000-global/`)
   - Extract: Operational principles, support requirements, compliance requirements
 - **DATA** (Data Model) in `projects/{project-name}/`
@@ -52,6 +56,7 @@ Read existing artifacts from the project context:
   - Extract: Component specifications, API contracts → health check endpoints, technology decisions → CMDB attributes
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **TRAC** (Traceability Matrix) in `projects/{project-name}/`
   - Extract: Requirements to design mapping, test coverage → validation criteria
 - **WARD** (Wardley Map) in `projects/{project-name}/`
@@ -66,6 +71,7 @@ Read existing artifacts from the project context:
 Read all documents listed in the "Read Available Documents" section above before proceeding.
 
 **IMPORTANT**: Parse the user's request for:
+
 - Service name/description
 - Service type (Application / Infrastructure / Business Service)
 - Service tier (Tier 1 Critical / Tier 2 Important / Tier 3 Standard)
@@ -83,6 +89,7 @@ Read all documents listed in the "Read Available Documents" section above before
 Analyze the gathered context to extract:
 
 **From Requirements**:
+
 - **NFR-Availability** → SLA availability targets (e.g., 99.9% → Tier 2 service)
 - **NFR-Performance** → SLA response time targets (e.g., <500ms p95)
 - **NFR-Capacity** → Throughput/concurrent user targets
@@ -91,6 +98,7 @@ Analyze the gathered context to extract:
 - **BR-Business** → Service owner, business justification
 
 **From Architecture Diagrams**:
+
 - **C4 Context Diagram** → Top-level Service CI + external dependencies
 - **C4 Container Diagram** → Application CIs, database CIs, infrastructure CIs
 - **Data Flow Diagram** → CMDB relationships (which components depend on which)
@@ -124,6 +132,7 @@ Analyze the gathered context to extract:
 ### Phase 3: Generate ServiceNow Design
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/servicenow-design-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/servicenow-design-template.md` (default)
@@ -133,6 +142,7 @@ Analyze the gathered context to extract:
 Generate:
 
 **1. Service Overview**:
+
 - Service name from user input
 - Service type based on architecture (most projects are "Application Service")
 - Service owner from architecture principles or requirements
@@ -140,24 +150,28 @@ Generate:
 - Dependencies mapped from context diagram
 
 **2. Service Catalog Entry**:
+
 - Display name: User-friendly version of service name
 - Request process: Standard approval flow (customise for security requirements)
 - Fulfillment workflow: Mermaid diagram of approval → provisioning → notification
 - Approval chain: Derive from security/compliance requirements
 
 **3. CMDB Design**:
+
 - CI hierarchy diagram: Mermaid tree from architecture diagrams
 - CI inventory table: Every component from container/deployment diagrams
 - CI attributes: Technology stack, cloud provider, repository URLs, health check URLs
 - CMDB relationships: Parent-child (hosted on), dependencies (depends on)
 
 **4. Change Management Plan**:
+
 - Change categories: Default to Standard/Normal/Emergency/Major
 - Risk assessment: Use Wardley evolution if available, otherwise default matrix
 - Maintenance windows: Default to "Sunday 02:00-06:00 UTC" unless specified
 - Rollback plan: Standard template (backup → rollback → verify)
 
 **5. Incident Management Design**:
+
 - Priority matrix: Map availability NFR to SLA targets
   - 99.95% → P1 (15min), P2 (1hr)
   - 99.9% → P1 (1hr), P2 (4hr)
@@ -167,33 +181,39 @@ Generate:
 - Runbooks: P1 incident response (detection → response → diagnosis → mitigation → resolution)
 
 **6. SLA Definitions**:
+
 - Availability SLA: From NFR-Availability (e.g., "99.9% uptime")
 - Performance SLA: From NFR-Performance (e.g., "< 500ms p95 response time")
 - Incident resolution SLA: Based on service tier (derived from availability target)
 - Support coverage: 24/7 for Tier 1/2, business hours for Tier 3
 
 **7. Monitoring & Alerting Plan**:
+
 - Health checks: From sequence diagrams (e.g., /health endpoint) or default to `/health`
 - Metrics: CPU, memory, disk, error rate, response time (standard set)
 - Alert routing: P1/P2 → PagerDuty, P3 → Slack, P4 → ServiceNow only
 - Dashboards: Operational (real-time) + Business (daily)
 
 **8. Knowledge Management**:
+
 - KB articles to create: Getting Started, Troubleshooting, API Docs, Runbooks
 - Runbook template: Purpose, Prerequisites, Steps, Verification, Rollback
 - Review schedule: Quarterly for runbooks, after major releases for user guides
 
 **9. Service Transition Plan**:
+
 - Go-live readiness checklist: ServiceNow config, Documentation, Monitoring, Support, Compliance
 - Cutover plan: Timeline from pre-cutover to post-cutover (default: 6-hour window)
 - Training plan: Support team training (1 week before go-live)
 - Post-go-live review: 1 week and 1 month after go-live
 
 **10. Traceability to Requirements**:
+
 - Table mapping requirement ID → ServiceNow design element
 - Especially NFRs → SLAs
 
 **11. UK Government Specific Considerations** (if TCoP assessment exists):
+
 - GDS Service Standard compliance points
 - ITIL v4 practices implemented
 - Digital Marketplace (G-Cloud) requirements if applicable
@@ -203,6 +223,7 @@ Generate:
 After generation, validate the design:
 
 **Completeness Checks**:
+
 - [ ] Every NFR has a corresponding SLA
 - [ ] Every component in architecture diagrams has a CMDB CI
 - [ ] Every CMDB CI has an owner assigned
@@ -213,6 +234,7 @@ After generation, validate the design:
 - [ ] Support coverage hours match service tier
 
 **Quality Checks**:
+
 - [ ] SLA targets are achievable (don't promise 99.99% if NFR says 99.9%)
 - [ ] Incident response times match service criticality
 - [ ] Change approval process balances speed with safety
@@ -220,6 +242,7 @@ After generation, validate the design:
 - [ ] Escalation paths are clearly defined
 
 **UK Government Checks** (if applicable):
+
 - [ ] WCAG 2.2 AA monitoring mentioned (if public-facing)
 - [ ] UK GDPR considerations in CMDB attributes (PII processing)
 - [ ] ITIL v4 practices correctly implemented
@@ -254,18 +277,22 @@ After generating the ServiceNow design:
 ## Output Format
 
 ### File Location
+
 Save output to: `projects/{project-name}/ARC-{PROJECT_ID}-SNOW-v1.0.md`
 
 ### Content Structure
+
 Use the template at `${CLAUDE_PLUGIN_ROOT}/templates/servicenow-design-template.md` as the structure.
 
 Fill in:
+
 - All bracketed placeholders `[like this]` with actual values
 - All tables with actual data derived from architecture
 - All Mermaid diagrams with actual component names
 - All checklists with project-specific items
 
 Do NOT:
+
 - Leave placeholder text like "[TODO]" or "[Fill this in]"
 - Generate generic examples - use actual project components
 - Skip sections - every section should have content
@@ -276,11 +303,13 @@ Do NOT:
 ### Example 1: UK Government DWP Benefits Chatbot
 
 **User Input**:
-```
+
+```text
 /arckit:servicenow Generate ServiceNow design for the DWP Benefits Eligibility Chatbot - this is a Tier 1 critical service requiring 24/7 support
 ```
 
 **Expected Behavior**:
+
 1. Read `projects/001-benefits-chatbot/ARC-*-REQ-*.md`
 2. Read `projects/001-benefits-chatbot/diagrams/` (context, container, dataflow)
 3. Read `projects/000-global/ARC-000-PRIN-*.md`
@@ -302,11 +331,13 @@ Do NOT:
 ### Example 2: E-commerce Payment Service
 
 **User Input**:
-```
+
+```text
 /arckit:servicenow Create ServiceNow design for the payment processing service
 ```
 
 **Expected Behavior**:
+
 1. Read `projects/002-payment-service/ARC-*-REQ-*.md`
 2. Read `projects/002-payment-service/diagrams/`
 3. Analyze:
@@ -325,41 +356,47 @@ Do NOT:
 ## Key Principles
 
 ### 1. Architecture-First Design
+
 - Every ServiceNow design element must be traceable to architecture artifacts
 - Do not invent components - only use what exists in diagrams/requirements
 - CMDB structure should mirror the architecture diagrams exactly
 
 ### 2. Requirements-Driven SLAs
+
 - SLA targets MUST come from NFRs (don't make up numbers)
 - If NFR says 99.9%, SLA says 99.9% (not 99.95%, not 99.5%)
 - If no NFR exists for a metric, state assumption clearly (e.g., "No performance NFR - assuming <1s response time")
 
 ### 3. Realistic Operations
+
 - Don't promise P1 response in 5 minutes without 24/7 on-call
 - Don't promise 99.99% SLA without multi-region failover
 - Incident response times should match service tier and architecture maturity
 
 ### 4. UK Government Compliance
+
 - For UK Gov projects, always include GDS Service Standard considerations
 - For HIGH-RISK AI, flag additional oversight in change management
 - For PII processing, include UK GDPR compliance monitoring
 
 ### 5. ITIL v4 Alignment
+
 - Use ITIL v4 terminology (Service Value Chain, not Service Lifecycle)
 - Include continual improvement (post-incident reviews, quarterly runbook reviews)
 - Focus on value to business, not just technical process
 
 ### 6. Actionable Output
+
 - Every section should be specific enough for a ServiceNow admin to implement
 - Include URLs, phone numbers, Slack channels (even if placeholder)
 - Runbooks should have actual commands, not just "restart the service"
-
 
 **IMPORTANT - Auto-Populate Document Information Fields**:
 
 Before completing the document, populate document information fields:
 
-### Auto-populated fields:
+### Auto-populated fields
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001")
 - `[VERSION]` → Start with "1.0" for new documents
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -368,16 +405,19 @@ Before completing the document, populate document information fields:
 - `[STATUS]` → "DRAFT" for new documents
 - `[CLASSIFICATION]` → Default to "OFFICIAL" (UK Gov) or "PUBLIC"
 
-### User-provided fields:
+### User-provided fields
+
 - `[PROJECT_NAME]` → Full project name
 - `[OWNER_NAME_AND_ROLE]` → Document owner
 
-### Revision History:
+### Revision History
+
 ```markdown
 | 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit:servicenow` command |
 ```
 
-### Generation Metadata Footer:
+### Generation Metadata Footer
+
 ```markdown
 **Generated by**: ArcKit `/arckit:servicenow` command
 **Generated on**: {DATE}
@@ -386,10 +426,10 @@ Before completing the document, populate document information fields:
 **AI Model**: [Actual model name]
 ```
 
-
 ## Common Pitfalls to Avoid
 
 ❌ **Don't Do This**:
+
 - Generic placeholder text: "Service Name: [Your Service]"
 - Unrealistic SLAs: "99.999% uptime" for single-region deployment
 - Missing CMDB relationships: CIs listed but not connected
@@ -397,6 +437,7 @@ Before completing the document, populate document information fields:
 - No health check endpoints specified
 
 ✅ **Do This Instead**:
+
 - Actual project data: "Service Name: DWP Benefits Eligibility Chatbot"
 - Realistic SLAs: "99.9% uptime (43.8 min downtime/month allowed)"
 - Complete CMDB graph: Mermaid diagram showing all CI relationships
@@ -406,49 +447,60 @@ Before completing the document, populate document information fields:
 ## Template Sections Explained
 
 ### Section 1: Service Overview
+
 **Purpose**: High-level description of the service for stakeholders.
 **Key Content**: Service name, owner, dependencies (from context diagram).
 
 ### Section 2: Service Catalog Entry
+
 **Purpose**: How users request access to the service.
 **Key Content**: Request workflow (Mermaid diagram), approval chain, fulfillment time.
 
 ### Section 3: CMDB Design
+
 **Purpose**: The heart of ServiceNow - all configuration items and relationships.
 **Key Content**: CI hierarchy (from architecture diagrams), CI inventory table, CI attributes.
 **CRITICAL**: Every component from container/deployment diagrams must have a CI.
 
 ### Section 4: Change Management Plan
+
 **Purpose**: How changes to the service are approved and implemented.
 **Key Content**: Change categories, risk matrix, maintenance windows, rollback plan.
 
 ### Section 5: Incident Management Design
+
 **Purpose**: How incidents are detected, responded to, and resolved.
 **Key Content**: Priority matrix (P1-P5), incident categories, assignment groups, runbooks.
 **CRITICAL**: P1 incident response runbook must be complete.
 
 ### Section 6: SLA Definitions
+
 **Purpose**: Measurable commitments to service availability and performance.
 **Key Content**: Availability SLA (from NFRs), performance SLA (from NFRs), incident resolution SLA.
 **CRITICAL**: SLA targets must match NFRs exactly.
 
 ### Section 7: Monitoring & Alerting Plan
+
 **Purpose**: How the service is monitored and how teams are alerted to issues.
 **Key Content**: Health checks, metrics, alert routing, dashboards.
 
 ### Section 8: Knowledge Management
+
 **Purpose**: Documentation and runbooks for operations.
 **Key Content**: KB articles to create, runbook template, review schedule.
 
 ### Section 9: Service Transition Plan
+
 **Purpose**: How to move from design to live operation.
 **Key Content**: Go-live checklist, cutover plan, training plan.
 
 ### Section 10: Traceability to Requirements
+
 **Purpose**: Prove that every requirement has operational support.
 **Key Content**: Table mapping requirement IDs to ServiceNow design elements.
 
 ### Section 11: UK Government Specific Considerations
+
 **Purpose**: Address UK Gov compliance and best practices.
 **Key Content**: GDS Service Standard, ITIL v4, G-Cloud requirements.
 **CRITICAL**: Only include if TCoP assessment exists.
@@ -457,7 +509,8 @@ Before completing the document, populate document information fields:
 
 Before presenting the ServiceNow design to the user, verify:
 
-### Completeness (ALL must be YES):
+### Completeness (ALL must be YES)
+
 - [ ] Every architecture component has a CMDB CI
 - [ ] Every NFR has a corresponding SLA
 - [ ] Every CMDB CI has an owner assigned
@@ -468,21 +521,24 @@ Before presenting the ServiceNow design to the user, verify:
 - [ ] Change approval process is defined
 - [ ] Rollback plan is documented
 
-### Accuracy (ALL must be YES):
+### Accuracy (ALL must be YES)
+
 - [ ] SLA targets match NFRs (not more aggressive, not more lenient)
 - [ ] CMDB hierarchy matches architecture diagrams
 - [ ] Incident priority matrix matches service tier
 - [ ] Support hours match user's requirement (24/7 vs business hours)
 - [ ] Technology stack in CI attributes matches architecture decisions
 
-### Quality (MOST should be YES):
+### Quality (MOST should be YES)
+
 - [ ] All placeholder text replaced with actual values
 - [ ] Mermaid diagrams use actual component names (not "Component A")
 - [ ] Tables are fully populated (no empty cells)
 - [ ] Runbooks have specific commands (not generic instructions)
 - [ ] URLs, phone numbers, Slack channels specified (even if placeholder)
 
-### UK Government (if applicable):
+### UK Government (if applicable)
+
 - [ ] GDS Service Standard points addressed
 - [ ] ITIL v4 practices correctly implemented
 - [ ] UK GDPR compliance mentioned (if PII processing)
@@ -491,19 +547,24 @@ Before presenting the ServiceNow design to the user, verify:
 
 ## Error Handling
 
-### If Requirements File Not Found:
+### If Requirements File Not Found
+
 "⚠️ Cannot find requirements document (ARC-*-REQ-*.md). Please run `/arckit:requirements` first. ServiceNow design requires NFRs for SLA definitions."
 
-### If No Architecture Diagrams Found:
+### If No Architecture Diagrams Found
+
 "⚠️ Cannot find architecture diagrams. Please run `/arckit:diagram context` and `/arckit:diagram container` first. ServiceNow design requires architecture diagrams for CMDB structure."
 
-### If No Availability NFR:
+### If No Availability NFR
+
 "⚠️ No availability NFR found. Defaulting to Tier 3 service (99.5% SLA). Please specify if higher availability is required."
 
-### If No Performance NFR:
+### If No Performance NFR
+
 "⚠️ No performance NFR found. Defaulting to <1s response time SLA. Please specify if different target is required."
 
-### If Unrealistic SLA Requested:
+### If Unrealistic SLA Requested
+
 "⚠️ Warning: 99.99% SLA requested but architecture shows single-region deployment. Multi-region failover is typically required for 99.99% SLA. Consider revising to 99.9% or upgrading architecture."
 
 ## Output Instructions
@@ -523,7 +584,7 @@ This ensures the complete document is written to the file system, and the user s
 
 After generating the ServiceNow design, provide this summary:
 
-```
+```text
 ✅ ServiceNow design generated successfully!
 
 **Service**: [Service Name]

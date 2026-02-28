@@ -38,11 +38,13 @@
 **Overall Compliance**: [Score/10] principles compliant
 
 **Risk Assessment**:
+
 - [ ] HIGH-RISK (fully automated decisions affecting rights, safety, health)
 - [ ] MEDIUM-RISK (significant impact with human oversight)
 - [ ] LOW-RISK (productivity tools, administrative tasks)
 
 **Status**:
+
 - ✅ COMPLIANT (9-10 principles met)
 - ⚠️ PARTIALLY COMPLIANT (7-8 principles met)
 - ❌ NON-COMPLIANT (< 7 principles met)
@@ -61,6 +63,7 @@
 **Purpose**: [What problem does it solve?]
 
 **Type of AI**:
+
 - [ ] Generative AI (e.g., Large Language Models, image generation)
 - [ ] Predictive AI (e.g., risk scoring, forecasting)
 - [ ] Computer Vision (e.g., image recognition, object detection)
@@ -73,11 +76,13 @@
 [Describe how the AI will be used in government operations]
 
 **Users**:
+
 - Internal users: [Who in government uses it?]
 - External users: [Citizens, businesses affected?]
 - Affected population: [Who is impacted by decisions?]
 
 **Decision Authority**:
+
 - [ ] AI makes recommendations, humans decide
 - [ ] AI makes decisions with human review
 - [ ] AI makes autonomous decisions (HIGH-RISK - justify carefully)
@@ -93,6 +98,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Team understands AI is not sentient or reasoning
 - [ ] AI limitations documented (hallucinations, biases, edge cases)
 - [ ] Use cases appropriate for AI capabilities
@@ -122,6 +128,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Legal review completed (data protection, equality, human rights)
 - [ ] Data Protection Impact Assessment (DPIA) completed
 - [ ] Equality Impact Assessment (EqIA) completed
@@ -142,6 +149,7 @@
 | Equality Act | ✅ / 🔄 / ❌ | [Issues] | [Actions] |
 
 **Data Protection**:
+
 - Legal basis for processing: [Consent / Legitimate Interest / Public Task / etc.]
 - Special category data: [ ] Yes / [ ] No (if yes, justify)
 - Data retention period: [X months/years]
@@ -164,6 +172,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Cyber security assessment completed
 - [ ] NCSC guidance followed
 - [ ] AI-specific threats assessed (prompt injection, data poisoning, model theft)
@@ -183,6 +192,7 @@
 | Model Inversion | [H/M/L] | [Differential privacy, access controls] |
 
 **Security Controls**:
+
 - [ ] Input validation and sanitization
 - [ ] Output content filtering (for generative AI)
 - [ ] Rate limiting on API endpoints
@@ -209,6 +219,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Human-in-the-loop design implemented
 - [ ] Decision points require human approval
 - [ ] Override capability exists for humans
@@ -218,6 +229,7 @@
 - [ ] Clear responsibilities assigned
 
 **Human Oversight Model**:
+
 - [ ] **Human-in-the-loop**: Human reviews EVERY decision before implementation
 - [ ] **Human-on-the-loop**: Human reviews decisions periodically/randomly
 - [ ] **Human-in-command**: Human can override AI decisions at any time
@@ -231,6 +243,7 @@
 | [Low-impact] | Audit trail only | [Automated monitoring] | [Team lead] |
 
 **For High-Risk AI** (affecting health, safety, fundamental rights):
+
 - [ ] MUST have human-in-the-loop (review every decision)
 - [ ] Humans trained on AI limitations and biases
 - [ ] Override process tested and documented
@@ -253,6 +266,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Lifecycle plan documented
 - [ ] Supplier selection criteria defined
 - [ ] Contract includes performance metrics and SLAs
@@ -266,12 +280,14 @@
 **Lifecycle Stages**:
 
 **1. Selection and Procurement**:
+
 - [ ] Requirements defined (see ARC-{PROJECT_ID}-REQ-v*.md)
 - [ ] Build vs buy decision documented
 - [ ] Supplier evaluation completed (see ARC-*-EVAL-*.md)
 - [ ] Contract includes AI-specific terms (performance, bias, retraining)
 
 **2. Development and Testing**:
+
 - [ ] Training data provenance documented
 - [ ] Bias testing completed
 - [ ] Performance benchmarks established
@@ -279,12 +295,14 @@
 - [ ] Accessibility testing completed
 
 **3. Deployment**:
+
 - [ ] Phased rollout plan (pilot, beta, full deployment)
 - [ ] Monitoring dashboards configured
 - [ ] Alert thresholds defined
 - [ ] Incident response procedures ready
 
 **4. Operation and Maintenance**:
+
 - [ ] Ongoing performance monitoring
 - [ ] Model drift detection (monthly checks)
 - [ ] Retraining schedule (e.g., quarterly with new data)
@@ -292,6 +310,7 @@
 - [ ] Regular fairness and bias audits
 
 **5. Decommissioning**:
+
 - [ ] Data deletion procedure defined
 - [ ] Model archive or deletion
 - [ ] User notification plan
@@ -323,6 +342,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Problem clearly defined
 - [ ] Alternative solutions considered (non-AI, simpler AI)
 - [ ] Cost-benefit analysis completed
@@ -340,6 +360,7 @@
 | AI (selected) | [Accurate, scalable] | [Less explainable, bias risk] | [Best fit with mitigation] |
 
 **Use Case Appropriateness**:
+
 - [ ] Problem is well-suited to AI capabilities
 - [ ] Sufficient quality training data available
 - [ ] Success can be measured objectively
@@ -347,6 +368,7 @@
 - [ ] NOT using AI just because it's trendy
 
 **Inappropriate Use Cases to Avoid**:
+
 - [ ] Fully automated decisions on life-changing matters (without justification)
 - [ ] High-stakes decisions with insufficient training data
 - [ ] Use cases requiring 100% accuracy where AI can't achieve it
@@ -377,6 +399,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Cross-government collaboration (GDS, CDDO, AI Standards Hub)
 - [ ] Academia partnerships
 - [ ] Industry engagement
@@ -394,6 +417,7 @@
 | [Other dept] | [Knowledge sharing] | [Similar use case] | [Reused components] |
 
 **Knowledge Sharing**:
+
 - [ ] Documented lessons learned
 - [ ] Presented at cross-government forums
 - [ ] Published case studies (where appropriate)
@@ -416,6 +440,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Procurement team engaged early
 - [ ] AI requirements in contract (performance, explainability, bias)
 - [ ] Supplier responsible AI commitments documented
@@ -426,6 +451,7 @@
 - [ ] Liability and indemnity clauses for AI failures
 
 **Contract Requirements for AI**:
+
 - [ ] **Performance metrics**: Accuracy, latency, uptime SLAs
 - [ ] **Explainability**: Supplier must explain how AI works
 - [ ] **Bias audits**: Regular fairness testing required
@@ -461,6 +487,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] AI/ML technical expertise on team
 - [ ] Data science capability
 - [ ] Ethical AI expertise or access
@@ -483,6 +510,7 @@
 | Product Manager | ✅ / ❌ | [Name] | [Junior/Mid/Senior] |
 
 **Training Provided**:
+
 - [ ] AI fundamentals for all team members
 - [ ] Ethical AI considerations
 - [ ] Bias recognition and mitigation
@@ -507,6 +535,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] AI governance board approval obtained
 - [ ] AI strategy alignment documented
 - [ ] Organizational AI principles followed
@@ -517,6 +546,7 @@
 - [ ] Regular governance reviews scheduled
 
 **Governance Structure**:
+
 - **AI Governance Board**: [Name of board]
 - **Senior Responsible Owner**: [Name, title]
 - **Product Owner**: [Name, title]
@@ -531,6 +561,7 @@
 | Post-Deployment | Performance Review | ✅ / 🔄 / ⏳ | [Date] | [Approved/Conditions] |
 
 **Organizational AI Principles** (if defined):
+
 - [ ] Aligns with department's AI principles
 - [ ] Aligns with cross-government AI principles
 - [ ] No conflicts with organizational values
@@ -552,6 +583,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Safety testing completed (no harmful outputs)
 - [ ] Robustness testing (handles edge cases)
 - [ ] Security controls implemented (see Principle 3)
@@ -574,6 +606,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Algorithmic Transparency Recording Standard (ATRS) completed
 - [ ] System documented publicly (where appropriate)
 - [ ] Decision explanations available to affected persons
@@ -581,16 +614,19 @@
 - [ ] Privacy notice includes AI use
 
 **ATRS Compliance**:
+
 - **ATRS URL**: [Link to published ATRS entry]
 - **Publication Date**: [Date]
 - **Last Updated**: [Date]
 
 **Explainability Level**:
+
 - [ ] **Full explainability**: Can explain why each decision was made
 - [ ] **Partial explainability**: Can explain general logic, not individual decisions
 - [ ] **Black box**: Cannot explain decisions (must justify if high-risk)
 
 **Public Communication**:
+
 - [ ] Citizens informed AI is being used
 - [ ] How to request human review explained
 - [ ] Complaint mechanism published
@@ -604,6 +640,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Bias assessment completed
 - [ ] Training data reviewed for bias
 - [ ] Fairness metrics calculated
@@ -620,6 +657,7 @@
 | Disability | Calibration | ±5% | ±10% | [%] | ✅ / ⚠️ / ❌ |
 
 **Bias Mitigation**:
+
 - [ ] Diverse training data sourced
 - [ ] Data augmentation for underrepresented groups
 - [ ] Algorithmic fairness techniques applied
@@ -634,6 +672,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Clear ownership assigned (SRO, Product Owner)
 - [ ] Decision-making process documented
 - [ ] Audit trail of all AI decisions
@@ -641,12 +680,14 @@
 - [ ] Accountability for errors defined
 
 **Accountability Structure**:
+
 - **Senior Responsible Owner**: [Name] - Strategic oversight
 - **Product Owner**: [Name] - Day-to-day operation
 - **Technical Lead**: [Name] - Technical implementation
 - **Ethics Lead**: [Name] - Ethical oversight
 
 **Incident Response**:
+
 - [ ] Process for reporting AI errors
 - [ ] Root cause analysis procedure
 - [ ] Corrective action tracking
@@ -661,6 +702,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Right to contest AI decisions enabled
 - [ ] Human review process for contested decisions
 - [ ] Appeal mechanism documented and accessible
@@ -668,6 +710,7 @@
 - [ ] Response times defined (e.g., 28 days)
 
 **Contestability Process**:
+
 1. **How users can contest**: [Email form, online portal, phone]
 2. **Information required**: [What users must provide]
 3. **Review timeline**: [X working days]
@@ -676,6 +719,7 @@
 6. **Redress options**: [Correction, compensation, apology]
 
 **Testing**:
+
 - [ ] Contestability process tested with real users
 - [ ] Response times meet targets
 - [ ] Users satisfied with process
@@ -689,6 +733,7 @@
 **Compliance Status**: [ ] COMPLIANT / [ ] PARTIAL / [ ] NON-COMPLIANT
 
 **Evidence**:
+
 - [ ] Positive societal impact assessment
 - [ ] Environmental impact considered (carbon footprint of AI)
 - [ ] Benefits distributed fairly across society
@@ -703,6 +748,7 @@
 | [Environmental (compute)] | Negative | Low | [Efficient models, renewable energy] |
 
 **Public Good**:
+
 - [ ] Solves real problem for citizens
 - [ ] Accessible to all (not just tech-savvy)
 - [ ] Maintains human dignity and autonomy
@@ -754,6 +800,7 @@
 ### Risk-Based Decision
 
 **For HIGH-RISK AI** (fully automated decisions affecting rights/safety/health):
+
 - [ ] MUST score ≥ 90% to proceed
 - [ ] ALL principles must be met (no ❌ allowed)
 - [ ] Human-in-the-loop REQUIRED
@@ -761,12 +808,14 @@
 - [ ] Regular audits (quarterly minimum)
 
 **For MEDIUM-RISK AI**:
+
 - [ ] SHOULD score ≥ 75% to proceed
 - [ ] Critical principles must be met (2, 3, 4)
 - [ ] Human oversight required
 - [ ] Annual audits
 
 **For LOW-RISK AI**:
+
 - [ ] SHOULD score ≥ 60% to proceed
 - [ ] Basic safeguards in place
 - [ ] Periodic review (annual)
@@ -831,6 +880,7 @@
 **Decision**: [ ] APPROVED / [ ] APPROVED WITH CONDITIONS / [ ] REJECTED
 
 **Conditions for Approval** (if applicable):
+
 1. [Condition 1]
 2. [Condition 2]
 3. [Condition 3]
@@ -838,6 +888,7 @@
 **Deployment Approval**: [ ] Yes / [ ] No
 
 **Ongoing Monitoring Required**:
+
 - [ ] Weekly performance reviews (first month)
 - [ ] Monthly bias audits
 - [ ] Quarterly governance reviews
@@ -866,6 +917,7 @@ Signature: ________________
 
 **Next Review**: [Date]
 **Review Frequency**:
+
 - [ ] Monthly (high-risk)
 - [ ] Quarterly (medium-risk)
 - [ ] Annually (low-risk)
@@ -889,4 +941,3 @@ Signature: ________________
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

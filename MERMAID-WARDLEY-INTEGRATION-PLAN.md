@@ -24,6 +24,7 @@ A new Wardley Maps diagram type has been added to Mermaid.js (PR #7147, opened N
 ### What ArcKit Already Does
 
 ArcKit generates Wardley Maps using:
+
 - **Format**: OnlineWardleyMaps (OWM) syntax
 - **Code blocks**: ` ```wardley ... ``` `
 - **Visualization**: Manually paste into https://create.wardleymaps.ai
@@ -56,6 +57,7 @@ style wardley
 ```
 
 **Pain Points**:
+
 - ❌ Maps don't render in GitHub - just show as code blocks
 - ❌ Manual step to visualize (copy to external tool)
 - ❌ Breaks developer flow
@@ -66,6 +68,7 @@ style wardley
 ## Mermaid PR #7147 Analysis
 
 ### Status
+
 - **PR**: https://github.com/mermaid-js/mermaid/pull/7147
 - **Opened**: November 9, 2025 (TODAY)
 - **Author**: tractorjuice (same owner as arc-kit!)
@@ -98,11 +101,13 @@ style wardley
 Features ArcKit doesn't currently use but could leverage:
 
 1. **Custom Evolution Stages**:
+
    ```wardley
    evolution Unmodelled -> Divergent -> Convergent -> Modelled
    ```
 
 2. **Source Strategy Markers**:
+
    ```wardley
    component Database [0.45, 0.72] (buy)
    component AI Model [0.68, 0.35] (build)
@@ -110,11 +115,13 @@ Features ArcKit doesn't currently use but could leverage:
    ```
 
 3. **Inertia Indicators**:
+
    ```wardley
    component Legacy System [0.55, 0.45] inertia
    ```
 
 4. **Multiple Link Types**:
+
    ```wardley
    A -> B          # Normal dependency
    A +> B          # Flow
@@ -123,6 +130,7 @@ Features ArcKit doesn't currently use but could leverage:
    ```
 
 5. **Canvas Sizing**:
+
    ```wardley
    size [1200, 800]
    ```
@@ -136,6 +144,7 @@ Features ArcKit doesn't currently use but could leverage:
 **Action**: NOTHING - ArcKit maps already compatible!
 
 Once PR #7147 is merged:
+
 1. GitHub will automatically render existing ArcKit Wardley Maps
 2. All test repositories (v0-v10) will work immediately
 3. No template changes needed
@@ -148,11 +157,13 @@ Once PR #7147 is merged:
 **Update wardley-map-template.md**:
 
 Current visualization section:
+
 ```markdown
 **View this map**: Paste the map code below into [https://create.wardleymaps.ai](https://create.wardleymaps.ai)
 ```
 
 New visualization section:
+
 ```markdown
 ## Map Visualization
 
@@ -169,6 +180,7 @@ This map renders automatically in:
 **Update arckit.wardley command**:
 
 Add after map generation:
+
 ```markdown
 ## Visualization
 
@@ -185,6 +197,7 @@ For advanced editing, you can also use [OnlineWardleyMaps](https://create.wardle
 **Update README.md**:
 
 Add to "Why ArcKit?" section:
+
 ```markdown
 - ✅ **Native Visualization**: Wardley Maps render directly in GitHub (Mermaid support)
 ```
@@ -230,16 +243,19 @@ component COBOL System [0.48, 0.28] inertia
 Replace generic evolution stages with domain-specific labels:
 
 **For Digital Transformation**:
+
 ```wardley
 evolution Discovery -> Alpha -> Beta -> Live
 ```
 
 **For Technology Maturity**:
+
 ```wardley
 evolution Prototype -> Pilot -> Production -> Retired
 ```
 
 **For AI Systems (JSP 936 alignment)**:
+
 ```wardley
 evolution Experimental -> Supervised -> Autonomous -> Deprecated
 ```
@@ -273,23 +289,27 @@ BI Dashboard +< Analytics Engine # User queries flow back
 ### Post-Merge Actions (When PR merges to Mermaid main)
 
 **Day 1: Documentation Updates**
+
 1. Update wardley-map-template.md visualization section
 2. Update arckit.wardley command instructions
 3. Update README.md with native rendering feature
 4. Update docs/guides/wardley-mapping.md
 
 **Day 2: Test All Example Maps**
+
 1. Verify rendering in GitHub for all test repos (v0-v10)
 2. Check VS Code Mermaid extension compatibility
 3. Test all 5 Wardley map types (current, future, gap, vendor, procurement)
 
 **Week 1: Enhanced Features (Optional)**
+
 1. Add source strategy markers to template
 2. Add inertia indicators for legacy systems
 3. Document custom evolution stages for UK Gov domains
 4. Create examples using enhanced link types
 
 **Week 2: Community Communication**
+
 1. Update CHANGELOG.md with Mermaid integration
 2. Announce on GitHub Discussions
 3. Update docs/index.html with visualization demo
@@ -298,12 +318,14 @@ BI Dashboard +< Analytics Engine # User queries flow back
 ### Future Enhancements (3-6 months)
 
 **Automation Opportunities**:
+
 1. **Auto-generate maps from code**: Scan codebase, detect components, auto-position on map
 2. **Traceability visualization**: Generate maps showing requirements → components → tests
 3. **Evolution tracking**: Git history analysis to show how maps evolved over time
 4. **Multi-map comparison**: Side-by-side vendor comparison maps with diff highlighting
 
 **Integration Opportunities**:
+
 1. **CI/CD validation**: Lint Wardley maps for syntax errors in GitHub Actions
 2. **Map as code**: Store maps as structured data (JSON/YAML), generate OWM syntax
 3. **Interactive maps**: Click component → jump to requirements, design docs, code
@@ -328,6 +350,7 @@ BI Dashboard +< Analytics Engine # User queries flow back
 **Fallback**: Always include visualization instructions for both methods
 
 Template wording:
+
 ```markdown
 ## Map Visualization
 
@@ -345,16 +368,19 @@ This map displays natively in Mermaid-supporting tools.
 ## Success Metrics
 
 ### Adoption Metrics
+
 - **Internal**: % of ArcKit projects using Wardley Maps (current: ~30%)
 - **Rendering**: % of maps successfully rendering in GitHub (target: 100%)
 - **Engagement**: PR review comments on Wardley Map strategy (increase expected)
 
 ### Quality Metrics
+
 - **Syntax errors**: Zero broken maps after migration (automated tests)
 - **Visualization parity**: Maps look identical in Mermaid vs OWM
 - **Performance**: Map rendering time < 1 second
 
 ### User Experience Metrics
+
 - **Developer feedback**: Survey on native rendering vs manual tools
 - **Reduced friction**: Time saved not copying to external tools
 - **Collaboration**: Increased strategic discussions on PRs
@@ -366,6 +392,7 @@ This map displays natively in Mermaid-supporting tools.
 ### Minimum Requirements
 
 **For Native Rendering**:
+
 - Mermaid.js version: TBD (when PR #7147 merges - likely v12.0+)
 - GitHub: Automatic (GitHub uses Mermaid for rendering)
 - VS Code: Mermaid Preview extension
@@ -374,16 +401,19 @@ This map displays natively in Mermaid-supporting tools.
 ### Testing Strategy
 
 **Unit Tests** (ArcKit CLI):
+
 - Validate generated OWM syntax correctness
 - Check template placeholder replacement
 - Verify component coordinate ranges (0.0-1.0)
 
 **Integration Tests**:
+
 - Generate map → render in Mermaid → screenshot → compare to OWM
 - Test all 5 map types (current, future, gap, vendor, procurement)
 - Test with/without optional features (annotations, notes, evolve, pipeline)
 
 **Visual Regression Tests**:
+
 - Capture screenshots of rendered maps
 - Compare against OWM baseline
 - Flag visual differences for review
@@ -393,6 +423,7 @@ This map displays natively in Mermaid-supporting tools.
 **Guarantee**: All existing ArcKit Wardley Maps will continue working
 
 **Strategy**:
+
 1. Maintain OWM syntax as source of truth
 2. Never introduce Mermaid-only syntax that breaks OWM
 3. Test dual rendering (Mermaid + OWM) in CI/CD
@@ -403,27 +434,35 @@ This map displays natively in Mermaid-supporting tools.
 ## FAQ
 
 ### Q1: Do we need to change existing Wardley Maps in ArcKit?
+
 **A: NO.** All existing maps are 100% compatible. They will render automatically once Mermaid PR merges.
 
 ### Q2: What if the PR doesn't merge?
+
 **A: No impact.** ArcKit continues using create.wardleymaps.ai as it does today. This is pure upside - zero downside.
 
 ### Q3: Should we wait for the PR to merge before using Wardley Maps?
+
 **A: NO.** Continue using Wardley Maps normally. They work today and will work even better once the PR merges.
 
 ### Q4: Can we still use create.wardleymaps.ai after the merge?
+
 **A: YES.** OnlineWardleyMaps has additional features (export, advanced styling) that may be useful for presentations. Use both!
 
 ### Q5: Will this break our test repositories?
+
 **A: NO.** Test repos will automatically benefit from native rendering. No updates needed.
 
 ### Q6: Should we update our templates now or wait?
+
 **A: WAIT.** Monitor PR #7147 merge status. Update templates AFTER merge to avoid documenting unreleased features.
 
 ### Q7: How do we track when the PR merges?
+
 **A: GitHub notifications.** Watch the PR: https://github.com/mermaid-js/mermaid/pull/7147
 
 ### Q8: Can we contribute to the PR?
+
 **A: YES.** The PR is open for feedback. Consider testing and providing constructive feedback on rendering quality.
 
 ---

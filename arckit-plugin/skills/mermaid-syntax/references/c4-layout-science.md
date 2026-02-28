@@ -358,6 +358,7 @@ flowchart LR
 ```
 
 **Layout notes:**
+
 - Declaration order matches left-to-right reading: Citizen, then the system, then external systems
 - All relationships declared after all elements
 - 5 elements = Simple complexity; target is 0 crossings
@@ -414,6 +415,7 @@ flowchart LR
 ```
 
 **Layout notes:**
+
 - 8 containers + 1 actor + 2 external = 11 elements (Medium complexity); target is fewer than 3 crossings
 - `subgraph` groups all internal containers within the system boundary
 - Elements within the subgraph follow tier order: presentation, API, service, data

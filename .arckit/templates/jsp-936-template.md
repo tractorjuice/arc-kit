@@ -38,11 +38,13 @@
 **Key AI Components**: [Number of AI/ML components identified]
 
 **Ethical Risk Assessment**:
+
 - **Likelihood**: [1-5 - Rare to Almost Certain]
 - **Impact**: [1-5 - Insignificant to Catastrophic]
 - **Risk Score**: [Likelihood × Impact = X]
 
 **Key Findings**:
+
 - [Summary of critical ethical considerations]
 - [Summary of AI-specific security risks]
 - [Summary of human-AI teaming approach]
@@ -60,28 +62,33 @@
 #### AI Component 1: [Name]
 
 **Component Details**:
+
 - **Type**: [ML Model / AI Algorithm / Autonomous System / Decision Support / NLP / Computer Vision / Generative AI]
 - **Sub-type**: [e.g., Deep Learning CNN / Random Forest / LLM / etc.]
 - **Purpose**: [What problem does it solve?]
 - **Criticality**: [Critical / High / Medium / Low]
 
 **Input Data**:
+
 - **Data Sources**: [Where does data come from?]
 - **Data Types**: [Structured/Unstructured, Image/Text/Sensor, etc.]
 - **Data Volume**: [Scale of data processed]
 - **Data Classification**: [OFFICIAL / OFFICIAL-SENSITIVE / SECRET / TOP SECRET]
 
 **Output/Decisions**:
+
 - **Output Type**: [Classification / Prediction / Recommendation / Autonomous Action]
 - **Decision Authority**: [Informational / Advisory / Semi-Autonomous / Fully Autonomous]
 - **Impact of Output**: [What happens based on this output?]
 
 **Human Involvement**:
+
 - **Teaming Model**: [Human-in-loop / Human-on-loop / Human-out-of-loop]
 - **Human Control Points**: [Where do humans interact?]
 - **Override Capability**: [Yes / No / Partial]
 
 **Training Data**:
+
 - **Dataset Source**: [Where did training data come from?]
 - **Dataset Size**: [Number of samples]
 - **Dataset Timeframe**: [When was data collected?]
@@ -89,6 +96,7 @@
 - **Data Quality Assessment**: [High / Medium / Low]
 
 **Model Details**:
+
 - **Algorithm/Architecture**: [Specific model architecture]
 - **Model Size**: [Number of parameters / Model complexity]
 - **Training Method**: [Supervised / Unsupervised / Reinforcement Learning]
@@ -96,12 +104,14 @@
 - **Technology Readiness Level (TRL)**: [1-9]
 
 **Deployment Context**:
+
 - **Deployment Environment**: [Cloud / On-premise / Edge / Operational system]
 - **Operational Tempo**: [Real-time / Batch / On-demand]
 - **Availability Requirements**: [24/7 / Business hours / Mission-critical]
 - **User Base**: [Who uses this system?]
 
 #### AI Component 2: [Name]
+
 [Repeat structure above for each AI component]
 
 ### 1.2 AI System Architecture
@@ -113,6 +123,7 @@
 [Description of data flow through AI components]
 
 **Integration Points**:
+
 - [Integration 1: AI component ↔ System component]
 - [Integration 2: AI component ↔ Human operator]
 
@@ -125,22 +136,27 @@
 #### Impact Assessment (Scale: 1-5)
 
 **Human Safety and Wellbeing**: [Score 1-5]
+
 - [Assessment rationale]
 - Potential harms: [Description]
 
 **Operational Effectiveness**: [Score 1-5]
+
 - [Assessment rationale]
 - Mission impact: [Description]
 
 **Legal and Ethical Compliance**: [Score 1-5]
+
 - [Assessment rationale]
 - Compliance risks: [Description]
 
 **Public Trust and Reputation**: [Score 1-5]
+
 - [Assessment rationale]
 - Reputational impact: [Description]
 
 **International Obligations**: [Score 1-5]
+
 - [Assessment rationale]
 - International law considerations: [Description]
 
@@ -149,22 +165,27 @@
 #### Likelihood Assessment (Scale: 1-5)
 
 **Technology Maturity (TRL)**: [Score 1-5]
+
 - Current TRL: [1-9]
 - Maturity risks: [Description]
 
 **Data Quality and Availability**: [Score 1-5]
+
 - Data quality assessment: [Description]
 - Data availability: [Description]
 
 **Algorithm Complexity**: [Score 1-5]
+
 - Complexity level: [High / Medium / Low]
 - Complexity risks: [Description]
 
 **Operational Environment**: [Score 1-5]
+
 - Environment variability: [Description]
 - Environmental risks: [Description]
 
 **Human Factors and Training**: [Score 1-5]
+
 - Training adequacy: [Description]
 - Human error potential: [Description]
 
@@ -175,6 +196,7 @@
 **Risk Score**: [Likelihood (Y) × Impact (X) = Z]
 
 **Classification**: [Based on score Z]
+
 - 20-25: **Critical** → 2PUS or Ministerial approval
 - 15-19: **Severe** → Defence-Level (JROC/IAC) approval
 - 10-14: **Major** → Defence-Level (JROC/IAC) approval
@@ -186,6 +208,7 @@
 #### Unacceptable Risk Check
 
 **Unacceptable Risk Criteria**:
+
 - [ ] Significant negative impacts are imminent
 - [ ] Severe harms are occurring
 - [ ] Catastrophic risks present
@@ -196,6 +219,7 @@
 **Justification**: [If unacceptable, explain why work cannot proceed]
 
 ### 2.2 Risk Matrix for AI Component 2: [Name]
+
 [Repeat structure above for each AI component]
 
 ### 2.3 Overall Project Risk Classification
@@ -215,18 +239,21 @@
 #### For AI Component 1: [Name]
 
 **Impact on People**:
+
 - **Affected Stakeholders**: [Who is impacted by this AI?]
 - **Positive Impacts**: [Benefits to humans]
 - **Negative Impacts**: [Potential harms to humans]
 - **Rights Considerations**: [Human rights, data rights, etc.]
 
 **Human-AI Interaction**:
+
 - **Interaction Model**: [Human-in-loop / Human-on-loop / Human-out-of-loop]
 - **Control Mechanisms**: [How humans maintain control]
 - **Override Capability**: [Yes / No / Partial - describe]
 - **Transparency to Users**: [What users see/understand about AI decisions]
 
 **Stakeholder Engagement**:
+
 - **Stakeholders Consulted**: [List of stakeholder groups]
 - **Consultation Method**: [Workshops / Surveys / Interviews]
 - **Feedback Incorporated**: [How stakeholder input shaped design]
@@ -237,10 +264,12 @@
 **Evidence**: [Documentation references, design documents, user research]
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
 #### For AI Component 2: [Name]
+
 [Repeat structure for each AI component]
 
 ### 3.2 Principle 2: Responsibility
@@ -250,6 +279,7 @@
 #### For AI Component 1: [Name]
 
 **Accountability Mapping**:
+
 - **System Owner**: [Name/Role] - Overall accountability
 - **RAISO (Responsible AI Senior Officer)**: [Name/Role] - AI governance
 - **Ethics Manager**: [Name/Role] - Ethical oversight
@@ -258,12 +288,14 @@
 - **Data Owner**: [Name/Role] - Training data governance
 
 **Meaningful Human Control**:
+
 - **Control Level**: [Full / Substantial / Limited / None]
 - **Decision Authority**: [Human decides / Human approves / Human monitors / Fully autonomous]
 - **Control Mechanisms**: [Describe how humans control AI]
 - **Time to Intervene**: [Time available for human to intervene if needed]
 
 **Decision Traceability**:
+
 - **Decision Logging**: [Yes / No - what is logged?]
 - **Audit Trail**: [Yes / No - can decisions be traced?]
 - **Explainability**: [Can decisions be explained after the fact?]
@@ -273,10 +305,12 @@
 **Evidence**: [RACI matrix, governance documents, decision logs]
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
 #### For AI Component 2: [Name]
+
 [Repeat structure for each AI component]
 
 ### 3.3 Principle 3: Understanding
@@ -286,24 +320,28 @@
 #### For AI Component 1: [Name]
 
 **Explainability**:
+
 - **Explainability Method**: [LIME / SHAP / Attention maps / Rule extraction / Other]
 - **Explanation Target Audience**: [Operators / Commanders / Oversight / Public]
 - **Explanation Content**: [What is explained - feature importance, decision rationale, etc.]
 - **Explanation Accuracy**: [How faithful are explanations to actual model behavior?]
 
 **Documentation**:
+
 - **Model Card**: [Yes / No - document model details]
 - **Technical Documentation**: [Architecture, training, performance]
 - **Operational Documentation**: [User guides, SOPs]
 - **Ethics Documentation**: [This JSP 936 assessment]
 
 **Training Programme**:
+
 - **Operator Training**: [Duration, content, competency assessment]
 - **Commander Training**: [Understanding AI capabilities and limitations]
 - **Technical Training**: [For maintainers and developers]
 - **Training Completion**: [% of required personnel trained]
 
 **Limitations Understanding**:
+
 - **Known Limitations**: [List model limitations]
 - **Failure Modes**: [How system can fail]
 - **Limitation Communication**: [How limitations communicated to users]
@@ -313,10 +351,12 @@
 **Evidence**: [Model card, training materials, documentation library]
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
 #### For AI Component 2: [Name]
+
 [Repeat structure for each AI component]
 
 ### 3.4 Principle 4: Bias and Harm Mitigation
@@ -326,6 +366,7 @@
 #### For AI Component 1: [Name]
 
 **Bias Assessment**:
+
 - **Bias Testing Conducted**: [Yes / No / In Progress]
 - **Bias Testing Method**: [Fairness metrics, demographic parity, equal opportunity, etc.]
 - **Protected Characteristics Tested**: [Age, gender, race, ethnicity, disability, etc.]
@@ -333,18 +374,21 @@
 - **Bias Severity**: [High / Medium / Low / None detected]
 
 **Bias Sources**:
+
 - **Data Bias**: [Historical bias in training data?]
 - **Algorithmic Bias**: [Algorithm inherently biased?]
 - **Deployment Bias**: [Different performance in deployment vs. training?]
 - **Feedback Loop Bias**: [System decisions creating biased future data?]
 
 **Harm Identification**:
+
 - **Potential Harms**: [List potential harms from AI system]
 - **Harm Likelihood**: [For each harm: High / Medium / Low]
 - **Harm Severity**: [For each harm: High / Medium / Low]
 - **Vulnerable Groups**: [Groups at higher risk of harm]
 
 **Mitigation Strategies**:
+
 - **Data Mitigation**: [Diverse training data, bias detection in data, rebalancing]
 - **Algorithmic Mitigation**: [Fairness constraints, debiasing techniques, adversarial debiasing]
 - **Operational Mitigation**: [Human oversight, decision review, performance monitoring by demographic]
@@ -355,10 +399,12 @@
 **Evidence**: [Bias test reports, fairness metrics, mitigation documentation]
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
 #### For AI Component 2: [Name]
+
 [Repeat structure for each AI component]
 
 ### 3.5 Principle 5: Reliability
@@ -368,6 +414,7 @@
 #### For AI Component 1: [Name]
 
 **Performance Boundaries**:
+
 - **Performance Metrics**: [Accuracy, precision, recall, F1, etc.]
 - **Minimum Acceptable Performance**: [Threshold for each metric]
 - **Current Performance**: [Measured performance]
@@ -375,18 +422,21 @@
 - **Out-of-Distribution Detection**: [How system handles novel inputs]
 
 **Robustness**:
+
 - **Adversarial Robustness**: [Tested against adversarial examples? Results?]
 - **Environmental Robustness**: [Performance across different conditions]
 - **Degradation Handling**: [How system handles degraded inputs]
 - **Edge Case Handling**: [How system handles unusual inputs]
 
 **Security**:
+
 - **AI-Specific Threats Assessed**: [Adversarial examples, data poisoning, model extraction, model inversion]
 - **Security Controls**: [Input validation, adversarial defenses, model security]
 - **Penetration Testing**: [AI-specific penetration testing conducted?]
 - **Security Monitoring**: [Anomaly detection, attack detection]
 
 **Reliability Evidence**:
+
 - **Test Coverage**: [% of operational scenarios tested]
 - **Verification & Validation**: [V&V report completed?]
 - **Operational Testing**: [Real-world performance data]
@@ -397,10 +447,12 @@
 **Evidence**: [Test reports, V&V documentation, security assessments]
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
 #### For AI Component 2: [Name]
+
 [Repeat structure for each AI component]
 
 ---
@@ -412,6 +464,7 @@
 **Status**: [Not Started / In Progress / Completed]
 
 **Documentation Required**:
+
 - [ ] AI Use Case Justification
 - [ ] Alternative approaches considered (AI vs. non-AI)
 - [ ] Initial ethical risk screening
@@ -422,15 +475,18 @@
 **Documentation Location**: [File path or reference]
 
 **Key Decisions**:
+
 - [Decision 1: Why AI is appropriate for this problem]
 - [Decision 2: Initial risk classification]
 
 **Assurance Activities**:
+
 - [ ] Ethics Manager review
 - [ ] RAISO consultation
 - [ ] Stakeholder engagement plan
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
@@ -439,6 +495,7 @@
 **Status**: [Not Started / In Progress / Completed]
 
 **Documentation Required**:
+
 - [ ] Functional Requirements (FR)
 - [ ] Non-Functional Requirements (NFR)
 - [ ] Ethical Requirements (ETH)
@@ -450,6 +507,7 @@
 **Documentation Location**: [File path or reference]
 
 **Key Requirements**:
+
 - [FR-01: Functional requirement example]
 - [NFR-01: Performance requirement example]
 - [ETH-01: Ethical requirement example]
@@ -457,12 +515,14 @@
 - [SEC-01: Security requirement example]
 
 **Assurance Activities**:
+
 - [ ] Requirements review with stakeholders
 - [ ] HAZOP workshop conducted
 - [ ] Ethics requirements validated
 - [ ] Requirements completeness check
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
@@ -471,6 +531,7 @@
 **Status**: [Not Started / In Progress / Completed]
 
 **Documentation Required**:
+
 - [ ] System architecture design
 - [ ] AI component integration design
 - [ ] Data architecture and flow
@@ -482,17 +543,20 @@
 **Documentation Location**: [File path or reference]
 
 **Key Architectural Decisions**:
+
 - [Decision 1: Model architecture selection and rationale]
 - [Decision 2: Human-in-loop placement]
 - [Decision 3: Data pipeline design]
 
 **Assurance Activities**:
+
 - [ ] Architecture review
 - [ ] Failure mode effects analysis (FMEA)
 - [ ] Security architecture review
 - [ ] Human factors review
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
@@ -501,6 +565,7 @@
 **Status**: [Not Started / In Progress / Completed]
 
 **Documentation Required**:
+
 - [ ] Algorithm selection justification
 - [ ] Alternative algorithms considered
 - [ ] Algorithm limitations documented
@@ -511,17 +576,20 @@
 **Documentation Location**: [File path or reference]
 
 **Algorithm Details**:
+
 - **Selected Algorithm**: [e.g., Convolutional Neural Network]
 - **Selection Rationale**: [Why this algorithm?]
 - **Alternatives Considered**: [Other algorithms evaluated]
 - **Trade-offs**: [Performance vs. explainability, etc.]
 
 **Assurance Activities**:
+
 - [ ] Algorithm design review
 - [ ] Explainability assessment
 - [ ] Bias mitigation plan review
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
@@ -530,6 +598,7 @@
 **Status**: [Not Started / In Progress / Completed]
 
 **Documentation Required**:
+
 - [ ] Training data documentation
 - [ ] Data preprocessing pipeline
 - [ ] Model training methodology
@@ -542,6 +611,7 @@
 **Documentation Location**: [File path or reference]
 
 **Training Data**:
+
 - **Dataset Name/Version**: [Name v1.0]
 - **Dataset Size**: [X samples]
 - **Data Collection Method**: [How collected]
@@ -550,18 +620,21 @@
 - **Data Bias**: [Bias assessment results]
 
 **Model Performance**:
+
 - **Training Performance**: [Metrics on training set]
 - **Validation Performance**: [Metrics on validation set]
 - **Test Performance**: [Metrics on held-out test set]
 - **Cross-validation Results**: [If applicable]
 
 **Assurance Activities**:
+
 - [ ] Training data review
 - [ ] Model performance review
 - [ ] Bias testing completed
 - [ ] Model card review
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
@@ -570,6 +643,7 @@
 **Status**: [Not Started / In Progress / Completed]
 
 **Documentation Required**:
+
 - [ ] V&V plan
 - [ ] Test cases and scenarios
 - [ ] V&V report
@@ -582,6 +656,7 @@
 **Documentation Location**: [File path or reference]
 
 **Testing Coverage**:
+
 - **Functional Testing**: [% scenarios covered]
 - **Performance Testing**: [Results vs. requirements]
 - **Robustness Testing**: [Edge cases, adversarial examples]
@@ -589,18 +664,21 @@
 - **User Acceptance Testing**: [UAT completion status]
 
 **V&V Results**:
+
 - **Requirements Met**: [X / Y requirements passed]
 - **Test Pass Rate**: [% of tests passed]
 - **Critical Failures**: [Any critical issues found]
 - **Performance vs. Baseline**: [Better / Same / Worse]
 
 **Assurance Activities**:
+
 - [ ] Independent V&V conducted (if Critical/Severe)
 - [ ] Test results review
 - [ ] Requirements traceability verified
 - [ ] UAT sign-off
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
@@ -609,6 +687,7 @@
 **Status**: [Not Started / In Progress / Completed]
 
 **Documentation Required**:
+
 - [ ] Deployment plan
 - [ ] Operational procedures (SOPs)
 - [ ] User training materials
@@ -620,29 +699,34 @@
 **Documentation Location**: [File path or reference]
 
 **Deployment**:
+
 - **Deployment Environment**: [Production / Staging / Pilot]
 - **Deployment Date**: [Date]
 - **Deployment Method**: [Blue-green / Canary / Rolling / Big bang]
 - **Rollback Plan**: [Yes / No - describe]
 
 **Operational Procedures**:
+
 - **Standard Operating Procedures**: [SOPs documented]
 - **User Guides**: [User documentation available]
 - **Troubleshooting Guide**: [Common issues documented]
 - **Escalation Procedures**: [Who to contact for issues]
 
 **Training**:
+
 - **Operator Training**: [Completion status]
 - **Commander Training**: [Completion status]
 - **Maintenance Training**: [Completion status]
 
 **Assurance Activities**:
+
 - [ ] Deployment review
 - [ ] Operational readiness review
 - [ ] Training completion verified
 - [ ] Monitoring verified operational
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
@@ -651,6 +735,7 @@
 **Status**: [Not Started / In Progress / Completed]
 
 **Documentation Required**:
+
 - [ ] Compliance matrix (all JSP 936 requirements)
 - [ ] Quality assurance report
 - [ ] Data integrity assessment
@@ -676,18 +761,21 @@
 | Continuous monitoring | [✅/⚠️/❌] | [Reference] | [Comments] |
 
 **Quality Metrics**:
+
 - **Documentation Completeness**: [% complete]
 - **Requirements Traceability**: [% traceable]
 - **Test Coverage**: [% covered]
 - **Defect Density**: [Defects per KLOC]
 
 **Assurance Activities**:
+
 - [ ] Independent ethical review
 - [ ] Security audit conducted
 - [ ] Compliance verification
 - [ ] Final approval obtained
 
 **Gaps/Actions**:
+
 - [ ] [Action 1]
 - [ ] [Action 2]
 
@@ -698,21 +786,25 @@
 ### 5.1 AI Governance Structure
 
 **Responsible AI Senior Officer (RAISO)**:
+
 - **Name**: [Name]
 - **Role**: [Role/Position]
 - **Responsibilities**: [Overall AI governance, policy compliance, strategic oversight]
 
 **Ethics Manager**:
+
 - **Name**: [Name]
 - **Role**: [Role/Position]
 - **Responsibilities**: [Day-to-day ethical oversight, ethics reviews, stakeholder engagement]
 
 **Independent Ethics Assurance**:
+
 - **Required**: [Yes / No - Required for Critical classification]
 - **Assurance Provider**: [Name/Organization]
 - **Assurance Status**: [Not Started / In Progress / Completed]
 
 **Governance Board**:
+
 - **Board Name**: [AI Ethics Board / Project Board / etc.]
 - **Meeting Frequency**: [Monthly / Quarterly / As needed]
 - **Last Meeting**: [Date]
@@ -723,6 +815,7 @@
 **Risk Classification**: [Critical / Severe / Major / Moderate / Minor]
 
 **Approval Authority**: [Based on classification]
+
 - **Critical (20-25)**: 2PUS or Ministers
 - **Severe (15-19)**: Defence-Level - JROC/IAC
 - **Major (10-14)**: Defence-Level - JROC/IAC
@@ -730,6 +823,7 @@
 - **Minor (1-4)**: TLB-Level (delegated)
 
 **Approval Process**:
+
 - [ ] Initial ethical screening (Ethics Manager)
 - [ ] Detailed JSP 936 assessment (this document)
 - [ ] RAISO review and endorsement
@@ -750,6 +844,7 @@
 ### 5.3 Escalation Criteria
 
 **Escalation Triggers**:
+
 - [ ] Risk classification increases
 - [ ] Significant system changes
 - [ ] Ethical concerns arise during deployment
@@ -773,6 +868,7 @@
 **Teaming Model**: [Human-in-loop / Human-on-loop / Human-out-of-loop]
 
 **Model Definition**:
+
 - **Human-in-loop**: Human reviews every AI decision before action
 - **Human-on-loop**: Human monitors AI with ability to intervene
 - **Human-out-of-loop**: AI operates autonomously, humans set constraints
@@ -784,6 +880,7 @@
 ### 6.2 Training Requirements
 
 **Operator Training Programme**:
+
 - **Duration**: [X hours/days]
 - **Content**: [AI capabilities, limitations, SOPs, ethical considerations]
 - **Competency Assessment**: [Written test / Practical assessment / Both]
@@ -791,12 +888,14 @@
 - **Training Completion**: [X% of operators trained]
 
 **Commander Training Programme**:
+
 - **Duration**: [X hours/days]
 - **Content**: [Strategic use of AI, ethical decision-making, accountability]
 - **Competency Assessment**: [Method]
 - **Training Completion**: [X% of commanders trained]
 
 **Technical Staff Training**:
+
 - **Duration**: [X hours/days]
 - **Content**: [Model maintenance, monitoring, troubleshooting]
 - **Training Completion**: [X% of technical staff trained]
@@ -804,24 +903,28 @@
 ### 6.3 Human Control Interface
 
 **Dashboard Design**:
+
 - **Key Information Displayed**: [AI confidence, decision rationale, alerts, performance metrics]
 - **Visualization**: [How AI outputs are presented]
 - **Alert Mechanisms**: [How operators are alerted to issues]
 - **Control Mechanisms**: [How operators can intervene]
 
 **Trust Calibration**:
+
 - **Trust Indicators**: [How to help users trust AI appropriately - not too much, not too little]
 - **Confidence Display**: [How AI confidence is communicated]
 - **Uncertainty Handling**: [How system handles and communicates uncertainty]
 - **Performance Feedback**: [How users learn about AI performance]
 
 **Decision Support Features**:
+
 - **Explanation Interface**: [How AI explains its decisions]
 - **Alternative Options**: [Does AI show alternative decisions?]
 - **Confidence Scores**: [Numerical / Graphical / Color-coded]
 - **Supporting Evidence**: [What evidence is shown to support AI decision]
 
 **Override Mechanisms**:
+
 - **Override Capability**: [Yes / No / Partial]
 - **Override Process**: [How operators override AI]
 - **Override Logging**: [All overrides logged and reviewed]
@@ -834,6 +937,7 @@
 ### 7.1 AI-Specific Threat Landscape
 
 **Adversarial Examples**:
+
 - **Threat**: Carefully crafted inputs that fool the AI
 - **Likelihood**: [High / Medium / Low]
 - **Impact**: [High / Medium / Low]
@@ -841,6 +945,7 @@
 - **Mitigation**: [Adversarial training, input validation, ensemble methods]
 
 **Data Poisoning**:
+
 - **Threat**: Malicious data injected into training set
 - **Likelihood**: [High / Medium / Low]
 - **Impact**: [High / Medium / Low]
@@ -848,6 +953,7 @@
 - **Mitigation**: [Data provenance, data validation, anomaly detection]
 
 **Model Extraction**:
+
 - **Threat**: Adversary steals model through queries
 - **Likelihood**: [High / Medium / Low]
 - **Impact**: [High / Medium / Low]
@@ -855,6 +961,7 @@
 - **Mitigation**: [Query limits, differential privacy, model obfuscation]
 
 **Model Inversion**:
+
 - **Threat**: Adversary reconstructs training data
 - **Likelihood**: [High / Medium / Low]
 - **Impact**: [High / Medium / Low]
@@ -862,6 +969,7 @@
 - **Mitigation**: [Differential privacy, aggregation, access controls]
 
 **Backdoor Attacks**:
+
 - **Threat**: Hidden triggers cause malicious behavior
 - **Likelihood**: [High / Medium / Low]
 - **Impact**: [High / Medium / Low]
@@ -869,6 +977,7 @@
 - **Mitigation**: [Model inspection, trigger detection, diverse training data]
 
 **Concept Drift**:
+
 - **Threat**: Real-world data distribution changes over time
 - **Likelihood**: [High / Medium / Low]
 - **Impact**: [High / Medium / Low]
@@ -878,30 +987,35 @@
 ### 7.2 AI-Specific Security Controls
 
 **Input Validation**:
+
 - [ ] Input bounds checking
 - [ ] Anomaly detection on inputs
 - [ ] Adversarial example detection
 - [ ] Input sanitization
 
 **Adversarial Defenses**:
+
 - [ ] Adversarial training
 - [ ] Input transformations
 - [ ] Ensemble methods
 - [ ] Certified defenses
 
 **Model Security**:
+
 - [ ] Model access controls
 - [ ] Query rate limiting
 - [ ] Model versioning and integrity
 - [ ] Secure model storage
 
 **Data Security**:
+
 - [ ] Training data access controls
 - [ ] Data encryption (at rest and in transit)
 - [ ] Data provenance tracking
 - [ ] Differential privacy
 
 **Monitoring and Detection**:
+
 - [ ] Input monitoring for attacks
 - [ ] Output monitoring for anomalies
 - [ ] Performance monitoring for drift
@@ -910,18 +1024,21 @@
 ### 7.3 Security Testing
 
 **Adversarial Testing**:
+
 - **Testing Method**: [FGSM / PGD / C&W / Other]
 - **Attack Success Rate**: [% of adversarial examples that fooled model]
 - **Robust Accuracy**: [Accuracy under adversarial attack]
 - **Mitigation Effectiveness**: [How well defenses work]
 
 **Penetration Testing**:
+
 - **AI-Specific Pentest**: [Yes / No]
 - **Pentest Date**: [Date]
 - **Findings**: [Critical: X, High: Y, Medium: Z, Low: W]
 - **Remediation Status**: [X% remediated]
 
 **Red Teaming**:
+
 - **Red Team Exercise**: [Yes / No]
 - **Exercise Date**: [Date]
 - **Scenarios Tested**: [Data poisoning, model extraction, adversarial attacks, etc.]
@@ -940,6 +1057,7 @@
 **Component Provided**: [Pre-trained model / Dataset / AI service / etc.]
 
 **Supplier Assessment**:
+
 - [ ] Supplier competence verified (AI expertise)
 - [ ] Data provenance documented
 - [ ] Model transparency provided
@@ -949,30 +1067,35 @@
 - [ ] Contract includes AI-specific clauses
 
 **Data Provenance**:
+
 - **Training Data Source**: [Where supplier obtained data]
 - **Data Quality**: [Supplier's data quality processes]
 - **Bias Assessment**: [Supplier's bias testing results]
 - **Data Rights**: [Licensing and usage rights]
 
 **Model Transparency**:
+
 - **Model Card Provided**: [Yes / No]
 - **Architecture Details**: [Level of detail provided]
 - **Performance Metrics**: [Metrics provided by supplier]
 - **Known Limitations**: [Documented by supplier]
 
 **Security**:
+
 - **Security Certifications**: [ISO 27001, Cyber Essentials Plus, etc.]
 - **Vulnerability Disclosure**: [Supplier's process]
 - **Incident Response**: [Supplier's IR process]
 - **Supply Chain Security**: [Supplier's supply chain assurance]
 
 **MOD Compliance**:
+
 - **JSP 936 Compliance**: [Supplier assessed against JSP 936]
 - **JSP 440 Compliance**: [If applicable]
 - **UK GDPR Compliance**: [Data protection]
 - **NCSC Guidelines**: [Follow NCSC guidance]
 
 **Ongoing Assurance**:
+
 - **Monitoring**: [How supplier performance is monitored]
 - **Reviews**: [Frequency of supplier reviews]
 - **SLAs**: [Service level agreements]
@@ -985,22 +1108,26 @@
 ### 9.1 Real-Time Monitoring
 
 **Performance Monitoring**:
+
 - **Metrics Tracked**: [Accuracy, latency, throughput, error rate]
 - **Monitoring Frequency**: [Real-time / Hourly / Daily]
 - **Alert Thresholds**: [When alerts triggered]
 - **Monitoring Dashboard**: [URL or location]
 
 **Bias Monitoring**:
+
 - **Metrics Tracked**: [Fairness metrics by demographic group]
 - **Monitoring Frequency**: [Real-time / Daily / Weekly]
 - **Alert Thresholds**: [Bias threshold for alerts]
 
 **Security Monitoring**:
+
 - **Threats Monitored**: [Adversarial inputs, anomalies, attacks]
 - **Monitoring Tools**: [SIEM, anomaly detection, etc.]
 - **Alert Thresholds**: [Security alert triggers]
 
 **Drift Detection**:
+
 - **Data Drift Monitoring**: [Input distribution changes]
 - **Concept Drift Monitoring**: [Model performance degradation]
 - **Monitoring Method**: [Statistical tests, performance tracking]
@@ -1009,16 +1136,19 @@
 ### 9.2 Periodic Reporting
 
 **Daily Reports**:
+
 - System uptime and availability
 - Error rates and failures
 - Security alerts
 
 **Weekly Reports**:
+
 - Performance metrics trends
 - User feedback summary
 - Incident summary
 
 **Monthly Reports**:
+
 - Detailed performance analysis
 - Bias assessment results
 - Security posture summary
@@ -1026,6 +1156,7 @@
 - Incidents and resolutions
 
 **Quarterly Reports**:
+
 - Comprehensive JSP 936 compliance review
 - Ethics Manager review
 - Risk re-assessment
@@ -1034,12 +1165,14 @@
 ### 9.3 Retraining Triggers
 
 **Automatic Retraining Triggers**:
+
 - [ ] Performance drops below [X%] threshold
 - [ ] Significant data drift detected
 - [ ] Bias increases beyond acceptable threshold
 - [ ] New data volume reaches [X] samples
 
 **Manual Retraining Triggers**:
+
 - [ ] Operational environment changes
 - [ ] New requirements added
 - [ ] Security vulnerabilities discovered
@@ -1047,6 +1180,7 @@
 - [ ] Scheduled retraining (every [X] months)
 
 **Retraining Process**:
+
 - [ ] Trigger detected and validated
 - [ ] New training data collected and validated
 - [ ] Model retrained following Phase 5 process
@@ -1057,6 +1191,7 @@
 ### 9.4 Annual JSP 936 Compliance Review
 
 **Annual Review Process**:
+
 - [ ] Full re-assessment of all Five Principles
 - [ ] Risk re-classification
 - [ ] Lifecycle documentation review
@@ -1068,10 +1203,12 @@
 - [ ] Stakeholder consultation
 
 **Review Schedule**:
+
 - **Last Annual Review**: [Date]
 - **Next Annual Review**: [Date]
 
 **Re-Approval Process**:
+
 - [ ] Updated JSP 936 assessment (this document)
 - [ ] Ethics Manager review
 - [ ] RAISO endorsement
@@ -1081,6 +1218,7 @@
 ### 9.5 System Retirement Criteria
 
 **Retirement Triggers**:
+
 - [ ] Risk classification increases to unacceptable level
 - [ ] Performance degrades below minimum acceptable
 - [ ] Ethical concerns cannot be mitigated
@@ -1090,6 +1228,7 @@
 - [ ] Cost-benefit analysis no longer favorable
 
 **Retirement Process**:
+
 - [ ] Retirement decision documented
 - [ ] Stakeholder notification
 - [ ] Alternative solution identified
@@ -1224,6 +1363,7 @@
 ---
 
 **Document Control**:
+
 - **Version**: 1.0
 - **Classification**: [OFFICIAL / OFFICIAL-SENSITIVE]
 - **Last Reviewed**: [Date]
@@ -1249,4 +1389,3 @@
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

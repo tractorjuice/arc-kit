@@ -127,6 +127,7 @@ When UK Government project detected:
 | Cost estimates | High-level | Detailed AWS pricing |
 
 **When to use which**:
+
 - Use `/arckit.research` for cloud-agnostic evaluation or build vs buy
 - Use `/arckit.aws-research` when AWS is the target platform
 

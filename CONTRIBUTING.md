@@ -6,11 +6,14 @@ Thank you for your interest in contributing to ArcKit! This document provides gu
 
 1. **Fork the repository** on GitHub
 2. **Clone your fork** locally:
+
    ```bash
    git clone https://github.com/YOUR-USERNAME/arc-kit.git
    cd arc-kit
    ```
+
 3. **Create a branch** for your changes:
+
    ```bash
    git checkout -b feature/your-feature-name
    ```
@@ -20,6 +23,7 @@ Thank you for your interest in contributing to ArcKit! This document provides gu
 ### 1. Bug Reports
 
 If you find a bug, please create an issue with:
+
 - Clear title describing the problem
 - Steps to reproduce
 - Expected vs actual behaviour
@@ -29,6 +33,7 @@ If you find a bug, please create an issue with:
 ### 2. Feature Requests
 
 For new features:
+
 - Explain the use case and problem it solves
 - Describe the proposed solution
 - Consider UK Government standards compliance
@@ -37,6 +42,7 @@ For new features:
 ### 3. Documentation Improvements
 
 Documentation contributions are highly valued:
+
 - Fix typos or clarify existing guides
 - Add examples or use cases
 - Improve command descriptions
@@ -47,6 +53,7 @@ Documentation contributions are highly valued:
 To add a new ArcKit command:
 
 1. **Create the command file** in `arckit-plugin/commands/`:
+
    ```markdown
    ---
    description: Brief description of what the command does
@@ -77,6 +84,7 @@ To add a new ArcKit command:
 ### 5. Code Improvements
 
 For scripts or tools:
+
 - Follow existing code style
 - Add comments explaining complex logic
 - Test thoroughly before submitting
@@ -133,7 +141,7 @@ Provide a real-world example scenario.
 
 Follow conventional commits:
 
-```
+```text
 <type>(<scope>): <description>
 
 [optional body]
@@ -142,6 +150,7 @@ Follow conventional commits:
 ```
 
 Types:
+
 - `feat`: New feature or command
 - `fix`: Bug fix
 - `docs`: Documentation changes
@@ -150,7 +159,8 @@ Types:
 - `chore`: Maintenance tasks
 
 Examples:
-```
+
+```text
 feat(commands): add /arckit.security-review command
 
 docs(guides): improve wardley mapping examples
@@ -182,6 +192,7 @@ fix(init): correct template file paths
 Before submitting:
 
 1. **Test command execution**:
+
    ```bash
    # Claude Code (requires ArcKit plugin: /plugin marketplace add tractorjuice/arc-kit)
    /arckit.your-command Test description

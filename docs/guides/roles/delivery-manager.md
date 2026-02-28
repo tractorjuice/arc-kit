@@ -31,7 +31,7 @@ The Delivery Manager ensures the project is delivered on time and to quality sta
 
 ## Typical Workflow
 
-```
+```text
 plan → stakeholders → risk → requirements → backlog → trello →
 traceability → health → story
 ```

@@ -25,6 +25,7 @@ Created when a vendor is evaluated with **3 or more data points** (e.g., pricing
 **Location:** `projects/{project}/vendors/{vendor-slug}-profile.md`
 
 **Contains:**
+
 - Vendor overview and product lines
 - Pricing model (CAPEX/OPEX/subscription)
 - UK Government presence (G-Cloud, DOS, UK data centres)
@@ -32,6 +33,7 @@ Created when a vendor is evaluated with **3 or more data points** (e.g., pricing
 - Projects where the vendor has been evaluated
 
 **Examples:**
+
 - `vendors/aws-profile.md`
 - `vendors/stripe-profile.md`
 - `vendors/auth0-profile.md`
@@ -43,11 +45,13 @@ Created when a technology, protocol, or standard is researched with **2 or more 
 **Location:** `projects/{project}/tech-notes/{topic-slug}.md`
 
 **Contains:**
+
 - Summary of the technology or standard
 - Key findings from research
 - Relevance to current and future projects
 
 **Examples:**
+
 - `tech-notes/event-driven-architecture.md`
 - `tech-notes/pci-dss-compliance.md`
 - `tech-notes/graphql-vs-rest.md`
@@ -58,7 +62,7 @@ Created when a technology, protocol, or standard is researched with **2 or more 
 
 After research with spawning enabled, a project directory looks like this:
 
-```
+```text
 projects/001-my-project/
 ├── ARC-001-REQ-v1.0.md          # Requirements (input)
 ├── ARC-001-RSCH-v1.0.md         # Research findings (main output)
@@ -107,6 +111,7 @@ Use the `--no-spawn` flag to produce only the main research document without cre
 ```
 
 **When to skip:**
+
 - Quick exploratory research where you do not want to pollute the project with standalone files
 - Re-running research purely to refresh the main document
 - Projects where you prefer to manage vendor and technology notes manually

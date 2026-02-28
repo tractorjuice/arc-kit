@@ -12,6 +12,7 @@ You are helping an enterprise architect create a Strategic Outline Business Case
 ## About SOBC
 
 A **Strategic Outline Business Case (SOBC)** is the first stage in the UK Government business case lifecycle:
+
 - **SOBC**: Strategic Outline (this command) - High-level case for change, done BEFORE detailed requirements
 - **OBC**: Outline Business Case - After some design work, with refined costs
 - **FBC**: Full Business Case - Detailed case with accurate costs, ready for final approval
@@ -31,6 +32,7 @@ $ARGUMENTS
 This command creates a **Strategic Outline Business Case (SOBC)** following HM Treasury Green Book 5-case model. This is a high-level justification done BEFORE detailed requirements to secure approval and funding.
 
 **When to use this:**
+
 - **After**: `/arckit:stakeholders` (MANDATORY - SOBC must link to stakeholder goals)
 - **Before**: `/arckit:requirements` (SOBC justifies whether to proceed with detailed requirements)
 - **Purpose**: Secure executive approval and funding to proceed to next stage
@@ -196,7 +198,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
    Every element must link back to stakeholder analysis:
 
-   ```
+   ```text
    Stakeholder Driver D-1 (CFO: Reduce costs - FINANCIAL, HIGH)
      → Strategic Case: Cost pressure driving change
        → Economic Case: Benefit B-1: £2M annual savings (maps to CFO Goal G-1)
@@ -232,11 +234,13 @@ Before generating the document ID, check if a previous version exists:
 5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
 ### Step 1: Construct Document ID
+
 - **Document ID**: `ARC-{PROJECT_ID}-SOBC-v{VERSION}` (e.g., `ARC-001-SOBC-v1.0`)
 
 ### Step 2: Populate Required Fields
 
 **Auto-populated fields** (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -245,20 +249,23 @@ Before generating the document ID, check if a previous version exists:
 - `[STATUS]` → "DRAFT" for new documents
 
 **User-specified fields** (must be confirmed with user):
+
 - `[OWNER]` → Who owns this business case? (typically from stakeholder RACI matrix)
 - `[REVIEWED_BY]` → Who will review? (mark as "PENDING" if not yet reviewed)
 - `[APPROVED_BY]` → Who must approve? (mark as "PENDING" if not yet approved)
 
 10. **Write the output**:
-   - Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v${VERSION}.md`
-   - Use project directory structure (create if doesn't exist)
-   - File name pattern: `ARC-{PROJECT_ID}-SOBC-v{VERSION}.md`
-   - Later stages will be: `ARC-{PROJECT_ID}-OBC-v*.md` (Outline Business Case), `ARC-{PROJECT_ID}-FBC-v*.md` (Full Business Case)
+
+- Create or update `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v${VERSION}.md`
+- Use project directory structure (create if doesn't exist)
+- File name pattern: `ARC-{PROJECT_ID}-SOBC-v{VERSION}.md`
+- Later stages will be: `ARC-{PROJECT_ID}-OBC-v*.md` (Outline Business Case), `ARC-{PROJECT_ID}-FBC-v*.md` (Full Business Case)
 
 11. **Use appropriate language**:
-   - **UK Government**: Use Green Book terminology (intervention, public value, social benefit, spending controls)
-   - **Private Sector**: Adapt to commercial language (investment, shareholder value, competitive advantage)
-   - **Always**: Link to stakeholder analysis for credibility
+
+- **UK Government**: Use Green Book terminology (intervention, public value, social benefit, spending controls)
+- **Private Sector**: Adapt to commercial language (investment, shareholder value, competitive advantage)
+- **Always**: Link to stakeholder analysis for credibility
 
 12. **Flag uncertainties**:
     - Mark estimates as "Rough Order of Magnitude (ROM)"
@@ -269,6 +276,7 @@ Before generating the document ID, check if a previous version exists:
 ## Output Format
 
 Provide:
+
 1. **Location**: `projects/NNN-project-name/ARC-{PROJECT_ID}-SOBC-v1.0.md`
 2. **Summary**:
    - "Created Strategic Outline Business Case (SOBC) for [project name]"
@@ -290,6 +298,7 @@ Provide:
 ## Common Patterns
 
 **Pattern 1: Technology Modernization**:
+
 - Strategic Case: Legacy systems failing, stakeholder frustration high
 - Economic Case: 3-5 options from do-nothing to complete rebuild
 - Commercial Case: Cloud migration, Digital Marketplace G-Cloud
@@ -297,6 +306,7 @@ Provide:
 - Management Case: Phased migration, minimal disruption
 
 **Pattern 2: New Digital Service**:
+
 - Strategic Case: Citizen/customer demand, competitive pressure
 - Economic Case: MVP vs full-featured comparison
 - Commercial Case: Build in-house vs platform vendor
@@ -304,6 +314,7 @@ Provide:
 - Management Case: Agile delivery, beta to live
 
 **Pattern 3: Compliance/Risk Driven**:
+
 - Strategic Case: Regulatory requirement, audit findings
 - Economic Case: Minimum compliance vs best practice
 - Commercial Case: Specialist vendors, certification needed
@@ -350,13 +361,16 @@ For UK Government/public sector projects, ensure:
 ## Error Handling
 
 If stakeholder analysis doesn't exist:
+
 - **DO NOT proceed** with SOBC
 - Tell user: "SOBC requires stakeholder analysis to link benefits to stakeholder goals. Please run `/arckit:stakeholders` first."
 
 If user wants detailed business case:
+
 - Tell user: "This command creates SOBC (Strategic Outline Business Case) - the first stage with high-level estimates. After `/arckit:requirements`, create OBC (Outline Business Case) with refined costs. After design, create FBC (Full Business Case) for final approval."
 
 If project seems too small for full 5-case:
+
 - Still use 5-case structure but scale appropriately
 - Smaller projects: 2-3 pages per case
 - Major programmes: 10-20 pages per case
@@ -364,6 +378,7 @@ If project seems too small for full 5-case:
 ## Template Reference
 
 Use the template at `${CLAUDE_PLUGIN_ROOT}/templates/sobc-template.md` as the structure. Fill in with:
+
 - Stakeholder analysis data (goals, drivers, outcomes, conflicts)
 - Architecture principles (strategic alignment)
 - User's project description
@@ -454,6 +469,7 @@ After writing the file, show ONLY a concise summary:
 ```
 
 **Statistics to Include**:
+
 - Number of options evaluated
 - NPV and BCR for preferred option
 - Total budget required

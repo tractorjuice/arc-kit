@@ -41,6 +41,7 @@
 **Approval Status**: [APPROVED/APPROVED WITH CONDITIONS/REJECTED/PENDING]
 
 **Key Findings**:
+
 - [Finding 1]
 - [Finding 2]
 - [Finding 3]
@@ -74,6 +75,7 @@
 **Decision**: [DPIA REQUIRED / DPIA RECOMMENDED / DPIA NOT REQUIRED]
 
 **Rationale**:
+
 - If ≥2 criteria met → DPIA REQUIRED
 - If processing involves special category data at scale → DPIA REQUIRED
 - If innovative technology with unknown risks → DPIA REQUIRED
@@ -90,6 +92,7 @@
 ### 2.1 Nature of Processing
 
 **What operations are being performed?**
+
 - [ ] Collection
 - [ ] Recording
 - [ ] Organisation
@@ -106,14 +109,17 @@
 - [ ] Erasure/destruction
 
 **Processing Method**:
+
 - [ ] Automated processing
 - [ ] Manual processing
 - [ ] Combination of automated and manual
 
 **Profiling Involved**: [YES/NO]
+
 - If YES, describe profiling activities: [DESCRIPTION]
 
 **Automated Decision-Making**: [YES/NO]
+
 - If YES, describe: [DESCRIPTION]
 - Human oversight: [YES/NO - describe how]
 
@@ -132,9 +138,11 @@
 **Total Data Items**: [N] personal data fields across [M] entities
 
 **Special Category Data**: [YES/NO]
+
 - If YES: Race/ethnicity, Political opinions, Religious beliefs, Trade union membership, Genetic data, Biometric data, Health data, Sex life/orientation, Criminal convictions
 
 **Children's Data**: [YES/NO]
+
 - If YES: Age range [AGE_RANGE], volume [N children]
 
 #### Whose data are we processing?
@@ -154,6 +162,7 @@
 #### How much data?
 
 **Volume Metrics**:
+
 - **Records**: [N] records
 - **Data subjects**: [N] individuals
 - **Storage size**: [N GB/TB]
@@ -161,6 +170,7 @@
 - **Geographic scope**: [UK-wide / Regional / Local / International]
 
 **Scale Classification**: [Small scale / Large scale]
+
 - Small scale: Fewer than 10,000 data subjects, limited geographic area, low volume
 - Large scale: ≥10,000 data subjects, or national/international scope, or high volume
 
@@ -196,6 +206,7 @@
 #### What is the relationship with data subjects?
 
 **Relationship Type**:
+
 - [ ] Customer/client
 - [ ] Employee
 - [ ] Citizen/public service user
@@ -206,6 +217,7 @@
 - [ ] Other: [SPECIFY]
 
 **Power Balance**:
+
 - [ ] Equal relationship (e.g., commercial transaction)
 - [ ] Imbalanced relationship (e.g., employer-employee, government-citizen)
 - If imbalanced: Describe safeguards to protect data subjects: [SAFEGUARDS]
@@ -213,6 +225,7 @@
 #### How much control do data subjects have?
 
 **Control Mechanisms**:
+
 - [ ] Consent can be withdrawn
 - [ ] Can opt out of processing
 - [ ] Can access their data (Subject Access Request)
@@ -228,6 +241,7 @@
 #### Would data subjects expect this processing?
 
 **Reasonable Expectation Assessment**:
+
 - **Transparency**: Are data subjects informed about processing? [YES/NO]
 - **Privacy Notice**: Is a clear privacy notice provided? [YES/NO]
 - **Expectation**: Would an average person in this context expect this processing? [YES/MAYBE/NO]
@@ -265,11 +279,13 @@
 **Date Consulted**: [DATE]
 
 **DPO Advice**:
+
 - [Advice point 1]
 - [Advice point 2]
 - [Advice point 3]
 
 **DPO Recommendations**:
+
 - [Recommendation 1]
 - [Recommendation 2]
 
@@ -278,6 +294,7 @@
 ### 3.2 Data Subject Consultation
 
 **Consultation Method**:
+
 - [ ] Survey
 - [ ] Focus groups
 - [ ] Public consultation
@@ -290,15 +307,18 @@
 **Number of Respondents**: [N] data subjects
 
 **Key Feedback Received**:
+
 1. [Feedback theme 1] - [N responses]
 2. [Feedback theme 2] - [N responses]
 3. [Feedback theme 3] - [N responses]
 
 **Concerns Raised**:
+
 - [Concern 1]
 - [Concern 2]
 
 **How Feedback Addressed**:
+
 - [Action taken for concern 1]
 - [Action taken for concern 2]
 
@@ -312,6 +332,7 @@
 | [Stakeholder 2] | [Role from RACI] | [DATE] | [Feedback] |
 
 **Key Stakeholder Concerns**:
+
 - [Concern 1]
 - [Concern 2]
 
@@ -387,6 +408,7 @@ If YES, select condition(s):
 **Necessity Conclusion**: Processing is [NECESSARY/NOT NECESSARY]
 
 **Alternatives Considered**:
+
 1. [Alternative approach 1] - Rejected because: [REASON]
 2. [Alternative approach 2] - Rejected because: [REASON]
 
@@ -395,6 +417,7 @@ If YES, select condition(s):
 **Is the processing proportionate to the purpose?**
 
 **Data Minimization**:
+
 - [ ] We only collect data that is adequate for the purpose
 - [ ] We only collect data that is relevant for the purpose
 - [ ] We do not collect excessive data
@@ -423,6 +446,7 @@ If YES, select condition(s):
 ### 5.1 Risk Identification
 
 **Risk Categories to Consider**:
+
 - Physical harm (safety, health risks)
 - Material damage (financial loss, fraud, identity theft, discrimination affecting employment/services)
 - Non-material damage (distress, anxiety, reputational damage, loss of confidentiality, loss of control over personal data, discrimination, disadvantage)
@@ -441,11 +465,13 @@ If YES, select condition(s):
 | DPIA-008 | Function creep (use for unintended purposes) | [Description of harm] | [Likelihood] | [Severity] | [Risk Level] | Mission creep |
 
 **Likelihood Scale**:
+
 - **Low**: Unlikely to occur (0-33% chance)
 - **Medium**: May occur (34-66% chance)
 - **High**: Likely to occur (67-100% chance)
 
 **Severity Scale** (Impact on Individuals):
+
 - **Low**: Minimal or no impact; temporary inconvenience
 - **Medium**: Significant inconvenience or distress; some financial loss; minor reputational impact
 - **High**: Serious consequences; significant financial loss; significant reputational damage; psychological harm
@@ -468,6 +494,7 @@ If YES, select condition(s):
 **Data Subjects Affected**: [Which groups/how many individuals]
 
 **Harm to Individuals**:
+
 - Physical: [Describe physical harm, if any]
 - Material: [Describe financial/material harm, if any]
 - Non-material: [Describe distress/reputational/discrimination harm, if any]
@@ -487,6 +514,7 @@ If YES, select condition(s):
 ### 6.1 Technical Measures
 
 **Data Security**:
+
 - [ ] **Encryption at rest** - [Specify: AES-256, database encryption, disk encryption]
 - [ ] **Encryption in transit** - [Specify: TLS 1.3, VPN, secure protocols]
 - [ ] **Pseudonymization** - [Describe: tokenization, hashing, key management]
@@ -497,18 +525,21 @@ If YES, select condition(s):
 - [ ] **Secure deletion** - [Describe: cryptographic erasure, overwriting, destruction]
 
 **Data Minimization**:
+
 - [ ] **Collection limitation** - Only collect necessary data fields
 - [ ] **Storage limitation** - Automated deletion after retention period
 - [ ] **Processing limitation** - Restrict processing to stated purposes
 - [ ] **Disclosure limitation** - Share only with authorized parties
 
 **Technical Safeguards for AI/ML** (if applicable):
+
 - [ ] **Bias testing** - Regular testing for discriminatory outcomes
 - [ ] **Model explainability** - LIME, SHAP, or other interpretability tools
 - [ ] **Human oversight** - Human review of automated decisions
 - [ ] **Fairness metrics** - Demographic parity, equal opportunity, calibration
 
 **Privacy-Enhancing Technologies**:
+
 - [ ] **Differential privacy** for statistical analysis
 - [ ] **Homomorphic encryption** for computation on encrypted data
 - [ ] **Secure multi-party computation** for collaborative analysis
@@ -517,6 +548,7 @@ If YES, select condition(s):
 ### 6.2 Organisational Measures
 
 **Policies and Procedures**:
+
 - [ ] **Privacy Policy** - Clear, accessible privacy notice for data subjects
 - [ ] **Data Protection Policy** - Internal policy for staff
 - [ ] **Retention and Disposal Policy** - Defined retention periods and deletion procedures
@@ -524,23 +556,27 @@ If YES, select condition(s):
 - [ ] **Data Subject Rights Procedures** - SAR, rectification, erasure, portability processes
 
 **Training and Awareness**:
+
 - [ ] **Staff training** - GDPR awareness, privacy principles, secure handling
 - [ ] **Role-specific training** - Additional training for those with data access
 - [ ] **Regular refresher training** - Frequency: [SPECIFY]
 
 **Vendor Management**:
+
 - [ ] **Data Processing Agreements (DPAs)** - Contracts with all processors
 - [ ] **Vendor due diligence** - Security and privacy assessments before engagement
 - [ ] **Regular audits** - Annual audits of processor compliance
 - [ ] **Data transfer safeguards** - SCCs for international transfers
 
 **Governance**:
+
 - [ ] **Data Protection Officer (DPO)** - DPO appointed and accessible
 - [ ] **Privacy by Design** - Privacy built into system design from the start
 - [ ] **Privacy by Default** - Strictest privacy settings by default
 - [ ] **Regular reviews** - DPIA reviewed every [N] months or on significant change
 
 **Data Subject Rights Facilitation**:
+
 - [ ] **Subject Access Request (SAR) process** - Response within 1 month
 - [ ] **Rectification process** - Mechanism to correct inaccurate data
 - [ ] **Erasure process** - "Right to be forgotten" implementation
@@ -577,11 +613,13 @@ If YES, select condition(s):
 **Overall Residual Risk Level**: [LOW/MEDIUM/HIGH/VERY HIGH]
 
 **Acceptability Assessment**:
+
 - [ ] All residual risks are LOW or MEDIUM → ACCEPTABLE
 - [ ] Some residual risks are HIGH → ACCEPTABLE WITH CONDITIONS (describe conditions)
 - [ ] Any residual risks are VERY HIGH → NOT ACCEPTABLE (ICO consultation required)
 
 **Conditions for Acceptance** (if applicable):
+
 1. [Condition 1]
 2. [Condition 2]
 
@@ -592,6 +630,7 @@ If YES, select condition(s):
 **ICO Consultation Required**: [YES/NO]
 
 **Trigger**: ICO prior consultation is required if:
+
 - Residual risk remains **HIGH** or **VERY HIGH** after mitigation, AND
 - Processing will go ahead despite the high residual risk
 
@@ -609,6 +648,7 @@ If YES, select condition(s):
 | How Conditions Addressed | [SUMMARY] |
 
 **ICO Advice Summary**:
+
 - [Advice point 1]
 - [Advice point 2]
 - [Advice point 3]
@@ -628,10 +668,12 @@ If YES, select condition(s):
 ### 8.2 Conditions of Approval
 
 **Conditions** (if any):
+
 1. [Condition 1]
 2. [Condition 2]
 
 **How Conditions Will Be Met**:
+
 - [Action for condition 1] - Responsibility: [NAME] - Due: [DATE]
 - [Action for condition 2] - Responsibility: [NAME] - Due: [DATE]
 
@@ -681,6 +723,7 @@ If YES, select condition(s):
 ### 10.1 Review Triggers
 
 **DPIA must be reviewed when**:
+
 - [ ] Significant change to processing (new data, new purpose, new systems)
 - [ ] New technology introduced
 - [ ] New risks identified (e.g., new attack vectors, regulatory changes)
@@ -702,6 +745,7 @@ If YES, select condition(s):
 ### 10.3 Monitoring Activities
 
 **Ongoing Monitoring**:
+
 - [ ] Track number of SARs received and response times
 - [ ] Track data breaches and near-misses
 - [ ] Monitor audit logs for unauthorized access attempts
@@ -721,6 +765,7 @@ If YES, select condition(s):
 ### 10.4 Change Management
 
 **Change Control Process**:
+
 1. Any change to processing must be assessed for DPIA impact
 2. If change is significant (new data, new purpose, new risk), DPIA must be updated
 3. Updated DPIA must be re-approved by DPO and Data Controller
@@ -784,6 +829,7 @@ If YES, select condition(s):
 ### 12.1 Rights Checklist
 
 **Right of Access (Article 15)**:
+
 - [ ] Process implemented: [Describe SAR process]
 - [ ] Response time: Within 1 month (extendable by 2 months if complex)
 - [ ] Identity verification: [Describe verification method]
@@ -791,31 +837,37 @@ If YES, select condition(s):
 - [ ] Free of charge (unless excessive/unfounded)
 
 **Right to Rectification (Article 16)**:
+
 - [ ] Process implemented: [Describe rectification process]
 - [ ] Verification: [How accuracy is verified]
 - [ ] Notification: Recipients notified of rectifications
 
 **Right to Erasure (Article 17)**:
+
 - [ ] Process implemented: [Describe deletion process]
 - [ ] Exceptions: [When erasure cannot be granted - legal obligation, public interest, etc.]
 - [ ] Third parties notified: [Process to notify processors/recipients]
 
 **Right to Restriction of Processing (Article 18)**:
+
 - [ ] Process implemented: [Describe restriction mechanism]
 - [ ] Technical implementation: [How data is marked/flagged as restricted]
 
 **Right to Data Portability (Article 20)**:
+
 - [ ] Applicable: [YES/NO - only for automated processing on consent/contract basis]
 - [ ] Process implemented: [Describe export process]
 - [ ] Format: Machine-readable (JSON, CSV, XML)
 - [ ] Direct transmission: [Can data be transmitted to another controller?]
 
 **Right to Object (Article 21)**:
+
 - [ ] Process implemented: [Describe objection process]
 - [ ] Basis: Applicable for public task and legitimate interests processing
 - [ ] Marketing opt-out: [Describe opt-out mechanism]
 
 **Rights Related to Automated Decision-Making (Article 22)**:
+
 - [ ] Applicable: [YES/NO - is there solely automated decision-making?]
 - [ ] Safeguards: Human oversight, explanation, ability to challenge decision
 - [ ] Process: [Describe how individuals can request human review]
@@ -823,6 +875,7 @@ If YES, select condition(s):
 ### 12.2 Rights Fulfillment Procedures
 
 **Standard Operating Procedures**:
+
 1. **Receipt**: Rights requests received via [email/web form/postal address]
 2. **Verification**: Identity verified using [method]
 3. **Logging**: Request logged in [system] with unique reference number
@@ -852,9 +905,11 @@ If YES:
 ### 13.2 Transfer Safeguards
 
 **For countries WITH UK adequacy decision**:
+
 - [ ] No additional safeguards required beyond standard DPIA measures
 
 **For countries WITHOUT adequacy decision**:
+
 - [ ] **Standard Contractual Clauses (SCCs)** - UK ICO approved SCCs signed with recipient
   - SCC version: [International Data Transfer Agreement (IDTA) / Addendum to EU SCCs]
   - Date signed: [DATE]
@@ -872,11 +927,13 @@ If YES:
 ### 13.3 Transfer Risk Assessment
 
 **Additional risks from international transfer**:
+
 - Foreign government access to data: [Assessment]
 - Different legal protections: [Assessment]
 - Enforcement challenges: [Assessment]
 
 **Additional safeguards**:
+
 - [Safeguard 1]
 - [Safeguard 2]
 
@@ -923,6 +980,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 ### 15.1 Algorithm Description
 
 **Algorithm Type**:
+
 - [ ] Rule-based system
 - [ ] Statistical model
 - [ ] Machine learning (supervised/unsupervised/reinforcement)
@@ -932,6 +990,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 - [ ] Other: [SPECIFY]
 
 **Processing Type**:
+
 - [ ] Profiling
 - [ ] Prediction
 - [ ] Classification
@@ -940,6 +999,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 - [ ] Anomaly detection
 
 **Human Oversight**:
+
 - [ ] Fully automated (no human review)
 - [ ] Human-in-the-loop (human can override)
 - [ ] Human-on-the-loop (human monitors and can intervene)
@@ -947,6 +1007,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 ### 15.2 Algorithmic Bias Assessment
 
 **Protected Characteristics Considered**:
+
 - [ ] Age
 - [ ] Disability
 - [ ] Gender reassignment
@@ -958,12 +1019,14 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 - [ ] Sexual orientation
 
 **Bias Testing**:
+
 - [ ] Training data reviewed for bias
 - [ ] Fairness metrics calculated (demographic parity, equal opportunity, equalized odds)
 - [ ] Disparate impact analysis conducted
 - [ ] Regular monitoring for bias in production
 
 **Bias Mitigation**:
+
 - [ ] Diverse training data
 - [ ] Fairness constraints in model
 - [ ] Human review of edge cases
@@ -973,11 +1036,13 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 ### 15.3 Explainability and Transparency
 
 **Explainability Level**:
+
 - [ ] Black box (no explanation possible)
 - [ ] Limited explainability (feature importance)
 - [ ] Full explainability (decision path visible)
 
 **Explanation Mechanism**:
+
 - [Describe how decisions are explained to data subjects]
 
 **ATRS Compliance**: [Link to ATRS record at `projects/{project_id}/ARC-{PROJECT_ID}-ATRS-v*.md`]
@@ -989,6 +1054,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 ### 16.1 Key Findings
 
 **Processing Summary**:
+
 - Processing [N] categories of personal data
 - Processing [N] special category data types
 - Affecting [N] data subjects
@@ -997,6 +1063,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 - Using special category basis: [Article 9 basis, if applicable]
 
 **Risk Summary**:
+
 - [N] risks identified
 - [N] HIGH risks before mitigation
 - [N] MEDIUM risks after mitigation
@@ -1004,6 +1071,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 - Overall residual risk: [LOW/MEDIUM/HIGH]
 
 **Compliance Summary**:
+
 - [ ] Necessity and proportionality demonstrated
 - [ ] Lawful basis identified
 - [ ] Data subjects consulted
@@ -1016,6 +1084,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 ### 16.2 Recommendations
 
 **Recommendations**:
+
 1. [Recommendation 1]
 2. [Recommendation 2]
 3. [Recommendation 3]
@@ -1034,6 +1103,7 @@ If YES, also complete `/arckit.ai-playbook` and `/arckit.atrs` assessments.
 **Rationale**: [Summary justification]
 
 **Conditions** (if any):
+
 - [Condition 1]
 - [Condition 2]
 

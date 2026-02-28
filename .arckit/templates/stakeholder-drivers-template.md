@@ -32,17 +32,21 @@
 ## Executive Summary
 
 ### Purpose
+
 This document identifies key stakeholders, their underlying drivers (motivations, concerns, needs), how these drivers manifest into goals, and the measurable outcomes that will satisfy those goals. This analysis ensures stakeholder alignment and provides traceability from individual concerns to project success metrics.
 
 ### Key Findings
+
 [2-3 sentences summarizing the most important stakeholder drivers and potential conflicts or synergies]
 
 ### Critical Success Factors
+
 - [Factor 1: What must be achieved for stakeholders to consider this successful]
 - [Factor 2]
 - [Factor 3]
 
 ### Stakeholder Alignment Score
+
 **Overall Alignment**: [HIGH | MEDIUM | LOW]
 
 [Brief explanation of alignment level and any significant conflicts that need resolution]
@@ -101,7 +105,7 @@ This document identifies key stakeholders, their underlying drivers (motivations
 
 ### Stakeholder Power-Interest Grid
 
-```
+```text
                           INTEREST
               Low                         High
         ┌─────────────────────┬─────────────────────┐
@@ -136,6 +140,7 @@ This document identifies key stakeholders, their underlying drivers (motivations
 | Industry Bodies | LOW | LOW | Monitor | Annual updates |
 
 **Quadrant Interpretation:**
+
 - **Manage Closely** (High Power, High Interest): Key decision-makers requiring active engagement
 - **Keep Satisfied** (High Power, Low Interest): Influential stakeholders needing periodic updates
 - **Keep Informed** (Low Power, High Interest): Engaged stakeholders needing regular communication
@@ -154,6 +159,7 @@ This document identifies key stakeholders, their underlying drivers (motivations
 **Driver Statement**: [What motivates this stakeholder? What are their underlying needs, concerns, or pressures?]
 
 Examples:
+
 - "Reduce operational costs by 20% to meet board targets"
 - "Ensure regulatory compliance to avoid penalties"
 - "Improve customer satisfaction to retain market share"
@@ -166,14 +172,17 @@ Examples:
 **Driver Intensity**: [CRITICAL | HIGH | MEDIUM | LOW]
 
 **Enablers** (What would help):
+
 - [Enabler 1]
 - [Enabler 2]
 
 **Blockers** (What would hinder):
+
 - [Blocker 1]
 - [Blocker 2]
 
 **Related Stakeholders**:
+
 - [Other stakeholders with similar or conflicting drivers]
 
 ---
@@ -199,6 +208,7 @@ Example: "Reduce invoice processing time from 7 days to 2 days by Q2 2026"
 **Why This Matters**: [Connection back to driver - explain how achieving this goal satisfies the underlying driver]
 
 **Success Metrics**:
+
 - **Primary Metric**: [Quantitative measure]
 - **Secondary Metrics**:
   - [Additional measure 1]
@@ -211,9 +221,11 @@ Example: "Reduce invoice processing time from 7 days to 2 days by Q2 2026"
 **Measurement Method**: [How will we measure this? What data source?]
 
 **Dependencies**:
+
 - [What must be true or in place for this goal to be achievable]
 
 **Risks to Achievement**:
+
 - [Risk 1 that could prevent goal achievement]
 - [Risk 2]
 
@@ -236,6 +248,7 @@ Example: "Reduce invoice processing time from 7 days to 2 days by Q2 2026"
 Example: "Increase operational efficiency by 30% measured by transactions per FTE per day"
 
 **Measurement Details**:
+
 - **KPI**: [Key Performance Indicator name]
 - **Current Value**: [Baseline measurement]
 - **Target Value**: [Goal after project completion]
@@ -244,26 +257,31 @@ Example: "Increase operational efficiency by 30% measured by transactions per FT
 - **Report Owner**: [Who produces the measurement?]
 
 **Business Value**:
+
 - **Financial Impact**: [Revenue increase, cost savings, cost avoidance]
 - **Strategic Impact**: [Market position, competitive advantage, capability building]
 - **Operational Impact**: [Efficiency, quality, speed, scale]
 - **Customer Impact**: [Satisfaction, retention, acquisition, NPS]
 
 **Timeline**:
+
 - **Phase 1 (Months 1-3)**: [Early indicator targets]
 - **Phase 2 (Months 4-6)**: [Mid-project targets]
 - **Phase 3 (Months 7-12)**: [Full target achievement]
 - **Sustainment (Year 2+)**: [Long-term maintenance of gains]
 
 **Stakeholder Benefits**:
+
 - **[Stakeholder 1]**: [How they benefit from this outcome]
 - **[Stakeholder 2]**: [How they benefit from this outcome]
 
 **Leading Indicators** (early signals of success):
+
 - [Indicator 1]
 - [Indicator 2]
 
 **Lagging Indicators** (final proof of success):
+
 - [Indicator 1]
 - [Indicator 2]
 
@@ -290,6 +308,7 @@ Example: "Increase operational efficiency by 30% measured by transactions per FT
 ### Conflict Analysis
 
 **Competing Drivers**:
+
 - **Conflict 1**: [Stakeholder A] wants [X] but [Stakeholder B] needs [Y] which are incompatible because [reason]
   - **Resolution Strategy**: [How will this be resolved? Trade-offs? Phased approach?]
 
@@ -297,6 +316,7 @@ Example: "Increase operational efficiency by 30% measured by transactions per FT
   - **Resolution Strategy**: [Approach]
 
 **Synergies**:
+
 - **Synergy 1**: [Stakeholder A]'s driver [SD-X] aligns perfectly with [Stakeholder B]'s driver [SD-Y] - achieving [goal] satisfies both
 - **Synergy 2**: [Description]
 
@@ -311,6 +331,7 @@ Example: "Increase operational efficiency by 30% measured by transactions per FT
 **Primary Message**: [What do they need to know? Focus on their drivers and outcomes]
 
 **Key Talking Points**:
+
 - [Point 1 addressing their driver]
 - [Point 2 showing benefit to them]
 - [Point 3 addressing their concerns]
@@ -334,12 +355,15 @@ Example: "Increase operational efficiency by 30% measured by transactions per FT
 ### Change Readiness
 
 **Champions** (Enthusiastic supporters):
+
 - [Stakeholder] - [Why they support it]
 
 **Fence-sitters** (Neutral, need convincing):
+
 - [Stakeholder] - [What would convince them]
 
 **Resisters** (Opposed or skeptical):
+
 - [Stakeholder] - [Why they resist] - [Strategy to address]
 
 ---
@@ -415,13 +439,16 @@ Example: "Increase operational efficiency by 30% measured by transactions per FT
 #### Interview with [Stakeholder Name] - [Date]
 
 **Key Points**:
+
 - [Point 1]
 - [Point 2]
 
 **Quotes**:
+
 - "[Direct quote that captures their driver]"
 
 **Follow-up Actions**:
+
 - [Action 1]
 
 ---
@@ -461,4 +488,3 @@ Example: "Increase operational efficiency by 30% measured by transactions per FT
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

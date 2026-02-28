@@ -19,16 +19,19 @@ Generate a systematic **Architecture Conformance Assessment** that checks whethe
 ### Architecture Principles (MANDATORY)
 
 a. **PRIN** (Architecture Principles, in `projects/000-global/`) (MUST exist):
-   - If NOT found: ERROR "Run /arckit:principles first to define governance standards for your organization"
+
+- If NOT found: ERROR "Run /arckit:principles first to define governance standards for your organization"
 
 ### Architecture Decision Records (MANDATORY)
 
 b. **ADR** (Architecture Decision Records, in `projects/{project-dir}/decisions/`) (MUST exist):
-   - If NOT found: ERROR "Run /arckit:adr first — conformance assessment requires at least one accepted ADR"
+
+- If NOT found: ERROR "Run /arckit:adr first — conformance assessment requires at least one accepted ADR"
 
 ### Project Artifacts (RECOMMENDED)
 
 More artifacts = better conformance assessment:
+
 - **REQ** (Requirements) in `projects/{project-dir}/` — Requirements to cross-reference
 - `projects/{project-dir}/vendors/{vendor}/hld-v*.md` — High-Level Design
 - `projects/{project-dir}/vendors/{vendor}/dld-v*.md` — Detailed Low-Level Design
@@ -42,10 +45,11 @@ More artifacts = better conformance assessment:
 ### Custom Constraint Rules (OPTIONAL)
 
 c. `.arckit/conformance-rules.md` in the project root (if exists):
-   - Contains user-defined ArchCNL-style constraint rules
-   - Format: Natural language rules with MUST/MUST NOT/SHOULD/SHOULD NOT keywords
-   - Example: "All API services MUST use OAuth 2.0 for authentication"
-   - Example: "Database connections MUST NOT use plaintext credentials"
+
+- Contains user-defined ArchCNL-style constraint rules
+- Format: Natural language rules with MUST/MUST NOT/SHOULD/SHOULD NOT keywords
+- Example: "All API services MUST use OAuth 2.0 for authentication"
+- Example: "Database connections MUST NOT use plaintext credentials"
 
 **Note**: Assessment is possible with minimal artifacts (principles + ADRs), but accuracy improves significantly with HLD/DLD and review documents.
 
@@ -68,6 +72,7 @@ c. `.arckit/conformance-rules.md` in the project root (if exists):
 ### 0. Read the Template
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/conformance-assessment-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/conformance-assessment-template.md` (default)
@@ -77,10 +82,12 @@ c. `.arckit/conformance-rules.md` in the project root (if exists):
 ### 1. Validate Prerequisites
 
 **Check Architecture Principles**:
+
 - Look for `ARC-000-PRIN-*.md` in `projects/000-global/`
 - If NOT found: ERROR "Architecture principles not found. Run /arckit:principles first."
 
 **Check ADRs**:
+
 - Look for `ARC-*-ADR-*.md` files in `projects/{project-dir}/decisions/`
 - If NONE found: ERROR "No ADRs found. Run /arckit:adr first — conformance assessment requires at least one accepted ADR."
 
@@ -100,21 +107,26 @@ c. `.arckit/conformance-rules.md` in the project root (if exists):
 Read the following artifacts. Do NOT read entire files — extract relevant sections for each conformance check.
 
 **Architecture Principles** (`projects/000-global/ARC-000-PRIN-*.md`):
+
 - Extract ALL principles dynamically (name, statement, rationale, implications)
 
 **ADRs** (`projects/{project-dir}/decisions/ARC-*-ADR-*.md`):
+
 - For EACH ADR, extract: title, status (Accepted/Superseded/Deprecated/Proposed), decision text, context, consequences (positive and negative), related ADRs
 - Track supersession chains (which ADR supersedes which)
 
 **Design Documents** (if exist):
+
 - `projects/{project-dir}/vendors/{vendor}/hld-v*.md` — Architecture overview, technology stack, patterns, components
 - `projects/{project-dir}/vendors/{vendor}/dld-v*.md` — Detailed implementation, API specs, infrastructure
 
 **Review Documents** (if exist):
+
 - `ARC-*-HLDR-*.md` in `reviews/` — HLD review conditions, findings
 - `ARC-*-DLDR-*.md` in `reviews/` — DLD review conditions, findings
 
 **Other Artifacts** (if exist):
+
 - `ARC-*-REQ-*.md` — Requirements for traceability
 - `ARC-*-PRIN-COMP-*.md` — Prior principles compliance (for trend comparison)
 - `ARC-*-TRAC-*.md` — Traceability matrix
@@ -122,6 +134,7 @@ Read the following artifacts. Do NOT read entire files — extract relevant sect
 - `ARC-*-DEVOPS-*.md` — DevOps strategy (for technology stack drift check)
 
 **Custom Rules** (if exist):
+
 - `.arckit/conformance-rules.md` in the project root
 
 ### 4. Execute Conformance Checks
@@ -133,6 +146,7 @@ Run ALL 12 conformance checks. Each check produces a PASS/FAIL/NOT ASSESSED stat
 #### Check ADR-IMPL: ADR Decision Implementation (Severity: HIGH)
 
 For EACH ADR with status "Accepted":
+
 1. Extract the **Decision** section text
 2. Search HLD and DLD for evidence that the decision is implemented
 3. Check that the technology/pattern/approach chosen in the ADR appears in the design
@@ -172,6 +186,7 @@ For EACH ADR with status "Accepted":
 #### Check PRIN-DESIGN: Principles-to-Design Alignment (Severity: HIGH)
 
 For EACH architecture principle:
+
 1. Extract the principle statement and implications
 2. Search HLD/DLD for design elements that satisfy or violate the principle
 3. Apply **binary pass/fail** constraint checking (unlike principles-compliance which uses RAG scoring):
@@ -306,11 +321,13 @@ For EACH architecture principle:
 ### 5. Calculate Conformance Score
 
 **Scoring**:
+
 - Count PASS, FAIL, NOT ASSESSED for each check
 - Calculate overall conformance percentage: `(PASS count / (PASS + FAIL count)) × 100`
 - Exclude NOT ASSESSED from the denominator
 
 **Overall Recommendation**:
+
 - **CONFORMANT**: All checks PASS (or NOT ASSESSED), conformance >= 100%
 - **CONFORMANT WITH EXCEPTIONS**: Some FAIL findings but all are LOW/MEDIUM severity with remediation plans, conformance >= 80%
 - **NON-CONFORMANT**: Any HIGH severity FAIL, or conformance < 80%
@@ -320,6 +337,7 @@ For EACH architecture principle:
 Use the document ID `ARC-{PROJECT_ID}-CONF-v{VERSION}` (e.g., `ARC-001-CONF-v1.0`).
 
 **Generate the document ID**:
+
 ```bash
 ${CLAUDE_PLUGIN_ROOT}/scripts/python/generate-document-id.py --project-id {PROJECT_ID} --type CONF --filename
 ```
@@ -336,7 +354,7 @@ Populate the template with all conformance check results, following the structur
 
 Display concise summary (NOT full document):
 
-```
+```text
 ✅ Architecture conformance assessment generated
 
 📊 **Conformance Summary**:
@@ -378,7 +396,8 @@ Display concise summary (NOT full document):
 After generating the assessment document:
 
 1. **Suggest Follow-up Commands**:
-   ```
+
+   ```text
    📋 **Related Commands**:
    - /arckit:principles-compliance - Detailed RAG scoring of principle compliance
    - /arckit:analyze - Comprehensive governance gap analysis

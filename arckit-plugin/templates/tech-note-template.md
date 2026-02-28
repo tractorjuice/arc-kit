@@ -29,12 +29,15 @@
 ---
 
 ## Summary
+
 {One-paragraph overview}
 
 ## Key Findings
+
 {Bulleted findings from research}
 
 ## Relevance to Projects
+
 {Which projects benefit from this knowledge}
 
 ---

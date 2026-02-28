@@ -34,7 +34,7 @@ The Technical Architect translates high-level designs into implementable archite
 
 ## Typical Workflow
 
-```
+```text
 requirements → research → cloud-research → adr → diagram →
 hld-review → dld-review → devops → operationalize
 ```

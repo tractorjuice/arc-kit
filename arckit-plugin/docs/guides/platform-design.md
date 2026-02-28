@@ -51,7 +51,7 @@ The **Platform Design Toolkit (PDT)** is an open-source methodology from [Bounda
 
 ## When to Use This Command
 
-### ✅ Use platform-design when:
+### ✅ Use platform-design when
 
 1. **Multi-sided market**: You have supply side + demand side (e.g., buyers & sellers, patients & providers)
 2. **Transaction-based**: Value comes from enabling exchanges between parties
@@ -59,7 +59,7 @@ The **Platform Design Toolkit (PDT)** is an open-source methodology from [Bounda
 4. **Ecosystem strategy**: You're orchestrating, not just building
 5. **Government as a Platform (GaaP)**: Designing reusable services/APIs for other departments
 
-### ❌ Don't use platform-design when:
+### ❌ Don't use platform-design when
 
 1. **Single-sided product**: Traditional SaaS/software for one user type
 2. **Linear workflow**: Sequential process without network dynamics
@@ -68,7 +68,7 @@ The **Platform Design Toolkit (PDT)** is an open-source methodology from [Bounda
 
 ### Decision Tree
 
-```
+```text
 Is there a supply side AND demand side?
 ├─ No → Use /arckit.requirements + /arckit.diagram
 └─ Yes → Does value increase with more participants?
@@ -81,9 +81,11 @@ Is there a supply side AND demand side?
 ## The 8 PDT Canvases
 
 ### 1. Ecosystem Canvas
+
 **Purpose**: Map all entities in your platform ecosystem
 
 **Key Questions**:
+
 - Who are the platform's supply side entities? (sellers, providers, creators)
 - Who are the demand side entities? (buyers, consumers, learners)
 - What supporting entities exist? (regulators, payment processors, data providers)
@@ -92,6 +94,7 @@ Is there a supply side AND demand side?
 **Output**: Entity relationship diagram (Mermaid), entity classification table
 
 **Example** (NHS appointment booking):
+
 - Supply: GP practices, hospitals, specialists
 - Demand: Patients, caregivers
 - Supporting: NHS Digital, ICB data services, payment gateway
@@ -99,9 +102,11 @@ Is there a supply side AND demand side?
 ---
 
 ### 2. Entity-Role Portraits
+
 **Purpose**: Deep dive into 3-5 key entities to understand motivations
 
 **Key Questions**:
+
 - What is this entity's **context**? (industry, size, maturity, constraints)
 - What **performance pressures** do they face? (cost, time, quality, risk)
 - What are their **goals**? (strategic objectives, outcomes)
@@ -114,9 +119,11 @@ Is there a supply side AND demand side?
 ---
 
 ### 3. Motivations Matrix
+
 **Purpose**: Identify synergies and conflicts between entities
 
 **Key Questions**:
+
 - Where do entity goals **align**? (win-win transactions)
 - Where do they **conflict**? (zero-sum dynamics, trust issues)
 - How can platform reduce conflicts? (governance, reputation, escrow)
@@ -129,9 +136,11 @@ Is there a supply side AND demand side?
 ---
 
 ### 4. Transactions Board
+
 **Purpose**: Design the core value exchanges enabled by the platform
 
 **Key Questions**:
+
 - What **transactions** happen between entities? (bookings, payments, data sharing)
 - What **transaction costs** exist today? (search time, information asymmetry, contract negotiation)
 - How does the platform **reduce each cost**? (search algorithms, reviews, standard contracts)
@@ -144,9 +153,11 @@ Is there a supply side AND demand side?
 ---
 
 ### 5. Learning Engine Canvas
+
 **Purpose**: Design services that help ecosystem participants improve over time
 
 **Key Questions**:
+
 - What **data** does the platform capture? (usage, ratings, outcomes, behaviors)
 - How can entities **learn** from this data? (benchmarks, recommendations, training)
 - What **feedback loops** drive improvement? (ratings → better matching, outcomes → better protocols)
@@ -155,6 +166,7 @@ Is there a supply side AND demand side?
 **Output**: 5+ learning services with data sources and feedback loops
 
 **Example** (G-Cloud):
+
 - Supplier performance data → Buyer recommendations
 - Procurement patterns → Cost benchmarks
 - Security assessments → Risk scoring
@@ -162,9 +174,11 @@ Is there a supply side AND demand side?
 ---
 
 ### 6. Platform Experience Canvas
+
 **Purpose**: Map the end-to-end journeys for each entity type
 
 **Key Questions**:
+
 - What is the **onboarding** journey? (signup → verification → first transaction)
 - What is the **transaction** journey? (search → negotiate → complete → rate)
 - What are the **touchpoints**? (web, mobile, API, support)
@@ -178,9 +192,11 @@ Is there a supply side AND demand side?
 ---
 
 ### 7. Minimum Viable Platform (MVP) Canvas
+
 **Purpose**: Design a validation strategy for your riskiest assumptions
 
 **Key Questions**:
+
 - What **assumptions** must be true for the platform to work? (entities want this, price is right, liquidity achievable)
 - What is the **minimum feature set** for first transaction? (no bells and whistles)
 - How do you **bootstrap liquidity**? (seed supply side, incentivize demand, staged rollout)
@@ -194,9 +210,11 @@ Is there a supply side AND demand side?
 ---
 
 ### 8. Platform Design Canvas
+
 **Purpose**: Synthesize all insights into cohesive platform strategy
 
 **Key Sections**:
+
 1. **Value Proposition**: What unique value does the platform create?
 2. **Ecosystem**: Who participates and why?
 3. **Transactions**: What exchanges happen and how?
@@ -236,7 +254,7 @@ Is there a supply side AND demand side?
 
 ### Workflow Order
 
-```
+```text
 1. /arckit.principles      → Governance foundation
 2. /arckit.stakeholders    → Entity portraits
 3. /arckit.requirements    → Platform capabilities
@@ -252,7 +270,7 @@ Is there a supply side AND demand side?
 
 ### Basic Usage
 
-```
+```text
 /arckit.platform-design Design NHS appointment booking platform
 ```
 
@@ -262,7 +280,7 @@ Is there a supply side AND demand side?
 
 ### Advanced Usage
 
-```
+```text
 /arckit.platform-design Design Digital Marketplace for training services connecting:
 - Supply: Training providers, independent trainers, content creators
 - Demand: Public sector organizations, L&D departments, individual learners
@@ -307,6 +325,7 @@ The UK Government's [GaaP strategy](https://www.gov.uk/government/publications/g
 | **GOV.UK Verify** (deprecated) | Identity providers | Services needing auth | Identity verification |
 
 **Platform Design Principles** (from GaaP):
+
 1. **Common components**: Reusable across departments
 2. **Open standards**: Avoid vendor lock-in
 3. **Self-service**: Low friction onboarding
@@ -361,12 +380,14 @@ graph TD
 ```
 
 **Input Artifacts**:
+
 - `ARC-000-PRIN-v1.0.md` → Governance principles for platform
 - `ARC-<id>-STKE-v1.0.md` → Entity portraits (stakeholders = entities)
 - `ARC-<id>-REQ-v1.0.md` → Platform capabilities (FR/DR/INT requirements)
 - `wardley-maps/ARC-<id>-WARD-*.md` → Build vs. buy strategy (component evolution)
 
 **Output Artifacts** (created after platform-design):
+
 - `diagrams/ARC-<id>-DIAG-001-v1.0.md` → C4 diagrams of platform technical architecture
 - `ARC-<id>-BKLG-v1.0.md` → MVP features converted to user stories, sprint plan
 - `ARC-<id>-SOW-v1.0.md` → RFP for platform development (if procuring vendor)
@@ -375,7 +396,7 @@ graph TD
 
 ### Typical Workflow
 
-```
+```text
 # Phase 1: Foundation
 /arckit.principles       # Define governance principles
 /arckit.stakeholders     # Analyze ecosystem entities
@@ -409,12 +430,14 @@ graph TD
 **Use Case**: Enable patients to book GP/specialist appointments across trusts
 
 **Why Platform Design**:
+
 - Supply side: GP practices, hospitals, specialists (own calendars/availability)
 - Demand side: Patients, caregivers (need appointments)
 - Transaction: Appointment booking (reduces search time, phone wait times)
 - Network effects: More providers → more choice → more patients → more data → better matching
 
 **Key Canvases**:
+
 - **Ecosystem**: NHS trusts, GP practices, patients, NHS Digital (identity), ICBs (data governance)
 - **Transactions**: Book appointment, reschedule, cancel, SMS reminder, outcomes reporting
 - **Learning Engine**: No-show prediction, optimal appointment duration, provider ratings
@@ -429,12 +452,14 @@ graph TD
 **Use Case**: Connect public sector organizations with training providers
 
 **Why Platform Design**:
+
 - Supply side: Training providers, independent trainers, content creators
 - Demand side: Public sector L&D departments, individual civil servants
 - Transaction: Course booking, certification, outcomes tracking
 - Network effects: More providers → more courses → more learners → more data → better recommendations
 
 **Key Canvases**:
+
 - **Ecosystem**: Training suppliers, accreditation bodies (CPD Standards Office), public sector orgs, learners, LMS integrations
 - **Transactions**: Search courses, compare providers, book training, track CPD, share certificates
 - **Learning Engine**: Course effectiveness (pre/post assessments), provider quality (ratings + outcomes), skill gap analysis
@@ -447,6 +472,7 @@ graph TD
 ### Example 3: Internal Employee Directory ❌
 
 **Why NOT Platform Design**:
+
 - No multi-sided market (just employees looking up colleagues)
 - No transactions (just information retrieval)
 - No network effects (value doesn't increase with more users)
@@ -461,12 +487,14 @@ graph TD
 **Use Case**: Enable councils to share/buy datasets (e.g., planning data, environmental sensors)
 
 **Why Platform Design**:
+
 - Supply side: Local authorities with datasets, IoT sensor providers
 - Demand side: Local authorities needing data, researchers, urban planners
 - Transaction: Data product licensing (Open Data Contract Standard v3.0.2)
 - Network effects: More data sources → richer analytics → more demand → more supply
 
 **Key Canvases**:
+
 - **Ecosystem**: 317 local authorities, central government, researchers, data processors, cloud storage (AWS S3)
 - **Transactions**: Publish data product, license dataset, query API, manage access controls, data quality SLA
 - **Learning Engine**: Data quality scoring (completeness, timeliness), usage patterns → recommendations, schema evolution

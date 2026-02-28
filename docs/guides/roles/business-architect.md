@@ -31,12 +31,13 @@ The Business Architect bridges business strategy and technology architecture. Yo
 
 ## Typical Workflow
 
-```
+```text
 plan → principles → stakeholders → risk → sobc → strategy → roadmap
 ```
 
-### For platform projects:
-```
+### For platform projects
+
+```text
 plan → principles → stakeholders → risk → sobc → requirements → platform-design → strategy → roadmap
 ```
 

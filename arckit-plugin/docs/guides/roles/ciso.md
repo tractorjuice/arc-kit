@@ -31,7 +31,7 @@ The CISO sets security strategy and risk appetite for the organisation. You use 
 
 ## Typical Workflow
 
-```
+```text
 principles (security) → risk → secure / mod-secure → conformance → analyze
 ```
 

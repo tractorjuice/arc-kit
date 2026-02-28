@@ -40,11 +40,13 @@
 **Objective**: [One-sentence goal from business case]
 
 **Success Criteria**:
+
 - [Criterion 1 from NFRs or business case]
 - [Criterion 2]
 - [Criterion 3]
 
 **Key Milestones**:
+
 - Discovery Complete: Week [X]
 - Alpha Complete (HLD approved): Week [Y]
 - Beta Complete (Go-Live approved): Week [Z]
@@ -168,6 +170,7 @@ graph TB
 ### Gate: Discovery Assessment (Week [X])
 
 **Approval Criteria**:
+
 - [ ] Problem clearly defined and validated
 - [ ] User needs documented
 - [ ] Business Requirements defined (15-25 BRs)
@@ -179,6 +182,7 @@ graph TB
 **Approvers**: SRO, Architecture Board
 
 **Possible Outcomes**:
+
 - ✅ **Go to Alpha** - Problem validated, approach feasible
 - 🔄 **Pivot** - Adjust approach based on findings
 - ❌ **Stop** - Problem not worth solving or approach not feasible
@@ -205,6 +209,7 @@ graph TB
 ### Gate: HLD Review (Week [Y-2])
 
 **Approval Criteria**:
+
 - [ ] All MUST requirements addressed in design
 - [ ] Architecture principles compliant
 - [ ] Security architecture defined
@@ -217,6 +222,7 @@ graph TB
 ### Gate: Alpha Assessment (Week [Y])
 
 **Approval Criteria**:
+
 - [ ] HLD approved
 - [ ] Vendor selected (if applicable)
 - [ ] Business case updated with accurate costs
@@ -226,6 +232,7 @@ graph TB
 **Approvers**: SRO, Architecture Board, Finance
 
 **Possible Outcomes**:
+
 - ✅ **Go to Beta** - Design validated, ready to build
 - 🔄 **Iterate** - Refine design based on feedback
 - ❌ **Stop** - Approach not feasible or business case negative
@@ -255,6 +262,7 @@ graph TB
 ### Gate: DLD Review (Week [Y+5])
 
 **Approval Criteria**:
+
 - [ ] DLD aligns with approved HLD
 - [ ] All implementation details documented
 - [ ] Security controls specified
@@ -266,6 +274,7 @@ graph TB
 ### Gate: Beta Assessment / Go-Live (Week [Z])
 
 **Approval Criteria**:
+
 - [ ] All MUST requirements implemented and tested
 - [ ] Security testing passed (no critical/high vulnerabilities)
 - [ ] Performance testing passed (meets NFR-P targets)
@@ -277,6 +286,7 @@ graph TB
 **Approvers**: SRO, Architecture Board, Security Lead, Operations Lead
 
 **Possible Outcomes**:
+
 - ✅ **Go-Live** - Ready for production deployment
 - 🔄 **Fix Issues** - Address blockers before go-live
 - ❌ **No-Go** - Major issues require significant rework
@@ -302,6 +312,7 @@ graph TB
 ## ArcKit Commands Integration
 
 ### Discovery Phase
+
 - Week 1-2: `/arckit.stakeholders` - Stakeholder analysis
 - Week 5-6: `/arckit.requirements` - Business Requirements (BRs)
 - Week 7: `/arckit.principles` - Architecture principles
@@ -309,6 +320,7 @@ graph TB
 - Week 8: `/arckit.risk` - Initial risk register
 
 ### Alpha Phase
+
 - Week 9-11: `/arckit.requirements` - Detailed requirements (FR, NFR, INT, DR)
 - Week 10-12: `/arckit.data-model` - Data model
 - Week 12-15: `/arckit.diagram` - Architecture diagrams (C4)
@@ -318,12 +330,14 @@ graph TB
 - Week 19: `/arckit.sobc` - Updated business case
 
 ### Beta Phase
+
 - Week 25: `/arckit.dld-review` - DLD approval gate
 - Week 29-31: `/arckit.analyze` - Quality analysis
 - Week 32-33: `/arckit.traceability` - Verify design → code → tests
 - If AI: `/arckit.ai-playbook`, `/arckit.atrs` - AI compliance
 
 ### Live Phase
+
 - Quarterly: `/arckit.analyze` - Periodic quality reviews
 - Quarterly: `/arckit.risk` - Update operational risks
 - Annually: `/arckit.sobc` - Track benefits realization

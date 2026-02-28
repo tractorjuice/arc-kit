@@ -79,11 +79,13 @@ This document presents Azure-specific technology research findings for the proje
 #### Recommended: [AZURE_SERVICE_NAME]
 
 **Service Overview**:
+
 - **Full Name**: [e.g., Azure Kubernetes Service (AKS)]
 - **Category**: [Compute / Storage / Database / AI / Security / etc.]
 - **Documentation**: [Microsoft Learn link]
 
 **Key Features**:
+
 - [Feature 1]: [Description]
 - [Feature 2]: [Description]
 - [Feature 3]: [Description]
@@ -124,17 +126,20 @@ This document presents Azure-specific technology research findings for the proje
 | LT-1: Logging and Threat Detection | ✅ | Azure Monitor, Defender |
 
 **Integration Capabilities**:
+
 - **APIs**: REST, ARM, Bicep, Terraform
 - **SDKs**: .NET, Python, Java, JavaScript, Go
 - **Event-Driven**: Event Grid, Service Bus integration
 - **Other Azure Services**: [List integrations]
 
 **UK Region Availability**:
+
 - ✅ UK South (Primary)
 - ✅ UK West (DR)
 - [Any limitations in UK regions]
 
 **Compliance Certifications**:
+
 - ✅ ISO 27001, 27017, 27018
 - ✅ SOC 1, 2, 3
 - ✅ UK Cyber Essentials Plus
@@ -279,6 +284,7 @@ graph TB
 ### Microsoft Defender for Cloud
 
 **Recommendations**:
+
 - Enable Defender for Cloud on all subscriptions
 - Enable Defender plans for: Servers, App Service, SQL, Storage, Key Vault, Kubernetes
 - Configure Security Policy aligned to Azure Security Benchmark
@@ -459,11 +465,13 @@ stages:
 ### G-Cloud Procurement
 
 **Azure on G-Cloud 14**:
+
 - **Framework**: RM1557.14
 - **Supplier**: Microsoft Limited
 - **Service ID**: [Service ID from Digital Marketplace]
 
 **Procurement Steps**:
+
 1. Search Digital Marketplace for "Microsoft Azure"
 2. Review service description and pricing
 3. Direct award (if requirements clear) or further competition
@@ -472,6 +480,7 @@ stages:
 ### Azure Government (if SECRET classification required)
 
 For SECRET data classification:
+
 - **Azure Government UK**: Separate sovereign cloud
 - **Accreditation**: IL3+ certified
 - **Access**: Requires MOD/government sponsorship

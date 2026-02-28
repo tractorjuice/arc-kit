@@ -157,6 +157,7 @@ cp ~/.gemini/extensions/arckit/templates/requirements-template.md .arckit/templa
 ```
 
 Common customizations:
+
 - Remove UK Government sections for non-UK Gov projects
 - Add organization-specific Document Control fields
 - Change requirement ID prefixes

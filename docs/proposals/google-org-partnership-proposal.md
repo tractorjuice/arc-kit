@@ -50,12 +50,14 @@ To make world-class enterprise architecture governance accessible to every gover
 ArcKit is not a concept seeking its first government user. The platform has been developed and tested in direct collaboration with UK Government architecture contexts, producing publicly available governance packs across 14+ government domains. These case studies — covering NHS, HMRC, Cabinet Office, Scottish Courts, National Highways, ONS, and others — represent real governance scenarios with real compliance requirements.
 
 **Government buy-in to date**:
+
 - **14+ public case studies** produced in collaboration with UK Government architecture scenarios, all publicly available on GitHub for independent verification
 - **Compliance frameworks built from government standards**: Every ArcKit compliance module (GDS Service Standard, Technology Code of Practice, NCSC CAF, Orange Book, Green Book) was developed against the official published frameworks and tested against government project requirements
 - **Digital Marketplace integration**: ArcKit includes live G-Cloud and DOS procurement automation, directly integrating with the UK Government's Digital Marketplace
 - **Multi-department applicability demonstrated**: Case studies span civilian (NHS, HMRC, ONS), justice (Scottish Courts), defence (MOD JSP 936), transport (National Highways), and cross-government (Cabinet Office GenAI, API Aggregator) domains
 
 **For the formal application**, we will secure:
+
 - [ ] Letter(s) of intent from 1-3 government departments or agencies willing to participate as pilot sites
 - [ ] Endorsement from a government architecture or digital leadership body
 - [ ] Confirmation of access to government architects for baseline measurement and training
@@ -97,12 +99,14 @@ ArcKit's contribution to the Economy focus area is structural: by systematically
 Government technology programmes suffer from systemic governance failures that waste public money and delay the services citizens and businesses depend on.
 
 **Scale of the Problem**:
+
 - The UK Government spends over **£20 billion annually** on technology and digital services (HM Treasury Main Estimates)
 - The NAO's *Digital Transformation in Government* report found that of 25 major government programmes examined, the majority suffered governance weaknesses that contributed to delays and cost overruns
 - The NHS National Programme for IT — the largest civilian IT programme ever attempted — was abandoned at an estimated cost of **£10 billion**, with poor architecture governance cited as a contributing factor
 - This is not unique to the UK: the US Government Accountability Office (GAO) maintains a High Risk List where IT programme management has appeared continuously since 2015, and the EU Court of Auditors has flagged similar governance failures in member state digitalisation programmes
 
 **Root Causes**:
+
 - **Manual governance processes**: Creating a requirements specification, business case, risk register, and procurement documentation takes **4-6 weeks per project** using traditional methods
 - **Inconsistent standards**: Each department, programme, and architect applies different templates, formats, and quality thresholds
 - **Fragmented tooling**: Architecture documents are scattered across Word, Confluence, PowerPoint, and SharePoint with no version control or traceability
@@ -111,6 +115,7 @@ Government technology programmes suffer from systemic governance failures that w
 
 **Impact on Citizens**:
 The downstream cost of governance failure is borne by citizens. When a government digital service is delayed by 12 months because requirements were incomplete, or a procurement is challenged because the evaluation framework was inconsistent, real people wait longer for real services. Consider:
+
 - A patient who cannot book an NHS appointment online because the booking system was delivered without proper data protection impact assessment, triggering a post-launch suspension
 - A small business waiting months for a patent decision because the IPO's case management system was procured without adequate requirements traceability, leading to vendor disputes
 - A court user unable to access case information digitally because the Scottish Courts' technology strategy lacked the architectural governance to move from pilot to production
@@ -132,7 +137,7 @@ These are not hypothetical scenarios — they reflect the kinds of failures that
 
 The causal chain from ArcKit adoption to citizen outcomes:
 
-```
+```text
 INPUTS                  ACTIVITIES              OUTPUTS                 OUTCOMES                IMPACT
 ─────────────────────── ─────────────────────── ─────────────────────── ─────────────────────── ───────────────────────
 ArcKit platform         Pilot deployments       Governance artifacts    75-85% faster           Services delivered
@@ -202,6 +207,7 @@ Each agent performs 20-50+ research queries autonomously before returning struct
 **Automated Quality Controls**:
 
 ArcKit includes four automation hooks that enforce governance standards without manual intervention:
+
 - **Project awareness**: Automatically detects existing artifacts and injects context so each new document builds on what already exists
 - **Naming enforcement**: Auto-corrects filenames to standardised conventions, preventing the inconsistency that plagues manual governance
 - **Compliance tool access**: Automatically connects to cloud provider documentation for authoritative, up-to-date reference material
@@ -210,6 +216,7 @@ ArcKit includes four automation hooks that enforce governance standards without 
 **Real-Time Cloud Documentation Access**:
 
 ArcKit connects directly to four authoritative cloud documentation systems, ensuring that architecture recommendations are based on current, official information rather than potentially outdated training data:
+
 - AWS Knowledge (Amazon Web Services)
 - Microsoft Learn (Azure)
 - Google Developer Knowledge (Google Cloud Platform)
@@ -322,6 +329,7 @@ Together, the partnership delivers what Google.org is looking for: proven techno
 ### 6.3 Governance Model
 
 **Steering Committee** (meets quarterly):
+
 - Partner Organisation lead (Chair)
 - ArcKit technical lead
 - Government pilot department representatives (2-3)
@@ -329,12 +337,14 @@ Together, the partnership delivers what Google.org is looking for: proven techno
 - Independent advisor (architecture/governance domain expert)
 
 **Working Group** (meets monthly):
+
 - ArcKit development team lead
 - Partner programme manager
 - Pilot department points of contact
 - Training and evaluation leads
 
 **Decision Rights**:
+
 - **Strategic decisions** (scope changes, new jurisdictions, budget reallocation >10%): Steering Committee
 - **Operational decisions** (feature prioritisation, pilot scheduling, training delivery): Working Group
 - **Technical decisions** (architecture, implementation, release management): ArcKit development team
@@ -440,11 +450,13 @@ The investment is not a recurring cost. It is a one-time catalyst that creates s
 **Approach**: Mixed-methods evaluation combining quantitative metrics with qualitative case studies.
 
 **Quantitative**:
+
 - **Before/after comparison**: Measure governance documentation time, compliance scores, and error rates before and after ArcKit adoption in each pilot department
 - **Platform analytics**: Automated tracking of commands used, artifacts generated, and time-to-completion
 - **Compliance scoring**: Automated assessment against TCoP, GDS Service Standard, and other frameworks
 
 **Qualitative**:
+
 - **Semi-structured interviews**: Architects, delivery managers, and senior sponsors in pilot departments
 - **Case study documentation**: Deep-dive into 3-5 exemplar projects showing end-to-end impact
 - **Focus groups**: Cross-department sessions to identify common patterns and challenges
@@ -481,6 +493,7 @@ ArcKit's architecture is designed for international scaling:
 ### 9.2 Open-Source Community Model
 
 **Sustainability through community**:
+
 - **Core maintainers**: ArcKit development team provides continuous platform development
 - **Compliance contributors**: Government architects contribute jurisdiction-specific modules
 - **Template contributors**: Organisations share customised templates for specific sectors
@@ -586,7 +599,7 @@ ArcKit's use of generative and agentic AI goes beyond incremental efficiency gai
 
 ### Appendix C: Architecture Diagram
 
-```
+```text
                     ┌──────────────────────────────────┐
                     │         AI Coding Assistant       │
                     │  (Claude / Gemini / Codex / OC)   │

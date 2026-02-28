@@ -9,6 +9,7 @@ You are an expert web developer helping generate a documentation site that displ
 ## What is the Pages Generator?
 
 The Pages Generator creates a `docs/index.html` file that:
+
 - **Dashboard** with KPI cards, donut charts, coverage bars, and governance checklist
 - **Displays** all ArcKit artifacts in a navigable web interface
 - **Renders** Mermaid diagrams inline
@@ -25,6 +26,7 @@ Generate a documentation site for this ArcKit repository.
 ## Step 0: Determine Repository Info
 
 Determine the repository name and URL:
+
 1. Run `git remote get-url origin` (single Bash command, no pipes or `&&`) to get the remote URL
 2. Extract the repo name and owner from the URL (e.g. `https://github.com/owner/repo-name` → repo name is `repo-name`, owner is `owner`)
 3. If no git remote, use the current directory name as the repo name (extract it from the working directory path using string manipulation — do NOT use shell commands like `basename` or `$(pwd)`)
@@ -109,7 +111,8 @@ Use **Glob** to scan `docs/guides/roles/*.md` for role guide files (excluding `R
 ### 1.2 Global Documents
 
 Use **Glob** to check `projects/000-global/` for global artifacts:
-```
+
+```text
 projects/000-global/
 ├── ARC-000-PRIN-v1.0.md    # Architecture Principles (global)
 ├── policies/                # Governance policies
@@ -123,7 +126,7 @@ projects/000-global/
 
 Use **Glob** to check `projects/` for all project folders. Documents use standardized naming: `ARC-{PROJECT_ID}-{TYPE}-v{VERSION}.md`
 
-```
+```text
 projects/
 ├── 001-{project-name}/
 │   ├── # Core Documents (ARC-001-{TYPE}-v1.0.md pattern)
@@ -410,6 +413,7 @@ Create `docs/manifest.json` with the discovered structure:
 ### 3.1 Read the template (MANDATORY)
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/pages-template.html` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` (default)
@@ -440,13 +444,13 @@ This template is the single source of truth for the pages site — it contains a
 
 ### 4.1 Write manifest.json
 
-```
+```text
 docs/manifest.json
 ```
 
 ### 4.2 Write index.html
 
-```
+```text
 docs/index.html
 ```
 
@@ -454,7 +458,7 @@ docs/index.html
 
 After generating, provide this summary:
 
-```
+```text
 Documentation Site Generated
 
 Files Created:
@@ -530,6 +534,7 @@ Next Steps:
 ### Error Handling
 
 The generated HTML should handle:
+
 - Missing documents gracefully (show "Document not found")
 - Failed fetch requests (show error message)
 - Invalid markdown (display raw content)
@@ -557,5 +562,6 @@ The generated HTML should handle:
 ---
 
 **Remember**: You MUST read and use `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
+
 - **Cross-platform**: Do NOT use Bash for file operations. Use Glob/Read/Write/Grep tools exclusively. The only acceptable Bash use is a single simple `git` command (no pipes, no `&&`, no `$()`).
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

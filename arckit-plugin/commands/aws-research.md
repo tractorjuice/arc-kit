@@ -32,7 +32,7 @@ This command performs AWS-specific technology research using the AWS Knowledge M
 
 2. **Launch the agent**: Launch the **arckit-aws-research** agent in `acceptEdits` mode with the following prompt:
 
-   ```
+   ```text
    Research AWS services and architecture patterns for the project in projects/{project-dir}/.
 
    User's additional context: {$ARGUMENTS}
@@ -64,6 +64,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 ### Output
 
 The agent writes the full research document to file and returns a summary including:
+
 - AWS services recommended per category
 - Architecture pattern and reference
 - Security alignment (Security Hub, Well-Architected)

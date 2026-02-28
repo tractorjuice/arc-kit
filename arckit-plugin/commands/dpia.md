@@ -7,6 +7,7 @@ You are helping an enterprise architect generate a **Data Protection Impact Asse
 A DPIA is a **legal requirement** under UK GDPR Article 35 for processing that is likely to result in a high risk to individuals' rights and freedoms. It systematically assesses privacy risks, evaluates necessity and proportionality, and identifies mitigations.
 
 ## User Input
+
 ```text
 $ARGUMENTS
 ```
@@ -18,16 +19,19 @@ $ARGUMENTS
 ### Step 0: Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
+
 - **DATA** (Data Model) — Extract: all entities with PII/special category data, data subjects, GDPR Article 6 lawful basis, Article 9 conditions, retention periods, data flows, data classifications
   - If missing: STOP and warn user to run `/arckit:data-model` first — a DPIA requires a data model to identify personal data processing
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **PRIN** (Architecture Principles, in 000-global) — Extract: Privacy by Design principles, data minimization principles, security principles
   - If missing: warn that DPIAs should be informed by Privacy by Design principles
 - **REQ** (Requirements) — Extract: DR (data requirements), NFR-SEC (security), NFR-C (compliance/GDPR)
 - **STKE** (Stakeholder Analysis) — Extract: data subject categories, vulnerable groups, RACI for data governance roles (DPO, Data Controller, Data Processors)
 
 **OPTIONAL** (read if available, skip silently):
+
 - **RISK** (Risk Register) — Extract: data protection risks, privacy risks already identified
 - **SECD** (Secure by Design) — Extract: security controls relevant to data protection
 
@@ -44,12 +48,14 @@ Before generating the DPIA, use the **AskUserQuestion** tool to gather the asses
 
 **Question 1** — header: `Scope`, multiSelect: false
 > "What is the scope of this Data Protection Impact Assessment?"
+
 - **Full system (Recommended)**: Assess all personal data processing across the entire system — required for new systems or major changes
 - **Specific feature or module**: Assess a single feature that introduces new personal data processing (e.g., a new AI profiling feature)
 - **Specific data flow**: Assess a particular data flow involving personal data (e.g., third-party data sharing, international transfer)
 
 **Question 2** — header: `Consultation`, multiSelect: false
 > "How should data subject consultation be approached?"
+
 - **Surveys (Recommended)**: Online questionnaires to affected user groups — scalable and documented
 - **Interviews**: One-on-one or small group discussions — deeper insights for sensitive processing
 - **Workshops**: Facilitated sessions with representative data subjects — collaborative and thorough
@@ -76,6 +82,7 @@ Read all documents listed in Step 0 above. Use the extracted information for aut
 Read the DPIA template:
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/dpia-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/dpia-template.md` (default)
@@ -101,13 +108,14 @@ Based on the data model analysis, automatically score the ICO 9 criteria:
 | 9 | **Prevents rights exercise** | YES if: No mechanism for SAR/deletion/portability in data model |
 
 **DPIA Decision Rules**:
+
 - **2+ criteria met**: DPIA REQUIRED (UK GDPR Article 35)
 - **1 criterion met**: DPIA RECOMMENDED (good practice)
 - **0 criteria met**: DPIA NOT REQUIRED (but consider Data Privacy Notice)
 
 Show the screening results to the user:
 
-```
+```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 📋 DPIA Screening Results (ICO 9 Criteria)
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -198,14 +206,16 @@ Generate the DPIA by:
 
 9. **Section 7: ICO Consultation**:
    - If any residual risks remain HIGH after mitigations, flag for ICO prior consultation:
-     ```
+
+     ```text
      ⚠️  ICO Prior Consultation Required:
      - Risk DPIA-003 (Unauthorized profiling of children) remains HIGH after mitigations
      - Contact ICO before processing: https://ico.org.uk/make-a-complaint/your-personal-information-concerns/
      ```
 
 10. **Section 8: Sign-off and Approval**:
-   - Leave signature fields blank (to be signed by Data Controller, DPO, Senior Responsible Owner)
+
+- Leave signature fields blank (to be signed by Data Controller, DPO, Senior Responsible Owner)
 
 11. **Section 9: Review and Monitoring**:
     - Set review triggers: 12 months, major system changes, data breaches, ICO guidance updates
@@ -245,7 +255,7 @@ Generate the DPIA by:
 
 Write the complete DPIA document to:
 
-```
+```text
 projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v${VERSION}.md
 ```
 
@@ -253,7 +263,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-DPIA-v${VERSION}.md
 
 Ask the user:
 
-```
+```text
 📊 DPIA generated with [N] risks identified.
 
 Would you like to add DPIA risks to the project risk register?
@@ -263,6 +273,7 @@ This will create/update: projects/{project_id}/ARC-*-RISK-*.md
 ```
 
 If YES:
+
 1. Read `projects/{project_id}/ARC-*-RISK-*.md` (or create from template if it doesn't exist)
 2. Add each DPIA risk as a new entry with:
    - Risk ID: DPIA-001, DPIA-002, etc.
@@ -275,7 +286,7 @@ If YES:
 
 **IMPORTANT**: Do NOT output the full DPIA document to the chat (it's too large). Instead, show a concise summary:
 
-```
+```text
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ✅ DPIA Generated Successfully
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -405,7 +416,7 @@ If YES:
 
 ## Example Usage
 
-```
+```text
 /arckit:dpia Generate DPIA for NHS appointment booking system
 
 /arckit:dpia Create data protection impact assessment for HMRC chatbot handling taxpayer queries

@@ -13,6 +13,7 @@ Remote Control is a Claude Code feature (available on Pro and Max plans) that le
 The key distinction: **your session never leaves your machine**. Claude Code continues running locally with full access to your filesystem, ArcKit plugin, MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and project configuration. The web or mobile interface is simply a window into that local session.
 
 This means:
+
 - Your `projects/` directory, templates, and generated artifacts stay local
 - All 53 ArcKit commands and 5 research agents remain fully available
 - MCP servers for cloud research (AWS, Azure, GCP) keep working
@@ -33,7 +34,7 @@ ArcKit's research agents (`/arckit.research`, `/arckit.datascout`, `/arckit.aws-
 
 With Remote Control, you can start a research task at your desk:
 
-```
+```text
 /arckit.research Evaluate low-code platforms for citizen development
 ```
 
@@ -82,7 +83,7 @@ This starts a session and displays a URL and QR code. Scan the QR code with the 
 
 If you're already working in Claude Code with ArcKit, type:
 
-```
+```text
 /remote-control
 ```
 
@@ -111,6 +112,7 @@ If you want every Claude Code session to be remotely accessible by default, run 
 Remote Control uses outbound HTTPS connections only — it never opens inbound ports on your machine. Your local Claude Code instance registers with the Anthropic API and polls for work. When you connect from another device, messages are routed through the Anthropic API over TLS.
 
 This means:
+
 - **No firewall changes needed** — works behind corporate firewalls and NAT
 - **Same transport security** as any Claude Code session
 - **Short-lived, scoped credentials** for each connection

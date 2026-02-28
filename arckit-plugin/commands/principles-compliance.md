@@ -19,12 +19,14 @@ Generate a comprehensive compliance assessment document that measures adherence 
 ### Architecture Principles (MANDATORY)
 
 a. **PRIN** (Architecture Principles, in `projects/000-global/`) (MUST exist):
-   - If NOT found: ERROR "Run /arckit:principles first to define governance standards for your organization"
-   - Principles compliance cannot be assessed without defined principles
+
+- If NOT found: ERROR "Run /arckit:principles first to define governance standards for your organization"
+- Principles compliance cannot be assessed without defined principles
 
 ### Project Artifacts (RECOMMENDED)
 
 More artifacts = better evidence = more accurate assessment:
+
 - **REQ** (Requirements) in `projects/{project-dir}/` - Requirements to assess against principles
 - `projects/{project-dir}/vendors/{vendor}/hld-v*.md` - High-Level Design
 - `projects/{project-dir}/vendors/{vendor}/dld-v*.md` - Detailed Low-Level Design
@@ -52,6 +54,7 @@ More artifacts = better evidence = more accurate assessment:
 ### 0. Read the Template
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/principles-compliance-assessment-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/principles-compliance-assessment-template.md` (default)
@@ -61,6 +64,7 @@ More artifacts = better evidence = more accurate assessment:
 ### 1. Validate Prerequisites
 
 **Check Architecture Principles**:
+
 ```bash
 if [ ! -f projects/000-global/ARC-000-PRIN-*.md ]; then
     ERROR "Architecture principles not found. Run /arckit:principles first."
@@ -80,6 +84,7 @@ Read any `ARC-000-PRIN-*.md` file in `projects/000-global/` and extract ALL prin
 **Extraction Pattern**:
 
 Principles are typically structured as:
+
 ```markdown
 ### [Number]. [Principle Name]
 
@@ -100,6 +105,7 @@ Principles are typically structured as:
 ```
 
 **For EACH principle found**:
+
 - Extract principle number (optional - may not exist)
 - Extract principle name/title (REQUIRED)
 - Extract principle statement (REQUIRED)
@@ -110,7 +116,8 @@ Principles are typically structured as:
 **Important**: Do NOT hardcode principle names or count. Organizations customize their principles. Extract dynamically whatever exists in the file.
 
 **Example Extraction**:
-```
+
+```text
 Principle 1: "Scalability and Elasticity"
 Principle 2: "Resilience and Fault Tolerance"
 Principle 3: "Security by Design"
@@ -128,6 +135,7 @@ Principle 3: "Security by Design"
 Load only the information needed for assessment. Do NOT read entire files - extract relevant sections.
 
 **From any `ARC-*-REQ-*.md` file in `projects/{project-dir}/`** (if exists):
+
 - Business requirements (BR-xxx) count and examples
 - Functional requirements (FR-xxx) count and examples
 - Non-functional requirements by category:
@@ -140,6 +148,7 @@ Load only the information needed for assessment. Do NOT read entire files - extr
 - Data requirements (DR-xxx) count
 
 **From `projects/{project-dir}/vendors/{vendor}/hld-v*.md`** (if exists):
+
 - Table of contents or section headings
 - Architecture overview section
 - Technology stack / technology choices
@@ -150,6 +159,7 @@ Load only the information needed for assessment. Do NOT read entire files - extr
 - Observability/monitoring approach
 
 **From `projects/{project-dir}/vendors/{vendor}/dld-v*.md`** (if exists):
+
 - Detailed component design
 - API specifications
 - Infrastructure as Code references
@@ -157,6 +167,7 @@ Load only the information needed for assessment. Do NOT read entire files - extr
 - CI/CD pipeline description
 
 **From compliance assessments** (if exist):
+
 - `ARC-*-TCOP-*.md` - TCoP point scores
 - `ARC-*-SECD-*.md` - NCSC CAF assessment results
 - `ARC-*-SECD-MOD-*.md` - MOD CAAT assessment
@@ -164,6 +175,7 @@ Load only the information needed for assessment. Do NOT read entire files - extr
 - `ARC-*-ATRS-*.md` - Algorithmic transparency
 
 **From other artifacts**:
+
 - Any `ARC-*-DATA-*.md` file - Entity-relationship diagram, GDPR compliance
 - Any `ARC-*-TRAC-*.md` file - Requirements coverage
 - `ARC-*-SNOW-*.md` - Operational design
@@ -179,20 +191,24 @@ Load only the information needed for assessment. Do NOT read entire files - extr
 Look for evidence of compliance in project artifacts:
 
 **Requirements Evidence**:
+
 - Does ARC-*-REQ-*.md address this principle?
 - Are there specific requirements (BR/FR/NFR) supporting this principle?
 - Example: Security principle → Check for NFR-SEC-xxx requirements
 
 **Design Evidence**:
+
 - Does HLD/DLD demonstrate implementation of this principle?
 - Are there design decisions explicitly addressing this principle?
 - Example: Scalability principle → Check for auto-scaling, load balancing in HLD
 
 **Validation Gates Evidence**:
+
 - For each validation gate defined in the principle, check if satisfied
 - Example: "Load testing demonstrates capacity growth" → Look for test results
 
 **Compliance Assessment Evidence**:
+
 - Do compliance assessments (TCoP, Secure by Design) validate this principle?
 - Example: Security principle → Check ARC-*-SECD-*.md findings
 
@@ -201,44 +217,52 @@ Look for evidence of compliance in project artifacts:
 Assign ONE of these statuses:
 
 **🔴 RED (Non-Compliant)**:
+
 - Principle is directly VIOLATED (design contradicts principle)
 - No evidence of compliance AND no plan to comply
 - Critical gaps with no remediation plan
 
 **Criteria for RED**:
+
 - Design explicitly violates principle (e.g., manual deployment when IaC principle exists)
 - Security principle violated with no compensating controls
 - No requirements or design addressing critical principle
 
 **🟠 AMBER (Partial Compliance)**:
+
 - Some evidence exists (typically requirements acknowledge principle)
 - Design addresses principle but implementation gaps remain
 - Clear remediation path defined with target dates
 - "Principle in progress" - work underway but incomplete
 
 **Criteria for AMBER**:
+
 - Requirements exist but design incomplete
 - Design exists but implementation/testing incomplete
 - Some validation gates passed, others failed
 - Gaps identified with remediation plan
 
 **🟢 GREEN (Fully Compliant)**:
+
 - Strong evidence across MULTIPLE artifacts (requirements + design + tests/assessments)
 - Most or all validation gates satisfied
 - No significant gaps identified
 
 **Criteria for GREEN**:
+
 - Requirements clearly address principle
 - Design demonstrates implementation
 - Validation evidence exists (tests, assessments, operational metrics)
 - All or most validation gates passed
 
 **⚪ NOT ASSESSED (Insufficient Evidence)**:
+
 - Project too early in lifecycle (Discovery phase, no requirements yet)
 - Artifacts needed for assessment don't exist yet
 - Principle applies to later phases (e.g., operational principles before Go-Live)
 
 **Criteria for NOT ASSESSED**:
+
 - Project phase too early (Discovery with no requirements)
 - Principle requires implementation evidence but only requirements exist
 - Assessment deferred to later gate by design
@@ -248,6 +272,7 @@ Assign ONE of these statuses:
 **If AMBER or RED** - identify specific gaps:
 
 For each gap:
+
 - **Description**: What's missing?
 - **Impact**: What risk does this gap create?
 - **Evidence Missing**: What artifact/proof is absent?
@@ -256,7 +281,8 @@ For each gap:
 - **Target Date**: When should this be fixed? (next gate)
 
 **Example Gap**:
-```
+
+```text
 Gap: No load testing performed
 Impact: Cannot validate system meets performance requirements under load
 Evidence Missing: Load test results, performance metrics
@@ -270,20 +296,24 @@ Target Date: Before Beta gate (2025-02-15)
 Generate actionable next steps:
 
 **For RED principles**:
+
 - IMMEDIATE actions required before proceeding to next gate
 - OR exception request process if compliance impossible
 - Assign clear ownership and deadlines
 
 **For AMBER principles**:
+
 - Actions to achieve GREEN status before next gate
 - Evidence gathering needed (tests, threat models, etc.)
 - Track in project backlog with target dates
 
 **For GREEN principles**:
+
 - How to maintain compliance (continuous monitoring)
 - Next reassessment trigger (phase change, major design change)
 
 **For NOT ASSESSED principles**:
+
 - When to reassess (which gate/phase)
 - What artifacts needed before assessment possible
 
@@ -295,6 +325,7 @@ Use the **Write tool** to create:
 **Document Structure** (see template below)
 
 **IMPORTANT**: Use Write tool, not output to user. Document will be 500-2000 lines depending on:
+
 - Number of principles (varies by organization)
 - Number of artifacts available (more artifacts = more evidence)
 - Number of gaps identified (RED/AMBER principles = more detail)
@@ -303,7 +334,7 @@ Use the **Write tool** to create:
 
 Display concise summary (NOT full document):
 
-```
+```text
 ✅ Principles compliance assessment generated
 
 📊 **Overall Compliance Summary**:
@@ -812,13 +843,15 @@ For each principle:
 After generating the assessment document:
 
 1. **Commit to Git** (if project is git-initialized):
+
    ```bash
    git add projects/{project-dir}/ARC-{PROJECT_ID}-PRIN-COMP-v{VERSION}.md
    git commit -m "docs: principles compliance assessment for {phase} gate"
    ```
 
 2. **Suggest Follow-up Commands**:
-   ```
+
+   ```text
    📋 **Related Commands**:
    - /arckit:analyze - Run comprehensive gap analysis
    - /arckit:hld-review - Review vendor HLD against principles
@@ -841,6 +874,7 @@ After generating the assessment document:
 **Input**: Project in Discovery, only stakeholders and risk register exist
 
 **Expected Output**:
+
 - Most principles: ⚪ NOT ASSESSED (too early)
 - A few principles: 🟠 AMBER (if stakeholder/risk docs address them)
 - Overall: "Assessment deferred to Alpha gate after requirements created"
@@ -850,6 +884,7 @@ After generating the assessment document:
 **Input**: Project in Alpha, requirements and HLD exist
 
 **Expected Output**:
+
 - Strategic principles: 🟢 GREEN (requirements + HLD evidence)
 - Security principles: 🟠 AMBER (requirements exist, validation pending)
 - Operational principles: ⚪ NOT ASSESSED (too early)
@@ -860,6 +895,7 @@ After generating the assessment document:
 **Input**: Project in Beta, requirements + HLD + DLD exist
 
 **Expected Output**:
+
 - Most principles: 🟢 GREEN (strong evidence)
 - Some principles: 🟠 AMBER (testing pending)
 - Operational principles: 🟠 AMBER (post-deployment validation needed)
@@ -870,6 +906,7 @@ After generating the assessment document:
 **Input**: HLD describes manual deployment, violates IaC principle
 
 **Expected Output**:
+
 - IaC principle: 🔴 RED (direct violation)
 - Other principles: Mix of GREEN/AMBER
 - Overall: "BLOCK - Critical violation of Infrastructure as Code principle"

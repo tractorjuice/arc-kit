@@ -46,7 +46,7 @@ Output: Console only (no file created). This is a navigation aid, not a governan
 
 ### Example Output
 
-```
+```text
 ArcKit — Enterprise Architecture Governance Toolkit
 Version 2.10.0 | 53 commands | Plugin mode
 
@@ -113,7 +113,7 @@ Output: Creates `projects/` directory structure. No governance artifact is gener
 
 ### Example Output
 
-```
+```text
 ArcKit project structure initialized:
 
 projects/
@@ -133,7 +133,7 @@ Individual projects will be created automatically in numbered directories (001-*
 
 After initialization and running a few commands, your project grows into:
 
-```
+```text
 projects/
 ├── 000-global/
 │   ├── ARC-000-PRIN-v1.0.md      (architecture principles)

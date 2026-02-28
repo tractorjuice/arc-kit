@@ -21,18 +21,23 @@ $ARGUMENTS
 ## Arguments
 
 **SPRINT_LENGTH** (optional): Sprint duration (default: `2w`)
+
 - Valid: `1w`, `2w`, `3w`, `4w`
 
 **SPRINTS** (optional): Number of sprints to plan (default: `8`)
+
 - Generates sprint plan for first N sprints
 
 **VELOCITY** (optional): Team velocity in story points per sprint (default: `20`)
+
 - Adjusts sprint capacity planning
 
 **FORMAT** (optional): Output formats (default: `markdown`)
+
 - Valid: `markdown`, `csv`, `json`, `all`
 
 **PRIORITY** (optional): Prioritization approach (default: `multi`)
+
 - `moscow` - MoSCoW only
 - `risk` - Risk-based only
 - `value` - Value-based only
@@ -53,7 +58,8 @@ Scans all ArcKit artifacts and automatically:
    - Data Requirements (DR-xxx) → Data Tasks
 
 2. **Generates GDS-compliant user stories**
-   ```
+
+   ```text
    As a [persona]
    I want [capability]
    So that [goal]
@@ -94,18 +100,21 @@ Scans all ArcKit artifacts and automatically:
 Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number). If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output.
 
 Extract project metadata:
+
 - Project name
 - Current phase (from artifacts)
 - Team size (if documented)
 
-### Step 2: Read existing artifacts from the project context:
+### Step 2: Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
+
 - **REQ** (Requirements) — primary source
   - Extract: All BR/FR/NFR/INT/DR requirement IDs, descriptions, priorities, acceptance criteria
   - If missing: warn user to run `/arckit:requirements` first — backlog is derived from requirements
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **STKE** (Stakeholder Analysis)
   - Extract: User personas for "As a..." statements, stakeholder priorities
 - **RISK** (Risk Register)
@@ -120,15 +129,17 @@ Extract project metadata:
   - Extract: Component mapping, detailed component info
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **DPIA** (Data Protection Impact Assessment)
   - Extract: Privacy-related tasks and constraints
 - `test-strategy.md` — Test requirements (optional external document)
   - Extract: Test types and coverage needs
 
-### Step 2b: Read external documents and policies:
-   - Read any **external documents** listed in the project context (`external/` files) — extract existing user stories, velocity data, sprint history, team capacity, component architecture from vendor HLD/DLD documents
-   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise backlog standards, Definition of Ready/Done templates, cross-project estimation benchmarks
-   - If no external docs exist but they would improve backlog accuracy, ask: "Do you have any vendor design documents or existing backlog exports? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+### Step 2b: Read external documents and policies
+
+- Read any **external documents** listed in the project context (`external/` files) — extract existing user stories, velocity data, sprint history, team capacity, component architecture from vendor HLD/DLD documents
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise backlog standards, Definition of Ready/Done templates, cross-project estimation benchmarks
+- If no external docs exist but they would improve backlog accuracy, ask: "Do you have any vendor design documents or existing backlog exports? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Step 2c: Interactive Configuration
 
@@ -136,6 +147,7 @@ Before generating the backlog, use the **AskUserQuestion** tool to gather user p
 
 **Question 1** — header: `Priority`, multiSelect: false
 > "Which prioritization approach should be used for the backlog?"
+
 - **Multi-factor (Recommended)**: Combines MoSCoW, risk, value, and dependency scoring for balanced prioritization
 - **MoSCoW**: Must/Should/Could/Won't categorization only
 - **Value vs Effort**: Prioritize by business value relative to implementation effort
@@ -143,6 +155,7 @@ Before generating the backlog, use the **AskUserQuestion** tool to gather user p
 
 **Question 2** — header: `Format`, multiSelect: false
 > "What output format do you need?"
+
 - **All formats (Recommended)**: Markdown report + CSV (Jira/Azure DevOps import) + JSON (API integration)
 - **Markdown only**: Standard report document
 - **CSV only**: For direct import into Jira, Azure DevOps, or GitHub Projects
@@ -155,46 +168,57 @@ Apply the user's selections to the corresponding parameters throughout this comm
 For each requirement in the requirements document (`ARC-*-REQ-*.md`), extract:
 
 **Business Requirements (BR-xxx)**:
+
 ```markdown
 **BR-001**: User Management
 - Description: [text]
 - Priority: Must Have
 ```
+
 → Becomes an **Epic**
 
 **Functional Requirements (FR-xxx)**:
+
 ```markdown
 **FR-001**: User Registration
 - Description: [text]
 - Priority: Must Have
 - Acceptance Criteria: [list]
 ```
+
 → Becomes a **User Story**
 
 **Non-Functional Requirements (NFR-xxx)**:
+
 ```markdown
 **NFR-005**: Response time < 2 seconds
 - Implementation: Caching layer
 - Priority: Should Have
 ```
+
 → Becomes a **Technical Task**
 
 **Integration Requirements (INT-xxx)**:
+
 ```markdown
 **INT-003**: Integrate with Stripe API
 - Priority: Must Have
 ```
+
 → Becomes an **Integration Story**
 
 **Data Requirements (DR-xxx)**:
+
 ```markdown
 **DR-002**: Store user payment history
 - Priority: Should Have
 ```
+
 → Becomes a **Data Task**
 
 Create a mapping table:
-```
+
+```text
 Requirement ID → Story Type → Priority → Dependencies
 ```
 
@@ -205,6 +229,7 @@ For **each FR-xxx**, create a user story in GDS format:
 #### 4.1: Identify the Actor (User Persona)
 
 Look in the stakeholder analysis (`ARC-*-STKE-*.md`) for user types:
+
 - Service users
 - Administrators
 - System operators
@@ -212,15 +237,18 @@ Look in the stakeholder analysis (`ARC-*-STKE-*.md`) for user types:
 - Third-party integrators
 
 Match the FR to the appropriate persona based on:
+
 - Who performs this action?
 - Who benefits from this capability?
 
 Examples:
+
 - FR about "user login" → "new user" or "registered user"
 - FR about "admin dashboard" → "system administrator"
 - FR about "API endpoint" → "API consumer"
 
 If no persona matches, use generic:
+
 - "user" for user-facing features
 - "system" for backend/integration features
 - "administrator" for admin features
@@ -228,10 +256,12 @@ If no persona matches, use generic:
 #### 4.2: Extract the Action (I want...)
 
 From the FR description, identify the core capability:
+
 - **Action verbs**: create, view, update, delete, process, integrate, export, import, search, filter, etc.
 - **Object**: what is being acted upon
 
 Examples:
+
 - FR: "System shall allow users to register" → "create an account"
 - FR: "System shall process payments" → "pay with my credit card"
 - FR: "System shall export reports to CSV" → "export my data as CSV"
@@ -239,12 +269,14 @@ Examples:
 #### 4.3: Infer the Goal (So that...)
 
 Why does the user need this capability? Look for:
+
 1. Explicit goal in FR description
 2. Parent BR description
 3. Business case benefits
 4. User needs from stakeholder analysis
 
 If goal not explicit, infer from context:
+
 - Registration → "access the service"
 - Payment → "complete my transaction"
 - Export → "analyze data offline"
@@ -255,14 +287,16 @@ If goal not explicit, infer from context:
 Convert FR's acceptance criteria to "It's done when..." format:
 
 **Original FR acceptance criteria**:
-```
+
+```text
 - Email verification required
 - Password must be 8+ characters
 - GDPR consent must be captured
 ```
 
 **Convert to GDS format**:
-```
+
+```text
 Acceptance Criteria:
 - It's done when email verification is sent within 1 minute
 - It's done when password meets security requirements (8+ chars, special char)
@@ -271,6 +305,7 @@ Acceptance Criteria:
 ```
 
 **Rules for acceptance criteria**:
+
 - Start with "It's done when..."
 - Make measurable and testable
 - Include success cases
@@ -318,6 +353,7 @@ Use Fibonacci sequence: **1, 2, 3, 5, 8, 13**
   - Example: "Build entire admin dashboard"
 
 **Factors that increase points**:
+
 - Multiple components involved (API + UI + database)
 - Security requirements (authentication, encryption)
 - Third-party integration (external APIs)
@@ -327,7 +363,8 @@ Use Fibonacci sequence: **1, 2, 3, 5, 8, 13**
 - Performance optimisation needed
 
 **Estimation algorithm**:
-```
+
+```text
 Base points = 3 (typical story)
 
 If FR involves:
@@ -347,6 +384,7 @@ Cap at 13 (break down if larger)
 #### 4.6: Identify Component (from HLD)
 
 Map story to HLD component:
+
 - Read `vendors/{vendor}/hld-v*.md` for component list
 - Match FR to component based on:
   - Component responsibilities
@@ -354,7 +392,8 @@ Map story to HLD component:
   - FR description keywords
 
 Example component mapping:
-```
+
+```text
 FR-001: User Registration → User Service
 FR-005: Process Payment → Payment Service
 FR-010: Send Email → Notification Service
@@ -362,6 +401,7 @@ FR-015: Generate Report → Reporting Service
 ```
 
 If no HLD exists, infer component from FR:
+
 - Authentication/user features → "User Service"
 - Payment features → "Payment Service"
 - Data/reporting → "Data Service"
@@ -373,7 +413,7 @@ Break down story into implementation tasks:
 
 **For a typical FR**, create 2-4 tasks:
 
-```
+```text
 Story-001: Create user account (8 points)
 
 Tasks:
@@ -396,6 +436,7 @@ Tasks:
 ```
 
 **Task estimation**:
+
 - Tasks should sum to story points
 - Typical split: 30% database, 40% API, 30% UI
 - Add testing tasks if needed
@@ -575,6 +616,7 @@ For **each NFR-xxx**, create a technical task:
 #### 6.2: NFR → Task Examples
 
 **Performance NFR**:
+
 ```markdown
 ### Task-NFR-005: Implement Redis caching layer
 
@@ -600,6 +642,7 @@ accessed data including user sessions, product catalog, and search results.
 ```
 
 **Security NFR**:
+
 ```markdown
 ### Task-NFR-012: Implement rate limiting
 
@@ -625,6 +668,7 @@ Limit: 100 requests per minute per IP, 1000 per hour.
 ```
 
 **Compliance NFR**:
+
 ```markdown
 ### Task-NFR-008: Implement GDPR audit logging
 
@@ -657,7 +701,7 @@ Apply **multi-factor prioritization algorithm**:
 
 For each story/task, calculate:
 
-```
+```text
 Priority Score = (
   MoSCoW_Weight * 40% +
   Risk_Weight * 20% +
@@ -667,24 +711,28 @@ Priority Score = (
 ```
 
 **MoSCoW Weight**:
+
 - Must Have = 4
 - Should Have = 3
 - Could Have = 2
 - Won't Have = 1
 
 **Risk Weight** (from `ARC-*-RISK-*.md`):
+
 - Critical risk = 4
 - High risk = 3
 - Medium risk = 2
 - Low risk = 1
 
 **Value Weight** (from `ARC-*-SOBC-*.md`):
+
 - High ROI/impact = 4
 - Medium ROI/impact = 3
 - Low ROI/impact = 2
 - No ROI data = 1
 
 **Dependency Weight**:
+
 - Blocks many items (>5) = 4
 - Blocks some items (3-5) = 3
 - Blocks few items (1-2) = 2
@@ -692,7 +740,7 @@ Priority Score = (
 
 **Example calculation**:
 
-```
+```text
 Story-001: Create user account
   MoSCoW: Must Have = 4
   Risk: Medium (GDPR) = 2
@@ -718,7 +766,7 @@ Priority Score = (2 * 0.4) + (1 * 0.2) + (2 * 0.2) + (1 * 0.2)
 
 Sort all stories/tasks by Priority Score (descending):
 
-```
+```text
 Story-001: Create user account (3.6)
 Story-002: User login (3.4)
 Task-NFR-012: Rate limiting (3.2)
@@ -733,6 +781,7 @@ Story-025: Export preferences (1.6)
 After sorting by priority, adjust for **mandatory dependencies**:
 
 **Foundation Stories** (always Sprint 1):
+
 - Authentication (user registration, login)
 - Database setup
 - CI/CD pipeline
@@ -756,7 +805,7 @@ After sorting by priority, adjust for **mandatory dependencies**:
 
 **Dependency adjustment algorithm**:
 
-```
+```text
 For each story S in sorted backlog:
   If S has dependencies D1, D2, ..., Dn:
     For each dependency Di:
@@ -767,7 +816,7 @@ For each story S in sorted backlog:
 
 **Example - Before dependency adjustment**:
 
-```
+```text
 Sprint 1:
   Story-016: Process payment (3.0) - depends on Story-015
 
@@ -777,7 +826,7 @@ Sprint 2:
 
 **After dependency adjustment**:
 
-```
+```text
 Sprint 1:
   Story-015: Connect to Stripe (3.0) - no dependencies
 
@@ -792,11 +841,13 @@ Organise stories into sprints with capacity planning:
 #### 8.1: Sprint Parameters
 
 **Default values** (overridden by arguments):
+
 - Velocity: 20 story points per sprint
 - Sprint length: 2 weeks
 - Number of sprints: 8
 
 **Capacity allocation per sprint**:
+
 - 60% Feature stories (12 points)
 - 20% Technical tasks (4 points)
 - 15% Testing tasks (3 points)
@@ -807,6 +858,7 @@ Organise stories into sprints with capacity planning:
 **Sprint 1 is special** - always includes:
 
 **Must-have foundation items**:
+
 1. User authentication (registration + login)
 2. Database setup
 3. CI/CD pipeline
@@ -876,7 +928,8 @@ Organise stories into sprints with capacity planning:
 For each sprint after Sprint 1:
 
 **Step 1: Calculate available capacity**
-```
+
+```text
 Total capacity = Velocity (default 20 points)
 Feature capacity = 60% = 12 points
 Technical capacity = 20% = 4 points
@@ -888,7 +941,7 @@ Buffer = 5% = 1 point
 
 Starting from top of prioritised backlog:
 
-```
+```text
 For each unscheduled story S (sorted by priority):
   If S's dependencies are all scheduled in earlier sprints:
     If S's points <= remaining_capacity_for_type:
@@ -905,6 +958,7 @@ Continue until sprint is full or no more stories fit
 **Step 3: Balance work types**
 
 Ensure sprint has mix of:
+
 - Feature stories (user-facing value)
 - Technical tasks (infrastructure, NFRs)
 - Testing tasks (quality)
@@ -914,6 +968,7 @@ If sprint has too many of one type, swap with next sprint.
 **Step 4: Validate dependencies**
 
 For each story in sprint:
+
 - Check all dependencies are in earlier sprints
 - If dependency missing, move it to current sprint (adjust capacity)
 
@@ -1075,7 +1130,7 @@ flowchart TD
     style S1 fill:#E3F2FD
     style S2 fill:#FFF3E0
     style Future fill:#E8F5E9
-```
+```text
 
 ### Sprint 2 → Sprint 3 Dependencies
 
@@ -1109,9 +1164,10 @@ flowchart TD
     style S3 fill:#FFF3E0
     style S4 fill:#E8F5E9
     style S3Plus fill:#F3E5F5
-```
+```text
 
 [... continue for all sprints ...]
+
 ```
 
 ### Step 11: Generate Epic Overview
@@ -1406,7 +1462,6 @@ Create `backlog.json` for programmatic access:
 }
 ```
 
-
 ---
 
 **CRITICAL - Auto-Populate Document Control Fields**:
@@ -1414,11 +1469,13 @@ Create `backlog.json` for programmatic access:
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-BKLG-v{VERSION}` (e.g., `ARC-001-BKLG-v1.0`)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -1427,14 +1484,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.backlog"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -1448,6 +1508,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:backlog` command
 **Generated on**: {DATE} {TIME} GMT
@@ -1464,9 +1525,11 @@ The footer should be populated with:
 Write all files to `projects/{project-dir}/`:
 
 **Always create**:
+
 - `ARC-{PROJECT_ID}-BKLG-v1.0.md` - Primary output
 
 **Create if FORMAT includes**:
+
 - `ARC-{PROJECT_ID}-BKLG-v1.0.csv` - If FORMAT=csv or FORMAT=all
 - `ARC-{PROJECT_ID}-BKLG-v1.0.json` - If FORMAT=json or FORMAT=all
 
@@ -1475,7 +1538,7 @@ After writing the file(s), show ONLY the confirmation message below. Do NOT outp
 
 **Confirmation message**:
 
-```
+```text
 ✅ Product backlog generated successfully!
 
 📁 Output files:
@@ -1511,6 +1574,7 @@ After writing the file(s), show ONLY the confirmation message below. Do NOT outp
 ### Story Point Accuracy
 
 AI-generated story points are **estimates only**. Teams should:
+
 1. Review and re-estimate based on their velocity
 2. Use team poker for consensus
 3. Track actual vs estimated over sprints
@@ -1519,6 +1583,7 @@ AI-generated story points are **estimates only**. Teams should:
 ### Velocity Calibration
 
 Initial velocity (default 20) is assumed. After Sprint 1:
+
 1. Calculate actual velocity: sum of "Done" story points
 2. Adjust Sprint 2+ capacity accordingly
 3. Track velocity trend (improving, stable, declining)
@@ -1527,6 +1592,7 @@ Initial velocity (default 20) is assumed. After Sprint 1:
 ### Backlog Grooming
 
 This backlog is a starting point. Teams should:
+
 - **Weekly**: Refine next 2 sprints (details, estimates)
 - **Bi-weekly**: Groom backlog beyond 2 sprints (priorities)
 - **Monthly**: Review epic priorities (business changes)
@@ -1535,6 +1601,7 @@ This backlog is a starting point. Teams should:
 ### Dependency Management
 
 Dependencies are identified automatically but may need adjustment:
+
 - Technical dependencies (X must exist before Y)
 - Business dependencies (A delivers value before B)
 - Resource dependencies (same person needed for both)
@@ -1542,6 +1609,7 @@ Dependencies are identified automatically but may need adjustment:
 ### Risk Management
 
 High-risk items are prioritised early to:
+
 - Prove technical feasibility
 - Identify blockers early
 - Reduce uncertainty
@@ -1556,7 +1624,8 @@ High-risk items are prioritised early to:
 If artifacts are missing:
 
 **No requirements document**:
-```
+
+```text
 ❌ Error: No ARC-*-REQ-*.md file found in projects/{project-dir}/
 
 Cannot generate backlog without requirements. Please run:
@@ -1566,7 +1635,8 @@ Then re-run /arckit:backlog
 ```
 
 **No stakeholder analysis**:
-```
+
+```text
 ⚠️ Warning: No ARC-*-STKE-*.md file found. Using generic personas.
 
 For better user stories, run:
@@ -1576,7 +1646,8 @@ Then re-run /arckit:backlog
 ```
 
 **No HLD**:
-```
+
+```text
 ⚠️ Warning: hld-v*.md not found. Stories will not be mapped to components.
 
 For better component mapping, run:
@@ -1592,12 +1663,14 @@ Continue with available artifacts, note limitations in output.
 ## Time Savings
 
 **Manual backlog creation**:
+
 - Convert requirements: 2-3 weeks
 - Prioritize and sequence: 1 week
 - Sprint planning: 1 week
 - **Total: 4-6 weeks (80-120 hours)**
 
 **With /arckit:backlog**:
+
 - Run command: 2-5 minutes
 - Review and refine: 1-2 days
 - Team refinement: 2-3 days
@@ -1616,6 +1689,7 @@ Continue with available artifacts, note limitations in output.
 ```
 
 Output:
+
 - Creates `ARC-{PROJECT_ID}-BKLG-v1.0.md` with 8 sprints at 20 points/sprint
 - Uses multi-factor prioritization
 - Includes all available artifacts
@@ -1627,6 +1701,7 @@ Output:
 ```
 
 Output:
+
 - 12 sprints planned
 - 25 story points per sprint
 - Adjusts capacity allocation (60/20/15/5)
@@ -1638,6 +1713,7 @@ Output:
 ```
 
 Output:
+
 - `ARC-{PROJECT_ID}-BKLG-v1.0.md` (markdown)
 - `ARC-{PROJECT_ID}-BKLG-v1.0.csv` (Jira import)
 - `ARC-{PROJECT_ID}-BKLG-v1.0.json` (API integration)
@@ -1649,6 +1725,7 @@ Output:
 ```
 
 Output:
+
 - Prioritizes solely by risk level
 - High-risk items first
 - Ignores MoSCoW, value, dependencies
@@ -1657,7 +1734,8 @@ Output:
 
 ## Integration with Other Commands
 
-### Inputs From:
+### Inputs From
+
 - `/arckit:requirements` → All stories
 - `/arckit:hld` → Component mapping
 - `/arckit:stakeholders` → User personas
@@ -1666,7 +1744,8 @@ Output:
 - `/arckit:business-case` → Value priorities
 - `/arckit:principles` → Definition of Done
 
-### Outputs To:
+### Outputs To
+
 - `/arckit:traceability` → Requirements → Stories → Sprints
 - `/arckit:test-strategy` → Test cases from acceptance criteria
 - `/arckit:analyze` → Backlog completeness check

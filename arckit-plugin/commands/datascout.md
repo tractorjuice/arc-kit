@@ -36,7 +36,7 @@ This command discovers external data sources — APIs, datasets, open data porta
 
 2. **Launch the agent**: Launch the **arckit-datascout** agent in `acceptEdits` mode with the following prompt:
 
-```
+```text
 Discover external data sources for the project in projects/{project-dir}/.
 
 User's additional context: {$ARGUMENTS}
@@ -68,6 +68,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 ### Output
 
 The agent writes the full discovery document to file and returns a summary including:
+
 - Categories researched and sources discovered
 - UK Government open data sources found
 - Top recommended sources with scores

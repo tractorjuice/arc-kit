@@ -8,13 +8,13 @@ Enterprise Architecture Governance & Vendor Procurement Toolkit - a Claude Code 
 
 In Claude Code, run:
 
-```
+```text
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
 ### Step 2: Install the plugin
 
-```
+```text
 /plugin
 ```
 
@@ -45,17 +45,20 @@ claude --plugin-dir /path/to/arc-kit/arckit-plugin
 After installing the plugin:
 
 1. **Initialize a project** (optional - commands will create structure automatically):
-   ```
+
+   ```text
    /arckit:init
    ```
 
 2. **Create architecture principles**:
-   ```
+
+   ```text
    /arckit:principles
    ```
 
 3. **Create requirements for a project**:
-   ```
+
+   ```text
    /arckit:requirements NHS appointment booking system
    ```
 
@@ -96,11 +99,13 @@ ArcKit templates can be customized per-project to match your organization's requ
 ### Common Customizations
 
 **For non-UK Government projects:**
+
 - Remove "UK Government Alignment" sections
 - Change classification scheme from OFFICIAL-SENSITIVE to your organization's scheme
 - Remove TCoP, GDS Service Standard references
 
 **For your organization:**
+
 - Add custom Document Control fields (Cost Centre, Programme, Department)
 - Change requirement ID prefixes (BR/FR/NFR → your taxonomy)
 - Add organization branding and headers
@@ -108,7 +113,7 @@ ArcKit templates can be customized per-project to match your organization's requ
 
 ### Template Location
 
-```
+```text
 project-root/
 ├── .arckit/
 │   └── templates/              # Your customized templates
@@ -122,6 +127,7 @@ project-root/
 ### Keeping Templates Updated
 
 When ArcKit plugin updates with new features:
+
 - Your customized templates are **not** automatically updated
 - Compare your templates with plugin versions periodically
 - Merge new sections you want to adopt
@@ -135,6 +141,7 @@ The plugin includes conversational skills that activate automatically when you a
 ## Commands Overview
 
 ### Core Governance
+
 - `/arckit:principles` - Create architecture principles
 - `/arckit:stakeholders` - Analyze stakeholders and goals
 - `/arckit:requirements` - Generate comprehensive requirements
@@ -142,12 +149,14 @@ The plugin includes conversational skills that activate automatically when you a
 - `/arckit:sobc` - Strategic Outline Business Case (Green Book)
 
 ### Technical Design
+
 - `/arckit:data-model` - Data model with GDPR compliance
 - `/arckit:diagram` - Architecture diagrams (Mermaid)
 - `/arckit:wardley` - Wardley Maps for strategy
 - `/arckit:adr` - Architecture Decision Records
 
 ### Research & Procurement
+
 - `/arckit:research` - Technology market research
 - `/arckit:aws-research` - AWS service research (MCP)
 - `/arckit:azure-research` - Azure service research (MCP)
@@ -158,6 +167,7 @@ The plugin includes conversational skills that activate automatically when you a
 - `/arckit:dos` - Digital Outcomes & Specialists
 
 ### UK Government Compliance
+
 - `/arckit:tcop` - Technology Code of Practice review
 - `/arckit:secure` - Secure by Design assessment
 - `/arckit:dpia` - Data Protection Impact Assessment
@@ -165,6 +175,7 @@ The plugin includes conversational skills that activate automatically when you a
 - `/arckit:service-assessment` - GDS Service Standard
 
 ### Operations & Delivery
+
 - `/arckit:devops` - DevOps strategy
 - `/arckit:finops` - FinOps cloud cost management
 - `/arckit:mlops` - MLOps strategy
@@ -178,7 +189,7 @@ See the full command list with `/help arckit`.
 
 ArcKit creates this structure in your project:
 
-```
+```text
 projects/
 ├── 000-global/           # Cross-project artifacts
 │   ├── policies/         # Organization policies
@@ -206,10 +217,12 @@ AWS Knowledge and Microsoft Learn work out of the box with no configuration. The
 ### Setting up optional API keys
 
 **Google Developer Knowledge** (for `/arckit:gcp-research`):
+
 1. Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey)
 2. Set the environment variable: `export GOOGLE_API_KEY="your-key-here"`
 
 **Data Commons** (for data statistics lookups):
+
 1. Get an API key from [datacommons.org](https://datacommons.org)
 2. Set the environment variable: `export DATA_COMMONS_API_KEY="your-key-here"`
 

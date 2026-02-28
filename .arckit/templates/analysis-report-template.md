@@ -34,6 +34,7 @@
 **Overall Status**: [✅ Ready / ⚠️ Issues Found / ❌ Critical Issues]
 
 **Key Metrics**:
+
 - Total Requirements: [count]
 - Requirements Coverage: [percentage]%
 - Critical Issues: [count]
@@ -66,6 +67,7 @@
 | NFR-S-001 | Security | MUST | [✅/❌] | [✅/❌] | [✅/⚠️/❌] |
 
 **Statistics**:
+
 - Total Requirements: [count]
 - Fully Covered: [count] ([percentage]%)
 - Partially Covered: [count] ([percentage]%)
@@ -94,6 +96,7 @@
 **Stakeholder Analysis Exists**: [✅ Yes / ❌ No]
 
 **Stakeholder-Requirements Coverage**:
+
 - Requirements traced to stakeholder goals: [percentage]%
 - Orphan requirements (no stakeholder justification): [count]
 - Requirement conflicts documented and resolved: [✅ Yes / ⚠️ Partial / ❌ No]
@@ -131,6 +134,7 @@
 | B-001 | [Description] | [Goal ID] | [REQ IDs] | [✅/❌] | [Status] |
 
 **Benefits Coverage**:
+
 - Total benefits: [count]
 - Benefits traced to stakeholder goals: [percentage]%
 - Benefits supported by requirements: [percentage]%
@@ -218,6 +222,7 @@
 [Specific action to resolve]
 
 **Evidence**:
+
 - [Evidence 1]
 - [Evidence 2]
 
@@ -284,6 +289,7 @@
 **Analyzed By**: ArcKit `/arckit.analyze` command
 
 **Checks Performed**:
+
 - Requirements completeness and quality
 - Architecture principles compliance
 - Stakeholder traceability
@@ -293,6 +299,7 @@
 - Design quality (HLD/DLD)
 
 **Severity Classification**:
+
 - 🔴 **CRITICAL**: Blocks procurement/implementation, must resolve immediately
 - 🟠 **HIGH**: Significant risk, resolve before major milestones
 - 🟡 **MEDIUM**: Should be addressed, can proceed with caution

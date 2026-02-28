@@ -12,9 +12,9 @@ The header row is a pipe-delimited markdown table. Commands are listed as column
 ### Adding a New Column
 
 1. Find the alphabetical position for the new command name in the header row
-2. Insert `| {name} ` at that position in the header row
+2. Insert `| {name}` at that position in the header row
 3. Insert `|------` at the same position in the separator row (line 21)
-4. Insert `|  ` (empty cell) at the same column position in **every** existing data row (lines 22-69)
+4. Insert `|` (empty cell) at the same column position in **every** existing data row (lines 22-69)
 
 **Important**: The column position must be consistent across all rows. Count pipes from the left to ensure alignment.
 
@@ -81,6 +81,7 @@ Commands are organized into tiers based on dependency depth. Each tier has a hea
 ### Choosing the Right Tier
 
 Place the new command in the tier that matches its highest mandatory dependency:
+
 - If it depends on nothing mandatory: Tier 0
 - If it depends on principles/plan: Tier 1
 - If it depends on requirements: Tier 3-5 (depending on other dependencies)
@@ -130,6 +131,7 @@ Use correct English ordinals: 1st, 2nd, 3rd, 4th, 5th, ..., 21st, 22nd, 23rd, 24
 ```
 
 Update:
+
 - `Commands Documented` to new count
 - `Matrix Rows` to new count (if command is in the matrix; utility commands don't add rows)
 - `Matrix Date` to today's date
@@ -186,6 +188,7 @@ style NEW fill:#90EE90    %% Green - Core workflow
 ### Workflow Paths
 
 There are 5 workflow diagrams in WORKFLOW-DIAGRAMS.md:
+
 1. **Standard Project Path** (Non-AI, Non-Government)
 2. **UK Government Project Path**
 3. **UK Government Platform Strategy Path**
@@ -193,6 +196,7 @@ There are 5 workflow diagrams in WORKFLOW-DIAGRAMS.md:
 5. **MOD Defence AI Project Path**
 
 Not every command appears in every path. Choose which paths are relevant based on the command's purpose:
+
 - Government-specific commands only appear in UK Gov paths
 - MOD commands only appear in MOD paths
 - AI commands only appear in AI paths

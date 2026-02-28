@@ -71,6 +71,7 @@ Create `.arckit/conformance-rules.md` to define project-specific constraints:
 ```
 
 Keywords determine severity:
+
 - **MUST / MUST NOT** → HIGH severity
 - **SHOULD / SHOULD NOT** → MEDIUM severity
 
@@ -118,7 +119,7 @@ Keywords determine severity:
 
 ## Relationship to Other Commands
 
-```
+```text
 /arckit.health          Quick metadata scan (stale files, missing links)
          ↓
 /arckit.conformance     Systematic decided-vs-designed check (this command)

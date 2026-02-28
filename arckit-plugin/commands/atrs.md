@@ -71,6 +71,7 @@ $ARGUMENTS
    - Make it accessible to non-technical readers
 
 **Key Tier 1 Fields**:
+
 - **Name**: Tool identifier
 - **Description**: 1-2 sentence plain English summary
 - **Website URL**: Link to more information
@@ -83,6 +84,7 @@ $ARGUMENTS
 7. **Complete TIER 2 - Detailed Information** (for specialists):
 
 ### Section 1: Owner and Responsibility
+
 - Organization and team
 - Senior Responsible Owner (name, role, accountability)
 - External suppliers (names, Companies House numbers, roles)
@@ -90,6 +92,7 @@ $ARGUMENTS
 - Data access terms for suppliers
 
 ### Section 2: Description and Rationale
+
 - Detailed technical description
 - Algorithm type (rule-based, ML, generative AI, etc.)
 - AI model details (if applicable): provider, version, fine-tuning
@@ -99,6 +102,7 @@ $ARGUMENTS
 - Alternatives considered (and why rejected)
 
 ### Section 3: Decision-Making Process
+
 - Process integration (role in workflow)
 - Provided information (outputs and format)
 - Frequency and scale of usage
@@ -111,6 +115,7 @@ $ARGUMENTS
 - Appeals and contestability (how users can contest decisions)
 
 ### Section 4: Data
+
 - Data sources (types, origins, fields used)
 - Personal data and special category data
 - Data sharing arrangements
@@ -120,12 +125,14 @@ $ARGUMENTS
 - Cyber Essentials / ISO 27001 certification
 
 ### Section 5: Impact Assessments
+
 - **DPIA (Data Protection Impact Assessment)**: Status, date, outcome, risks
 - **EqIA (Equality Impact Assessment)**: Protected characteristics, impacts, mitigations
 - **Human Rights Assessment**: ECHR articles, safeguards
 - **Other assessments**: Environmental, accessibility, security
 
 ### Section 6: Fairness, Bias, and Discrimination
+
 - Bias testing completed (methodology, date)
 - Fairness metrics (demographic parity, equalized odds, etc.)
 - Results by protected characteristic (gender, ethnicity, age, disability)
@@ -134,6 +141,7 @@ $ARGUMENTS
 - Ongoing bias monitoring (frequency, metrics, alert thresholds)
 
 ### Section 7: Technical Details
+
 - Model performance metrics (accuracy, precision, recall, F1)
 - Performance by demographic group
 - Model explainability approach (SHAP, LIME, etc.)
@@ -142,6 +150,7 @@ $ARGUMENTS
 - Retraining schedule
 
 ### Section 8: Testing and Assurance
+
 - Testing approach (unit, integration, UAT, A/B, red teaming)
 - Edge cases and failure modes
 - Fallback procedures
@@ -153,30 +162,35 @@ $ARGUMENTS
 - Independent assurance and external audit
 
 ### Section 9: Transparency and Explainability
+
 - Public disclosure (website, GOV.UK, model card, open source)
 - User communication (how users are informed)
 - Information provided to users (that algorithm is used, how it works, how to contest)
 - Model card published
 
 ### Section 10: Governance and Oversight
+
 - Governance structure (board/committee composition, responsibilities)
 - Risk register and top risks
 - Incident management (response plan, process, contact)
 - Audit trail (logging, retention, review)
 
 ### Section 11: Compliance
+
 - Legal basis (primary legislation, regulatory compliance)
 - Data protection (controller, DPO, ICO registration, legal basis)
 - Standards compliance (TCoP, GDS Service Standard, Data Ethics Framework, ISO)
 - Procurement compliance (route, value, IR35)
 
 ### Section 12: Performance and Outcomes
+
 - Success metrics and KPIs
 - Benefits realized (with evidence)
 - User feedback and satisfaction
 - Continuous improvement log
 
 ### Section 13: Review and Updates
+
 - Review schedule (frequency, next review date)
 - Triggers for unscheduled review
 - Version history
@@ -185,6 +199,7 @@ $ARGUMENTS
 8. **Provide risk-appropriate guidance**:
 
 **For HIGH-RISK algorithmic tools** (affecting rights, benefits, healthcare):
+
 - **CRITICAL**: DPIA is MANDATORY before deployment
 - **CRITICAL**: EqIA is MANDATORY
 - Human-in-the-loop STRONGLY RECOMMENDED
@@ -194,6 +209,7 @@ $ARGUMENTS
 - Independent audit STRONGLY RECOMMENDED
 
 **For MEDIUM-RISK tools**:
+
 - DPIA likely required
 - EqIA recommended
 - Human oversight required (human-on-the-loop minimum)
@@ -202,6 +218,7 @@ $ARGUMENTS
 - Annual reviews
 
 **For LOW-RISK tools**:
+
 - DPIA assessment (may determine not required)
 - Basic fairness checks
 - Human oversight recommended
@@ -217,6 +234,7 @@ $ARGUMENTS
 10. **Flag missing mandatory items**:
 
 **BLOCKERS** (must complete before publication):
+
 - [ ] DPIA completed (for high-risk)
 - [ ] EqIA completed (for high-risk)
 - [ ] Senior Responsible Owner identified
@@ -226,11 +244,11 @@ $ARGUMENTS
 - [ ] Contact details provided
 
 **WARNINGS** (should complete):
+
 - [ ] Alternatives considered documented
 - [ ] Training program defined
 - [ ] Incident response plan
 - [ ] Review schedule set
-
 
 ---
 
@@ -239,11 +257,13 @@ $ARGUMENTS
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-ATRS-v{VERSION}` (e.g., `ARC-001-ATRS-v1.0`)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -252,14 +272,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.atrs"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -273,6 +296,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:atrs` command
 **Generated on**: {DATE} {TIME} GMT
@@ -291,6 +315,7 @@ Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-ATRS-v1.0.md`
 Use the template structure from `uk-gov-atrs-template.md`
 
 **Format**:
+
 - Tier 1: Clear, simple, jargon-free language
 - Tier 2: Technical detail sufficient for specialists
 - All mandatory fields completed
@@ -300,6 +325,7 @@ Use the template structure from `uk-gov-atrs-template.md`
 12. **Provide publication guidance**:
 
 After generating the ATRS record:
+
 - Summary of completeness (what percentage of fields are complete)
 - List of blocking issues (must resolve before publication)
 - List of warnings (should address)
@@ -317,6 +343,7 @@ After generating the ATRS record:
 User: `/arckit:atrs Generate ATRS record for our benefits eligibility chatbot using GPT-4`
 
 You should:
+
 - Identify tool: Benefits eligibility chatbot, Generative AI (LLM)
 - Determine risk: **HIGH-RISK** (affects access to benefits - fundamental right)
 - Read existing requirements, AI Playbook assessment (if exists)

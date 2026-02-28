@@ -15,9 +15,10 @@ You are helping an enterprise architect create a **strategic architecture roadma
 $ARGUMENTS
 ```
 
-## Prerequisites: Read existing artifacts from the project context:
+## Prerequisites: Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
+
 - **PRIN** (Architecture Principles, in `projects/000-global/`)
   - Extract: Technology standards, strategic direction, compliance requirements
   - If missing: STOP and ask user to run `/arckit:principles` first. The roadmap must align to approved principles.
@@ -26,6 +27,7 @@ $ARGUMENTS
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **STKE** (Stakeholder Analysis) in `projects/{project-dir}/`
   - Extract: Business drivers, strategic goals, success metrics, investment appetite
 - **WARD** (Wardley Map) in `projects/{project-dir}/wardley-maps/`
@@ -34,6 +36,7 @@ $ARGUMENTS
   - Extract: Strategic risks, risk appetite, mitigation timelines
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **SOBC** (Business Case) in `projects/{project-dir}/`
   - Extract: Investment figures, ROI targets, payback period, benefits timeline
 
@@ -61,6 +64,7 @@ Read all available documents identified in the Prerequisites section above. Use 
 Load the roadmap template structure:
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/roadmap-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/roadmap-template.md` (default)
@@ -73,12 +77,14 @@ Before generating the roadmap, use the **AskUserQuestion** tool to gather strate
 
 **Question 1** — header: `Horizon`, multiSelect: false
 > "What time horizon should the roadmap cover?"
+
 - **3 years (Recommended)**: Typical for technology transformation programmes — detailed enough to be actionable, long enough for strategic value
 - **2 years**: Shorter horizon — suited for tactical improvements or fast-moving technology areas
 - **5 years**: Extended horizon — suited for major enterprise transformations, infrastructure programmes, or multi-phase migrations
 
 **Question 2** — header: `Year format`, multiSelect: false
 > "Which year notation should the roadmap use?"
+
 - **UK Financial Year (Recommended)**: FY 2025/26, FY 2026/27 — April to March, standard for UK Government and public sector
 - **Calendar Year**: CY 2025, CY 2026 — January to December, standard for private sector and international
 
@@ -89,22 +95,26 @@ Apply the user's selections: the horizon determines the number of financial year
 Create a comprehensive multi-year architecture roadmap with the following sections:
 
 #### Document Control
+
 - Generate Document ID: `ARC-[PROJECT_ID]-ROAD-v1.0` (for filename: `ARC-{PROJECT_ID}-ROAD-v1.0.md`)
 - Set owner, dates, financial years covered
 - Review cycle: Quarterly (default for roadmaps)
 
 #### Executive Summary
+
 - **Strategic Vision**: What transformation is being enabled? (1-2 paragraphs)
 - **Investment Summary**: Total investment, CAPEX/OPEX split, ROI, payback period
 - **Expected Outcomes**: 3-5 measurable business outcomes
 - **Timeline at a Glance**: Duration, major phases, key milestones, governance gates
 
 #### Strategic Context
+
 - **Vision & Strategic Drivers**: Link to stakeholder drivers, architecture principles alignment
 - **Current State Assessment**: Technology landscape, capability maturity baseline, technical debt, risk exposure
 - **Future State Vision**: Target architecture, capability maturity targets, technology evolution (reference Wardley Maps if available)
 
 #### Roadmap Timeline
+
 - **Visual Timeline**: Mermaid Gantt chart showing 3-5 year timeline
   - Use financial year notation: FY 2024/25, FY 2025/26, etc. (if UK Government) OR calendar years
   - Show 4 major phases: Foundation, Migration, Transformation, Optimization
@@ -112,6 +122,7 @@ Create a comprehensive multi-year architecture roadmap with the following sectio
   - **IMPORTANT**: Remember Mermaid gantt syntax - no `<br/>` tags in task names
 
 Example Gantt structure:
+
 ```mermaid
 gantt
     title Architecture Roadmap Timeline FY 2024/25 - FY 2027/28
@@ -146,9 +157,11 @@ gantt
 - **Roadmap Phases**: Describe each phase with objectives, key deliverables, investment
 
 #### Roadmap Themes & Initiatives
+
 Create 3-5 strategic themes (e.g., Cloud Migration, Data Modernization, Security & Compliance, DevOps Transformation, Legacy Decommissioning)
 
 For each theme:
+
 - Strategic objective
 - Timeline by financial year (what happens in FY 2024/25, FY 2025/26, etc.)
 - Initiatives within each year
@@ -156,19 +169,24 @@ For each theme:
 - Success criteria
 
 #### Capability Delivery Matrix
+
 Show capability maturity progression over time using a table:
+
 - Capability domains (Cloud Platform, API Management, Data Analytics, DevOps, Security, etc.)
 - Current maturity level (L1-L5)
 - Target maturity by year
 - Final target maturity
 
 #### Dependencies & Sequencing
+
 Create a Mermaid flowchart showing initiative dependencies:
+
 - **IMPORTANT**: Flowcharts CANNOT use `<br/>` in edge labels (causes parse errors)
 - Use comma-separated text in edge labels instead
 - Example: `A -->|Requires completion, dependencies met| B`
 
 Example dependency flowchart:
+
 ```mermaid
 flowchart TD
     A[Architecture Strategy] --> B[Cloud Platform Foundation]
@@ -190,31 +208,38 @@ flowchart TD
 ```
 
 #### Investment & Resource Planning
+
 - **Investment Summary by Financial Year**: Table showing CAPEX, OPEX, total by year
 - **Resource Requirements**: FTE needed, key roles, recruitment timeline, training budget
 - **Investment by Theme**: Budget allocation across themes
 - **Cost Savings & Benefits Realization**: Operational savings, efficiency gains, revenue enablement
 
 #### Risks, Assumptions & Constraints
+
 - **Key Risks**: Strategic risks impacting roadmap (link to risk register if available)
 - **Critical Assumptions**: Funding, skills, vendor support, executive sponsorship
 - **Constraints**: Budget caps, regulatory requirements, timeline mandates
 
 #### Governance & Decision Gates
+
 - **Governance Structure**: ARB (monthly), Programme Board (monthly), Steering Committee (quarterly)
 - **Review Cycles**: Weekly progress, monthly ARB, quarterly business review, annual strategic review
 - **Service Standard Assessment Gates** (if UK Government): Alpha, Beta, Live assessments with dates
 - **Decision Gates**: Go/No-Go gates at major phase transitions
 
 #### Success Metrics & KPIs
+
 Create tables showing progression over time:
+
 - **Strategic KPIs**: Cloud adoption %, technical debt reduction, security incidents, MTTR, deployment frequency
 - **Capability Maturity Metrics**: Maturity levels by year
 - **Technical Metrics**: API availability, page load time, IaC %, automated testing coverage
 - **Business Outcome Metrics**: User satisfaction, cost reduction, revenue enablement, productivity gains
 
 #### Traceability
+
 Link roadmap back to source artifacts:
+
 - Stakeholder Drivers → Roadmap Themes
 - Architecture Principles → Compliance Timeline
 - Requirements → Capability Delivery
@@ -222,6 +247,7 @@ Link roadmap back to source artifacts:
 - Risk Register → Mitigation Timeline
 
 #### Appendices
+
 - **Appendix A**: Capability Maturity Model (L1-L5 definitions)
 - **Appendix B**: Technology Radar (Adopt/Trial/Assess/Hold)
 - **Appendix C**: Vendor Roadmap Alignment
@@ -256,16 +282,17 @@ Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/gantt.md` and `${CL
 ### 8. Mermaid Diagram Syntax - CRITICAL RULES
 
 **Gantt Charts**:
+
 - ✅ Use descriptive task names without `<br/>` tags
 - ✅ Use dateFormat: YYYY-MM-DD
 - ✅ Status: done, active, crit (critical path)
 - ✅ Milestones: Use milestone keyword with 0d duration
 
 **Flowcharts**:
+
 - ✅ Node labels: CAN use `<br/>` for multi-line: `Node["Line 1<br/>Line 2"]`
 - ❌ Edge labels: CANNOT use `<br/>` (causes parse error: "Expecting 'SQE', got 'PIPE'")
 - ✅ Edge labels: Use comma-separated text instead: `A -->|Step 1, Step 2| B`
-
 
 ---
 
@@ -274,11 +301,13 @@ Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/gantt.md` and `${CL
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-ROAD-v{VERSION}` (e.g., `ARC-001-ROAD-v1.0`)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -287,14 +316,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.roadmap"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -308,6 +340,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:roadmap` command
 **Generated on**: {DATE} {TIME} GMT
@@ -324,7 +357,8 @@ The footer should be populated with:
 **IMPORTANT**: The roadmap will be a LARGE document (typically 400-600 lines). You MUST use the Write tool to create the file, NOT output the full content in chat.
 
 Create the file at:
-```
+
+```text
 projects/[PROJECT_ID]/ARC-{PROJECT_ID}-ROAD-v1.0.md
 ```
 
@@ -433,4 +467,5 @@ After writing the file, show a concise summary (NOT the full document):
 10. **Investment Realism**: Show investment increasing in middle years (migration/transformation), then decreasing in optimization phase
 
 11. **Traceability**: Link every roadmap theme back to stakeholder drivers and architecture principles to show strategic alignment
+
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

@@ -38,6 +38,7 @@
 ### 1.1 Purpose
 
 This Requirements Traceability Matrix (RTM) provides end-to-end traceability from business requirements through design, implementation, and testing. It ensures:
+
 - All requirements are addressed in design
 - All design elements trace to requirements
 - All requirements are tested
@@ -83,6 +84,7 @@ flowchart TD
 | BR-3 | FR-5 | [Requirement description] | Not yet designed | - | - | - | [❌ Gap] | Design not started |
 
 **Legend**:
+
 - ✅ **Covered**: Requirement fully addressed in design and tested
 - ⚠️ **Partial**: Requirement partially addressed; needs clarification or additional work
 - ❌ **Gap**: Requirement not addressed in design or testing
@@ -233,6 +235,7 @@ This section tracks how requirement changes ripple through design and tests.
 | CHG-001 | [DATE] | FR-5 | [Changed from X to Y] | [Service A, Service C] | [TC-010, TC-012] | [In Progress] | [HIGH \| MED \| LOW] |
 
 **Change Impact Legend**:
+
 - **HIGH**: Requires significant rework of design and tests
 - **MEDIUM**: Requires moderate updates to design or tests
 - **LOW**: Minor updates, limited impact

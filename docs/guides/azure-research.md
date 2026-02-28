@@ -124,6 +124,7 @@ When UK Government project detected:
 | Cost estimates | High-level | Detailed Azure pricing |
 
 **When to use which**:
+
 - Use `/arckit.research` for cloud-agnostic evaluation or build vs buy
 - Use `/arckit.azure-research` when Azure is the target platform
 

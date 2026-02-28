@@ -94,6 +94,7 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 ### Data Needs by Category
 
 **Category 1: [CATEGORY_NAME]**
+
 - Requirements: [DR-001, FR-015, INT-003]
 - Data fields needed: [List specific fields]
 - Volume: [Records/day, queries/second]
@@ -101,6 +102,7 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 - Quality threshold: [Accuracy %, completeness %]
 
 **Category 2: [CATEGORY_NAME]**
+
 - [Repeat structure]
 
 ---
@@ -147,11 +149,13 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 | **UK Data Residency** | [Yes / No / N/A] |
 
 **Requirements Fit**:
+
 - ✅ Covers: [Which data fields match requirements]
 - ❌ Missing: [Which data fields are not available]
 - ⚠️ Partial: [Which data fields have quality/coverage issues]
 
 **Integration Approach**:
+
 - **Pattern**: [REST API call / Bulk download + ETL / Event stream / Cache + refresh]
 - **Estimated Effort**: [X person-days]
 - **Dependencies**: [API key registration, data agreement, etc.]
@@ -245,7 +249,7 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 
 ### Recommended Integration Architecture
 
-```
+```text
 [Brief description of integration approach]
 
 - Data ingestion layer (API gateway, ETL pipeline)
@@ -303,6 +307,7 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 ### Requirements Without Suitable Data Sources
 
 **GAP-1**: [Requirement ID] — [Requirement description]
+
 - **Data Need**: [What data is missing]
 - **Why No Source**: [No public API, data is proprietary, coverage insufficient, quality too low]
 - **Impact**: [What cannot be delivered, affected features/capabilities]
@@ -335,11 +340,13 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 **Rationale**: [2-3 sentences explaining why this is recommended]
 
 **Key Strengths**:
+
 - ✅ [Strength 1]
 - ✅ [Strength 2]
 - ✅ [Strength 3]
 
 **Key Concerns**:
+
 - ⚠️ [Concern 1, if any]
 - ⚠️ [Concern 2, if any]
 
@@ -348,6 +355,7 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 **Risk Level**: [LOW / MEDIUM / HIGH]
 
 **Next Steps**:
+
 - [ ] Register for API access
 - [ ] Conduct integration POC ([X] days)
 - [ ] Validate data quality against requirements
@@ -406,16 +414,19 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 | [ONS] | [Dataset name] | OGL v3.0 | [DR-xxx] | ✅ Recommended |
 
 **Open Data Publishing Opportunities**:
+
 - [Data that could be published as open data from this project]
 - [Datasets that would benefit the wider public sector]
 
 **Common Data Standards Used**:
+
 - [UPRN for property addresses]
 - [Company Number for business entities]
 - [NHS Number for patient identification]
 - [Other UK Government identifiers]
 
 **Data Ethics Framework Compliance**:
+
 - [ ] Clear user need for data collection
 - [ ] Proportionate to the need
 - [ ] Lawful basis established
@@ -441,6 +452,7 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 ### Coverage Summary
 
 **Requirements with Identified Sources**:
+
 - ✅ **[X] requirements ([Y%])** have recommended data sources
 - ⚠️ **[Z] requirements ([W%])** partially covered (quality or coverage issues)
 - ❌ **[A] requirements ([B%])** no suitable source (see Gap Analysis)
@@ -482,6 +494,7 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 ### Appendix A: Research Methodology
 
 **Data Sources Searched**:
+
 - UK Government open data portals (data.gov.uk, ONS, NHS Digital, etc.)
 - Commercial data provider websites
 - API directories and documentation
@@ -489,12 +502,14 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 - Industry analyst reports and reviews
 
 **Evaluation Methodology**:
+
 - Weighted scoring across 6 criteria (Requirements Fit 25%, Data Quality 20%, License & Cost 15%, API Quality 15%, Compliance 15%, Reliability 10%)
 - All scores based on verified information from official sources
 - Pricing verified from vendor websites or documentation
 - API quality assessed from documentation review
 
 **Limitations**:
+
 - Pricing based on published rates (volume discounts may be available)
 - API quality assessed from documentation, not hands-on testing
 - Data quality indicators from provider claims (validate during POC)

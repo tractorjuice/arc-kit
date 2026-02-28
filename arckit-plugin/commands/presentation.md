@@ -5,6 +5,7 @@ description: Generate MARP presentation slides from existing project artifacts f
 You are helping an enterprise architect **generate a MARP-format presentation** from existing ArcKit project artifacts. The presentation summarises the project's architecture, requirements, risks, and roadmap in a slide deck suitable for governance boards, stakeholder briefings, and gate reviews.
 
 This command creates an **ARC-{PROJECT_ID}-PRES-v1.0.md** document that serves as:
+
 - A slide deck in [MARP](https://marp.app/) format (renders to PDF/PPTX/HTML via MARP CLI or VS Code extension)
 - A governance-ready summary drawing from existing ArcKit artifacts
 - A tailored presentation for different audiences (executive, technical, stakeholder)
@@ -27,11 +28,13 @@ $ARGUMENTS
 ### Step 2: Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
+
 - **PRIN** (Architecture Principles, in `projects/000-global/`)
   - Extract: Governance standards, technology constraints, compliance framework
   - If missing: warn user to run `/arckit:principles` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **STKE** (Stakeholder Analysis) — personas, goals, priorities → Stakeholder slide
 - **REQ** (Requirements) — BR/FR/NFR/INT/DR counts and critical items → Requirements slide
 - **RISK** (Risk Register) — top risks, mitigations, distribution → Risk slide
@@ -50,7 +53,8 @@ $ARGUMENTS
 - **DEVOPS** (DevOps Strategy) → Delivery approach
 
 **Minimum artifact check**: A meaningful presentation requires at least 3 artifacts. If the project has fewer than 3, warn:
-```
+
+```text
 ⚠️  Warning: This project only has [N] artifacts.
 
 A useful presentation typically requires at least:
@@ -67,6 +71,7 @@ Before generating the presentation, use the **AskUserQuestion** tool to gather p
 
 **Question 1** — header: `Focus`, multiSelect: false
 > "What audience is this presentation for?"
+
 - **Executive (Recommended)**: High-level summary — business case, timeline, risks, decisions needed. Fewer slides, minimal technical detail.
 - **Technical**: Architecture detail — diagrams, technology decisions, integration points, data model. More slides, Mermaid diagrams.
 - **Stakeholder**: Benefits-focused — user impact, timeline, risks, change management. Balanced detail, emphasis on outcomes.
@@ -74,6 +79,7 @@ Before generating the presentation, use the **AskUserQuestion** tool to gather p
 
 **Question 2** — header: `Slides`, multiSelect: false
 > "How many slides should the presentation contain?"
+
 - **10-12 slides (Recommended)**: Standard governance board deck — covers all key areas concisely
 - **6-8 slides**: Brief update — executive summary, key decisions, next steps only
 - **15-20 slides**: Comprehensive briefing — detailed sections with supporting data and diagrams
@@ -99,45 +105,55 @@ Build the slide deck by extracting key content from each artifact:
 **Title Slide**: Project name, date, classification, presenter/team
 
 **Context & Objectives** (from STRAT, SOBC, REQ):
+
 - Business challenge and strategic opportunity
 - Key objectives and success criteria
 
 **Stakeholder Landscape** (from STKE):
+
 - Key stakeholders with roles, interest, and influence
 - Mermaid quadrant chart if data available (see Mermaid label rules below)
 
 **Architecture Overview** (from DIAG, STRAT):
+
 - Current state summary and pain points
 - Target state and key changes
 - Embed Mermaid C4 context diagram or reference existing diagrams
 
 **Technology Decisions** (from RSCH, AWSR, AZUR, GCRS, ADR):
+
 - Key build vs buy decisions
 - Technology choices with rationale
 
 **Key Requirements** (from REQ):
+
 - Summary counts by category (BR/FR/NFR/INT/DR)
 - Top 3-5 critical requirements
 
 **Risk Summary** (from RISK):
+
 - Top 3-5 risks with likelihood/impact/mitigation
 - Mermaid pie chart of risk distribution
 
 **Roadmap & Timeline** (from PLAN, ROAD):
+
 - Mermaid Gantt chart of project phases
 - Key milestones with status
 
 **Compliance & Governance** (from TCOP, SECD, MSBD, DPIA, AIPB):
+
 - Standards compliance status table
 - Only include if UK Government or compliance-heavy project
 
 **Recommendations & Next Steps**:
+
 - Immediate actions with owners and deadlines
 - Decisions required from the audience
 
 **Questions & Discussion**: Contact details and next review date
 
 **Slide count guidelines**:
+
 - **6-8 slides**: Title + Context + Architecture + Requirements + Risks + Timeline + Next Steps
 - **10-12 slides**: All of the above + Stakeholders + Technology Decisions + Compliance + Questions
 - **15-20 slides**: All sections expanded with additional detail slides, data model, integration points
@@ -153,6 +169,7 @@ Build the slide deck by extracting key content from each artifact:
 - Tables should have no more than 5 rows per slide
 
 **Mermaid label rules** (applies to ALL Mermaid diagrams, especially `quadrantChart`):
+
 - **No accented characters**: Use ASCII only in labels — replace é→e, í→i, ó→o, ñ→n, ü→u, etc.
 - **No hyphens in data point labels**: Use spaces instead — e.g., `DST Cybersecurity` not `DST-Cybersecurity`
 - **No special characters**: Avoid colons, parentheses, brackets, or quotes in labels
@@ -186,6 +203,7 @@ Before generating the document ID, check if a previous version exists:
 #### Step 7c: Populate Required Fields
 
 **Auto-populated fields** (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → Determined version from Step 7a
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -194,11 +212,13 @@ Before generating the document ID, check if a previous version exists:
 - `[COMMAND]` → "arckit.presentation"
 
 **User-provided fields** (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 **Pending fields** (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -229,6 +249,7 @@ Show ONLY a concise summary after writing the file.
 User: `/arckit:presentation Generate executive presentation for NHS appointment booking`
 
 You should:
+
 - Find project 007-nhs-appointment
 - Read all available artifacts (STKE, REQ, RISK, PLAN, DIAG, etc.)
 - Ask about focus (executive) and slide count (10-12)

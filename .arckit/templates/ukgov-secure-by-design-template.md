@@ -40,6 +40,7 @@
 **NCSC Cyber Assessment Framework (CAF) Score**: [X/14 objectives met]
 
 **Key Security Findings**:
+
 - [Summary of critical security gaps]
 - [Summary of security strengths]
 - [Blocking security issues for next phase]
@@ -64,6 +65,7 @@
 [Describe security governance structure]
 
 **Security Governance**:
+
 - [ ] Senior leadership owns information security
 - [ ] Senior Information Risk Owner (SIRO) appointed
 - [ ] Security policies and standards defined
@@ -72,6 +74,7 @@
 - [ ] Security oversight and reporting in place
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -83,6 +86,7 @@
 [Describe risk management approach]
 
 **Risk Management Process**:
+
 - [ ] Information assets identified and classified
 - [ ] Threats and vulnerabilities assessed
 - [ ] Risk assessment methodology defined
@@ -91,6 +95,7 @@
 - [ ] Residual risks accepted by SIRO
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -102,6 +107,7 @@
 [Describe asset inventory and management]
 
 **Asset Management**:
+
 - [ ] Hardware inventory maintained
 - [ ] Software inventory maintained
 - [ ] Data assets catalogued
@@ -110,6 +116,7 @@
 - [ ] Secure disposal procedures
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -121,6 +128,7 @@
 [Describe supply chain security]
 
 **Supply Chain Security**:
+
 - [ ] Supplier security requirements defined
 - [ ] Supplier security assessments conducted
 - [ ] Contracts include security obligations
@@ -129,6 +137,7 @@
 - [ ] Open source software risks managed
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -144,6 +153,7 @@
 [Describe protective security policies]
 
 **Protection Policies**:
+
 - [ ] Acceptable Use Policy
 - [ ] Access Control Policy
 - [ ] Data Protection Policy
@@ -152,6 +162,7 @@
 - [ ] Cryptography Policy
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -163,6 +174,7 @@
 [Describe access control implementation]
 
 **Access Controls**:
+
 - [ ] User accounts managed centrally
 - [ ] Multi-factor authentication (MFA) enabled
 - [ ] Privileged access management (PAM)
@@ -174,6 +186,7 @@
 **Authentication Method**: [GOV.UK Verify / Azure AD / Other]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -185,6 +198,7 @@
 [Describe data protection measures]
 
 **Data Protection**:
+
 - [ ] Data classification scheme implemented
 - [ ] Encryption at rest (AES-256 minimum)
 - [ ] Encryption in transit (TLS 1.3 minimum)
@@ -197,6 +211,7 @@
 **DPIA Completed**: [Yes / No / N/A]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -208,6 +223,7 @@
 [Describe system hardening and security]
 
 **System Hardening**:
+
 - [ ] Secure baseline configurations
 - [ ] Unnecessary services disabled
 - [ ] Security patches applied timely
@@ -219,6 +235,7 @@
 **Operating Systems**: [Windows / Linux / macOS / Mixed]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -230,6 +247,7 @@
 [Describe network architecture and security]
 
 **Network Security**:
+
 - [ ] Network segmentation by function/sensitivity
 - [ ] Firewalls at network boundaries
 - [ ] Intrusion Detection/Prevention Systems (IDS/IPS)
@@ -241,6 +259,7 @@
 **Network Architecture**: [On-premise / Cloud / Hybrid]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -252,6 +271,7 @@
 [Describe security awareness program]
 
 **Security Training**:
+
 - [ ] Mandatory security awareness training
 - [ ] Phishing awareness training
 - [ ] Role-based security training
@@ -263,6 +283,7 @@
 **Training Completion Rate**: [X%]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -278,6 +299,7 @@
 [Describe monitoring capabilities]
 
 **Monitoring Capabilities**:
+
 - [ ] Centralized logging (SIEM)
 - [ ] Real-time security alerting
 - [ ] Log retention (minimum 12 months)
@@ -289,6 +311,7 @@
 **SIEM Solution**: [Splunk / Sentinel / ELK / Other / None]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -300,6 +323,7 @@
 [Describe proactive threat hunting]
 
 **Proactive Measures**:
+
 - [ ] Threat hunting activities
 - [ ] Vulnerability scanning (weekly/monthly)
 - [ ] NCSC VMS enrolled and alerts actioned
@@ -309,6 +333,7 @@
 - [ ] Threat modeling
 
 **NCSC Vulnerability Monitoring Service (VMS)**:
+
 - **VMS Enrollment Status**: [Enrolled / Not Enrolled / In Progress]
 - **VMS Coverage**: [Number of domains/IPs monitored]
 - **VMS Alert Handling**: [Process for triaging and actioning VMS alerts]
@@ -317,6 +342,7 @@
 **Pen Test Findings**: [Critical: X, High: Y, Medium: Z, Low: W]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -332,6 +358,7 @@
 [Describe incident response and recovery plans]
 
 **Incident Response**:
+
 - [ ] Incident response plan documented
 - [ ] Incident response team defined
 - [ ] Incident classification scheme
@@ -343,6 +370,7 @@
 **IR Plan Last Tested**: [Date / Not Tested]
 
 **Business Continuity**:
+
 - [ ] Business continuity plan (BCP)
 - [ ] Disaster recovery plan (DRP)
 - [ ] Recovery time objective (RTO) defined
@@ -353,6 +381,7 @@
 **RPO**: [X hours]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -364,6 +393,7 @@
 [Describe continuous improvement process]
 
 **Continuous Improvement**:
+
 - [ ] Post-incident reviews conducted
 - [ ] Security metrics tracked
 - [ ] Security improvements implemented
@@ -372,6 +402,7 @@
 - [ ] Security roadmap maintained
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -397,6 +428,7 @@
 | **Patch Management** | [✅/⚠️/❌] | [Description] |
 
 **Cyber Essentials Plus Additional Requirements**:
+
 - [ ] External vulnerability scan passed
 - [ ] Internal vulnerability scan passed
 - [ ] System configuration review passed
@@ -404,6 +436,7 @@
 **Target Certification Level**: [Basic / Plus]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -418,6 +451,7 @@
 **ICO Registration**: [Required / Not Required / Completed]
 
 **UK GDPR Compliance**:
+
 - [ ] Lawful basis for processing identified
 - [ ] Privacy notice published
 - [ ] Data subject rights procedures
@@ -431,6 +465,7 @@
 **Special Category Data**: [Yes / No]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -441,6 +476,7 @@
 **DPIA Status**: [Completed / In Progress / Not Started / N/A]
 
 **DPIA Findings**:
+
 - High risks identified: [Number]
 - Mitigations implemented: [Number]
 - Residual risks accepted: [Yes/No by whom]
@@ -448,6 +484,7 @@
 **ICO Consultation Required**: [Yes / No]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -460,6 +497,7 @@
 **Development Methodology**: [Agile / Waterfall / DevOps]
 
 **Secure Development Practices**:
+
 - [ ] Secure coding standards defined
 - [ ] Security requirements in user stories
 - [ ] Threat modeling in design phase
@@ -470,6 +508,7 @@
 - [ ] Dependency vulnerability scanning
 
 **OWASP Top 10 Mitigation**:
+
 - [ ] Injection flaws prevented
 - [ ] Broken authentication prevented
 - [ ] Sensitive data exposure prevented
@@ -482,12 +521,14 @@
 - [ ] Insufficient logging and monitoring addressed
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
 ### 4.2 DevSecOps
 
 **CI/CD Security Integration**:
+
 - [ ] Automated security testing in pipeline
 - [ ] Secrets scanning (no hardcoded credentials)
 - [ ] Container image scanning
@@ -496,6 +537,7 @@
 - [ ] Automated deployment security checks
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -512,6 +554,7 @@
 **Data Residency**: [UK / EU / Other]
 
 **Cloud Security Controls**:
+
 - [ ] Cloud Security Posture Management (CSPM)
 - [ ] Identity and Access Management (IAM)
 - [ ] Encryption key management
@@ -523,6 +566,7 @@
 **NCSC Cloud Security Principles**: [X/14 principles met]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -537,6 +581,7 @@
 **Scanning Coverage**: [X% of assets]
 
 **Vulnerability Management Process**:
+
 - [ ] Automated vulnerability scanning
 - [ ] Vulnerability prioritization (CVSS scores)
 - [ ] Remediation SLAs defined
@@ -545,6 +590,7 @@
 - [ ] Metrics and reporting
 
 **Remediation SLAs**:
+
 - Critical vulnerabilities: [Within X days]
 - High vulnerabilities: [Within X days]
 - Medium vulnerabilities: [Within X days]
@@ -553,6 +599,7 @@
 #### VMS Integration
 
 **NCSC Vulnerability Monitoring Service (VMS) Status**:
+
 - [ ] Department enrolled in VMS
 - [ ] All internet-facing domains registered with VMS
 - [ ] VMS alerts integrated into vulnerability management workflow
@@ -567,24 +614,28 @@
 | General vulnerability fix time | 32 days | [Target] | [Current] |
 
 **VMS Coverage Metrics**:
+
 - Domains monitored: [Number]
 - IP ranges monitored: [Number]
 - Coverage of internet-facing assets: [X%]
 - Open VMS alerts: [Number]
 
 **Current Vulnerability Status**:
+
 - Critical: [Number]
 - High: [Number]
 - Medium: [Number]
 - Low: [Number]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
 ### 6.2 Patch Management
 
 **Patch Management Process**:
+
 - [ ] Patch assessment and testing
 - [ ] Patch deployment schedule
 - [ ] Emergency patching process
@@ -596,6 +647,7 @@
 **Critical Patch SLA**: [Within 14 days]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -606,6 +658,7 @@
 ### 7.1 Third-Party Risk Management
 
 **Third-Party Security Assessment**:
+
 - [ ] Vendor security questionnaires
 - [ ] Vendor security certifications verified
 - [ ] Data Processing Agreements (DPAs) in place
@@ -621,6 +674,7 @@
 | [Vendor 2] | [Service] | [High/Med/Low] | [H/M/L] | [Controls] |
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -629,6 +683,7 @@
 **Open Source Components**: [Number]
 
 **OSS Security Controls**:
+
 - [ ] Software Bill of Materials (SBOM)
 - [ ] Automated dependency scanning
 - [ ] Known vulnerability detection (CVE)
@@ -636,6 +691,7 @@
 - [ ] OSS component lifecycle management
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -648,6 +704,7 @@
 **Backup Method**: [3-2-1 rule / Continuous replication / Snapshot / Other]
 
 **Backup Controls**:
+
 - [ ] Automated backups scheduled
 - [ ] Backup encryption enabled
 - [ ] Offsite/cloud backups
@@ -664,6 +721,7 @@
 **Last Restoration Test**: [Date]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -677,6 +735,7 @@
 **Recovery Success Rate**: [X%]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -698,10 +757,12 @@
 | [System 2] | [Planned / In Progress / Complete] | [Date / N/A] | [Summary] | [Open / In Progress / Closed] |
 
 **Assessment Findings**:
+
 - [Key finding 1]
 - [Key finding 2]
 
 **Remediation Actions**:
+
 - [ ] [Action 1 - Owner - Due date]
 - [ ] [Action 2 - Owner - Due date]
 
@@ -720,6 +781,7 @@
 | **Secure Operation** | [✅/⚠️/❌] | [Description] |
 
 **High-Confidence Profile Achievement**:
+
 - [ ] Security is embedded throughout the development lifecycle
 - [ ] Threat modelling conducted and reviewed regularly
 - [ ] Security testing integrated into CI/CD pipelines
@@ -746,6 +808,7 @@
 **Exceptions Under Active Improvement Plan**: [Number]
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -765,11 +828,13 @@
 | **Collaboration & Sharing** | [Cross-government threat sharing, sector collaboration] | [Project information sharing] | [✅/⚠️/❌] |
 
 **Investment Alignment**:
+
 - [ ] Department has submitted Cyber Action Plan investment case
 - [ ] Project security budget aligns with Cyber Action Plan priorities
 - [ ] Funding opportunities identified for project security improvements
 
 **Gaps/Actions**:
+
 - [Action 1]
 - [Action 2]
 
@@ -840,6 +905,7 @@
 ### 11.4 Workforce Development Plan
 
 **Workforce Development Checklist**:
+
 - [ ] Security roles mapped to DDaT profession framework
 - [ ] CCP certification targets set for project security staff
 - [ ] Cyber Academy learning paths assigned to team members
@@ -848,6 +914,7 @@
 - [ ] Succession planning for key security roles
 
 **Actions**:
+
 - [ ] [Action 1 - Owner - Due date]
 - [ ] [Action 2 - Owner - Due date]
 
@@ -868,10 +935,12 @@
 ### Security Posture Summary
 
 **Strengths**:
+
 - [Strength 1]
 - [Strength 2]
 
 **Critical Gaps**:
+
 - [Gap 1 - blocks progression to next phase]
 - [Gap 2 - unacceptable risk level]
 
@@ -886,14 +955,17 @@
 ### Recommendations
 
 **Critical Priority** (0-30 days - must resolve before next phase):
+
 - [Recommendation 1 - Owner - Due date]
 - [Recommendation 2 - Owner - Due date]
 
 **High Priority** (1-3 months - significant risk reduction):
+
 - [Recommendation 1 - Owner - Due date]
 - [Recommendation 2 - Owner - Due date]
 
 **Medium Priority** (3-6 months - continuous improvement):
+
 - [Recommendation 1 - Owner - Due date]
 - [Recommendation 2 - Owner - Due date]
 
@@ -902,14 +974,17 @@
 ## Next Steps and Action Plan
 
 **Immediate Actions** (0-30 days):
+
 - [ ] [Action 1 - Owner - Due date]
 - [ ] [Action 2 - Owner - Due date]
 
 **Short-term Actions** (1-3 months):
+
 - [ ] [Action 1 - Owner - Due date]
 - [ ] [Action 2 - Owner - Due date]
 
 **Long-term Actions** (3-12 months):
+
 - [ ] [Action 1 - Owner - Due date]
 - [ ] [Action 2 - Owner - Due date]
 
@@ -931,6 +1006,7 @@
 ---
 
 **Document Control**:
+
 - **Version**: 1.0
 - **Classification**: [OFFICIAL / OFFICIAL-SENSITIVE]
 - **Last Reviewed**: [Date]

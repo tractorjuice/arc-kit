@@ -5,6 +5,7 @@
 ### MEMORY.md Style
 
 Use terse, scannable formatting:
+
 - **Bold** for key terms and names
 - Bullet points over paragraphs
 - Pipe-separated inline lists for related items (e.g., `CLI = VERSION + pyproject.toml`)
@@ -12,12 +13,14 @@ Use terse, scannable formatting:
 - No full sentences where fragments suffice
 
 Example — good:
+
 ```markdown
 - **3 test suites**: unit (`tests/unit/`), integration (`tests/integration/`), e2e (`tests/e2e/`)
 - Config: `jest.config.ts` (unit/integration) | `playwright.config.ts` (e2e)
 ```
 
 Example — bad:
+
 ```markdown
 There are three test suites in the project. Unit tests are located in the tests/unit directory,
 integration tests are in tests/integration, and end-to-end tests use Playwright and can be
@@ -27,6 +30,7 @@ found in tests/e2e.
 ### Topic File Style
 
 More detail is acceptable, but still prefer:
+
 - Headers for scannable structure
 - Code blocks for commands, paths, and configurations
 - Tables for multi-column data
@@ -217,16 +221,19 @@ Saving conclusions from incomplete exploration:
 ## Scaling Guidelines
 
 ### Small Projects (1-5 files in memory/)
+
 - MEMORY.md + 1-3 topic files
 - Topic files for the most complex domains only
 - Most knowledge fits in MEMORY.md itself
 
 ### Medium Projects (5-10 files in memory/)
+
 - MEMORY.md as pure index
 - Dedicated topic files for each major domain
 - Cross-reference between topic files where domains interact
 
 ### Large Projects (10+ files in memory/)
+
 - MEMORY.md strictly under 200 lines
 - Consider grouping related topic files with clear naming:
   - `api-routes.md`, `api-auth.md`, `api-middleware.md`

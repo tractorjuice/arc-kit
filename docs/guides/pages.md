@@ -21,6 +21,7 @@
 ```
 
 Output:
+
 - `docs/index.html` - Main documentation site
 - `docs/manifest.json` - Document index
 
@@ -117,10 +118,12 @@ graph TD
     A[Start] --> B{Decision}
     B -->|Yes| C[Action]
     B -->|No| D[End]
-```
+```text
+
 ```
 
 Supported diagram types:
+
 - Flowcharts
 - Sequence diagrams
 - C4 diagrams (Context, Container, Component)
@@ -169,6 +172,7 @@ The dashboard (`#dashboard`) is the default landing page, providing an instant p
 ### Coverage Calculation
 
 Coverage measures how many of the 6 core artifact types each project has:
+
 - REQ (Requirements), STKE (Stakeholders), RISK (Risk Register)
 - SOBC (Business Case), PLAN (Project Plan), DATA (Data Model)
 
@@ -180,13 +184,16 @@ A project with 4 of 6 types = 67% coverage.
 
 Documents use hash-based routing:
 
-```
+```text
+
 https://org.github.io/repo/#dashboard                              (dashboard)
 https://org.github.io/repo/#guides                                 (guides index)
 https://org.github.io/repo/#projects/001-name/ARC-001-REQ-v1.0.md (document)
+
 ```
 
 Benefits:
+
 - Dashboard is the default view (bare URL with no hash)
 - Shareable links to specific documents
 - Browser back/forward navigation works

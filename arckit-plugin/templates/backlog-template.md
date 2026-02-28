@@ -37,11 +37,13 @@
 **Estimated Duration**: [N] sprints ([N] weeks)
 
 ### Priority Breakdown
+
 - Must Have: [N] stories ([N] points) - [X]%
 - Should Have: [N] stories ([N] points) - [X]%
 - Could Have: [N] stories ([N] points) - [X]%
 
 ### Epic Breakdown
+
 1. [Epic Name] ([N] points, [N] stories)
 2. [Epic Name] ([N] points, [N] stories)
 [... all epics listed ...]
@@ -50,27 +52,31 @@
 
 ## How to Use This Backlog
 
-### For Product Owners:
+### For Product Owners
+
 1. Review epic priorities - adjust based on business needs
 2. Refine story acceptance criteria before sprint planning
 3. Validate user stories with actual users
 4. Adjust sprint sequence based on stakeholder priorities
 
-### For Development Teams:
+### For Development Teams
+
 1. Review stories in upcoming sprint (Sprint Planning)
 2. Break down stories into tasks if needed
 3. Estimate effort using team velocity
 4. Identify technical blockers early
 5. Update story status as work progresses
 
-### For Scrum Masters:
+### For Scrum Masters
+
 1. Track velocity after each sprint
 2. Adjust future sprint loading based on actual velocity
 3. Monitor dependency chains
 4. Escalate blockers early
 5. Facilitate backlog refinement sessions
 
-### Backlog Refinement Schedule:
+### Backlog Refinement Schedule
+
 - **Weekly**: Review and refine next 2 sprints
 - **Bi-weekly**: Groom backlog beyond 2 sprints
 - **Monthly**: Reassess epic priorities
@@ -94,11 +100,13 @@
 [Epic description from BR]
 
 **Success Criteria**:
+
 - [Criterion 1]
 - [Criterion 2]
 - [Criterion 3]
 
 **Stories in this Epic**:
+
 1. Story-[ID]: [Title] ([N] points) - Sprint [N]
 2. Story-[ID]: [Title] ([N] points) - Sprint [N]
 [... all stories in epic ...]
@@ -114,12 +122,14 @@
 **So that** [goal]
 
 **Acceptance Criteria**:
+
 - It's done when [measurable outcome 1]
 - It's done when [measurable outcome 2]
 - It's done when [measurable outcome 3]
 - It's done when [measurable outcome 4]
 
 **Technical Tasks**:
+
 - Task-001-A: [task description] ([N] points)
 - Task-001-B: [task description] ([N] points)
 - Task-001-C: [task description] ([N] points)
@@ -144,39 +154,48 @@
 **Velocity**: 20 story points
 **Theme**: Technical foundation and core infrastructure
 
-#### Must Have Stories (12 points):
+#### Must Have Stories (12 points)
+
 - Story-001: [Title] ([N] points) [Epic: [Name]]
 - Story-002: [Title] ([N] points) [Epic: [Name]]
 
-#### Technical Tasks (4 points):
+#### Technical Tasks (4 points)
+
 - Task-DB-001: [Title] ([N] points) [Epic: Infrastructure]
 - Task-CI-001: [Title] ([N] points) [Epic: DevOps]
 
-#### Testing Tasks (3 points):
+#### Testing Tasks (3 points)
+
 - Task-TEST-001: [Title] ([N] points) [Epic: Testing]
 
-#### Buffer (1 point):
+#### Buffer (1 point)
+
 - [Could Have story for buffer]
 
 **Total Allocated**: 20 points
 
-### Sprint Goals:
+### Sprint Goals
+
 - [Goal 1]
 - [Goal 2]
 - [Goal 3]
 
-### Dependencies Satisfied:
+### Dependencies Satisfied
+
 ✅ [Dependency description or "None" for Sprint 1]
 
-### Dependencies Created for Sprint 2:
+### Dependencies Created for Sprint 2
+
 → [Dependency 1]
 → [Dependency 2]
 
-### Risks:
+### Risks
+
 ⚠️ [Risk 1]
 ⚠️ [Risk 2]
 
-### Definition of Done:
+### Definition of Done
+
 - [ ] Code reviewed and approved
 - [ ] Unit tests written (80% coverage minimum)
 - [ ] Integration tests written for critical paths
@@ -206,9 +225,10 @@
 | BR-001 | Business | Story-001, Story-002, ... | 1-2 | Planned | [Epic name] |
 | FR-001 | Functional | Story-001 | 1 | Planned | [Description] |
 | NFR-005 | Non-Functional | Task-NFR-005 | 2 | Planned | [Description] |
-[... all requirements ...]
+| ... | ... | ... | ... | ... | ... |
 
 **Coverage Summary**:
+
 - Total Requirements: [N]
 - Mapped to Stories: [N] (100%)
 - Scheduled in Sprints 1-[N]: [N] ([X]%)
@@ -252,7 +272,7 @@ flowchart TD
 |---------|-----------|----------|---------|--------|---------|--------|--------------|
 | EPIC-001 | [Name] | Must Have | [N] | [N] | 1-2 | Planned | None |
 | EPIC-002 | [Name] | Must Have | [N] | [N] | 2-4 | Planned | EPIC-001 |
-[... all epics ...]
+| ... | ... | ... | ... | ... | ... | ... | ... |
 
 **Total**: [N] epics, [N] stories, [N] story points
 
@@ -269,6 +289,7 @@ xychart-beta
 ```
 
 **Summary**:
+
 - Total: [N] points allocated / [N] points total
 - Remaining: [N] points ([N] more sprints needed)
 
@@ -277,13 +298,16 @@ xychart-beta
 ### E. Risk-Based Prioritization
 
 **High Risk Items (Addressed Early)**:
+
 - Sprint [N]: [Risk description and story]
 - Sprint [N]: [Risk description and story]
 
 **Medium Risk Items**:
+
 - Sprint [N]: [Risk description and story]
 
 **Low Risk Items**:
+
 - Sprint [N]: [Risk description and story]
 
 ---
@@ -293,47 +317,55 @@ xychart-beta
 Every story must meet these criteria before marking "Done":
 
 #### Code Quality
+
 - [ ] Code reviewed by 2+ team members
 - [ ] No merge conflicts
 - [ ] Follows coding standards (linting passed)
 - [ ] No code smells or technical debt introduced
 
 #### Testing
+
 - [ ] Unit tests written (minimum 80% coverage)
 - [ ] Integration tests written for API endpoints
 - [ ] Manual testing completed
 - [ ] Acceptance criteria verified and signed off
 
 #### Security
+
 - [ ] Security scan passed (no critical/high vulnerabilities)
 - [ ] OWASP Top 10 checks completed
 - [ ] Secrets not hardcoded (use environment variables)
 - [ ] Authentication and authorization tested
 
 #### Performance
+
 - [ ] Performance tested (meets NFR thresholds)
 - [ ] No N+1 query issues
 - [ ] Caching implemented where appropriate
 - [ ] Response times within acceptable limits
 
 #### Compliance
+
 - [ ] GDPR requirements met (if handling user data)
 - [ ] Accessibility tested (WCAG 2.1 AA)
 - [ ] Audit logging in place (if required)
 
 #### Documentation
+
 - [ ] API documentation updated (OpenAPI/Swagger)
 - [ ] Code comments for complex logic
 - [ ] README updated if needed
 - [ ] Runbook updated (if operational changes)
 
 #### Deployment
+
 - [ ] Deployed to dev environment
 - [ ] Deployed to staging environment
 - [ ] Database migrations tested (if applicable)
 - [ ] Configuration updated in all environments
 
 #### Stakeholder
+
 - [ ] Demoed to Product Owner at sprint review
 - [ ] Acceptance criteria validated by PO
 - [ ] User feedback incorporated (if available)
@@ -346,11 +378,13 @@ Every story must meet these criteria before marking "Done":
 **Estimated Duration**: [N] sprints (at [velocity] points/sprint)
 
 **High Priority Items for Sprint 9+**:
+
 1. Story-[ID]: [Title] ([N] points) - [Epic name]
 2. Story-[ID]: [Title] ([N] points) - [Epic name]
 [... remaining high-priority items ...]
 
 **Could Have Items (Deferred)**:
+
 - Story-[ID]: [Title] ([N] points) - [Reason for deferral]
 - Story-[ID]: [Title] ([N] points) - [Reason for deferral]
 
@@ -359,17 +393,21 @@ Every story must meet these criteria before marking "Done":
 ## Backlog Maintenance
 
 ### Velocity Tracking
+
 After each sprint, update:
+
 - Actual velocity vs planned
 - Velocity trend (improving, stable, declining)
 - Adjust future sprint capacity accordingly
 
 ### Backlog Grooming Sessions
+
 - **Weekly**: Refine next 2 sprints (add details, update estimates)
 - **Bi-weekly**: Groom backlog beyond 2 sprints (reprioritize)
 - **Monthly**: Review epic priorities (business changes)
 
 ### When to Re-Generate Backlog
+
 - Requirements significantly changed
 - New epics added
 - Business priorities shifted
@@ -380,6 +418,7 @@ After each sprint, update:
 ## Integration with Other ArcKit Commands
 
 **This backlog was generated from**:
+
 - `/arckit.requirements` - Source of all stories
 - `/arckit.hld` - Component mapping
 - `/arckit.stakeholders` - User personas
@@ -387,6 +426,7 @@ After each sprint, update:
 - `/arckit.business-case` - Value priorities
 
 **Use this backlog with**:
+
 - `/arckit.traceability` - Track requirements through implementation
 - `/arckit.test-strategy` - Generate test cases from acceptance criteria
 - `/arckit.analyze` - Validate backlog completeness

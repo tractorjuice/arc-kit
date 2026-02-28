@@ -7,6 +7,7 @@ You are helping an enterprise architect **create a data mesh contract** for a da
 This command generates a **data-mesh-contract** document that defines the formal agreement between a data product provider (domain team) and consumers, following the **Open Data Contract Standard (ODCS) v3.0.2**.
 
 ## User Input
+
 ```text
 $ARGUMENTS
 ```
@@ -22,7 +23,8 @@ $ARGUMENTS
 1. **Architecture Principles** (REQUIRED):
    - Check if `projects/000-global/ARC-000-PRIN-*.md` exists
    - If it does NOT exist:
-     ```
+
+     ```text
      ❌ Architecture principles not found.
 
      Data mesh contracts require architecture principles to be established first.
@@ -32,12 +34,14 @@ $ARGUMENTS
 
      Then return here to generate the data mesh contract.
      ```
+
    - If it exists, proceed to Step 1
 
 2. **Data Model** (HIGHLY RECOMMENDED):
    - Check if the project has a `ARC-*-DATA-*.md` file
    - If it does NOT exist:
-     ```
+
+     ```text
      ⚠️  Warning: No data model found for this project.
 
      Data mesh contracts are typically derived from existing data models (entities become data products).
@@ -48,13 +52,15 @@ $ARGUMENTS
 
      Continue anyway? (yes/no)
      ```
+
    - If user says "no", stop here and tell them to run `/arckit:data-model` first
    - If user says "yes" or if ARC-*-DATA-*.md exists, proceed to Step 1
 
 3. **Stakeholder Analysis** (RECOMMENDED):
    - Check if the project has `ARC-*-STKE-*.md`
    - If it does NOT exist:
-     ```
+
+     ```text
      ⚠️  Warning: No stakeholder analysis found.
 
      Stakeholder analysis helps identify:
@@ -68,22 +74,26 @@ $ARGUMENTS
 
      Continue anyway? (yes/no)
      ```
+
    - If user says "no", stop here
    - If user says "yes" or if ARC-*-STKE-*.md exists, proceed to Step 1
 
 ### Step 1: Parse User Input
 
 Extract the **data product name** from the user's message. Examples:
+
 - "Create contract for customer payments"
 - "Generate mesh contract for seller analytics data product"
 - "customer-orders contract"
 
 The data product name should be:
+
 - Kebab-case: `customer-payments`, `seller-analytics`
 - Descriptive of the business domain
 
 If the user didn't provide a clear data product name, ask:
-```
+
+```text
 What is the name of the data product for this contract?
 
 Examples:
@@ -96,16 +106,19 @@ Data product name (kebab-case):
 ```
 
 ### Step 2: Identify the target project
-   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
-   - If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$DATA_PRODUCT_NAME" --json` to create a new project and parse the JSON output
+
+- Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+- If no match, run `${CLAUDE_PLUGIN_ROOT}/scripts/python/create-project.py --name "$DATA_PRODUCT_NAME" --json` to create a new project and parse the JSON output
 
 **Parse the JSON output** to get:
+
 - `project_id` (e.g., 001, 002)
 - `project_path` (e.g., `projects/001-customer-payments/`)
 - `project_name` (e.g., `customer-payments`)
 
 **Important**: If the script creates a NEW project, inform the user:
-```
+
+```text
 Created new project: Project {project_id} - {project_name}
    Location: {project_path}
 
@@ -116,7 +129,8 @@ Note: This is a new project. You may want to run these commands first:
 ```
 
 If the project ALREADY EXISTS, just acknowledge it:
-```
+
+```text
 Using existing project: Project {project_id} - {project_name}
    Location: {project_path}
 ```
@@ -126,7 +140,8 @@ Using existing project: Project {project_id} - {project_name}
 Data mesh contracts should be organized in a subdirectory. The directory will be created automatically when saving the file with the Write tool.
 
 The contract file will use the multi-instance naming pattern:
-```
+
+```text
 {project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
 ```
 
@@ -137,20 +152,23 @@ Where `{NNN}` is the next sequential number for contracts in this project. Check
 Read the data mesh contract template:
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/data-mesh-contract-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/data-mesh-contract-template.md` (default)
 
 > **Tip**: Users can customize templates with `/arckit:customize data-mesh-contract`
 
-### Step 4b: Read external documents and policies:
-   - Read any **external documents** listed in the project context (`external/` files) — extract existing data product definitions, SLA terms, schema specifications, data quality rules
-   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise data governance standards, data sharing agreements, cross-project data catalogue conventions
-   - If no external docs exist but they would improve the output, ask: "Do you have any existing data contracts, data product SLAs, or schema specifications? I can read PDFs, YAML, and JSON files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+### Step 4b: Read external documents and policies
+
+- Read any **external documents** listed in the project context (`external/` files) — extract existing data product definitions, SLA terms, schema specifications, data quality rules
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise data governance standards, data sharing agreements, cross-project data catalogue conventions
+- If no external docs exist but they would improve the output, ask: "Do you have any existing data contracts, data product SLAs, or schema specifications? I can read PDFs, YAML, and JSON files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Step 5: Gather Context from Existing Artifacts
 
 **IF `ARC-*-DATA-*.md` exists in the project**:
+
 - Read `{project_path}/ARC-*-DATA-*.md`
 - Extract:
   - Entity definitions (these become Objects in the contract)
@@ -160,6 +178,7 @@ Read the data mesh contract template:
   - Relationships
 
 **IF `ARC-*-REQ-*.md` exists**:
+
 - Read `{project_path}/ARC-*-REQ-*.md`
 - Extract:
   - DR-xxx data requirements (these inform schema and quality rules)
@@ -168,12 +187,14 @@ Read the data mesh contract template:
   - INT-xxx integration requirements (these become access methods)
 
 **IF `ARC-*-STKE-*.md` exists**:
+
 - Read `{project_path}/ARC-*-STKE-*.md`
 - Extract:
   - Stakeholder names and roles (these become ownership roles: Product Owner, Data Steward)
   - Consumer stakeholders (these inform consumer obligations)
 
 **IF `projects/000-global/ARC-000-PRIN-*.md` exists**:
+
 - Read it to understand mesh governance standards
 - Look for principles about:
   - Federated ownership
@@ -313,9 +334,9 @@ Using the template and context gathered, generate a comprehensive data mesh cont
     - Contact information
 
 ### Step 7: Construct Document ID
+
 - **Document ID**: `ARC-{PROJECT_ID}-DMC-{NNN}-v{VERSION}` (e.g., `ARC-001-DMC-001-v1.0`)
 - Sequence number `{NNN}`: Check existing files in `data-contracts/` and use the next number (001, 002, ...)
-
 
 ---
 
@@ -324,11 +345,13 @@ Using the template and context gathered, generate a comprehensive data mesh cont
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-DMC-{NNN}-v{VERSION}` (e.g., `ARC-001-DMC-001-v1.0`)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -337,14 +360,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.data-mesh-contract"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -358,6 +384,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:data-mesh-contract` command
 **Generated on**: {DATE} {TIME} GMT
@@ -373,7 +400,7 @@ The footer should be populated with:
 
 **IMPORTANT**: Use the **Write tool** to create the file. Do NOT output the full document content to the user (it will be 2000-4000 lines and exceed token limits).
 
-```
+```text
 Write tool:
   file_path: {project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
   content: {full contract content}
@@ -385,7 +412,7 @@ Note: Use the constructed document ID format for the filename.
 
 After writing the file, show the user a concise summary (do NOT show the full document):
 
-```
+```text
 ✅ Data Mesh Contract Generated
 
 **Contract**: ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
@@ -461,19 +488,22 @@ After writing the file, show the user a concise summary (do NOT show the full do
 Based on what artifacts exist, recommend next steps:
 
 **If no ARC-*-REQ-*.md**:
-```
+
+```text
 💡 Tip: Run /arckit:requirements to capture DR-xxx data requirements.
    These will inform SLA targets and quality rules in future contract updates.
 ```
 
 **If no ARC-*-STKE-*.md**:
-```
+
+```text
 💡 Tip: Run /arckit:stakeholders to identify domain owners and consumers.
    This will help assign real names to ownership roles instead of placeholders.
 ```
 
 **If PII exists but no ARC-*-DPIA-*.md**:
-```
+
+```text
 ⚠️  This contract contains PII ({N} fields marked as PII).
 
 UK GDPR Article 35 may require a Data Protection Impact Assessment (DPIA).
@@ -482,7 +512,8 @@ Consider running: /arckit:dpia Generate DPIA for {project_name}
 ```
 
 **If this is a UK Government project**:
-```
+
+```text
 💡 UK Government Alignment:
    - Technology Code of Practice: Point 8 (Share, reuse and collaborate) ✅
    - National Data Strategy: Pillar 1 (Unlocking value) ✅
@@ -537,7 +568,8 @@ Consider running:
 ## Example User Interactions
 
 **Example 1: Simple contract creation**
-```
+
+```text
 User: /arckit:data-mesh-contract Create contract for customer payments
 Assistant:
   - Checks prerequisites ✅
@@ -548,7 +580,8 @@ Assistant:
 ```
 
 **Example 2: Contract without data model**
-```
+
+```text
 User: /arckit:data-mesh-contract seller-analytics contract
 Assistant:
   - Checks prerequisites ✅
@@ -559,7 +592,8 @@ Assistant:
 ```
 
 **Example 3: Contract with full context**
-```
+
+```text
 User: /arckit:data-mesh-contract fraud-detection-features
 Assistant:
   - Checks prerequisites ✅
@@ -575,22 +609,27 @@ Assistant:
 ## Error Handling
 
 **If architecture principles don't exist**:
+
 - Stop and tell user to run `/arckit:principles` first
 - Do NOT proceed without principles
 
 **If user provides unclear data product name**:
+
 - Ask for clarification: "What is the name of the data product?"
 - Suggest examples: customer-payments, seller-analytics, order-events
 
 **If project creation fails**:
+
 - Show error message from create-project.sh
 - Ask user to check permissions or directory structure
 
 **If template file is missing**:
+
 - Error: "Template not found: ${CLAUDE_PLUGIN_ROOT}/templates/data-mesh-contract-template.md"
 - Ask user to check ArcKit installation
 
 **If file write fails**:
+
 - Show error message
 - Check if directory exists
 - Check permissions

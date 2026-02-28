@@ -40,6 +40,7 @@
 ```
 
 **View this diagram**:
+
 - **GitHub**: Renders automatically in markdown preview
 - **VS Code**: Install Mermaid Preview extension
 - **Online**: https://mermaid.live (paste code above)
@@ -66,6 +67,7 @@ title {diagram_title}
 ```
 
 **View this diagram** (PlantUML does NOT render in GitHub markdown):
+
 - **Online**: https://www.plantuml.com/plantuml/uml/ (paste code above)
 - **VS Code**: Install PlantUML extension (jebbs.plantuml)
 - **CLI**: `java -jar plantuml.jar diagram.puml`
@@ -82,13 +84,15 @@ title {diagram_title}
 C4 diagrams support `<br/>` tags in **BOTH node labels AND edge labels**:
 
 ✅ **Node Labels** - WORKS:
-```
+
+```text
 Person(user, "User<br/>(Customer Role)")
 System(api, "Payment API<br/>(REST)")
 ```
 
 ✅ **Edge Labels** - WORKS:
-```
+
+```text
 Rel(user, api, "Submits payment<br/>HTTPS, JWT auth")
 Rel(api, db, "Stores transaction<br/>Encrypted at rest")
 ```
@@ -98,20 +102,23 @@ Rel(api, db, "Stores transaction<br/>Encrypted at rest")
 These diagram types support `<br/>` tags in **node labels ONLY** - NOT in edge labels:
 
 ✅ **Node Labels** - WORKS:
-```
+
+```text
 flowchart LR
     User["User<br/>(Customer Role)"]
     API["Payment API<br/>(REST)"]
 ```
 
 ❌ **Edge Labels with `<br/>`** - FAILS (causes parse error):
-```
+
+```text
 flowchart LR
     User -->|Submits payment<br/>HTTPS| API  %% PARSE ERROR!
 ```
 
 ✅ **Edge Labels with commas** - WORKS:
-```
+
+```text
 flowchart LR
     User -->|Submits payment via HTTPS, JWT auth| API
 ```
@@ -140,12 +147,14 @@ flowchart LR
 | {Component 3} | {type} | {technology} | {responsibility} | {stage} | {decision} |
 
 **Evolution Stage Legend**:
+
 - **Genesis (0.0-0.25)**: Novel, unproven, rapidly changing
 - **Custom (0.25-0.50)**: Bespoke, emerging practices
 - **Product (0.50-0.75)**: Commercial products with feature differentiation
 - **Commodity (0.75-1.0)**: Utility services, standardized
 
 **Build/Buy Decision**:
+
 - **BUILD**: Genesis/Custom components with competitive advantage
 - **BUY**: Product components with mature market
 - **USE**: Commodity cloud/utility services
@@ -158,12 +167,14 @@ flowchart LR
 ### Key Design Decisions
 
 **Decision 1**: {decision_title}
+
 - **Context**: {context}
 - **Decision**: {decision}
 - **Rationale**: {rationale}
 - **Consequences**: {consequences}
 
 **Decision 2**: {decision_title}
+
 - **Context**: {context}
 - **Decision**: {decision}
 - **Rationale**: {rationale}
@@ -192,6 +203,7 @@ flowchart LR
 | DR-001 | {description} | {components} | ✅ / ⚠️ / ❌ |
 
 **Coverage Summary**:
+
 - Total Requirements: {total}
 - Covered: {covered} ({percentage}%)
 - Partially Covered: {partial}
@@ -358,6 +370,7 @@ flowchart LR
 **AI Risk Level**: {HIGH-RISK / MEDIUM-RISK / LOW-RISK / N/A}
 
 If AI system:
+
 - **Human Oversight**: {Human-in-the-loop / Human-on-the-loop / Human-in-command}
 - **ATRS Required**: {Yes / No}
 - **Bias Testing**: {Yes / No}
@@ -592,4 +605,3 @@ Lay_Right(web, api)
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

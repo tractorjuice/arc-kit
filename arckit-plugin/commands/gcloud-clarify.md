@@ -13,6 +13,7 @@ $ARGUMENTS
 ## Context
 
 After using `/arckit:gcloud-search` to find G-Cloud services, you have a shortlist but face challenges:
+
 - Service descriptions may be vague or use marketing language
 - Technical details may be missing or ambiguous
 - Compliance claims may lack evidence
@@ -27,15 +28,18 @@ This command analyzes gaps between requirements and service descriptions, then g
 ### 1. Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
+
 - **REQ** (Requirements) — Extract: All MUST requirements (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx), SHOULD requirements, compliance (NFR-C-xxx), integration (INT-xxx), performance (NFR-P-xxx), security (NFR-S-xxx)
   - If missing: ERROR "Run `/arckit:requirements` first — need source requirements"
 - **GCLD** (G-Cloud Search, in procurement/) — Extract: Shortlisted services (top 3-5), service names, supplier names, service links, key features, Must-Have Match scores, Desirable Features scores, compliance mentions, pricing
   - If missing: ERROR "Run `/arckit:gcloud-search` first — need service search results"
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **PRIN** (Architecture Principles, in 000-global) — Extract: Technology standards, compliance requirements, approved platforms for gap analysis context
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **RSCH** (Research) — Extract: Market landscape, alternative services, technology recommendations
 
 ### 3. Gap Analysis
@@ -47,11 +51,13 @@ For **each shortlisted service**, perform systematic gap analysis:
 For each MUST requirement (BR-xxx, FR-xxx, NFR-xxx, INT-xxx with MUST priority):
 
 **Check Coverage**:
+
 - ✅ **CONFIRMED**: Service description explicitly mentions this capability with specifics
 - ⚠️ **AMBIGUOUS**: Service mentions related capability but vaguely (needs clarification)
 - ❌ **NOT MENTIONED**: Service does not mention this requirement at all
 
 **Examples**:
+
 - Requirement: "MUST export metrics in Prometheus format"
   - ✅ CONFIRMED: "Supports Prometheus 2.x metric export via /metrics endpoint"
   - ⚠️ AMBIGUOUS: "Industry-standard monitoring integrations" (which standards?)
@@ -60,6 +66,7 @@ For each MUST requirement (BR-xxx, FR-xxx, NFR-xxx, INT-xxx with MUST priority):
 #### B. Ambiguous Claims Detection
 
 Identify vague marketing language that needs clarification:
+
 - "Industry-standard" → Which specific standards?
 - "High availability" → What specific SLA percentage?
 - "Scalable" → To what capacity? What are the limits?
@@ -72,6 +79,7 @@ Identify vague marketing language that needs clarification:
 #### C. Compliance Gaps
 
 For compliance requirements (NFR-C-xxx):
+
 - Are required certifications explicitly mentioned? (ISO 27001, Cyber Essentials Plus, etc.)
 - Are certification numbers provided?
 - Are expiry dates mentioned?
@@ -81,6 +89,7 @@ For compliance requirements (NFR-C-xxx):
 #### D. Integration Gaps
 
 For integration requirements (INT-xxx):
+
 - Is integration method specified? (API, webhook, agent, etc.)
 - Are API versions specified?
 - Is integration architecture documented?
@@ -89,6 +98,7 @@ For integration requirements (INT-xxx):
 #### E. Performance Gaps
 
 For performance requirements (NFR-P-xxx):
+
 - Are specific SLAs mentioned? (uptime %, response time, throughput)
 - Are capacity limits specified?
 - Are performance benchmarks provided?
@@ -104,6 +114,7 @@ For performance requirements (NFR-P-xxx):
 For each gap or ambiguity, generate a structured question:
 
 **Question Format**:
+
 ```markdown
 #### Q[N]: [Clear, specific question title]
 **Requirement**: [REQ-ID] (MUST/SHOULD) - [requirement text]
@@ -126,23 +137,27 @@ For each gap or ambiguity, generate a structured question:
 #### Question Priority Levels
 
 **🔴 CRITICAL** (Blocking):
+
 - MUST requirement not confirmed at all (❌ NOT MENTIONED)
 - Compliance requirement without evidence
 - Blocker for procurement
 
 **🟠 HIGH** (Affects Scoring):
+
 - MUST requirement mentioned ambiguously (⚠️ AMBIGUOUS)
 - Integration requirement unclear
 - SLA not specified
 - Certification mentioned but not confirmed
 
 **🔵 MEDIUM** (Due Diligence):
+
 - SHOULD requirement not mentioned
 - Pricing details incomplete
 - Data residency not confirmed
 - Support terms unclear
 
 **🟢 LOW** (Nice to Know):
+
 - Nice-to-have features
 - Future roadmap questions
 - General support questions
@@ -171,11 +186,11 @@ Create risk matrix for each service:
 ```
 
 **Risk Levels**:
+
 - 🔴 **CRITICAL**: 1+ MUST requirements not confirmed → DO NOT PROCEED
 - 🟠 **HIGH**: 2+ MUST requirements ambiguous → CLARIFY FIRST
 - 🔵 **MEDIUM**: 1 MUST ambiguous OR 3+ SHOULD missing → PROCEED WITH CAUTION
 - 🟢 **LOW**: All MUST confirmed, few SHOULD missing → PROCEED TO DEMO
-
 
 ---
 
@@ -184,11 +199,13 @@ Create risk matrix for each service:
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-GCLC-v{VERSION}` (e.g., `ARC-001-GCLC-v1.0`)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -197,14 +214,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.gcloud-clarify"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -218,6 +238,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:gcloud-clarify` command
 **Generated on**: {DATE} {TIME} GMT
@@ -426,7 +447,7 @@ Before finalizing, validate output:
 
 Output to user:
 
-```
+```text
 ✅ Generated G-Cloud clarification questions for [PROJECT_NAME]
 
 Services Analyzed: [N]
@@ -465,6 +486,7 @@ Important: Do not award contracts to services with CRITICAL gaps until gaps are 
 ## Gap Detection Examples
 
 **Example 1: Explicit Gap**
+
 - Requirement: FR-003 (MUST) - "Export metrics in Prometheus format"
 - Service: "Industry-standard monitoring integrations"
 - Gap: ❌ NOT MENTIONED - Prometheus not mentioned at all
@@ -472,6 +494,7 @@ Important: Do not award contracts to services with CRITICAL gaps until gaps are 
 - Question: "Does the service support Prometheus metric export? If yes, which Prometheus versions and what is the export format?"
 
 **Example 2: Ambiguous Gap**
+
 - Requirement: NFR-P-001 (MUST) - "99.9% uptime SLA"
 - Service: "High availability architecture"
 - Gap: ⚠️ AMBIGUOUS - "High availability" is vague, no specific SLA
@@ -479,6 +502,7 @@ Important: Do not award contracts to services with CRITICAL gaps until gaps are 
 - Question: "What is the specific uptime SLA? Is it 99.9% or higher? What are the SLA credits if uptime falls below target?"
 
 **Example 3: Compliance Gap**
+
 - Requirement: NFR-C-002 (MUST) - "ISO 27001 certified"
 - Service: "ISO certified, secure by design"
 - Gap: ⚠️ AMBIGUOUS - ISO mentioned but which standard? Certificate number?
@@ -495,6 +519,7 @@ Important: Do not award contracts to services with CRITICAL gaps until gaps are 
 ## Integration with Workflow
 
 **Complete G-Cloud Procurement Workflow**:
+
 1. `/arckit:requirements` → Define service needs
 2. `/arckit:gcloud-search` → Find services on Digital Marketplace
 3. **`/arckit:gcloud-clarify`** → Identify gaps, generate questions

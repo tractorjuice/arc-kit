@@ -93,24 +93,28 @@ For the formal application, we will jointly secure letters of intent from pilot 
 Google.org evaluates applications on four criteria. ArcKit maps directly:
 
 ### Impact
+
 - **Governance made possible, not just faster**: Small agencies that previously could not conduct comprehensive governance can now do so — this is a structural change, not an efficiency gain
 - **75-85% time compression** (4-6 weeks to 3-5 days), meaning citizens receive improved digital services months earlier
 - **Compliance uplift from 40-60% to 90%+** against government frameworks — reducing the gaps that lead to project failures and wasted public money
 - **14+ public case studies** across NHS, HMRC, Cabinet Office, Patent Office, ONS, National Highways, Scottish Courts, and more
 
 ### Innovative Technology
+
 - **Autonomous research agents**: 5 AI agents that independently conduct market research, data discovery, and cloud service evaluation — producing specialist analysis that would otherwise require separate consultant engagements
 - **Real-time cloud documentation access**: Live integration with AWS, Azure, GCP, and DataCommons documentation ensures recommendations reflect current services, not outdated knowledge
 - **Multi-AI platform distribution**: Same toolkit works across Claude Code, Gemini CLI, Codex CLI, and OpenCode CLI — no single-vendor dependency
 - **Automated quality controls**: Filename enforcement, context injection, and output validation run automatically — ensuring consistency without manual oversight
 
 ### Feasibility
+
 - **Production-ready platform**: v2.8.5 with 51 commands, extensively tested
 - **Proven across 14+ government domains**: Health, tax, defence, justice, transport, data, procurement, energy, education
 - **Active development team** with continuous releases
 - **Zero-config installation** for Claude Code (plugin marketplace) and Gemini CLI (extension)
 
 ### Scalability
+
 - **Open source (MIT license)**: No vendor lock-in, free to adopt and adapt
 - **Template-driven customisation**: Organisations adapt templates for their standards without modifying the core toolkit — enabling localisation for any jurisdiction
 - **4 distribution formats**: Reaches architects regardless of their AI assistant preference

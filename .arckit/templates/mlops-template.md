@@ -219,6 +219,7 @@ flowchart LR
 ### Model Metadata
 
 Each registered model must include:
+
 - Model version and unique identifier
 - Training data version
 - Training code commit
@@ -517,6 +518,7 @@ flowchart LR
 ### Documentation Requirements
 
 Each model must have:
+
 - [ ] Model card (purpose, limitations, performance)
 - [ ] Training data documentation
 - [ ] Feature documentation

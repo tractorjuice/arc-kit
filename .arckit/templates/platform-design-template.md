@@ -43,6 +43,7 @@
 ### Strategic Overview
 
 **Two-Sided (or Multi-Sided) Market**:
+
 - **Supply Side**: [Who provides value - e.g., service providers, sellers, creators]
 - **Demand Side**: [Who consumes value - e.g., consumers, buyers, learners]
 - **Platform Role**: [How platform enables/enhances transactions and learning]
@@ -166,6 +167,7 @@ graph TB
 ### 2.1 Purpose
 
 Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each portrait analyzes:
+
 - **Context**: Current situation and constraints
 - **Performance Pressures**: What forces drive their behavior
 - **Goals**: What outcomes they seek
@@ -182,14 +184,17 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 #### 2.2.1 Context
 
 **Who are they?**
+
 - [Description of typical profile - e.g., demographics, industry, size]
 
 **Current Situation:**
+
 - [How they operate today without the platform]
 - [What tools/processes they currently use]
 - [Pain points in current workflow]
 
 **Constraints:**
+
 - [Time constraints]
 - [Budget constraints]
 - [Regulatory constraints]
@@ -198,12 +203,14 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 #### 2.2.2 Performance Pressures
 
 **External Pressures:**
+
 - [Market competition pressures]
 - [Economic pressures - e.g., declining revenues]
 - [Regulatory pressures]
 - [Customer expectation changes]
 
 **Internal Pressures:**
+
 - [Operational efficiency needs]
 - [Cost reduction imperatives]
 - [Growth targets]
@@ -212,16 +219,19 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 #### 2.2.3 Goals
 
 **Short-term Goals (0-6 months):**
+
 1. [Goal 1 - e.g., "Acquire 10 new customers per month"]
 2. [Goal 2 - e.g., "Reduce time spent on administration by 50%"]
 3. [Goal 3 - e.g., "Improve cash flow visibility"]
 
 **Medium-term Goals (6-18 months):**
+
 1. [Goal 1 - e.g., "Establish reputation in new market segment"]
 2. [Goal 2 - e.g., "Build recurring revenue base"]
 3. [Goal 3 - e.g., "Expand service offerings"]
 
 **Long-term Goals (18+ months):**
+
 1. [Goal 1 - e.g., "Become recognized leader in niche"]
 2. [Goal 2 - e.g., "Scale business to £500K annual revenue"]
 3. [Goal 3 - e.g., "Reduce dependency on large clients"]
@@ -269,13 +279,16 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 #### 2.3.1 Context
 
 **Who are they?**
+
 - [Description of typical profile]
 
 **Current Situation:**
+
 - [How they find/purchase services today without the platform]
 - [What pain points they experience]
 
 **Constraints:**
+
 - [Budget limitations]
 - [Procurement process constraints]
 - [Technical integration constraints]
@@ -284,12 +297,14 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 #### 2.3.2 Performance Pressures
 
 **External Pressures:**
+
 - [Competitive pressures requiring faster delivery]
 - [Cost reduction mandates]
 - [Quality/compliance requirements]
 - [Stakeholder expectations]
 
 **Internal Pressures:**
+
 - [Operational efficiency targets]
 - [Risk mitigation requirements]
 - [Innovation demands]
@@ -298,16 +313,19 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 #### 2.3.3 Goals
 
 **Short-term Goals (0-6 months):**
+
 1. [Goal 1 - e.g., "Find qualified vendor within 2 weeks"]
 2. [Goal 2 - e.g., "Reduce procurement cycle time by 40%"]
 3. [Goal 3 - e.g., "Ensure vendor compliance with standards"]
 
 **Medium-term Goals (6-18 months):**
+
 1. [Goal 1 - e.g., "Build panel of pre-qualified suppliers"]
 2. [Goal 2 - e.g., "Reduce total cost of ownership by 20%"]
 3. [Goal 3 - e.g., "Improve vendor performance visibility"]
 
 **Long-term Goals (18+ months):**
+
 1. [Goal 1 - e.g., "Establish strategic supplier partnerships"]
 2. [Goal 2 - e.g., "Create continuous improvement culture"]
 3. [Goal 3 - e.g., "Benchmark performance against industry leaders"]
@@ -355,13 +373,16 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 #### 2.4.1 Context
 
 **Who are they?**
+
 - [Description of regulatory body or supporting entity]
 
 **Current Situation:**
+
 - [How they interact with the ecosystem today]
 - [What challenges they face]
 
 **Constraints:**
+
 - [Legal/statutory constraints]
 - [Resource constraints]
 - [Political constraints]
@@ -369,11 +390,13 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 #### 2.4.2 Performance Pressures
 
 **Mandates:**
+
 - [Statutory obligations]
 - [Public interest requirements]
 - [Compliance monitoring duties]
 
 **Stakeholder Expectations:**
+
 - [Government expectations]
 - [Industry expectations]
 - [Public expectations]
@@ -381,6 +404,7 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 #### 2.4.3 Goals
 
 **Regulatory Goals:**
+
 1. [Goal 1 - e.g., "Ensure 100% provider compliance with safety standards"]
 2. [Goal 2 - e.g., "Reduce consumer complaints by 30%"]
 3. [Goal 3 - e.g., "Improve market transparency"]
@@ -412,6 +436,7 @@ Entity portraits provide deep context on 3-5 key entities in the ecosystem. Each
 ### 3.1 Purpose
 
 The Motivations Matrix maps how different entities' motivations align or conflict. It helps identify:
+
 - Where natural synergies exist (aligned motivations)
 - Where platform must resolve conflicts
 - Which entities are natural partners vs. competitors
@@ -430,18 +455,21 @@ The Motivations Matrix maps how different entities' motivations align or conflic
 ### 3.3 Key Synergies
 
 **Synergy 1: Supply-Demand Matching**
+
 - **Entities**: E-001 (Supply) ↔ E-002 (Demand)
 - **Shared Motivation**: Both want efficient, low-friction transactions
 - **Platform Role**: Provide matching algorithm, reduce search costs, ensure quality
 - **Value Creation**: £X million in transaction value enabled annually
 
 **Synergy 2: Quality Assurance**
+
 - **Entities**: E-002 (Demand) ↔ E-003 (Regulator)
 - **Shared Motivation**: Both want compliant, high-quality providers
 - **Platform Role**: Automated compliance verification, quality ratings, provider certification
 - **Value Creation**: Risk reduction, consumer confidence, regulatory efficiency
 
 **Synergy 3: Transaction Enablement**
+
 - **Entities**: E-001 (Supply) ↔ E-004 (Payment Provider) ↔ E-002 (Demand)
 - **Shared Motivation**: All benefit from transaction volume and payment security
 - **Platform Role**: Integrated payment, escrow, dispute resolution
@@ -450,18 +478,21 @@ The Motivations Matrix maps how different entities' motivations align or conflic
 ### 3.4 Key Conflicts to Resolve
 
 **Conflict 1: Flexibility vs. Control**
+
 - **Entities**: E-001 (Supply) vs. E-003 (Regulator)
 - **Conflict**: Providers want operational flexibility; regulator wants standardization
 - **Platform Solution**: [How platform balances flexibility with compliance - e.g., "Compliance-as-a-service" that automates regulatory requirements while allowing provider customization]
 - **Success Metric**: [e.g., 95% provider compliance + 80% provider satisfaction with flexibility]
 
 **Conflict 2: Price Transparency vs. Price Optimization**
+
 - **Entities**: E-001 (Supply) vs. E-002 (Demand)
 - **Conflict**: Buyers want price transparency; sellers want pricing power
 - **Platform Solution**: [e.g., Dynamic pricing with visibility into demand signals, allowing sellers to optimize while buyers compare]
 - **Success Metric**: [e.g., 20% price reduction for buyers + 15% revenue increase for sellers through better matching]
 
 **Conflict 3: Data Privacy vs. Personalization**
+
 - **Entities**: E-002 (Demand) vs. Platform
 - **Conflict**: Users want privacy; platform needs data for personalization
 - **Platform Solution**: [e.g., Privacy-preserving analytics, user-controlled data sharing, GDPR compliance]
@@ -478,6 +509,7 @@ The Transactions Board identifies all transactions in the ecosystem and analyzes
 **Reference**: Based on PDT Transactions Board (TB) v2.2
 
 **Transaction Costs** (Coase, Williamson):
+
 - **Search Costs**: Finding the right party
 - **Information Costs**: Verifying quality, credentials, reputation
 - **Negotiation Costs**: Agreeing on terms, pricing, contracts
@@ -499,6 +531,7 @@ The Transactions Board identifies all transactions in the ecosystem and analyzes
 ### 4.3 Transaction Cost Analysis
 
 **Total Ecosystem Transaction Costs (Without Platform):**
+
 - Search Costs: [£X per transaction]
 - Information Costs: [£Y per transaction]
 - Negotiation Costs: [£Z per transaction]
@@ -507,6 +540,7 @@ The Transactions Board identifies all transactions in the ecosystem and analyzes
 - **TOTAL**: [£X+Y+Z+A+B per transaction]
 
 **Total Ecosystem Transaction Costs (With Platform):**
+
 - Search Costs: [£reduced]
 - Information Costs: [£reduced]
 - Negotiation Costs: [£reduced]
@@ -515,6 +549,7 @@ The Transactions Board identifies all transactions in the ecosystem and analyzes
 - **TOTAL**: [£reduced total per transaction]
 
 **Platform Value Creation**:
+
 - **Cost Reduction per Transaction**: [e.g., £450 saved per transaction]
 - **Annual Transaction Volume**: [e.g., 10,000 transactions/year]
 - **Annual Value Created**: [e.g., £4.5 million/year in transaction cost savings]
@@ -558,6 +593,7 @@ The Learning Engine Canvas designs services that help ecosystem entities **conti
 **Reference**: Based on PDT Learning Engine Canvas (LC) v2.2
 
 **Learning as Value Engine:**
+
 - Transactions = immediate value exchange
 - Learning = long-term value appreciation
 - Platform that helps entities get better → stickiness, moat, network effects
@@ -571,21 +607,25 @@ The Learning Engine Canvas designs services that help ecosystem entities **conti
 **What**: Real-time dashboard showing provider performance vs. peer benchmarks
 
 **Inputs**:
+
 - Transaction data (volume, value, ratings)
 - Peer group performance (anonymized)
 - Industry benchmarks
 
 **Outputs**:
+
 - Performance scorecard (response time, quality ratings, revenue per hour)
 - Trend analysis (improving/declining metrics)
 - Peer comparison (top quartile, median, bottom quartile)
 
 **How Entity Improves**:
+
 - Identifies underperforming areas (e.g., slow response times)
 - Sets improvement targets (reach top quartile)
 - Tracks progress over time
 
 **Platform Benefit**:
+
 - Higher-quality supply side
 - Competitive pressure drives excellence
 - Data for coaching/training interventions
@@ -599,21 +639,25 @@ The Learning Engine Canvas designs services that help ecosystem entities **conti
 **What**: Curated library of case studies, templates, and how-to guides from top performers
 
 **Inputs**:
+
 - Top performer profiles (with permission)
 - Success patterns identified by platform AI
 - Industry expert contributions
 
 **Outputs**:
+
 - Case studies (e.g., "How provider X grew revenue 200% in 12 months")
 - Templates (e.g., service description templates that convert 3x better)
 - Video tutorials (e.g., "Optimizing your profile for search")
 
 **How Entity Improves**:
+
 - Learns from top performers
 - Adopts proven templates
 - Shortens learning curve
 
 **Platform Benefit**:
+
 - Faster onboarding of new providers
 - Quality standards diffuse through ecosystem
 - Content marketing (case studies)
@@ -627,21 +671,25 @@ The Learning Engine Canvas designs services that help ecosystem entities **conti
 **What**: AI-driven recommendations + human coaching for underperformers
 
 **Inputs**:
+
 - Provider performance data
 - Customer feedback themes
 - Success patterns from top performers
 
 **Outputs**:
+
 - Weekly personalized tips (e.g., "Update your profile photo - it increases bookings 25%")
 - Quarterly coaching calls for bottom quartile
 - Certification programs for capability development
 
 **How Entity Improves**:
+
 - Receives specific, actionable feedback
 - Gets human support for difficult changes
 - Gains credentials through certification
 
 **Platform Benefit**:
+
 - Reduces provider churn (bottom quartile stays and improves)
 - Elevates overall quality
 - Creates professionalization pathway
@@ -657,21 +705,25 @@ The Learning Engine Canvas designs services that help ecosystem entities **conti
 **What**: Market intelligence reports on pricing trends, capacity, quality benchmarks
 
 **Inputs**:
+
 - Platform transaction data (prices, volumes, geographies)
 - Quality ratings and compliance data
 - Capacity/availability signals
 
 **Outputs**:
+
 - Quarterly market reports (e.g., "Average consulting rates decreased 10% this quarter")
 - Real-time pricing benchmarks (e.g., "You are paying 15% above market median")
 - Capacity forecasts (e.g., "High demand expected in Q4, book early")
 
 **How Entity Improves**:
+
 - Makes better procurement decisions
 - Negotiates from data-driven position
 - Plans capacity in advance
 
 **Platform Benefit**:
+
 - Buyers perceive platform as strategic advisor, not just marketplace
 - Increased transaction volume (better planning)
 - Reduced buyer churn
@@ -685,22 +737,26 @@ The Learning Engine Canvas designs services that help ecosystem entities **conti
 **What**: Tools and templates for managing vendor relationships and performance
 
 **Inputs**:
+
 - Platform SLA monitoring data
 - Vendor scorecards
 - Contract templates
 
 **Outputs**:
+
 - Vendor performance dashboards
 - Automated SLA breach alerts
 - Contract management workflows
 - Vendor review templates
 
 **How Entity Improves**:
+
 - Professionalizes vendor management
 - Reduces vendor management overhead (automated monitoring)
 - Improves vendor performance (data-driven conversations)
 
 **Platform Benefit**:
+
 - Buyers get more value from platform relationships
 - Platform becomes embedded in buyer operations
 - Churn reduction
@@ -712,20 +768,24 @@ The Learning Engine Canvas designs services that help ecosystem entities **conti
 ### 5.3 Learning Services Business Model
 
 **Freemium Model:**
+
 - **Free Tier**: Basic analytics, public best practices
 - **Premium Tier**: Advanced analytics, personalized coaching, market intelligence
 - **Enterprise Tier**: Custom reports, dedicated account management, API access
 
 **Pricing:**
+
 - Premium: [£X/month per provider, £Y/month per buyer]
 - Enterprise: [£Z/month + % of transaction value]
 
 **Projected Adoption:**
+
 - Year 1: 20% of entities upgrade to premium
 - Year 2: 35% of entities on premium
 - Year 3: 50% of entities on premium
 
 **Revenue Potential:**
+
 - [Calculate based on entity volumes and pricing]
 
 ---
@@ -808,23 +868,27 @@ The Platform Experience Canvas integrates **peer-to-peer transactions** (from Tr
 #### 6.4.1 Revenue Streams
 
 **Transaction Fees:**
+
 - **Commission on Transactions**: [X]% of transaction value
   - Supply side pays [Y]%, Demand side pays [Z]%
   - **Rationale**: [e.g., Split 5% supply / 5% demand to balance liquidity on both sides]
   - **Projected Volume**: [e.g., £10M GMV Year 1 → £1M commission revenue]
 
 **Subscription Fees:**
+
 - **Premium Memberships**: [£X/month per entity]
   - **Supply Side Premium**: [e.g., £99/month for advanced analytics, featured listings]
   - **Demand Side Premium**: [e.g., £199/month for procurement intelligence, unlimited RFQs]
   - **Projected Adoption**: [e.g., 30% adoption rate → £500K ARR]
 
 **Learning Services:**
+
 - **Certification Programs**: [£X per certification]
   - **Example**: [e.g., "Verified Professional" certification - £299]
   - **Projected Volume**: [e.g., 1,000 certifications Year 1 → £300K revenue]
 
 **Data and Insights:**
+
 - **Market Intelligence Reports**: [£X per report]
   - **Target**: Enterprise buyers, industry analysts, investors
   - **Projected Volume**: [e.g., 50 reports/year @ £5K each → £250K revenue]
@@ -834,16 +898,19 @@ The Platform Experience Canvas integrates **peer-to-peer transactions** (from Tr
 #### 6.4.2 Cost Structure
 
 **Technology Costs:**
+
 - Platform development and maintenance: [£X/year]
 - Cloud infrastructure (AWS/Azure): [£Y/year]
 - Third-party APIs (payment, verification, etc.): [£Z/year]
 
 **Operations Costs:**
+
 - Customer support: [£A/year]
 - Content moderation: [£B/year]
 - Compliance and legal: [£C/year]
 
 **Sales and Marketing:**
+
 - Demand-side acquisition (CAC): [£D per buyer]
 - Supply-side acquisition (CAC): [£E per provider]
 - Marketing budget: [£F/year]
@@ -856,12 +923,14 @@ The Platform Experience Canvas integrates **peer-to-peer transactions** (from Tr
 #### 6.4.3 Unit Economics
 
 **Per Transaction:**
+
 - Average Transaction Value: [£X]
 - Platform Commission (10%): [£Y]
 - Payment Processing Fee (2.5%): [£Z]
 - **Gross Profit per Transaction**: [£Y - Z]
 
 **Per Entity (Annual):**
+
 - Average Revenue per Supply Entity: [£X]
 - Average Cost to Serve Supply Entity: [£Y]
 - **Gross Profit per Supply Entity**: [£X - Y]
@@ -871,14 +940,17 @@ The Platform Experience Canvas integrates **peer-to-peer transactions** (from Tr
 - **Gross Profit per Demand Entity**: [£A - B]
 
 **Lifetime Value (LTV):**
+
 - Supply-side LTV: [£X over 3 years]
 - Demand-side LTV: [£Y over 3 years]
 
 **Customer Acquisition Cost (CAC):**
+
 - Supply-side CAC: [£A]
 - Demand-side CAC: [£B]
 
 **LTV:CAC Ratios:**
+
 - Supply-side: [X:1] (Target: >3:1)
 - Demand-side: [Y:1] (Target: >3:1)
 
@@ -897,30 +969,35 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 ### 7.2 Critical Assumptions
 
 **Assumption 1: Supply-Side Value Hypothesis**
+
 - **Assumption**: Service providers will join the platform because [reason - e.g., "they struggle to find customers and will pay 10% commission for qualified leads"]
 - **Riskiness**: 🔴 **HIGH** - This is a critical assumption; if wrong, platform fails
 - **Evidence Needed**: [e.g., 50 providers sign up and activate profiles within 30 days]
 - **Test Method**: [e.g., Landing page + email campaign + 20 provider interviews]
 
 **Assumption 2: Demand-Side Value Hypothesis**
+
 - **Assumption**: Enterprise buyers will use the platform because [reason - e.g., "they waste £500 and 2 weeks finding providers, and will pay premium for verified suppliers"]
 - **Riskiness**: 🔴 **HIGH** - This is a critical assumption; if wrong, platform fails
 - **Evidence Needed**: [e.g., 10 buyers complete first purchase within 60 days]
 - **Test Method**: [e.g., Concierge service - manually match buyers to providers, test willingness to pay]
 
 **Assumption 3: Transaction Cost Reduction**
+
 - **Assumption**: Platform can reduce transaction costs by [X]% through [mechanism - e.g., "automated matching, standardized contracts, escrow payments"]
 - **Riskiness**: 🟠 **MEDIUM** - Important but testable
 - **Evidence Needed**: [e.g., Transaction time reduced from 2 weeks to 2 days in 80% of cases]
 - **Test Method**: [e.g., Pilot with 10 transactions, measure time and cost savings]
 
 **Assumption 4: Network Effects**
+
 - **Assumption**: Platform improves with scale because [reason - e.g., "more providers = better matching for buyers, more buyers = more revenue for providers"]
 - **Riskiness**: 🟠 **MEDIUM** - Validates long-term moat
 - **Evidence Needed**: [e.g., Buyer satisfaction increases from +20 NPS at 10 providers to +40 NPS at 50 providers]
 - **Test Method**: [e.g., Track NPS, conversion rates, transaction velocity as supply grows]
 
 **Assumption 5: Regulatory Compliance**
+
 - **Assumption**: Platform can ensure provider compliance without manual audits through [mechanism - e.g., "API integration with professional bodies, automated credential verification"]
 - **Riskiness**: 🟢 **LOW** - Known solution space
 - **Evidence Needed**: [e.g., 95% automated verification success rate]
@@ -931,11 +1008,13 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 **What's IN the MVP:**
 
 ✅ **Core Transactions** (from Transactions Board):
+
 - T-001: Service Request (Supply-Demand matching)
 - T-002: Service Delivery (basic workflow tracking)
 - T-003: Payment (escrow + automated invoicing)
 
 ✅ **Essential Platform Services**:
+
 - Provider profiles (basic templates, not AI-optimized)
 - Buyer search and filtering
 - Rating system (post-transaction only)
@@ -944,11 +1023,13 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 - Email/SMS notifications
 
 ✅ **One Learning Service** (to test learning hypothesis):
+
 - Learning Service 1: Performance Analytics (basic version - just ratings and transaction count)
 
 **What's OUT of the MVP** (defer to post-validation):
 
 ❌ **Advanced Features**:
+
 - AI matching algorithm (use manual curation initially)
 - Real-time chat (use email)
 - Mobile apps (web-only)
@@ -958,6 +1039,7 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 - API for integrations
 
 ❌ **Nice-to-Have Services**:
+
 - Learning Services 2, 3, 4, 5 (defer until core value proven)
 - Premium subscriptions (start with transaction fees only)
 - Flywheel optimization
@@ -968,12 +1050,14 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 **Geographic Scope**: [e.g., "London only" to concentrate liquidity]
 
 **Entity Scope**:
+
 - **Supply Side**: [e.g., "50 verified service providers in 3 categories"]
 - **Demand Side**: [e.g., "10 enterprise buyers from our existing network"]
 
 **Transaction Scope**: [e.g., "100 transactions in 90 days" to validate unit economics]
 
 **Technology Scope**:
+
 - Web app (responsive, mobile-friendly)
 - PostgreSQL database
 - Stripe for payments
@@ -986,6 +1070,7 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 **Solution: Supply-First Strategy**
 
 **Phase 1: Curate Initial Supply (Weeks 1-4)**
+
 - **Target**: 50 high-quality providers in 3 categories
 - **Acquisition Method**:
   - Direct outreach to providers in our network
@@ -995,6 +1080,7 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 - **Success Metric**: 50 providers with complete, high-quality profiles
 
 **Phase 2: Seed Demand (Weeks 5-8)**
+
 - **Target**: 10 enterprise buyers from existing relationships
 - **Acquisition Method**:
   - Personal introductions from founders
@@ -1003,6 +1089,7 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 - **Success Metric**: 10 buyers, each completing 2+ transactions
 
 **Phase 3: Test Transaction Velocity (Weeks 9-12)**
+
 - **Target**: 100 transactions in 30 days
 - **Method**:
   - Optimize matching (learn what converts)
@@ -1014,6 +1101,7 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
   - NPS >+30 from both sides
 
 **Phase 4: Expand Liquidity (Weeks 13-24)**
+
 - **Target**: 200 providers, 50 buyers, 500 transactions/month
 - **Method**:
   - Provider referrals ("Bring 2 colleagues, get featured listing")
@@ -1041,6 +1129,7 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 | **Unit Economics** | CAC < 33% LTV | [Measure] | |
 
 **Decision**:
+
 - **🟢 PROCEED**: If 10+ metrics hit targets → Build full platform, raise funding, scale
 - **🟠 PIVOT**: If 7-9 metrics hit targets → Iterate MVP, test for another 90 days
 - **🔴 STOP**: If <7 metrics hit targets → Core hypothesis invalid, shut down or fundamental pivot
@@ -1063,6 +1152,7 @@ The Minimum Viable Platform (MVP) Canvas designs your validation strategy. It an
 | **TOTAL MVP Budget** | **£150K** | Seed funding requirement |
 
 **Team**:
+
 - 1 Founder/CEO (strategy, fundraising, buyer relationships)
 - 1 Founder/CTO (product, engineering, technical architecture)
 - 2 Full-stack Developers (platform build)
@@ -1092,11 +1182,13 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 #### Building Block 1: Ecosystem
 
 **Who participates?**
+
 - **Supply Side**: [Entity types - e.g., "Independent consultants, SME service providers"]
 - **Demand Side**: [Entity types - e.g., "Enterprise buyers, government departments"]
 - **Supporting Entities**: [e.g., "Regulators, payment providers, insurers"]
 
 **Ecosystem Size (3-year target)**:
+
 - [X] supply-side entities
 - [Y] demand-side entities
 - [£Z] Gross Merchandise Value (GMV) annually
@@ -1110,16 +1202,19 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 **What value do we create?**
 
 **For Supply Side**:
+
 1. [Value 1 - e.g., "Customer acquisition at 90% lower cost"]
 2. [Value 2 - e.g., "Payment certainty (1-day payment vs 30-60 days)"]
 3. [Value 3 - e.g., "Continuous improvement through analytics and coaching"]
 
 **For Demand Side**:
+
 1. [Value 1 - e.g., "Verified supplier discovery (95% faster)"]
 2. [Value 2 - e.g., "Risk mitigation (compliance guaranteed)"]
 3. [Value 3 - e.g., "Procurement intelligence (20% cost savings)"]
 
 **For Ecosystem**:
+
 1. [Value 1 - e.g., "£4.5M annual transaction cost savings"]
 2. [Value 2 - e.g., "Market transparency and quality standards"]
 3. [Value 3 - e.g., "Industry professionalization"]
@@ -1133,6 +1228,7 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 **How do we monetize?**
 
 **Revenue Model**:
+
 1. **Transaction Fees**: [X]% commission = [£Y] revenue Year 1
 2. **Subscriptions**: [Premium memberships] = [£Z] ARR Year 1
 3. **Learning Services**: [Certifications, reports] = [£A] revenue Year 1
@@ -1149,20 +1245,25 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 **How does the platform get better with scale?**
 
 **Same-Side Network Effects**:
+
 - **Supply Side**: [e.g., "More providers → more specializations → better matching"]
 - **Demand Side**: [e.g., "More buyers → more transactions → better provider revenue → attracts higher-quality providers"]
 
 **Cross-Side Network Effects**:
+
 - **Supply → Demand**: [e.g., "More providers → more choice, faster delivery, better prices → attracts more buyers"]
 - **Demand → Supply**: [e.g., "More buyers → more revenue opportunities → attracts more providers"]
 
 **Data Network Effects**:
+
 - [e.g., "More transactions → better matching algorithm → higher conversion rates → more transactions"]
 
 **Learning Network Effects**:
+
 - [e.g., "More entities → more performance data → better benchmarks, coaching, insights → entities improve faster → ecosystem quality increases"]
 
 **Defensibility**:
+
 - [Why entities won't leave once ecosystem reaches critical mass]
 - **Switching Costs**: [e.g., "Provider reputation, buyer relationships, transaction history"]
 - **Multi-tenanting Risk**: [e.g., "Providers could multi-home on competing platforms - mitigate through exclusive benefits, superior matching"]
@@ -1176,15 +1277,18 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 **What transactions do we enable/enhance?**
 
 **Core Transactions** (from Transactions Board):
+
 1. **T-001**: Service Request (Supply-Demand matching) - reduces search costs by 90%
 2. **T-002**: Service Delivery - reduces coordination costs by 90%
 3. **T-003**: Payment - reduces payment time by 86%, eliminates bad debt risk
 
 **Transaction Cost Reductions**:
+
 - **Total Cost Savings**: [£X per transaction]
 - **Annual Value Created**: [£Y million for ecosystem]
 
 **Transaction Velocity Target**:
+
 - Year 1: [100 transactions/month]
 - Year 2: [1,000 transactions/month]
 - Year 3: [5,000 transactions/month]
@@ -1200,6 +1304,7 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 **Learning Services** (from Learning Engine Canvas):
 
 **For Supply Side**:
+
 1. **Performance Analytics** - peer benchmarking, improvement tracking
 2. **Best Practice Library** - case studies, templates, tutorials
 3. **Personalized Coaching** - AI tips + human support
@@ -1211,6 +1316,7 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 **Learning Revenue**: [£X/year from premium subscriptions and certifications]
 
 **Learning Impact**:
+
 - [e.g., "Providers using analytics improve ratings by 0.5 stars in 3 months"]
 - [e.g., "Buyers using intelligence achieve 20% better pricing"]
 
@@ -1248,6 +1354,7 @@ The Platform Design Canvas synthesizes insights from all previous canvases into 
 **Government as a Platform (GaaP) Alignment**:
 
 This platform embodies GaaP principles:
+
 1. **Shared Services**: [How platform provides shared capability - e.g., "Verification-as-a-Service for all government departments"]
 2. **Ecosystem Orchestration**: [How platform enables ecosystem - e.g., "SME suppliers access £10M government procurement opportunities"]
 3. **Data Sharing**: [How platform enables data flows - e.g., "Supplier performance data shared across departments"]
@@ -1272,6 +1379,7 @@ This platform embodies GaaP principles:
 **Digital Marketplace Positioning**:
 
 This platform operates within Digital Marketplace ecosystem:
+
 - **G-Cloud**: [If applicable - e.g., "Platform listed as G-Cloud SaaS service"]
 - **DOS**: [If applicable - e.g., "Platform providers are DOS suppliers"]
 - **Differentiation**: [How this platform differs from/complements Digital Marketplace - e.g., "Digital Marketplace provides discovery; we provide transaction engine, learning services, and ecosystem orchestration"]
@@ -1376,6 +1484,7 @@ This platform operates within Digital Marketplace ecosystem:
 ### 10.4 Go/No-Go Decision (Month 7)
 
 **Review Validation Metrics** (Section 7.6):
+
 - If ✅ 10+ metrics hit targets → **PROCEED** to full platform build
 - If 🟠 7-9 metrics hit targets → **PIVOT** and iterate for another 90 days
 - If 🔴 <7 metrics hit targets → **STOP** or fundamental pivot
@@ -1407,17 +1516,20 @@ This platform operates within Digital Marketplace ecosystem:
 ### Appendix A: PDT Methodology Reference
 
 **Platform Design Toolkit v2.2.1**
+
 - **Source**: Boundaryless.io
 - **License**: Creative Commons CC-BY-SA
 - **Documentation**: https://boundaryless.io/pdt-toolkit/
 
 **PDT Phases**:
+
 1. Opportunity Exploration (Arena Scan, Ecosystem Scan, VRIO, Wardley Maps)
 2. **Strategy Design** (THIS DOCUMENT - 8 canvases)
 3. Validation & Prototyping (Experiments, interviews, MVP)
 4. Growth & Evolution (Flywheel, liquidity strategy, network properties)
 
 **Core PDT Concepts**:
+
 - **Two Value Engines**: Transactions (reduce friction) + Learning (continuous improvement)
 - **Ecosystem Thinking**: Multi-sided markets, entities with distinct roles
 - **Transaction Cost Economics**: Platform's role is to reduce Coasean transaction costs
@@ -1473,6 +1585,7 @@ This platform operates within Digital Marketplace ecosystem:
 **Next Review Date**: `{next_review_date}`
 
 **Approval Required From**:
+
 - [ ] Chief Technology Officer
 - [ ] Chief Product Officer
 - [ ] Head of Procurement (if applicable)

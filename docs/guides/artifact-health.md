@@ -21,6 +21,7 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 **Why it matters**: Procurement decisions based on stale research risk cost overruns, missed alternatives, and selecting vendors whose offerings have materially changed. SaaS pricing, in particular, can shift quarterly.
 
 **How to resolve**:
+
 1. Run `/arckit:research` to generate a fresh research document
 2. Compare the new findings against the original to identify material changes
 3. If the original research is still valid (rare for pricing data), update the Document Control "Last Modified" date to acknowledge the review
@@ -38,6 +39,7 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 **Why it matters**: Proposed ADRs represent architectural decisions that someone thought were important enough to document but that no one has formally evaluated. Teams may be proceeding with conflicting assumptions, or the decision may be blocking downstream work.
 
 **How to resolve**:
+
 1. Schedule an architecture review meeting to discuss the proposed ADR
 2. After review, update the ADR status to "Accepted", "Rejected", or "Superseded"
 3. If the ADR is no longer relevant, change status to "Deprecated" with an explanation
@@ -55,6 +57,7 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 **Why it matters**: "Approved with conditions" is a conditional pass — it means the architecture can proceed but specific changes are mandatory. If conditions are never addressed, the design ships with known gaps that the review board explicitly flagged.
 
 **How to resolve**:
+
 1. Read the specific conditions listed in the review document
 2. For each condition:
    - If explicitly marked as resolved in the review document: resolution is clear
@@ -75,6 +78,7 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 **Why it matters**: Not every requirement needs a dedicated ADR — straightforward requirements may be adequately covered by design reviews or traceability matrices. However, complex or contentious requirements benefit from explicit architectural decisions. This finding flags the gap for the architect to assess.
 
 **How to resolve**:
+
 1. Review the list of orphaned requirements
 2. For each one, ask: "Does this requirement involve a non-trivial architectural choice?"
    - **If yes**: Create an ADR with `/arckit:adr` documenting the decision
@@ -94,6 +98,7 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 **Why it matters**: Traceability is a governance best practice. ADRs without requirement references are harder to audit, harder to assess for impact when requirements change, and may indicate decisions made without clear justification.
 
 **How to resolve**:
+
 1. Open the flagged ADR
 2. Identify which requirements motivated the decision
 3. Add references in the ADR body (e.g., "This decision addresses FR-015 and NFR-P-003")
@@ -112,6 +117,7 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 **Why it matters**: Version drift can indicate abandoned revisions, teams working from outdated versions, or simply a completed artifact that has accumulated old versions. The risk is low but worth periodic review.
 
 **How to resolve**:
+
 1. Check whether the latest version is still the authoritative document
 2. If the latest version is current and complete: no action needed (the age is acceptable)
 3. If older versions are superseded: consider archiving or deleting them to reduce confusion

@@ -32,7 +32,7 @@ This command performs Azure-specific technology research using the Microsoft Lea
 
 2. **Launch the agent**: Launch the **arckit-azure-research** agent in `acceptEdits` mode with the following prompt:
 
-   ```
+   ```text
    Research Azure services and architecture patterns for the project in projects/{project-dir}/.
 
    User's additional context: {$ARGUMENTS}
@@ -64,6 +64,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 ### Output
 
 The agent writes the full research document to file and returns a summary including:
+
 - Azure services recommended per category
 - Architecture pattern and reference
 - Security alignment (Security Benchmark, Well-Architected)

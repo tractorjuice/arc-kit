@@ -9,7 +9,7 @@ Use persistent auto memory to retain project knowledge across Claude Code sessio
 
 ## Core Architecture
 
-```
+```text
 ~/.claude/projects/<project-path>/memory/
 ├── MEMORY.md          # Always loaded into system prompt (~200 lines max)
 ├── architecture.md    # Topic file: system architecture decisions
@@ -137,10 +137,12 @@ Periodically review memory files against the actual project state. Stale entries
 ### Reference Files
 
 For detailed patterns, anti-patterns, and advanced techniques:
+
 - **[references/patterns.md](references/patterns.md)** — Writing style guide, MEMORY.md structure patterns, topic file patterns, common anti-patterns
 
 ### Example Files
 
 Working examples ready to adapt:
+
 - **[examples/MEMORY.md](examples/MEMORY.md)** — Starter MEMORY.md template
 - **[examples/topic-file.md](examples/topic-file.md)** — Topic file template with recommended structure

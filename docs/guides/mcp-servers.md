@@ -15,13 +15,13 @@ This guide covers installing the ArcKit plugin, configuring MCP servers, and com
 
 In Claude Code, run:
 
-```
+```text
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
 ### Step 2: Install the plugin
 
-```
+```text
 /plugin
 ```
 
@@ -157,7 +157,7 @@ export DATA_COMMONS_API_KEY="your-api-key-here"
 
 ### "Missing environment variables" errors in plugin UI
 
-```
+```text
 Invalid MCP server config for 'google-developer-knowledge': Missing environment variables: GOOGLE_API_KEY
 Invalid MCP server config for 'datacommons-mcp': Missing environment variables: DATA_COMMONS_API_KEY
 ```
@@ -232,7 +232,7 @@ Anthropic publishes document skills in the `anthropics/skills` marketplace that 
 
 ### Installing the document skills
 
-```
+```text
 /plugin marketplace add anthropics/skills
 /plugin
 ```
@@ -251,16 +251,19 @@ Navigate to **Discover** > **anthropic-agent-skills** > **document-skills** and 
 ### Example workflows
 
 **Architecture board submission**:
+
 1. Run `/arckit:sobc` to generate a Strategic Outline Business Case
 2. Use `/docx` to convert it into a branded Word document with your organisation's template
 3. Use `/pptx` to create an executive summary deck from the key findings
 
 **Vendor evaluation pack**:
+
 1. Run `/arckit:evaluate` to score vendors
 2. Use `/xlsx` to export the evaluation matrix as a spreadsheet
 3. Use `/pdf` to create a sealed PDF for procurement records
 
 **Stakeholder briefing**:
+
 1. Run `/arckit:stakeholders` and `/arckit:requirements`
 2. Use `/pptx` to build a slide deck covering stakeholder map, goals, and top-level requirements
 3. Share with project sponsors for sign-off

@@ -108,7 +108,7 @@ Output: `projects/<id>/ARC-<id>-WARD-001-v1.0.md` (uses multi-instance numbering
 
 ## OnlineWardleyMaps Format
 
-```
+```text
 title Your Map Title
 anchor User Need [0.95, 0.63]
 component Component A [0.85, 0.45] label [-50, -10]

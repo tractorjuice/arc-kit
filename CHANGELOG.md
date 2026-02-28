@@ -1185,17 +1185,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Why This Matters
 
 The dependency matrix work ensures ArcKit commands are executed in the correct order, preventing:
+
 - **Quality Issues**: Running evaluate without principles means vendor scoring isn't aligned with organizational standards
 - **Rework**: Running hld-review/dld-review without principles means design decisions may violate governance
 - **Incomplete Analysis**: Running plan without requirements means timelines don't reflect actual scope
 - **Procurement Failures**: Running dos without stakeholders means vendor requirements don't address real needs
 
 The comprehensive dependency documentation provides:
+
 - **Clear Guidance**: 5 workflow diagrams showing exactly which commands to run for different project types
 - **Traceability**: Complete dependency chain from foundation commands to final compliance assessments
 - **Quality Assurance**: Artifact fan-in analysis shows requirements.md consumed by 22 commands (highest)
 
 This release completes the dependency analysis initiative (Issue #9) with:
+
 - Phase 1: 4 critical (M-level) fixes ✅
 - Phase 2: 9 high-priority (R-level) enhancements ✅
 - Phase 3: 26 optional (O-level) enhancements (future work)
@@ -1304,6 +1307,7 @@ This release completes the dependency analysis initiative (Issue #9) with:
 JSP 936 (Dependable Artificial Intelligence in Defence), published November 2024, establishes the UK Ministry of Defence's mandatory framework for safe and responsible adoption of AI/ML systems. Defence projects using AI must complete JSP 936 assessments to receive approval at the appropriate level (2PUS/Ministerial for Critical, Defence-Level for Severe/Major, TLB-Level for Moderate/Minor).
 
 Without JSP 936 compliance, defence AI projects face:
+
 - Approval blockages (no deployment without JSP 936 assessment)
 - Ethical risks unidentified until late stages
 - Unclear accountability for AI decisions
@@ -1312,6 +1316,7 @@ Without JSP 936 compliance, defence AI projects face:
 - No continuous monitoring or drift detection
 
 The `/arckit.jsp-936` command automates the creation of comprehensive JSP 936 compliance documentation, guiding project teams through:
+
 - Systematic identification of all AI/ML components
 - Ethical risk classification using MOD's likelihood × impact methodology
 - Assessment against all 5 ethical principles (Human-Centricity, Responsibility, Understanding, Bias & Harm Mitigation, Reliability)
@@ -1421,6 +1426,7 @@ The backlog command bridges the gap between ArcKit's design phase commands (`/ar
 ### Deployment
 
 Deployed to 6 test repositories:
+
 - arckit-test-project-v1-m365
 - arckit-test-project-v2-hmrc-chatbot
 - arckit-test-project-v3-windows11
@@ -1480,7 +1486,7 @@ Deployed to 6 test repositories:
 ### Fixed
 
 - **Font Licensing Compliance**: GDS Transport font override for non-gov.uk domains
-  - GDS Transport licensed only for *.gov.uk, *.service.gov.uk, *.blog.gov.uk
+  - GDS Transport licensed only for *.gov.uk,*.service.gov.uk, *.blog.gov.uk
   - Added explicit system font override: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial
   - Complies with GDS typography guidelines for non-government services
   - Transparent footer note explaining font choice
@@ -1585,7 +1591,6 @@ Deployed to 6 test repositories:
 - **Command Count**: Now 25 commands per AI assistant (22 original + 3 new G-Cloud commands)
 - **README**: Updated to reflect new DOS, G-Cloud search, and G-Cloud clarify commands
 - **Complete G-Cloud Workflow**: Requirements → Search → Clarify → Engage → Evaluate → Award
-
 
 ### Benefits
 
@@ -1755,6 +1760,7 @@ Deployed to 6 test repositories:
 ## [0.3.1] - 2025-10-21
 
 ### Added
+
 - **Data Modeling Command**: `/arckit.data-model` for comprehensive data modeling with ERD, GDPR compliance, and data governance
   - Visual Entity-Relationship Diagram (ERD) using Mermaid syntax
   - Detailed entity catalog (E-001, E-002, etc.) with attributes, types, validation rules
@@ -1770,12 +1776,14 @@ Deployed to 6 test repositories:
 - `.codex/prompts/arckit.data-model.md` - Data modeling command for OpenAI Codex CLI
 
 ### Changed
+
 - **WORKFLOW UPDATE**: Data modeling now positioned after requirements, before vendor selection
   - Old workflow: Requirements → SOW → Vendor selection
   - New workflow: Requirements → **Data Model** → SOW → Vendor selection
 - Total command count increased from 19 to 20
 
 ### Documentation
+
 - Updated `README.md`:
   - Added Phase 5.5: Data Modeling
   - Updated feature list to include data modeling, risk management, and SOBC
@@ -1795,6 +1803,7 @@ Deployed to 6 test repositories:
 - Deployed to all 7 test repositories
 
 ### Integration
+
 - Data model integrates with:
   - **Input**: Requires `requirements.md` (extracts DR-xxx Data Requirements)
   - **Input**: Uses `stakeholder-drivers.md` (for data ownership RACI matrix)
@@ -1806,6 +1815,7 @@ Deployed to 6 test repositories:
 ## [0.3.0] - 2025-10-21
 
 ### Added
+
 - **Strategic Outline Business Case (SOBC) Command**: `/arckit.sobc` implementing HM Treasury Green Book 5-case model
   - Strategic Case: Problem, drivers, stakeholder goals, scope
   - Economic Case: Options analysis (Do Nothing, Minimal, Balanced, Comprehensive), benefits mapping, NPV, ROI
@@ -1826,6 +1836,7 @@ Deployed to 6 test repositories:
 - `.codex/prompts/arckit.risk.md` - Risk command for OpenAI Codex CLI
 
 ### Changed
+
 - **CRITICAL WORKFLOW CHANGE**: Risk assessment and business case now come BEFORE requirements
   - Old workflow: Principles → Stakeholders → Requirements
   - New workflow: Principles → Stakeholders → **Risk** → **SOBC** → Requirements
@@ -1838,6 +1849,7 @@ Deployed to 6 test repositories:
 - Total command count increased from 17 to 19
 
 ### Documentation
+
 - Updated `README.md`:
   - Added Phase 3: Risk Assessment
   - Added Phase 4: Business Case Justification (SOBC)
@@ -1869,6 +1881,7 @@ Deployed to 6 test repositories:
   - arckit-test-project-v6-patent-system
 
 ### UK Government Compliance
+
 - **Green Book Compliance**: Full 5-case business case model for investment appraisal
   - Options analysis with do-nothing baseline
   - Benefits mapping to stakeholder goals
@@ -1891,6 +1904,7 @@ Deployed to 6 test repositories:
   - Operational: GDS Service Assessment, CDDO controls, security clearances
 
 ### Integration
+
 - Complete traceability chain: Stakeholder → Driver → Goal → Risk → Benefit → Requirement
 - Risk register feeds into SOBC Management Case Part E
 - Financial risks inform Economic Case cost contingency (optimism bias)
@@ -1899,6 +1913,7 @@ Deployed to 6 test repositories:
 - Risk appetite compliance enables go/no-go decisions
 
 ### Bug Fixes
+
 - Fixed command ordering in `.claude/COMMANDS.md` (stakeholders correctly positioned before risk/SOBC)
 - Improved documentation commit messages for clarity
 - Corrected workflow documentation alignment across all files
@@ -1906,6 +1921,7 @@ Deployed to 6 test repositories:
 ## [0.2.2] - 2025-10-20
 
 ### Added
+
 - **OpenAI Codex CLI Support**: Complete `.codex/` folder structure with 17 prompts for OpenAI Codex CLI users
 - `.codex/README.md` - Comprehensive 400+ line setup guide for Codex CLI
 - `OPENAI-INTEGRATION-PLAN.md` - Integration strategy document comparing Codex CLI to alternative approaches
@@ -1913,17 +1929,20 @@ Deployed to 6 test repositories:
 - All ArcKit commands now available with `/prompts:arckit.*` format for Codex CLI users
 
 ### Changed
+
 - Updated `README.md` to list OpenAI Codex CLI as supported AI agent
 - Updated `.codex/README.md` version to v0.2.2
 - Added Codex CLI usage examples throughout documentation
 - Supported AI agents increased from 4 to 5 (added Codex CLI)
 
 ### Documentation
+
 - Updated version references throughout documentation
 
 ## [0.2.1] - 2025-10-19
 
 ### Added
+
 - **Stakeholder Analysis Command**: `/arckit.stakeholders` for comprehensive stakeholder driver analysis
 - `templates/stakeholder-drivers-template.md` (400+ lines) - Stakeholder analysis template with:
   - Power-Interest Grid for stakeholder identification
@@ -1940,6 +1959,7 @@ Deployed to 6 test repositories:
   - Decision authority tracking
 
 ### Changed
+
 - **CRITICAL WORKFLOW CHANGE**: Stakeholder analysis now comes **BEFORE** requirements
   - Old workflow: Principles → Requirements → Design
   - New workflow: Principles → **Stakeholders** → Requirements → Design
@@ -1954,6 +1974,7 @@ Deployed to 6 test repositories:
   - 6 common conflict patterns with example resolutions
 
 ### Documentation
+
 - Updated `README.md` workflow to show stakeholders before requirements
 - Updated `.claude/COMMANDS.md` with stakeholder analysis step
 - Updated all 7 test repositories with:
@@ -1964,6 +1985,7 @@ Deployed to 6 test repositories:
 ## [0.2.0] - 2025-10-14
 
 ### Added
+
 - **UK Government Compliance Support**: Comprehensive support for UK Government frameworks
 - `/arckit.tcop` - Technology Code of Practice assessment (13 mandatory points)
 - `/arckit.ai-playbook` - AI Playbook compliance assessment (10 principles + 6 ethical themes)
@@ -1975,6 +1997,7 @@ Deployed to 6 test repositories:
 - `templates/mod-secure-by-design-template.md` - MOD security review template
 
 ### Documentation (6,000+ lines added)
+
 - `docs/principles.md` (527 lines) - Architecture Principles Guide
 - `docs/requirements.md` (628 lines) - Requirements Guide
 - `docs/procurement.md` (503 lines) - Vendor Procurement Guide
@@ -1983,6 +2006,7 @@ Deployed to 6 test repositories:
 - `docs/uk-government-digital-marketplace.md` (684 lines) - Digital Marketplace Guide
 
 ### Changed
+
 - Updated `README.md` with UK Government support section
 - Added UK Government example workflows
 - Updated supported commands from 7 to 14
@@ -1990,6 +2014,7 @@ Deployed to 6 test repositories:
 ## [0.1.0] - 2025-10-13
 
 ### Added
+
 - Initial release of ArcKit
 - `/arckit.principles` - Create architecture principles
 - `/arckit.requirements` - Define comprehensive requirements
@@ -2005,6 +2030,7 @@ Deployed to 6 test repositories:
 - `/arckit.servicenow` - Export to ServiceNow CMDB
 
 ### Templates
+
 - `templates/architecture-principles-template.md`
 - `templates/requirements-template.md`
 - `templates/wardley-map-template.md`
@@ -2018,11 +2044,13 @@ Deployed to 6 test repositories:
 - `templates/traceability-matrix-template.md`
 
 ### CLI Tool
+
 - `arckit init` command to bootstrap new projects
 - Support for Claude Code, OpenAI Codex CLI, and Gemini CLI
 - Bash and PowerShell script support
 
 ### Documentation
+
 - Comprehensive README.md with examples
 - Quick start guide
 - Agent compatibility matrix
@@ -2052,6 +2080,7 @@ ArcKit follows [Semantic Versioning](https://semver.org/):
 - **PATCH** version (0.0.X): Backward-compatible bug fixes and documentation updates
 
 **Examples**:
+
 - v0.1.0 → v0.2.0: Added UK Government support (new features)
 - v0.2.0 → v0.2.1: Added stakeholder analysis (new feature)
 - v0.2.1 → v0.2.2: Added Codex CLI support (new feature)

@@ -91,7 +91,7 @@
 
 ### Stakeholder Alignment
 
-```
+```text
                           INTEREST
               Low                         High
         +-----------------------+-----------------------+
@@ -206,6 +206,7 @@ The following architecture principles guide all strategic and design decisions:
 [Description of the target architecture and how it differs from current state]
 
 **Target State Characteristics**:
+
 - [Characteristic 1, e.g., "Cloud-native architecture on [platform]"]
 - [Characteristic 2, e.g., "API-first integration strategy"]
 - [Characteristic 3, e.g., "Event-driven microservices where appropriate"]
@@ -308,11 +309,13 @@ graph TB
 **Investment**: £[AMOUNT] over [N] years ([%]% of total)
 
 **Key Initiatives**:
+
 1. [Initiative 1.1]: [Description]
 2. [Initiative 1.2]: [Description]
 3. [Initiative 1.3]: [Description]
 
 **Success Criteria**:
+
 - [ ] [Measurable criterion 1]
 - [ ] [Measurable criterion 2]
 - [ ] [Measurable criterion 3]
@@ -328,11 +331,13 @@ graph TB
 **Investment**: £[AMOUNT] over [N] years ([%]% of total)
 
 **Key Initiatives**:
+
 1. [Initiative 2.1]: [Description]
 2. [Initiative 2.2]: [Description]
 3. [Initiative 2.3]: [Description]
 
 **Success Criteria**:
+
 - [ ] [Measurable criterion 1]
 - [ ] [Measurable criterion 2]
 - [ ] [Measurable criterion 3]
@@ -348,11 +353,13 @@ graph TB
 **Investment**: £[AMOUNT] over [N] years ([%]% of total)
 
 **Key Initiatives**:
+
 1. [Initiative 3.1]: [Description]
 2. [Initiative 3.2]: [Description]
 3. [Initiative 3.3]: [Description]
 
 **Success Criteria**:
+
 - [ ] [Measurable criterion 1]
 - [ ] [Measurable criterion 2]
 - [ ] [Measurable criterion 3]
@@ -368,11 +375,13 @@ graph TB
 **Investment**: £[AMOUNT] over [N] years ([%]% of total)
 
 **Key Initiatives**:
+
 1. [Initiative 4.1]: [Description]
 2. [Initiative 4.2]: [Description]
 3. [Initiative 4.3]: [Description]
 
 **Success Criteria**:
+
 - [ ] [Measurable criterion 1]
 - [ ] [Measurable criterion 2]
 - [ ] [Measurable criterion 3]
@@ -463,7 +472,7 @@ gantt
 
 ### Risk Heat Map
 
-```
+```text
                     PROBABILITY
               Low         Medium        High
         +------------+------------+------------+
@@ -484,12 +493,14 @@ gantt
 ### Assumptions & Constraints
 
 **Critical Assumptions**:
+
 1. [Assumption 1, e.g., "Funding will be approved as per SOBC"]
 2. [Assumption 2, e.g., "Key skills can be recruited or procured"]
 3. [Assumption 3, e.g., "Vendor support will continue for migration period"]
 4. [Assumption 4, e.g., "Executive sponsorship will be maintained"]
 
 **Constraints**:
+
 1. [Constraint 1, e.g., "Budget capped at £[AMOUNT]"]
 2. [Constraint 2, e.g., "Must achieve [milestone] by [DATE] for compliance"]
 3. [Constraint 3, e.g., "Cannot disrupt [critical system] during [period]"]

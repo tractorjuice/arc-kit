@@ -60,6 +60,7 @@ Use the AskUserQuestion tool to interactively gather the information needed to c
 **First, identify the anchor and scope:**
 
 Use AskUserQuestion to ask:
+
 - **Who is the primary user?** — Options might include: "External customers", "Internal developers", "Business analysts", or let the user specify
 - **What is the user need?** — e.g., "Purchase products online", "Deploy applications reliably", "Generate analytical reports"
 - **What is the scope?** — Options: "Single product/service", "Business unit", "Entire organization", "Specific capability"
@@ -67,6 +68,7 @@ Use AskUserQuestion to ask:
 **Then, gather strategic context:**
 
 Use AskUserQuestion to ask:
+
 - **What is the primary goal?** — Options: "Identify investment priorities", "Evaluate build vs. buy", "Assess competitive position", "Plan technology evolution"
 - **What industry/domain?** — Let the user specify (affects how components are positioned on the evolution axis)
 - **What depth of analysis?** — Options: "Quick overview (5-10 components)", "Standard map (10-20 components)", "Deep analysis (20+ components with gameplay)"
@@ -87,6 +89,7 @@ If component identification is uncertain, use AskUserQuestion to ask the user ab
 For each component, assess its evolution stage using the indicators in [references/evolution-stages.md](references/evolution-stages.md). Place it on the X-axis accordingly.
 
 Key questions for each component:
+
 - How well understood is it in the market?
 - How many alternatives exist?
 - Is it commoditized or unique?
@@ -156,6 +159,7 @@ analysis_checklist:
 ```
 
 For deeper strategic analysis, consult:
+
 - [Gameplay Patterns](references/gameplay-patterns.md) for offensive/defensive moves and build vs. buy guidance
 - [Climatic Patterns](references/climatic-patterns.md) for external forces affecting the landscape
 - [Doctrine](references/doctrine.md) for organizational maturity weaknesses

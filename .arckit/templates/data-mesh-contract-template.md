@@ -34,6 +34,7 @@
 ### 1.1 Contract Identification
 
 **ODCS Specification:**
+
 ```yaml
 apiVersion: v3.0.2
 kind: DataContract
@@ -95,6 +96,7 @@ status: {active|deprecated|retired}
 **Properties**: {M} total properties across all objects
 
 **ODCS Terminology**:
+
 - **Object** = Structure of data (table in RDBMS, document in NoSQL, file in data lake)
 - **Property** = Attribute of an object (column, field, attribute)
 
@@ -155,6 +157,7 @@ status: {active|deprecated|retired}
 | Bug fix (data quality) | PATCH | 1.0.0 → 1.0.1 | No |
 
 **Breaking Change Policy**:
+
 - **Deprecation Notice**: {N days} advance notice (recommended: 90 days)
 - **Dual Running Period**: {N days} where both old and new versions are supported
 - **Consumer Migration Support**: {How domain team will assist consumers}
@@ -319,13 +322,14 @@ action: {warn / fail / quarantine}
 **Authentication**: {OAuth 2.0 / API Key / JWT / Mutual TLS}
 
 **Rate Limits**:
+
 - **Standard Tier**: {100 requests/minute per consumer}
 - **Premium Tier**: {1000 requests/minute per consumer}
 - **Burst Limit**: {2x sustained rate for 30 seconds}
 
 **Example API Endpoints:**
 
-```
+```text
 GET /data-products/{product_id}/objects/{object_name}
   - Retrieve all records (paginated)
   - Query params: limit, offset, filter, sort
@@ -356,12 +360,14 @@ GET /data-products/{product_id}/quality
 ### 5.4 Consumer Onboarding
 
 **Prerequisites**:
+
 1. {Read and accept this contract}
 2. {Request access via data catalogue}
 3. {Obtain API credentials from IAM team}
 4. {Review consumer obligations (Section 8)}
 
 **Onboarding Steps**:
+
 1. **Discovery**: Browse data catalogue, review this contract
 2. **Request Access**: Submit access request with business justification
 3. **Approval**: Product Owner approves within {2 business days}
@@ -370,6 +376,7 @@ GET /data-products/{product_id}/quality
 6. **Production**: Move to production after successful sandbox testing
 
 **Sandbox Environment**:
+
 - URL: {https://sandbox-api.example.com/v1}
 - Data: {Anonymized production-like data, refreshed weekly}
 - Rate Limits: {Same as standard tier}
@@ -410,6 +417,7 @@ GET /data-products/{product_id}/quality
 | **Admin** | {Schema changes, quality rules} | {Domain Lead approval} |
 
 **PII Access Restrictions**:
+
 - {Email, phone fields require additional approval from DPO}
 - {PII access logged and audited}
 - {PII cannot be exported without anonymization}
@@ -437,6 +445,7 @@ GET /data-products/{product_id}/quality
 ### 6.5 Audit Logging
 
 **Logged Events**:
+
 - All API access (who, what, when, result)
 - Schema changes (who, what, when, approval)
 - Quality rule violations (what, when, severity)
@@ -453,6 +462,7 @@ GET /data-products/{product_id}/quality
 ### 7.1 Change Request Process
 
 **Minor Changes** (MINOR version, backward compatible):
+
 - Add optional property
 - Add new object
 - Improve documentation
@@ -460,6 +470,7 @@ GET /data-products/{product_id}/quality
 - **Notice**: {7 days} advance notice via changelog
 
 **Major Changes** (MAJOR version, breaking changes):
+
 - Remove property
 - Rename property
 - Change property type
@@ -469,6 +480,7 @@ GET /data-products/{product_id}/quality
 - **Migration Support**: Product Owner provides migration guide and support
 
 **Emergency Changes** (Security, data quality incidents):
+
 - **Approval**: Domain Lead + Security team
 - **Notice**: {Immediate} via PagerDuty and Slack
 - **Retrospective**: Post-incident review within {5 business days}
@@ -478,6 +490,7 @@ GET /data-products/{product_id}/quality
 **Review Frequency**: {Quarterly}
 
 **Review Scope**:
+
 - SLA adherence (actual vs. target)
 - Quality metrics trends
 - Consumer feedback
@@ -489,6 +502,7 @@ GET /data-products/{product_id}/quality
 ### 7.3 Deprecation Policy
 
 **Deprecation Process**:
+
 1. **Announcement**: {90 days} before removal
 2. **Documentation Update**: Mark as deprecated in contract and API docs
 3. **Consumer Notification**: Email all registered consumers
@@ -520,6 +534,7 @@ GET /data-products/{product_id}/quality
 7. **Monitoring**: {Monitor your own usage; domain team may throttle excessive use}
 
 **Consumer Support Obligations**:
+
 - {Designate a technical contact for your team}
 - {Respond to schema change notifications within {14 days}}
 - {Participate in contract review if you're a key consumer}
@@ -542,10 +557,12 @@ GET /data-products/{product_id}/quality
 **Free Tier**: {10,000 API requests/month, 10GB data transfer/month}
 
 **Cost Attribution**:
+
 - {Costs allocated to consumer's cost center via chargeback}
 - {Billing reports available in finance portal}
 
 **Cost Optimization Tips**:
+
 - {Cache frequently accessed data}
 - {Use batch queries instead of individual record lookups}
 - {Compress responses (gzip)}
@@ -563,6 +580,7 @@ GET /data-products/{product_id}/quality
 **High Availability**: {Multi-AZ deployment across 3 availability zones}
 
 **Disaster Recovery**:
+
 - **RTO (Recovery Time Objective)**: {4 hours}
 - **RPO (Recovery Point Objective)**: {15 minutes}
 - **Backup Frequency**: {Continuous replication + daily snapshots}
@@ -585,10 +603,12 @@ GET /data-products/{product_id}/quality
 **VPC**: {10.0.0.0/16}
 
 **Subnets**:
+
 - Public: {10.0.1.0/24, 10.0.2.0/24, 10.0.3.0/24} (API Gateway, ALB)
 - Private: {10.0.11.0/24, 10.0.12.0/24, 10.0.13.0/24} (Compute, Database)
 
 **Security Groups**:
+
 - {Allow HTTPS (443) from internet to API Gateway}
 - {Allow PostgreSQL (5432) from compute to RDS}
 - {Deny all other inbound traffic}
@@ -604,6 +624,7 @@ GET /data-products/{product_id}/quality
 **Dashboard URL**: {https://datadog.example.com/dashboard/seller-payments}
 
 **Metrics Tracked**:
+
 - Request rate (requests/sec)
 - Error rate (4xx, 5xx)
 - Latency (p50, p95, p99)
@@ -637,11 +658,13 @@ GET /data-products/{product_id}/quality
 ### 12.1 Contract Testing
 
 **Test Environments**:
+
 - **Development**: {https://dev-api.example.com} - Schema changes tested here first
 - **Staging**: {https://staging-api.example.com} - Pre-production validation
 - **Production**: {https://api.example.com} - Live environment
 
 **Test Data**:
+
 - {Development: Synthetic data}
 - {Staging: Anonymized production data (refreshed weekly)}
 - {Production: Real data}
@@ -679,6 +702,7 @@ for i in range(150):  # Exceed 100/min limit
 ## 13. Known Limitations and Issues
 
 **Current Limitations**:
+
 1. {Limitation 1: e.g., "Historical data only available for past 2 years"}
 2. {Limitation 2: e.g., "No support for real-time updates, batch only"}
 3. {Limitation 3: e.g., "Some legacy records have null values for optional fields"}
@@ -817,6 +841,7 @@ sla:
 **Model**: [AI_MODEL]
 
 **References**:
+
 - Open Data Contract Standard (ODCS): https://github.com/bitol-io/open-data-contract-standard
 - Data Mesh (Zhamak Dehghani): https://www.oreilly.com/library/view/data-mesh/9781492092384/
 - UK Government Data Quality Framework: https://www.gov.uk/government/publications/the-government-data-quality-framework

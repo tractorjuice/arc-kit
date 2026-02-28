@@ -32,6 +32,7 @@
 ## 1. Service Overview
 
 ### Service Description
+
 [Brief description of the service - what business capability it provides]
 
 **Service Type**: [Application / Infrastructure / Business Service]
@@ -39,6 +40,7 @@
 **Service Tier**: [Tier 1 Critical / Tier 2 Important / Tier 3 Standard]
 
 ### Service Dependencies
+
 - **Upstream**: [Services this depends on]
 - **Downstream**: [Services that depend on this]
 
@@ -47,6 +49,7 @@
 ## 2. CMDB Design
 
 ### Configuration Items
+
 [Derive CI hierarchy from architecture diagrams - Context/Container/Component layers map to Business Service/Application/Infrastructure CIs]
 
 | CI Name | CI Class | Parent CI | Owner | Environment |
@@ -56,6 +59,7 @@
 | [Database 1] | Database | [Application 1] | [Team] | PROD |
 
 **Key CI Attributes**:
+
 - `u_service_tier`: [1/2/3]
 - `u_technology_stack`: [Languages/frameworks]
 - `u_repository_url`: [GitHub URL]
@@ -66,6 +70,7 @@
 ## 3. Service Level Agreements (SLAs)
 
 ### Availability SLA
+
 [Derive from NFRs]
 
 | Service Tier | Availability | Max Downtime/Month |
@@ -75,6 +80,7 @@
 | Tier 3 | 99.5% | 3.65 hours |
 
 ### Performance SLA
+
 [Derive from NFRs]
 
 | Transaction Type | Target (p95) | Target (p99) |
@@ -111,6 +117,7 @@
 | [Service]-DB | Performance | DBA-Support | DBA-Senior |
 
 ### P1 Response Runbook
+
 1. **Detection** (0-5min): Auto-create incident, page on-call
 2. **Response** (5-15min): Acknowledge, join incident bridge
 3. **Diagnosis** (15-60min): Check dashboards, review logs
@@ -130,10 +137,12 @@
 | Emergency | ECAB | 2 hours | Allowed 24/7 |
 
 ### Maintenance Windows
+
 - **Standard**: [Day] [Time UTC], e.g. Sunday 02:00-06:00 UTC
 - **Blackout Periods**: [e.g., fiscal year-end, peak usage]
 
 ### Rollback Criteria
+
 - [e.g., Error rate >5% for 10 minutes]
 - [e.g., Response time >3s for 5 minutes]
 
@@ -158,6 +167,7 @@
 | CPU Usage | >80% for 15min | P3 | Auto-scale + alert |
 
 ### Dashboards
+
 - **Operational**: [Grafana/Datadog URL] - Real-time service health
 - **Business**: [BI tool URL] - Daily user/transaction metrics
 
@@ -166,6 +176,7 @@
 ## 7. Knowledge Management
 
 ### Required Runbooks
+
 - [ ] Getting Started Guide (users)
 - [ ] Troubleshooting Guide (users + support)
 - [ ] Incident Response Runbook (operations)
@@ -180,6 +191,7 @@
 ## 8. Go-Live Checklist
 
 ### ServiceNow Configuration
+
 - [ ] Service CI created in CMDB with all child CIs
 - [ ] Service Catalog entry published
 - [ ] Incident categories and assignment groups configured
@@ -187,17 +199,20 @@
 - [ ] Change templates created
 
 ### Documentation
+
 - [ ] All runbooks written and tested
 - [ ] User guides published
 - [ ] Support team trained
 
 ### Monitoring
+
 - [ ] Health checks configured
 - [ ] Dashboards created
 - [ ] Alert rules tested
 - [ ] On-call rotation staffed
 
 ### Compliance
+
 - [ ] DPIA completed (if processing PII)
 - [ ] Security review passed
 - [ ] Accessibility audit passed (WCAG 2.2 AA)
@@ -218,11 +233,13 @@
 ## 10. UK Government Compliance
 
 ### GDS Service Standard
+
 - **Point 5**: WCAG 2.2 AA compliance monitored
 - **Point 10**: Success metrics in ServiceNow dashboards
 - **Point 13**: Reuse common platforms (GOV.UK Notify, Pay)
 
 ### ITIL v4 Practices
+
 - **Plan**: Change Management (CAB)
 - **Improve**: Post-Incident Reviews
 - **Engage**: Service Catalog
@@ -251,4 +268,3 @@
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

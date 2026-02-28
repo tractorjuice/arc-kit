@@ -29,7 +29,7 @@ The Chief Data Officer sets data strategy and governance policy. You use ArcKit'
 
 ## Typical Workflow
 
-```
+```text
 principles → requirements (DR-xxx) → datascout → data-model → data-mesh-contract → dpia
 ```
 

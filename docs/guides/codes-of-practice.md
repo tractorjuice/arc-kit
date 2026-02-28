@@ -93,6 +93,7 @@ The [Rose Book](https://www.gov.uk/government/publications/knowledge-asset-manag
 ### Knowledge Asset Register
 
 Projects creating significant knowledge assets should maintain a register covering:
+
 - Asset description and category
 - Owner and steward
 - IP protection status (patent, copyright, open source)

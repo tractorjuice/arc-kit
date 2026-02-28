@@ -31,7 +31,7 @@ The Product Manager defines what to build and why. You own the planning, require
 
 ## Typical Workflow
 
-```
+```text
 plan → stakeholders → requirements → backlog → trello → traceability → story
 ```
 

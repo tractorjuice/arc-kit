@@ -5,6 +5,7 @@ description: Create DevOps strategy with CI/CD pipelines, IaC, container orchest
 # /arckit:devops - DevOps Strategy Command
 
 You are an expert DevOps architect and Platform Engineer with deep knowledge of:
+
 - CI/CD pipeline design (GitHub Actions, GitLab CI, Azure DevOps, Jenkins)
 - Infrastructure as Code (Terraform, Pulumi, CloudFormation, ARM)
 - Container orchestration (Kubernetes, ECS, AKS, GKE)
@@ -20,6 +21,7 @@ Generate a comprehensive **DevOps Strategy** document that defines how software 
 ## When to Use This Command
 
 Use `/arckit:devops` after completing:
+
 1. Requirements (`/arckit:requirements`) - for deployment and performance needs
 2. Architecture diagrams (`/arckit:diagram`) - for deployment topology
 3. Research (`/arckit:research`) - for technology stack decisions
@@ -33,6 +35,7 @@ $ARGUMENTS
 ```
 
 Parse the user input for:
+
 - Technology stack (languages, frameworks)
 - Cloud provider preference (AWS, Azure, GCP, multi-cloud)
 - Deployment target (Kubernetes, serverless, VMs, PaaS)
@@ -44,9 +47,10 @@ Parse the user input for:
 
 > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-### Phase 1: Read existing artifacts from the project context:
+### Phase 1: Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
+
 - **REQ** (Requirements)
   - Extract: NFR-P (performance), NFR-S (scalability), NFR-SEC (security), NFR-A (availability), FR (functional), INT (integration) requirements
   - If missing: warn user to run `/arckit:requirements` first
@@ -55,12 +59,14 @@ Parse the user input for:
   - If missing: warn user to run `/arckit:principles` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **DIAG** (Architecture Diagrams)
   - Extract: Deployment topology, component inventory, integration points
 - **RSCH** (Research Findings) or **AWSR** / **AZUR** (Cloud Research)
   - Extract: Recommended services, platform choices, vendor decisions
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **DATA** (Data Model)
   - Extract: Data stores, schemas, database requirements
 - **RISK** (Risk Register)
@@ -68,10 +74,11 @@ Parse the user input for:
 - **TCOP** (TCoP Assessment)
   - Extract: UK Government compliance requirements for DevOps
 
-### Phase 1b: Read external documents and policies:
-   - Read any **external documents** listed in the project context (`external/` files) — extract current pipeline configurations, deployment procedures, environment specifications, infrastructure-as-code patterns
-   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise CI/CD standards, platform engineering guidelines, cross-project DevOps maturity benchmarks
-   - If no external docs exist but they would improve the strategy, ask: "Do you have any existing CI/CD configurations, deployment runbooks, or infrastructure documentation? I can read PDFs and YAML files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+### Phase 1b: Read external documents and policies
+
+- Read any **external documents** listed in the project context (`external/` files) — extract current pipeline configurations, deployment procedures, environment specifications, infrastructure-as-code patterns
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise CI/CD standards, platform engineering guidelines, cross-project DevOps maturity benchmarks
+- If no external docs exist but they would improve the strategy, ask: "Do you have any existing CI/CD configurations, deployment runbooks, or infrastructure documentation? I can read PDFs and YAML files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ### Phase 2: Analysis
 
@@ -86,6 +93,7 @@ Parse the user input for:
 | Level 5 | GitOps, self-healing, platform | On-demand |
 
 **Extract from Requirements**:
+
 - NFR-P (Performance) → Build/deploy speed requirements
 - NFR-S (Scalability) → Infrastructure scaling needs
 - NFR-SEC (Security) → Security scanning, compliance
@@ -99,6 +107,7 @@ Parse the user input for:
 ### Phase 3: Generate DevOps Strategy
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/devops-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/devops-template.md` (default)
@@ -108,12 +117,14 @@ Parse the user input for:
 Generate:
 
 **Section 1: DevOps Overview**
+
 - Strategic objectives
 - Maturity level (current and target)
 - Team structure (platform team, dev teams)
 - Key stakeholders
 
 **Section 2: Source Control Strategy**
+
 - Repository structure (monorepo vs multi-repo)
 - Branching strategy (GitFlow, trunk-based, GitHub Flow)
 - Code review process
@@ -121,6 +132,7 @@ Generate:
 - Commit conventions
 
 **Section 3: CI Pipeline Design**
+
 - Pipeline architecture (stages, jobs)
 - Build automation
 - Testing strategy (unit, integration, E2E)
@@ -129,6 +141,7 @@ Generate:
 - Artifact management
 
 **Section 4: CD Pipeline Design**
+
 - Deployment pipeline stages
 - Environment promotion (dev → staging → prod)
 - Deployment strategies (blue-green, canary, rolling)
@@ -137,6 +150,7 @@ Generate:
 - Feature flags
 
 **Section 5: Infrastructure as Code**
+
 - IaC tool selection (Terraform, Pulumi, CloudFormation)
 - Module/component structure
 - State management
@@ -145,6 +159,7 @@ Generate:
 - IaC testing
 
 **Section 6: Container Strategy**
+
 - Container runtime (Docker, containerd)
 - Base image strategy
 - Image registry
@@ -152,6 +167,7 @@ Generate:
 - Container orchestration (Kubernetes, ECS, etc.)
 
 **Section 7: Kubernetes/Orchestration** (if applicable)
+
 - Cluster architecture
 - Namespace strategy
 - Resource management (limits, quotas)
@@ -160,6 +176,7 @@ Generate:
 - GitOps tooling (ArgoCD, Flux)
 
 **Section 8: Environment Management**
+
 - Environment types (dev, staging, prod)
 - Environment provisioning
 - Data management across environments
@@ -167,12 +184,14 @@ Generate:
 - Ephemeral environments for PR reviews
 
 **Section 9: Secret Management**
+
 - Secret storage (Vault, AWS Secrets Manager, etc.)
 - Secret rotation
 - Secret injection into applications
 - Access control
 
 **Section 10: Developer Experience**
+
 - Local development setup
 - Development containers/devcontainers
 - Inner loop optimization
@@ -180,6 +199,7 @@ Generate:
 - Self-service capabilities
 
 **Section 11: Observability Integration**
+
 - Logging pipeline
 - Metrics collection
 - Tracing integration
@@ -187,6 +207,7 @@ Generate:
 - Alert configuration as code
 
 **Section 12: DevSecOps**
+
 - Shift-left security practices
 - SAST (Static Application Security Testing)
 - DAST (Dynamic Application Security Testing)
@@ -196,6 +217,7 @@ Generate:
 - Compliance as code
 
 **Section 13: Release Management**
+
 - Release versioning (SemVer)
 - Changelog generation
 - Release notes
@@ -203,28 +225,33 @@ Generate:
 - Hotfix process
 
 **Section 14: Platform Engineering** (if applicable)
+
 - Internal Developer Platform (IDP) design
 - Self-service portal
 - Golden paths/templates
 - Platform APIs
 
 **Section 15: UK Government Compliance** (if applicable)
+
 - Cloud First (TCoP Point 5) implementation
 - Open standards (TCoP Point 4)
 - Secure by Design integration
 - Digital Marketplace compatibility
 
 **Section 16: Metrics & Improvement**
+
 - DORA metrics (deployment frequency, lead time, MTTR, change failure rate)
 - Engineering metrics
 - Continuous improvement process
 
 **Section 17: Traceability**
+
 - Requirements to DevOps element mapping
 
 ### Phase 4: Validation
 
 Verify before saving:
+
 - [ ] CI/CD pipeline covers all deployable components
 - [ ] Security scanning integrated at appropriate stages
 - [ ] Environment strategy supports requirements
@@ -239,7 +266,8 @@ Verify before saving:
 1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-DEVO-v1.0.md`
 
 2. **Provide summary**:
-```
+
+```text
 ✅ DevOps Strategy generated!
 
 **DevOps Maturity**: Level [X] (target: Level [Y])
@@ -279,36 +307,44 @@ Verify before saving:
 
 ## Error Handling
 
-### If No Requirements Found:
+### If No Requirements Found
+
 "⚠️ Cannot find requirements document (ARC-*-REQ-*.md). Please run `/arckit:requirements` first. DevOps strategy requires NFRs for deployment and performance requirements."
 
-### If No Architecture Principles:
+### If No Architecture Principles
+
 "⚠️ Architecture principles not found. Using cloud-agnostic defaults. Consider running `/arckit:principles` to establish technology standards."
 
 ## Key Principles
 
 ### 1. Automation First
+
 - Automate everything that can be automated
 - Manual processes are technical debt
 
 ### 2. Security Shift-Left
+
 - Security scanning in CI, not just production
 - Every commit is security-checked
 
 ### 3. Infrastructure as Code
+
 - All infrastructure defined in code
 - No manual changes to production
 
 ### 4. Developer Experience
+
 - Fast feedback loops
 - Self-service where possible
 - Clear documentation
 
 ### 5. Observability by Default
+
 - Logging, metrics, tracing from day one
 - Dashboards and alerts automated
 
 ### 6. UK Government Alignment
+
 - Cloud First (AWS, Azure, GCP)
 - Open standards preferred
 - Digital Marketplace compatible
@@ -316,12 +352,14 @@ Verify before saving:
 ## Document Control
 
 **Auto-populate**:
+
 - `[PROJECT_ID]` → From project path
 - `[VERSION]` → "1.0" for new documents
 - `[DATE]` → Current date (YYYY-MM-DD)
 - `ARC-[PROJECT_ID]-DEVO-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-DEVO-v1.0.md`)
 
 **Generation Metadata Footer**:
+
 ```markdown
 ---
 **Generated by**: ArcKit `/arckit:devops` command

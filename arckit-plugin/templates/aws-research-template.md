@@ -79,11 +79,13 @@ This document presents AWS-specific technology research findings for the project
 #### Recommended: [AWS_SERVICE_NAME]
 
 **Service Overview**:
+
 - **Full Name**: [e.g., Amazon Elastic Kubernetes Service (EKS)]
 - **Category**: [Compute / Storage / Database / AI / Security / etc.]
 - **Documentation**: [AWS Documentation link]
 
 **Key Features**:
+
 - [Feature 1]: [Description]
 - [Feature 2]: [Description]
 - [Feature 3]: [Description]
@@ -126,17 +128,20 @@ This document presents AWS-specific technology research findings for the project
 | NIST 800-53 | ✅ | Federal compliance |
 
 **Integration Capabilities**:
+
 - **APIs**: REST, AWS SDK, CloudFormation, CDK, Terraform
 - **SDKs**: Python (boto3), JavaScript, Java, .NET, Go, Ruby
 - **Event-Driven**: EventBridge, SNS, SQS integration
 - **Other AWS Services**: [List integrations]
 
 **UK Region Availability**:
+
 - ✅ eu-west-2 (London) - Primary
 - ✅ eu-west-1 (Ireland) - DR option
 - [Any limitations in UK region]
 
 **Compliance Certifications**:
+
 - ✅ ISO 27001, 27017, 27018
 - ✅ SOC 1, 2, 3
 - ✅ UK Cyber Essentials Plus
@@ -288,6 +293,7 @@ graph TB
 ### AWS GuardDuty & Security Hub
 
 **Recommendations**:
+
 - Enable GuardDuty in all accounts and regions
 - Enable Security Hub with AWS Foundational Security Best Practices
 - Configure automated remediation via EventBridge and Lambda
@@ -493,11 +499,13 @@ artifacts:
 ### G-Cloud Procurement
 
 **AWS on G-Cloud 14**:
+
 - **Framework**: RM1557.14
 - **Supplier**: Amazon Web Services EMEA SARL
 - **Service ID**: [Service ID from Digital Marketplace]
 
 **Procurement Steps**:
+
 1. Search Digital Marketplace for "Amazon Web Services"
 2. Review service description and pricing
 3. Direct award (if requirements clear) or further competition
@@ -506,6 +514,7 @@ artifacts:
 ### AWS GovCloud (if SECRET classification required)
 
 For SECRET data classification:
+
 - **AWS GovCloud**: US-only isolated region
 - **Note**: Not available in UK - consider alternative approaches
 - **Alternative**: Implement strong controls on standard AWS for OFFICIAL-SENSITIVE

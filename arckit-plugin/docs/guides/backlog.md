@@ -12,7 +12,7 @@ Generate a sprint-ready backlog from existing ArcKit artefacts with `/arckit.bac
 | Approved HLD/DLD | Ensures stories reference actual components |
 | Stakeholder analysis | Provides personas for story wording |
 
-_Strongly recommended_: risk register (for priority), business case (for value), traceability matrix (for gaps).
+*Strongly recommended*: risk register (for priority), business case (for value), traceability matrix (for gaps).
 
 ---
 

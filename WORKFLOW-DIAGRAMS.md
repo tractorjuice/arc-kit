@@ -3,6 +3,7 @@
 This document contains Mermaid diagrams for all 5 ArcKit workflow paths based on the Dependency Structure Matrix.
 
 **Legend**:
+
 - **Blue boxes** = Foundation commands (Tier 0-1)
 - **Green boxes** = Core workflow (Tier 2-5)
 - **Orange boxes** = Design & Implementation (Tier 6-7)
@@ -339,6 +340,7 @@ graph TD
 **Key Milestones**: SOBC Approval → Strategy/Requirements Sign-off → DPIA Complete → G-Cloud Clarifications → AI Playbook Approval → ATRS Publication → Service Assessment → Go Live
 
 **Critical Gates**:
+
 - AI Playbook compliance required before Beta
 - ATRS publication required before Live
 
@@ -453,6 +455,7 @@ graph TD
 **Key Milestones**: SOBC Approval → Strategy/Requirements Sign-off → DPIA Complete → DOS Down-select → MOD Secure by Design Approval → Service Assessment → Go Live
 
 **Critical Gates**:
+
 - MOD Secure by Design (JSP 440, IAMM) required before Beta
 - Security clearances required for team
 
@@ -571,6 +574,7 @@ graph TD
 **Key Milestones**: SOBC Approval → Strategy/Requirements Sign-off → DPIA Complete → DOS Down-select → MOD Secure by Design + JSP 936 Approval → Service Assessment → Go Live
 
 **Critical Gates**:
+
 - MOD Secure by Design required before Beta
 - JSP 936 AI assurance required before Beta
 - Risk classification determines approval pathway:

@@ -50,6 +50,7 @@
 
 [IF NON-CONFORMANT:]
 **Critical Conformance Gaps**:
+
 1. [Check ID] — [Brief description of failure]
 2. [Repeat for each HIGH-severity finding]
 
@@ -93,6 +94,7 @@
 
 [IF FAIL:]
 **Unimplemented Decisions**:
+
 - **ADR-[N] "[Title]"** (decisions/ARC-*-ADR-[N]-v*.md, line [N]):
   - Decision: "[decision text]"
   - Expected in: HLD/DLD
@@ -110,6 +112,7 @@
 **Conflicting ADR Pairs**:
 
 **Conflict 1**: ADR-[N] vs ADR-[N]
+
 - **ADR-[N] "[Title]"** (file:line): Decides [X]
 - **ADR-[N] "[Title]"** (file:line): Decides [Y]
 - **Contradiction**: [Describe how decisions conflict]
@@ -127,6 +130,7 @@
 
 [IF FAIL:]
 **Superseded Decision Residue**:
+
 - **ADR-[N] "[Title]"** was superseded by ADR-[N] "[Title]"
   - Old decision: "[text]"
   - New decision: "[text]"
@@ -148,6 +152,7 @@
 **Principle Violations**:
 
 **Violation 1**: Principle "[Name]"
+
 - **Principle Statement**: "[text]"
 - **Design Violation**: [file:section:line] — [what the design does that violates the principle]
 - **Impact**: [Risk created by this violation]
@@ -168,6 +173,7 @@
 
 [IF FAIL:]
 **Unresolved Conditions**:
+
 - **Condition**: "[text]" (source: file:line)
   - Required by: [Reviewer/Board]
   - Deadline: [Date if specified]
@@ -184,6 +190,7 @@
 
 [IF FAIL:]
 **Expired Exceptions**:
+
 - **EXC-[N]** for principle "[Name]" — expired [DATE]
   - Original justification: [text]
   - Remediation status: [No remediation evidence / Partial / Complete]
@@ -199,6 +206,7 @@
 
 [IF FAIL:]
 **Exceptions Without Remediation Progress**:
+
 - **EXC-[N]**: No remediation plan documented
   - Expires: [Date] ([N] days remaining)
   - Action: Create remediation plan with milestones before [Date]
@@ -223,6 +231,7 @@
 
 [IF FAIL:]
 **Technology Drift Findings**:
+
 - [Technology] decided in ADR-[N] but design uses [different technology] at [file:line]
 - [Technology] found in design at [file:line] with no ADR justification
 
@@ -240,6 +249,7 @@
 
 [IF FAIL:]
 **Pattern Drift Findings**:
+
 - Pattern "[name]" chosen in [source file:line]
   - Applied in: [component list with file:line references]
   - Deviating: [component] at [file:line] — uses [different pattern] instead
@@ -261,6 +271,7 @@
 
 [IF FAIL:]
 **Rule Violations**:
+
 - **Rule [N]**: "[text]"
   - Violation: [file:line — what violates the rule]
   - Severity: [HIGH/MEDIUM]
@@ -368,12 +379,14 @@
 ### Immediate Actions (CRITICAL — before next gate)
 
 [IF HIGH-severity FAIL findings:]
+
 1. [Action] — Owner: [Role] — Deadline: [Date]
 2. [Repeat for each critical action]
 
 ### Short-Term Actions (within 30 days)
 
 [IF MEDIUM-severity FAIL findings:]
+
 1. [Action] — Owner: [Role] — Deadline: [Date]
 2. [Repeat]
 
@@ -394,20 +407,25 @@
 ## Artifacts Reviewed
 
 **Architecture Principles** (conformance authority):
+
 - ✅ `projects/000-global/ARC-000-PRIN-v*.md` — [DATE] — [N] principles
 
 **Architecture Decision Records**:
+
 - ✅ `projects/{project-dir}/decisions/ARC-*-ADR-*.md` — [N] ADRs ([N] Accepted, [N] Superseded, [N] Other)
 
 **Design Documents**:
+
 - [✅/❌] `projects/{project-dir}/vendors/{vendor}/hld-v*.md` — [Available/Not available]
 - [✅/❌] `projects/{project-dir}/vendors/{vendor}/dld-v*.md` — [Available/Not available]
 
 **Review Documents**:
+
 - [✅/❌] `projects/{project-dir}/reviews/ARC-*-HLDR-*.md` — [Available/Not available]
 - [✅/❌] `projects/{project-dir}/reviews/ARC-*-DLDR-*.md` — [Available/Not available]
 
 **Other Artifacts**:
+
 - [✅/❌] `ARC-*-REQ-*.md` — [Available/Not available]
 - [✅/❌] `ARC-*-PRIN-COMP-*.md` — [Available/Not available]
 - [✅/❌] `ARC-*-TRAC-*.md` — [Available/Not available]
@@ -415,9 +433,11 @@
 - [✅/❌] `ARC-*-DEVOPS-*.md` — [Available/Not available]
 
 **Custom Rules**:
+
 - [✅/❌] `.arckit/conformance-rules.md` — [Available/Not available]
 
 **Assessment Limitations**:
+
 - [List any limitations based on missing artifacts]
 
 ---
@@ -452,6 +472,7 @@
 ### Evidence Referencing Convention
 
 All findings reference source artifacts using: `file:section:line` format.
+
 - Example: `decisions/ARC-001-ADR-001-v1.0.md:Decision:15` — ADR file, Decision section, line 15
 - Example: `vendors/acme/hld-v1.md:4.2 Security:156-203` — HLD file, section 4.2, lines 156-203
 
