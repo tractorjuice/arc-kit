@@ -14,7 +14,7 @@ Use `/arckit.sobc` to produce HM Treasury Green Book Strategic Outline Business 
 5. /arckit.requirements (only if SOBC approved)
 ```
 
-_Do not skip steps 2–3: stakeholder drivers feed benefits; risks drive optimism bias and management case._
+*Do not skip steps 2–3: stakeholder drivers feed benefits; risks drive optimism bias and management case.*
 
 ---
 

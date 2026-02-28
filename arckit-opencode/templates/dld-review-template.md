@@ -69,10 +69,12 @@ This document captures the review of the Detailed Design (DLD) for [PROJECT_NAME
 ### 2.2 Conditions for Approval
 
 **MUST Address Before Development**:
+
 1. [BLOCKING-01]: [Critical issue]
 2. [BLOCKING-02]: [Critical issue]
 
 **SHOULD Address During Development**:
+
 1. [ADVISORY-01]: [Important issue]
 
 ### 2.3 Recommendation
@@ -106,6 +108,7 @@ For each major component/service, evaluate:
 | **Configuration** | [ ] Yes [ ] No | [✅ | ⚠️ | ❌] | Is configuration externalized? |
 
 **Concerns**:
+
 - [Concern 1]
 - [Concern 2]
 
@@ -140,7 +143,7 @@ For each major component/service, evaluate:
 
 **Sample Endpoint Review**:
 
-```
+```text
 POST /api/v1/orders
 Request:
 {
@@ -160,6 +163,7 @@ Response (201 Created):
 **Assessment**: [✅ Well-designed | ⚠️ Needs improvement | ❌ Redesign required]
 
 **Issues**:
+
 - [Issue 1: e.g., "Missing idempotency key for POST"]
 - [Issue 2: e.g., "Error responses lack structured format"]
 
@@ -210,6 +214,7 @@ CREATE TABLE orders (
 **Assessment**: [✅ Well-designed | ⚠️ Needs improvement | ❌ Redesign required]
 
 **Issues**:
+
 - [Issue 1]
 
 ---
@@ -374,10 +379,12 @@ CREATE TABLE orders (
 **Status**: [ ] APPROVED | [ ] APPROVED WITH CONDITIONS | [ ] REJECTED
 
 **Conditions** (if conditional):
+
 1. [Condition 1]
 2. [Condition 2]
 
 **Next Steps**:
+
 - [ ] Address blocking issues
 - [ ] Resubmit revised sections (if needed)
 - [ ] Proceed to development phase

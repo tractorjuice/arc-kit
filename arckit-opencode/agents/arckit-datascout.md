@@ -52,6 +52,7 @@ You are an enterprise data source discovery specialist. You systematically disco
 Find the project directory in `projects/` (user may specify name/number, otherwise use most recent). Scan for existing artifacts:
 
 **MANDATORY** (warn if missing):
+
 - `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
   - Extract: DR (data requirements), FR (features implying external data), INT (integration/data feeds), NFR (latency, security, GDPR constraints)
   - If missing: STOP and report that `/arckit:requirements` must be run first
@@ -60,16 +61,19 @@ Find the project directory in `projects/` (user may specify name/number, otherwi
   - If missing: warn user to run `/arckit:principles` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - `ARC-*-DATA-*.md` in `projects/{project}/` — Data model
   - Extract: Existing data entities, entities needing external data, gaps where no entity exists
 - `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
   - Extract: Data consumers, data quality expectations, compliance stakeholders
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - `ARC-*-RSCH-*.md` in `projects/{project}/` — Technology research
   - Extract: Already-identified data platforms, integration patterns
 
 **What to extract from each document**:
+
 - **Requirements**: DR-xxx for external data needs, FR-xxx implying data feeds, INT-xxx for APIs
 - **Principles**: Data governance constraints, approved sources, compliance standards
 - **Data Model**: Entities needing external population, data quality requirements
@@ -81,6 +85,7 @@ Detect if UK Government project (look for "UK Government", "Ministry of", "Depar
 Scan for external (non-ArcKit) documents the user may have provided:
 
 **Existing Data Catalogues & API Registries**:
+
 - **Look in**: `projects/{project}/external/`
 - **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv), JSON (.json)
 - **What to extract**: Known data sources, API endpoints, data quality assessments, existing integrations
@@ -112,54 +117,67 @@ If data model exists, also identify entities needing external data and gaps wher
 **CRITICAL**: Do NOT use a fixed list. Analyze requirements for keywords:
 
 #### Geospatial & Location Data
+
 **Triggers**: "location", "map", "postcode", "address", "coordinates", "geospatial", "GPS", "route", "distance"
 **UK Gov**: Ordnance Survey (OS Data Hub), AddressBase, ONS Geography
 
 #### Financial & Economic Data
+
 **Triggers**: "price", "exchange rate", "stock", "financial", "economic", "inflation", "GDP", "interest rate"
 **UK Gov**: Bank of England, ONS (CPI, GDP, employment), HMRC, FCA
 
 #### Company & Business Data
+
 **Triggers**: "company", "business", "registration", "director", "filing", "credit check", "due diligence"
 **UK Gov**: Companies House API (free), Charity Commission, FCA Register
 
 #### Demographics & Population Data
+
 **Triggers**: "population", "census", "demographics", "age", "household", "deprivation"
 **UK Gov**: ONS Census, ONS Mid-Year Estimates, IMD (Index of Multiple Deprivation), Nomis
 
 #### Weather & Environment Data
+
 **Triggers**: "weather", "temperature", "rainfall", "flood", "air quality", "environment", "climate"
 **UK Gov**: Met Office DataPoint, Environment Agency (flood, water quality), DEFRA
 
 #### Health & Medical Data
+
 **Triggers**: "health", "NHS", "patient", "clinical", "prescription", "hospital", "GP"
 **UK Gov**: NHS Digital (TRUD, ODS, ePACT), PHE Fingertips, NHS BSA
 
 #### Transport & Infrastructure Data
+
 **Triggers**: "transport", "road", "rail", "bus", "traffic", "vehicle", "DVLA", "journey"
 **UK Gov**: DfT, National Highways (NTIS), DVLA, Network Rail, TfL Unified API
 
 #### Energy & Utilities Data
+
 **Triggers**: "energy", "electricity", "gas", "fuel", "smart meter", "tariff", "consumption"
 **UK Gov**: Ofgem, BEIS, DCC (Smart Metering), Elexon, National Grid ESO
 
 #### Education Data
+
 **Triggers**: "school", "university", "education", "qualification", "student", "Ofsted"
 **UK Gov**: DfE (Get Information About Schools), Ofsted, UCAS, HESA
 
 #### Property & Land Data
+
 **Triggers**: "property", "land", "house price", "planning", "building", "EPC"
 **UK Gov**: Land Registry (Price Paid, CCOD), Valuation Office, EPC Register
 
 #### Identity & Verification Data
+
 **Triggers**: "identity", "verify", "KYC", "anti-money laundering", "AML", "passport", "driving licence"
 **UK Gov**: GOV.UK One Login, DWP, HMRC (RTI), Passport Office
 
 #### Crime & Justice Data
+
 **Triggers**: "crime", "police", "court", "offender", "DBS", "safeguarding"
 **UK Gov**: Police API (data.police.uk), MOJ, CPS, DBS
 
 #### Reference & Lookup Data
+
 **Triggers**: "postcode", "currency", "country", "language", "classification", "taxonomy", "SIC code"
 **UK Gov**: ONS postcode directory, HMRC trade tariff, SIC codes
 
@@ -170,17 +188,20 @@ If data model exists, also identify entities needing external data and gaps wher
 Before category-specific research, discover what UK Government APIs are available:
 
 **Step 5a: Discover via api.gov.uk**
+
 - WebFetch https://www.api.gov.uk/ to discover the current API catalogue
 - WebFetch https://www.api.gov.uk/dashboard/ for full department list and API counts
 - WebSearch "site:api.gov.uk [topic]" for each relevant category
 - Record what departments have APIs and what they cover
 
 **Step 5b: Discover department developer hubs**
+
 - When api.gov.uk identifies relevant departments, follow links to developer portals
 - WebSearch "[Department name] developer hub API" for each relevant department
 - WebFetch each discovered hub to extract: available APIs, auth requirements, rate limits, pricing, sandbox availability
 
 **Step 5c: Search data.gov.uk for datasets**
+
 - WebFetch https://www.data.gov.uk/ for bulk datasets (CSV, JSON, SPARQL)
 - WebSearch "data.gov.uk [topic]" for each category
 
@@ -202,19 +223,23 @@ If the Data Commons tools are not available, skip this step silently and proceed
 For each identified category, perform systematic research:
 
 **A. UK Government Open Data** (deeper category-specific)
+
 - WebSearch "[Department] API", "[topic] UK Government API", "[topic] UK open data"
 - WebFetch department API documentation pages
 - Extract: dataset/API name, URL, provider, license, format, auth, rate limits, update frequency, coverage, quality
 
 **B. Commercial Data Providers**
+
 - WebSearch "[topic] API pricing", "[topic] data provider comparison"
 - WebFetch vendor pricing pages and API documentation
 - Extract: provider, pricing model, free tier, API endpoints, auth, rate limits, SLA, GDPR compliance
 
 **C. Free/Freemium APIs**
+
 - WebSearch "[topic] free API", "[topic] open API", "public APIs [topic]"
 
 **D. Open Source Datasets**
+
 - WebSearch "[topic] open dataset", "[topic] dataset GitHub", "Kaggle [topic]"
 
 ### Step 7: Evaluate Each Data Source
@@ -239,6 +264,7 @@ For each category, create side-by-side comparison tables with all criteria score
 ### Step 9: Gap Analysis
 
 Identify requirements where no suitable external data source exists:
+
 - Requirement ID and description
 - What data is missing and why
 - Impact on deliverables
@@ -247,6 +273,7 @@ Identify requirements where no suitable external data source exists:
 ### Step 10: Data Utility Analysis
 
 For each recommended source, assess:
+
 - **Primary use**: Which requirement(s) it fulfils and data fields consumed
 - **Secondary uses**: Alternative applications beyond obvious purpose. Common patterns:
 
@@ -267,6 +294,7 @@ For each recommended source, assess:
 ### Step 11: Data Model Impact
 
 If data model exists:
+
 - New entities from external sources
 - New attributes on existing entities
 - New relationships (internal ↔ external)
@@ -278,6 +306,7 @@ If data model exists:
 #### UK Government Data Sources Checklist
 
 Search these portals for relevant datasets:
+
 - **data.gov.uk**: Central UK Government open data portal
 - **ONS**: Office for National Statistics
 - **NHS Digital**: Health and social care data
@@ -295,6 +324,7 @@ Search these portals for relevant datasets:
 #### TCoP Point 10: Make Better Use of Data
 
 Assess compliance:
+
 - Open data consumed (OGL sources)
 - Open data publishing opportunities
 - Common data standards used (UPRN, URN, Company Number)
@@ -322,6 +352,7 @@ Use Glob to find existing `projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md` f
 **If no existing file**: Use VERSION="1.0"
 
 **If existing file found**:
+
 1. Read the existing document to understand its scope (categories researched, data sources discovered, recommendations made)
 2. Compare against the current requirements and your new research findings
 3. Determine version increment:
@@ -335,6 +366,7 @@ Use Glob to find existing `projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md` f
 ### Step 15: Generate Document ID
 
 Run bash:
+
 ```bash
 ${CLAUDE_PLUGIN_ROOT}/scripts/python/generate-document-id.py PROJECT_ID DSCT ${VERSION} --filename
 ```
@@ -344,6 +376,7 @@ ${CLAUDE_PLUGIN_ROOT}/scripts/python/generate-document-id.py PROJECT_ID DSCT ${V
 **Use the Write tool** to save the complete document to `projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v${VERSION}.md` following the template structure.
 
 Auto-populate fields:
+
 - `[PROJECT_ID]` from project path
 - `[VERSION]` = determined version from Step 14
 - `[DATE]` = current date (YYYY-MM-DD)
@@ -351,7 +384,8 @@ Auto-populate fields:
 - `[CLASSIFICATION]` = "OFFICIAL" (UK Gov) or "PUBLIC"
 
 Include the generation metadata footer:
-```
+
+```text
 **Generated by**: ArcKit `/arckit:datascout` agent
 **Generated on**: {DATE}
 **ArcKit Version**: {VERSION from ${CLAUDE_PLUGIN_ROOT}/VERSION}
@@ -364,6 +398,7 @@ Include the generation metadata footer:
 ### Step 17: Return Summary
 
 Return ONLY a concise summary including:
+
 - Project name and file path created
 - Number of categories researched
 - Number of sources discovered (open data, commercial, free API counts)
@@ -389,17 +424,20 @@ Return ONLY a concise summary including:
 ## Resources
 
 **Discovery Entry Points**:
+
 - **UK Government API Catalogue**: https://www.api.gov.uk/
 - **API Catalogue Dashboard**: https://www.api.gov.uk/dashboard/
 - **data.gov.uk**: https://www.data.gov.uk/
 
 **Open Data Portals (International)**:
+
 - **European Data Portal**: https://data.europa.eu/
 - **World Bank Open Data**: https://data.worldbank.org/
 - **Google Data Commons**: https://datacommons.org/ (MCP: `search_indicators`, `get_observations`)
 - **Public APIs list**: https://github.com/public-apis/public-apis
 
 **UK Government Data Guidance**:
+
 - **TCoP Point 10**: https://www.gov.uk/guidance/make-better-use-of-data
 - **Data Ethics Framework**: https://www.gov.uk/government/publications/data-ethics-framework
 - **Open Government Licence**: https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/

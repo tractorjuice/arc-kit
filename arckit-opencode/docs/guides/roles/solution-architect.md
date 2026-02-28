@@ -38,7 +38,7 @@ The Solution Architect designs technical solutions to meet business requirements
 
 ## Typical Workflow
 
-```
+```text
 requirements → research → cloud-research → wardley → adr →
 diagram → hld-review → dld-review → traceability
 ```

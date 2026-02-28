@@ -17,6 +17,7 @@ $ARGUMENTS
 ### 1. **Read existing artifacts from the project context:**
 
 **MANDATORY** (warn if missing):
+
 - **PRIN** (Architecture Principles, in 000-global)
   - Extract: Technology standards, constraints, compliance requirements that inform decision drivers
   - If missing: warn user to run `/arckit:principles` first
@@ -25,10 +26,12 @@ $ARGUMENTS
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **RISK** (Risk Register)
   - Extract: Risks this decision mitigates, risk appetite context
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **RSCH** (Research Findings) or **AWSR** / **AZUR** (Cloud Research)
   - Extract: Options already analyzed, vendor comparisons, TCO data
 - **STKE** (Stakeholder Analysis)
@@ -36,17 +39,19 @@ $ARGUMENTS
 - **WARD** (Wardley Map)
   - Extract: Evolution stage influences on build vs buy choices
 
-### 1b. **Read external documents and policies**:
-   - Read any **external documents** listed in the project context (`external/` files) — extract previous architectural decisions, decision rationale, options considered, decision outcomes
-   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise decision frameworks, architecture review board templates, cross-project decision logs
-   - If no external docs exist but they would improve context, ask: "Do you have any previous ADRs from legacy systems or decision logs? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+### 1b. **Read external documents and policies**
 
-### 1c. **Interactive Configuration**:
+- Read any **external documents** listed in the project context (`external/` files) — extract previous architectural decisions, decision rationale, options considered, decision outcomes
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise decision frameworks, architecture review board templates, cross-project decision logs
+- If no external docs exist but they would improve context, ask: "Do you have any previous ADRs from legacy systems or decision logs? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+### 1c. **Interactive Configuration**
 
 Before creating the ADR, use the **AskUserQuestion** tool to gather key decision parameters. **Skip any question where the user has already provided a clear answer in their arguments.**
 
 **Question 1** — header: `Escalation`, multiSelect: false
 > "What escalation level does this architectural decision require?"
+
 - **Team**: Local implementation decision (frameworks, libraries, testing approaches)
 - **Cross-team**: Affects multiple teams (integration patterns, shared services, APIs)
 - **Department (Recommended)**: Department-wide impact (technology standards, cloud providers, security frameworks)
@@ -54,205 +59,225 @@ Before creating the ADR, use the **AskUserQuestion** tool to gather key decision
 
 **Question 2** — header: `Options`, multiSelect: false
 > "How many options should be evaluated (plus a 'Do Nothing' baseline)?"
+
 - **3 options (Recommended)**: Standard analysis — Do Nothing + 2 alternatives provides clear comparison
 - **2 options**: Quick decision — Do Nothing + 1 proposed approach for straightforward choices
 - **4+ options**: Comprehensive analysis — Do Nothing + 3+ alternatives for complex technology selections
 
 Apply the user's selections: the escalation level determines the governance forum and stakeholder RACI in the ADR. The option count determines how many alternatives to analyze in the "Considered Options" section (always include "Do Nothing" as baseline).
 
-### 2. **Identify the target project**:
-   - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
-   - If no match, run `.arckit/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
+### 2. **Identify the target project**
 
-### 3. **Create decisions directory and determine ADR number**:
-   - Use Glob to find existing `projects/{project-slug}/decisions/ADR-*.md` files
-   - If none found, the next ADR number is `ADR-001`
-   - If found, extract the highest ADR number and increment by 1 (e.g., `ADR-003` → `ADR-004`), zero-padded to 3 digits
-   - The decisions directory will be created automatically when saving the file with the Write tool
+- Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
+- If no match, run `.arckit/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
-### 4. **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/adr-template.md` exists in the project root
-   - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `.arckit/templates/adr-template.md` (default)
+### 3. **Create decisions directory and determine ADR number**
+
+- Use Glob to find existing `projects/{project-slug}/decisions/ADR-*.md` files
+- If none found, the next ADR number is `ADR-001`
+- If found, extract the highest ADR number and increment by 1 (e.g., `ADR-003` → `ADR-004`), zero-padded to 3 digits
+- The decisions directory will be created automatically when saving the file with the Write tool
+
+### 4. **Read the template** (with user override support)
+
+- **First**, check if `.arckit/templates/adr-template.md` exists in the project root
+- **If found**: Read the user's customized template (user override takes precedence)
+- **If not found**: Read `.arckit/templates/adr-template.md` (default)
 
    > **Tip**: Users can customize templates with `/arckit:customize adr`
 
-### 5. **Gather decision information from user**:
-   - **Decision title**: Short noun phrase (e.g., "Use PostgreSQL for Data Persistence")
-   - **Problem statement**: What architectural decision needs to be made?
-   - **Context**: Why is this decision needed? Business/technical drivers?
-   - **Status**: Proposed (default) / Accepted / Deprecated / Superseded
-   - **Escalation level**: Team / Cross-team / Department / Cross-government
-   - **Governance forum**: Architecture Review Board, TDA, Programme Board, etc.
+### 5. **Gather decision information from user**
 
-### 6. **Generate comprehensive ADR** following MADR v4.0 + UK Gov framework:
+- **Decision title**: Short noun phrase (e.g., "Use PostgreSQL for Data Persistence")
+- **Problem statement**: What architectural decision needs to be made?
+- **Context**: Why is this decision needed? Business/technical drivers?
+- **Status**: Proposed (default) / Accepted / Deprecated / Superseded
+- **Escalation level**: Team / Cross-team / Department / Cross-government
+- **Governance forum**: Architecture Review Board, TDA, Programme Board, etc.
+
+### 6. **Generate comprehensive ADR** following MADR v4.0 + UK Gov framework
 
    **Document Control** (see "Auto-Populate Document Control Fields" section below for full details):
-   - Document ID: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}` (e.g., `ARC-001-ADR-001-v1.0`)
-   - ADR Number: ADR-{NUM} (e.g., ADR-001, ADR-002)
-   - Version: ${VERSION} (from Step 0: Detect Version)
-   - Status: Proposed (or as user specified)
-   - Date: Current date (YYYY-MM-DD)
-   - Escalation Level: Based on decision scope
-   - Governance Forum: Based on escalation level
+
+- Document ID: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}` (e.g., `ARC-001-ADR-001-v1.0`)
+- ADR Number: ADR-{NUM} (e.g., ADR-001, ADR-002)
+- Version: ${VERSION} (from Step 0: Detect Version)
+- Status: Proposed (or as user specified)
+- Date: Current date (YYYY-MM-DD)
+- Escalation Level: Based on decision scope
+- Governance Forum: Based on escalation level
 
    **Stakeholders**:
-   - **Deciders**: Who has authority to approve this ADR?
-   - **Consulted**: Subject matter experts to involve (two-way communication)
-   - **Informed**: Stakeholders to keep updated (one-way communication)
-   - **UK Government Escalation Context**:
-     - Team: Local implementation (frameworks, libraries, testing)
-     - Cross-team: Integration patterns, shared services, APIs
-     - Department: Technology standards, cloud providers, security
-     - Cross-government: National infrastructure, cross-department interoperability
+
+- **Deciders**: Who has authority to approve this ADR?
+- **Consulted**: Subject matter experts to involve (two-way communication)
+- **Informed**: Stakeholders to keep updated (one-way communication)
+- **UK Government Escalation Context**:
+  - Team: Local implementation (frameworks, libraries, testing)
+  - Cross-team: Integration patterns, shared services, APIs
+  - Department: Technology standards, cloud providers, security
+  - Cross-government: National infrastructure, cross-department interoperability
 
    **Context and Problem Statement**:
-   - Problem description (2-3 sentences or story format)
-   - Why is this decision needed?
-   - Business context (link to BR-xxx requirements)
-   - Technical context (link to FR-xxx, NFR-xxx requirements)
-   - Regulatory context (GDPR, GDS Service Standard, Cyber Essentials)
-   - Supporting links (user stories, requirements, research)
+
+- Problem description (2-3 sentences or story format)
+- Why is this decision needed?
+- Business context (link to BR-xxx requirements)
+- Technical context (link to FR-xxx, NFR-xxx requirements)
+- Regulatory context (GDPR, GDS Service Standard, Cyber Essentials)
+- Supporting links (user stories, requirements, research)
 
    **Decision Drivers (Forces)**:
-   - **Technical drivers**: Performance, scalability, maintainability, security
-     - Link to NFR-xxx requirements
-     - Reference architecture principles
-   - **Business drivers**: Cost, time to market, risk reduction
-     - Link to BR-xxx requirements
-     - Link to stakeholder goals
-   - **Regulatory & compliance drivers**:
-     - GDS Service Standard (which points apply?)
-     - Technology Code of Practice (Point 5: Cloud first, Point 8: Reuse, Point 13: AI)
-     - NCSC Cyber Security (Cyber Essentials, CAF principles)
-     - Data Protection (UK GDPR Article 25, 35)
-   - **Alignment to architecture principles**: Create table showing which principles support/conflict
+
+- **Technical drivers**: Performance, scalability, maintainability, security
+  - Link to NFR-xxx requirements
+  - Reference architecture principles
+- **Business drivers**: Cost, time to market, risk reduction
+  - Link to BR-xxx requirements
+  - Link to stakeholder goals
+- **Regulatory & compliance drivers**:
+  - GDS Service Standard (which points apply?)
+  - Technology Code of Practice (Point 5: Cloud first, Point 8: Reuse, Point 13: AI)
+  - NCSC Cyber Security (Cyber Essentials, CAF principles)
+  - Data Protection (UK GDPR Article 25, 35)
+- **Alignment to architecture principles**: Create table showing which principles support/conflict
 
    **Considered Options** (MINIMUM 2-3 options, always include "Do Nothing"):
 
    For each option:
-   - **Description**: What is this option?
-   - **Implementation approach**: How would it be implemented?
-   - **Wardley Evolution Stage**: Genesis / Custom-Built / Product / Commodity
-   - **Good (Pros)**:
-     - ✅ Benefits, requirements met, principles supported
-     - ✅ Quantify where possible (performance, cost savings)
-   - **Bad (Cons)**:
-     - ❌ Drawbacks, requirements not met, risks
-     - ❌ Trade-offs and negative consequences
-   - **Cost Analysis**:
-     - CAPEX: One-time costs (licenses, hardware, migration)
-     - OPEX: Ongoing costs (support, training, maintenance per year)
-     - TCO (3-year): Total cost of ownership
-   - **GDS Service Standard Impact**: Create table showing impact on relevant points
+
+- **Description**: What is this option?
+- **Implementation approach**: How would it be implemented?
+- **Wardley Evolution Stage**: Genesis / Custom-Built / Product / Commodity
+- **Good (Pros)**:
+  - ✅ Benefits, requirements met, principles supported
+  - ✅ Quantify where possible (performance, cost savings)
+- **Bad (Cons)**:
+  - ❌ Drawbacks, requirements not met, risks
+  - ❌ Trade-offs and negative consequences
+- **Cost Analysis**:
+  - CAPEX: One-time costs (licenses, hardware, migration)
+  - OPEX: Ongoing costs (support, training, maintenance per year)
+  - TCO (3-year): Total cost of ownership
+- **GDS Service Standard Impact**: Create table showing impact on relevant points
 
    **Option: Do Nothing (Baseline)**:
-   - Always include this as baseline comparison
-   - Pros: No immediate cost, no risk
-   - Cons: Technical debt accumulates, opportunity cost, compliance risk
+
+- Always include this as baseline comparison
+- Pros: No immediate cost, no risk
+- Cons: Technical debt accumulates, opportunity cost, compliance risk
 
    **Decision Outcome**:
-   - **Chosen Option**: Which option was selected
-   - **Y-Statement** (structured justification):
+
+- **Chosen Option**: Which option was selected
+- **Y-Statement** (structured justification):
      > In the context of [use case],
      > facing [concern],
      > we decided for [option],
      > to achieve [quality/benefit],
      > accepting [downside/trade-off].
-   - **Justification**: Why this option over alternatives?
-     - Key reasons with evidence
-     - Stakeholder consensus or dissenting views
-     - Risk appetite alignment
+- **Justification**: Why this option over alternatives?
+  - Key reasons with evidence
+  - Stakeholder consensus or dissenting views
+  - Risk appetite alignment
 
    **Consequences**:
-   - **Positive**: Benefits, capabilities enabled, compliance achieved
-     - Include measurable outcomes (metrics: baseline → target)
-   - **Negative**: Accepted trade-offs, limitations, technical debt
-     - Include mitigation strategies
-   - **Neutral**: Changes needed (training, infrastructure, process, vendors)
-   - **Risks and Mitigations**: Create table with risk, likelihood, impact, mitigation, owner
-     - Link to risk register (RISK-xxx)
+
+- **Positive**: Benefits, capabilities enabled, compliance achieved
+  - Include measurable outcomes (metrics: baseline → target)
+- **Negative**: Accepted trade-offs, limitations, technical debt
+  - Include mitigation strategies
+- **Neutral**: Changes needed (training, infrastructure, process, vendors)
+- **Risks and Mitigations**: Create table with risk, likelihood, impact, mitigation, owner
+  - Link to risk register (RISK-xxx)
 
    **Validation & Compliance**:
-   - **How will implementation be verified?**
-     - Design review requirements (HLD, DLD include this decision)
-     - Code review checklist (PR checklist includes ADR compliance)
-     - Testing strategy (unit, integration, performance, security tests)
-   - **Monitoring & Observability**:
-     - Success metrics (how to measure if goals achieved)
-     - Alerts and dashboards
-   - **Compliance verification**:
-     - GDS Service Assessment: Which points addressed, evidence prepared
-     - Technology Code of Practice: Which points addressed
-     - Security assurance: NCSC principles, Cyber Essentials, security testing
-     - Data protection: DPIA updated, data flows, privacy notice
+
+- **How will implementation be verified?**
+  - Design review requirements (HLD, DLD include this decision)
+  - Code review checklist (PR checklist includes ADR compliance)
+  - Testing strategy (unit, integration, performance, security tests)
+- **Monitoring & Observability**:
+  - Success metrics (how to measure if goals achieved)
+  - Alerts and dashboards
+- **Compliance verification**:
+  - GDS Service Assessment: Which points addressed, evidence prepared
+  - Technology Code of Practice: Which points addressed
+  - Security assurance: NCSC principles, Cyber Essentials, security testing
+  - Data protection: DPIA updated, data flows, privacy notice
 
    **Links to Supporting Documents**:
-   - **Requirements traceability**:
-     - Business: BR-xxx requirements addressed
-     - Functional: FR-xxx requirements addressed
-     - Non-functional: NFR-xxx requirements addressed
-   - **Architecture artifacts**:
-     - Architecture principles: Which influenced this decision
-     - Stakeholder drivers: Which stakeholder goals supported
-     - Risk register: Which risks mitigated (RISK-xxx)
-     - Research findings: Which research sections analyzed these options
-     - Wardley Maps: Which maps show evolution stage
-     - Architecture diagrams: Which C4/deployment/sequence diagrams show this
-     - Strategic roadmap: Which theme/initiative this supports
-   - **Design documents**:
-     - High-Level Design: HLD section implementing this
-     - Detailed Design: DLD specifications
-     - Data model: If decision affects data structure
-   - **External references**:
-     - Standards and RFCs
-     - Vendor documentation
-     - UK Government guidance (GDS Service Manual, NCSC, GOV.UK patterns)
-     - Research and evidence
+
+- **Requirements traceability**:
+  - Business: BR-xxx requirements addressed
+  - Functional: FR-xxx requirements addressed
+  - Non-functional: NFR-xxx requirements addressed
+- **Architecture artifacts**:
+  - Architecture principles: Which influenced this decision
+  - Stakeholder drivers: Which stakeholder goals supported
+  - Risk register: Which risks mitigated (RISK-xxx)
+  - Research findings: Which research sections analyzed these options
+  - Wardley Maps: Which maps show evolution stage
+  - Architecture diagrams: Which C4/deployment/sequence diagrams show this
+  - Strategic roadmap: Which theme/initiative this supports
+- **Design documents**:
+  - High-Level Design: HLD section implementing this
+  - Detailed Design: DLD specifications
+  - Data model: If decision affects data structure
+- **External references**:
+  - Standards and RFCs
+  - Vendor documentation
+  - UK Government guidance (GDS Service Manual, NCSC, GOV.UK patterns)
+  - Research and evidence
 
    **Implementation Plan**:
-   - **Dependencies**: Prerequisite ADRs, infrastructure, team skills
-   - **Implementation timeline**: Phases, activities, duration, owners
-   - **Rollback plan**: Trigger, procedure, owner
+
+- **Dependencies**: Prerequisite ADRs, infrastructure, team skills
+- **Implementation timeline**: Phases, activities, duration, owners
+- **Rollback plan**: Trigger, procedure, owner
 
    **Review and Updates**:
-   - **Review schedule**: Initial (3-6 months), periodic (annually)
-   - **Review criteria**: Metrics met? Assumptions changed? Still optimal?
-   - **Trigger events**: Version changes, cost changes, security incidents, regulatory changes
+
+- **Review schedule**: Initial (3-6 months), periodic (annually)
+- **Review criteria**: Metrics met? Assumptions changed? Still optimal?
+- **Trigger events**: Version changes, cost changes, security incidents, regulatory changes
 
    **Related Decisions**:
-   - **Depends on**: ADR-xxx
-   - **Depended on by**: ADR-yyy
-   - **Conflicts with**: ADR-zzz (how resolved)
+
+- **Depends on**: ADR-xxx
+- **Depended on by**: ADR-yyy
+- **Conflicts with**: ADR-zzz (how resolved)
 
    **Appendices** (optional):
-   - **Options analysis details**: Benchmarks, PoC results
-   - **Stakeholder consultation log**: Date, stakeholder, feedback, action
-   - **Mermaid decision flow diagram**: Visual representation of decision logic
 
-### 7. **Ensure comprehensive traceability**:
-   - Link decision drivers to requirements (BR-xxx, FR-xxx, NFR-xxx)
-   - Link to architecture principles (show alignment/conflicts)
-   - Link to stakeholder goals (from ARC-{PROJECT_ID}-STKE-v*.md)
-   - Link to risk mitigations (from ARC-{PROJECT_ID}-RISK-v*.md)
-   - Link to research findings (which sections analyzed these options)
-   - Link to Wardley maps (evolution stage influences choice)
-   - Link to roadmap (which theme/initiative this supports)
-   - Create bidirectional traceability chain
+- **Options analysis details**: Benchmarks, PoC results
+- **Stakeholder consultation log**: Date, stakeholder, feedback, action
+- **Mermaid decision flow diagram**: Visual representation of decision logic
 
-### 8. **Create file naming**:
-   - **Format**: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
-   - **Example**: `ARC-001-ADR-001-v1.0.md`, `ARC-001-ADR-002-v1.0.md`
-   - **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
-   - Sequence number auto-assigned from existing files in the directory
+### 7. **Ensure comprehensive traceability**
 
-### 9. **Use Write tool to create the ADR file**:
-   - **CRITICAL**: Because ADRs are very large documents (500+ lines), you MUST use the Write tool to create the file
-   - Do NOT output the full ADR content in your response (this will exceed token limits)
-   - Use Write tool with the full ADR content
-   - Path: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION}.md`
+- Link decision drivers to requirements (BR-xxx, FR-xxx, NFR-xxx)
+- Link to architecture principles (show alignment/conflicts)
+- Link to stakeholder goals (from ARC-{PROJECT_ID}-STKE-v*.md)
+- Link to risk mitigations (from ARC-{PROJECT_ID}-RISK-v*.md)
+- Link to research findings (which sections analyzed these options)
+- Link to Wardley maps (evolution stage influences choice)
+- Link to roadmap (which theme/initiative this supports)
+- Create bidirectional traceability chain
 
+### 8. **Create file naming**
 
+- **Format**: `ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
+- **Example**: `ARC-001-ADR-001-v1.0.md`, `ARC-001-ADR-002-v1.0.md`
+- **Path**: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v{VERSION}.md`
+- Sequence number auto-assigned from existing files in the directory
+
+### 9. **Use Write tool to create the ADR file**
+
+- **CRITICAL**: Because ADRs are very large documents (500+ lines), you MUST use the Write tool to create the file
+- Do NOT output the full ADR content in your response (this will exceed token limits)
+- Use Write tool with the full ADR content
+- Path: `projects/{PROJECT_ID}-{project-name}/decisions/ARC-{PROJECT_ID}-ADR-{NUM}-v${VERSION}.md`
 
 **CRITICAL - Auto-Populate Document Control Fields**:
 
@@ -267,6 +292,7 @@ ADRs are multi-instance documents. Version detection depends on whether you are 
 **Creating a new ADR** (default): Use `VERSION="1.0"` — the ADR number is auto-incremented by `--next-num`.
 
 **Updating an existing ADR** (user explicitly references an existing ADR number, e.g., "update ADR-001", "revise ADR-003"):
+
 1. Look for existing `ARC-{PROJECT_ID}-ADR-{NUM}-v*.md` files in `projects/{project-dir}/decisions/`
 2. **If no existing file**: Use VERSION="1.0"
 3. **If existing file found**:
@@ -278,12 +304,14 @@ ADRs are multi-instance documents. Version detection depends on whether you are 
 5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
 ### Step 1: Construct Document ID
+
 - **Document ID**: `ARC-{PROJECT_ID}-ADR-{NNN}-v{VERSION}` (e.g., `ARC-001-ADR-001-v1.0`)
 - Sequence number `{NNN}`: Check existing files in `decisions/` and use the next number (001, 002, ...)
 
 ### Step 2: Populate Required Fields
 
 **Auto-populated fields** (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -292,15 +320,18 @@ ADRs are multi-instance documents. Version detection depends on whether you are 
 - `[COMMAND]` → "arckit.adr"
 
 **User-provided fields** (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 **Calculated fields**:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days (requirements, research, risks)
 - `[YYYY-MM-DD]` for Review Date → Phase gate dates (Alpha/Beta/Live for compliance docs)
 
 **Pending fields** (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -314,6 +345,7 @@ ADRs are multi-instance documents. Version detection depends on whether you are 
 ### Step 4: Populate Generation Metadata Footer
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:adr` command
 **Generated on**: {DATE} {TIME} GMT
@@ -323,7 +355,7 @@ The footer should be populated with:
 **Generation Context**: [Brief note about source documents used]
 ```
 
-### Example Fully Populated Document Control Section:
+### Example Fully Populated Document Control Section
 
 ```markdown
 ## Document Control
@@ -351,8 +383,8 @@ The footer should be populated with:
 | 1.0 | 2025-10-29 | ArcKit AI | Initial creation from `/arckit:adr` command | [PENDING] | [PENDING] |
 ```
 
+### 10. **Show summary to user** (NOT full document)
 
-### 10. **Show summary to user** (NOT full document):
    ```markdown
    ## Architecture Decision Record Created
 
@@ -416,26 +448,27 @@ The footer should be populated with:
    **Technology Code of Practice**: Points {A, B, C} addressed
    ```
 
-### 11. **Provide guidance on ADR lifecycle**:
-   - **Status transitions**:
-     - Proposed → Accepted (after approval)
-     - Accepted → Superseded (when replaced by new ADR)
-     - Accepted → Deprecated (when no longer recommended but not replaced)
-   - **When to create new ADR**:
-     - Significant architectural decision affecting structure, behavior, or quality attributes
-     - Technology choices (databases, frameworks, cloud services, APIs)
-     - Integration patterns and protocols
-     - Security and compliance approaches
-     - Deployment and infrastructure decisions
-     - Data management and privacy decisions
-   - **When NOT to create ADR**:
-     - Minor implementation details (variable names, coding style)
-     - Temporary workarounds or fixes
-     - Decisions that don't affect other teams or systems
-   - **ADR numbering**:
-     - Sequential: ADR-001, ADR-002, ADR-003, etc.
-     - Never reuse numbers (even if ADR is superseded)
-     - Superseded ADRs remain in place with updated status
+### 11. **Provide guidance on ADR lifecycle**
+
+- **Status transitions**:
+  - Proposed → Accepted (after approval)
+  - Accepted → Superseded (when replaced by new ADR)
+  - Accepted → Deprecated (when no longer recommended but not replaced)
+- **When to create new ADR**:
+  - Significant architectural decision affecting structure, behavior, or quality attributes
+  - Technology choices (databases, frameworks, cloud services, APIs)
+  - Integration patterns and protocols
+  - Security and compliance approaches
+  - Deployment and infrastructure decisions
+  - Data management and privacy decisions
+- **When NOT to create ADR**:
+  - Minor implementation details (variable names, coding style)
+  - Temporary workarounds or fixes
+  - Decisions that don't affect other teams or systems
+- **ADR numbering**:
+  - Sequential: ADR-001, ADR-002, ADR-003, etc.
+  - Never reuse numbers (even if ADR is superseded)
+  - Superseded ADRs remain in place with updated status
 
 ## Important Notes
 

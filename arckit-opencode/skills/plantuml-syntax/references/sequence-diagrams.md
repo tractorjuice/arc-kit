@@ -225,6 +225,7 @@ Carol --> Alice: Step 3
 ```
 
 Options:
+
 - `autonumber 10` — start from 10
 - `autonumber 10 10` — start from 10, increment by 10
 - `autonumber "<b>[000]"` — formatted numbering

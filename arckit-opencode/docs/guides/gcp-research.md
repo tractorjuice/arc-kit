@@ -33,6 +33,7 @@ Add to your Claude Code MCP configuration (`~/.claude/claude_desktop_config.json
 ```
 
 Set the environment variable:
+
 ```bash
 export GOOGLE_API_KEY="your-api-key-here"
 ```
@@ -135,6 +136,7 @@ When UK Government project detected:
 | Cost estimates | High-level | Detailed Google Cloud pricing |
 
 **When to use which**:
+
 - Use `/arckit.research` for cloud-agnostic evaluation or build vs buy
 - Use `/arckit.gcp-research` when Google Cloud is the target platform
 

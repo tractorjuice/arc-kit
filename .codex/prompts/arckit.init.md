@@ -21,7 +21,7 @@ $ARGUMENTS
 
 3. **Provide next steps**:
 
-```
+```text
 ArcKit project structure initialized:
 
 projects/

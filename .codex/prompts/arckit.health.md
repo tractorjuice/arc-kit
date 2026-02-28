@@ -17,18 +17,22 @@ $ARGUMENTS
 ## Arguments
 
 **PROJECT** (optional): Restrict scan to a single project directory
+
 - Example: `PROJECT=001-payment-gateway`
 - Default: scan all projects under `projects/`
 
 **SEVERITY** (optional): Minimum severity to report (default: `LOW`)
+
 - Valid: `HIGH`, `MEDIUM`, `LOW`
 - Example: `SEVERITY=HIGH` shows only high-severity findings
 
 **SINCE** (optional): Override staleness baseline date (default: today)
+
 - Valid: ISO date `YYYY-MM-DD`
 - Useful for "what would be stale as of date X" scenarios
 
 **JSON** (optional): Write machine-readable output to `docs/health.json` for dashboard integration
+
 - Example: `JSON=true`
 - Default: console output only
 - When enabled: writes `docs/health.json` AND still shows console output
@@ -67,6 +71,7 @@ Use the **ArcKit Project Context** (above) to determine which projects to scan:
 - If no argument: scan all project directories under `projects/` (excluding `000-global`)
 
 For each project, build an inventory of all `ARC-*` artifacts, noting:
+
 - Document type code (RSCH, ADR, REQ, HLDR, DLDR, TRAC, etc.)
 - Version number
 - File path
@@ -76,31 +81,37 @@ For each project, build an inventory of all `ARC-*` artifacts, noting:
 For each artifact discovered, read the file and extract:
 
 **For all artifacts:**
+
 - Created/modified dates (from Document Control section or frontmatter)
 - Version number (from filename pattern `ARC-{ID}-{TYPE}-v{VERSION}.md`)
 - Status (from Document Control or content headings)
 
 **For RSCH (Research) documents:**
+
 - Created date and last modified date
 - Any pricing data, vendor comparisons, or market analysis sections
 - Whether the document references current-year data
 
 **For ADR (Architecture Decision Record) documents:**
+
 - Status field: look for "Proposed", "Accepted", "Deprecated", "Superseded"
 - Date proposed / date accepted
 - Whether any review comments or decision rationale exists
 - References to requirements (FR-xxx, NFR-xxx, BR-xxx, INT-xxx, DR-xxx)
 
 **For HLDR/DLDR (HLD Review / DLD Review) documents:**
+
 - Overall verdict: "APPROVED", "APPROVED WITH CONDITIONS", "REJECTED", "PENDING"
 - If "APPROVED WITH CONDITIONS": extract the specific conditions listed
 - Whether conditions have resolution text (e.g., "Resolved", "Addressed in v2", "Condition met")
 
 **For REQ (Requirements) documents:**
+
 - Requirement IDs (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx)
 - Whether any ADR in the same project references these requirement IDs
 
 **For TRAC (Traceability) documents:**
+
 - Whether traceability matrix exists for the project
 
 ### Step 3: Apply Detection Rules
@@ -112,6 +123,7 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Scan**: All `ARC-*-RSCH-*.md` files
 
 **Logic**:
+
 1. Extract the created date and last modified date from the Document Control section
 2. Calculate age = baseline date - last modified date (or created date if no modified date)
 3. If age > 180 days (6 months): **flag as HIGH severity**
@@ -119,7 +131,8 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Rationale**: Research documents contain pricing data, vendor comparisons, and market analysis that becomes unreliable after 6 months. Procurement decisions based on stale research risk cost overruns and missed alternatives.
 
 **Output per finding**:
-```
+
+```text
 [HIGH] STALE-RSCH: {filepath}
   Last modified: {date} ({N} days ago)
   Action: Re-run /arckit:research to refresh pricing and vendor data
@@ -130,6 +143,7 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Scan**: All `ARC-*-ADR-*-*.md` files
 
 **Logic**:
+
 1. Extract the status field from the ADR content
 2. If status is "Proposed":
    a. Extract the proposed/created date
@@ -139,7 +153,8 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Rationale**: An ADR stuck in "Proposed" status for over 30 days indicates a decision that has been raised but never reviewed. This creates architectural ambiguity — teams may proceed without a formal decision or make conflicting assumptions.
 
 **Output per finding**:
-```
+
+```text
 [HIGH] FORGOTTEN-ADR: {filepath}
   Status: Proposed since {date} ({N} days without review)
   Action: Schedule architecture review or accept/reject the decision
@@ -150,6 +165,7 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Scan**: All `ARC-*-HLDR-*.md` and `ARC-*-DLDR-*.md` files, plus review files in `reviews/` subdirectories
 
 **Logic**:
+
 1. Check the overall verdict/status in the review document
 2. If verdict is "APPROVED WITH CONDITIONS":
    a. Extract the list of conditions (typically in a "Conditions" or "Required Changes" section)
@@ -162,7 +178,8 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Rationale**: "Approved with conditions" means the design can proceed but specific changes are required. If conditions are never formally resolved, the design may ship with known gaps — creating technical debt or compliance risk.
 
 **Output per finding**:
-```
+
+```text
 [HIGH] UNRESOLVED-COND: {filepath}
   Verdict: APPROVED WITH CONDITIONS
   Unresolved conditions: {count}
@@ -177,6 +194,7 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Scan**: All `ARC-*-REQ-*.md` files, cross-referenced with `ARC-*-ADR-*-*.md` files in the same project
 
 **Logic**:
+
 1. For each project that has a REQ document:
    a. Extract the list of requirement IDs from the REQ document (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx)
    b. Read all ADR documents in the same project
@@ -187,7 +205,8 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Note**: Not all requirements need a dedicated ADR. This rule flags the gap for awareness — the architect decides whether an ADR is needed. Requirements covered by traceability matrices (TRAC) or design reviews (HLDR/DLDR) may be adequately governed without a specific ADR.
 
 **Output per finding**:
-```
+
+```text
 [MEDIUM] ORPHAN-REQ: {project-dir}
   Requirements document: {filepath}
   Total requirements: {count}
@@ -201,6 +220,7 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Scan**: All `ARC-*-ADR-*-*.md` files
 
 **Logic**:
+
 1. For each ADR document:
    a. Search the content for references to requirement IDs (patterns: `BR-\d{3}`, `FR-\d{3}`, `NFR-\w+-\d{3}`, `INT-\d{3}`, `DR-\d{3}`)
    b. Also check for references to REQ documents (`ARC-*-REQ-*`)
@@ -209,7 +229,8 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Rationale**: ADRs should be traceable to the requirements they address. An ADR with no requirement references may indicate a decision made without clear justification, or simply missing cross-references that should be added.
 
 **Output per finding**:
-```
+
+```text
 [MEDIUM] MISSING-TRACE: {filepath}
   ADR title: {title from document}
   Status: {status}
@@ -221,6 +242,7 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Scan**: All `ARC-*` files, grouped by project and document type
 
 **Logic**:
+
 1. Group all artifacts by project and document type code (e.g., all REQ files for project 001)
 2. For each group with multiple versions:
    a. Identify the latest version by version number
@@ -231,7 +253,8 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Rationale**: Multiple versions of an artifact suggest active iteration. If the latest version has not been updated in over 3 months, the artifact may have been abandoned mid-revision or the team may be working from an outdated version.
 
 **Output per finding**:
-```
+
+```text
 [LOW] VERSION-DRIFT: {project-dir}/{type}
   Versions found: {list of version numbers}
   Latest version: {filepath} (last modified: {date}, {N} days ago)
@@ -243,6 +266,7 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Scan**: All files in `projects/*/external/` directories (including `000-global/external/`)
 
 **Logic**:
+
 1. For each project that has an `external/` directory:
    a. Find the newest `ARC-*` artifact modification time across the project directory and its subdirectories (`decisions/`, `diagrams/`, `wardley-maps/`, `data-contracts/`, `reviews/`)
    b. For each file in `external/` (excluding `README.md`):
@@ -266,7 +290,8 @@ Apply each rule against the collected metadata. Use today's date (or the `SINCE`
 **Rationale**: External files (PoC results, API specs, compliance reports, vendor documents) are placed in `external/` to inform architecture decisions. If these files are newer than all existing artifacts, the architecture may not yet reflect their content — creating a governance gap.
 
 **Output per finding**:
-```
+
+```text
 [HIGH] STALE-EXT: {project-dir}
   Unincorporated external files: {count}
   Files:
@@ -281,7 +306,7 @@ Produce the health report as **console output only** (do NOT write a file). Stru
 
 #### 4.1: Summary Table
 
-```
+```text
 ========================================
   ArcKit Artifact Health Report
   Scanned: {date}
@@ -312,7 +337,8 @@ FINDINGS BY TYPE
 Group findings by project directory, then by finding type within each project.
 
 For each project:
-```
+
+```text
 PROJECT: {project-dir}
   Artifacts scanned: {count}
 
@@ -334,7 +360,8 @@ PROJECT: {project-dir}
 ```
 
 If a project has no findings:
-```
+
+```text
 PROJECT: {project-dir}
   Artifacts scanned: {count}
   No issues found.
@@ -344,7 +371,7 @@ PROJECT: {project-dir}
 
 At the end of the report, provide a prioritised action list:
 
-```
+```text
 RECOMMENDED ACTIONS (prioritised)
 ----------------------------------
 
@@ -382,7 +409,7 @@ RECOMMENDED ACTIONS (prioritised)
 
 If no findings are detected across all projects:
 
-```
+```text
 ========================================
   ArcKit Artifact Health Report
   Scanned: {date}
@@ -440,6 +467,7 @@ If the user specified `JSON=true`, write a machine-readable `docs/health.json` f
 ```
 
 **Field definitions**:
+
 - `generated` — ISO 8601 timestamp of when the scan was run
 - `scanned.projects` — number of projects scanned
 - `scanned.artifacts` — total number of artifacts scanned across all projects
@@ -457,17 +485,20 @@ If the user specified `JSON=true`, write a machine-readable `docs/health.json` f
 ## Error Handling
 
 **No projects directory**:
-```
+
+```text
 No projects/ directory found. Run /arckit:init to create your first project.
 ```
 
 **No artifacts found**:
-```
+
+```text
 No ARC-* artifacts found in projects/. Generate artifacts using /arckit commands first.
 ```
 
 **Single project specified but not found**:
-```
+
+```text
 Project directory not found: projects/{PROJECT}
 Available projects:
   - 001-payment-gateway
@@ -514,11 +545,13 @@ Useful for planning — "what will be stale by June?"
 
 ## Integration with Other Commands
 
-### Run After:
+### Run After
+
 - `/arckit:analyze` — health check complements the deeper governance analysis
 - Any artifact creation — verify new artifacts don't introduce drift
 
-### Triggers For:
+### Triggers For
+
 - `/arckit:research` — refresh stale RSCH documents
 - `/arckit:adr` — create ADRs for orphaned requirements
 - `/arckit:traceability` — fix missing traceability links

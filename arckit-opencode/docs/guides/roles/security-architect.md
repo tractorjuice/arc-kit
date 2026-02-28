@@ -33,12 +33,13 @@ The Security Architect ensures solutions meet security and compliance requiremen
 
 ## Typical Workflow
 
-```
+```text
 principles → risk → requirements (NFR-SEC) → dpia → secure → conformance
 ```
 
-### For MOD projects:
-```
+### For MOD projects
+
+```text
 principles → risk → requirements (NFR-SEC) → dpia → mod-secure → jsp-936 → conformance
 ```
 

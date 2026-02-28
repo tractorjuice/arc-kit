@@ -5,6 +5,18 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.15.0] - 2026-02-28
+
+### Added
+
+- **Markdown linting CI** — `.markdownlint-cli2.jsonc` config + `.github/workflows/lint-markdown.yml` enforcing consistent markdown formatting; auto-fix of 39K+ violations across 571 files
+
+### Fixed
+
+- Markdown formatting across all templates, commands, guides, agents, and documentation files
+
+---
+
 ## [2.14.0] - 2026-02-28
 
 ### Added

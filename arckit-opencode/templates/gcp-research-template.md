@@ -79,11 +79,13 @@ This document presents Google Cloud-specific technology research findings for th
 #### Recommended: [GOOGLE_CLOUD_SERVICE_NAME]
 
 **Service Overview**:
+
 - **Full Name**: [e.g., Google Kubernetes Engine (GKE)]
 - **Category**: [Compute / Storage / Database / AI / Security / etc.]
 - **Documentation**: [Google Cloud Documentation link]
 
 **Key Features**:
+
 - [Feature 1]: [Description]
 - [Feature 2]: [Description]
 - [Feature 3]: [Description]
@@ -126,17 +128,20 @@ This document presents Google Cloud-specific technology research findings for th
 | Compliance Findings | ✅ | Compliance monitoring (PCI DSS, NIST 800-53) |
 
 **Integration Capabilities**:
+
 - **APIs**: REST, gRPC, Client Libraries, Terraform
 - **SDKs**: Python, Java, Go, Node.js, C#, Ruby, PHP
 - **Event-Driven**: Eventarc, Pub/Sub integration
 - **Other Google Cloud Services**: [List integrations]
 
 **UK Region Availability**:
+
 - ✅ europe-west2 (London) - Primary
 - ✅ europe-west1 (Belgium) - DR option
 - [Any limitations in UK region]
 
 **Compliance Certifications**:
+
 - ✅ ISO 27001, 27017, 27018
 - ✅ SOC 1, 2, 3
 - ✅ UK Cyber Essentials Plus
@@ -290,6 +295,7 @@ graph TB
 ### Security Command Center & Chronicle
 
 **Recommendations**:
+
 - Enable Security Command Center Premium in the organization
 - Configure Security Health Analytics for continuous posture monitoring
 - Enable Event Threat Detection for runtime threat detection
@@ -473,11 +479,13 @@ options:
 ### G-Cloud Procurement
 
 **Google Cloud on G-Cloud 14**:
+
 - **Framework**: RM1557.14
 - **Supplier**: Google Cloud EMEA Limited
 - **Service ID**: [Service ID from Digital Marketplace]
 
 **Procurement Steps**:
+
 1. Search Digital Marketplace for "Google Cloud"
 2. Review service description and pricing
 3. Direct award (if requirements clear) or further competition
@@ -486,6 +494,7 @@ options:
 ### SECRET Classification
 
 For SECRET data classification:
+
 - **Google Cloud Government**: US-only (Google Cloud Government is not available in the UK)
 - **Note**: Google Cloud does not offer a UK sovereign cloud
 - **Alternative**: Use AWS GovCloud or Microsoft Cloud for Sovereignty for SECRET workloads

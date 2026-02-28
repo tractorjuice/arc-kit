@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD003 -->
 # [PROJECT_NAME] — Architecture Presentation
 
 > **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.presentation`
@@ -34,6 +35,7 @@
 <!-- MARP presentation begins below -->
 
 ---
+
 marp: true
 theme: default
 paginate: true

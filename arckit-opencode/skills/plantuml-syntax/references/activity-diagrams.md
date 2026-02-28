@@ -97,6 +97,7 @@ end fork
 ```
 
 Merge (end fork with different modes):
+
 - `end fork` — synchronisation bar (wait for all)
 - `end merge` — merge point (any one completes)
 
@@ -157,6 +158,7 @@ detach
 ```
 
 Activity shapes:
+
 - `:text;` — rounded rectangle (default)
 - `:text|` — vertical bar (for signals)
 - `:text<` — arrow pointing left (receive)

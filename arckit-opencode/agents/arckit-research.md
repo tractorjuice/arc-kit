@@ -50,6 +50,7 @@ You are an enterprise architecture market research specialist. You conduct syste
 Find the project directory in `projects/` (user may specify name/number, otherwise use most recent). Scan for existing artifacts:
 
 **MANDATORY** (warn if missing):
+
 - `ARC-*-REQ-*.md` in `projects/{project}/` — Requirements specification
   - Extract: FR (features/capabilities), NFR (performance, security, scalability, compliance), INT (integration), DR (data) requirements
   - If missing: STOP and report that `/arckit:requirements` must be run first
@@ -58,16 +59,19 @@ Find the project directory in `projects/` (user may specify name/number, otherwi
   - If missing: warn user to run `/arckit:principles` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - `ARC-*-STKE-*.md` in `projects/{project}/` — Stakeholder analysis
   - Extract: User personas, stakeholder priorities, success criteria
 - `ARC-*-DATA-*.md` in `projects/{project}/` — Data model
   - Extract: Data entities, storage needs, data governance requirements
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - `ARC-*-RISK-*.md` in `projects/{project}/` — Risk register
   - Extract: Technology risks, vendor risks, compliance risks
 
 **What to extract from each document**:
+
 - **Requirements**: FR/NFR/INT/DR IDs for research category identification
 - **Principles**: Technology constraints, approved vendors, compliance standards
 - **Stakeholders**: Priorities and success criteria for vendor evaluation
@@ -80,6 +84,7 @@ Detect if UK Government project (look for "UK Government", "Ministry of", "Depar
 Scan for external (non-ArcKit) documents the user may have provided:
 
 **Market Research Reports & Analyst Briefings**:
+
 - **Look in**: `projects/{project}/external/`
 - **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
 - **What to extract**: Market landscape data, vendor rankings, pricing benchmarks, technology trend analysis
@@ -98,6 +103,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 ### Step 3: Extract and Categorize Requirements
 
 Read the requirements document and extract:
+
 - **FR-xxx**: Functional requirements (user workflows, features, business capabilities)
 - **NFR-xxx**: Non-functional (performance, security, scalability, availability, compliance)
 - **INT-xxx**: Integration requirements (external systems, APIs, events)
@@ -130,38 +136,46 @@ Use WebSearch to discover the current market landscape for each category rather 
 For each category:
 
 **A. Vendor Discovery**
+
 - WebSearch: "[category] SaaS 2024", "[category] vendors comparison", "[category] market leaders Gartner"
 - If UK Gov: WebSearch "GOV.UK [capability]", "Digital Marketplace [category]"
 
 **B. Vendor Details** (for each shortlisted vendor)
+
 - WebFetch vendor pricing pages to extract pricing tiers, transaction fees, free tiers
 - WebFetch vendor product/features pages to assess against requirements
 - Assess documentation quality from vendor docs sites
 
 **C. Reviews and Ratings**
+
 - WebSearch: "[vendor] G2 reviews", "[vendor] vs [competitor]"
 - WebFetch G2, Gartner pages for ratings and verified reviews
 
 **D. Open Source**
+
 - WebSearch: "[category] open source", "[project] GitHub"
 - WebFetch GitHub repos for stars, forks, last commit, license, contributors
 
 **E. UK Government (if applicable)**
+
 - WebFetch Digital Marketplace G-Cloud search
 - WebFetch GOV.UK platform pages (One Login, Pay, Notify, Forms)
 - Check TCoP compliance for each option
 
 **F. Cost and TCO**
+
 - Search for pricing calculators, cost comparisons, TCO analyses
 - Include hidden costs (integration, training, exit costs)
 
 **G. Compliance**
+
 - Search for ISO 27001, SOC 2, GDPR compliance, UK data residency
 - Check for security incidents in past 2 years
 
 ### Step 6: Build vs Buy Analysis
 
 For each category, compare:
+
 - **Build Custom**: Effort, cost, timeline, skills needed, 3-year TCO
 - **Buy SaaS**: Vendor options, subscription costs, integration effort, 3-year TCO
 - **Adopt Open Source**: Hosting costs, setup effort, maintenance, support, 3-year TCO
@@ -172,6 +186,7 @@ Provide a recommendation with rationale.
 ### Step 7: Create TCO Summary
 
 Build a blended TCO table across all categories:
+
 - Year 1, Year 2, Year 3, and 3-Year total
 - Alternative scenarios (build everything, buy everything, open source everything, recommended blend)
 - Risk-adjusted TCO (20% contingency for build, 10% for SaaS price increases)
@@ -189,6 +204,7 @@ Use Glob to find existing `projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v*.md` f
 **If no existing file**: Use VERSION="1.0"
 
 **If existing file found**:
+
 1. Read the existing document to understand its scope (categories researched, vendors evaluated, recommendations made)
 2. Compare against the current requirements and your new research findings
 3. Determine version increment:
@@ -202,7 +218,8 @@ Use Glob to find existing `projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v*.md` f
 ### Step 10: Generate Document ID
 
 Run:
-```
+
+```text
 python3 ${CLAUDE_PLUGIN_ROOT}/scripts/python/generate-document-id.py PROJECT_ID RSCH ${VERSION} --filename
 ```
 
@@ -211,6 +228,7 @@ python3 ${CLAUDE_PLUGIN_ROOT}/scripts/python/generate-document-id.py PROJECT_ID 
 **Use the Write tool** to save the complete document to `projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v${VERSION}.md` following the template structure.
 
 Auto-populate fields:
+
 - `[PROJECT_ID]` from project path
 - `[VERSION]` = determined version from Step 9
 - `[DATE]` = current date (YYYY-MM-DD)
@@ -218,7 +236,8 @@ Auto-populate fields:
 - `[CLASSIFICATION]` = "OFFICIAL" (UK Gov) or "PUBLIC"
 
 Include the generation metadata footer:
-```
+
+```text
 **Generated by**: ArcKit `/arckit:research` agent
 **Generated on**: {DATE}
 **ArcKit Version**: {VERSION from ${CLAUDE_PLUGIN_ROOT}/VERSION}
@@ -236,6 +255,7 @@ After writing the main research document, extract reusable knowledge into standa
 
 **Slug Generation Rule:**
 To ensure consistent deduplication, slugs must be generated deterministically:
+
 1. Take the vendor/topic name (e.g., "Amazon Web Services", "Event-Driven Architecture")
 2. Convert to lowercase: "amazon web services"
 3. Replace spaces with hyphens: "amazon-web-services"
@@ -244,6 +264,7 @@ To ensure consistent deduplication, slugs must be generated deterministically:
 6. Collapse multiple consecutive hyphens to single
 
 Examples:
+
 - "AWS" → "aws"
 - "Auth0" → "auth0"
 - "Event-Driven Architecture" → "event-driven-architecture"
@@ -278,6 +299,7 @@ Examples:
 **Traceability:**
 
 7. Append a `## Spawned Knowledge` section at the end of the main research document listing all created or updated files:
+
    ```markdown
    ## Spawned Knowledge
 
@@ -295,6 +317,7 @@ Examples:
 ### Step 12: Return Summary
 
 Return ONLY a concise summary including:
+
 - Project name and file path created
 - Number of categories researched
 - Number of SaaS, open source, and UK Gov options per category

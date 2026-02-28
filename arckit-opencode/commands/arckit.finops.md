@@ -5,6 +5,7 @@ description: "Create FinOps strategy with cloud cost management, optimization, g
 # /arckit:finops - FinOps Strategy Command
 
 You are an expert FinOps practitioner and cloud economist with deep knowledge of:
+
 - Cloud cost management (AWS Cost Explorer, Azure Cost Management, GCP Billing)
 - Cost optimization strategies (rightsizing, reserved instances, spot/preemptible)
 - FinOps Foundation framework and maturity model
@@ -20,6 +21,7 @@ Generate a comprehensive **FinOps Strategy** document that establishes cloud fin
 ## When to Use This Command
 
 Use `/arckit:finops` after completing:
+
 1. Requirements (`/arckit:requirements`) - for scale and budget constraints
 2. Architecture diagrams (`/arckit:diagram`) - for resource topology
 3. DevOps strategy (`/arckit:devops`) - for infrastructure patterns
@@ -33,6 +35,7 @@ $ARGUMENTS
 ```
 
 Parse the user input for:
+
 - Cloud provider(s) (AWS, Azure, GCP, multi-cloud)
 - Current cloud spend (monthly/annual)
 - Budget constraints or targets
@@ -47,15 +50,18 @@ Parse the user input for:
 ### Phase 1: Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
+
 - **REQ** (Requirements) — Extract: NFR-P (performance), NFR-S (scalability), NFR-A (availability), BR (business/budget) requirements
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **PRIN** (Architecture Principles, in 000-global) — Extract: Technology standards, cloud-first policy, cost governance principles
 - **DEVOPS** (DevOps Strategy) — Extract: Infrastructure patterns, deployment targets, container orchestration
 - **DIAG** (Architecture Diagrams, in diagrams/) — Extract: Resource architecture, deployment topology
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Cloud provider choices, service pricing, platform decisions
 - **STKE** (Stakeholder Analysis) — Extract: Business drivers, budget constraints, ROI expectations
 - **SOBC** (Business Case) — Extract: Budget allocations, cost targets, ROI commitments
@@ -78,6 +84,7 @@ Parse the user input for:
 | Run | Real-time visibility, optimization automation, forecasting | Full |
 
 **Extract from Requirements**:
+
 - NFR-P (Performance) → Resource sizing requirements
 - NFR-S (Scalability) → Auto-scaling patterns, cost implications
 - NFR-A (Availability) → Multi-AZ/region cost factors
@@ -85,6 +92,7 @@ Parse the user input for:
 - BR (Business) → Budget constraints, ROI targets
 
 **Cloud Cost Drivers**:
+
 - Compute (VMs, containers, serverless)
 - Storage (block, object, file)
 - Networking (egress, load balancers, CDN)
@@ -94,6 +102,7 @@ Parse the user input for:
 ### Phase 3: Generate FinOps Strategy
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/finops-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/finops-template.md` (default)
@@ -103,42 +112,49 @@ Parse the user input for:
 Generate:
 
 **Section 1: FinOps Overview**
+
 - Strategic objectives (cost visibility, optimization, governance)
 - FinOps maturity level (current and target)
 - Team structure (FinOps team, cloud teams, finance)
 - Key stakeholders and responsibilities
 
 **Section 2: Cloud Estate Overview**
+
 - Cloud providers and accounts/subscriptions
 - Major workloads and cost centers
 - Current spend baseline
 - Spend trends and growth projections
 
 **Section 3: Tagging Strategy**
+
 - Mandatory tags (cost center, environment, owner, project)
 - Optional tags (team, application, data classification)
 - Tag enforcement policies
 - Untagged resource handling
 
 **Section 4: Cost Visibility & Reporting**
+
 - Cost allocation model
 - Reporting cadence and distribution
 - Dashboard requirements
 - Cost attribution by team/project/environment
 
 **Section 5: Budgeting & Forecasting**
+
 - Budget setting process
 - Budget types (fixed, variable, per-unit)
 - Forecasting methodology
 - Budget alert thresholds
 
 **Section 6: Showback/Chargeback Model**
+
 - Allocation methodology (direct, proportional, fixed)
 - Shared cost distribution
 - Unit economics metrics
 - Internal billing process (if chargeback)
 
 **Section 7: Cost Optimization Strategies**
+
 - Rightsizing recommendations
 - Reserved instances / Savings Plans strategy
 - Spot/Preemptible instance usage
@@ -146,59 +162,69 @@ Generate:
 - Idle resource detection and remediation
 
 **Section 8: Commitment Management**
+
 - Reserved instance inventory
 - Savings Plans coverage
 - Commitment utilization targets
 - Purchase recommendations
 
 **Section 9: Anomaly Detection & Alerts**
+
 - Anomaly detection configuration
 - Alert thresholds and escalation
 - Investigation workflow
 - Root cause analysis process
 
 **Section 10: Governance & Policies**
+
 - Cloud governance framework
 - Approval workflows for large spend
 - Policy enforcement (quotas, limits)
 - Exception handling process
 
 **Section 11: FinOps Tooling**
+
 - Native cloud tools (Cost Explorer, Cost Management, Billing)
 - Third-party tools (if applicable)
 - Automation and integrations
 - Custom dashboards and reports
 
 **Section 12: Sustainability & Carbon**
+
 - Carbon footprint visibility
 - Sustainable cloud practices
 - Green region preferences
 - Sustainability reporting
 
 **Section 13: UK Government Compliance** (if applicable)
+
 - Cabinet Office Digital Spend Controls
 - Treasury Green Book alignment
 - G-Cloud/Digital Marketplace cost tracking
 - Annual technology spend reporting
 
 **Section 14: FinOps Operating Model**
+
 - FinOps cadence (daily, weekly, monthly reviews)
 - Stakeholder engagement model
 - Escalation paths
 - Continuous improvement process
 
 **Section 15: Metrics & KPIs**
+
 - Cost efficiency metrics
 - Unit economics targets
 - Optimization targets
 - Governance compliance metrics
 
 **Section 16: Traceability**
+
 - Requirements to FinOps element mapping
 
 ### Phase 4: Validation
 
 Verify before saving:
+
 - [ ] Tagging strategy covers cost attribution needs
 - [ ] Reporting cadence meets stakeholder requirements
 - [ ] Optimization strategies aligned with workload patterns
@@ -212,7 +238,8 @@ Verify before saving:
 1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-FINO-v1.0.md`
 
 2. **Provide summary**:
-```
+
+```text
 ✅ FinOps Strategy generated!
 
 **FinOps Maturity**: [Crawl / Walk / Run] (target: [Level])
@@ -249,36 +276,44 @@ Verify before saving:
 
 ## Error Handling
 
-### If No Requirements Found:
+### If No Requirements Found
+
 "⚠️ Cannot find requirements document (ARC-*-REQ-*.md). Please run `/arckit:requirements` first. FinOps strategy requires NFRs for budget and scale requirements."
 
-### If No Architecture Principles:
+### If No Architecture Principles
+
 "⚠️ Architecture principles not found. Using cloud-agnostic defaults. Consider running `/arckit:principles` to establish technology standards."
 
 ## Key Principles
 
 ### 1. Cost Visibility First
+
 - You cannot optimize what you cannot see
 - Tagging is foundational to cost management
 
 ### 2. Shared Accountability
+
 - Engineering teams own their cloud spend
 - Finance provides oversight and governance
 - FinOps team enables and facilitates
 
 ### 3. Real-Time Decision Making
+
 - Cost data should be timely and accessible
 - Enable teams to make informed trade-offs
 
 ### 4. Variable Cost Model
+
 - Cloud spend should scale with business value
 - Unit economics matter more than absolute cost
 
 ### 5. Continuous Optimization
+
 - Optimization is ongoing, not one-time
 - Automation reduces toil and improves consistency
 
 ### 6. UK Government Alignment
+
 - Align with Cabinet Office spending controls
 - Support Treasury Green Book business cases
 - Enable G-Cloud/Digital Marketplace reporting
@@ -286,12 +321,14 @@ Verify before saving:
 ## Document Control
 
 **Auto-populate**:
+
 - `[PROJECT_ID]` → From project path
 - `[VERSION]` → "1.0" for new documents
 - `[DATE]` → Current date (YYYY-MM-DD)
 - `ARC-[PROJECT_ID]-FINO-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-FINO-v1.0.md`)
 
 **Generation Metadata Footer**:
+
 ```markdown
 ---
 **Generated by**: ArcKit `/arckit:finops` command

@@ -32,9 +32,11 @@
 ## Executive Summary
 
 ### Strategic Vision
+
 [1-2 paragraphs: What is the strategic vision? What problem are we solving? What is the desired future state?]
 
 ### Investment Summary
+
 - **Total Investment**: £[AMOUNT] over [N] years
 - **Capital Expenditure**: £[CAPEX]
 - **Operational Expenditure**: £[OPEX]
@@ -42,11 +44,13 @@
 - **Payback Period**: [N] years
 
 ### Expected Outcomes
+
 1. **Business Outcome 1**: [Measurable outcome]
 2. **Business Outcome 2**: [Measurable outcome]
 3. **Business Outcome 3**: [Measurable outcome]
 
 ### Timeline at a Glance
+
 - **Duration**: [START_DATE] to [END_DATE]
 - **Major Phases**: [N] phases
 - **Key Milestones**: [N] strategic milestones
@@ -59,9 +63,11 @@
 ### Vision & Strategic Drivers
 
 #### Business Vision
+
 [What business transformation is this roadmap enabling?]
 
 #### Link to Stakeholder Drivers
+
 [Reference to ARC-{PROJECT_ID}-STKE-v*.md document]
 
 | Stakeholder Group | Key Driver | Strategic Goal | Roadmap Alignment |
@@ -69,6 +75,7 @@
 | [Group] | [Driver] | [Goal] | [Which roadmap theme/initiative] |
 
 #### Architecture Principles Alignment
+
 [Reference to ARC-000-PRIN-v*.md]
 
 | Principle | Roadmap Compliance | Timeline for Full Compliance |
@@ -78,9 +85,11 @@
 ### Current State Assessment
 
 #### Technology Landscape
+
 [Current technology estate, systems, platforms]
 
 **Key Systems**:
+
 - **System 1**: [Description, technology stack, age, technical debt]
 - **System 2**: [Description, technology stack, age, technical debt]
 
@@ -93,6 +102,7 @@
 | [Domain 3] | Level 1 (Initial/Ad-hoc) | [Brief assessment] |
 
 **Maturity Model**:
+
 - **Level 1**: Initial/Ad-hoc
 - **Level 2**: Repeatable
 - **Level 3**: Defined
@@ -100,14 +110,17 @@
 - **Level 5**: Optimized
 
 #### Technical Debt Quantification
+
 - **Total Technical Debt**: £[AMOUNT] or [N] person-months
 - **High Priority Debt**: [List top 3-5 items]
 - **Impact on Delivery**: [How debt slows current delivery]
 
 #### Risk Exposure
+
 [Link to ARC-{PROJECT_ID}-RISK-v*.md]
 
 **Strategic Risks**:
+
 1. **Risk 1**: [Description, impact on roadmap]
 2. **Risk 2**: [Description, impact on roadmap]
 3. **Risk 3**: [Description, impact on roadmap]
@@ -115,9 +128,11 @@
 ### Future State Vision
 
 #### Target Architecture
+
 [What will the technology landscape look like at the end of the roadmap?]
 
 **Target State Characteristics**:
+
 - Cloud-native architecture
 - API-first integration
 - Microservices where appropriate
@@ -134,9 +149,11 @@
 | [Domain 3] | Level 5 (Optimized) | +4 levels |
 
 #### Technology Evolution
+
 [Reference to Wardley Maps if available]
 
 **Evolution Strategy**:
+
 - **Genesis → Custom**: [New capabilities to build]
 - **Custom → Product**: [Build vs buy decisions]
 - **Product → Commodity**: [Services to commoditize via cloud]
@@ -181,13 +198,16 @@ gantt
 ### Roadmap Phases
 
 #### Phase 1: Foundation (FY [YEAR] Q[N] - Q[N])
+
 **Objectives**:
+
 - Establish architecture baseline
 - Define target architecture
 - Secure funding and resources
 - Build foundational capabilities
 
 **Key Deliverables**:
+
 - Architecture principles approved
 - Current state assessment complete
 - Target architecture defined
@@ -199,13 +219,16 @@ gantt
 ---
 
 #### Phase 2: Migration (FY [YEAR] Q[N] - FY [YEAR] Q[N])
+
 **Objectives**:
+
 - Migrate core systems to target architecture
 - Reduce technical debt
 - Establish new ways of working
 - Decommission legacy systems
 
 **Key Deliverables**:
+
 - [N]% of applications migrated to cloud
 - Legacy system 1 decommissioned
 - Data migration complete
@@ -216,13 +239,16 @@ gantt
 ---
 
 #### Phase 3: Transformation (FY [YEAR] Q[N] - FY [YEAR] Q[N])
+
 **Objectives**:
+
 - Achieve cloud-native architecture
 - Implement DevOps practices at scale
 - Enable self-service capabilities
 - Improve time to market
 
 **Key Deliverables**:
+
 - Cloud-native platform operational
 - CI/CD pipelines for all services
 - Container orchestration platform live
@@ -233,13 +259,16 @@ gantt
 ---
 
 #### Phase 4: Optimization (FY [YEAR] Q[N] - FY [YEAR] Q[N])
+
 **Objectives**:
+
 - Optimize costs and performance
 - Achieve target capability maturity
 - Establish continuous improvement culture
 - Realize full business benefits
 
 **Key Deliverables**:
+
 - Target maturity levels achieved
 - Cost optimization realized
 - Performance SLAs met
@@ -254,29 +283,34 @@ gantt
 ### Theme 1: [THEME_NAME] (e.g., Cloud Migration)
 
 #### Strategic Objective
+
 [What business value does this theme deliver?]
 
 #### Timeline by Financial Year
 
 **FY [YEAR] Q1-Q2**:
+
 - Initiative 1.1: [Description]
 - Initiative 1.2: [Description]
 - **Milestones**: [Key milestones]
 - **Investment**: £[AMOUNT]
 
 **FY [YEAR] Q3-Q4**:
+
 - Initiative 1.3: [Description]
 - Initiative 1.4: [Description]
 - **Milestones**: [Key milestones]
 - **Investment**: £[AMOUNT]
 
 **FY [YEAR+1]**:
+
 - Initiative 1.5: [Description]
 - Initiative 1.6: [Description]
 - **Milestones**: [Key milestones]
 - **Investment**: £[AMOUNT]
 
 #### Success Criteria
+
 - [ ] [Measurable success criterion 1]
 - [ ] [Measurable success criterion 2]
 - [ ] [Measurable success criterion 3]
@@ -286,29 +320,34 @@ gantt
 ### Theme 2: [THEME_NAME] (e.g., Data Modernization)
 
 #### Strategic Objective
+
 [What business value does this theme deliver?]
 
 #### Timeline by Financial Year
 
 **FY [YEAR]**:
+
 - Initiative 2.1: [Description]
 - Initiative 2.2: [Description]
 - **Milestones**: [Key milestones]
 - **Investment**: £[AMOUNT]
 
 **FY [YEAR+1]**:
+
 - Initiative 2.3: [Description]
 - Initiative 2.4: [Description]
 - **Milestones**: [Key milestones]
 - **Investment**: £[AMOUNT]
 
 **FY [YEAR+2]**:
+
 - Initiative 2.5: [Description]
 - Initiative 2.6: [Description]
 - **Milestones**: [Key milestones]
 - **Investment**: £[AMOUNT]
 
 #### Success Criteria
+
 - [ ] [Measurable success criterion 1]
 - [ ] [Measurable success criterion 2]
 - [ ] [Measurable success criterion 3]
@@ -318,29 +357,34 @@ gantt
 ### Theme 3: [THEME_NAME] (e.g., Security & Compliance)
 
 #### Strategic Objective
+
 [What business value does this theme deliver?]
 
 #### Timeline by Financial Year
 
 **FY [YEAR]**:
+
 - Initiative 3.1: Achieve Cyber Essentials certification
 - Initiative 3.2: Implement NCSC CAF baseline controls
 - **Milestones**: Cyber Essentials certified
 - **Investment**: £[AMOUNT]
 
 **FY [YEAR+1]**:
+
 - Initiative 3.3: ISO 27001 certification
 - Initiative 3.4: Security automation and monitoring
 - **Milestones**: ISO 27001 certified
 - **Investment**: £[AMOUNT]
 
 **FY [YEAR+2]**:
+
 - Initiative 3.5: Continuous compliance automation
 - Initiative 3.6: Zero Trust architecture
 - **Milestones**: Continuous compliance operational
 - **Investment**: £[AMOUNT]
 
 #### Success Criteria
+
 - [ ] All critical systems meet security baseline
 - [ ] Security incident reduction by 80%
 - [ ] Compliance audit findings reduced to zero
@@ -359,6 +403,7 @@ gantt
 | Monitoring & Observability | L1 (Initial) | L2 | L3 | L4 | L4 | L4 (Managed) |
 
 **Capability Evolution**:
+
 - **L1 → L2**: Documented processes, repeatable execution
 - **L2 → L3**: Standardized across organization, proactive management
 - **L3 → L4**: Quantitatively managed, metrics-driven
@@ -394,9 +439,11 @@ flowchart TD
 ```
 
 ### Critical Path
+
 1. **Architecture Strategy** → 2. **Security Baseline** → 3. **Cloud Platform** → 4. **Application Modernization** → 5. **Optimization**
 
 ### External Dependencies
+
 | Dependency | Provider | Required By | Risk Level |
 |------------|----------|-------------|------------|
 | [Dependency 1] | [External party] | FY [YEAR] Q[N] | High/Medium/Low |
@@ -480,18 +527,21 @@ flowchart TD
 ### Governance Structure
 
 #### Architecture Review Board (ARB)
+
 - **Frequency**: Monthly
 - **Purpose**: Review progress, resolve blockers, approve architecture decisions
 - **Participants**: Chief Architect, Enterprise Architects, Technical Leads
 - **Deliverables**: Architecture Decision Records (ADRs), progress reports
 
 #### Programme Board
+
 - **Frequency**: Monthly
 - **Purpose**: Programme-level oversight, budget management, risk management
 - **Participants**: SRO, Programme Manager, Finance, ARB representative
 - **Deliverables**: Progress reports, budget variance reports, risk updates
 
 #### Steering Committee
+
 - **Frequency**: Quarterly
 - **Purpose**: Strategic direction, investment decisions, escalation resolution
 - **Participants**: Executive sponsors, SRO, Chief Architect, Finance Director
@@ -510,7 +560,9 @@ flowchart TD
 ### Service Standard Assessment Gates (UK Government)
 
 #### Alpha Assessment - FY [YEAR] Q[N]
+
 **Focus**: Validate approach, prove concept feasibility
+
 - [ ] User research completed
 - [ ] Technology spike validated
 - [ ] Architecture approach approved
@@ -518,7 +570,9 @@ flowchart TD
 - [ ] 14 Service Standard points addressed
 
 #### Beta Assessment - FY [YEAR] Q[N]
+
 **Focus**: Prove service works at scale, ready for public use
+
 - [ ] Service in private/public beta
 - [ ] User feedback incorporated
 - [ ] Non-functional requirements met
@@ -526,7 +580,9 @@ flowchart TD
 - [ ] 14 Service Standard points demonstrated
 
 #### Live Assessment - FY [YEAR] Q[N]
+
 **Focus**: Service fully operational and continuously improving
+
 - [ ] Service live and stable
 - [ ] SLAs being met
 - [ ] Continuous improvement process established
@@ -590,6 +646,7 @@ flowchart TD
 ### Links to Architecture Artifacts
 
 #### Stakeholder Drivers → Roadmap Themes
+
 [Reference: ARC-{PROJECT_ID}-STKE-v*.md]
 
 | Stakeholder Driver | Strategic Goal | Roadmap Theme | Timeline |
@@ -597,6 +654,7 @@ flowchart TD
 | [Driver ID] | [Goal] | Theme [N] | FY [YEAR] |
 
 #### Architecture Principles → Compliance Timeline
+
 [Reference: ARC-000-PRIN-v*.md]
 
 | Principle | Current Compliance | Roadmap Activities | Target Compliance Date |
@@ -604,6 +662,7 @@ flowchart TD
 | [Principle Name] | [%] | [Activities] | FY [YEAR] Q[N] |
 
 #### Requirements → Capability Delivery
+
 [Reference: ARC-{PROJECT_ID}-REQ-v*.md]
 
 | Requirement ID | Capability Delivered | Roadmap Phase | Delivery Date |
@@ -611,6 +670,7 @@ flowchart TD
 | BR-001 | [Capability] | Phase [N] | FY [YEAR] Q[N] |
 
 #### Wardley Maps → Technology Evolution
+
 [Reference: wardley-maps/]
 
 | Component | Current Evolution | Target Evolution | Roadmap Timeline |
@@ -618,6 +678,7 @@ flowchart TD
 | [Component] | Custom (0.35) | Product (0.65) | FY [YEAR] - FY [YEAR+1] |
 
 #### Risk Register → Mitigation Timeline
+
 [Reference: ARC-{PROJECT_ID}-RISK-v*.md]
 
 | Risk ID | Mitigation Activity | Roadmap Phase | Mitigation Date |
@@ -631,30 +692,35 @@ flowchart TD
 ### Appendix A: Capability Maturity Model
 
 #### Level 1: Initial / Ad-hoc
+
 - **Characteristics**: Unpredictable, poorly controlled, reactive
 - **Process**: Informal, undocumented
 - **Success**: Depends on individual heroics
 - **Repeatability**: Low
 
 #### Level 2: Repeatable
+
 - **Characteristics**: Repeatable processes, some discipline
 - **Process**: Documented at project level
 - **Success**: Can repeat previous successes
 - **Repeatability**: Medium
 
 #### Level 3: Defined
+
 - **Characteristics**: Standardized, documented, integrated
 - **Process**: Organization-wide standards
 - **Success**: Consistent across projects
 - **Repeatability**: High
 
 #### Level 4: Managed
+
 - **Characteristics**: Quantitatively managed, measured
 - **Process**: Metrics-driven, statistically controlled
 - **Success**: Predictable, meets targets
 - **Repeatability**: Very High
 
 #### Level 5: Optimized
+
 - **Characteristics**: Continuous improvement, innovative
 - **Process**: Focus on continuous optimization
 - **Success**: Industry-leading
@@ -665,18 +731,22 @@ flowchart TD
 ### Appendix B: Technology Radar
 
 #### Adopt (Use now, proven technology)
+
 - [Technology 1]
 - [Technology 2]
 
 #### Trial (Try in low-risk projects)
+
 - [Technology 3]
 - [Technology 4]
 
 #### Assess (Explore, not ready for production)
+
 - [Technology 5]
 - [Technology 6]
 
 #### Hold (Do not use for new projects)
+
 - [Technology 7]
 - [Technology 8]
 

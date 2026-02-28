@@ -106,6 +106,7 @@ If a chart fails to render, check labels for non-ASCII characters or hyphens fir
 ## Rendering the Presentation
 
 **VS Code** (recommended for previewing):
+
 ```bash
 # Install the MARP extension
 code --install-extension marp-team.marp-vscode
@@ -113,6 +114,7 @@ code --install-extension marp-team.marp-vscode
 ```
 
 **MARP CLI** (for export):
+
 ```bash
 # Install
 npm install -g @marp-team/marp-cli

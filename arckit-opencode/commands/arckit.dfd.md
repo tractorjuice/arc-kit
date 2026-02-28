@@ -53,9 +53,10 @@ Read existing project artifacts to understand what to diagram:
    - **DIAG** (Architecture Diagrams)
    - Extract: System context, containers, components — use to inform DFD decomposition
 
-## Step 1b: Read external documents and policies:
-   - Read any **external documents** listed in the project context (`external/` files) — extract existing data flow diagrams, process descriptions, system interfaces
-   - If no external docs exist but they would improve the output, ask: "Do you have any existing data flow diagrams or system interface documents? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+## Step 1b: Read external documents and policies
+
+- Read any **external documents** listed in the project context (`external/` files) — extract existing data flow diagrams, process descriptions, system interfaces
+- If no external docs exist but they would improve the output, ask: "Do you have any existing data flow diagrams or system interface documents? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
 
 ## Step 1c: Interactive Configuration
 
@@ -63,6 +64,7 @@ If the user has **not** specified a DFD level in their arguments, use the **AskU
 
 **Question 1** — header: `DFD Level`, multiSelect: false
 > "What level of Data Flow Diagram should be generated?"
+
 - **Context Diagram (Level 0) (Recommended)**: Single process showing system boundary with all external entities — best starting point
 - **Level 1 DFD**: Decomposes system into major sub-processes with data stores — requires context diagram first
 - **Level 2 DFD**: Detailed decomposition of a specific Level 1 process — requires Level 1 first
@@ -81,6 +83,7 @@ Based on the selected level and project context, generate the Data Flow Diagram.
 ### Naming Conventions
 
 Use consistent naming throughout:
+
 - **Processes**: Verb + Noun (e.g., "Validate Payment", "Process Order", "Generate Report")
 - **Data Stores**: Plural noun or descriptor (e.g., "Customer Records", "Transaction Log", "Product Catalogue")
 - **External Entities**: Specific role or system name (e.g., "Customer", "Payment Gateway", "HMRC API")
@@ -107,7 +110,7 @@ This text format can be rendered using the open-source [`data-flow-diagram`](htt
 
 **DSL syntax reference:**
 
-```
+```text
 # Elements
 process   ID   "Label"
 entity    ID   "Label"
@@ -231,11 +234,13 @@ flowchart LR
 **File Location**: `projects/{project_number}-{project_name}/diagrams/ARC-{PROJECT_ID}-DFD-{NNN}-v1.0.md`
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/dfd-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/dfd-template.md` (default)
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-DFD-{NNN}-v{VERSION}` (e.g., `ARC-001-DFD-001-v1.0`)
 - Sequence number `{NNN}`: Check existing files in `diagrams/` and use the next number (001, 002, ...)
 
@@ -278,6 +283,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -286,14 +292,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.dfd"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING]):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -320,6 +329,7 @@ Before completing the document, populate ALL document control fields in the head
 Before finalizing, validate the DFD:
 
 ### Yourdon-DeMarco Rules
+
 - [ ] Every process has at least one input AND one output data flow
 - [ ] No process has only inputs (black hole) or only outputs (miracle)
 - [ ] Data stores have at least one read and one write flow
@@ -330,6 +340,7 @@ Before finalizing, validate the DFD:
 - [ ] Data flows at Level 1 are consistent with Level 0 boundary flows
 
 ### Balancing Rules (across levels)
+
 - [ ] All data flows entering/leaving the context diagram appear at Level 1
 - [ ] No new external entities introduced at lower levels
 - [ ] Data stores may appear at Level 1 that weren't visible at Level 0 (this is correct)
@@ -338,7 +349,7 @@ Before finalizing, validate the DFD:
 
 After creating the DFD, provide a summary:
 
-```
+```text
 DFD Created: {level} - {system_name}
 
 Location: projects/{project}/diagrams/ARC-{PROJECT_ID}-DFD-{NUM}-v{VERSION}.md

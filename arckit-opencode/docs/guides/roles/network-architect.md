@@ -29,7 +29,7 @@ The Network Architect designs network infrastructure, connectivity, and security
 
 ## Typical Workflow
 
-```
+```text
 requirements (NFR-NET) → cloud-research → adr → diagram → secure → hld-review
 ```
 

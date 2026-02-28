@@ -45,6 +45,7 @@ arckit init --here --ai codex
 > **Note:** For Gemini CLI users, use the ArcKit extension (`gemini extensions install https://github.com/tractorjuice/arckit-gemini`). Updates via `gemini extensions update arckit`.
 
 > **Note:** `README.md` will be overwritten. If you've customized it, back it up first:
+>
 > ```bash
 > cp README.md README.md.bak
 > arckit init --here --ai codex
@@ -64,7 +65,7 @@ arckit init --here --ai codex
 
 If upgrading from **v0.x** to **v1.x**, your project artifacts may use old-style filenames (e.g., `requirements.md`, `stakeholder-drivers.md`). ArcKit v1.x uses standardized Document IDs:
 
-```
+```text
 Old: requirements.md
 New: ARC-001-REQ-v1.0.md
 ```
@@ -80,6 +81,7 @@ Run the migration script to rename files automatically:
 ```
 
 The script:
+
 - Creates timestamped backups before making changes
 - Skips files that are already migrated
 - Handles subdirectories (decisions, diagrams, wardley-maps, etc.)

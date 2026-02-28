@@ -96,6 +96,7 @@ style wardley
 ## Evolution Analysis
 
 ### Components in Genesis (0.00 - 0.25)
+
 **Novel, unproven, high uncertainty**
 
 | Component | Current Position | Risk | Opportunity | Action |
@@ -103,6 +104,7 @@ style wardley
 | {Component} | {evolution} | {risk_description} | {opportunity_description} | {action_plan} |
 
 **Strategic Recommendations**:
+
 - [ ] Accept high failure rate
 - [ ] Invest in R&D and experimentation
 - [ ] Build in-house if strategic differentiator
@@ -110,6 +112,7 @@ style wardley
 - [ ] Plan for rapid change and iteration
 
 ### Components in Custom (0.25 - 0.50)
+
 **Emerging practices, competitive advantage**
 
 | Component | Current Position | Competitive Advantage? | Action |
@@ -117,6 +120,7 @@ style wardley
 | {Component} | {evolution} | {yes/no + rationale} | {action_plan} |
 
 **Strategic Recommendations**:
+
 - [ ] Build custom if provides competitive advantage
 - [ ] Invest in specialist skills
 - [ ] Consider IP protection (patents, trade secrets)
@@ -124,6 +128,7 @@ style wardley
 - [ ] Build vs Buy decision critical here
 
 ### Components in Product (0.50 - 0.75)
+
 **Maturing market, feature differentiation**
 
 | Component | Current Position | Market Options | Action |
@@ -131,6 +136,7 @@ style wardley
 | {Component} | {evolution} | {list_of_vendors} | {action_plan} |
 
 **Strategic Recommendations**:
+
 - [ ] Procure from market leaders
 - [ ] Compare feature sets and pricing
 - [ ] Standardize on common platforms
@@ -138,6 +144,7 @@ style wardley
 - [ ] Use RFP process for selection
 
 ### Components in Commodity (0.75 - 1.00)
+
 **Industrialized, utility services**
 
 | Component | Current Position | Commodity Provider | Action |
@@ -145,6 +152,7 @@ style wardley
 | {Component} | {evolution} | {provider_name} | {action_plan} |
 
 **Strategic Recommendations**:
+
 - [ ] Use commodity/utility services (cloud, SaaS)
 - [ ] Focus on cost efficiency, not features
 - [ ] Avoid custom development at all costs
@@ -164,6 +172,7 @@ style wardley
 | {Component} | Genesis/Custom | {competitive_advantage_rationale} | {risk_level} | {estimated_cost} |
 
 **Build Criteria**:
+
 - ✅ Genesis/Custom stage (< 0.50 evolution)
 - ✅ Provides competitive advantage
 - ✅ Core to business differentiator
@@ -180,6 +189,7 @@ style wardley
 | {Component} | Product/Commodity | {vendor_names} | {rationale} | {RFP/G-Cloud/Direct} |
 
 **Buy Criteria**:
+
 - ✅ Product/Commodity stage (> 0.50 evolution)
 - ✅ Mature market with multiple vendors
 - ✅ Not a competitive differentiator
@@ -196,6 +206,7 @@ style wardley
 | {Component} | Commodity | {provider_name} | {rationale} | {G-Cloud/Direct} |
 
 **Rent Criteria**:
+
 - ✅ Commodity stage (> 0.75 evolution)
 - ✅ Utility services available (AWS, Azure, GCP, SaaS)
 - ✅ Pay-as-you-go model preferred
@@ -214,6 +225,7 @@ style wardley
 | {Component} | {current} | {desired} | {High/Medium/Low} | {barrier_description} | {mitigation_plan} |
 
 **Common Inertia Sources**:
+
 - **Skills inertia**: Team expertise in legacy technology
 - **Process inertia**: Established workflows and procedures
 - **Vendor lock-in**: Contractual or technical dependencies
@@ -222,6 +234,7 @@ style wardley
 - **Regulatory inertia**: Compliance requirements for change
 
 **De-risking Strategies**:
+
 - [ ] Upskilling programs for new technology
 - [ ] Pilot projects to prove new approach
 - [ ] Phased migration to reduce risk
@@ -247,6 +260,7 @@ style wardley
 | {Component} | {current} | {predicted} | {Fast/Medium/Slow} | {impact_description} | {action_plan} |
 
 **Strategic Implications**:
+
 - [ ] Components moving Genesis → Custom: Invest in R&D now
 - [ ] Components moving Custom → Product: Prepare to buy vs build
 - [ ] Components moving Product → Commodity: Plan cloud migration
@@ -271,6 +285,7 @@ style wardley
 | {Custom Service} | {stage} | {usage_status} | {rationale} |
 
 **Reuse Opportunities**:
+
 - [ ] GOV.UK Pay for payment processing (avoid building custom)
 - [ ] GOV.UK Notify for notifications (SMS, email)
 - [ ] GOV.UK Design System for frontend (accessibility compliance)
@@ -286,6 +301,7 @@ style wardley
 | {Component} | Product/Commodity | G-Cloud / DOS | {rationale} |
 
 **Procurement Recommendations**:
+
 - **Genesis/Custom** (< 0.50): Consider DOS Outcomes for discovery + build
 - **Product** (0.50-0.75): G-Cloud for commercial off-the-shelf products
 - **Commodity** (> 0.75): G-Cloud for cloud services (AWS, Azure, GCP)
@@ -310,6 +326,7 @@ style wardley
 | Data Quality & Governance | {components} | {status} | {gaps} |
 
 **HIGH-RISK AI Components** (if applicable):
+
 - [ ] Human-in-the-loop component mapped (Custom, ~0.45 evolution)
 - [ ] Bias testing framework mapped (Custom, ~0.35 evolution)
 - [ ] DPIA/EqIA requirements noted
@@ -337,6 +354,7 @@ flowchart TD
 ```
 
 **Critical Path Analysis**:
+
 - [ ] Identify components on critical path to user value
 - [ ] Highlight high-risk dependencies (single vendor, Genesis components)
 - [ ] Flag inertia points that could block evolution
@@ -349,21 +367,25 @@ flowchart TD
 ### Gameplay Patterns Identified
 
 **Accelerators** (speed up evolution):
+
 - [ ] {Component}: Use open source to commoditize
 - [ ] {Component}: Partner with vendor to productize
 - [ ] {Component}: Contribute to standards to industrialize
 
 **Tower and Moat** (protect competitive advantage):
+
 - [ ] {Component}: Build custom, keep proprietary
 - [ ] {Component}: Create switching costs for competitors
 - [ ] {Component}: Build ecosystem around our platform
 
 **Exploiting Inertia** (leverage competitors' resistance to change):
+
 - [ ] {Competitor} has inertia in {legacy_system}
 - [ ] We can move faster to {new_technology}
 - [ ] Market opportunity: {opportunity_description}
 
 **Sensing Engines** (early warning systems):
+
 - [ ] Monitor {market_segment} for new entrants
 - [ ] Track {open_source_project} evolution velocity
 - [ ] Watch for {technology} moving to commodity
@@ -467,6 +489,7 @@ flowchart TD
 ### What is a Wardley Map?
 
 A Wardley Map is a visual representation of:
+
 1. **Value Chain** (Visibility axis, top to bottom): User needs → capabilities → components
 2. **Evolution** (Evolution axis, left to right): Genesis → Custom → Product → Commodity
 3. **Movement**: How components evolve over time
@@ -522,4 +545,3 @@ A Wardley Map is a visual representation of:
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

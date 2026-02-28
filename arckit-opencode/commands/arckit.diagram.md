@@ -9,6 +9,7 @@ You are an expert enterprise architect helping create visual architecture diagra
 ## What are Architecture Diagrams?
 
 Architecture diagrams are visual representations of system structure, components, and interactions. They help:
+
 - **Communicate**: Complex architectures to stakeholders
 - **Validate**: Designs against requirements and principles
 - **Document**: Technical decisions and rationale
@@ -45,6 +46,7 @@ Read existing artifacts from the project context to understand what to diagram:
 
 **Question 1** — header: `Diagram type`, multiSelect: false
 > "What type of architecture diagram should be generated?"
+
 - **C4 Context (Recommended)**: System boundary with users and external systems — best for stakeholder communication
 - **C4 Container**: Technical containers with technology choices — best after HLD phase
 - **Deployment**: Infrastructure topology showing cloud resources and network zones
@@ -52,10 +54,12 @@ Read existing artifacts from the project context to understand what to diagram:
 
 **Question 2** — header: `Output format`, multiSelect: false
 > "What output format should be used? (Applies to C4 Context, C4 Container, and Sequence — Deployment always uses Mermaid)"
+
 - **Mermaid (Recommended)**: Renders in GitHub, VS Code, mermaid.live — best for diagrams with 12 or fewer elements
 - **PlantUML**: Directional layout hints and richer styling — best for complex diagrams; renders in ArcKit Pages, PlantUML server, VS Code extension
 
 **Skip rules** (only skip questions the user already answered in their arguments):
+
 - User specified type only (e.g., `/arckit.diagram context`): skip Question 1, **still ask Question 2**
 - User specified format only (e.g., `/arckit.diagram plantuml`): skip Question 2, still ask Question 1
 - User specified both (e.g., `/arckit.diagram context plantuml`): skip both questions
@@ -84,6 +88,7 @@ Load format-specific syntax references based on the output format selected in St
 2. For Sequence diagrams: also read `.arckit/skills/plantuml-syntax/references/sequence-diagrams.md`
 
 **Mermaid ERD Rules** (when generating any ER content in Mermaid):
+
 - Valid key types: `PK`, `FK`, `UK` only. For combined primary-and-foreign key, use `PK, FK` (comma-separated). **Never use `PK_FK`** — it is invalid Mermaid syntax.
 - All entities referenced in relationships MUST be declared with attributes.
 
@@ -100,9 +105,11 @@ Apply these principles when generating diagrams in Step 3. In particular:
 Based on the user's request and available artifacts, select the appropriate diagram type:
 
 ### Mode A: C4 Context Diagram (Level 1)
+
 **Purpose**: Show system in context with users and external systems
 
 **When to Use**:
+
 - Starting a new project (after requirements phase)
 - Stakeholder communication (non-technical audience)
 - Understanding system boundaries
@@ -113,6 +120,7 @@ Based on the user's request and available artifacts, select the appropriate diag
 **Mermaid Syntax**: Use `C4Context` diagram
 
 **Example**:
+
 ```mermaid
 C4Context
     title System Context - Payment Gateway
@@ -137,6 +145,7 @@ C4Context
 ```
 
 **PlantUML C4 Example** (if PlantUML format selected):
+
 ```plantuml
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
@@ -168,9 +177,11 @@ Lay_Right(paypal, fraud)
 ```
 
 ### Mode B: C4 Container Diagram (Level 2)
+
 **Purpose**: Show technical containers and technology choices
 
 **When to Use**:
+
 - After HLD phase
 - Reviewing vendor proposals
 - Understanding technical architecture
@@ -181,6 +192,7 @@ Lay_Right(paypal, fraud)
 **Mermaid Syntax**: Use `C4Container` diagram
 
 **Example**:
+
 ```mermaid
 C4Container
     title Container Diagram - Payment Gateway
@@ -211,6 +223,7 @@ C4Container
 ```
 
 **PlantUML C4 Example** (if PlantUML format selected):
+
 ```plantuml
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
@@ -252,9 +265,11 @@ Lay_Right(queue, cache)
 **Note**: Include evolution stage from Wardley Map in square brackets [Custom 0.42]
 
 ### Mode C: C4 Component Diagram (Level 3)
+
 **Purpose**: Show internal components within a container
 
 **When to Use**:
+
 - After DLD phase
 - Implementation planning
 - Understanding component responsibilities
@@ -265,6 +280,7 @@ Lay_Right(queue, cache)
 **Mermaid Syntax**: Use `C4Component` diagram
 
 **Example**:
+
 ```mermaid
 C4Component
     title Component Diagram - Payment API Container
@@ -299,6 +315,7 @@ C4Component
 ```
 
 **PlantUML C4 Example** (if PlantUML format selected):
+
 ```plantuml
 @startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
@@ -341,9 +358,11 @@ Lay_Right(paymentRepo, queuePublisher)
 ```
 
 ### Mode D: Deployment Diagram
+
 **Purpose**: Show infrastructure topology and cloud resources
 
 **When to Use**:
+
 - Cloud-first compliance (TCoP Point 5)
 - Infrastructure planning
 - Security zone design
@@ -354,6 +373,7 @@ Lay_Right(paymentRepo, queuePublisher)
 **Mermaid Syntax**: Use `flowchart` with subgraphs
 
 **Example**:
+
 ```mermaid
 flowchart TB
     subgraph Internet["Internet"]
@@ -410,9 +430,11 @@ flowchart TB
 ```
 
 ### Mode E: Sequence Diagram
+
 **Purpose**: Show API interactions and request/response flows
 
 **When to Use**:
+
 - API design and review
 - Integration requirements (INT)
 - Understanding interaction patterns
@@ -423,6 +445,7 @@ flowchart TB
 **Mermaid Syntax**: Use `sequenceDiagram`
 
 **Mermaid Example**:
+
 ```mermaid
 sequenceDiagram
     participant Customer
@@ -475,6 +498,7 @@ sequenceDiagram
 **PlantUML Syntax**: Use `@startuml` / `@enduml` with `actor`, `participant`, `database` stereotypes
 
 **PlantUML Example**:
+
 ```plantuml
 @startuml
 title Payment Processing Flow
@@ -528,9 +552,11 @@ end
 ```
 
 ### Mode F: Data Flow Diagram
+
 **Purpose**: Show how data moves through the system
 
 **When to Use**:
+
 - Data requirements (DR)
 - GDPR / UK GDPR compliance
 - PII handling and data residency
@@ -541,6 +567,7 @@ end
 **Mermaid Syntax**: Use `flowchart` with data emphasis
 
 **Example**:
+
 ```mermaid
 flowchart LR
     subgraph Sources["Data Sources"]
@@ -623,14 +650,17 @@ From requirements and architecture artifacts, identify:
 For each component, annotate with:
 
 **From Wardley Map** (if available):
+
 - Evolution stage: [Genesis 0.15], [Custom 0.42], [Product 0.70], [Commodity 0.95]
 - Build/Buy decision: BUILD, BUY, USE, REUSE
 
 **From Requirements**:
+
 - NFR targets: "10K TPS", "99.99% availability", "Sub-200ms response"
 - Compliance: "PCI-DSS Level 1", "UK GDPR", "WCAG 2.2 AA"
 
 **From UK Government** (if applicable):
+
 - GOV.UK services: "GOV.UK Notify", "GOV.UK Pay", "GOV.UK Design System"
 - TCoP compliance: "Cloud First (AWS)", "Open Source (PostgreSQL)"
 - AI Playbook: "HIGH-RISK AI - Human-in-the-loop", "Bias testing required"
@@ -638,6 +668,7 @@ For each component, annotate with:
 ### Mermaid Syntax Guidelines
 
 **Best Practices**:
+
 1. Use clear, descriptive labels
 2. Include technology choices (e.g., "Node.js, Express")
 3. Show protocols (e.g., "HTTPS", "REST/JSON", "SQL")
@@ -656,6 +687,7 @@ For each component, annotate with:
    - **Best Practice**: For flowcharts, always use comma-separated text in edge labels, never `<br/>` tags
 
 **C4 Diagram Syntax**:
+
 - `Person(id, "Label", "Description")` - User or actor
 - `System(id, "Label", "Description")` - Your system
 - `System_Ext(id, "Label", "Description")` - External system
@@ -666,6 +698,7 @@ For each component, annotate with:
 - `System_Boundary(id, "Label")` - System boundary
 
 **Flowchart Syntax** (for Deployment/Data Flow):
+
 - `subgraph Name["Display Name"]` - Logical grouping
 - `Node[Label]` - Standard node
 - `Node[(Label)]` - Database/storage
@@ -678,11 +711,13 @@ For each component, annotate with:
 When PlantUML format is selected, use the C4-PlantUML library. Refer to `c4-layout-science.md` Section 7 (already loaded at Step 1d) for full details.
 
 **Include URLs** (one per diagram type):
+
 - Context: `!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml`
 - Container: `!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml`
 - Component: `!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml`
 
 **Element Syntax** (same names as Mermaid C4):
+
 - `Person(id, "Label", "Description")` - User or actor
 - `System(id, "Label", "Description")` - Your system
 - `System_Ext(id, "Label", "Description")` - External system
@@ -696,6 +731,7 @@ When PlantUML format is selected, use the C4-PlantUML library. Refer to `c4-layo
 - `Container_Boundary(id, "Label")` - Container boundary
 
 **Directional Relationships** (use instead of generic `Rel`):
+
 - `Rel_Down(from, to, "Label", "Protocol")` - Places source above target (hierarchical tiers)
 - `Rel_Right(from, to, "Label", "Protocol")` - Places source left of target (horizontal flow)
 - `Rel_Up(from, to, "Label", "Protocol")` - Places source below target (callbacks)
@@ -703,6 +739,7 @@ When PlantUML format is selected, use the C4-PlantUML library. Refer to `c4-layo
 - `Rel_Neighbor(from, to, "Label", "Protocol")` - Forces adjacent placement
 
 **Invisible Layout Constraints** (no visible arrow):
+
 - `Lay_Right(a, b)` - Forces a to appear left of b (tier alignment)
 - `Lay_Down(a, b)` - Forces a to appear above b (vertical alignment)
 
@@ -715,17 +752,18 @@ Create the architecture diagram document using the template:
 **File Location**: `projects/{project_number}-{project_name}/diagrams/ARC-{PROJECT_ID}-DIAG-{NNN}-v1.0.md`
 
 **Naming Convention**:
+
 - `ARC-001-DIAG-001-v1.0.md` - First diagram (e.g., C4 context)
 - `ARC-001-DIAG-002-v1.0.md` - Second diagram (e.g., C4 container)
 - `ARC-001-DIAG-003-v1.0.md` - Third diagram (e.g., C4 component)
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/architecture-diagram-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/architecture-diagram-template.md` (default)
 
 > **Tip**: Users can customize templates with `/arckit:customize diagram`
-
 
 ---
 
@@ -734,12 +772,14 @@ Create the architecture diagram document using the template:
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-DIAG-{NNN}-v{VERSION}` (e.g., `ARC-001-DIAG-001-v1.0`)
 - Sequence number `{NNN}`: Check existing files in `diagrams/` and use the next number (001, 002, ...)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -748,14 +788,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.diagram"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -769,6 +812,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:diagram` command
 **Generated on**: {DATE} {TIME} GMT
@@ -785,11 +829,13 @@ The footer should be populated with:
 The diagram code block format depends on the selected output format:
 
 **Mermaid** (default):
+
 - Use ` ```mermaid ` code block
 - Complete, valid Mermaid syntax
 - Renders in GitHub markdown, VS Code (Mermaid Preview extension), https://mermaid.live
 
 **PlantUML C4** (C4 types only, when selected):
+
 - Use ` ```plantuml ` code block
 - Wrap in `@startuml` / `@enduml`
 - Include the appropriate C4 library URL (`!include`)
@@ -872,6 +918,7 @@ The diagram document must include:
 Before finalizing, validate the diagram:
 
 ### Technical Validation (Mermaid)
+
 - [ ] Mermaid syntax is valid (test at https://mermaid.live)
 - [ ] All components are properly labeled
 - [ ] Relationships show directionality correctly
@@ -879,6 +926,7 @@ Before finalizing, validate the diagram:
 - [ ] Protocols and data formats specified
 
 ### Technical Validation (PlantUML C4 — when PlantUML format selected)
+
 - [ ] Valid PlantUML syntax (test at https://www.plantuml.com/plantuml/uml/)
 - [ ] Correct `!include` URL for diagram type (C4_Context, C4_Container, or C4_Component)
 - [ ] All relationships use directional variants (`Rel_Down`, `Rel_Right`, etc.) — no generic `Rel`
@@ -888,12 +936,14 @@ Before finalizing, validate the diagram:
 - [ ] Technology choices match HLD/requirements
 
 ### Requirements Validation
+
 - [ ] All integration requirements (INT) are shown
 - [ ] NFR targets are annotated
 - [ ] External systems match requirements
 - [ ] Data requirements (DR) are reflected
 
 ### Strategic Validation (Wardley Map)
+
 - [ ] Evolution stages match Wardley Map
 - [ ] BUILD decisions align with Genesis/Custom stage
 - [ ] BUY decisions align with Product stage
@@ -901,6 +951,7 @@ Before finalizing, validate the diagram:
 - [ ] No building commodity components
 
 ### UK Government Validation (if applicable)
+
 - [ ] GOV.UK services shown where used
 - [ ] Cloud First (TCoP Point 5) compliance visible
 - [ ] Open Source (TCoP Point 3) technologies noted
@@ -908,6 +959,7 @@ Before finalizing, validate the diagram:
 - [ ] HIGH-RISK AI components include human oversight
 
 ### Quality Checks
+
 - [ ] Diagram is readable and not cluttered
 - [ ] Labels are clear and descriptive
 - [ ] Grouping (subgraphs) is logical
@@ -939,6 +991,7 @@ After generating the diagram, evaluate it against the following quality criteria
 ## Step 6: Integration with ArcKit Workflow
 
 ### Before Diagram Creation
+
 If required artifacts don't exist, recommend creating them first:
 
 ```bash
@@ -953,6 +1006,7 @@ If required artifacts don't exist, recommend creating them first:
 ```
 
 ### After Diagram Creation
+
 Recommend next steps based on diagram type:
 
 ```bash
@@ -975,6 +1029,7 @@ Recommend next steps based on diagram type:
 ```
 
 ### Integrate with Design Review
+
 When HLD/DLD review is requested, reference diagrams:
 
 ```bash
@@ -982,12 +1037,14 @@ When HLD/DLD review is requested, reference diagrams:
 ```
 
 The design review should validate:
+
 - HLD matches container diagram
 - All components in diagram are documented
 - Technology choices are consistent
 - NFR targets are achievable
 
 ### Integrate with Traceability
+
 The `/arckit:traceability` command should include diagram references:
 
 - Requirements → Diagram components
@@ -1059,6 +1116,7 @@ The `/arckit:traceability` command should include diagram references:
 ### Diagram Quality Standards
 
 ✅ **Good Architecture Diagrams**:
+
 - Clear purpose and audience
 - Appropriate level of detail
 - Valid Mermaid syntax
@@ -1069,6 +1127,7 @@ The `/arckit:traceability` command should include diagram references:
 - Compliance requirements visible
 
 ❌ **Poor Architecture Diagrams**:
+
 - Too complex (everything in one diagram)
 - No labels or unclear labels
 - Missing technology choices
@@ -1113,17 +1172,20 @@ Always remind users:
 
 **For Mermaid diagrams:**
 **"View this diagram by pasting the Mermaid code into:**
+
 - **GitHub markdown** (renders automatically)
 - **https://mermaid.live** (online editor)
 - **VS Code** (install Mermaid Preview extension)"
 
 **For PlantUML C4 diagrams:**
 **"View this diagram by pasting the PlantUML code into:**
+
 - **https://www.plantuml.com/plantuml/uml/** (online renderer)
 - **VS Code** (install PlantUML extension — jebbs.plantuml)
 - **CLI**: `java -jar plantuml.jar diagram.puml`"
 
 The visualization helps:
+
 - Communicate architecture to stakeholders
 - Validate designs during reviews
 - Document technical decisions
@@ -1140,6 +1202,7 @@ Generate a comprehensive architecture diagram document saved to:
 **`projects/{project_number}-{project_name}/diagrams/ARC-{PROJECT_ID}-DIAG-{NUM}-v{VERSION}.md`**
 
 The document must be:
+
 - ✅ Complete with all sections from template
 - ✅ Valid syntax (Mermaid: tested at mermaid.live; PlantUML: tested at plantuml.com)
 - ✅ Traceable (linked to requirements and design documents)
@@ -1150,7 +1213,7 @@ After creating the diagram, provide a summary to the user:
 
 **Summary Message**:
 
-```
+```text
 ✅ Architecture Diagram Created: {diagram_type} - {name}
 
 📁 Location: projects/{project}/diagrams/ARC-{PROJECT_ID}-DIAG-{NUM}-v{VERSION}.md

@@ -31,7 +31,7 @@ The Chief Technology Officer (CTO) or Chief Digital and Information Officer (CDI
 
 ## Typical Workflow
 
-```
+```text
 principles → wardley → strategy → roadmap → presentation
 ```
 

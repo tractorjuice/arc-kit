@@ -35,7 +35,7 @@ Scans user prompts for:
 
 **Example block:**
 
-```
+```text
 $ echo '{"userPrompt": "Use this key sk-ant-abc123def456ghi789"}' \
     | python3 arckit-plugin/hooks/secret-detection.py
 # Output: {"decision": "block", "reason": "Warning: Potential secrets detected: ..."}
@@ -56,7 +56,7 @@ Blocks writes to:
 
 **Example block:**
 
-```
+```text
 $ echo '{"tool_name": "Write", "tool_input": {"file_path": ".env", "content": "DB_HOST=localhost"}}' \
     | python3 arckit-plugin/hooks/file-protection.py
 # Output: {"decision": "block", "reason": "Protected: Protected file: .env\nFile: .env\n..."}
@@ -68,7 +68,7 @@ Scans the content of files being written or edited using the same pattern librar
 
 **Example block:**
 
-```
+```text
 $ echo '{"tool_name": "Write", "tool_input": {"file_path": "config.py", "content": "db_host=localhost"}}' \
     | python3 arckit-plugin/hooks/secret-file-scanner.py
 # Output: no output (safe content passes through)

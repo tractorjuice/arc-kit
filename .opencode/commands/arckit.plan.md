@@ -9,6 +9,7 @@ You are an expert project planner helping create comprehensive project plans wit
 ## What is a Project Plan?
 
 A project plan shows:
+
 - **Phases**: Discovery → Alpha → Beta → Live (GDS framework)
 - **Timeline**: Gantt chart with activities, dependencies, and milestones
 - **Gates**: Decision points with approval criteria (Discovery, Alpha, Beta assessments)
@@ -25,6 +26,7 @@ $ARGUMENTS
 ## Step 0: Read the Template
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/project-plan-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/project-plan-template.md` (default)
@@ -55,12 +57,14 @@ Before determining project parameters, use the **AskUserQuestion** tool to gathe
 
 **Question 1** — header: `Approach`, multiSelect: false
 > "What delivery approach should this project follow?"
+
 - **Agile GDS (Recommended)**: Discovery, Alpha, Beta, Live phases with iterative sprints — standard for UK Government
 - **Waterfall**: Sequential phases with formal stage gates — suited for fixed-scope, compliance-heavy projects
 - **Hybrid**: Agile delivery within waterfall governance gates — common for large programmes with external vendors
 
 **Question 2** — header: `Complexity`, multiSelect: false
 > "What is the expected project complexity?"
+
 - **Small (3-6 months)**: Under 30 requirements, 1-2 integrations, standard technology
 - **Medium (6-12 months)**: 30-100 requirements, 3-5 integrations, some custom development
 - **Large (12-24 months)**: 100+ requirements, 5+ integrations, significant custom development, multiple compliance regimes
@@ -72,7 +76,9 @@ Apply the user's selections when calculating timeline durations and structuring 
 Based on artifacts and user input, classify the project:
 
 ### Small Projects (3-6 months)
+
 **Characteristics**:
+
 - Simple integrations or enhancements
 - < 30 total requirements
 - 1-2 external integrations
@@ -80,13 +86,16 @@ Based on artifacts and user input, classify the project:
 - No complex compliance (basic security)
 
 **Timeline**:
+
 - Discovery: 2-4 weeks
 - Alpha: 4-8 weeks
 - Beta: 8-12 weeks
 - **Total**: 3-6 months
 
 ### Medium Projects (6-12 months)
+
 **Characteristics**:
+
 - New services or significant changes
 - 30-100 total requirements
 - 3-5 external integrations
@@ -94,13 +103,16 @@ Based on artifacts and user input, classify the project:
 - PCI-DSS, GDPR, or moderate compliance
 
 **Timeline**:
+
 - Discovery: 4-8 weeks
 - Alpha: 8-12 weeks (includes vendor procurement)
 - Beta: 12-24 weeks
 - **Total**: 6-12 months
 
 ### Large Projects (12-24 months)
+
 **Characteristics**:
+
 - Major transformations or complex systems
 - 100+ total requirements
 - 5+ external integrations
@@ -109,6 +121,7 @@ Based on artifacts and user input, classify the project:
 - Data migration required
 
 **Timeline**:
+
 - Discovery: 8-12 weeks
 - Alpha: 12-16 weeks (vendor procurement + complex design)
 - Beta: 24-52 weeks
@@ -123,6 +136,7 @@ Read `.arckit/skills/mermaid-syntax/references/gantt.md` and `.arckit/skills/mer
 ### Part A: Executive Summary
 
 Create a summary with:
+
 - Project name and objective
 - Duration and budget
 - Team size (FTE by phase)
@@ -131,6 +145,7 @@ Create a summary with:
 - Key milestones
 
 **Example**:
+
 ```markdown
 # Project Plan: {Project Name}
 
@@ -159,6 +174,7 @@ Create a summary with:
 ### Part B: Gantt Timeline (Mermaid)
 
 Create a Gantt chart showing ALL phases with:
+
 - **Discovery activities**: Stakeholders, user research, BRs, principles, business case, risk register
 - **Discovery gate**: Discovery Assessment milestone
 - **Alpha activities**: Detailed requirements, HLD, vendor procurement (if needed), threat model, HLD review
@@ -168,6 +184,7 @@ Create a Gantt chart showing ALL phases with:
 - **Live activities**: Deployment, hypercare, benefits realization
 
 **IMPORTANT Gantt Rules**:
+
 - Use `dateFormat YYYY-MM-DD`
 - Activities have format: `description :id, start, duration`
 - Dependencies use: `after id` (e.g., `after a1`)
@@ -176,6 +193,7 @@ Create a Gantt chart showing ALL phases with:
 - Mark gates as `:milestone`
 
 **Example**:
+
 ```mermaid
 gantt
     title {Project Name} - Project Timeline
@@ -223,6 +241,7 @@ gantt
 ### Part C: Workflow & Gates Diagram (Mermaid)
 
 Create a flowchart showing gates and decision paths:
+
 - Start with Project Initiation
 - Show each phase as a box with key activities
 - Show gates as diamonds
@@ -231,6 +250,7 @@ Create a flowchart showing gates and decision paths:
 - End with Live/BAU
 
 **IMPORTANT Flowchart Rules**:
+
 - Use `graph TB` (top to bottom)
 - Phases are rectangles: `Discovery[Discovery Phase<br/>• Activity 1<br/>• Activity 2]`
 - Gates are diamonds: `DiscGate{Discovery<br/>Assessment}`
@@ -238,6 +258,7 @@ Create a flowchart showing gates and decision paths:
 - Style gates with fill color: `style DiscGate fill:#FFE4B5`
 
 **Example**:
+
 ```mermaid
 graph TB
     Start[Project Initiation] --> Discovery
@@ -287,12 +308,14 @@ graph TB
 ### Part D: Phase Details Tables
 
 For each phase (Discovery, Alpha, Beta, Live), create a table with:
+
 - Week number
 - Activity description
 - ArcKit command to run
 - Deliverable
 
 **Example**:
+
 ```markdown
 ## Discovery Phase (Weeks 1-8)
 
@@ -364,7 +387,6 @@ Create a section mapping ALL relevant ArcKit commands to the plan:
 - Annually: `/arckit:business-case` - Track benefits realization
 ```
 
-
 ---
 
 **CRITICAL - Auto-Populate Document Control Fields**:
@@ -372,11 +394,13 @@ Create a section mapping ALL relevant ArcKit commands to the plan:
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-PLAN-v{VERSION}` (e.g., `ARC-001-PLAN-v1.0`)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -385,14 +409,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.plan"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -406,6 +433,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:plan` command
 **Generated on**: {DATE} {TIME} GMT
@@ -498,6 +526,7 @@ After writing the plan, provide a summary:
 ## Quality Checks
 
 Before delivering the plan, verify:
+
 - [ ] Gantt chart uses valid Mermaid syntax
 - [ ] All gates have approval criteria
 - [ ] All phases have activity tables

@@ -29,7 +29,7 @@ The Data Architect designs data structures, governance, and flows. You own ArcKi
 
 ## Typical Workflow
 
-```
+```text
 requirements (DR-xxx) → datascout → data-model → data-mesh-contract → dpia
 ```
 
@@ -52,6 +52,7 @@ requirements (DR-xxx) → datascout → data-model → data-mesh-contract → dp
 ## UK Government Data Context
 
 ArcKit's data commands are designed for UK public sector data governance:
+
 - **datascout** prioritises UK Government open data (data.gov.uk, ONS, NHS Digital, Companies House, OS Data Hub)
 - **data-model** includes GDPR compliance classification and ICO lawful basis
 - **dpia** follows ICO guidance for UK GDPR Article 35

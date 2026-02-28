@@ -28,7 +28,7 @@ The IT Service Manager ensures IT services are delivered effectively and efficie
 
 ## Typical Workflow
 
-```
+```text
 requirements → servicenow → finops → operationalize
 ```
 

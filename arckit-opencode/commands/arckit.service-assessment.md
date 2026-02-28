@@ -15,6 +15,7 @@ $ARGUMENTS
 ## Command Purpose
 
 Generate a comprehensive GDS Service Standard assessment preparation report that:
+
 1. Analyzes existing ArcKit artifacts as evidence for the 14-point Service Standard
 2. Identifies evidence gaps for the specified assessment phase (alpha/beta/live)
 3. Provides RAG (Red/Amber/Green) ratings for each point and overall readiness
@@ -29,6 +30,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 ## The 14-Point Service Standard
 
 ### Section 1: Meeting Users' Needs
+
 1. **Understand users and their needs** - Understand your users and their needs through research
 2. **Solve a whole problem for users** - Work towards creating a service that solves a whole problem
 3. **Provide a joined up experience across all channels** - Create a joined up experience across channels
@@ -36,6 +38,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 5. **Make sure everyone can use the service** - Ensure accessibility including disabled people
 
 ### Section 2: Providing a Good Service
+
 6. **Have a multidisciplinary team** - Put in place a sustainable multidisciplinary team
 7. **Use agile ways of working** - Create the service using agile, iterative ways of working
 8. **Iterate and improve frequently** - Have capacity and flexibility to iterate frequently
@@ -43,6 +46,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 10. **Define what success looks like and publish performance data** - Use metrics to inform decisions
 
 ### Section 3: Using the Right Technology
+
 11. **Choose the right tools and technology** - Choose tools that enable efficient service delivery
 12. **Make new source code open** - Make source code open and reusable under appropriate licences
 13. **Use and contribute to open standards, common components and patterns** - Build on open standards
@@ -53,6 +57,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/service-assessment-prep-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/service-assessment-prep-template.md` (default)
@@ -64,9 +69,10 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
 - If no match, run `.arckit/scripts/python/create-project.py --name "$PROJECT_NAME" --json` to create a new project and parse the JSON output
 
-### Step 2: Read existing artifacts from the project context:
+### Step 2: Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
+
 - **PRIN** (Architecture Principles, in `projects/000-global/`)
   - Extract: Technology standards, compliance requirements, governance constraints
   - If missing: warn user to run `/arckit:principles` first
@@ -75,6 +81,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **STKE** (Stakeholder Analysis) — user needs, personas, RACI
 - **RISK** (Risk Register) — security risks, mitigation strategies
 - **PLAN** (Project Plan) — phases, timeline, team structure
@@ -88,6 +95,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 - **TRAC** (Traceability Matrix)
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **TCOP** (TCoP Assessment) — technology compliance
 - **AIPB** (AI Playbook) — if AI components
 - **ATRS** (ATRS record) — if algorithmic tools
@@ -110,6 +118,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 1: Understand Users and Their Needs
 
 **Evidence Sources**:
+
 - `ARC-*-STKE-*.md` - User groups, needs, pain points, drivers
 - `ARC-*-REQ-*.md` - User stories, personas, user journeys, acceptance criteria
 - `ARC-*-PLAN-*.md` - User research activities planned/completed
@@ -118,6 +127,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ User needs documented from research
 - ✅ User groups and personas identified
 - ✅ Prototype testing results with real users (critical)
@@ -125,6 +135,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ⚠️ Analytics data (optional for alpha)
 
 **Beta**:
+
 - ✅ Ongoing user research throughout beta
 - ✅ Testing with diverse users including assistive technology users
 - ✅ User research informing iterations
@@ -132,6 +143,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Evidence of continuous user engagement
 
 **Live**:
+
 - ✅ User satisfaction metrics being collected and published
 - ✅ Continuous user research program
 - ✅ User feedback informing service improvements
@@ -141,6 +153,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 2: Solve a Whole Problem for Users
 
 **Evidence Sources**:
+
 - `ARC-*-REQ-*.md` - End-to-end user journeys, functional requirements
 - `ARC-*-STKE-*.md` - User goals, desired outcomes
 - `wardley-maps/ARC-*-WARD-*.md` - Value chain, user needs to components mapping
@@ -150,18 +163,21 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ User journey maps showing end-to-end experience
 - ✅ Problem definition beyond government touchpoints
 - ✅ Understanding of user context before/after service interaction
 - ✅ Identification of pain points in current experience
 
 **Beta**:
+
 - ✅ Service covers complete user journey
 - ✅ Integration with other services/channels
 - ✅ Assisted digital support for those who need it
 - ✅ Clear service boundaries with rationale
 
 **Live**:
+
 - ✅ User completion rates demonstrating whole problem solved
 - ✅ Monitoring of user drop-off points
 - ✅ Evidence of service iterations based on completion data
@@ -170,6 +186,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 3: Provide a Joined Up Experience Across All Channels
 
 **Evidence Sources**:
+
 - `ARC-*-REQ-*.md` - Multi-channel requirements, integration points
 - `reviews/ARC-*-HLDR-*.md` - Channel strategy, integration architecture
 - `diagrams/` - System integration diagrams
@@ -178,12 +195,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Channels identified and mapped
 - ✅ Integration strategy defined
 - ✅ Consistent branding and messaging planned
 - ✅ Understanding of user channel preferences
 
 **Beta**:
+
 - ✅ All channels implemented and working
 - ✅ Data synchronized across channels
 - ✅ Consistent user experience across channels
@@ -191,6 +210,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Testing completed across all channels
 
 **Live**:
+
 - ✅ Channel usage monitored and optimized
 - ✅ User satisfaction high across all channels
 - ✅ Continuous improvement of channel experience
@@ -199,6 +219,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 4: Make the Service Simple to Use
 
 **Evidence Sources**:
+
 - `ARC-*-REQ-*.md` - Usability requirements, simplicity NFRs
 - `reviews/ARC-*-HLDR-*.md` - UX design review, simplicity assessment
 - `ARC-*-PLAN-*.md` - Usability testing activities
@@ -206,12 +227,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Prototype usability testing conducted
 - ✅ Design iterations based on user feedback
 - ✅ Simple language and clear instructions
 - ✅ Task completion rates in testing
 
 **Beta**:
+
 - ✅ Usability testing with diverse users
 - ✅ Task completion >85% on first attempt
 - ✅ Content design reviewed by GDS content designers
@@ -219,6 +242,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Forms and interactions simplified
 
 **Live**:
+
 - ✅ Task completion rates >90%
 - ✅ User satisfaction scores high
 - ✅ Low support ticket volume for "how to use"
@@ -227,6 +251,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 5: Make Sure Everyone Can Use the Service
 
 **Evidence Sources**:
+
 - `ARC-*-REQ-*.md` - WCAG 2.1 AA requirements, accessibility NFRs
 - `ARC-*-SECD-*.md` - Accessibility considerations
 - `reviews/ARC-*-HLDR-*.md` - Accessibility design review
@@ -235,12 +260,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Accessibility considerations documented
 - ✅ WCAG 2.1 AA compliance planned
 - ✅ Testing with assistive technology planned
 - ⚠️ Full accessibility audit not required at alpha
 
 **Beta**:
+
 - ✅ WCAG 2.1 AA audit completed and passed (critical)
 - ✅ Testing with screen readers, voice control, magnification
 - ✅ Testing with disabled users
@@ -248,6 +275,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Alternative formats available
 
 **Live**:
+
 - ✅ Zero accessibility complaints/barriers
 - ✅ Regular accessibility audits
 - ✅ Continuous accessibility testing in development
@@ -257,6 +285,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 6: Have a Multidisciplinary Team
 
 **Evidence Sources**:
+
 - `ARC-*-STKE-*.md` - RACI matrix, team roles
 - `ARC-*-PLAN-*.md` - Team structure, roles, skills
 - `ARC-*-SOBC-*.md` - Team costs, sustainability plan
@@ -264,12 +293,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Team composition documented
 - ✅ Key roles filled: Product Manager, User Researcher, Tech Lead, Designer, Delivery Manager
 - ✅ Skills audit showing capability coverage
 - ✅ Team co-located or good remote working practices
 
 **Beta**:
+
 - ✅ Team stable and sustainable
 - ✅ All required skills represented
 - ✅ Specialists available (accessibility, security, content, etc.)
@@ -277,6 +308,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Career development for team members
 
 **Live**:
+
 - ✅ Team retention high
 - ✅ Knowledge sharing and documentation
 - ✅ Continuous learning culture
@@ -286,6 +318,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 7: Use Agile Ways of Working
 
 **Evidence Sources**:
+
 - `ARC-*-PLAN-*.md` - GDS phases, sprint structure, agile ceremonies
 - `ARC-*-RISK-*.md` - Iterative risk management
 - `reviews/ARC-*-HLDR-*.md`, `reviews/ARC-*-DLDR-*.md` - Design iterations
@@ -293,12 +326,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Agile ceremonies established (standups, retros, planning)
 - ✅ Sprint cadence defined (typically 1-2 weeks)
 - ✅ User stories and backlog maintained
 - ✅ Iterative approach to prototyping
 
 **Beta**:
+
 - ✅ Mature agile practices
 - ✅ Regular releases to production
 - ✅ Retrospectives leading to improvements
@@ -306,6 +341,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Continuous improvement culture
 
 **Live**:
+
 - ✅ Continuous deployment pipeline
 - ✅ Regular feature releases based on user feedback
 - ✅ DevOps maturity high
@@ -314,6 +350,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 8: Iterate and Improve Frequently
 
 **Evidence Sources**:
+
 - `reviews/ARC-*-HLDR-*.md`, `reviews/ARC-*-DLDR-*.md` - Design iterations, review dates
 - `ARC-*-ANAL-*.md` - Governance improvements over time
 - `ARC-*-PLAN-*.md` - Iteration cycles, review gates
@@ -322,12 +359,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Prototype iterations documented
 - ✅ Changes based on user feedback
 - ✅ Multiple design options explored
 - ✅ Learning log showing insights and pivots
 
 **Beta**:
+
 - ✅ Service iterations in production
 - ✅ A/B testing or controlled rollouts
 - ✅ Feature flags for experimentation
@@ -335,6 +374,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Regular releases (at least monthly)
 
 **Live**:
+
 - ✅ Continuous improvement demonstrated
 - ✅ User feedback directly informing roadmap
 - ✅ Metrics showing service improvements
@@ -343,6 +383,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 9: Create a Secure Service Which Protects Users' Privacy
 
 **Evidence Sources**:
+
 - `ARC-*-SECD-*.md` - NCSC security principles, threat model
 - `ARC-*-DATA-*.md` - GDPR compliance, data protection, PII handling
 - `ARC-*-ATRS-*.md` - AI transparency and risk (if AI service)
@@ -353,6 +394,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Threat model created
 - ✅ Security risks identified and assessed
 - ✅ GDPR compliance approach defined
@@ -360,6 +402,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Privacy considerations documented
 
 **Beta**:
+
 - ✅ Security testing completed (pen test, vulnerability scanning)
 - ✅ GDPR compliance implemented
 - ✅ Privacy policy published
@@ -368,6 +411,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Incident response plan documented
 
 **Live**:
+
 - ✅ Zero security breaches
 - ✅ Regular security testing and audits
 - ✅ Security monitoring and alerting
@@ -377,6 +421,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 10: Define What Success Looks Like and Publish Performance Data
 
 **Evidence Sources**:
+
 - `ARC-*-REQ-*.md` - KPIs, success metrics, NFRs
 - `ARC-*-SOBC-*.md` - Benefits realization, success criteria, ROI
 - `ARC-*-PLAN-*.md` - Milestones, success criteria per phase
@@ -385,12 +430,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Success metrics defined (user satisfaction, completion rates, cost per transaction)
 - ✅ Baseline measurements identified
 - ✅ Data collection approach planned
 - ✅ KPIs aligned to user needs
 
 **Beta**:
+
 - ✅ Performance data being collected
 - ✅ Dashboard showing key metrics
 - ✅ Performance data published (at least internally)
@@ -398,6 +445,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Targets set for live service
 
 **Live**:
+
 - ✅ Performance data published on GOV.UK (critical)
 - ✅ 4 mandatory KPIs published: cost per transaction, user satisfaction, completion rate, digital take-up
 - ✅ Data updated regularly (at least quarterly)
@@ -407,6 +455,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 11: Choose the Right Tools and Technology
 
 **Evidence Sources**:
+
 - `research/` - Technology research, proof of concepts
 - `wardley-maps/` - Build vs buy analysis, technology evolution
 - `ARC-*-TCOP-*.md` - Technology choices justified (TCoP Point 11)
@@ -417,6 +466,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Technology options explored
 - ✅ Build vs buy analysis completed
 - ✅ Technology spikes/proof of concepts conducted
@@ -424,6 +474,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Cost analysis for technology options
 
 **Beta**:
+
 - ✅ Technology choices working in production
 - ✅ Technology scalable and fit for purpose
 - ✅ Total cost of ownership understood
@@ -431,6 +482,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Team has skills for chosen technology
 
 **Live**:
+
 - ✅ Technology performing well at scale
 - ✅ Technology costs optimized
 - ✅ Technology debt managed
@@ -440,6 +492,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 12: Make New Source Code Open
 
 **Evidence Sources**:
+
 - `reviews/ARC-*-HLDR-*.md` - Open source approach, repository links
 - `ARC-*-TCOP-*.md` - TCoP Point 12 (Open source code)
 - `ARC-*-REQ-*.md` - Open source licensing requirements
@@ -447,12 +500,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Open source approach decided
 - ✅ Security and IP considerations addressed
 - ✅ Code repository approach defined
 - ⚠️ Code may not be public yet at alpha
 
 **Beta**:
+
 - ✅ Source code repository exists (GitHub/GitLab)
 - ✅ Code published under appropriate license (MIT, Apache 2.0, etc.)
 - ✅ Secrets and credentials not in source code
@@ -460,6 +515,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Contribution guidelines if accepting contributions
 
 **Live**:
+
 - ✅ All new code public and open source
 - ✅ Active repository with regular commits
 - ✅ External contributions welcomed
@@ -469,6 +525,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 13: Use and Contribute to Open Standards, Common Components and Patterns
 
 **Evidence Sources**:
+
 - `ARC-*-TCOP-*.md` - TCoP Point 13 (Open standards)
 - `reviews/ARC-*-HLDR-*.md` - GOV.UK Design System usage, API standards, common components
 - `ARC-*-REQ-*.md` - Standards compliance requirements
@@ -477,12 +534,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ GOV.UK Design System usage planned
 - ✅ Common components identified (GOV.UK Notify, Pay, etc.)
 - ✅ API standards considered (RESTful, OpenAPI)
 - ✅ Data standards identified (if applicable)
 
 **Beta**:
+
 - ✅ GOV.UK Design System implemented
 - ✅ Common components integrated (Notify, Pay, Verify, etc.)
 - ✅ APIs follow government API standards
@@ -490,6 +549,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Contributing patterns back to community (if novel)
 
 **Live**:
+
 - ✅ Consistent use of GOV.UK patterns
 - ✅ Common components working in production
 - ✅ Contributing to open standards development
@@ -499,6 +559,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 #### Point 14: Operate a Reliable Service
 
 **Evidence Sources**:
+
 - `ARC-*-REQ-*.md` - Availability/reliability NFRs, SLAs
 - `reviews/ARC-*-HLDR-*.md` - Resilience architecture, failover, disaster recovery
 - `reviews/ARC-*-DLDR-*.md` - Infrastructure resilience, monitoring
@@ -507,12 +568,14 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Phase-Specific Evidence Requirements**:
 
 **Alpha**:
+
 - ✅ Reliability requirements defined
 - ✅ Uptime targets set
 - ✅ High-level resilience approach planned
 - ⚠️ Full operational procedures not needed at alpha
 
 **Beta**:
+
 - ✅ Service uptime meeting targets (typically 99.9%)
 - ✅ Monitoring and alerting in place
 - ✅ Incident response procedures documented
@@ -521,6 +584,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 - ✅ Load testing completed
 
 **Live**:
+
 - ✅ SLA consistently met (99.9%+ uptime)
 - ✅ Incident response tested and working
 - ✅ Post-incident reviews conducted
@@ -533,18 +597,21 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 Apply phase-appropriate criteria when assessing evidence:
 
 **Alpha Assessment** - Focus on demonstrating viability:
+
 - Lower bar for operational evidence (monitoring, performance data)
 - Higher bar for user research and prototyping
 - Critical: User testing, team composition, technology viability
 - Optional: Full accessibility audit, published performance data
 
 **Beta Assessment** - Focus on demonstrating production readiness:
+
 - Higher bar for everything
 - Critical: Working service, security testing, accessibility compliance, performance monitoring
 - All 14 points must be addressed substantively
 - Evidence of service working end-to-end
 
 **Live Assessment** - Focus on demonstrating continuous improvement:
+
 - Highest bar, operational excellence expected
 - Critical: Published performance data, user satisfaction, continuous improvement
 - Evidence of service evolution based on user feedback
@@ -555,24 +622,28 @@ Apply phase-appropriate criteria when assessing evidence:
 For each Service Standard point, assign a RAG rating based on evidence found:
 
 **🟢 Green (Ready)**:
+
 - All critical evidence found for this phase
 - Evidence is comprehensive and high quality
 - No significant gaps
 - Team ready to discuss this point confidently
 
 **🟡 Amber (Partial)**:
+
 - Some evidence found but gaps remain
 - Evidence exists but may lack detail or breadth
 - Minor gaps that can be addressed quickly (1-2 weeks)
 - Would likely receive "Amber" rating from assessment panel
 
 **🔴 Red (Not Ready)**:
+
 - Critical evidence missing
 - Significant gaps that require substantial work (3+ weeks)
 - Would likely receive "Red" rating and fail this point
 - Must be addressed before booking assessment
 
 **Overall Readiness Rating**:
+
 - **🟢 Green (Ready)**: 12+ points Green, max 2 Amber, 0 Red
 - **🟡 Amber (Nearly Ready)**: 10+ points Green/Amber, max 2 Red
 - **🔴 Red (Not Ready)**: More than 2 Red points or fewer than 10 Green/Amber
@@ -582,12 +653,14 @@ For each Service Standard point, assign a RAG rating based on evidence found:
 For each gap identified, generate specific, actionable recommendations:
 
 **Priority Levels**:
+
 - **Critical**: Must complete before assessment (affects Red rating)
 - **High**: Should complete before assessment (affects Amber rating)
 - **Medium**: Nice to have, strengthens case (improves confidence)
 
 **Recommendation Format**:
-```
+
+```text
 Priority: [Critical/High/Medium]
 Point: [Service Standard point number]
 Action: [Specific action to take]
@@ -601,16 +674,19 @@ Evidence to create: [What artifact/documentation will this produce]
 Provide practical guidance for the assessment day:
 
 **Documentation to Prepare** (share with panel 1 week before):
+
 - List specific ArcKit artifacts to share
 - Suggest additional materials needed (prototypes, demos, research findings)
 - Recommend format for sharing (links, documents, slide deck limits)
 
 **Who Should Attend**:
+
 - Core team members required (Product Manager, User Researcher, Tech Lead, Delivery Manager)
 - Phase-specific additions (e.g., Accessibility specialist for beta)
 - Suggested role assignments during assessment
 
 **Show and Tell Structure** (4-hour assessment timeline):
+
 - 0:00-0:15: Introductions and context
 - 0:15-1:00: User research and needs
 - 1:00-1:45: Service demo/prototype walkthrough
@@ -620,6 +696,7 @@ Provide practical guidance for the assessment day:
 - 3:45-4:00: Panel deliberation
 
 **Tips for Assessment Day**:
+
 - Show real work, not polished presentations
 - Have doers present their work
 - Be honest about unknowns
@@ -1219,6 +1296,7 @@ Create a public document (visible to assessment team) showing:
 ## Operating Constraints
 
 **Tone and Approach**:
+
 - Supportive and constructive - you want the team to succeed
 - Specific and actionable - avoid vague recommendations
 - Realistic - don't overwhelm with too many actions
@@ -1226,6 +1304,7 @@ Create a public document (visible to assessment team) showing:
 - Phase-appropriate - adjust expectations based on alpha/beta/live
 
 **Quality Standards**:
+
 - Every gap must have a specific recommendation
 - Every recommendation must have an owner, timeline, and outcome
 - RAG ratings must be justified with evidence (or lack thereof)
@@ -1233,6 +1312,7 @@ Create a public document (visible to assessment team) showing:
 - Report must be comprehensive but scannable
 
 **Important Notes**:
+
 - This is a **preparation tool**, not the actual assessment
 - Panel will make final decisions based on their expert judgment
 - This command helps teams gather evidence and present it effectively
@@ -1241,13 +1321,13 @@ Create a public document (visible to assessment team) showing:
 
 ## Example Usage
 
-```
+```text
 /arckit:service-assessment PHASE=alpha DATE=2025-12-15
 ```
 
 Generates: `projects/001-nhs-appointment/ARC-001-SVCASS-v1.0.md`
 
-```
+```text
 /arckit:service-assessment PHASE=beta
 ```
 
@@ -1256,6 +1336,7 @@ Generates: `projects/002-payment-gateway/ARC-002-SVCASS-v1.0.md`
 ## Success Indicators
 
 **This command succeeds when**:
+
 - Team feels confident and prepared for assessment
 - All 14 Service Standard points have clear evidence or action plans
 - Critical gaps identified and addressed before booking

@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.15.0] - 2026-02-28
+
+### Added
+
+- **Markdown linting CI** — markdownlint-cli2 configuration and GitHub Actions workflow enforcing consistent formatting across 571 markdown files; skills override for third-party reference docs
+
+### Fixed
+
+- Trailing whitespace, missing blank lines around headings/lists/fences, bare code fences, emphasis style inconsistencies across all commands, templates, guides, and agents
+
+---
+
 ## [2.14.0] - 2026-02-28
 
 ### Added

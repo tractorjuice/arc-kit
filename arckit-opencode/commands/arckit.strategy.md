@@ -15,17 +15,20 @@ $ARGUMENTS
 > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 **MANDATORY** (warn if missing):
+
 - **PRIN** (Architecture Principles, in 000-global) — Extract: Guiding principles, decision framework, technology standards
   - If missing: STOP and ask user to run `/arckit:principles` first. Strategy must be grounded in principles.
 - **STKE** (Stakeholder Analysis) — Extract: Stakeholder drivers, goals, measurable outcomes, conflicts, engagement strategies
   - If missing: STOP and ask user to run `/arckit:stakeholders` first. Strategy must address stakeholder drivers.
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **WARD** (Wardley Maps, in wardley-maps/) — Extract: Component evolution, build vs buy positioning, technology radar
 - **ROAD** (Architecture Roadmap) — Extract: Timeline, phases, milestones, investment by year, capability evolution
 - **SOBC** (Strategic Outline Business Case) — Extract: Investment figures, NPV, IRR, payback period, benefits timeline
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **RISK** (Risk Register) — Extract: Strategic risks, mitigations, risk appetite
 
 ### Prerequisites 1b: Read external documents and policies
@@ -45,6 +48,7 @@ python3 .arckit/scripts/python/create-project.py --name "[project-name-from-user
 ```
 
 Parse the JSON response to extract:
+
 - `project_path`: Where to create the strategy file
 - `project_id`: For document ID generation
 - `project_name`: For document metadata
@@ -52,6 +56,7 @@ Parse the JSON response to extract:
 ### 2. Gather Strategic Context
 
 Read all available documents identified in the Prerequisites section above. Build a mental model of:
+
 - **What drives stakeholders** (from stakeholders document)
 - **What principles guide decisions** (from principles document)
 - **How technology should evolve** (from Wardley maps if available)
@@ -64,6 +69,7 @@ Read all available documents identified in the Prerequisites section above. Buil
 Load the strategy template structure:
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/architecture-strategy-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/architecture-strategy-template.md` (default)
@@ -75,76 +81,91 @@ Load the strategy template structure:
 Create a comprehensive Architecture Strategy document that synthesises insights from the strategic artifacts. The document should:
 
 #### Document Control
+
 - Generate Document ID: `ARC-[PROJECT_ID]-STRAT-v1.0` (for filename: `ARC-{PROJECT_ID}-STRAT-v1.0.md`)
 - Set owner, dates, strategic horizon
 - Review cycle: Quarterly (default for strategy documents)
 
 #### Executive Summary
+
 - **Strategic Vision**: 2-3 paragraphs articulating the transformation vision
 - **Strategic Context**: Business challenge, opportunity, investment, risk appetite
 - **Key Strategic Decisions**: Build vs buy, cloud strategy, vendor strategy, integration approach
 - **Strategic Outcomes**: 5 measurable outcomes that will define success
 
 #### Strategic Drivers (from stakeholders)
+
 - Summarise top 5-7 business drivers with stakeholder ownership
 - List external drivers (regulatory, market, technology, competitive)
 - Include stakeholder power/interest grid
 
 #### Guiding Principles (from principles)
+
 - Summarise foundational, technology, and governance principles
 - Show strategic implications of each principle
 - Include principles compliance summary
 
 #### Current State Assessment
+
 - Technology landscape overview
 - Capability maturity baseline (L1-L5)
 - Technical debt summary
 - SWOT analysis
 
 #### Target State Vision
+
 - Future architecture description
 - Capability maturity targets
 - Architecture vision diagram (Mermaid)
 
 #### Technology Evolution Strategy (from Wardley maps)
+
 - Strategic positioning (Genesis → Commodity)
 - Build vs buy decisions table
 - Technology radar summary (Adopt/Trial/Assess/Hold)
 
 #### Strategic Themes & Investment Areas
+
 - Define 3-5 strategic themes (e.g., Cloud Migration, Data Modernisation, Security)
 - For each theme: objective, investment, initiatives, success criteria, principles alignment
 
 #### Delivery Roadmap Summary (from roadmap)
+
 - Strategic timeline (Mermaid Gantt)
 - Phase summary table
 - Key milestones
 
 #### Investment Summary
+
 - Cross-reference the SOBC (ARC-[PROJECT_ID]-SOBC-v*.md) if available
 - Include only: total investment envelope (single figure), investment horizon, and a "See SOBC for detailed financial analysis" note
 - Do NOT duplicate NPV, IRR, BCR, payback, benefits realisation, or year-by-year breakdowns — these belong in the SOBC
 
 #### Strategic Risks & Mitigations (from risk register)
+
 - Top 5-7 strategic risks with mitigations
 - Risk heat map (ASCII or Mermaid)
 - Assumptions and constraints
 
 #### Success Metrics & KPIs
+
 - Strategic KPIs with baseline and targets by year
 - Leading indicators (early warning)
 - Lagging indicators (final proof)
 
 #### Governance Model
+
 - Governance structure (forums, frequency, participants)
 - Decision rights
 - Review cadence
 
 #### Traceability
+
 - List source documents with document IDs
 - Traceability matrix: Driver → Goal → Outcome → Theme → Principle → KPI
 
 #### Next Steps & Recommendations
+
 - Immediate actions (30 days)
 - Short-term actions (90 days)
 - Recommended follow-on artifacts with ArcKit commands
@@ -182,10 +203,10 @@ Include at least 2 Mermaid diagrams:
 2. **Strategic Timeline** (Gantt chart showing phases and milestones)
 
 **Syntax Rules**:
+
 - ✅ Gantt: Use dateFormat YYYY-MM-DD, no `<br/>` in task names
 - ✅ Flowcharts: Node labels can use `<br/>`, edge labels cannot
 - ✅ Use subgraphs for architecture layers
-
 
 ---
 
@@ -194,11 +215,13 @@ Include at least 2 Mermaid diagrams:
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-STRAT-v{VERSION}` (e.g., `ARC-001-STRAT-v1.0`)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -207,14 +230,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.strategy"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -228,6 +254,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:strategy` command
 **Generated on**: {DATE} {TIME} GMT
@@ -244,7 +271,8 @@ The footer should be populated with:
 **IMPORTANT**: The strategy document will be a LARGE document (typically 350-500 lines). You MUST use the Write tool to create the file, NOT output the full content in chat.
 
 Create the file at:
-```
+
+```text
 projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v1.0.md
 ```
 
@@ -337,6 +365,7 @@ After writing the file, show a concise summary (NOT the full document):
 9. **Version Management**: If a strategy already exists (ARC-*-STRAT-v*.md), create a new version (v2.0) rather than overwriting. Strategies should be versioned to track evolution.
 
 10. **Financial Years**: For UK Government, use "FY 2024/25" notation (April-March). For US/other contexts, use appropriate fiscal year notation.
+
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
 
 ## Suggested Next Steps

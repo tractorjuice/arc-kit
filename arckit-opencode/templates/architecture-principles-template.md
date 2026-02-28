@@ -52,6 +52,7 @@ All systems MUST be designed to scale horizontally to meet demand, with the abil
 Business demand is unpredictable and variable. Systems must handle both growth and traffic spikes without manual intervention or architectural changes.
 
 **Implications**:
+
 - Design for stateless components that can be replicated
 - Avoid hard-coded limits or fixed capacity assumptions
 - Plan for distributed deployment across multiple compute nodes
@@ -59,6 +60,7 @@ Business demand is unpredictable and variable. Systems must handle both growth a
 - Implement auto-scaling based on demand metrics
 
 **Validation Gates**:
+
 - [ ] System can scale horizontally (add more instances)
 - [ ] No single points of failure that limit scaling
 - [ ] Load testing demonstrates capacity growth with added resources
@@ -76,6 +78,7 @@ All systems MUST gracefully degrade when dependencies fail and recover automatic
 Failures are inevitable in distributed systems. The architecture must assume failures will occur and design for resilience rather than perfect reliability.
 
 **Implications**:
+
 - Implement circuit breakers for external dependencies
 - Use timeouts on all network calls
 - Retry with exponential backoff for transient failures
@@ -84,6 +87,7 @@ Failures are inevitable in distributed systems. The architecture must assume fai
 - Avoid cascading failures through bulkhead isolation
 
 **Validation Gates**:
+
 - [ ] Failure modes identified and mitigated
 - [ ] Chaos engineering or fault injection testing performed
 - [ ] Recovery Time Objective (RTO) and Recovery Point Objective (RPO) defined
@@ -101,6 +105,7 @@ All systems MUST expose functionality through well-defined, versioned interfaces
 Loose coupling through standard interfaces enables independent evolution, technology diversity, and system composability.
 
 **Implications**:
+
 - Use standardized protocols (HTTP REST, GraphQL, message queuing, event streaming)
 - Version all interfaces with backward compatibility strategy
 - Publish interface specifications (API contracts, event schemas)
@@ -108,6 +113,7 @@ Loose coupling through standard interfaces enables independent evolution, techno
 - Asynchronous communication for non-real-time interactions
 
 **Validation Gates**:
+
 - [ ] Interface specifications published (OpenAPI, AsyncAPI, GraphQL schema)
 - [ ] Versioning strategy defined
 - [ ] Authentication and authorization model documented
@@ -125,12 +131,14 @@ All architectures MUST implement defense-in-depth security with zero-trust princ
 The threat landscape requires assuming breach, eliminating implicit trust, and continuously verifying all access requests.
 
 **Zero Trust Pillars**:
+
 1. **Identity-Based Access**: No network-based trust; every request authenticated
 2. **Least Privilege**: Grant minimum necessary permissions, time-boxed where possible
 3. **Encryption Everywhere**: Data encrypted in transit and at rest
 4. **Continuous Verification**: Monitor, log, and analyze all access patterns
 
 **Mandatory Controls**:
+
 - [ ] Multi-factor authentication for all human access
 - [ ] Service-to-service authentication (mutual TLS, signed tokens, or equivalent)
 - [ ] Secrets management via secure vault (never in code or config files)
@@ -141,14 +149,17 @@ The threat landscape requires assuming breach, eliminating implicit trust, and c
 - [ ] Regular security testing (penetration testing, vulnerability scanning)
 
 **Compliance Frameworks**:
+
 - [NIST Cybersecurity Framework | ISO 27001 | SOC 2 Type II | CIS Controls]
 - [GDPR | HIPAA | PCI-DSS | FedRAMP] (if applicable)
 
 **Exceptions**:
+
 - NONE. Security principles are non-negotiable.
 - Specific control implementations may vary with compensating controls.
 
 **Validation Gates**:
+
 - [ ] Threat model completed and reviewed
 - [ ] Security controls mapped to requirements
 - [ ] Security testing plan defined
@@ -165,23 +176,27 @@ All systems MUST emit structured telemetry (logs, metrics, traces) enabling real
 We cannot operate what we cannot observe. Instrumentation is a first-class architectural requirement, not an afterthought.
 
 **Telemetry Requirements**:
+
 - **Logging**: Structured logs with correlation IDs
 - **Metrics**: Request volume, latency percentiles (p50, p95, p99), error rates
 - **Tracing**: Distributed trace context for request flows
 - **Alerting**: Service Level Objective (SLO)-based alerting with actionable runbooks
 
 **Required Instrumentation**:
+
 - Request volume, latency distribution, error rate
 - Resource utilization (CPU, memory, I/O, network)
 - Business metrics (transactions, revenue impact, user actions)
 - Security events (auth failures, policy violations, suspicious patterns)
 
 **Log Retention**:
+
 - **Security/audit logs**: As required by compliance (typically 1-7 years)
 - **Application logs**: Sufficient for troubleshooting (typically 30-90 days)
 - **Metrics**: Long-term trends (typically 1-2 years with aggregation)
 
 **Validation Gates**:
+
 - [ ] Logging, metrics, tracing instrumented
 - [ ] Dashboards and alerts configured
 - [ ] Service Level Objectives (SLOs) and Service Level Indicators (SLIs) defined
@@ -198,22 +213,26 @@ We cannot operate what we cannot observe. Instrumentation is a first-class archi
 Data classification, residency, retention, and access controls MUST comply with regulatory requirements and corporate data governance policies.
 
 **Data Classification Tiers**:
+
 1. **Public**: No restrictions (marketing content, public documentation)
 2. **Internal**: Employee-only access (internal documents, non-sensitive data)
 3. **Confidential**: Need-to-know basis (financial data, PII, business secrets)
 4. **Restricted**: Highest controls (regulated data: PHI, payment cards, classified information)
 
 **Data Residency**:
+
 - Personal data must reside in jurisdictions compliant with applicable regulations
 - Cross-border data transfers require legal basis (adequacy decisions, standard contractual clauses)
 - Regulatory requirements (GDPR, CCPA, sector-specific) dictate storage locations
 
 **Data Retention**:
+
 - Automatic deletion after defined retention period
 - Legal hold process for litigation/investigation
 - Backup retention aligned with compliance and recovery requirements
 
 **Validation Gates**:
+
 - [ ] Data classification performed for all data stores
 - [ ] Residency requirements mapped to infrastructure
 - [ ] Retention policies configured with automated deletion
@@ -227,18 +246,21 @@ Data classification, residency, retention, and access controls MUST comply with 
 Data pipelines MUST maintain data quality standards and provide end-to-end lineage for auditability and troubleshooting.
 
 **Quality Standards**:
+
 - **Completeness**: No unexpected nulls in required fields
 - **Consistency**: Cross-system data reconciliation
 - **Accuracy**: Validation rules and constraints enforced at source
 - **Timeliness**: Freshness Service Level Agreements (SLAs) defined and monitored
 
 **Lineage Requirements**:
+
 - Source-to-target mapping documented for all data flows
 - Transformation logic version-controlled and reviewable
 - Data quality metrics tracked per pipeline
 - Impact analysis capability for schema changes
 
 **Validation Gates**:
+
 - [ ] Data quality rules defined and automated
 - [ ] Lineage metadata captured and queryable
 - [ ] Data contracts between producers and consumers
@@ -255,12 +277,14 @@ Every data domain MUST have a single authoritative source. Derived copies must b
 Multiple authoritative sources create inconsistency, reconciliation overhead, and data integrity issues.
 
 **Implications**:
+
 - Identify the system of record for each data domain
 - Derived/cached copies are read-only and clearly labeled as such
 - Synchronization strategy defined for all derived copies
 - Avoid bidirectional synchronization (creates split-brain scenarios)
 
 **Validation Gates**:
+
 - [ ] System of record identified for each data entity
 - [ ] Derived copies documented with sync frequency
 - [ ] No bidirectional sync without conflict resolution strategy
@@ -279,6 +303,7 @@ Systems MUST be loosely coupled through published interfaces, avoiding shared da
 Loose coupling enables independent deployment, technology diversity, team autonomy, and system evolution without breaking dependencies.
 
 **Implications**:
+
 - Communicate through published APIs or asynchronous events
 - No direct database access across system boundaries
 - Each system manages its own data lifecycle
@@ -286,6 +311,7 @@ Loose coupling enables independent deployment, technology diversity, team autono
 - Avoid distributed transactions across systems
 
 **Validation Gates**:
+
 - [ ] Systems communicate via APIs or events, not database
 - [ ] No shared mutable state
 - [ ] Each system has independent data store
@@ -303,17 +329,20 @@ Systems SHOULD use asynchronous communication for non-real-time interactions to 
 Asynchronous patterns reduce temporal coupling, improve fault tolerance, and enable better scalability.
 
 **When to Use Async**:
+
 - Non-real-time business processes (order fulfillment, batch jobs)
 - Event notification and pub/sub patterns
 - Long-running operations that don't require immediate response
 - Integration with unreliable or slow external systems
 
 **When Synchronous is Acceptable**:
+
 - Real-time user interactions requiring immediate feedback
 - Query operations (read-only, idempotent)
 - Transactions requiring immediate consistency
 
 **Validation Gates**:
+
 - [ ] Async patterns used for non-real-time flows
 - [ ] Message durability and delivery guarantees defined
 - [ ] Event schemas versioned and published
@@ -329,12 +358,14 @@ Asynchronous patterns reduce temporal coupling, improve fault tolerance, and ena
 All systems MUST meet defined performance targets under expected load with efficient use of computational resources.
 
 **Performance Targets** (define for each system):
+
 - **Response Time**: p50, p95, p99 latency targets
 - **Throughput**: Requests per second, transactions per minute
 - **Concurrency**: Simultaneous user/request capacity
 - **Resource Efficiency**: CPU/memory utilization targets
 
 **Implications**:
+
 - Performance requirements defined before implementation
 - Load testing performed before production deployment
 - Performance monitoring continuous, not just point-in-time
@@ -342,6 +373,7 @@ All systems MUST meet defined performance targets under expected load with effic
 - Caching strategies for expensive operations
 
 **Validation Gates**:
+
 - [ ] Performance requirements defined with measurable targets
 - [ ] Load testing performed at expected capacity
 - [ ] Performance metrics monitored in production
@@ -355,17 +387,20 @@ All systems MUST meet defined performance targets under expected load with effic
 All systems MUST meet defined availability targets with automated recovery and minimal data loss.
 
 **Availability Targets** (define for each system):
+
 - **Uptime SLA**: e.g., 99.9% (43.8 min downtime/month), 99.95%, 99.99%
 - **Recovery Time Objective (RTO)**: Maximum acceptable downtime
 - **Recovery Point Objective (RPO)**: Maximum acceptable data loss
 
 **High Availability Patterns**:
+
 - Redundancy across availability zones / data centers
 - Automated health checks and failover
 - Active-active or active-passive configurations
 - Regular disaster recovery testing
 
 **Validation Gates**:
+
 - [ ] Availability SLA defined
 - [ ] RTO and RPO requirements documented
 - [ ] Redundancy strategy implemented
@@ -383,6 +418,7 @@ All systems MUST be designed for change, with clear separation of concerns, modu
 Software spends most of its lifetime in maintenance. Design decisions should optimize for understandability and modifiability.
 
 **Implications**:
+
 - Modular architecture with clear boundaries
 - Separation of concerns (business logic, data access, presentation)
 - Code is self-documenting with meaningful names
@@ -390,6 +426,7 @@ Software spends most of its lifetime in maintenance. Design decisions should opt
 - Automated testing to enable confident refactoring
 
 **Validation Gates**:
+
 - [ ] Architecture documentation exists and is current
 - [ ] Module boundaries clear with defined responsibilities
 - [ ] Automated test coverage enables safe refactoring
@@ -408,6 +445,7 @@ All infrastructure MUST be defined as code, version-controlled, and deployed thr
 Manual infrastructure changes create drift, inconsistency, and undocumented state. Infrastructure as Code (IaC) enables repeatability, auditability, and disaster recovery.
 
 **Implications**:
+
 - All infrastructure defined in declarative code
 - Infrastructure changes go through code review
 - Environments are reproducible from code
@@ -415,6 +453,7 @@ Manual infrastructure changes create drift, inconsistency, and undocumented stat
 - Infrastructure versioned alongside application code
 
 **Validation Gates**:
+
 - [ ] Infrastructure defined as code
 - [ ] Infrastructure code version-controlled
 - [ ] Automated deployment pipeline for infrastructure
@@ -428,17 +467,20 @@ Manual infrastructure changes create drift, inconsistency, and undocumented stat
 All code changes MUST be validated through automated testing before deployment to production.
 
 **Test Pyramid**:
+
 - **Unit Tests**: Fast, isolated, high coverage (70-80% of tests)
 - **Integration Tests**: Test component interactions (15-20% of tests)
 - **End-to-End Tests**: Critical user journeys (5-10% of tests)
 
 **Required Test Types**:
+
 - Functional tests (does it work?)
 - Performance tests (is it fast enough?)
 - Security tests (is it secure?)
 - Resilience tests (does it handle failures?)
 
 **Validation Gates**:
+
 - [ ] Automated tests exist and pass before merge
 - [ ] Test coverage meets defined thresholds
 - [ ] Critical paths have end-to-end tests
@@ -452,6 +494,7 @@ All code changes MUST be validated through automated testing before deployment t
 All code changes MUST go through automated build, test, and deployment pipelines with quality gates at each stage.
 
 **Pipeline Stages**:
+
 1. **Source Control**: All changes committed to version control
 2. **Build**: Automated compilation and packaging
 3. **Test**: Automated test execution
@@ -459,12 +502,14 @@ All code changes MUST go through automated build, test, and deployment pipelines
 5. **Deployment**: Automated deployment to environments
 
 **Quality Gates**:
+
 - All tests must pass
 - No critical security vulnerabilities
 - Code review approval required
 - Deployment requires production readiness checklist
 
 **Validation Gates**:
+
 - [ ] Automated CI/CD pipeline exists
 - [ ] Pipeline includes security scanning
 - [ ] Deployment is automated and repeatable
@@ -479,12 +524,14 @@ All code changes MUST go through automated build, test, and deployment pipelines
 Principles are mandatory unless a documented exception is approved by the Enterprise Architecture Review Board.
 
 **Valid Exception Reasons**:
+
 - Technical constraints that prevent compliance
 - Regulatory or legal requirements
 - Transitional state during migration
 - Pilot/proof-of-concept with defined end date
 
 **Exception Request Requirements**:
+
 - [ ] Justification with business/technical rationale
 - [ ] Alternative approach and compensating controls
 - [ ] Risk assessment and mitigation plan
@@ -492,6 +539,7 @@ Principles are mandatory unless a documented exception is approved by the Enterp
 - [ ] Remediation plan to achieve compliance
 
 **Approval Process**:
+
 1. Submit exception request to Enterprise Architecture team
 2. Review by architecture review board
 3. CTO/CIO approval for exceptions to critical principles
@@ -507,17 +555,20 @@ Principles are mandatory unless a documented exception is approved by the Enterp
 All projects must pass architecture reviews at key milestones:
 
 **Discovery/Alpha**:
+
 - [ ] Architecture principles understood
 - [ ] High-level approach aligns with principles
 - [ ] No obvious principle violations
 
 **Beta/Design**:
+
 - [ ] Detailed architecture documented
 - [ ] Compliance with each principle validated
 - [ ] Exceptions requested and approved
 - [ ] Security and data principles validated
 
 **Pre-Production**:
+
 - [ ] Implementation matches approved architecture
 - [ ] All validation gates passed
 - [ ] Operational readiness verified
@@ -576,4 +627,3 @@ All projects must pass architecture reviews at key milestones:
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]
 **Model**: [AI_MODEL]
-

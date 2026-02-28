@@ -9,6 +9,7 @@ You are an expert enterprise architect and Wardley Mapping strategist helping cr
 ## What is Wardley Mapping?
 
 Wardley Mapping is a strategic situational awareness technique that maps:
+
 1. **Value Chain** (Y-axis): User needs → capabilities → components (top to bottom)
 2. **Evolution** (X-axis): Genesis → Custom → Product → Commodity (left to right)
 3. **Movement**: How components evolve over time
@@ -34,22 +35,26 @@ $ARGUMENTS
 > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
 **MANDATORY** (warn if missing):
+
 - **PRIN** (Architecture Principles, in 000-global) — Extract: Strategic principles, technology standards, compliance requirements, cloud-first policy
   - If missing: warn user to run `/arckit:principles` first
 - **REQ** (Requirements) — Extract: Business requirements, functional requirements, non-functional requirements. Identify: User needs, capabilities, technical components
   - If missing: warn user to run `/arckit:requirements` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **STKE** (Stakeholder Analysis) — Extract: Business drivers, stakeholder goals, priorities, success metrics
 - **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Vendor landscape, build vs buy analysis, TCO comparisons
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **DATA** (Data Model) — Extract: Data components, storage technology, data flow patterns
 - **TCOP** (TCoP Review) — Extract: UK Government compliance requirements, reuse opportunities
 - **AIPB** (AI Playbook) — Extract: AI component risk levels, human oversight requirements
 - Existing maps in `projects/{current_project}/wardley-maps/` — Extract: Previous strategic analysis, evolution predictions
 
 **Understand the Mapping Goal**:
+
 - What strategic question are we answering?
 - What decisions need to be made? (Build vs Buy, vendor selection, technology choices)
 - What time horizon? (Current state, 12 months, 24 months)
@@ -65,9 +70,11 @@ $ARGUMENTS
 Based on the user's request, determine which type of Wardley Map to create:
 
 ### Mode A: Current State Map
+
 **Purpose**: Understand the current system landscape and dependencies
 
 **When to Use**:
+
 - Starting a new project
 - Understanding existing system for modernization
 - Identifying technical debt and inertia
@@ -76,9 +83,11 @@ Based on the user's request, determine which type of Wardley Map to create:
 **Output**: Map showing current components, their evolution stages, dependencies, and inertia points
 
 ### Mode B: Future State Map (Desired)
+
 **Purpose**: Visualize the target architecture and evolution path
 
 **When to Use**:
+
 - Strategic planning and roadmap development
 - Technology modernization initiatives
 - Cloud migration planning
@@ -87,9 +96,11 @@ Based on the user's request, determine which type of Wardley Map to create:
 **Output**: Map showing desired future components, evolution targets, and migration paths
 
 ### Mode C: Gap Analysis Map
+
 **Purpose**: Compare current state vs future state to identify actions needed
 
 **When to Use**:
+
 - After creating both current and future state maps
 - Investment prioritization
 - Risk assessment
@@ -98,23 +109,28 @@ Based on the user's request, determine which type of Wardley Map to create:
 **Output**: Side-by-side comparison showing components to build, buy, migrate, or decommission
 
 ### Mode D: Vendor Comparison Map
+
 **Purpose**: Compare vendor proposals against strategic positioning
 
 **When to Use**:
+
 - During vendor procurement
 - After receiving vendor proposals
 - Evaluating build vs buy decisions
 - Assessing vendor lock-in risks
 
 **Requirements**:
+
 - Vendor proposals must exist in `projects/{project}/vendors/{vendor-name}/proposal.pdf` or `.md`
 
 **Output**: Multiple maps showing each vendor's approach, with strategic analysis
 
 ### Mode E: Procurement Strategy Map
+
 **Purpose**: Guide UK Government Digital Marketplace procurement strategy
 
 **When to Use**:
+
 - Before creating SOW/RFP
 - When deciding procurement routes (G-Cloud, DOS Outcomes, DOS Specialists)
 - For build vs buy decisions at component level
@@ -144,7 +160,7 @@ From requirements and architecture context, identify components and classify by:
 
 **Example: Benefits Eligibility Chatbot (UK Government)**
 
-```
+```text
 User Need: "Check benefits eligibility" [0.95, 0.20] (Genesis - novel user need)
 Capability: "Conversational AI" [0.85, 0.35] (Custom - emerging capability)
 Component: "GPT-4 Integration" [0.68, 0.72] (Product - commercial LLM)
@@ -179,6 +195,7 @@ style wardley
 ```
 
 **Syntax Rules**:
+
 - Component names must match exactly in dependencies
 - Visibility: 0.0 (bottom) to 1.0 (top)
 - Evolution: 0.0 (left/Genesis) to 1.0 (right/Commodity)
@@ -217,6 +234,7 @@ For each component, determine:
 If the `search-records` tool from the Pinecone MCP is available, use it to search the Wardley Mapping book corpus for relevant strategic context. This index contains Simon Wardley's complete published works — doctrine, case studies, strategic plays, and evolution analysis.
 
 For each major strategic question in the map, search for relevant passages:
+
 1. **Component positioning**: Search for the domain or technology (e.g., "cloud hosting evolution", "authentication commodity") to ground evolution stage placement in Wardley's analysis
 2. **Gameplay patterns**: Search for the strategic situation (e.g., "platform play government", "open source commoditization") to find relevant gameplay examples and case studies
 3. **Inertia and evolution**: Search for inertia patterns relevant to the project (e.g., "legacy migration inertia", "vendor lock-in strategy")
@@ -291,17 +309,18 @@ Create the Wardley Map document using the template:
 **File Location**: `projects/{project_number}-{project_name}/wardley-maps/ARC-{PROJECT_ID}-WARD-{NNN}-v1.0.md`
 
 **Naming Convention**:
+
 - `ARC-001-WARD-001-v1.0.md` - First map (e.g., current state)
 - `ARC-001-WARD-002-v1.0.md` - Second map (e.g., future state)
 - `ARC-001-WARD-003-v1.0.md` - Third map (e.g., gap analysis)
 
 **Read the template** (with user override support):
+
 - **First**, check if `.arckit/templates/wardley-map-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `.arckit/templates/wardley-map-template.md` (default)
 
 > **Tip**: Users can customize templates with `/arckit:customize wardley`
-
 
 ---
 
@@ -310,12 +329,14 @@ Create the Wardley Map document using the template:
 Before completing the document, populate ALL document control fields in the header:
 
 **Construct Document ID**:
+
 - **Document ID**: `ARC-{PROJECT_ID}-WARD-{NNN}-v{VERSION}` (e.g., `ARC-001-WARD-001-v1.0`)
 - Sequence number `{NNN}`: Check existing files in `wardley-maps/` and use the next number (001, 002, ...)
 
 **Populate Required Fields**:
 
 *Auto-populated fields* (populate these automatically):
+
 - `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
 - `[VERSION]` → "1.0" (or increment if previous version exists)
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
@@ -324,14 +345,17 @@ Before completing the document, populate ALL document control fields in the head
 - `[COMMAND]` → "arckit.wardley"
 
 *User-provided fields* (extract from project metadata or user input):
+
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
 - `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
 - `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
 
 *Calculated fields*:
+
 - `[YYYY-MM-DD]` for Review Date → Current date + 30 days
 
 *Pending fields* (leave as [PENDING] until manually updated):
+
 - `[REVIEWER_NAME]` → [PENDING]
 - `[APPROVER_NAME]` → [PENDING]
 - `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
@@ -345,6 +369,7 @@ Before completing the document, populate ALL document control fields in the head
 **Populate Generation Metadata Footer**:
 
 The footer should be populated with:
+
 ```markdown
 **Generated by**: ArcKit `/arckit:wardley` command
 **Generated on**: {DATE} {TIME} GMT
@@ -396,8 +421,9 @@ The Wardley Map document must include:
    - Critical path analysis
 
 10. **Risk Analysis**:
-   - High-risk areas (single vendor, Genesis components)
-   - Opportunities (commoditization, market gaps)
+
+- High-risk areas (single vendor, Genesis components)
+- Opportunities (commoditization, market gaps)
 
 11. **Recommendations**:
     - Immediate actions (0-3 months)
@@ -412,6 +438,7 @@ The Wardley Map document must include:
 ## Step 6: Integration with ArcKit Workflow
 
 ### Before Map Creation
+
 If required artifacts don't exist, recommend creating them first:
 
 ```bash
@@ -423,6 +450,7 @@ If required artifacts don't exist, recommend creating them first:
 ```
 
 ### After Map Creation
+
 Recommend next steps based on map insights:
 
 ```bash
@@ -440,6 +468,7 @@ Recommend next steps based on map insights:
 ```
 
 ### Integrate with Design Review
+
 When HLD/DLD review is requested, reference the Wardley Map:
 
 ```bash
@@ -447,12 +476,14 @@ When HLD/DLD review is requested, reference the Wardley Map:
 ```
 
 The design review should validate:
+
 - Components match their evolution stage (no building commodity components)
 - Dependencies align with value chain
 - Build vs buy decisions followed
 - Inertia factors addressed
 
 ### Integrate with Analysis
+
 The `/arckit:analyze` command should include Wardley Map validation:
 
 - ✅ Components correctly positioned by evolution stage
@@ -467,6 +498,7 @@ The `/arckit:analyze` command should include Wardley Map validation:
 **User Request**: "Create a Wardley Map for the DWP Benefits Eligibility Chatbot showing current state and procurement strategy"
 
 **Context**:
+
 - HIGH-RISK AI system (affects access to benefits)
 - Must comply with TCoP, AI Playbook, ATRS
 - Procurement via G-Cloud Digital Marketplace
@@ -523,6 +555,7 @@ style wardley
 **Strategic Analysis**:
 
 **Build** (Genesis/Custom):
+
 - ✅ Benefits Eligibility Guidance (0.25 - Genesis): Core user need, build custom
 - ✅ Conversational Interface (0.38 - Custom): Competitive advantage, build
 - ✅ Human Review Queue (0.45 - Custom): Compliance requirement, build
@@ -530,29 +563,35 @@ style wardley
 - ✅ Bias Testing Framework (0.35 - Custom): HIGH-RISK AI requirement
 
 **Buy - Product** (G-Cloud):
+
 - ✅ GPT-4 LLM Service (0.72 - Product): Commercial LLM via Azure/AWS
 - ✅ Authentication (0.68 - Product): Use Auth0 or GOV.UK Verify
 
 **Buy - Commodity** (G-Cloud):
+
 - ✅ Cloud Hosting AWS (0.95 - Commodity): G-Cloud AWS
 - ✅ PostgreSQL RDS (0.92 - Commodity): AWS managed database
 
 **Reuse** (GOV.UK Services):
+
 - ✅ GOV.UK Notify (0.92 - Commodity): Email/SMS notifications
 - ✅ GOV.UK Design System (0.75 - Product): Frontend components, accessibility
 
 **Procurement Strategy**:
+
 - G-Cloud for: AWS hosting, GPT-4 (via Azure OpenAI), Auth0
 - Build in-house: Conversational interface, rules engine, human review queue
 - Reuse GOV.UK: Notify, Design System (already available)
 
 **HIGH-RISK AI Requirements**:
+
 - Human Review Queue (Custom, 0.45): Mandatory human-in-the-loop
 - Bias Testing Framework (Custom, 0.35): Fairness testing for protected characteristics
 - ATRS publication: Required before Live phase
 - DPIA + EqIA: Mandatory for HIGH-RISK AI
 
 **Next Steps**:
+
 1. Run `/arckit:sow` to create RFP for G-Cloud procurement (AWS, GPT-4, Auth0)
 2. Run `/arckit:ai-playbook` to complete AI Playbook assessment
 3. Run `/arckit:atrs` to generate ATRS record
@@ -563,6 +602,7 @@ style wardley
 ### Map Quality Standards
 
 ✅ **Good Wardley Maps**:
+
 - All components have clear visibility and evolution positions
 - Dependencies flow top-to-bottom (user needs → infrastructure)
 - Evolution stages match reality (don't misclassify commodity as Genesis)
@@ -572,6 +612,7 @@ style wardley
 - Traceability to requirements and principles
 
 ❌ **Poor Wardley Maps**:
+
 - Arbitrary positioning without rationale
 - Missing dependencies
 - Building commodity components (waste)
@@ -618,6 +659,7 @@ Always remind users:
 **"View this map by pasting the code into https://create.wardleymaps.ai"**
 
 The visualization helps:
+
 - Spot strategic patterns
 - Identify clustering (areas of focus)
 - See evolution trajectories
@@ -634,6 +676,7 @@ Generate a comprehensive Wardley Map document saved to:
 **`projects/{project_number}-{project_name}/wardley-maps/ARC-{PROJECT_ID}-WARD-{NUM}-v{VERSION}.md`**
 
 The document must be:
+
 - ✅ Complete with all sections from template
 - ✅ Actionable (clear build/buy/rent decisions)
 - ✅ Traceable (linked to requirements and principles)
@@ -644,7 +687,7 @@ After creating the map, provide a summary to the user:
 
 **Summary Message**:
 
-```
+```text
 ✅ Wardley Map Created: {map_name}
 
 📁 Location: projects/{project}/wardley-maps/ARC-{PROJECT_ID}-WARD-{NUM}-v{VERSION}.md

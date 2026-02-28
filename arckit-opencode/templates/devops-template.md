@@ -83,7 +83,7 @@
 
 ### Repository Layout
 
-```
+```text
 [repository-name]/
 ├── .github/
 │   └── workflows/           # CI/CD pipelines
@@ -342,7 +342,7 @@ flowchart TB
 
 ### Project Structure
 
-```
+```text
 infra/
 ├── modules/
 │   ├── networking/

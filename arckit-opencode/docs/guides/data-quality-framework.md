@@ -36,6 +36,7 @@ These dimensions are already scaffolded in the `/arckit:data-model` template wit
 ### 1. Data Quality Action Plans
 
 Prioritised improvement steps for critical data issues. The data-model template captures this through:
+
 - Quality targets per entity and dimension (gap = target vs current)
 - Issue classification (Critical/High/Medium/Low)
 - Resolution process with owner assignment
@@ -57,6 +58,7 @@ Techniques for addressing underlying data quality problems rather than symptoms.
 ### 3. Metadata Guidance
 
 Minimum metadata set for documenting data characteristics. The data-model template captures this through:
+
 - Entity catalogue (definitions, data types, keys, constraints)
 - Data dictionary with attribute-level descriptions
 - Source system and refresh cadence per entity

@@ -47,7 +47,7 @@ Commands you delegate to specialists but review or consume outputs from:
 
 ## Typical Workflow
 
-```
+```text
 principles → plan → stakeholders → risk → sobc → requirements →
 research → wardley → adr → diagram → hld-review → dld-review →
 backlog → traceability → principles-compliance → conformance →

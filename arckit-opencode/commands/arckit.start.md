@@ -20,7 +20,7 @@ $ARGUMENTS
 
 Read `.arckit/VERSION` to get the current version number, then display:
 
-```
+```text
 ArcKit — Enterprise Architecture Governance Toolkit
 Version X.Y.Z | 53 commands | Plugin mode
 
@@ -34,7 +34,7 @@ Replace `X.Y.Z` with the actual version from the VERSION file.
 
 Run `.arckit/scripts/python/list-projects.py --json` to get a machine-readable project inventory. Parse the JSON output and display a compact summary:
 
-```
+```text
 Projects
 --------
 🟢 [001] project-name (N artifacts)
@@ -47,13 +47,15 @@ Global foundations:
 ```
 
 **Completeness heuristic** — estimate project completeness based on artifact types present:
+
 - 0-24%: Only stakeholders/principles/requirements
 - 25-49%: Has research, data-model, or ADRs
 - 50-74%: Has design reviews, SOW, or evaluations
 - 75-100%: Has traceability, governance analysis, conformance
 
 **If no `projects/` directory exists**, show:
-```
+
+```text
 No project structure found. Run /arckit:init to create your first project.
 ```
 
@@ -70,7 +72,8 @@ Check which MCP tools are available by listing available tools. Look for:
 - **Google Developer** — tools with `google` in the name (enables `/arckit:gcp-research`)
 
 Report which are connected:
-```
+
+```text
 Connected Tools
 ---------------
 ✓ AWS Knowledge — AWS service research and architecture patterns
@@ -86,7 +89,7 @@ If the user provided `$ARGUMENTS` with a specific focus area (e.g., "procurement
 
 Otherwise, show the full navigation tree:
 
-```
+```text
 What are you working on?
 
 Starting a new project
@@ -143,7 +146,8 @@ Based on what was detected in Step 2, provide 3-5 specific **suggested next step
 | Multiple projects | Highlight which project needs the most attention (fewest artifacts relative to others) |
 
 Format as a numbered list:
-```
+
+```text
 Suggested next steps
 --------------------
 1. Run /arckit:principles to establish architecture principles (required by most commands)
@@ -155,7 +159,7 @@ Suggested next steps
 
 Present three conversational entry points to help the user choose their path:
 
-```
+```text
 How can I help today?
 
 1. "I'm starting a new project"

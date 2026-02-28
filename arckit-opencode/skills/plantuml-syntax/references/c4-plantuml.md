@@ -117,6 +117,7 @@ Directional relationship macros control how the layout engine positions elements
 ### Relationship with Technology Tag
 
 The `protocol` parameter is optional. Both are valid:
+
 ```plantuml
 Rel_Right(web, api, "Calls", "REST/JSON")   ' With protocol
 Rel_Down(api, db, "Reads/Writes")           ' Without protocol
