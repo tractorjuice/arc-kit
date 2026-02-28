@@ -170,6 +170,8 @@ project/
 **`scripts/bash/list-projects.sh`**: Lists all ArcKit projects with artifact counts (table or JSON output)
 **`scripts/bash/migrate-filenames.sh`**: Migrates existing project files to new naming convention (supports `--dry-run`)
 **`scripts/converter.py`**: Converts plugin commands (`arckit-plugin/commands/*.md`) to three output formats: Codex Markdown (`.codex/`), OpenCode Markdown (`.opencode/` + `arckit-opencode/`), and Gemini extension TOML (`arckit-gemini/`). Rewrites `${CLAUDE_PLUGIN_ROOT}` paths (CLI: `.arckit`, extension: `~/.gemini/extensions/arckit`). Also copies templates, scripts, guides, and skills to the extension directories. For agent-delegating commands, extracts the full agent prompt (not the thin wrapper) since Gemini/Codex/OpenCode don't support the Task/agent architecture
+**`scripts/bump-version.sh`**: Updates all 11 version files in one go (VERSION, pyproject.toml, README.md, docs, plugin, extensions)
+**`scripts/generate-release-notes.sh`**: Parses git log between tags into Keep a Changelog sections (Added/Fixed/Changed/Breaking Changes). Filters out `chore: bump version` commits. Auto-detects previous tag if none supplied
 
 ## Adding a New Slash Command
 
@@ -279,6 +281,26 @@ Every template must start with a **Document Control** table followed by **Revisi
 **Extension versions** (track plugin version):
 - `arckit-gemini/VERSION` + `arckit-gemini/gemini-extension.json`
 - `arckit-opencode/VERSION`
+
+**Release automation**:
+- `scripts/bump-version.sh <version>` updates all 11 version files at once
+- `scripts/generate-release-notes.sh [prev-tag]` parses git log into Keep a Changelog markdown (auto-detects previous tag if omitted)
+- `.github/workflows/release.yml` creates a GitHub Release automatically on `v*` tag push (tag-push triggered, does NOT commit back to main)
+
+**Local release flow**:
+```bash
+# 1. Edit CHANGELOGs manually
+# 2. Preview release notes (optional)
+./scripts/generate-release-notes.sh
+# 3. Bump all version files
+./scripts/bump-version.sh X.Y.Z
+# 4. Regenerate Codex/OpenCode/Gemini formats
+python scripts/converter.py
+# 5. Commit, tag, push — GitHub Release created automatically
+git add -A && git commit -m "chore: bump version to X.Y.Z"
+git tag -a vX.Y.Z -m "vX.Y.Z"
+git push && git push --tags
+```
 
 **Adding new package data files**: Update `pyproject.toml` `[tool.hatch.build.targets.wheel.shared-data]`
 
