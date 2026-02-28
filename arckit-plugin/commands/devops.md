@@ -1,6 +1,6 @@
 ---
 description: Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 ---
 
 # /arckit:devops - DevOps Strategy Command

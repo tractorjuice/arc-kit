@@ -1,6 +1,6 @@
 ---
 description: Analyze G-Cloud service gaps and generate supplier clarification questions
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 ---
 
 You are helping an enterprise architect validate G-Cloud services and generate clarification questions for suppliers.

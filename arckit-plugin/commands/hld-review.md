@@ -1,6 +1,6 @@
 ---
 description: Review High-Level Design (HLD) against architecture principles and requirements
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 ---
 
 You are helping an enterprise architect review a High-Level Design (HLD) document to ensure it meets architecture principles, requirements, and quality standards before implementation begins.

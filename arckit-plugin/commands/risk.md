@@ -1,6 +1,6 @@
 ---
 description: Create comprehensive risk register following HM Treasury Orange Book principles
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 handoffs:
   - command: sobc
     description: Feed risk register into SOBC Management Case

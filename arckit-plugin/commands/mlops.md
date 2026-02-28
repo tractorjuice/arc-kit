@@ -1,6 +1,6 @@
 ---
 description: Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 ---
 
 # /arckit:mlops - MLOps Strategy Command

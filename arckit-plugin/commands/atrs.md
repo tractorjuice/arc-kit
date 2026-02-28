@@ -1,6 +1,6 @@
 ---
 description: Generate Algorithmic Transparency Recording Standard (ATRS) record for AI/algorithmic tools
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 ---
 
 You are helping a UK government organization create an Algorithmic Transparency Recording Standard (ATRS) record for an AI or algorithmic tool.

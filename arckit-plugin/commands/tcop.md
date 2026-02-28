@@ -1,6 +1,6 @@
 ---
 description: Generate a Technology Code of Practice (TCoP) review document for a UK Government technology project
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 tags: [governance, compliance, uk-government, tcop, digital-spend-control]
 ---
 

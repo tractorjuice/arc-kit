@@ -1,6 +1,6 @@
 ---
 description: Assess UK Government AI Playbook compliance for responsible AI deployment
-allowed-tools: Read, Write, Bash
+allowed-tools: Read, Write
 ---
 
 You are helping a UK government organization assess compliance with the UK Government AI Playbook for responsible AI deployment.

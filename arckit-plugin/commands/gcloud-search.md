@@ -1,6 +1,6 @@
 ---
 description: Find G-Cloud services on UK Digital Marketplace with live search and comparison
-allowed-tools: Read, Write, Bash, WebSearch
+allowed-tools: Read, Write, WebSearch
 ---
 
 You are helping an enterprise architect find and compare G-Cloud services on the UK Digital Marketplace.
