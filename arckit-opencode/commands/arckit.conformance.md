@@ -332,11 +332,23 @@ For EACH architecture principle:
 - Calculate overall conformance percentage: `(PASS count / (PASS + FAIL count)) × 100`
 - Exclude NOT ASSESSED from the denominator
 
+**Deviation Tier Assignment** — for each FAIL finding, assign a tier based on result + severity:
+
+- 🔴 RED: FAIL + HIGH severity — escalate immediately, blocks next gate
+- 🟡 YELLOW: FAIL + MEDIUM severity — negotiate remediation within 30 days, include fallback
+- 🟢 GREEN: FAIL + LOW severity — acceptable deviation, document and monitor
+
+**Tier-Specific Response Requirements**:
+
+- For each 🔴 RED finding: explain the architecture risk, propose an alternative approach, recommend escalation to architecture board/CTO
+- For each 🟡 YELLOW finding: provide specific remediation steps + timeline, include a fallback position if remediation is deferred
+- For each 🟢 GREEN finding: document the deviation rationale, set a review date, no blocking action required
+
 **Overall Recommendation**:
 
-- **CONFORMANT**: All checks PASS (or NOT ASSESSED), conformance >= 100%
-- **CONFORMANT WITH EXCEPTIONS**: Some FAIL findings but all are LOW/MEDIUM severity with remediation plans, conformance >= 80%
-- **NON-CONFORMANT**: Any HIGH severity FAIL, or conformance < 80%
+- **CONFORMANT**: All checks PASS (or NOT ASSESSED), no FAIL findings
+- **CONFORMANT WITH CONDITIONS**: No RED findings, YELLOW/GREEN findings have remediation plans, conformance >= 80%
+- **NON-CONFORMANT**: Any RED finding, or conformance < 80%
 
 ### 6. Generate Document
 
@@ -360,20 +372,25 @@ Display concise summary (NOT full document):
 ✅ Architecture conformance assessment generated
 
 📊 **Conformance Summary**:
-   - Overall Score: [X]% ([CONFORMANT / CONFORMANT WITH EXCEPTIONS / NON-CONFORMANT])
+   - Overall Score: [X]% ([CONFORMANT / CONFORMANT WITH CONDITIONS / NON-CONFORMANT])
    - Checks Passed: [X] / [Y]
    - Checks Failed: [X]
    - Not Assessed: [X]
 
-[IF HIGH-severity FAIL findings:]
-⚠️ **Critical Findings** ([X] HIGH-severity):
+[IF RED findings:]
+🔴 **RED — Escalate** ([N]):
    - [Check ID]: [Brief description]
-   [List all HIGH findings]
+   [List all RED findings]
 
-[IF MEDIUM-severity FAIL findings:]
-📋 **Findings Requiring Attention** ([X] MEDIUM-severity):
+[IF YELLOW findings:]
+🟡 **YELLOW — Negotiate** ([N]):
    - [Check ID]: [Brief description]
-   [List MEDIUM findings]
+   [List all YELLOW findings]
+
+[IF GREEN findings:]
+🟢 **GREEN — Acceptable** ([N]):
+   - [Check ID]: [Brief description]
+   [List all GREEN findings]
 
 [IF ATD items found:]
 📦 **Architecture Technical Debt**: [X] known items, [Y] potential untracked items
@@ -382,15 +399,16 @@ Display concise summary (NOT full document):
 
 🔍 **Recommendation**:
    [CONFORMANT]: ✅ Architecture conforms to decisions and principles
-   [CONFORMANT WITH EXCEPTIONS]: ⚠️ Mostly conformant — address MEDIUM findings by [next review]
-   [NON-CONFORMANT]: ❌ Critical conformance gaps — address HIGH findings before proceeding
+   [CONFORMANT WITH CONDITIONS]: ⚠️ No critical deviations — [N] YELLOW findings need remediation by [date]
+   [NON-CONFORMANT]: ❌ [N] RED findings require escalation before proceeding
 
 **Next Steps**:
 1. Review detailed findings in the generated document
-2. [IF HIGH findings:] Address critical conformance gaps immediately
-3. [IF ATD items:] Review technical debt register with architecture board
-4. [IF custom rules missing:] Consider creating `.arckit/conformance-rules.md` for project-specific rules
-5. Schedule next conformance check at [next gate/phase]
+2. [IF RED findings:] Escalate critical deviations to architecture board immediately
+3. [IF YELLOW findings:] Agree remediation plans or fallback positions within 30 days
+4. [IF ATD items:] Review technical debt register with architecture board
+5. [IF custom rules missing:] Consider creating `.arckit/conformance-rules.md` for project-specific rules
+6. Schedule next conformance check at [next gate/phase]
 ```
 
 ## Post-Generation Actions

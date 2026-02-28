@@ -46,18 +46,26 @@
 | ❌ FAIL | [N] | Conformance violation detected |
 | ⚪ NOT ASSESSED | [N] | Insufficient artifacts to check |
 
-**Overall Recommendation**: [CONFORMANT / CONFORMANT WITH EXCEPTIONS / NON-CONFORMANT]
+**Overall Recommendation**: [CONFORMANT / CONFORMANT WITH CONDITIONS / NON-CONFORMANT]
+
+**Deviation Tiers** (FAIL findings only):
+
+| Tier | Count | Response |
+|------|-------|----------|
+| 🔴 RED — Escalate | [N] | Blocks next gate — escalate to architecture board |
+| 🟡 YELLOW — Negotiate | [N] | Remediate within 30 days or agree fallback |
+| 🟢 GREEN — Acceptable | [N] | Document and monitor — no blocking action |
 
 [IF NON-CONFORMANT:]
 **Critical Conformance Gaps**:
 
 1. [Check ID] — [Brief description of failure]
-2. [Repeat for each HIGH-severity finding]
+2. [Repeat for each RED finding]
 
-**Action Required**: Address HIGH-severity findings before proceeding to next gate.
+**Action Required**: Escalate RED findings to architecture board before proceeding to next gate.
 
-[IF CONFORMANT WITH EXCEPTIONS:]
-**Exceptions Noted**: [N] MEDIUM-severity findings require remediation by [next gate date].
+[IF CONFORMANT WITH CONDITIONS:]
+**Conditions Noted**: No RED findings — [N] YELLOW findings require remediation by [next gate date].
 
 [IF CONFORMANT:]
 **All checks passed** — architecture conforms to decisions and principles.
@@ -66,20 +74,20 @@
 
 ## Conformance Scorecard
 
-| ID | Conformance Check | Severity | Result | Evidence | Finding Summary |
-|----|-------------------|----------|--------|----------|-----------------|
-| ADR-IMPL | ADR Decision Implementation | HIGH | [✅/❌/⚪] | [N] ADRs checked | [Summary] |
-| ADR-CONFL | Cross-ADR Consistency | HIGH | [✅/❌/⚪] | [N] ADR pairs | [Summary] |
-| ADR-SUPER | Superseded ADR Enforcement | MEDIUM | [✅/❌/⚪] | [N] superseded | [Summary] |
-| PRIN-DESIGN | Principles-to-Design Alignment | HIGH | [✅/❌/⚪] | [N] principles | [Summary] |
-| COND-RESOLVE | Review Condition Resolution | HIGH | [✅/❌/⚪] | [N] conditions | [Summary] |
-| EXCPT-EXPIRY | Exception Register Expiry | HIGH | [✅/❌/⚪] | [N] exceptions | [Summary] |
-| EXCPT-REMEDI | Exception Remediation Progress | MEDIUM | [✅/❌/⚪] | [N] active | [Summary] |
-| DRIFT-TECH | Technology Stack Drift | MEDIUM | [✅/❌/⚪] | [N] technologies | [Summary] |
-| DRIFT-PATTERN | Architecture Pattern Drift | MEDIUM | [✅/❌/⚪] | [N] patterns | [Summary] |
-| RULE-CUSTOM | Custom Constraint Rules | Variable | [✅/❌/⚪] | [N] rules | [Summary] |
-| ATD-KNOWN | Known Technical Debt | LOW | [✅/⚪] | [N] items | [Summary] |
-| ATD-UNTRACK | Untracked Technical Debt | MEDIUM | [✅/❌/⚪] | [N] potential | [Summary] |
+| ID | Conformance Check | Severity | Result | Tier | Evidence | Finding Summary |
+|----|-------------------|----------|--------|------|----------|-----------------|
+| ADR-IMPL | ADR Decision Implementation | HIGH | [✅/❌/⚪] | [—/🔴] | [N] ADRs checked | [Summary] |
+| ADR-CONFL | Cross-ADR Consistency | HIGH | [✅/❌/⚪] | [—/🔴] | [N] ADR pairs | [Summary] |
+| ADR-SUPER | Superseded ADR Enforcement | MEDIUM | [✅/❌/⚪] | [—/🟡] | [N] superseded | [Summary] |
+| PRIN-DESIGN | Principles-to-Design Alignment | HIGH | [✅/❌/⚪] | [—/🔴] | [N] principles | [Summary] |
+| COND-RESOLVE | Review Condition Resolution | HIGH | [✅/❌/⚪] | [—/🔴] | [N] conditions | [Summary] |
+| EXCPT-EXPIRY | Exception Register Expiry | HIGH | [✅/❌/⚪] | [—/🔴] | [N] exceptions | [Summary] |
+| EXCPT-REMEDI | Exception Remediation Progress | MEDIUM | [✅/❌/⚪] | [—/🟡] | [N] active | [Summary] |
+| DRIFT-TECH | Technology Stack Drift | MEDIUM | [✅/❌/⚪] | [—/🟡] | [N] technologies | [Summary] |
+| DRIFT-PATTERN | Architecture Pattern Drift | MEDIUM | [✅/❌/⚪] | [—/🟡] | [N] patterns | [Summary] |
+| RULE-CUSTOM | Custom Constraint Rules | Variable | [✅/❌/⚪] | [—/🟢/🟡/🔴] | [N] rules | [Summary] |
+| ATD-KNOWN | Known Technical Debt | LOW | [✅/⚪] | [—/🟢] | [N] items | [Summary] |
+| ATD-UNTRACK | Untracked Technical Debt | MEDIUM | [✅/❌/⚪] | [—/🟡] | [N] potential | [Summary] |
 
 ---
 
@@ -345,29 +353,29 @@
 
 ## Findings & Remediation Plan
 
-### Critical Findings (HIGH Severity)
+### 🔴 RED — Escalate (Blocks Next Gate)
 
-[IF HIGH-severity findings exist:]
+[IF RED findings exist:]
 
-| # | Check | Finding | Impact | Recommended Action | Owner | Deadline |
-|---|-------|---------|--------|-------------------|-------|----------|
-| 1 | [Check ID] | [Description with file:line] | [Business/technical impact] | [Specific remediation] | [Role] | [Date] |
+| # | Check | Finding | Impact | Alternative Approach | Escalation Path | Owner | Deadline |
+|---|-------|---------|--------|---------------------|-----------------|-------|----------|
+| 1 | [Check ID] | [Description with file:line] | [Business/technical impact] | [Proposed alternative] | [Architecture board/CTO] | [Role] | [Date] |
 
-### Medium Findings
+### 🟡 YELLOW — Negotiate (Remediate or Agree Fallback)
 
-[IF MEDIUM-severity findings exist:]
+[IF YELLOW findings exist:]
 
-| # | Check | Finding | Impact | Recommended Action | Owner | Deadline |
-|---|-------|---------|--------|-------------------|-------|----------|
-| 1 | [Check ID] | [Description with file:line] | [Business/technical impact] | [Specific remediation] | [Role] | [Date] |
+| # | Check | Finding | Impact | Remediation Steps | Fallback Position | Owner | Deadline |
+|---|-------|---------|--------|-------------------|-------------------|-------|----------|
+| 1 | [Check ID] | [Description with file:line] | [Business/technical impact] | [Specific remediation] | [Fallback if deferred] | [Role] | [Date] |
 
-### Low Findings
+### 🟢 GREEN — Acceptable (Document and Monitor)
 
-[IF LOW-severity findings exist:]
+[IF GREEN findings exist:]
 
-| # | Check | Finding | Impact | Recommended Action | Owner | Deadline |
-|---|-------|---------|--------|-------------------|-------|----------|
-| 1 | [Check ID] | [Description with file:line] | [Impact] | [Action] | [Role] | [Date] |
+| # | Check | Finding | Impact | Deviation Rationale | Review Date | Owner |
+|---|-------|---------|--------|---------------------|-------------|-------|
+| 1 | [Check ID] | [Description with file:line] | [Impact] | [Why deviation is acceptable] | [Date] | [Role] |
 
 [IF no findings:]
 ✅ No conformance findings — all checks passed.
@@ -376,21 +384,21 @@
 
 ## Recommendations
 
-### Immediate Actions (CRITICAL — before next gate)
+### 🔴 RED — Immediate Actions (before next gate)
 
-[IF HIGH-severity FAIL findings:]
+[IF RED findings:]
 
 1. [Action] — Owner: [Role] — Deadline: [Date]
-2. [Repeat for each critical action]
+2. [Repeat for each RED finding]
 
-### Short-Term Actions (within 30 days)
+### 🟡 YELLOW — Short-Term Actions (within 30 days)
 
-[IF MEDIUM-severity FAIL findings:]
+[IF YELLOW findings:]
 
 1. [Action] — Owner: [Role] — Deadline: [Date]
 2. [Repeat]
 
-### Medium-Term Actions (next quarter)
+### 🟢 GREEN — Monitoring Actions (next quarter)
 
 1. [Action] — Owner: [Role] — Target: [Date]
 2. [Repeat]
@@ -463,11 +471,19 @@
 | SCOPE-REDUCTION | Quality/feature removed for timeline/budget | Requirements changes, sprint reviews |
 | EXCEPTION | Approved principle exception with expiry | Exception register, compliance assessments |
 
+### Deviation Tiers
+
+| Tier | Criteria | Required Response |
+|------|----------|-------------------|
+| 🔴 RED — Escalate | FAIL + HIGH severity | Explain risk, provide alternative approach, escalate to architecture board/CTO |
+| 🟡 YELLOW — Negotiate | FAIL + MEDIUM severity | Specific remediation steps + timeline, fallback position if deferred |
+| 🟢 GREEN — Acceptable | FAIL + LOW severity | Document deviation rationale, set review date, no blocking action |
+
 ### Conformance Scoring
 
 - **CONFORMANT** (100%): All checks PASS or NOT ASSESSED
-- **CONFORMANT WITH EXCEPTIONS** ( >= 80%): Some FAIL findings, all LOW/MEDIUM with remediation plans
-- **NON-CONFORMANT** ( < 80% or any HIGH FAIL): Critical gaps requiring immediate action
+- **CONFORMANT WITH CONDITIONS** ( >= 80%): No RED findings, YELLOW/GREEN findings have remediation plans
+- **NON-CONFORMANT** ( < 80% or any RED finding): Critical gaps requiring immediate action
 
 ### Evidence Referencing Convention
 
