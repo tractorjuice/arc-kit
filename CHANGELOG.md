@@ -5,6 +5,15 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.16.0] - 2026-02-28
+
+### Added
+
+- **Quality checklist** — shared `references/quality-checklist.md` with 10 common checks and 47 per-type checks for artifact verification before write (#92)
+- **`argument-hint` frontmatter** on all 53 plugin commands
+
+---
+
 ## [2.15.1] - 2026-02-28
 
 ### Fixed

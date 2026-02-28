@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.16.0] - 2026-02-28
+
+### Added
+
+- **Quality checklist** (`references/quality-checklist.md`) — shared artifact verification with 10 common checks and 47 per-type checks keyed by document type code; introduces `references/` directory pattern (#92)
+- **`argument-hint` frontmatter** on all 53 plugin commands — IDE-visible hints for required arguments
+
+---
+
 ## [2.15.1] - 2026-02-28
 
 ### Added
