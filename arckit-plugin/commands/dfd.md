@@ -1,6 +1,7 @@
 ---
 description: Generate Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation
 allowed-tools: Read, Write, AskUserQuestion
+argument-hint: "<system or process, e.g. 'user registration', 'claims processing'>"
 ---
 
 # ArcKit: Yourdon-DeMarco Data Flow Diagram

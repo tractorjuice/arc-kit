@@ -1,6 +1,7 @@
 ---
 description: Create or update enterprise architecture principles
 allowed-tools: Read, Write
+argument-hint: "<domain or focus, e.g. 'cloud-first', 'data governance'>"
 ---
 
 You are helping an enterprise architect define architecture principles that will govern all technology decisions in the organisation.

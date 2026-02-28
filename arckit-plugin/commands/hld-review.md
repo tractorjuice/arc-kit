@@ -1,6 +1,7 @@
 ---
 description: Review High-Level Design (HLD) against architecture principles and requirements
 allowed-tools: Read, Write
+argument-hint: "<project ID or HLD path, e.g. '001'>"
 ---
 
 You are helping an enterprise architect review a High-Level Design (HLD) document to ensure it meets architecture principles, requirements, and quality standards before implementation begins.

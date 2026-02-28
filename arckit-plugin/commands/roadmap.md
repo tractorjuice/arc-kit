@@ -1,6 +1,7 @@
 ---
 description: Create strategic architecture roadmap with multi-year timeline, capability evolution, and governance
 allowed-tools: Read, Write, AskUserQuestion
+argument-hint: "<project ID or initiative, e.g. '001', 'cloud migration 3-year'>"
 handoffs:
   - command: backlog
     description: Generate product backlog from roadmap

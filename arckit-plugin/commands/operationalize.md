@@ -1,6 +1,7 @@
 ---
 description: Create operational readiness pack with support model, runbooks, DR/BCP, on-call, and handover documentation
 allowed-tools: Read, Write
+argument-hint: "<project ID or service, e.g. '001', 'Payments API'>"
 ---
 
 # /arckit:operationalize - Operational Readiness Command

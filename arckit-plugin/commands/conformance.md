@@ -1,6 +1,7 @@
 ---
 description: Assess architecture conformance — ADR decision implementation, cross-decision consistency, design-principles alignment, architecture drift, technical debt, and custom constraint rules
 allowed-tools: Read, Write, Glob
+argument-hint: "<project ID or scope, e.g. '001', 'all projects'>"
 ---
 
 ## User Input

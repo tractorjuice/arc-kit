@@ -1,6 +1,7 @@
 ---
 description: Analyze G-Cloud service gaps and generate supplier clarification questions
 allowed-tools: Read, Write
+argument-hint: "<service name, e.g. 'Salesforce CRM Lot 2'>"
 ---
 
 You are helping an enterprise architect validate G-Cloud services and generate clarification questions for suppliers.

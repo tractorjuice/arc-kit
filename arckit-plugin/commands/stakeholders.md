@@ -1,6 +1,7 @@
 ---
 description: Analyze stakeholder drivers, goals, and measurable outcomes
 allowed-tools: Read, Write
+argument-hint: "<project ID or group, e.g. '001', 'senior leadership'>"
 handoffs:
   - command: requirements
     description: Create requirements aligned to stakeholder goals
