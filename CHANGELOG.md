@@ -5,6 +5,16 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.17.0] - 2026-02-28
+
+### Added
+
+- **Tiered deviation classification** for conformance assessment — GREEN/YELLOW/RED tiers overlay on PASS/FAIL, classifying FAIL findings by actionability (#95)
+- **Conversational gathering rules** (max 2 rounds) on 15 commands (#94)
+- **STANDALONE/SUPERCHARGED degradation** for cloud research commands (#93)
+
+---
+
 ## [2.16.0] - 2026-02-28
 
 ### Added

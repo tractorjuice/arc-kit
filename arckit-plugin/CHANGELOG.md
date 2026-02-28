@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.17.0] - 2026-02-28
+
+### Added
+
+- **Tiered deviation classification** for conformance assessment — GREEN/YELLOW/RED tiers overlay on PASS/FAIL system, classifying FAIL findings by actionability: RED (escalate), YELLOW (negotiate), GREEN (acceptable) (#95)
+- **Conversational gathering rules** (max 2 rounds) added to 15 commands for structured user input collection (#94)
+- **STANDALONE/SUPERCHARGED degradation** for cloud research commands — graceful fallback when MCP servers are unavailable (#93)
+
+---
+
 ## [2.16.0] - 2026-02-28
 
 ### Added
