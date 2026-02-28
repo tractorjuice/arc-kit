@@ -34,6 +34,7 @@ Each command has a row showing what it produces and which other commands depend 
 | `R` | Recommended | Command works better with this input but can function without |
 | `O` | Optional | Command can use this input if available |
 | `-` | Self | Diagonal (command references itself) |
+<!-- markdownlint-disable-next-line MD038 -->
 | ` ` | None | No dependency relationship |
 
 ### Reading the Matrix
