@@ -542,8 +542,14 @@ try {
   process.exit(0);
 }
 
-// hooks.json matcher already gates this hook to /arckit:pages only.
-// No redundant user_prompt check needed here.
+// Guard: hooks.json matcher triggers on substring "/arckit:pages" which can
+// false-positive when another command's expanded body mentions /arckit:pages.
+// Accept raw slash command OR the Skill-expanded body (starts with frontmatter/heading).
+const userPrompt = data.user_prompt || '';
+const isRawCommand = /^\s*\/arckit[.:]+pages\b/i.test(userPrompt);
+const isExpandedBody = /^---\s*\n[\s\S]*?description:\s*Generate documentation site/i.test(userPrompt)
+  || /^#\s*ArcKit:\s*Documentation Site Generator/i.test(userPrompt);
+if (!isRawCommand && !isExpandedBody) process.exit(0);
 
 // Resolve roots
 const __dirname_hook = dirname(fileURLToPath(import.meta.url));

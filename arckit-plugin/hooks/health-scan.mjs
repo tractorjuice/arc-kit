@@ -550,9 +550,14 @@ try {
   process.exit(0);
 }
 
-// hooks.json matcher already gates this hook to /arckit:health only.
-// No redundant user_prompt check needed here.
+// Guard: hooks.json matcher triggers on substring "/arckit:health" which can
+// false-positive when another command's expanded body mentions /arckit:health.
+// Accept raw slash command OR the Skill-expanded body (starts with frontmatter/heading).
 const userPrompt = data.user_prompt || '';
+const isRawCommand = /^\s*\/arckit[.:]+health\b/i.test(userPrompt);
+const isExpandedBody = /^---\s*\n[\s\S]*?description:\s*Scan all projects for stale/i.test(userPrompt)
+  || /^#\s*Artifact Health Check/i.test(userPrompt);
+if (!isRawCommand && !isExpandedBody) process.exit(0);
 
 // Parse arguments
 const args = parseArguments(userPrompt);

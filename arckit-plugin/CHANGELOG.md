@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [2.20.5] - 2026-02-28
+
+### Fixed
+
+- **Health hook fires for unrelated commands** — the `hooks.json` substring matcher triggers on any expanded command body that mentions `/arckit:health` or `/arckit:pages` (e.g. conformance, start, customize). Replaced naive regex guards with smart guards that match either the raw slash command or the Skill-expanded body's unique opening text (frontmatter description or heading). Applies to both `sync-guides.mjs` and `health-scan.mjs`.
+
+---
+
 ## [2.20.4] - 2026-02-28
 
 ### Fixed
