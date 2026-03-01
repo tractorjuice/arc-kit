@@ -5,6 +5,12 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.22.4] - 2026-03-01
+
+### Fixed
+
+- **Traceability hook missed FR and NFR requirements** — heading regex only matched h3 (`###`) but the requirements template uses h4 (`####`) for FR, NFR, INT, and DR sections; now matches both levels. Also changed the fallback from all-or-nothing to always-merge so regex-extracted IDs supplement heading matches instead of being silently skipped
+
 ## [2.22.3] - 2026-03-01
 
 ### Fixed

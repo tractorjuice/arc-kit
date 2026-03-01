@@ -5,6 +5,14 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.22.4] - 2026-03-01
+
+### Fixed
+
+- **Traceability hook missed FR and NFR requirements** — heading regex only matched h3 (`###`) but the requirements template uses h4 (`####`) for FR, NFR, INT, and DR sections (plugin fix, see plugin CHANGELOG for details)
+
+---
+
 ## [2.22.0] - 2026-03-01
 
 ### Added
