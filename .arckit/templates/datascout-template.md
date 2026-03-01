@@ -1,6 +1,6 @@
 # Data Source Discovery: [PROJECT_NAME]
 
-> **Template Status**: Alpha | **Version**: [VERSION] | **Command**: `/arckit.datascout`
+> **Template Status**: Alpha | **ArcKit Version**: [VERSION] | **Command**: `/arckit.datascout`
 
 ## Document Control
 

@@ -1,6 +1,6 @@
 # Data Model: [PROJECT_NAME]
 
-> **Template Status**: Live | **Version**: [VERSION] | **Command**: `/arckit.data-model`
+> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.data-model`
 
 ## Document Control
 

@@ -1,6 +1,6 @@
 # Architecture Strategy: [INITIATIVE_NAME]
 
-> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.strategy`
+> **Template Status**: Beta | **ArcKit Version**: [VERSION] | **Command**: `/arckit.strategy`
 
 ## Document Control
 

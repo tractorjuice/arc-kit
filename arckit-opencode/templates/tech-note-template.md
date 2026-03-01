@@ -1,5 +1,7 @@
 # Tech Note: {TOPIC}
 
+> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.research`
+
 ## Document Control
 
 | Field | Value |

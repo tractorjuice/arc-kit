@@ -1,6 +1,6 @@
 # Vendor Evaluation Criteria: [PROJECT_NAME]
 
-> **Template Status**: Live | **Version**: [VERSION] | **Command**: `/arckit.evaluate`
+> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.evaluate`
 
 ## Document Control
 

@@ -1,6 +1,6 @@
 # High-Level Design (HLD) Review: [PROJECT_NAME]
 
-> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.hld-review`
+> **Template Status**: Beta | **ArcKit Version**: [VERSION] | **Command**: `/arckit.hld-review`
 
 ## Document Control
 
@@ -42,7 +42,7 @@ This document captures the Architecture Review Board's evaluation of the High-Le
 ### 1.2 HLD Document Under Review
 
 **Document**: [Link to HLD document or path]
-**Version**: [VERSION]
+**ArcKit Version**: [VERSION]
 **Submitted By**: [VENDOR_NAME]
 **Submission Date**: [DATE]
 

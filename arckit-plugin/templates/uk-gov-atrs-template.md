@@ -1,6 +1,6 @@
 # Algorithmic Transparency Recording Standard (ATRS)
 
-> **Template Status**: Alpha | **Version**: [VERSION] | **Command**: `/arckit.atrs`
+> **Template Status**: Alpha | **ArcKit Version**: [VERSION] | **Command**: `/arckit.atrs`
 
 ## Document Control
 

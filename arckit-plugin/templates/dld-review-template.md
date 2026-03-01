@@ -1,6 +1,6 @@
 # Detailed Design (DLD) Review: [PROJECT_NAME]
 
-> **Template Status**: Beta | **Version**: [VERSION] | **Command**: `/arckit.dld-review`
+> **Template Status**: Beta | **ArcKit Version**: [VERSION] | **Command**: `/arckit.dld-review`
 
 ## Document Control
 
@@ -126,7 +126,7 @@ For each major component/service, evaluate:
 
 **OpenAPI Spec Provided**: [ ] Yes [ ] No
 
-**Version**: [VERSION]
+**ArcKit Version**: [VERSION]
 
 | Aspect | Quality | Comments |
 |--------|---------|----------|
