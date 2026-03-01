@@ -8,8 +8,7 @@
           {
             "type": "command",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-session.mjs",
-            "timeout": 5,
-            "async": true
+            "timeout": 5
           }
         ]
       }
@@ -21,8 +20,7 @@
           {
             "type": "command",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.mjs",
-            "timeout": 10,
-            "async": true
+            "timeout": 10
           },
           {
             "type": "command",

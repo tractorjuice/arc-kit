@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **Hook context not reaching Claude** — all 4 UserPromptSubmit hooks used `systemMessage` (which per docs is only "shown to user") instead of `additionalContext` (which is "added to Claude's context"). This caused Claude to ignore hook-injected instructions like "do not call tools" and redundantly read manifest.json. Switched to `hookSpecificOutput.additionalContext` in sync-guides, health-scan, traceability-scan, and arckit-context
+- **Async hooks deliver context one turn late** — `arckit-context.mjs` and `arckit-session.mjs` had `"async": true`, meaning their `additionalContext` arrived on the next conversation turn instead of the current one. Removed async flag — both are fast filesystem scans that complete in < 1 second
 - **Research stats missing from pages output** — added Research row to the stats table in sync-guides.mjs
 
 ---
