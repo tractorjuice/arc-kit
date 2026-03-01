@@ -221,9 +221,8 @@ The footer should be populated with:
 
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **HLDR** per-type checks pass. Fix any failures before proceeding.
 
-8. **Write outputs**:
-   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-HLDR-v1.0.md` - Full review report
-   - `projects/{project-dir}/ARC-{PROJECT_ID}-HLDR-SUM-v1.0.md` - Summary if comparing multiple vendors
+8. **Write output**:
+   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-HLDR-v1.0.md` - Full review report (include vendor comparison summary section if reviewing multiple vendors)
    - Update traceability matrix with design references
 
    **CRITICAL - Show Summary Only**:
@@ -255,7 +254,7 @@ You should:
 - **Blocking items**:
   - [BLOCKING-01] Must add multi-AZ deployment for 99.99% uptime
   - [BLOCKING-02] Consider microservices migration path to avoid future tech debt
-- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/reviews/ARC-001-HLD-v1.0.md`
+- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/reviews/ARC-001-HLDR-v1.0.md`
 
 ## Important Notes
 

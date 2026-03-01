@@ -272,7 +272,7 @@ You should:
 - **Blocking items**:
   - [BLOCKING-01] Specify fraud detection ML model (algorithm, features, thresholds)
   - [BLOCKING-02] Define data retention policy (7 years for PCI compliance)
-- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/reviews/ARC-001-DLD-v1.0.md`
+- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/reviews/ARC-001-DLDR-v1.0.md`
 
 ## Important Notes
 

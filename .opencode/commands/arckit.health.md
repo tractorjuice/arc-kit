@@ -31,19 +31,13 @@ $ARGUMENTS
 - Valid: ISO date `YYYY-MM-DD`
 - Useful for "what would be stale as of date X" scenarios
 
-**JSON** (optional): Write machine-readable output to `docs/health.json` for dashboard integration
-
-- Example: `JSON=true`
-- Default: console output only
-- When enabled: writes `docs/health.json` AND still shows console output
-
 ---
 
 ## What This Command Does
 
-Scans the `projects/` directory for all `ARC-*` artifacts and applies seven detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action.
+Scans the `projects/` directory for all `ARC-*` artifacts and applies seven detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action. The hook also writes `docs/health.json` on every run for dashboard integration (consumed by `/arckit:pages`).
 
-**This command does NOT modify any files.** It is a read-only diagnostic.
+**This command does NOT modify any project files.** It is a diagnostic tool. The only file written is `docs/health.json`.
 
 ### Detection Rules
 
@@ -69,9 +63,9 @@ Scans the `projects/` directory for all `ARC-*` artifacts and applies seven dete
 > 2. **Metadata Extraction** — read every artifact and extracted dates, statuses, requirement IDs, review verdicts, and conditions
 > 3. **Rule Application** — applied all 7 detection rules and generated findings with severities
 >
-> The hook's `systemMessage` above contains all findings — use them directly. **Do NOT re-read any artifact files.** Proceed to Step 4 to format the console output.
+> The hook's `hook context` above contains all findings — use them directly. **Do NOT re-read any artifact files.** Proceed to Step 4 to format the console output.
 >
-> If the hook data is not present (systemMessage missing), fall back to manual scanning: read each ARC-* artifact, extract Document Control fields, and apply the detection rules described below.
+> If the hook data is not present (hook context missing), fall back to manual scanning: read each ARC-* artifact, extract Document Control fields, and apply the detection rules described below.
 
 #### Rule 1: STALE-RSCH — Stale Research
 
@@ -297,7 +291,7 @@ For each project:
 PROJECT: {project-dir}
   Artifacts scanned: {count}
 
-  [HIGH] STALE-RSCH: ARC-001-RSCH-v1.0.md
+  [HIGH] STALE-RSCH: research/ARC-001-RSCH-001-v1.0.md
     Last modified: 2025-06-15 (250 days ago)
     Action: Re-run /arckit:research to refresh pricing and vendor data
 
@@ -375,11 +369,13 @@ If no findings are detected across all projects:
 All clear. No stale artifacts, forgotten decisions, or traceability gaps detected.
 ```
 
-### Step 5: Write JSON Output (if JSON=true)
+### Step 5: JSON Output (automatic)
 
-If the user specified `JSON=true`, write a machine-readable `docs/health.json` file using the Write tool. This file is consumed by the `/arckit:pages` dashboard.
+The hook automatically writes `docs/health.json` on every run. No action is needed from the command for JSON output.
 
-**Schema**:
+**Dashboard integration**: Run `/arckit:pages` after the health check to see health data on the governance dashboard.
+
+**JSON schema** (written by hook to `docs/health.json`):
 
 ```json
 {
@@ -411,7 +407,7 @@ If the user specified `JSON=true`, write a machine-readable `docs/health.json` f
         {
           "severity": "HIGH",
           "rule": "STALE-RSCH",
-          "file": "ARC-001-RSCH-v1.0.md",
+          "file": "research/ARC-001-RSCH-001-v1.0.md",
           "message": "Last modified: 2025-06-15 (250 days ago)",
           "action": "Re-run /arckit:research to refresh pricing and vendor data"
         }
@@ -430,10 +426,6 @@ If the user specified `JSON=true`, write a machine-readable `docs/health.json` f
 - `byType` — finding counts per detection rule (always include all 7 rule IDs, using 0 for rules with no findings)
 - `projects[]` — per-project breakdown; each entry includes the project directory ID, artifact count, and an array of findings
 - Each finding includes: `severity`, `rule` (detection rule ID), `file` (artifact filename), `message` (human-readable detail), and `action` (suggested remediation)
-
-**Important**: Still show the console report (Step 4) even when JSON=true. The JSON file is an additional output, not a replacement.
-
-**Dashboard integration**: Run `/arckit:health JSON=true` then `/arckit:pages` to see health data on the governance dashboard.
 
 ---
 
@@ -517,7 +509,7 @@ Useful for planning — "what will be stale by June?"
 
 ## Design Notes
 
-### Why Console Output, Not a File?
+### Why Console Output as Primary?
 
 The health check is a **diagnostic tool**, not a governance artifact. Unlike `/arckit:analyze` which produces a formal analysis report (saved as `ARC-*-ANAL-*.md`), the health check is:
 
@@ -525,6 +517,8 @@ The health check is a **diagnostic tool**, not a governance artifact. Unlike `/a
 - **Actionable**: Designed to trigger other commands, not to be filed
 - **Lightweight**: Quick scan, not a deep analysis
 - **Repeatable**: Run it daily, weekly, or before any governance gate
+
+Console output is the primary user-facing output. `docs/health.json` is always written as a side effect for dashboard integration (`/arckit:pages`).
 
 ### Threshold Rationale
 
@@ -537,14 +531,6 @@ The health check is a **diagnostic tool**, not a governance artifact. Unlike `/a
 | ADR traceability | Any age | Traceability is a governance best practice; missing references should be added when convenient |
 | Version drift | 3 months | Multiple versions indicate active iteration; 3 months of inactivity suggests the iteration has stalled |
 | External file staleness | Any age | External files newer than all artifacts indicate unincorporated content; no safe window to ignore since governance may be based on outdated information |
-
-### Example 5: Generate JSON for Dashboard
-
-```bash
-/arckit:health JSON=true
-```
-
-Writes `docs/health.json` for the pages dashboard, in addition to the console report.
 
 ### Future Enhancements
 

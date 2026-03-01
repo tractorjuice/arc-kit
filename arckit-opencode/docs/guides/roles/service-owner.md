@@ -46,7 +46,7 @@ requirements → servicenow → operationalize → service-assessment → story
 
 - `ARC-{PID}-SNOW-v*.md` — ServiceNow service design
 - `ARC-{PID}-OPS-v*.md` — Operational readiness pack
-- `ARC-{PID}-SASS-v*.md` — Service assessment report
+- `ARC-{PID}-SVCASS-v*.md` — Service assessment report
 
 ## Related Roles
 

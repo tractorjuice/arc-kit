@@ -148,7 +148,7 @@ Data mesh contracts should be organized in a subdirectory. The directory will be
 The contract file will use the multi-instance naming pattern:
 
 ```text
-{project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
+{project_path}/data-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
 ```
 
 Where `{NNN}` is the next sequential number for contracts in this project. Check existing files in `data-contracts/` and use the next number (001, 002, ...).
@@ -410,7 +410,7 @@ Before writing the file, read `.arckit/references/quality-checklist.md` and veri
 
 ```text
 Write tool:
-  file_path: {project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
+  file_path: {project_path}/data-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
   content: {full contract content}
 ```
 
@@ -424,7 +424,7 @@ After writing the file, show the user a concise summary (do NOT show the full do
 ✅ Data Mesh Contract Generated
 
 **Contract**: ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md
-**Location**: {project_path}/data-mesh-contracts/
+**Location**: {project_path}/data-contracts/
 **Document ID**: ARC-{project_id}-DMC-{NNN}-v1.0
 **ODCS Version**: v3.0.2
 **Contract Version**: 1.0.0
@@ -488,7 +488,7 @@ After writing the file, show the user a concise summary (do NOT show the full do
 
 ---
 
-**Full contract**: `{project_path}/data-mesh-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md` ({line_count} lines)
+**Full contract**: `{project_path}/data-contracts/ARC-{PROJECT_ID}-DMC-{NNN}-v1.0.md` ({line_count} lines)
 ```
 
 ### Step 10: Post-Generation Recommendations

@@ -173,7 +173,6 @@ function parseArguments(prompt) {
     project: null,
     severity: 'LOW',
     since: null,
-    json: false,
   };
 
   const text = prompt.replace(/^\/arckit[.:]+health\s*/i, '');
@@ -186,8 +185,6 @@ function parseArguments(prompt) {
 
   const sinceMatch = text.match(/\bSINCE\s*=\s*(\d{4}-\d{2}-\d{2})/i);
   if (sinceMatch) args.since = sinceMatch[1];
-
-  if (/\bJSON\s*=\s*true\b/i.test(text)) args.json = true;
 
   return args;
 }
@@ -617,16 +614,14 @@ for (const projectName of projectDirs) {
 // Build JSON data
 const jsonData = buildJsonOutput(projectResults, baseline);
 
-// Write docs/health.json if JSON=true
-if (args.json) {
-  const docsDir = join(repoRoot, 'docs');
-  if (!isDir(docsDir)) mkdirSync(docsDir, { recursive: true });
-  writeFileSync(
-    join(docsDir, 'health.json'),
-    JSON.stringify(jsonData, null, 2),
-    'utf8'
-  );
-}
+// Always write docs/health.json for dashboard integration
+const docsDir = join(repoRoot, 'docs');
+if (!isDir(docsDir)) mkdirSync(docsDir, { recursive: true });
+writeFileSync(
+  join(docsDir, 'health.json'),
+  JSON.stringify(jsonData, null, 2),
+  'utf8'
+);
 
 // Build additionalContext
 const lines = [];
@@ -640,7 +635,7 @@ lines.push(`- **Projects scanned**: ${jsonData.scanned.projects}`);
 lines.push(`- **Artifacts scanned**: ${jsonData.scanned.artifacts}`);
 lines.push(`- **Severity filter**: ${args.severity}`);
 if (args.project) lines.push(`- **Project filter**: ${args.project}`);
-if (args.json) lines.push(`- **JSON output**: docs/health.json written`);
+lines.push(`- **JSON output**: docs/health.json written`);
 lines.push('');
 
 lines.push('### Summary');
@@ -684,11 +679,7 @@ lines.push('### What to do');
 lines.push('- **Skip Steps 1-3** — all metadata has been extracted and rules applied');
 lines.push('- **Format the Step 4 console output** using the findings above');
 lines.push('- **Include the Step 4.3 Recommended Actions** section using finding counts');
-if (args.json) {
-  lines.push('- **Step 5 JSON already written** — docs/health.json is complete');
-} else {
-  lines.push('- **Skip Step 5** — JSON output was not requested');
-}
+lines.push('- **Step 5 JSON already written** — docs/health.json is complete');
 
 const message = lines.join('\n');
 
