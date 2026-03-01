@@ -146,10 +146,18 @@ if (!repoRoot) process.exit(0);
 const projectsDir = join(repoRoot, 'projects');
 if (!isDir(projectsDir)) process.exit(0);
 
+// Read ArcKit version from plugin VERSION file
+const pluginRoot = resolve(import.meta.url.replace('file://', ''), '..', '..');
+let arckitVersion = 'unknown';
+try {
+  arckitVersion = readFileSync(join(pluginRoot, 'VERSION'), 'utf8').trim();
+} catch { /* ignore */ }
+
 // Build context string
 const lines = [];
 lines.push('## ArcKit Project Context (auto-detected by hook)\n');
-lines.push(`Repository: ${repoRoot}\n`);
+lines.push(`Repository: ${repoRoot}`);
+lines.push(`ArcKit Version: ${arckitVersion}\n`);
 
 // Count projects
 const projectEntries = readdirSync(projectsDir)

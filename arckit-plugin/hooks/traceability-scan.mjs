@@ -552,8 +552,16 @@ lines.push('');
 lines.push('**All requirement IDs extracted and cross-referenced.**');
 lines.push('');
 
+// Read ArcKit version from plugin VERSION file
+const pluginRoot = resolve(import.meta.url.replace('file://', ''), '..', '..');
+let arckitVersion = 'unknown';
+try {
+  arckitVersion = readFileSync(join(pluginRoot, 'VERSION'), 'utf8').trim();
+} catch { /* ignore */ }
+
 lines.push('### Project');
 lines.push(`- **Project**: ${projectName}`);
+lines.push(`- **ArcKit Version**: ${arckitVersion}`);
 lines.push(`- **REQ files scanned**: ${reqFiles.join(', ')}`);
 lines.push(`- **Existing TRAC version**: ${existingVersion || 'none'}`);
 lines.push(`- **Suggested next version**: v${suggestedVersion}`);

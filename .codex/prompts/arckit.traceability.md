@@ -48,13 +48,11 @@ $ARGUMENTS
 
    ### Forward Traceability (Requirements → Design → Implementation → Tests)
 
-   For each requirement (BR, FR, NFR, INT, DR):
+   For each requirement (BR, FR, NFR, INT, DR) from the hook's requirements table:
 
-   **Step 1: Requirement Details**
-   - Requirement ID (e.g., FR-001)
-   - Requirement statement
-   - Priority (MUST/SHOULD/MAY)
-   - Category (Business/Functional/Non-Functional/Integration/Data)
+   **Step 1: Requirement Details** (pre-extracted by hook)
+   - Requirement ID, description, priority, and category are in the hook's table
+   - The "Covered" and "Referenced By" columns show which design docs already reference each requirement
 
    **Step 2: Design Mapping**
    - Which HLD components implement this requirement?
@@ -90,37 +88,27 @@ $ARGUMENTS
 
    ### Gap Analysis
 
-   Identify and flag:
-   - **Orphan Requirements**: Requirements with NO design/implementation
-   - **Orphan Design Elements**: Design components not linked to requirements (scope creep?)
+   Use the hook's pre-computed data directly:
+   - **Orphan Requirements**: Listed in the hook's "Orphan Requirements" section — requirements with NO design references
+   - **Orphan Design Elements**: Listed in the hook's "Design-Only References" section — IDs referenced in design docs but absent from REQ files (scope creep?)
    - **Orphan Tests**: Tests not linked to requirements (what are they testing?)
    - **Coverage Gaps**: Requirements without adequate test coverage
 
 5. **Analyze coverage metrics**:
 
-   Calculate and report:
-   - **Requirements Coverage**: % of requirements with design mapping
-   - **Implementation Coverage**: % of requirements implemented
-   - **Test Coverage**: % of requirements with tests
-   - **By Priority**:
-     - MUST requirements: Should be 100% covered
-     - SHOULD requirements: Should be >80% covered
-     - MAY requirements: Can be <50% covered
+   Use the hook's **COVERAGE SUMMARY** table directly — it already provides:
+   - Overall coverage (covered / total / percentage)
+   - Breakdown by category (Business, Functional, Non-Functional, Integration, Data)
+   - Breakdown by priority (MUST, SHOULD, MAY)
 
-   Example:
+   **Do NOT recalculate these metrics.** Enrich them with additional context:
+   - **Implementation Coverage**: % of requirements with implementation evidence (from vendor HLD/DLD prose)
+   - **Test Coverage**: % of requirements with test references (from project artifacts)
 
-   ```text
-   Overall Coverage:
-   - Business Requirements: 15/15 (100%)
-   - Functional Requirements: 42/45 (93%) - 3 gaps
-   - Non-Functional Requirements: 18/22 (82%) - 4 gaps
-   - Integration Requirements: 8/8 (100%)
-
-   Priority Coverage:
-   - MUST requirements: 68/70 (97%) - 2 CRITICAL GAPS
-   - SHOULD requirements: 12/15 (80%)
-   - MAY requirements: 3/8 (38%)
-   ```
+   Apply these thresholds when flagging gaps:
+   - MUST requirements: Should be 100% covered
+   - SHOULD requirements: Should be > 80% covered
+   - MAY requirements: Can be < 50% covered
 
 6. **Risk Assessment**:
 
@@ -177,17 +165,14 @@ Before completing the document, populate ALL document control fields in the head
 
 ### Step 0: Detect Version
 
-Before generating the document ID, check if a previous version exists:
+The hook provides the existing TRAC version and a suggested next version. Use these directly:
 
-1. Look for existing `ARC-{PROJECT_ID}-TRAC-v*.md` files in the project directory
-2. **If no existing file**: Use VERSION="1.0"
-3. **If existing file found**:
-   - Read the existing document to understand its scope
-   - Compare against current project artifacts and coverage
-   - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed coverage metrics, updated gap analysis, corrected details
-   - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new requirement categories traced, fundamentally different coverage, significant new artifacts added
-4. Use the determined version for document ID, filename, Document Control, and Revision History
-5. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+1. **If hook says "Existing TRAC version: none"**: Use VERSION="1.0"
+2. **If hook provides an existing version** (e.g., "v1.0"):
+   - Use the hook's **suggested next version** as the default (minor increment, e.g., 1.0 → 1.1)
+   - **Major increment** (e.g., 1.0 → 2.0): Only if scope materially changed — new requirement categories traced, fundamentally different coverage, significant new artifacts added
+3. Use the determined version for document ID, filename, Document Control, and Revision History
+4. For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
 ### Step 1: Construct Document ID
 
@@ -203,6 +188,7 @@ Before generating the document ID, check if a previous version exists:
 - `[DOCUMENT_TYPE_NAME]` → "Requirements Traceability Matrix"
 - `ARC-[PROJECT_ID]-TRAC-v[VERSION]` → Construct using format from Step 1
 - `[COMMAND]` → "arckit.traceability"
+- `{ARCKIT_VERSION}` → Use the ArcKit Version from the hook's Project section (do NOT search for VERSION files)
 
 **User-provided fields** (extract from project metadata or user input):
 
@@ -274,19 +260,15 @@ User: `/arckit:traceability Generate traceability matrix for payment gateway pro
 
 You should:
 
-- Read ARC-*-REQ-*.md (70 requirements total)
-- Read HLD and DLD documents
-- Read review documents for implementation details
-- Build forward traceability:
+- Use the hook's requirements table (70 requirements pre-extracted with IDs, categories, priorities, coverage status)
+- Use the hook's coverage summary (by category and priority) as the baseline metrics
+- Use the hook's orphan requirements and design-only references for gap analysis
+- Read vendor HLD/DLD files for component/module names (hook only extracted req ID references)
+- Build forward traceability using hook data + vendor prose:
   - FR-001 (Process payment) → PaymentService (HLD) → PaymentController.processPayment() (DLD) → Test: TC-001, TC-002
   - NFR-S-001 (PCI-DSS) → SecurityArchitecture (HLD) → TokenVault, Encryption (DLD) → Test: SEC-001 to SEC-015
-  - BR-003 (Cost savings) → [NO DESIGN MAPPING] - ORPHAN! (GAP)
-- Calculate coverage:
-  - Business Requirements: 14/15 (93%) - BR-003 missing!
-  - Functional Requirements: 45/45 (100%)
-  - Non-Functional Requirements: 20/22 (91%) - NFR-R-002, NFR-P-003 missing tests
-  - Integration Requirements: 8/8 (100%)
-- Identify gaps:
+  - BR-003 (Cost savings) → [NO DESIGN MAPPING] - ORPHAN! (from hook's orphan list)
+- Flag gaps using hook's coverage data:
   - CRITICAL: BR-003 (Cost savings) has no success metrics defined
   - HIGH: NFR-R-002 (99.99% uptime) has no disaster recovery tests
   - MEDIUM: NFR-P-003 (Database performance) missing load tests
