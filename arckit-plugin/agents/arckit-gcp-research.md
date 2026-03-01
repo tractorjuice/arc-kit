@@ -184,7 +184,7 @@ Create a Mermaid diagram showing:
 
 Check if a previous version of this document exists in the project directory:
 
-Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCRS-v*.md` files. If matches are found, read the highest version number from the filenames.
+Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCRS-*-v*.md` files. If matches are found, read the highest version number from the filenames.
 
 **If no existing file**: Use VERSION="1.0"
 

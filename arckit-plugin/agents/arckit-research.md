@@ -198,7 +198,7 @@ Map every requirement to a recommended solution or flag as a gap.
 
 Check if a previous version of this document exists in the project directory:
 
-Use Glob to find existing `projects/{project-dir}/ARC-{PROJECT_ID}-RSCH-v*.md` files. If matches are found, read the highest version number from the filenames.
+Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-RSCH-*-v*.md` files. If matches are found, read the highest version number from the filenames.
 
 **If no existing file**: Use VERSION="1.0"
 
@@ -240,7 +240,7 @@ Include the generation metadata footer:
 
 **DO NOT output the full document.** Write it to file only.
 
-### Step 11b: Spawn Reusable Knowledge
+### Step 11: Spawn Reusable Knowledge
 
 > **Skip this step** if the user passed `--no-spawn` in the original command arguments.
 

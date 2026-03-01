@@ -346,7 +346,7 @@ Coverage Summary: ✅ [X] fully matched, ⚠️ [Y] partial, ❌ [Z] gaps.
 
 Check if a previous version of this document exists in the project directory:
 
-Use Glob to find existing `projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md` files. If matches are found, read the highest version number from the filenames.
+Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-DSCT-*-v*.md` files. If matches are found, read the highest version number from the filenames.
 
 **If no existing file**: Use VERSION="1.0"
 
@@ -388,7 +388,7 @@ Include the generation metadata footer:
 
 **DO NOT output the full document.** Write it to file only.
 
-### Step 17: Return Summary
+### Step 16: Return Summary
 
 Return ONLY a concise summary including:
 

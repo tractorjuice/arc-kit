@@ -5,6 +5,14 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.22.2] - 2026-03-01
+
+### Fixed
+
+- **Agent version detection Glob patterns** — all 5 research agents now include sequence number wildcard (`*-v*.md`) in Glob patterns for version detection, matching the multi-instance filename format (e.g., `ARC-001-RSCH-001-v1.0.md`)
+- **Missing `research/` in Glob paths** — arckit-research and arckit-datascout version detection now searches `research/` subdirectory, matching where documents are actually written
+- **Step numbering gaps** — fixed Step 11b → Step 11 in arckit-research (after 11a removal), fixed Step 17 → Step 16 in arckit-datascout (missing step)
+
 ## [2.22.1] - 2026-03-01
 
 ### Fixed
