@@ -72,9 +72,9 @@ Scans the `projects/` directory for all `ARC-*` artifacts and applies seven dete
 > 2. **Metadata Extraction** — read every artifact and extracted dates, statuses, requirement IDs, review verdicts, and conditions
 > 3. **Rule Application** — applied all 7 detection rules and generated findings with severities
 >
-> The hook's `systemMessage` above contains all findings — use them directly. **Do NOT re-read any artifact files.** Proceed to Step 4 to format the console output.
+> The hook's `hook context` above contains all findings — use them directly. **Do NOT re-read any artifact files.** Proceed to Step 4 to format the console output.
 >
-> If the hook data is not present (systemMessage missing), fall back to manual scanning: read each ARC-* artifact, extract Document Control fields, and apply the detection rules described below.
+> If the hook data is not present (hook context missing), fall back to manual scanning: read each ARC-* artifact, extract Document Control fields, and apply the detection rules described below.
 
 #### Rule 1: STALE-RSCH — Stale Research
 

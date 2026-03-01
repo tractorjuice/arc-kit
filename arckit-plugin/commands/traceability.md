@@ -28,11 +28,11 @@ $ARGUMENTS
    > 3. Computed coverage analysis: covered vs orphan requirements, coverage by category and priority
    > 4. Detected existing TRAC version for version numbering
    >
-   > Use the hook's `systemMessage` data directly. **Do NOT re-read REQ, ADR, or review files for requirement IDs.**
+   > Use the hook's pre-extracted data directly. **Do NOT re-read REQ, ADR, or review files for requirement IDs.**
    >
    > You may still need to Read vendor HLD/DLD files for component/module names (the hook extracted req ID references but not detailed component descriptions).
    >
-   > If the hook data is not present (systemMessage missing), fall back to reading all artifacts manually.
+   > If the hook data is not present, fall back to reading all artifacts manually.
 
    **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/traceability-matrix-template.md` exists in the project root
@@ -153,13 +153,11 @@ $ARGUMENTS
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **TRAC** per-type checks pass. Fix any failures before proceeding.
 
-8. **Write outputs**:
-   - `projects/{project-dir}/ARC-{PROJECT_ID}-TRAC-v${VERSION}.md` - Full traceability matrix
-   - `projects/{project-dir}/ARC-{PROJECT_ID}-COVR-v${VERSION}.md` - Coverage metrics and gaps
-   - `projects/{project-dir}/ARC-{PROJECT_ID}-GAPS-v${VERSION}.md` - Detailed gap analysis with remediation plan
+8. **Write output**:
+   - `projects/{project-dir}/ARC-{PROJECT_ID}-TRAC-v${VERSION}.md` - Full traceability matrix including coverage metrics and gap analysis (all in one document)
 
    **CRITICAL - Show Summary Only**:
-   After writing the file(s), show ONLY a brief summary with coverage metrics and key gaps. Do NOT output the full traceability matrix content in your response, as matrices can be 800+ lines with detailed requirement-to-test mappings.
+   After writing the file, show ONLY a brief summary with coverage metrics and key gaps. Do NOT output the full traceability matrix content in your response, as matrices can be 800+ lines with detailed requirement-to-test mappings.
 
 **CRITICAL - Auto-Populate Document Control Fields**:
 
@@ -276,8 +274,7 @@ You should:
   - MEDIUM: NFR-P-003 (Database performance) missing load tests
 - **Overall Score**: 85/100 (Good, but gaps must be addressed)
 - **Recommendation**: APPROVED WITH CONDITIONS - address 3 critical gaps
-- Write detailed matrix to `projects/001-payment-gateway/ARC-001-TRAC-v1.0.md`
-- Write gap analysis to `projects/001-payment-gateway/ARC-001-GAPS-v1.0.md`
+- Write detailed matrix (including gap analysis) to `projects/001-payment-gateway/ARC-001-TRAC-v1.0.md`
 
 ## Important Notes
 

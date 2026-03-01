@@ -36,7 +36,7 @@ Generate a documentation site for this ArcKit repository.
 5. Processes `pages-template.html` → writes `docs/index.html`
 6. Scans all projects, artifacts, vendors, external files → writes `docs/manifest.json`
 
-**CRITICAL: The hook's systemMessage contains ALL document stats you need. Use ONLY those stats for the Step 5 summary. Do NOT call any tools — no Read, Write, Glob, Grep, or Bash. Do NOT read manifest.json or any other file. The hook has already written docs/index.html and docs/manifest.json with correct data. Go directly to Step 5 and output the summary using the stats from the systemMessage.**
+**CRITICAL: The hook's hook context contains ALL document stats you need. Use ONLY those stats for the Step 5 summary. Do NOT call any tools — no Read, Write, Glob, Grep, or Bash. Do NOT read manifest.json or any other file. The hook has already written docs/index.html and docs/manifest.json with correct data. Go directly to Step 5 and output the summary using the stats from the hook context.**
 
 The following reference sections document the manifest structure and data tables used by the hook. They are preserved here for maintenance reference only — the command does not need to process them.
 
@@ -407,7 +407,7 @@ The hook generates `docs/manifest.json` with this structure:
 
 ## Step 5: Provide Summary
 
-Use the stats from the hook's systemMessage (under "Document Stats") to fill in the summary:
+Use the stats from the hook's hook context (under "Document Stats") to fill in the summary:
 
 ```text
 Documentation Site Generated
@@ -467,4 +467,4 @@ Next Steps:
 
 ---
 
-**Remember**: The `sync-guides` hook handles ALL I/O before this command runs — guide sync, title extraction, repo info, template processing, project scanning, and manifest generation. The command MUST output the Step 5 summary using ONLY the stats from the hook's systemMessage. Do NOT call any tools — no Read, no Glob, no Write, no Bash. The hook's stats are the single source of truth.
+**Remember**: The `sync-guides` hook handles ALL I/O before this command runs — guide sync, title extraction, repo info, template processing, project scanning, and manifest generation. The command MUST output the Step 5 summary using ONLY the stats from the hook's hook context. Do NOT call any tools — no Read, no Glob, no Write, no Bash. The hook's stats are the single source of truth.
