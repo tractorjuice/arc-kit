@@ -115,8 +115,9 @@ function extractRequirementDetails(content) {
     'DR': 'Data',
   };
 
-  // Pattern for requirement headings: ### BR-001: Description text
-  const headingRe = /^###\s+((?:BR|FR|NFR(?:-[A-Z]+)?|INT|DR)-\d{3}):\s*(.+)/;
+  // Pattern for requirement headings: ### or #### BR-001: Description text
+  // Template uses ### for BR, #### for FR/NFR/INT/DR — match both levels
+  const headingRe = /^#{3,4}\s+((?:BR|FR|NFR(?:-[A-Z]+)?|INT|DR)-\d{3}):\s*(.+)/;
   // Priority patterns in table rows or inline markers
   const priorityRe = /\b(MUST|SHOULD|MAY)\b/;
 
@@ -139,8 +140,8 @@ function extractRequirementDetails(content) {
     // Look for priority in the next ~10 lines (table rows, inline text)
     let priority = 'SHOULD'; // default
     for (let j = i + 1; j < Math.min(i + 11, lines.length); j++) {
-      // Stop if we hit another heading
-      if (/^###?\s+/.test(lines[j])) break;
+      // Stop if we hit another heading (h2, h3, or h4)
+      if (/^#{2,4}\s+/.test(lines[j])) break;
       const pMatch = lines[j].match(priorityRe);
       if (pMatch) {
         priority = pMatch[1];
@@ -151,20 +152,20 @@ function extractRequirementDetails(content) {
     requirements.push({ id, category, description, priority });
   }
 
-  // Fallback: if no heading-style requirements found, extract IDs from content
-  // and create minimal entries
-  if (requirements.length === 0) {
-    const ids = extractRequirementIds(content);
-    for (const id of ids) {
-      let category = 'Unknown';
-      for (const [prefix, cat] of Object.entries(categoryMap)) {
-        if (id.startsWith(prefix)) {
-          category = cat;
-          break;
-        }
+  // Merge: also extract IDs via regex to catch requirements not under headings
+  // (e.g. table rows, inline references, or unexpected heading levels)
+  const headingIds = new Set(requirements.map(r => r.id));
+  const allIds = extractRequirementIds(content);
+  for (const id of allIds) {
+    if (headingIds.has(id)) continue; // already captured via heading
+    let category = 'Unknown';
+    for (const [prefix, cat] of Object.entries(categoryMap)) {
+      if (id.startsWith(prefix)) {
+        category = cat;
+        break;
       }
-      requirements.push({ id, category, description: '(extracted from content)', priority: 'SHOULD' });
     }
+    requirements.push({ id, category, description: '(extracted from content)', priority: 'SHOULD' });
   }
 
   return requirements;
