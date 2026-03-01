@@ -4,14 +4,14 @@
  *
  * Fires on UserPromptSubmit for /arckit:health commands.
  * Pre-extracts metadata from all ARC-* artifacts and applies 7 detection
- * rules in Node.js, providing structured findings in the systemMessage.
+ * rules in Node.js, providing structured findings via additionalContext.
  * The command then just formats the console output.
  *
  * This follows the same pattern as sync-guides.mjs for /arckit:pages.
  *
  * Hook Type: UserPromptSubmit (sync, not async)
  * Input (stdin): JSON with prompt, cwd, etc.
- * Output (stdout): JSON with systemMessage containing structured findings
+ * Output (stdout): JSON with additionalContext containing structured findings
  */
 
 import { readFileSync, writeFileSync, statSync, readdirSync, mkdirSync } from 'node:fs';
@@ -628,7 +628,7 @@ if (args.json) {
   );
 }
 
-// Build systemMessage
+// Build additionalContext
 const lines = [];
 lines.push('## Health Pre-processor Complete (hook)');
 lines.push('');
@@ -693,7 +693,9 @@ if (args.json) {
 const message = lines.join('\n');
 
 const output = {
-  suppressOutput: true,
-  systemMessage: message,
+  hookSpecificOutput: {
+    hookEventName: 'UserPromptSubmit',
+    additionalContext: message,
+  },
 };
 console.log(JSON.stringify(output));

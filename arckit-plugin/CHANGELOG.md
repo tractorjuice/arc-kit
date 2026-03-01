@@ -5,6 +5,15 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.21.2] - 2026-03-01
+
+### Fixed
+
+- **Hook context not reaching Claude** — all 4 UserPromptSubmit hooks used `systemMessage` (which per docs is only "shown to user") instead of `additionalContext` (which is "added to Claude's context"). This caused Claude to ignore hook-injected instructions like "do not call tools" and redundantly read manifest.json. Switched to `hookSpecificOutput.additionalContext` in sync-guides, health-scan, traceability-scan, and arckit-context
+- **Research stats missing from pages output** — added Research row to the stats table in sync-guides.mjs
+
+---
+
 ## [2.21.1] - 2026-03-01
 
 ### Added

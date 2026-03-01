@@ -4,11 +4,11 @@
  *
  * Pre-computes project context when any /arckit: command is run.
  * Injects project inventory, artifact lists, and external documents
- * as a systemMessage so commands don't need to discover this themselves.
+ * via additionalContext so commands don't need to discover this themselves.
  *
  * Hook Type: UserPromptSubmit
  * Input (stdin): JSON with prompt, cwd, etc.
- * Output (stdout): JSON with systemMessage containing project context
+ * Output (stdout): JSON with additionalContext containing project context
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -276,7 +276,9 @@ if (isDir(policiesDir)) {
 const contextText = lines.join('\n');
 
 const output = {
-  suppressOutput: true,
-  systemMessage: contextText,
+  hookSpecificOutput: {
+    hookEventName: 'UserPromptSubmit',
+    additionalContext: contextText,
+  },
 };
 console.log(JSON.stringify(output));

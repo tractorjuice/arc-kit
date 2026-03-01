@@ -5,7 +5,7 @@
  * Fires on UserPromptSubmit for /arckit:traceability commands.
  * Pre-extracts all requirement IDs from REQ files, scans ADRs, vendor
  * HLD/DLD files, and review documents for cross-references, computes
- * coverage analysis, and injects structured data as a systemMessage.
+ * coverage analysis, and injects structured data via additionalContext.
  * The command then focuses on AI reasoning (building the matrix, writing
  * the report) rather than I/O.
  *
@@ -13,7 +13,7 @@
  *
  * Hook Type: UserPromptSubmit (sync, not async)
  * Input (stdin): JSON with prompt, cwd, etc.
- * Output (stdout): JSON with systemMessage containing structured findings
+ * Output (stdout): JSON with additionalContext containing structured findings
  */
 
 import { readFileSync, statSync, readdirSync } from 'node:fs';
@@ -545,7 +545,7 @@ const coverage = computeCoverage(allRequirements, refMap);
 const existingVersion = detectExistingTracVersion(projectDir);
 const suggestedVersion = suggestNextVersion(existingVersion);
 
-// Phase 5: Build systemMessage
+// Phase 5: Build additionalContext
 const lines = [];
 
 lines.push('## Traceability Pre-processor Complete (hook)');
@@ -662,7 +662,9 @@ lines.push('- **Write outputs** per the command instructions');
 const message = lines.join('\n');
 
 const output = {
-  suppressOutput: true,
-  systemMessage: message,
+  hookSpecificOutput: {
+    hookEventName: 'UserPromptSubmit',
+    additionalContext: message,
+  },
 };
 console.log(JSON.stringify(output));

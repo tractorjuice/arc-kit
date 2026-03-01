@@ -16,7 +16,7 @@
  *
  * Hook Type: UserPromptSubmit (sync, not async)
  * Input (stdin): JSON with prompt, cwd, etc.
- * Output (stdout): JSON with systemMessage containing summary
+ * Output (stdout): JSON with additionalContext containing summary
  */
 
 import { readFileSync, writeFileSync, mkdirSync, statSync, readdirSync } from 'node:fs';
@@ -654,6 +654,7 @@ const globalCount = manifest.global.length;
 let projectDocCount = 0;
 let diagramCount = 0;
 let adrCount = 0;
+let researchCount = 0;
 let vendorDocCount = 0;
 let vendorProfileCount = 0;
 let techNoteCount = 0;
@@ -661,6 +662,7 @@ for (const p of manifest.projects) {
   projectDocCount = projectDocCount + (p.documents ? p.documents.length : 0);
   diagramCount = diagramCount + (p.diagrams ? p.diagrams.length : 0);
   adrCount = adrCount + (p.decisions ? p.decisions.length : 0);
+  researchCount = researchCount + (p.research ? p.research.length : 0);
   if (p.vendors) for (const v of p.vendors) vendorDocCount = vendorDocCount + v.documents.length;
   vendorProfileCount = vendorProfileCount + (p.vendorProfiles ? p.vendorProfiles.length : 0);
   techNoteCount = techNoteCount + (p.techNotes ? p.techNotes.length : 0);
@@ -696,6 +698,7 @@ const message = [
   `| Project Documents | ${projectDocCount} |`,
   `| Diagrams | ${diagramCount} |`,
   `| ADRs | ${adrCount} |`,
+  `| Research | ${researchCount} |`,
   `| Vendor Documents | ${vendorDocCount} |`,
   `| Vendor Profiles | ${vendorProfileCount} |`,
   `| Tech Notes | ${techNoteCount} |`,
@@ -708,7 +711,9 @@ const message = [
 ].join('\n');
 
 const output = {
-  suppressOutput: true,
-  systemMessage: message,
+  hookSpecificOutput: {
+    hookEventName: 'UserPromptSubmit',
+    additionalContext: message,
+  },
 };
 console.log(JSON.stringify(output));
