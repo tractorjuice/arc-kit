@@ -15,7 +15,7 @@
  * 6. Scans projects/ → builds and writes docs/manifest.json
  *
  * Hook Type: UserPromptSubmit (sync, not async)
- * Input (stdin): JSON with user_prompt, cwd, etc.
+ * Input (stdin): JSON with prompt, cwd, etc.
  * Output (stdout): JSON with systemMessage containing summary
  */
 
@@ -361,6 +361,7 @@ function scanProject(repoRoot, projectName) {
     wardleyMaps: [],
     dataContracts: [],
     reviews: [],
+    research: [],
     vendors: [],
     vendorProfiles: [],
     techNotes: [],
@@ -388,6 +389,7 @@ function scanProject(repoRoot, projectName) {
     'wardley-maps': 'wardleyMaps',
     'data-contracts': 'dataContracts',
     'reviews': 'reviews',
+    'research': 'research',
   };
 
   for (const [dirName, key] of Object.entries(subdirMap)) {
@@ -484,7 +486,7 @@ function scanProject(repoRoot, projectName) {
   }
 
   // Remove empty arrays
-  for (const key of ['diagrams', 'decisions', 'wardleyMaps', 'dataContracts', 'reviews', 'vendors', 'vendorProfiles', 'techNotes', 'external']) {
+  for (const key of ['diagrams', 'decisions', 'wardleyMaps', 'dataContracts', 'reviews', 'research', 'vendors', 'vendorProfiles', 'techNotes', 'external']) {
     if (project[key].length === 0) delete project[key];
   }
 
@@ -544,11 +546,12 @@ try {
 
 // Guard: hooks.json matcher triggers on substring "/arckit:pages" which can
 // false-positive when another command's expanded body mentions /arckit:pages.
-// Accept raw slash command OR the Skill-expanded body (starts with frontmatter/heading).
-const userPrompt = data.user_prompt || '';
+// Accept raw slash command OR the Skill-expanded body (unique description/heading).
+// No ^ anchors — Skill tool may wrap the expanded body in XML tags.
+const userPrompt = data.prompt || '';
 const isRawCommand = /^\s*\/arckit[.:]+pages\b/i.test(userPrompt);
-const isExpandedBody = /^---\s*\n[\s\S]*?description:\s*Generate documentation site/i.test(userPrompt)
-  || /^#\s*ArcKit:\s*Documentation Site Generator/i.test(userPrompt);
+const isExpandedBody = /description:\s*Generate documentation site/i.test(userPrompt)
+  || /#\s*ArcKit:\s*Documentation Site Generator/i.test(userPrompt);
 if (!isRawCommand && !isExpandedBody) process.exit(0);
 
 // Resolve roots

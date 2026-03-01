@@ -10,7 +10,7 @@
  * This follows the same pattern as sync-guides.mjs for /arckit:pages.
  *
  * Hook Type: UserPromptSubmit (sync, not async)
- * Input (stdin): JSON with user_prompt, cwd, etc.
+ * Input (stdin): JSON with prompt, cwd, etc.
  * Output (stdout): JSON with systemMessage containing structured findings
  */
 
@@ -552,11 +552,12 @@ try {
 
 // Guard: hooks.json matcher triggers on substring "/arckit:health" which can
 // false-positive when another command's expanded body mentions /arckit:health.
-// Accept raw slash command OR the Skill-expanded body (starts with frontmatter/heading).
-const userPrompt = data.user_prompt || '';
+// Accept raw slash command OR the Skill-expanded body (unique description/heading).
+// No ^ anchors — Skill tool may wrap the expanded body in XML tags.
+const userPrompt = data.prompt || '';
 const isRawCommand = /^\s*\/arckit[.:]+health\b/i.test(userPrompt);
-const isExpandedBody = /^---\s*\n[\s\S]*?description:\s*Scan all projects for stale/i.test(userPrompt)
-  || /^#\s*Artifact Health Check/i.test(userPrompt);
+const isExpandedBody = /description:\s*Scan all projects for stale/i.test(userPrompt)
+  || /#\s*Artifact Health Check/i.test(userPrompt);
 if (!isRawCommand && !isExpandedBody) process.exit(0);
 
 // Parse arguments

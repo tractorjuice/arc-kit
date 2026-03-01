@@ -5,6 +5,20 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.21.1] - 2026-03-01
+
+### Added
+
+- **PostToolUse manifest hook** — `update-manifest.mjs` incrementally updates `docs/manifest.json` after every ARC file write, keeping the manifest current without re-running `/arckit:pages`
+
+### Fixed
+
+- **Research files missing from manifest** — cloud research agents (aws-research, azure-research, gcp-research) write to `projects/*/research/` but `sync-guides.mjs` didn't scan that subdirectory. Added `research` to the subdirMap. Affected at least 3 test repos (v7, v17, v18)
+- **UserPromptSubmit hooks read wrong field name** — all 5 hooks read `data.user_prompt` but the documented API field is `data.prompt`. Hooks silently got an empty string and exited. Fixed in arckit-context, sync-guides, health-scan, traceability-scan, and secret-detection
+- **Hook guards reject Skill-expanded body** — `^` anchors on `isExpandedBody` regex failed when the Skill tool prefixed/wrapped the expanded command body. Removed anchors; unique `description:` strings prevent false positives. Also discovered that `UserPromptSubmit` matchers in hooks.json are silently ignored per the docs — the internal guard is the sole gating mechanism
+
+---
+
 ## [2.21.0] - 2026-03-01
 
 ### Added

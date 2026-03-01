@@ -12,7 +12,7 @@
  * Follows the same pattern as health-scan.mjs for /arckit:health.
  *
  * Hook Type: UserPromptSubmit (sync, not async)
- * Input (stdin): JSON with user_prompt, cwd, etc.
+ * Input (stdin): JSON with prompt, cwd, etc.
  * Output (stdout): JSON with systemMessage containing structured findings
  */
 
@@ -463,11 +463,12 @@ try {
 
 // Guard: hooks.json matcher triggers on substring "/arckit:traceability" which can
 // false-positive when another command's expanded body mentions /arckit:traceability.
-// Accept raw slash command OR the Skill-expanded body (starts with frontmatter/heading).
-const userPrompt = data.user_prompt || '';
+// Accept raw slash command OR the Skill-expanded body (unique description/heading).
+// No ^ anchors — Skill tool may wrap the expanded body in XML tags.
+const userPrompt = data.prompt || '';
 const isRawCommand = /^\s*\/arckit[.:]+traceability\b/i.test(userPrompt);
-const isExpandedBody = /^---\s*\n[\s\S]*?description:\s*Generate requirements traceability/i.test(userPrompt)
-  || /^#\s*You are helping an enterprise architect/i.test(userPrompt);
+const isExpandedBody = /description:\s*Generate requirements traceability/i.test(userPrompt)
+  || /#\s*You are helping an enterprise architect/i.test(userPrompt);
 if (!isRawCommand && !isExpandedBody) process.exit(0);
 
 // Parse arguments

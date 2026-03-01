@@ -7,7 +7,7 @@
  * as a systemMessage so commands don't need to discover this themselves.
  *
  * Hook Type: UserPromptSubmit
- * Input (stdin): JSON with user_prompt, cwd, etc.
+ * Input (stdin): JSON with prompt, cwd, etc.
  * Output (stdout): JSON with systemMessage containing project context
  */
 
@@ -124,7 +124,7 @@ try {
   process.exit(0);
 }
 
-const userPrompt = data.user_prompt || '';
+const userPrompt = data.prompt || '';
 
 // Only run for /arckit: commands
 if (!userPrompt.startsWith('/arckit:')) process.exit(0);

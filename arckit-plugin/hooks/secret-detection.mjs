@@ -93,7 +93,7 @@ try {
   process.exit(0);
 }
 
-const prompt = inputData.userPrompt || '';
+const prompt = inputData.prompt || '';
 if (!prompt) {
   console.log('{}');
   process.exit(0);
