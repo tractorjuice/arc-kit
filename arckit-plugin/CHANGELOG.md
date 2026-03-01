@@ -5,6 +5,13 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.22.1] - 2026-03-01
+
+### Fixed
+
+- **Removed VERSION file reads from 5 agents** — arckit-research, arckit-datascout, arckit-aws-research, arckit-azure-research, and arckit-gcp-research no longer instruct the agent to read `${CLAUDE_PLUGIN_ROOT}/VERSION`; the ArcKit version is already provided via the `arckit-context` SessionStart hook, eliminating unnecessary file reads (and failed `echo $CLAUDE_PLUGIN_ROOT` attempts)
+- **Removed VERSION file read from start command** — `/arckit:start` now uses the ArcKit version from context instead of reading the VERSION file
+
 ## [2.22.0] - 2026-03-01
 
 ### Added

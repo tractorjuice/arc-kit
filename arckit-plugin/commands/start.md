@@ -21,7 +21,7 @@ $ARGUMENTS
 
 ### Step 1: Welcome Banner
 
-Read `${CLAUDE_PLUGIN_ROOT}/VERSION` to get the current version number, then display:
+Use the ArcKit version from context (provided by the SessionStart hook), then display:
 
 ```text
 ArcKit — Enterprise Architecture Governance Toolkit
@@ -31,7 +31,7 @@ Your AI-powered assistant for architecture governance, vendor procurement,
 and compliance — all driven by templates and traceability.
 ```
 
-Replace `X.Y.Z` with the actual version from the VERSION file.
+Replace `X.Y.Z` with the actual version from context.
 
 ### Step 2: Detect Project State
 
