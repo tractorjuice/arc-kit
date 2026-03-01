@@ -6,7 +6,7 @@ argument-hint: "<project ID, e.g. '001'>"
 
 You are helping an enterprise architect **generate a comprehensive project story** that documents the journey of an ArcKit-managed project from inception to completion, with heavy emphasis on timeline analysis and governance achievements.
 
-This command creates a **ARC-{PROJECT_ID}-STRY-v1.0.md** document that serves as:
+This command creates a **ARC-{PROJECT_ID}-STORY-v1.0.md** document that serves as:
 
 - A historical record of the project's evolution through the ArcKit governance framework
 - A detailed timeline analysis with multiple visualization types (Gantt, flowchart, table, pie chart)
@@ -647,7 +647,7 @@ Write comprehensive analysis sections:
 
 Before generating the document ID, check if a previous version exists:
 
-1. Look for existing `ARC-{PROJECT_ID}-STRY-v*.md` files in the project directory
+1. Look for existing `ARC-{PROJECT_ID}-STORY-v*.md` files in the project directory
 2. **If no existing file**: Use VERSION="1.0"
 3. **If existing file found**:
    - Read the existing document to understand its scope
@@ -661,7 +661,7 @@ Before generating the document ID, check if a previous version exists:
 
 Construct document control fields:
 
-- **Document ID**: `ARC-{PROJECT_ID}-STRY-v{VERSION}` (e.g., `ARC-001-STRY-v1.0`)
+- **Document ID**: `ARC-{PROJECT_ID}-STORY-v{VERSION}` (e.g., `ARC-001-STORY-v1.0`)
 - **Date Created**: Current date in YYYY-MM-DD format
 
 Document control fields:
@@ -722,15 +722,15 @@ Read the story template:
 - Ensure all tables are complete with real counts
 - Write full narrative paragraphs for each chapter with real project details
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **STRY** per-type checks pass. Fix any failures before proceeding.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **STORY** per-type checks pass. Fix any failures before proceeding.
 
-### Step 14: Write ARC-{PROJECT_ID}-STRY-v${VERSION}.md Using Write Tool
+### Step 14: Write ARC-{PROJECT_ID}-STORY-v${VERSION}.md Using Write Tool
 
 **CRITICAL**: Use the **Write tool** to create the document. Do NOT output the full content in your response.
 
 ```text
 Write tool:
-- file_path: projects/[PROJECT_ID]-[PROJECT_NAME]/ARC-{PROJECT_ID}-STRY-v1.0.md
+- file_path: projects/[PROJECT_ID]-[PROJECT_NAME]/ARC-{PROJECT_ID}-STORY-v1.0.md
 - content: [Full populated template with all placeholders replaced]
 ```
 
@@ -752,7 +752,7 @@ The document will be **2000-3000 lines** with:
 After writing the file, show the user a **concise summary** (NOT the full document):
 
 ```text
-✅ Project story generated: projects/001-cabinet-office-genai/ARC-001-STRY-v1.0.md
+✅ Project story generated: projects/001-cabinet-office-genai/ARC-001-STORY-v1.0.md
 
 📊 **Project Timeline Summary**
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -807,7 +807,7 @@ Governance & Traceability      4 days      5%
 📄 **Document Contents**
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-The 2,400-line ARC-{PROJECT_ID}-STRY-v1.0.md includes:
+The 2,400-line ARC-{PROJECT_ID}-STORY-v1.0.md includes:
 
 ✓ Executive summary with timeline snapshot
 ✓ 4 timeline visualizations (Gantt, flowchart, table, pie chart)
@@ -841,7 +841,7 @@ The story demonstrates systematic architecture governance from stakeholder needs
 
 1. **Prerequisites first**: Always check that architecture principles exist before generating a story. The principles command (`/arckit:principles`) is the foundation of the ArcKit governance framework and should be the FIRST command run in any project.
 
-2. **Use Write tool**: The ARC-{PROJECT_ID}-STRY-v1.0.md will be 2000-3000 lines. You MUST use the Write tool to avoid exceeding token limits.
+2. **Use Write tool**: The ARC-{PROJECT_ID}-STORY-v1.0.md will be 2000-3000 lines. You MUST use the Write tool to avoid exceeding token limits.
 
 3. **Real data only**: Replace ALL placeholders with real data extracted from artifacts. No "[PLACEHOLDER]" should remain in the final document.
 
@@ -883,7 +883,7 @@ cd projects/009-cabinet-office-genai
 ## Success Criteria
 
 - ✅ Prerequisites checked (architecture principles exist)
-- ✅ ARC-{PROJECT_ID}-STRY-v1.0.md created in project directory
+- ✅ ARC-{PROJECT_ID}-STORY-v1.0.md created in project directory
 - ✅ All timeline data extracted from git log or file dates
 - ✅ All placeholders replaced with real data
 - ✅ 4 timeline visualizations generated

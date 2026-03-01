@@ -713,15 +713,15 @@ Provide practical guidance for the assessment day:
 - Demonstrate user-centered thinking
 - Show iteration and learning
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SASS** per-type checks pass. Fix any failures before proceeding.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **SVCASS** per-type checks pass. Fix any failures before proceeding.
 
 ### Step 8: Write Assessment Preparation Report
 
 Generate a comprehensive markdown report saved to:
 
-**`projects/{project-dir}/ARC-{PROJECT_ID}-SASS-v1.0.md`**
+**`projects/{project-dir}/ARC-{PROJECT_ID}-SVCASS-v1.0.md`**
 
-Example: `projects/001-nhs-appointment/ARC-001-SASS-v1.0.md`
+Example: `projects/001-nhs-appointment/ARC-001-SVCASS-v1.0.md`
 
 ## Report Structure
 

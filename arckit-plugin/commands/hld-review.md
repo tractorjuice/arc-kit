@@ -223,9 +223,8 @@ The footer should be populated with:
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **HLDR** per-type checks pass. Fix any failures before proceeding.
 
-8. **Write outputs**:
-   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-HLDR-v1.0.md` - Full review report
-   - `projects/{project-dir}/ARC-{PROJECT_ID}-HLDR-SUM-v1.0.md` - Summary if comparing multiple vendors
+8. **Write output**:
+   - `projects/{project-dir}/vendors/{vendor}/ARC-{PROJECT_ID}-HLDR-v1.0.md` - Full review report (include vendor comparison summary section if reviewing multiple vendors)
    - Update traceability matrix with design references
 
    **CRITICAL - Show Summary Only**:

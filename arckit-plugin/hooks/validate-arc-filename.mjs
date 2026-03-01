@@ -29,7 +29,7 @@ const KNOWN_TYPES = new Set([
   'HLDR', 'DLDR', 'DATA', 'WARD', 'DIAG', 'DFD', 'ADR', 'TRAC', 'TCOP',
   'SECD', 'SECD-MOD', 'AIPB', 'ATRS', 'DPIA', 'JSP936', 'SVCASS', 'SNOW',
   'DEVOPS', 'MLOPS', 'FINOPS', 'OPS', 'PLAT', 'SOW', 'EVAL', 'DOS', 'GCLD', 'GCLC',
-  'DMC', 'RSCH', 'AWRS', 'AZRS', 'GCRS', 'DSCT', 'ANAL', 'GAPS', 'PRIN-COMP', 'VEND', 'CONF',
+  'DMC', 'RSCH', 'AWRS', 'AZRS', 'GCRS', 'DSCT', 'ANAL', 'GAPS', 'PRIN-COMP', 'VEND', 'CONF', 'PRES',
 ]);
 
 // Multi-instance types that require sequence numbers

@@ -327,10 +327,10 @@ Generate actionable next steps:
 
 ### 6. Generate Assessment Document
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PRCO** per-type checks pass. Fix any failures before proceeding.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **PRIN-COMP** per-type checks pass. Fix any failures before proceeding.
 
 Use the **Write tool** to create:
-`projects/{project-dir}/ARC-{PROJECT_ID}-PRCO-v1.0.md`
+`projects/{project-dir}/ARC-{PROJECT_ID}-PRIN-COMP-v1.0.md`
 
 **Document Structure** (see template below)
 

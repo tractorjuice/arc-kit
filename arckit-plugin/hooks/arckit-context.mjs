@@ -72,6 +72,7 @@ const DOC_TYPE_NAMES = {
   'ANAL': 'Analysis Report',
   'PRIN-COMP': 'Principles Compliance',
   'CONF': 'Conformance Assessment',
+  'PRES': 'Presentation',
 };
 
 // Multi-instance type regex

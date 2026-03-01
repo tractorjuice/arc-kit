@@ -65,7 +65,7 @@ Parse the user input for:
 
 **OPTIONAL** (read if available, skip silently if missing):
 
-- **DEVO** (DevOps Strategy) — Extract: CI/CD pipeline, deployment strategy, monitoring approach
+- **DEVOPS** (DevOps Strategy) — Extract: CI/CD pipeline, deployment strategy, monitoring approach
 - **TRAC** (Traceability Matrix) — Extract: Requirements-to-component mapping for runbook coverage
 - **DATA** (Data Model) — Extract: Data dependencies, backup requirements, retention policies
 - **STKE** (Stakeholder Analysis) — Extract: Stakeholder expectations, SLA requirements, support model preferences
@@ -302,12 +302,12 @@ Before saving, verify:
 
 ### Phase 5: Output
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **OPER** per-type checks pass. Fix any failures before proceeding.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **OPS** per-type checks pass. Fix any failures before proceeding.
 
 **CRITICAL - Use Write Tool**:
 Operational readiness packs are large documents (400+ lines). Use the Write tool to save the document to avoid token limits.
 
-1. **Save the file** to `projects/{project-name}/ARC-{PROJECT_ID}-OPER-v1.0.md`
+1. **Save the file** to `projects/{project-name}/ARC-{PROJECT_ID}-OPS-v1.0.md`
 
 2. **Provide summary** to user:
 
@@ -335,7 +335,7 @@ Operational readiness packs are large documents (400+ lines). Use the Write tool
 
 **Handover Readiness**: [X/Y] checklist items complete
 
-**File**: projects/{project-name}/ARC-{PROJECT_ID}-OPER-v1.0.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-OPS-v1.0.md
 
 **Next Steps**:
 1. Review SLOs with service owner
@@ -405,7 +405,7 @@ Operational readiness packs are large documents (400+ lines). Use the Write tool
 - `[PROJECT_ID]` → From project path
 - `[VERSION]` → "1.0" for new documents
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-OPER-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-OPER-v1.0.md`)
+- `ARC-[PROJECT_ID]-OPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-OPS-v1.0.md`)
 
 **Generation Metadata Footer**:
 

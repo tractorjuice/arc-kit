@@ -71,6 +71,7 @@ const DOC_TYPE_META = {
   'TRAC':      { category: 'Governance',    title: 'Traceability Matrix' },
   'PRIN-COMP': { category: 'Governance',    title: 'Principles Compliance' },
   'CONF':      { category: 'Governance',    title: 'Conformance Assessment' },
+  'PRES':      { category: 'Governance',    title: 'Presentation' },
   'ANAL':      { category: 'Governance',    title: 'Analysis Report' },
   // Compliance
   'TCOP':      { category: 'Compliance',    title: 'TCoP Assessment' },

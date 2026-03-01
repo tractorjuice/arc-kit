@@ -180,25 +180,25 @@ All artifacts must pass these 10 checks:
 - Algorithmic impact assessment completed with risk tier
 - Transparency statement written in plain language
 
-### DEVO -- DevOps Strategy
+### DEVOPS -- DevOps Strategy
 
 - CI/CD pipeline design described with stages
 - Environment strategy defined (dev, staging, prod)
 - Monitoring and observability approach included
 
-### MLOP -- MLOps Strategy
+### MLOPS -- MLOps Strategy
 
 - Model lifecycle stages defined (train, validate, deploy, monitor)
 - Model monitoring strategy with drift detection approach
 - Data pipeline and feature store design documented
 
-### FINO -- FinOps Strategy
+### FINOPS -- FinOps Strategy
 
 - Cost allocation model defined with tagging strategy
 - Optimization recommendations with estimated savings
 - Showback/chargeback approach documented
 
-### OPER -- Operational Readiness
+### OPS -- Operational Readiness
 
 - Runbook procedures defined for key operations
 - SLA/SLO targets set with measurement approach
@@ -222,13 +222,13 @@ All artifacts must pass these 10 checks:
 - Slide separators (`---`) used correctly between slides
 - Speaker notes included for each content slide
 
-### STRY -- Project Story
+### STORY -- Project Story
 
 - Narrative structure with clear beginning, middle, and end
 - Key metrics and measurable outcomes highlighted
 - Lessons learned section included
 
-### SASS -- Service Assessment
+### SVCASS -- Service Assessment
 
 - All 14 GDS Service Standard points addressed
 - Evidence provided for each assessment point
@@ -240,7 +240,7 @@ All artifacts must pass these 10 checks:
 - Assessment evidence documented per criterion
 - Non-conformance items have remediation plans with owners
 
-### PRCO -- Principles Compliance
+### PRIN-COMP -- Principles Compliance
 
 - Each architecture principle from ARC-000-PRIN assessed
 - Compliance evidence documented per principle

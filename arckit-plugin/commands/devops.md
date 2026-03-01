@@ -261,13 +261,13 @@ Verify before saving:
 - [ ] Secret management defined
 - [ ] Rollback procedures documented
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DEVO** per-type checks pass. Fix any failures before proceeding.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DEVOPS** per-type checks pass. Fix any failures before proceeding.
 
 ### Phase 5: Output
 
 **CRITICAL - Use Write Tool**: DevOps documents are large. Use Write tool to save.
 
-1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-DEVO-v1.0.md`
+1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-DEVOPS-v1.0.md`
 
 2. **Provide summary**:
 
@@ -298,7 +298,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 - Dependency Scanning: [Enabled]
 - Container Scanning: [Enabled]
 
-**File**: projects/{project-name}/ARC-{PROJECT_ID}-DEVO-v1.0.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-DEVOPS-v1.0.md
 
 **Next Steps**:
 1. Set up source control repository structure
@@ -360,7 +360,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 - `[PROJECT_ID]` → From project path
 - `[VERSION]` → "1.0" for new documents
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-DEVO-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-DEVO-v1.0.md`)
+- `ARC-[PROJECT_ID]-DEVOPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-DEVOPS-v1.0.md`)
 
 **Generation Metadata Footer**:
 

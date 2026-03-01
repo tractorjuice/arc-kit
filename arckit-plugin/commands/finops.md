@@ -237,9 +237,9 @@ Verify before saving:
 
 **CRITICAL - Use Write Tool**: FinOps documents are large. Use Write tool to save.
 
-Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FINO** per-type checks pass. Fix any failures before proceeding.
+Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **FINOPS** per-type checks pass. Fix any failures before proceeding.
 
-1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-FINO-v1.0.md`
+1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-FINOPS-v1.0.md`
 
 2. **Provide summary**:
 
@@ -268,7 +268,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 - Approval Threshold: [£X,XXX]
 - Budget Alerts: [X%, X%, X%]
 
-**File**: projects/{project-name}/ARC-{PROJECT_ID}-FINO-v1.0.md
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-FINOPS-v1.0.md
 
 **Next Steps**:
 1. Implement mandatory tagging policy
@@ -329,7 +329,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 - `[PROJECT_ID]` → From project path
 - `[VERSION]` → "1.0" for new documents
 - `[DATE]` → Current date (YYYY-MM-DD)
-- `ARC-[PROJECT_ID]-FINO-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-FINO-v1.0.md`)
+- `ARC-[PROJECT_ID]-FINOPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-FINOPS-v1.0.md`)
 
 **Generation Metadata Footer**:
 
