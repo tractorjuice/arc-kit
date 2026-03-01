@@ -172,17 +172,32 @@ for (const projectName of projectEntries) {
     lines.push('- **Artifacts**: none');
   }
 
-  // Check for vendor directories
+  // Check for vendor directories and profiles
   const vendorsDir = join(projectDir, 'vendors');
   if (isDir(vendorsDir)) {
-    const vendorList = [];
+    const vendorDirs = [];
+    const vendorProfiles = [];
     for (const vname of readdirSync(vendorsDir).sort()) {
       const vpath = join(vendorsDir, vname);
-      if (isDir(vpath)) vendorList.push(`  - ${vname}`);
+      if (isDir(vpath)) vendorDirs.push(`  - ${vname}`);
+      else if (isFile(vpath) && vname.endsWith('-profile.md')) vendorProfiles.push(`  - ${vname}`);
     }
-    if (vendorList.length > 0) {
-      lines.push(`- **Vendors** (${vendorList.length}):`);
-      lines.push(...vendorList);
+    if (vendorDirs.length > 0 || vendorProfiles.length > 0) {
+      lines.push(`- **Vendors** (${vendorDirs.length + vendorProfiles.length}):`);
+      lines.push(...vendorProfiles, ...vendorDirs);
+    }
+  }
+
+  // Check for tech notes
+  const techNotesDir = join(projectDir, 'tech-notes');
+  if (isDir(techNotesDir)) {
+    const noteList = [];
+    for (const f of readdirSync(techNotesDir).sort()) {
+      if (isFile(join(techNotesDir, f)) && f.endsWith('.md')) noteList.push(`  - ${f}`);
+    }
+    if (noteList.length > 0) {
+      lines.push(`- **Tech Notes** (${noteList.length}):`);
+      lines.push(...noteList);
     }
   }
 

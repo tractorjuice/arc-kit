@@ -5,6 +5,14 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.22.3] - 2026-03-01
+
+### Fixed
+
+- **Pages directory tree** — moved RSCH from project root to `research/` subdirectory; added all 5 research types (RSCH, DSCT, AWRS, AZRS, GCRS) with sequence numbers to the directory tree
+- **Health example filenames** — updated RSCH examples from `ARC-001-RSCH-v1.0.md` to `research/ARC-001-RSCH-001-v1.0.md`
+- **Context hook missing vendor profiles and tech notes** — `arckit-context.mjs` now lists flat vendor profile files (`*-profile.md`) alongside vendor subdirectories, and scans `tech-notes/` directory so spawned knowledge from research is visible in project inventory
+
 ## [2.22.2] - 2026-03-01
 
 ### Fixed

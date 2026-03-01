@@ -300,7 +300,7 @@ For each project:
 PROJECT: {project-dir}
   Artifacts scanned: {count}
 
-  [HIGH] STALE-RSCH: ARC-001-RSCH-v1.0.md
+  [HIGH] STALE-RSCH: research/ARC-001-RSCH-001-v1.0.md
     Last modified: 2025-06-15 (250 days ago)
     Action: Re-run /arckit:research to refresh pricing and vendor data
 
@@ -414,7 +414,7 @@ If the user specified `JSON=true`, write a machine-readable `docs/health.json` f
         {
           "severity": "HIGH",
           "rule": "STALE-RSCH",
-          "file": "ARC-001-RSCH-v1.0.md",
+          "file": "research/ARC-001-RSCH-001-v1.0.md",
           "message": "Last modified: 2025-06-15 (250 days ago)",
           "action": "Re-run /arckit:research to refresh pricing and vendor data"
         }

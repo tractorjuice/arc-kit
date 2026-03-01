@@ -132,7 +132,6 @@ projects/
 │   ├── ARC-001-RISK-v1.0.md     # Risk Register
 │   ├── ARC-001-SOBC-v1.0.md     # Strategic Outline Business Case
 │   ├── ARC-001-DATA-v1.0.md     # Data Model
-│   ├── ARC-001-RSCH-v1.0.md     # Research Findings
 │   ├── ARC-001-TRAC-v1.0.md     # Traceability Matrix
 │   ├── ARC-001-SOW-v1.0.md      # Statement of Work
 │   ├── ARC-001-EVAL-v1.0.md     # Evaluation Criteria
@@ -162,6 +161,12 @@ projects/
 │   │   └── ARC-001-WARD-{NNN}-v1.0.md  # Wardley Maps
 │   ├── data-contracts/
 │   │   └── ARC-001-DMC-{NNN}-v1.0.md   # Data Mesh Contracts
+│   ├── research/
+│   │   ├── ARC-001-RSCH-{NNN}-v1.0.md  # Research Findings
+│   │   ├── ARC-001-DSCT-{NNN}-v1.0.md  # Data Source Discovery
+│   │   ├── ARC-001-AWRS-{NNN}-v1.0.md  # AWS Research
+│   │   ├── ARC-001-AZRS-{NNN}-v1.0.md  # Azure Research
+│   │   └── ARC-001-GCRS-{NNN}-v1.0.md  # GCP Research
 │   ├── reviews/
 │   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
 │   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
