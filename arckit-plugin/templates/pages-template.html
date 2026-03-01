@@ -2081,20 +2081,8 @@
         // ============================================
         const CORE_ARTIFACTS = ['REQ', 'STKE', 'RISK', 'SOBC', 'PLAN', 'DATA'];
 
-        const TYPE_CATEGORIES = {
-            REQ: 'Discovery', STKE: 'Discovery', RSCH: 'Discovery', DSCT: 'Discovery',
-            SOBC: 'Planning', PLAN: 'Planning', ROAD: 'Planning', STRAT: 'Planning', BKLG: 'Planning',
-            PRIN: 'Architecture', HLDR: 'Architecture', DLDR: 'Architecture', DATA: 'Architecture',
-            WARD: 'Architecture', DIAG: 'Architecture', ADR: 'Architecture', PLAT: 'Architecture',
-            RISK: 'Governance', TRAC: 'Governance', 'PRIN-COMP': 'Governance', ANAL: 'Governance', PRES: 'Governance', CONF: 'Governance',
-            TCOP: 'Compliance', SECD: 'Compliance', 'SECD-MOD': 'Compliance', AIPB: 'Compliance',
-            ATRS: 'Compliance', DPIA: 'Compliance', JSP936: 'Compliance', SVCASS: 'Compliance',
-            SNOW: 'Operations', DEVOPS: 'Operations', MLOPS: 'Operations', FINOPS: 'Operations', OPS: 'Operations',
-            SOW: 'Procurement', EVAL: 'Procurement', DOS: 'Procurement', GCLD: 'Procurement',
-            GCLC: 'Procurement', DMC: 'Procurement',
-            AWRS: 'Research', AZRS: 'Research', GCRS: 'Research',
-            STORY: 'Other'
-        };
+        // Loaded from manifest.typeCategories (written by sync-guides hook from config/doc-types.mjs)
+        let TYPE_CATEGORIES = {};
 
         const CATEGORY_COLORS = {
             Discovery: '#1d70b8',
@@ -3394,6 +3382,11 @@
                     throw new Error('manifest.json not found');
                 }
                 manifest = await response.json();
+
+                // Populate TYPE_CATEGORIES from manifest (single source of truth: config/doc-types.mjs)
+                if (manifest.typeCategories) {
+                    TYPE_CATEGORIES = manifest.typeCategories;
+                }
 
                 // Optionally load health data (graceful if missing)
                 try {

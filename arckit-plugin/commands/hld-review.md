@@ -256,7 +256,7 @@ You should:
 - **Blocking items**:
   - [BLOCKING-01] Must add multi-AZ deployment for 99.99% uptime
   - [BLOCKING-02] Consider microservices migration path to avoid future tech debt
-- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/reviews/ARC-001-HLD-v1.0.md`
+- Write to `projects/001-payment-gateway/vendors/acme-payment-solutions/reviews/ARC-001-HLDR-v1.0.md`
 
 ## Important Notes
 

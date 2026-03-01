@@ -22,27 +22,7 @@
 
 import { readFileSync, readdirSync, mkdirSync } from 'node:fs';
 import { basename, dirname, join } from 'node:path';
-
-// All valid ArcKit document type codes (~47)
-const KNOWN_TYPES = new Set([
-  'PRIN', 'STKE', 'REQ', 'RISK', 'SOBC', 'PLAN', 'ROAD', 'STRAT', 'BKLG', 'STORY',
-  'HLDR', 'DLDR', 'DATA', 'WARD', 'DIAG', 'DFD', 'ADR', 'TRAC', 'TCOP',
-  'SECD', 'SECD-MOD', 'AIPB', 'ATRS', 'DPIA', 'JSP936', 'SVCASS', 'SNOW',
-  'DEVOPS', 'MLOPS', 'FINOPS', 'OPS', 'PLAT', 'SOW', 'EVAL', 'DOS', 'GCLD', 'GCLC',
-  'DMC', 'RSCH', 'AWRS', 'AZRS', 'GCRS', 'DSCT', 'ANAL', 'GAPS', 'PRIN-COMP', 'VEND', 'CONF', 'PRES',
-]);
-
-// Multi-instance types that require sequence numbers
-const MULTI_INSTANCE_TYPES = new Set(['ADR', 'DIAG', 'DFD', 'WARD', 'DMC']);
-
-// Multi-instance type -> required subdirectory
-const SUBDIR_MAP = {
-  'ADR': 'decisions',
-  'DIAG': 'diagrams',
-  'DFD': 'diagrams',
-  'WARD': 'wardley-maps',
-  'DMC': 'data-contracts',
-};
+import { KNOWN_TYPES, MULTI_INSTANCE_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
 
 // --- Main ---
 let raw = '';
@@ -148,9 +128,10 @@ const paddedPid = String(pidClean).padStart(3, '0');
 // --- Normalize version (ensure N.N format) ---
 const normVersion = /^\d+$/.test(rawVersion) ? `${rawVersion}.0` : rawVersion;
 
-// --- Handle multi-instance types (ADR, DIAG, DFD, WARD, DMC) ---
+// --- Route to correct directory and filename ---
 let correctedPath;
 if (MULTI_INSTANCE_TYPES.has(docType)) {
+  // Multi-instance types: route to subdirectory with sequence number
   const requiredSubdir = SUBDIR_MAP[docType];
   const targetDir = join(projectDir, requiredSubdir);
 
@@ -158,7 +139,6 @@ if (MULTI_INSTANCE_TYPES.has(docType)) {
     // Claude omitted sequence number - scan directory and assign next available
     mkdirSync(targetDir, { recursive: true });
     let lastNum = 0;
-    const patternPrefix = `ARC-${paddedPid}-${docType}-`;
 
     try {
       for (const fname of readdirSync(targetDir)) {
@@ -180,8 +160,15 @@ if (MULTI_INSTANCE_TYPES.has(docType)) {
 
   const correctedFilename = `ARC-${paddedPid}-${docType}-${seqNum}-v${normVersion}.md`;
   correctedPath = join(targetDir, correctedFilename);
+} else if (SUBDIR_MAP[docType]) {
+  // Single-instance type with required subdirectory (e.g. RSCH → research/)
+  const requiredSubdir = SUBDIR_MAP[docType];
+  const targetDir = join(projectDir, requiredSubdir);
+  mkdirSync(targetDir, { recursive: true });
+  const correctedFilename = `ARC-${paddedPid}-${docType}-v${normVersion}.md`;
+  correctedPath = join(targetDir, correctedFilename);
 } else {
-  // Single-instance type - keep directory as Claude specified, only correct filename
+  // Single-instance type in project root
   const correctedFilename = `ARC-${paddedPid}-${docType}-v${normVersion}.md`;
   correctedPath = join(dirpath, correctedFilename);
 }

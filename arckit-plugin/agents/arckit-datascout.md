@@ -359,23 +359,15 @@ Use Glob to find existing `projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v*.md` f
    - **Minor increment** (e.g., 1.0 → 1.1, 2.1 → 2.2): Use when the scope is unchanged — refreshed data, updated API details, corrected details, minor additions within existing categories
    - **Major increment** (e.g., 1.0 → 2.0, 1.3 → 2.0): Use when scope has materially changed — new data categories, removed categories, fundamentally different source recommendations, significant new requirements added since last version
 4. Use the determined version for ALL subsequent references:
-   - Document ID and filename (passed to generate-document-id.py)
+   - Document ID and filename: `ARC-{PROJECT_ID}-DSCT-v${VERSION}.md`
    - Document Control: Version field
    - Revision History: Add new row with version, date, "AI Agent", description of changes, "PENDING", "PENDING"
 
-### Step 15: Generate Document ID
-
-Run bash:
-
-```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/python/generate-document-id.py PROJECT_ID DSCT ${VERSION} --filename
-```
+### Step 15: Write the Document
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DSCT** per-type checks pass. Fix any failures before proceeding.
 
-### Step 16: Write the Document
-
-**Use the Write tool** to save the complete document to `projects/{project-dir}/ARC-{PROJECT_ID}-DSCT-v${VERSION}.md` following the template structure.
+**Use the Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-DSCT-v${VERSION}.md` following the template structure.
 
 Auto-populate fields:
 

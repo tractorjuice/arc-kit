@@ -22,6 +22,7 @@
 import { readFileSync, writeFileSync, mkdirSync, statSync, readdirSync } from 'node:fs';
 import { join, dirname, resolve, relative, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
 
 // ── Utility functions ──
 
@@ -106,66 +107,12 @@ function parseRepoInfo(repoRoot) {
   return info;
 }
 
-// ── Static data tables ──
+// ── Static data tables (derived from central config) ──
 
-const DOC_TYPE_META = {
-  // Discovery
-  'REQ':       { category: 'Discovery',     title: 'Requirements' },
-  'STKE':      { category: 'Discovery',     title: 'Stakeholder Drivers' },
-  'RSCH':      { category: 'Discovery',     title: 'Research Findings' },
-  // Planning
-  'SOBC':      { category: 'Planning',      title: 'Strategic Outline Business Case' },
-  'PLAN':      { category: 'Planning',      title: 'Project Plan' },
-  'ROAD':      { category: 'Planning',      title: 'Roadmap' },
-  'STRAT':     { category: 'Planning',      title: 'Architecture Strategy' },
-  'BKLG':      { category: 'Planning',      title: 'Product Backlog' },
-  // Architecture
-  'PRIN':      { category: 'Architecture',  title: 'Architecture Principles' },
-  'HLDR':      { category: 'Architecture',  title: 'High-Level Design Review' },
-  'DLDR':      { category: 'Architecture',  title: 'Detailed Design Review' },
-  'DATA':      { category: 'Architecture',  title: 'Data Model' },
-  'WARD':      { category: 'Architecture',  title: 'Wardley Map' },
-  'DIAG':      { category: 'Architecture',  title: 'Architecture Diagrams' },
-  'DFD':       { category: 'Architecture',  title: 'Data Flow Diagram' },
-  'ADR':       { category: 'Architecture',  title: 'Architecture Decision Records' },
-  // Governance
-  'RISK':      { category: 'Governance',    title: 'Risk Register' },
-  'TRAC':      { category: 'Governance',    title: 'Traceability Matrix' },
-  'PRIN-COMP': { category: 'Governance',    title: 'Principles Compliance' },
-  'CONF':      { category: 'Governance',    title: 'Conformance Assessment' },
-  'PRES':      { category: 'Governance',    title: 'Presentation' },
-  // Compliance
-  'TCOP':      { category: 'Compliance',    title: 'TCoP Assessment' },
-  'SECD':      { category: 'Compliance',    title: 'Secure by Design' },
-  'SECD-MOD':  { category: 'Compliance',    title: 'MOD Secure by Design' },
-  'AIPB':      { category: 'Compliance',    title: 'AI Playbook Assessment' },
-  'ATRS':      { category: 'Compliance',    title: 'ATRS Record' },
-  'DPIA':      { category: 'Compliance',    title: 'Data Protection Impact Assessment' },
-  'JSP936':    { category: 'Compliance',    title: 'JSP 936 Assessment' },
-  'SVCASS':    { category: 'Compliance',    title: 'Service Assessment' },
-  // Operations
-  'SNOW':      { category: 'Operations',    title: 'ServiceNow Design' },
-  'DEVOPS':    { category: 'Operations',    title: 'DevOps Strategy' },
-  'MLOPS':     { category: 'Operations',    title: 'MLOps Strategy' },
-  'FINOPS':    { category: 'Operations',    title: 'FinOps Strategy' },
-  'OPS':       { category: 'Operations',    title: 'Operational Readiness' },
-  'PLAT':      { category: 'Operations',    title: 'Platform Design' },
-  // Procurement
-  'SOW':       { category: 'Procurement',   title: 'Statement of Work' },
-  'EVAL':      { category: 'Procurement',   title: 'Evaluation Criteria' },
-  'DOS':       { category: 'Procurement',   title: 'DOS Requirements' },
-  'GCLD':      { category: 'Procurement',   title: 'G-Cloud Search' },
-  'GCLC':      { category: 'Procurement',   title: 'G-Cloud Clarifications' },
-  'DMC':       { category: 'Procurement',   title: 'Data Mesh Contract' },
-  // Research
-  'AWRS':      { category: 'Research',      title: 'AWS Research' },
-  'AZRS':      { category: 'Research',      title: 'Azure Research' },
-  'GCRS':      { category: 'Research',      title: 'GCP Research' },
-  'DSCT':      { category: 'Research',      title: 'Data Source Discovery' },
-  // Other
-  'STORY':     { category: 'Other',         title: 'Project Story' },
-  'ANAL':      { category: 'Governance',    title: 'Analysis Report' },
-};
+// DOC_TYPE_META: { code: { category, title } } — derived from DOC_TYPES
+const DOC_TYPE_META = Object.fromEntries(
+  Object.entries(DOC_TYPES).map(([code, { name, category }]) => [code, { category, title: name }])
+);
 
 const GUIDE_CATEGORIES = {
   'requirements': 'Discovery', 'stakeholders': 'Discovery', 'stakeholder-analysis': 'Discovery',
@@ -383,15 +330,13 @@ function scanProject(repoRoot, projectName) {
     });
   }
 
-  // Multi-instance subdirectories
-  const subdirMap = {
-    'diagrams': 'diagrams',
-    'decisions': 'decisions',
-    'wardley-maps': 'wardleyMaps',
-    'data-contracts': 'dataContracts',
-    'reviews': 'reviews',
-    'research': 'research',
-  };
+  // Subdirectories to scan: derived from SUBDIR_MAP values + reviews
+  // Maps directory name → manifest JSON key (camelCase)
+  const subdirMap = {};
+  for (const dir of new Set(Object.values(SUBDIR_MAP))) {
+    subdirMap[dir] = dir.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
+  }
+  subdirMap['reviews'] = 'reviews';
 
   for (const [dirName, key] of Object.entries(subdirMap)) {
     const subDir = join(projectDir, dirName);
@@ -520,6 +465,11 @@ function buildManifest(repoRoot, repoInfo, guideTitles) {
     roleGuides,
     global: globalDocs,
   };
+
+  // Type code → category map for client-side JS (pages-template.html can't import .mjs)
+  manifest.typeCategories = Object.fromEntries(
+    Object.entries(DOC_TYPES).map(([code, { category }]) => [code, category])
+  );
 
   if (globalExternal.length > 0) manifest.globalExternal = globalExternal;
   if (globalPolicies.length > 0) manifest.globalPolicies = globalPolicies;

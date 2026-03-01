@@ -5,6 +5,31 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.22.0] - 2026-03-01
+
+### Added
+
+- **Centralized doc type config** — single source of truth (`config/doc-types.mjs`) for all 49 document type codes, categories, multi-instance types, and subdirectory mappings. Replaces duplicated data across 5 hooks/templates
+- **Research subdirectory routing** — all research types (RSCH, AWRS, AZRS, GCRS, DSCT) now auto-route to `research/` with sequence numbers (e.g., `ARC-001-RSCH-001-v1.0.md`)
+- **`typeCategories` in manifest.json** — pages-template.html reads type-to-category mappings from the manifest instead of hardcoding them, staying in sync with the central config
+- **New doc type codes** — GAPS (Gap Analysis, Governance), VEND (Vendor Evaluation, Procurement) added with full metadata
+
+### Fixed
+
+- **HLD/DLD example filenames** — `ARC-001-HLD` → `ARC-001-HLDR`, `ARC-001-DLD` → `ARC-001-DLDR` in hld-review and dld-review commands
+- **DMC subdirectory** — `data-mesh-contracts/` → `data-contracts/` in data-mesh-contract command (4 occurrences)
+- **DSCT category** — standardized to Discovery (was inconsistent between hooks)
+- **PLAT category** — standardized to Architecture (was inconsistent between hooks)
+- **DFD missing from pages** — added to type categories
+
+### Changed
+
+- **Hooks import from config** — validate-arc-filename, arckit-context, sync-guides, and update-manifest now import `DOC_TYPES`, `SUBDIR_MAP`, `KNOWN_TYPES`, `MULTI_INSTANCE_TYPES` from `config/doc-types.mjs` instead of defining inline copies
+- **Subdirectory scan lists derived from config** — arckit-context, sync-guides, and update-manifest derive their subdirectory scan lists from `SUBDIR_MAP` instead of hardcoding them
+- **Agents use inline filenames** — removed `generate-document-id.py` calls from all 5 research agents; they now use inline filename patterns and write directly to `research/`, with the PreToolUse hook as safety net
+
+---
+
 ## [2.21.3] - 2026-03-01
 
 ### Fixed

@@ -13,6 +13,7 @@
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
+import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
 
 function isDir(p) {
   try { return statSync(p).isDirectory(); } catch { return false; }
@@ -24,62 +25,11 @@ function mtime(p) {
   try { return statSync(p).mtimeMs; } catch { return 0; }
 }
 
-// Doc type code to human-readable name mapping
-const DOC_TYPE_NAMES = {
-  'PRIN': 'Architecture Principles',
-  'STKE': 'Stakeholder Analysis',
-  'REQ': 'Requirements',
-  'RISK': 'Risk Register',
-  'SOBC': 'Business Case',
-  'PLAN': 'Project Plan',
-  'ROAD': 'Roadmap',
-  'STRAT': 'Architecture Strategy',
-  'BKLG': 'Product Backlog',
-  'HLDR': 'High-Level Design Review',
-  'DLDR': 'Detailed Design Review',
-  'DATA': 'Data Model',
-  'WARD': 'Wardley Map',
-  'DIAG': 'Architecture Diagram',
-  'DFD': 'Data Flow Diagram',
-  'ADR': 'Architecture Decision Record',
-  'TRAC': 'Traceability Matrix',
-  'TCOP': 'TCoP Assessment',
-  'SECD': 'Secure by Design',
-  'SECD-MOD': 'MOD Secure by Design',
-  'AIPB': 'AI Playbook Assessment',
-  'ATRS': 'ATRS Record',
-  'DPIA': 'Data Protection Impact Assessment',
-  'JSP936': 'JSP 936 Assessment',
-  'SVCASS': 'Service Assessment',
-  'SNOW': 'ServiceNow Design',
-  'DEVOPS': 'DevOps Strategy',
-  'MLOPS': 'MLOps Strategy',
-  'FINOPS': 'FinOps Strategy',
-  'OPS': 'Operational Readiness',
-  'PLAT': 'Platform Design',
-  'SOW': 'Statement of Work',
-  'EVAL': 'Evaluation Criteria',
-  'DOS': 'DOS Requirements',
-  'GCLD': 'G-Cloud Search',
-  'GCLC': 'G-Cloud Clarifications',
-  'DMC': 'Data Mesh Contract',
-  'RSCH': 'Research Findings',
-  'AWRS': 'AWS Research',
-  'AZRS': 'Azure Research',
-  'GCRS': 'GCP Research',
-  'DSCT': 'Data Source Discovery',
-  'STORY': 'Project Story',
-  'ANAL': 'Analysis Report',
-  'PRIN-COMP': 'Principles Compliance',
-  'CONF': 'Conformance Assessment',
-  'PRES': 'Presentation',
-};
-
 // Multi-instance type regex
 const MULTI_INSTANCE_RE = /^([A-Z]+-?[A-Z]*)-\d{3}$/;
 
 function docTypeName(code) {
-  return DOC_TYPE_NAMES[code] || code;
+  return DOC_TYPES[code]?.name || code;
 }
 
 function extractDocType(filename) {
@@ -196,8 +146,9 @@ for (const projectName of projectEntries) {
     }
   }
 
-  // Also scan subdirectories
-  for (const subdir of ['decisions', 'diagrams', 'wardley-maps', 'data-contracts', 'reviews']) {
+  // Also scan subdirectories (derived from SUBDIR_MAP + reviews)
+  const subdirs = [...new Set(Object.values(SUBDIR_MAP)), 'reviews'];
+  for (const subdir of subdirs) {
     const subPath = join(projectDir, subdir);
     if (isDir(subPath)) {
       for (const f of readdirSync(subPath).sort()) {

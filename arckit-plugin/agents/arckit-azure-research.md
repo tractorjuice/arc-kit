@@ -196,21 +196,15 @@ Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS
    - **Minor increment** (e.g., 1.0 → 1.1, 2.1 → 2.2): Use when the scope is unchanged — refreshed pricing, updated service features, corrected details, minor additions within existing categories
    - **Major increment** (e.g., 1.0 → 2.0, 1.3 → 2.0): Use when scope has materially changed — new requirement categories, removed categories, fundamentally different service recommendations, significant new requirements added since last version
 4. Use the determined version for ALL subsequent references:
-   - Document ID and filename (passed to generate-document-id.py)
+   - Document ID and filename: `ARC-{PROJECT_ID}-AZRS-v${VERSION}.md`
    - Document Control: Version field
    - Revision History: Add new row with version, date, "AI Agent", description of changes, "PENDING", "PENDING"
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **AZRS** per-type checks pass. Fix any failures before proceeding.
 
-### Step 10: Generate Document ID and Write Output
+### Step 10: Write Output
 
-Run bash:
-
-```bash
-${CLAUDE_PLUGIN_ROOT}/scripts/python/generate-document-id.py PROJECT_ID AZRS ${VERSION} --filename
-```
-
-Create `research/` subdirectory if needed, then **use the Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v${VERSION}.md` following the template structure.
+**Use the Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-AZRS-v${VERSION}.md` following the template structure.
 
 Auto-populate fields:
 

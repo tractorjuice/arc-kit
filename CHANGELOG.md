@@ -5,6 +5,26 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.22.0] - 2026-03-01
+
+### Added
+
+- **Centralized doc type config** — `arckit-plugin/config/doc-types.mjs` is the single source of truth for all 49 document type codes, replacing duplicated data across 5+ files
+- **Research subdirectory routing** — research types (RSCH, AWRS, AZRS, GCRS, DSCT) are now multi-instance and auto-route to `research/` with sequence numbers
+- **GAPS and VEND doc type codes** — Gap Analysis (Governance) and Vendor Evaluation (Procurement)
+
+### Fixed
+
+- **Command filename mismatches** — HLD→HLDR, DLD→DLDR, `data-mesh-contracts/`→`data-contracts/`
+- **Inconsistent categories** — DSCT (Discovery), PLAT (Architecture), DFD (Architecture) standardized across all hooks
+
+### Changed
+
+- **Research agents use inline filenames** — removed `generate-document-id.py` calls from 5 agents; PreToolUse hook handles filename correction
+- **Multi-instance types updated** — `generate-document-id.sh` and `.py` (both copies) now list all 10 multi-instance types
+
+---
+
 ## [2.21.0] - 2026-03-01
 
 ### Added
