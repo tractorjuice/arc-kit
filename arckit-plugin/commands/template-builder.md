@@ -1,7 +1,7 @@
 ---
 description: Create new document templates by interviewing the user about their organization's requirements
 allowed-tools: Read, Write, AskUserQuestion
-argument-hint: "<template type, e.g. 'security assessment', 'vendor scorecard', 'migration checklist'>"
+argument-hint: "<template type> [--share], e.g. 'security assessment', 'vendor scorecard --share'"
 handoffs:
   - command: customize
     description: Copy and modify existing official templates instead of creating new ones
@@ -40,6 +40,8 @@ ArcKit uses three origin tiers for all templates and guides:
 ### Step 1: Parse User Input
 
 Extract the template type from `$ARGUMENTS`. If blank or vague, ask the user what kind of document template they want to create.
+
+Check for the `--share` flag in arguments. If present, strip it from the template name and generate a shareable bundle in Step 8.
 
 Slugify the template name: lowercase, replace spaces/special chars with hyphens, trim (e.g., "Security Assessment" -> "security-assessment").
 
@@ -104,10 +106,9 @@ Apply the user's selections: the category determines the template's major sectio
 > "What additional outputs would you like?"
 
 - **Slash Command**: Generate a matching `/arckit.community.{name}` command file
-- **Shareable Bundle**: Create an export bundle for sharing with others
 - **Minimal Template**: Skip optional sections, keep it lean
 
-Apply the user's selections: the organizational context determines compliance sections and terminology. The additional outputs control which files are generated in Steps 7-8.
+Apply the user's selections: the organizational context determines compliance sections and terminology. "Slash Command" controls whether Step 7 runs. The `--share` flag (from Step 1) controls whether Step 8 runs.
 
 ### Step 5: Generate the Template
 
@@ -268,7 +269,7 @@ $ARGUMENTS
 
 ### Step 8: Generate Optional Shareable Bundle
 
-If the user selected "Shareable Bundle" in Round 2, create the bundle directory:
+If the user passed `--share` in their arguments, create the bundle directory:
 
 - `.arckit/community/{name}/README.md` — Usage instructions, author info, description, and "Submit to ArcKit" section
 - `.arckit/community/{name}/{name}-template.md` — Copy of the template

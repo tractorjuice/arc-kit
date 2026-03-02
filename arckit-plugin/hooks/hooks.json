@@ -109,6 +109,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "AskUserQuestion",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"decision\":\"allow\",\"reason\":\"ArcKit: auto-allowed interactive question tool\"}'",
+            "timeout": 2
+          }
+        ]
       }
     ]
   }
