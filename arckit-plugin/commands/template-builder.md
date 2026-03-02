@@ -1,6 +1,6 @@
 ---
 description: Create new document templates by interviewing the user about their organization's requirements
-allowed-tools: Read, Write, AskUserQuestion
+allowed-tools: Read, Write
 argument-hint: "<template type> [--share], e.g. 'security assessment', 'vendor scorecard --share'"
 handoffs:
   - command: customize
@@ -47,39 +47,35 @@ Slugify the template name: lowercase, replace spaces/special chars with hyphens,
 
 ### Step 2: Interview the User
 
-Ask these questions BEFORE reading any templates. Call the **AskUserQuestion** tool exactly once with all 4 questions below in a single call. Do NOT proceed until the user has answered.
+Ask these questions BEFORE reading any templates. Present them as a numbered list in plain text and **STOP**. Wait for the user to reply before continuing. Do NOT proceed to Step 3 until the user has answered.
 
-**Question 1** — header: `Category`, multiSelect: false
-> "What category best describes this template?"
+Ask exactly this:
 
-- **Governance (Recommended)**: Compliance assessments, audits, policy reviews
-- **Technical**: Architecture patterns, design specs, technical evaluations
-- **Procurement**: Vendor assessments, scoring matrices, contract templates
-- **Strategy**: Roadmaps, capability assessments, transformation plans
+```text
+Before I generate your template, I need a few details:
 
-**Question 2** — header: `Elements`, multiSelect: true
-> "Which structural elements should the template include?"
+1. **Category** — Which best describes this template?
+   a) Governance (compliance, audits, policy reviews)
+   b) Technical (architecture patterns, design specs)
+   c) Procurement (vendor assessments, scoring matrices)
+   d) Strategy (roadmaps, capability assessments)
 
-- **Scoring/Rating Matrix**: Quantitative scoring with weighted criteria
-- **Compliance Checklist**: Pass/fail items against a framework or standard
-- **Approval Workflow**: Sign-off gates, review stages, escalation paths
-- **Risk Assessment**: Risk identification, likelihood, impact, mitigations
+2. **Structural elements** — Which should the template include? (pick any)
+   a) Scoring/Rating Matrix
+   b) Compliance Checklist
+   c) Approval Workflow
+   d) Risk Assessment
 
-**Question 3** — header: `Context`, multiSelect: false
-> "What organizational context should the template support?"
+3. **Organizational context** — What context should it support?
+   a) UK Government (GDS, TCoP, Orange/Green Book)
+   b) Enterprise/Corporate
+   c) Regulated Industry (financial, healthcare, defence)
+   d) Technology Startup
 
-- **UK Government (Recommended)**: GDS, TCoP, Orange/Green Book alignment
-- **Enterprise/Corporate**: Standard corporate governance
-- **Regulated Industry**: Financial services, healthcare, defence compliance
-- **Technology Startup**: Lightweight, agile-friendly documentation
+4. **Slash command** — Should I also generate a reusable `/arckit.community.{name}` command? (yes/no)
+```
 
-**Question 4** — header: `Outputs`, multiSelect: true
-> "What additional outputs would you like?"
-
-- **Slash Command**: Generate a matching `/arckit.community.{name}` command file
-- **Minimal Template**: Skip optional sections, keep it lean
-
-Apply the user's selections: the category determines the template's major sections. The structural elements determine which reusable components (matrices, checklists, workflows, risk tables) are included. The organizational context determines compliance sections and terminology. If "Slash Command" is selected, generate a command file in Step 6. If the user passed `--share`, generate a bundle in Step 7.
+After the user replies, apply their selections: the category determines the template's major sections. The structural elements determine which reusable components are included. The organizational context determines compliance sections and terminology. If they want a slash command, generate one in Step 6. If the user passed `--share`, generate a bundle in Step 7.
 
 ### Step 3: Read Reference Templates
 
