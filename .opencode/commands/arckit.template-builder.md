@@ -37,7 +37,27 @@ Extract the template type from `$ARGUMENTS`. If blank or vague, ask the user wha
 
 Slugify the template name: lowercase, replace spaces/special chars with hyphens, trim (e.g., "Security Assessment" -> "security-assessment").
 
-### Step 2: Interview Round 1 (Purpose & Structure)
+### Step 2: Read Reference Templates
+
+Read 2-3 existing official templates to understand the standard format. Use the Read tool only — do NOT use Bash, Glob, or Agent to search for templates.
+
+**Always read**:
+
+- `.arckit/templates/requirements-template.md` (canonical Document Control + structure)
+- `.arckit/templates/risk-register-template.md` (scoring/rating tables)
+
+**Read a third if relevant** to the user's requested type:
+
+- Security/compliance: `.arckit/templates/conformance-assessment-template.md`
+- Vendor/procurement: `.arckit/templates/evaluation-criteria-template.md`
+- Strategy/roadmap: `.arckit/templates/architecture-strategy-template.md`
+- Data/privacy: `.arckit/templates/dpia-template.md`
+- Operations/DevOps: `.arckit/templates/devops-template.md`
+- Cloud research: `.arckit/templates/aws-research-template.md`
+
+Extract the standard patterns: Document Control table, Revision History table, section structure, and generation metadata footer.
+
+### Step 3: Interview Round 1 (Purpose & Structure)
 
 Before generating the template, use the **AskUserQuestion** tool to gather user preferences. **Skip any question where the user has already specified their preference in the arguments.**
 
@@ -64,7 +84,7 @@ Before generating the template, use the **AskUserQuestion** tool to gather user 
 
 Apply the user's selections: the category determines the template's major sections. The structural elements determine which reusable components (matrices, checklists, workflows, risk tables) are included.
 
-### Step 3: Interview Round 2 (Context & Options)
+### Step 4: Interview Round 2 (Context & Options)
 
 **Question 1** — header: `Context`, multiSelect: false
 > "What organizational context should the template support?"
@@ -81,9 +101,9 @@ Apply the user's selections: the category determines the template's major sectio
 - **Shareable Bundle**: Create an export bundle for sharing with others
 - **Minimal Template**: Skip optional sections, keep it lean
 
-Apply the user's selections: the organizational context determines compliance sections and terminology. The additional outputs control which files are generated in Steps 6-7.
+Apply the user's selections: the organizational context determines compliance sections and terminology. The additional outputs control which files are generated in Steps 7-8.
 
-### Step 4: Generate the Template
+### Step 5: Generate the Template
 
 Create the template file at `.arckit/templates-custom/{name}-template.md` using the Write tool.
 
@@ -142,7 +162,7 @@ Create the template file at `.arckit/templates-custom/{name}-template.md` using 
 
 **TYPE_CODE**: Generate a short 3-5 character uppercase code for the document type (e.g., "SECAS" for Security Assessment, "VSCR" for Vendor Scorecard). Ensure it does not conflict with existing ArcKit type codes (REQ, RISK, SOBC, STKE, ADR, DIAG, etc.).
 
-### Step 5: Generate the Usage Guide
+### Step 6: Generate the Usage Guide
 
 Create a usage guide at `.arckit/guides-custom/{name}.md` using the Write tool.
 
@@ -202,7 +222,7 @@ For official promotion: rename command (drop `community.` prefix), change banner
 
 ```text
 
-### Step 6: Generate Optional Slash Command
+### Step 7: Generate Optional Slash Command
 
 If the user selected "Slash Command" in Round 2, create `.arckit/commands-custom/community.{name}.md` using the Write tool.
 
@@ -240,7 +260,7 @@ $ARGUMENTS
 
 ```text
 
-### Step 7: Generate Optional Shareable Bundle
+### Step 8: Generate Optional Shareable Bundle
 
 If the user selected "Shareable Bundle" in Round 2, create the bundle directory:
 
@@ -281,7 +301,7 @@ To propose this template for official inclusion:
 7. Open a PR with description of the template's purpose
 ```
 
-### Step 8: Show Summary
+### Step 9: Show Summary
 
 After writing all files, show ONLY this summary:
 
