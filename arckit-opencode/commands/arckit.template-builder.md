@@ -41,7 +41,9 @@ Slugify the template name: lowercase, replace spaces/special chars with hyphens,
 
 ### Step 2: Interview Round 1 (Purpose & Structure)
 
-**IMPORTANT**: Ask these questions BEFORE reading any templates. Use the **AskUserQuestion** tool now.
+**CRITICAL: Each interview round MUST be a separate AskUserQuestion tool call. You MUST wait for the user's response to Round 1 before proceeding to Round 2. Never call AskUserQuestion more than once in the same response.**
+
+Ask these questions BEFORE reading any templates. Use the **AskUserQuestion** tool now.
 
 **Gathering rules** (apply to all questions):
 
