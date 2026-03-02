@@ -1,6 +1,6 @@
 # Architecture Governance Analysis Report: [PROJECT_NAME]
 
-> **Template Status**: Beta | **ArcKit Version**: [VERSION] | **Command**: `/arckit.analyze`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.analyze`
 
 ## Document Control
 

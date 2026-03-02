@@ -1,6 +1,6 @@
 # Risk Register
 
-> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.risk`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.risk`
 
 ## Document Control
 

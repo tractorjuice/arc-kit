@@ -1,5 +1,7 @@
 # Trello Export Quick Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 Export your ArcKit product backlog to a Trello board with `/arckit.trello`. The command reads the JSON output from `/arckit.backlog FORMAT=json` and creates a fully structured board with sprint lists, labelled cards, and acceptance criteria checklists.
 
 ---

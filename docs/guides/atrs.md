@@ -1,5 +1,7 @@
 # Algorithmic Transparency Recording Standard Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.atrs` generates an Algorithmic Transparency Recording Standard (ATRS) record for AI and algorithmic tools used in public services.
 
 ---

@@ -1,5 +1,7 @@
 # GitHub Pages Generator Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.pages` generates a GitHub Pages documentation site that displays all project documents with Mermaid diagram support.
 
 ---

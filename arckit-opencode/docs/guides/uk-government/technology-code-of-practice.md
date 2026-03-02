@@ -1,5 +1,7 @@
 # Technology Code of Practice (TCoP) Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.tcop` assembles evidence for the 13-point Technology Code of Practice, flagging gaps and recommended actions.
 
 ---

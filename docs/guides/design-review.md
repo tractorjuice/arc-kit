@@ -1,5 +1,7 @@
 # Design Review Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 Run `/arckit.hld-review` and `/arckit.dld-review` to apply structured quality gates before delivery teams start building.
 
 ---

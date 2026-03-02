@@ -1,5 +1,7 @@
 # Getting Started with ArcKit
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.start` and `/arckit.init` are your entry points to ArcKit. Start gives you orientation and routes you to the right workflow; init creates the project structure.
 
 ---

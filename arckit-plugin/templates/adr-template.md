@@ -1,6 +1,6 @@
 # Architecture Decision Record: [DECISION_TITLE]
 
-> **Template Status**: Beta | **ArcKit Version**: [VERSION] | **Command**: `/arckit.adr`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.adr`
 
 ## Document Control
 

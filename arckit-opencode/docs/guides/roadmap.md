@@ -1,5 +1,7 @@
 # Architecture Roadmap Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.roadmap` creates a multi-year architecture roadmap that links current-state constraints to future-state capabilities, governance milestones, and funding cycles.
 
 ---

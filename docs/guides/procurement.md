@@ -1,5 +1,7 @@
 # Vendor Procurement Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 ArcKit streamlines procurement through three commands:
 
 | Need | Command | Output |

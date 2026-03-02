@@ -1,5 +1,7 @@
 # Platform Strategy Design Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.platform-design` designs multi-sided platforms using Platform Design Toolkit (PDT) methodology with 8 canvases for ecosystem analysis.
 
 ---

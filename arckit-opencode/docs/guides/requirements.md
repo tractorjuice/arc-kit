@@ -1,5 +1,7 @@
 # Requirements Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.requirements` produces a single living document covering business, functional, non-functional, integration, and data requirements.
 
 ---

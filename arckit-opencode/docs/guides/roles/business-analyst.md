@@ -1,5 +1,7 @@
 # Business Analyst — ArcKit Command Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 > **DDaT Role Family**: [Product and Delivery](https://ddat-capability-framework.service.gov.uk/role/business-analyst)
 > **Framework**: [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/)
 

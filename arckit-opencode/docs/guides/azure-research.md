@@ -1,5 +1,7 @@
 # Azure Technology Research Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.azure-research` researches Azure services, architecture patterns, and implementation guidance using the Microsoft Learn MCP server for authoritative documentation.
 
 > **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather Azure documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.

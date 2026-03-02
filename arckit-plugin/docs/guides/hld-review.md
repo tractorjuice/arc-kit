@@ -1,5 +1,7 @@
 # High-Level Design Review Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.hld-review` reviews a High-Level Design (HLD) against architecture principles, requirements, and governance standards.
 
 ---

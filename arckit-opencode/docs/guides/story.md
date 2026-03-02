@@ -1,5 +1,7 @@
 # Project Story Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.story` produces a narrative history of your project—ideal for gate packs, retrospectives, and knowledge transfer.
 
 ---

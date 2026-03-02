@@ -1,5 +1,7 @@
 # UK Government Secure by Design Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.secure` captures NCSC Secure by Design, Cyber Essentials, and GDPR evidence for civilian (non-MOD) services.
 
 ---

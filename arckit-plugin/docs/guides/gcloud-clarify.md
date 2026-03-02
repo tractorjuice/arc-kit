@@ -1,5 +1,7 @@
 # G-Cloud Clarification Questions Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.gcloud-clarify` analyzes G-Cloud service gaps and generates supplier clarification questions for procurement.
 
 ---

@@ -1,5 +1,7 @@
 # UK Government AI Playbook Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.ai-playbook` documents compliance with the UK Government AI Playbook’s 10 principles and 6 ethical themes.
 
 ---

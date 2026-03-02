@@ -1,5 +1,7 @@
 # Data Source Discovery Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.datascout` discovers external data sources — APIs, datasets, open data portals, and commercial providers — that can fulfil a project's data and integration requirements.
 
 > **Agent Architecture**: This command delegates to the `arckit-datascout` autonomous agent. The agent runs as a subprocess with its own context window, searching api.gov.uk, data.gov.uk, department developer hubs, and commercial API providers without polluting your main conversation. The slash command launches the agent and relays its summary back to you.

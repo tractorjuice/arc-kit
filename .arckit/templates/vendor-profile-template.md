@@ -1,6 +1,6 @@
 # Vendor Profile: {VENDOR_NAME}
 
-> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.research`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.research`
 
 ## Document Control
 

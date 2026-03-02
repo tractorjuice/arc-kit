@@ -1,6 +1,6 @@
 # High-Level Design (HLD) Review: [PROJECT_NAME]
 
-> **Template Status**: Beta | **ArcKit Version**: [VERSION] | **Command**: `/arckit.hld-review`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.hld-review`
 
 ## Document Control
 

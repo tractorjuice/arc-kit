@@ -1,5 +1,7 @@
 # Stakeholder Analysis Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.stakeholders` analyzes stakeholder drivers, goals, and measurable outcomes to establish project foundation.
 
 ---

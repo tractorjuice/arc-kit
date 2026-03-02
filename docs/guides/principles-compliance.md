@@ -1,5 +1,7 @@
 # Principles Compliance Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.principles-compliance` scores each architecture principle defined in `projects/000-global/ARC-000-PRIN-v1.0.md`, producing a RAG status with evidence and actions.
 
 ---

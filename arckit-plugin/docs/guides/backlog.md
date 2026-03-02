@@ -1,5 +1,7 @@
 # Product Backlog Quick Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 Generate a sprint-ready backlog from existing ArcKit artefacts with `/arckit.backlog`. The command converts requirements into groomed stories, groups them into sprints, and exports markdown, CSV, and JSON for tooling.
 
 ---

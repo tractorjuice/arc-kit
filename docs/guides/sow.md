@@ -1,5 +1,7 @@
 # Statement of Work Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.sow` generates a Statement of Work (SOW) or RFP document for vendor procurement.
 
 ---

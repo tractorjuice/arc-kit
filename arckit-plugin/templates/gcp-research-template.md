@@ -1,6 +1,6 @@
 # Google Cloud Technology Research: [PROJECT_NAME]
 
-> **Template Status**: Experimental | **ArcKit Version**: [VERSION] | **Command**: `/arckit.gcp-research`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.gcp-research`
 
 ## Document Control
 

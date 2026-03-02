@@ -1,6 +1,6 @@
 # UK Digital Marketplace: G-Cloud Service Procurement
 
-> **Template Status**: Beta | **ArcKit Version**: [VERSION] | **Command**: `/arckit.gcloud-search`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.gcloud-search`
 
 ## Document Control
 

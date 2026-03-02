@@ -1,5 +1,7 @@
 # Strategic Outline Business Case Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.sobc` creates a Strategic Outline Business Case (SOBC) using the UK Government Green Book 5-case model.
 
 ---

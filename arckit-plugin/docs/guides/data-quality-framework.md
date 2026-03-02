@@ -1,5 +1,7 @@
 # UK Government Data Quality Framework — ArcKit Reference Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 This guide maps the [Government Data Quality Framework](https://www.gov.uk/government/publications/the-government-data-quality-framework/the-government-data-quality-framework) (DQF) to ArcKit commands and artefacts. The DQF is published by the Government Data Quality Hub and provides principles, dimensions, and practical tools for managing data quality across government.
 
 ---

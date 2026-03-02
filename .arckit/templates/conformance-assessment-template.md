@@ -1,6 +1,6 @@
 # Architecture Conformance Assessment
 
-> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.conformance`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.conformance`
 
 ## Document Control
 

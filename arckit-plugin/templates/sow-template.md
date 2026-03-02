@@ -1,6 +1,6 @@
 # Statement of Work (SOW): [PROJECT_NAME]
 
-> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.sow`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.sow`
 
 ## Document Control
 

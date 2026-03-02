@@ -1,5 +1,7 @@
 # ServiceNow Service Design Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.servicenow` creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.
 
 ---

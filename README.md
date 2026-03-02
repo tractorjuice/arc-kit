@@ -40,7 +40,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 53 commands, 5 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 54 commands, 5 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
 > **Why v2.1.63?** This version fixes memory leaks in subagents and long-running sessions (critical for ArcKit's 5 research agents), resolves MCP server cache leaks on reconnect (affects all 4 bundled MCP servers), fixes stale skill caching after `/clear`, and adds worktree config sharing.
 
@@ -50,7 +50,7 @@ Then install from the Discover tab. Claude Code is the **primary development pla
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
-Zero-config: all 53 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+Zero-config: all 54 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
 
 **Codex CLI** — install the ArcKit CLI:
 
@@ -65,7 +65,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v2.22.5](https://github.com/tractorjuice/arc-kit/releases/tag/v2.22.5)
+**Latest Release**: [v3.0.0](https://github.com/tractorjuice/arc-kit/releases/tag/v3.0.0)
 
 ### Platform Support
 
@@ -760,7 +760,7 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 | Feature | Claude Code | Gemini CLI | Codex / OpenCode |
 |---------|:-----------:|:----------:|:----------------:|
-| 53 slash commands | ✅ | ✅ | ✅ |
+| 54 slash commands | ✅ | ✅ | ✅ |
 | Templates & scripts | ✅ | ✅ | ✅ |
 | Bundled MCP servers (AWS, Azure, GCP, DataCommons) | ✅ | ✅ (3 servers) | Manual setup |
 | **Autonomous research agents** (5 agents for research, datascout, cloud research) | ✅ | — | — |
@@ -883,7 +883,7 @@ Customize ArcKit templates without modifying defaults:
 
 ## Complete Command Reference
 
-All 53 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 54 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
@@ -1010,6 +1010,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit.conformance` | Assess architecture conformance — ADR decision implementation, cross-decision consistency, architecture drift, technical debt, and custom constraint rules | — | 🔵 Beta |
 | `/arckit.health` | Scan projects for stale research, forgotten ADRs, unresolved review conditions, orphaned requirements, missing traceability, and version drift | — | 🔵 Beta |
 | `/arckit.customize` | Copy templates to `.arckit/templates-custom/` for customization (preserved across updates) | — | 🟢 Live |
+| `/arckit.template-builder` | Create new document templates through interactive interview — generates community-origin templates, guides, and optional shareable bundles | — | 🟠 Alpha |
 
 ### UK Government
 
@@ -1251,7 +1252,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v2.22.5](https://github.com/tractorjuice/arc-kit/releases/tag/v2.22.5)
+- **Latest Version**: [v3.0.0](https://github.com/tractorjuice/arc-kit/releases/tag/v3.0.0)
 
 ---
 

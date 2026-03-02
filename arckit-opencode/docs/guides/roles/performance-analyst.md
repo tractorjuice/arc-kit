@@ -1,5 +1,7 @@
 # Performance Analyst — ArcKit Command Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 > **DDaT Role Family**: [Data](https://ddat-capability-framework.service.gov.uk/role/performance-analyst)
 > **Framework**: [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/)
 

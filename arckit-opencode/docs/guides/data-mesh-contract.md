@@ -1,5 +1,7 @@
 # Data Mesh Contract Quick Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.data-mesh-contract` creates federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees.
 
 ---

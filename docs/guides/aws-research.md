@@ -1,5 +1,7 @@
 # AWS Technology Research Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.aws-research` researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative documentation.
 
 > **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather AWS documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.

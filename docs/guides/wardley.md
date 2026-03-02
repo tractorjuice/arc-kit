@@ -1,5 +1,7 @@
 # Wardley Mapping Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.wardley` creates strategic Wardley Maps for architecture decisions and build vs buy analysis.
 
 ---

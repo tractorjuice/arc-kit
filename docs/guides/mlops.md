@@ -1,5 +1,7 @@
 # MLOps Strategy Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.mlops` creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.
 
 ---

@@ -1,5 +1,7 @@
 # AI Playbook Assessment Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.ai-playbook` assesses UK Government AI Playbook compliance for responsible AI deployment in public sector projects.
 
 ---

@@ -1,5 +1,7 @@
 # Data Model Quick Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.data-model` transforms Data Requirements (DR-xxx) into an ERD, governance catalogue, and GDPR compliance pack.
 
 ---

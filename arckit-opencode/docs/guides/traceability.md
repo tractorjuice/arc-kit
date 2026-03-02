@@ -1,5 +1,7 @@
 # Traceability Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.traceability` produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.
 
 ---

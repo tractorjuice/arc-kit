@@ -197,8 +197,9 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit.presentation` | [presentation.md](guides/presentation.md) | ✅ Complete |
 | `/arckit.health` | [artifact-health.md](guides/artifact-health.md) | ✅ Complete |
 | `/arckit.start` | [start.md](guides/start.md) | ✅ Complete |
+| `/arckit.template-builder` | [template-builder.md](guides/template-builder.md) | ✅ Complete |
 
-**Coverage**: 53/53 commands documented (100%)
+**Coverage**: 54/54 commands documented (100%)
 
 ---
 
@@ -212,4 +213,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2026-02-25
-**ArcKit Version**: 2.22.5
+**ArcKit Version**: 3.0.0

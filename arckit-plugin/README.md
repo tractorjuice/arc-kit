@@ -1,6 +1,6 @@
 # ArcKit Plugin for Claude Code
 
-Enterprise Architecture Governance & Vendor Procurement Toolkit - a Claude Code plugin providing 53 slash commands for generating architecture artifacts.
+Enterprise Architecture Governance & Vendor Procurement Toolkit - a Claude Code plugin providing 54 slash commands for generating architecture artifacts.
 
 ## Installation
 
@@ -66,7 +66,7 @@ After installing the plugin:
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Commands | 53 | Slash commands for architecture artifacts |
+| Commands | 54 | Slash commands for architecture artifacts |
 | Skills | 1 | Conversational Wardley Mapping with interactive guidance |
 | Agents | 5 | Autonomous research agents |
 | Templates | 45 | Document templates with UK Government compliance |

@@ -1,5 +1,7 @@
 # Risk Management Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.risk` builds an HM Treasury Orange Book–aligned risk register with scoring, treatment, and monitoring.
 
 ---

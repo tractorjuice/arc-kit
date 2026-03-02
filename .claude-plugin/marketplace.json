@@ -12,8 +12,8 @@
     {
       "name": "arckit",
       "source": "./arckit-plugin",
-      "description": "53 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
-      "version": "2.22.5",
+      "description": "54 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
+      "version": "3.0.0",
       "author": {
         "name": "TractorJuice"
       },

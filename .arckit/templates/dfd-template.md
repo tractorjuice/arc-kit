@@ -1,6 +1,6 @@
 # Data Flow Diagram: {diagram_name}
 
-> **Template Status**: Experimental | **ArcKit Version**: [VERSION] | **Command**: `/arckit.dfd`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.dfd`
 
 ## Document Control
 

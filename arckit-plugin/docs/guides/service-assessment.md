@@ -1,5 +1,7 @@
 # GDS Service Assessment Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.service-assessment` packages evidence for Discovery→Alpha, Alpha→Beta, and Beta→Live assessments against the 14-point Service Standard.
 
 ---

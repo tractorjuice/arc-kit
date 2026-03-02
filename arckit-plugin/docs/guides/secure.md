@@ -1,5 +1,7 @@
 # Secure by Design Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.secure` generates a UK Government Secure by Design assessment for civilian department projects using NCSC CAF principles.
 
 ---

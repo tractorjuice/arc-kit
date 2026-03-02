@@ -1,5 +1,7 @@
 # Digital Marketplace Procurement Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 Use `/arckit.sow`, `/arckit.evaluate`, and `/arckit.research` to prepare compliant procurements via the UK Government Digital Marketplace (G-Cloud, DOS, Crown Hosting).
 
 ---

@@ -1,7 +1,7 @@
 {
   "name": "arckit",
-  "version": "2.22.5",
-  "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 53 slash commands for generating architecture artifacts",
+  "version": "3.0.0",
+  "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 54 slash commands for generating architecture artifacts",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"

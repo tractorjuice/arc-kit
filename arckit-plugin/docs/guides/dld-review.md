@@ -1,5 +1,7 @@
 # Detailed Design Review Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.dld-review` reviews a Detailed-Level Design (DLD) for implementation readiness, technical accuracy, and alignment with HLD.
 
 ---

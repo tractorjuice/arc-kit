@@ -1,5 +1,7 @@
 # Knowledge Compounding Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.research` automatically extracts reusable knowledge from research output into standalone vendor profiles and tech notes.
 
 > **Compound Knowledge Pattern**: One research document contains findings about vendors and technologies that persist beyond the project that discovered them. By extracting these into standalone files, future projects can find and reference existing knowledge instead of re-researching from scratch.

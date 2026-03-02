@@ -1,5 +1,7 @@
 # UK Government Digital Policy & Standards Map
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 This reference maps the major UK government functional standards, digital policies, and assurance frameworks that apply to technology-enabled services. It highlights how top-level **GovS functional standards** drive the application of specific guidance such as the **Service Standard**, **Technology Code of Practice**, **AI Playbook**, and security, commercial, and finance controls.
 
 ---

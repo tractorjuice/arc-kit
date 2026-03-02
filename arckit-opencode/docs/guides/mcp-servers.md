@@ -1,5 +1,7 @@
 # ArcKit Plugin Setup Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 This guide covers installing the ArcKit plugin, configuring MCP servers, and complementary plugins that enhance architecture workflows.
 
 ---

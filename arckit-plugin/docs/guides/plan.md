@@ -1,5 +1,7 @@
 # Project Plan Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.plan` creates a GDS-aligned delivery plan with phases, gates, dependencies, and Mermaid timelines.
 
 ---

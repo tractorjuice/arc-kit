@@ -1,6 +1,6 @@
 # Architecture Diagram: {diagram_name}
 
-> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.diagram`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.diagram`
 
 ## Document Control
 

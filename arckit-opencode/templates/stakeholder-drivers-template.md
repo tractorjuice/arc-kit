@@ -1,6 +1,6 @@
 # Stakeholder Drivers & Goals Analysis: [PROJECT_NAME]
 
-> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.stakeholders`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.stakeholders`
 
 ## Document Control
 

@@ -1,6 +1,6 @@
 # MLOps Strategy
 
-> **Template Status**: Experimental | **ArcKit Version**: [VERSION] | **Command**: `/arckit.mlops`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.mlops`
 
 ## Document Control
 

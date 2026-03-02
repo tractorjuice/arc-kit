@@ -136,12 +136,13 @@ const GUIDE_CATEGORIES = {
   'sow': 'Procurement', 'evaluate': 'Procurement', 'dos': 'Procurement',
   'gcloud-search': 'Procurement', 'gcloud-clarify': 'Procurement', 'procurement': 'Procurement',
   'aws-research': 'Research', 'azure-research': 'Research', 'gcp-research': 'Research',
+  'template-builder': 'Other',
 };
 
 const GUIDE_STATUS = {};
 for (const name of ['plan','principles','stakeholders','stakeholder-analysis','risk','sobc','requirements','data-model','diagram','traceability','principles-compliance','story','sow','evaluate','customize','risk-management','business-case']) GUIDE_STATUS[name] = 'live';
 for (const name of ['dpia','research','strategy','roadmap','adr','hld-review','dld-review','backlog','servicenow','analyze','service-assessment','tcop','secure','presentation','artifact-health','design-review','procurement','knowledge-compounding','c4-layout-science','security-hooks','codes-of-practice','data-quality-framework','govs-007-security','national-data-strategy','upgrading','start','conformance','productivity','remote-control','mcp-servers']) GUIDE_STATUS[name] = 'beta';
-for (const name of ['data-mesh-contract','ai-playbook','atrs','pages']) GUIDE_STATUS[name] = 'alpha';
+for (const name of ['data-mesh-contract','ai-playbook','atrs','pages','template-builder']) GUIDE_STATUS[name] = 'alpha';
 for (const name of ['platform-design','wardley','azure-research','aws-research','gcp-research','datascout','dos','gcloud-search','gcloud-clarify','trello','devops','mlops','finops','operationalize','mod-secure','jsp-936','migration','pinecone-mcp']) GUIDE_STATUS[name] = 'experimental';
 
 const ROLE_FAMILIES = {
@@ -205,6 +206,18 @@ function buildGuides(guideTitles) {
   const roleGuides = [];
 
   for (const [path, title] of Object.entries(guideTitles)) {
+    // Community guides from .arckit/guides-custom/ (prefixed with "community-guide:")
+    if (path.startsWith('community-guide:')) {
+      const stem = basename(path.replace('community-guide:', ''), '.md');
+      guides.push({
+        path: `.arckit/guides-custom/${stem}.md`,
+        title,
+        category: 'Community',
+        status: 'community',
+      });
+      continue;
+    }
+
     // e.g. docs/guides/roles/enterprise-architect.md
     const rel = path.replace(/^docs\/guides\//, '');
 
@@ -557,6 +570,24 @@ for (const { abs: srcPath, rel: relPath } of sourceFiles) {
   copied = copied + 1;
 }
 
+// ── 1b. Discover community guides from .arckit/guides-custom/ ──
+
+let communityGuideCount = 0;
+const communityGuidesDir = join(repoRoot, '.arckit', 'guides-custom');
+if (isDir(communityGuidesDir)) {
+  for (const f of listDir(communityGuidesDir)) {
+    if (!f.endsWith('.md') || !isFile(join(communityGuidesDir, f))) continue;
+    const content = readText(join(communityGuidesDir, f));
+    if (!content) continue;
+    const title = extractTitle(content, f);
+    if (title) {
+      // Use a special prefix so buildGuides can detect community guides
+      guideTitles[`community-guide:${f}`] = title;
+      communityGuideCount = communityGuideCount + 1;
+    }
+  }
+}
+
 // ── 2. Repo info + version ──
 
 const repoInfo = parseRepoInfo(repoRoot);
@@ -633,6 +664,7 @@ const message = [
   ``,
   `### Guide Sync`,
   `- **${total}** guide files (**${copied}** copied, **${skipped}** up to date)`,
+  communityGuideCount > 0 ? `- **${communityGuideCount}** community guide(s) from \`.arckit/guides-custom/\`` : '',
   ``,
   `### Repository Info`,
   `- **Repo**: ${repoInfo.repo}`,

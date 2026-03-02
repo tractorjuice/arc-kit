@@ -1,5 +1,7 @@
 # Risk Register Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.risk` creates a comprehensive risk register following HM Treasury Orange Book principles for project and operational risk management.
 
 ---

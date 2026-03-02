@@ -1,7 +1,7 @@
 <!-- markdownlint-disable MD003 -->
 # [PROJECT_NAME] — Architecture Presentation
 
-> **Template Status**: Beta | **ArcKit Version**: [VERSION] | **Command**: `/arckit.presentation`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.presentation`
 
 ## Document Control
 

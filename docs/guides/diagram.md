@@ -1,5 +1,7 @@
 # Architecture Diagram Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.diagram` converts architecture artefacts into Mermaid or PlantUML C4 diagrams for visual architecture documentation.
 
 ---

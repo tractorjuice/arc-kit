@@ -1,6 +1,6 @@
 # Vendor Scoring Summary: [PROJECT_NAME]
 
-> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.evaluate`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.evaluate`
 
 ## Document Control
 

@@ -1,5 +1,7 @@
 # Data Governance Manager — ArcKit Command Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 > **DDaT Role Family**: [Data](https://ddat-capability-framework.service.gov.uk/role/data-governance-manager)
 > **Framework**: [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/)
 

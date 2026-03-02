@@ -1,5 +1,7 @@
 # FinOps Strategy Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.finops` creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.
 
 ---

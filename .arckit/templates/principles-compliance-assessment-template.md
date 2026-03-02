@@ -1,6 +1,6 @@
 # Architecture Principles Compliance Assessment
 
-> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: `/arckit.principles-compliance`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.principles-compliance`
 
 ## Document Control
 

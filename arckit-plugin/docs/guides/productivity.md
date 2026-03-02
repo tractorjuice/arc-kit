@@ -1,5 +1,7 @@
 # Architecture Productivity Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 ArcKit generates architecture artifacts in Markdown, but governance boards, procurement panels, and senior stakeholders expect Word documents, PDF packs, slide decks, and spreadsheets. Anthropic's document skills bridge that gap — letting you convert ArcKit output into polished, client-ready deliverables without leaving Claude Code.
 
 ---

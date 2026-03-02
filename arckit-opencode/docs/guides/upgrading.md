@@ -1,5 +1,7 @@
 # Upgrading ArcKit
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 How to upgrade the ArcKit CLI and update your existing projects.
 
 ---

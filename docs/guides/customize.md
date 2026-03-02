@@ -1,5 +1,7 @@
 # Template Customization Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.customize` copies templates to `.arckit/templates-custom/` for customization, preserving changes across updates.
 
 ---

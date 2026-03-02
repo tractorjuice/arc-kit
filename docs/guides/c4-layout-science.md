@@ -1,5 +1,7 @@
 # C4 Layout Science Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 A research-backed guide to creating readable C4 architecture diagrams with minimal edge crossings and clear visual hierarchy. This guide covers the graph drawing theory behind layout engines, practical declaration ordering strategies, quality targets from empirical research, and a structured validation checklist.
 
 For the full reference used by the `/arckit:diagram` command, see `arckit-plugin/skills/mermaid-syntax/references/c4-layout-science.md`.

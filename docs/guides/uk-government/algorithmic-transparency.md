@@ -1,5 +1,7 @@
 # Algorithmic Transparency Recording Standard (ATRS) Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.atrs` produces the public transparency record required for UK Government algorithmic tools that influence decisions about people.
 
 ---

@@ -1,6 +1,6 @@
 # MOD Secure by Design Assessment
 
-> **Template Status**: Experimental | **ArcKit Version**: [VERSION] | **Command**: `/arckit.mod-secure`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.mod-secure`
 
 ## Document Control
 

@@ -1,5 +1,7 @@
 # Solution Architect — ArcKit Command Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 > **DDaT Role Family**: [Architecture](https://ddat-capability-framework.service.gov.uk/role/solution-architect)
 > **Framework**: [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/)
 

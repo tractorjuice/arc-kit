@@ -1,5 +1,7 @@
 # Artifact Health Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 The `/arckit:health` command scans your projects for governance artifacts that need attention. This guide explains what each finding type means, why the thresholds exist, and how to resolve each issue.
 
 ## Overview

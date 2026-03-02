@@ -333,11 +333,18 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 1.5.0
 - **Matrix Date**: 2026-02-25
-- **Commands Documented**: 53
+- **Commands Documented**: 54
 - **Matrix Rows**: 52 (50 document-generating commands + 2 external documents)
-- **Note**: `/arckit.customize`, `/arckit.health`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
+- **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-03-02 - Added Template Builder Command
+
+- **Added**: `/arckit.template-builder` command (54th ArcKit command) for creating new document templates through interactive interview
+- **Not in matrix**: Utility command that generates community-origin templates, guides, and optional shareable bundles — no dependencies and no outputs consumed by other commands
+- **Updated**: Commands Documented count from 53 to 54
+- **Note**: Introduces three-tier origin model (Official/Custom/Community) for templates and guides
 
 ### 2026-02-25 - Added Architecture Conformance Assessment Command
 

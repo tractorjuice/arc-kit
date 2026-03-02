@@ -1,6 +1,6 @@
 # Data Mesh Contract: {data_product_name}
 
-> **Template Status**: Alpha | **ArcKit Version**: [VERSION] | **Command**: `/arckit.data-mesh-contract`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.data-mesh-contract`
 
 ## Document Control
 

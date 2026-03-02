@@ -1,5 +1,7 @@
 # Vendor Evaluation Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.evaluate` creates vendor evaluation frameworks and scores vendor proposals against requirements.
 
 ---

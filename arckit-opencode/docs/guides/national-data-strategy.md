@@ -1,5 +1,7 @@
 # UK National Data Strategy — ArcKit Reference Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 This guide maps the [UK National Data Strategy](https://www.gov.uk/government/publications/uk-national-data-strategy/national-data-strategy) (NDS) to ArcKit commands and artefacts. The NDS sets the government's vision for how data should be used, managed, and governed across the economy and public services.
 
 ---

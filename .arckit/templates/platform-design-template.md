@@ -1,6 +1,6 @@
 # Platform Strategy Design
 
-> **Template Status**: Experimental | **ArcKit Version**: [VERSION] | **Command**: `/arckit.platform-design`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.platform-design`
 
 ## Document Control
 

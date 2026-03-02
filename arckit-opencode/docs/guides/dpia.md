@@ -1,5 +1,7 @@
 # Data Protection Impact Assessment (DPIA) Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.dpia` delivers a GDPR-compliant DPIA whenever processing could present high risk to individuals.
 
 ---

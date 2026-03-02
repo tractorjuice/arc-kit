@@ -1,5 +1,7 @@
 # Architecture Conformance Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.conformance` checks whether the decided architecture (ADRs, principles) matches the designed architecture (HLD, DLD). It bridges `/arckit.health` (quick metadata scan) and `/arckit.analyze` (deep governance analysis) by focusing on decided-vs-designed conformance, architecture drift, and technical debt.
 
 ---

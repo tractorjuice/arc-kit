@@ -1,5 +1,7 @@
 # Presentation Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.presentation` produces a MARP-format slide deck from existing project artifacts — ideal for governance boards, stakeholder briefings, and gate reviews.
 
 ---

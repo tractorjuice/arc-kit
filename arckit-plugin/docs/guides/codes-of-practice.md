@@ -1,5 +1,7 @@
 # UK Government Codes of Practice — ArcKit Reference Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 This guide maps HM Treasury and Cabinet Office codes of practice to ArcKit commands and artefacts. These publications — informally known as the "Rainbow of Books" — set expectations for evaluation, analytical quality, knowledge asset management, and commercial procurement across government.
 
 ---

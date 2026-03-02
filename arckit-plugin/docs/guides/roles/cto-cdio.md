@@ -1,5 +1,7 @@
 # CTO / CDIO — ArcKit Command Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 > **DDaT Role Family**: [Chief Digital and Data](https://ddat-capability-framework.service.gov.uk/role/chief-technology-officer)
 > **Framework**: [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/)
 

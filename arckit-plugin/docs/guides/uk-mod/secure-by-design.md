@@ -1,5 +1,7 @@
 # MOD Secure by Design Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.mod-secure` documents MOD-specific Secure by Design requirements, covering JSP 440, JSP 604, HMG SPF, and Defence Cyber Protection Partnership obligations.
 
 ---

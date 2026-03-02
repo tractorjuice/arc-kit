@@ -1,5 +1,7 @@
 # Stakeholder Analysis Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.stakeholders` maps stakeholders to drivers, goals, outcomes, and engagement plans—forming the backbone for requirements, risks, and communications.
 
 ---

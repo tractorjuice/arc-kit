@@ -1,6 +1,6 @@
 # JSP 936 AI Assurance Documentation
 
-> **Template Status**: Experimental | **ArcKit Version**: [VERSION] | **Command**: `/arckit.jsp-936`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.jsp-936`
 
 ## Document Control
 

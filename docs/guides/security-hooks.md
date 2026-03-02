@@ -1,5 +1,7 @@
 # Security Hooks Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 ArcKit includes three security hooks that provide layered protection against accidental secret exposure during Claude Code sessions. These hooks run automatically and require no manual configuration.
 
 ## Three-Layer Protection Model

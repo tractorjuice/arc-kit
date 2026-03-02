@@ -1,5 +1,7 @@
 # Technology Code of Practice Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.tcop` generates a Technology Code of Practice (TCoP) review document for UK Government technology projects.
 
 > **Parent standard**: TCoP is the implementation guidance for [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital). A TCoP review satisfies the majority of GovS 005 obligations.

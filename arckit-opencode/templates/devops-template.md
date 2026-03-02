@@ -1,6 +1,6 @@
 # DevOps Strategy
 
-> **Template Status**: Experimental | **ArcKit Version**: [VERSION] | **Command**: `/arckit.devops`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.devops`
 
 ## Document Control
 

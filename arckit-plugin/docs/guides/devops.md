@@ -1,5 +1,7 @@
 # DevOps Strategy Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.devops` creates a comprehensive DevOps strategy covering CI/CD pipelines, Infrastructure as Code, container orchestration, and developer experience.
 
 ---

@@ -1,6 +1,6 @@
 # ServiceNow Service Design
 
-> **Template Status**: Beta | **ArcKit Version**: [VERSION] | **Command**: `/arckit.servicenow`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.servicenow`
 
 ## Document Control
 

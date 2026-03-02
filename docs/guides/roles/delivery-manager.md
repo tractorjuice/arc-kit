@@ -1,5 +1,7 @@
 # Delivery Manager — ArcKit Command Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 > **DDaT Role Family**: [Product and Delivery](https://ddat-capability-framework.service.gov.uk/role/delivery-manager)
 > **Framework**: [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/)
 

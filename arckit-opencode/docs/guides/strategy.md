@@ -1,5 +1,7 @@
 # Architecture Strategy Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.strategy` synthesises multiple strategic artifacts into a single executive-level Architecture Strategy document.
 
 ---

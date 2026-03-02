@@ -1,5 +1,7 @@
 # MOD Secure by Design Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.mod-secure` generates a Ministry of Defence Secure by Design assessment using CAAT and continuous assurance methodology.
 
 ---

@@ -1,5 +1,7 @@
 # Project Analysis Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 Use `/arckit.analyze` as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then prints gap-focused actions.
 
 ---

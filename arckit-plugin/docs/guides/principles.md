@@ -1,5 +1,7 @@
 # Architecture Principles Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.principles` generates an organisation-wide set of architecture principles. Treat them as the contract for design decisions and compliance reviews.
 
 ---

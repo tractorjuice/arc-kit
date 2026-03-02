@@ -1,5 +1,7 @@
 # G-Cloud Search Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.gcloud-search` finds G-Cloud services on the UK Digital Marketplace with live search and comparison capabilities.
 
 ---

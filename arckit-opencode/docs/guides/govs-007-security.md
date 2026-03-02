@@ -1,5 +1,7 @@
 # GovS 007: Security — ArcKit Reference Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 This guide maps the [Government Functional Standard GovS 007: Security](https://www.gov.uk/government/publications/government-functional-standard-govs-007-security) to ArcKit commands and artefacts. GovS 007 is the cross-government baseline for protective security, sitting above the Cyber Security Standard and NCSC CAF in the governance hierarchy.
 
 ---

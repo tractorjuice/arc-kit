@@ -1,5 +1,7 @@
 # Strategic Outline Business Case (SOBC) Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 Use `/arckit.sobc` to produce HM Treasury Green Book Strategic Outline Business Cases. The command pulls from stakeholders, risks, and principles to assemble the five-case model with traceability back to ArcKit artefacts.
 
 ---

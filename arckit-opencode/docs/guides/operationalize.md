@@ -1,5 +1,7 @@
 # Operational Readiness Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.operationalize` creates an operational readiness pack covering support model, runbooks, DR/BCP, on-call, and handover documentation.
 
 ---

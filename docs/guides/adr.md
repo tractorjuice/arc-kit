@@ -1,5 +1,7 @@
 # Architecture Decision Record (ADR) Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.adr` produces MADR v4.0-compatible architecture decision records backed by governance metadata and UK Government escalation requirements.
 
 ---

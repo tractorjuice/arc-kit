@@ -1,5 +1,7 @@
 # Digital Outcomes and Specialists Playbook
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 `/arckit.dos` generates Digital Outcomes and Specialists (DOS) procurement documentation for the UK Digital Marketplace.
 
 ---

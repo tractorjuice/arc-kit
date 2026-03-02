@@ -5,6 +5,21 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- `/arckit.template-builder` command — interactive template builder that creates community-origin templates, guides, and optional shareable bundles through a 2-round interview process
+- Three-tier origin model for templates and guides: Official, Custom, and Community with distinct banners
+- Community guide discovery in `sync-guides.mjs` — scans `.arckit/guides-custom/` and includes community guides in the pages manifest under "Community" category
+- `community.` prefix convention for user-generated slash commands
+
+### Changed
+
+- All 50 official templates updated: `Template Status: <status>` replaced with `Template Origin: Official` banner
+- All official guides updated with `Guide Origin: Official` banner after the first heading
+- `/arckit:customize` now sets `Template Origin: Custom` banner when copying templates
+
 ## [2.22.5] - 2026-03-01
 
 ### Fixed

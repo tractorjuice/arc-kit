@@ -1,5 +1,7 @@
 # CISO (Chief Information Security Officer) — ArcKit Command Guide
 
+> **Guide Origin**: Official | **ArcKit Version**: [VERSION]
+
 > **DDaT Role Family**: [Chief Digital and Data](https://ddat-capability-framework.service.gov.uk/role/chief-information-security-officer)
 > **Framework**: [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/)
 
