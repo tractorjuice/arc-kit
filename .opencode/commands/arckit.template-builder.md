@@ -39,32 +39,13 @@ Check for the `--share` flag in arguments. If present, strip it from the templat
 
 Slugify the template name: lowercase, replace spaces/special chars with hyphens, trim (e.g., "Security Assessment" -> "security-assessment").
 
-### Step 2: Read Reference Templates
+### Step 2: Interview Round 1 (Purpose & Structure)
 
-Read 2-3 existing official templates to understand the standard format. Use the Read tool only — do NOT use Bash, Glob, or Agent to search for templates.
-
-**Always read**:
-
-- `.arckit/templates/requirements-template.md` (canonical Document Control + structure)
-- `.arckit/templates/risk-register-template.md` (scoring/rating tables)
-
-**Read a third if relevant** to the user's requested type:
-
-- Security/compliance: `.arckit/templates/conformance-assessment-template.md`
-- Vendor/procurement: `.arckit/templates/evaluation-criteria-template.md`
-- Strategy/roadmap: `.arckit/templates/architecture-strategy-template.md`
-- Data/privacy: `.arckit/templates/dpia-template.md`
-- Operations/DevOps: `.arckit/templates/devops-template.md`
-- Cloud research: `.arckit/templates/aws-research-template.md`
-
-Extract the standard patterns: Document Control table, Revision History table, section structure, and generation metadata footer.
-
-### Step 3: Interview Round 1 (Purpose & Structure)
-
-Before generating the template, use the **AskUserQuestion** tool to gather user preferences. **Skip any question where the user has already specified their preference in the arguments.**
+**IMPORTANT**: Ask these questions BEFORE reading any templates. Use the **AskUserQuestion** tool now.
 
 **Gathering rules** (apply to all questions):
 
+- Ask the most important question first; fill in secondary details from context or reasonable defaults.
 - **Maximum 2 rounds of questions.** After that, pick the best option from available context.
 - If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
 
@@ -86,7 +67,7 @@ Before generating the template, use the **AskUserQuestion** tool to gather user 
 
 Apply the user's selections: the category determines the template's major sections. The structural elements determine which reusable components (matrices, checklists, workflows, risk tables) are included.
 
-### Step 4: Interview Round 2 (Context & Options)
+### Step 3: Interview Round 2 (Context & Options)
 
 **Question 1** — header: `Context`, multiSelect: false
 > "What organizational context should the template support?"
@@ -103,6 +84,21 @@ Apply the user's selections: the category determines the template's major sectio
 - **Minimal Template**: Skip optional sections, keep it lean
 
 Apply the user's selections: the organizational context determines compliance sections and terminology. "Slash Command" controls whether Step 7 runs. The `--share` flag (from Step 1) controls whether Step 8 runs.
+
+### Step 4: Read Reference Templates
+
+Now that you have the user's preferences, read 2-3 existing official templates to understand the standard format. Use the Read tool only — do NOT use Bash, Glob, or Agent to search for templates.
+
+**Always read**:
+
+- `.arckit/templates/requirements-template.md` (canonical Document Control + structure)
+
+**Read one more based on the user's category selection**:
+
+- Governance: `.arckit/templates/conformance-assessment-template.md`
+- Technical: `.arckit/templates/platform-design-template.md`
+- Procurement: `.arckit/templates/evaluation-criteria-template.md`
+- Strategy: `.arckit/templates/architecture-strategy-template.md`
 
 ### Step 5: Generate the Template
 
