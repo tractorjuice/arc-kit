@@ -1,6 +1,5 @@
 ---
 description: Generate MARP presentation slides from existing project artifacts for governance boards and stakeholder briefings
-allowed-tools: Read, Write, AskUserQuestion
 argument-hint: "<project ID and audience, e.g. '001 executive board'>"
 ---
 

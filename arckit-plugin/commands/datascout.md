@@ -1,6 +1,5 @@
 ---
 description: Discover external data sources (APIs, datasets, open data portals) to fulfil project requirements
-allowed-tools: Read, Write, Agent
 argument-hint: "<data need, e.g. 'real-time traffic data UK', 'company financials'>"
 tags: [data, api, open-data, datasets, data-sources, discovery, uk-gov, data-integration]
 handoffs:

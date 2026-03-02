@@ -1,6 +1,5 @@
 ---
 description: Generate requirements traceability matrix from requirements to design to tests
-allowed-tools: Read, Write
 argument-hint: "<project ID or scope, e.g. '001', 'FR-xxx only'>"
 ---
 

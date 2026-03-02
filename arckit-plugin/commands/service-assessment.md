@@ -1,6 +1,5 @@
 ---
 description: Prepare for GDS Service Standard assessment - analyze evidence against 14 points, identify gaps, generate readiness report
-allowed-tools: Read, Write
 argument-hint: "<project ID and stage, e.g. '001 Alpha', '001 Beta'>"
 alwaysShow: true
 ---

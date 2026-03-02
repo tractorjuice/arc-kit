@@ -1,6 +1,5 @@
 ---
 description: Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace
-allowed-tools: Read, Write
 argument-hint: "<project ID or title, e.g. '001', 'Data Engineering Specialist'>"
 ---
 

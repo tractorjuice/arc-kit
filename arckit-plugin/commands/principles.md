@@ -1,6 +1,5 @@
 ---
 description: Create or update enterprise architecture principles
-allowed-tools: Read, Write
 argument-hint: "<domain or focus, e.g. 'cloud-first', 'data governance'>"
 ---
 

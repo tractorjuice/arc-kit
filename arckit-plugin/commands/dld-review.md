@@ -1,6 +1,5 @@
 ---
 description: Review Detailed Design (DLD) for implementation readiness
-allowed-tools: Read, Write
 argument-hint: "<project ID or DLD path, e.g. '001'>"
 ---
 

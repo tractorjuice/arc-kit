@@ -1,6 +1,5 @@
 ---
 description: Create comprehensive data model with entity relationships, GDPR compliance, and data governance
-allowed-tools: Read, Write
 argument-hint: "<project ID or domain, e.g. '001', 'patient records'>"
 handoffs:
   - command: hld-review

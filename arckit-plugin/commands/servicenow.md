@@ -1,6 +1,5 @@
 ---
 description: Create comprehensive ServiceNow service design with CMDB, SLAs, incident management, and change control
-allowed-tools: Read, Write
 argument-hint: "<project ID or service, e.g. '001', 'IT Asset Management'>"
 ---
 

@@ -1,6 +1,5 @@
 ---
 description: Create platform strategy using Platform Design Toolkit (8 canvases for multi-sided ecosystems)
-allowed-tools: Read, Write
 argument-hint: "<platform name, e.g. 'NHS API marketplace'>"
 ---
 

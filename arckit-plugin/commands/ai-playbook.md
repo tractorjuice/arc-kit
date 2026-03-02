@@ -1,6 +1,5 @@
 ---
 description: Assess UK Government AI Playbook compliance for responsible AI deployment
-allowed-tools: Read, Write
 argument-hint: "<project or AI system, e.g. 'Fraud Detection ML Service'>"
 ---
 

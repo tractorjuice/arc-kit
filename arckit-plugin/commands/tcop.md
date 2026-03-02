@@ -1,6 +1,5 @@
 ---
 description: Generate a Technology Code of Practice (TCoP) review document for a UK Government technology project
-allowed-tools: Read, Write
 argument-hint: "<project ID or name, e.g. '001', 'Land Registry Digital Gateway'>"
 tags: [governance, compliance, uk-government, tcop, digital-spend-control]
 ---

@@ -1,6 +1,5 @@
 ---
 description: Create federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees (project)
-allowed-tools: Read, Write
 argument-hint: "<data product name, e.g. 'Customer Orders — Sales Domain'>"
 ---
 

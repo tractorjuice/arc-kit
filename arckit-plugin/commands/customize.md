@@ -1,6 +1,5 @@
 ---
 description: Copy plugin templates to project for customization
-allowed-tools: Read, Write, Bash, Glob
 argument-hint: "<template name or 'list', e.g. 'requirements', 'risk', 'list'>"
 ---
 

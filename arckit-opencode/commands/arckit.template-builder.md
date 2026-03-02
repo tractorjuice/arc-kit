@@ -218,7 +218,6 @@ If the user selected "Slash Command" in Round 2, create `.claude/commands/arckit
 ```markdown
 ---
 description: {Brief description of what this command generates}
-allowed-tools: Read, Write, Glob
 argument-hint: "<project ID or name>"
 ---
 

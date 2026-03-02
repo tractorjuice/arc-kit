@@ -1,6 +1,5 @@
 ---
 description: Create vendor evaluation framework and score vendor proposals
-allowed-tools: Read, Write
 argument-hint: "<project ID or category, e.g. '001', 'CRM platforms'>"
 ---
 

@@ -1,6 +1,5 @@
 ---
 description: Perform comprehensive governance quality analysis across architecture artifacts (requirements, principles, designs, assessments)
-allowed-tools: Read, Write
 argument-hint: "<project ID or scope, e.g. '001', 'all projects'>"
 ---
 

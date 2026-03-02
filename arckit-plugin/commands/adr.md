@@ -1,6 +1,5 @@
 ---
 description: Document architectural decisions with options analysis and traceability
-allowed-tools: Read, Write, AskUserQuestion, Glob
 argument-hint: "<decision topic, e.g. 'API gateway selection', 'database platform'>"
 handoffs:
   - command: hld-review

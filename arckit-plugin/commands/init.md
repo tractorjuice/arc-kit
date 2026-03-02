@@ -1,6 +1,5 @@
 ---
 description: Initialize ArcKit project structure for enterprise architecture governance
-allowed-tools: Read, Write, Bash
 argument-hint: "<project name, e.g. 'NHS Appointment System'>"
 tags: [init, setup, project, start]
 ---

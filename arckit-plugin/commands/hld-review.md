@@ -1,6 +1,5 @@
 ---
 description: Review High-Level Design (HLD) against architecture principles and requirements
-allowed-tools: Read, Write
 argument-hint: "<project ID or HLD path, e.g. '001'>"
 ---
 

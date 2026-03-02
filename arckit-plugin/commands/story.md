@@ -1,6 +1,5 @@
 ---
 description: Generate comprehensive project story with timeline analysis, traceability, and governance achievements (project)
-allowed-tools: Read, Write, Bash, Grep
 argument-hint: "<project ID, e.g. '001'>"
 ---
 

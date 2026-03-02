@@ -1,6 +1,5 @@
 ---
 description: Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance
-allowed-tools: Read, Write
 argument-hint: "<project ID or ML platform, e.g. '001', 'SageMaker'>"
 ---
 

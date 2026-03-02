@@ -1,6 +1,5 @@
 ---
 description: Generate Data Protection Impact Assessment (DPIA) for UK GDPR Article 35 compliance
-allowed-tools: Read, Write, AskUserQuestion
 argument-hint: "<project ID or processing activity, e.g. '001', 'biometric tracking'>"
 ---
 

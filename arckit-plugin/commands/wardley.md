@@ -1,6 +1,5 @@
 ---
 description: Create strategic Wardley Maps for architecture decisions and build vs buy analysis
-allowed-tools: Read, Write
 argument-hint: "<system or domain, e.g. 'NHS appointment system', 'cloud strategy'>"
 handoffs:
   - command: roadmap

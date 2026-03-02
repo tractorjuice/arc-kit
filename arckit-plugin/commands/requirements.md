@@ -1,6 +1,5 @@
 ---
 description: Create comprehensive business and technical requirements
-allowed-tools: Read, Write
 argument-hint: "<project ID or feature, e.g. '001', 'authentication module'>"
 handoffs:
   - command: data-model
