@@ -22,7 +22,7 @@ This command generates:
 
 1. **A new document template** in `.arckit/templates-custom/{name}-template.md` with `Template Origin: Community` banner
 2. **A usage guide** in `.arckit/guides-custom/{name}.md` with `Guide Origin: Community` banner
-3. **Optionally**: A matching slash command in `.arckit/commands-custom/community.{name}.md`
+3. **Optionally**: A matching slash command in `.claude/commands/arckit.community.{name}.md`
 4. **Optionally**: A shareable bundle in `.arckit/community/{name}/`
 
 All community-generated content is clearly marked with origin banners to distinguish it from official ArcKit templates.
@@ -230,7 +230,7 @@ For official promotion: rename command (drop `community.` prefix), change banner
 
 ### Step 7: Generate Optional Slash Command
 
-If the user selected "Slash Command" in Round 2, create `.arckit/commands-custom/community.{name}.md` using the Write tool.
+If the user selected "Slash Command" in Round 2, create `.claude/commands/arckit.community.{name}.md` using the Write tool. This location is auto-discovered by Claude Code as a project-level slash command (available as `/arckit.community.{name}`).
 
 **Command Structure**:
 
@@ -273,7 +273,7 @@ If the user selected "Shareable Bundle" in Round 2, create the bundle directory:
 - `.arckit/community/{name}/README.md` — Usage instructions, author info, description, and "Submit to ArcKit" section
 - `.arckit/community/{name}/{name}-template.md` — Copy of the template
 - `.arckit/community/{name}/{name}.md` — Copy of the usage guide
-- `.arckit/community/{name}/community.{name}.md` — Copy of the command (if generated)
+- `.arckit/community/{name}/arckit.community.{name}.md` — Copy of the command (if generated)
 
 **README.md for the bundle**:
 
@@ -292,7 +292,7 @@ Copy the files to your ArcKit project:
 
 - `{name}-template.md` -> `.arckit/templates-custom/`
 - `{name}.md` -> `.arckit/guides-custom/`
-- `community.{name}.md` -> `.arckit/commands-custom/` (optional)
+- `arckit.community.{name}.md` -> `.claude/commands/` (optional)
 
 ## Submit to ArcKit
 
@@ -324,7 +324,7 @@ After writing all files, show ONLY this summary:
 |------|----------|
 | Template | `.arckit/templates-custom/{name}-template.md` |
 | Usage Guide | `.arckit/guides-custom/{name}.md` |
-| Slash Command | `.arckit/commands-custom/community.{name}.md` (if selected) |
+| Slash Command | `.claude/commands/arckit.community.{name}.md` (if selected) |
 | Shareable Bundle | `.arckit/community/{name}/` (if selected) |
 
 ### Template Sections
@@ -354,7 +354,7 @@ After writing all files, show ONLY this summary:
 
 - All community templates MUST have `Template Origin: Community` banner
 - All community guides MUST have `Guide Origin: Community` banner
-- Community commands use the `community.` prefix (e.g., `community.security-assessment.md`)
+- Community commands use the `community.` prefix (e.g., `.claude/commands/arckit.community.security-assessment.md`)
 - Templates follow the same Document Control standard as official ArcKit templates
 - The Write tool MUST be used for all file creation (avoids token limit issues)
 - Never output the full template content in the response — show summary only

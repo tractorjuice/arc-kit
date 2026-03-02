@@ -49,7 +49,7 @@ The command conducts a 2-round interview (4 questions total):
 |------|----------|---------|
 | Document template | `.arckit/templates-custom/{name}-template.md` | Yes |
 | Usage guide | `.arckit/guides-custom/{name}.md` | Yes |
-| Slash command | `.arckit/commands-custom/community.{name}.md` | If selected |
+| Slash command | `.claude/commands/arckit.community.{name}.md` | If selected |
 | Shareable bundle | `.arckit/community/{name}/` | If selected |
 
 ---
@@ -79,7 +79,7 @@ If you selected "Shareable Bundle", find the export at:
   README.md                  # Usage instructions and author info
   {name}-template.md         # The template
   {name}.md                  # Usage guide
-  community.{name}.md        # Slash command (if generated)
+  arckit.community.{name}.md  # Slash command (if generated)
 ```
 
 Share this folder via Git, email, or any file transfer method.
@@ -90,7 +90,7 @@ To submit a community template for official ArcKit inclusion:
 
 1. Fork [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
 2. Copy template to `.arckit/templates/` and `arckit-plugin/templates/`
-3. Drop the `community.` prefix from the command filename
+3. Move command from `.claude/commands/` to `arckit-plugin/commands/` and drop the `arckit.community.` prefix
 4. Change `Template Origin: Community` to `Template Origin: Official`
 5. Change `Guide Origin: Community` to `Guide Origin: Official`
 6. Add guide to the category map in `arckit-plugin/hooks/sync-guides.mjs`
