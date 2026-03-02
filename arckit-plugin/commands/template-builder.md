@@ -45,17 +45,9 @@ Check for the `--share` flag in arguments. If present, strip it from the templat
 
 Slugify the template name: lowercase, replace spaces/special chars with hyphens, trim (e.g., "Security Assessment" -> "security-assessment").
 
-### Step 2: Interview Round 1 (Purpose & Structure)
+### Step 2: Interview the User
 
-**CRITICAL: Each interview round MUST be a separate AskUserQuestion tool call. You MUST wait for the user's response to Round 1 before proceeding to Round 2. Never call AskUserQuestion more than once in the same response.**
-
-Ask these questions BEFORE reading any templates. Use the **AskUserQuestion** tool now.
-
-**Gathering rules** (apply to all questions):
-
-- Ask the most important question first; fill in secondary details from context or reasonable defaults.
-- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
-- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
+Ask these questions BEFORE reading any templates. Call the **AskUserQuestion** tool exactly once with all 4 questions below in a single call. Do NOT proceed until the user has answered.
 
 **Question 1** — header: `Category`, multiSelect: false
 > "What category best describes this template?"
@@ -73,11 +65,7 @@ Ask these questions BEFORE reading any templates. Use the **AskUserQuestion** to
 - **Approval Workflow**: Sign-off gates, review stages, escalation paths
 - **Risk Assessment**: Risk identification, likelihood, impact, mitigations
 
-Apply the user's selections: the category determines the template's major sections. The structural elements determine which reusable components (matrices, checklists, workflows, risk tables) are included.
-
-### Step 3: Interview Round 2 (Context & Options)
-
-**Question 1** — header: `Context`, multiSelect: false
+**Question 3** — header: `Context`, multiSelect: false
 > "What organizational context should the template support?"
 
 - **UK Government (Recommended)**: GDS, TCoP, Orange/Green Book alignment
@@ -85,15 +73,15 @@ Apply the user's selections: the category determines the template's major sectio
 - **Regulated Industry**: Financial services, healthcare, defence compliance
 - **Technology Startup**: Lightweight, agile-friendly documentation
 
-**Question 2** — header: `Outputs`, multiSelect: true
+**Question 4** — header: `Outputs`, multiSelect: true
 > "What additional outputs would you like?"
 
 - **Slash Command**: Generate a matching `/arckit.community.{name}` command file
 - **Minimal Template**: Skip optional sections, keep it lean
 
-Apply the user's selections: the organizational context determines compliance sections and terminology. "Slash Command" controls whether Step 7 runs. The `--share` flag (from Step 1) controls whether Step 8 runs.
+Apply the user's selections: the category determines the template's major sections. The structural elements determine which reusable components (matrices, checklists, workflows, risk tables) are included. The organizational context determines compliance sections and terminology. If "Slash Command" is selected, generate a command file in Step 6. If the user passed `--share`, generate a bundle in Step 7.
 
-### Step 4: Read Reference Templates
+### Step 3: Read Reference Templates
 
 Now that you have the user's preferences, read 2-3 existing official templates to understand the standard format. Use the Read tool only — do NOT use Bash, Glob, or Agent to search for templates.
 
@@ -108,7 +96,7 @@ Now that you have the user's preferences, read 2-3 existing official templates t
 - Procurement: `${CLAUDE_PLUGIN_ROOT}/templates/evaluation-criteria-template.md`
 - Strategy: `${CLAUDE_PLUGIN_ROOT}/templates/architecture-strategy-template.md`
 
-### Step 5: Generate the Template
+### Step 4: Generate the Template
 
 Create the template file at `.arckit/templates-custom/{name}-template.md` using the Write tool.
 
@@ -167,7 +155,7 @@ Create the template file at `.arckit/templates-custom/{name}-template.md` using 
 
 **TYPE_CODE**: Generate a short 3-5 character uppercase code for the document type (e.g., "SECAS" for Security Assessment, "VSCR" for Vendor Scorecard). Ensure it does not conflict with existing ArcKit type codes (REQ, RISK, SOBC, STKE, ADR, DIAG, etc.).
 
-### Step 6: Generate the Usage Guide
+### Step 5: Generate the Usage Guide
 
 Create a usage guide at `.arckit/guides-custom/{name}.md` using the Write tool.
 
@@ -227,7 +215,7 @@ For official promotion: rename command (drop `community.` prefix), change banner
 
 ```text
 
-### Step 7: Generate Optional Slash Command
+### Step 6: Generate Optional Slash Command
 
 If the user selected "Slash Command" in Round 2, create `.claude/commands/arckit.community.{name}.md` using the Write tool. This location is auto-discovered by Claude Code as a project-level slash command (available as `/arckit.community.{name}`).
 
@@ -265,7 +253,7 @@ $ARGUMENTS
 
 ```text
 
-### Step 8: Generate Optional Shareable Bundle
+### Step 7: Generate Optional Shareable Bundle
 
 If the user passed `--share` in their arguments, create the bundle directory:
 
@@ -306,7 +294,7 @@ To propose this template for official inclusion:
 7. Open a PR with description of the template's purpose
 ```
 
-### Step 9: Show Summary
+### Step 8: Show Summary
 
 After writing all files, show ONLY this summary:
 
