@@ -59,54 +59,49 @@ Extract the standard patterns:
 
 ### Step 3: Interview Round 1 (Purpose & Structure)
 
-Use AskUserQuestion to ask up to 2 questions simultaneously:
+Before generating the template, use the **AskUserQuestion** tool to gather user preferences. **Skip any question where the user has already specified their preference in the arguments.**
 
-**Question 1 — Template Category**:
+**Gathering rules** (apply to all questions):
 
-"What category best describes this template?"
+- **Maximum 2 rounds of questions.** After that, pick the best option from available context.
+- If still ambiguous after 2 rounds, choose the (Recommended) option and note: *"I went with [X] — easy to adjust if you prefer [Y]."*
 
-Options:
+**Question 1** — header: `Category`, multiSelect: false
+> "What category best describes this template?"
 
-- **Governance** — Compliance assessments, audits, policy reviews
-- **Technical** — Architecture patterns, design specs, technical evaluations
-- **Procurement** — Vendor assessments, scoring matrices, contract templates
-- **Strategy** — Roadmaps, capability assessments, transformation plans
+- **Governance (Recommended)**: Compliance assessments, audits, policy reviews
+- **Technical**: Architecture patterns, design specs, technical evaluations
+- **Procurement**: Vendor assessments, scoring matrices, contract templates
+- **Strategy**: Roadmaps, capability assessments, transformation plans
 
-**Question 2 — Structural Elements**:
+**Question 2** — header: `Elements`, multiSelect: true
+> "Which structural elements should the template include?"
 
-"Which structural elements should the template include?" (multi-select)
+- **Scoring/Rating Matrix**: Quantitative scoring with weighted criteria
+- **Compliance Checklist**: Pass/fail items against a framework or standard
+- **Approval Workflow**: Sign-off gates, review stages, escalation paths
+- **Risk Assessment**: Risk identification, likelihood, impact, mitigations
 
-Options:
-
-- **Scoring/Rating Matrix** — Quantitative scoring with weighted criteria
-- **Compliance Checklist** — Pass/fail items against a framework or standard
-- **Approval Workflow** — Sign-off gates, review stages, escalation paths
-- **Risk Assessment** — Risk identification, likelihood, impact, mitigations
+Apply the user's selections: the category determines the template's major sections. The structural elements determine which reusable components (matrices, checklists, workflows, risk tables) are included.
 
 ### Step 4: Interview Round 2 (Context & Options)
 
-Use AskUserQuestion to ask up to 2 more questions:
+**Question 1** — header: `Context`, multiSelect: false
+> "What organizational context should the template support?"
 
-**Question 1 — Organizational Context**:
+- **UK Government (Recommended)**: GDS, TCoP, Orange/Green Book alignment
+- **Enterprise/Corporate**: Standard corporate governance
+- **Regulated Industry**: Financial services, healthcare, defence compliance
+- **Technology Startup**: Lightweight, agile-friendly documentation
 
-"What organizational context should the template support?"
+**Question 2** — header: `Outputs`, multiSelect: true
+> "What additional outputs would you like?"
 
-Options:
+- **Slash Command**: Generate a matching `/arckit.community.{name}` command file
+- **Shareable Bundle**: Create an export bundle for sharing with others
+- **Minimal Template**: Skip optional sections, keep it lean
 
-- **UK Government** — GDS, TCoP, Orange/Green Book alignment
-- **Enterprise/Corporate** — Standard corporate governance
-- **Regulated Industry** — Financial services, healthcare, defence compliance
-- **Technology Startup** — Lightweight, agile-friendly documentation
-
-**Question 2 — Additional Outputs**:
-
-"What additional outputs would you like?" (multi-select)
-
-Options:
-
-- **Slash Command** — Generate a matching `/arckit.community.{name}` command file
-- **Shareable Bundle** — Create an export bundle for sharing with others
-- **Minimal Template** — Skip optional sections, keep it lean
+Apply the user's selections: the organizational context determines compliance sections and terminology. The additional outputs control which files are generated in Steps 7-8.
 
 ### Step 5: Generate the Template
 
