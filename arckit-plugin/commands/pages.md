@@ -431,6 +431,10 @@ Document Breakdown:
 - Project Documents: {project_doc_count}
 - Diagrams: {diagram_count}
 - ADRs: {adr_count}
+- Wardley Maps: {wardley_map_count}
+- Data Contracts: {data_contract_count}
+- Research: {research_count}
+- Reviews: {review_count}
 - Vendor Documents: {vendor_doc_count}
 - Vendor Profiles: {vendor_profile_count}
 - Tech Notes: {tech_note_count}

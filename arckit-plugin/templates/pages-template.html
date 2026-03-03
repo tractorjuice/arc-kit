@@ -1829,6 +1829,50 @@
                         });
                     }
 
+                    if (project.wardleyMaps) {
+                        project.wardleyMaps.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Wardley Maps',
+                                searchText: `${doc.title} wardley map strategy ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.dataContracts) {
+                        project.dataContracts.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Data Contracts',
+                                searchText: `${doc.title} data contract mesh ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.research) {
+                        project.research.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Research',
+                                searchText: `${doc.title} research ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.reviews) {
+                        project.reviews.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Reviews',
+                                searchText: `${doc.title} review design ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
                     if (project.vendors) {
                         project.vendors.forEach(vendor => {
                             if (vendor.documents) {
@@ -2116,10 +2160,11 @@
                 const vendors = project.vendors || [];
                 const wardleyMaps = project.wardleyMaps || [];
                 const dataContracts = project.dataContracts || [];
+                const research = project.research || [];
                 const reviews = project.reviews || [];
                 const vendorProfiles = project.vendorProfiles || [];
                 const techNotes = project.techNotes || [];
-                const allDocs = [...docs, ...diagrams, ...decisions, ...wardleyMaps, ...dataContracts, ...reviews, ...vendorProfiles, ...techNotes];
+                const allDocs = [...docs, ...diagrams, ...decisions, ...wardleyMaps, ...dataContracts, ...research, ...reviews, ...vendorProfiles, ...techNotes];
                 vendors.forEach(v => { if (v.documents) allDocs.push(...v.documents); });
 
                 const projectDocCount = allDocs.length;
@@ -2143,7 +2188,7 @@
                 const coverage = CORE_ARTIFACTS.length > 0 ? Math.round((corePresent / CORE_ARTIFACTS.length) * 100) : 0;
 
                 // First document path for linking
-                const firstDoc = docs[0] || diagrams[0] || decisions[0] || wardleyMaps[0] || dataContracts[0] || reviews[0];
+                const firstDoc = docs[0] || diagrams[0] || decisions[0] || wardleyMaps[0] || dataContracts[0] || research[0] || reviews[0];
 
                 projectMetrics.push({
                     name: project.name || project.id,
@@ -2200,7 +2245,8 @@
             realProjects.forEach(project => {
                 const allDocs = [...(project.documents || []), ...(project.diagrams || []),
                     ...(project.decisions || []), ...(project.wardleyMaps || []),
-                    ...(project.dataContracts || []), ...(project.reviews || []),
+                    ...(project.dataContracts || []), ...(project.research || []),
+                    ...(project.reviews || []),
                     ...(project.vendorProfiles || []), ...(project.techNotes || [])];
                 allDocs.forEach(doc => {
                     const tc = extractTypeCode(doc.path || '');
@@ -2732,10 +2778,34 @@
                 });
             }
 
+            // Wardley Maps
+            if (project.wardleyMaps && project.wardleyMaps.length > 0) {
+                listHtml += `<li class="app-nav-category">Wardley Maps</li>`;
+                project.wardleyMaps.forEach(doc => {
+                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
+                });
+            }
+
+            // Data Contracts
+            if (project.dataContracts && project.dataContracts.length > 0) {
+                listHtml += `<li class="app-nav-category">Data Contracts</li>`;
+                project.dataContracts.forEach(doc => {
+                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
+                });
+            }
+
             // Research
             if (project.research && project.research.length > 0) {
                 listHtml += `<li class="app-nav-category">Research</li>`;
                 project.research.forEach(doc => {
+                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
+                });
+            }
+
+            // Reviews
+            if (project.reviews && project.reviews.length > 0) {
+                listHtml += `<li class="app-nav-category">Reviews</li>`;
+                project.reviews.forEach(doc => {
                     listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
                 });
             }

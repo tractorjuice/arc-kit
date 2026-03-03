@@ -637,7 +637,10 @@ const globalCount = manifest.global.length;
 let projectDocCount = 0;
 let diagramCount = 0;
 let adrCount = 0;
+let wardleyMapCount = 0;
+let dataContractCount = 0;
 let researchCount = 0;
+let reviewCount = 0;
 let vendorDocCount = 0;
 let vendorProfileCount = 0;
 let techNoteCount = 0;
@@ -645,7 +648,10 @@ for (const p of manifest.projects) {
   projectDocCount = projectDocCount + (p.documents ? p.documents.length : 0);
   diagramCount = diagramCount + (p.diagrams ? p.diagrams.length : 0);
   adrCount = adrCount + (p.decisions ? p.decisions.length : 0);
+  wardleyMapCount = wardleyMapCount + (p.wardleyMaps ? p.wardleyMaps.length : 0);
+  dataContractCount = dataContractCount + (p.dataContracts ? p.dataContracts.length : 0);
   researchCount = researchCount + (p.research ? p.research.length : 0);
+  reviewCount = reviewCount + (p.reviews ? p.reviews.length : 0);
   if (p.vendors) for (const v of p.vendors) vendorDocCount = vendorDocCount + v.documents.length;
   vendorProfileCount = vendorProfileCount + (p.vendorProfiles ? p.vendorProfiles.length : 0);
   techNoteCount = techNoteCount + (p.techNotes ? p.techNotes.length : 0);
@@ -682,7 +688,10 @@ const message = [
   `| Project Documents | ${projectDocCount} |`,
   `| Diagrams | ${diagramCount} |`,
   `| ADRs | ${adrCount} |`,
+  `| Wardley Maps | ${wardleyMapCount} |`,
+  `| Data Contracts | ${dataContractCount} |`,
   `| Research | ${researchCount} |`,
+  `| Reviews | ${reviewCount} |`,
   `| Vendor Documents | ${vendorDocCount} |`,
   `| Vendor Profiles | ${vendorProfileCount} |`,
   `| Tech Notes | ${techNoteCount} |`,
