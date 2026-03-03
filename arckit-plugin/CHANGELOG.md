@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.9] - 2026-03-03
+
+### Added
+
+- **Governance scan pre-processor hook** (`governance-scan.mjs`) — pre-extracts all artifact metadata, requirements, principles, risks, cross-references, vendor data, and placeholder counts for `/arckit:analyze`, eliminating 20-40 Read tool calls
+- Three new shared functions in `hook-utils.mjs`: `extractRequirementDetails`, `extractPrinciples`, `extractRiskEntries`
+- Hook-aware shortcut preamble in `analyze.md` — skips Steps 1-2 when pre-extracted data is present
+
+### Changed
+
+- `extractRequirementDetails` moved from `traceability-scan.mjs` to shared `hook-utils.mjs` — no behavioral change, same function in shared location
+
 ## [3.0.8] - 2026-03-03
 
 ### Changed
