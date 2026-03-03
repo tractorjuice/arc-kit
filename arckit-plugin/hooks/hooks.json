@@ -58,6 +58,16 @@
             "timeout": 20
           }
         ]
+      },
+      {
+        "matcher": "/arckit:analyze",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/governance-scan.mjs",
+            "timeout": 30
+          }
+        ]
       }
     ],
     "PreToolUse": [

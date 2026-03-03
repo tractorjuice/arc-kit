@@ -21,84 +21,9 @@ import {
   isDir, isFile, readText, listDir,
   findRepoRoot, extractDocType, extractVersion,
   extractDocControlFields, extractRequirementIds,
+  extractRequirementDetails,
   parseHookInput,
 } from './hook-utils.mjs';
-
-// ── Requirement detail extraction ──
-
-/**
- * Parse requirement headings and details from a REQ document.
- * Looks for ### ID: Description headings and priority markers.
- * Returns array of { id, category, description, priority }
- */
-function extractRequirementDetails(content) {
-  const requirements = [];
-  const lines = content.split('\n');
-
-  // Map prefix to category
-  const categoryMap = {
-    'BR': 'Business',
-    'FR': 'Functional',
-    'NFR': 'Non-Functional',
-    'INT': 'Integration',
-    'DR': 'Data',
-  };
-
-  // Pattern for requirement headings: ### or #### BR-001: Description text
-  // Template uses ### for BR, #### for FR/NFR/INT/DR — match both levels
-  const headingRe = /^#{3,4}\s+((?:BR|FR|NFR(?:-[A-Z]+)?|INT|DR)-\d{3}):\s*(.+)/;
-  // Priority patterns in table rows or inline markers
-  const priorityRe = /\b(MUST|SHOULD|MAY)\b/;
-
-  for (let i = 0; i < lines.length; i++) {
-    const headingMatch = lines[i].match(headingRe);
-    if (!headingMatch) continue;
-
-    const id = headingMatch[1];
-    const description = headingMatch[2].trim();
-
-    // Determine category from prefix
-    let category = 'Unknown';
-    for (const [prefix, cat] of Object.entries(categoryMap)) {
-      if (id.startsWith(prefix)) {
-        category = cat;
-        break;
-      }
-    }
-
-    // Look for priority in the next ~10 lines (table rows, inline text)
-    let priority = 'SHOULD'; // default
-    for (let j = i + 1; j < Math.min(i + 11, lines.length); j++) {
-      // Stop if we hit another heading (h2, h3, or h4)
-      if (/^#{2,4}\s+/.test(lines[j])) break;
-      const pMatch = lines[j].match(priorityRe);
-      if (pMatch) {
-        priority = pMatch[1];
-        break;
-      }
-    }
-
-    requirements.push({ id, category, description, priority });
-  }
-
-  // Merge: also extract IDs via regex to catch requirements not under headings
-  // (e.g. table rows, inline references, or unexpected heading levels)
-  const headingIds = new Set(requirements.map(r => r.id));
-  const allIds = extractRequirementIds(content);
-  for (const id of allIds) {
-    if (headingIds.has(id)) continue; // already captured via heading
-    let category = 'Unknown';
-    for (const [prefix, cat] of Object.entries(categoryMap)) {
-      if (id.startsWith(prefix)) {
-        category = cat;
-        break;
-      }
-    }
-    requirements.push({ id, category, description: '(extracted from content)', priority: 'SHOULD' });
-  }
-
-  return requirements;
-}
 
 // ── Argument parsing ──
 

@@ -33,6 +33,18 @@ Identify inconsistencies, gaps, ambiguities, and compliance issues across all ar
 
 > **Tip**: Users can customize templates with `/arckit:customize analyze`
 
+### Hook-Aware Shortcut
+
+If the hook has injected a `## Governance Scan Pre-processor Complete` section in the context:
+
+- **Skip Steps 1-2 entirely** — all artifact metadata, requirements, principles, risks, cross-references, vendor data, and placeholder counts are pre-extracted
+- **Go directly to Step 3** (Build Semantic Models) using the pre-extracted tables
+- **Do NOT re-read artifacts** listed in the hook output — the data is already available
+- **Still read the template** (Step 0) for output formatting
+- **Focus on Steps 3-6**: semantic analysis, detection passes A-K, severity assignment, report generation
+
+If no hook data is present, proceed with Steps 1-2 as normal.
+
 ### 1. Discover Project Context
 
 Identify the project directory to analyze:
