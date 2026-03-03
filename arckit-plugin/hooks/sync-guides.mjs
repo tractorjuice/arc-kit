@@ -272,7 +272,7 @@ function scanGlobalDocs(repoRoot) {
   const extDir = join(globalDir, 'external');
   if (isDir(extDir)) {
     for (const f of listDir(extDir)) {
-      if (f === 'README.md') continue;
+      if (f === 'README.md' || f.startsWith('.')) continue;
       if (isFile(join(extDir, f))) {
         const ext = extname(f).replace('.', '') || 'file';
         globalExternal.push({
@@ -288,6 +288,7 @@ function scanGlobalDocs(repoRoot) {
   const polDir = join(globalDir, 'policies');
   if (isDir(polDir)) {
     for (const f of listDir(polDir)) {
+      if (f.startsWith('.')) continue;
       if (isFile(join(polDir, f))) {
         const ext = extname(f).replace('.', '') || 'file';
         globalPolicies.push({
@@ -432,7 +433,7 @@ function scanProject(repoRoot, projectName) {
   const extDir = join(projectDir, 'external');
   if (isDir(extDir)) {
     for (const f of listDir(extDir)) {
-      if (f === 'README.md') continue;
+      if (f === 'README.md' || f.startsWith('.')) continue;
       if (isFile(join(extDir, f))) {
         const ext = extname(f).replace('.', '') || 'file';
         project.external.push({
