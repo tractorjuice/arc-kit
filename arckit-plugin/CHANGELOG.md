@@ -7,12 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.7] - 2026-03-03
+
 ### Added
 
 - `/arckit.template-builder` command — interactive template builder that creates community-origin templates, guides, and optional shareable bundles through a 2-round interview process
 - Three-tier origin model for templates and guides: Official, Custom, and Community with distinct banners
 - Community guide discovery in `sync-guides.mjs` — scans `.arckit/guides-custom/` and includes community guides in the pages manifest under "Community" category
 - `community.` prefix convention for user-generated slash commands
+- Diagram quality gate v2 — element count thresholds per diagram type with split strategies, layout direction decision table (LR vs TB), expanded 9-criteria quality gate (was 6), per-criterion remediation table, and iterative review loop (max 3 iterations)
 
 ### Fixed
 
