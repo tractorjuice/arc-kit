@@ -19,39 +19,14 @@
  * Output (stdout): JSON with additionalContext containing summary
  */
 
-import { readFileSync, writeFileSync, mkdirSync, statSync, readdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { join, dirname, resolve, relative, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
-
-// ── Utility functions ──
-
-function isDir(p) {
-  try { return statSync(p).isDirectory(); } catch { return false; }
-}
-function isFile(p) {
-  try { return statSync(p).isFile(); } catch { return false; }
-}
-function mtimeMs(p) {
-  try { return statSync(p).mtimeMs; } catch { return 0; }
-}
-function readText(p) {
-  try { return readFileSync(p, 'utf8'); } catch { return null; }
-}
-function listDir(p) {
-  try { return readdirSync(p).sort(); } catch { return []; }
-}
-
-function findRepoRoot(cwd) {
-  let current = resolve(cwd);
-  while (true) {
-    if (isDir(join(current, 'projects'))) return current;
-    const parent = resolve(current, '..');
-    if (parent === current) break;
-    current = parent;
-  }
-  return null;
-}
+import {
+  isDir, isFile, mtimeMs, readText, listDir,
+  findRepoRoot, parseHookInput,
+} from './hook-utils.mjs';
 
 function walkMdFiles(baseDir, currentDir = baseDir) {
   const results = [];
@@ -494,20 +469,7 @@ function buildManifest(repoRoot, repoInfo, guideTitles) {
 
 // ── Main ──
 
-let raw = '';
-try {
-  raw = readFileSync(0, 'utf8');
-} catch {
-  process.exit(0);
-}
-if (!raw || !raw.trim()) process.exit(0);
-
-let data;
-try {
-  data = JSON.parse(raw);
-} catch {
-  process.exit(0);
-}
+const data = parseHookInput();
 
 // Guard: hooks.json matcher triggers on substring "/arckit:pages" which can
 // false-positive when another command's expanded body mentions /arckit:pages.

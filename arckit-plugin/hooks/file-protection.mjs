@@ -9,8 +9,8 @@
  * Exit code is always 0.
  */
 
-import { readFileSync } from 'node:fs';
-import { basename, parse as pathParse } from 'node:path';
+import { basename } from 'node:path';
+import { parseHookInput } from './hook-utils.mjs';
 
 // Files and paths to protect
 const PROTECTED_PATHS = [
@@ -164,20 +164,7 @@ function isProtected(filePath) {
 }
 
 // --- Main ---
-let raw = '';
-try {
-  raw = readFileSync(0, 'utf8');
-} catch {
-  process.exit(0);
-}
-if (!raw || !raw.trim()) process.exit(0);
-
-let inputData;
-try {
-  inputData = JSON.parse(raw);
-} catch {
-  process.exit(0);
-}
+const inputData = parseHookInput();
 
 const toolName = inputData.tool_name || '';
 const filePath = (inputData.tool_input || {}).file_path || '';

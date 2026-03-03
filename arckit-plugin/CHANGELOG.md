@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.8] - 2026-03-03
+
+### Changed
+
+- **Shared hook-utils module** — extracted 11 utility functions (`isDir`, `isFile`, `readText`, `listDir`, `mtimeMs`, `findRepoRoot`, `extractDocType`, `extractVersion`, `extractDocControlFields`, `extractRequirementIds`, `parseHookInput`) into `hook-utils.mjs`; updated 9 hooks to import from it, removing ~240 lines of duplicate code
+- `COMPOUND_TYPES` now derived dynamically from `config/doc-types.mjs` instead of hardcoded — new compound doc types propagate automatically to all hooks
+
 ## [3.0.7] - 2026-03-03
 
 ### Added

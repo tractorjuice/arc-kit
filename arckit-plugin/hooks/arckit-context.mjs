@@ -11,69 +11,20 @@
  * Output (stdout): JSON with additionalContext containing project context
  */
 
-import { readFileSync, readdirSync, statSync } from 'node:fs';
+import { readdirSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
-
-function isDir(p) {
-  try { return statSync(p).isDirectory(); } catch { return false; }
-}
-function isFile(p) {
-  try { return statSync(p).isFile(); } catch { return false; }
-}
-function mtime(p) {
-  try { return statSync(p).mtimeMs; } catch { return 0; }
-}
-
-// Multi-instance type regex
-const MULTI_INSTANCE_RE = /^([A-Z]+-?[A-Z]*)-\d{3}$/;
+import {
+  isDir, isFile, mtimeMs, readText,
+  findRepoRoot, extractDocType, parseHookInput,
+} from './hook-utils.mjs';
 
 function docTypeName(code) {
   return DOC_TYPES[code]?.name || code;
 }
 
-function extractDocType(filename) {
-  // ARC-001-REQ-v1.0.md -> REQ
-  // ARC-001-ADR-001-v1.0.md -> ADR
-  // ARC-001-SECD-MOD-v1.0.md -> SECD-MOD
-  const m = filename.match(/^ARC-\d{3}-(.+)$/);
-  if (!m) return filename;
-  let rest = m[1];
-  // Remove version suffix: -vN.N.md or -vN.N
-  rest = rest.replace(/-v\d+(\.\d+)?\.md$/, '');
-  rest = rest.replace(/-v\d+(\.\d+)?$/, '');
-  // Strip trailing -NNN for multi-instance types
-  const mm = rest.match(MULTI_INSTANCE_RE);
-  if (mm) return mm[1];
-  return rest;
-}
-
-function findRepoRoot(cwd) {
-  let current = resolve(cwd);
-  while (true) {
-    if (isDir(join(current, 'projects'))) return current;
-    const parent = resolve(current, '..');
-    if (parent === current) break;
-    current = parent;
-  }
-  return null;
-}
-
 // --- Main ---
-let raw = '';
-try {
-  raw = readFileSync(0, 'utf8');
-} catch {
-  process.exit(0);
-}
-if (!raw || !raw.trim()) process.exit(0);
-
-let data;
-try {
-  data = JSON.parse(raw);
-} catch {
-  process.exit(0);
-}
+const data = parseHookInput();
 
 const userPrompt = data.prompt || '';
 
@@ -99,10 +50,7 @@ if (!isDir(projectsDir)) process.exit(0);
 
 // Read ArcKit version from plugin VERSION file
 const pluginRoot = resolve(import.meta.url.replace('file://', ''), '..', '..');
-let arckitVersion = 'unknown';
-try {
-  arckitVersion = readFileSync(join(pluginRoot, 'VERSION'), 'utf8').trim();
-} catch { /* ignore */ }
+const arckitVersion = readText(join(pluginRoot, 'VERSION'))?.trim() || 'unknown';
 
 // Build context string
 const lines = [];
@@ -137,11 +85,11 @@ for (const projectName of projectEntries) {
   for (const f of readdirSync(projectDir).sort()) {
     const fp = join(projectDir, f);
     if (isFile(fp) && f.startsWith('ARC-') && f.endsWith('.md')) {
-      const dtype = extractDocType(f);
+      const dtype = extractDocType(f) || f;
       const dname = docTypeName(dtype);
       artifactList.push(`  - \`${f}\` (${dname})`);
       artifactCount++;
-      const amtime = mtime(fp);
+      const amtime = mtimeMs(fp);
       if (amtime > newestArtifactMtime) newestArtifactMtime = amtime;
     }
   }
@@ -154,11 +102,11 @@ for (const projectName of projectEntries) {
       for (const f of readdirSync(subPath).sort()) {
         const fp = join(subPath, f);
         if (isFile(fp) && f.startsWith('ARC-') && f.endsWith('.md')) {
-          const dtype = extractDocType(f);
+          const dtype = extractDocType(f) || f;
           const dname = docTypeName(dtype);
           artifactList.push(`  - \`${subdir}/${f}\` (${dname})`);
           artifactCount++;
-          const amtime = mtime(fp);
+          const amtime = mtimeMs(fp);
           if (amtime > newestArtifactMtime) newestArtifactMtime = amtime;
         }
       }
@@ -209,7 +157,7 @@ for (const projectName of projectEntries) {
       const fp = join(externalDir, f);
       if (!isFile(fp)) continue;
       if (f === 'README.md') continue;
-      const extMtime = mtime(fp);
+      const extMtime = mtimeMs(fp);
       if (extMtime > newestArtifactMtime) {
         extList.push(`  - \`${f}\` (**NEW** \u2014 newer than latest artifact)`);
       } else {

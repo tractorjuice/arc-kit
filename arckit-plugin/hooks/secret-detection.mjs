@@ -8,7 +8,7 @@
  * Exit code is always 0.
  */
 
-import { readFileSync } from 'node:fs';
+import { parseHookInput } from './hook-utils.mjs';
 
 // Patterns that indicate potential secrets
 // IMPORTANT: Keep synchronised with secret-file-scanner.mjs
@@ -73,25 +73,7 @@ function checkForSecrets(prompt) {
 }
 
 // --- Main ---
-let raw = '';
-try {
-  raw = readFileSync(0, 'utf8');
-} catch {
-  console.log('{}');
-  process.exit(0);
-}
-if (!raw || !raw.trim()) {
-  console.log('{}');
-  process.exit(0);
-}
-
-let inputData;
-try {
-  inputData = JSON.parse(raw);
-} catch {
-  console.log('{}');
-  process.exit(0);
-}
+const inputData = parseHookInput();
 
 const prompt = inputData.prompt || '';
 if (!prompt) {

@@ -14,38 +14,14 @@
  * Output (stdout): JSON with additionalContext containing structured findings
  */
 
-import { readFileSync, writeFileSync, statSync, readdirSync, mkdirSync } from 'node:fs';
-import { join, resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-// ── Utility functions ──
-
-function isDir(p) {
-  try { return statSync(p).isDirectory(); } catch { return false; }
-}
-function isFile(p) {
-  try { return statSync(p).isFile(); } catch { return false; }
-}
-function readText(p) {
-  try { return readFileSync(p, 'utf8'); } catch { return null; }
-}
-function listDir(p) {
-  try { return readdirSync(p).sort(); } catch { return []; }
-}
-function mtimeMs(p) {
-  try { return statSync(p).mtimeMs; } catch { return 0; }
-}
-
-function findRepoRoot(cwd) {
-  let current = resolve(cwd);
-  while (true) {
-    if (isDir(join(current, 'projects'))) return current;
-    const parent = resolve(current, '..');
-    if (parent === current) break;
-    current = parent;
-  }
-  return null;
-}
+import { writeFileSync, mkdirSync } from 'node:fs';
+import { join } from 'node:path';
+import {
+  isDir, isFile, readText, listDir, mtimeMs,
+  findRepoRoot, extractDocType, extractVersion,
+  extractDocControlFields, extractRequirementIds,
+  parseHookInput,
+} from './hook-utils.mjs';
 
 // ── Date helpers ──
 
@@ -61,59 +37,12 @@ function formatDate(dateStr) {
   return dateStr;
 }
 
-// ── Doc type extraction ──
+// ── Health-specific constants ──
 
-const COMPOUND_TYPES = ['SECD-MOD', 'PRIN-COMP'];
-
-function extractDocType(filename) {
-  const m = filename.match(/^ARC-\d{3}-(.+)-v\d+(\.\d+)?\.md$/);
-  if (!m) return null;
-  let rest = m[1];
-
-  // Try compound types first
-  for (const code of COMPOUND_TYPES) {
-    if (rest.startsWith(code)) return code;
-  }
-
-  // Strip trailing -NNN for multi-instance types (ADR-001, DIAG-002)
-  rest = rest.replace(/-\d{3}$/, '');
-  return rest;
-}
-
-function extractVersion(filename) {
-  const m = filename.match(/-v(\d+(?:\.\d+)?)\.md$/);
-  return m ? m[1] : null;
-}
-
-// ── Metadata extraction ──
-
-const DOC_CONTROL_RE = /^\|\s*\*\*([^*]+)\*\*\s*\|\s*(.+?)\s*\|/;
-const REQ_ID_PATTERN = /\b(BR-\d{3}|FR-\d{3}|NFR-[A-Z]+-\d{3}|NFR-\d{3}|INT-\d{3}|DR-\d{3})\b/g;
 const RESOLUTION_KEYWORDS = [
   'resolved', 'addressed', 'completed', 'condition met',
   'fixed in v', 'implemented', 'mitigated', 'satisfied',
 ];
-
-function extractDocControlFields(content) {
-  const fields = {};
-  for (const line of content.split('\n')) {
-    const m = line.match(DOC_CONTROL_RE);
-    if (m) {
-      fields[m[1].trim()] = m[2].trim();
-    }
-  }
-  return fields;
-}
-
-function extractRequirementIds(content) {
-  const ids = new Set();
-  let m;
-  const re = new RegExp(REQ_ID_PATTERN.source, 'g');
-  while ((m = re.exec(content)) !== null) {
-    ids.add(m[1]);
-  }
-  return ids;
-}
 
 function extractAdrStatus(content) {
   // Look for Status field in doc control
@@ -532,20 +461,7 @@ function buildJsonOutput(projectResults, baseline) {
 
 // ── Main ──
 
-let raw = '';
-try {
-  raw = readFileSync(0, 'utf8');
-} catch {
-  process.exit(0);
-}
-if (!raw || !raw.trim()) process.exit(0);
-
-let data;
-try {
-  data = JSON.parse(raw);
-} catch {
-  process.exit(0);
-}
+const data = parseHookInput();
 
 // Guard: hooks.json matcher triggers on substring "/arckit:health" which can
 // false-positive when another command's expanded body mentions /arckit:health.

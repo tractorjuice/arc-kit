@@ -11,34 +11,12 @@
  * Output (stdout): JSON with additionalContext
  */
 
-import { readFileSync, readdirSync, statSync, appendFileSync } from 'node:fs';
+import { readdirSync, appendFileSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { isDir, isFile, mtimeMs, readText, parseHookInput } from './hook-utils.mjs';
 
-function isDir(p) {
-  try { return statSync(p).isDirectory(); } catch { return false; }
-}
-function isFile(p) {
-  try { return statSync(p).isFile(); } catch { return false; }
-}
-function mtime(p) {
-  try { return statSync(p).mtimeMs; } catch { return 0; }
-}
-
-let raw = '';
-try {
-  raw = readFileSync(0, 'utf8');
-} catch {
-  process.exit(0);
-}
-if (!raw || !raw.trim()) process.exit(0);
-
-let data;
-try {
-  data = JSON.parse(raw);
-} catch {
-  process.exit(0);
-}
+const data = parseHookInput();
 
 const cwd = data.cwd || '.';
 const envFile = data.env_file || '';
@@ -48,12 +26,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const pluginRoot = process.env.CLAUDE_PLUGIN_ROOT || resolve(__dirname, '..');
 const versionFile = join(pluginRoot, 'VERSION');
 
-let arckitVersion = 'unknown';
-if (isFile(versionFile)) {
-  try {
-    arckitVersion = readFileSync(versionFile, 'utf8').trim();
-  } catch { /* keep unknown */ }
-}
+const arckitVersion = (isFile(versionFile) && readText(versionFile)?.trim()) || 'unknown';
 
 // Export ARCKIT_VERSION so Bash tool calls can use it
 if (envFile) {
@@ -92,7 +65,7 @@ if (isDir(projectsDir)) {
     for (const f of readdirSync(projectDir)) {
       const fp = join(projectDir, f);
       if (isFile(fp) && f.startsWith('ARC-') && f.endsWith('.md')) {
-        const mt = mtime(fp);
+        const mt = mtimeMs(fp);
         if (mt > newestArtifact) newestArtifact = mt;
       }
     }
@@ -104,7 +77,7 @@ if (isDir(projectsDir)) {
         for (const f of readdirSync(subPath)) {
           const fp = join(subPath, f);
           if (isFile(fp) && f.startsWith('ARC-') && f.endsWith('.md')) {
-            const mt = mtime(fp);
+            const mt = mtimeMs(fp);
             if (mt > newestArtifact) newestArtifact = mt;
           }
         }
@@ -117,7 +90,7 @@ if (isDir(projectsDir)) {
       const fp = join(externalDir, f);
       if (!isFile(fp)) continue;
       if (f === 'README.md') continue;
-      const extMtime = mtime(fp);
+      const extMtime = mtimeMs(fp);
       if (extMtime > newestArtifact) {
         newExtFiles.push(f);
       }

@@ -18,32 +18,10 @@
  * Exit codes:      0 always
  */
 
-import { readFileSync, writeFileSync, statSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { join, basename, resolve } from 'node:path';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
-
-// ── Utility functions ──
-
-function isDir(p) {
-  try { return statSync(p).isDirectory(); } catch { return false; }
-}
-function isFile(p) {
-  try { return statSync(p).isFile(); } catch { return false; }
-}
-function readText(p) {
-  try { return readFileSync(p, 'utf8'); } catch { return null; }
-}
-
-function findRepoRoot(cwd) {
-  let current = resolve(cwd);
-  while (true) {
-    if (isDir(join(current, 'projects'))) return current;
-    const parent = resolve(current, '..');
-    if (parent === current) break;
-    current = parent;
-  }
-  return null;
-}
+import { isDir, isFile, findRepoRoot, parseHookInput } from './hook-utils.mjs';
 
 // ── Static data (derived from central config) ──
 
@@ -101,20 +79,7 @@ function extractFirstHeading(content) {
 
 // ── Main ──
 
-let raw = '';
-try {
-  raw = readFileSync(0, 'utf8');
-} catch {
-  process.exit(0);
-}
-if (!raw || !raw.trim()) process.exit(0);
-
-let data;
-try {
-  data = JSON.parse(raw);
-} catch {
-  process.exit(0);
-}
+const data = parseHookInput();
 
 const filePath = (data.tool_input || {}).file_path || '';
 const fileContent = (data.tool_input || {}).content || '';

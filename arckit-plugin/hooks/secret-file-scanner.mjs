@@ -9,7 +9,7 @@
  * Exit code is always 0.
  */
 
-import { readFileSync } from 'node:fs';
+import { parseHookInput } from './hook-utils.mjs';
 
 // Secret patterns - synced with secret-detection.mjs
 const SECRET_PATTERNS = [
@@ -91,20 +91,7 @@ function checkContentForSecrets(content) {
 }
 
 // --- Main ---
-let raw = '';
-try {
-  raw = readFileSync(0, 'utf8');
-} catch {
-  process.exit(0);
-}
-if (!raw || !raw.trim()) process.exit(0);
-
-let inputData;
-try {
-  inputData = JSON.parse(raw);
-} catch {
-  process.exit(0);
-}
+const inputData = parseHookInput();
 
 const toolName = inputData.tool_name || '';
 const toolInput = inputData.tool_input || {};
