@@ -973,25 +973,75 @@ Before finalizing, validate the diagram:
 - [ ] Complexity is appropriate for audience
 - [ ] Split into multiple diagrams if too complex
 
-## Step 5b: Diagram Quality Gate
+## Step 5b: Element Count Thresholds
+
+Before evaluating quality, check element counts against these thresholds. If exceeded, split the diagram before proceeding to the quality gate.
+
+| Diagram Type | Max Elements | Rationale | Split Strategy |
+|-------------|-------------|-----------|----------------|
+| C4 Context | 10 | Stakeholder communication — must be instantly comprehensible | Split by domain boundary or system group |
+| C4 Container | 15 | Technical detail within one system boundary | Split by deployment unit or bounded context |
+| C4 Component | 12 per container | Internal structure of one container | Split by responsibility or layer |
+| Deployment | 15 | Infrastructure topology | Split by cloud region or availability zone |
+| Sequence | 8 lifelines | Interaction flow for one scenario | Split by phase (setup, processing, teardown) |
+| Data Flow | 12 | Data movement between stores and processes | Split by trust boundary or data domain |
+
+If the diagram exceeds these thresholds, split it at natural architectural boundaries and create a parent diagram showing the split points.
+
+## Step 5c: Layout Direction Decision
+
+Select the primary layout direction based on diagram content. This affects `flowchart LR` vs `flowchart TB` (Mermaid) or `LAYOUT_LEFT_RIGHT()` vs `LAYOUT_TOP_DOWN()` (PlantUML).
+
+| Choose | When | Examples |
+|--------|------|---------|
+| **Left-to-Right (LR)** | Data flows through tiers or layers; actors on left, external systems on right | C4 Context, C4 Container with clear tier progression |
+| **Top-to-Bottom (TB)** | Hierarchical relationships; control flows downward; org-chart style | Deployment diagrams, component diagrams with layered architecture |
+| **LR inside TB** | Top-level diagram is hierarchical but internal groups flow horizontally | System boundary (TB) containing containers with LR data flow via `direction LR` in subgraph |
+
+**Default:** LR for C4 Context and Container; TB for Deployment; TB for Sequence (lifelines are inherently top-to-bottom); LR for Data Flow.
+
+## Step 5d: Diagram Quality Gate
 
 After generating the diagram, evaluate it against the following quality criteria derived from graph drawing research (Purchase et al.) and C4 best practices. Report the results as part of the output:
 
-| Criterion | Target | Result | Status |
-|-----------|--------|--------|--------|
-| Edge crossings | fewer than 5 for complex diagrams, 0 for simple (6 or fewer elements) | {count or estimate} | {PASS/FAIL} |
-| Visual hierarchy | System boundary is the most prominent visual element | {assessment} | {PASS/FAIL} |
-| Grouping | Related elements are proximate (Gestalt proximity principle) | {assessment} | {PASS/FAIL} |
-| Flow direction | Consistent left-to-right or top-to-bottom throughout | {direction} | {PASS/FAIL} |
-| Relationship traceability | Each line can be followed from source to target without ambiguity | {assessment} | {PASS/FAIL} |
-| Abstraction level | One C4 level per diagram (context, container, component, or code) | {level} | {PASS/FAIL} |
+| # | Criterion | Target | Result | Status |
+|---|-----------|--------|--------|--------|
+| 1 | Edge crossings | fewer than 5 for complex diagrams, 0 for simple (6 or fewer elements) | {count or estimate} | {PASS/FAIL} |
+| 2 | Visual hierarchy | System boundary is the most prominent visual element | {assessment} | {PASS/FAIL} |
+| 3 | Grouping | Related elements are proximate (Gestalt proximity principle) | {assessment} | {PASS/FAIL} |
+| 4 | Flow direction | Consistent left-to-right or top-to-bottom throughout | {direction} | {PASS/FAIL} |
+| 5 | Relationship traceability | Each line can be followed from source to target without ambiguity | {assessment} | {PASS/FAIL} |
+| 6 | Abstraction level | One C4 level per diagram (context, container, component, or code) | {level} | {PASS/FAIL} |
+| 7 | Edge label readability | All edge labels are legible and do not overlap other edges or nodes | {assessment} | {PASS/FAIL} |
+| 8 | Node placement | No unnecessarily long edges; connected nodes are proximate | {assessment} | {PASS/FAIL} |
+| 9 | Element count | Within threshold for diagram type (see Step 5b) | {count}/{max} | {PASS/FAIL} |
 
-**If any criterion fails:**
+### Remediation by Criterion
 
-1. **Reorder element declarations** to match the intended tier layout (actors first, external systems last)
-2. **Add `subgraph` containers** for related elements to improve visual grouping
-3. **For PlantUML:** use directional hints (`Rel_Right`, `Rel_Down`, `Lay_Right`, `Lay_Down`) to control placement
-4. **Re-generate and re-evaluate** until all criteria pass or document accepted trade-offs in the Architecture Decisions section
+| Failed # | Remediation Steps |
+|----------|------------------|
+| 1 (Edge crossings) | Reorder declarations in tier order; add subgraph grouping; switch to PlantUML for directional hints |
+| 2 (Visual hierarchy) | Ensure system boundary uses dashed stroke style; actors and external systems outside boundary |
+| 3 (Grouping) | Add `subgraph` containers around related elements; use consistent styling within groups |
+| 4 (Flow direction) | Change `flowchart LR`/`TB` to match the dominant data flow; avoid mixed directions |
+| 5 (Traceability) | Reduce edge crossings; shorten long edges; ensure distinct line paths between parallel edges |
+| 6 (Abstraction level) | Remove elements that belong at a different C4 level; split into separate diagrams |
+| 7 (Edge labels) | Shorten labels to key information (protocol, format); move detail to a legend table below the diagram |
+| 8 (Node placement) | Reorder declarations to place connected elements adjacent; group tightly-coupled components in a subgraph |
+| 9 (Element count) | Split diagram at natural architectural boundaries (see Step 5b) |
+
+### Iterative Review Loop
+
+**IMPORTANT:** Do not proceed to Step 6 until the quality gate passes. Follow this loop:
+
+1. Generate the diagram code
+2. Evaluate all 9 criteria in the quality gate table
+3. If any criterion fails:
+   a. Apply the corresponding remediation from the table above
+   b. Re-generate the diagram code with fixes applied
+   c. Re-evaluate all 9 criteria
+4. Repeat steps 3a-3c up to **3 iterations**
+5. If criteria still fail after 3 iterations, document accepted trade-offs and proceed
 
 **Accepted trade-offs:** If a crossing or layout imperfection cannot be eliminated without sacrificing clarity elsewhere, document the trade-off explicitly. For example: "One edge crossing between the Payment API and Cache is accepted to maintain the left-to-right tier ordering of all other elements."
 

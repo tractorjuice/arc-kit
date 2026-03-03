@@ -281,6 +281,12 @@ All artifacts must pass these 10 checks:
 - Diagram type specified (C4 level, sequence, deployment, etc.)
 - Mermaid syntax validated (renders without errors)
 - Legend or key included for custom notation
+- Element count within threshold for diagram type (Context: 10, Container: 15, Component: 12, Deployment: 15, Sequence: 8 lifelines, Data Flow: 12)
+- Edge crossings within target (0 for simple diagrams, fewer than 5 for complex)
+- Consistent flow direction (LR or TB throughout, no mixed directions)
+- Edge labels legible and non-overlapping
+- One abstraction level per diagram (no mixed C4 levels)
+- Quality gate table (Step 5d) included in output with all 9 criteria assessed
 
 ### WARD -- Wardley Map
 
