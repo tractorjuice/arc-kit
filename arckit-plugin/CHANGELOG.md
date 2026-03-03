@@ -14,6 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Community guide discovery in `sync-guides.mjs` — scans `.arckit/guides-custom/` and includes community guides in the pages manifest under "Community" category
 - `community.` prefix convention for user-generated slash commands
 
+### Fixed
+
+- **Research documents missing from sidebar navigation** — added research section to `buildProjectNav` in pages template so research artifacts render between Decisions and Vendors
+- **.gitkeep files leaked into manifest** — dotfiles in `external/` and `policies/` directories were included in the manifest scan; now filtered out
+- **Stale statistics in docs/index.html** — updated document and command counts
+
 ### Changed
 
 - All 50 official templates updated: `Template Status: <status>` replaced with `Template Origin: Official` banner

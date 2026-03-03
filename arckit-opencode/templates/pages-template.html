@@ -2732,6 +2732,14 @@
                 });
             }
 
+            // Research
+            if (project.research && project.research.length > 0) {
+                listHtml += `<li class="app-nav-category">Research</li>`;
+                project.research.forEach(doc => {
+                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
+                });
+            }
+
             // Vendors
             if (project.vendors && project.vendors.length > 0) {
                 listHtml += `<li class="app-nav-category">Vendors</li>`;
