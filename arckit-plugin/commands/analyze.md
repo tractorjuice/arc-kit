@@ -35,15 +35,45 @@ Identify inconsistencies, gaps, ambiguities, and compliance issues across all ar
 
 ### Hook-Aware Shortcut
 
-If the hook has injected a `## Governance Scan Pre-processor Complete` section in the context:
+If the hook has injected a `## Governance Scan Pre-processor Complete` section in the context, follow this protocol. If no hook data is present, proceed with Steps 1-2 as normal.
 
-- **Skip Steps 1-2 entirely** — all artifact metadata, requirements, principles, risks, cross-references, vendor data, and placeholder counts are pre-extracted
-- **Go directly to Step 3** (Build Semantic Models) using the pre-extracted tables
-- **Do NOT re-read artifacts** listed in the hook output — the data is already available
-- **Still read the template** (Step 0) for output formatting
-- **Focus on Steps 3-6**: semantic analysis, detection passes A-K, severity assignment, report generation
+**Rule 1 — Hook tables are primary data.** Use them directly for all detection passes. Do NOT re-read any artifact file listed in the Artifact Inventory table.
 
-If no hook data is present, proceed with Steps 1-2 as normal.
+**Rule 2 — Targeted reads only.** When a detection pass needs evidence beyond hook tables, use Grep (search for specific patterns) or Read with offset/limit (specific sections). NEVER read an entire artifact file.
+
+**Rule 3 — Skip Steps 1-2 entirely.** Go directly to Step 3. Still read the template (Step 0) for output formatting.
+
+#### Hook Data to Detection Pass Mapping
+
+Use this table to identify the primary data source for each detection pass. Only perform a targeted read when the hook data is genuinely insufficient for a specific check.
+
+| Detection Pass | Primary Hook Data | Targeted Read (only if needed) |
+|---|---|---|
+| A. Requirements Quality | Requirements Inventory, Priority Distribution, Placeholder Counts | Hook data sufficient for all Pass A checks |
+| B. Principles Alignment | Principles table + Requirements Inventory | Grep PRIN files for full validation criteria of specific principles flagged as violated |
+| C. Req-Design Traceability | Coverage Summary, Orphan Requirements, Cross-Reference Map | Hook data sufficient for all Pass C checks |
+| D. Vendor Procurement | Vendor Inventory + Cross-Reference Map | Grep vendor HLD/DLD for specific requirement IDs missing from cross-ref map |
+| E. Stakeholder Traceability | Artifact Inventory (STKE presence) + Requirements Inventory | Grep STKE for driver-goal-outcome chains when validating orphan requirements |
+| F. Risk Management | Risks table + Requirements Inventory | Grep RISK file for "Risk Appetite" section only (appetite thresholds) |
+| G. Business Case | Artifact Inventory (SOBC presence) + Risks table | Grep SOBC for benefits table and option analysis section |
+| H. Data Model Consistency | Requirements Inventory (DR-xxx) + Cross-Reference Map | Grep DATA file for entity catalog when validating DR-entity mapping |
+| I. UK Gov Compliance | Compliance Artifact Presence | Grep TCOP for per-point scores; Grep AIPB for risk level and principle status |
+| J. MOD SbD Compliance | Compliance Artifact Presence | Grep SECD-MOD for SbD principle scores and NIST CSF function scores |
+| K. Cross-Artifact Consistency | All hook tables (Document Control, coverage, cross-refs) | Hook data sufficient for all Pass K checks |
+
+#### Targeted Read Examples
+
+Correct (surgical):
+
+- `Grep "Risk Appetite" in projects/001-*/ARC-*-RISK-*.md` then read only 10-20 lines around match
+- `Grep "### 5\. Cloud" in projects/000-global/ARC-000-PRIN-*.md` to get one principle's full criteria
+- `Read ARC-001-TCOP-v1.0.md offset=50 limit=30` to get just the scoring table
+
+Wrong (wasteful — this data is already in hook tables):
+
+- `Read ARC-001-REQ-v1.0.md` — entire requirements file (use Requirements Inventory table)
+- `Read ARC-001-RISK-v1.0.md` — entire risk register (use Risks table)
+- `Read ARC-000-PRIN-v1.0.md` — entire principles file (use Principles table, grep only for specific criteria)
 
 ### 1. Discover Project Context
 

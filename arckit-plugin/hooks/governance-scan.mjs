@@ -669,11 +669,14 @@ for (const projectName of projectDirs) {
 
   // Section 15: What to do
   lines.push('### What to do');
-  lines.push('- **Skip Steps 1-2 entirely** \u2014 all artifact data is pre-extracted above');
-  lines.push('- **Go directly to Step 3** (Build Semantic Models) using the pre-extracted tables');
-  lines.push('- **Do NOT re-read artifacts** listed in the hook output');
-  lines.push('- **Still read the template** (Step 0) for output formatting');
-  lines.push('- **Focus on Steps 3-6**: semantic analysis, detection passes A-K, severity assignment, report generation');
+  lines.push('');
+  lines.push('**Rule 1 — Hook tables are primary data.** Use them directly for all detection passes. Do NOT re-read any artifact file listed in the Artifact Inventory table.');
+  lines.push('');
+  lines.push('**Rule 2 — Targeted reads only.** When a detection pass needs evidence beyond hook tables (e.g. full principle validation criteria, TCoP per-point scores, risk appetite thresholds), use Grep for specific patterns or Read with offset/limit. NEVER read an entire artifact file.');
+  lines.push('');
+  lines.push('**Rule 3 — Skip Steps 1-2 entirely.** Go directly to Step 3 (Build Semantic Models) using the pre-extracted tables. Still read the template (Step 0) for output formatting.');
+  lines.push('');
+  lines.push('Passes A, C, K need zero file reads — hook data is sufficient. Passes B, D, E, F, G, H, I, J may need surgical Grep reads for specific evidence sections only.');
 
   allOutput.push(lines.join('\n'));
 }
