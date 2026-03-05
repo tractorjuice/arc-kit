@@ -1,6 +1,6 @@
 ---
 name: plantuml-syntax
-description: "This skill should be used when the user asks about PlantUML diagram syntax, C4-PlantUML library, PlantUML sequence diagrams, component diagrams, deployment diagrams, class diagrams, state diagrams, activity diagrams, ER diagrams, use case diagrams, PlantUML skinparams, themes, layout hints, Rel_Down, Rel_Right, Lay_Right, Lay_Down, or PlantUML directional hints. Triggers: plantuml syntax, C4-PlantUML, plantuml sequence diagram, plantuml class diagram, plantuml component diagram, plantuml deployment diagram, plantuml ER diagram, plantuml layout, plantuml skinparams, plantuml themes, plantuml icons, plantuml styling, Rel_Down vs Lay_Right, plantuml layout conflicts, plantuml activity diagram, plantuml state diagram, plantuml use case diagram, plantuml common errors."
+description: "This skill should be used when the user asks about PlantUML syntax for any diagram type including C4-PlantUML, sequence, class, activity, state, ER, component, deployment, or use case diagrams. Also applies when troubleshooting PlantUML rendering errors, fixing layout conflicts between Rel_Down and Lay_Right, styling with skinparams or themes, or asking about C4 directional relationships and tier-based layout patterns."
 ---
 
 # PlantUML Syntax Reference
@@ -21,6 +21,7 @@ Select the appropriate diagram type and read the corresponding reference file:
 | ER Diagram | [er-diagrams.md](references/er-diagrams.md) | — |
 | Component Diagram | [component-diagrams.md](references/component-diagrams.md) | — |
 | Use Case Diagram | [use-case-diagrams.md](references/use-case-diagrams.md) | — |
+| Deployment Diagram | [deployment-diagrams.md](references/deployment-diagrams.md) | — |
 
 ## Styling & Errors
 
@@ -57,7 +58,7 @@ These are the most common PlantUML syntax errors encountered when generating dia
 | Missing element declaration | Relationship references an undeclared element ID | Declare ALL elements before ANY relationships |
 | Spaces in element IDs | Parser fails on IDs with spaces or special characters | Use camelCase or underscores: `paymentApi`, `payment_api` |
 | Nested boundaries without content | Empty boundaries may cause rendering errors | Ensure every boundary contains at least one element |
-| `\n` in descriptions | Literal `\n` appears instead of line break | Use `\n` for line breaks in element descriptions (PlantUML handles this natively) |
+| `\n` in descriptions | Expects literal `\n` text but PlantUML renders it as a line break | This is expected behavior — PlantUML interprets `\n` as line breaks natively. Use `\\n` if literal text is needed |
 
 ## ArcKit Integration
 

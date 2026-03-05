@@ -1,6 +1,6 @@
 ---
 name: wardley-mapping
-description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, situational awareness, technology evolution, or competitive landscape. Covers creating maps, gameplay patterns, doctrine, build vs. buy, inertia, and quantitative analysis. Triggers: create a wardley map, map our value chain, what evolution stage is this component, should we build or buy, assess doctrine maturity, analyze competitive landscape, where should we invest vs outsource, score evolution, calculate ubiquity, quantitative positioning, evolution formula, differentiation pressure, commodity leverage, weak signal detection, readiness score."
+description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, situational awareness, technology evolution, competitive landscape, creating maps, gameplay patterns, doctrine, build vs. buy decisions, inertia analysis, or quantitative evolution scoring including differentiation pressure, commodity leverage, weak signal detection, and readiness scores."
 ---
 
 # Wardley Mapping
@@ -117,14 +117,9 @@ Use AskUserQuestion to confirm priorities with the user before finalizing recomm
 
 When the user asks for numeric precision, scoring, or data-driven positioning, apply the mathematical models from [references/mathematical-models.md](references/mathematical-models.md):
 
-1. **Evolution Scoring** — Score each component's Ubiquity (0-1) and Certainty (0-1), then calculate `E(c) = (U + C) / 2` to get a precise X-axis position. Use the rubrics in [references/evolution-stages.md](references/evolution-stages.md) for scoring guidance.
-
-2. **Decision Metrics** — For each component, calculate:
-   - **Differentiation Pressure**: `D(v) = visibility × (1 - evolution)` — high means invest to differentiate
-   - **Commodity Leverage**: `K(v) = (1 - visibility) × evolution` — high means outsource/consume
-   - **Dependency Risk**: `R(a,b) = visibility(a) × (1 - evolution(b))` — high means critical dependency on immature component
-
-3. **Weak Signal Detection** — When the user asks whether a component is about to transition stages, assess the four readiness factors (Concept, Technology, Suitability, Attitude) and calculate `R(t) = C × T × S × A`. A score above 0.7 signals imminent transition.
+1. **Evolution Scoring** — Calculate precise X-axis positions using Ubiquity and Certainty scores
+2. **Decision Metrics** — Differentiation Pressure, Commodity Leverage, and Dependency Risk
+3. **Weak Signal Detection** — Assess readiness factors to predict stage transitions
 
 Present results as a table alongside the qualitative analysis — the numbers should confirm or challenge the intuitive positioning, not replace it.
 

@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.1] - 2026-03-05
+
+### Fixed
+
+- Improve skill descriptions and resolve content issues across all 4 plugin skills (#123)
+
+### Changed
+
+- Add .worktrees/ to gitignore
+
 ## [3.1.0] - 2026-03-05
 
 ### Added

@@ -41,7 +41,7 @@ Every C4-PlantUML diagram must include the appropriate library file. Use one inc
 | `Person_Ext(alias, label, description)` | An external person | alias, label, description |
 | `System(alias, label, description)` | The system being described | alias, label, description |
 | `System_Ext(alias, label, description)` | An external system | alias, label, description |
-| `SystemDb(alias, label, description)` | An external database system | alias, label, description |
+| `SystemDb(alias, label, description)` | A database system | alias, label, description |
 | `SystemDb_Ext(alias, label, description)` | An external database system | alias, label, description |
 | `SystemQueue(alias, label, description)` | A queue system | alias, label, description |
 | `SystemQueue_Ext(alias, label, description)` | An external queue system | alias, label, description |

@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.22.6] - 2026-03-05
+
+### Changed
+
+- Add .worktrees/ to gitignore
+
 ## [2.22.5] - 2026-03-01
 
 ### Fixed
