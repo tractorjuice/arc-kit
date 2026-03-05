@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.1.0] - 2026-03-05
+
+### Added
+
+- **Architecture Workflow process skill** — new `architecture-workflow` skill in `arckit-plugin/skills/` that guides users through project onboarding with adaptive-depth questions and tailored command sequence recommendations
+- 5 workflow path reference files: standard (private sector), UK Government, Defence, AI/ML modifier, Data platform modifier
+- Patterns borrowed from Claude Code brainstorming skill: HARD-GATE, anti-patterns, one-question-at-a-time, adaptive depth
+
+### Changed
+
+- `/arckit:start` command refactored from 189-line inline logic to 21-line thin wrapper delegating to the architecture-workflow skill
+
 ## [3.0.9] - 2026-03-03
 
 ### Added
