@@ -82,3 +82,6 @@ arckit-gemini/docs/
 # Draft articles (not for version control)
 docs/articles/
 .tmp*
+
+# Git worktrees
+.worktrees/
