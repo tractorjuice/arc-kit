@@ -1,11 +1,11 @@
 ---
 name: architecture-workflow
-description: "This skill should be used when the user asks how to start an architecture project, which ArcKit commands to run, what order to run commands in, what's the right workflow path, how to begin with ArcKit, project onboarding, getting started, which commands do I need, recommend commands for my project, architecture governance workflow, command sequence, what's next after this command. Triggers: start a project, which commands should I run, what's next, how do I begin, recommend a workflow, onboard my project, getting started with arckit, project setup, arckit start, arckit workflow, what commands are available, guide me through, help me plan my architecture, new project setup, what order, command sequence, next steps."
+description: "This skill should be used when the user asks how to start an architecture project, which ArcKit commands to run and in what order, what workflow path to follow, how to onboard a project, or what comes next after a command. Common triggers: getting started with ArcKit, recommend a workflow, new project setup, guide me through, command sequence, next steps, arckit start."
 ---
 
 # Architecture Workflow
 
-A process skill that guides users through ArcKit project onboarding by asking adaptive-depth questions and recommending a tailored command sequence. This skill replaces the old inline `/arckit:start` logic with a structured, question-driven methodology.
+Guides users through project onboarding using adaptive-depth questions and recommends a tailored command sequence.
 
 <HARD-GATE>
 Do NOT run any `/arckit:*` commands during this process. Your only output is a recommended command plan. The user decides when and what to execute. This applies regardless of how simple the project seems.
@@ -215,4 +215,4 @@ After presenting the plan, ask if they want to adjust anything or if they're rea
 
 This skill is invoked by the `/arckit:start` command, which delegates project onboarding to this skill. Users can also trigger it by asking about getting started, command sequences, or workflow recommendations.
 
-For the detailed command dependency matrix, see `DEPENDENCY-MATRIX.md` in the project root. For visual workflow diagrams, see `WORKFLOW-DIAGRAMS.md`.
+For the detailed command dependency matrix, see `DEPENDENCY-MATRIX.md` in the user's project root (installed by `arckit init`). For visual workflow diagrams, see `WORKFLOW-DIAGRAMS.md` in the user's project root.

@@ -1,6 +1,6 @@
 # Climatic Patterns
 
-External forces that affect the landscape over which you have no choice.
+External forces that affect the landscape, outside organizational control.
 
 ## Economic Patterns
 
@@ -24,7 +24,7 @@ pattern:
 ```yaml
 pattern:
   name: "Characteristics Change"
-  description: "How you manage a component changes with its evolution"
+  description: "How a component is managed changes with its evolution"
 
   changes:
     genesis:

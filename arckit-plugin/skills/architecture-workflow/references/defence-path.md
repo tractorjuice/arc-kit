@@ -97,6 +97,8 @@
 
 ## AI/ML Additions
 
+> See ai-ml-path.md for full AI/ML additions; the entries below are defence-specific supplements only.
+
 If the defence project includes AI/ML components, add these commands:
 
 | # | Command | Where to Insert | Rationale | Artifacts |

@@ -1,11 +1,13 @@
 ---
 name: mermaid-syntax
-description: "This skill should be used when the user asks about Mermaid diagram syntax, how to write a specific Mermaid diagram type, flowchart node shapes, Gantt date formats, sequence diagram arrows, ER diagram cardinality, C4 diagram syntax, state diagram notation, pie chart syntax, timeline formatting, mindmap indentation, quadrant chart axes, or any Mermaid configuration and theming question. Triggers: mermaid syntax, how to write a flowchart, gantt chart date format, sequence diagram arrows, entity relationship diagram, mermaid class diagram, state diagram syntax, pie chart mermaid, mindmap mermaid, timeline diagram, quadrant chart, c4 diagram mermaid, mermaid theming, mermaid configuration, mermaid layout, block diagram, kanban board mermaid, architecture diagram mermaid, radar chart, sankey diagram, git graph mermaid, user journey diagram, what mermaid diagram types are available, mermaid node shapes, mermaid edge labels, mermaid styling."
+description: "This skill should be used when the user asks about Mermaid diagram syntax, how to write a specific Mermaid diagram type (flowchart, sequence, class, state, ER, Gantt, pie, mindmap, timeline, git graph, quadrant, C4, sankey, XY chart, block, packet, kanban, architecture, radar, treemap, user journey, ZenUML), Mermaid node shapes, edge labels, styling, configuration, theming, layout options, or troubleshooting Mermaid rendering errors and syntax gotchas."
 ---
 
 # Mermaid Syntax Reference
 
 A comprehensive reference for all 23 Mermaid diagram types plus configuration and theming. This skill provides official Mermaid syntax documentation sourced from the [mermaid-skill](https://github.com/WH-2099/mermaid-skill) project (auto-synced from upstream Mermaid docs).
+
+To look up syntax for a specific diagram type, identify the type from the table below and read the corresponding reference file.
 
 ## Supported Diagram Types
 
