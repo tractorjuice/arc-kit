@@ -81,6 +81,7 @@ Systematically scan all available artifacts and extract:
 - **Financial and procurement terms** — Investment terminology, procurement vehicle names (G-Cloud, DOS)
 
 For each term, record:
+
 1. **Term** — The word, phrase, or acronym
 2. **Definition** — Clear, concise definition (inferred from artifact context)
 3. **Source** — Which artifact(s) the term appears in (by Document ID)

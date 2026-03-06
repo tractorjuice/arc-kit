@@ -76,6 +76,7 @@ Examples of domain-specific dimensions:
 - **Enterprise architecture project**: Architecture Governance, Standards Adoption, Technology Lifecycle, Integration Maturity, Innovation, Portfolio Management
 
 For each dimension, define:
+
 - **Name** — Clear, descriptive dimension name
 - **Scope** — What the dimension covers and does not cover
 - **Why it matters** — Business justification for measuring this dimension
@@ -94,6 +95,7 @@ For each capability dimension, define 5 maturity levels following the standard m
 | 5 | Optimised | Continuous innovation, industry-leading, automated optimisation |
 
 For each level within each dimension, provide:
+
 - **Characteristics** — 3-5 specific, observable characteristics (not vague aspirations)
 - **Evidence criteria** — Concrete, measurable evidence that demonstrates this level (e.g., "Documented data quality rules exist for > 80% of critical data elements")
 - **Examples** — 1-2 real-world examples of what this level looks like in practice
@@ -108,6 +110,7 @@ For each dimension, define what must be demonstrated to progress from one level 
 - **L4 to L5**: What innovation, optimisation, or industry leadership must be demonstrated
 
 Each transition criterion must be:
+
 - **Specific** — Not "improve processes" but "implement automated quality gates in CI/CD pipeline"
 - **Measurable** — Include a threshold or evidence requirement
 - **Achievable** — Realistic within a 6-12 month improvement cycle
