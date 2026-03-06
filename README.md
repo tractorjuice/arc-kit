@@ -40,9 +40,9 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 54 commands, 5 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 57 commands, 6 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.63?** This version fixes memory leaks in subagents and long-running sessions (critical for ArcKit's 5 research agents), resolves MCP server cache leaks on reconnect (affects all 4 bundled MCP servers), fixes stale skill caching after `/clear`, and adds worktree config sharing.
+> **Why v2.1.63?** This version fixes memory leaks in subagents and long-running sessions (critical for ArcKit's 6 research agents), resolves MCP server cache leaks on reconnect (affects all 4 bundled MCP servers), fixes stale skill caching after `/clear`, and adds worktree config sharing.
 
 **Gemini CLI** — install the ArcKit extension:
 
@@ -50,7 +50,7 @@ Then install from the Discover tab. Claude Code is the **primary development pla
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
-Zero-config: all 54 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+Zero-config: all 57 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
 
 **Codex CLI** — install the ArcKit CLI:
 
@@ -760,10 +760,10 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 | Feature | Claude Code | Gemini CLI | Codex / OpenCode |
 |---------|:-----------:|:----------:|:----------------:|
-| 54 slash commands | ✅ | ✅ | ✅ |
+| 57 slash commands | ✅ | ✅ | ✅ |
 | Templates & scripts | ✅ | ✅ | ✅ |
 | Bundled MCP servers (AWS, Azure, GCP, DataCommons) | ✅ | ✅ (3 servers) | Manual setup |
-| **Autonomous research agents** (5 agents for research, datascout, cloud research) | ✅ | — | — |
+| **Autonomous research agents** (6 agents for research, datascout, cloud research, framework) | ✅ | — | — |
 | **SessionStart hook** (auto-detect version + projects) | ✅ | — | — |
 | **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | — | — |
 | **PreToolUse hook** (ARC filename auto-correction) | ✅ | — | — |
@@ -883,7 +883,7 @@ Customize ArcKit templates without modifying defaults:
 
 ## Complete Command Reference
 
-All 54 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 57 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
@@ -948,6 +948,7 @@ All 54 ArcKit commands with maturity status and example outputs from public test
 | `/arckit.wardley` | Create strategic Wardley Maps for architecture decisions and build vs buy analysis | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/wardley-maps/ARC-001-WARD-001-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/wardley-maps/ARC-001-WARD-001-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/wardley-maps/ARC-001-WARD-001-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/wardley-maps/ARC-001-WARD-001-v1.0.md) | 🟣 Experimental |
 | `/arckit.strategy` | Synthesise strategic artifacts into executive-level Architecture Strategy document | — | 🔵 Beta |
 | `/arckit.roadmap` | Create strategic architecture roadmap with multi-year timeline, capability evolution, and governance | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-ROAD-v1.0.md) | 🔵 Beta |
+| `/arckit.framework` | Transform architecture artifacts into a structured, reusable framework with principles, patterns, and implementation guidance | — | 🔵 Beta |
 | `/arckit.adr` | Document architectural decisions with options analysis and traceability | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/decisions/ARC-001-ADR-001-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/decisions/ARC-002-ADR-001-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/decisions/ARC-003-ADR-001-v1.0.md) [v3/004](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/004-conference-facilities-modernization/decisions/ARC-004-ADR-001-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/decisions/ARC-005-ADR-001-v1.0.md) [v3/007](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/007-vpn-service-windows11-autopilot/decisions/ARC-007-ADR-001-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/decisions/ARC-001-ADR-001-v1.0.md) | 🔵 Beta |
 
 ### Cloud Research (MCP)
@@ -1010,6 +1011,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit.conformance` | Assess architecture conformance — ADR decision implementation, cross-decision consistency, architecture drift, technical debt, and custom constraint rules | — | 🔵 Beta |
 | `/arckit.health` | Scan projects for stale research, forgotten ADRs, unresolved review conditions, orphaned requirements, missing traceability, and version drift | — | 🔵 Beta |
 | `/arckit.customize` | Copy templates to `.arckit/templates-custom/` for customization (preserved across updates) | — | 🟢 Live |
+| `/arckit.maturity-model` | Generate capability maturity model with current-state assessment, target-state definition, and improvement roadmap | — | 🔵 Beta |
 | `/arckit.template-builder` | Create new document templates through interactive interview — generates community-origin templates, guides, and optional shareable bundles | — | 🟠 Alpha |
 
 ### UK Government
@@ -1033,6 +1035,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
+| `/arckit.glossary` | Generate comprehensive project glossary with terms, definitions, acronyms, and cross-references | — | 🔵 Beta |
 | `/arckit.pages` | Generate documentation site with Mermaid diagram support | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/) [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/) [v7](https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/) | 🟠 Alpha |
 
 ---

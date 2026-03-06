@@ -43,6 +43,7 @@ graph TD
     K --> L[wardley]
     L --> M[roadmap]
     M --> M1[strategy]
+    M1 -.-> M2[framework]
     H -.-> N[diagram]
 
     %% Tier 5: Procurement
@@ -90,6 +91,7 @@ graph TD
     style L fill:#90EE90
     style M fill:#90EE90
     style M1 fill:#90EE90
+    style M2 fill:#90EE90
     style N fill:#90EE90
     style O fill:#90EE90
     style P fill:#90EE90
@@ -599,14 +601,14 @@ graph TD
 | 1 | Strategic Context | stakeholders, risk |
 | 2 | Business Justification | sobc |
 | 3 | Requirements | requirements |
-| 3.5 | Platform Strategy | platform-design |
+| 3.5 | Platform Strategy & Synthesis | platform-design, framework, glossary |
 | 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, datascout, wardley, roadmap, diagram |
 | 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
 | 6 | Design Reviews | hld-review, dld-review, adr |
 | 7 | Implementation | backlog |
 | 7.5 | Backlog Export | trello |
 | 8-9 | Operations & Quality | servicenow, devops, finops, mlops (AI projects), operationalize, traceability, analyze, principles-compliance |
-| 10 | Compliance | conformance, service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
+| 10 | Compliance | conformance, maturity-model, service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
 | 11 | Reporting | story |
 | 12 | Publishing | pages |
 

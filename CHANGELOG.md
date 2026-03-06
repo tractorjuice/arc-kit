@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `/arckit.framework` command for transforming architecture artifacts into a structured, reusable framework (agent-delegating)
+- `/arckit.glossary` command for generating comprehensive project glossary with terms, definitions, and cross-references
+- `/arckit.maturity-model` command for generating capability maturity model with current-state assessment and improvement roadmap
+
 ## [2.22.6] - 2026-03-05
 
 ### Changed

@@ -1,6 +1,6 @@
 # ArcKit Plugin for Claude Code
 
-Enterprise Architecture Governance & Vendor Procurement Toolkit - a Claude Code plugin providing 54 slash commands for generating architecture artifacts.
+Enterprise Architecture Governance & Vendor Procurement Toolkit - a Claude Code plugin providing 57 slash commands for generating architecture artifacts.
 
 ## Installation
 
@@ -38,7 +38,7 @@ claude --plugin-dir /path/to/arc-kit/arckit-plugin
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.63?** This version includes memory leak fixes for subagents and long-running sessions, which directly improves stability for ArcKit's 5 research agents. It also fixes MCP server cache leaks (important for the 4 bundled MCP servers), resolves stale skill caching after `/clear`, and adds worktree config sharing for multi-repo workflows.
+> **Why v2.1.63?** This version includes memory leak fixes for subagents and long-running sessions, which directly improves stability for ArcKit's 6 research agents. It also fixes MCP server cache leaks (important for the 4 bundled MCP servers), resolves stale skill caching after `/clear`, and adds worktree config sharing for multi-repo workflows.
 
 ## Quick Start
 
@@ -66,9 +66,9 @@ After installing the plugin:
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Commands | 54 | Slash commands for architecture artifacts |
+| Commands | 57 | Slash commands for architecture artifacts |
 | Skills | 1 | Conversational Wardley Mapping with interactive guidance |
-| Agents | 5 | Autonomous research agents |
+| Agents | 6 | Autonomous research agents |
 | Templates | 45 | Document templates with UK Government compliance |
 | Scripts | 6 | Helper bash scripts |
 | Guides | 52 | Command usage documentation |
