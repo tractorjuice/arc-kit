@@ -233,7 +233,6 @@ def create_project_structure(
         # Create directories for all AI assistants (Codex and OpenCode)
         directories.extend(
             [
-                ".codex/prompts",
                 ".codex/agents",
                 ".agents/skills",
                 ".opencode/commands",
@@ -242,15 +241,12 @@ def create_project_structure(
         )
     else:
         agent_folder = AGENT_CONFIG[ai_assistant]["folder"]
-        # OpenCode uses 'commands' and 'agents'
-        if ai_assistant == "opencode":
+        if ai_assistant == "codex":
+            directories.append(".agents/skills")
+            directories.append(f"{agent_folder}agents")
+        elif ai_assistant == "opencode":
             directories.append(f"{agent_folder}commands")
             directories.append(f"{agent_folder}agents")
-        else:
-            directories.append(f"{agent_folder}prompts")
-            if ai_assistant == "codex":
-                directories.append(".agents/skills")
-                directories.append(f"{agent_folder}agents")
 
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
@@ -490,34 +486,21 @@ def init(
     # Copy slash commands
     # Copy Codex prompts (all_ai and single-AI both install codex)
     if ai_assistant == "codex" or all_ai:
-        commands_src = data_paths["codex_prompts"]
-        if all_ai:
-            # If all_ai, commands_dst was set for codex above, but let's be explicit
-            target_dst = project_path / ".codex" / "prompts"
-        else:
-            target_dst = commands_dst
-
-        if commands_src.exists():
-            console.print(f"[dim]Copying Codex prompts from: {commands_src}[/dim]")
-            command_count = 0
-            target_dst.mkdir(parents=True, exist_ok=True)
-            for command_file in commands_src.glob("arckit.*.md"):
-                shutil.copy2(command_file, target_dst / command_file.name)
-                command_count += 1
-            console.print(f"[green]✓[/green] Copied {command_count} Codex prompts")
-        else:
-            console.print(
-                f"[yellow]Warning: Codex prompts not found at {commands_src}[/yellow]"
-            )
-
-        # Copy Codex skills to .agents/skills/
+        # Copy Codex skills to .agents/skills/ (replaces deprecated .codex/prompts/)
         codex_skills_src = data_paths.get("codex_skills")
         if codex_skills_src and codex_skills_src.exists():
             skills_dst = project_path / ".agents" / "skills"
             skills_dst.mkdir(parents=True, exist_ok=True)
             shutil.copytree(codex_skills_src, skills_dst, dirs_exist_ok=True)
-            skill_count = len(list(skills_dst.iterdir()))
+            skill_count = sum(
+                1 for d in skills_dst.iterdir()
+                if d.is_dir() and not d.name.startswith(".")
+            )
             console.print(f"[green]✓[/green] Copied {skill_count} skills to .agents/skills/")
+        else:
+            console.print(
+                f"[yellow]Warning: Codex skills not found at {codex_skills_src}[/yellow]"
+            )
 
         # Copy Codex agent configs
         codex_agents_src = data_paths.get("codex_agents")
@@ -625,7 +608,12 @@ def init(
         shutil.copy2(changelog_src, project_path / "CHANGELOG.md")
         console.print(f"[green]✓[/green] Copied CHANGELOG.md")
 
-    # Create README
+    # Determine command prefix based on AI assistant
+    if ai_assistant == "codex":
+        p = "$arckit-"  # skill invocation
+    else:
+        p = "/arckit."  # slash command
+
     readme_content = f"""# {project_name}
 
 Enterprise Architecture Governance Project
@@ -639,55 +627,55 @@ This project uses ArcKit for enterprise architecture governance and vendor procu
 Once you start your AI assistant, you'll have access to these commands:
 
 #### Project Planning
-- `/arckit.plan` - Create project plan with timeline, phases, and gates
+- `{p}plan` - Create project plan with timeline, phases, and gates
 
 #### Core Workflow
-- `/arckit.principles` - Create or update architecture principles
-- `/arckit.stakeholders` - Analyze stakeholder drivers, goals, and outcomes
-- `/arckit.risk` - Create comprehensive risk register (Orange Book)
-- `/arckit.sobc` - Create Strategic Outline Business Case (Green Book 5-case)
-- `/arckit.requirements` - Define comprehensive requirements
-- `/arckit.data-model` - Create data model with ERD, GDPR compliance, data governance
-- `/arckit.research` - Research technology, services, and products with build vs buy analysis
-- `/arckit.wardley` - Create strategic Wardley Maps for build vs buy and procurement strategy
+- `{p}principles` - Create or update architecture principles
+- `{p}stakeholders` - Analyze stakeholder drivers, goals, and outcomes
+- `{p}risk` - Create comprehensive risk register (Orange Book)
+- `{p}sobc` - Create Strategic Outline Business Case (Green Book 5-case)
+- `{p}requirements` - Define comprehensive requirements
+- `{p}data-model` - Create data model with ERD, GDPR compliance, data governance
+- `{p}research` - Research technology, services, and products with build vs buy analysis
+- `{p}wardley` - Create strategic Wardley Maps for build vs buy and procurement strategy
 
 #### Vendor Procurement
-- `/arckit.sow` - Generate Statement of Work (RFP)
-- `/arckit.dos` - Digital Outcomes and Specialists (DOS) procurement (UK Digital Marketplace)
-- `/arckit.gcloud-search` - Search G-Cloud services on UK Digital Marketplace
-- `/arckit.gcloud-clarify` - Validate G-Cloud services and generate clarification questions
-- `/arckit.evaluate` - Create vendor evaluation framework and score vendors
+- `{p}sow` - Generate Statement of Work (RFP)
+- `{p}dos` - Digital Outcomes and Specialists (DOS) procurement (UK Digital Marketplace)
+- `{p}gcloud-search` - Search G-Cloud services on UK Digital Marketplace
+- `{p}gcloud-clarify` - Validate G-Cloud services and generate clarification questions
+- `{p}evaluate` - Create vendor evaluation framework and score vendors
 
 #### Design Review
-- `/arckit.hld-review` - Review High-Level Design
-- `/arckit.dld-review` - Review Detailed Design
+- `{p}hld-review` - Review High-Level Design
+- `{p}dld-review` - Review Detailed Design
 
 #### Architecture Diagrams
-- `/arckit.diagram` - Generate visual architecture diagrams using Mermaid
+- `{p}diagram` - Generate visual architecture diagrams using Mermaid
 
 #### Sprint Planning
-- `/arckit.backlog` - Generate prioritised product backlog with GDS user stories
+- `{p}backlog` - Generate prioritised product backlog with GDS user stories
 
 #### Service Management
-- `/arckit.servicenow` - Generate ServiceNow service design (CMDB, SLAs, incident/change management)
+- `{p}servicenow` - Generate ServiceNow service design (CMDB, SLAs, incident/change management)
 
 #### Traceability & Quality
-- `/arckit.traceability` - Generate requirements traceability matrix
-- `/arckit.analyze` - Comprehensive governance quality analysis
+- `{p}traceability` - Generate requirements traceability matrix
+- `{p}analyze` - Comprehensive governance quality analysis
 
 #### Template Customization
-- `/arckit.customize` - Copy templates for customization (preserves across updates)
+- `{p}customize` - Copy templates for customization (preserves across updates)
 
 #### UK Government Compliance
-- `/arckit.service-assessment` - GDS Service Standard assessment preparation
-- `/arckit.tcop` - Technology Code of Practice assessment (all 13 points)
-- `/arckit.ai-playbook` - AI Playbook compliance for responsible AI
-- `/arckit.atrs` - Algorithmic Transparency Recording Standard (ATRS) record
+- `{p}service-assessment` - GDS Service Standard assessment preparation
+- `{p}tcop` - Technology Code of Practice assessment (all 13 points)
+- `{p}ai-playbook` - AI Playbook compliance for responsible AI
+- `{p}atrs` - Algorithmic Transparency Recording Standard (ATRS) record
 
 #### Security Assessment
-- `/arckit.secure` - UK Government Secure by Design (NCSC CAF, Cyber Essentials, UK GDPR)
-- `/arckit.mod-secure` - MOD Secure by Design (JSP 440, IAMM, security clearances)
-- `/arckit.jsp-936` - MOD JSP 936 AI assurance documentation
+- `{p}secure` - UK Government Secure by Design (NCSC CAF, Cyber Essentials, UK GDPR)
+- `{p}mod-secure` - MOD Secure by Design (JSP 440, IAMM, security clearances)
+- `{p}jsp-936` - MOD JSP 936 AI assurance documentation
 
 ## Project Structure
 
@@ -698,6 +686,7 @@ Once you start your AI assistant, you'll have access to these commands:
 │   │   └── bash/
 │   ├── templates/           # Default templates (refreshed by arckit init)
 │   └── templates-custom/    # Your customizations (preserved across updates)
+├── .agents/skills/          # Codex skills (auto-discovered)
 ├── projects/
 │   ├── 000-global/
 │   │   └── ARC-000-PRIN-v1.0.md (global principles)
@@ -705,29 +694,28 @@ Once you start your AI assistant, you'll have access to these commands:
 │       ├── requirements.md
 │       ├── sow.md
 │       └── vendors/
-└── {commands_dst.relative_to(project_path)}/
 ```
 
 ## Template Customization
 
 ArcKit templates can be customized without modifying the defaults:
 
-1. Run `/arckit.customize <template-name>` to copy a template for editing
+1. Run `{p}customize <template-name>` to copy a template for editing
 2. Your customizations are stored in `.arckit/templates-custom/`
 3. Commands automatically use your custom templates when present
 4. Running `arckit init` again preserves your customizations
 
 Example:
 ```
-/arckit.customize requirements   # Copy requirements template
-/arckit.customize all            # Copy all templates
+{p}customize requirements   # Copy requirements template
+{p}customize all            # Copy all templates
 ```
 
 ## Next Steps
 
 1. Start your AI assistant ({AGENT_CONFIG[ai_assistant]["name"]})
-2. Run `/arckit.principles` to establish architecture governance
-3. Create your first project with `/arckit.requirements`
+2. Run `{p}principles` to establish architecture governance
+3. Create your first project with `{p}requirements`
 
 ## Documentation
 
@@ -743,48 +731,14 @@ Example:
     if should_init_git and not is_git_repo(project_path):
         init_git_repo(project_path)
 
-    # Create .envrc for Codex projects
+    # Set up .gitignore for Codex projects
     if ai_assistant == "codex":
-        console.print("[cyan]Setting up Codex environment...[/cyan]")
-
-        # Create .envrc
-        envrc_path = project_path / ".envrc"
-        envrc_content = f"""# Auto-generated by arckit CLI for Codex CLI support
-# This file sets CODEX_HOME so Codex can discover project-specific prompts
-# See: https://developers.openai.com/codex/cli/
-
-export CODEX_HOME="$PWD/.codex"
-"""
-        envrc_path.write_text(envrc_content, encoding='utf-8')
-
-        # Copy .codex/README.md if it exists
-        codex_src = data_paths.get("codex_root")
-        if codex_src and codex_src.exists():
-            codex_readme_src = codex_src / "README.md"
-            codex_gitignore_src = codex_src / ".gitignore"
-            codex_dst = project_path / ".codex"
-
-            if codex_readme_src.exists():
-                shutil.copy2(codex_readme_src, codex_dst / "README.md")
-                console.print(f"[green]✓[/green] Copied .codex/README.md")
-
-            if codex_gitignore_src.exists():
-                shutil.copy2(codex_gitignore_src, codex_dst / ".gitignore")
-                console.print(f"[green]✓[/green] Copied .codex/.gitignore")
-
-        # Create/update .gitignore
         gitignore_path = project_path / ".gitignore"
         codex_ignore_entries = [
-            "# Codex CLI - exclude auth tokens but include prompts",
+            "# Codex CLI",
             ".codex/*",
-            "!.codex/prompts/",
-            "!.codex/README.md",
-            "!.codex/.gitignore",
             "!.codex/agents/",
             "!.codex/config.toml",
-            "",
-            "# direnv",
-            ".envrc.local",
         ]
 
         if gitignore_path.exists():
@@ -795,7 +749,7 @@ export CODEX_HOME="$PWD/.codex"
         else:
             gitignore_path.write_text("\n".join(codex_ignore_entries) + "\n", encoding='utf-8')
 
-        console.print("[green]✓[/green] Codex environment configured (.envrc created)")
+        console.print("[green]✓[/green] Codex environment configured")
 
     # Create .envrc for OpenCode projects
     if ai_assistant == "opencode":
@@ -902,18 +856,14 @@ export OPENCODE_HOME="$PWD/.opencode"
         f"1. Navigate to project: [cyan]cd {project_name if not here else '.'}[/cyan]",
     ]
 
-    # Codex-specific setup steps
     if ai_assistant == "codex":
-        next_steps.append("2. Set up CODEX_HOME environment variable:")
+        next_steps.append("2. Start Codex: [cyan]codex[/cyan]")
         next_steps.append(
-            "   [cyan]RECOMMENDED[/cyan]: Install direnv and run [cyan]direnv allow[/cyan]"
+            "3. Establish architecture principles: [cyan]$arckit-principles[/cyan]"
         )
         next_steps.append(
-            '   Alternative: Run [cyan]export CODEX_HOME="$PWD/.codex"[/cyan]'
+            "4. Create your first project: [cyan]$arckit-requirements[/cyan]"
         )
-        next_steps.append(f"3. Start Codex: [cyan]{ai_assistant}[/cyan]")
-
-    # OpenCode-specific setup steps
     elif ai_assistant == "opencode":
         next_steps.append("2. Set up OPENCODE_HOME environment variable:")
         next_steps.append(
@@ -922,12 +872,12 @@ export OPENCODE_HOME="$PWD/.opencode"
         next_steps.append(
             '   Alternative: Run [cyan]export OPENCODE_HOME="$PWD/.opencode"[/cyan]'
         )
-        next_steps.append(f"3. Start OpenCode: [cyan]{ai_assistant}[/cyan]")
-
-    next_steps.append(
-        "4. Establish architecture principles: [cyan]/arckit.principles[/cyan]"
-    )
-    next_steps.append("5. Create your first project: [cyan]/arckit.requirements[/cyan]")
+        next_steps.append(f"3. Start OpenCode: [cyan]opencode[/cyan]")
+        next_steps.append(
+            "4. Establish architecture principles: [cyan]/arckit.principles[/cyan]"
+        )
+        next_steps.append("5. Create your first project: [cyan]/arckit.requirements[/cyan]"
+        )
 
     console.print(Panel("\n".join(next_steps), title="Next Steps", border_style="cyan"))
 

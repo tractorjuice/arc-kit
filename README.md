@@ -791,17 +791,18 @@ Claude Code automatically exposes ArcKit commands as **skills** (they appear in 
 
 ### Using with Codex CLI
 
-For OpenAI Codex CLI users, commands use the `/prompts:` format:
+For OpenAI Codex CLI users, ArcKit commands are delivered as skills and auto-discovered:
 
 ```bash
-# Set CODEX_HOME to use project-specific commands
-export CODEX_HOME="$(pwd)/.codex"
-codex --auto
+# Install and create project (3 steps, zero config)
+pip install git+https://github.com/tractorjuice/arc-kit.git
+arckit init my-project --ai codex
+cd my-project && codex
 
-# Then use ArcKit commands
-/prompts:arckit.principles Create principles for financial services
-/prompts:arckit.stakeholders Analyze stakeholders for cloud migration
-/prompts:arckit.requirements Create comprehensive requirements
+# Then use ArcKit skills
+$arckit-principles Create principles for financial services
+$arckit-stakeholders Analyze stakeholders for cloud migration
+$arckit-requirements Create comprehensive requirements
 ```
 
 See [.codex/README.md](.codex/README.md) for full Codex CLI setup and usage.
@@ -849,7 +850,10 @@ payment-modernization/
 │           ├── selected-vendor.md
 │           ├── approved-hld.md
 │           └── dld/
-├── .codex/prompts/                        # Codex CLI prompts
+├── .agents/skills/                        # Codex CLI skills (auto-discovered)
+├── .codex/
+│   ├── agents/                            # Agent configs
+│   └── config.toml                        # MCP servers + agent roles
 └── .opencode/commands/                    # OpenCode CLI commands
 ```
 
@@ -1236,8 +1240,8 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 **Command not found**: Ensure commands are available
 
 ```bash
-# For Codex, check if commands directory exists
-ls .codex/prompts/
+# For Codex, check if skills directory exists
+ls .agents/skills/arckit-principles/SKILL.md
 
 # For Claude Code, install the ArcKit plugin:
 # /plugin marketplace add tractorjuice/arc-kit

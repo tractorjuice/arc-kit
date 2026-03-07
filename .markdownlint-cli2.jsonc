@@ -63,8 +63,12 @@
     ".codex/**",
     ".opencode/**",
     "arckit-opencode/**",
+    "arckit-codex/commands/**",
+    "arckit-codex/prompts/**",
+    "arckit-codex/skills/**",
     "arckit-gemini/skills/**",
     "node_modules/**",
-    "docs/articles/**"
+    "docs/articles/**",
+    "docs/plans/**"
   ]
 }

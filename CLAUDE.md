@@ -32,7 +32,7 @@ arckit check
 arckit init test-project --ai codex --no-git
 arckit init test-project --ai opencode --no-git
 arckit init test-project --ai codex --minimal  # Skip docs/guides
-cd test-project && ls -la .codex/prompts/
+cd test-project && ls -la .agents/skills/
 
 # Build distribution
 python -m build
@@ -95,7 +95,7 @@ Commands exist in multiple formats across the distribution:
 | AI | Format | Location |
 |----|--------|----------|
 | Claude Code | `/arckit.requirements` (plugin) | `arckit-plugin/commands/requirements.md` |
-| Codex CLI | `/prompts:arckit.requirements` | `.codex/prompts/arckit.requirements.md` |
+| Codex CLI | `$arckit-requirements` (skill) | `.agents/skills/arckit-requirements/SKILL.md` |
 | Gemini CLI | `/arckit:requirements` (extension) | `arckit-gemini/commands/arckit/requirements.toml` |
 | OpenCode CLI | `/arckit.requirements` | `.opencode/commands/arckit.requirements.md` |
 
@@ -168,7 +168,10 @@ project/
 ├── .arckit/
 │   ├── templates/        # Document templates
 │   └── scripts/bash/     # create-project.sh, generate-document-id.sh, etc.
-├── .codex/prompts/       # Codex CLI prompts
+├── .agents/skills/       # Codex CLI skills (auto-discovered, invoked as $arckit-*)
+├── .codex/
+│   ├── agents/           # Agent configs (.toml + .md)
+│   └── config.toml       # MCP servers + agent roles
 ├── .opencode/commands/   # OpenCode CLI commands
 ├── docs/                 # Documentation (unless --minimal)
 │   ├── README.md         # Documentation index
@@ -206,7 +209,7 @@ project/
 **`scripts/bash/check-prerequisites.sh`**: Validates environment (principles exist, tools available)
 **`scripts/bash/list-projects.sh`**: Lists all ArcKit projects with artifact counts (table or JSON output)
 **`scripts/bash/migrate-filenames.sh`**: Migrates existing project files to new naming convention (supports `--dry-run`)
-**`scripts/converter.py`**: Config-driven converter using `AGENT_CONFIG` dictionary — adding a new AI target only requires a new dict entry. Converts plugin commands (`arckit-plugin/commands/*.md`) to all configured output formats (currently: Codex Markdown `.codex/`, Codex Extension `arckit-codex/`, OpenCode Markdown `.opencode/` + `arckit-opencode/`, Gemini extension TOML `arckit-gemini/`). Rewrites `${CLAUDE_PLUGIN_ROOT}` paths, copies supporting files to extension dirs, and extracts full agent prompts for non-Claude targets. For the Codex extension, also generates `config.toml` (MCP servers + agent roles), per-agent `.toml` files with `developer_instructions`, and rewrites skill command references (`/arckit:X` -> `/prompts:arckit.X`). Key functions: `rewrite_paths(prompt, config)`, `format_output(description, prompt, fmt)`, `convert(commands_dir, agents_dir)`, `copy_extension_files(plugin_dir)`, `generate_codex_config_toml()`, `generate_agent_toml_files()`, `rewrite_codex_skills()` — all driven by `AGENT_CONFIG`
+**`scripts/converter.py`**: Config-driven converter using `AGENT_CONFIG` dictionary — adding a new AI target only requires a new dict entry. Converts plugin commands (`arckit-plugin/commands/*.md`) to all configured output formats (currently: Codex Markdown `.codex/`, Codex Skills `arckit-codex/skills/arckit-*/` with `SKILL.md` + `agents/openai.yaml`, OpenCode Markdown `.opencode/` + `arckit-opencode/`, Gemini extension TOML `arckit-gemini/`). The `"skill"` format creates directory-per-command with YAML frontmatter (name, description) and `allow_implicit_invocation: false`. Rewrites `${CLAUDE_PLUGIN_ROOT}` paths, copies supporting files to extension dirs, and extracts full agent prompts for non-Claude targets. For the Codex extension, also generates `config.toml` (MCP servers + agent roles), per-agent `.toml` files with `developer_instructions`, and rewrites skill command references (`/arckit:X` -> `/prompts:arckit.X`). Key functions: `rewrite_paths(prompt, config)`, `format_output(description, prompt, fmt)`, `convert(commands_dir, agents_dir)`, `copy_extension_files(plugin_dir)`, `generate_codex_config_toml()`, `generate_agent_toml_files()`, `rewrite_codex_skills()` — all driven by `AGENT_CONFIG`
 **`scripts/bump-version.sh`**: Updates all 12 version files in one go (VERSION, pyproject.toml, README.md, docs, plugin, extensions)
 **`scripts/generate-release-notes.sh`**: Parses git log between tags into Keep a Changelog sections (Added/Fixed/Changed/Breaking Changes). Filters out `chore: bump version` commits. Auto-detects previous tag if none supplied
 

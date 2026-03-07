@@ -1,6 +1,6 @@
 # C4 Diagram Layout Reference
 
-A research-backed reference for creating readable C4 architecture diagrams with minimal edge crossings and clear visual hierarchy. This document supplements the `/prompts:arckit.diagram` command with graph drawing science, layout optimisation techniques, and quality targets.
+A research-backed reference for creating readable C4 architecture diagrams with minimal edge crossings and clear visual hierarchy. This document supplements the `$arckit-diagram` command with graph drawing science, layout optimisation techniques, and quality targets.
 
 ---
 
@@ -440,4 +440,4 @@ flowchart LR
 
 ---
 
-*This reference is maintained as part of the ArcKit plugin. For the full diagram generation command, see `/prompts:arckit.diagram`.*
+*This reference is maintained as part of the ArcKit plugin. For the full diagram generation command, see `$arckit-diagram`.*

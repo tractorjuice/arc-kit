@@ -1,0 +1,378 @@
+---
+name: arckit-strategy
+description: "Synthesise strategic artifacts into executive-level Architecture Strategy document"
+---
+
+You are helping an enterprise architect create an **Architecture Strategy** document. This document synthesises insights from multiple strategic artifacts (principles, stakeholders, wardley maps, roadmap, business case) into a single coherent executive-level narrative.
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+## Prerequisites: Read Strategic Artifacts
+
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
+**MANDATORY** (warn if missing):
+
+- **PRIN** (Architecture Principles, in 000-global) — Extract: Guiding principles, decision framework, technology standards
+  - If missing: STOP and ask user to run `$arckit-principles` first. Strategy must be grounded in principles.
+- **STKE** (Stakeholder Analysis) — Extract: Stakeholder drivers, goals, measurable outcomes, conflicts, engagement strategies
+  - If missing: STOP and ask user to run `$arckit-stakeholders` first. Strategy must address stakeholder drivers.
+
+**RECOMMENDED** (read if available, note if missing):
+
+- **WARD** (Wardley Maps, in wardley-maps/) — Extract: Component evolution, build vs buy positioning, technology radar
+- **ROAD** (Architecture Roadmap) — Extract: Timeline, phases, milestones, investment by year, capability evolution
+- **SOBC** (Strategic Outline Business Case) — Extract: Investment figures, NPV, IRR, payback period, benefits timeline
+
+**OPTIONAL** (read if available, skip silently if missing):
+
+- **RISK** (Risk Register) — Extract: Strategic risks, mitigations, risk appetite
+
+### Prerequisites 1b: Read external documents and policies
+
+- Read any **external documents** listed in the project context (`external/` files) — extract existing strategies, strategic plans, vision documents
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise architecture strategy, digital transformation plans, cross-project strategic alignment documents
+- If no external strategy docs found but they would improve the output, ask: "Do you have any existing strategy documents, vision statements, or strategic plans? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+## Instructions
+
+### 1. Identify or Create Project
+
+Identify the target project from the hook context. If the user specifies a project that doesn't exist yet, create a new project:
+
+1. Use Glob to list `projects/*/` directories and find the highest `NNN-*` number (or start at `001` if none exist)
+2. Calculate the next number (zero-padded to 3 digits, e.g., `002`)
+3. Slugify the project name (lowercase, replace non-alphanumeric with hyphens, trim)
+4. Use the Write tool to create `projects/{NNN}-{slug}/README.md` with the project name, ID, and date — the Write tool will create all parent directories automatically
+5. Also create `projects/{NNN}-{slug}/external/README.md` with a note to place external reference documents here
+6. Set `PROJECT_ID` = the 3-digit number, `PROJECT_PATH` = the new directory path
+
+### 2. Gather Strategic Context
+
+Read all available documents identified in the Prerequisites section above. Build a mental model of:
+
+- **What drives stakeholders** (from stakeholders document)
+- **What principles guide decisions** (from principles document)
+- **How technology should evolve** (from Wardley maps if available)
+- **When capabilities will be delivered** (from roadmap if available)
+- **Why this investment makes sense** (from SOBC if available)
+- **What could go wrong** (from risk register if available)
+
+### 3. Read Strategy Template
+
+Load the strategy template structure:
+
+**Read the template** (with user override support):
+
+- **First**, check if `.arckit/templates/architecture-strategy-template.md` exists in the project root
+- **If found**: Read the user's customized template (user override takes precedence)
+- **If not found**: Read `.arckit/templates/architecture-strategy-template.md` (default)
+
+> **Tip**: Users can customize templates with `$arckit-customize strategy`
+
+### 4. Generate Architecture Strategy
+
+Create a comprehensive Architecture Strategy document that synthesises insights from the strategic artifacts. The document should:
+
+#### Document Control
+
+- Generate Document ID: `ARC-[PROJECT_ID]-STRAT-v1.0` (for filename: `ARC-{PROJECT_ID}-STRAT-v1.0.md`)
+- Set owner, dates, strategic horizon
+- Review cycle: Quarterly (default for strategy documents)
+
+#### Executive Summary
+
+- **Strategic Vision**: 2-3 paragraphs articulating the transformation vision
+- **Strategic Context**: Business challenge, opportunity, investment, risk appetite
+- **Key Strategic Decisions**: Build vs buy, cloud strategy, vendor strategy, integration approach
+- **Strategic Outcomes**: 5 measurable outcomes that will define success
+
+#### Strategic Drivers (from stakeholders)
+
+- Summarise top 5-7 business drivers with stakeholder ownership
+- List external drivers (regulatory, market, technology, competitive)
+- Include stakeholder power/interest grid
+
+#### Guiding Principles (from principles)
+
+- Summarise foundational, technology, and governance principles
+- Show strategic implications of each principle
+- Include principles compliance summary
+
+#### Current State Assessment
+
+- Technology landscape overview
+- Capability maturity baseline (L1-L5)
+- Technical debt summary
+- SWOT analysis
+
+#### Target State Vision
+
+- Future architecture description
+- Capability maturity targets
+- Architecture vision diagram (Mermaid)
+
+#### Technology Evolution Strategy (from Wardley maps)
+
+- Strategic positioning (Genesis → Commodity)
+- Build vs buy decisions table
+- Technology radar summary (Adopt/Trial/Assess/Hold)
+
+#### Strategic Themes & Investment Areas
+
+- Define 3-5 strategic themes (e.g., Cloud Migration, Data Modernisation, Security)
+- For each theme: objective, investment, initiatives, success criteria, principles alignment
+
+#### Delivery Roadmap Summary (from roadmap)
+
+- Strategic timeline (Mermaid Gantt)
+- Phase summary table
+- Key milestones
+
+#### Investment Summary
+
+- Cross-reference the SOBC (ARC-[PROJECT_ID]-SOBC-v*.md) if available
+- Include only: total investment envelope (single figure), investment horizon, and a "See SOBC for detailed financial analysis" note
+- Do NOT duplicate NPV, IRR, BCR, payback, benefits realisation, or year-by-year breakdowns — these belong in the SOBC
+
+#### Strategic Risks & Mitigations (from risk register)
+
+- Top 5-7 strategic risks with mitigations
+- Risk heat map (ASCII or Mermaid)
+- Assumptions and constraints
+
+#### Success Metrics & KPIs
+
+- Strategic KPIs with baseline and targets by year
+- Leading indicators (early warning)
+- Lagging indicators (final proof)
+
+#### Governance Model
+
+- Governance structure (forums, frequency, participants)
+- Decision rights
+- Review cadence
+
+#### Traceability
+
+- List source documents with document IDs
+- Traceability matrix: Driver → Goal → Outcome → Theme → Principle → KPI
+
+#### Next Steps & Recommendations
+
+- Immediate actions (30 days)
+- Short-term actions (90 days)
+- Recommended follow-on artifacts with ArcKit commands
+
+### 5. UK Government Specifics
+
+If the user indicates this is a UK Government project, include:
+
+- **Financial Year Notation**: Use "FY 2024/25", "FY 2025/26" format
+- **Spending Review Alignment**: Reference SR periods
+- **GDS Service Standard**: Reference Discovery/Alpha/Beta/Live phases
+- **TCoP (Technology Code of Practice)**: Reference 13 points
+- **NCSC CAF**: Security maturity progression
+- **Cross-Government Services**: GOV.UK Pay, Notify, Design System
+- **G-Cloud/DOS**: Procurement alignment
+
+### 6. MOD Specifics
+
+If this is a Ministry of Defence project, include:
+
+- **JSP 440**: Defence project management alignment
+- **Security Clearances**: BPSS, SC, DV requirements
+- **IAMM**: Security maturity progression
+- **JSP 936**: AI assurance (if applicable)
+
+### 7. Load Mermaid Syntax References
+
+Read `.arckit/skills/mermaid-syntax/references/flowchart.md` and `.arckit/skills/mermaid-syntax/references/gantt.md` for official Mermaid syntax — node shapes, edge labels, date formats, task statuses, and styling options.
+
+### 8. Mermaid Diagram Requirements
+
+Include at least 2 Mermaid diagrams:
+
+1. **Architecture Vision Diagram** (graph/flowchart showing target architecture)
+2. **Strategic Timeline** (Gantt chart showing phases and milestones)
+
+**Syntax Rules**:
+
+- ✅ Gantt: Use dateFormat YYYY-MM-DD, no `<br/>` in task names
+- ✅ Flowcharts: Node labels can use `<br/>`, edge labels cannot
+- ✅ Use subgraphs for architecture layers
+
+---
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+**Construct Document ID**:
+
+- **Document ID**: `ARC-{PROJECT_ID}-STRAT-v{VERSION}` (e.g., `ARC-001-STRAT-v1.0`)
+
+**Populate Required Fields**:
+
+*Auto-populated fields* (populate these automatically):
+
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → "1.0" (or increment if previous version exists)
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → "Architecture Strategy"
+- `ARC-[PROJECT_ID]-STRAT-v[VERSION]` → Construct using format above
+- `[COMMAND]` → "arckit.strategy"
+
+*User-provided fields* (extract from project metadata or user input):
+
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+*Calculated fields*:
+
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days
+
+*Pending fields* (leave as [PENDING] until manually updated):
+
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+**Populate Revision History**:
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `$arckit-strategy` command | [PENDING] | [PENDING] |
+```
+
+**Populate Generation Metadata Footer**:
+
+The footer should be populated with:
+
+```markdown
+**Generated by**: ArcKit `$arckit-strategy` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: {ARCKIT_VERSION}
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+---
+
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **STRAT** per-type checks pass. Fix any failures before proceeding.
+
+### 9. Write the Strategy File
+
+**IMPORTANT**: The strategy document will be a LARGE document (typically 350-500 lines). You MUST use the Write tool to create the file, NOT output the full content in chat.
+
+Create the file at:
+
+```text
+projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v1.0.md
+```
+
+Use the Write tool with the complete strategy content following the template structure.
+
+### 10. Show Summary to User
+
+After writing the file, show a concise summary (NOT the full document):
+
+```markdown
+## Architecture Strategy Created
+
+**Document**: `projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v1.0.md`
+**Document ID**: ARC-[PROJECT_ID]-STRAT-v1.0
+
+### Strategy Overview
+- **Strategic Horizon**: FY [START_YEAR] - FY [END_YEAR] ([N] years)
+- **Total Investment**: £[AMOUNT] ([% CAPEX] / [% OPEX])
+- **Expected ROI**: [%]% by FY [YEAR]
+- **Risk Appetite**: [LOW / MEDIUM / HIGH]
+
+### Key Strategic Decisions
+- **Build vs Buy**: [Build / Buy / Hybrid]
+- **Cloud Strategy**: [Cloud-Native / Hybrid / On-Premises]
+- **Vendor Strategy**: [Single / Multi / Platform]
+
+### Strategic Themes
+1. **[Theme 1]**: £[INVESTMENT] - [Brief description]
+2. **[Theme 2]**: £[INVESTMENT] - [Brief description]
+3. **[Theme 3]**: £[INVESTMENT] - [Brief description]
+4. **[Theme 4]**: £[INVESTMENT] - [Brief description]
+
+### Strategic Outcomes
+1. [Measurable outcome 1]
+2. [Measurable outcome 2]
+3. [Measurable outcome 3]
+4. [Measurable outcome 4]
+5. [Measurable outcome 5]
+
+### Synthesised From
+- ✅ Architecture Principles: ARC-000-PRIN-v[N].md
+- ✅ Stakeholder Analysis: ARC-[PID]-STKE-v[N].md
+- [✅/⚠️] Wardley Maps: [Status]
+- [✅/⚠️] Architecture Roadmap: [Status]
+- [✅/⚠️] Strategic Business Case: [Status]
+- [✅/⚠️] Risk Register: [Status]
+
+### Top Strategic Risks
+1. **[Risk 1]**: [Mitigation summary]
+2. **[Risk 2]**: [Mitigation summary]
+3. **[Risk 3]**: [Mitigation summary]
+
+### Next Steps
+1. Review strategy with Strategy Board / Architecture Review Board
+2. Validate investment with Finance / Spending Review
+3. Confirm strategic direction with Executive Sponsor
+4. Create detailed requirements: `$arckit-requirements`
+5. Expand roadmap: `$arckit-roadmap`
+6. Begin detailed design: `$arckit-diagram`
+
+### Traceability
+- Aligns to [N] architecture principles
+- Addresses [N] stakeholder drivers
+- Delivers [N] strategic outcomes
+- Mitigates [N] strategic risks
+
+**File location**: `projects/[PROJECT_ID]/ARC-{PROJECT_ID}-STRAT-v1.0.md`
+```
+
+## Important Notes
+
+1. **Synthesis, Not Generation**: This command synthesises existing artifacts into a coherent narrative. It should NOT generate new information but rather consolidate and present existing strategic decisions.
+
+2. **Use Write Tool**: The strategy document is typically 350-500 lines. ALWAYS use the Write tool to create it. Never output the full content in chat.
+
+3. **Mandatory Prerequisites**: Unlike other commands, this command has TWO mandatory prerequisites (principles AND stakeholders). Strategy cannot be created without understanding both the decision framework and the stakeholder drivers.
+
+4. **Executive Audience**: The strategy document is intended for executive stakeholders (CTO, CIO, Strategy Board). Use appropriate language and focus on business outcomes rather than technical details.
+
+5. **Traceability is Critical**: Every element of the strategy should trace back to source documents. This ensures the strategy is grounded in agreed artifacts, not assumptions.
+
+6. **Gap Identification**: If recommended documents are missing, include a "Gaps" section noting what additional artifacts would strengthen the strategy (e.g., "A Wardley Map would improve build vs buy decisions").
+
+7. **Principles Compliance**: Show how each strategic theme aligns to specific principles. This demonstrates that strategy is principles-driven.
+
+8. **Integration with Other Commands**:
+   - Strategy feeds into: `$arckit-requirements` (detailed requirements), `$arckit-roadmap` (expanded timeline), `$arckit-plan` (project delivery)
+   - Strategy is informed by: `$arckit-principles`, `$arckit-stakeholders`, `$arckit-wardley`, `$arckit-sobc`, `$arckit-risk`
+
+9. **Version Management**: If a strategy already exists (ARC-*-STRAT-v*.md), create a new version (v2.0) rather than overwriting. Strategies should be versioned to track evolution.
+
+10. **Financial Years**: For UK Government, use "FY 2024/25" notation (April-March). For US/other contexts, use appropriate fiscal year notation.
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
+## Suggested Next Steps
+
+After completing this command, consider running:
+
+- `$arckit-requirements` -- Create detailed requirements from strategy
+- `$arckit-roadmap` -- Expand strategic timeline into detailed roadmap
+- `$arckit-diagram` -- Create architecture vision diagrams
+

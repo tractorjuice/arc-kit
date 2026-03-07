@@ -18,7 +18,7 @@ Standalone [OpenAI Codex CLI](https://chatgpt.com/features/codex) extension for 
 
 ### Option 1: CLI (Recommended)
 
-The ArcKit CLI scaffolds a complete project with commands, skills, agents, and MCP config in one step:
+The ArcKit CLI scaffolds a complete project with skills, agents, and MCP config in one step:
 
 ```bash
 # Install the CLI
@@ -29,15 +29,16 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 # Create a new project
 arckit init my-project --ai codex
 cd my-project
-codex --auto
+codex
 ```
+
+That's it -- no environment variables, no config files. Codex auto-discovers skills from `.agents/skills/`.
 
 This creates a project with:
 
-- `.codex/prompts/` -- 57 slash commands
+- `.agents/skills/` -- 61 skills (57 commands + 4 reference skills, auto-discovered by Codex)
 - `.codex/agents/` -- 6 agent configs (research, datascout, cloud providers, framework)
 - `.codex/config.toml` -- MCP servers and agent roles
-- `.agents/skills/` -- 4 skills (architecture workflow, Mermaid, PlantUML, Wardley mapping)
 - `.arckit/templates/` -- document templates
 - `.arckit/scripts/` -- helper scripts
 
@@ -45,28 +46,21 @@ This creates a project with:
 
 This repo can also be used as a standalone extension installed once and shared across projects.
 
-**Step 1: Commands (prompts)**
+**Step 1: Skills (commands)**
 
-Set the `CODEX_HOME` environment variable to point at this directory:
-
-```bash
-# Add to your shell profile (~/.zshrc, ~/.bashrc, etc.)
-export CODEX_HOME="/path/to/arckit-codex"
-```
-
-This makes all 57 ArcKit commands available as `/prompts:arckit.X` in every Codex session.
-
-**Step 2: Skills**
-
-Copy the `skills/` directory into your Codex agents directory:
+Copy the `skills/` directory into your project or home directory:
 
 ```bash
+# Per-project (auto-discovered from repo root)
+cp -r /path/to/arckit-codex/skills/* .agents/skills/
+
+# Or global (auto-discovered from $HOME)
 cp -r /path/to/arckit-codex/skills/* ~/.agents/skills/
 ```
 
-Skills are automatically activated when Codex detects a matching context. You can also reference them explicitly with `$skill-name` in your prompts.
+This makes all 57 ArcKit commands available as `$arckit-*` skills plus 4 reference skills.
 
-**Step 3: MCP Servers and Agents**
+**Step 2: MCP Servers and Agents**
 
 Merge the contents of `config.toml` into your global Codex configuration:
 
@@ -81,7 +75,9 @@ MCP servers require no API keys except for Google Developer Knowledge (`GOOGLE_A
 
 ## Skills
 
-Skills provide domain-specific knowledge that Codex can draw on automatically. Install them to `~/.agents/skills/` as described above.
+All 57 commands are available as skills, invoked with `$arckit-<command>` in Codex CLI. Additionally, 4 reference skills provide domain knowledge.
+
+### Reference Skills
 
 | Skill | Invocation | Description |
 |-------|------------|-------------|
@@ -89,6 +85,90 @@ Skills provide domain-specific knowledge that Codex can draw on automatically. I
 | **mermaid-syntax** | `$mermaid-syntax` | Mermaid diagram syntax for all diagram types (flowchart, sequence, C4, Gantt, ER, etc.), styling, theming, and troubleshooting |
 | **plantuml-syntax** | `$plantuml-syntax` | PlantUML syntax including C4-PlantUML, sequence, class, activity, deployment diagrams, and layout patterns |
 | **wardley-mapping** | `$wardley-mapping` | Wardley Mapping concepts: evolution stages, gameplay patterns, doctrine, build vs buy, quantitative scoring |
+
+### Command Skills
+
+#### Foundation and Governance
+
+```bash
+$arckit-plan           # Project plan with GDS Agile Delivery phases
+$arckit-principles     # Architecture principles
+$arckit-stakeholders   # Stakeholder analysis with Power-Interest Grid
+$arckit-risk           # Risk register (HM Treasury Orange Book)
+$arckit-sobc           # Strategic Outline Business Case (Green Book 5-case)
+$arckit-strategy       # Architecture strategy
+$arckit-start          # Guided project onboarding
+$arckit-init           # Initialize project structure
+```
+
+#### Requirements and Data
+
+```bash
+$arckit-requirements       # Business, functional, non-functional requirements
+$arckit-data-model         # Data model with ERD and GDPR compliance
+$arckit-data-mesh-contract # Federated data product contract (ODCS v3.0.2)
+$arckit-dpia               # Data Protection Impact Assessment
+$arckit-platform-design    # Platform Design Toolkit (8 PDT canvases)
+$arckit-glossary           # Domain glossary
+```
+
+#### Research and Procurement
+
+```bash
+$arckit-research        # Market research with build vs buy analysis
+$arckit-datascout       # External data source discovery
+$arckit-aws-research    # AWS service research via MCP
+$arckit-azure-research  # Azure service research via MCP
+$arckit-gcp-research    # Google Cloud research via MCP
+$arckit-wardley         # Wardley mapping
+$arckit-roadmap         # Multi-year strategic roadmap
+$arckit-evaluate        # Vendor scoring against requirements
+$arckit-sow             # RFP statement of work
+$arckit-gcloud-search   # G-Cloud framework search
+$arckit-gcloud-clarify  # Supplier clarification questions
+$arckit-dos             # Digital Outcomes and Specialists procurement
+$arckit-finops          # Cloud financial operations
+```
+
+#### Delivery and Quality
+
+```bash
+$arckit-adr             # Architecture Decision Records (MADR format)
+$arckit-diagram         # C4 architecture diagrams
+$arckit-dfd             # Data flow diagrams
+$arckit-backlog         # Sprint-ready GDS backlog from requirements
+$arckit-hld-review      # High-level design review
+$arckit-dld-review      # Detailed design review
+$arckit-analyze         # Cross-artifact quality analysis
+$arckit-traceability    # Traceability matrix
+$arckit-devops          # DevOps pipeline design
+$arckit-mlops           # MLOps pipeline design
+$arckit-operationalize  # Operational readiness
+$arckit-servicenow      # ServiceNow CMDB export
+$arckit-trello          # Trello board export
+$arckit-framework       # Structured framework generation
+$arckit-health          # Architecture health check
+$arckit-presentation    # Executive presentation
+$arckit-pages           # Documentation site generation
+$arckit-template-builder # Custom template creation
+$arckit-maturity-model  # Architecture maturity assessment
+```
+
+#### Compliance and Governance Reporting
+
+```bash
+$arckit-principles-compliance  # Principles compliance (RAG evidence)
+$arckit-conformance            # Architecture conformance review
+$arckit-service-assessment     # GDS Service Standard assessment
+$arckit-secure                 # Secure by Design review
+$arckit-mod-secure             # MOD Secure by Design assessment
+$arckit-jsp-936                # JSP 936 AI assurance documentation
+$arckit-tcop                   # Technology Code of Practice compliance
+$arckit-atrs                   # Algorithmic Transparency Record
+$arckit-ai-playbook            # UK Government AI Playbook alignment
+$arckit-story                  # Programme story for governance reporting
+$arckit-customize              # Template customization
+```
 
 ## Agents (Experimental)
 
@@ -118,129 +198,42 @@ Four Model Context Protocol servers are configured in `config.toml` to provide c
 | **google-developer-knowledge** | `https://developerknowledge.googleapis.com/mcp` | Yes (`GOOGLE_API_KEY`) |
 | **datacommons-mcp** | `https://api.datacommons.org/mcp` | Yes (`DATA_COMMONS_API_KEY`) |
 
-## Commands
-
-All 57 commands are invoked as `/prompts:arckit.<command>` in Codex CLI.
-
-### Foundation and Governance
-
-```bash
-/prompts:arckit.plan           # Project plan with GDS Agile Delivery phases
-/prompts:arckit.principles     # Architecture principles
-/prompts:arckit.stakeholders   # Stakeholder analysis with Power-Interest Grid
-/prompts:arckit.risk           # Risk register (HM Treasury Orange Book)
-/prompts:arckit.sobc           # Strategic Outline Business Case (Green Book 5-case)
-/prompts:arckit.strategy       # Architecture strategy
-/prompts:arckit.start          # Guided project onboarding
-/prompts:arckit.init           # Initialize project structure
-```
-
-### Requirements and Data
-
-```bash
-/prompts:arckit.requirements       # Business, functional, non-functional requirements
-/prompts:arckit.data-model         # Data model with ERD and GDPR compliance
-/prompts:arckit.data-mesh-contract # Federated data product contract (ODCS v3.0.2)
-/prompts:arckit.dpia               # Data Protection Impact Assessment
-/prompts:arckit.platform-design    # Platform Design Toolkit (8 PDT canvases)
-/prompts:arckit.glossary           # Domain glossary
-```
-
-### Research and Procurement
-
-```bash
-/prompts:arckit.research        # Market research with build vs buy analysis
-/prompts:arckit.datascout       # External data source discovery
-/prompts:arckit.aws-research    # AWS service research via MCP
-/prompts:arckit.azure-research  # Azure service research via MCP
-/prompts:arckit.gcp-research    # Google Cloud research via MCP
-/prompts:arckit.wardley         # Wardley mapping
-/prompts:arckit.roadmap         # Multi-year strategic roadmap
-/prompts:arckit.evaluate        # Vendor scoring against requirements
-/prompts:arckit.sow             # RFP statement of work
-/prompts:arckit.gcloud-search   # G-Cloud framework search
-/prompts:arckit.gcloud-clarify  # Supplier clarification questions
-/prompts:arckit.dos             # Digital Outcomes and Specialists procurement
-/prompts:arckit.finops          # Cloud financial operations
-```
-
-### Delivery and Quality
-
-```bash
-/prompts:arckit.adr             # Architecture Decision Records (MADR format)
-/prompts:arckit.diagram         # C4 architecture diagrams
-/prompts:arckit.dfd             # Data flow diagrams
-/prompts:arckit.backlog         # Sprint-ready GDS backlog from requirements
-/prompts:arckit.hld-review      # High-level design review
-/prompts:arckit.dld-review      # Detailed design review
-/prompts:arckit.analyze         # Cross-artifact quality analysis
-/prompts:arckit.traceability    # Traceability matrix
-/prompts:arckit.devops          # DevOps pipeline design
-/prompts:arckit.mlops           # MLOps pipeline design
-/prompts:arckit.operationalize  # Operational readiness
-/prompts:arckit.servicenow      # ServiceNow CMDB export
-/prompts:arckit.trello          # Trello board export
-/prompts:arckit.framework       # Structured framework generation
-/prompts:arckit.health          # Architecture health check
-/prompts:arckit.presentation    # Executive presentation
-/prompts:arckit.pages           # Documentation site generation
-/prompts:arckit.template-builder # Custom template creation
-/prompts:arckit.maturity-model  # Architecture maturity assessment
-```
-
-### Compliance and Governance Reporting
-
-```bash
-/prompts:arckit.principles-compliance  # Principles compliance (RAG evidence)
-/prompts:arckit.conformance            # Architecture conformance review
-/prompts:arckit.service-assessment     # GDS Service Standard assessment
-/prompts:arckit.secure                 # Secure by Design review
-/prompts:arckit.mod-secure             # MOD Secure by Design assessment
-/prompts:arckit.jsp-936                # JSP 936 AI assurance documentation
-/prompts:arckit.tcop                   # Technology Code of Practice compliance
-/prompts:arckit.atrs                   # Algorithmic Transparency Record
-/prompts:arckit.ai-playbook            # UK Government AI Playbook alignment
-/prompts:arckit.story                  # Programme story for governance reporting
-/prompts:arckit.customize              # Template customization
-```
-
 ## Differences from Claude Code
 
 | Feature | Claude Code (Plugin) | Codex CLI (Extension) |
 |---------|---------------------|-----------------------|
-| **Command format** | `/arckit.principles` | `/prompts:arckit.principles` |
-| **Command location** | `arckit-plugin/commands/` | `arckit-codex/prompts/` |
-| **Skills** | Supported (plugin skills/) | Supported (`~/.agents/skills/`) |
+| **Command format** | `/arckit.principles` | `$arckit-principles` |
+| **Command location** | `arckit-plugin/commands/` | `arckit-codex/skills/arckit-*/` |
+| **Skills** | Supported (plugin skills/) | Supported (`.agents/skills/`, auto-discovered) |
 | **Agents** | Supported (Task tool) | Experimental (multi-agent flag) |
 | **MCP servers** | Supported (plugin config) | Supported (`config.toml`) |
 | **Hooks** | Supported (plugin hooks/) | Not supported |
 | **Approval modes** | Automatic | `--auto`, `--read-only`, `--network` |
 | **Template paths** | `${CLAUDE_PLUGIN_ROOT}/templates/` | `.arckit/templates/` |
-| **Installation** | Marketplace plugin | Manual (`CODEX_HOME` + file copy) |
+| **Installation** | Marketplace plugin | CLI (`arckit init --ai codex`) or manual file copy |
 
 ## File Structure
 
-```
+```text
 arckit-codex/
 ├── README.md              # This file
 ├── VERSION                # Extension version (tracks plugin)
 ├── config.toml            # MCP servers + agent configuration
-├── prompts/               # 57 slash commands (/prompts:arckit.X)
-│   ├── arckit.plan.md
-│   ├── arckit.principles.md
-│   ├── arckit.requirements.md
-│   ├── arckit.research.md
-│   └── ...
-├── skills/                # 4 skills (copy to ~/.agents/skills/)
-│   ├── architecture-workflow/
-│   ├── mermaid-syntax/
-│   ├── plantuml-syntax/
-│   └── wardley-mapping/
+├── skills/                # 61 skills (57 commands + 4 reference)
+│   ├── arckit-requirements/
+│   │   ├── SKILL.md       # Command prompt with frontmatter
+│   │   └── agents/
+│   │       └── openai.yaml  # allow_implicit_invocation: false
+│   ├── arckit-principles/
+│   ├── ...                # 55 more command skills
+│   ├── architecture-workflow/  # Reference skill
+│   ├── mermaid-syntax/         # Reference skill
+│   ├── plantuml-syntax/        # Reference skill
+│   └── wardley-mapping/        # Reference skill
+├── prompts/               # 57 prompts (deprecated, use skills instead)
 ├── agents/                # 6 agent configs + system prompts
 │   ├── arckit-research.md
 │   ├── arckit-research.toml
-│   ├── arckit-datascout.md
-│   ├── arckit-datascout.toml
 │   └── ...
 ├── templates/             # Document templates
 ├── scripts/               # Helper scripts (bash, python)
@@ -250,7 +243,7 @@ arckit-codex/
 
 ## Version
 
-**Current Release: v3.1.2 (57 commands)**
+**Current Release: v3.1.2 (57 commands, 4 reference skills)**
 
 ---
 

@@ -111,6 +111,12 @@ AGENT_CONFIG = {
         "copy_commands_to_extension": True,
         "copy_agents_to_extension": True,
     },
+    "codex_skills": {
+        "name": "Codex Skills",
+        "output_dir": "arckit-codex/skills",
+        "format": "skill",
+        "path_prefix": ".arckit",
+    },
     "opencode": {
         "name": "OpenCode CLI",
         "output_dir": ".opencode/commands",
@@ -156,7 +162,7 @@ def rewrite_paths(prompt, config):
 
 
 def format_output(description, prompt, fmt):
-    """Format into target format: 'markdown' or 'toml'."""
+    """Format into target format: 'markdown', 'toml', or 'skill'."""
     if fmt == "toml":
         prompt_escaped = prompt.replace("\\", "\\\\").replace('"', '\\"')
         prompt_formatted = '"""\n' + prompt_escaped + '\n"""'
@@ -212,13 +218,32 @@ def convert(commands_dir, agents_dir):
 
         for agent_id, config in AGENT_CONFIG.items():
             rewritten = rewrite_paths(prompt, config)
-            content = format_output(description, rewritten, config["format"])
-            out_filename = config["filename_pattern"].format(name=base_name)
-            out_path = os.path.join(config["output_dir"], out_filename)
-            with open(out_path, "w") as f:
-                f.write(content)
-            print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
-            counts[agent_id] += 1
+
+            if config["format"] == "skill":
+                skill_name = f"arckit-{base_name}"
+                skill_dir = os.path.join(config["output_dir"], skill_name)
+                os.makedirs(skill_dir, exist_ok=True)
+                os.makedirs(os.path.join(skill_dir, "agents"), exist_ok=True)
+
+                escaped_desc = description.replace('"', '\\"')
+                skill_md = f'---\nname: {skill_name}\ndescription: "{escaped_desc}"\n---\n\n{rewritten}\n'
+                openai_yaml = "policy:\n  allow_implicit_invocation: false\n"
+
+                with open(os.path.join(skill_dir, "SKILL.md"), "w") as f:
+                    f.write(skill_md)
+                with open(os.path.join(skill_dir, "agents", "openai.yaml"), "w") as f:
+                    f.write(openai_yaml)
+
+                print(f"  {config['name'] + ':':14s}{source_label} -> {skill_dir}/")
+                counts[agent_id] += 1
+            else:
+                content = format_output(description, rewritten, config["format"])
+                out_filename = config["filename_pattern"].format(name=base_name)
+                out_path = os.path.join(config["output_dir"], out_filename)
+                with open(out_path, "w") as f:
+                    f.write(content)
+                print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
+                counts[agent_id] += 1
 
     return counts
 
@@ -361,7 +386,9 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
 def rewrite_codex_skills(skills_dir):
     """Rewrite Claude Code-specific references in skills for Codex extension.
 
-    - /arckit:X -> /prompts:arckit.X
+    - /arckit:X -> $arckit-X (skill invocation syntax)
+    - /arckit.X -> $arckit-X
+    - /prompts:arckit.X -> $arckit-X
     - Remove SessionStart hook references
     - ${CLAUDE_PLUGIN_ROOT} -> .arckit
     """
@@ -379,14 +406,21 @@ def rewrite_codex_skills(skills_dir):
 
             original = content
 
-            # Rewrite /arckit:X -> /prompts:arckit.X (colon-prefixed plugin format)
-            content = re.sub(r"/arckit:(\w[\w-]*)", r"/prompts:arckit.\1", content)
+            # Rewrite /arckit:X -> $arckit-X (colon-prefixed plugin format)
+            content = re.sub(r"/arckit:(\w[\w-]*)", r"$arckit-\1", content)
 
-            # Rewrite /arckit.X (dot-prefixed format used in some references)
+            # Rewrite /arckit.X -> $arckit-X (dot-prefixed format)
             # Only match when preceded by a space or start-of-line to avoid false matches
             content = re.sub(
                 r"(?<=\s)/arckit\.(\w[\w-]*)",
-                r"/prompts:arckit.\1",
+                r"$arckit-\1",
+                content,
+            )
+
+            # Rewrite /prompts:arckit.X -> $arckit-X (old Codex prompt format)
+            content = re.sub(
+                r"/prompts:arckit\.(\w[\w-]*)",
+                r"$arckit-\1",
                 content,
             )
 
@@ -407,7 +441,7 @@ def rewrite_codex_skills(skills_dir):
                 count += 1
 
     if count:
-        print(f"  Rewrote {count} skill files for Codex command format")
+        print(f"  Rewrote {count} skill files for Codex skill invocation format")
 
 
 if __name__ == "__main__":
@@ -427,6 +461,12 @@ if __name__ == "__main__":
             print(f"{config['name'] + ' Ext:':14s}{ext_dir}/")
     print()
 
+    # Copy extension supporting files BEFORE convert so reference skills
+    # are in place before command skills are generated on top
+    print("Copying extension supporting files...")
+    copy_extension_files(plugin_dir)
+
+    print()
     counts = convert(commands_dir, agents_dir)
 
     # Post-processing: copy commands and agents to extension directories
@@ -473,10 +513,6 @@ if __name__ == "__main__":
                 print(
                     f"  Copied agents to {local_agents_dir} and {ext_agents_dir}"
                 )
-
-    print()
-    print("Copying extension supporting files...")
-    copy_extension_files(plugin_dir)
 
     print()
     print("Generating Codex extension config...")

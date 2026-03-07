@@ -18,7 +18,7 @@ Add to the base path's Design and Analysis phase:
 
 | Command | Rationale | Insert After |
 |---------|-----------|-------------|
-| `/prompts:arckit.datascout` | Discover training data sources, validate data quality | Before data-model (if not already in base path) |
+| `$arckit-datascout` | Discover training data sources, validate data quality | Before data-model (if not already in base path) |
 
 ### Operations Phase
 
@@ -26,7 +26,7 @@ Add to the base path's Operations phase:
 
 | Command | Rationale | Insert After |
 |---------|-----------|-------------|
-| `/prompts:arckit.mlops` | ML model lifecycle: training pipelines, model registry, serving, monitoring, drift detection | After `/prompts:arckit.devops` |
+| `$arckit-mlops` | ML model lifecycle: training pipelines, model registry, serving, monitoring, drift detection | After `$arckit-devops` |
 
 ### Compliance Phase
 
@@ -36,20 +36,20 @@ Which compliance commands to add depends on the base path:
 
 | Command | Rationale | Insert After |
 |---------|-----------|-------------|
-| `/prompts:arckit.ai-playbook` | UK Government AI Playbook compliance (10 principles) | After `/prompts:arckit.tcop` |
-| `/prompts:arckit.atrs` | Algorithmic Transparency Recording Standard (mandatory for public-facing algorithmic systems) | After `/prompts:arckit.ai-playbook` |
+| `$arckit-ai-playbook` | UK Government AI Playbook compliance (10 principles) | After `$arckit-tcop` |
+| `$arckit-atrs` | Algorithmic Transparency Recording Standard (mandatory for public-facing algorithmic systems) | After `$arckit-ai-playbook` |
 
 #### Defence Base Path
 
 | Command | Rationale | Insert After |
 |---------|-----------|-------------|
-| `/prompts:arckit.jsp-936` | MOD AI Assurance (JSP 936) — risk classification and approval pathway | After `/prompts:arckit.mod-secure` |
+| `$arckit-jsp-936` | MOD AI Assurance (JSP 936) — risk classification and approval pathway | After `$arckit-mod-secure` |
 
 #### Standard Base Path
 
 | Command | Rationale | Insert After |
 |---------|-----------|-------------|
-| `/prompts:arckit.ai-playbook` | AI Playbook principles are good practice even outside UK Government | Optional, after quality checks |
+| `$arckit-ai-playbook` | AI Playbook principles are good practice even outside UK Government | Optional, after quality checks |
 
 ## Critical Gates
 
@@ -77,7 +77,7 @@ Which compliance commands to add depends on the base path:
 ## Key Considerations
 
 - **Model governance**: Establish model risk management framework early (during requirements phase)
-- **Training data**: Use `/prompts:arckit.datascout` to identify and evaluate training data sources
+- **Training data**: Use `$arckit-datascout` to identify and evaluate training data sources
 - **Bias and fairness**: Address in requirements (NFR-AI-xxx) and validate in ai-playbook assessment
 - **Explainability**: Document explainability approach in ADRs
 - **Monitoring**: MLOps must include model drift detection and retraining triggers

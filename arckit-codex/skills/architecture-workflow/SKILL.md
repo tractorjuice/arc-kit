@@ -180,17 +180,17 @@ Recommended Command Sequence
 Based on: [UK Government] + [AI/ML] project, starting fresh, full lifecycle
 
 Phase 1: Foundation
-  1. /prompts:arckit.principles — Governance foundation (GDS + TCoP aligned)
-  2. /prompts:arckit.stakeholders — Map DDaT roles, SROs, policy owners
-  3. /prompts:arckit.risk — HMG Orange Book risk methodology
+  1. $arckit-principles — Governance foundation (GDS + TCoP aligned)
+  2. $arckit-stakeholders — Map DDaT roles, SROs, policy owners
+  3. $arckit-risk — HMG Orange Book risk methodology
 
 Phase 2: Business Justification
-  4. /prompts:arckit.sobc — HM Treasury Green Book 5-case model
-  5. /prompts:arckit.requirements — Central artifact for all downstream work
+  4. $arckit-sobc — HM Treasury Green Book 5-case model
+  5. $arckit-requirements — Central artifact for all downstream work
 
 Phase 3: Design & Analysis
-  6. /prompts:arckit.datascout — Discover UK Gov open data sources
-  7. /prompts:arckit.data-model — Data architecture with GDPR considerations
+  6. $arckit-datascout — Discover UK Gov open data sources
+  7. $arckit-data-model — Data architecture with GDPR considerations
   ...
 
 [Total: N commands across M phases]
@@ -212,6 +212,6 @@ After presenting the plan, ask if they want to adjust anything or if they're rea
 
 ## ArcKit Integration
 
-This skill is invoked by the `/prompts:arckit.start` command, which delegates project onboarding to this skill. Users can also trigger it by asking about getting started, command sequences, or workflow recommendations.
+This skill is invoked by the `$arckit-start` command, which delegates project onboarding to this skill. Users can also trigger it by asking about getting started, command sequences, or workflow recommendations.
 
 For the detailed command dependency matrix, see `DEPENDENCY-MATRIX.md` in the user's project root (installed by `arckit init`). For visual workflow diagrams, see `WORKFLOW-DIAGRAMS.md` in the user's project root.

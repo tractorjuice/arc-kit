@@ -92,8 +92,8 @@ Display as a table:
 1. Map the user's short name to the full filename (e.g., "requirements" → `requirements-template.md`, "pages" → `pages-template.html`)
 2. Use the Read tool to read the source template from `.arckit/templates/{name}-template.{ext}`
 3. **Update the origin banner**: Before writing, change the `Template Origin` line from `Official` to `Custom` and add a `Based On` reference:
-   - Find: `> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.{command}`
-   - Replace with: `> **Template Origin**: Custom | **Based On**: `/arckit.{command}` | **ArcKit Version**: [VERSION]`
+   - Find: ``> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.{command}` ``
+   - Replace with: ``> **Template Origin**: Custom | **Based On**: `/arckit.{command}` | **ArcKit Version**: [VERSION]``
 4. Use the Write tool to save it to `.arckit/templates/{name}-template.{ext}` (the directory will be created automatically)
 5. If the source template does not exist, inform the user and suggest running `/arckit:customize list`
 

@@ -36,7 +36,7 @@ arckit init --here --ai codex
 
 | Updated | Preserved |
 |---------|-----------|
-| Slash commands (`.codex/prompts/`) | Project data (`projects/`) |
+| Skills (`.agents/skills/`) | Project data (`projects/`) |
 | Default templates (`.arckit/templates/`) | Custom templates (`.arckit/templates-custom/`) |
 | Helper scripts (`.arckit/scripts/`) | |
 | Documentation and guides (`docs/`) | |

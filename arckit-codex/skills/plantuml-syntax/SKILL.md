@@ -64,4 +64,4 @@ These are the most common PlantUML syntax errors encountered when generating dia
 
 This skill handles **conversational** PlantUML syntax questions — quick lookups, syntax examples, troubleshooting rendering issues, and learning about diagram types.
 
-For **formal architecture diagram generation** with document control, project integration, layout science, and governance compliance, use the `/prompts:arckit.diagram` command instead. It generates versioned diagram artifacts saved to your project directory with full traceability to requirements and architecture principles.
+For **formal architecture diagram generation** with document control, project integration, layout science, and governance compliance, use the `$arckit-diagram` command instead. It generates versioned diagram artifacts saved to your project directory with full traceability to requirements and architecture principles.

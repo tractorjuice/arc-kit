@@ -55,12 +55,10 @@ projects/
 # projects/*/vendors/*/proposal.pdf
 # projects/*/vendors/*/proprietary/
 
-# Codex CLI - exclude auth tokens but include prompts
+# Codex CLI - exclude auth tokens but include agents and config
 .codex/*
-!.codex/prompts/
-!.codex/prompts/*.md
-!.codex/README.md
-!.codex/.gitignore
+!.codex/agents/
+!.codex/config.toml
 
 # OpenCode CLI - exclude auth tokens but include prompts
 .opencode/*
@@ -69,8 +67,6 @@ projects/
 !.opencode/README.md
 !.opencode/.gitignore
 
-# direnv
-.envrc.local
 
 # Gemini extension - generated files (static files are checked in)
 arckit-gemini/commands/

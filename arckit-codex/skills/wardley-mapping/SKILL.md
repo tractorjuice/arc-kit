@@ -262,4 +262,4 @@ Consult these reference files for deeper analysis:
 
 This skill handles **conversational** Wardley Mapping — quick questions, evolution stage lookups, doctrine assessments, and interactive map creation.
 
-For **formal architecture documents** with document control, project integration, UK Government compliance (TCoP, GDS, AI Playbook), and OnlineWardleyMaps syntax for https://create.wardleymaps.ai, use the `/prompts:arckit.wardley` command instead. It generates versioned Wardley Map artifacts saved to your project directory with full traceability to requirements and architecture principles.
+For **formal architecture documents** with document control, project integration, UK Government compliance (TCoP, GDS, AI Playbook), and OnlineWardleyMaps syntax for https://create.wardleymaps.ai, use the `$arckit-wardley` command instead. It generates versioned Wardley Map artifacts saved to your project directory with full traceability to requirements and architecture principles.

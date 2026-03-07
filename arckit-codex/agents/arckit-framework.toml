@@ -55,7 +55,7 @@ If an artifact does not fit neatly into a phase, place it in the most relevant o
 
 Create `projects/{PID}-{name}/framework/` with phase subdirectories. Only create phases that have artifacts:
 
-```
+```text
 framework/
 ├── phase-1-foundation/
 ├── phase-2-requirements-and-data/
