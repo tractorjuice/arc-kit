@@ -1,0 +1,70 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${extensionPath}/hooks/scripts/session-start.py",
+            "name": "ArcKit Session Init",
+            "timeout": 5000,
+            "description": "Inject ArcKit version and project context"
+          }
+        ]
+      }
+    ],
+    "BeforeAgent": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${extensionPath}/hooks/scripts/context-inject.py",
+            "name": "ArcKit Context",
+            "timeout": 10000,
+            "description": "Inject project context before agent planning"
+          }
+        ]
+      }
+    ],
+    "BeforeTool": [
+      {
+        "matcher": "write_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${extensionPath}/hooks/scripts/validate-filename.py",
+            "name": "ARC Filename Validator",
+            "timeout": 5000,
+            "description": "Validate ARC-xxx filename convention"
+          }
+        ]
+      },
+      {
+        "matcher": "write_file|edit_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${extensionPath}/hooks/scripts/file-protection.py",
+            "name": "File Protection",
+            "timeout": 5000,
+            "description": "Protect ArcKit system files from modification"
+          }
+        ]
+      }
+    ],
+    "AfterTool": [
+      {
+        "matcher": "write_file",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${extensionPath}/hooks/scripts/update-manifest.py",
+            "name": "Manifest Updater",
+            "timeout": 5000,
+            "description": "Update manifest.json after writing project files"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -151,6 +151,40 @@ This extension bundles MCP servers for cloud research:
 - **Microsoft Learn**: Azure and Microsoft documentation
 - **Google Developer Knowledge**: GCP documentation (requires `GOOGLE_API_KEY` setting)
 
+## Agents (Sub-agents)
+
+ArcKit includes 6 autonomous research agents that run as sub-agents. These handle research-heavy tasks in isolated context:
+
+| Agent | Purpose |
+|-------|---------|
+| `arckit-research` | Market research, vendor evaluation, build vs buy, TCO |
+| `arckit-datascout` | Data source discovery, API catalogue search |
+| `arckit-aws-research` | AWS service research via AWS Knowledge MCP |
+| `arckit-azure-research` | Azure service research via Microsoft Learn MCP |
+| `arckit-gcp-research` | GCP service research via Google Developer Knowledge MCP |
+| `arckit-framework` | Transform artifacts into structured framework |
+
+Agents are invoked automatically by commands that need heavy web research.
+
+## Hooks
+
+ArcKit includes automation hooks that fire during your session:
+
+| Event | Hook | Purpose |
+|-------|------|---------|
+| SessionStart | Session Init | Inject ArcKit version and project status |
+| BeforeAgent | Context Inject | Inject project artifact inventory |
+| BeforeTool | Filename Validator | Validate ARC-xxx naming convention |
+| BeforeTool | File Protection | Block writes to sensitive/protected files |
+| AfterTool | Manifest Updater | Update manifest.json after writing project files |
+
+## Policies
+
+ArcKit includes policy rules that:
+
+- Prevent modification of extension system files
+- Warn when file content may contain secrets
+
 ## Key Patterns
 
 - **Check prerequisites** before generating documents

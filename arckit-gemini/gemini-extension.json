@@ -1,7 +1,7 @@
 {
   "name": "arckit",
   "version": "4.0.0",
-  "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 54 commands for architecture artifacts, vendor procurement, and UK Government compliance",
+  "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 57 commands for architecture artifacts, vendor procurement, and UK Government compliance",
   "contextFileName": "GEMINI.md",
   "mcpServers": {
     "aws-knowledge": {
@@ -29,6 +29,17 @@
       "description": "Optional. Required for /arckit:gcp-research. Get one at https://makersuite.google.com/app/apikey",
       "envVar": "GOOGLE_API_KEY",
       "sensitive": true
+    }
+  ],
+  "themes": [
+    {
+      "name": "arckit",
+      "type": "custom",
+      "background": { "primary": "#0b0c0c" },
+      "text": { "primary": "#f0f0f0", "secondary": "#b1b4b6", "link": "#1d70b8" },
+      "status": { "success": "#00703c", "warning": "#f47738", "error": "#d4351c" },
+      "border": { "default": "#505a5f" },
+      "ui": { "comment": "#a0a8b0" }
     }
   ]
 }

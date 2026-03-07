@@ -437,6 +437,186 @@ def rewrite_codex_skills(skills_dir):
         print(f"  Rewrote {count} skill files for Codex skill invocation format")
 
 
+def generate_gemini_agents(agents_dir, output_dir):
+    """Generate Gemini CLI sub-agent markdown files from Claude Code agents.
+
+    Reads each arckit-{name}.md from agents_dir, converts the YAML frontmatter
+    (keeping name/description, dropping model, adding max_turns/timeout_mins),
+    rewrites paths and Read instructions for Gemini, prepends the extension
+    file access block, and writes to output_dir.
+    """
+    if not os.path.isdir(agents_dir):
+        print(f"  Skipped: {agents_dir} not found")
+        return
+
+    os.makedirs(output_dir, exist_ok=True)
+    gemini_path_prefix = "~/.gemini/extensions/arckit"
+    count = 0
+
+    for filename in sorted(os.listdir(agents_dir)):
+        if not (filename.startswith("arckit-") and filename.endswith(".md")):
+            continue
+
+        agent_path = os.path.join(agents_dir, filename)
+        with open(agent_path, "r") as f:
+            content = f.read()
+
+        frontmatter, prompt = extract_frontmatter_and_prompt(content)
+
+        # Build Gemini frontmatter: keep name/description, drop model,
+        # add Gemini-specific fields
+        gemini_fm = {}
+        if "name" in frontmatter:
+            gemini_fm["name"] = frontmatter["name"]
+        if "description" in frontmatter:
+            gemini_fm["description"] = frontmatter["description"]
+        gemini_fm["max_turns"] = 25
+        gemini_fm["timeout_mins"] = 10
+
+        # Rewrite paths: ${CLAUDE_PLUGIN_ROOT} -> ~/.gemini/extensions/arckit
+        prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", gemini_path_prefix)
+
+        # Rewrite Read instructions to shell commands
+        prompt = re.sub(
+            r"Read `(" + re.escape(gemini_path_prefix) + r"/[^`]+)`",
+            r"Run `cat \1` to read the file",
+            prompt,
+        )
+
+        # Prepend extension file access block
+        prompt = EXTENSION_FILE_ACCESS_BLOCK + prompt
+
+        # Serialize frontmatter with yaml for correct multi-line handling
+        fm_str = yaml.dump(gemini_fm, default_flow_style=False, sort_keys=False).rstrip()
+        output_content = f"---\n{fm_str}\n---\n\n{prompt}\n"
+
+        out_path = os.path.join(output_dir, filename)
+        with open(out_path, "w") as f:
+            f.write(output_content)
+        print(f"  {filename}")
+        count += 1
+
+    print(f"  Generated {count} Gemini sub-agent files in {output_dir}")
+
+
+def generate_gemini_hooks(output_dir):
+    """Generate hooks.json for Gemini CLI extension.
+
+    Creates arckit-gemini/hooks/hooks.json which tells Gemini CLI
+    which hook scripts to run for each lifecycle event.
+    """
+    hooks_dir = os.path.join(output_dir, "hooks")
+    os.makedirs(hooks_dir, exist_ok=True)
+
+    hooks_config = {
+        "hooks": {
+            "SessionStart": [
+                {
+                    "hooks": [
+                        {
+                            "type": "command",
+                            "command": "python3 ${extensionPath}/hooks/scripts/session-start.py",
+                            "name": "ArcKit Session Init",
+                            "timeout": 5000,
+                            "description": "Inject ArcKit version and project context",
+                        }
+                    ]
+                }
+            ],
+            "BeforeAgent": [
+                {
+                    "hooks": [
+                        {
+                            "type": "command",
+                            "command": "python3 ${extensionPath}/hooks/scripts/context-inject.py",
+                            "name": "ArcKit Context",
+                            "timeout": 10000,
+                            "description": "Inject project context before agent planning",
+                        }
+                    ]
+                }
+            ],
+            "BeforeTool": [
+                {
+                    "matcher": "write_file",
+                    "hooks": [
+                        {
+                            "type": "command",
+                            "command": "python3 ${extensionPath}/hooks/scripts/validate-filename.py",
+                            "name": "ARC Filename Validator",
+                            "timeout": 5000,
+                            "description": "Validate ARC-xxx filename convention",
+                        }
+                    ],
+                },
+                {
+                    "matcher": "write_file|edit_file",
+                    "hooks": [
+                        {
+                            "type": "command",
+                            "command": "python3 ${extensionPath}/hooks/scripts/file-protection.py",
+                            "name": "File Protection",
+                            "timeout": 5000,
+                            "description": "Protect ArcKit system files from modification",
+                        }
+                    ],
+                },
+            ],
+            "AfterTool": [
+                {
+                    "matcher": "write_file",
+                    "hooks": [
+                        {
+                            "type": "command",
+                            "command": "python3 ${extensionPath}/hooks/scripts/update-manifest.py",
+                            "name": "Manifest Updater",
+                            "timeout": 5000,
+                            "description": "Update manifest.json after writing project files",
+                        }
+                    ]
+                }
+            ],
+        }
+    }
+
+    hooks_path = os.path.join(hooks_dir, "hooks.json")
+    with open(hooks_path, "w") as f:
+        json.dump(hooks_config, f, indent=2)
+        f.write("\n")
+
+    print(f"  Generated: {hooks_path}")
+
+
+def generate_gemini_policies(output_dir):
+    """Generate policies/rules.toml for Gemini CLI extension."""
+    policies_dir = os.path.join(output_dir, "policies")
+    os.makedirs(policies_dir, exist_ok=True)
+
+    rules = '''\
+# ArcKit Gemini Extension Policies
+# Auto-generated by scripts/converter.py
+
+# Protect ArcKit extension files from modification
+[[rules]]
+description = "Prevent modification of ArcKit extension system files"
+when = "tool_name in ['write_file', 'edit_file'] and '~/.gemini/extensions/arckit/' in tool_input.get('path', '')"
+decision = "deny"
+reason = "Cannot modify ArcKit extension files. These are managed by the extension."
+
+# Warn on potential secret patterns in file content
+[[rules]]
+description = "Warn when writing files containing potential secrets"
+when = "tool_name == 'write_file' and any(p in tool_input.get('content', '') for p in ['PRIVATE KEY', 'password=', 'secret=', 'api_key='])"
+decision = "ask"
+reason = "File content may contain secrets. Please confirm this is intentional."
+'''
+
+    rules_path = os.path.join(policies_dir, "rules.toml")
+    with open(rules_path, "w") as f:
+        f.write(rules)
+    print(f"  Generated: {rules_path}")
+
+
 if __name__ == "__main__":
     commands_dir = "arckit-claude/commands/"
     agents_dir = "arckit-claude/agents/"
@@ -523,6 +703,18 @@ if __name__ == "__main__":
     print()
     print("Rewriting Codex extension skills for Codex command format...")
     rewrite_codex_skills("arckit-codex/skills")
+
+    print()
+    print("Generating Gemini CLI sub-agents...")
+    generate_gemini_agents(agents_dir, "arckit-gemini/agents")
+
+    print()
+    print("Generating Gemini extension hooks...")
+    generate_gemini_hooks("arckit-gemini")
+
+    print()
+    print("Generating Gemini extension policies...")
+    generate_gemini_policies("arckit-gemini")
 
     print()
     total = sum(counts.values())

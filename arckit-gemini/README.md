@@ -51,7 +51,7 @@ gemini
 /arckit:gcp-research Evaluate GCP services for data analytics platform
 ```
 
-## All 48 Commands
+## All 57 Commands
 
 ### Phase 0: Project Planning
 
@@ -59,6 +59,7 @@ gemini
 |---------|-------------|
 | `/arckit:init` | Initialize ArcKit project structure |
 | `/arckit:plan` | Project plan with GDS Agile Delivery phases and Mermaid Gantt charts |
+| `/arckit:start` | Guided project onboarding, workflow selection, and command recommendations |
 | `/arckit:strategy` | Enterprise architecture strategy document |
 
 ### Phase 1: Discovery
@@ -82,6 +83,7 @@ gemini
 | `/arckit:wardley` | Wardley Map with strategic analysis |
 | `/arckit:roadmap` | Multi-year strategic architecture roadmap |
 | `/arckit:adr` | Architecture Decision Record (MADR format) |
+| `/arckit:dfd` | Yourdon-DeMarco Data Flow Diagrams (DFDs) with structured analysis notation |
 | `/arckit:diagram` | Architecture diagrams (C4, Mermaid) |
 
 ### Phase 3: Research & Procurement
@@ -98,6 +100,7 @@ gemini
 | `/arckit:dos` | Digital Outcomes and Specialists procurement |
 | `/arckit:sow` | Statement of Work for RFP |
 | `/arckit:evaluate` | Vendor scoring and evaluation |
+| `/arckit:framework` | Transform artifacts into structured framework with principles and guidance |
 
 ### Phase 4: Beta & Live
 
@@ -113,6 +116,7 @@ gemini
 | `/arckit:tcop` | Technology Code of Practice assessment |
 | `/arckit:atrs` | AI Transparency Risk Standards assessment |
 | `/arckit:ai-playbook` | AI Playbook compliance check |
+| `/arckit:conformance` | Architecture conformance assessment (ADR implementation, drift, debt) |
 
 ### Phase 5: Operations & Delivery
 
@@ -123,6 +127,7 @@ gemini
 | `/arckit:mlops` | MLOps maturity assessment and ML pipeline design |
 | `/arckit:operationalize` | Service operationalization and runbook generation |
 | `/arckit:backlog` | Sprint-ready backlog generation |
+| `/arckit:presentation` | MARP presentation slides from project artifacts |
 | `/arckit:story` | Executive story for steering committee |
 
 ### Analysis & Reporting
@@ -133,6 +138,9 @@ gemini
 | `/arckit:traceability` | Requirements traceability matrix |
 | `/arckit:servicenow` | ServiceNow CMDB export design |
 | `/arckit:trello` | Trello board export |
+| `/arckit:glossary` | Consolidated project glossary of terms and acronyms |
+| `/arckit:health` | Project health scan (stale research, orphaned artifacts, drift) |
+| `/arckit:maturity-model` | Capability maturity model with assessment criteria |
 | `/arckit:pages` | GitHub Pages documentation site |
 
 ### Utilities
@@ -140,6 +148,39 @@ gemini
 | Command | Description |
 |---------|-------------|
 | `/arckit:customize` | Template customization manager |
+| `/arckit:template-builder` | Create new document templates via interactive interview |
+
+## Agents
+
+ArcKit includes 6 autonomous research agents that handle web-intensive tasks:
+
+- **arckit-research** — Market research, vendor evaluation, build vs buy
+- **arckit-datascout** — Data source discovery, API catalogue search
+- **arckit-aws-research** — AWS service research (via AWS Knowledge MCP)
+- **arckit-azure-research** — Azure service research (via Microsoft Learn MCP)
+- **arckit-gcp-research** — GCP service research (via Google Developer Knowledge MCP)
+- **arckit-framework** — Transform artifacts into structured framework
+
+## Hooks
+
+Automation hooks fire during your session to provide context and enforce standards:
+
+- **Session Init** — Injects ArcKit version and project status on startup
+- **Context Inject** — Adds project artifact inventory before agent planning
+- **Filename Validator** — Validates ARC-xxx naming convention on file writes
+- **File Protection** — Blocks writes to sensitive/protected files
+- **Manifest Updater** — Updates manifest.json after writing project files
+
+## Policies
+
+Policy rules enforce extension safety:
+
+- Prevent modification of ArcKit extension system files
+- Warn when file content may contain potential secrets
+
+## Theme
+
+ArcKit includes a GDS-branded terminal theme using official UK Government Design System colors.
 
 ## Template Customization
 
