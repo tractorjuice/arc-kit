@@ -27,11 +27,25 @@
     {
       "name": "arckit",
       "type": "custom",
-      "background": { "primary": "#0b0c0c" },
-      "text": { "primary": "#f0f0f0", "secondary": "#b1b4b6", "link": "#1d70b8" },
-      "status": { "success": "#00703c", "warning": "#f47738", "error": "#d4351c" },
-      "border": { "default": "#505a5f" },
-      "ui": { "comment": "#a0a8b0" }
+      "background": {
+        "primary": "#0b0c0c"
+      },
+      "text": {
+        "primary": "#f0f0f0",
+        "secondary": "#b1b4b6",
+        "link": "#1d70b8"
+      },
+      "status": {
+        "success": "#00703c",
+        "warning": "#f47738",
+        "error": "#d4351c"
+      },
+      "border": {
+        "default": "#505a5f"
+      },
+      "ui": {
+        "comment": "#a0a8b0"
+      }
     }
   ]
 }
