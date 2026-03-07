@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Get started with ArcKit in 5 minutes. Install Claude Code, add the ArcKit plugin, and begin generating architecture governance artifacts following UK Government standards.">
-    <meta name="keywords" content="ArcKit getting started, install ArcKit, Claude Code plugin, architecture governance setup, quick start guide">
+    <meta name="description" content="Get started with ArcKit in 5 minutes. Install for Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI and begin generating architecture governance artifacts following UK Government standards.">
+    <meta name="keywords" content="ArcKit getting started, install ArcKit, Claude Code plugin, Gemini CLI extension, Codex CLI, OpenCode CLI, architecture governance setup, quick start guide">
     <meta name="author" content="ArcKit">
     <title>Getting Started - ArcKit</title>
     <meta property="og:title" content="Getting Started - ArcKit">
-    <meta property="og:description" content="Get started with ArcKit in 5 minutes. Install Claude Code, add the plugin, and begin generating architecture governance artifacts.">
+    <meta property="og:description" content="Get started with ArcKit in 5 minutes. Install for Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI and begin generating architecture governance artifacts.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arckit.org/getting-started.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Getting Started - ArcKit">
-    <meta name="twitter:description" content="Get started with ArcKit in 5 minutes. Install Claude Code, add the plugin, and begin generating architecture governance artifacts.">
+    <meta name="twitter:description" content="Get started with ArcKit in 5 minutes. Install for Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI and begin generating architecture governance artifacts.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/getting-started.html">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -207,6 +207,69 @@
             margin: 0;
         }
 
+        /* Platform tabs */
+        .app-platform-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .app-platform-tab {
+            padding: 0.625rem 1.25rem;
+            border: 2px solid #b1b4b6;
+            background: #fff;
+            color: #0b0c0c;
+            font-size: 0.9375rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .app-platform-tab:hover {
+            border-color: #1d70b8;
+            background: #f8f8f8;
+        }
+
+        .app-platform-tab--active {
+            border-color: #1d70b8;
+            background: #1d70b8;
+            color: #fff;
+        }
+
+        .app-platform-tab--premier {
+            position: relative;
+        }
+
+        .app-platform-tab--premier::after {
+            content: "Premier";
+            position: absolute;
+            top: -0.5rem;
+            right: -0.25rem;
+            font-size: 0.625rem;
+            background: #00703c;
+            color: #fff;
+            padding: 0.0625rem 0.3125rem;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .app-platform-content {
+            display: none;
+        }
+
+        .app-platform-content--active {
+            display: block;
+        }
+
+        .app-install-note {
+            background: #f3f2f1;
+            border-left: 4px solid #1d70b8;
+            padding: 0.75rem 1rem;
+            margin: 0.75rem 0;
+            font-size: 0.875rem;
+        }
+
         /* Footer */
         .app-footer {
             background: #0b0c0c;
@@ -226,14 +289,14 @@
                 "@type": "HowTo",
                 "@id": "https://arckit.org/getting-started.html",
                 "name": "Getting Started with ArcKit",
-                "description": "Install Claude Code, add the ArcKit plugin, and begin generating architecture governance artifacts in 5 minutes.",
+                "description": "Install ArcKit for Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI and begin generating architecture governance artifacts in 5 minutes.",
                 "totalTime": "PT5M",
                 "step": [
-                    { "@type": "HowToStep", "position": 1, "name": "Install Claude Code", "text": "Install Claude Code using Homebrew, shell script, or PowerShell." },
-                    { "@type": "HowToStep", "position": 2, "name": "Install ArcKit Plugin", "text": "Run /plugin marketplace add tractorjuice/arc-kit in Claude Code." },
-                    { "@type": "HowToStep", "position": 3, "name": "Open Your Project", "text": "Navigate to your project directory and launch Claude Code." },
-                    { "@type": "HowToStep", "position": 4, "name": "Get Oriented", "text": "Run /arckit.start to see project status and recommended next steps." },
-                    { "@type": "HowToStep", "position": 5, "name": "Initialize Project Structure", "text": "Run /arckit.init to create the projects directory structure." },
+                    { "@type": "HowToStep", "position": 1, "name": "Choose Your AI Platform", "text": "Pick Claude Code (premier), Gemini CLI, Codex CLI, or OpenCode CLI." },
+                    { "@type": "HowToStep", "position": 2, "name": "Install Your AI Tool", "text": "Install Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI using the platform-specific installer." },
+                    { "@type": "HowToStep", "position": 3, "name": "Install ArcKit", "text": "Add the ArcKit plugin (Claude Code), extension (Gemini CLI), or run arckit init (Codex/OpenCode)." },
+                    { "@type": "HowToStep", "position": 4, "name": "Open Your Project", "text": "Navigate to your project directory and launch your chosen AI tool." },
+                    { "@type": "HowToStep", "position": 5, "name": "Get Oriented", "text": "Run the start command to see project status and recommended next steps." },
                     { "@type": "HowToStep", "position": 6, "name": "Follow GDS Phases", "text": "Use ArcKit commands to generate artifacts for Discovery, Alpha, and Beta phases." }
                 ],
                 "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
@@ -281,7 +344,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">5 Minutes</span>
             <h1 class="app-page-hero__title">Getting Started</h1>
-            <p class="app-page-hero__description">Install Claude Code, add the ArcKit plugin, and start generating architecture governance artifacts.</p>
+            <p class="app-page-hero__description">Install ArcKit for Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI and start generating architecture governance artifacts.</p>
         </div>
     </div>
 
@@ -289,54 +352,199 @@
         <div class="govuk-width-container">
             <a href="index.html" class="govuk-back-link govuk-!-margin-bottom-6">Back to ArcKit</a>
 
-            <!-- Step 1 -->
-            <div class="app-step">
-                <span class="app-step__number">1</span>
-                <h2 class="govuk-heading-m app-step__title">Install Claude Code</h2>
-                <p class="govuk-body">macOS &amp; Linux (Homebrew):</p>
-                <div class="app-code-block">brew install --cask claude-code</div>
-                <p class="govuk-body govuk-!-margin-top-3">macOS, Linux &amp; WSL (Shell script):</p>
-                <div class="app-code-block">curl -fsSL https://claude.ai/install.sh | bash</div>
-                <p class="govuk-body govuk-!-margin-top-3">Windows (PowerShell):</p>
-                <div class="app-code-block">irm https://claude.ai/install.ps1 | iex</div>
+            <!-- Platform selector -->
+            <h2 class="govuk-heading-l">Choose your AI platform</h2>
+            <div class="app-platform-tabs">
+                <button class="app-platform-tab app-platform-tab--premier app-platform-tab--active" data-platform="claude">Claude Code</button>
+                <button class="app-platform-tab" data-platform="gemini">Gemini CLI</button>
+                <button class="app-platform-tab" data-platform="codex">Codex CLI</button>
+                <button class="app-platform-tab" data-platform="opencode">OpenCode CLI</button>
             </div>
 
-            <!-- Step 2 -->
-            <div class="app-step">
-                <span class="app-step__number">2</span>
-                <h2 class="govuk-heading-m app-step__title">Install ArcKit Plugin</h2>
-                <div class="app-code-block">/plugin marketplace add tractorjuice/arc-kit</div>
-                <p class="govuk-body govuk-!-margin-top-3">Then install from the Discover tab.</p>
-            </div>
+            <!-- Claude Code -->
+            <div class="app-platform-content app-platform-content--active" id="platform-claude">
+                <div class="app-step">
+                    <span class="app-step__number">1</span>
+                    <h2 class="govuk-heading-m app-step__title">Install Claude Code</h2>
+                    <p class="govuk-body">macOS, Linux &amp; WSL:</p>
+                    <div class="app-code-block">curl -fsSL https://claude.ai/install.sh | bash</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Windows (PowerShell):</p>
+                    <div class="app-code-block">irm https://claude.ai/install.ps1 | iex</div>
+                    <div class="app-install-note">Auto-updates in the background. See <a href="https://code.claude.com/docs/en/setup" class="govuk-link">setup docs</a> for Homebrew and WinGet alternatives.</div>
+                </div>
 
-            <!-- Step 3 -->
-            <div class="app-step">
-                <span class="app-step__number">3</span>
-                <h2 class="govuk-heading-m app-step__title">Open Your Project</h2>
-                <div class="app-code-block"><pre><code>cd my-project
+                <div class="app-step">
+                    <span class="app-step__number">2</span>
+                    <h2 class="govuk-heading-m app-step__title">Install ArcKit Plugin</h2>
+                    <div class="app-code-block">/plugin marketplace add tractorjuice/arc-kit</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Then install from the Discover tab. The plugin provides all 57 commands, 6 autonomous research agents, 4 automation hooks, and bundled MCP servers. Updates are automatic via the marketplace.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">3</span>
+                    <h2 class="govuk-heading-m app-step__title">Open Your Project</h2>
+                    <div class="app-code-block"><pre><code>cd my-project
 claude</code></pre></div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">4</span>
+                    <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
+                    <div class="app-code-block">/arckit.start</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Shows project status, connected tools, command decision tree, and recommended next steps.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">5</span>
+                    <h2 class="govuk-heading-m app-step__title">Initialize Project Structure</h2>
+                    <div class="app-code-block">/arckit.init</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
+                </div>
             </div>
 
-            <!-- Step 4 -->
-            <div class="app-step">
-                <span class="app-step__number">4</span>
-                <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
-                <div class="app-code-block">/arckit.start</div>
-                <p class="govuk-body govuk-!-margin-top-3">Shows project status, connected tools, command decision tree, and recommended next steps.</p>
+            <!-- Gemini CLI -->
+            <div class="app-platform-content" id="platform-gemini">
+                <div class="app-step">
+                    <span class="app-step__number">1</span>
+                    <h2 class="govuk-heading-m app-step__title">Install Gemini CLI</h2>
+                    <p class="govuk-body">npm (requires Node.js 20+):</p>
+                    <div class="app-code-block">npm install -g @google/gemini-cli</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Homebrew (macOS &amp; Linux):</p>
+                    <div class="app-code-block">brew install gemini-cli</div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">2</span>
+                    <h2 class="govuk-heading-m app-step__title">Install ArcKit Extension</h2>
+                    <div class="app-code-block">gemini extensions install https://github.com/tractorjuice/arckit-gemini</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Zero-config: all 57 commands, templates, scripts, and bundled MCP servers. Update with <code>gemini extensions update arckit</code>.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">3</span>
+                    <h2 class="govuk-heading-m app-step__title">Open Your Project</h2>
+                    <div class="app-code-block"><pre><code>cd my-project
+gemini</code></pre></div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">4</span>
+                    <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
+                    <div class="app-code-block">/arckit:start</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Shows project status, connected tools, command decision tree, and recommended next steps.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">5</span>
+                    <h2 class="govuk-heading-m app-step__title">Initialize Project Structure</h2>
+                    <div class="app-code-block">/arckit:init</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
+                </div>
             </div>
 
-            <!-- Step 5 -->
-            <div class="app-step">
-                <span class="app-step__number">5</span>
-                <h2 class="govuk-heading-m app-step__title">Initialize Project Structure</h2>
-                <div class="app-code-block">/arckit.init</div>
-                <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
+            <!-- Codex CLI -->
+            <div class="app-platform-content" id="platform-codex">
+                <div class="app-step">
+                    <span class="app-step__number">1</span>
+                    <h2 class="govuk-heading-m app-step__title">Install Codex CLI</h2>
+                    <p class="govuk-body">npm (requires Node.js 22+):</p>
+                    <div class="app-code-block">npm install -g @openai/codex</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Homebrew:</p>
+                    <div class="app-code-block">brew install codex</div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">2</span>
+                    <h2 class="govuk-heading-m app-step__title">Install ArcKit CLI &amp; Initialize Project</h2>
+                    <p class="govuk-body">Install the ArcKit CLI, then initialize your project:</p>
+                    <div class="app-code-block"><pre><code># Install with pip
+pip install git+https://github.com/tractorjuice/arc-kit.git
+
+# Or with uv (recommended)
+uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
+
+# Initialize project
+arckit init my-project --ai codex</code></pre></div>
+                    <p class="govuk-body govuk-!-margin-top-3">This copies all 57 commands, templates, and scripts into your project. Use <code>--minimal</code> to skip docs and guides.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">3</span>
+                    <h2 class="govuk-heading-m app-step__title">Open Your Project</h2>
+                    <div class="app-code-block"><pre><code>cd my-project
+codex</code></pre></div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">4</span>
+                    <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
+                    <div class="app-code-block">$arckit-start</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Shows project status, connected tools, command decision tree, and recommended next steps.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">5</span>
+                    <h2 class="govuk-heading-m app-step__title">Initialize Project Structure</h2>
+                    <div class="app-code-block">$arckit-init</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
+                </div>
+            </div>
+
+            <!-- OpenCode CLI -->
+            <div class="app-platform-content" id="platform-opencode">
+                <div class="app-step">
+                    <span class="app-step__number">1</span>
+                    <h2 class="govuk-heading-m app-step__title">Install OpenCode CLI</h2>
+                    <p class="govuk-body">Install script (recommended):</p>
+                    <div class="app-code-block">curl -fsSL https://opencode.ai/install | bash</div>
+                    <p class="govuk-body govuk-!-margin-top-3">npm:</p>
+                    <div class="app-code-block">npm install -g opencode-ai</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Homebrew (macOS &amp; Linux):</p>
+                    <div class="app-code-block">brew install anomalyco/tap/opencode</div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">2</span>
+                    <h2 class="govuk-heading-m app-step__title">Install ArcKit CLI &amp; Initialize Project</h2>
+                    <p class="govuk-body">Install the ArcKit CLI, then initialize your project:</p>
+                    <div class="app-code-block"><pre><code># Install with pip
+pip install git+https://github.com/tractorjuice/arc-kit.git
+
+# Or with uv (recommended)
+uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
+
+# Initialize project
+arckit init my-project --ai opencode</code></pre></div>
+                    <p class="govuk-body govuk-!-margin-top-3">This copies all 57 commands, templates, and scripts into your project.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">3</span>
+                    <h2 class="govuk-heading-m app-step__title">Open Your Project</h2>
+                    <div class="app-code-block"><pre><code>cd my-project
+opencode</code></pre></div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">4</span>
+                    <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
+                    <div class="app-code-block">/arckit.start</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Shows project status, connected tools, command decision tree, and recommended next steps.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">5</span>
+                    <h2 class="govuk-heading-m app-step__title">Initialize Project Structure</h2>
+                    <div class="app-code-block">/arckit.init</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
+                </div>
             </div>
 
             <!-- Step 6 -->
             <div class="app-step">
                 <span class="app-step__number">6</span>
                 <h2 class="govuk-heading-m app-step__title">Follow GDS Phases</h2>
+                <div class="app-install-note">Commands shown use Claude Code / OpenCode syntax (<code>/arckit.command</code>). For Gemini CLI use <code>/arckit:command</code>. For Codex CLI use <code>$arckit-command</code>.</div>
 
                 <h3 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Discovery</h3>
                 <div class="app-code-block">/arckit.stakeholders Analyze stakeholders for appointment system</div>
@@ -369,7 +577,7 @@ claude</code></pre></div>
             <div class="app-next-grid">
                 <a href="commands.html" class="app-next-card">
                     <p class="app-next-card__title">Command Reference</p>
-                    <p class="app-next-card__desc">Browse all 53 commands with filters and dependency matrix.</p>
+                    <p class="app-next-card__desc">Browse all 57 commands with filters and dependency matrix.</p>
                 </a>
                 <a href="guides.html" class="app-next-card">
                     <p class="app-next-card__title">Command Guides</p>
@@ -381,7 +589,7 @@ claude</code></pre></div>
                 </a>
                 <a href="use-cases.html" class="app-next-card">
                     <p class="app-next-card__title">Example Projects</p>
-                    <p class="app-next-card__desc">See AI-generated architecture documentation from 18 real scenarios.</p>
+                    <p class="app-next-card__desc">See AI-generated architecture documentation from real-world scenarios.</p>
                 </a>
             </div>
         </div>
@@ -416,5 +624,21 @@ claude</code></pre></div>
         initAll()
     </script>
 <script src="theme.js"></script>
+    <script>
+        (function() {
+            var tabs = document.querySelectorAll('.app-platform-tab');
+            tabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    var platform = this.getAttribute('data-platform');
+                    tabs.forEach(function(t) { t.classList.remove('app-platform-tab--active'); });
+                    this.classList.add('app-platform-tab--active');
+                    document.querySelectorAll('.app-platform-content').forEach(function(c) {
+                        c.classList.remove('app-platform-content--active');
+                    });
+                    document.getElementById('platform-' + platform).classList.add('app-platform-content--active');
+                });
+            });
+        })();
+    </script>
 </body>
 </html>

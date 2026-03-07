@@ -503,6 +503,29 @@ html.dark-mode .app-next-card__desc {
     color: #a0a8b0;
 }
 
+html.dark-mode .app-platform-tab {
+    border-color: #555555;
+    background: #2a2a2a;
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-platform-tab:hover {
+    border-color: #4da3ff;
+    background: #333333;
+}
+
+html.dark-mode .app-platform-tab--active {
+    border-color: #4da3ff;
+    background: #4da3ff;
+    color: #fff;
+}
+
+html.dark-mode .app-install-note {
+    background: #2a2a2a;
+    border-left-color: #4da3ff;
+    color: #f0f0f0;
+}
+
 /* ============================================================
    Page Hero Banners — dark mode
    ============================================================ */
