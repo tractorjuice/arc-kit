@@ -146,7 +146,7 @@ config_file = "agents/arckit-framework.toml"
 Each `agents/arckit-{name}.toml` is auto-generated from the plugin agent markdown:
 
 ```toml
-# Auto-generated from arckit-plugin/agents/arckit-research.md
+# Auto-generated from arckit-claude/agents/arckit-research.md
 # Do not edit — edit the source and re-run scripts/converter.py
 
 developer_instructions = """
@@ -159,7 +159,7 @@ You are an enterprise architecture market research specialist...
 
 The converter:
 
-1. Reads `arckit-plugin/agents/arckit-{name}.md`
+1. Reads `arckit-claude/agents/arckit-{name}.md`
 2. Strips agent-specific YAML frontmatter (`name`, `description`, `model`)
 3. Extracts the prompt body
 4. Rewrites `${CLAUDE_PLUGIN_ROOT}` paths to `.arckit`
@@ -170,7 +170,7 @@ The converter:
 
 ### config.toml MCP Section
 
-Generated from `arckit-plugin/.mcp.json`:
+Generated from `arckit-claude/.mcp.json`:
 
 ```toml
 [mcp_servers.aws-knowledge]

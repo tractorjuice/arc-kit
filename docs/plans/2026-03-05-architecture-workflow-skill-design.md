@@ -19,13 +19,13 @@ Create a new **process skill** called `architecture-workflow` that replaces `/ar
 ## Skill Identity
 
 - **Name**: `architecture-workflow`
-- **Location**: `arckit-plugin/skills/architecture-workflow/`
+- **Location**: `arckit-claude/skills/architecture-workflow/`
 - **Replaces**: `/arckit:start` (command becomes thin wrapper delegating to skill)
 
 ## File Structure
 
 ```text
-arckit-plugin/skills/architecture-workflow/
+arckit-claude/skills/architecture-workflow/
 ├── SKILL.md                           # Process methodology + question flow
 └── references/
     ├── standard-path.md               # Non-government, non-AI projects

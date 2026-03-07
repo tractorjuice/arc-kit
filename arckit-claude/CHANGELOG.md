@@ -1,0 +1,908 @@
+# Changelog — ArcKit Plugin
+
+All notable changes to the ArcKit Claude Code plugin will be documented in this file.
+
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## [Unreleased]
+
+### Added
+
+- `/arckit.framework` command for transforming architecture artifacts into a structured, reusable framework (agent-delegating via arckit-framework agent)
+- `/arckit.glossary` command for generating comprehensive project glossary with terms, definitions, acronyms, and cross-references
+- `/arckit.maturity-model` command for generating capability maturity model with current-state assessment, target-state definition, and improvement roadmap
+- `arckit-framework` agent for autonomous framework synthesis from architecture artifacts
+
+## [3.1.1] - 2026-03-05
+
+### Fixed
+
+- Improve skill descriptions and resolve content issues across all 4 plugin skills (#123)
+
+### Changed
+
+- Add .worktrees/ to gitignore
+
+## [3.1.0] - 2026-03-05
+
+### Added
+
+- **Architecture Workflow process skill** — new `architecture-workflow` skill in `arckit-claude/skills/` that guides users through project onboarding with adaptive-depth questions and tailored command sequence recommendations
+- 5 workflow path reference files: standard (private sector), UK Government, Defence, AI/ML modifier, Data platform modifier
+- Patterns borrowed from Claude Code brainstorming skill: HARD-GATE, anti-patterns, one-question-at-a-time, adaptive depth
+
+### Changed
+
+- `/arckit:start` command refactored from 189-line inline logic to 21-line thin wrapper delegating to the architecture-workflow skill
+
+## [3.0.9] - 2026-03-03
+
+### Added
+
+- **Governance scan pre-processor hook** (`governance-scan.mjs`) — pre-extracts all artifact metadata, requirements, principles, risks, cross-references, vendor data, and placeholder counts for `/arckit:analyze`, eliminating 20-40 Read tool calls
+- Three new shared functions in `hook-utils.mjs`: `extractRequirementDetails`, `extractPrinciples`, `extractRiskEntries`
+- Hook-aware shortcut preamble in `analyze.md` — skips Steps 1-2 when pre-extracted data is present
+
+### Changed
+
+- `extractRequirementDetails` moved from `traceability-scan.mjs` to shared `hook-utils.mjs` — no behavioral change, same function in shared location
+
+## [3.0.8] - 2026-03-03
+
+### Changed
+
+- **Shared hook-utils module** — extracted 11 utility functions (`isDir`, `isFile`, `readText`, `listDir`, `mtimeMs`, `findRepoRoot`, `extractDocType`, `extractVersion`, `extractDocControlFields`, `extractRequirementIds`, `parseHookInput`) into `hook-utils.mjs`; updated 9 hooks to import from it, removing ~240 lines of duplicate code
+- `COMPOUND_TYPES` now derived dynamically from `config/doc-types.mjs` instead of hardcoded — new compound doc types propagate automatically to all hooks
+
+## [3.0.7] - 2026-03-03
+
+### Added
+
+- `/arckit.template-builder` command — interactive template builder that creates community-origin templates, guides, and optional shareable bundles through a 2-round interview process
+- Three-tier origin model for templates and guides: Official, Custom, and Community with distinct banners
+- Community guide discovery in `sync-guides.mjs` — scans `.arckit/guides-custom/` and includes community guides in the pages manifest under "Community" category
+- `community.` prefix convention for user-generated slash commands
+- Diagram quality gate v2 — element count thresholds per diagram type with split strategies, layout direction decision table (LR vs TB), expanded 9-criteria quality gate (was 6), per-criterion remediation table, and iterative review loop (max 3 iterations)
+
+### Fixed
+
+- **Wardley Maps, Data Contracts, Research, and Reviews missing from pages** — added all four doc types to sidebar navigation, search index, and dashboard counting in the pages template; added stats to the hook summary output
+- **.gitkeep files leaked into manifest** — dotfiles in `external/` and `policies/` directories were included in the manifest scan; now filtered out
+- **Stale statistics in docs/index.html** — updated document and command counts
+
+### Changed
+
+- All 50 official templates updated: `Template Status: <status>` replaced with `Template Origin: Official` banner
+- All official guides updated with `Guide Origin: Official` banner after the first heading
+- `/arckit:customize` now sets `Template Origin: Custom` banner when copying templates
+
+## [2.22.5] - 2026-03-01
+
+### Fixed
+
+- **Template status line showed ambiguous Version label** — renamed `**Version**: [VERSION]` to `**ArcKit Version**: [VERSION]` on the status blockquote line across all 50 templates so AI correctly fills the ArcKit version instead of the document version
+- **Tech-note and vendor-profile templates missing status line** — added the `> **Template Status**: Live | **ArcKit Version**: [VERSION] | **Command**: ...` blockquote to align with the other 48 templates
+- **Health command always writes docs/health.json** — ensures dashboard integration works even when docs directory already exists
+
+## [2.22.4] - 2026-03-01
+
+### Fixed
+
+- **Traceability hook missed FR and NFR requirements** — heading regex only matched h3 (`###`) but the requirements template uses h4 (`####`) for FR, NFR, INT, and DR sections; now matches both levels. Also changed the fallback from all-or-nothing to always-merge so regex-extracted IDs supplement heading matches instead of being silently skipped
+
+## [2.22.3] - 2026-03-01
+
+### Fixed
+
+- **Pages directory tree** — moved RSCH from project root to `research/` subdirectory; added all 5 research types (RSCH, DSCT, AWRS, AZRS, GCRS) with sequence numbers to the directory tree
+- **Health example filenames** — updated RSCH examples from `ARC-001-RSCH-v1.0.md` to `research/ARC-001-RSCH-001-v1.0.md`
+- **Context hook missing vendor profiles and tech notes** — `arckit-context.mjs` now lists flat vendor profile files (`*-profile.md`) alongside vendor subdirectories, and scans `tech-notes/` directory so spawned knowledge from research is visible in project inventory
+
+## [2.22.2] - 2026-03-01
+
+### Fixed
+
+- **Agent version detection Glob patterns** — all 5 research agents now include sequence number wildcard (`*-v*.md`) in Glob patterns for version detection, matching the multi-instance filename format (e.g., `ARC-001-RSCH-001-v1.0.md`)
+- **Missing `research/` in Glob paths** — arckit-research and arckit-datascout version detection now searches `research/` subdirectory, matching where documents are actually written
+- **Step numbering gaps** — fixed Step 11b → Step 11 in arckit-research (after 11a removal), fixed Step 17 → Step 16 in arckit-datascout (missing step)
+
+## [2.22.1] - 2026-03-01
+
+### Fixed
+
+- **Removed VERSION file reads from 5 agents** — arckit-research, arckit-datascout, arckit-aws-research, arckit-azure-research, and arckit-gcp-research no longer instruct the agent to read `${CLAUDE_PLUGIN_ROOT}/VERSION`; the ArcKit version is already provided via the `arckit-context` SessionStart hook, eliminating unnecessary file reads (and failed `echo $CLAUDE_PLUGIN_ROOT` attempts)
+- **Removed VERSION file read from start command** — `/arckit:start` now uses the ArcKit version from context instead of reading the VERSION file
+
+## [2.22.0] - 2026-03-01
+
+### Added
+
+- **Centralized doc type config** — single source of truth (`config/doc-types.mjs`) for all 49 document type codes, categories, multi-instance types, and subdirectory mappings. Replaces duplicated data across 5 hooks/templates
+- **Research subdirectory routing** — all research types (RSCH, AWRS, AZRS, GCRS, DSCT) now auto-route to `research/` with sequence numbers (e.g., `ARC-001-RSCH-001-v1.0.md`)
+- **`typeCategories` in manifest.json** — pages-template.html reads type-to-category mappings from the manifest instead of hardcoding them, staying in sync with the central config
+- **New doc type codes** — GAPS (Gap Analysis, Governance), VEND (Vendor Evaluation, Procurement) added with full metadata
+
+### Fixed
+
+- **HLD/DLD example filenames** — `ARC-001-HLD` → `ARC-001-HLDR`, `ARC-001-DLD` → `ARC-001-DLDR` in hld-review and dld-review commands
+- **DMC subdirectory** — `data-mesh-contracts/` → `data-contracts/` in data-mesh-contract command (4 occurrences)
+- **DSCT category** — standardized to Discovery (was inconsistent between hooks)
+- **PLAT category** — standardized to Architecture (was inconsistent between hooks)
+- **DFD missing from pages** — added to type categories
+
+### Changed
+
+- **Hooks import from config** — validate-arc-filename, arckit-context, sync-guides, and update-manifest now import `DOC_TYPES`, `SUBDIR_MAP`, `KNOWN_TYPES`, `MULTI_INSTANCE_TYPES` from `config/doc-types.mjs` instead of defining inline copies
+- **Subdirectory scan lists derived from config** — arckit-context, sync-guides, and update-manifest derive their subdirectory scan lists from `SUBDIR_MAP` instead of hardcoding them
+- **Agents use inline filenames** — removed `generate-document-id.py` calls from all 5 research agents; they now use inline filename patterns and write directly to `research/`, with the PreToolUse hook as safety net
+
+---
+
+## [2.21.3] - 2026-03-01
+
+### Fixed
+
+- **Hook context not reaching Claude** — all 4 UserPromptSubmit hooks used `systemMessage` (which per docs is only "shown to user") instead of `additionalContext` (which is "added to Claude's context"). This caused Claude to ignore hook-injected instructions like "do not call tools" and redundantly read manifest.json. Switched to `hookSpecificOutput.additionalContext` in sync-guides, health-scan, traceability-scan, and arckit-context
+- **Async hooks deliver context one turn late** — `arckit-context.mjs` and `arckit-session.mjs` had `"async": true`, meaning their `additionalContext` arrived on the next conversation turn instead of the current one. Removed async flag — both are fast filesystem scans that complete in < 1 second
+- **Research stats missing from pages output** — added Research row to the stats table in sync-guides.mjs
+
+---
+
+## [2.21.2] - 2026-03-01
+
+(Superseded by 2.21.3 — async fix was added after tagging)
+
+---
+
+## [2.21.1] - 2026-03-01
+
+### Added
+
+- **PostToolUse manifest hook** — `update-manifest.mjs` incrementally updates `docs/manifest.json` after every ARC file write, keeping the manifest current without re-running `/arckit:pages`
+
+### Fixed
+
+- **Research files missing from manifest** — cloud research agents (aws-research, azure-research, gcp-research) write to `projects/*/research/` but `sync-guides.mjs` didn't scan that subdirectory. Added `research` to the subdirMap. Affected at least 3 test repos (v7, v17, v18)
+- **UserPromptSubmit hooks read wrong field name** — all 5 hooks read `data.user_prompt` but the documented API field is `data.prompt`. Hooks silently got an empty string and exited. Fixed in arckit-context, sync-guides, health-scan, traceability-scan, and secret-detection
+- **Hook guards reject Skill-expanded body** — `^` anchors on `isExpandedBody` regex failed when the Skill tool prefixed/wrapped the expanded command body. Removed anchors; unique `description:` strings prevent false positives. Also discovered that `UserPromptSubmit` matchers in hooks.json are silently ignored per the docs — the internal guard is the sole gating mechanism
+
+---
+
+## [2.21.0] - 2026-03-01
+
+### Added
+
+- **Traceability pre-processor hook** — automatically extracts requirements from project artifacts and computes coverage metrics before the traceability command runs
+
+---
+
+## [2.20.5] - 2026-02-28
+
+### Fixed
+
+- **Health hook fires for unrelated commands** — the `hooks.json` substring matcher triggers on any expanded command body that mentions `/arckit:health` or `/arckit:pages` (e.g. conformance, start, customize). Replaced naive regex guards with smart guards that match either the raw slash command or the Skill-expanded body's unique opening text (frontmatter description or heading). Applies to both `sync-guides.mjs` and `health-scan.mjs`.
+
+---
+
+## [2.20.4] - 2026-02-28
+
+### Fixed
+
+- **Pages command ignores hook stats and reads manifest** — removed all tools from `allowed-tools` (was `Read, Glob, Grep`), reformatted hook stats as a markdown table with explicit heading, and added triple-layered "do not call any tools" instructions to prevent the AI from second-guessing the hook's output.
+
+---
+
+## [2.20.3] - 2026-02-28
+
+### Fixed
+
+- **Hooks fail via Skill tool** — removed redundant `user_prompt` regex guards from `sync-guides.mjs` and `health-scan.mjs`. The `hooks.json` matcher already gates each hook; the internal guard silently aborted when the Skill tool passed the expanded command body instead of the raw slash command.
+
+---
+
+## [2.20.2] - 2026-02-28
+
+### Fixed
+
+- **ANAL files missing from pages manifest** — removed Write from `/arckit:pages` allowed-tools so the AI cannot overwrite the hook-generated manifest; strengthened instruction to skip all tool use. Fixed ANAL category mismatch: `sync-guides.mjs` and `pages.md` reference table now map ANAL to Governance (matching `pages-template.html`).
+
+---
+
+## [2.20.1] - 2026-02-28
+
+### Fixed
+
+- **Analysis report type code** — standardized `ANLZ` → `ANAL` across all commands (analyze, health, story, service-assessment) and guides. Files named `ARC-*-ANLZ-*.md` were invisible to the manifest scanner and health hook because metadata tables only recognized `ANAL`.
+
+---
+
+## [2.20.0] - 2026-02-28
+
+### Added
+
+- **Health pre-processor hook** (`health-scan.mjs`) — new `UserPromptSubmit` hook pre-extracts all artifact metadata and applies all 7 detection rules (STALE-RSCH, FORGOTTEN-ADR, UNRESOLVED-COND, ORPHAN-REQ, MISSING-TRACE, VERSION-DRIFT, STALE-EXT) in Node.js, eliminating 20-50+ Read tool calls. The `/arckit:health` command now just formats the console output from hook findings.
+
+---
+
+## [2.19.0] - 2026-02-28
+
+### Added
+
+- **Pages pre-processor hook** — the `sync-guides` hook now handles the entire `/arckit:pages` pipeline (guide sync, title extraction, repo info, template processing, project scanning, manifest generation), reducing the command from ~310 tool calls to zero. The 134KB HTML template and ~95 guide files never enter the context window.
+
+---
+
+## [2.18.0] - 2026-02-28
+
+### Added
+
+- **Guide sync hook** (`sync-guides.mjs`) — new `UserPromptSubmit` hook replaces ~190 Read+Write tool round-trips in `/arckit:pages` with native `fs.copyFileSync`, mtime-based smart skipping, zero tool calls
+
+---
+
+## [2.17.0] - 2026-02-28
+
+### Added
+
+- **Tiered deviation classification** for conformance assessment — GREEN/YELLOW/RED tiers overlay on PASS/FAIL system, classifying FAIL findings by actionability: RED (escalate), YELLOW (negotiate), GREEN (acceptable) (#95)
+- **Conversational gathering rules** (max 2 rounds) added to 15 commands for structured user input collection (#94)
+- **STANDALONE/SUPERCHARGED degradation** for cloud research commands — graceful fallback when MCP servers are unavailable (#93)
+
+---
+
+## [2.16.0] - 2026-02-28
+
+### Added
+
+- **Quality checklist** (`references/quality-checklist.md`) — shared artifact verification with 10 common checks and 47 per-type checks keyed by document type code; introduces `references/` directory pattern (#92)
+- **`argument-hint` frontmatter** on all 53 plugin commands — IDE-visible hints for required arguments
+
+---
+
+## [2.15.1] - 2026-02-28
+
+### Added
+
+- **`allowed-tools` frontmatter** on all 53 plugin commands — explicit tool permissions per command for tighter security and predictability
+
+### Fixed
+
+- Replace Python script calls (`create-project.py`, `generate-document-id.py`, `list-projects.py`) with inline Glob/Write instructions in 20 commands — commands no longer shell out to scripts
+- Remove `Bash` from `allowed-tools` in 50 commands that don't need it (down from 53 to only 3: `story`, `init`, `trello`)
+- Markdown lint CI now recurses into subdirectories correctly
+- Suppress MD038 false positive for intentional space-in-code-span in DEPENDENCY-MATRIX.md
+
+---
+
+## [2.15.0] - 2026-02-28
+
+### Added
+
+- **Markdown linting CI** — markdownlint-cli2 configuration and GitHub Actions workflow enforcing consistent formatting across 571 markdown files; skills override for third-party reference docs
+
+### Fixed
+
+- Trailing whitespace, missing blank lines around headings/lists/fences, bare code fences, emphasis style inconsistencies across all commands, templates, guides, and agents
+
+---
+
+## [2.14.0] - 2026-02-28
+
+### Added
+
+- **Handoffs frontmatter** — 16 plugin commands now declare `handoffs:` in YAML frontmatter for machine-readable workflow navigation (requirements, stakeholders, risk, sobc, research, datascout, data-model, wardley, adr, sow, roadmap, aws/azure/gcp-research, strategy, backlog)
+- **Release automation** — `scripts/generate-release-notes.sh` parses git log into Keep a Changelog sections; `.github/workflows/release.yml` creates GitHub Releases on tag push
+- **Version automation** — `scripts/bump-version.sh` updates all 11 version files in one command
+
+### Changed
+
+- **Converter uses PyYAML** — `extract_frontmatter_and_prompt()` now uses `yaml.safe_load()` instead of regex, enabling parsing of complex frontmatter fields like `handoffs:`
+- **Converter renders handoffs** — `render_handoffs_section()` appends a `## Suggested Next Steps` section to Codex/OpenCode/Gemini output for commands with handoffs
+- **Config-driven converter** — refactored `scripts/converter.py` to use `AGENT_CONFIG` dictionary; adding a new AI target only requires a new dict entry
+
+---
+
+## [2.13.2] - 2026-02-28
+
+### Fixed
+
+- **Node.js hooks** — rewrote all 7 plugin hooks from Python to Node.js (.mjs) for Windows compatibility; `python3` doesn't exist on Windows but Node.js is guaranteed on every Claude Code installation (#86)
+- Deleted 8 legacy `.py` hook files and 5 legacy `.sh` hook files (13 files removed)
+- Added `async: true` to non-blocking hooks (arckit-session, arckit-context) for faster session start
+- Version bump across all distribution formats
+
+---
+
+## [2.13.1] - 2026-02-27
+
+### Fixed
+
+- **Cross-platform commands** — removed bash-only patterns (`ls|sort|tail`, `mkdir -p`, `basename`, `sed`, `xargs`) from 7 commands (adr, customize, data-mesh-contract, init, pages, trello, wardley) replacing with Glob/Read/Write tool instructions
+- **Cross-platform agents** — replaced `ls|sort -V|tail` version detection with Glob instructions and `generate-document-id.sh` references with `.py` across all 5 agents (research, aws-research, azure-research, gcp-research, datascout)
+- **Wardley hook** — changed from bash to python3 for validate-wardley-math hook
+- **Trello command** — added Windows PowerShell alternatives for environment variable checks
+- **Migration guide** — added platform note that migrate-filenames.sh requires bash (Git Bash / WSL on Windows)
+- Regenerated all Codex/OpenCode/Gemini formats via converter
+
+---
+
+## [2.13.0] - 2026-02-27
+
+### Added
+
+- **NCSC Vulnerability Monitoring Service (VMS)** — `/arckit:secure` now assesses VMS enrollment in CAF C2 and includes a VMS Integration subsection (Section 6.1) with 8-day domain / 32-day general remediation benchmarks
+- **Cyber Action Plan Alignment** (Section 9.4) — `/arckit:secure` template tracks departmental alignment with the £210m cross-government Cyber Action Plan across four pillars (Skills, Tooling, Resilience, Collaboration)
+- **Government Cyber Security Profession** (Section 11) — `/arckit:secure` template assesses CCP certification, DDaT role mapping, Cyber Academy engagement, and workforce development planning
+- **Structured vulnerability management** — `/arckit:operationalize` Section 11 expanded with 11.3 Vulnerability Scanning (VMS integration), 11.4 Remediation SLAs (severity-based + VMS benchmarks), and 11.5 Patch Management
+- **Critical Vulnerability Remediation runbook** (6.7) — `/arckit:operationalize` template includes full runbook for critical CVEs and VMS alerts
+
+### Changed
+
+- `/arckit:secure` GovS 007 mapping updated: principle 5 (Security culture) references Cyber Security Profession, principle 8 (Continuous improvement) references Cyber Action Plan
+- `/arckit:operationalize` handover checklist and NCSC guidance sections include VMS enrollment items
+- Version bump across all distribution formats
+
+---
+
+## [2.12.3] - 2026-02-26
+
+### Changed
+
+- **Pages header: Repository icon** — replaced "Repository" text link with a GitHub icon positioned next to the dark/light mode toggle
+- **Pages header: version badge** — added ArcKit version badge (`v{{VERSION}}`) to the header menu, populated from the plugin's VERSION file via new `{{VERSION}}` placeholder
+- Version bump across all distribution formats
+
+---
+
+## [2.12.2] - 2026-02-26
+
+### Fixed
+
+- **Pages template: GitHub Pages fallback** (#80) — relative paths (`../`) don't work on GitHub Pages because only the `/docs` folder is published; template now tries relative paths first (works for local/full-repo hosting), then falls back to `raw.githubusercontent.com` (works for GitHub Pages public repos)
+- **New `{{CONTENT_BASE_URL}}` placeholder** — `/arckit:pages` command sets this to the raw.githubusercontent.com base URL for GitHub repos, enabling the fallback; non-GitHub hosting can set it to empty string
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.12.1] - 2026-02-26
+
+### Changed
+
+- **Pages template: relative paths instead of GitHub raw URLs** (#79) — `docs/index.html` now loads documents via `../${path}` relative paths instead of `raw.githubusercontent.com`, making the site deployable to any static hosting provider (GitHub Pages, Netlify, Vercel, S3, etc.)
+- **Pages command: hosting-agnostic language** (#79) — description and summary updated from "GitHub Pages" to generic "documentation site" terminology with multi-provider deployment instructions
+- **Pages error handling: safe DOM methods** (#79) — error display refactored from innerHTML to safe DOM construction (`createElement`/`textContent`), simplified to generic "Document not found" message
+- Version bump across all distribution formats
+
+---
+
+## [2.12.0] - 2026-02-26
+
+### Added
+
+- **STALE-EXT detection rule for `/arckit:health`** (#77) — 7th detection rule flags external files in `external/` that are newer than a project's latest artifact, with filename-to-command mapping (e.g., `*api*` → `/arckit:requirements`, `/arckit:data-model`, `/arckit:diagram`) for targeted remediation
+- **SessionStart hook external file detection** (#77) — auto-detects new external files at session start and reports them in context with project name and file count
+- **UserPromptSubmit hook external file flagging** (#77) — context hook now marks external files as `(**NEW** — newer than latest artifact)` when they are newer than the project's most recent ARC-* artifact
+- **PlantUML Syntax Reference skill** (`plantuml-syntax`) (#78) — 10 reference files covering C4-PlantUML (with layout conflict rules), sequence diagrams, class diagrams, activity diagrams, state diagrams, ER diagrams, component diagrams, use case diagrams, common syntax errors, and styling guide
+- **C4-PlantUML layout conflict rules** (#78) — explicit rules preventing `Rel_Down`/`Lay_Right` contradictions: directional consistency, vertical consistency, all-pairs agreement, and coverage requirements with validation checklist
+- **Format-specific syntax loading in `/arckit:diagram`** (#78) — Step 1d now conditionally loads PlantUML or Mermaid references based on selected output format; PlantUML format loads `c4-plantuml.md` with layout conflict rules
+- **Mermaid ERD syntax rules in `/arckit:diagram`** (#78) — explicit rules preventing invalid `PK_FK` key type (must use `PK, FK` comma-separated); loads `entityRelationshipDiagram.md` reference for ER content
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.11.0] - 2026-02-26
+
+### Added
+
+- **`/arckit.start` onboarding command** — guided entry point with project detection, tool survey, command decision tree, and context-aware workflow routing
+- **Mermaid Syntax Reference skill** (`mermaid-syntax`) — 30 official Mermaid syntax reference files (auto-synced from [WH-2099/mermaid-skill](https://github.com/WH-2099/mermaid-skill)) covering all 23 diagram types plus configuration and theming, bundled with ArcKit's existing C4 layout science reference
+  - 10 Mermaid-generating commands (`diagram`, `roadmap`, `plan`, `story`, `dfd`, `backlog`, `strategy`, `presentation`, `data-model`, `jsp-936`) now read type-specific syntax references before generating Mermaid code
+  - Conversational skill triggers on Mermaid syntax questions (e.g., "what Mermaid diagram types can I use?", "gantt chart date format")
+
+### Changed
+
+- **Getting Started guide** now covers both `/arckit.start` and `/arckit.init` in a single combined guide with a quick-start section, replacing the previous start-only guide
+- **GitHub Pages Getting Started section** updated with new steps 4 (`/arckit.start`) and 5 (`/arckit.init`) before the GDS phases workflow
+- **`/arckit.pages` command** — added 5 missing guides to category and status tables: `start`, `conformance`, `productivity`, `remote-control`, `mcp-servers`
+- Moved `c4-diagram-reference.md` from `templates/` to `skills/mermaid-syntax/references/c4-layout-science.md` — `/arckit.diagram` Step 1d path updated
+- Version bump across all distribution formats
+
+---
+
+## [2.10.0] - 2026-02-25
+
+### Added
+
+- **DDaT Role Guides** (#75) — 18 new role-based guides mapping ArcKit commands to [UK Government DDaT Capability Framework](https://ddat-capability-framework.service.gov.uk/) roles, so users can find the commands relevant to their job
+  - **Architecture** (7): Enterprise Architect, Solution Architect, Data Architect, Security Architect, Business Architect, Technical Architect, Network Architect
+  - **Chief Digital and Data** (3): CTO/CDIO, CDO, CISO
+  - **Product and Delivery** (4): Product Manager, Delivery Manager, Business Analyst, Service Owner
+  - **Data** (2): Data Governance Manager, Performance Analyst
+  - **IT Operations** (1): IT Service Manager
+  - **Software Development** (1): DevOps Engineer
+- Each guide includes primary commands, secondary commands, typical workflow, key artifacts, and related roles
+- **"Roles" nav link** in GitHub Pages template — new top-level navigation alongside Dashboard and Guides
+- `showRolesIndex()` function in pages template — renders role guides grouped by DDaT family with command counts
+- Role guides added to search index in pages template
+- `roleGuides` array in `manifest.json` schema — separate from command guides
+- Updated `/arckit.pages` command to sync and index role guides from `docs/guides/roles/`
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.9.0] - 2026-02-25
+
+### Added
+
+- **Architecture Conformance Assessment** (`/arckit.conformance`) (#55) — new command for systematic decided-vs-designed conformance checking with 12 conformance rules: ADR decision implementation, cross-ADR consistency, superseded ADR enforcement, principles-to-design alignment, review condition resolution, exception register expiry/remediation, technology stack drift, architecture pattern drift, custom constraint rules (ArchCNL-style via `.arckit/conformance-rules.md`), known and untracked architecture technical debt
+- New template: `conformance-assessment-template.md`
+- New guide: `conformance.md`
+- New doc type code: `CONF` (added to filename validation hook and context hook)
+- Added `CONF` migration entry to `migrate-filenames.sh`
+- Updated DEPENDENCY-MATRIX.md with conformance row/column and critical paths
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.8.8] - 2026-02-25
+
+### Fixed
+
+- **Markdown escaping for `<` and `>` in generated documents** (#67) — added instruction to all 49 document-generating commands and 5 agents to space-separate less-than/greater-than comparisons (e.g., `< 3 seconds` instead of `<3 seconds`) so markdown renderers don't misinterpret them as HTML tags or emoji
+- Fixed unescaped `<` examples in `requirements.md` and `servicenow.md`
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.8.7] - 2026-02-25
+
+### Added
+
+- **PlantUML rendering in Pages** — `pages-template.html` now renders ` ```plantuml ``` ` code blocks as SVG diagrams via the PlantUML server (`plantuml.com/plantuml/svg/`), with interactive pan/zoom controls, dark mode support (CSS invert filter), fullscreen, scroll-to-zoom, keyboard shortcuts, and error fallback; no new JS dependencies required
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, Gemini extension, OpenCode extension, marketplace)
+
+---
+
+## [2.8.6] - 2026-02-25
+
+### Fixed
+
+- **Mermaid label compatibility for presentations** (#73, #70) — added ASCII-only, no-hyphens, no-special-characters rules to `/arckit.presentation` command, template, and guide; Mermaid's parser breaks on accented characters (é, í, ó) and hyphens in `quadrantChart` data point labels
+- **Diagram command UX** (#71, #65) — `/arckit.diagram` now asks both diagram type and output format in a single `AskUserQuestion` call instead of sequentially; skip rules clarified for partial arguments
+
+### Added
+
+- **Mermaid Compatibility section** in presentation guide — documents label restrictions with troubleshooting advice
+- **OpenCode extension guides** — MCP servers setup guide and Architecture Productivity Guide synced to OpenCode extension
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, Gemini extension, OpenCode extension, marketplace)
+
+---
+
+## [2.8.5] - 2026-02-24
+
+### Added
+
+- **PlantUML C4 output format for `/arckit.diagram`** (#65) — C4 diagram types (Context, Container, Component) now offer PlantUML C4 as an alternative to Mermaid, with directional layout hints (`Rel_Right`, `Rel_Down`, `Lay_Right`, `Lay_Down`) for precise control on complex diagrams with more than 12 elements
+- **Format selector** — interactive prompt (Question 2) lets users choose Mermaid or PlantUML C4 for C4 types; skip with `/arckit.diagram context plantuml`
+- **PlantUML C4 examples** — Modes A, B, C include PlantUML examples alongside Mermaid
+- **PlantUML syntax guidelines** — include URLs, element syntax, directional relationships, invisible layout constraints
+- **PlantUML validation checks** — Step 5 validates directional variants, `Lay_Right`/`Lay_Down` constraints, `@startuml`/`@enduml` wrappers
+- **Template PlantUML section** — architecture diagram template includes PlantUML code block, syntax reference, and directional hints quick-reference table
+- **Guide update** — diagram guide includes format comparison table (Mermaid vs PlantUML) and PlantUML example
+- **Platform support documentation** (#71) — README and docs/index.html note that ArcKit targets Linux, with devcontainer/WSL2 recommended for Windows
+- **Pages template support for `/arckit:customize`** (#72) — users can now customize the pages HTML template
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, Gemini extension, OpenCode extension, marketplace)
+
+---
+
+## [2.8.4] - 2026-02-24
+
+### Added
+
+- **Interactive zoom/pan for Mermaid diagrams** — scroll to zoom, drag to pan, double-click to zoom in, toolbar controls (zoom-in, zoom-out, reset, fullscreen), keyboard shortcuts (`+`/`-`/`0`/`f`/`Escape`), and touch pinch-to-zoom via svg-pan-zoom library
+- **Diagram fullscreen mode** — expand any diagram to a full-screen overlay with `f` key or toolbar button
+- **Accessible diagram controls** — focusable viewports with ARIA labels, keyboard navigation, always-visible controls on mobile/touch devices
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.8.3] - 2026-02-20
+
+### Added
+
+- **Dark mode for pages template** — CSS-variable-driven dark theme with sun/moon toggle in header, system preference detection (`prefers-color-scheme`), and localStorage persistence
+- **Auto-sync guides from plugin** — `/arckit:pages` now copies all guides from the plugin to `docs/guides/` before scanning, ensuring repos always have the latest guides
+- **4 missing guides synced to plugin** — `artifact-health`, `c4-layout-science`, `knowledge-compounding`, `security-hooks`
+
+### Changed
+
+- Replaced ~35 hardcoded colour values in pages template with semantic CSS variables
+- Mermaid diagrams switch between default/dark theme based on mode
+- SVG donut chart text colour reads from CSS variable for dark mode compatibility
+- Version bump across all distribution formats
+
+---
+
+## [2.8.2] - 2026-02-20
+
+### Added
+
+- **Health dashboard panel in `/arckit:pages`** — pages template loads `docs/health.json` (when present) and renders an Artifact Health panel with severity bars, findings-by-type breakdown, and a per-project Health column with traffic-light colours
+- **`JSON=true` flag for `/arckit:health`** — writes machine-readable `docs/health.json` for dashboard integration alongside the console report
+
+### Fixed
+
+- **All 64 guides now listed in pages command** — added 19 missing guides to category/status tables and corrected status discrepancies (sow/evaluate/customize → live, pages → alpha per README)
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.8.1] - 2026-02-20
+
+### Added
+
+- **Vendor profiles & tech notes in `/arckit:pages`** — pages command and HTML template now discover, index, and display vendor profiles (`vendors/*-profile.md`) and tech notes (`tech-notes/*.md`) with search, dashboard metrics, Knowledge column, and sidebar navigation (#62)
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.8.0] - 2026-02-20
+
+### Added
+
+- **Knowledge compounding from research** — research agent now spawns standalone vendor profiles and tech notes from research findings, extracting reusable knowledge that persists beyond the originating project
+- New `vendor-profile-template.md` and `tech-note-template.md` templates for spawned knowledge files
+- `--no-spawn` flag for `/arckit.research` to skip knowledge compounding when only the main research document is needed
+- Documentation: `docs/guides/knowledge-compounding.md` explaining the compound knowledge pattern, deduplication, and directory structure
+- **`/arckit:health` command** — scans all projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift
+- Documentation: artifact-health guide
+- **Security hooks** — three new hooks for secret and sensitive file protection:
+  - `file-protection.py` — blocks edits to sensitive files (environment files, credentials, private keys, lock files) with configurable exception lists
+  - `secret-detection.py` — scans user prompts for potential secrets (API keys, tokens, passwords, connection strings) before they reach the model
+  - `secret-file-scanner.py` — scans file content being written for embedded secrets with skip patterns for documentation files
+- Documentation: `docs/guides/security-hooks.md` — three-layer protection model guide
+- **C4 layout science reference template** — `c4-diagram-reference.md` with research-backed graph drawing guidance: Sugiyama algorithm, tier-based declaration ordering, edge crossing targets (Purchase et al.), C4 colour standards, node shape reference, PlantUML directional hints, prompt antipatterns, and iterative refinement process
+- **Diagram quality gate** — structured 6-criterion validation checklist added to `/arckit:diagram` command (edge crossings, visual hierarchy, grouping, flow direction, traceability, abstraction level)
+- **C4 layout science guide** — `docs/guides/c4-layout-science.md` standalone reference for C4 diagram best practices
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.7.1] - 2026-02-20
+
+### Added
+
+- **Wardley Map validation Stop hook** — new `validate-wardley-math.sh` hook fires on Stop for the `/arckit.wardley` command, validating stage-evolution alignment, coordinate ranges [0,1], and OWM code block consistency against Component Inventory tables; blocks stop with actionable error details on failure
+
+### Changed
+
+- Version bump across all distribution formats
+
+---
+
+## [2.7.0] - 2026-02-19
+
+### Added
+
+- **UK Government Cyber Security Standard integration** — `/arckit.secure` template now includes three new sections for CSS compliance (July 2025, Cabinet Office):
+  - **9.1 GovAssure Status** — tracker for critical system assurance (cycle year, per-system status, findings, remediation)
+  - **9.2 Secure by Design Confidence Rating** — self-assessment against SbD high-confidence profile (principles checklist, gap analysis)
+  - **9.3 Cyber Security Standard Exception Register** — non-compliance management per CSS clauses 4.3/4.4 (exception ID, risk assessment, approval authority, improvement plan)
+- CSS reference added to Executive Summary, External References, command prompt, and guide
+- GovAssure and CSS URLs added to command Resources section
+- **GovS 007: Security alignment** — `/arckit.secure` template now includes:
+  - **Section 10: GovS 007 Alignment Summary** — mapping table of 9 principles to CAF sections and ArcKit artefacts, plus named security roles table (SSRO, DSO, SIRO)
+  - SSRO and DSO added to Approval & Sign-Off section
+  - GovS 007 entry added to External References
+- New `docs/guides/govs-007-security.md` reference guide cross-mapping GovS 007 principles, security lifecycle, protective security disciplines, and key roles to ArcKit commands
+- GovS 007 security roles (SSRO, DSO, SIRO, Cyber Security Lead) added to stakeholders template alongside existing GovS 005 digital roles
+- **National Data Strategy reference guide** — new `docs/guides/national-data-strategy.md` mapping NDS 5 missions and 4 pillars to ArcKit commands and artefacts, with pillar checklists and National Data Library context
+- NDS added to UK Government standards map (Mermaid diagram, lifecycle table, reference links)
+- NDS cross-reference added to data-model command, template, and guide
+- **Government Data Quality Framework reference guide** — new `docs/guides/data-quality-framework.md` mapping DQF 5 principles, 6 dimensions, 4 practical tools, maturity model, and data lifecycle to ArcKit artefacts
+- DQF alignment note added to data-model template's existing Data Quality Framework section
+- DQF cross-reference added to data-model command and guide
+- **UK Government Codes of Practice reference guide** — new `docs/guides/codes-of-practice.md` mapping the Rainbow of Books (Magenta, AQuA, Rose, Commercial Playbooks) alongside existing Green/Orange Book coverage to ArcKit commands, with delivery lifecycle mapping
+- Magenta Book and Sourcing Playbook references added to SOBC command
+- Sourcing Playbook and DDaT Playbook references added to DOS command
+- Sourcing Playbook reference added to SOW command
+- Magenta Book, Orange Book, AQuA Book, and Rose Book nodes added to standards map Mermaid diagram
+- **New `/arckit:presentation` command** — generates MARP-format slide decks from existing project artifacts for governance boards, stakeholder briefings, and gate reviews
+  - Supports 4 presentation focus modes: Executive, Technical, Stakeholder, Procurement
+  - Configurable slide count (6-8, 10-12, 15-20)
+  - Reads all available project artifacts and extracts key content into slides
+  - Embeds Mermaid diagrams (Gantt, pie, C4, quadrant charts)
+  - MARP output renders to PDF/PPTX/HTML via MARP CLI or VS Code extension
+  - Doc type code: `PRES`
+- New `presentation-template.md` with MARP frontmatter, Document Control, and slide structure
+- New `docs/guides/presentation.md` with rendering instructions and focus option reference
+- **Data Commons MCP integration for `/arckit.datascout`** — datascout agent now uses `search_indicators` and `get_observations` tools from the Data Commons MCP (when available) to discover and validate UK statistical data (population, GDP, health, climate, government spending) before category-specific web research; includes sub-national NUTS2 regional queries; skips gracefully if MCP not configured
+- **Pinecone MCP integration for `/arckit.wardley`** — wardley command now searches the Wardley Mapping book corpus via Pinecone `search-records` (when available) for relevant strategic context, case studies, gameplay patterns, and evolution analysis; complements local reference files with full book depth; skips gracefully if Pinecone MCP not configured
+- New `docs/guides/pinecone-mcp.md` — optional integration guide covering Wardley book knowledge base, configuration, prerequisites, and command integration
+
+---
+
+## [2.6.0] - 2026-02-17
+
+### Added
+
+- **SessionStart hook for version injection** — new `hooks/arckit-session.sh` fires once at session start (and on resume/clear/compact), injecting the ArcKit plugin version into Claude's context and exporting `ARCKIT_VERSION` as an environment variable; also detects whether a `projects/` directory exists
+- **OpenCode CLI support** — 4th distribution format (`arckit-opencode/`); `scripts/converter.py` now generates OpenCode markdown alongside Codex and Gemini formats
+
+### Changed
+
+- **Removed per-command VERSION file reads from 46 commands** — commands no longer instruct Claude to read `${CLAUDE_PLUGIN_ROOT}/VERSION`; the version is now provided via `{ARCKIT_VERSION}` from the SessionStart hook context, eliminating a redundant Read tool call on every command invocation
+- Updated `hooks.json` to include `SessionStart` event alongside existing `UserPromptSubmit` and `PreToolUse` hooks
+- Version bump across all distribution formats (CLI, plugin, extension, marketplace)
+
+---
+
+## [2.5.1] - 2026-02-17
+
+### Changed
+
+- **Removed `generate-document-id.sh` calls from 29 commands** — replaced bash script invocations with inline document ID format strings (e.g., `ARC-{PROJECT_ID}-REQ-v{VERSION}`); the PreToolUse hook now auto-corrects ARC filenames, making script calls redundant. The script itself is retained for `arckit init` and standalone use.
+- Version bump across all distribution formats (CLI, plugin, extension, marketplace)
+
+---
+
+## [2.5.0] - 2026-02-17
+
+### Added
+
+- **UserPromptSubmit hook for project context** — new `hooks/arckit-context.sh` hook automatically detects all projects, artifacts, external documents, and global policies before any `/arckit:` command runs, injecting structured context via `systemMessage`
+- **Plugin hooks configuration** — new `hooks/hooks.json` firing `arckit-context.sh` on every `UserPromptSubmit` event (skips non-arckit and utility commands)
+- **PreToolUse (Write) hook for filename enforcement** — new `hooks/validate-arc-filename.sh` auto-corrects ARC filenames before the Write tool creates them: zero-pads project IDs, normalizes version format, moves multi-instance types (ADR, DIAG, DFD, WARD, DMC) to correct subdirectories, assigns next sequence numbers, and blocks unknown doc type codes
+
+### Changed
+
+- **Refactored 39 commands to use hook-provided context** — removed boilerplate directory scanning, `ARC-*-TYPE-*.md` glob patterns, verbose external docs blocks, and `list-projects.sh` calls; replaced with compact hook-aware references (net -1,071 lines, 66% boilerplate reduction)
+- Version bump across all distribution formats (CLI, plugin, extension, marketplace)
+
+---
+
+## [2.4.5] - 2026-02-15
+
+### Added
+
+- **New `/arckit:dfd` command** — Data Flow Diagram (DFD) generation with multi-instance support, document control, and DFD-specific template
+- **DFD multi-instance document type** — `DFD` added to `generate-document-id.sh` for sequential numbering (ARC-001-DFD-001, ARC-001-DFD-002, etc.)
+
+### Changed
+
+- **Explicit VERSION file path in all commands and agents** — all 49 commands and 5 agents now reference `${CLAUDE_PLUGIN_ROOT}/VERSION` instead of bare `VERSION`, ensuring the ArcKit version is always read from the plugin's authoritative file regardless of project state
+- Version bump across all distribution formats (CLI, plugin, extension, marketplace)
+
+---
+
+## [2.4.4] - 2026-02-12
+
+### Fixed
+
+- **Windows cp1252 encoding fix** — added explicit `encoding='utf-8'` to all file I/O operations in `arckit init` to prevent `UnicodeEncodeError` on Windows (fixes #49)
+
+### Changed
+
+- Version bump across all distribution formats (CLI, plugin, extension, marketplace)
+
+---
+
+## [2.4.3] - 2026-02-11
+
+### Added
+
+- **Data Commons MCP server for Gemini extension** — added `datacommons-mcp` to the Gemini extension MCP configuration, matching the Claude plugin
+
+### Changed
+
+- Version bump across all distribution formats (plugin, extension, marketplace)
+
+---
+
+## [2.4.2] - 2026-02-11
+
+### Added
+
+- **Data Commons MCP server** — bundled as a plugin MCP server for statistical data access (population, economics, health, etc.)
+
+### Fixed
+
+- Version bump to force plugin cache refresh for MCP server testing
+
+---
+
+## [2.4.1] - 2026-02-10
+
+### Added
+
+- **Gemini CLI native extension** — ArcKit is now available as a Gemini CLI extension at [`tractorjuice/arckit-gemini`](https://github.com/tractorjuice/arckit-gemini), giving Gemini users the same zero-config experience as the Claude Code plugin
+  - Install: `gemini extensions install https://github.com/tractorjuice/arckit-gemini`
+  - Bundled MCP servers (AWS Knowledge, Microsoft Learn via mcp-remote), optional Google Developer Knowledge
+  - All 48 commands, templates, scripts, guides, and Wardley Mapping skill included
+  - Extension version tracks plugin version (v2.4.1)
+- `scripts/converter.py` now generates extension output alongside Codex format, with path rewriting (`${CLAUDE_PLUGIN_ROOT}` -> `~/.gemini/extensions/arckit`)
+
+### Fixed
+
+- **Gemini extension workspace sandbox fix**: Extension commands prepend a file access instruction block telling the model to use `run_shell_command` instead of `read_file` for extension paths (Gemini CLI sandboxes `read_file` to the project directory). `Read` instructions are also rewritten to `cat` commands in extension output.
+
+### Changed
+
+- **CLI is now Codex-only**: Gemini CLI removed from the CLI package — Gemini users should use the native extension instead. The converter now generates 2 output formats (Codex + Extension) instead of 3.
+
+---
+
+## [2.4.0] - 2026-02-09
+
+### Added
+
+- **Google Cloud Research** (`/arckit:gcp-research`) — new command + agent for GCP-specific technology research using the [Google Developer Knowledge MCP](https://developerknowledge.googleapis.com/mcp) server
+  - Mirrors the existing AWS and Azure research commands (thin wrapper + autonomous agent)
+  - Architecture Framework assessment (6 pillars: Operational Excellence, Security/Privacy/Compliance, Reliability, Cost Optimization, Performance Optimization, Sustainability)
+  - Security Command Center mapping (CIS Benchmark for GCP, vulnerability/misconfiguration/threat findings)
+  - UK Government: G-Cloud procurement, europe-west2 (London) data residency, NCSC alignment
+  - Cost optimization: Committed Use Discounts (CUDs), Sustained Use Discounts (SUDs), Spot VMs, E2 machine types
+  - IaC: Terraform (primary), Cloud Build CI/CD pipelines
+  - Doc type code: `GCRS`
+- Added `google-developer-knowledge` MCP server to plugin `.mcp.json` (requires `GOOGLE_API_KEY` env var)
+- Added GCP research template, guide, and dependency matrix entry
+
+---
+
+## [2.3.1] - 2026-02-09
+
+### Fixed
+
+- Pass directory argument to `--next-num` in multi-instance commands (wardley, diagram, data-mesh-contract) to prevent unbound variable crash with `set -u`
+- Added guard in `generate-document-id.sh` to give a clear error message when directory is missing
+- Replace Mermaid `gitGraph` with `flowchart` in devops template — gitGraph has limited renderer support and fails with "No diagram type detected" errors in GitHub/VS Code
+- Added diagram guidelines to devops command to prevent gitGraph usage in generated documents
+
+---
+
+## [2.3.0] - 2026-02-09
+
+### Added
+
+- **Mathematical models** for Wardley Mapping skill — new `references/mathematical-models.md` with evolution scoring formulas, decision metrics (differentiation pressure, commodity leverage, dependency risk), and weak signal detection framework
+- Quantitative analysis triggers in skill description (score evolution, calculate ubiquity, differentiation pressure, commodity leverage, weak signal detection, readiness score)
+- Optional **Step 6: Quantitative Analysis** in SKILL.md mapping workflow
+- Numeric scoring rubric (ubiquity/certainty scales) added to `references/evolution-stages.md`
+- Quantitative positioning worked example added to E-Commerce Platform in `references/mapping-examples.md`
+
+---
+
+## [2.2.1] - 2026-02-09
+
+### Fixed
+
+- Added explicit `list-projects.sh --json` step to 9 commands (stakeholders, requirements, adr, sow, roadmap, strategy, dpia, platform-design, data-mesh-contract) to prevent Claude from guessing wrong script paths in plugin-based repos that no longer have `.arckit/scripts/bash/`
+
+---
+
+## [2.2.0] - 2026-02-09
+
+### Added
+
+- **Wardley Mapping skill** (`skills/wardley-mapping/`) for conversational Wardley Mapping — quick questions, evolution stage lookups, doctrine assessments, and interactive map creation with AskUserQuestion
+- 5 reference files shared between skill and `/arckit:wardley` command: evolution stages, doctrine, gameplay patterns, climatic patterns, and mapping examples
+- Enhanced strategic analysis in `/arckit:wardley` command — now reads shared reference files for doctrine assessment, gameplay patterns, climatic patterns, and mapping examples
+- Output documents now include Doctrine Assessment Summary, Applicable Gameplay Patterns, and Climatic Pattern Analysis sections
+
+## [2.1.9] - 2026-02-08
+
+### Added
+
+- Interactive configuration using AskUserQuestion for 8 key commands: backlog, diagram, plan, adr, dpia, sow, sobc, roadmap
+- Commands now ask users about key decision points (prioritization approach, diagram type, contract type, evaluation weighting, etc.) before generating documents
+- Questions are automatically skipped when users specify preferences via command arguments
+
+## [2.1.8] - 2026-02-07
+
+### Removed
+
+- Redundant SessionStart hook that checked for already-bundled MCP servers (AWS Knowledge + Microsoft Learn are guaranteed by plugin `.mcp.json`)
+
+## [2.1.7] - 2026-02-07
+
+### Changed
+
+- Plugin is now the **sole Claude Code distribution** — CLI no longer ships `.claude/commands/` or `.claude/agents/`
+- All 22 test repos migrated from synced files to plugin marketplace
+
+## [2.1.5] - 2026-02-07
+
+### Added
+
+- Bundled Microsoft Learn MCP server (`https://learn.microsoft.com/api/mcp`) via `.mcp.json`
+
+### Changed
+
+- Removed redundant MCP availability checks from Azure research commands (MCP now guaranteed by plugin)
+
+## [2.1.4] - 2026-02-07
+
+### Added
+
+- Bundled AWS Knowledge MCP server (`https://knowledge-mcp.global.api.aws`) via `.mcp.json`
+
+### Changed
+
+- Renamed plugin commands to remove `arckit.` prefix for clean namespacing (e.g. `arckit.requirements` → `requirements`)
+- Removed redundant MCP availability checks from AWS research commands (MCP now guaranteed by plugin)
+
+## [2.1.3] - 2026-02-06
+
+### Fixed
+
+- Added missing `get_arckit_dir` and `get_templates_dir` functions to plugin `common.sh`
+- Converted `arckit-init` from skill to slash command
+
+## [2.1.2] - 2026-02-06
+
+### Fixed
+
+- Removed `hooks` field from `plugin.json` (auto-discovered from `hooks/` directory)
+
+## [2.1.1] - 2026-02-06
+
+### Fixed
+
+- Reference agents by name in commands instead of `subagent_type: "general-purpose"` workaround
+- Removed `agents` field from `plugin.json` (auto-discovered from `agents/` directory)
+- Removed invalid `color`, `permissionMode`, `tools` fields from agent frontmatter (invalid in plugin context)
+
+## [2.1.0] - 2026-02-06
+
+### Added
+
+- Initial plugin release for Claude Code marketplace
+- 46 slash commands for architecture governance artifact generation
+- 4 autonomous agents (research, datascout, aws-research, azure-research)
+- 35 document templates with Document Control standard
+- Helper scripts (`common.sh`, `create-project.sh`, `generate-document-id.sh`, etc.)
+- Command usage guides
+- `marketplace.json` for plugin discovery
+- MIT LICENSE
+
+### Changed
+
+- All commands use `${CLAUDE_PLUGIN_ROOT}` for template and script references
+- Agent frontmatter uses only valid plugin fields (`name`, `description`, `model`)

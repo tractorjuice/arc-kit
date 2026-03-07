@@ -280,11 +280,11 @@ Copy the files to your ArcKit project:
 To propose this template for official inclusion:
 
 1. Fork [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
-2. Copy template to `.arckit/templates/` and `arckit-plugin/templates/`
+2. Copy template to `.arckit/templates/` and `arckit-claude/templates/`
 3. Rename command file: drop `community.` prefix
 4. Change `Template Origin: Community` to `Template Origin: Official`
 5. Change `Guide Origin: Community` to `Guide Origin: Official`
-6. Add guide to the category map in `arckit-plugin/hooks/sync-guides.mjs`
+6. Add guide to the category map in `arckit-claude/hooks/sync-guides.mjs`
 7. Open a PR with description of the template's purpose
 ```
 

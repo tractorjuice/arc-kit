@@ -30,7 +30,7 @@ Review of test repo v20 (UAE MOI IPAD Framework) identified 40 unique doc type c
    - SOW/requirements traceability
    - Phase-by-phase walkthrough of every document
 
-**Agent**: Yes -- `arckit-plugin/agents/arckit-framework.md`. Reads many artifacts, needs isolated context. Command is a thin wrapper delegating via Task tool.
+**Agent**: Yes -- `arckit-claude/agents/arckit-framework.md`. Reads many artifacts, needs isolated context. Command is a thin wrapper delegating via Task tool.
 
 **Template**: `framework-overview-template.md`
 **Doc type code**: FWRK (single-instance)
@@ -81,14 +81,14 @@ Review of test repo v20 (UAE MOI IPAD Framework) identified 40 unique doc type c
 
 Each command requires:
 
-1. **Template**: `.arckit/templates/{name}-template.md` + `arckit-plugin/templates/{name}-template.md`
+1. **Template**: `.arckit/templates/{name}-template.md` + `arckit-claude/templates/{name}-template.md`
    - Standard 14 Document Control fields, Revision History, standard footer
    - Generalized sections (not IPAD-specific)
-2. **Command**: `arckit-plugin/commands/{name}.md`
+2. **Command**: `arckit-claude/commands/{name}.md`
    - YAML frontmatter: `description`, `argument-hint`, `handoffs`
    - Execution: read template, check prerequisites, create-project.sh, generate-document-id.sh, populate, Write tool, summary
-3. **Agent** (framework only): `arckit-plugin/agents/arckit-framework.md`
-4. **Guide**: `docs/guides/{name}.md` + `arckit-plugin/guides/{name}.md`
+3. **Agent** (framework only): `arckit-claude/agents/arckit-framework.md`
+4. **Guide**: `docs/guides/{name}.md` + `arckit-claude/guides/{name}.md`
 5. **Converter output**: Run `python scripts/converter.py` for Codex/OpenCode/Gemini formats
 
 ## Dependency Matrix Updates

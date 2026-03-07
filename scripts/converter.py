@@ -94,13 +94,6 @@ All extension file access MUST go through shell commands.
 # --- Agent configuration: adding a new AI target = adding a dictionary entry ---
 
 AGENT_CONFIG = {
-    "codex": {
-        "name": "Codex CLI",
-        "output_dir": ".codex/prompts",
-        "filename_pattern": "arckit.{name}.md",
-        "format": "markdown",
-        "path_prefix": ".arckit",
-    },
     "codex_extension": {
         "name": "Codex Extension",
         "output_dir": "arckit-codex/prompts",
@@ -119,12 +112,11 @@ AGENT_CONFIG = {
     },
     "opencode": {
         "name": "OpenCode CLI",
-        "output_dir": ".opencode/commands",
+        "output_dir": "arckit-opencode/commands",
         "filename_pattern": "arckit.{name}.md",
         "format": "markdown",
         "path_prefix": ".arckit",
         "extension_dir": "arckit-opencode",
-        "copy_commands_to_extension": True,
         "copy_agents_to_extension": True,
     },
     "gemini": {
@@ -260,6 +252,7 @@ def copy_extension_files(plugin_dir):
         ("scripts/python", "scripts/python"),
         ("docs/guides", "docs/guides"),
         ("skills", "skills"),
+        ("references", "references"),
     ]
 
     for config in AGENT_CONFIG.values():
@@ -368,7 +361,7 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
         toml_path = os.path.join(output_dir, toml_name)
 
         toml_content = (
-            f"# Auto-generated from arckit-plugin/agents/{filename}\n"
+            f"# Auto-generated from arckit-claude/agents/{filename}\n"
             f"# Do not edit — edit the source and re-run scripts/converter.py\n"
             f"\n"
             f'developer_instructions = """\n'
@@ -445,9 +438,9 @@ def rewrite_codex_skills(skills_dir):
 
 
 if __name__ == "__main__":
-    commands_dir = "arckit-plugin/commands/"
-    agents_dir = "arckit-plugin/agents/"
-    plugin_dir = "arckit-plugin"
+    commands_dir = "arckit-claude/commands/"
+    agents_dir = "arckit-claude/agents/"
+    plugin_dir = "arckit-claude"
 
     print(
         "Converting plugin commands to Codex, OpenCode, and Gemini extension formats..."

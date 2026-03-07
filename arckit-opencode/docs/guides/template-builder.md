@@ -89,11 +89,11 @@ Share this folder via Git, email, or any file transfer method.
 To submit a community template for official ArcKit inclusion:
 
 1. Fork [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
-2. Copy template to `.arckit/templates/` and `arckit-plugin/templates/`
-3. Move command from `.claude/commands/` to `arckit-plugin/commands/` and drop the `arckit.community.` prefix
+2. Copy template to `.arckit/templates/` and `arckit-claude/templates/`
+3. Move command from `.claude/commands/` to `arckit-claude/commands/` and drop the `arckit.community.` prefix
 4. Change `Template Origin: Community` to `Template Origin: Official`
 5. Change `Guide Origin: Community` to `Guide Origin: Official`
-6. Add guide to the category map in `arckit-plugin/hooks/sync-guides.mjs`
+6. Add guide to the category map in `arckit-claude/hooks/sync-guides.mjs`
 7. Open a PR describing the template's purpose and use cases
 
 ---

@@ -39,7 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- **Centralized doc type config** — `arckit-plugin/config/doc-types.mjs` is the single source of truth for all 49 document type codes, replacing duplicated data across 5+ files
+- **Centralized doc type config** — `arckit-claude/config/doc-types.mjs` is the single source of truth for all 49 document type codes, replacing duplicated data across 5+ files
 - **Research subdirectory routing** — research types (RSCH, AWRS, AZRS, GCRS, DSCT) are now multi-instance and auto-route to `research/` with sequence numbers
 - **GAPS and VEND doc type codes** — Gap Analysis (Governance) and Vendor Evaluation (Procurement)
 
@@ -644,7 +644,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Claude Code Plugin Migration**: Claude Code distribution migrated from CLI to standalone plugin (`arckit-plugin/`). Claude Code users should install via `/plugin marketplace add tractorjuice/arc-kit` instead of `arckit init --ai claude`
+- **Claude Code Plugin Migration**: Claude Code distribution migrated from CLI to standalone plugin (`arckit-claude/`). Claude Code users should install via `/plugin marketplace add tractorjuice/arc-kit` instead of `arckit init --ai claude`
 - **CLI `--ai claude` Redirect**: CLI `--ai claude` option now shows redirect message to plugin marketplace installation
 - **Plugin MCP Hook Removed**: Removed redundant SessionStart hook that checked for already-bundled MCP servers (AWS Knowledge + Microsoft Learn)
 - **Test Repo Migration**: All 22 test repos migrated from synced command/agent/template files to plugin marketplace
@@ -687,7 +687,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- **Claude CLI Directories**: `.claude/commands/` and `.claude/agents/` directories removed from CLI distribution (now exclusively in `arckit-plugin/`)
+- **Claude CLI Directories**: `.claude/commands/` and `.claude/agents/` directories removed from CLI distribution (now exclusively in `arckit-claude/`)
 - **`--ai claude` CLI Option**: Removed as a valid init target (redirects to plugin installation instructions)
 - **Orphan Template**: Removed `uk-gov-tcop-template.md` (duplicate of `tcop-review-template.md`)
 - **Orphaned Codex Subdirectory**: Removed 12 files from `.codex/prompts/arckit/` (obsolete naming convention; all prompts now at `.codex/prompts/arckit.*.md`)

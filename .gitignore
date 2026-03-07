@@ -55,17 +55,9 @@ projects/
 # projects/*/vendors/*/proposal.pdf
 # projects/*/vendors/*/proprietary/
 
-# Codex CLI - exclude auth tokens but include agents and config
-.codex/*
-!.codex/agents/
-!.codex/config.toml
-
-# OpenCode CLI - exclude auth tokens but include prompts
-.opencode/*
-!.opencode/commands/
-!.opencode/commands/*.md
-!.opencode/README.md
-!.opencode/.gitignore
+# Legacy local directories (no longer generated)
+.codex/
+.opencode/
 
 
 # Gemini extension - generated files (static files are checked in)

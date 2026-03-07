@@ -23,7 +23,7 @@ import re
 import sys
 
 # Multi-instance document types that require sequence numbers
-# Keep in sync with arckit-plugin/config/doc-types.mjs MULTI_INSTANCE_TYPES
+# Keep in sync with arckit-claude/config/doc-types.mjs MULTI_INSTANCE_TYPES
 MULTI_INSTANCE_TYPES = {"ADR", "DIAG", "DFD", "WARD", "DMC", "RSCH", "AWRS", "AZRS", "GCRS", "DSCT"}
 
 

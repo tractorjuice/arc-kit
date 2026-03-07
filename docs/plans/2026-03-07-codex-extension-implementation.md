@@ -241,7 +241,7 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
         toml_path = os.path.join(output_dir, toml_name)
 
         toml_content = (
-            f"# Auto-generated from arckit-plugin/agents/{filename}\n"
+            f"# Auto-generated from arckit-claude/agents/{filename}\n"
             f"# Do not edit — edit the source and re-run scripts/converter.py\n"
             f"\n"
             f'developer_instructions = """\n'
@@ -414,7 +414,7 @@ update_file "arckit-codex/VERSION" "overwrite"
 In the verification `grep` line (~112), add `arckit-codex/VERSION`:
 
 ```bash
-grep -H "$NEW_VERSION" VERSION arckit-plugin/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION
+grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION
 ```
 
 **Step 3: Commit**

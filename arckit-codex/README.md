@@ -6,7 +6,7 @@
 
 Standalone [OpenAI Codex CLI](https://chatgpt.com/features/codex) extension for ArcKit -- Enterprise Architecture Governance & Vendor Procurement Toolkit.
 
-> **Auto-generated**: Files in this directory are generated from plugin commands by `python scripts/converter.py`. Do not edit them directly -- edit the source in `arckit-plugin/commands/` and re-run the converter.
+> **Auto-generated**: Files in this directory are generated from plugin commands by `python scripts/converter.py`. Do not edit them directly -- edit the source in `arckit-claude/commands/` and re-run the converter.
 
 ## Prerequisites
 
@@ -203,7 +203,7 @@ Four Model Context Protocol servers are configured in `config.toml` to provide c
 | Feature | Claude Code (Plugin) | Codex CLI (Extension) |
 |---------|---------------------|-----------------------|
 | **Command format** | `/arckit.principles` | `$arckit-principles` |
-| **Command location** | `arckit-plugin/commands/` | `arckit-codex/skills/arckit-*/` |
+| **Command location** | `arckit-claude/commands/` | `arckit-codex/skills/arckit-*/` |
 | **Skills** | Supported (plugin skills/) | Supported (`.agents/skills/`, auto-discovered) |
 | **Agents** | Supported (Task tool) | Experimental (multi-agent flag) |
 | **MCP servers** | Supported (plugin config) | Supported (`config.toml`) |

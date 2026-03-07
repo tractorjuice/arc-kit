@@ -37,7 +37,7 @@ ssl_context = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 client = httpx.Client(verify=ssl_context)
 
 # Agent configuration for ArcKit
-# Note: Claude Code support has moved to the ArcKit plugin (arckit-plugin/).
+# Note: Claude Code support has moved to the ArcKit plugin (arckit-claude/).
 # Gemini CLI support has moved to the ArcKit Gemini extension (arckit-gemini/).
 # The CLI now only supports Codex.
 AGENT_CONFIG = {
@@ -146,17 +146,16 @@ def get_data_paths():
         return {
             "templates": base_path / ".arckit" / "templates",
             "scripts": base_path / "scripts",
-            "codex_root": base_path / ".codex",
-            "codex_prompts": base_path / ".codex" / "prompts",
-            "opencode_root": base_path / ".opencode",
-            "opencode_commands": base_path / ".opencode" / "commands",
-            "opencode_agents": base_path / ".opencode" / "agents",
+            "opencode_root": base_path / "arckit-opencode",
+            "opencode_commands": base_path / "arckit-opencode" / "commands",
+            "opencode_agents": base_path / "arckit-opencode" / "agents",
             "docs_guides": base_path / "docs" / "guides",
             "docs_readme": base_path / "docs" / "README.md",
-            "dependency_matrix": base_path / "DEPENDENCY-MATRIX.md",
-            "workflow_diagrams": base_path / "WORKFLOW-DIAGRAMS.md",
+            "dependency_matrix": base_path / "docs" / "DEPENDENCY-MATRIX.md",
+            "workflow_diagrams": base_path / "docs" / "WORKFLOW-DIAGRAMS.md",
             "version": base_path / "VERSION",
             "changelog": base_path / "CHANGELOG.md",
+            "codex_references": base_path / "arckit-codex" / "references",
             "codex_skills": base_path / "arckit-codex" / "skills",
             "codex_agents": base_path / "arckit-codex" / "agents",
             "codex_config": base_path / "arckit-codex" / "config.toml",
@@ -165,7 +164,7 @@ def get_data_paths():
     # First, check if running from source (development mode)
     # This allows testing local changes without re-installing
     source_root = Path(__file__).parent.parent.parent
-    if (source_root / ".arckit").exists() and (source_root / ".codex").exists():
+    if (source_root / ".arckit").exists() and (source_root / "arckit-codex").exists():
         return build_paths(source_root)
 
     # Then try to find installed package data
@@ -363,10 +362,19 @@ def init(
         raise typer.Exit(1)
 
     if here:
-        project_name = Path.cwd().name
-        project_path = Path.cwd()
+        try:
+            project_name = Path.cwd().name
+            project_path = Path.cwd()
+        except (FileNotFoundError, OSError):
+            console.print(
+                "[red]Error:[/red] Current directory does not exist. Please cd to a valid directory first."
+            )
+            raise typer.Exit(1)
     else:
-        project_path = Path(project_name).resolve()
+        try:
+            project_path = Path(project_name).resolve()
+        except (FileNotFoundError, OSError):
+            project_path = Path.home() / project_name
         if project_path.exists():
             console.print(
                 f"[red]Error:[/red] Directory '{project_name}' already exists"
@@ -483,6 +491,14 @@ def init(
     else:
         console.print(f"[yellow]Warning: Scripts not found at {scripts_src}[/yellow]")
 
+    # Copy references if they exist
+    references_src = data_paths.get("codex_references")
+    if references_src and references_src.exists():
+        references_dst = project_path / ".arckit" / "references"
+        references_dst.mkdir(parents=True, exist_ok=True)
+        shutil.copytree(references_src, references_dst, dirs_exist_ok=True)
+        console.print(f"[green]✓[/green] References copied")
+
     # Copy slash commands
     # Copy Codex prompts (all_ai and single-AI both install codex)
     if ai_assistant == "codex" or all_ai:
@@ -586,14 +602,14 @@ def init(
         # Copy DEPENDENCY-MATRIX.md
         dep_matrix_src = data_paths["dependency_matrix"]
         if dep_matrix_src.exists():
-            shutil.copy2(dep_matrix_src, project_path / "DEPENDENCY-MATRIX.md")
-            console.print(f"[green]✓[/green] Copied DEPENDENCY-MATRIX.md")
+            shutil.copy2(dep_matrix_src, project_path / "docs" / "DEPENDENCY-MATRIX.md")
+            console.print(f"[green]✓[/green] Copied docs/DEPENDENCY-MATRIX.md")
 
         # Copy WORKFLOW-DIAGRAMS.md
         workflow_src = data_paths["workflow_diagrams"]
         if workflow_src.exists():
-            shutil.copy2(workflow_src, project_path / "WORKFLOW-DIAGRAMS.md")
-            console.print(f"[green]✓[/green] Copied WORKFLOW-DIAGRAMS.md")
+            shutil.copy2(workflow_src, project_path / "docs" / "WORKFLOW-DIAGRAMS.md")
+            console.print(f"[green]✓[/green] Copied docs/WORKFLOW-DIAGRAMS.md")
 
         console.print("[green]✓[/green] Documentation configured")
 

@@ -78,9 +78,9 @@ See [html-patterns.md](html-patterns.md) for the full HTML template.
 
 **Search for category comment**: `grep -n "<!-- " docs/index.html | grep -i "{category}"`
 
-## 3. arckit-plugin/.claude-plugin/plugin.json
+## 3. arckit-claude/.claude-plugin/plugin.json
 
-**File**: `arckit-plugin/.claude-plugin/plugin.json`
+**File**: `arckit-claude/.claude-plugin/plugin.json`
 
 ### Count Location (1 place)
 
@@ -88,7 +88,7 @@ See [html-patterns.md](html-patterns.md) for the full HTML template.
 |----------|-------------|
 | Line 4 | `"description": "Enterprise Architecture.*{N} slash commands` |
 
-**Search**: `grep -n "slash commands" arckit-plugin/.claude-plugin/plugin.json`
+**Search**: `grep -n "slash commands" arckit-claude/.claude-plugin/plugin.json`
 
 **Replace pattern**:
 
@@ -116,17 +116,17 @@ OLD: "{N} slash commands for enterprise architecture artifacts"
 NEW: "{N+1} slash commands for enterprise architecture artifacts"
 ```
 
-## 5. arckit-plugin/README.md
+## 5. arckit-claude/README.md
 
-**File**: `arckit-plugin/README.md`
+**File**: `arckit-claude/README.md`
 
-**Search**: `grep -n "[0-9]* commands\|[0-9]* slash" arckit-plugin/README.md`
+**Search**: `grep -n "[0-9]* commands\|[0-9]* slash" arckit-claude/README.md`
 
 Check for count references. This file may or may not have explicit counts. Update any that appear.
 
-## 6. DEPENDENCY-MATRIX.md
+## 6. docs/DEPENDENCY-MATRIX.md
 
-**File**: `DEPENDENCY-MATRIX.md`
+**File**: `docs/DEPENDENCY-MATRIX.md`
 
 ### Header Row (Line 20)
 
@@ -138,7 +138,7 @@ The header row lists all commands as columns. Insert the new command name alphab
 | PRODUCES -> | plan | principles | stakeholders | risk | sobc | requirements | ... | pages |
 ```
 
-**Search**: `grep -n "PRODUCES" DEPENDENCY-MATRIX.md`
+**Search**: `grep -n "PRODUCES" docs/DEPENDENCY-MATRIX.md`
 
 ### Existing Rows (Lines 21-69)
 
@@ -158,27 +158,27 @@ Find the appropriate tier and add a bullet point:
 - **{name}** -> Depends on: {dep1} (M), {dep2} (R)
 ```
 
-**Search for tier**: `grep -n "### Tier" DEPENDENCY-MATRIX.md`
+**Search for tier**: `grep -n "### Tier" docs/DEPENDENCY-MATRIX.md`
 
 ### Version Section (~Line 286)
 
 Update `Commands Documented: {N}` and `Matrix Rows: {N}`.
 
-**Search**: `grep -n "Commands Documented" DEPENDENCY-MATRIX.md`
+**Search**: `grep -n "Commands Documented" docs/DEPENDENCY-MATRIX.md`
 
 ### Changelog Section (~Line 294)
 
 Add new entry at the TOP of the Changelog (before existing entries). See [dependency-matrix-format.md](dependency-matrix-format.md) for format.
 
-**Search**: `grep -n "^## Changelog\|^### 20" DEPENDENCY-MATRIX.md`
+**Search**: `grep -n "^## Changelog\|^### 20" docs/DEPENDENCY-MATRIX.md`
 
-## 7. WORKFLOW-DIAGRAMS.md
+## 7. docs/WORKFLOW-DIAGRAMS.md
 
-**File**: `WORKFLOW-DIAGRAMS.md`
+**File**: `docs/WORKFLOW-DIAGRAMS.md`
 
 Only update if the command fits into the sequential workflow. Utility commands (customize, pages, trello) typically don't need workflow entries.
 
-**Search for Mermaid blocks**: `grep -n "graph TD\|style " WORKFLOW-DIAGRAMS.md`
+**Search for Mermaid blocks**: `grep -n "graph TD\|style " docs/WORKFLOW-DIAGRAMS.md`
 
 See [dependency-matrix-format.md](dependency-matrix-format.md) for Mermaid node format and style colors.
 
@@ -238,13 +238,13 @@ Add entry under the current or next version. If no unreleased section exists, cr
 
 **Search**: `grep -n "^## \|^### " CHANGELOG.md | head -10` (find the latest version section)
 
-## 11. arckit-plugin/CHANGELOG.md
+## 11. arckit-claude/CHANGELOG.md
 
-**File**: `arckit-plugin/CHANGELOG.md`
+**File**: `arckit-claude/CHANGELOG.md`
 
 Same format as root CHANGELOG.md but for the plugin.
 
-**Search**: `grep -n "^## \|^### " arckit-plugin/CHANGELOG.md | head -10`
+**Search**: `grep -n "^## \|^### " arckit-claude/CHANGELOG.md | head -10`
 
 ---
 
@@ -254,15 +254,15 @@ Same format as root CHANGELOG.md but for the plugin.
 # Find ALL remaining old count references (replace 49 with old count)
 grep -rn "\b50 commands\b\|50 slash commands\|50 AI-assisted\|50/50\|of 50 " \
   README.md docs/index.html docs/README.md CLAUDE.md \
-  arckit-plugin/.claude-plugin/plugin.json \
-  arckit-plugin/README.md \
+  arckit-claude/.claude-plugin/plugin.json \
+  arckit-claude/README.md \
   .claude-plugin/marketplace.json \
-  DEPENDENCY-MATRIX.md
+  docs/DEPENDENCY-MATRIX.md
 
 # Verify new command appears in key files
 grep -l "arckit\.{name}" \
-  README.md docs/index.html docs/README.md DEPENDENCY-MATRIX.md
+  README.md docs/index.html docs/README.md docs/DEPENDENCY-MATRIX.md
 
 # Check DEPENDENCY-MATRIX header has the new column
-head -21 DEPENDENCY-MATRIX.md | grep "{name}"
+head -21 docs/DEPENDENCY-MATRIX.md | grep "{name}"
 ```

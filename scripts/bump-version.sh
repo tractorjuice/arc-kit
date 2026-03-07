@@ -21,7 +21,7 @@ fi
 
 # ── Must run from repo root ─────────────────────────────────────────────────
 
-if [[ ! -f VERSION ]] || [[ ! -d arckit-plugin ]]; then
+if [[ ! -f VERSION ]] || [[ ! -d arckit-claude ]]; then
   echo "Error: Must be run from the arc-kit repo root."
   exit 1
 fi
@@ -66,16 +66,16 @@ MONTH_YEAR=$(date +"%B %Y")
 sed -i -E "s/Version [0-9]+\.[0-9]+\.[0-9]+ - [A-Za-z]+ [0-9]{4}/Version $NEW_VERSION - $MONTH_YEAR/" docs/index.html
 update_file "docs/index.html" "version + date → $MONTH_YEAR"
 
-# ── 6. arckit-plugin/VERSION ───────────────────────────────────────────────
+# ── 6. arckit-claude/VERSION ───────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-plugin/VERSION
-update_file "arckit-plugin/VERSION" "overwrite"
+echo "$NEW_VERSION" > arckit-claude/VERSION
+update_file "arckit-claude/VERSION" "overwrite"
 
-# ── 7. arckit-plugin/.claude-plugin/plugin.json ────────────────────────────
+# ── 7. arckit-claude/.claude-plugin/plugin.json ────────────────────────────
 
-jq --arg v "$NEW_VERSION" '.version = $v' arckit-plugin/.claude-plugin/plugin.json > arckit-plugin/.claude-plugin/plugin.json.tmp
-mv arckit-plugin/.claude-plugin/plugin.json.tmp arckit-plugin/.claude-plugin/plugin.json
-update_file "arckit-plugin/.claude-plugin/plugin.json" ".version"
+jq --arg v "$NEW_VERSION" '.version = $v' arckit-claude/.claude-plugin/plugin.json > arckit-claude/.claude-plugin/plugin.json.tmp
+mv arckit-claude/.claude-plugin/plugin.json.tmp arckit-claude/.claude-plugin/plugin.json
+update_file "arckit-claude/.claude-plugin/plugin.json" ".version"
 
 # ── 8. .claude-plugin/marketplace.json (plugins[0].version only) ───────────
 
@@ -114,13 +114,13 @@ echo ""
 echo "── Verification ──"
 echo ""
 echo "VERSION files:"
-grep -H "$NEW_VERSION" VERSION arckit-plugin/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION
+grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION
 echo ""
 echo "pyproject.toml:"
 grep "^version" pyproject.toml
 echo ""
 echo "plugin.json:"
-jq -r '.version' arckit-plugin/.claude-plugin/plugin.json
+jq -r '.version' arckit-claude/.claude-plugin/plugin.json
 echo ""
 echo "marketplace.json:"
 echo "  plugins[0].version: $(jq -r '.plugins[0].version' .claude-plugin/marketplace.json)"
@@ -131,6 +131,6 @@ echo ""
 echo "── Reminders ──"
 echo ""
 echo "  CHANGELOG.md              — Add release notes manually"
-echo "  arckit-plugin/CHANGELOG.md — Add release notes manually"
+echo "  arckit-claude/CHANGELOG.md — Add release notes manually"
 echo ""
 echo "Done."

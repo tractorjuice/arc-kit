@@ -11,15 +11,15 @@ When a new ArcKit command is added, **11 files** across the repository must be u
 
 Before starting, verify these files exist for the new command:
 
-1. **Command file**: `arckit-plugin/commands/{name}.md` (required)
-2. **Template file**: `.arckit/templates/{name}-template.md` AND `arckit-plugin/templates/{name}-template.md` (required for document-generating commands, skip for utility commands like `customize`, `pages`, `trello`)
-3. **Guide file**: `docs/guides/{name}.md` AND `arckit-plugin/guides/{name}.md` (create if missing, see Guide Creation below)
+1. **Command file**: `arckit-claude/commands/{name}.md` (required)
+2. **Template file**: `.arckit/templates/{name}-template.md` AND `arckit-claude/templates/{name}-template.md` (required for document-generating commands, skip for utility commands like `customize`, `pages`, `trello`)
+3. **Guide file**: `docs/guides/{name}.md` AND `arckit-claude/guides/{name}.md` (create if missing, see Guide Creation below)
 
-If any required file is missing, create it before proceeding. Templates should be identical between `.arckit/templates/` and `arckit-plugin/templates/`. Guides should be identical between `docs/guides/` and `arckit-plugin/guides/` (except `migration.md` and `customize.md` which have path differences).
+If any required file is missing, create it before proceeding. Templates should be identical between `.arckit/templates/` and `arckit-claude/templates/`. Guides should be identical between `docs/guides/` and `arckit-claude/guides/` (except `migration.md` and `customize.md` which have path differences).
 
 ## Determine the New Count
 
-Read the current count from `arckit-plugin/.claude-plugin/plugin.json` (the `description` field contains the current count, e.g., "50 slash commands"). The new count is current + 1.
+Read the current count from `arckit-claude/.claude-plugin/plugin.json` (the `description` field contains the current count, e.g., "50 slash commands"). The new count is current + 1.
 
 ## Update Checklist
 
@@ -59,7 +59,7 @@ Count locations (search for the old number):
 
 **Important**: The `visible-count` span and its adjacent count BOTH need updating. The JavaScript filter counter uses the span, while the static text shows the total.
 
-### 3. arckit-plugin/.claude-plugin/plugin.json
+### 3. arckit-claude/.claude-plugin/plugin.json
 
 Update the `description` field count:
 
@@ -75,11 +75,11 @@ Update the `description` field count:
 "description": "{N} slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance"
 ```
 
-### 5. arckit-plugin/README.md
+### 5. arckit-claude/README.md
 
 Check for any command count references and update. Look for patterns like "{N} commands" or "{N} slash commands".
 
-### 6. DEPENDENCY-MATRIX.md
+### 6. docs/DEPENDENCY-MATRIX.md
 
 This is the most complex update. See [references/dependency-matrix-format.md](references/dependency-matrix-format.md) for detailed format.
 
@@ -105,7 +105,7 @@ Steps:
 - **Consumed by**: {consumer1} (M/R/O), {consumer2} (M/R/O)
 ```
 
-### 7. WORKFLOW-DIAGRAMS.md
+### 7. docs/WORKFLOW-DIAGRAMS.md
 
 If the new command fits into existing workflow paths, add it to the relevant Mermaid diagrams. See [references/dependency-matrix-format.md](references/dependency-matrix-format.md) for Mermaid node format and style colors.
 
@@ -142,7 +142,7 @@ Add an entry under a new or existing version section:
 - `/arckit.{name}` command for {description}
 ```
 
-### 11. arckit-plugin/CHANGELOG.md (plugin changelog)
+### 11. arckit-claude/CHANGELOG.md (plugin changelog)
 
 Add an entry under a new or existing version section:
 
@@ -168,7 +168,7 @@ A guide should contain:
 4. What the command produces (document type, filename pattern)
 5. Tips and best practices
 
-Remember to copy the guide to both `docs/guides/` and `arckit-plugin/guides/`.
+Remember to copy the guide to both `docs/guides/` and `arckit-claude/guides/`.
 
 ## Post-Update Verification
 
@@ -176,11 +176,11 @@ After completing all updates, verify no old counts remain:
 
 1. **Grep for old count**: Search the entire repo for the old number pattern (e.g., "50 commands", "50 slash commands", "50 AI-assisted"). Any remaining matches are locations you missed.
 2. **Grep for new count**: Verify the new count appears in all expected locations.
-3. **Check the command exists in**: README.md table, docs/index.html card, DEPENDENCY-MATRIX.md row/column, docs/README.md coverage table.
+3. **Check the command exists in**: README.md table, docs/index.html card, docs/DEPENDENCY-MATRIX.md row/column, docs/README.md coverage table.
 
 ```bash
 # Example verification (replace 49 with old count, 50 with new count)
-grep -rn "50 commands\|50 slash commands\|50 AI-assisted\|50/50" README.md docs/index.html arckit-plugin/.claude-plugin/plugin.json .claude-plugin/marketplace.json docs/README.md DEPENDENCY-MATRIX.md
+grep -rn "50 commands\|50 slash commands\|50 AI-assisted\|50/50" README.md docs/index.html arckit-claude/.claude-plugin/plugin.json .claude-plugin/marketplace.json docs/README.md docs/DEPENDENCY-MATRIX.md
 ```
 
 ## Run Converter

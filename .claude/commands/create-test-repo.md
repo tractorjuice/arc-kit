@@ -223,18 +223,18 @@ The same version string read from the main repo's `VERSION` file.
 
 ### 4j. `DEPENDENCY-MATRIX.md`
 
-Copy the file from `/workspaces/arc-kit/DEPENDENCY-MATRIX.md` using Bash:
+Copy the file from `/workspaces/arc-kit/docs/DEPENDENCY-MATRIX.md` using Bash:
 
 ```bash
-cp /workspaces/arc-kit/DEPENDENCY-MATRIX.md /tmp/arckit-test-setup/${REPO_NAME}/DEPENDENCY-MATRIX.md
+cp /workspaces/arc-kit/docs/DEPENDENCY-MATRIX.md /tmp/arckit-test-setup/${REPO_NAME}/docs/DEPENDENCY-MATRIX.md
 ```
 
 ### 4k. `WORKFLOW-DIAGRAMS.md`
 
-Copy the file from `/workspaces/arc-kit/WORKFLOW-DIAGRAMS.md` using Bash:
+Copy the file from `/workspaces/arc-kit/docs/WORKFLOW-DIAGRAMS.md` using Bash:
 
 ```bash
-cp /workspaces/arc-kit/WORKFLOW-DIAGRAMS.md /tmp/arckit-test-setup/${REPO_NAME}/WORKFLOW-DIAGRAMS.md
+cp /workspaces/arc-kit/docs/WORKFLOW-DIAGRAMS.md /tmp/arckit-test-setup/${REPO_NAME}/docs/WORKFLOW-DIAGRAMS.md
 ```
 
 ## Step 5: Commit and push
@@ -278,8 +278,8 @@ Files created:
   CLAUDE.md                      (Claude Code context)
   CHANGELOG.md                   (changelog)
   VERSION                        (version tracking)
-  DEPENDENCY-MATRIX.md           (command dependencies)
-  WORKFLOW-DIAGRAMS.md           (workflow diagrams)
+  docs/DEPENDENCY-MATRIX.md      (command dependencies)
+  docs/WORKFLOW-DIAGRAMS.md      (workflow diagrams)
 
 Next steps:
   1. Open the repo in a GitHub Codespace

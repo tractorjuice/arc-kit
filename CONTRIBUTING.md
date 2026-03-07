@@ -52,7 +52,7 @@ Documentation contributions are highly valued:
 
 To add a new ArcKit command:
 
-1. **Create the command file** in `arckit-plugin/commands/`:
+1. **Create the command file** in `arckit-claude/commands/`:
 
    ```markdown
    ---

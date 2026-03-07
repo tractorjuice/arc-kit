@@ -16,12 +16,12 @@
 
 Commands to study for patterns:
 
-- **Standard command**: `arckit-plugin/commands/strategy.md` (similar structure to glossary/maturity-model)
-- **Agent-delegating command**: `arckit-plugin/commands/research.md` (pattern for framework)
-- **Agent file**: `arckit-plugin/agents/arckit-research.md` (pattern for framework agent)
+- **Standard command**: `arckit-claude/commands/strategy.md` (similar structure to glossary/maturity-model)
+- **Agent-delegating command**: `arckit-claude/commands/research.md` (pattern for framework)
+- **Agent file**: `arckit-claude/agents/arckit-research.md` (pattern for framework agent)
 - **Template**: `.arckit/templates/architecture-strategy-template.md` (Document Control pattern)
 - **Guide**: `docs/guides/strategy.md` (guide structure)
-- **Quality checklist**: `arckit-plugin/references/quality-checklist.md`
+- **Quality checklist**: `arckit-claude/references/quality-checklist.md`
 - **New-command-docs skill**: `.claude/skills/new-command-docs/SKILL.md` (11-file checklist)
 - **HTML card patterns**: `.claude/skills/new-command-docs/references/html-patterns.md`
 - **DSM format**: `.claude/skills/new-command-docs/references/dependency-matrix-format.md`
@@ -33,7 +33,7 @@ Commands to study for patterns:
 **Files:**
 
 - Create: `.arckit/templates/glossary-template.md`
-- Create: `arckit-plugin/templates/glossary-template.md` (identical copy)
+- Create: `arckit-claude/templates/glossary-template.md` (identical copy)
 
 **Step 1: Create the template**
 
@@ -54,12 +54,12 @@ Model after `.arckit/templates/architecture-strategy-template.md` for Document C
 
 **Step 2: Copy to plugin templates**
 
-The files must be identical. Create both `.arckit/templates/glossary-template.md` and `arckit-plugin/templates/glossary-template.md`.
+The files must be identical. Create both `.arckit/templates/glossary-template.md` and `arckit-claude/templates/glossary-template.md`.
 
 **Step 3: Commit**
 
 ```bash
-git add .arckit/templates/glossary-template.md arckit-plugin/templates/glossary-template.md
+git add .arckit/templates/glossary-template.md arckit-claude/templates/glossary-template.md
 git commit -m "feat: add glossary template (GLOS)"
 ```
 
@@ -69,11 +69,11 @@ git commit -m "feat: add glossary template (GLOS)"
 
 **Files:**
 
-- Create: `arckit-plugin/commands/glossary.md`
+- Create: `arckit-claude/commands/glossary.md`
 
 **Step 1: Create the command file**
 
-Follow the pattern of `arckit-plugin/commands/strategy.md`. Key elements:
+Follow the pattern of `arckit-claude/commands/strategy.md`. Key elements:
 
 ```yaml
 ---
@@ -108,7 +108,7 @@ Command body should follow this flow:
 **Step 2: Commit**
 
 ```bash
-git add arckit-plugin/commands/glossary.md
+git add arckit-claude/commands/glossary.md
 git commit -m "feat: add /arckit.glossary command (GLOS)"
 ```
 
@@ -119,7 +119,7 @@ git commit -m "feat: add /arckit.glossary command (GLOS)"
 **Files:**
 
 - Create: `docs/guides/glossary.md`
-- Create: `arckit-plugin/guides/glossary.md` (identical copy)
+- Create: `arckit-claude/guides/glossary.md` (identical copy)
 
 **Step 1: Create the guide**
 
@@ -145,7 +145,7 @@ Files must be identical. Create both locations.
 **Step 3: Commit**
 
 ```bash
-git add docs/guides/glossary.md arckit-plugin/guides/glossary.md
+git add docs/guides/glossary.md arckit-claude/guides/glossary.md
 git commit -m "docs: add glossary command guide"
 ```
 
@@ -156,7 +156,7 @@ git commit -m "docs: add glossary command guide"
 **Files:**
 
 - Create: `.arckit/templates/maturity-model-template.md`
-- Create: `arckit-plugin/templates/maturity-model-template.md` (identical copy)
+- Create: `arckit-claude/templates/maturity-model-template.md` (identical copy)
 
 **Step 1: Create the template**
 
@@ -185,7 +185,7 @@ Content sections based on v20's `ARC-001-MMOD-v1.0.md` but generalized:
 **Step 3: Commit**
 
 ```bash
-git add .arckit/templates/maturity-model-template.md arckit-plugin/templates/maturity-model-template.md
+git add .arckit/templates/maturity-model-template.md arckit-claude/templates/maturity-model-template.md
 git commit -m "feat: add maturity model template (MMOD)"
 ```
 
@@ -195,7 +195,7 @@ git commit -m "feat: add maturity model template (MMOD)"
 
 **Files:**
 
-- Create: `arckit-plugin/commands/maturity-model.md`
+- Create: `arckit-claude/commands/maturity-model.md`
 
 **Step 1: Create the command file**
 
@@ -233,7 +233,7 @@ Command body flow:
 **Step 2: Commit**
 
 ```bash
-git add arckit-plugin/commands/maturity-model.md
+git add arckit-claude/commands/maturity-model.md
 git commit -m "feat: add /arckit.maturity-model command (MMOD)"
 ```
 
@@ -244,7 +244,7 @@ git commit -m "feat: add /arckit.maturity-model command (MMOD)"
 **Files:**
 
 - Create: `docs/guides/maturity-model.md`
-- Create: `arckit-plugin/guides/maturity-model.md` (identical copy)
+- Create: `arckit-claude/guides/maturity-model.md` (identical copy)
 
 **Step 1: Create the guide**
 
@@ -264,7 +264,7 @@ Same structure as glossary guide but for maturity models. Include:
 **Step 3: Commit**
 
 ```bash
-git add docs/guides/maturity-model.md arckit-plugin/guides/maturity-model.md
+git add docs/guides/maturity-model.md arckit-claude/guides/maturity-model.md
 git commit -m "docs: add maturity-model command guide"
 ```
 
@@ -275,7 +275,7 @@ git commit -m "docs: add maturity-model command guide"
 **Files:**
 
 - Create: `.arckit/templates/framework-overview-template.md`
-- Create: `arckit-plugin/templates/framework-overview-template.md` (identical copy)
+- Create: `arckit-claude/templates/framework-overview-template.md` (identical copy)
 
 **Step 1: Create the template**
 
@@ -300,7 +300,7 @@ Content sections based on v20's `ARC-001-FWRK-v1.0.md` but generalized:
 **Step 3: Commit**
 
 ```bash
-git add .arckit/templates/framework-overview-template.md arckit-plugin/templates/framework-overview-template.md
+git add .arckit/templates/framework-overview-template.md arckit-claude/templates/framework-overview-template.md
 git commit -m "feat: add framework overview template (FWRK)"
 ```
 
@@ -310,11 +310,11 @@ git commit -m "feat: add framework overview template (FWRK)"
 
 **Files:**
 
-- Create: `arckit-plugin/agents/arckit-framework.md`
+- Create: `arckit-claude/agents/arckit-framework.md`
 
 **Step 1: Create the agent file**
 
-Model after `arckit-plugin/agents/arckit-research.md`. Key differences:
+Model after `arckit-claude/agents/arckit-research.md`. Key differences:
 
 - This agent reads project artifacts (not web research)
 - Produces 2 outputs: FWRK overview + Executive Guide
@@ -369,7 +369,7 @@ Agent body (system prompt) should cover:
 **Step 2: Commit**
 
 ```bash
-git add arckit-plugin/agents/arckit-framework.md
+git add arckit-claude/agents/arckit-framework.md
 git commit -m "feat: add arckit-framework agent for framework generation"
 ```
 
@@ -379,11 +379,11 @@ git commit -m "feat: add arckit-framework agent for framework generation"
 
 **Files:**
 
-- Create: `arckit-plugin/commands/framework.md`
+- Create: `arckit-claude/commands/framework.md`
 
 **Step 1: Create the command file**
 
-Model after `arckit-plugin/commands/research.md` (agent-delegating pattern):
+Model after `arckit-claude/commands/research.md` (agent-delegating pattern):
 
 ```yaml
 ---
@@ -418,7 +418,7 @@ Command body:
 **Step 2: Commit**
 
 ```bash
-git add arckit-plugin/commands/framework.md
+git add arckit-claude/commands/framework.md
 git commit -m "feat: add /arckit.framework command (FWRK) with agent delegation"
 ```
 
@@ -429,7 +429,7 @@ git commit -m "feat: add /arckit.framework command (FWRK) with agent delegation"
 **Files:**
 
 - Create: `docs/guides/framework.md`
-- Create: `arckit-plugin/guides/framework.md` (identical copy)
+- Create: `arckit-claude/guides/framework.md` (identical copy)
 
 **Step 1: Create the guide**
 
@@ -450,7 +450,7 @@ Emphasize that this is a transformation/orchestration command:
 **Step 3: Commit**
 
 ```bash
-git add docs/guides/framework.md arckit-plugin/guides/framework.md
+git add docs/guides/framework.md arckit-claude/guides/framework.md
 git commit -m "docs: add framework command guide"
 ```
 
@@ -491,15 +491,15 @@ Use the `new-command-docs` skill for exact patterns. Run it 3 times (once per co
 
 1. `README.md` -- 4 count locations (54 to 57) + 3 new command table rows
 2. `docs/index.html` -- 8 count locations (54 to 57) + 3 new HTML command cards
-3. `arckit-plugin/.claude-plugin/plugin.json` -- description count
+3. `arckit-claude/.claude-plugin/plugin.json` -- description count
 4. `.claude-plugin/marketplace.json` -- description count
-5. `arckit-plugin/README.md` -- any count references
+5. `arckit-claude/README.md` -- any count references
 6. `DEPENDENCY-MATRIX.md` -- 3 new rows + columns, tier assignments, changelog entries
 7. `WORKFLOW-DIAGRAMS.md` -- add framework to relevant Mermaid diagrams if applicable
 8. `docs/README.md` -- 3 new coverage table rows, coverage count
 9. `CLAUDE.md` -- update command count (54 to 57), add framework agent to Agent System table
 10. `CHANGELOG.md` (root) -- add entries for 3 new commands
-11. `arckit-plugin/CHANGELOG.md` -- add entries for 3 new commands
+11. `arckit-claude/CHANGELOG.md` -- add entries for 3 new commands
 
 **Dependency Matrix details:**
 
@@ -519,14 +519,14 @@ Use the `new-command-docs` skill references for exact grep patterns and HTML car
 
 **Step 2: Verify no old counts remain**
 
-Run: `grep -rn "54 commands\|54 slash commands\|54 AI-assisted" README.md docs/index.html arckit-plugin/.claude-plugin/plugin.json .claude-plugin/marketplace.json docs/README.md DEPENDENCY-MATRIX.md CLAUDE.md`
+Run: `grep -rn "54 commands\|54 slash commands\|54 AI-assisted" README.md docs/index.html arckit-claude/.claude-plugin/plugin.json .claude-plugin/marketplace.json docs/README.md DEPENDENCY-MATRIX.md CLAUDE.md`
 
 Expected: No matches (all should show 57).
 
 **Step 3: Commit**
 
 ```bash
-git add README.md docs/index.html arckit-plugin/.claude-plugin/plugin.json .claude-plugin/marketplace.json arckit-plugin/README.md DEPENDENCY-MATRIX.md WORKFLOW-DIAGRAMS.md docs/README.md CLAUDE.md CHANGELOG.md arckit-plugin/CHANGELOG.md
+git add README.md docs/index.html arckit-claude/.claude-plugin/plugin.json .claude-plugin/marketplace.json arckit-claude/README.md DEPENDENCY-MATRIX.md WORKFLOW-DIAGRAMS.md docs/README.md CLAUDE.md CHANGELOG.md arckit-claude/CHANGELOG.md
 git commit -m "docs: update documentation for 3 new commands (framework, glossary, maturity-model)"
 ```
 
@@ -539,17 +539,17 @@ git commit -m "docs: update documentation for 3 new commands (framework, glossar
 ```bash
 # Templates (6 files -- 3 commands x 2 locations)
 ls .arckit/templates/glossary-template.md .arckit/templates/maturity-model-template.md .arckit/templates/framework-overview-template.md
-ls arckit-plugin/templates/glossary-template.md arckit-plugin/templates/maturity-model-template.md arckit-plugin/templates/framework-overview-template.md
+ls arckit-claude/templates/glossary-template.md arckit-claude/templates/maturity-model-template.md arckit-claude/templates/framework-overview-template.md
 
 # Commands (3 files)
-ls arckit-plugin/commands/glossary.md arckit-plugin/commands/maturity-model.md arckit-plugin/commands/framework.md
+ls arckit-claude/commands/glossary.md arckit-claude/commands/maturity-model.md arckit-claude/commands/framework.md
 
 # Agent (1 file)
-ls arckit-plugin/agents/arckit-framework.md
+ls arckit-claude/agents/arckit-framework.md
 
 # Guides (6 files -- 3 commands x 2 locations)
 ls docs/guides/glossary.md docs/guides/maturity-model.md docs/guides/framework.md
-ls arckit-plugin/guides/glossary.md arckit-plugin/guides/maturity-model.md arckit-plugin/guides/framework.md
+ls arckit-claude/guides/glossary.md arckit-claude/guides/maturity-model.md arckit-claude/guides/framework.md
 
 # Converter output (verify at least Codex files exist)
 ls .codex/prompts/arckit.glossary.md .codex/prompts/arckit.maturity-model.md .codex/prompts/arckit.framework.md
@@ -560,7 +560,7 @@ Expected: All files exist.
 **Step 2: Verify command count consistency**
 
 ```bash
-grep -rn "57 commands\|57 slash commands\|57 AI-assisted" README.md docs/index.html arckit-plugin/.claude-plugin/plugin.json .claude-plugin/marketplace.json CLAUDE.md | wc -l
+grep -rn "57 commands\|57 slash commands\|57 AI-assisted" README.md docs/index.html arckit-claude/.claude-plugin/plugin.json .claude-plugin/marketplace.json CLAUDE.md | wc -l
 ```
 
 Expected: Multiple matches confirming count is 57 everywhere.
@@ -568,9 +568,9 @@ Expected: Multiple matches confirming count is 57 everywhere.
 **Step 3: Verify template consistency**
 
 ```bash
-diff .arckit/templates/glossary-template.md arckit-plugin/templates/glossary-template.md
-diff .arckit/templates/maturity-model-template.md arckit-plugin/templates/maturity-model-template.md
-diff .arckit/templates/framework-overview-template.md arckit-plugin/templates/framework-overview-template.md
+diff .arckit/templates/glossary-template.md arckit-claude/templates/glossary-template.md
+diff .arckit/templates/maturity-model-template.md arckit-claude/templates/maturity-model-template.md
+diff .arckit/templates/framework-overview-template.md arckit-claude/templates/framework-overview-template.md
 ```
 
 Expected: No differences.
@@ -578,9 +578,9 @@ Expected: No differences.
 **Step 4: Verify guide consistency**
 
 ```bash
-diff docs/guides/glossary.md arckit-plugin/guides/glossary.md
-diff docs/guides/maturity-model.md arckit-plugin/guides/maturity-model.md
-diff docs/guides/framework.md arckit-plugin/guides/framework.md
+diff docs/guides/glossary.md arckit-claude/guides/glossary.md
+diff docs/guides/maturity-model.md arckit-claude/guides/maturity-model.md
+diff docs/guides/framework.md arckit-claude/guides/framework.md
 ```
 
 Expected: No differences.
@@ -588,7 +588,7 @@ Expected: No differences.
 **Step 5: Run markdown lint**
 
 ```bash
-npx markdownlint-cli2 "arckit-plugin/commands/glossary.md" "arckit-plugin/commands/maturity-model.md" "arckit-plugin/commands/framework.md" ".arckit/templates/glossary-template.md" ".arckit/templates/maturity-model-template.md" ".arckit/templates/framework-overview-template.md" "docs/guides/glossary.md" "docs/guides/maturity-model.md" "docs/guides/framework.md"
+npx markdownlint-cli2 "arckit-claude/commands/glossary.md" "arckit-claude/commands/maturity-model.md" "arckit-claude/commands/framework.md" ".arckit/templates/glossary-template.md" ".arckit/templates/maturity-model-template.md" ".arckit/templates/framework-overview-template.md" "docs/guides/glossary.md" "docs/guides/maturity-model.md" "docs/guides/framework.md"
 ```
 
 Expected: No lint errors (or only pre-existing violations).

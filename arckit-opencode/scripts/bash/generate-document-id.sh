@@ -81,7 +81,7 @@ PROJECT_ID_CLEAN=${PROJECT_ID_CLEAN:-0}
 PROJECT_ID_PADDED=$(printf "%03d" "$PROJECT_ID_CLEAN")
 
 # Multi-instance document types that require sequence numbers
-# Keep in sync with arckit-plugin/config/doc-types.mjs MULTI_INSTANCE_TYPES
+# Keep in sync with arckit-claude/config/doc-types.mjs MULTI_INSTANCE_TYPES
 MULTI_INSTANCE_TYPES="ADR DIAG DFD WARD DMC RSCH AWRS AZRS GCRS DSCT"
 
 # Check if this is a multi-instance type

@@ -369,7 +369,7 @@ python scripts/converter.py
 
 **Description**:
 
-Automatically converts all plugin slash commands from `arckit-plugin/commands/*.md` to Codex Skills (`arckit-codex/skills/arckit-*/SKILL.md`), Codex prompts (`.codex/prompts/arckit.*.md`), OpenCode commands (`.opencode/commands/arckit.*.md`), and Gemini extension TOML (`arckit-gemini/commands/arckit/*.toml`). The plugin is the source of truth for all commands.
+Automatically converts all plugin slash commands from `arckit-claude/commands/*.md` to Codex Skills (`arckit-codex/skills/arckit-*/SKILL.md`), Codex prompts (`.codex/prompts/arckit.*.md`), OpenCode commands (`.opencode/commands/arckit.*.md`), and Gemini extension TOML (`arckit-gemini/commands/arckit/*.toml`). The plugin is the source of truth for all commands.
 
 **Key Features**:
 
@@ -381,9 +381,9 @@ Automatically converts all plugin slash commands from `arckit-plugin/commands/*.
 
 **Conversion Process**:
 
-1. Reads each `arckit-plugin/commands/*.md` file
+1. Reads each `arckit-claude/commands/*.md` file
 2. Extracts frontmatter description and prompt body
-3. For agent-delegating commands, reads `arckit-plugin/agents/arckit-*.md` and extracts the full agent prompt
+3. For agent-delegating commands, reads `arckit-claude/agents/arckit-*.md` and extracts the full agent prompt
 4. Writes Codex Skills to `arckit-codex/skills/arckit-*/SKILL.md` with `agents/openai.yaml`
 5. Writes Codex Markdown to `.codex/prompts/arckit.*.md`
 6. Writes OpenCode Markdown to `.opencode/commands/arckit.*.md`
@@ -397,9 +397,9 @@ Automatically converts all plugin slash commands from `arckit-plugin/commands/*.
 python scripts/converter.py
 
 # Output:
-#   Codex CLI:    arckit-plugin/commands/plan.md -> .codex/prompts/arckit.plan.md
-#   Codex Skills: arckit-plugin/commands/plan.md -> arckit-codex/skills/arckit-plan/
-#   Gemini:       arckit-plugin/commands/plan.md -> arckit-gemini/commands/arckit/plan.toml
+#   Codex CLI:    arckit-claude/commands/plan.md -> .codex/prompts/arckit.plan.md
+#   Codex Skills: arckit-claude/commands/plan.md -> arckit-codex/skills/arckit-plan/
+#   Gemini:       arckit-claude/commands/plan.md -> arckit-gemini/commands/arckit/plan.toml
 #   ...
 # Generated 57 Codex CLI + 57 Codex Skills + 57 OpenCode + 57 Gemini = 285 total files.
 ```
@@ -418,8 +418,8 @@ python scripts/converter.py
 
 **Related**:
 
-- Plugin commands (source): `arckit-plugin/commands/`
-- Plugin agents (source): `arckit-plugin/agents/`
+- Plugin commands (source): `arckit-claude/commands/`
+- Plugin agents (source): `arckit-claude/agents/`
 - Codex Skills (generated): `arckit-codex/skills/arckit-*/`
 - Codex prompts (generated, deprecated): `.codex/prompts/`
 - OpenCode commands (generated): `.opencode/commands/`

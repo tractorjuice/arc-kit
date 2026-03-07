@@ -4,7 +4,7 @@
 
 **Goal:** Create a process skill that replaces `/arckit:start` with an adaptive-depth, question-driven onboarding experience that recommends tailored command sequences.
 
-**Architecture:** A new `architecture-workflow` skill in `arckit-plugin/skills/` with a SKILL.md (process methodology + question flow) and 5 reference files (one per workflow path). The existing `/arckit:start` command becomes a thin wrapper delegating to the skill.
+**Architecture:** A new `architecture-workflow` skill in `arckit-claude/skills/` with a SKILL.md (process methodology + question flow) and 5 reference files (one per workflow path). The existing `/arckit:start` command becomes a thin wrapper delegating to the skill.
 
 **Tech Stack:** Claude Code plugin skills (Markdown with YAML frontmatter), AskUserQuestion tool for interactive questions.
 
@@ -13,22 +13,22 @@
 ### Task 1: Create skill directory structure
 
 **Files:**
-- Create: `arckit-plugin/skills/architecture-workflow/SKILL.md` (placeholder)
-- Create: `arckit-plugin/skills/architecture-workflow/references/` (directory)
+- Create: `arckit-claude/skills/architecture-workflow/SKILL.md` (placeholder)
+- Create: `arckit-claude/skills/architecture-workflow/references/` (directory)
 
 **Step 1: Create the directories**
 
-Run: `mkdir -p arckit-plugin/skills/architecture-workflow/references`
+Run: `mkdir -p arckit-claude/skills/architecture-workflow/references`
 
 **Step 2: Verify structure**
 
-Run: `ls -la arckit-plugin/skills/architecture-workflow/`
+Run: `ls -la arckit-claude/skills/architecture-workflow/`
 Expected: Empty directory with `references/` subdirectory
 
 **Step 3: Commit**
 
 ```bash
-git add arckit-plugin/skills/architecture-workflow/
+git add arckit-claude/skills/architecture-workflow/
 git commit -m "chore: scaffold architecture-workflow skill directory"
 ```
 
@@ -37,7 +37,7 @@ git commit -m "chore: scaffold architecture-workflow skill directory"
 ### Task 2: Create the standard-path reference file
 
 **Files:**
-- Create: `arckit-plugin/skills/architecture-workflow/references/standard-path.md`
+- Create: `arckit-claude/skills/architecture-workflow/references/standard-path.md`
 - Reference: `WORKFLOW-DIAGRAMS.md` lines 18-113 (Standard Project Path)
 - Reference: `DEPENDENCY-MATRIX.md` lines 225-231 (Standard critical path)
 
@@ -134,13 +134,13 @@ For quick prototype documentation or proof of concept:
 
 **Step 2: Verify file renders correctly**
 
-Run: `wc -l arckit-plugin/skills/architecture-workflow/references/standard-path.md`
+Run: `wc -l arckit-claude/skills/architecture-workflow/references/standard-path.md`
 Expected: ~90-100 lines
 
 **Step 3: Commit**
 
 ```bash
-git add arckit-plugin/skills/architecture-workflow/references/standard-path.md
+git add arckit-claude/skills/architecture-workflow/references/standard-path.md
 git commit -m "feat: add standard-path reference for architecture-workflow skill"
 ```
 
@@ -149,7 +149,7 @@ git commit -m "feat: add standard-path reference for architecture-workflow skill
 ### Task 3: Create the uk-gov-path reference file
 
 **Files:**
-- Create: `arckit-plugin/skills/architecture-workflow/references/uk-gov-path.md`
+- Create: `arckit-claude/skills/architecture-workflow/references/uk-gov-path.md`
 - Reference: `WORKFLOW-DIAGRAMS.md` lines 116-224 (UK Government Path)
 - Reference: `DEPENDENCY-MATRIX.md` lines 236-240 (UK Gov critical path)
 
@@ -267,7 +267,7 @@ For Alpha assessment preparation:
 **Step 2: Commit**
 
 ```bash
-git add arckit-plugin/skills/architecture-workflow/references/uk-gov-path.md
+git add arckit-claude/skills/architecture-workflow/references/uk-gov-path.md
 git commit -m "feat: add uk-gov-path reference for architecture-workflow skill"
 ```
 
@@ -276,7 +276,7 @@ git commit -m "feat: add uk-gov-path reference for architecture-workflow skill"
 ### Task 4: Create the defence-path reference file
 
 **Files:**
-- Create: `arckit-plugin/skills/architecture-workflow/references/defence-path.md`
+- Create: `arckit-claude/skills/architecture-workflow/references/defence-path.md`
 - Reference: `WORKFLOW-DIAGRAMS.md` lines 349-461 (MOD Defence Path)
 - Reference: `DEPENDENCY-MATRIX.md` lines 262-276 (MOD critical paths)
 
@@ -298,7 +298,7 @@ Key differences from UK Gov path:
 **Step 2: Commit**
 
 ```bash
-git add arckit-plugin/skills/architecture-workflow/references/defence-path.md
+git add arckit-claude/skills/architecture-workflow/references/defence-path.md
 git commit -m "feat: add defence-path reference for architecture-workflow skill"
 ```
 
@@ -307,7 +307,7 @@ git commit -m "feat: add defence-path reference for architecture-workflow skill"
 ### Task 5: Create the ai-ml-path reference file
 
 **Files:**
-- Create: `arckit-plugin/skills/architecture-workflow/references/ai-ml-path.md`
+- Create: `arckit-claude/skills/architecture-workflow/references/ai-ml-path.md`
 - Reference: `WORKFLOW-DIAGRAMS.md` lines 227-346 (UK Gov AI Path)
 - Reference: `DEPENDENCY-MATRIX.md` lines 251-258 (UK Gov AI critical path)
 
@@ -325,7 +325,7 @@ This reference is a **modifier** — it specifies which additional commands to a
 **Step 2: Commit**
 
 ```bash
-git add arckit-plugin/skills/architecture-workflow/references/ai-ml-path.md
+git add arckit-claude/skills/architecture-workflow/references/ai-ml-path.md
 git commit -m "feat: add ai-ml-path reference for architecture-workflow skill"
 ```
 
@@ -334,7 +334,7 @@ git commit -m "feat: add ai-ml-path reference for architecture-workflow skill"
 ### Task 6: Create the data-path reference file
 
 **Files:**
-- Create: `arckit-plugin/skills/architecture-workflow/references/data-path.md`
+- Create: `arckit-claude/skills/architecture-workflow/references/data-path.md`
 
 **Step 1: Write the reference file**
 
@@ -351,7 +351,7 @@ This reference is a **modifier** like ai-ml-path — specifies additions and whe
 **Step 2: Commit**
 
 ```bash
-git add arckit-plugin/skills/architecture-workflow/references/data-path.md
+git add arckit-claude/skills/architecture-workflow/references/data-path.md
 git commit -m "feat: add data-path reference for architecture-workflow skill"
 ```
 
@@ -360,9 +360,9 @@ git commit -m "feat: add data-path reference for architecture-workflow skill"
 ### Task 7: Create the SKILL.md
 
 **Files:**
-- Create: `arckit-plugin/skills/architecture-workflow/SKILL.md`
-- Reference: `arckit-plugin/skills/wardley-mapping/SKILL.md` (for frontmatter pattern)
-- Reference: `arckit-plugin/commands/start.md` (for project detection logic)
+- Create: `arckit-claude/skills/architecture-workflow/SKILL.md`
+- Reference: `arckit-claude/skills/wardley-mapping/SKILL.md` (for frontmatter pattern)
+- Reference: `arckit-claude/commands/start.md` (for project detection logic)
 - Reference: Design doc at `docs/plans/2026-03-05-architecture-workflow-skill-design.md`
 
 **Step 1: Write the SKILL.md**
@@ -424,13 +424,13 @@ The skill must contain:
 
 **Step 2: Verify the skill is well-formed**
 
-Run: `head -5 arckit-plugin/skills/architecture-workflow/SKILL.md`
+Run: `head -5 arckit-claude/skills/architecture-workflow/SKILL.md`
 Expected: YAML frontmatter with `name: architecture-workflow`
 
 **Step 3: Commit**
 
 ```bash
-git add arckit-plugin/skills/architecture-workflow/SKILL.md
+git add arckit-claude/skills/architecture-workflow/SKILL.md
 git commit -m "feat: add architecture-workflow process skill"
 ```
 
@@ -439,11 +439,11 @@ git commit -m "feat: add architecture-workflow process skill"
 ### Task 8: Modify /arckit:start to delegate to skill
 
 **Files:**
-- Modify: `arckit-plugin/commands/start.md` (entire file — replace content)
+- Modify: `arckit-claude/commands/start.md` (entire file — replace content)
 
 **Step 1: Read the current start.md to confirm contents**
 
-Run: `wc -l arckit-plugin/commands/start.md`
+Run: `wc -l arckit-claude/commands/start.md`
 Expected: 189 lines (the current full command)
 
 **Step 2: Replace with thin wrapper**
@@ -476,13 +476,13 @@ $ARGUMENTS
 
 **Step 3: Verify the replacement**
 
-Run: `wc -l arckit-plugin/commands/start.md`
+Run: `wc -l arckit-claude/commands/start.md`
 Expected: ~18-20 lines (much shorter than 189)
 
 **Step 4: Commit**
 
 ```bash
-git add arckit-plugin/commands/start.md
+git add arckit-claude/commands/start.md
 git commit -m "refactor: make /arckit:start delegate to architecture-workflow skill"
 ```
 
@@ -552,7 +552,7 @@ git commit -m "fix: address issues found during skill testing"
 | 5 | `references/ai-ml-path.md` | Create (~80 lines) |
 | 6 | `references/data-path.md` | Create (~80 lines) |
 | 7 | `SKILL.md` | Create (~200-250 lines) |
-| 8 | `arckit-plugin/commands/start.md` | Modify (189 → ~20 lines) |
+| 8 | `arckit-claude/commands/start.md` | Modify (189 → ~20 lines) |
 | 9 | `MEMORY.md` | Modify (skill count) |
 | 10 | End-to-end testing | Test |
 

@@ -22,12 +22,12 @@
       "category": "Overview"
     },
     {
-      "path": "DEPENDENCY-MATRIX.md",
+      "path": "docs/DEPENDENCY-MATRIX.md",
       "title": "Command Dependencies",
       "category": "Overview"
     },
     {
-      "path": "WORKFLOW-DIAGRAMS.md",
+      "path": "docs/WORKFLOW-DIAGRAMS.md",
       "title": "Workflow Diagrams",
       "category": "Overview"
     },

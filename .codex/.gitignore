@@ -1,7 +1,0 @@
-# Exclude Codex CLI authentication tokens and session data
-# but keep prompts and documentation
-*
-!prompts/
-!prompts/*.md
-!README.md
-!.gitignore
