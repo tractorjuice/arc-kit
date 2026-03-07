@@ -359,6 +359,7 @@
             <span class="app-page-hero__stat">Enterprise Architecture Toolkit</span>
             <h1 class="app-page-hero__title">ArcKit</h1>
             <p class="app-page-hero__description">Transform architecture chaos into systematic, audit-ready governance.</p>
+            <p class="app-page-hero__version" id="hero-version"></p>
         </div>
     </div>
 
@@ -526,7 +527,7 @@
                 <div class="govuk-grid-column-two-thirds">
                     <h2 class="govuk-heading-m">ArcKit</h2>
                     <p class="govuk-body">Enterprise Architecture Governance & Vendor Procurement Toolkit</p>
-                    <p class="govuk-body">Version 4.0.0 - March 2026</p>
+                    <p class="govuk-body" id="footer-version"></p>
                 </div>
 
                 <div class="govuk-grid-column-one-third">
@@ -554,5 +555,26 @@
         initAll()
     </script>
 <script src="theme.js"></script>
+    <script>
+        (function() {
+            fetch('https://api.github.com/repos/tractorjuice/arc-kit/releases/latest')
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                    if (!d.tag_name) return;
+                    var ver = d.tag_name.replace(/^v/, '');
+                    var date = d.published_at ? new Date(d.published_at).toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }) : '';
+                    var hero = document.getElementById('hero-version');
+                    if (hero) {
+                        var link = document.createElement('a');
+                        link.href = d.html_url;
+                        link.textContent = 'v' + ver;
+                        hero.appendChild(link);
+                    }
+                    var footer = document.getElementById('footer-version');
+                    if (footer) footer.textContent = 'Version ' + ver + (date ? ' \u2014 ' + date : '');
+                })
+                .catch(function() {});
+        })();
+    </script>
 </body>
 </html>

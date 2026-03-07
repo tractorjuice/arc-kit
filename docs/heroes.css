@@ -89,6 +89,33 @@
 .app-page-hero__title       { animation-delay: 0.09s; }
 .app-page-hero__description { animation-delay: 0.14s; }
 
+/* Version badge */
+.app-page-hero__version {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.8125rem;
+    font-weight: 700;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.18);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    animation: heroReveal 0.45s ease-out 0.19s both;
+}
+
+.app-page-hero__version:empty {
+    display: none;
+}
+
+.app-page-hero__version a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.app-page-hero__version a:hover {
+    text-decoration: underline;
+}
+
 /* ============================================================
    Responsive
    ============================================================ */
