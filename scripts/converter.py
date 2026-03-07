@@ -196,6 +196,10 @@ def convert(commands_dir, agents_dir):
         if filename in agent_map:
             agent_path, agent_prompt = agent_map[filename]
             prompt = agent_prompt
+            # Agent prompts don't contain $ARGUMENTS — append it so the
+            # user's query is injected into the generated command
+            if "$ARGUMENTS" not in prompt:
+                prompt += "\n\n## User Request\n\n```text\n$ARGUMENTS\n```\n"
             source_label = f"{command_path} (agent: {agent_path})"
         else:
             prompt = command_prompt

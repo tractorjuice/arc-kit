@@ -228,6 +228,13 @@ Return ONLY a concise summary including:
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
 
+## User Request
+
+```text
+$ARGUMENTS
+```
+
+
 ## Suggested Next Steps
 
 After completing this command, consider running:

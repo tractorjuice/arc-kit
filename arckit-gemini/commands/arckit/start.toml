@@ -1,0 +1,29 @@
+description = """
+Get oriented with ArcKit — guided project onboarding, workflow selection, and command recommendations
+"""
+prompt = """
+**IMPORTANT — Gemini Extension File Access**:
+This command runs as a Gemini CLI extension. The extension directory (`~/.gemini/extensions/arckit/`) is outside the workspace sandbox, so you CANNOT use the read_file tool to access it. Instead:
+- To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arckit/templates/foo-template.md`
+- To list files: use `ls ~/.gemini/extensions/arckit/templates/`
+- To run scripts: use `python3 ~/.gemini/extensions/arckit/scripts/python/create-project.py --json`
+- To check file existence: use `test -f ~/.gemini/extensions/arckit/templates/foo-template.md && echo exists`
+All extension file access MUST go through shell commands.
+
+# ArcKit: Project Onboarding
+
+Use the **architecture-workflow** skill to guide this user through project onboarding and workflow selection.
+
+## User Input
+
+```text
+{{args}}
+```
+
+## Instructions
+
+1. Follow the architecture-workflow skill process exactly
+2. If the user provided `{{args}}` with a specific focus (e.g., \"procurement\", \"governance review\"), use that as context during triage — it may let you skip some questions
+3. The skill will detect project state, ask adaptive questions, and present a tailored command plan
+4. Do NOT run any commands — only present the recommended plan for the user to execute
+"""
