@@ -23,14 +23,6 @@
       }
     }
   },
-  "settings": [
-    {
-      "name": "Google API Key",
-      "description": "Optional. Required for /arckit:gcp-research. Get one at https://makersuite.google.com/app/apikey",
-      "envVar": "GOOGLE_API_KEY",
-      "sensitive": true
-    }
-  ],
   "themes": [
     {
       "name": "arckit",
