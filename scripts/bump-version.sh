@@ -99,6 +99,11 @@ update_file "arckit-gemini/gemini-extension.json" ".version"
 echo "$NEW_VERSION" > arckit-opencode/VERSION
 update_file "arckit-opencode/VERSION" "overwrite"
 
+# ── 12. arckit-codex/VERSION ──────────────────────────────────────────────
+
+echo "$NEW_VERSION" > arckit-codex/VERSION
+update_file "arckit-codex/VERSION" "overwrite"
+
 # ── Summary ─────────────────────────────────────────────────────────────────
 
 echo ""
@@ -109,7 +114,7 @@ echo ""
 echo "── Verification ──"
 echo ""
 echo "VERSION files:"
-grep -H "$NEW_VERSION" VERSION arckit-plugin/VERSION arckit-gemini/VERSION arckit-opencode/VERSION
+grep -H "$NEW_VERSION" VERSION arckit-plugin/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION
 echo ""
 echo "pyproject.toml:"
 grep "^version" pyproject.toml

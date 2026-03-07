@@ -1,0 +1,289 @@
+---
+description: "Generate a Technology Code of Practice (TCoP) review document for a UK Government technology project"
+---
+
+# Technology Code of Practice Review
+
+You are helping to conduct a **Technology Code of Practice (TCoP) review** for a UK Government technology project or programme.
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+## Context
+
+The Technology Code of Practice is a set of 13 criteria to help government design, build and buy technology. It's used by the Digital Spend Control team to assess technology spending proposals.
+
+**TCoP Reference**: https://www.gov.uk/guidance/the-technology-code-of-practice
+
+## Your Task
+
+Generate a comprehensive TCoP review document by:
+
+1. **Loading the template** (with user override support):
+   - **First**, check if `.arckit/templates/tcop-review-template.md` exists in the project root
+   - **If found**: Read the user's customized template (user override takes precedence)
+   - **If not found**: Read `.arckit/templates/tcop-review-template.md` (default)
+
+   > **Tip**: Users can customize templates with `/arckit:customize tcop`
+
+2. **Read Available Documents**:
+
+   > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
+   **MANDATORY** (warn if missing):
+   - **REQ** (Requirements) — Extract: FR/NFR IDs, technology constraints, compliance requirements
+     - If missing: warn user to run `/arckit:requirements` first
+   - **PRIN** (Architecture Principles, in 000-global) — Extract: Technology standards, approved platforms, security requirements
+     - If missing: warn user to run `/arckit:principles` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - **STKE** (Stakeholder Analysis) — Extract: User needs, priorities
+   - **RISK** (Risk Register) — Extract: Security and compliance risks
+   - **DIAG** (Architecture Diagrams, in diagrams/) — Extract: Deployment topology
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Technology choices
+   - **AIPB** (AI Playbook) — Extract: AI/ML system assessments
+   - **DPIA** (Data Protection Impact Assessment) — Extract: Data protection context
+
+3. **Assess compliance**: Based on the user's description and any existing project documentation, assess compliance against all 13 TCoP points:
+   - Point 1: Define user needs
+   - Point 2: Make things accessible and inclusive
+   - Point 3: Be open and use open source
+   - Point 4: Make use of open standards
+   - Point 5: Use cloud first
+   - Point 6: Make things secure
+   - Point 7: Make privacy integral
+   - Point 8: Share, reuse and collaborate
+   - Point 9: Integrate and adapt technology
+   - Point 10: Make better use of data
+   - Point 11: Define your purchasing strategy
+   - Point 12: Make your technology sustainable
+   - Point 13: Meet the Service Standard
+
+4. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract previous TCoP assessment results, departmental interpretations of TCoP points, remediation plans
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract approved technology lists, procurement policies, cloud-first mandates
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise technology standards, digital strategy documents, cross-project TCoP compliance evidence
+   - If no external docs found but they would improve the TCoP assessment, ask: "Do you have any previous TCoP assessments or departmental technology policy documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+5. **For each TCoP point**:
+   - Assess status: ✅ Compliant / ⚠️ Partially Compliant / ❌ Non-Compliant / N/A Not Applicable
+   - Provide evidence of how the project meets (or fails to meet) the criteria
+   - Check relevant checklist items based on project information
+   - Identify gaps and required actions
+
+6. **Provide realistic assessments**:
+   - Be honest about compliance gaps
+   - Mark items as "Partially Compliant" if only some aspects are met
+   - Use "N/A" only when truly not applicable
+   - Provide actionable recommendations for gaps
+
+7. **Generate compliance scorecard**: Create a summary showing status of all 13 points
+
+8. **Prioritize actions**: Identify critical issues requiring immediate attention
+
+9. **Detect version**: Before generating the document ID, check if a previous version exists:
+   - Look for existing `ARC-{PROJECT_ID}-TCOP-v*.md` files in the project directory
+   - **If no existing file**: Use VERSION="1.0"
+   - **If existing file found**:
+     - Read the existing document to understand its scope
+     - Compare against current project state and compliance evidence
+     - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed assessments, updated evidence, corrected details
+     - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new TCoP points assessed, fundamentally different compliance posture, significant project changes
+   - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **TCOP** per-type checks pass. Fix any failures before proceeding.
+
+10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-TCOP-v${VERSION}.md`
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+### Step 1: Construct Document ID
+
+- **Document ID**: `ARC-{PROJECT_ID}-TCOP-v{VERSION}` (e.g., `ARC-001-TCOP-v1.0`)
+
+### Step 2: Populate Required Fields
+
+**Auto-populated fields** (populate these automatically):
+
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → Determined version from step 8
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → "Technology Code of Practice Review"
+- `ARC-[PROJECT_ID]-TCOP-v[VERSION]` → Construct using format from Step 1
+- `[COMMAND]` → "arckit.tcop"
+
+**User-provided fields** (extract from project metadata or user input):
+
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+**Calculated fields**:
+
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days (requirements, research, risks)
+- `[YYYY-MM-DD]` for Review Date → Phase gate dates (Alpha/Beta/Live for compliance docs)
+
+**Pending fields** (leave as [PENDING] until manually updated):
+
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+### Step 3: Populate Revision History
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit:tcop` command | [PENDING] | [PENDING] |
+```
+
+### Step 4: Populate Generation Metadata Footer
+
+The footer should be populated with:
+
+```markdown
+**Generated by**: ArcKit `/arckit:tcop` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: {ARCKIT_VERSION}
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+### Example Fully Populated Document Control Section
+
+```markdown
+## Document Control
+
+| Field | Value |
+|-------|-------|
+| **Document ID** | ARC-001-TCOP-v1.0 |
+| **Document Type** | {Document purpose} |
+| **Project** | Windows 10 to Windows 11 Migration (Project 001) |
+| **Classification** | OFFICIAL-SENSITIVE |
+| **Status** | DRAFT |
+| **Version** | 1.0 |
+| **Created Date** | 2025-10-29 |
+| **Last Modified** | 2025-10-29 |
+| **Review Date** | 2025-11-30 |
+| **Owner** | John Smith (Business Analyst) |
+| **Reviewed By** | [PENDING] |
+| **Approved By** | [PENDING] |
+| **Distribution** | PM Team, Architecture Team, Dev Team |
+
+## Revision History
+
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| 1.0 | 2025-10-29 | ArcKit AI | Initial creation from `/arckit:tcop` command | [PENDING] | [PENDING] |
+```
+
+## Output Format
+
+The document must include:
+
+- Executive summary with overall compliance status
+- Detailed assessment for each of the 13 TCoP points
+- Evidence and checklist items for each point
+- Gaps and required actions
+- Overall compliance scorecard (X/13 compliant)
+- Critical issues list
+- Prioritized recommendations (High/Medium/Low)
+- Next steps with timeline
+- GovS 005 alignment mapping (TCoP-to-GovS 005 principle traceability and governance obligations)
+- Approval section
+
+## Assessment Guidelines
+
+**When assessing compliance**:
+
+- **✅ Compliant**: Clear evidence exists, all key criteria met, no significant gaps
+- **⚠️ Partially Compliant**: Some aspects addressed but significant gaps remain, or evidence is incomplete
+- **❌ Non-Compliant**: Criteria not met, no evidence of compliance, or critical gaps exist
+- **N/A**: Point is genuinely not applicable (e.g., Point 13 if not building a public service)
+
+**Common critical issues**:
+
+- No DPIA for projects processing personal data (Point 7)
+- No accessibility testing for user-facing services (Point 2)
+- No security assessment completed (Point 6)
+- Public cloud not considered (Point 5)
+- No user research conducted (Point 1)
+
+**Project phases matter**:
+
+- **Discovery/Alpha**: User research, technical spikes, open source exploration expected
+- **Beta**: Accessibility testing, security assessments, DPIA should be complete
+- **Live**: All 13 points must be fully compliant
+
+## Special Considerations
+
+**For AI/ML systems**: Also consider requirements from the AI Playbook (may need ATRS - Algorithmic Transparency Record)
+
+**For public-facing services**: Point 13 (Service Standard) is mandatory - must pass GDS service assessments
+
+**For Digital Spend Control submissions**: Focus on points most relevant to spending approval:
+
+- Point 5 (Cloud First)
+- Point 11 (Purchasing Strategy)
+- Point 8 (Reuse and Collaboration)
+
+**Data protection**: If processing personal data, Point 7 is critical - DPIA completion is mandatory before going live
+
+## UK Government Context
+
+Be aware of:
+
+- **Digital Marketplace**: G-Cloud, DOS frameworks for procurement
+- **GDS Service Standard**: 14-point standard for public services
+- **NCSC guidance**: Cyber security best practices
+- **UK GDPR**: Data protection requirements
+- **Cyber Essentials**: Baseline security certification
+- **Cloud First policy**: Public cloud preferred unless justified otherwise
+- **GovS 005**: TCoP is the implementation guidance for the Government Functional Standard for Digital — include GovS 005 alignment mapping
+
+## Example Output Structure
+
+```markdown
+# Technology Code of Practice (TCoP) Review
+
+**Project**: Benefits Eligibility Chatbot
+**Overall TCoP Compliance**: Partially Compliant
+
+## TCoP Point 1: Define User Needs
+**Status**: ✅ Compliant
+**Evidence**: User research completed with 50+ DWP claimants...
+[Checked items and gaps listed]
+
+## TCoP Point 6: Make Things Secure
+**Status**: ⚠️ Partially Compliant
+**Evidence**: Threat model exists, but penetration testing not yet completed...
+**Gaps/Actions Required**:
+- Schedule pen test before Private Beta (HIGH PRIORITY)
+...
+
+## Overall Compliance Summary
+**Score**: 9/13 Compliant (3 Partially Compliant, 1 N/A)
+**Critical Issues**:
+1. DPIA not completed (Point 7) - BLOCKING for Beta
+2. Accessibility audit incomplete (Point 2) - Required for Beta
+```
+
+## Notes
+
+- Be thorough but practical - this is a governance document, not just a checkbox exercise
+- Highlight blockers that prevent progression to next phase
+- Reference official GOV.UK guidance URLs for each point
+- Consider the project's maturity - don't expect Live compliance in Discovery
+- Provide specific, actionable recommendations rather than generic advice
+
+Generate the TCoP review now based on the project information provided.
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

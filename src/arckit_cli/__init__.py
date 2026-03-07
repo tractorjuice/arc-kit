@@ -157,6 +157,9 @@ def get_data_paths():
             "workflow_diagrams": base_path / "WORKFLOW-DIAGRAMS.md",
             "version": base_path / "VERSION",
             "changelog": base_path / "CHANGELOG.md",
+            "codex_skills": base_path / "arckit-codex" / "skills",
+            "codex_agents": base_path / "arckit-codex" / "agents",
+            "codex_config": base_path / "arckit-codex" / "config.toml",
         }
 
     # First, check if running from source (development mode)
@@ -231,6 +234,8 @@ def create_project_structure(
         directories.extend(
             [
                 ".codex/prompts",
+                ".codex/agents",
+                ".agents/skills",
                 ".opencode/commands",
                 ".opencode/agents",
             ]
@@ -243,6 +248,9 @@ def create_project_structure(
             directories.append(f"{agent_folder}agents")
         else:
             directories.append(f"{agent_folder}prompts")
+            if ai_assistant == "codex":
+                directories.append(".agents/skills")
+                directories.append(f"{agent_folder}agents")
 
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
@@ -502,6 +510,34 @@ def init(
                 f"[yellow]Warning: Codex prompts not found at {commands_src}[/yellow]"
             )
 
+        # Copy Codex skills to .agents/skills/
+        codex_skills_src = data_paths.get("codex_skills")
+        if codex_skills_src and codex_skills_src.exists():
+            skills_dst = project_path / ".agents" / "skills"
+            skills_dst.mkdir(parents=True, exist_ok=True)
+            shutil.copytree(codex_skills_src, skills_dst, dirs_exist_ok=True)
+            skill_count = len(list(skills_dst.iterdir()))
+            console.print(f"[green]✓[/green] Copied {skill_count} skills to .agents/skills/")
+
+        # Copy Codex agent configs
+        codex_agents_src = data_paths.get("codex_agents")
+        if codex_agents_src and codex_agents_src.exists():
+            agents_dst = project_path / ".codex" / "agents"
+            agents_dst.mkdir(parents=True, exist_ok=True)
+            agent_count = 0
+            for agent_file in sorted(codex_agents_src.iterdir()):
+                if agent_file.suffix in (".toml", ".md"):
+                    shutil.copy2(agent_file, agents_dst / agent_file.name)
+                    agent_count += 1
+            console.print(f"[green]✓[/green] Copied {agent_count} agent configs to .codex/agents/")
+
+        # Copy Codex config.toml (MCP servers + agent roles)
+        codex_config_src = data_paths.get("codex_config")
+        if codex_config_src and codex_config_src.exists():
+            config_dst = project_path / ".codex" / "config.toml"
+            shutil.copy2(codex_config_src, config_dst)
+            console.print(f"[green]✓[/green] Copied config.toml (MCP servers + agent roles)")
+
     # Copy OpenCode commands and agents
     if ai_assistant == "opencode" or all_ai:
         # Copy commands
@@ -744,6 +780,8 @@ export CODEX_HOME="$PWD/.codex"
             "!.codex/prompts/",
             "!.codex/README.md",
             "!.codex/.gitignore",
+            "!.codex/agents/",
+            "!.codex/config.toml",
             "",
             "# direnv",
             ".envrc.local",

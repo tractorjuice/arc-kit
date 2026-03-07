@@ -1,0 +1,527 @@
+---
+description: "Generate a Secure by Design assessment for UK Government projects (civilian departments)"
+---
+
+# UK Government Secure by Design Assessment
+
+You are helping to conduct a **Secure by Design assessment** for a UK Government technology project (civilian/non-MOD).
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+## Context
+
+UK Government departments must follow NCSC (National Cyber Security Centre) guidance and achieve appropriate security certifications before deploying systems. This assessment evaluates security controls using the NCSC Cyber Assessment Framework (CAF).
+
+**Key UK Government Security References**:
+
+- NCSC Cyber Assessment Framework (CAF)
+- UK Government Cyber Security Standard (July 2025, Cabinet Office)
+- NCSC Vulnerability Monitoring Service (VMS)
+- Government Cyber Security Profession & Cyber Academy
+- Cyber Essentials / Cyber Essentials Plus
+- UK GDPR and Data Protection Act 2018
+- Government Security Classifications Policy
+- Cloud Security Principles
+
+## Your Task
+
+> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+
+Generate a comprehensive Secure by Design assessment document by:
+
+1. **Loading the template** (with user override support):
+   - **First**, check if `.arckit/templates/ukgov-secure-by-design-template.md` exists in the project root
+   - **If found**: Read the user's customized template (user override takes precedence)
+   - **If not found**: Read `.arckit/templates/ukgov-secure-by-design-template.md` (default)
+
+   > **Tip**: Users can customize templates with `/arckit:customize secure`
+
+2. **Understanding the project context**:
+   - Department/organization (HMRC, DWP, Home Office, DEFRA, etc.)
+   - Data classification (PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE)
+   - Project phase (Discovery, Alpha, Beta, Live)
+   - User base (public-facing, internal staff, both)
+   - Hosting approach (cloud, on-premise, hybrid)
+
+3. **Read existing artifacts from the project context:**
+
+   **MANDATORY** (warn if missing):
+   - **REQ** (Requirements) in `projects/{project-name}/`
+     - Extract: NFR-SEC (security), NFR-P (performance), NFR-A (availability), INT (integration), DR (data) requirements
+     - If missing: warn user to run `/arckit:requirements` first
+   - **PRIN** (Architecture Principles, in `projects/000-global/`)
+     - Extract: Security standards, approved platforms, compliance requirements, cloud policy
+     - If missing: warn user to run `/arckit:principles` first
+
+   **RECOMMENDED** (read if available, note if missing):
+   - **RISK** (Risk Register) in `projects/{project-name}/`
+     - Extract: Security risks, threat model, risk appetite, mitigations
+   - **DPIA** (DPIA) in `projects/{project-name}/`
+     - Extract: Personal data processing, lawful basis, data protection risks
+   - **DIAG** (Architecture Diagrams) in `projects/{project-name}/diagrams/`
+     - Extract: Deployment topology, network boundaries, data flows, integration points
+
+   **OPTIONAL** (read if available, skip silently if missing):
+   - **TCOP** (TCoP Assessment) in `projects/{project-name}/`
+     - Extract: Technology governance compliance, Point 6 (Secure) findings
+   - **AIPB** (AI Playbook) in `projects/{project-name}/`
+     - Extract: AI-specific security requirements (prompt injection, data poisoning)
+   - **ATRS** (ATRS record) in `projects/{project-name}/`
+     - Extract: Algorithmic transparency security requirements
+
+4. **Read external documents and policies**:
+   - Read any **external documents** listed in the project context (`external/` files) — extract vulnerability findings, risk ratings, remediation recommendations, threat actors, attack vectors, existing mitigations
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract security requirements, acceptable risk levels, mandatory controls, certification scope, validity dates
+   - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise security baselines, penetration test reports, cross-project security assessment patterns
+   - If no external docs exist but they would improve the assessment, ask: "Do you have any existing security assessments, pen test reports, or threat models? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+5. **Assess security using NCSC CAF (14 principles across 4 objectives)**:
+
+   **Objective A: Managing Security Risk (4 principles)**
+   - A1: Governance - SIRO appointed, security policies, oversight
+   - A2: Risk Management - Asset classification, risk register, treatment plans
+   - A3: Asset Management - Inventory of hardware, software, data
+   - A4: Supply Chain - Vendor assessments, contracts, third-party controls
+
+   **Objective B: Protecting Against Cyber Attack (6 principles)**
+   - B1: Service Protection Policies - Acceptable use, access control, data protection policies
+   - B2: Identity and Access Control - MFA, PAM, least privilege, access reviews
+   - B3: Data Security - Encryption, UK GDPR compliance, DPIA, DLP
+   - B4: System Security - Patching, hardening, anti-malware, EDR
+   - B5: Resilient Networks - Segmentation, firewalls, IDS/IPS, VPN
+   - B6: Staff Awareness - Security training, phishing awareness, data protection
+
+   **Objective C: Detecting Cyber Security Events (2 principles)**
+   - C1: Security Monitoring - SIEM, alerting, logging, threat intelligence
+   - C2: Proactive Security Event Discovery - Vulnerability scanning (including NCSC VMS enrollment), pen testing, threat hunting
+
+   **Objective D: Minimising the Impact of Incidents (2 principles)**
+   - D1: Response and Recovery Planning - Incident response, BC/DR, RTO/RPO
+   - D2: Improvements - Post-incident reviews, metrics, continuous improvement
+
+6. **Assess Cyber Essentials compliance (5 controls)**:
+   - Firewalls - Boundary firewalls configured
+   - Secure Configuration - Hardened systems, unnecessary services disabled
+   - Access Control - User accounts, MFA, least privilege
+   - Malware Protection - Anti-malware on all devices
+   - Patch Management - Timely patching (critical within 14 days)
+
+7. **Assess UK GDPR compliance (if processing personal data)**:
+   - DPO appointed (if required)
+   - Lawful basis identified
+   - Privacy notice published
+   - Data subject rights procedures
+   - DPIA completed (if high risk)
+   - Data breach notification process (72 hours to ICO)
+   - Records of Processing Activities (ROPA)
+
+8. **For each CAF principle and control**:
+   - Assess status: ✅ Achieved / ⚠️ Partially Achieved / ❌ Not Achieved / N/A
+   - Gather evidence from project documents
+   - Check relevant security controls
+   - Identify gaps and risks
+   - Provide specific remediation actions with owners and timelines
+
+9. **Calculate overall CAF score**: X/14 principles achieved
+
+10. **Assess UK Government Cyber Security Standard compliance**:
+
+    **9.1 GovAssure Status** — For critical systems subject to GovAssure assurance:
+    - Identify which systems are in scope for the current GovAssure cycle
+    - Record assessment status per system (Planned / In Progress / Complete)
+    - Summarize findings and remediation status
+    - Reference NCSC GovAssure guidance
+
+    **9.2 Secure by Design Confidence Rating** — Self-assessment against SbD high-confidence profile:
+    - Assess confidence level (Low / Medium / High)
+    - Evaluate against SbD principles: secure development, secure deployment, secure operation
+    - Document evidence of high-confidence profile achievement
+    - Identify gaps and improvement actions
+
+    **9.3 Cyber Security Standard Exception Register** — Per CSS clauses 4.3/4.4:
+    - Record any exceptions to CSS compliance with clause references
+    - Assess risk for each exception
+    - Document mitigation measures and approval authority
+    - Track improvement plans to achieve compliance
+
+    **9.4 Cyber Action Plan Alignment** — Assess alignment with the £210m cross-government Cyber Action Plan (February 2026):
+    - Determine departmental enrollment and participation status
+    - Map project activities to the four Cyber Action Plan pillars: Skills & Workforce, Tooling & Infrastructure, Resilience & Response, Collaboration & Sharing
+    - Identify investment alignment and funding opportunities
+    - Record gaps where the project or department does not yet meet Cyber Action Plan expectations
+
+10. **Assess Government Cyber Security Profession alignment**:
+    - Determine whether the department participates in the Government Cyber Security Profession
+    - Record Certified Cyber Professional (CCP) certification status for project security roles
+    - Map security roles to DDaT (Digital, Data and Technology) profession framework
+    - Assess engagement with the Government Cyber Academy (learning areas, completions)
+    - Identify workforce development gaps and training actions
+
+11. **Map GovS 007: Security alignment**:
+    - Complete the GovS 007 principle mapping table (9 principles → CAF sections and ArcKit artefacts)
+    - For principle 5 (Security culture), reference Section 11 (Government Cyber Security Profession) in addition to CAF B6
+    - For principle 8 (Continuous improvement), reference Section 9.4 (Cyber Action Plan Alignment) in addition to CAF D2
+    - Identify named security role holders (SSRO, DSO, SIRO) and populate the security roles table
+    - Assess status for each GovS 007 principle based on evidence from sections 1–9 and the Cyber Action Plan / Profession sections
+
+12. **Identify critical security issues**:
+
+- Issues that block progression to next phase
+- Unacceptable risk levels
+- Regulatory non-compliance (UK GDPR, Data Protection Act)
+
+13. **Generate actionable recommendations**:
+    - Critical priority (0-30 days) - blockers for next phase
+    - High priority (1-3 months) - significant risk reduction
+    - Medium priority (3-6 months) - continuous improvement
+    - Include VMS enrollment and Cyber Action Plan alignment actions where applicable
+
+14. **Detect version**: Before generating the document ID, check if a previous version exists:
+    - Look for existing `ARC-{PROJECT_ID}-SECD-v*.md` files in the project directory
+    - **If no existing file**: Use VERSION="1.0"
+    - **If existing file found**:
+      - Read the existing document to understand its scope
+      - Compare against current inputs and project state
+      - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed assessments, updated control status, corrected details
+      - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new CAF objectives assessed, fundamentally different security posture, significant architecture changes
+    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
+
+15. **Save the document**:
+
+    Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **SECD** per-type checks pass. Fix any failures before proceeding.
+
+    Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-v${VERSION}.md`
+
+**CRITICAL - Auto-Populate Document Control Fields**:
+
+Before completing the document, populate ALL document control fields in the header:
+
+### Step 1: Construct Document ID
+
+- **Document ID**: `ARC-{PROJECT_ID}-SECD-v{VERSION}` (e.g., `ARC-001-SECD-v1.0`)
+
+### Step 2: Populate Required Fields
+
+**Auto-populated fields** (populate these automatically):
+
+- `[PROJECT_ID]` → Extract from project path (e.g., "001" from "projects/001-project-name")
+- `[VERSION]` → Determined version from step 11
+- `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
+- `[DOCUMENT_TYPE_NAME]` → "Secure by Design Assessment"
+- `ARC-[PROJECT_ID]-SECD-v[VERSION]` → Construct using format from Step 1
+- `[COMMAND]` → "arckit.secure"
+
+**User-provided fields** (extract from project metadata or user input):
+
+- `[PROJECT_NAME]` → Full project name from project metadata or user input
+- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
+- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+
+**Calculated fields**:
+
+- `[YYYY-MM-DD]` for Review Date → Current date + 30 days (requirements, research, risks)
+- `[YYYY-MM-DD]` for Review Date → Phase gate dates (Alpha/Beta/Live for compliance docs)
+
+**Pending fields** (leave as [PENDING] until manually updated):
+
+- `[REVIEWER_NAME]` → [PENDING]
+- `[APPROVER_NAME]` → [PENDING]
+- `[DISTRIBUTION_LIST]` → Default to "Project Team, Architecture Team" or [PENDING]
+
+### Step 3: Populate Revision History
+
+```markdown
+| 1.0 | {DATE} | ArcKit AI | Initial creation from `/arckit:secure` command | [PENDING] | [PENDING] |
+```
+
+### Step 4: Populate Generation Metadata Footer
+
+The footer should be populated with:
+
+```markdown
+**Generated by**: ArcKit `/arckit:secure` command
+**Generated on**: {DATE} {TIME} GMT
+**ArcKit Version**: {ARCKIT_VERSION}
+**Project**: {PROJECT_NAME} (Project {PROJECT_ID})
+**AI Model**: [Use actual model name, e.g., "claude-sonnet-4-5-20250929"]
+**Generation Context**: [Brief note about source documents used]
+```
+
+### Example Fully Populated Document Control Section
+
+```markdown
+## Document Control
+
+| Field | Value |
+|-------|-------|
+| **Document ID** | ARC-001-SECD-v1.0 |
+| **Document Type** | {Document purpose} |
+| **Project** | Windows 10 to Windows 11 Migration (Project 001) |
+| **Classification** | OFFICIAL-SENSITIVE |
+| **Status** | DRAFT |
+| **Version** | 1.0 |
+| **Created Date** | 2025-10-29 |
+| **Last Modified** | 2025-10-29 |
+| **Review Date** | 2025-11-30 |
+| **Owner** | John Smith (Business Analyst) |
+| **Reviewed By** | [PENDING] |
+| **Approved By** | [PENDING] |
+| **Distribution** | PM Team, Architecture Team, Dev Team |
+
+## Revision History
+
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| 1.0 | 2025-10-29 | ArcKit AI | Initial creation from `/arckit:secure` command | [PENDING] | [PENDING] |
+```
+
+## Assessment Guidelines
+
+### Status Indicators
+
+- **✅ Achieved**: All key controls implemented and effective, no significant gaps
+- **⚠️ Partially Achieved**: Some controls in place but gaps remain
+- **❌ Not Achieved**: Controls not implemented or ineffective
+- **N/A**: Principle genuinely not applicable
+
+### Critical Security Issues (Phase Blockers)
+
+Mark as CRITICAL if:
+
+- No UK GDPR compliance for personal data processing
+- No DPIA for high-risk processing
+- No encryption for sensitive data (OFFICIAL-SENSITIVE)
+- Cyber Essentials not obtained (required for most gov contracts)
+- No incident response capability
+- No backup/recovery capability
+- Critical vulnerabilities unpatched (>30 days)
+- No MFA for privileged access
+- SIRO not appointed or engaged
+
+### Data Classification Requirements
+
+**PUBLIC**:
+
+- Basic security controls
+- No special encryption requirements
+- Standard access controls
+
+**OFFICIAL**:
+
+- Cyber Essentials baseline minimum
+- Encryption in transit (TLS 1.2+)
+- Access control and audit logging
+- Regular security patching
+
+**OFFICIAL-SENSITIVE**:
+
+- Cyber Essentials Plus recommended
+- Encryption at rest and in transit (strong algorithms)
+- Multi-factor authentication required
+- Enhanced audit logging
+- DPIA if processing personal data
+- Data loss prevention controls
+
+### Project Phase Considerations
+
+**Discovery/Alpha**:
+
+- Security principles identified
+- Data classification determined
+- Initial risk assessment
+- Security requirements defined
+- SIRO engaged
+
+**Beta**:
+
+- Security controls implemented
+- Penetration testing completed
+- DPIA completed (if required)
+- Cyber Essentials certification obtained
+- Vulnerability management operational
+- Incident response plan documented
+
+**Live**:
+
+- All CAF principles addressed
+- Cyber Essentials Plus for high-risk systems
+- Continuous security monitoring
+- Regular penetration testing (annual minimum)
+- Security incident capability proven
+- Annual security review with SIRO
+
+### Cyber Essentials Requirements
+
+**Basic Cyber Essentials**: Self-assessment questionnaire
+**Cyber Essentials Plus**: External technical verification
+
+Required for:
+
+- All central government contracts involving handling personal data
+- Contracts valued at £5 million or more
+- Most public sector technology procurements
+
+## UK Government Context
+
+### Senior Information Risk Owner (SIRO)
+
+- Senior executive responsible for information risk
+- Must be board-level or equivalent
+- Reviews and approves risk treatment
+- Signs off on major security decisions
+- Typically Permanent Secretary or Director level
+
+### Data Protection Officer (DPO)
+
+Required if:
+
+- Public authority or public body
+- Core activities involve regular/systematic monitoring
+- Core activities involve large-scale processing of special category data
+
+Responsibilities:
+
+- Advise on UK GDPR compliance
+- Monitor compliance with UK GDPR
+- Advise on DPIA
+- Liaise with ICO
+
+### Information Commissioner's Office (ICO)
+
+- UK's independent data protection regulator
+- Enforces UK GDPR and Data Protection Act 2018
+- Must be notified of data breaches within 72 hours
+- Can impose fines up to £17.5 million or 4% of turnover
+
+### Common UK Government Security Requirements
+
+**Cyber Essentials Controls**:
+
+- Firewalls and internet gateways configured
+- Secure configuration (CIS benchmarks)
+- User access control (least privilege, MFA)
+- Malware protection (up-to-date anti-malware)
+- Security update management (patching within 14 days)
+
+**Cloud Hosting**:
+
+- Prefer UK or EU data centers for data residency
+- NCSC Cloud Security Principles compliance
+- Cloud provider certifications (ISO 27001, etc.)
+- Clear data ownership and portability
+
+**Network Security**:
+
+- PSN (Public Services Network) connectivity if required
+- Network segmentation by sensitivity
+- VPN for remote access
+- WiFi security (WPA3 preferred, WPA2 minimum)
+
+## Example Output Structure
+
+```markdown
+# UK Government Secure by Design Assessment
+
+**Project**: HMRC Tax Credits Modernization
+**Department**: HMRC
+**Data Classification**: OFFICIAL-SENSITIVE
+**NCSC CAF Score**: 11/14 Achieved
+
+## NCSC CAF Assessment
+
+### Objective A: Managing Security Risk
+
+#### A1: Governance
+**Status**: ✅ Achieved
+**Evidence**: SIRO appointed (Director of Digital Services), security policies approved, quarterly security reviews...
+
+#### A2: Risk Management
+**Status**: ⚠️ Partially Achieved
+**Evidence**: Risk register exists, but threat modeling incomplete...
+**Gaps**:
+- Complete threat modeling for payment processing (HIGH - 30 days)
+- Update risk register with emerging threats (MEDIUM - 60 days)
+
+### Objective B: Protecting Against Cyber Attack
+
+#### B3: Data Security
+**Status**: ⚠️ Partially Achieved
+**Evidence**: TLS 1.3 in transit, AES-256 at rest, but DPIA not completed...
+**Gaps**:
+- Complete DPIA before Beta (CRITICAL - blocker for Beta phase)
+- Implement Data Loss Prevention (HIGH - 90 days)
+
+## Cyber Essentials
+
+**Status**: Certified Basic (expires 2024-06-30)
+**Target**: Cyber Essentials Plus by Beta
+
+**Gaps**:
+- External vulnerability scan required for Plus certification
+
+## UK GDPR Compliance
+
+**Status**: ⚠️ Partially Compliant
+**DPO**: Appointed ([Data Protection Officer Name])
+**DPIA**: Not completed (REQUIRED before Beta)
+
+**Critical Issues**:
+1. DPIA not completed for tax credit processing (CRITICAL)
+2. Data retention policy not documented (HIGH)
+
+## Critical Issues
+1. DPIA incomplete (CAF B3, UK GDPR) - Blocks Beta phase
+2. Threat modeling incomplete (CAF A2) - Significant risk gap
+
+## Recommendations
+**Critical** (0-30 days):
+- Complete DPIA - DPO - 15 days
+- Complete threat model - Security Architect - 30 days
+```
+
+## Important Notes
+
+- **NCSC CAF is the standard framework** for UK Government security assessment
+- **Cyber Essentials is mandatory** for most government contracts
+- **UK GDPR compliance is legally required** for personal data processing
+- **SIRO sign-off required** for security risk acceptance
+- **Data classification drives security controls** - OFFICIAL-SENSITIVE requires stronger controls
+- **Penetration testing** recommended annually minimum
+- **Incident response** - 72-hour reporting to ICO for personal data breaches
+- **Cloud First** - prefer cloud hosting, assess against NCSC Cloud Security Principles
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+
+## Related UK Government Standards
+
+- NCSC Cyber Assessment Framework (CAF)
+- UK Government Cyber Security Standard (July 2025, Cabinet Office)
+- NCSC Vulnerability Monitoring Service (VMS)
+- Government Cyber Security Profession & Cyber Academy
+- £210m Cyber Action Plan (February 2026)
+- Cyber Essentials Scheme
+- UK Government Security Classifications
+- Government Functional Standard GovS 007: Security
+- NCSC Cloud Security Principles
+- HMG Security Policy Framework
+- Public Services Network (PSN) Code of Connection
+
+## Resources
+
+- NCSC CAF: https://www.ncsc.gov.uk/collection/caf
+- UK Government Cyber Security Standard: https://www.gov.uk/government/publications/government-cyber-security-standard
+- GovS 007 Security: https://www.gov.uk/government/publications/government-functional-standard-govs-007-security
+- NCSC GovAssure: https://www.ncsc.gov.uk/collection/govassure
+- NCSC Vulnerability Monitoring Service: https://www.ncsc.gov.uk/information/vulnerability-monitoring-service
+- Government Cyber Security Profession: https://www.gov.uk/government/publications/government-cyber-security-profession
+- Government Cyber Action Plan: https://www.gov.uk/government/publications/government-cyber-action-plan
+- Cyber Essentials: https://www.ncsc.gov.uk/cyberessentials
+- UK GDPR: https://ico.org.uk/for-organisations/guide-to-data-protection/
+- Government Security Classifications: https://www.gov.uk/government/publications/government-security-classifications
+- NCSC Guidance: https://www.ncsc.gov.uk/guidance
+
+Generate the UK Government Secure by Design assessment now based on the project information provided.

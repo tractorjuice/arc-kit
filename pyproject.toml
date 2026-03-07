@@ -59,3 +59,4 @@ packages = ["src/arckit_cli"]
 "WORKFLOW-DIAGRAMS.md" = "share/arckit/WORKFLOW-DIAGRAMS.md"
 "VERSION" = "share/arckit/VERSION"
 "CHANGELOG.md" = "share/arckit/CHANGELOG.md"
+"arckit-codex" = "share/arckit/arckit-codex"
