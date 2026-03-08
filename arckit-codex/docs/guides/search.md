@@ -4,7 +4,7 @@ Search across all project artifacts by keyword, document type, or requirement ID
 
 ## Usage
 
-```
+```text
 /arckit:search <query> [--type=TYPE] [--project=NNN] [--id=REQ-ID]
 ```
 

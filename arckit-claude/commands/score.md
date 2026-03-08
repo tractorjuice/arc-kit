@@ -138,7 +138,7 @@ Show the scoring audit trail.
 
 If no recognised action, show usage:
 
-```
+```text
 Usage: /arckit:score <action> [options]
 
 Actions:

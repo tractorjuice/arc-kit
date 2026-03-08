@@ -4,7 +4,7 @@ Score vendor proposals against evaluation criteria with persistent structured st
 
 ## Usage
 
-```
+```text
 /arckit:score vendor <name> --project=NNN    # Score a vendor
 /arckit:score compare --project=NNN          # Compare all scored vendors
 /arckit:score audit --project=NNN            # View scoring audit trail
@@ -12,7 +12,7 @@ Score vendor proposals against evaluation criteria with persistent structured st
 
 ## Workflow
 
-```
+```text
 /arckit:evaluate  →  /arckit:score vendor  →  /arckit:score compare  →  /arckit:sow
    (criteria)         (score each)             (decide)                  (procure)
 ```
