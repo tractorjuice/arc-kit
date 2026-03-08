@@ -105,6 +105,16 @@
             "timeout": 5
           }
         ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/score-validator.mjs",
+            "timeout": 5
+          }
+        ]
       }
     ],
     "PostToolUse": [
