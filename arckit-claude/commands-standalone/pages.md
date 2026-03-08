@@ -1,5 +1,7 @@
 ---
-description: "Generate documentation site with governance dashboard, document viewer, and Mermaid diagram support"
+description: Generate documentation site with governance dashboard, document viewer, and Mermaid diagram support
+allowed-tools: Read, Write, Glob, Grep
+argument-hint: "<project ID or 'all', e.g. '001', 'all'>"
 ---
 
 # ArcKit: Documentation Site Generator
@@ -41,7 +43,7 @@ Use **Glob** and **Read** tools to scan the repository. Do NOT use `ls`, `find`,
 
 - **If the hook systemMessage is present** (mentions "Guide Sync Complete" and contains a `guideTitles` JSON map): guides are synced and titles are pre-extracted. Use the `guideTitles` map directly — do NOT use Glob or Read on guide files. The map keys are repo-relative paths (e.g., `docs/guides/requirements.md`, `docs/guides/roles/enterprise-architect.md`) and values are the extracted titles (with " — ArcKit Command Guide" suffix already stripped for role guides).
 - **If no hook message** (hook unavailable or failed): fall back to manual sync and title extraction:
-  1. Use **Glob** to list all `.md` files in `.arckit/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`, `roles/`)
+  1. Use **Glob** to list all `.md` files in `${CLAUDE_PLUGIN_ROOT}/docs/guides/` (and any subdirectories like `uk-government/`, `uk-mod/`, `roles/`)
   2. For each guide file, **Read** from the plugin path and **Write** to the corresponding path under `docs/guides/`, creating subdirectories as needed
   3. Use **Glob** to scan `docs/guides/*.md` then **Read** (with `limit: 5`) each file to extract the `#` title
 
@@ -416,7 +418,7 @@ Create `docs/manifest.json` with the discovered structure:
 
 - **First**, check if `.arckit/templates/pages-template.html` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
-- **If not found**: Read `.arckit/templates/pages-template.html` (default)
+- **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` (default)
 
 > **Tip**: Users can customize templates with `/arckit:customize pages`
 
@@ -428,7 +430,7 @@ This template is the single source of truth for the pages site — it contains a
    - `'{{REPO}}'` → the repository name (e.g. `'arckit-test-project-v17-fuel-prices'`)
    - `'{{REPO_URL}}'` → the full repository URL (e.g. `'https://github.com/tractorjuice/arckit-test-project-v17-fuel-prices'`)
    - `'{{CONTENT_BASE_URL}}'` → the raw content base URL for fallback loading (e.g. `'https://raw.githubusercontent.com/tractorjuice/arckit-test-project-v17-fuel-prices/main'`). For GitHub repos use `https://raw.githubusercontent.com/{owner}/{repo}/{branch}`. For non-GitHub hosting set to `''` (empty string).
-   - `'{{VERSION}}'` → the ArcKit version from the plugin's VERSION file (`.arckit/VERSION`)
+   - `'{{VERSION}}'` → the ArcKit version from the plugin's VERSION file (`${CLAUDE_PLUGIN_ROOT}/VERSION`)
    - `'{{DEFAULT_DOC}}'` → the default document path (principles if exists, or `''`)
 4. Write the final HTML to `docs/index.html` using the **Write** tool
 
@@ -560,7 +562,7 @@ The generated HTML should handle:
 
 ---
 
-**Remember**: You MUST read and use `.arckit/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
+**Remember**: You MUST read and use `${CLAUDE_PLUGIN_ROOT}/templates/pages-template.html` as the base for `docs/index.html`. The template is the source of truth for all HTML, CSS, and JavaScript. Only replace the `{{...}}` config placeholders with actual values.
 
 - **Cross-platform**: Do NOT use Bash for file operations. Use Glob/Read/Write/Grep tools exclusively. The only acceptable Bash use is a single simple `git` command (no pipes, no `&&`, no `$()`).
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji

@@ -90,6 +90,20 @@ All extension file access MUST go through shell commands.
 
 """
 
+CONTEXT_HOOK_NOTE = (
+    "> **Note**: The ArcKit Project Context hook has already detected all "
+    "projects, artifacts, external documents, and global policies. Use that "
+    "context below \u2014 no need to scan directories manually."
+)
+
+CONTEXT_HOOK_REPLACEMENT = (
+    "> **Note**: Before generating, scan `projects/` for existing project "
+    "directories. For each project, list all `ARC-*.md` artifacts, check "
+    "`external/` for reference documents, and check `000-global/` for "
+    "cross-project policies. If no external docs exist but they would "
+    "improve output, ask the user."
+)
+
 
 # --- Agent configuration: adding a new AI target = adding a dictionary entry ---
 
@@ -103,12 +117,16 @@ AGENT_CONFIG = {
         "extension_dir": "arckit-codex",
         "copy_commands_to_extension": True,
         "copy_agents_to_extension": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
     "codex_skills": {
         "name": "Codex Skills",
         "output_dir": "arckit-codex/skills",
         "format": "skill",
         "path_prefix": ".arckit",
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
     "opencode": {
         "name": "OpenCode CLI",
@@ -118,6 +136,8 @@ AGENT_CONFIG = {
         "path_prefix": ".arckit",
         "extension_dir": "arckit-opencode",
         "copy_agents_to_extension": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
     "gemini": {
         "name": "Gemini CLI",
@@ -129,6 +149,8 @@ AGENT_CONFIG = {
         "extension_dir": "arckit-gemini",
         "prepend_block": EXTENSION_FILE_ACCESS_BLOCK,
         "rewrite_read_instructions": True,
+        "has_context_hook": True,
+        "has_sync_guides_hook": False,
     },
 }
 
@@ -149,6 +171,17 @@ def rewrite_paths(prompt, config):
 
     if config.get("arg_placeholder"):
         result = result.replace("$ARGUMENTS", config["arg_placeholder"])
+
+    return result
+
+
+def rewrite_hook_dependencies(prompt, config):
+    """Replace hook-dependent content for platforms without hooks."""
+    result = prompt
+
+    # Context injection: replace hook note with self-scan instructions
+    if not config.get("has_context_hook", False):
+        result = result.replace(CONTEXT_HOOK_NOTE, CONTEXT_HOOK_REPLACEMENT)
 
     return result
 
@@ -212,8 +245,24 @@ def convert(commands_dir, agents_dir):
 
         base_name = filename.replace(".md", "")
 
+        # Check for standalone command override once (result is agent-independent)
+        standalone_path = os.path.join(
+            os.path.dirname(commands_dir.rstrip(os.sep)), "commands-standalone", filename
+        )
+        has_standalone = os.path.isfile(standalone_path)
+        standalone_prompt = None
+        if has_standalone:
+            with open(standalone_path, "r") as f:
+                standalone_content = f.read()
+            _, standalone_prompt = extract_frontmatter_and_prompt(standalone_content)
+
         for agent_id, config in AGENT_CONFIG.items():
-            rewritten = rewrite_paths(prompt, config)
+            if has_standalone and not config.get("has_sync_guides_hook", False):
+                # Use standalone version for platforms lacking required hook
+                rewritten = rewrite_paths(standalone_prompt, config)
+            else:
+                rewritten = rewrite_paths(prompt, config)
+                rewritten = rewrite_hook_dependencies(rewritten, config)
 
             if config["format"] == "skill":
                 skill_name = f"arckit-{base_name}"
