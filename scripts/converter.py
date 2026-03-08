@@ -103,12 +103,16 @@ AGENT_CONFIG = {
         "extension_dir": "arckit-codex",
         "copy_commands_to_extension": True,
         "copy_agents_to_extension": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
     "codex_skills": {
         "name": "Codex Skills",
         "output_dir": "arckit-codex/skills",
         "format": "skill",
         "path_prefix": ".arckit",
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
     "opencode": {
         "name": "OpenCode CLI",
@@ -118,6 +122,8 @@ AGENT_CONFIG = {
         "path_prefix": ".arckit",
         "extension_dir": "arckit-opencode",
         "copy_agents_to_extension": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
     "gemini": {
         "name": "Gemini CLI",
@@ -129,6 +135,8 @@ AGENT_CONFIG = {
         "extension_dir": "arckit-gemini",
         "prepend_block": EXTENSION_FILE_ACCESS_BLOCK,
         "rewrite_read_instructions": True,
+        "has_context_hook": True,
+        "has_sync_guides_hook": False,
     },
 }
 
