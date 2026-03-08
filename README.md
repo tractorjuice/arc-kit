@@ -1154,7 +1154,7 @@ Full guidance lives in `docs/` and the static site.
 
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](docs/WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](docs/DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 53×53 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](docs/WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](docs/DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 57×57 command matrix.
 - Traceability: [docs/guides/traceability.md](docs/guides/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit
