@@ -246,7 +246,24 @@ def convert(commands_dir, agents_dir):
         base_name = filename.replace(".md", "")
 
         for agent_id, config in AGENT_CONFIG.items():
-            rewritten = rewrite_paths(prompt, config)
+            # Check for standalone command override (for hookless platforms)
+            standalone_path = os.path.join(
+                os.path.dirname(commands_dir), "commands-standalone", filename
+            )
+            if os.path.isfile(standalone_path):
+                # Use standalone version if platform lacks required hook
+                needs_standalone = not config.get("has_sync_guides_hook", False)
+                if needs_standalone:
+                    with open(standalone_path, "r") as f:
+                        standalone_content = f.read()
+                    _, standalone_prompt = extract_frontmatter_and_prompt(standalone_content)
+                    rewritten = rewrite_paths(standalone_prompt, config)
+                    # Skip rewrite_hook_dependencies — standalone is self-contained
+                else:
+                    rewritten = rewrite_paths(prompt, config)
+            else:
+                rewritten = rewrite_paths(prompt, config)
+                rewritten = rewrite_hook_dependencies(rewritten, config)
 
             if config["format"] == "skill":
                 skill_name = f"arckit-{base_name}"
