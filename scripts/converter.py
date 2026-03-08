@@ -175,6 +175,17 @@ def rewrite_paths(prompt, config):
     return result
 
 
+def rewrite_hook_dependencies(prompt, config):
+    """Replace hook-dependent content for platforms without hooks."""
+    result = prompt
+
+    # Context injection: replace hook note with self-scan instructions
+    if not config.get("has_context_hook", False):
+        result = result.replace(CONTEXT_HOOK_NOTE, CONTEXT_HOOK_REPLACEMENT)
+
+    return result
+
+
 def format_output(description, prompt, fmt):
     """Format into target format: 'markdown', 'toml', or 'skill'."""
     if fmt == "toml":
