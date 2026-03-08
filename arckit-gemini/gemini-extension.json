@@ -1,6 +1,6 @@
 {
   "name": "arckit",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 57 commands for architecture artifacts, vendor procurement, and UK Government compliance",
   "contextFileName": "GEMINI.md",
   "mcpServers": {

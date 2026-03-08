@@ -7,12 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.0.2] - 2026-03-08
+
 ### Added
 
 - `/arckit.framework` command for transforming architecture artifacts into a structured, reusable framework (agent-delegating via arckit-framework agent)
 - `/arckit.glossary` command for generating comprehensive project glossary with terms, definitions, acronyms, and cross-references
 - `/arckit.maturity-model` command for generating capability maturity model with current-state assessment, target-state definition, and improvement roadmap
 - `arckit-framework` agent for autonomous framework synthesis from architecture artifacts
+- Missing guides for `dfd`, `health`, and `init` commands
+- `dfd` command added to DEPENDENCY-MATRIX with row and column
+
+### Fixed
+
+- Framework command referenced wrong template filename (`framework-template.md` → `framework-overview-template.md`)
+- Stale command counts (53 → 57) across all docs, guides, commands.html, and extension copies
+- Stale agent counts (5 → 6) in MCP servers and remote control guides
 
 ## [3.1.1] - 2026-03-05
 
