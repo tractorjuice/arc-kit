@@ -245,22 +245,21 @@ def convert(commands_dir, agents_dir):
 
         base_name = filename.replace(".md", "")
 
+        # Check for standalone command override once (result is agent-independent)
+        standalone_path = os.path.join(
+            os.path.dirname(commands_dir.rstrip(os.sep)), "commands-standalone", filename
+        )
+        has_standalone = os.path.isfile(standalone_path)
+        standalone_prompt = None
+        if has_standalone:
+            with open(standalone_path, "r") as f:
+                standalone_content = f.read()
+            _, standalone_prompt = extract_frontmatter_and_prompt(standalone_content)
+
         for agent_id, config in AGENT_CONFIG.items():
-            # Check for standalone command override (for hookless platforms)
-            standalone_path = os.path.join(
-                os.path.dirname(commands_dir.rstrip(os.sep)), "commands-standalone", filename
-            )
-            if os.path.isfile(standalone_path):
-                # Use standalone version if platform lacks required hook
-                needs_standalone = not config.get("has_sync_guides_hook", False)
-                if needs_standalone:
-                    with open(standalone_path, "r") as f:
-                        standalone_content = f.read()
-                    _, standalone_prompt = extract_frontmatter_and_prompt(standalone_content)
-                    rewritten = rewrite_paths(standalone_prompt, config)
-                    # Skip rewrite_hook_dependencies — standalone is self-contained
-                else:
-                    rewritten = rewrite_paths(prompt, config)
+            if has_standalone and not config.get("has_sync_guides_hook", False):
+                # Use standalone version for platforms lacking required hook
+                rewritten = rewrite_paths(standalone_prompt, config)
             else:
                 rewritten = rewrite_paths(prompt, config)
                 rewritten = rewrite_hook_dependencies(rewritten, config)
