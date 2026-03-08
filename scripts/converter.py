@@ -248,7 +248,7 @@ def convert(commands_dir, agents_dir):
         for agent_id, config in AGENT_CONFIG.items():
             # Check for standalone command override (for hookless platforms)
             standalone_path = os.path.join(
-                os.path.dirname(commands_dir), "commands-standalone", filename
+                os.path.dirname(commands_dir.rstrip(os.sep)), "commands-standalone", filename
             )
             if os.path.isfile(standalone_path):
                 # Use standalone version if platform lacks required hook

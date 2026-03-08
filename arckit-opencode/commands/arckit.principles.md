@@ -21,7 +21,7 @@ $ARGUMENTS
 
 2. **Read external documents and policies**:
 
-   > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+   > **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
    - Read any **global policies** listed in the project context (`000-global/policies/`) — extract existing architecture principles, TOGAF standards, departmental policies, technology standards
    - If no external governance documents found, ask: "Do you have any existing architecture principles, governance frameworks, or departmental technology standards? I can read PDFs and Word docs directly. Place them in `projects/000-global/policies/` and re-run, or skip to create principles from scratch."
