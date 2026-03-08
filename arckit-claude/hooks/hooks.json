@@ -68,6 +68,16 @@
             "timeout": 30
           }
         ]
+      },
+      {
+        "matcher": "/arckit:search",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/search-scan.mjs",
+            "timeout": 15
+          }
+        ]
       }
     ],
     "PreToolUse": [
