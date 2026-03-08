@@ -46,9 +46,9 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
    - **MANDATORY**: Architecture Principles (`ARC-*-PRIN-*.md`) and Requirements (`ARC-*-REQ-*.md`) must exist
    - **RECOMMENDED**: Stakeholder analysis (`ARC-*-STKE-*.md`), Strategy (`ARC-*-STRAT-*.md`), Data model (`ARC-*-DATA-*.md`), Research findings (`ARC-*-RSCH-*.md`)
 2. **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/framework-template.md` exists in the project root
+   - **First**, check if `.arckit/templates/framework-overview-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/framework-template.md` (default)
+   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/framework-overview-template.md` (default)
    - **Tip**: Users can customize templates with `/arckit:customize framework`
 3. Read all project artifacts in `projects/{project-dir}/`
 4. Categorise recommendations and requirements into logical implementation phases
