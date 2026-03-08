@@ -144,7 +144,7 @@ const entries = sections.slice(1);
 entries.unshift(entry);
 
 const trimmed = entries.slice(0, 30);
-const output = header.trimEnd() + '\n\n' + trimmed.join('\n');
+const output = header.trimEnd() + '\n\n' + trimmed.join('\n') + '\n';
 
 writeFileSync(sessionsFile, output);
 
