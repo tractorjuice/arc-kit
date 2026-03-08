@@ -350,11 +350,18 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 1.5.0
 - **Matrix Date**: 2026-02-25
-- **Commands Documented**: 57
+- **Commands Documented**: 58
 - **Matrix Rows**: 54 (52 document-generating commands + 2 external documents)
-- **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
+- **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-03-08 - Added Project Search Command
+
+- **Added**: `/arckit.search` command (58th ArcKit command) for keyword, type, and requirement ID search across all project artifacts
+- **Not in matrix**: Diagnostic/query command with console-only output — no dependencies and no outputs consumed by other commands
+- **Updated**: Commands Documented count from 57 to 58
+- **Note**: Uses UserPromptSubmit pre-processing hook (`search-scan.mjs`) to index artifacts before search
 
 ### 2026-03-08 - Added DFD Command to Matrix
 

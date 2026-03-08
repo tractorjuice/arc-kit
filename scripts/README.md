@@ -401,7 +401,7 @@ python scripts/converter.py
 #   Codex Skills: arckit-claude/commands/plan.md -> arckit-codex/skills/arckit-plan/
 #   Gemini:       arckit-claude/commands/plan.md -> arckit-gemini/commands/arckit/plan.toml
 #   ...
-# Generated 57 Codex CLI + 57 Codex Skills + 57 OpenCode + 57 Gemini = 285 total files.
+# Generated 58 Codex CLI + 58 Codex Skills + 58 OpenCode + 58 Gemini = 290 total files.
 ```
 
 **Use Cases**:
