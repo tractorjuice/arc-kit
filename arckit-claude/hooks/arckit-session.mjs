@@ -110,6 +110,21 @@ if (isDir(projectsDir)) {
   }
 }
 
+// Surface recent session history if available
+const sessionsFile = join(cwd, '.arckit', 'memory', 'sessions.md');
+if (isFile(sessionsFile)) {
+  const sessionsContent = readText(sessionsFile);
+  if (sessionsContent) {
+    // Extract last 3 session entries for context
+    const sections = sessionsContent.split(/\n(?=### \d{4}-\d{2}-\d{2})/);
+    const recentSessions = sections.slice(1, 4); // skip header, take 3
+    if (recentSessions.length > 0) {
+      context += '\n\n## Recent Sessions\n';
+      context += recentSessions.join('\n');
+    }
+  }
+}
+
 // Output additionalContext
 const output = {
   hookSpecificOutput: {
