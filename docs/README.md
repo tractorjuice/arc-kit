@@ -134,6 +134,7 @@ See the [full index](guides/roles/README.md) for details.
 
 ## 🔧 Technical Guides
 
+- [Session Memory](guides/session-memory.md) - Automated cross-session activity tracking
 - [Upgrading ArcKit](guides/upgrading.md) - Upgrade the CLI and update existing projects
 - [Token Limits Solutions](TOKEN-LIMITS.md) - Handling large projects with AI token limits
 - [File Migration](guides/migration.md) - Migrate legacy filenames to Document ID convention

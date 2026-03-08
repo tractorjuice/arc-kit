@@ -1,6 +1,18 @@
 {
-  "description": "ArcKit hooks: session init, project context injection, filename enforcement, MCP tool auto-allow, and security protection (file protection, secret detection, secret file scanning)",
+  "description": "ArcKit hooks: session init, session learner, project context injection, filename enforcement, MCP tool auto-allow, and security protection (file protection, secret detection, secret file scanning)",
   "hooks": {
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/session-learner.mjs",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "matcher": ".*",
