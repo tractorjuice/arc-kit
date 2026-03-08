@@ -68,12 +68,24 @@ try {
 
 const files = [...new Set(changedFiles.split('\n').filter(Boolean))];
 
-// Detect artifact types from filenames using DOC_TYPES config
-const detectedTypes = new Set();
+// Detect artifact types from filenames, grouped by project number
+// projectArtifacts: Map<projectNum, Map<category, Set<typeName>>>
+const projectArtifacts = new Map();
+const allCategories = new Set();
+
 for (const f of files) {
+  // Extract project number from ARC filename (e.g., ARC-001-REQ-v1.0.md → 001)
+  const projMatch = f.match(/ARC-(\d{3})-/);
+  if (!projMatch) continue;
+  const projNum = projMatch[1];
+
   for (const [code, info] of Object.entries(DOC_TYPES)) {
     if (f.includes(`-${code}-`) || f.includes(`-${code}.`)) {
-      detectedTypes.add(`${info.name} (${info.category})`);
+      if (!projectArtifacts.has(projNum)) projectArtifacts.set(projNum, new Map());
+      const projMap = projectArtifacts.get(projNum);
+      if (!projMap.has(info.category)) projMap.set(info.category, new Set());
+      projMap.get(info.category).add(info.name);
+      allCategories.add(info.category);
     }
   }
 }
@@ -84,19 +96,14 @@ const CATEGORY_PRIORITY = [
   'Architecture', 'Planning', 'Discovery', 'Operations',
 ];
 
-function classifySession(types) {
-  const categories = new Set();
-  for (const t of types) {
-    const match = t.match(/\((.+)\)$/);
-    if (match) categories.add(match[1]);
-  }
+function classifySession(categories) {
   for (const cat of CATEGORY_PRIORITY) {
     if (categories.has(cat)) return cat.toLowerCase();
   }
   return 'general';
 }
 
-const sessionType = classifySession(detectedTypes);
+const sessionType = classifySession(allCategories);
 
 // Extract commit message summaries (strip hashes)
 const commitSummaries = commitLines.map(line => {
@@ -108,11 +115,22 @@ const commitSummaries = commitLines.map(line => {
 const now = new Date();
 const dateStr = now.toISOString().substring(0, 10);
 const timeStr = now.toISOString().substring(11, 16);
-const artifactList = [...detectedTypes].join(', ') || 'none detected';
 
 let entry = `### ${dateStr} ${timeStr} — ${sessionType}\n\n`;
 entry += `- **Commits:** ${commitCount} | **Files changed:** ${files.length}\n`;
-entry += `- **Artifacts:** ${artifactList}\n`;
+
+if (projectArtifacts.size > 0) {
+  entry += '- **Artifacts:**\n';
+  for (const [projNum, catMap] of [...projectArtifacts.entries()].sort()) {
+    const parts = [];
+    for (const [category, names] of catMap) {
+      parts.push(`${category}: ${[...names].join(', ')}`);
+    }
+    entry += `  - [${projNum}] ${parts.join(' | ')}\n`;
+  }
+} else {
+  entry += '- **Artifacts:** none detected\n';
+}
 
 if (commitSummaries.length > 0) {
   entry += '- **Summary:**\n';

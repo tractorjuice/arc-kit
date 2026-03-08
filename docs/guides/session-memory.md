@@ -60,13 +60,17 @@ Session history is stored in `.arckit/memory/sessions.md` — a rolling log of t
 ### 2026-03-08 14:30 — governance
 
 - **Commits:** 4 | **Files changed:** 7
-- **Artifacts:** Risk Register (Governance), Architecture Decision Records (Architecture)
+- **Artifacts:**
+  - [001] Governance: Risk Register | Architecture: Architecture Decision Records
+  - [002] Compliance: Secure by Design
 - **Summary:**
   - feat: add SECD assessment for cloud migration
   - docs: update ADR-003 with security review outcome
   - fix: correct risk rating in RISK register
   - chore: update traceability matrix
 ```
+
+Artifacts are grouped by project number (e.g., `[001]`) and organized by category, making it easy to see which projects were active and what type of work was done.
 
 ## Relationship to Auto-Memory
 
