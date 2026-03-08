@@ -202,8 +202,9 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit.framework` | [framework.md](guides/framework.md) | ✅ Complete |
 | `/arckit.glossary` | [glossary.md](guides/glossary.md) | ✅ Complete |
 | `/arckit.maturity-model` | [maturity-model.md](guides/maturity-model.md) | ✅ Complete |
+| `/arckit.score` | [score.md](guides/score.md) | ✅ Complete |
 
-**Coverage**: 58/58 commands documented (100%)
+**Coverage**: 59/59 commands documented (100%)
 
 ---
 

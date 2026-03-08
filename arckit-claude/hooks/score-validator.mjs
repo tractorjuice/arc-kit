@@ -16,24 +16,10 @@
  * Output (stdout): JSON with decision (allow/block)
  */
 
-import { readFileSync } from 'node:fs';
 import { basename } from 'node:path';
+import { parseHookInput } from './hook-utils.mjs';
 
-// --- Read stdin ---
-let raw = '';
-try {
-  raw = readFileSync(0, 'utf8');
-} catch {
-  process.exit(0);
-}
-if (!raw || !raw.trim()) process.exit(0);
-
-let data;
-try {
-  data = JSON.parse(raw);
-} catch {
-  process.exit(0);
-}
+const data = parseHookInput();
 
 // --- Early exit: only validate scores.json files ---
 const filePath = (data.tool_input || {}).file_path || '';
@@ -97,6 +83,9 @@ if (scores.vendors && typeof scores.vendors === 'object') {
     for (const s of vendor.scores) {
       if (typeof s.score !== 'number' || s.score < 0 || s.score > 3) {
         warnings.push(`Vendor '${vendorKey}' criterion ${s.criterionId || '?'}: score ${s.score} out of range (must be 0-3)`);
+      }
+      if (!s.evidence || !s.evidence.trim()) {
+        warnings.push(`Vendor '${vendorKey}' criterion ${s.criterionId || '?'}: missing evidence (every score must cite supporting evidence)`);
       }
       if (s.criterionId && !criteriaIds.has(s.criterionId)) {
         warnings.push(`Vendor '${vendorKey}' references unknown criterion: ${s.criterionId}`);

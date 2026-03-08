@@ -161,6 +161,9 @@ Most procurement commands require ARC-*-REQ-*.md:
   - Note: Requirements recommended for search context but not mandatory
 - **gcloud-clarify** → Depends on: requirements (M), gcloud-search (M)
 - **evaluate** → Depends on: requirements (M), sow (M), principles (R), research (R), gcloud-clarify (R)
+- **score** → Depends on: evaluate (M), requirements (M)
+  - Note: Structured vendor scoring with JSON storage, comparison, and audit trail
+  - Integrates with evaluate criteria; scores stored in `projects/{id}/vendors/scores.json`
 
 ### Tier 6: Design Reviews (Depends on Design Documents + Requirements)
 
@@ -350,11 +353,21 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 1.5.0
 - **Matrix Date**: 2026-02-25
-- **Commands Documented**: 58
+- **Commands Documented**: 59
 - **Matrix Rows**: 54 (52 document-generating commands + 2 external documents)
 - **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-03-08 - Added Vendor Scoring Command
+
+- **Added**: `/arckit.score` command (59th ArcKit command) for structured vendor scoring with JSON storage, comparison, and audit trail
+- **Added**: score row and column to dependency matrix
+- **Updated**: Tier 5 Procurement to include score command
+- **Dependencies**: evaluate (M), requirements (M)
+- **Consumed by**: sow (O), pages (R)
+- **Updated**: Commands Documented count from 58 to 59
+- **Note**: First command to use structured JSON output instead of Markdown; includes PreToolUse validator hook for scores.json integrity
 
 ### 2026-03-08 - Added Project Search Command
 
