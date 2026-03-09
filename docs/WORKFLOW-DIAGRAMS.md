@@ -603,7 +603,7 @@ graph TD
 | 3 | Requirements | requirements |
 | 3.5 | Platform Strategy & Synthesis | platform-design, framework, glossary |
 | 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, datascout, wardley, roadmap, diagram |
-| 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate |
+| 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate, score |
 | 6 | Design Reviews | hld-review, dld-review, adr |
 | 7 | Implementation | backlog |
 | 7.5 | Backlog Export | trello |
