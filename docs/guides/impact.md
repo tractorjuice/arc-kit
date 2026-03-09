@@ -4,7 +4,7 @@ Analyse the blast radius of a change to a requirement, decision, or design docum
 
 ## Usage
 
-```
+```bash
 /arckit:impact <document ID or requirement ID>
 ```
 
