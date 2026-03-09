@@ -437,6 +437,7 @@ Document Breakdown:
 - Reviews: {review_count}
 - Vendor Documents: {vendor_doc_count}
 - Vendor Profiles: {vendor_profile_count}
+- Vendor Scores: {scored_vendor_count} scored across {scored_project_count} project(s)
 - Tech Notes: {tech_note_count}
 
 Features:
