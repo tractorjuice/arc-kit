@@ -55,7 +55,8 @@ $ARGUMENTS
    - Trying alternative terms
 
 6. **If the query is empty**, show a usage summary:
-   ```
+
+   ```text
    Usage: /arckit:search <query> [--type=TYPE] [--project=NNN] [--id=REQ-ID]
 
    Examples:

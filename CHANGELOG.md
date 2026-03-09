@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `/arckit.search` command for keyword, type, and requirement ID search across all project artifacts with pre-processing hook
 - `/arckit.score` command for structured vendor scoring with JSON storage, comparison, sensitivity analysis, and audit trail
+- `/arckit.impact` command for blast radius analysis and reverse dependency tracing
 
 ## [4.0.2] - 2026-03-08
 

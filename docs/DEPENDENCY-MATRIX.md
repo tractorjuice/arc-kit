@@ -353,11 +353,18 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 1.5.0
 - **Matrix Date**: 2026-02-25
-- **Commands Documented**: 59
+- **Commands Documented**: 60
 - **Matrix Rows**: 54 (52 document-generating commands + 2 external documents)
-- **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
+- **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.impact`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-03-09 - Added Impact Analysis Command
+
+- **Added**: `/arckit.impact` command (60th ArcKit command) for blast radius analysis and reverse dependency tracing
+- **Not in matrix**: Diagnostic command with console-only output — no dependencies and no outputs consumed by other commands
+- **Updated**: Commands Documented count from 59 to 60
+- **Note**: Uses UserPromptSubmit pre-processing hook (`impact-scan.mjs`) to build a dependency graph with doc-to-doc edges for reverse traversal
 
 ### 2026-03-08 - Added Vendor Scoring Command
 
