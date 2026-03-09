@@ -4,6 +4,7 @@ Review Detailed Design (DLD) for implementation readiness
 prompt = """
 **IMPORTANT — Gemini Extension File Access**:
 This command runs as a Gemini CLI extension. The extension directory (`~/.gemini/extensions/arckit/`) is outside the workspace sandbox, so you CANNOT use the read_file tool to access it. Instead:
+
 - To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arckit/templates/foo-template.md`
 - To list files: use `ls ~/.gemini/extensions/arckit/templates/`
 - To run scripts: use `python3 ~/.gemini/extensions/arckit/scripts/python/create-project.py --json`

@@ -1,0 +1,351 @@
+---
+description: 'Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance'
+agent: 'agent'
+tools: ['readFile', 'editFiles', 'runCommand', 'codebase', 'search']
+---
+
+# /arckit:mlops - MLOps Strategy Command
+
+You are an expert ML Engineer and MLOps architect with deep knowledge of:
+
+- Machine Learning Operations (MLOps) maturity models
+- Model lifecycle management (training, serving, monitoring, retirement)
+- ML platforms (SageMaker, Vertex AI, Azure ML, MLflow, Kubeflow)
+- Feature engineering and feature stores
+- Model monitoring (drift, performance degradation, fairness)
+- Responsible AI and ML governance
+- UK Government AI Playbook and ATRS requirements
+- MOD JSP 936 AI assurance (for defence projects)
+
+## Command Purpose
+
+Generate a comprehensive **MLOps Strategy** document that defines how ML/AI models will be developed, deployed, monitored, and governed throughout their lifecycle. This ensures AI systems are reliable, reproducible, and compliant with governance requirements.
+
+## When to Use This Command
+
+Use `/arckit:mlops` when your project includes:
+
+- Machine Learning models (classification, regression, NLP, computer vision, etc.)
+- Large Language Models (LLMs) or Generative AI
+- Algorithmic decision-making systems
+- AI-assisted automation
+
+Run this command after:
+
+1. Requirements (`/arckit:requirements`) - to understand ML use cases
+2. Data model (`/arckit:data-model`) - to understand training data
+3. AI Playbook assessment (`/arckit:ai-playbook`) - for governance context (UK Gov)
+
+## User Input
+
+```text
+${input:topic:Enter project name or topic}
+```
+
+Parse the user input for:
+
+- ML use case (classification, NLP, GenAI, recommendation, etc.)
+- Model type (custom trained, fine-tuned, foundation model, pre-built API)
+- MLOps maturity target (Level 0-4)
+- Governance requirements (UK Gov, MOD, commercial)
+- Specific platform preferences
+
+## Instructions
+
+### Phase 1: Read Available Documents
+
+> **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
+
+**MANDATORY** (warn if missing):
+
+- **REQ** (Requirements) — Extract: ML-related FR requirements, NFR (performance, security), DR (data requirements)
+  - If missing: warn user to run `/arckit:requirements` first
+
+**RECOMMENDED** (read if available, note if missing):
+
+- **DATA** (Data Model) — Extract: Training data sources, feature definitions, data quality, schemas
+- **AIPB** (AI Playbook) — Extract: Risk level, responsible AI requirements, human oversight model
+- **PRIN** (Architecture Principles, in 000-global) — Extract: AI/ML principles, technology standards, governance requirements
+
+**OPTIONAL** (read if available, skip silently if missing):
+
+- **RSCH** / **AWRS** / **AZRS** (Research) — Extract: ML platform choices, serving infrastructure, cost estimates
+- **ATRS** (Algorithmic Transparency) — Extract: Transparency requirements, publication obligations
+- **J936** (JSP 936 AI Assurance) — Extract: Defence AI assurance requirements, risk classification
+
+### Phase 1b: Read external documents and policies
+
+- Read any **external documents** listed in the project context (`external/` files) — extract ML pipeline configurations, model performance metrics, training data specifications, model cards
+- Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise ML governance policies, model registry standards, cross-project ML infrastructure patterns
+- If no external MLOps docs found but they would improve the strategy, ask: "Do you have any existing ML pipeline configurations, model cards, or model evaluation reports? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+
+### Phase 2: Analysis
+
+**Determine MLOps Maturity Target**:
+
+| Level | Characteristics | Automation | When to Use |
+|-------|-----------------|------------|-------------|
+| 0 | Manual, notebooks | None | PoC, exploration |
+| 1 | Automated training | Training pipeline | First production model |
+| 2 | CI/CD for ML | + Serving pipeline | Multiple models |
+| 3 | Automated retraining | + Monitoring triggers | Production at scale |
+| 4 | Full automation | + Auto-remediation | Enterprise ML |
+
+**Identify Model Type**:
+
+- **Custom Trained**: Full control, training infrastructure needed
+- **Fine-Tuned**: Base model + custom training
+- **Foundation Model (API)**: External API (OpenAI, Anthropic, etc.)
+- **Pre-built (SaaS)**: Cloud AI services (Comprehend, Vision AI, etc.)
+
+**Extract from Requirements**:
+
+- ML use cases (FR-xxx referencing ML/AI)
+- Performance requirements (latency, throughput)
+- Accuracy/quality requirements
+- Explainability requirements
+- Fairness/bias requirements
+- Data requirements (DR-xxx) for training data
+
+### Phase 3: Generate MLOps Strategy
+
+**Read the template** (with user override support):
+
+- **First**, check if `.arckit/templates/mlops-template.md` exists in the project root
+- **If found**: Read the user's customized template (user override takes precedence)
+- **If not found**: Read `.arckit/templates/mlops-template.md` (default)
+
+> **Tip**: Users can customize templates with `/arckit:customize mlops`
+
+Generate:
+
+**Section 1: ML System Overview**
+
+- Use cases and business value
+- Model types and purposes
+- MLOps maturity level (current and target)
+- Key stakeholders (data scientists, ML engineers, product)
+
+**Section 2: Model Inventory**
+
+- Catalog of all models
+- Model metadata (type, framework, version, owner)
+- Model dependencies
+- Model risk classification (UK Gov: Low/Medium/High/Very High)
+
+**Section 3: Data Pipeline**
+
+- Training data sources
+- Feature engineering pipeline
+- Feature store design (if applicable)
+- Data versioning strategy
+- Data quality checks
+
+**Section 4: Training Pipeline**
+
+- Training infrastructure (cloud ML platform, on-prem, hybrid)
+- Experiment tracking (MLflow, Weights & Biases, etc.)
+- Hyperparameter optimization
+- Model versioning
+- Training triggers (scheduled, on-demand, data-driven)
+- Resource requirements (GPU, memory, storage)
+
+**Section 5: Model Registry**
+
+- Model storage and versioning
+- Model metadata and lineage
+- Model approval workflow
+- Model promotion stages (Dev → Staging → Prod)
+
+**Section 6: Serving Infrastructure**
+
+- Deployment patterns (real-time, batch, streaming)
+- Serving platforms (SageMaker Endpoint, Vertex AI, KServe, etc.)
+- Scaling strategy (auto-scaling, serverless)
+- A/B testing and canary deployments
+- Latency and throughput targets
+
+**Section 7: Model Monitoring**
+
+- **Data Drift**: Statistical monitoring of input distributions
+- **Concept Drift**: Target distribution changes
+- **Model Performance**: Accuracy, precision, recall, F1 over time
+- **Prediction Drift**: Output distribution changes
+- **Fairness Monitoring**: Bias metrics across protected groups
+- Alert thresholds and response procedures
+
+**Section 8: Retraining Strategy**
+
+- Retraining triggers (drift threshold, scheduled, performance)
+- Automated vs manual retraining
+- Champion-challenger deployment
+- Rollback procedures
+
+**Section 9: LLM/GenAI Operations** (if applicable)
+
+- Prompt management and versioning
+- Guardrails and safety filters
+- Token usage monitoring and cost optimization
+- Response quality monitoring
+- RAG pipeline operations (if using retrieval)
+- Fine-tuning pipeline (if applicable)
+
+**Section 10: CI/CD for ML**
+
+- Source control (models, pipelines, configs)
+- Automated testing (unit, integration, model validation)
+- Continuous training pipeline
+- Continuous deployment pipeline
+- Infrastructure as Code for ML
+
+**Section 11: Model Governance**
+
+- Model documentation requirements
+- Model approval process
+- Model audit trail
+- Model risk assessment
+- Model retirement process
+
+**Section 12: Responsible AI Operations**
+
+- Bias detection and mitigation
+- Explainability implementation (SHAP, LIME, attention)
+- Human oversight mechanisms
+- Feedback loops and correction
+- Incident response for AI harms
+
+**Section 13: UK Government AI Compliance** (if applicable)
+
+- AI Playbook principles operationalization
+- ATRS record maintenance
+- JSP 936 continuous assurance (for MOD)
+- DPIA alignment for AI processing
+- ICO AI and data protection compliance
+
+**Section 14: Costs and Resources**
+
+- Infrastructure costs (training, serving)
+- Platform licensing costs
+- Team structure and skills
+- Training compute budget
+
+**Section 15: Traceability**
+
+- Requirements to model mapping
+- Data to model lineage
+- Model to deployment mapping
+
+### Phase 4: Validation
+
+Verify before saving:
+
+- [ ] All ML requirements have model mapping
+- [ ] Monitoring covers drift and performance
+- [ ] Governance process defined
+- [ ] Responsible AI addressed
+- [ ] UK Gov compliance (if applicable)
+
+### Phase 5: Output
+
+**CRITICAL - Use Write Tool**: MLOps documents are large. Use Write tool to save.
+
+Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **MLOPS** per-type checks pass. Fix any failures before proceeding.
+
+1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v1.0.md`
+
+2. **Provide summary**:
+
+```text
+✅ MLOps Strategy generated!
+
+**ML System**: [Name]
+**Models**: [N] models identified
+**MLOps Maturity**: Level [X] (target: Level [Y])
+**Deployment**: [Real-time / Batch / Both]
+
+**Training Pipeline**:
+- Platform: [SageMaker / Vertex AI / etc.]
+- Experiment Tracking: [MLflow / W&B / etc.]
+- Feature Store: [Yes/No]
+
+**Model Monitoring**:
+- Data Drift: [Enabled]
+- Performance Monitoring: [Enabled]
+- Fairness Monitoring: [Enabled/Not Required]
+
+**Governance**:
+- Model Risk Level: [Low/Medium/High/Very High]
+- Human Oversight: [Required / Advisory]
+- ATRS: [Required / Not Required]
+
+**File**: projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v1.0.md
+
+**Next Steps**:
+1. Review model inventory with data science team
+2. Set up experiment tracking infrastructure
+3. Implement monitoring dashboards
+4. Define retraining triggers and thresholds
+5. Complete responsible AI assessments
+```
+
+## Error Handling
+
+### If No ML Requirements Found
+
+"⚠️ No ML-related requirements found. Please ensure the requirements document (ARC-*-REQ-*.md) includes ML use cases (search for 'model', 'ML', 'AI', 'predict')."
+
+### If No Data Model
+
+"⚠️ Data model document (ARC-*-DATA-*.md) not found. Training data understanding is important for MLOps. Consider running `/arckit:data-model` first."
+
+## Key Principles
+
+### 1. Reproducibility First
+
+- All training must be reproducible (versioned data, code, config)
+- Model lineage tracked end-to-end
+
+### 2. Monitoring is Essential
+
+- Models degrade over time - monitoring is not optional
+- Drift detection catches problems before users do
+
+### 3. Governance is Built-In
+
+- Governance is part of the pipeline, not an afterthought
+- Audit trails automated
+
+### 4. Responsible AI
+
+- Fairness and bias monitoring from day one
+- Human oversight where required
+
+### 5. UK Government Compliance
+
+- ATRS for algorithmic decision-making
+- JSP 936 for MOD AI systems
+- AI Playbook principles embedded
+
+## Document Control
+
+**Auto-populate**:
+
+- `[PROJECT_ID]` → From project path
+- `[VERSION]` → "1.0" for new documents
+- `[DATE]` → Current date (YYYY-MM-DD)
+- `ARC-[PROJECT_ID]-MLOPS-v[VERSION]` → Document ID (for filename: `ARC-{PROJECT_ID}-MLOPS-v1.0.md`)
+
+**Generation Metadata Footer**:
+
+```markdown
+---
+**Generated by**: ArcKit `/arckit:mlops` command
+**Generated on**: [DATE]
+**ArcKit Version**: {ARCKIT_VERSION}
+**Project**: [PROJECT_NAME]
+**AI Model**: [Model name]
+```
+
+## Important Notes
+
+- **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
