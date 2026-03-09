@@ -234,7 +234,6 @@ Return ONLY a concise summary including:
 $ARGUMENTS
 ```
 
-
 ## Suggested Next Steps
 
 After completing this command, consider running:
@@ -243,4 +242,3 @@ After completing this command, consider running:
 - `/arckit:devops` -- Design Cloud Build pipeline
 - `/arckit:finops` -- Create Google Cloud cost management strategy
 - `/arckit:adr` -- Record Google Cloud service selection decisions
-

@@ -173,11 +173,9 @@ Return ONLY a concise summary to the caller including:
 $ARGUMENTS
 ```
 
-
 ## Suggested Next Steps
 
 After completing this command, consider running:
 
 - `$arckit-glossary` -- Generate glossary of framework terminology
 - `$arckit-maturity-model` -- Create maturity model for framework adoption
-

@@ -319,4 +319,3 @@ After completing this command, consider running:
 - `/arckit:research` -- Research technology options
 - `/arckit:risk` -- Create risk register from requirements
 - `/arckit:dpia` -- Assess data protection impact
-

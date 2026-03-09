@@ -181,12 +181,10 @@ Return ONLY a concise summary to the caller including:
 {{args}}
 ```
 
-
 ## Suggested Next Steps
 
 After completing this command, consider running:
 
 - `/arckit:glossary` -- Generate glossary of framework terminology
 - `/arckit:maturity-model` -- Create maturity model for framework adoption
-
 """

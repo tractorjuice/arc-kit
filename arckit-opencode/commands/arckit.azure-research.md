@@ -233,7 +233,6 @@ Return ONLY a concise summary including:
 $ARGUMENTS
 ```
 
-
 ## Suggested Next Steps
 
 After completing this command, consider running:
@@ -242,4 +241,3 @@ After completing this command, consider running:
 - `/arckit:devops` -- Design Azure DevOps pipeline
 - `/arckit:finops` -- Create Azure cost management strategy
 - `/arckit:adr` -- Record Azure service selection decisions
-

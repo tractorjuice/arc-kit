@@ -492,4 +492,3 @@ After completing this command, consider running:
 
 - `/arckit:requirements` -- Define detailed requirements after SOBC approval
 - `/arckit:roadmap` -- Create strategic roadmap from SOBC investment plan
-
