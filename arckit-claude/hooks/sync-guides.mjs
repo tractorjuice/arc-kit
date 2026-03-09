@@ -110,13 +110,15 @@ const GUIDE_CATEGORIES = {
   'servicenow': 'Operations', 'operationalize': 'Operations',
   'sow': 'Procurement', 'evaluate': 'Procurement', 'dos': 'Procurement',
   'gcloud-search': 'Procurement', 'gcloud-clarify': 'Procurement', 'procurement': 'Procurement',
+  'score': 'Procurement',
   'aws-research': 'Research', 'azure-research': 'Research', 'gcp-research': 'Research',
+  'search': 'Governance', 'impact': 'Governance',
   'template-builder': 'Other',
 };
 
 const GUIDE_STATUS = {};
 for (const name of ['plan','principles','stakeholders','stakeholder-analysis','risk','sobc','requirements','data-model','diagram','traceability','principles-compliance','story','sow','evaluate','customize','risk-management','business-case']) GUIDE_STATUS[name] = 'live';
-for (const name of ['dpia','research','strategy','roadmap','adr','hld-review','dld-review','backlog','servicenow','analyze','service-assessment','tcop','secure','presentation','artifact-health','design-review','procurement','knowledge-compounding','c4-layout-science','security-hooks','codes-of-practice','data-quality-framework','govs-007-security','national-data-strategy','upgrading','start','conformance','productivity','remote-control','mcp-servers']) GUIDE_STATUS[name] = 'beta';
+for (const name of ['dpia','research','strategy','roadmap','adr','hld-review','dld-review','backlog','servicenow','analyze','service-assessment','tcop','secure','presentation','artifact-health','design-review','procurement','knowledge-compounding','c4-layout-science','security-hooks','codes-of-practice','data-quality-framework','govs-007-security','national-data-strategy','upgrading','start','conformance','productivity','remote-control','mcp-servers','search','score','impact']) GUIDE_STATUS[name] = 'beta';
 for (const name of ['data-mesh-contract','ai-playbook','atrs','pages','template-builder']) GUIDE_STATUS[name] = 'alpha';
 for (const name of ['platform-design','wardley','azure-research','aws-research','gcp-research','datascout','dos','gcloud-search','gcloud-clarify','trello','devops','mlops','finops','operationalize','mod-secure','jsp-936','migration','pinecone-mcp']) GUIDE_STATUS[name] = 'experimental';
 
@@ -385,6 +387,48 @@ function scanProject(repoRoot, projectName) {
     }
   }
 
+  // Vendor scores
+  const scoresPath = join(projectDir, 'vendors', 'scores.json');
+  if (isFile(scoresPath)) {
+    try {
+      const scoresRaw = readFileSync(scoresPath, 'utf8');
+      const scoresData = JSON.parse(scoresRaw);
+      if (scoresData.criteria && scoresData.vendors) {
+        const categories = [...new Set(scoresData.criteria.map(c => c.category))];
+        const vendorSummaries = [];
+        for (const [slug, vendor] of Object.entries(scoresData.vendors)) {
+          const categoryAverages = {};
+          for (const cat of categories) {
+            const catCriteria = scoresData.criteria.filter(c => c.category === cat);
+            const catScores = catCriteria.map(c => {
+              const s = vendor.scores.find(s => s.criterionId === c.id);
+              return s ? s.score : 0;
+            });
+            categoryAverages[cat] = catScores.length > 0
+              ? Math.round((catScores.reduce((a, b) => a + b, 0) / catScores.length) * 100) / 100
+              : 0;
+          }
+          vendorSummaries.push({
+            name: vendor.displayName || slug,
+            slug,
+            totalWeighted: vendor.totalWeighted || 0,
+            totalRaw: vendor.totalRaw || 0,
+            maxPossible: vendor.maxPossible || 0,
+            categoryAverages,
+          });
+        }
+        vendorSummaries.sort((a, b) => b.totalWeighted - a.totalWeighted);
+        project.vendorScores = {
+          lastUpdated: scoresData.lastUpdated || null,
+          categories,
+          vendors: vendorSummaries,
+        };
+      }
+    } catch (e) {
+      // Silently skip malformed scores.json
+    }
+  }
+
   // Tech notes
   const techDir = join(projectDir, 'tech-notes');
   if (isDir(techDir)) {
@@ -618,6 +662,10 @@ for (const p of manifest.projects) {
   vendorProfileCount = vendorProfileCount + (p.vendorProfiles ? p.vendorProfiles.length : 0);
   techNoteCount = techNoteCount + (p.techNotes ? p.techNotes.length : 0);
 }
+let scoredVendorCount = 0;
+for (const p of manifest.projects) {
+  if (p.vendorScores) scoredVendorCount = scoredVendorCount + p.vendorScores.vendors.length;
+}
 
 // ── 5. Output ──
 
@@ -657,6 +705,7 @@ const message = [
   `| Vendor Documents | ${vendorDocCount} |`,
   `| Vendor Profiles | ${vendorProfileCount} |`,
   `| Tech Notes | ${techNoteCount} |`,
+  `| Scored Vendors | ${scoredVendorCount} |`,
   `| Projects | ${manifest.projects.length} |`,
   ``,
   `### What to do`,
