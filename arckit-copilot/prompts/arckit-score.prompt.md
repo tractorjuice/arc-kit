@@ -158,4 +158,3 @@ After completing this command, consider running:
 
 - `/arckit-evaluate` -- Create or update evaluation framework before scoring *(when No EVAL artifact exists for the project)*
 - `/arckit-sow` -- Generate Statement of Work for selected vendor *(when Vendor selection complete, ready for procurement)*
-

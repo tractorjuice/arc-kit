@@ -346,4 +346,3 @@ After writing all files, show ONLY this summary:
 After completing this command, consider running:
 
 - `/arckit-customize` -- Copy and modify existing official templates instead of creating new ones *(when User wants to customize an existing template rather than build a new one)*
-

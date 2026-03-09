@@ -26,7 +26,7 @@ are in `.github/prompts/arckit-*.prompt.md` (type `/` in Copilot Chat).
 
 ## Project Structure
 
-```
+```text
 projects/
 ├── 000-global/          # Cross-project artifacts (principles, policies)
 └── 001-project-name/    # Numbered project directories

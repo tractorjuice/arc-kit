@@ -6,7 +6,6 @@ tools: ['readFile', 'editFiles', 'runCommand', 'codebase', 'search']
 
 Use the `arckit-framework` agent to handle this request.
 
-
 ## Suggested Next Steps
 
 After completing this command, consider running:

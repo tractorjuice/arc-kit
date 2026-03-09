@@ -293,4 +293,3 @@ After completing this command, consider running:
 
 - `/arckit-roadmap` -- Create phased roadmap based on maturity progression
 - `/arckit-strategy` -- Incorporate maturity targets into architecture strategy
-

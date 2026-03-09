@@ -258,4 +258,3 @@ The footer should be populated with:
 After completing this command, consider running:
 
 - `/arckit-data-model` -- Review data model for entity/attribute terminology
-

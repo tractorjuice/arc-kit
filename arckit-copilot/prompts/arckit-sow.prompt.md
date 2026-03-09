@@ -418,4 +418,3 @@ After completing this command, consider running:
 
 - `/arckit-evaluate` -- Create vendor evaluation framework
 - `/arckit-dos` -- Generate Digital Marketplace DOS opportunity
-

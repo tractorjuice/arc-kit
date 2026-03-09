@@ -734,4 +734,3 @@ After completing this command, consider running:
 - `/arckit-roadmap` -- Create strategic roadmap from evolution analysis
 - `/arckit-strategy` -- Synthesise Wardley insights into architecture strategy
 - `/arckit-research` -- Research vendors for Custom-Built components *(when Custom-Built components identified that need market research)*
-

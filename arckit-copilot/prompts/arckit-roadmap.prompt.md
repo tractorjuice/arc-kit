@@ -487,4 +487,3 @@ After completing this command, consider running:
 
 - `/arckit-backlog` -- Generate product backlog from roadmap
 - `/arckit-plan` -- Create detailed project plan for Phase 1
-

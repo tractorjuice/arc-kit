@@ -535,4 +535,3 @@ After completing this command, consider running:
 - `/arckit-sobc` -- Feed risk register into SOBC Management Case
 - `/arckit-requirements` -- Create risk-driven requirements
 - `/arckit-secure` -- Validate security controls against risks
-

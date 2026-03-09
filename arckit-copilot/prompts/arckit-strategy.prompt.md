@@ -376,4 +376,3 @@ After completing this command, consider running:
 - `/arckit-requirements` -- Create detailed requirements from strategy
 - `/arckit-roadmap` -- Expand strategic timeline into detailed roadmap
 - `/arckit-diagram` -- Create architecture vision diagrams
-

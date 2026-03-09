@@ -75,4 +75,3 @@ After completing this command, consider running:
 - `/arckit-health` -- Check artifact health after finding relevant documents *(when Search revealed potentially stale artifacts)*
 - `/arckit-traceability` -- Trace requirements found in search results *(when Search included requirement IDs)*
 - `/arckit-impact` -- Analyse impact of changes to found documents *(when User wants to understand change blast radius)*
-

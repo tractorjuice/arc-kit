@@ -261,4 +261,3 @@ After completing this command, consider running:
 - `/arckit-requirements` -- Create requirements aligned to stakeholder goals
 - `/arckit-risk` -- Create risk register with stakeholder risk owners
 - `/arckit-sobc` -- Build business case from stakeholder drivers
-

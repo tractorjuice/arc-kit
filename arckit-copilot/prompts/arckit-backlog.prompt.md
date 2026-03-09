@@ -1787,4 +1787,3 @@ After completing this command, consider running:
 
 - `/arckit-trello` -- Export backlog to Trello board
 - `/arckit-traceability` -- Map user stories back to requirements
-

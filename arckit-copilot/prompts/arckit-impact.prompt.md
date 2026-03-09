@@ -85,4 +85,3 @@ After completing this command, consider running:
 - `/arckit-traceability` -- Update traceability matrix after impact assessment *(when Impact analysis revealed traceability gaps)*
 - `/arckit-health` -- Check health of impacted artifacts *(when Impacted documents may be stale)*
 - `/arckit-conformance` -- Re-assess conformance after changes *(when Impact includes architecture design documents)*
-

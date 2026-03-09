@@ -536,4 +536,3 @@ After completing this command, consider running:
 - `/arckit-hld-review` -- Reflect decision in High-Level Design
 - `/arckit-diagram` -- Update architecture diagrams
 - `/arckit-traceability` -- Update traceability matrix with decision links
-

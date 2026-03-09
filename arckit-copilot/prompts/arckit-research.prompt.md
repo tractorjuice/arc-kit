@@ -6,7 +6,6 @@ tools: ['fetch', 'readFile', 'editFiles', 'runCommand', 'codebase', 'search']
 
 Use the `arckit-research` agent to handle this request.
 
-
 ## Suggested Next Steps
 
 After completing this command, consider running:

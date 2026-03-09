@@ -401,4 +401,3 @@ After completing this command, consider running:
 - `/arckit-dld-review` -- Validate schema design and query patterns
 - `/arckit-sow` -- Include data migration and governance in RFP
 - `/arckit-traceability` -- Map DR-xxx to entities and attributes
-

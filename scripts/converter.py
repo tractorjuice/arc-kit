@@ -315,7 +315,7 @@ def convert(commands_dir, agents_dir):
             handoffs_section = render_handoffs_section(handoffs, command_format=cmd_fmt)
 
             if handoffs_section:
-                rewritten = rewritten + "\n" + handoffs_section
+                rewritten = rewritten.rstrip("\n") + "\n" + handoffs_section.rstrip("\n")
 
             # For Copilot prompt format with agent-backed commands,
             # generate a thin wrapper that references the .agent.md file
@@ -335,7 +335,7 @@ def convert(commands_dir, agents_dir):
                     f"Use the `{agent_ref}` agent to handle this request.\n"
                 )
                 if handoffs_section:
-                    content += "\n" + handoffs_section
+                    content += "\n" + handoffs_section.strip("\n") + "\n"
 
                 out_filename = config["filename_pattern"].format(name=base_name)
                 out_path = os.path.join(config["output_dir"], out_filename)
@@ -826,7 +826,7 @@ are in `.github/prompts/arckit-*.prompt.md` (type `/` in Copilot Chat).
 
 ## Project Structure
 
-```
+```text
 projects/
 ├── 000-global/          # Cross-project artifacts (principles, policies)
 └── 001-project-name/    # Numbered project directories
