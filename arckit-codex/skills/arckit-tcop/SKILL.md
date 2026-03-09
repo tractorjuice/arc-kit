@@ -32,7 +32,7 @@ Generate a comprehensive TCoP review document by:
 
 2. **Read Available Documents**:
 
-   > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+   > **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
    **MANDATORY** (warn if missing):
    - **REQ** (Requirements) — Extract: FR/NFR IDs, technology constraints, compliance requirements

@@ -52,7 +52,7 @@ def extract_agent_prompt(content):
     return content
 
 
-def render_handoffs_section(handoffs):
+def render_handoffs_section(handoffs, command_format="/arckit:{cmd}"):
     """Render handoffs list as a markdown Suggested Next Steps section."""
     if not handoffs:
         return ""
@@ -67,7 +67,7 @@ def render_handoffs_section(handoffs):
         cmd = h.get("command", "")
         desc = h.get("description", "")
         cond = h.get("condition", "")
-        line = f"- `/arckit:{cmd}`"
+        line = f"- `{command_format.format(cmd=cmd)}`"
         if desc:
             line += f" -- {desc}"
         if cond:
@@ -82,6 +82,7 @@ EXTENSION_FILE_ACCESS_BLOCK = """\
 This command runs as a Gemini CLI extension. The extension directory \
 (`~/.gemini/extensions/arckit/`) is outside the workspace sandbox, so you \
 CANNOT use the read_file tool to access it. Instead:
+
 - To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arckit/templates/foo-template.md`
 - To list files: use `ls ~/.gemini/extensions/arckit/templates/`
 - To run scripts: use `python3 ~/.gemini/extensions/arckit/scripts/python/create-project.py --json`
@@ -89,6 +90,20 @@ CANNOT use the read_file tool to access it. Instead:
 All extension file access MUST go through shell commands.
 
 """
+
+CONTEXT_HOOK_NOTE = (
+    "> **Note**: The ArcKit Project Context hook has already detected all "
+    "projects, artifacts, external documents, and global policies. Use that "
+    "context below \u2014 no need to scan directories manually."
+)
+
+CONTEXT_HOOK_REPLACEMENT = (
+    "> **Note**: Before generating, scan `projects/` for existing project "
+    "directories. For each project, list all `ARC-*.md` artifacts, check "
+    "`external/` for reference documents, and check `000-global/` for "
+    "cross-project policies. If no external docs exist but they would "
+    "improve output, ask the user."
+)
 
 
 # --- Agent configuration: adding a new AI target = adding a dictionary entry ---
@@ -103,12 +118,16 @@ AGENT_CONFIG = {
         "extension_dir": "arckit-codex",
         "copy_commands_to_extension": True,
         "copy_agents_to_extension": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
     "codex_skills": {
         "name": "Codex Skills",
         "output_dir": "arckit-codex/skills",
         "format": "skill",
         "path_prefix": ".arckit",
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
     "opencode": {
         "name": "OpenCode CLI",
@@ -118,6 +137,8 @@ AGENT_CONFIG = {
         "path_prefix": ".arckit",
         "extension_dir": "arckit-opencode",
         "copy_agents_to_extension": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
     "gemini": {
         "name": "Gemini CLI",
@@ -129,6 +150,21 @@ AGENT_CONFIG = {
         "extension_dir": "arckit-gemini",
         "prepend_block": EXTENSION_FILE_ACCESS_BLOCK,
         "rewrite_read_instructions": True,
+        "has_context_hook": True,
+        "has_sync_guides_hook": False,
+    },
+    "copilot": {
+        "name": "Copilot",
+        "output_dir": "arckit-copilot/prompts",
+        "filename_pattern": "arckit-{name}.prompt.md",
+        "format": "prompt",
+        "path_prefix": ".arckit",
+        "arg_placeholder": "${input:topic:Enter project name or topic}",
+        "extension_dir": "arckit-copilot",
+        "copy_commands_to_extension": False,
+        "copy_agents_to_extension": False,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
     },
 }
 
@@ -153,13 +189,55 @@ def rewrite_paths(prompt, config):
     return result
 
 
+def rewrite_hook_dependencies(prompt, config):
+    """Replace hook-dependent content for platforms without hooks."""
+    result = prompt
+
+    # Context injection: replace hook note with self-scan instructions
+    if not config.get("has_context_hook", False):
+        result = result.replace(CONTEXT_HOOK_NOTE, CONTEXT_HOOK_REPLACEMENT)
+
+    return result
+
+
+# Default Copilot tools for most ArcKit commands
+_COPILOT_DEFAULT_TOOLS = [
+    "readFile", "editFiles", "runCommand", "codebase", "search",
+]
+
+# Additional tools for research-heavy commands
+_COPILOT_RESEARCH_TOOLS = [
+    "fetch", "readFile", "editFiles", "runCommand", "codebase", "search",
+]
+
+
+def _copilot_tools_for_prompt(prompt):
+    """Determine Copilot tools based on prompt content."""
+    if any(kw in prompt for kw in ["WebSearch", "WebFetch", "web research",
+                                    "search the web", "fetch", "MCP"]):
+        return _COPILOT_RESEARCH_TOOLS
+    return _COPILOT_DEFAULT_TOOLS
+
+
 def format_output(description, prompt, fmt):
-    """Format into target format: 'markdown', 'toml', or 'skill'."""
+    """Format into target format: 'markdown', 'toml', 'prompt', or 'skill'."""
     if fmt == "toml":
         prompt_escaped = prompt.replace("\\", "\\\\").replace('"', '\\"')
         prompt_formatted = '"""\n' + prompt_escaped + '\n"""'
         description_formatted = '"""\n' + description + '\n"""'
         return f"description = {description_formatted}\nprompt = {prompt_formatted}\n"
+    elif fmt == "prompt":
+        escaped = description.replace("'", "''")
+        tools = _copilot_tools_for_prompt(prompt)
+        tools_yaml = "[" + ", ".join(f"'{t}'" for t in tools) + "]"
+        return (
+            f"---\n"
+            f"description: '{escaped}'\n"
+            f"agent: 'agent'\n"
+            f"tools: {tools_yaml}\n"
+            f"---\n\n"
+            f"{prompt}\n"
+        )
     else:
         escaped = description.replace("\\", "\\\\").replace('"', '\\"')
         return f'---\ndescription: "{escaped}"\n---\n\n{prompt}\n'
@@ -205,15 +283,67 @@ def convert(commands_dir, agents_dir):
             prompt = command_prompt
             source_label = command_path
 
-        # Append rendered handoffs section to prompt for all output formats
-        handoffs_section = render_handoffs_section(handoffs)
-        if handoffs_section:
-            prompt = prompt + "\n" + handoffs_section
-
         base_name = filename.replace(".md", "")
 
+        # Check for standalone command override once (result is agent-independent)
+        standalone_path = os.path.join(
+            os.path.dirname(commands_dir.rstrip(os.sep)), "commands-standalone", filename
+        )
+        has_standalone = os.path.isfile(standalone_path)
+        standalone_prompt = None
+        if has_standalone:
+            with open(standalone_path, "r") as f:
+                standalone_content = f.read()
+            _, standalone_prompt = extract_frontmatter_and_prompt(standalone_content)
+
         for agent_id, config in AGENT_CONFIG.items():
-            rewritten = rewrite_paths(prompt, config)
+            if has_standalone and not config.get("has_sync_guides_hook", False):
+                # Use standalone version for platforms lacking required hook
+                rewritten = rewrite_paths(standalone_prompt, config)
+            else:
+                rewritten = rewrite_paths(prompt, config)
+                rewritten = rewrite_hook_dependencies(rewritten, config)
+
+            # Determine handoff command format based on target
+            if config["format"] == "prompt":
+                cmd_fmt = "/arckit-{cmd}"
+            elif config["format"] == "skill":
+                cmd_fmt = "$arckit-{cmd}"
+            else:
+                cmd_fmt = "/arckit:{cmd}"
+
+            handoffs_section = render_handoffs_section(handoffs, command_format=cmd_fmt)
+
+            if handoffs_section:
+                rewritten = rewritten.rstrip("\n") + "\n" + handoffs_section.rstrip("\n")
+
+            # For Copilot prompt format with agent-backed commands,
+            # generate a thin wrapper that references the .agent.md file
+            if config["format"] == "prompt" and filename in agent_map:
+                agent_name = filename.replace(".md", "")
+                agent_ref = f"arckit-{agent_name}"
+                escaped_desc = description.replace("'", "''")
+                tools = _copilot_tools_for_prompt(rewritten)
+                tools_yaml = "[" + ", ".join(f"'{t}'" for t in tools) + "]"
+
+                content = (
+                    f"---\n"
+                    f"description: '{escaped_desc}'\n"
+                    f"agent: '{agent_ref}'\n"
+                    f"tools: {tools_yaml}\n"
+                    f"---\n\n"
+                    f"Use the `{agent_ref}` agent to handle this request.\n"
+                )
+                if handoffs_section:
+                    content += "\n" + handoffs_section.strip("\n") + "\n"
+
+                out_filename = config["filename_pattern"].format(name=base_name)
+                out_path = os.path.join(config["output_dir"], out_filename)
+                with open(out_path, "w") as f:
+                    f.write(content)
+                print(f"  {config['name'] + ':':14s}{source_label} -> {out_path} (agent wrapper)")
+                counts[agent_id] += 1
+                continue
 
             if config["format"] == "skill":
                 skill_name = f"arckit-{base_name}"
@@ -621,13 +751,104 @@ reason = "File content may contain secrets. Please confirm this is intentional."
     print(f"  Generated: {rules_path}")
 
 
+def generate_copilot_agents(agents_dir, output_dir):
+    """Generate Copilot custom agent .agent.md files from Claude Code agents."""
+    if not os.path.isdir(agents_dir):
+        print(f"  Skipped: {agents_dir} not found")
+        return
+
+    os.makedirs(output_dir, exist_ok=True)
+    count = 0
+
+    for filename in sorted(os.listdir(agents_dir)):
+        if not (filename.startswith("arckit-") and filename.endswith(".md")):
+            continue
+
+        agent_path = os.path.join(agents_dir, filename)
+        with open(agent_path, "r") as f:
+            content = f.read()
+
+        frontmatter, prompt = extract_frontmatter_and_prompt(content)
+
+        copilot_fm = {}
+        if "name" in frontmatter:
+            copilot_fm["name"] = frontmatter["name"]
+        if "description" in frontmatter:
+            desc = frontmatter["description"].strip().split("\n")[0].strip()
+            copilot_fm["description"] = desc
+        copilot_fm["tools"] = _copilot_tools_for_prompt(prompt)
+        copilot_fm["user-invocable"] = False
+
+        prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
+        prompt = prompt.replace(CONTEXT_HOOK_NOTE, CONTEXT_HOOK_REPLACEMENT)
+
+        fm_str = yaml.dump(copilot_fm, default_flow_style=False, sort_keys=False).rstrip()
+        out_filename = filename.replace(".md", ".agent.md")
+        output_content = f"---\n{fm_str}\n---\n\n{prompt}\n"
+
+        out_path = os.path.join(output_dir, out_filename)
+        with open(out_path, "w") as f:
+            f.write(output_content)
+        print(f"  {out_filename}")
+        count += 1
+
+    print(f"  Generated {count} Copilot agent files in {output_dir}")
+
+
+def generate_copilot_instructions(output_path):
+    """Generate copilot-instructions.md for Copilot repos using ArcKit."""
+    content = """\
+# ArcKit Enterprise Architecture Toolkit
+
+This project uses ArcKit for architecture governance. Available commands
+are in `.github/prompts/arckit-*.prompt.md` (type `/` in Copilot Chat).
+
+## Conventions
+
+- All architecture artifacts go in `projects/` directories (e.g., `projects/001-project-name/`)
+- Use `bash .arckit/scripts/bash/create-project.sh --json` to create numbered project dirs
+- Use `bash .arckit/scripts/bash/generate-document-id.sh` for document IDs (e.g., ARC-001-REQ-v1.0)
+- Templates are in `.arckit/templates/` (custom overrides in `.arckit/templates-custom/`)
+- Always write large documents to files (avoid output token limits)
+- Show only a summary to the user after generating artifacts
+
+## Document ID Format
+
+`ARC-{project}-{type}-v{version}` (e.g., `ARC-001-REQ-v1.0`)
+
+## Requirement ID Prefixes
+
+- BR-xxx: Business Requirements
+- FR-xxx: Functional Requirements
+- NFR-xxx: Non-Functional Requirements (NFR-P-xxx Performance, NFR-SEC-xxx Security)
+- INT-xxx: Integration Requirements
+- DR-xxx: Data Requirements
+
+## Project Structure
+
+```text
+projects/
+├── 000-global/          # Cross-project artifacts (principles, policies)
+└── 001-project-name/    # Numbered project directories
+    ├── ARC-001-REQ-v1.0.md
+    ├── ARC-001-STKE-v1.0.md
+    ├── external/        # Reference documents
+    └── vendors/         # Vendor evaluations
+```
+"""
+    os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
+    with open(output_path, "w") as f:
+        f.write(content)
+    print(f"  Generated: {output_path}")
+
+
 if __name__ == "__main__":
     commands_dir = "arckit-claude/commands/"
     agents_dir = "arckit-claude/agents/"
     plugin_dir = "arckit-claude"
 
     print(
-        "Converting plugin commands to Codex, OpenCode, and Gemini extension formats..."
+        "Converting plugin commands to Codex, OpenCode, Gemini, and Copilot extension formats..."
     )
     print()
     print(f"Source:       {commands_dir}")
@@ -719,6 +940,14 @@ if __name__ == "__main__":
     print()
     print("Generating Gemini extension policies...")
     generate_gemini_policies("arckit-gemini")
+
+    print()
+    print("Generating Copilot custom agents...")
+    generate_copilot_agents(agents_dir, "arckit-copilot/agents")
+
+    print()
+    print("Generating Copilot instructions...")
+    generate_copilot_instructions("arckit-copilot/copilot-instructions.md")
 
     print()
     total = sum(counts.values())

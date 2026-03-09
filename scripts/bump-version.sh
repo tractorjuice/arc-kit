@@ -104,6 +104,11 @@ update_file "arckit-opencode/VERSION" "overwrite"
 echo "$NEW_VERSION" > arckit-codex/VERSION
 update_file "arckit-codex/VERSION" "overwrite"
 
+# ── 13. arckit-copilot/VERSION ─────────────────────────────────────────────
+
+echo "$NEW_VERSION" > arckit-copilot/VERSION
+update_file "arckit-copilot/VERSION" "overwrite"
+
 # ── Summary ─────────────────────────────────────────────────────────────────
 
 echo ""
@@ -114,7 +119,7 @@ echo ""
 echo "── Verification ──"
 echo ""
 echo "VERSION files:"
-grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION
+grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION arckit-copilot/VERSION
 echo ""
 echo "pyproject.toml:"
 grep "^version" pyproject.toml

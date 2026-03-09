@@ -4,6 +4,7 @@ Research technology, services, and products to meet requirements with build vs b
 prompt = """
 **IMPORTANT — Gemini Extension File Access**:
 This command runs as a Gemini CLI extension. The extension directory (`~/.gemini/extensions/arckit/`) is outside the workspace sandbox, so you CANNOT use the read_file tool to access it. Instead:
+
 - To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arckit/templates/foo-template.md`
 - To list files: use `ls ~/.gemini/extensions/arckit/templates/`
 - To run scripts: use `python3 ~/.gemini/extensions/arckit/scripts/python/create-project.py --json`
@@ -330,7 +331,6 @@ Return ONLY a concise summary including:
 {{args}}
 ```
 
-
 ## Suggested Next Steps
 
 After completing this command, consider running:
@@ -339,5 +339,4 @@ After completing this command, consider running:
 - `/arckit:sobc` -- Feed TCO data into Economic Case
 - `/arckit:sow` -- Create RFP from vendor requirements
 - `/arckit:hld-review` -- Validate technology choices against HLD
-
 """

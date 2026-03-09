@@ -1,6 +1,6 @@
 # ArcKit - Gemini Extension Context
 
-ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing 57 slash commands for generating architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
+ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing 60 slash commands for generating architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
 
 ## Extension File Locations
 

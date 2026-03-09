@@ -36,7 +36,7 @@ That's it -- no environment variables, no config files. Codex auto-discovers ski
 
 This creates a project with:
 
-- `.agents/skills/` -- 61 skills (57 commands + 4 reference skills, auto-discovered by Codex)
+- `.agents/skills/` -- 63 skills (59 commands + 4 reference skills, auto-discovered by Codex)
 - `.codex/agents/` -- 6 agent configs (research, datascout, cloud providers, framework)
 - `.codex/config.toml` -- MCP servers and agent roles
 - `.arckit/templates/` -- document templates
@@ -58,7 +58,7 @@ cp -r /path/to/arckit-codex/skills/* .agents/skills/
 cp -r /path/to/arckit-codex/skills/* ~/.agents/skills/
 ```
 
-This makes all 57 ArcKit commands available as `$arckit-*` skills plus 4 reference skills.
+This makes all 59 ArcKit commands available as `$arckit-*` skills plus 4 reference skills.
 
 **Step 2: MCP Servers and Agents**
 
@@ -75,7 +75,7 @@ MCP servers require no API keys except for Google Developer Knowledge (`GOOGLE_A
 
 ## Skills
 
-All 57 commands are available as skills, invoked with `$arckit-<command>` in Codex CLI. Additionally, 4 reference skills provide domain knowledge.
+All 59 commands are available as skills, invoked with `$arckit-<command>` in Codex CLI. Additionally, 4 reference skills provide domain knowledge.
 
 ### Reference Skills
 
@@ -219,7 +219,7 @@ arckit-codex/
 ├── README.md              # This file
 ├── VERSION                # Extension version (tracks plugin)
 ├── config.toml            # MCP servers + agent configuration
-├── skills/                # 61 skills (57 commands + 4 reference)
+├── skills/                # 63 skills (59 commands + 4 reference)
 │   ├── arckit-requirements/
 │   │   ├── SKILL.md       # Command prompt with frontmatter
 │   │   └── agents/
@@ -230,7 +230,7 @@ arckit-codex/
 │   ├── mermaid-syntax/         # Reference skill
 │   ├── plantuml-syntax/        # Reference skill
 │   └── wardley-mapping/        # Reference skill
-├── prompts/               # 57 prompts (deprecated, use skills instead)
+├── prompts/               # 59 prompts (deprecated, use skills instead)
 ├── agents/                # 6 agent configs + system prompts
 │   ├── arckit-research.md
 │   ├── arckit-research.toml
@@ -243,7 +243,7 @@ arckit-codex/
 
 ## Version
 
-**Current Release: v3.1.2 (57 commands, 4 reference skills)**
+**Current Release: v3.1.2 (59 commands, 4 reference skills)**
 
 ---
 

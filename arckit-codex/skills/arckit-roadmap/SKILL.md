@@ -44,7 +44,7 @@ $ARGUMENTS
 
 ## Instructions
 
-> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+> **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
 ### 1. Identify the target project
 
@@ -486,4 +486,3 @@ After completing this command, consider running:
 
 - `$arckit-backlog` -- Generate product backlog from roadmap
 - `$arckit-plan` -- Create detailed project plan for Phase 1
-

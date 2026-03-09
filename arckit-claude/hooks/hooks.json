@@ -1,6 +1,18 @@
 {
-  "description": "ArcKit hooks: session init, project context injection, filename enforcement, MCP tool auto-allow, and security protection (file protection, secret detection, secret file scanning)",
+  "description": "ArcKit hooks: session init, session learner, project context injection, filename enforcement, MCP tool auto-allow, and security protection (file protection, secret detection, secret file scanning)",
   "hooks": {
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/session-learner.mjs",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
     "SessionStart": [
       {
         "matcher": ".*",
@@ -68,6 +80,26 @@
             "timeout": 30
           }
         ]
+      },
+      {
+        "matcher": "/arckit:search",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/search-scan.mjs",
+            "timeout": 15
+          }
+        ]
+      },
+      {
+        "matcher": "/arckit:impact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/impact-scan.mjs",
+            "timeout": 20
+          }
+        ]
       }
     ],
     "PreToolUse": [
@@ -77,6 +109,11 @@
           {
             "type": "command",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.mjs",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/score-validator.mjs",
             "timeout": 5
           }
         ]

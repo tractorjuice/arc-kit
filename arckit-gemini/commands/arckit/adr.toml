@@ -4,6 +4,7 @@ Document architectural decisions with options analysis and traceability
 prompt = """
 **IMPORTANT — Gemini Extension File Access**:
 This command runs as a Gemini CLI extension. The extension directory (`~/.gemini/extensions/arckit/`) is outside the workspace sandbox, so you CANNOT use the read_file tool to access it. Instead:
+
 - To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arckit/templates/foo-template.md`
 - To list files: use `ls ~/.gemini/extensions/arckit/templates/`
 - To run scripts: use `python3 ~/.gemini/extensions/arckit/scripts/python/create-project.py --json`
@@ -542,5 +543,4 @@ After completing this command, consider running:
 - `/arckit:hld-review` -- Reflect decision in High-Level Design
 - `/arckit:diagram` -- Update architecture diagrams
 - `/arckit:traceability` -- Update traceability matrix with decision links
-
 """

@@ -13,7 +13,7 @@ $ARGUMENTS
 
 ## Instructions
 
-> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+> **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
 ### 1. **Read existing artifacts from the project context:**
 
@@ -535,4 +535,3 @@ After completing this command, consider running:
 - `$arckit-hld-review` -- Reflect decision in High-Level Design
 - `$arckit-diagram` -- Update architecture diagrams
 - `$arckit-traceability` -- Update traceability matrix with decision links
-

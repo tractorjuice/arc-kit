@@ -40,7 +40,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 57 commands, 6 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 60 commands, 6 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
 > **Why v2.1.71?** This version fixes background agent completion notifications missing output file paths (critical for ArcKit's 6 research agents), resolves plugin installation loss across multiple instances, fixes plugin hooks being silently dropped with `${CLAUDE_PLUGIN_ROOT}` templates, and includes all prior fixes for memory leaks in subagents, MCP server cache leaks, and worktree config sharing.
 
@@ -50,7 +50,19 @@ Then install from the Discover tab. Claude Code is the **primary development pla
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
-Zero-config: all 57 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+Zero-config: all 60 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+
+**GitHub Copilot** (VS Code) — install the ArcKit CLI and scaffold prompt files:
+
+```bash
+# Install with pip
+pip install git+https://github.com/tractorjuice/arc-kit.git
+
+# Scaffold a project with Copilot prompt files
+arckit init my-project --ai copilot
+```
+
+Creates `.github/prompts/arckit-*.prompt.md` (60 prompt files), `.github/agents/arckit-*.agent.md` (6 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arckit-requirements`, `/arckit-stakeholders`, etc.
 
 **Codex CLI** — install the ArcKit CLI:
 
@@ -65,22 +77,32 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v4.0.2](https://github.com/tractorjuice/arc-kit/releases/tag/v4.0.2)
+**Latest Release**: [v4.1.1](https://github.com/tractorjuice/arc-kit/releases/tag/v4.1.1)
 
 ### Platform Support
 
-| Platform | Claude Code Plugin | Gemini CLI Extension | Codex / OpenCode CLI |
-|----------|-------------------|---------------------|---------------------|
-| macOS | Full support | Full support | Full support |
-| Linux | Full support | Full support | Full support |
-| Windows (WSL2) | Full support | Full support | Full support |
-| Windows (native) | Full support | Full support | Partial |
+| Platform | Claude Code Plugin | Gemini CLI Extension | GitHub Copilot | Codex / OpenCode CLI |
+|----------|-------------------|---------------------|----------------|---------------------|
+| macOS | Full support | Full support | Full support | Full support |
+| Linux | Full support | Full support | Full support | Full support |
+| Windows (WSL2) | Full support | Full support | Full support | Full support |
+| Windows (native) | Full support | Full support | Full support | Partial |
 
-**Windows users**: The Claude Code plugin and Gemini CLI extension work natively on all platforms — all hooks and scripts are Python-based. For Codex CLI / OpenCode CLI on native Windows (without WSL), some commands containing inline bash snippets may require [Git Bash](https://git-scm.com/downloads/win) or [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). We recommend WSL2 for the best experience.
+**Windows users**: The Claude Code plugin, Gemini CLI extension, and GitHub Copilot prompt files work natively on all platforms. For Codex CLI / OpenCode CLI on native Windows (without WSL), some commands containing inline bash snippets may require [Git Bash](https://git-scm.com/downloads/win) or [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). We recommend WSL2 for the best experience.
 
 ### Initialize a Project
 
 **Claude Code**: No initialization needed — the plugin provides everything.
+
+**GitHub Copilot** (VS Code):
+
+```bash
+# Create a new architecture governance project
+arckit init payment-modernization --ai copilot
+
+# Or initialize in current directory
+arckit init . --ai copilot
+```
 
 **OpenCode CLI**:
 
@@ -108,10 +130,15 @@ arckit init . --ai codex
 ### Start Using ArcKit
 
 ```bash
+# GitHub Copilot (VS Code)
+cd payment-modernization && code .
+# In Copilot Chat, use ArcKit commands:
+/arckit-principles Create principles for a financial services company
+/arckit-requirements Build a payment processing system...
+
 # Codex CLI
 cd payment-modernization
 codex
-
 # Inside your AI assistant, use ArcKit commands:
 /arckit.principles Create principles for a financial services company
 /arckit.requirements Build a payment processing system...
@@ -123,6 +150,8 @@ codex
 **Claude Code plugin**: Updates are automatic via the marketplace — no action needed.
 
 **Gemini CLI extension**: Updates via `gemini extensions update arckit`.
+
+**GitHub Copilot**: Re-run `arckit init --here --ai copilot` to update prompt files, agents, and instructions.
 
 **Codex CLI**:
 
@@ -749,6 +778,7 @@ Publish all project documentation as an interactive website:
 |-----------|---------|-------|
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ Premier | **Primary platform.** Plugin with agents, hooks, MCP servers, and auto-updates |
 | [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ Full | Extension with commands, MCP servers, and auto-updates |
+| [GitHub Copilot](https://github.com/features/copilot) | ✅ Core | VS Code prompt files, custom agents, and repo-wide instructions (`arckit init --ai copilot`) |
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ Core | CLI with commands and templates. ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
 | [OpenCode CLI](https://opencode.net/cli) | ✅ Core | CLI with commands and templates |
 
@@ -758,27 +788,27 @@ Publish all project documentation as an interactive website:
 
 Claude Code is the **primary development platform** for ArcKit and provides capabilities not available in other formats:
 
-| Feature | Claude Code | Gemini CLI | Codex / OpenCode |
-|---------|:-----------:|:----------:|:----------------:|
-| 57 slash commands | ✅ | ✅ | ✅ |
-| Templates & scripts | ✅ | ✅ | ✅ |
-| Bundled MCP servers (AWS, Azure, GCP, DataCommons) | ✅ | ✅ (3 servers) | Manual setup |
-| **Autonomous research agents** (6 agents for research, datascout, cloud research, framework) | ✅ | — | — |
-| **SessionStart hook** (auto-detect version + projects) | ✅ | — | — |
-| **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | — | — |
-| **PreToolUse hook** (ARC filename auto-correction) | ✅ | — | — |
-| **PermissionRequest hook** (auto-allow MCP documentation tools) | ✅ | — | — |
-| **Per-command Stop hooks** (output validation, e.g. Wardley Map math checks) | ✅ | — | — |
-| Wardley Mapping skill (with Pinecone MCP book corpus) | ✅ | — | — |
-| Mermaid Syntax Reference skill (23 diagram types + config) | ✅ | ✅ | ✅ |
-| Automatic marketplace updates | ✅ | ✅ | Manual reinstall |
-| Zero-config installation | ✅ | ✅ | `arckit init` required |
+| Feature | Claude Code | Gemini CLI | Copilot | Codex / OpenCode |
+|---------|:-----------:|:----------:|:-------:|:----------------:|
+| 60 slash commands | ✅ | ✅ | ✅ | ✅ |
+| Templates & scripts | ✅ | ✅ | ✅ | ✅ |
+| Bundled MCP servers (AWS, Azure, GCP, DataCommons) | ✅ | ✅ (3 servers) | — | Manual setup |
+| **Autonomous research agents** (6 agents for research, datascout, cloud research, framework) | ✅ | — | ✅ (6 agents) | — |
+| **SessionStart hook** (auto-detect version + projects) | ✅ | — | — | — |
+| **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | — | — | — |
+| **PreToolUse hook** (ARC filename auto-correction) | ✅ | — | — | — |
+| **PermissionRequest hook** (auto-allow MCP documentation tools) | ✅ | — | — | — |
+| **Per-command Stop hooks** (output validation, e.g. Wardley Map math checks) | ✅ | — | — | — |
+| Wardley Mapping skill (with Pinecone MCP book corpus) | ✅ | — | — | — |
+| Mermaid Syntax Reference skill (23 diagram types + config) | ✅ | ✅ | — | ✅ |
+| Automatic marketplace updates | ✅ | ✅ | Manual reinstall | Manual reinstall |
+| Zero-config installation | ✅ | ✅ | `arckit init` required | `arckit init` required |
 
 **Agents** run research-heavy commands (market research, data source discovery, cloud service evaluation) in isolated context windows, keeping the main conversation clean and enabling dozens of WebSearch/WebFetch/MCP calls without context bloat.
 
 **Hooks** provide automated governance: filenames are auto-corrected to ArcKit conventions, project context is injected into every prompt so commands know what artifacts exist, MCP tools are auto-approved, and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
 
-Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
+Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 60 commands as prompt files and 6 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
 
 ### Why Commands, Not Skills
 
@@ -788,6 +818,24 @@ Claude Code automatically exposes ArcKit commands as **skills** (they appear in 
 - **Dependency ordering** — Commands follow a deliberate sequence (principles → stakeholders → requirements → data-model → etc.). Skills that auto-trigger could run out of order.
 - **User input via `$ARGUMENTS`** — Most commands accept context from the user (project name, scope, constraints). The command system handles this with `$ARGUMENTS` substitution.
 - **Best of both worlds** — Since Claude Code exposes commands as skills automatically, users get explicit `/arckit.requirements` invocation AND natural language matching when Claude recognises intent — no restructuring needed.
+
+### Using with GitHub Copilot
+
+For GitHub Copilot users in VS Code, ArcKit commands are delivered as prompt files and custom agents:
+
+```bash
+# Install and create project (3 steps, zero config)
+pip install git+https://github.com/tractorjuice/arc-kit.git
+arckit init my-project --ai copilot
+cd my-project && code .
+
+# Then use ArcKit commands in Copilot Chat
+/arckit-principles Create principles for financial services
+/arckit-stakeholders Analyze stakeholders for cloud migration
+/arckit-requirements Create comprehensive requirements
+```
+
+This creates `.github/prompts/arckit-*.prompt.md` (60 prompt files), `.github/agents/arckit-*.agent.md` (6 custom agents), and `.github/copilot-instructions.md` (repo-wide context).
 
 ### Using with Codex CLI
 
@@ -854,6 +902,10 @@ payment-modernization/
 ├── .codex/
 │   ├── agents/                            # Agent configs
 │   └── config.toml                        # MCP servers + agent roles
+├── .github/
+│   ├── prompts/arckit-*.prompt.md         # GitHub Copilot prompt files (60 commands)
+│   ├── agents/arckit-*.agent.md           # GitHub Copilot custom agents (6 agents)
+│   └── copilot-instructions.md            # Repo-wide Copilot context
 └── .opencode/commands/                    # OpenCode CLI commands
 ```
 
@@ -887,7 +939,7 @@ Customize ArcKit templates without modifying defaults:
 
 ## Complete Command Reference
 
-All 57 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 60 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
@@ -982,6 +1034,7 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit.gcloud-search` | Find G-Cloud services on UK Digital Marketplace with live search and comparison | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-GCLD-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-GCLD-v1.0.md) | 🟣 Experimental |
 | `/arckit.gcloud-clarify` | Analyze G-Cloud service gaps and generate supplier clarification questions | — | 🟣 Experimental |
 | `/arckit.evaluate` | Create vendor evaluation framework and score vendor proposals | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-EVAL-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-EVAL-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-EVAL-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-EVAL-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/ARC-003-EVAL-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/ARC-005-EVAL-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-EVAL-v1.0.md) | 🟢 Live |
+| `/arckit.score` | Score vendor proposals with structured storage, side-by-side comparison, sensitivity analysis, and audit trail | — | 🔵 Beta |
 
 ### Design & Architecture
 
@@ -1014,6 +1067,8 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit.presentation` | Generate MARP slide deck from project artifacts for governance boards and stakeholder briefings | — | 🔵 Beta |
 | `/arckit.conformance` | Assess architecture conformance — ADR decision implementation, cross-decision consistency, architecture drift, technical debt, and custom constraint rules | — | 🔵 Beta |
 | `/arckit.health` | Scan projects for stale research, forgotten ADRs, unresolved review conditions, orphaned requirements, missing traceability, and version drift | — | 🔵 Beta |
+| `/arckit.impact` | Analyse blast radius of changes — reverse dependency tracing | — | 🟣 Experimental |
+| `/arckit.search` | Search across all project artifacts by keyword, document type, or requirement ID | — | 🔵 Beta |
 | `/arckit.customize` | Copy templates to `.arckit/templates-custom/` for customization (preserved across updates) | — | 🟢 Live |
 | `/arckit.maturity-model` | Generate capability maturity model with current-state assessment, target-state definition, and improvement roadmap | — | 🔵 Beta |
 | `/arckit.template-builder` | Create new document templates through interactive interview — generates community-origin templates, guides, and optional shareable bundles | — | 🟠 Alpha |
@@ -1154,7 +1209,7 @@ Full guidance lives in `docs/` and the static site.
 
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](docs/WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](docs/DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 57×57 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](docs/WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](docs/DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 60×60 command matrix.
 - Traceability: [docs/guides/traceability.md](docs/guides/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit
@@ -1249,6 +1304,9 @@ ls .agents/skills/arckit-principles/SKILL.md
 # For Gemini CLI, install the ArcKit extension:
 # gemini extensions install https://github.com/tractorjuice/arckit-gemini
 
+# For GitHub Copilot, check if prompt files exist
+ls .github/prompts/arckit-*.prompt.md
+
 # For OpenCode CLI, check if commands directory exists
 ls .opencode/commands/
 ```
@@ -1273,7 +1331,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v4.0.2](https://github.com/tractorjuice/arc-kit/releases/tag/v4.0.2)
+- **Latest Version**: [v4.1.1](https://github.com/tractorjuice/arc-kit/releases/tag/v4.1.1)
 
 ---
 

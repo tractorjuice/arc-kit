@@ -322,7 +322,6 @@ Return ONLY a concise summary including:
 $ARGUMENTS
 ```
 
-
 ## Suggested Next Steps
 
 After completing this command, consider running:
@@ -331,4 +330,3 @@ After completing this command, consider running:
 - `/arckit:sobc` -- Feed TCO data into Economic Case
 - `/arckit:sow` -- Create RFP from vendor requirements
 - `/arckit:hld-review` -- Validate technology choices against HLD
-

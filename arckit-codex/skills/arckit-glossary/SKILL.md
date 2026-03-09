@@ -13,7 +13,7 @@ $ARGUMENTS
 
 ## Prerequisites: Read Artifacts
 
-> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+> **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
 **RECOMMENDED** (read if available, note if missing):
 
@@ -257,4 +257,3 @@ The footer should be populated with:
 After completing this command, consider running:
 
 - `$arckit-data-model` -- Review data model for entity/attribute terminology
-

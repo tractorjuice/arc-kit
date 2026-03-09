@@ -89,7 +89,7 @@ Scans all ArcKit artifacts and automatically:
 
 ### Step 1: Identify Project Context
 
-> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+> **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
 Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number). If no match, create a new project:
 
@@ -1785,4 +1785,3 @@ After completing this command, consider running:
 
 - `/arckit:trello` -- Export backlog to Trello board
 - `/arckit:traceability` -- Map user stories back to requirements
-

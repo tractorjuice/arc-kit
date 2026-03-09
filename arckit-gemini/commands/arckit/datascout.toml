@@ -4,6 +4,7 @@ Discover external data sources (APIs, datasets, open data portals) to fulfil pro
 prompt = """
 **IMPORTANT — Gemini Extension File Access**:
 This command runs as a Gemini CLI extension. The extension directory (`~/.gemini/extensions/arckit/`) is outside the workspace sandbox, so you CANNOT use the read_file tool to access it. Instead:
+
 - To read templates/files: use a shell command, e.g. `cat ~/.gemini/extensions/arckit/templates/foo-template.md`
 - To list files: use `ls ~/.gemini/extensions/arckit/templates/`
 - To run scripts: use `python3 ~/.gemini/extensions/arckit/scripts/python/create-project.py --json`
@@ -432,7 +433,6 @@ Return ONLY a concise summary including:
 {{args}}
 ```
 
-
 ## Suggested Next Steps
 
 After completing this command, consider running:
@@ -443,5 +443,4 @@ After completing this command, consider running:
 - `/arckit:dpia` -- Assess third-party data sources with personal data
 - `/arckit:diagram` -- Create data flow diagrams
 - `/arckit:traceability` -- Map DR-xxx requirements to discovered sources
-
 """

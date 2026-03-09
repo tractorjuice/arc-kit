@@ -12,7 +12,7 @@ $ARGUMENTS
 
 ## Instructions
 
-> **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
+> **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
 1. **Identify the target project**:
    - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
@@ -259,4 +259,3 @@ After completing this command, consider running:
 - `/arckit:requirements` -- Create requirements aligned to stakeholder goals
 - `/arckit:risk` -- Create risk register with stakeholder risk owners
 - `/arckit:sobc` -- Build business case from stakeholder drivers
-
