@@ -53,6 +53,12 @@ AGENT_CONFIG = {
         "install_url": "https://opencode.net/cli/",
         "requires_cli": True,
     },
+    "copilot": {
+        "name": "GitHub Copilot",
+        "folder": ".github/",
+        "install_url": "https://github.com/features/copilot",
+        "requires_cli": False,
+    },
 }
 
 BANNER = """
@@ -159,6 +165,9 @@ def get_data_paths():
             "codex_skills": base_path / "arckit-codex" / "skills",
             "codex_agents": base_path / "arckit-codex" / "agents",
             "codex_config": base_path / "arckit-codex" / "config.toml",
+            "copilot_prompts": base_path / "arckit-copilot" / "prompts",
+            "copilot_agents": base_path / "arckit-copilot" / "agents",
+            "copilot_instructions": base_path / "arckit-copilot" / "copilot-instructions.md",
         }
 
     # First, check if running from source (development mode)
@@ -246,6 +255,9 @@ def create_project_structure(
         elif ai_assistant == "opencode":
             directories.append(f"{agent_folder}commands")
             directories.append(f"{agent_folder}agents")
+        elif ai_assistant == "copilot":
+            directories.append(f"{agent_folder}prompts")
+            directories.append(f"{agent_folder}agents")
 
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
@@ -310,7 +322,7 @@ def init(
         None,
         help="Name for your new project directory (optional, use '.' for current directory)",
     ),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot"),
     no_git: bool = typer.Option(
         False, "--no-git", help="Skip git repository initialization"
     ),
@@ -398,6 +410,7 @@ def init(
         console.print("\n[cyan]Select your AI assistant:[/cyan]")
         console.print("1. codex (OpenAI Codex CLI)")
         console.print("2. opencode (OpenCode CLI)")
+        console.print("3. copilot (GitHub Copilot in VS Code)")
         console.print()
         console.print("[dim]For Claude Code, use the ArcKit plugin instead:[/dim]")
         console.print("[dim]  /plugin marketplace add tractorjuice/arc-kit[/dim]")
@@ -407,7 +420,7 @@ def init(
         )
 
         choice = typer.prompt("Enter choice", default="1")
-        ai_map = {"1": "codex", "2": "opencode"}
+        ai_map = {"1": "codex", "2": "opencode", "3": "copilot"}
         ai_assistant = ai_map.get(choice, "codex")
 
     if ai_assistant == "claude":
@@ -576,6 +589,45 @@ def init(
                 f"[yellow]Warning: OpenCode agents not found at {agents_src}[/yellow]"
             )
 
+    # Copy Copilot prompt files and agents
+    if ai_assistant == "copilot":
+        console.print("[cyan]Setting up Copilot environment...[/cyan]")
+
+        # Copy prompt files to .github/prompts/
+        copilot_prompts_src = data_paths.get("copilot_prompts")
+        if copilot_prompts_src and copilot_prompts_src.exists():
+            prompts_dst = project_path / ".github" / "prompts"
+            prompts_dst.mkdir(parents=True, exist_ok=True)
+            prompt_count = 0
+            for prompt_file in copilot_prompts_src.glob("*.prompt.md"):
+                shutil.copy2(prompt_file, prompts_dst / prompt_file.name)
+                prompt_count += 1
+            console.print(f"[green]✓[/green] Copied {prompt_count} prompt files to .github/prompts/")
+        else:
+            console.print(
+                f"[yellow]Warning: Copilot prompts not found at {copilot_prompts_src}[/yellow]"
+            )
+
+        # Copy agent files to .github/agents/
+        copilot_agents_src = data_paths.get("copilot_agents")
+        if copilot_agents_src and copilot_agents_src.exists():
+            agents_dst = project_path / ".github" / "agents"
+            agents_dst.mkdir(parents=True, exist_ok=True)
+            agent_count = 0
+            for agent_file in copilot_agents_src.glob("*.agent.md"):
+                shutil.copy2(agent_file, agents_dst / agent_file.name)
+                agent_count += 1
+            console.print(f"[green]✓[/green] Copied {agent_count} agent files to .github/agents/")
+
+        # Copy copilot-instructions.md
+        copilot_instructions_src = data_paths.get("copilot_instructions")
+        if copilot_instructions_src and copilot_instructions_src.exists():
+            instructions_dst = project_path / ".github" / "copilot-instructions.md"
+            shutil.copy2(copilot_instructions_src, instructions_dst)
+            console.print(f"[green]✓[/green] Copied copilot-instructions.md")
+
+        console.print("[green]✓[/green] Copilot environment configured")
+
     console.print("[green]✓[/green] Templates configured")
 
     # Copy documentation (unless --minimal)
@@ -627,6 +679,8 @@ def init(
     # Determine command prefix based on AI assistant
     if ai_assistant == "codex":
         p = "$arckit-"  # skill invocation
+    elif ai_assistant == "copilot":
+        p = "/arckit-"  # copilot prompt invocation
     else:
         p = "/arckit."  # slash command
 
@@ -893,6 +947,12 @@ export OPENCODE_HOME="$PWD/.opencode"
             "4. Establish architecture principles: [cyan]/arckit.principles[/cyan]"
         )
         next_steps.append("5. Create your first project: [cyan]/arckit.requirements[/cyan]"
+        )
+    elif ai_assistant == "copilot":
+        next_steps.append("2. Open in VS Code: [cyan]code .[/cyan]")
+        next_steps.append("3. Open Copilot Chat and type: [cyan]/arckit-principles[/cyan]")
+        next_steps.append(
+            "4. Create your first project: [cyan]/arckit-requirements[/cyan]"
         )
 
     console.print(Panel("\n".join(next_steps), title="Next Steps", border_style="cyan"))

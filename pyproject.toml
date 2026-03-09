@@ -60,3 +60,4 @@ packages = ["src/arckit_cli"]
 "CHANGELOG.md" = "share/arckit/CHANGELOG.md"
 "arckit-codex" = "share/arckit/arckit-codex"
 "arckit-opencode" = "share/arckit/arckit-opencode"
+"arckit-copilot" = "share/arckit/arckit-copilot"
