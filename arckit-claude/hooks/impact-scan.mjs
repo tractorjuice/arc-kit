@@ -12,134 +12,14 @@
  */
 
 import { join } from 'node:path';
-import {
-  isDir, isFile, readText, listDir,
-  findRepoRoot, extractDocType, extractVersion,
-  extractDocControlFields, extractRequirementIds,
-  parseHookInput,
-} from './hook-utils.mjs';
-import { DOC_TYPES } from '../config/doc-types.mjs';
+import { isDir, findRepoRoot, parseHookInput } from './hook-utils.mjs';
+import { scanAllArtifacts } from './graph-utils.mjs';
 
 // ── Argument parsing ──
 
 function parseArguments(prompt) {
   const text = prompt.replace(/^\/arckit[.:]+impact\s*/i, '');
   return text.trim();
-}
-
-// ── Title extraction ──
-
-function extractTitle(content) {
-  const match = content.match(/^#\s+(.+)/m);
-  return match ? match[1].trim() : null;
-}
-
-// ── Severity classification by doc type category ──
-
-function classifySeverity(docType) {
-  const info = DOC_TYPES[docType];
-  if (!info) return 'LOW';
-  const cat = info.category;
-  if (cat === 'Compliance' || cat === 'Governance') return 'HIGH';
-  if (cat === 'Architecture') return 'MEDIUM';
-  return 'LOW';
-}
-
-// ── Artifact scanning ──
-
-function scanAllArtifacts(projectsDir) {
-  const nodes = {};   // docId -> { type, project, path, title, status }
-  const edges = [];   // { from, to, type }
-  const reqIndex = {}; // reqId -> [docIds]
-
-  const projectDirs = listDir(projectsDir)
-    .filter(e => isDir(join(projectsDir, e)) && /^\d{3}-/.test(e));
-
-  for (const projectName of projectDirs) {
-    const projectDir = join(projectsDir, projectName);
-    scanProjectDir(projectDir, projectName, nodes, edges, reqIndex);
-  }
-
-  return { nodes, edges, reqIndex, projects: projectDirs };
-}
-
-function scanProjectDir(projectDir, projectName, nodes, edges, reqIndex) {
-  const dirsToScan = [
-    { dir: projectDir, prefix: '' },
-    { dir: join(projectDir, 'decisions'), prefix: 'decisions/' },
-    { dir: join(projectDir, 'diagrams'), prefix: 'diagrams/' },
-    { dir: join(projectDir, 'wardley-maps'), prefix: 'wardley-maps/' },
-    { dir: join(projectDir, 'data-contracts'), prefix: 'data-contracts/' },
-    { dir: join(projectDir, 'reviews'), prefix: 'reviews/' },
-    { dir: join(projectDir, 'research'), prefix: 'research/' },
-  ];
-
-  // Also scan vendor directories
-  const vendorsDir = join(projectDir, 'vendors');
-  if (isDir(vendorsDir)) {
-    for (const vendor of listDir(vendorsDir)) {
-      const vd = join(vendorsDir, vendor);
-      if (isDir(vd)) {
-        dirsToScan.push({ dir: vd, prefix: `vendors/${vendor}/` });
-        const vrd = join(vd, 'reviews');
-        if (isDir(vrd)) {
-          dirsToScan.push({ dir: vrd, prefix: `vendors/${vendor}/reviews/` });
-        }
-      }
-    }
-  }
-
-  for (const { dir, prefix } of dirsToScan) {
-    if (!isDir(dir)) continue;
-    for (const f of listDir(dir)) {
-      if (!f.startsWith('ARC-') || !f.endsWith('.md')) continue;
-      const fp = join(dir, f);
-      if (!isFile(fp)) continue;
-
-      const content = readText(fp);
-      if (!content) continue;
-
-      const docType = extractDocType(f);
-      const version = extractVersion(f);
-      const fields = extractDocControlFields(content);
-      const title = extractTitle(content) || fields['Document Title'] || f;
-      const status = fields['Status'] || '';
-
-      // Build a short document ID (without version for matching)
-      const shortId = f.replace(/-v[\d.]+\.md$/, '');
-      const fullId = f.replace(/\.md$/, '');
-
-      nodes[fullId] = {
-        type: docType,
-        project: projectName,
-        path: `projects/${projectName}/${prefix}${f}`,
-        title,
-        status,
-        severity: classifySeverity(docType),
-      };
-
-      // Extract requirement IDs referenced in this document
-      const reqIds = extractRequirementIds(content);
-      for (const reqId of reqIds) {
-        if (!reqIndex[reqId]) reqIndex[reqId] = [];
-        if (!reqIndex[reqId].includes(fullId)) {
-          reqIndex[reqId].push(fullId);
-        }
-      }
-
-      // Extract cross-references to other ARC documents
-      const ARC_REF_RE = /\bARC-(\d{3})-([A-Z][\w-]*?)(?:-(\d{3}))?(?:-v[\d.]+)?(?:\.md)?\b/g;
-      let match;
-      while ((match = ARC_REF_RE.exec(content)) !== null) {
-        const refStr = match[0].replace(/\.md$/, '');
-        // Build a normalized reference ID
-        const refShort = refStr.replace(/-v[\d.]+$/, '');
-        if (refShort !== shortId) {
-          edges.push({ from: fullId, to: refShort, type: 'references' });
-        }
-      }
-    }
-  }
 }
 
 // ── Main ──
