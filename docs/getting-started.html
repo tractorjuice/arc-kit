@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="Get started with ArcKit in 5 minutes. Install for Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI and begin generating architecture governance artifacts following UK Government standards.">
-    <meta name="keywords" content="ArcKit getting started, install ArcKit, Claude Code plugin, Gemini CLI extension, Codex CLI, OpenCode CLI, architecture governance setup, quick start guide">
+    <meta name="description" content="Get started with ArcKit in 5 minutes. Install for Claude Code, Gemini CLI, Codex CLI, OpenCode CLI, or GitHub Copilot and begin generating architecture governance artifacts following UK Government standards.">
+    <meta name="keywords" content="ArcKit getting started, install ArcKit, Claude Code plugin, Gemini CLI extension, Codex CLI, OpenCode CLI, GitHub Copilot, architecture governance setup, quick start guide">
     <meta name="author" content="ArcKit">
     <title>Getting Started - ArcKit</title>
     <meta property="og:title" content="Getting Started - ArcKit">
-    <meta property="og:description" content="Get started with ArcKit in 5 minutes. Install for Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI and begin generating architecture governance artifacts.">
+    <meta property="og:description" content="Get started with ArcKit in 5 minutes. Install for Claude Code, Gemini CLI, Codex CLI, OpenCode CLI, or GitHub Copilot and begin generating architecture governance artifacts.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arckit.org/getting-started.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Getting Started - ArcKit">
-    <meta name="twitter:description" content="Get started with ArcKit in 5 minutes. Install for Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI and begin generating architecture governance artifacts.">
+    <meta name="twitter:description" content="Get started with ArcKit in 5 minutes. Install for Claude Code, Gemini CLI, Codex CLI, OpenCode CLI, or GitHub Copilot and begin generating architecture governance artifacts.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/getting-started.html">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -292,9 +292,9 @@
                 "description": "Install ArcKit for Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI and begin generating architecture governance artifacts in 5 minutes.",
                 "totalTime": "PT5M",
                 "step": [
-                    { "@type": "HowToStep", "position": 1, "name": "Choose Your AI Platform", "text": "Pick Claude Code (premier), Gemini CLI, Codex CLI, or OpenCode CLI." },
-                    { "@type": "HowToStep", "position": 2, "name": "Install Your AI Tool", "text": "Install Claude Code, Gemini CLI, Codex CLI, or OpenCode CLI using the platform-specific installer." },
-                    { "@type": "HowToStep", "position": 3, "name": "Install ArcKit", "text": "Add the ArcKit plugin (Claude Code), extension (Gemini CLI), or run arckit init (Codex/OpenCode)." },
+                    { "@type": "HowToStep", "position": 1, "name": "Choose Your AI Platform", "text": "Pick Claude Code (premier), Gemini CLI, Codex CLI, OpenCode CLI, or GitHub Copilot." },
+                    { "@type": "HowToStep", "position": 2, "name": "Install Your AI Tool", "text": "Install Claude Code, Gemini CLI, Codex CLI, OpenCode CLI, or GitHub Copilot using the platform-specific installer." },
+                    { "@type": "HowToStep", "position": 3, "name": "Install ArcKit", "text": "Add the ArcKit plugin (Claude Code), extension (Gemini CLI), or run arckit init (Codex/OpenCode/Copilot)." },
                     { "@type": "HowToStep", "position": 4, "name": "Open Your Project", "text": "Navigate to your project directory and launch your chosen AI tool." },
                     { "@type": "HowToStep", "position": 5, "name": "Get Oriented", "text": "Run the start command to see project status and recommended next steps." },
                     { "@type": "HowToStep", "position": 6, "name": "Follow GDS Phases", "text": "Use ArcKit commands to generate artifacts for Discovery, Alpha, and Beta phases." }
@@ -359,6 +359,7 @@
                 <button class="app-platform-tab" data-platform="gemini">Gemini CLI</button>
                 <button class="app-platform-tab" data-platform="codex">Codex CLI</button>
                 <button class="app-platform-tab" data-platform="opencode">OpenCode CLI</button>
+                <button class="app-platform-tab" data-platform="copilot">GitHub Copilot</button>
             </div>
 
             <!-- Claude Code -->
@@ -540,11 +541,57 @@ opencode</code></pre></div>
                 </div>
             </div>
 
+            <!-- GitHub Copilot -->
+            <div class="app-platform-content" id="platform-copilot">
+                <div class="app-step">
+                    <span class="app-step__number">1</span>
+                    <h2 class="govuk-heading-m app-step__title">Install VS Code &amp; GitHub Copilot</h2>
+                    <p class="govuk-body">Install <a href="https://code.visualstudio.com/" class="govuk-link">VS Code</a> and the <a href="https://marketplace.visualstudio.com/items?itemName=GitHub.copilot" class="govuk-link">GitHub Copilot extension</a>.</p>
+                    <div class="app-install-note">Requires a GitHub Copilot subscription (Individual, Business, or Enterprise).</div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">2</span>
+                    <h2 class="govuk-heading-m app-step__title">Install ArcKit CLI &amp; Initialize Project</h2>
+                    <p class="govuk-body">Install the ArcKit CLI, then initialize your project:</p>
+                    <div class="app-code-block"><pre><code># Install with pip
+pip install git+https://github.com/tractorjuice/arc-kit.git
+
+# Or with uv (recommended)
+uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
+
+# Initialize project
+arckit init my-project --ai copilot</code></pre></div>
+                    <p class="govuk-body govuk-!-margin-top-3">This scaffolds 60 prompt files, 6 research agents, templates, and scripts into your project.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">3</span>
+                    <h2 class="govuk-heading-m app-step__title">Open Your Project in VS Code</h2>
+                    <div class="app-code-block">code my-project</div>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">4</span>
+                    <h2 class="govuk-heading-m app-step__title">Use Commands in Copilot Chat</h2>
+                    <p class="govuk-body">Open Copilot Chat (Ctrl+Shift+I / Cmd+Shift+I) and type <code>/</code> to see all <code>arckit-*</code> commands in autocomplete.</p>
+                    <div class="app-code-block">/arckit-start</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Shows project status, command decision tree, and recommended next steps.</p>
+                </div>
+
+                <div class="app-step">
+                    <span class="app-step__number">5</span>
+                    <h2 class="govuk-heading-m app-step__title">Initialize Project Structure</h2>
+                    <div class="app-code-block">/arckit-init</div>
+                    <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
+                </div>
+            </div>
+
             <!-- Step 6 -->
             <div class="app-step">
                 <span class="app-step__number">6</span>
                 <h2 class="govuk-heading-m app-step__title">Follow GDS Phases</h2>
-                <div class="app-install-note">Commands shown use Claude Code / OpenCode syntax (<code>/arckit.command</code>). For Gemini CLI use <code>/arckit:command</code>. For Codex CLI use <code>$arckit-command</code>.</div>
+                <div class="app-install-note">Commands shown use Claude Code / OpenCode syntax (<code>/arckit.command</code>). For Gemini CLI use <code>/arckit:command</code>. For Codex CLI use <code>$arckit-command</code>. For GitHub Copilot use <code>/arckit-command</code>.</div>
 
                 <h3 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Discovery</h3>
                 <div class="app-code-block">/arckit.stakeholders Analyze stakeholders for appointment system</div>
