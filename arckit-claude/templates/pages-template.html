@@ -2968,7 +2968,9 @@
                 // Group by category
                 const catGroups = {};
                 for (const id of filteredIds) {
-                    const cat = TYPE_CATEGORIES[nodes[id].type] || 'Other';
+                    const node = nodes[id];
+                    if (!node) continue;
+                    const cat = (node.type && TYPE_CATEGORIES[node.type]) || 'Other';
                     if (!catGroups[cat]) catGroups[cat] = [];
                     catGroups[cat].push(id);
                 }
@@ -2977,7 +2979,7 @@
                 for (const cat of Object.keys(catGroups)) {
                     catGroups[cat].sort((a, b) => {
                         const na = nodes[a], nb = nodes[b];
-                        return na.project.localeCompare(nb.project) || na.type.localeCompare(nb.type);
+                        return (na.project || '').localeCompare(nb.project || '') || (na.type || '').localeCompare(nb.type || '');
                     });
                 }
 
