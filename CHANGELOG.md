@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.0] - 2026-03-11
+
+### Added
+
+- Interactive dependency map visualization in pages dashboard with SVG rendering, category-layered layout, hover/click interactions, project filtering, and orphan detection
+
+### Fixed
+
+- Explicit UTF-8 encoding on all Python file I/O operations to prevent encoding issues on non-English systems
+
 ## [4.1.1] - 2026-03-11
 
 ### Added
