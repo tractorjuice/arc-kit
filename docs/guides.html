@@ -280,7 +280,7 @@
         <div class="govuk-width-container app-page-hero__content">
             <span class="app-page-hero__stat">69 Guides</span>
             <h1 class="app-page-hero__title">Command Guides</h1>
-            <p class="app-page-hero__description">Step-by-step usage guides organised into 9 categories. Each covers prerequisites, workflow steps, and real-world examples.</p>
+            <p class="app-page-hero__description">Step-by-step usage guides organised into 10 categories. Each covers prerequisites, workflow steps, and real-world examples.</p>
         </div>
     </div>
 
@@ -296,6 +296,25 @@
             </div>
 
             <p class="govuk-body-s"><button onclick="toggleAllCategories(true)" class="govuk-link" style="background:none;border:none;cursor:pointer;text-decoration:underline;font-size:inherit;padding:0;">Expand all</button> | <button onclick="toggleAllCategories(false)" class="govuk-link" style="background:none;border:none;cursor:pointer;text-decoration:underline;font-size:inherit;padding:0;">Collapse all</button></p>
+
+            <!-- Getting Started -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Getting Started
+                    <span class="app-guide-category__count">7 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=start" class="govuk-link">Getting Started with ArcKit</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Onboarding with /arckit.start and /arckit.init</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=init" class="govuk-link">ArcKit Initialization Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Initialize ArcKit projects with arckit init</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=customize" class="govuk-link">Template Customization Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Customize templates for your organization</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=template-builder" class="govuk-link">Template Builder Guide</a> <span class="app-status-tag app-status-alpha">ALPHA</span> <span class="app-guide-desc">Build custom document templates</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=upgrading" class="govuk-link">Upgrading ArcKit</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Version upgrade instructions</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=remote-control" class="govuk-link">Remote Control Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Remote architecture governance with Claude Code</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=productivity" class="govuk-link">Architecture Productivity Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Productivity tips and workflow optimization</span></li>
+                    </ul>
+                </div>
+            </div>
 
             <!-- Discovery -->
             <div class="app-guide-category">
@@ -318,7 +337,7 @@
             <div class="app-guide-category">
                 <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
                     <span class="app-guide-category__toggle">&#9662;</span> Planning
-                    <span class="app-guide-category__count">6 guides</span>
+                    <span class="app-guide-category__count">7 guides</span>
                 </h2>
                 <div class="app-guide-category__body">
                     <ul class="app-guide-list">
@@ -328,6 +347,7 @@
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=strategy" class="govuk-link">Architecture Strategy Playbook</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Architecture strategy and vision definition</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=roadmap" class="govuk-link">Architecture Roadmap Playbook</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Multi-year capability evolution roadmap</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=backlog" class="govuk-link">Product Backlog Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Product backlog generation from requirements</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=migration" class="govuk-link">File Migration Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Migrate files to new naming convention</span></li>
                     </ul>
                 </div>
             </div>
@@ -348,11 +368,11 @@
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=hld-review" class="govuk-link">High-Level Design Review</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">HLD review and assessment</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=dld-review" class="govuk-link">Detailed Design Review</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Detailed low-level design review</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=c4-layout-science" class="govuk-link">C4 Layout Science Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Research-backed diagram layout best practices</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=dfd" class="govuk-link">Data Flow Diagram Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Data flow diagrams for system analysis</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=framework" class="govuk-link">Framework Design Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Transform artifacts into structured frameworks</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=platform-design" class="govuk-link">Platform Strategy Design Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Multi-sided platform strategy using PDT methodology</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=wardley" class="govuk-link">Wardley Mapping Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Strategic analysis and build-vs-buy decisions</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=data-mesh-contract" class="govuk-link">Data Mesh Contract Guide</a> <span class="app-status-tag app-status-alpha">ALPHA</span> <span class="app-guide-desc">Data mesh contract definitions</span></li>
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=conformance" class="govuk-link">Architecture Conformance Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Architecture conformance checking</span></li>
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=productivity" class="govuk-link">Architecture Productivity Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Productivity tips and workflow optimization</span></li>
                     </ul>
                 </div>
             </div>
@@ -361,7 +381,7 @@
             <div class="app-guide-category">
                 <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
                     <span class="app-guide-category__toggle">&#9662;</span> Governance
-                    <span class="app-guide-category__count">8 guides</span>
+                    <span class="app-guide-category__count">11 guides</span>
                 </h2>
                 <div class="app-guide-category__body">
                     <ul class="app-guide-list">
@@ -373,6 +393,11 @@
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=artifact-health" class="govuk-link">Artifact Health Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Project health scanning and diagnostics</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=knowledge-compounding" class="govuk-link">Knowledge Compounding Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Reusable vendor profiles from research</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=data-quality-framework" class="govuk-link">Data Quality Framework Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">UK Government data quality dimensions</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=search" class="govuk-link">Architecture Search Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Search across project artifacts</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=impact" class="govuk-link">Impact Assessment Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Change impact analysis across artifacts</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=conformance" class="govuk-link">Architecture Conformance Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Architecture conformance checking</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=health" class="govuk-link">Health Metrics Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Project health metrics and scoring</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=maturity-model" class="govuk-link">Maturity Model Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Architecture maturity assessment</span></li>
                     </ul>
                 </div>
             </div>
@@ -405,11 +430,10 @@
             <div class="app-guide-category">
                 <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
                     <span class="app-guide-category__toggle">&#9662;</span> Operations
-                    <span class="app-guide-category__count">5 guides</span>
+                    <span class="app-guide-category__count">4 guides</span>
                 </h2>
                 <div class="app-guide-category__body">
                     <ul class="app-guide-list">
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=servicenow" class="govuk-link">ServiceNow Service Design</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">ServiceNow service catalogue design</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=devops" class="govuk-link">DevOps Strategy Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">DevOps pipeline and practices strategy</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=mlops" class="govuk-link">MLOps Strategy Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">ML model lifecycle and operations</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=finops" class="govuk-link">FinOps Strategy Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Cloud financial operations strategy</span></li>
@@ -422,13 +446,14 @@
             <div class="app-guide-category">
                 <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
                     <span class="app-guide-category__toggle">&#9662;</span> Procurement
-                    <span class="app-guide-category__count">6 guides</span>
+                    <span class="app-guide-category__count">7 guides</span>
                 </h2>
                 <div class="app-guide-category__body">
                     <ul class="app-guide-list">
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=sow" class="govuk-link">Statement of Work Playbook</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Statement of Work generation</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=evaluate" class="govuk-link">Vendor Evaluation Playbook</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Vendor evaluation and scoring framework</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=procurement" class="govuk-link">Procurement Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Digital Marketplace procurement frameworks</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=score" class="govuk-link">Vendor Scoring Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Vendor scoring and comparison framework</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=dos" class="govuk-link">Digital Outcomes &amp; Specialists</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">DOS framework procurement</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=gcloud-search" class="govuk-link">G-Cloud Search Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">G-Cloud service search and comparison</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=gcloud-clarify" class="govuk-link">G-Cloud Clarification Questions</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">G-Cloud vendor clarification questions</span></li>
@@ -436,17 +461,21 @@
                 </div>
             </div>
 
-            <!-- Research -->
+            <!-- Integrations -->
             <div class="app-guide-category">
                 <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
-                    <span class="app-guide-category__toggle">&#9662;</span> Research
-                    <span class="app-guide-category__count">3 guides</span>
+                    <span class="app-guide-category__toggle">&#9662;</span> Integrations
+                    <span class="app-guide-category__count">7 guides</span>
                 </h2>
                 <div class="app-guide-category__body">
                     <ul class="app-guide-list">
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=aws-research" class="govuk-link">AWS Technology Research</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">AWS service research via MCP server</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=azure-research" class="govuk-link">Azure Technology Research</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Azure service research via MCP server</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=gcp-research" class="govuk-link">Google Cloud Research</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">GCP service research via MCP server</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=mcp-servers" class="govuk-link">MCP Server Setup Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Plugin MCP server configuration</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=pinecone-mcp" class="govuk-link">Pinecone MCP Integration</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Wardley Mapping book corpus search</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=trello" class="govuk-link">Trello Export Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Export backlog to Trello board</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=servicenow" class="govuk-link">ServiceNow Service Design</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">ServiceNow service catalogue design</span></li>
                     </ul>
                 </div>
             </div>
@@ -461,39 +490,8 @@
                     <ul class="app-guide-list">
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=story" class="govuk-link">Project Story Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Project narrative for stakeholder communication</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=presentation" class="govuk-link">Presentation Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">MARP slide deck generation for governance boards</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=glossary" class="govuk-link">Glossary Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Project glossary and terminology reference</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=pages" class="govuk-link">GitHub Pages Generator</a> <span class="app-status-tag app-status-alpha">ALPHA</span> <span class="app-guide-desc">Generate GitHub Pages site for project artifacts</span></li>
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=trello" class="govuk-link">Trello Export Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Export backlog to Trello board</span></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Integration -->
-            <div class="app-guide-category">
-                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
-                    <span class="app-guide-category__toggle">&#9662;</span> Integration
-                    <span class="app-guide-category__count">2 guides</span>
-                </h2>
-                <div class="app-guide-category__body">
-                    <ul class="app-guide-list">
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=mcp-servers" class="govuk-link">MCP Server Setup Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Plugin MCP server configuration</span></li>
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=pinecone-mcp" class="govuk-link">Pinecone MCP Integration</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Wardley Mapping book corpus search</span></li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Other -->
-            <div class="app-guide-category">
-                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
-                    <span class="app-guide-category__toggle">&#9662;</span> Other
-                    <span class="app-guide-category__count">5 guides</span>
-                </h2>
-                <div class="app-guide-category__body">
-                    <ul class="app-guide-list">
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=customize" class="govuk-link">Template Customization Guide</a> <span class="app-status-tag app-status-live">LIVE</span> <span class="app-guide-desc">Customize templates for your organization</span></li>
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=upgrading" class="govuk-link">Upgrading ArcKit</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Version upgrade instructions</span></li>
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=start" class="govuk-link">Getting Started with ArcKit</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Onboarding with /arckit.start and /arckit.init</span></li>
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=remote-control" class="govuk-link">Remote Control Guide</a> <span class="app-status-tag app-status-beta">BETA</span> <span class="app-guide-desc">Remote architecture governance with Claude Code</span></li>
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=migration" class="govuk-link">File Migration Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Migrate files to new naming convention</span></li>
                     </ul>
                 </div>
             </div>

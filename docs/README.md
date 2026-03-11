@@ -14,76 +14,106 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 
 ## 📖 Guides
 
-### Core Workflow
+### Getting Started
 
-0. [Getting Started](guides/start.md) - `/arckit.start` ⭐ NEW
-1. [Project Plan](guides/plan.md) - `/arckit.plan`
-2. [Architecture Principles](guides/principles.md) - `/arckit.principles`
-3. [Stakeholder Analysis](guides/stakeholders.md) - `/arckit.stakeholders`
-4. [Risk Management](guides/risk-management.md) - `/arckit.risk`
-5. [Business Case](guides/business-case.md) - `/arckit.sobc` ⭐ NEW
-6. [Requirements Definition](guides/requirements.md) - `/arckit.requirements`
-7. [Platform Design](guides/platform-design.md) - `/arckit.platform-design` ⭐ NEW
-8. [Data Model](guides/data-model.md) - `/arckit.data-model` ⭐ NEW
-9. [Data Mesh Contract](guides/data-mesh-contract.md) - `/arckit.data-mesh-contract` ⭐ NEW
-10. [Data Protection Impact Assessment](guides/dpia.md) - `/arckit.dpia` ⭐ NEW
-11. [Wardley Mapping](guides/wardley-mapping.md) - `/arckit.wardley` ⭐ NEW
-12. [Roadmap](guides/roadmap.md) - `/arckit.roadmap` ⭐ NEW
-13. [Architecture Strategy](guides/strategy.md) - `/arckit.strategy` ⭐ NEW
-14. [Design Reviews](guides/design-review.md) - `/arckit.hld-review`, `/arckit.dld-review`
-14. [Traceability](guides/traceability.md) - `/arckit.traceability`
+- [Getting Started](guides/start.md) - `/arckit.start` - Onboarding walkthrough
+- [ArcKit Init](guides/init.md) - `/arckit.init` - Project initialization
+- [Template Customization](guides/customize.md) - `/arckit.customize` - Customize templates for your organization
+- [Template Builder](guides/template-builder.md) - `/arckit.template-builder` - Build custom document templates
+- [Upgrading ArcKit](guides/upgrading.md) - Version upgrade instructions
+- [Remote Control](guides/remote-control.md) - Remote architecture governance
+- [Productivity](guides/productivity.md) - Workflow optimization tips
 
-### Research & Analysis
+### Discovery
 
-13. [Research](guides/research.md) - `/arckit.research`
-14. [Data Source Discovery](guides/datascout.md) - `/arckit.datascout` ⭐ NEW
-15. [Analyze](guides/analyze.md) - `/arckit.analyze`
-15. [Principles Compliance](guides/principles-compliance.md) - `/arckit.principles-compliance` ⭐ NEW
-15. [Conformance Assessment](guides/conformance.md) - `/arckit.conformance` ⭐ NEW
-16. [Diagrams](guides/diagram.md) - `/arckit.diagram` ⭐ NEW
-17. [Architecture Decision Records](guides/adr.md) - `/arckit.adr` ⭐ NEW
+- [Requirements Definition](guides/requirements.md) - `/arckit.requirements`
+- [Stakeholder Analysis](guides/stakeholders.md) - `/arckit.stakeholders`
+- [Technology Research](guides/research.md) - `/arckit.research`
+- [Data Source Discovery](guides/datascout.md) - `/arckit.datascout`
 
-### Cloud Research (MCP)
+### Planning
 
-These commands require [MCP servers](https://modelcontextprotocol.io/) for authoritative cloud documentation:
+- [Project Plan](guides/plan.md) - `/arckit.plan`
+- [Business Case](guides/business-case.md) - `/arckit.sobc`
+- [Architecture Strategy](guides/strategy.md) - `/arckit.strategy`
+- [Architecture Roadmap](guides/roadmap.md) - `/arckit.roadmap`
+- [Product Backlog](guides/backlog.md) - `/arckit.backlog`
+- [File Migration](guides/migration.md) - Migrate files to new naming convention
 
-- [Azure Research](guides/azure-research.md) - `/arckit.azure-research` (Requires Microsoft Learn MCP)
-- [AWS Research](guides/aws-research.md) - `/arckit.aws-research` ⭐ NEW (Requires AWS Knowledge MCP)
-- [GCP Research](guides/gcp-research.md) - `/arckit.gcp-research` ⭐ NEW (Requires Google Developer Knowledge MCP)
+### Architecture
+
+- [Architecture Principles](guides/principles.md) - `/arckit.principles`
+- [Architecture Diagrams](guides/diagram.md) - `/arckit.diagram` - C4 Model visualization
+- [Data Model](guides/data-model.md) - `/arckit.data-model`
+- [ADR](guides/adr.md) - `/arckit.adr` - Architecture Decision Records
+- [Design Reviews](guides/design-review.md) - `/arckit.hld-review`, `/arckit.dld-review`
+- [Data Flow Diagrams](guides/dfd.md) - `/arckit.dfd`
+- [Framework Design](guides/framework.md) - `/arckit.framework`
+- [Platform Design](guides/platform-design.md) - `/arckit.platform-design`
+- [Wardley Mapping](guides/wardley.md) - `/arckit.wardley`
+- [Data Mesh Contract](guides/data-mesh-contract.md) - `/arckit.data-mesh-contract`
+- [C4 Layout Science](guides/c4-layout-science.md) - Research-backed diagram layout
+
+### Governance
+
+- [Risk Management](guides/risk-management.md) - `/arckit.risk`
+- [Traceability](guides/traceability.md) - `/arckit.traceability`
+- [Principles Compliance](guides/principles-compliance.md) - `/arckit.principles-compliance`
+- [Project Analysis](guides/analyze.md) - `/arckit.analyze`
+- [Artifact Health](guides/artifact-health.md) - `/arckit.health`
+- [Architecture Search](guides/search.md) - `/arckit.search`
+- [Impact Assessment](guides/impact.md) - `/arckit.impact`
+- [Conformance](guides/conformance.md) - `/arckit.conformance`
+- [Knowledge Compounding](guides/knowledge-compounding.md) - Reusable vendor profiles
+- [Data Quality Framework](guides/data-quality-framework.md) - UK Government data quality
+- [Health Metrics](guides/health.md) - Project health scoring
+- [Maturity Model](guides/maturity-model.md) - Architecture maturity assessment
+
+### Compliance
+
+- [Technology Code of Practice](guides/uk-government/technology-code-of-practice.md) - `/arckit.tcop`
+- [Secure by Design](guides/uk-government/secure-by-design.md) - `/arckit.secure`
+- [DPIA](guides/dpia.md) - `/arckit.dpia` - Data Protection Impact Assessment
+- [Service Assessment](guides/service-assessment.md) - `/arckit.service-assessment`
+- [GovS 007 Security](guides/govs-007-security.md) - Security principles and role mapping
+- [National Data Strategy](guides/national-data-strategy.md) - NDS missions and pillars
+- [Codes of Practice](guides/codes-of-practice.md) - Rainbow of Books mapping
+- [Security Hooks](guides/security-hooks.md) - Three-layer secret protection
+- [AI Playbook](guides/uk-government/ai-playbook.md) - `/arckit.ai-playbook`
+- [Algorithmic Transparency](guides/uk-government/algorithmic-transparency.md) - `/arckit.atrs`
+- [MOD Secure by Design](guides/uk-mod/secure-by-design.md) - `/arckit.mod-secure`
+- [JSP 936 AI Assurance](guides/jsp-936.md) - `/arckit.jsp-936`
+
+### Operations
+
+- [DevOps Strategy](guides/devops.md) - `/arckit.devops` - CI/CD, IaC, containers
+- [MLOps Strategy](guides/mlops.md) - `/arckit.mlops` - ML lifecycle, model monitoring
+- [FinOps Strategy](guides/finops.md) - `/arckit.finops` - Cloud cost management
+- [Operational Readiness](guides/operationalize.md) - `/arckit.operationalize` - SRE runbooks
 
 ### Procurement
 
-17. [Vendor Procurement](guides/procurement.md) - `/arckit.sow`, `/arckit.evaluate`
-
-### UK Government
-
-- [Service Assessment](guides/service-assessment.md) - `/arckit.service-assessment` ⭐ NEW
+- [Statement of Work](guides/procurement.md) - `/arckit.sow`
+- [Vendor Evaluation](guides/evaluate.md) - `/arckit.evaluate`
+- [Vendor Scoring](guides/score.md) - `/arckit.score`
 - [Digital Marketplace](guides/uk-government/digital-marketplace.md) - `/arckit.gcloud-search`, `/arckit.gcloud-clarify`, `/arckit.dos`
-- [Technology Code of Practice](guides/uk-government/technology-code-of-practice.md) - `/arckit.tcop` ⭐ NEW
-- [AI Playbook](guides/uk-government/ai-playbook.md) - `/arckit.ai-playbook` ⭐ NEW
-- [Algorithmic Transparency](guides/uk-government/algorithmic-transparency.md) - `/arckit.atrs` ⭐ NEW
-- [Secure by Design](guides/uk-government/secure-by-design.md) - `/arckit.secure` ⭐ NEW
 
-### UK MOD (Ministry of Defence)
+### Integrations
 
-- [MOD Secure by Design](guides/uk-mod/secure-by-design.md) - `/arckit.mod-secure` ⭐ NEW
-- [JSP 936 AI Assurance](guides/jsp-936.md) - `/arckit.jsp-936` ⭐ NEW
+- [AWS Research](guides/aws-research.md) - `/arckit.aws-research` (Requires AWS Knowledge MCP)
+- [Azure Research](guides/azure-research.md) - `/arckit.azure-research` (Requires Microsoft Learn MCP)
+- [GCP Research](guides/gcp-research.md) - `/arckit.gcp-research` (Requires Google Developer Knowledge MCP)
+- [MCP Servers](guides/mcp-servers.md) - Plugin MCP server configuration
+- [Pinecone MCP](guides/pinecone-mcp.md) - Wardley Mapping book corpus search
+- [Trello Export](guides/trello.md) - `/arckit.trello` - Export backlog to Trello
+- [ServiceNow](guides/servicenow.md) - ServiceNow service catalogue design
 
-### DevOps & Operations
+### Reporting
 
-- [Operationalize](guides/operationalize.md) - `/arckit.operationalize` ⭐ NEW - SRE operational readiness
-- [DevOps Strategy](guides/devops.md) - `/arckit.devops` ⭐ NEW - CI/CD, IaC, containers
-- [MLOps Strategy](guides/mlops.md) - `/arckit.mlops` ⭐ NEW - ML lifecycle, model monitoring
-- [FinOps Strategy](guides/finops.md) - `/arckit.finops` ⭐ NEW - Cloud cost management, optimization
-
-### Reporting & Presentations
-
-- [Project Story](guides/story.md) - `/arckit.story` - Comprehensive project narrative
-- [Presentation](guides/presentation.md) - `/arckit.presentation` ⭐ NEW - MARP slide deck from artifacts
-
-### Documentation & Publishing
-
-- [GitHub Pages](guides/pages.md) - `/arckit.pages` ⭐ NEW - Generate documentation site
+- [Project Story](guides/story.md) - `/arckit.story` - Project narrative
+- [Presentation](guides/presentation.md) - `/arckit.presentation` - MARP slide decks
+- [Glossary](guides/glossary.md) - `/arckit.glossary` - Terminology reference
+- [GitHub Pages](guides/pages.md) - `/arckit.pages` - Documentation site generator
 
 ### DDaT Role Guides
 
@@ -132,12 +162,9 @@ See the [full index](guides/roles/README.md) for details.
 
 ---
 
-## 🔧 Technical Guides
+## 🔧 Technical Reference
 
-- [Session Memory](guides/session-memory.md) - Automated cross-session activity tracking
-- [Upgrading ArcKit](guides/upgrading.md) - Upgrade the CLI and update existing projects
 - [Token Limits Solutions](TOKEN-LIMITS.md) - Handling large projects with AI token limits
-- [File Migration](guides/migration.md) - Migrate legacy filenames to Document ID convention
 - Document Control Standard - See [CLAUDE.md](../CLAUDE.md#document-control-standard) for the canonical specification
 
 ---
