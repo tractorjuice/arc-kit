@@ -90,6 +90,8 @@ export function scanProjectDir(projectDir, projectName, nodes, edges, reqIndex) 
         title,
         status,
         severity: classifySeverity(docType),
+        createdDate: fields['Created Date'] || null,
+        lastModified: fields['Last Modified'] || null,
       };
 
       const reqIds = extractRequirementIds(content);
