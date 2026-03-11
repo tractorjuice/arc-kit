@@ -68,7 +68,7 @@ lines.push('| Category | Severity | Document Types |');
 lines.push('|----------|----------|---------------|');
 lines.push('| Compliance/Governance | HIGH | TCOP, SECD, DPIA, SVCASS, RISK, TRAC, CONF |');
 lines.push('| Architecture | MEDIUM | HLDR, DLDR, ADR, DATA, DIAG, PLAT |');
-lines.push('| Planning/Other | LOW | PLAN, ROAD, BKLG, SOBC, OPS, PRES |');
+lines.push('| Planning/Reporting | LOW | PLAN, ROAD, BKLG, SOBC, OPS, STORY, PRES |');
 lines.push('');
 lines.push('### Instructions');
 lines.push('- Parse query: ARC document ID, requirement ID (e.g. BR-003), or type+project');

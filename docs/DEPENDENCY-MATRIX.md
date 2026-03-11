@@ -90,19 +90,19 @@ These commands can run first:
 
 - **stakeholders** → Depends on: principles (R)
 
-### Tier 1.5: Risk Assessment (Depends on Stakeholders)
+### Tier 2: Risk Assessment (Depends on Stakeholders)
 
 - **risk** → Depends on: stakeholders (M), principles (R)
 
-### Tier 2: Business Justification
+### Tier 3: Business Justification
 
 - **sobc** → Depends on: stakeholders (M), risk (R), principles (R)
 
-### Tier 3: Requirements Definition
+### Tier 4: Requirements Definition
 
 - **requirements** → Depends on: stakeholders (R), sobc (R), principles (R)
 
-### Tier 3.5: Strategic Planning (Platform Strategy, Roadmaps & Strategy Synthesis)
+### Tier 5: Strategic Planning (Platform Strategy, Roadmaps & Strategy Synthesis)
 
 - **platform-design** → Depends on: principles (M), stakeholders (R), requirements (R), wardley (R), risk (O), sobc (O), data-model (O)
   - Note: Designs multi-sided platform strategy using Platform Design Toolkit (PDT) methodology
@@ -123,7 +123,7 @@ These commands can run first:
   - Note: Generates comprehensive project glossary with terms, definitions, acronyms, and cross-references
   - Can run at any point once requirements exist; richer with more artifacts available
 
-### Tier 4: Detailed Design (Depends on Requirements)
+### Tier 6: Detailed Design (Depends on Requirements)
 
 Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 
@@ -151,7 +151,7 @@ Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 - **data-mesh-contract** → Depends on: principles (M), data-model (R), stakeholders (R), diagram (R)
   - Note: Federated data product contracts for mesh architectures; requires principles for governance standards
 
-### Tier 5: Procurement (Depends on Requirements)
+### Tier 7: Procurement (Depends on Requirements)
 
 Most procurement commands require ARC-*-REQ-*.md:
 
@@ -165,22 +165,22 @@ Most procurement commands require ARC-*-REQ-*.md:
   - Note: Structured vendor scoring with JSON storage, comparison, and audit trail
   - Integrates with evaluate criteria; scores stored in `projects/{id}/vendors/scores.json`
 
-### Tier 6: Design Reviews (Depends on Design Documents + Requirements)
+### Tier 8: Design Reviews (Depends on Design Documents + Requirements)
 
 - **hld-review** → Depends on: requirements (M), principles (M), HLD (M)
 - **dld-review** → Depends on: requirements (M), principles (M), HLD (M), DLD (M)
 
-### Tier 7: Implementation Planning (Depends on Design Reviews)
+### Tier 9: Implementation Planning (Depends on Design Reviews)
 
 - **backlog** → Depends on: requirements (M), HLD (M), stakeholders (R), risk (R)
 
-### Tier 7.5: Backlog Export (Depends on Backlog)
+### Tier 10: Backlog Export (Depends on Backlog)
 
 - **trello** → Depends on: backlog (M) — specifically the JSON export (`ARC-*-BKLG-*.json`)
   - Note: Exports backlog to Trello board with sprint lists, labelled cards, and acceptance criteria checklists
   - Requires `TRELLO_API_KEY` and `TRELLO_TOKEN` environment variables
 
-### Tier 8: Operations (Depends on Architecture)
+### Tier 11: Operations (Depends on Architecture)
 
 - **servicenow** → Depends on: requirements (M), diagram (M), principles (R), HLD/DLD (R)
 - **devops** → Depends on: requirements (M), diagram (M), principles (R), HLD/DLD (R)
@@ -189,12 +189,12 @@ Most procurement commands require ARC-*-REQ-*.md:
 - **operationalize** → Depends on: requirements (M), diagram (M), HLD/DLD (R), principles (R), risk (R)
 - **traceability** → Depends on: requirements (M), HLD (M), DLD (M), data-model (R)
 
-### Tier 9: Quality Assurance (Can Run Before or After Compliance)
+### Tier 12: Quality Assurance (Can Run Before or After Compliance)
 
 - **analyze** → Depends on: principles (M), requirements (R), stakeholders (R), all other artifacts (O)
   - Note: Requires principles as foundation; other dependencies are optional - analyze identifies gaps for missing artifacts
 
-### Tier 10: Compliance Assessment (Depends on Multiple Artifacts)
+### Tier 13: Compliance Assessment (Depends on Multiple Artifacts)
 
 These assess compliance across the project:
 
@@ -215,7 +215,7 @@ These assess compliance across the project:
 - **mod-secure** → Depends on: requirements (M), principles (M), risk (R)
 - **jsp-936** → Depends on: requirements (M), principles (M), mod-secure (R), risk (R) [for MOD AI systems]
 
-### Tier 11: Project Story & Reporting (Depends on All Artifacts)
+### Tier 14: Project Story & Reporting (Depends on All Artifacts)
 
 Final reporting commands that create comprehensive project narratives and presentations:
 
@@ -228,7 +228,7 @@ Final reporting commands that create comprehensive project narratives and presen
   - Supports focus modes: Executive, Technical, Stakeholder, Procurement
   - Can run at any milestone when at least 3 artifacts exist; more artifacts = richer slides
 
-### Tier 12: Documentation Publishing (Utility)
+### Tier 15: Documentation Publishing (Utility)
 
 Publishing command that generates documentation site:
 
@@ -370,7 +370,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.score` command (59th ArcKit command) for structured vendor scoring with JSON storage, comparison, and audit trail
 - **Added**: score row and column to dependency matrix
-- **Updated**: Tier 5 Procurement to include score command
+- **Updated**: Tier 7 Procurement to include score command
 - **Dependencies**: evaluate (M), requirements (M)
 - **Consumed by**: sow (O), pages (R)
 - **Updated**: Commands Documented count from 58 to 59
@@ -386,7 +386,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 ### 2026-03-08 - Added DFD Command to Matrix
 
 - **Added**: `/arckit.dfd` row and column to dependency matrix
-- **Updated**: Tier 4 Detailed Design to include dfd command
+- **Updated**: Tier 6 Detailed Design to include dfd command
 - **Dependencies**: requirements (M), data-model (R), principles (O), diagram (O)
 - **Consumed by**: traceability (O), analyze (O), story (R), pages (R), presentation (O)
 - **Note**: Multi-instance document type (ARC-*-DFD-{NUM}-v*.md); generates Yourdon-DeMarco Data Flow Diagrams
@@ -397,20 +397,20 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.framework` command (55th ArcKit command) for transforming architecture artifacts into a structured, reusable framework
 - **Added**: framework row and column to dependency matrix
-- **Updated**: Tier 3.5 Strategic Planning to include framework command
+- **Updated**: Tier 5 Strategic Planning to include framework command
 - **Dependencies**: principles (M), requirements (M), stakeholders (R), strategy (R), data-model (R), research (R)
 - **Consumed by**: glossary (R), maturity-model (R), story (R), pages (R), presentation (O)
 - **Note**: Agent-delegating command using arckit-framework agent for synthesis
 
 - **Added**: `/arckit.glossary` command (56th ArcKit command) for generating comprehensive project glossary
 - **Added**: glossary row and column to dependency matrix
-- **Updated**: Tier 3.5 Strategic Planning to include glossary command
+- **Updated**: Tier 5 Strategic Planning to include glossary command
 - **Dependencies**: requirements (R), data-model (R)
 - **Consumed by**: story (R), pages (R), presentation (O)
 
 - **Added**: `/arckit.maturity-model` command (57th ArcKit command) for generating capability maturity model
 - **Added**: maturity-model row and column to dependency matrix
-- **Updated**: Tier 10 Compliance Assessment to include maturity-model command
+- **Updated**: Tier 13 Compliance Assessment to include maturity-model command
 - **Dependencies**: principles (R)
 - **Consumed by**: roadmap (R), strategy (R), story (R), pages (R), presentation (O)
 
@@ -428,7 +428,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.conformance` command (52nd ArcKit command) for systematic decided-vs-designed conformance checking
 - **Added**: conformance row and column to dependency matrix
-- **Updated**: Tier 10 Compliance Assessment to include conformance command
+- **Updated**: Tier 13 Compliance Assessment to include conformance command
 - **Dependencies**: principles (M), adr (M), requirements (R), hld-review (R), dld-review (R), principles-compliance (R), traceability (R), HLD (R), DLD (R), risk (O), devops (O)
 - **Consumed by**: analyze (O), service-assessment (O), story (R), pages (R), presentation (O)
 - **Doc ID**: `ARC-{PID}-CONF-v{VERSION}`
@@ -450,7 +450,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.presentation` command (50th ArcKit command) for generating MARP-format slide decks from project artifacts
 - **Added**: presentation row and column to dependency matrix
-- **Updated**: Tier 11 to include presentation alongside story
+- **Updated**: Tier 14 to include presentation alongside story
 - **Dependencies**: All artifacts (R) — reads whatever is available, minimum 3 recommended
 - **Consumed by**: pages (R)
 - **Note**: Similar to story in consuming all artifacts; output is MARP markdown that renders to PDF/PPTX/HTML
@@ -459,7 +459,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.gcp-research` command (47th ArcKit command) for Google Cloud-specific technology research using Google Developer Knowledge MCP server
 - **Added**: gcp-research row and column to dependency matrix
-- **Updated**: Tier 4 Detailed Design to include gcp-research command
+- **Updated**: Tier 6 Detailed Design to include gcp-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
 - **Consumed by**: diagram (R), devops (R), finops (R), adr (R), pages (R)
 - **Note**: Requires Google Developer Knowledge MCP server with API key (`GOOGLE_API_KEY`) for authoritative Google Cloud documentation
@@ -474,7 +474,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.strategy` command (45th ArcKit command) for synthesising strategic artifacts into executive-level Architecture Strategy document
 - **Added**: strategy row and column to dependency matrix
-- **Updated**: Tier 3.5 Strategic Planning to include strategy command
+- **Updated**: Tier 5 Strategic Planning to include strategy command
 - **Dependencies**: principles (M), stakeholders (M), wardley (R), roadmap (R), sobc (R), risk (O)
 - **Consumed by**: story (R), pages (R)
 - **Note**: Unique among ArcKit commands in requiring TWO mandatory inputs (principles AND stakeholders)
@@ -484,7 +484,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.trello` command (44th ArcKit command) for exporting product backlog to Trello boards
 - **Added**: trello row and column to dependency matrix
-- **Added**: Tier 7.5 Backlog Export for trello command
+- **Added**: Tier 10 Backlog Export for trello command
 - **Dependencies**: backlog (M) — reads `ARC-*-BKLG-*.json`
 - **Consumed by**: None (external Trello board output)
 - **Note**: Requires `TRELLO_API_KEY` and `TRELLO_TOKEN` environment variables; uses Trello REST API via curl
@@ -493,7 +493,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.datascout` command (43rd ArcKit command) for discovering external data sources (APIs, datasets, open data portals, commercial providers)
 - **Added**: datascout row and column to dependency matrix
-- **Updated**: Tier 4 Detailed Design to include datascout command
+- **Updated**: Tier 6 Detailed Design to include datascout command
 - **Dependencies**: requirements (M), data-model (O), stakeholders (R), principles (R)
 - **Consumed by**: data-model (R), research (R), adr (R), dpia (O), diagram (O), traceability (R), pages (R)
 - **Note**: Bidirectional with data-model; prioritises UK Government open data sources (TCoP Point 10)
@@ -502,7 +502,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.aws-research` command (42nd ArcKit command) for AWS-specific technology research using AWS Knowledge MCP server
 - **Added**: aws-research row and column to dependency matrix
-- **Updated**: Tier 4 Detailed Design to include aws-research command
+- **Updated**: Tier 6 Detailed Design to include aws-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
 - **Consumed by**: diagram (R), devops (R), finops (R), adr (R), pages (R)
 - **Note**: Requires AWS Knowledge MCP server for authoritative AWS documentation
@@ -511,7 +511,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **Added**: `/arckit.azure-research` command (41st ArcKit command) for Azure-specific technology research using Microsoft Learn MCP server
 - **Added**: azure-research row and column to dependency matrix
-- **Updated**: Tier 4 Detailed Design to include azure-research command
+- **Updated**: Tier 6 Detailed Design to include azure-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
 - **Consumed by**: diagram (R), devops (R), finops (R), adr (R), secure (O), pages (R)
 - **Note**: Requires Microsoft Learn MCP server for authoritative Azure documentation
@@ -521,7 +521,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Fixed**: Added devops, mlops, finops, operationalize rows and columns to the matrix
 - **Updated**: ARC-*-REQ-*.md consumption count from 23 to 27 commands
 - **Updated**: ARC-000-PRIN-v*.md consumption count from 15 to 17 commands
-- **Note**: These commands were documented in Tier 8 but missing from the actual DSM table
+- **Note**: These commands were documented in Tier 11 but missing from the actual DSM table
 
 ### 2026-01-28 - Standardized Filename Patterns
 
@@ -540,7 +540,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 ### 2026-01-21 - Added FinOps Command
 
 - **Added**: `/arckit.finops` command (39th ArcKit command) for FinOps strategy with cloud cost management, optimization, governance, and forecasting
-- **Updated**: Tier 8 Operations to include finops command
+- **Updated**: Tier 11 Operations to include finops command
 - **Dependencies**: requirements (M), devops (R), diagram (R), principles (R)
 
 ### 2026-01-09 - Added DevOps, MLOps, and Operationalize Commands
@@ -548,7 +548,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Added**: `/arckit.devops` command (34th ArcKit command) for DevOps strategy with CI/CD pipelines, IaC, container orchestration
 - **Added**: `/arckit.mlops` command (35th ArcKit command) for MLOps strategy with model lifecycle, training pipelines, serving, monitoring
 - **Added**: `/arckit.operationalize` command (36th ArcKit command) for operational readiness with SRE practices, runbooks, DR/BCP
-- **Updated**: Tier 8 Operations to include devops, mlops (AI projects), operationalize commands
+- **Updated**: Tier 11 Operations to include devops, mlops (AI projects), operationalize commands
 - **Updated**: All 6 critical paths to include new commands in operations phase
 - **Dependencies**:
   - devops: requirements (M), diagram (R), research (R), principles (R)
@@ -560,8 +560,8 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Added**: `/arckit.platform-design` command (33rd ArcKit command) for multi-sided platform strategy design using Platform Design Toolkit (PDT) methodology
 - **Added**: platform-design row and column to dependency matrix
 - **Added**: New critical path: "UK Government Platform Strategy Path" showing where platform-design fits
-- **Added**: Tier 3.5 "Strategic Planning (Platform Strategy)" for platform-design placement
-- **Updated**: Tier 4 commands to optionally consume platform-design (research R, wardley R, diagram R)
+- **Added**: Tier 5 "Strategic Planning (Platform Strategy)" for platform-design placement
+- **Updated**: Tier 6 commands to optionally consume platform-design (research R, wardley R, diagram R)
 - **Updated**: analyze to consume platform-design (O), principles-compliance (R), service-assessment (O)
 - **Dependencies**: principles (M), stakeholders (R), requirements (R), wardley (R), risk (O), sobc (O), data-model (O)
 - **Consumed by**: research (R), wardley (R), diagram (R), analyze (M), principles-compliance (R), service-assessment (R)
@@ -572,7 +572,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Added**: `/arckit.principles-compliance` command for measuring architecture principles adherence
 - **Added**: principles-compliance row and column to dependency matrix
 - **Updated**: All critical paths to include principles-compliance assessment
-- **Updated**: Tier 10 description to include principles-compliance command
+- **Updated**: Tier 13 description to include principles-compliance command
 - **Updated**: service-assessment to optionally consume principles-compliance output (O)
 - **Dependencies**: principles (M), requirements (R), stakeholders (R), risk (R), data-model (R), HLD (R), DLD (R), hld-review (R), dld-review (R), traceability (R), dpia (R), tcop (R), secure (R), mod-secure (R)
 
@@ -582,7 +582,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Fixed**: service-assessment compliance dependencies changed from M to O (tcop, ai-playbook, atrs, secure, mod-secure, jsp-936)
 - **Fixed**: analyze compliance dependencies changed from M to O (tcop, ai-playbook, atrs, mod-secure)
 - **Updated**: Critical paths reordered to show compliance commands before quality gates
-- **Updated**: Tier 9 and Tier 10 descriptions to reflect optional dependencies and iterative execution
+- **Updated**: Tier 12 and Tier 13 descriptions to reflect optional dependencies and iterative execution
 - **Added**: 23 optional dependencies to complete matrix:
   - plan: principles, stakeholders, risk, sobc, requirements (5)
   - diagram: principles, DLD, tcop, ai-playbook, atrs (5)

@@ -551,19 +551,16 @@
                 <label for="category-filter">Category:</label>
                 <select id="category-filter">
                     <option value="all">All categories</option>
-                    <option value="foundation">Foundation</option>
-                    <option value="strategic">Strategic Context</option>
-                    <option value="requirements">Requirements & Data</option>
-                    <option value="research">Research & Strategy</option>
-                    <option value="cloud-mcp">Cloud Research (MCP)</option>
-                    <option value="data-discovery">Data Source Discovery</option>
-                    <option value="procurement">Procurement</option>
-                    <option value="design">Design & Architecture</option>
+                    <option value="discovery">Discovery</option>
+                    <option value="planning">Planning</option>
+                    <option value="architecture">Architecture</option>
+                    <option value="governance">Governance</option>
+                    <option value="compliance">Compliance</option>
                     <option value="operations">Operations</option>
-                    <option value="governance">Quality & Governance</option>
-                    <option value="ukgov">UK Government</option>
-                    <option value="mod">UK MOD</option>
-                    <option value="publishing">Documentation</option>
+                    <option value="procurement">Procurement</option>
+                    <option value="research">Research</option>
+                    <option value="reporting">Reporting</option>
+                    <option value="other">Other</option>
                 </select>
             </div>
             <div>
@@ -588,25 +585,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- Foundation -->
-                    <tr data-status="live" data-category="foundation">
+                    <!-- Planning -->
+                    <tr data-status="live" data-category="planning">
                         <td><code>/arckit.init</code></td>
                         <td class="description">Initialize ArcKit project structure with numbered project directories and global artifacts</td>
-                        <td>Foundation</td>
+                        <td>Planning</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
-                    <tr data-status="live" data-category="foundation">
+                    <tr data-status="live" data-category="planning">
                         <td><code>/arckit.start</code></td>
                         <td class="description">Get oriented with ArcKit — check project status, explore available commands, and choose your next step</td>
-                        <td>Foundation</td>
+                        <td>Planning</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
-                    <tr data-status="live" data-category="foundation">
+                    <tr data-status="live" data-category="planning">
                         <td><code>/arckit.plan</code></td>
                         <td class="description">Create project plan with timeline, phases, gates, and Mermaid diagrams</td>
-                        <td>Foundation</td>
+                        <td>Planning</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-PLAN-v1.0.md" title="Windows 11 Migration">v3/001</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-PLAN-v1.0.md" title="App Packaging">v3/002</a>
@@ -622,10 +619,10 @@
                         </td>
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
-                    <tr data-status="live" data-category="foundation">
+                    <tr data-status="live" data-category="architecture">
                         <td><code>/arckit.principles</code></td>
                         <td class="description">Create or update enterprise architecture principles</td>
-                        <td>Foundation</td>
+                        <td>Architecture</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/000-global/ARC-000-PRIN-v1.0.md" title="M365">v1</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/000-global/ARC-000-PRIN-v1.0.md" title="HMRC">v2</a>
@@ -645,11 +642,11 @@
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
 
-                    <!-- Strategic Context -->
-                    <tr data-status="live" data-category="strategic">
+                    <!-- Discovery -->
+                    <tr data-status="live" data-category="discovery">
                         <td><code>/arckit.stakeholders</code></td>
                         <td class="description">Analyze stakeholder drivers, goals, and measurable outcomes</td>
-                        <td>Strategic Context</td>
+                        <td>Discovery</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-STKE-v1.0.md" title="M365">v1</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-STKE-v1.0.md" title="HMRC">v2</a>
@@ -673,10 +670,10 @@
                         </td>
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
-                    <tr data-status="live" data-category="strategic">
+                    <tr data-status="live" data-category="governance">
                         <td><code>/arckit.risk</code></td>
                         <td class="description">Create comprehensive risk register following HM Treasury Orange Book principles</td>
-                        <td>Strategic Context</td>
+                        <td>Governance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-RISK-v1.0.md" title="Windows 11 Migration">v3/001</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-RISK-v1.0.md" title="App Packaging">v3/002</a>
@@ -695,10 +692,10 @@
                         </td>
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
-                    <tr data-status="live" data-category="strategic">
+                    <tr data-status="live" data-category="planning">
                         <td><code>/arckit.sobc</code></td>
                         <td class="description">Create Strategic Outline Business Case (SOBC) using UK Government Green Book 5-case model</td>
-                        <td>Strategic Context</td>
+                        <td>Planning</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-SOBC-v1.0.md" title="Windows 11 Migration">v3/001</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-SOBC-v1.0.md" title="App Packaging">v3/002</a>
@@ -712,11 +709,11 @@
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
 
-                    <!-- Requirements & Data -->
-                    <tr data-status="live" data-category="requirements">
+                    <!-- Discovery (continued) -->
+                    <tr data-status="live" data-category="discovery">
                         <td><code>/arckit.requirements</code></td>
                         <td class="description">Create comprehensive business and technical requirements</td>
-                        <td>Requirements & Data</td>
+                        <td>Discovery</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-REQ-v1.0.md" title="M365">v1</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-REQ-v1.0.md" title="HMRC">v2</a>
@@ -741,10 +738,10 @@
                         </td>
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
-                    <tr data-status="live" data-category="requirements">
+                    <tr data-status="live" data-category="architecture">
                         <td><code>/arckit.data-model</code></td>
                         <td class="description">Create comprehensive data model with entity relationships, GDPR compliance, and data governance</td>
-                        <td>Requirements & Data</td>
+                        <td>Architecture</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-DATA-v1.0.md" title="Windows 11 Migration">v3/001</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-DATA-v1.0.md" title="App Packaging">v3/002</a>
@@ -759,17 +756,17 @@
                         </td>
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
-                    <tr data-status="alpha" data-category="requirements">
+                    <tr data-status="alpha" data-category="architecture">
                         <td><code>/arckit.data-mesh-contract</code></td>
                         <td class="description">Create federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees</td>
-                        <td>Requirements & Data</td>
+                        <td>Architecture</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="requirements">
+                    <tr data-status="beta" data-category="compliance">
                         <td><code>/arckit.dpia</code></td>
                         <td class="description">Generate <a href="https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/" class="govuk-link">Data Protection Impact Assessment (DPIA)</a> for UK GDPR Article 35 compliance</td>
-                        <td>Requirements & Data</td>
+                        <td>Compliance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-DPIA-v1.0.md" title="Windows 11">v3</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-DPIA-v1.0.md" title="ONS Data">v8</a>
@@ -782,21 +779,21 @@
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
 
-                    <!-- Research & Strategy -->
-                    <tr data-status="experimental" data-category="research">
+                    <!-- Architecture -->
+                    <tr data-status="experimental" data-category="architecture">
                         <td><code>/arckit.platform-design</code></td>
                         <td class="description">Create platform strategy using Platform Design Toolkit (8 canvases for multi-sided ecosystems)</td>
-                        <td>Research & Strategy</td>
+                        <td>Architecture</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-GAAP-v1.0.md" title="ONS Data">v8</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/ARC-001-PLAT-v1.0.md" title="Training">v10</a>
                         </td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="research">
+                    <tr data-status="beta" data-category="discovery">
                         <td><code>/arckit.research</code></td>
                         <td class="description">Research technology, services, and products to meet requirements with build vs buy analysis</td>
-                        <td>Research & Strategy</td>
+                        <td>Discovery</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-RSCH-v1.0.md" title="Windows 11 Migration">v3/001</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-RSCH-v1.0.md" title="App Packaging">v3/002</a>
@@ -806,10 +803,10 @@
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
-                    <tr data-status="experimental" data-category="research">
+                    <tr data-status="experimental" data-category="architecture">
                         <td><code>/arckit.wardley</code></td>
                         <td class="description">Create strategic Wardley Maps for architecture decisions and build vs buy analysis</td>
-                        <td>Research & Strategy</td>
+                        <td>Architecture</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/wardley-maps/ARC-001-WARD-001-v1.0.md" title="Windows 11">v3</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/wardley-maps/ARC-001-WARD-001-v1.0.md" title="Patent">v6</a>
@@ -818,26 +815,26 @@
                         </td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="research">
+                    <tr data-status="beta" data-category="planning">
                         <td><code>/arckit.roadmap</code></td>
                         <td class="description">Create strategic architecture roadmap with multi-year timeline, capability evolution, and governance</td>
-                        <td>Research & Strategy</td>
+                        <td>Planning</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-ROAD-v1.0.md" title="Windows 11">v3</a>
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="research">
+                    <tr data-status="beta" data-category="planning">
                         <td><code>/arckit.strategy</code></td>
                         <td class="description">Synthesise strategic artifacts into executive-level Architecture Strategy document</td>
-                        <td>Research & Strategy</td>
+                        <td>Planning</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="research">
+                    <tr data-status="beta" data-category="architecture">
                         <td><code>/arckit.adr</code></td>
                         <td class="description">Document architectural decisions with options analysis and traceability</td>
-                        <td>Research & Strategy</td>
+                        <td>Architecture</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/decisions/ARC-001-ADR-001-v1.0.md" title="Windows 11 Migration">v3/001</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/decisions/ARC-002-ADR-001-v1.0.md" title="App Packaging">v3/002</a>
@@ -850,11 +847,11 @@
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
 
-                    <!-- Cloud Research (MCP) -->
-                    <tr data-status="experimental" data-category="cloud-mcp">
+                    <!-- Research -->
+                    <tr data-status="experimental" data-category="research">
                         <td><code>/arckit.azure-research</code></td>
                         <td class="description">Research Azure services and architecture patterns using Microsoft Learn MCP for authoritative guidance</td>
-                        <td>Cloud Research (MCP)</td>
+                        <td>Research</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/research/ARC-001-AZRS-v1.0.md" title="Windows 11 Migration">v3/001</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/research/ARC-002-AZRS-v1.0.md" title="App Packaging">v3/002</a>
@@ -865,10 +862,10 @@
                         </td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
-                    <tr data-status="experimental" data-category="cloud-mcp">
+                    <tr data-status="experimental" data-category="research">
                         <td><code>/arckit.aws-research</code></td>
                         <td class="description">Research AWS services and architecture patterns using AWS Knowledge MCP for authoritative guidance</td>
-                        <td>Cloud Research (MCP)</td>
+                        <td>Research</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-AWRS-v1.0.md" title="SCTS">v14</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/research/ARC-001-AWRS-v1.0.md" title="Fuel Prices">v17</a>
@@ -877,19 +874,19 @@
                         </td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
-                    <tr data-status="experimental" data-category="cloud-mcp">
+                    <tr data-status="experimental" data-category="research">
                         <td><code>/arckit.gcp-research</code></td>
                         <td class="description">Research Google Cloud services and architecture patterns using <a href="https://developerknowledge.googleapis.com/mcp">Google Developer Knowledge MCP</a></td>
-                        <td>Cloud Research (MCP)</td>
+                        <td>Research</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
 
-                    <!-- Data Source Discovery -->
-                    <tr data-status="experimental" data-category="data-discovery">
+                    <!-- Discovery (datascout) -->
+                    <tr data-status="experimental" data-category="discovery">
                         <td><code>/arckit.datascout</code></td>
                         <td class="description">Discover external data sources (APIs, datasets, open data portals) to fulfil project requirements</td>
-                        <td>Data Source Discovery</td>
+                        <td>Discovery</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-DSCT-v1.0.md" title="Fuel Prices">v17</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-DSCT-v1.0.md" title="Smart Meter">v18</a>
@@ -960,11 +957,11 @@
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
 
-                    <!-- Design & Architecture -->
-                    <tr data-status="live" data-category="design">
+                    <!-- Architecture (continued) -->
+                    <tr data-status="live" data-category="architecture">
                         <td><code>/arckit.diagram</code></td>
                         <td class="description">Generate architecture diagrams using Mermaid for visual documentation</td>
-                        <td>Design & Architecture</td>
+                        <td>Architecture</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/diagrams/ARC-001-DIAG-001-v1.0.md" title="M365">v1</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/diagrams/ARC-001-DIAG-001-v1.0.md" title="Windows 11 Migration">v3/001</a>
@@ -977,36 +974,36 @@
                         </td>
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="design">
+                    <tr data-status="beta" data-category="architecture">
                         <td><code>/arckit.dfd</code></td>
                         <td class="description">Generate Data Flow Diagrams (DFD) showing how data moves through system components, trust boundaries, and external entities</td>
-                        <td>Design & Architecture</td>
+                        <td>Architecture</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="design">
+                    <tr data-status="beta" data-category="architecture">
                         <td><code>/arckit.hld-review</code></td>
                         <td class="description">Review High-Level Design (HLD) against architecture principles and requirements</td>
-                        <td>Design & Architecture</td>
+                        <td>Architecture</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/reviews/ARC-001-HLD-v1.0.md" title="Windows 11">v3</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/reviews/ARC-001-HLD-v1.0.md" title="SCTS">v14</a>
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="design">
+                    <tr data-status="beta" data-category="architecture">
                         <td><code>/arckit.dld-review</code></td>
                         <td class="description">Review Detailed Design (DLD) for implementation readiness</td>
-                        <td>Design & Architecture</td>
+                        <td>Architecture</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
 
                     <!-- Operations -->
-                    <tr data-status="beta" data-category="operations">
+                    <tr data-status="beta" data-category="planning">
                         <td><code>/arckit.backlog</code></td>
                         <td class="description">Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints</td>
-                        <td>Operations</td>
+                        <td>Planning</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-BKLG-v1.0.md" title="Windows 11 Migration">v3/001</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-BKLG-v1.0.md" title="App Packaging">v3/002</a>
@@ -1019,10 +1016,10 @@
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
-                    <tr data-status="experimental" data-category="operations">
+                    <tr data-status="experimental" data-category="reporting">
                         <td><code>/arckit.trello</code></td>
                         <td class="description">Export product backlog to Trello - create board, lists, cards with labels and checklists from backlog JSON</td>
-                        <td>Operations</td>
+                        <td>Reporting</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
@@ -1071,10 +1068,10 @@
                         </td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
-                    <tr data-status="live" data-category="operations">
+                    <tr data-status="live" data-category="governance">
                         <td><code>/arckit.traceability</code></td>
                         <td class="description">Generate requirements traceability matrix from requirements to design to tests</td>
-                        <td>Operations</td>
+                        <td>Governance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-TRAC-v1.0.md" title="M365">v1</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-TRAC-v1.0.md" title="HMRC">v2</a>
@@ -1088,11 +1085,11 @@
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
 
-                    <!-- Quality & Governance -->
+                    <!-- Governance -->
                     <tr data-status="beta" data-category="governance">
                         <td><code>/arckit.analyze</code></td>
                         <td class="description">Perform comprehensive governance quality analysis across architecture artifacts (requirements, principles, designs, assessments)</td>
-                        <td>Quality & Governance</td>
+                        <td>Governance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-ANAL-v1.0.md" title="Patent">v6</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-ANAL-v1.0.md" title="Cabinet Office">v9</a>
@@ -1104,7 +1101,7 @@
                     <tr data-status="live" data-category="governance">
                         <td><code>/arckit.principles-compliance</code></td>
                         <td class="description">Assess compliance with architecture principles and generate scorecard with evidence, gaps, and recommendations</td>
-                        <td>Quality & Governance</td>
+                        <td>Governance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-PRIN-COMP-v1.0.md" title="Windows 11">v3</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-PRIN-COMP-v1.0.md" title="SCTS">v14</a>
@@ -1114,26 +1111,26 @@
                     <tr data-status="beta" data-category="governance">
                         <td><code>/arckit.conformance</code></td>
                         <td class="description">Systematic architecture conformance assessment — validates ADR decisions against designs, checks architecture drift, tracks technical debt, and enforces custom constraint rules</td>
-                        <td>Quality & Governance</td>
+                        <td>Governance</td>
                         <td class="examples">
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
 
-                    <!-- UK Government -->
-                    <tr data-status="beta" data-category="ukgov">
+                    <!-- Compliance -->
+                    <tr data-status="beta" data-category="compliance">
                         <td><code>/arckit.service-assessment</code></td>
                         <td class="description">Prepare for <a href="https://www.gov.uk/service-manual/service-assessments" class="govuk-link">GDS Service Standard</a> assessment - analyze evidence against 14 points, identify gaps, generate readiness report</td>
-                        <td>UK Government</td>
+                        <td>Compliance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/001-doctors-appointment/ARC-001-SASS-v1.0.md" title="Doctors">v16</a>
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="ukgov">
+                    <tr data-status="beta" data-category="compliance">
                         <td><code>/arckit.tcop</code></td>
                         <td class="description">Generate a <a href="https://www.gov.uk/guidance/the-technology-code-of-practice" class="govuk-link">Technology Code of Practice (TCoP)</a> review document for a UK Government technology project</td>
-                        <td>UK Government</td>
+                        <td>Compliance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-TCOP-v1.0.md" title="Patent">v6</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-TCOP-v1.0.md" title="ONS Data">v8</a>
@@ -1143,10 +1140,10 @@
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
-                    <tr data-status="beta" data-category="ukgov">
+                    <tr data-status="beta" data-category="compliance">
                         <td><code>/arckit.secure</code></td>
                         <td class="description">Generate a Secure by Design assessment for UK Government projects (civilian departments)</td>
-                        <td>UK Government</td>
+                        <td>Compliance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-SECD-v1.0.md" title="ONS Data">v8</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-SECD-v1.0.md" title="Cabinet Office">v9</a>
@@ -1159,20 +1156,20 @@
                         </td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
-                    <tr data-status="alpha" data-category="ukgov">
+                    <tr data-status="alpha" data-category="compliance">
                         <td><code>/arckit.ai-playbook</code></td>
                         <td class="description">Assess <a href="https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government" class="govuk-link">UK Government AI Playbook</a> compliance for responsible AI deployment</td>
-                        <td>UK Government</td>
+                        <td>Compliance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-AIPB-v1.0.md" title="Cabinet Office">v9</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-AIPB-v1.0.md" title="SCTS">v14</a>
                         </td>
                         <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
                     </tr>
-                    <tr data-status="alpha" data-category="ukgov">
+                    <tr data-status="alpha" data-category="compliance">
                         <td><code>/arckit.atrs</code></td>
                         <td class="description">Generate <a href="https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub" class="govuk-link">Algorithmic Transparency Recording Standard (ATRS)</a> record for AI/algorithmic tools</td>
-                        <td>UK Government</td>
+                        <td>Compliance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-ATRS-v1.0.md" title="HMRC">v2</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-ATRS-v1.0.md" title="Cabinet Office">v9</a>
@@ -1181,30 +1178,30 @@
                         <td><span class="app-status-tag app-status-alpha">Alpha</span></td>
                     </tr>
 
-                    <!-- UK MOD -->
-                    <tr data-status="experimental" data-category="mod">
+                    <!-- Compliance (MOD) -->
+                    <tr data-status="experimental" data-category="compliance">
                         <td><code>/arckit.mod-secure</code></td>
                         <td class="description">Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance</td>
-                        <td>UK MOD</td>
+                        <td>Compliance</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-SECD-MOD-v1.0.md" title="Windows 11 Migration">v3/001</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/006-large-format-printer/ARC-006-SECD-MOD-v1.0.md" title="Large Format Printer">v3/006</a>
                         </td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
-                    <tr data-status="experimental" data-category="mod">
+                    <tr data-status="experimental" data-category="compliance">
                         <td><code>/arckit.jsp-936</code></td>
                         <td class="description">Generate <a href="https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive" class="govuk-link">MOD JSP 936</a> AI assurance documentation for defence AI/ML systems</td>
-                        <td>UK MOD</td>
+                        <td>Compliance</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
                     </tr>
 
-                    <!-- Documentation & Publishing -->
-                    <tr data-status="alpha" data-category="publishing">
+                    <!-- Other -->
+                    <tr data-status="alpha" data-category="reporting">
                         <td><code>/arckit.pages</code></td>
                         <td class="description">Generate GitHub Pages documentation site with Mermaid diagrams, artifact health dashboard, vendor profiles, tech notes, dark mode, and guide auto-sync</td>
-                        <td>Documentation</td>
+                        <td>Reporting</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v1-m365/" title="M365">v1</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/" title="HMRC">v2</a>
@@ -1225,10 +1222,10 @@
                     </tr>
 
                     <!-- Reporting -->
-                    <tr data-status="live" data-category="governance">
+                    <tr data-status="live" data-category="reporting">
                         <td><code>/arckit.story</code></td>
                         <td class="description">Generate comprehensive project story with timeline analysis, traceability, and governance achievements</td>
-                        <td>Quality & Governance</td>
+                        <td>Reporting</td>
                         <td class="examples">
                             <a href="https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-STORY-v1.0.md" title="Windows 11">v3</a>
                             <a href="https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-STORY-v1.0.md" title="ONS Data">v8</a>
@@ -1238,10 +1235,10 @@
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
 
-                    <tr data-status="beta" data-category="governance">
+                    <tr data-status="beta" data-category="reporting">
                         <td><code>/arckit.presentation</code></td>
                         <td class="description">Generate MARP slide deck from project artifacts for governance boards and stakeholder briefings</td>
-                        <td>Quality & Governance</td>
+                        <td>Reporting</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
@@ -1250,14 +1247,14 @@
                     <tr data-status="beta" data-category="governance">
                         <td><code>/arckit.health</code></td>
                         <td class="description">Scan projects for stale research, forgotten ADRs, unresolved review conditions, orphaned requirements, missing traceability, and version drift</td>
-                        <td>Quality & Governance</td>
+                        <td>Governance</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
                     <tr data-status="experimental" data-category="governance">
                         <td><code>/arckit.impact</code></td>
                         <td class="description">Analyse blast radius of changes — reverse dependency tracing</td>
-                        <td>Quality & Governance</td>
+                        <td>Governance</td>
                         <td class="examples">
                         </td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
@@ -1265,16 +1262,16 @@
                     <tr data-status="beta" data-category="governance">
                         <td><code>/arckit.search</code></td>
                         <td class="description">Search across all project artifacts by keyword, document type, or requirement ID</td>
-                        <td>Quality &amp; Governance</td>
+                        <td>Governance</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-beta">Beta</span></td>
                     </tr>
 
                     <!-- Template Customization -->
-                    <tr data-status="live" data-category="governance">
+                    <tr data-status="live" data-category="other">
                         <td><code>/arckit.customize</code></td>
                         <td class="description">Copy templates to <code>.arckit/templates-custom/</code> for customization (preserved across updates)</td>
-                        <td>Quality & Governance</td>
+                        <td>Other</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-live">Live</span></td>
                     </tr>
@@ -1548,7 +1545,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 1.5: Risk & Justification</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 2: Risk & Justification</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">risk</td>
@@ -1653,7 +1650,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 3: Requirements</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 4: Requirements</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">requirements</td>
@@ -1707,7 +1704,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 3.5: Strategic Planning</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 5: Strategic Planning</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">platform-design</td>
@@ -1863,7 +1860,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 4: Detailed Design</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 6: Detailed Design</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">data-model</td>
@@ -2427,7 +2424,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 5: Procurement</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 7: Procurement</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">sow</td>
@@ -2685,7 +2682,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 6: Design Reviews</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 8: Design Reviews</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">hld-review</td>
@@ -2790,7 +2787,7 @@
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--m" title="dld-review requires DLD (mandatory)">M</td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 7: Implementation</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 9: Implementation</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">backlog</td>
@@ -2895,7 +2892,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 8: Operations</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 11: Operations</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">servicenow</td>
@@ -3204,7 +3201,7 @@
                                 <td class="app-dep-matrix__cell app-dep-matrix__cell--m" title="traceability requires DLD (mandatory)">M</td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 9-10: Quality & Compliance</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 12-13: Quality & Compliance</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">analyze</td>
@@ -3666,7 +3663,7 @@
                                 <td class="app-dep-matrix__cell"></td>
                             </tr>
                             <tr class="app-dep-matrix__tier-row">
-                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 11-12: Reporting</td>
+                                <td colspan="50" class="app-dep-matrix__tier-label">Tier 14-15: Reporting</td>
                             </tr>
                             <tr>
                                 <td class="app-dep-matrix__row-label">story</td>

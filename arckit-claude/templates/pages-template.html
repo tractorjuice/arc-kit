@@ -2175,7 +2175,7 @@
             });
 
             // Sort categories
-            const categoryOrder = ['Discovery', 'Planning', 'Architecture', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Research', 'Other'];
+            const categoryOrder = ['Discovery', 'Planning', 'Architecture', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Research', 'Reporting', 'Other'];
             const sortedCategories = Object.keys(byCategory).sort((a, b) => {
                 const aIdx = categoryOrder.indexOf(a);
                 const bIdx = categoryOrder.indexOf(b);
@@ -2303,6 +2303,7 @@
             Operations: '#28a197',
             Procurement: '#d53880',
             Research: '#4c6272',
+            Reporting: '#85994b',
             Other: '#b1b4b6'
         };
 
@@ -2875,7 +2876,7 @@
 
             const CATEGORY_ORDER = [
                 'Discovery', 'Planning', 'Architecture', 'Governance',
-                'Compliance', 'Operations', 'Procurement', 'Research', 'Other'
+                'Compliance', 'Operations', 'Procurement', 'Research', 'Reporting', 'Other'
             ];
 
             // Build controls DOM

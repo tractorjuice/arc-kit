@@ -61,7 +61,8 @@ Use the titles (from hook or manual extraction) to build the `guides` array for 
 | Operations | devops, mlops, finops, servicenow, operationalize |
 | Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
 | Research | aws-research, azure-research, gcp-research |
-| Other | pages, story, presentation, trello, migration, customize, upgrading, pinecone-mcp, start, conformance, productivity, remote-control, mcp-servers |
+| Reporting | pages, story, presentation, trello |
+| Other | migration, customize, upgrading, pinecone-mcp, start, conformance, productivity, remote-control, mcp-servers |
 
 **DDaT Role Guides** (in `docs/guides/roles/`):
 
@@ -244,7 +245,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | AZRS | `ARC-*-AZRS-*.md` | Azure Research |
 | | GCRS | `ARC-*-GCRS-*.md` | GCP Research |
 | | DSCT | `ARC-*-DSCT-*.md` | Data Source Discovery |
-| **Other** | | | |
+| **Reporting** | | | |
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
 | | ANAL | `ARC-*-ANAL-*.md` | Analysis Report |
 

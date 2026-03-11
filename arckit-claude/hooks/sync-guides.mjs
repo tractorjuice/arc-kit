@@ -114,6 +114,7 @@ const GUIDE_CATEGORIES = {
   'score': 'Procurement',
   'aws-research': 'Research', 'azure-research': 'Research', 'gcp-research': 'Research',
   'search': 'Governance', 'impact': 'Governance',
+  'pages': 'Reporting', 'story': 'Reporting', 'presentation': 'Reporting', 'trello': 'Reporting',
   'template-builder': 'Other',
 };
 

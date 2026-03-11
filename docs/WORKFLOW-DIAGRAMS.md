@@ -5,11 +5,11 @@ This document contains Mermaid diagrams for all 5 ArcKit workflow paths based on
 **Legend**:
 
 - **Blue boxes** = Foundation commands (Tier 0-1)
-- **Green boxes** = Core workflow (Tier 2-5)
-- **Orange boxes** = Design & Implementation (Tier 6-7)
-- **Purple boxes** = Quality & Operations (Tier 8-9)
-- **Red boxes** = Compliance (Tier 10)
-- **Gold boxes** = Project Story & Reporting (Tier 11)
+- **Green boxes** = Core workflow (Tier 2-7)
+- **Orange boxes** = Design & Implementation (Tier 8-9)
+- **Purple boxes** = Quality & Operations (Tier 11-12)
+- **Red boxes** = Compliance (Tier 13)
+- **Gold boxes** = Project Story & Reporting (Tier 14)
 - **Solid arrows (→)** = Mandatory sequential flow
 - **Dotted arrows (-.->)** = Recommended dependencies or optional inputs
 
@@ -26,11 +26,11 @@ graph TD
     B --> C[stakeholders]
     C --> D[risk]
 
-    %% Tier 2-3: Business Case & Requirements
+    %% Tier 2-4: Business Case & Requirements
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
+    %% Tier 5-6: Strategy & Design
     F --> G[platform-design]
     F --> F1[datascout]
     F1 -.-> H
@@ -46,24 +46,24 @@ graph TD
     M1 -.-> M2[framework]
     H -.-> N[diagram]
 
-    %% Tier 5: Procurement
+    %% Tier 7: Procurement
     M --> O[sow]
     I -.-> O
     J -.-> O
     O --> P[evaluate]
 
-    %% Tier 6: Design Reviews
+    %% Tier 8: Design Reviews
     P --> Q[hld-review]
     Q --> R[dld-review]
     R --> S[adr]
 
-    %% Tier 7: Implementation
+    %% Tier 9: Implementation
     R --> T[backlog]
 
-    %% Tier 7.5: Backlog Export
+    %% Tier 10: Backlog Export
     T --> T1[trello]
 
-    %% Tier 8-9: Operations & Quality
+    %% Tier 11-12: Operations & Quality
     T --> U[servicenow]
     U --> U1[devops]
     U1 --> U1a[finops]
@@ -73,7 +73,7 @@ graph TD
     V1 --> V2[conformance]
     V2 --> W[analyze]
 
-    %% Tier 11: Reporting
+    %% Tier 14: Reporting
     W --> X[story]
 
     style A fill:#87CEEB
@@ -126,11 +126,11 @@ graph TD
     B --> C[stakeholders]
     C --> D[risk]
 
-    %% Tier 2-3: Business Case & Requirements
+    %% Tier 2-4: Business Case & Requirements
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
+    %% Tier 5-6: Strategy & Design
     F --> G[platform-design]
     F --> F1[datascout]
     F1 -.-> H
@@ -145,7 +145,7 @@ graph TD
     M --> M1[strategy]
     H -.-> V[diagram]
 
-    %% Tier 5: UK Gov Procurement
+    %% Tier 7: UK Gov Procurement
     B -.-> N[gcloud-search]
     M --> N
     N --> O[gcloud-clarify]
@@ -154,25 +154,25 @@ graph TD
     Q -.-> P
     J -.-> P
 
-    %% Tier 6: Design Reviews
+    %% Tier 8: Design Reviews
     P --> R[hld-review]
     R --> S[dld-review]
     S --> T[adr]
 
-    %% Tier 7: Implementation
+    %% Tier 9: Implementation
     S --> U[backlog]
 
-    %% Tier 7.5: Backlog Export
+    %% Tier 10: Backlog Export
     U --> U1t[trello]
 
-    %% Tier 8-9: Operations & Quality
+    %% Tier 11-12: Operations & Quality
     U --> W[servicenow]
     W --> W1[devops]
     W1 --> W1a[finops]
     W1a --> W2[operationalize]
     W2 --> X[traceability]
 
-    %% Tier 10: UK Gov Compliance
+    %% Tier 13: UK Gov Compliance
     X --> X1[tcop]
     X1 --> X2[secure]
     X2 --> X3[principles-compliance]
@@ -180,7 +180,7 @@ graph TD
     X4 --> Y[analyze]
     Y --> Z[service-assessment]
 
-    %% Tier 11: Reporting
+    %% Tier 14: Reporting
     Z --> AA[story]
 
     style A fill:#87CEEB
@@ -237,11 +237,11 @@ graph TD
     B --> C[stakeholders]
     C --> D[risk]
 
-    %% Tier 2-3: Business Case & Requirements
+    %% Tier 2-4: Business Case & Requirements
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
+    %% Tier 5-6: Strategy & Design
     F --> G[platform-design]
     F --> F1[datascout]
     F1 -.-> H
@@ -256,7 +256,7 @@ graph TD
     M --> M1[strategy]
     H -.-> W[diagram]
 
-    %% Tier 5: UK Gov Procurement
+    %% Tier 7: UK Gov Procurement
     B -.-> N[gcloud-search]
     M --> N
     N --> O[gcloud-clarify]
@@ -265,18 +265,18 @@ graph TD
     Q -.-> P
     J -.-> P
 
-    %% Tier 6: Design Reviews
+    %% Tier 8: Design Reviews
     P --> R[hld-review]
     R --> S[dld-review]
     S --> T[adr]
 
-    %% Tier 7: Implementation
+    %% Tier 9: Implementation
     S --> U[backlog]
 
-    %% Tier 7.5: Backlog Export
+    %% Tier 10: Backlog Export
     U --> U1t[trello]
 
-    %% Tier 8-9: Operations & Quality
+    %% Tier 11-12: Operations & Quality
     U --> V[servicenow]
     V --> V1[devops]
     V1 --> V1a[finops]
@@ -284,7 +284,7 @@ graph TD
     V2 --> V3[operationalize]
     V3 --> X[traceability]
 
-    %% Tier 10: UK Gov + AI Compliance
+    %% Tier 13: UK Gov + AI Compliance
     X --> X1[tcop]
     X1 --> X2[ai-playbook]
     X2 --> X3[atrs]
@@ -294,7 +294,7 @@ graph TD
     X6 --> Y[analyze]
     Y --> Z[service-assessment]
 
-    %% Tier 11: Reporting
+    %% Tier 14: Reporting
     Z --> AA[story]
 
     style A fill:#87CEEB
@@ -359,11 +359,11 @@ graph TD
     B --> C[stakeholders]
     C --> D[risk]
 
-    %% Tier 2-3: Business Case & Requirements
+    %% Tier 2-4: Business Case & Requirements
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
+    %% Tier 5-6: Strategy & Design
     F --> G[platform-design]
     F --> F1[datascout]
     F1 -.-> H
@@ -378,7 +378,7 @@ graph TD
     M --> M1[strategy]
     H -.-> U[diagram]
 
-    %% Tier 5: MOD Procurement
+    %% Tier 7: MOD Procurement
     B -.-> N[dos]
     C -.-> N
     M --> N
@@ -387,25 +387,25 @@ graph TD
     P -.-> O
     J -.-> O
 
-    %% Tier 6: Design Reviews
+    %% Tier 8: Design Reviews
     O --> Q[hld-review]
     Q --> R[dld-review]
     R --> S[adr]
 
-    %% Tier 7: Implementation
+    %% Tier 9: Implementation
     R --> T[backlog]
 
-    %% Tier 7.5: Backlog Export
+    %% Tier 10: Backlog Export
     T --> T1t[trello]
 
-    %% Tier 8-9: Operations & Quality
+    %% Tier 11-12: Operations & Quality
     T --> V[servicenow]
     V --> V1[devops]
     V1 --> V1a[finops]
     V1a --> V2[operationalize]
     V2 --> W[traceability]
 
-    %% Tier 10: MOD Compliance
+    %% Tier 13: MOD Compliance
     W --> W1[tcop]
     W1 --> W2[mod-secure]
     W2 --> W3[principles-compliance]
@@ -413,7 +413,7 @@ graph TD
     W4 --> X[analyze]
     X --> Y[service-assessment]
 
-    %% Tier 11: Reporting
+    %% Tier 14: Reporting
     Y --> Z[story]
 
     style A fill:#87CEEB
@@ -474,11 +474,11 @@ graph TD
     B --> C[stakeholders]
     C --> D[risk]
 
-    %% Tier 2-3: Business Case & Requirements
+    %% Tier 2-4: Business Case & Requirements
     D --> E[sobc]
     E --> F[requirements]
 
-    %% Tier 4: Strategy & Design
+    %% Tier 5-6: Strategy & Design
     F --> G[platform-design]
     F --> F1[datascout]
     F1 -.-> H
@@ -493,7 +493,7 @@ graph TD
     M --> M1[strategy]
     H -.-> V[diagram]
 
-    %% Tier 5: MOD Procurement
+    %% Tier 7: MOD Procurement
     B -.-> N[dos]
     C -.-> N
     M --> N
@@ -502,18 +502,18 @@ graph TD
     P -.-> O
     J -.-> O
 
-    %% Tier 6: Design Reviews
+    %% Tier 8: Design Reviews
     O --> Q[hld-review]
     Q --> R[dld-review]
     R --> S[adr]
 
-    %% Tier 7: Implementation
+    %% Tier 9: Implementation
     R --> T[backlog]
 
-    %% Tier 7.5: Backlog Export
+    %% Tier 10: Backlog Export
     T --> T1t[trello]
 
-    %% Tier 8-9: Operations & Quality
+    %% Tier 11-12: Operations & Quality
     T --> W[servicenow]
     W --> W1[devops]
     W1 --> W1a[finops]
@@ -521,7 +521,7 @@ graph TD
     W2 --> W3[operationalize]
     W3 --> X[traceability]
 
-    %% Tier 10: MOD + AI Compliance
+    %% Tier 13: MOD + AI Compliance
     X --> X1[tcop]
     X1 --> X2[mod-secure]
     X2 --> X3[jsp-936]
@@ -530,7 +530,7 @@ graph TD
     X5 --> Y[analyze]
     Y --> Z[service-assessment]
 
-    %% Tier 11: Reporting
+    %% Tier 14: Reporting
     Z --> AA[story]
 
     style A fill:#87CEEB
@@ -598,19 +598,20 @@ graph TD
 | Tier | Phase | Commands |
 |------|-------|----------|
 | 0 | Foundation | plan, principles |
-| 1 | Strategic Context | stakeholders, risk |
-| 2 | Business Justification | sobc |
-| 3 | Requirements | requirements |
-| 3.5 | Platform Strategy & Synthesis | platform-design, framework, glossary |
-| 4 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, datascout, wardley, roadmap, diagram |
-| 5 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate, score |
-| 6 | Design Reviews | hld-review, dld-review, adr |
-| 7 | Implementation | backlog |
-| 7.5 | Backlog Export | trello |
-| 8-9 | Operations & Quality | servicenow, devops, finops, mlops (AI projects), operationalize, traceability, analyze, principles-compliance |
-| 10 | Compliance | conformance, maturity-model, service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
-| 11 | Reporting | story |
-| 12 | Publishing | pages |
+| 1 | Strategic Context | stakeholders |
+| 2 | Risk Assessment | risk |
+| 3 | Business Justification | sobc |
+| 4 | Requirements | requirements |
+| 5 | Strategic Planning & Synthesis | platform-design, roadmap, strategy, framework, glossary |
+| 6 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, gcp-research*, datascout, dfd, wardley, diagram, adr |
+| 7 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate, score |
+| 8 | Design Reviews | hld-review, dld-review |
+| 9 | Implementation | backlog |
+| 10 | Backlog Export | trello |
+| 11-12 | Operations & Quality | servicenow, devops, finops, mlops (AI projects), operationalize, traceability, analyze, principles-compliance |
+| 13 | Compliance | conformance, maturity-model, service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 |
+| 14 | Reporting | story, presentation |
+| 15 | Publishing | pages |
 
 > **\*** `azure-research` and `aws-research` are alternatives to `research` for cloud-specific projects. Each requires its respective MCP server.
 > **datascout** discovers external data sources (APIs, datasets, open data portals) and feeds into data-model and research.
@@ -763,7 +764,7 @@ graph LR
 - **Key Changes**:
   - Added conformance node to all 5 workflow paths (between principles-compliance and analyze)
   - Added conformance to Compliance-Only Path and Gantt chart
-  - Updated Tier 10 Compliance to include conformance
+  - Updated Tier 13 Compliance to include conformance
   - Previous: Added missing style definitions for finops nodes in all workflow diagrams
-  - Previous: Updated Tier Groupings table to include all 40 commands across 13 tiers
+  - Previous: Updated Tier Groupings table to include all 40 commands across 16 tiers
   - Previous: Added principles-compliance to Operations & Quality tier

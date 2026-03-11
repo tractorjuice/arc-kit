@@ -36,7 +36,7 @@ export const DOC_TYPES = {
   'TRAC':      { name: 'Traceability Matrix',              category: 'Governance' },
   'PRIN-COMP': { name: 'Principles Compliance',            category: 'Governance' },
   'CONF':      { name: 'Conformance Assessment',           category: 'Governance' },
-  'PRES':      { name: 'Presentation',                     category: 'Governance' },
+  'PRES':      { name: 'Presentation',                     category: 'Reporting' },
   'ANAL':      { name: 'Analysis Report',                  category: 'Governance' },
   'GAPS':      { name: 'Gap Analysis',                     category: 'Governance' },
   // Compliance
@@ -66,8 +66,8 @@ export const DOC_TYPES = {
   'AWRS':      { name: 'AWS Research',                     category: 'Research' },
   'AZRS':      { name: 'Azure Research',                   category: 'Research' },
   'GCRS':      { name: 'GCP Research',                     category: 'Research' },
-  // Other
-  'STORY':     { name: 'Project Story',                    category: 'Planning' },
+  // Reporting
+  'STORY':     { name: 'Project Story',                    category: 'Reporting' },
 };
 
 // Multi-instance types that require sequence numbers (e.g. ADR-001, RSCH-002)
