@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.2] - 2026-03-11
+
+### Fixed
+
+- Dependency map always shows 000-global documents when filtering by project
+
 ## [4.2.1] - 2026-03-11
 
 ### Fixed
