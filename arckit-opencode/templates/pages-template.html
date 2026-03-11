@@ -2175,7 +2175,7 @@
             });
 
             // Sort categories
-            const categoryOrder = ['Discovery', 'Planning', 'Architecture', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Research', 'Reporting', 'Other'];
+            const categoryOrder = ['Getting Started', 'Discovery', 'Planning', 'Architecture', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Integrations', 'Reporting'];
             const sortedCategories = Object.keys(byCategory).sort((a, b) => {
                 const aIdx = categoryOrder.indexOf(a);
                 const bIdx = categoryOrder.indexOf(b);
@@ -2295,6 +2295,7 @@
         let TYPE_CATEGORIES = {};
 
         const CATEGORY_COLORS = {
+            'Getting Started': '#4c6272',
             Discovery: '#1d70b8',
             Planning: '#00703c',
             Architecture: '#f47738',
@@ -2302,7 +2303,7 @@
             Compliance: '#5694ca',
             Operations: '#28a197',
             Procurement: '#d53880',
-            Research: '#4c6272',
+            Integrations: '#4c2c92',
             Reporting: '#85994b',
             Other: '#b1b4b6'
         };

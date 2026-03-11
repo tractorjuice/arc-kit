@@ -91,38 +91,56 @@ const DOC_TYPE_META = Object.fromEntries(
 );
 
 const GUIDE_CATEGORIES = {
+  // Getting Started
+  'init': 'Getting Started', 'start': 'Getting Started', 'upgrading': 'Getting Started',
+  'customize': 'Getting Started', 'template-builder': 'Getting Started',
+  'session-memory': 'Getting Started', 'remote-control': 'Getting Started',
+  'productivity': 'Getting Started',
+  // Discovery
   'requirements': 'Discovery', 'stakeholders': 'Discovery', 'stakeholder-analysis': 'Discovery',
   'research': 'Discovery', 'datascout': 'Discovery',
+  // Planning
   'sobc': 'Planning', 'business-case': 'Planning', 'plan': 'Planning', 'roadmap': 'Planning',
-  'backlog': 'Planning', 'strategy': 'Planning',
+  'backlog': 'Planning', 'strategy': 'Planning', 'migration': 'Planning',
+  // Architecture
   'principles': 'Architecture', 'adr': 'Architecture', 'diagram': 'Architecture',
   'wardley': 'Architecture', 'data-model': 'Architecture', 'hld-review': 'Architecture',
   'dld-review': 'Architecture', 'design-review': 'Architecture', 'platform-design': 'Architecture',
   'data-mesh-contract': 'Architecture', 'c4-layout-science': 'Architecture',
+  'dfd': 'Architecture', 'framework': 'Architecture',
+  // Governance
   'risk': 'Governance', 'risk-management': 'Governance', 'traceability': 'Governance',
   'principles-compliance': 'Governance', 'analyze': 'Governance', 'artifact-health': 'Governance',
   'data-quality-framework': 'Governance', 'knowledge-compounding': 'Governance',
+  'search': 'Governance', 'impact': 'Governance',
+  'conformance': 'Governance', 'health': 'Governance', 'maturity-model': 'Governance',
+  // Compliance
   'tcop': 'Compliance', 'secure': 'Compliance', 'mod-secure': 'Compliance', 'dpia': 'Compliance',
   'ai-playbook': 'Compliance', 'atrs': 'Compliance', 'jsp-936': 'Compliance',
   'service-assessment': 'Compliance', 'govs-007-security': 'Compliance',
   'national-data-strategy': 'Compliance', 'codes-of-practice': 'Compliance',
   'security-hooks': 'Compliance',
+  // Operations
   'devops': 'Operations', 'mlops': 'Operations', 'finops': 'Operations',
-  'servicenow': 'Operations', 'operationalize': 'Operations',
+  'operationalize': 'Operations',
+  // Procurement
   'sow': 'Procurement', 'evaluate': 'Procurement', 'dos': 'Procurement',
   'gcloud-search': 'Procurement', 'gcloud-clarify': 'Procurement', 'procurement': 'Procurement',
   'score': 'Procurement',
-  'aws-research': 'Research', 'azure-research': 'Research', 'gcp-research': 'Research',
-  'search': 'Governance', 'impact': 'Governance',
-  'pages': 'Reporting', 'story': 'Reporting', 'presentation': 'Reporting', 'trello': 'Reporting',
-  'template-builder': 'Other',
+  // Integrations
+  'aws-research': 'Integrations', 'azure-research': 'Integrations', 'gcp-research': 'Integrations',
+  'mcp-servers': 'Integrations', 'pinecone-mcp': 'Integrations',
+  'trello': 'Integrations', 'servicenow': 'Integrations',
+  // Reporting
+  'pages': 'Reporting', 'story': 'Reporting', 'presentation': 'Reporting',
+  'glossary': 'Reporting',
 };
 
 const GUIDE_STATUS = {};
 for (const name of ['plan','principles','stakeholders','stakeholder-analysis','risk','sobc','requirements','data-model','diagram','traceability','principles-compliance','story','sow','evaluate','customize','risk-management','business-case']) GUIDE_STATUS[name] = 'live';
 for (const name of ['dpia','research','strategy','roadmap','adr','hld-review','dld-review','backlog','servicenow','analyze','service-assessment','tcop','secure','presentation','artifact-health','design-review','procurement','knowledge-compounding','c4-layout-science','security-hooks','codes-of-practice','data-quality-framework','govs-007-security','national-data-strategy','upgrading','start','conformance','productivity','remote-control','mcp-servers','search','score','impact']) GUIDE_STATUS[name] = 'beta';
 for (const name of ['data-mesh-contract','ai-playbook','atrs','pages','template-builder']) GUIDE_STATUS[name] = 'alpha';
-for (const name of ['platform-design','wardley','azure-research','aws-research','gcp-research','datascout','dos','gcloud-search','gcloud-clarify','trello','devops','mlops','finops','operationalize','mod-secure','jsp-936','migration','pinecone-mcp']) GUIDE_STATUS[name] = 'experimental';
+for (const name of ['platform-design','wardley','azure-research','aws-research','gcp-research','datascout','dos','gcloud-search','gcloud-clarify','trello','devops','mlops','finops','operationalize','mod-secure','jsp-936','migration','pinecone-mcp','dfd','framework','health','maturity-model','glossary','init','session-memory']) GUIDE_STATUS[name] = 'experimental';
 
 const ROLE_FAMILIES = {
   'enterprise-architect': 'Architecture', 'solution-architect': 'Architecture',
