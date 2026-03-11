@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.4] - 2026-03-11
+
+### Fixed
+
+- Moved STORY doc type from Other to Planning category
+
 ## [4.2.3] - 2026-03-11
 
 ### Fixed
