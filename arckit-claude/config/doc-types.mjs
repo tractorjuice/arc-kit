@@ -67,7 +67,7 @@ export const DOC_TYPES = {
   'AZRS':      { name: 'Azure Research',                   category: 'Research' },
   'GCRS':      { name: 'GCP Research',                     category: 'Research' },
   // Other
-  'STORY':     { name: 'Project Story',                    category: 'Other' },
+  'STORY':     { name: 'Project Story',                    category: 'Planning' },
 };
 
 // Multi-instance types that require sequence numbers (e.g. ADR-001, RSCH-002)
