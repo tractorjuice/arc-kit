@@ -2835,9 +2835,9 @@
         // Dependency Map
         // ============================================
         function showDependencyMap() {
-            const content = document.getElementById('doc-content');
-            const tocPanel = document.getElementById('toc');
-            if (tocPanel) tocPanel.style.display = 'none';
+            const content = document.getElementById('content');
+            const toc = document.getElementById('toc');
+            toc.style.display = 'none';
 
             if (!manifest.dependencyGraph || Object.keys(manifest.dependencyGraph.nodes).length === 0) {
                 content.textContent = '';
