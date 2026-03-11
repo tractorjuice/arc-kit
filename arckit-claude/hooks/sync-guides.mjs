@@ -357,6 +357,7 @@ function scanProject(repoRoot, projectName) {
         // Vendor subdirectory with documents
         const vendorDocs = [];
         for (const f of listDir(entryPath)) {
+          if (f === 'README.md' || f.startsWith('.')) continue;
           const fp = join(entryPath, f);
           if (isFile(fp) && f.endsWith('.md')) {
             const heading = extractFirstHeading(fp) || basename(f, '.md');
@@ -434,6 +435,7 @@ function scanProject(repoRoot, projectName) {
   const techDir = join(projectDir, 'tech-notes');
   if (isDir(techDir)) {
     for (const f of listDir(techDir)) {
+      if (f === 'README.md' || f.startsWith('.')) continue;
       const fp = join(techDir, f);
       if (isFile(fp) && f.endsWith('.md')) {
         const heading = extractFirstHeading(fp);
