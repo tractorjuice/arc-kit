@@ -1533,6 +1533,115 @@
             outline: 3px solid var(--color-focus);
             outline-offset: 0;
         }
+
+        /* ── Dependency Map ── */
+        .app-depmap-container {
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            background: var(--color-surface);
+            overflow: hidden;
+        }
+        .app-depmap-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--color-border);
+            background: var(--color-bg);
+        }
+        .app-depmap-controls label {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-text);
+        }
+        .app-depmap-controls select {
+            font-size: 14px;
+            padding: 4px 8px;
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            background: var(--color-surface);
+            color: var(--color-text);
+        }
+        .app-depmap-svg {
+            display: block;
+            width: 100%;
+            overflow-x: auto;
+        }
+        .app-depmap-node {
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+        .app-depmap-node rect {
+            transition: stroke-width 0.15s;
+        }
+        .app-depmap-node:hover rect {
+            stroke-width: 2.5;
+        }
+        .app-depmap-node.orphan rect {
+            stroke-dasharray: 4,3;
+        }
+        .app-depmap-node.dimmed {
+            opacity: 0.15;
+        }
+        .app-depmap-edge {
+            fill: none;
+            stroke-width: 1.5;
+            opacity: 0.3;
+            transition: opacity 0.15s;
+        }
+        .app-depmap-edge.highlighted {
+            opacity: 1;
+            stroke-width: 2;
+        }
+        .app-depmap-edge.dimmed {
+            opacity: 0.06;
+        }
+        .app-depmap-tooltip {
+            position: fixed;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 12px;
+            line-height: 1.4;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            pointer-events: none;
+            z-index: 1000;
+            max-width: 260px;
+        }
+        .app-depmap-tooltip strong {
+            display: block;
+            margin-bottom: 2px;
+            color: var(--color-text);
+        }
+        .app-depmap-tooltip span {
+            color: var(--color-muted);
+        }
+        .app-depmap-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 10px 16px;
+            border-top: 1px solid var(--color-border);
+            font-size: 12px;
+            color: var(--color-muted);
+        }
+        .app-depmap-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .app-depmap-legend-swatch {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        .app-depmap-empty {
+            text-align: center;
+            padding: 48px 16px;
+            color: var(--color-muted);
+            font-size: 16px;
+        }
     </style>
 </head>
 <body class="govuk-template__body">
@@ -1550,6 +1659,7 @@
                 <a href="#dashboard" id="dashboard-link" class="app-header__dashboard-link">Dashboard</a>
                 <a href="#guides" id="guides-link" class="app-header__guides-link">Guides</a>
                 <a href="#roles" id="roles-link" class="app-header__guides-link">Roles</a>
+                <a href="#dependency-map" id="depmap-link" class="app-header__guides-link">Map</a>
                 <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
                 <span class="app-version-badge">v{{VERSION}}</span>
                 <a href="{{REPO_URL}}" target="_blank" rel="noopener" class="app-icon-link" aria-label="Repository" title="Repository">
@@ -2722,6 +2832,374 @@
         }
 
         // ============================================
+        // Dependency Map
+        // ============================================
+        function showDependencyMap() {
+            const content = document.getElementById('doc-content');
+            const tocPanel = document.getElementById('toc');
+            if (tocPanel) tocPanel.style.display = 'none';
+
+            if (!manifest.dependencyGraph || Object.keys(manifest.dependencyGraph.nodes).length === 0) {
+                content.textContent = '';
+                const h1 = document.createElement('h1');
+                h1.textContent = 'Dependency Map';
+                content.appendChild(h1);
+                const empty = document.createElement('div');
+                empty.className = 'app-depmap-empty';
+                const p1 = document.createElement('p');
+                p1.textContent = 'No dependency graph data available.';
+                const p2 = document.createElement('p');
+                p2.textContent = 'Run /arckit:pages in a project with ARC documents to generate the graph.';
+                empty.appendChild(p1);
+                empty.appendChild(p2);
+                content.appendChild(empty);
+                document.getElementById('main-content').scrollTo(0, 0);
+                return;
+            }
+
+            const { nodes, edges } = manifest.dependencyGraph;
+            const nodeIds = Object.keys(nodes);
+
+            // Build connected set for orphan detection
+            const connectedIds = new Set();
+            for (const e of edges) {
+                connectedIds.add(e.from);
+                for (const nid of nodeIds) {
+                    if (nid.startsWith(e.to)) connectedIds.add(nid);
+                }
+            }
+
+            // Build project list for filter
+            const projectSet = new Set(nodeIds.map(id => nodes[id].project));
+            const projects = [...projectSet].sort();
+
+            const CATEGORY_ORDER = [
+                'Discovery', 'Planning', 'Architecture', 'Governance',
+                'Compliance', 'Operations', 'Procurement', 'Research', 'Other'
+            ];
+
+            // Build controls DOM
+            content.textContent = '';
+            const h1 = document.createElement('h1');
+            h1.textContent = 'Dependency Map';
+            content.appendChild(h1);
+
+            const container = document.createElement('div');
+            container.className = 'app-depmap-container';
+
+            const controls = document.createElement('div');
+            controls.className = 'app-depmap-controls';
+
+            const label = document.createElement('label');
+            label.setAttribute('for', 'depmap-project-filter');
+            label.textContent = 'Project:';
+            controls.appendChild(label);
+
+            const select = document.createElement('select');
+            select.id = 'depmap-project-filter';
+            const optAll = document.createElement('option');
+            optAll.value = '';
+            optAll.textContent = 'All Projects';
+            select.appendChild(optAll);
+            for (const p of projects) {
+                const opt = document.createElement('option');
+                opt.value = p;
+                opt.textContent = p;
+                select.appendChild(opt);
+            }
+            controls.appendChild(select);
+
+            const statsSpan = document.createElement('span');
+            statsSpan.id = 'depmap-stats';
+            statsSpan.style.cssText = 'margin-left:auto;font-size:12px;color:var(--color-muted)';
+            controls.appendChild(statsSpan);
+
+            container.appendChild(controls);
+
+            const svgWrap = document.createElement('div');
+            svgWrap.id = 'depmap-svg-wrap';
+            svgWrap.style.cssText = 'overflow-x:auto;padding:16px';
+            container.appendChild(svgWrap);
+
+            const legendEl = document.createElement('div');
+            legendEl.className = 'app-depmap-legend';
+            legendEl.id = 'depmap-legend';
+            container.appendChild(legendEl);
+
+            content.appendChild(container);
+
+            // Render legend using DOM
+            for (const cat of CATEGORY_ORDER) {
+                if (!CATEGORY_COLORS[cat]) continue;
+                const item = document.createElement('span');
+                item.className = 'app-depmap-legend-item';
+                const swatch = document.createElement('span');
+                swatch.className = 'app-depmap-legend-swatch';
+                swatch.style.background = CATEGORY_COLORS[cat];
+                item.appendChild(swatch);
+                item.appendChild(document.createTextNode(' ' + cat));
+                legendEl.appendChild(item);
+            }
+
+            // Tooltip element
+            const tooltip = document.createElement('div');
+            tooltip.className = 'app-depmap-tooltip';
+            tooltip.style.display = 'none';
+            document.body.appendChild(tooltip);
+
+            function renderGraph(filterProject) {
+                const statsEl = document.getElementById('depmap-stats');
+
+                // Filter nodes
+                const filteredIds = filterProject
+                    ? nodeIds.filter(id => nodes[id].project === filterProject)
+                    : [...nodeIds];
+
+                if (filteredIds.length === 0) {
+                    svgWrap.textContent = '';
+                    const emptyMsg = document.createElement('div');
+                    emptyMsg.className = 'app-depmap-empty';
+                    emptyMsg.textContent = 'No documents in this project.';
+                    svgWrap.appendChild(emptyMsg);
+                    statsEl.textContent = '';
+                    return;
+                }
+
+                // Group by category
+                const catGroups = {};
+                for (const id of filteredIds) {
+                    const cat = TYPE_CATEGORIES[nodes[id].type] || 'Other';
+                    if (!catGroups[cat]) catGroups[cat] = [];
+                    catGroups[cat].push(id);
+                }
+
+                // Sort within each category by project then type
+                for (const cat of Object.keys(catGroups)) {
+                    catGroups[cat].sort((a, b) => {
+                        const na = nodes[a], nb = nodes[b];
+                        return na.project.localeCompare(nb.project) || na.type.localeCompare(nb.type);
+                    });
+                }
+
+                // Layout constants
+                const nodeW = 100, nodeH = 40;
+                const gapX = 20, gapY = 16;
+                const rowPadTop = 28, rowPadBot = 12;
+                const labelW = 100, padL = 16, padR = 16, padT = 16;
+
+                // Compute positions
+                const positions = {};
+                let y = padT;
+                const rowBands = [];
+
+                for (const cat of CATEGORY_ORDER) {
+                    const ids = catGroups[cat];
+                    if (!ids || ids.length === 0) continue;
+
+                    const cols = ids.length;
+                    const rowH = rowPadTop + nodeH + rowPadBot;
+
+                    rowBands.push({ cat, y, h: rowH, cols });
+
+                    for (let i = 0; i < ids.length; i++) {
+                        positions[ids[i]] = {
+                            x: padL + labelW + i * (nodeW + gapX),
+                            y: y + rowPadTop,
+                        };
+                    }
+                    y += rowH + gapY;
+                }
+
+                const maxCols = Math.max(...rowBands.map(r => r.cols), 1);
+                const svgW = padL + labelW + maxCols * nodeW + (maxCols - 1) * gapX + padR;
+                const svgH = y - gapY + padT;
+
+                // Filter edges to visible nodes
+                const filteredSet = new Set(filteredIds);
+                const visibleEdges = edges.filter(e => {
+                    if (!filteredSet.has(e.from)) return false;
+                    return filteredIds.some(id => id.startsWith(e.to));
+                });
+
+                statsEl.textContent = filteredIds.length + ' nodes, ' + visibleEdges.length + ' edges';
+
+                // Build SVG using DOM (SVG namespace)
+                const NS = 'http://www.w3.org/2000/svg';
+                const svg = document.createElementNS(NS, 'svg');
+                svg.setAttribute('class', 'app-depmap-svg');
+                svg.setAttribute('viewBox', '0 0 ' + svgW + ' ' + svgH);
+                svg.setAttribute('width', svgW);
+                svg.setAttribute('height', svgH);
+
+                // Row backgrounds
+                for (const band of rowBands) {
+                    const color = CATEGORY_COLORS[band.cat] || CATEGORY_COLORS.Other;
+                    const bg = document.createElementNS(NS, 'rect');
+                    bg.setAttribute('x', 0);
+                    bg.setAttribute('y', band.y);
+                    bg.setAttribute('width', svgW);
+                    bg.setAttribute('height', band.h);
+                    bg.setAttribute('fill', color);
+                    bg.setAttribute('opacity', '0.06');
+                    bg.setAttribute('rx', '4');
+                    svg.appendChild(bg);
+
+                    const lbl = document.createElementNS(NS, 'text');
+                    lbl.setAttribute('x', padL);
+                    lbl.setAttribute('y', band.y + 18);
+                    lbl.setAttribute('font-size', '11');
+                    lbl.setAttribute('font-weight', '700');
+                    lbl.setAttribute('fill', color);
+                    lbl.textContent = band.cat;
+                    svg.appendChild(lbl);
+                }
+
+                // Edges
+                for (const e of visibleEdges) {
+                    const fromPos = positions[e.from];
+                    if (!fromPos) continue;
+                    const toId = filteredIds.find(id => id.startsWith(e.to));
+                    if (!toId) continue;
+                    const toPos = positions[toId];
+                    if (!toPos) continue;
+
+                    const x1 = fromPos.x + nodeW / 2;
+                    const y1 = fromPos.y + nodeH;
+                    const x2 = toPos.x + nodeW / 2;
+                    const y2 = toPos.y;
+
+                    const dy = Math.abs(y2 - y1) * 0.4;
+                    const color = CATEGORY_COLORS[TYPE_CATEGORIES[nodes[e.from].type] || 'Other'] || CATEGORY_COLORS.Other;
+
+                    const path = document.createElementNS(NS, 'path');
+                    path.setAttribute('class', 'app-depmap-edge');
+                    path.dataset.from = e.from;
+                    path.dataset.to = toId;
+                    path.setAttribute('d', 'M' + x1 + ',' + y1 + ' C' + x1 + ',' + (y1 + dy) + ' ' + x2 + ',' + (y2 - dy) + ' ' + x2 + ',' + y2);
+                    path.setAttribute('stroke', color);
+                    svg.appendChild(path);
+                }
+
+                // Nodes
+                for (const id of filteredIds) {
+                    const node = nodes[id];
+                    const pos = positions[id];
+                    const color = CATEGORY_COLORS[TYPE_CATEGORIES[node.type] || 'Other'] || CATEGORY_COLORS.Other;
+                    const isOrphan = !connectedIds.has(id);
+
+                    const shortTitle = (node.title || '').length > 16
+                        ? node.title.substring(0, 15) + '\u2026'
+                        : (node.title || id);
+
+                    const g = document.createElementNS(NS, 'g');
+                    g.setAttribute('class', 'app-depmap-node' + (isOrphan ? ' orphan' : ''));
+                    g.dataset.id = id;
+                    g.dataset.path = node.path;
+
+                    const rect = document.createElementNS(NS, 'rect');
+                    rect.setAttribute('x', pos.x);
+                    rect.setAttribute('y', pos.y);
+                    rect.setAttribute('width', nodeW);
+                    rect.setAttribute('height', nodeH);
+                    rect.setAttribute('rx', '4');
+                    rect.setAttribute('fill', 'var(--color-surface, #fff)');
+                    rect.setAttribute('stroke', color);
+                    rect.setAttribute('stroke-width', '1.5');
+                    g.appendChild(rect);
+
+                    const typeText = document.createElementNS(NS, 'text');
+                    typeText.setAttribute('x', pos.x + nodeW / 2);
+                    typeText.setAttribute('y', pos.y + 16);
+                    typeText.setAttribute('text-anchor', 'middle');
+                    typeText.setAttribute('font-size', '11');
+                    typeText.setAttribute('font-weight', '700');
+                    typeText.setAttribute('fill', color);
+                    typeText.textContent = node.type;
+                    g.appendChild(typeText);
+
+                    const titleText = document.createElementNS(NS, 'text');
+                    titleText.setAttribute('x', pos.x + nodeW / 2);
+                    titleText.setAttribute('y', pos.y + 30);
+                    titleText.setAttribute('text-anchor', 'middle');
+                    titleText.setAttribute('font-size', '8');
+                    titleText.setAttribute('fill', 'var(--color-muted, #666)');
+                    titleText.textContent = shortTitle;
+                    g.appendChild(titleText);
+
+                    // Event listeners
+                    g.addEventListener('mouseenter', () => {
+                        const nodeId = g.dataset.id;
+                        const connNodes = new Set([nodeId]);
+                        svg.querySelectorAll('.app-depmap-edge').forEach(p => {
+                            if (p.dataset.from === nodeId || p.dataset.to === nodeId) {
+                                p.classList.add('highlighted');
+                                connNodes.add(p.dataset.from);
+                                connNodes.add(p.dataset.to);
+                            } else {
+                                p.classList.add('dimmed');
+                            }
+                        });
+                        svg.querySelectorAll('.app-depmap-node').forEach(n => {
+                            if (!connNodes.has(n.dataset.id)) n.classList.add('dimmed');
+                        });
+
+                        const nd = nodes[nodeId];
+                        if (nd) {
+                            const ttTitle = document.createElement('strong');
+                            ttTitle.textContent = nd.title || nodeId;
+                            const ttMeta = document.createElement('span');
+                            ttMeta.textContent = nd.type + ' \u00b7 ' + nd.project + ' \u00b7 ' + (nd.status || 'No status') + ' \u2014 Severity: ' + (nd.severity || 'LOW');
+                            tooltip.textContent = '';
+                            tooltip.appendChild(ttTitle);
+                            tooltip.appendChild(ttMeta);
+                            tooltip.style.display = 'block';
+                            const r = g.getBoundingClientRect();
+                            tooltip.style.left = (r.right + 8) + 'px';
+                            tooltip.style.top = r.top + 'px';
+                        }
+                    });
+
+                    g.addEventListener('mouseleave', () => {
+                        svg.querySelectorAll('.app-depmap-edge').forEach(p => {
+                            p.classList.remove('highlighted', 'dimmed');
+                        });
+                        svg.querySelectorAll('.app-depmap-node').forEach(n => {
+                            n.classList.remove('dimmed');
+                        });
+                        tooltip.style.display = 'none';
+                    });
+
+                    g.addEventListener('click', () => {
+                        const docPath = g.dataset.path;
+                        if (docPath) {
+                            tooltip.style.display = 'none';
+                            window.location.hash = docPath;
+                        }
+                    });
+
+                    svg.appendChild(g);
+                }
+
+                svgWrap.textContent = '';
+                svgWrap.appendChild(svg);
+            }
+
+            // Initial render
+            renderGraph('');
+
+            // Filter handler
+            select.addEventListener('change', () => {
+                renderGraph(select.value);
+            });
+
+            // Clear active states in sidebar
+            document.querySelectorAll('#nav-container a').forEach(a => a.classList.remove('active'));
+
+            // Scroll to top
+            document.getElementById('main-content').scrollTo(0, 0);
+        }
+
+        // ============================================
         // Table of Contents
         // ============================================
         function buildTableOfContents(container) {
@@ -3661,6 +4139,13 @@
                     closeMobileSidebar();
                 });
 
+                // Setup dependency map link
+                document.getElementById('depmap-link').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    window.location.hash = 'dependency-map';
+                    closeMobileSidebar();
+                });
+
                 // Handle initial hash or load dashboard
                 if (window.location.hash) {
                     const path = window.location.hash.slice(1);
@@ -3670,6 +4155,8 @@
                         showGuidesIndex();
                     } else if (path === 'roles') {
                         showRolesIndex();
+                    } else if (path === 'dependency-map') {
+                        showDependencyMap();
                     } else {
                         loadDocument(path);
 
@@ -3723,6 +4210,8 @@
                 showGuidesIndex();
             } else if (path === 'roles') {
                 showRolesIndex();
+            } else if (path === 'dependency-map') {
+                showDependencyMap();
             } else if (path) {
                 loadDocument(path);
 
