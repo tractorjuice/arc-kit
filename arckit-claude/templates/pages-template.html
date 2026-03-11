@@ -2952,7 +2952,7 @@
 
                 // Filter nodes
                 const filteredIds = filterProject
-                    ? nodeIds.filter(id => nodes[id].project === filterProject)
+                    ? nodeIds.filter(id => nodes[id].project === filterProject || nodes[id].project.startsWith('000-'))
                     : [...nodeIds];
 
                 if (filteredIds.length === 0) {
