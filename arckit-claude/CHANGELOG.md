@@ -7,10 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.1.1] - 2026-03-11
+
 ### Added
 
 - `/arckit.impact` command for blast radius analysis and reverse dependency tracing
 - `impact-scan.mjs` hook for dependency graph pre-processing
+- `/arckit.search` command for keyword, type, and requirement ID search across all project artifacts
+- `/arckit.score` command for structured vendor scoring with JSON storage, comparison, sensitivity analysis, and audit trail
+- Session learner skill for capturing and replaying session insights
 
 ## [4.0.2] - 2026-03-08
 
