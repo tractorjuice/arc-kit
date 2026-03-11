@@ -21,7 +21,7 @@ def build_agent_map(agents_dir):
             name = filename.replace("arckit-", "", 1).replace(".md", "")
             command_filename = f"{name}.md"
             agent_path = os.path.join(agents_dir, filename)
-            with open(agent_path, "r") as f:
+            with open(agent_path, "r", encoding="utf-8") as f:
                 agent_content = f.read()
             agent_prompt = extract_agent_prompt(agent_content)
             agent_map[command_filename] = (agent_path, agent_prompt)
@@ -261,7 +261,7 @@ def convert(commands_dir, agents_dir):
 
         command_path = os.path.join(commands_dir, filename)
 
-        with open(command_path, "r") as f:
+        with open(command_path, "r", encoding="utf-8") as f:
             command_content = f.read()
 
         # Extract frontmatter from command (always use command's description)
@@ -292,7 +292,7 @@ def convert(commands_dir, agents_dir):
         has_standalone = os.path.isfile(standalone_path)
         standalone_prompt = None
         if has_standalone:
-            with open(standalone_path, "r") as f:
+            with open(standalone_path, "r", encoding="utf-8") as f:
                 standalone_content = f.read()
             _, standalone_prompt = extract_frontmatter_and_prompt(standalone_content)
 
@@ -339,7 +339,7 @@ def convert(commands_dir, agents_dir):
 
                 out_filename = config["filename_pattern"].format(name=base_name)
                 out_path = os.path.join(config["output_dir"], out_filename)
-                with open(out_path, "w") as f:
+                with open(out_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 print(f"  {config['name'] + ':':14s}{source_label} -> {out_path} (agent wrapper)")
                 counts[agent_id] += 1
@@ -355,9 +355,9 @@ def convert(commands_dir, agents_dir):
                 skill_md = f'---\nname: {skill_name}\ndescription: "{escaped_desc}"\n---\n\n{rewritten}\n'
                 openai_yaml = "policy:\n  allow_implicit_invocation: false\n"
 
-                with open(os.path.join(skill_dir, "SKILL.md"), "w") as f:
+                with open(os.path.join(skill_dir, "SKILL.md"), "w", encoding="utf-8") as f:
                     f.write(skill_md)
-                with open(os.path.join(skill_dir, "agents", "openai.yaml"), "w") as f:
+                with open(os.path.join(skill_dir, "agents", "openai.yaml"), "w", encoding="utf-8") as f:
                     f.write(openai_yaml)
 
                 print(f"  {config['name'] + ':':14s}{source_label} -> {skill_dir}/")
@@ -366,7 +366,7 @@ def convert(commands_dir, agents_dir):
                 content = format_output(description, rewritten, config["format"])
                 out_filename = config["filename_pattern"].format(name=base_name)
                 out_path = os.path.join(config["output_dir"], out_filename)
-                with open(out_path, "w") as f:
+                with open(out_path, "w", encoding="utf-8") as f:
                     f.write(content)
                 print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
                 counts[agent_id] += 1
@@ -415,7 +415,7 @@ def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
 
     # MCP servers section
     if os.path.isfile(mcp_json_path):
-        with open(mcp_json_path, "r") as f:
+        with open(mcp_json_path, "r", encoding="utf-8") as f:
             mcp_config = json.load(f)
         servers = mcp_config.get("mcpServers", {})
         if servers:
@@ -451,7 +451,7 @@ def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
 
             for filename in agent_files:
                 agent_path = os.path.join(agents_dir, filename)
-                with open(agent_path, "r") as f:
+                with open(agent_path, "r", encoding="utf-8") as f:
                     content = f.read()
                 frontmatter, _ = extract_frontmatter_and_prompt(content)
                 name = frontmatter.get("name", filename.replace(".md", ""))
@@ -466,7 +466,7 @@ def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
                 lines.append("")
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
-    with open(output_path, "w") as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n".join(lines))
     print(f"  Generated: {output_path}")
 
@@ -484,7 +484,7 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
             continue
 
         agent_path = os.path.join(agents_dir, filename)
-        with open(agent_path, "r") as f:
+        with open(agent_path, "r", encoding="utf-8") as f:
             content = f.read()
 
         prompt = extract_agent_prompt(content)
@@ -503,7 +503,7 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
             f'"""\n'
         )
 
-        with open(toml_path, "w") as f:
+        with open(toml_path, "w", encoding="utf-8") as f:
             f.write(toml_content)
         count += 1
 
@@ -528,7 +528,7 @@ def rewrite_codex_skills(skills_dir):
             if not filename.endswith(".md"):
                 continue
             filepath = os.path.join(root, filename)
-            with open(filepath, "r") as f:
+            with open(filepath, "r", encoding="utf-8") as f:
                 content = f.read()
 
             original = content
@@ -561,7 +561,7 @@ def rewrite_codex_skills(skills_dir):
             content = content.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
 
             if content != original:
-                with open(filepath, "w") as f:
+                with open(filepath, "w", encoding="utf-8") as f:
                     f.write(content)
                 rel_path = os.path.relpath(filepath, skills_dir)
                 print(f"  Rewrote: {skills_dir}/{rel_path}")
@@ -592,7 +592,7 @@ def generate_gemini_agents(agents_dir, output_dir):
             continue
 
         agent_path = os.path.join(agents_dir, filename)
-        with open(agent_path, "r") as f:
+        with open(agent_path, "r", encoding="utf-8") as f:
             content = f.read()
 
         frontmatter, prompt = extract_frontmatter_and_prompt(content)
@@ -625,7 +625,7 @@ def generate_gemini_agents(agents_dir, output_dir):
         output_content = f"---\n{fm_str}\n---\n\n{prompt}\n"
 
         out_path = os.path.join(output_dir, filename)
-        with open(out_path, "w") as f:
+        with open(out_path, "w", encoding="utf-8") as f:
             f.write(output_content)
         print(f"  {filename}")
         count += 1
@@ -714,7 +714,7 @@ def generate_gemini_hooks(output_dir):
     }
 
     hooks_path = os.path.join(hooks_dir, "hooks.json")
-    with open(hooks_path, "w") as f:
+    with open(hooks_path, "w", encoding="utf-8") as f:
         json.dump(hooks_config, f, indent=2)
         f.write("\n")
 
@@ -746,7 +746,7 @@ reason = "File content may contain secrets. Please confirm this is intentional."
 '''
 
     rules_path = os.path.join(policies_dir, "rules.toml")
-    with open(rules_path, "w") as f:
+    with open(rules_path, "w", encoding="utf-8") as f:
         f.write(rules)
     print(f"  Generated: {rules_path}")
 
@@ -765,7 +765,7 @@ def generate_copilot_agents(agents_dir, output_dir):
             continue
 
         agent_path = os.path.join(agents_dir, filename)
-        with open(agent_path, "r") as f:
+        with open(agent_path, "r", encoding="utf-8") as f:
             content = f.read()
 
         frontmatter, prompt = extract_frontmatter_and_prompt(content)
@@ -787,7 +787,7 @@ def generate_copilot_agents(agents_dir, output_dir):
         output_content = f"---\n{fm_str}\n---\n\n{prompt}\n"
 
         out_path = os.path.join(output_dir, out_filename)
-        with open(out_path, "w") as f:
+        with open(out_path, "w", encoding="utf-8") as f:
             f.write(output_content)
         print(f"  {out_filename}")
         count += 1
@@ -837,7 +837,7 @@ projects/
 ```
 """
     os.makedirs(os.path.dirname(output_path) or ".", exist_ok=True)
-    with open(output_path, "w") as f:
+    with open(output_path, "w", encoding="utf-8") as f:
         f.write(content)
     print(f"  Generated: {output_path}")
 
