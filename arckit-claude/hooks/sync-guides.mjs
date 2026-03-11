@@ -94,7 +94,7 @@ const GUIDE_CATEGORIES = {
   // Getting Started
   'init': 'Getting Started', 'start': 'Getting Started', 'upgrading': 'Getting Started',
   'customize': 'Getting Started', 'template-builder': 'Getting Started',
-  'session-memory': 'Getting Started', 'remote-control': 'Getting Started',
+  'remote-control': 'Getting Started',
   'productivity': 'Getting Started',
   // Discovery
   'requirements': 'Discovery', 'stakeholders': 'Discovery', 'stakeholder-analysis': 'Discovery',
@@ -140,7 +140,7 @@ const GUIDE_STATUS = {};
 for (const name of ['plan','principles','stakeholders','stakeholder-analysis','risk','sobc','requirements','data-model','diagram','traceability','principles-compliance','story','sow','evaluate','customize','risk-management','business-case']) GUIDE_STATUS[name] = 'live';
 for (const name of ['dpia','research','strategy','roadmap','adr','hld-review','dld-review','backlog','servicenow','analyze','service-assessment','tcop','secure','presentation','artifact-health','design-review','procurement','knowledge-compounding','c4-layout-science','security-hooks','codes-of-practice','data-quality-framework','govs-007-security','national-data-strategy','upgrading','start','conformance','productivity','remote-control','mcp-servers','search','score','impact']) GUIDE_STATUS[name] = 'beta';
 for (const name of ['data-mesh-contract','ai-playbook','atrs','pages','template-builder']) GUIDE_STATUS[name] = 'alpha';
-for (const name of ['platform-design','wardley','azure-research','aws-research','gcp-research','datascout','dos','gcloud-search','gcloud-clarify','trello','devops','mlops','finops','operationalize','mod-secure','jsp-936','migration','pinecone-mcp','dfd','framework','health','maturity-model','glossary','init','session-memory']) GUIDE_STATUS[name] = 'experimental';
+for (const name of ['platform-design','wardley','azure-research','aws-research','gcp-research','datascout','dos','gcloud-search','gcloud-clarify','trello','devops','mlops','finops','operationalize','mod-secure','jsp-936','migration','pinecone-mcp','dfd','framework','health','maturity-model','glossary','init']) GUIDE_STATUS[name] = 'experimental';
 
 const ROLE_FAMILIES = {
   'enterprise-architect': 'Architecture', 'solution-architect': 'Architecture',
