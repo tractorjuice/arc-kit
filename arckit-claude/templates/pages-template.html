@@ -1659,7 +1659,7 @@
                 <a href="#dashboard" id="dashboard-link" class="app-header__dashboard-link">Dashboard</a>
                 <a href="#guides" id="guides-link" class="app-header__guides-link">Guides</a>
                 <a href="#roles" id="roles-link" class="app-header__guides-link">Roles</a>
-                <a href="#dependency-map" id="depmap-link" class="app-header__guides-link">Map</a>
+                <a href="#dependency-map" id="depmap-link" class="app-header__guides-link">Document Map</a>
                 <a href="https://tractorjuice.github.io/arc-kit/">ArcKit</a>
                 <span class="app-version-badge">v{{VERSION}}</span>
                 <a href="{{REPO_URL}}" target="_blank" rel="noopener" class="app-icon-link" aria-label="Repository" title="Repository">
@@ -2984,12 +2984,13 @@
                 }
 
                 // Layout constants
-                const nodeW = 100, nodeH = 40;
-                const gapX = 20, gapY = 16;
-                const rowPadTop = 28, rowPadBot = 12;
-                const labelW = 100, padL = 16, padR = 16, padT = 16;
+                const nodeW = 110, nodeH = 44;
+                const gapX = 16, gapY = 24;
+                const rowPadTop = 30, rowPadBot = 14, rowGapY = 10;
+                const labelW = 110, padL = 16, padR = 16, padT = 16;
+                const maxCols = 8; // wrap after this many nodes per row
 
-                // Compute positions
+                // Compute positions with wrapping
                 const positions = {};
                 let y = padT;
                 const rowBands = [];
@@ -2998,22 +2999,24 @@
                     const ids = catGroups[cat];
                     if (!ids || ids.length === 0) continue;
 
-                    const cols = ids.length;
-                    const rowH = rowPadTop + nodeH + rowPadBot;
+                    const numRows = Math.ceil(ids.length / maxCols);
+                    const rowH = rowPadTop + numRows * nodeH + (numRows - 1) * rowGapY + rowPadBot;
 
-                    rowBands.push({ cat, y, h: rowH, cols });
+                    rowBands.push({ cat, y, h: rowH });
 
                     for (let i = 0; i < ids.length; i++) {
+                        const col = i % maxCols;
+                        const row = Math.floor(i / maxCols);
                         positions[ids[i]] = {
-                            x: padL + labelW + i * (nodeW + gapX),
-                            y: y + rowPadTop,
+                            x: padL + labelW + col * (nodeW + gapX),
+                            y: y + rowPadTop + row * (nodeH + rowGapY),
                         };
                     }
                     y += rowH + gapY;
                 }
 
-                const maxCols = Math.max(...rowBands.map(r => r.cols), 1);
-                const svgW = padL + labelW + maxCols * nodeW + (maxCols - 1) * gapX + padR;
+                const usedCols = Math.min(maxCols, Math.max(...Object.keys(catGroups).map(c => catGroups[c] ? catGroups[c].length : 0), 1));
+                const svgW = padL + labelW + usedCols * nodeW + (usedCols - 1) * gapX + padR;
                 const svgH = y - gapY + padT;
 
                 // Filter edges to visible nodes
