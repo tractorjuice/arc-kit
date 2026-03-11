@@ -27,6 +27,7 @@ import {
   isDir, isFile, mtimeMs, readText, listDir,
   findRepoRoot, parseHookInput,
 } from './hook-utils.mjs';
+import { scanAllArtifacts } from './graph-utils.mjs';
 
 function walkMdFiles(baseDir, currentDir = baseDir) {
   const results = [];
@@ -508,6 +509,17 @@ function buildManifest(repoRoot, repoInfo, guideTitles) {
   if (globalPolicies.length > 0) manifest.globalPolicies = globalPolicies;
   manifest.projects = projects;
 
+  // Dependency graph for dashboard visualization
+  if (isDir(projectsDir)) {
+    const graph = scanAllArtifacts(projectsDir);
+    if (Object.keys(graph.nodes).length > 0) {
+      manifest.dependencyGraph = {
+        nodes: graph.nodes,
+        edges: graph.edges,
+      };
+    }
+  }
+
   return manifest;
 }
 
@@ -706,6 +718,8 @@ const message = [
   `| Vendor Profiles | ${vendorProfileCount} |`,
   `| Tech Notes | ${techNoteCount} |`,
   `| Scored Vendors | ${scoredVendorCount} |`,
+  `| Graph Nodes | ${manifest.dependencyGraph ? Object.keys(manifest.dependencyGraph.nodes).length : 0} |`,
+  `| Graph Edges | ${manifest.dependencyGraph ? manifest.dependencyGraph.edges.length : 0} |`,
   `| Projects | ${manifest.projects.length} |`,
   ``,
   `### What to do`,
