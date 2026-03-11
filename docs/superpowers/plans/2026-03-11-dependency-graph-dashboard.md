@@ -26,6 +26,7 @@
 ### Task 1: Create `graph-utils.mjs` with extracted functions
 
 **Files:**
+
 - Create: `arckit-claude/hooks/graph-utils.mjs`
 
 The graph-building logic currently lives in `impact-scan.mjs` (lines 30-143). Extract five functions into a shared module: `extractTitle`, `classifySeverity`, `scanProjectDir`, `scanAllArtifacts`. These are pure functions with no hook-specific logic.
@@ -33,6 +34,7 @@ The graph-building logic currently lives in `impact-scan.mjs` (lines 30-143). Ex
 - [ ] **Step 1: Create `graph-utils.mjs`**
 
 Copy the following functions from `impact-scan.mjs` into the new file, converting them to named exports:
+
 - `extractTitle` (lines 32-35)
 - `classifySeverity` (lines 39-46)
 - `scanProjectDir` (lines 66-143) — includes vendor directory scanning and cross-reference extraction
@@ -57,6 +59,7 @@ git commit -m "refactor: extract graph-building logic into shared graph-utils.mj
 ### Task 2: Refactor `impact-scan.mjs` to use shared module
 
 **Files:**
+
 - Modify: `arckit-claude/hooks/impact-scan.mjs`
 
 Replace the duplicated `extractTitle`, `classifySeverity`, `scanProjectDir`, and `scanAllArtifacts` functions (lines 30-143) with a single import from `graph-utils.mjs`. Keep `parseArguments` and the main hook logic (lines 145-208) as-is.
@@ -64,6 +67,7 @@ Replace the duplicated `extractTitle`, `classifySeverity`, `scanProjectDir`, and
 - [ ] **Step 1: Replace imports and remove duplicated functions**
 
 Replace lines 1-143 with:
+
 - Same file header comment
 - Import `join` from `node:path`
 - Import `isDir`, `findRepoRoot`, `parseHookInput` from `./hook-utils.mjs`
@@ -89,6 +93,7 @@ git commit -m "refactor: import graph-building from shared graph-utils.mjs in im
 ### Task 3: Extend `sync-guides.mjs` to build graph and write to manifest
 
 **Files:**
+
 - Modify: `arckit-claude/hooks/sync-guides.mjs`
 
 Add a graph-building step between manifest building (line 634) and manifest writing (line 637). Import `scanAllArtifacts` from `graph-utils.mjs` and attach the result to the manifest object.
@@ -125,7 +130,7 @@ Note: Intentionally exclude `reqIndex` from manifest (large, only needed by impa
 
 In the stats table (around line 708, after the `Scored Vendors` row), add two new rows:
 
-```
+```text
 | Graph Nodes | ${manifest.dependencyGraph ? Object.keys(manifest.dependencyGraph.nodes).length : 0} |
 | Graph Edges | ${manifest.dependencyGraph ? manifest.dependencyGraph.edges.length : 0} |
 ```
@@ -149,6 +154,7 @@ git commit -m "feat: build dependency graph in manifest.json for dashboard visua
 ### Task 4: Add CSS styles for the dependency map
 
 **Files:**
+
 - Modify: `arckit-claude/templates/pages-template.html`
 
 Add styles for the dependency map container, controls bar, SVG canvas, node rectangles, edge paths, tooltips, legend strip, orphan indicator (dashed border), and hover states (highlighted/dimmed classes). Insert in the `<style>` block after existing dashboard styles. Key classes:
@@ -180,11 +186,13 @@ git commit -m "feat: add CSS styles for dependency map dashboard panel"
 ### Task 5: Add header nav link and hash routing for Dependency Map
 
 **Files:**
+
 - Modify: `arckit-claude/templates/pages-template.html`
 
 - [ ] **Step 1: Add nav link in header**
 
 After the Roles link (line 1552), add a "Map" link:
+
 ```html
 <a href="#dependency-map" id="depmap-link" class="app-header__guides-link">Map</a>
 ```
@@ -196,6 +204,7 @@ After the roles link event listener, add a `depmap-link` click handler that sets
 - [ ] **Step 3: Add hash route handling**
 
 In both the initial hash handler and the `hashchange` listener, add:
+
 ```javascript
 } else if (path === 'dependency-map') {
     showDependencyMap();
@@ -213,38 +222,45 @@ git commit -m "feat: add Dependency Map nav link and hash routing"
 ### Task 6: Implement `showDependencyMap()` function
 
 **Files:**
+
 - Modify: `arckit-claude/templates/pages-template.html`
 
 This is the core rendering function. Add it after the `showDashboard()` function (after line 2722). Key design:
 
 **Layout algorithm** — Layered by category:
+
 - Y-axis: category bands (Discovery at top, Research at bottom) using `CATEGORY_ORDER` array
 - X-axis: nodes sorted by project then doc type within each category row
 - Each row has a tinted background rectangle and a category label on the left
 - Node rectangles are 90x36px with 24px horizontal gap and 20px vertical gap between rows
 
 **Node rendering:**
+
 - Rounded rectangle per node, stroke colour from `CATEGORY_COLORS[category]`
 - Two text lines: type code (bold, coloured) and truncated title (muted, 8px)
 - Orphan nodes (not in any edge) get `stroke-dasharray: 4,3`
 
 **Edge rendering:**
+
 - Curved SVG `<path>` using cubic bezier from source node bottom to target node top
 - Stroke colour matches source node's category
 - Default opacity 0.3, highlighted opacity 1.0
 
 **Interactions:**
+
 - **Hover node**: Add `highlighted` class to hovered node + connected nodes/edges. Add `dimmed` to everything else. Show tooltip with title, type, project, status, severity.
 - **Click node**: Navigate to document via `window.location.hash = path`
 - **Project filter**: `<select>` dropdown re-renders the graph with only nodes from selected project
 
 **Empty states:**
+
 - No `manifest.dependencyGraph`: Show message suggesting `/arckit:pages`
 - No nodes: Show message suggesting creating documents
 - No nodes for selected project: Show inline SVG text
 
 **Function structure:**
-```
+
+```text
 showDependencyMap()
   ├── Guard: check manifest.dependencyGraph exists → empty state if not
   ├── Build project list for filter dropdown
@@ -268,6 +284,7 @@ showDependencyMap()
 Add after `showDashboard()` closing brace (line 2722). The function should be approximately 200-250 lines implementing the design above.
 
 Key implementation details:
+
 - Use `escapeHtml()` (already exists in template) for all user-facing text
 - Use `TYPE_CATEGORIES` (already exists, line ~2180) to look up category from type code
 - Use `CATEGORY_COLORS` (already exists, line 2187) for node/edge colours
@@ -298,6 +315,7 @@ Expected: `All OK`
 - [ ] **Step 3: Test in a test repo (manual)**
 
 In a test repo with the plugin enabled:
+
 1. Run `/arckit:pages` — should see `Graph Nodes` and `Graph Edges` in the stats table
 2. Open `docs/index.html` in browser
 3. Click "Map" in the header nav
