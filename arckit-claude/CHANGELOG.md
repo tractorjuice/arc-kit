@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.1] - 2026-03-11
+
+### Fixed
+
+- Dependency map layout now wraps nodes into grid rows (max 8 columns) instead of one long row per category
+- Fixed null element ID (`doc-content` → `content`) crash when opening dependency map
+- Fixed null `type`/`project` crash in dependency map node sorting
+- Filtered `.gitkeep` and `README.md` from vendor docs and tech notes in manifest
+
 ## [4.2.0] - 2026-03-11
 
 ### Added
@@ -14,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Interactive dependency map visualization in pages dashboard (`#dependency-map` route)
 - Shared `graph-utils.mjs` module extracted from `impact-scan.mjs` for graph-building logic
 - Dependency graph data (`dependencyGraph`) added to `manifest.json` via `sync-guides.mjs`
-- "Map" nav link in dashboard header with SVG rendering, category-layered layout, hover/click interactions, project filtering, and orphan detection
+- "Document Map" nav link in dashboard header with SVG rendering, category-layered layout, hover/click interactions, project filtering, and orphan detection
 
 ### Fixed
 

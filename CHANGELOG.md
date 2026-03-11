@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.1] - 2026-03-11
+
+### Fixed
+
+- Dependency map grid layout wrapping, null property crashes, and filtered hidden files from manifest
+
 ## [4.2.0] - 2026-03-11
 
 ### Added
