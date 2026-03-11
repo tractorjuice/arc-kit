@@ -100,12 +100,15 @@ export function scanProjectDir(projectDir, projectName, nodes, edges, reqIndex) 
         }
       }
 
-      // Extract cross-references to other ARC documents
+      // Extract cross-references to other ARC documents (deduplicated per source)
       const ARC_REF_RE = /\bARC-(\d{3})-([A-Z][\w-]*?)(?:-(\d{3}))?(?:-v[\d.]+)?(?:\.md)?\b/g;
+      const seenRefs = new Set();
       for (const m of content.matchAll(ARC_REF_RE)) {
         const refStr = m[0].replace(/\.md$/, '');
         const refShort = refStr.replace(/-v[\d.]+$/, '');
-        if (refShort !== shortId) {
+        const edgeKey = fullId + '>' + refShort;
+        if (refShort !== shortId && !seenRefs.has(edgeKey)) {
+          seenRefs.add(edgeKey);
           edges.push({ from: fullId, to: refShort, type: 'references' });
         }
       }
