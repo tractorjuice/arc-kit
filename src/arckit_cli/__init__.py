@@ -832,7 +832,7 @@ Example:
 
 export OPENCODE_HOME="$PWD/.opencode"
 """
-        envrc_path.write_text(envrc_content)
+        envrc_path.write_text(envrc_content, encoding="utf-8")
 
         # Copy .opencode/README.md if it exists
         opencode_src = data_paths.get("opencode_root")
@@ -877,7 +877,7 @@ export OPENCODE_HOME="$PWD/.opencode"
   }
 }
 """
-            opencode_json_path.write_text(opencode_json_content)
+            opencode_json_path.write_text(opencode_json_content, encoding="utf-8")
             console.print(
                 f"[green]✓[/green] Created .opencode/opencode.json with MCP servers"
             )
@@ -906,12 +906,12 @@ export OPENCODE_HOME="$PWD/.opencode"
         ]
 
         if gitignore_path.exists():
-            existing_content = gitignore_path.read_text()
+            existing_content = gitignore_path.read_text(encoding="utf-8")
             if ".opencode" not in existing_content:
-                with open(gitignore_path, "a") as f:
+                with open(gitignore_path, "a", encoding="utf-8") as f:
                     f.write("\n" + "\n".join(opencode_ignore_entries) + "\n")
         else:
-            gitignore_path.write_text("\n".join(opencode_ignore_entries) + "\n")
+            gitignore_path.write_text("\n".join(opencode_ignore_entries) + "\n", encoding="utf-8")
 
         console.print(
             "[green]✓[/green] OpenCode environment configured (.envrc created)"
