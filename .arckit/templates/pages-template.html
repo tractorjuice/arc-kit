@@ -2411,14 +2411,6 @@
                 ? Math.round(projectMetrics.reduce((sum, p) => sum + p.coverage, 0) / projectMetrics.length)
                 : 0;
 
-            // Guide maturity
-            const guideCounts = { live: 0, beta: 0, alpha: 0, experimental: 0 };
-            (manifest.guides || []).forEach(g => {
-                if (g.status && guideCounts.hasOwnProperty(g.status)) {
-                    guideCounts[g.status]++;
-                }
-            });
-
             // Governance coverage (portfolio-wide)
             const GOVERNANCE_TYPES = {
                 'Requirements (REQ)': 'REQ',
@@ -2461,7 +2453,6 @@
                 avgCoverage,
                 categoryCounts,
                 projectMetrics,
-                guideCounts,
                 governanceCoverage
             };
         }
@@ -2731,7 +2722,7 @@
             // Row 3.5: Vendor Scores
             html += renderVendorScores(manifest);
 
-            // Row 4: Guide maturity + Governance checklist
+            // Row 4: Governance checklist
             let checklistHtml = '';
             Object.entries(m.governanceCoverage).forEach(([label, info]) => {
                 const icon = info.present
@@ -2745,10 +2736,6 @@
 
             html += `
                 <div class="app-dashboard-panels">
-                    <div class="app-dashboard-panel">
-                        <h3>Guide Maturity</h3>
-                        <div id="dashboard-guide-chart"></div>
-                    </div>
                     <div class="app-dashboard-panel">
                         <h3>Governance Coverage</h3>
                         <ul class="app-dashboard-checklist">${checklistHtml}</ul>
@@ -2831,11 +2818,6 @@
             const categoryData = Object.entries(CATEGORY_COLORS)
                 .map(([label, color]) => ({ label, value: m.categoryCounts[label] || 0, color }));
             renderDonutChart('dashboard-category-chart', categoryData);
-
-            const guideColors = { live: '#00703c', beta: '#1d70b8', alpha: '#f47738', experimental: '#912b88' };
-            const guideData = Object.entries(guideColors)
-                .map(([label, color]) => ({ label: label.charAt(0).toUpperCase() + label.slice(1), value: m.guideCounts[label] || 0, color }));
-            renderDonutChart('dashboard-guide-chart', guideData);
 
             // Wire up dashboard links to navigate to documents
             content.querySelectorAll('.app-dashboard-link').forEach(link => {
