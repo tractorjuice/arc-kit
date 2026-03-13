@@ -1,0 +1,60 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+labels: ["enhancement"]
+body:
+  - type: input
+    id: summary
+    attributes:
+      label: Summary
+      description: One-line summary of the feature.
+      placeholder: "Add /arckit.security-review command"
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / use case
+      description: What problem does this solve? What's the use case?
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How do you envision this working?
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Other approaches you've thought about.
+    validations:
+      required: false
+
+  - type: dropdown
+    id: ai-tool
+    attributes:
+      label: AI Tool
+      description: Which AI tool is this most relevant to?
+      options:
+        - Claude Code
+        - Codex CLI
+        - Gemini CLI
+        - OpenCode CLI
+        - GitHub Copilot
+        - ArcKit CLI
+        - All
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Examples, screenshots, or references.
+    validations:
+      required: false

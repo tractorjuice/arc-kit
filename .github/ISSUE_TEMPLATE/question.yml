@@ -1,0 +1,51 @@
+name: Question
+description: Ask a question or get help with ArcKit
+labels: ["question"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What do you need help with?
+    validations:
+      required: true
+
+  - type: textarea
+    id: tried
+    attributes:
+      label: What I've tried
+      description: What have you already tried or looked at?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ai-tool
+    attributes:
+      label: AI Tool
+      description: Which AI tool are you using?
+      options:
+        - Claude Code
+        - Codex CLI
+        - Gemini CLI
+        - OpenCode CLI
+        - GitHub Copilot
+        - ArcKit CLI
+    validations:
+      required: true
+
+  - type: input
+    id: arckit-version
+    attributes:
+      label: ArcKit version
+      description: The ArcKit plugin/CLI version, if known.
+      placeholder: "4.2.9"
+    validations:
+      required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Screenshots, logs, or links.
+    validations:
+      required: false

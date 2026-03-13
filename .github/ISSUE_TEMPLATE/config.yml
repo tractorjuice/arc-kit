@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Discord
+    url: https://discord.gg/e28w3deA
+    about: Ask general questions and discuss ideas with the community
+  - name: Documentation
+    url: https://tractorjuice.github.io/arc-kit/
+    about: Browse ArcKit documentation and command guides

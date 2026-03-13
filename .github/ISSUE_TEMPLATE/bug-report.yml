@@ -1,0 +1,110 @@
+name: Bug Report
+description: Report a bug or unexpected behaviour
+labels: ["bug"]
+body:
+  - type: input
+    id: command
+    attributes:
+      label: Command
+      description: Which ArcKit command triggered the bug?
+      placeholder: "/arckit.requirements"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: A clear description of the problem.
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Numbered steps to reproduce the issue.
+      placeholder: |
+        1. Run `/arckit.requirements My Project`
+        2. Wait for output
+        3. See error...
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+      description: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behaviour
+      description: What actually happened? Include any error messages.
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: Screenshots / logs
+      description: Paste screenshots or terminal output if helpful.
+      render: text
+    validations:
+      required: false
+
+  - type: dropdown
+    id: ai-tool
+    attributes:
+      label: AI Tool
+      description: Which AI tool are you using?
+      options:
+        - Claude Code
+        - Codex CLI
+        - Gemini CLI
+        - OpenCode CLI
+        - GitHub Copilot
+        - ArcKit CLI
+    validations:
+      required: true
+
+  - type: input
+    id: ai-tool-version
+    attributes:
+      label: AI Tool version
+      description: The version of your AI tool.
+      placeholder: "Claude Code v2.1.71"
+    validations:
+      required: true
+
+  - type: input
+    id: arckit-version
+    attributes:
+      label: ArcKit version
+      description: The ArcKit plugin/CLI version.
+      placeholder: "4.2.9"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating System
+      options:
+        - macOS
+        - Windows
+        - Linux/WSL
+        - Codespaces/DevContainer
+    validations:
+      required: true
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Anything else that might help.
+    validations:
+      required: false
