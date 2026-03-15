@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.10] - 2026-03-15
+
+### Added
+
+- Add GitHub issue forms for bugs, features, and questions (#171)
+
+### Fixed
+
+- Correct 9 dependency matrix discrepancies from audit (#170)
+- Wrap mermaid.run() in try-catch to prevent page crash on bad diagrams (#172)
+
 ## [4.2.4] - 2026-03-11
 
 ### Fixed
