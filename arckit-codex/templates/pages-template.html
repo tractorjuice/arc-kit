@@ -3964,7 +3964,7 @@
                 buildTableOfContents(content.querySelector('.app-markdown'));
 
                 // Render mermaid diagrams
-                await mermaid.run({ querySelector: '.mermaid' });
+                try { await mermaid.run({ querySelector: '.mermaid' }); } catch (e) { console.warn('Mermaid render error:', e); }
 
                 // Render PlantUML diagrams (via PlantUML server)
                 renderPlantUMLDiagrams();
