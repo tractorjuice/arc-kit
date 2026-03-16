@@ -1,4 +1,8 @@
 {
+  "statusLine": {
+    "type": "command",
+    "command": "bash /workspaces/arc-kit/.claude/statusline.sh"
+  },
   "permissions": {
     "allow": [
       "mcp__aws-knowledge__aws___get_regional_availability",
