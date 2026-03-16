@@ -27,6 +27,10 @@ export const DOC_TYPES = {
   'DLDR':      { name: 'Detailed Design Review',           category: 'Architecture' },
   'DATA':      { name: 'Data Model',                       category: 'Architecture' },
   'WARD':      { name: 'Wardley Map',                      category: 'Architecture' },
+  'WDOC':      { name: 'Wardley Doctrine Assessment',  category: 'Architecture' },
+  'WGAM':      { name: 'Wardley Gameplay Analysis',     category: 'Architecture' },
+  'WCLM':      { name: 'Wardley Climate Assessment',    category: 'Architecture' },
+  'WVCH':      { name: 'Wardley Value Chain',            category: 'Architecture' },
   'DIAG':      { name: 'Architecture Diagrams',            category: 'Architecture' },
   'DFD':       { name: 'Data Flow Diagram',                category: 'Architecture' },
   'ADR':       { name: 'Architecture Decision Records',    category: 'Architecture' },
@@ -74,6 +78,7 @@ export const DOC_TYPES = {
 export const MULTI_INSTANCE_TYPES = new Set([
   'ADR', 'DIAG', 'DFD', 'WARD', 'DMC',
   'RSCH', 'AWRS', 'AZRS', 'GCRS', 'DSCT',
+  'WGAM', 'WCLM', 'WVCH',
 ]);
 
 // Type code -> required subdirectory
@@ -84,6 +89,10 @@ export const SUBDIR_MAP = {
   'DIAG': 'diagrams',
   'DFD':  'diagrams',
   'WARD': 'wardley-maps',
+  'WDOC': 'wardley-maps',
+  'WGAM': 'wardley-maps',
+  'WCLM': 'wardley-maps',
+  'WVCH': 'wardley-maps',
   'DMC':  'data-contracts',
   'RSCH': 'research',
   'AWRS': 'research',

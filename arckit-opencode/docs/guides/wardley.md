@@ -6,6 +6,29 @@
 
 ---
 
+## Wardley Mapping Suite
+
+ArcKit provides a full suite of Wardley Mapping commands that work together as a strategic analysis pipeline:
+
+| Command | Purpose | Output |
+|---------|---------|--------|
+| `/arckit.wardley.value-chain` | Decompose user needs into value chains | WVCH |
+| `/arckit.wardley` | Create positioned Wardley Maps | WARD |
+| `/arckit.wardley.doctrine` | Assess organizational doctrine maturity | WDOC |
+| `/arckit.wardley.climate` | Assess 32 climatic patterns | WCLM |
+| `/arckit.wardley.gameplay` | Analyze 60+ strategic gameplay patterns | WGAM |
+
+**Recommended workflow order:**
+
+1. **Value Chain** -- Decompose domain into components ([guide](wardley-value-chain.md))
+2. **Wardley Map** -- Position components on evolution axis (this guide)
+3. **Doctrine** -- Assess organizational maturity ([guide](wardley-doctrine.md))
+4. **Climate** -- Understand external forces ([guide](wardley-climate.md))
+5. **Gameplay** -- Identify strategic plays ([guide](wardley-gameplay.md))
+6. **Strategy / Roadmap** -- Synthesise findings into actionable plans
+
+---
+
 ## Inputs
 
 | Artefact | Purpose |

@@ -26,7 +26,7 @@ ArcKit's GitHub issues are frequently low-quality: vague titles, missing reprodu
 
 ## File Structure
 
-```
+```text
 .github/
 ├── ISSUE_TEMPLATE/
 │   ├── bug-report.yml

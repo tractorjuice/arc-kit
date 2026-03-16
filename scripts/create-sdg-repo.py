@@ -500,7 +500,7 @@ This repository contains **{total_projects} UK Government technology projects** 
 
 ## ArcKit
 
-This repository is powered by [ArcKit](https://github.com/tractorjuice/arc-kit) -- an Enterprise Architecture Governance & Vendor Procurement Toolkit providing 60 slash commands for AI coding assistants.
+This repository is powered by [ArcKit](https://github.com/tractorjuice/arc-kit) -- an Enterprise Architecture Governance & Vendor Procurement Toolkit providing 64 slash commands for AI coding assistants.
 
 **Version**: {VERSION}
 """

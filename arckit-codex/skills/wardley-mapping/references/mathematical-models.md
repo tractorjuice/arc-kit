@@ -249,6 +249,152 @@ Moderate-to-strong signal — transitioning from Product to Commodity. (And inde
 
 ---
 
+---
+
+## D. Play-Position Scoring
+
+A quantitative framework for evaluating which gameplay options are viable given your current map position.
+
+### Core Formula
+
+```
+Play Score = Position_Match(0-1) × Capability_Fit(0-1) × (1 - Risk_Factor(0-1))
+```
+
+Higher scores indicate plays that are well-aligned with your position, executable with current capabilities, and have acceptable downside risk.
+
+### Position Match
+
+How well does the gameplay play align with the evolution position of the target components?
+
+```
+Position_Match scoring:
+  Play targets your current stage:        1.0   (e.g., ILC play on a Custom-Built component)
+  Play targets an adjacent stage:         0.6   (one stage left or right of current)
+  Play targets a distant stage:           0.2   (two stages away)
+```
+
+**Example**: An "Open Source" commoditization play on a Product-stage component (adjacent — targeting Commodity) scores 0.6. The same play on a Genesis-stage component (distant — skipping two stages) scores 0.2.
+
+### Capability Fit
+
+Can your organization actually execute this play? Assess against the prerequisites for the specific gameplay.
+
+```
+Capability_Fit scoring:
+  Have all prerequisites:                 1.0   (full capability to execute)
+  Have most prerequisites:                0.7   (minor gaps, fillable with investment)
+  Missing one key capability:             0.3   (significant gap requiring major effort)
+  Missing multiple key capabilities:      0.1   (play is currently out of reach)
+```
+
+**Example**: An ILC play requires engineering scale, platform capabilities, and sales channels. A startup with strong engineering but no sales or platform infrastructure scores 0.3.
+
+### Risk Factor
+
+What is the downside if the play fails or conditions change?
+
+```
+Risk_Factor scoring:
+  Low risk, fully reversible:             0.1   (easy to stop, low sunk cost)
+  Medium risk, partially reversible:      0.4   (moderate investment, some recovery possible)
+  High risk, largely irreversible:        0.8   (major commitment, hard to unwind)
+  Existential risk, irreversible:         0.95  (bet-the-company, failure = shutdown)
+```
+
+Note: The Risk_Factor is subtracted from 1.0 before multiplying — so higher risk *reduces* the play score.
+
+### Worked Example: Evaluating Three Plays
+
+A company with a Custom-Built analytics platform evaluates three possible plays:
+
+| Play | Position_Match | Capability_Fit | Risk_Factor | Play Score | Verdict |
+|------|---------------|----------------|-------------|------------|---------|
+| Productize platform (sell to others) | 1.0 (Custom→Product) | 0.7 (engineering ok, sales gap) | 0.4 (medium) | 1.0 × 0.7 × 0.6 = **0.42** | Viable with investment |
+| Open source to commoditize | 0.6 (adjacent→Commodity) | 0.3 (no community mgmt) | 0.4 (medium) | 0.6 × 0.3 × 0.6 = **0.11** | Not viable yet |
+| Deepen custom differentiation | 1.0 (stay in Custom) | 1.0 (core strength) | 0.1 (low) | 1.0 × 1.0 × 0.9 = **0.90** | Strong — continue investing |
+
+The scoring confirms the intuitive recommendation: double down on differentiation while building the sales capability needed to eventually productize.
+
+### Play Score Interpretation
+
+| Play Score | Recommendation |
+|------------|---------------|
+| 0.70 - 1.00 | Execute — strong alignment, capability, and acceptable risk |
+| 0.40 - 0.70 | Conditional — viable but address the weakest factor first |
+| 0.15 - 0.40 | Weak — significant gaps; develop prerequisites before attempting |
+| 0.00 - 0.15 | Avoid — misaligned, incapable, or too risky at current position |
+
+---
+
+## E. Climate Pattern Impact Weighting
+
+A scoring framework for prioritizing which components face the greatest strategic pressure from climatic patterns.
+
+### Impact Matrix
+
+For each climatic pattern identified on a map, score its impact on each component:
+
+```
+Impact Matrix: Pattern × Component → Score (1-5)
+
+Scoring scale:
+  5 = Pattern directly threatens or enables this component's current position
+  4 = Pattern significantly affects this component's evolution trajectory
+  3 = Pattern has moderate influence on this component
+  2 = Pattern has minor relevance to this component
+  1 = Pattern has negligible or no effect on this component
+```
+
+A score of 5 means: if you ignore this pattern for this component, you will likely make a wrong strategic decision. A score of 1 means: the pattern exists but has no actionable implication for this component.
+
+### Aggregate Scoring
+
+Once the matrix is populated, calculate three aggregate scores:
+
+```
+Component Risk Score  = Sum of all pattern impact scores for that component
+  → Identifies which components face the most cumulative climatic pressure
+
+Pattern Criticality   = Sum of all component impact scores for that pattern
+  → Identifies which patterns have the broadest effect across the value chain
+
+Priority Focus        = Components with the highest Component Risk Scores
+  → Where to direct monitoring, investment, or contingency planning
+```
+
+### Worked Example: TechnoGadget Smart Home
+
+Applying 5 climatic patterns to the TechnoGadget map (from [Mapping Examples](mapping-examples.md)):
+
+| Component | Everything Evolves | Inertia | Higher-Order Systems | Efficiency Enables Innovation | Competitors Change Game | Risk Score |
+|-----------|-------------------|---------|---------------------|------------------------------|------------------------|------------|
+| Smart thermostat | 4 | 5 | 2 | 1 | 5 | **17** |
+| Mobile app | 3 | 4 | 2 | 1 | 4 | **14** |
+| Cloud infrastructure | 2 | 1 | 5 | 5 | 1 | **14** |
+| Data analytics | 4 | 2 | 5 | 4 | 3 | **18** |
+| R&D | 3 | 1 | 4 | 4 | 2 | **14** |
+| API | 5 | 2 | 3 | 3 | 4 | **17** |
+| **Pattern Criticality** | **21** | **15** | **21** | **18** | **19** | |
+
+**Interpretation**:
+
+- **Data analytics** (18) and **Smart thermostat / API** (17 each) face the highest cumulative climatic pressure — these are the priority focus components
+- **Everything Evolves** and **Higher-Order Systems** tie as the most broadly impactful patterns (21 each) — both affect nearly every component
+- **Inertia** (15) scores lowest in criticality but scores highest on Smart thermostat (5) — it is highly concentrated on one critical component, not broadly distributed
+
+### Using the Matrix in Practice
+
+1. List all climatic patterns identified on the map (typically 3-8 for a focused analysis)
+2. Score each pattern against each component (5-minute workshop exercise per pattern)
+3. Sum rows (component risk) and columns (pattern criticality)
+4. Rank components by risk score — highest scores demand strategic attention
+5. For components scoring 15+ (in a 5-pattern analysis), develop explicit contingency responses
+
+The matrix is most useful as a workshop tool: it forces explicit discussion about *why* a pattern affects a component, surfaces disagreements in the team's mental models, and produces a defensible prioritization.
+
+---
+
 ## Further Reading
 
 These models are drawn from a broader mathematical framework for Wardley Mapping that includes game theory, stochastic processes, topological analysis, and Bayesian inference. For the full academic treatment, see the [Wardley Map Mathematical Model](https://github.com/tractorjuice/wardleymap_math_model) repository.

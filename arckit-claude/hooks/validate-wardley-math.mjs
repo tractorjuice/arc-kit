@@ -65,7 +65,7 @@ if (isDir(projectsDir)) {
     for (const f of readdirSync(wmDir)) {
       const fp = join(wmDir, f);
       if (!isFile(fp)) continue;
-      if (!f.startsWith('ARC-') || !f.includes('-WARD-') || !f.endsWith('.md')) continue;
+      if (!f.startsWith('ARC-') || !(f.includes('-WARD-') || f.includes('-WVCH-')) || !f.endsWith('.md')) continue;
       try {
         const mt = statSync(fp).mtimeMs;
         const age = now - mt;

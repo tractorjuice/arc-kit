@@ -534,19 +534,19 @@ def rewrite_codex_skills(skills_dir):
             original = content
 
             # Rewrite /arckit:X -> $arckit-X (colon-prefixed plugin format)
-            content = re.sub(r"/arckit:(\w[\w-]*)", r"$arckit-\1", content)
+            content = re.sub(r"/arckit:(\w[\w.-]*)", r"$arckit-\1", content)
 
             # Rewrite /arckit.X -> $arckit-X (dot-prefixed format)
             # Only match when preceded by a space or start-of-line to avoid false matches
             content = re.sub(
-                r"(?<=\s)/arckit\.(\w[\w-]*)",
+                r"(?<=\s)/arckit\.(\w[\w.-]*)",
                 r"$arckit-\1",
                 content,
             )
 
             # Rewrite /prompts:arckit.X -> $arckit-X (old Codex prompt format)
             content = re.sub(
-                r"/prompts:arckit\.(\w[\w-]*)",
+                r"/prompts:arckit\.(\w[\w.-]*)",
                 r"$arckit-\1",
                 content,
             )

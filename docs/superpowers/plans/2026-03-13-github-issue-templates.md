@@ -17,6 +17,7 @@
 ### Task 1: Create bug report form
 
 **Files:**
+
 - Create: `.github/ISSUE_TEMPLATE/bug-report.yml`
 
 - [ ] **Step 1: Create the bug report form**
@@ -144,6 +145,7 @@ git commit -m "feat: add bug report issue form"
 ### Task 2: Create feature request form
 
 **Files:**
+
 - Create: `.github/ISSUE_TEMPLATE/feature-request.yml`
 
 - [ ] **Step 1: Create the feature request form**
@@ -221,6 +223,7 @@ git commit -m "feat: add feature request issue form"
 ### Task 3: Create question form
 
 **Files:**
+
 - Create: `.github/ISSUE_TEMPLATE/question.yml`
 
 - [ ] **Step 1: Create the question form**
@@ -289,6 +292,7 @@ git commit -m "feat: add question issue form"
 ### Task 4: Create config to disable blank issues
 
 **Files:**
+
 - Create: `.github/ISSUE_TEMPLATE/config.yml`
 
 - [ ] **Step 1: Create the config**

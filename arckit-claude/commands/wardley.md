@@ -9,11 +9,17 @@ handoffs:
   - command: research
     description: Research vendors for Custom-Built components
     condition: "Custom-Built components identified that need market research"
+  - command: wardley.doctrine
+    description: Assess organizational doctrine maturity
+  - command: wardley.gameplay
+    description: Identify strategic plays from the map
+  - command: wardley.climate
+    description: Assess climatic patterns affecting components
 hooks:
   Stop:
     - hooks:
         - type: command
-          command: "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.py"
+          command: "node ${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.mjs"
           timeout: 10
 ---
 
@@ -60,9 +66,13 @@ $ARGUMENTS
 
 - **STKE** (Stakeholder Analysis) — Extract: Business drivers, stakeholder goals, priorities, success metrics
 - **RSCH** / **AWRS** / **AZRS** (Research) — Extract: Vendor landscape, build vs buy analysis, TCO comparisons
+- **WVCH** (Value Chain) — Extract: Anchor (user need), components, visibility scores, dependencies
 
 **OPTIONAL** (read if available, skip silently if missing):
 
+- **WDOC** (Doctrine Assessment) — Extract: Doctrine maturity scores, capability gaps, improvement priorities
+- **WCLM** (Climate Assessment) — Extract: Climatic pattern impacts, evolution predictions, inertia factors
+- **WGAM** (Gameplay Analysis) — Extract: Selected strategic plays, execution steps
 - **DATA** (Data Model) — Extract: Data components, storage technology, data flow patterns
 - **TCOP** (TCoP Review) — Extract: UK Government compliance requirements, reuse opportunities
 - **AIPB** (AI Playbook) — Extract: AI component risk levels, human oversight requirements

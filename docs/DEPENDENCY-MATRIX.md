@@ -143,8 +143,20 @@ Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 - **dfd** → Depends on: requirements (O), data-model (R), principles (O), diagram (O)
   - Note: Can generate DFDs from user description alone; richer output when requirements and data-model exist
   - Multi-instance document type (ARC-*-DFD-{NUM}-v*.md)
+- **wardley.value-chain** → Depends on: requirements (M), stakeholders (R)
+  - Note: Decomposes user needs into value chains for Wardley Mapping; produces WVCH artifacts
+  - Multi-instance document type (ARC-*-WVCH-{NUM}-v*.md), stored in wardley-maps/ subdirectory
 - **wardley** → Depends on: requirements (R), principles (R), research (O), data-model (O), tcop (O), ai-playbook (O)
   - Note: Can create initial map from user description alone; enhanced with requirements, principles, research
+- **wardley.doctrine** → Depends on: principles (M), wardley (R), stakeholders (R)
+  - Note: Assesses organizational doctrine maturity across 4 phases and 40+ principles; produces WDOC artifact
+  - Single instance per project (ARC-*-WDOC-v*.md), stored in wardley-maps/ subdirectory
+- **wardley.gameplay** → Depends on: wardley (M), wardley.climate (R), wardley.doctrine (R)
+  - Note: Analyzes strategic plays from 60+ gameplay patterns; produces WGAM artifacts
+  - Multi-instance document type (ARC-*-WGAM-{NUM}-v*.md), stored in wardley-maps/ subdirectory
+- **wardley.climate** → Depends on: wardley (M), requirements (R), research (R)
+  - Note: Assesses 32 climatic patterns affecting mapped components; produces WCLM artifacts
+  - Multi-instance document type (ARC-*-WCLM-{NUM}-v*.md), stored in wardley-maps/ subdirectory
 - **diagram** → Depends on: requirements (O), platform-design (R)
   - Note: Can generate diagrams from user description alone; richer output when requirements and other artifacts exist
 - **adr** → Depends on: principles (R), requirements (R), risk (R), stakeholders (O), research (O), wardley (O)
@@ -353,13 +365,21 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ## Version
 
-- **ArcKit Version**: 1.5.0
-- **Matrix Date**: 2026-02-25
-- **Commands Documented**: 60
-- **Matrix Rows**: 54 (52 document-generating commands + 2 external documents)
+- **ArcKit Version**: 1.6.0
+- **Matrix Date**: 2026-03-16
+- **Commands Documented**: 64
+- **Matrix Rows**: 58 (56 document-generating commands + 2 external documents)
 - **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.impact`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-03-16 - Wardley Mapping Suite
+
+- **Added**: wardley.value-chain command — Depends on: requirements (M), stakeholders (R). Produces WVCH artifacts
+- **Added**: wardley.doctrine command — Depends on: principles (M), wardley (R), stakeholders (R). Produces WDOC artifacts
+- **Added**: wardley.gameplay command — Depends on: wardley (M), wardley.climate (R), wardley.doctrine (R). Produces WGAM artifacts
+- **Added**: wardley.climate command — Depends on: wardley (M), requirements (R), research (R). Produces WCLM artifacts
+- **Updated**: Commands documented from 60 to 64
 
 ### 2026-03-13 - Dependency Matrix Audit Fixes
 

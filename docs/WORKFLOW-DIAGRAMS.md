@@ -586,6 +586,56 @@ graph TD
 
 ---
 
+## 6. Wardley Mapping Suite
+
+The Wardley Mapping suite provides a focused strategic analysis pipeline. Value chain decomposition feeds into map creation, which then branches into three parallel analysis tracks.
+
+```mermaid
+graph TD
+    %% Prerequisites
+    A[requirements] --> B[wardley.value-chain]
+    C[principles] -.-> B
+    D[stakeholders] -.-> B
+
+    %% Core mapping
+    B --> E[wardley]
+
+    %% Analysis tracks (parallel after map creation)
+    E --> F[wardley.doctrine]
+    E --> G[wardley.climate]
+    E --> H[wardley.gameplay]
+
+    %% Cross-feed between analysis tracks
+    G -.-> H
+    F -.-> H
+
+    %% Downstream
+    E --> I[roadmap]
+    E --> J[strategy]
+    H -.-> J
+
+    style A fill:#90EE90
+    style B fill:#87CEEB
+    style C fill:#87CEEB
+    style D fill:#87CEEB
+    style E fill:#90EE90
+    style F fill:#9370DB
+    style G fill:#9370DB
+    style H fill:#9370DB
+    style I fill:#90EE90
+    style J fill:#90EE90
+```
+
+**Key:**
+
+- **Blue boxes** = Foundation inputs and value chain decomposition
+- **Green boxes** = Core workflow (requirements, wardley map, downstream)
+- **Purple boxes** = Wardley analysis tracks (doctrine, climate, gameplay)
+
+**Duration**: 1-3 weeks (within the Alpha phase)
+
+---
+
 ## Command Dependency Legend
 
 ### Dependency Types in Diagrams
@@ -603,7 +653,7 @@ graph TD
 | 3 | Business Justification | sobc |
 | 4 | Requirements | requirements |
 | 5 | Strategic Planning & Synthesis | platform-design, roadmap, strategy, framework, glossary |
-| 6 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, gcp-research*, datascout, dfd, wardley, diagram, adr |
+| 6 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, gcp-research*, datascout, dfd, wardley, wardley.value-chain, wardley.doctrine, wardley.gameplay, wardley.climate, diagram, adr |
 | 7 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate, score |
 | 8 | Design Reviews | hld-review, dld-review |
 | 9 | Implementation | backlog |
@@ -757,12 +807,14 @@ graph LR
 
 ## Version
 
-- **ArcKit Version**: 1.2.0
-- **Document Date**: 2026-02-25
+- **ArcKit Version**: 1.3.0
+- **Document Date**: 2026-03-16
 - **Based On**: DEPENDENCY-MATRIX.md (with Phase 2 R-level dependencies)
-- **Commands Documented**: 44
+- **Commands Documented**: 48
 - **Key Changes**:
-  - Added conformance node to all 5 workflow paths (between principles-compliance and analyze)
+  - Added Wardley Mapping Suite workflow diagram (wardley.value-chain, wardley.doctrine, wardley.climate, wardley.gameplay)
+  - Updated Tier 6 Detailed Design to include 4 new Wardley suite commands
+  - Previous: Added conformance node to all 5 workflow paths (between principles-compliance and analyze)
   - Added conformance to Compliance-Only Path and Gantt chart
   - Updated Tier 13 Compliance to include conformance
   - Previous: Added missing style definitions for finops nodes in all workflow diagrams

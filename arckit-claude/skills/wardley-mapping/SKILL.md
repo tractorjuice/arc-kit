@@ -1,6 +1,6 @@
 ---
 name: wardley-mapping
-description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, situational awareness, technology evolution, competitive landscape, creating maps, gameplay patterns, doctrine, build vs. buy decisions, inertia analysis, or quantitative evolution scoring including differentiation pressure, commodity leverage, weak signal detection, and readiness scores."
+description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, situational awareness, technology evolution, competitive landscape, creating maps, value chain decomposition, gameplay patterns, doctrine assessment, doctrine maturity, climatic patterns, climate assessment, build vs. buy decisions, inertia analysis, D&D alignment of strategies, peace/war/wonder cycles, play-position matrix, pioneers/settlers/planners, or quantitative evolution scoring including differentiation pressure, commodity leverage, weak signal detection, and readiness scores."
 ---
 
 # Wardley Mapping
@@ -251,15 +251,23 @@ wardley_map:
 
 Consult these reference files for deeper analysis:
 
-- [Evolution Stages](references/evolution-stages.md) — Detailed stage characteristics, indicators, and positioning criteria
-- [Climatic Patterns](references/climatic-patterns.md) — External forces affecting the landscape (economic, competitive, technology, market patterns)
-- [Gameplay Patterns](references/gameplay-patterns.md) — Offensive/defensive strategic moves, build vs. buy vs. outsource, anti-patterns
-- [Doctrine](references/doctrine.md) — Universal strategy patterns and organizational maturity assessment
-- [Mapping Examples](references/mapping-examples.md) — Worked examples: E-Commerce, DevOps Platform, ML Product
-- [Mathematical Models](references/mathematical-models.md) — Evolution scoring formulas, decision metrics, weak signal detection
+- [Evolution Stages](references/evolution-stages.md) — Stage characteristics, indicators, positioning criteria, transition heuristics, pioneers/settlers/planners talent model
+- [Climatic Patterns](references/climatic-patterns.md) — 32 patterns across 6 categories (component, financial, speed, inertia, competitor, prediction), peace/war/wonder cycle, pattern interactions
+- [Gameplay Patterns](references/gameplay-patterns.md) — 60+ plays across 11 categories with D&D alignment classification, play-position matrix, play compatibility, case studies (AWS, Netflix, Tesla, Spotify)
+- [Doctrine](references/doctrine.md) — 40+ principles across 4 phases and 6 categories, Strategy Cycle framework, implementation journeys, maturity assessment template
+- [Mapping Examples](references/mapping-examples.md) — Worked examples: E-Commerce, DevOps Platform, ML Product, TechnoGadget Smart Home, value chain decomposition walkthrough, case study cross-references
+- [Mathematical Models](references/mathematical-models.md) — Evolution scoring formulas, decision metrics, weak signal detection, play-position scoring, climate pattern impact weighting
 
 ## ArcKit Integration
 
 This skill handles **conversational** Wardley Mapping — quick questions, evolution stage lookups, doctrine assessments, and interactive map creation.
 
-For **formal architecture documents** with document control, project integration, UK Government compliance (TCoP, GDS, AI Playbook), and OnlineWardleyMaps syntax for https://create.wardleymaps.ai, use the `/arckit:wardley` command instead. It generates versioned Wardley Map artifacts saved to your project directory with full traceability to requirements and architecture principles.
+For **formal architecture documents** with document control, project integration, UK Government compliance (TCoP, GDS, AI Playbook), and OnlineWardleyMaps syntax for https://create.wardleymaps.ai, use the ArcKit Wardley suite:
+
+- `/arckit.wardley.value-chain` — Decompose user needs into value chains (WVCH artifact)
+- `/arckit.wardley` — Create strategic Wardley Maps (WARD artifact)
+- `/arckit.wardley.doctrine` — Assess organizational doctrine maturity across 4 phases, 40+ principles (WDOC artifact)
+- `/arckit.wardley.gameplay` — Analyze strategic plays from 60+ gameplay patterns with D&D alignment (WGAM artifact)
+- `/arckit.wardley.climate` — Assess 32 climatic patterns across 6 categories with prediction horizons (WCLM artifact)
+
+These generate versioned artifacts saved to your project directory with full traceability to requirements and architecture principles. Each command works standalone but gets richer when sibling artifacts exist.

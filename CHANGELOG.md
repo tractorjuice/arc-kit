@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `/arckit.wardley.value-chain` command — Decompose user needs into value chains
+- `/arckit.wardley.doctrine` command — Assess organizational doctrine maturity (4 phases, 40+ principles)
+- `/arckit.wardley.gameplay` command — Analyze strategic plays from 60+ gameplay patterns with D&D alignment
+- `/arckit.wardley.climate` command — Assess 32 climatic patterns across 6 categories
+- Wardley reference files enriched from 3 Wardley Mapping books (doctrine, gameplays, climatic patterns)
+- 4 new document types: WVCH, WDOC, WGAM, WCLM
+- 4 new document templates and usage guides
+
+### Fixed
+
+- `wardley.md` hook reference corrected from `python3 .py` to `node .mjs`
+
 ## [4.2.11] - 2026-03-16
 
 ### Added

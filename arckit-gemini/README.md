@@ -2,7 +2,7 @@
 
 **Enterprise Architecture Governance & Vendor Procurement Toolkit for Gemini CLI**
 
-ArcKit provides 60 slash commands for generating architecture artifacts, vendor procurement documents, and UK Government compliance assessments — all from within Gemini CLI.
+ArcKit provides 64 slash commands for generating architecture artifacts, vendor procurement documents, and UK Government compliance assessments — all from within Gemini CLI.
 
 ## Installation
 
@@ -51,7 +51,7 @@ gemini
 /arckit:gcp-research Evaluate GCP services for data analytics platform
 ```
 
-## All 60 Commands
+## All 64 Commands
 
 ### Phase 0: Project Planning
 

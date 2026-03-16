@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="ArcKit Command Guides - 79 usage guides for enterprise architecture governance commands organized by category.">
+    <meta name="description" content="ArcKit Command Guides - 88 usage guides for enterprise architecture governance commands organized by category.">
     <title>Command Guides - ArcKit</title>
     <meta name="keywords" content="ArcKit guides, architecture governance guides, command usage, workflow steps, UK government architecture">
     <meta name="author" content="ArcKit">
     <meta property="og:title" content="Command Guides - ArcKit">
-    <meta property="og:description" content="79 step-by-step usage guides for ArcKit enterprise architecture governance commands, organised by category.">
+    <meta property="og:description" content="88 step-by-step usage guides for ArcKit enterprise architecture governance commands, organised by category.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arckit.org/guides.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Command Guides - ArcKit">
-    <meta name="twitter:description" content="79 step-by-step usage guides for ArcKit enterprise architecture governance commands, organised by category.">
+    <meta name="twitter:description" content="88 step-by-step usage guides for ArcKit enterprise architecture governance commands, organised by category.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/guides.html">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -234,7 +234,7 @@
                 "@type": "CollectionPage",
                 "@id": "https://arckit.org/guides.html",
                 "name": "Command Guides - ArcKit",
-                "description": "79 step-by-step usage guides for ArcKit enterprise architecture governance commands, organised by category.",
+                "description": "88 step-by-step usage guides for ArcKit enterprise architecture governance commands, organised by category.",
                 "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
             },
             {
@@ -278,7 +278,7 @@
 
     <div class="app-page-hero app-page-hero--guides">
         <div class="govuk-width-container app-page-hero__content">
-            <span class="app-page-hero__stat">79 Guides</span>
+            <span class="app-page-hero__stat">88 Guides</span>
             <h1 class="app-page-hero__title">Command Guides</h1>
             <p class="app-page-hero__description">Step-by-step usage guides organised into 10 categories. Each covers prerequisites, workflow steps, and real-world examples.</p>
         </div>
@@ -356,7 +356,7 @@
             <div class="app-guide-category">
                 <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
                     <span class="app-guide-category__toggle">&#9662;</span> Architecture
-                    <span class="app-guide-category__count">13 guides</span>
+                    <span class="app-guide-category__count">8 guides</span>
                 </h2>
                 <div class="app-guide-category__body">
                     <ul class="app-guide-list">
@@ -371,8 +371,24 @@
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=dfd" class="govuk-link">Data Flow Diagram Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Data flow diagrams for system analysis</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=framework" class="govuk-link">Framework Design Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Transform artifacts into structured frameworks</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=platform-design" class="govuk-link">Platform Strategy Design Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Multi-sided platform strategy using PDT methodology</span></li>
-                        <li class="app-guide-item"><a href="guide-viewer.html?guide=wardley" class="govuk-link">Wardley Mapping Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Strategic analysis and build-vs-buy decisions</span></li>
                         <li class="app-guide-item"><a href="guide-viewer.html?guide=data-mesh-contract" class="govuk-link">Data Mesh Contract Guide</a> <span class="app-status-tag app-status-alpha">ALPHA</span> <span class="app-guide-desc">Data mesh contract definitions</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Wardley Mapping -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> Wardley Mapping
+                    <span class="app-guide-category__count">5 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=wardley" class="govuk-link">Wardley Mapping Playbook</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Strategic analysis and build-vs-buy decisions</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=wardley-value-chain" class="govuk-link">Wardley Value Chain Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Value chain decomposition and evolution analysis</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=wardley-doctrine" class="govuk-link">Wardley Doctrine Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Doctrine maturity assessment across 40+ principles</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=wardley-climate" class="govuk-link">Wardley Climate Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Climatic pattern analysis for strategic landscapes</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=wardley-gameplay" class="govuk-link">Wardley Gameplay Guide</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Strategic play analysis from 60+ gameplay patterns</span></li>
                     </ul>
                 </div>
             </div>

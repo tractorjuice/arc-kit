@@ -51,6 +51,10 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 - [Framework Design](guides/framework.md) - `/arckit.framework`
 - [Platform Design](guides/platform-design.md) - `/arckit.platform-design`
 - [Wardley Mapping](guides/wardley.md) - `/arckit.wardley`
+- [Value Chain Decomposition](guides/wardley-value-chain.md) - `/arckit.wardley.value-chain`
+- [Doctrine Assessment](guides/wardley-doctrine.md) - `/arckit.wardley.doctrine`
+- [Gameplay Analysis](guides/wardley-gameplay.md) - `/arckit.wardley.gameplay`
+- [Climate Assessment](guides/wardley-climate.md) - `/arckit.wardley.climate`
 - [Data Mesh Contract](guides/data-mesh-contract.md) - `/arckit.data-mesh-contract`
 - [C4 Layout Science](guides/c4-layout-science.md) - Research-backed diagram layout
 
@@ -189,7 +193,11 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit.aws-research` | [aws-research.md](guides/aws-research.md) | ✅ Complete |
 | `/arckit.gcp-research` | [gcp-research.md](guides/gcp-research.md) | ✅ Complete |
 | `/arckit.datascout` | [datascout.md](guides/datascout.md) | ✅ Complete |
-| `/arckit.wardley` | [wardley-mapping.md](guides/wardley-mapping.md) | ✅ Complete |
+| `/arckit.wardley` | [wardley.md](guides/wardley.md) | ✅ Complete |
+| `/arckit.wardley.value-chain` | [wardley-value-chain.md](guides/wardley-value-chain.md) | ✅ Complete |
+| `/arckit.wardley.doctrine` | [wardley-doctrine.md](guides/wardley-doctrine.md) | ✅ Complete |
+| `/arckit.wardley.gameplay` | [wardley-gameplay.md](guides/wardley-gameplay.md) | ✅ Complete |
+| `/arckit.wardley.climate` | [wardley-climate.md](guides/wardley-climate.md) | ✅ Complete |
 | `/arckit.roadmap` | [roadmap.md](guides/roadmap.md) | ✅ Complete |
 | `/arckit.strategy` | [strategy.md](guides/strategy.md) | ✅ Complete |
 | `/arckit.adr` | [adr.md](guides/adr.md) | ✅ Complete |
@@ -233,7 +241,7 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit.maturity-model` | [maturity-model.md](guides/maturity-model.md) | ✅ Complete |
 | `/arckit.score` | [score.md](guides/score.md) | ✅ Complete |
 
-**Coverage**: 60/60 commands documented (100%)
+**Coverage**: 64/64 commands documented (100%)
 
 ---
 

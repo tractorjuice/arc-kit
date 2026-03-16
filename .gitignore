@@ -46,6 +46,7 @@ htmlcov/
 # Project specific
 *.log
 .arckit-debug/
+research/
 
 # Projects (created by arckit init, not part of the toolkit itself)
 projects/
