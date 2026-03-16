@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.2.11] - 2026-03-16
+
+### Added
+
+- Systems thinking foundations in framework command: Ashby's Law of Requisite Variety, Conant-Ashby Good Regulator Theorem, Gall's Law, and Conway's Law integrated into agent guidance, template, and quality checks
+- Version check SessionStart hook: compares local plugin version against latest GitHub release and notifies users when an update is available
+
 ## [4.2.10] - 2026-03-15
 
 ### Added

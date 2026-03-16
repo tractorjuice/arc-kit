@@ -109,6 +109,17 @@ graph TB
 
 ## Design Philosophy
 
+### Systems Thinking Foundations
+
+This framework is shaped by four foundational systems thinking laws:
+
+| Law | Principle | How Applied |
+|-----|-----------|-------------|
+| **Ashby's Law of Requisite Variety** | "Only variety can absorb variety" — a governance framework must have at least as much variety in its controls as the system it governs | [How the framework's control variety matches the system's complexity — see Requisite Variety Assessment below] |
+| **Conant-Ashby Good Regulator Theorem** | "Every good regulator of a system must be a model of that system" — the framework must accurately represent the system it governs | [How the framework models the actual system architecture, components, and relationships — verified via Document Map and Traceability] |
+| **Gall's Law** | "A complex system that works is invariably found to have evolved from a simple system that worked" — start simple, layer on complexity | [How phased adoption ensures each phase is independently viable before building on it] |
+| **Conway's Law** | "Organizations produce designs that mirror their communication structures" — framework adoption must align with organisational reality | [How adoption paths and phase boundaries respect team structure and communication patterns] |
+
 ### Key Design Decisions
 
 [Describe the fundamental design decisions that shaped this framework. Why was this structure chosen over alternatives? What trade-offs were made?]
@@ -118,6 +129,27 @@ graph TB
 | [Decision 1] | [Choice made] | [Why this choice was made] |
 | [Decision 2] | [Choice made] | [Why this choice was made] |
 | [Decision 3] | [Choice made] | [Why this choice was made] |
+
+### Requisite Variety Assessment
+
+> **Ashby's Law of Requisite Variety**: "Only variety can absorb variety." A governance framework must have at least as much variety in its controls, principles, and guidance as the system it governs.
+
+The following table maps the project's identified concern domains against the framework's governance controls:
+
+| Domain | System Variety (Concerns Identified) | Framework Controls (Artifacts / Governance) | Coverage |
+|--------|--------------------------------------|---------------------------------------------|----------|
+| [e.g., Security] | [Concerns from requirements, stakeholders, risks] | [Artifacts addressing this domain] | [COVERED / PARTIAL / GAP] |
+| [e.g., Data Governance] | [Concerns from requirements, stakeholders, risks] | [Artifacts addressing this domain] | [COVERED / PARTIAL / GAP] |
+| [e.g., Compliance] | [Concerns from requirements, stakeholders, risks] | [Artifacts addressing this domain] | [COVERED / PARTIAL / GAP] |
+| [e.g., Operations] | [Concerns from requirements, stakeholders, risks] | [Artifacts addressing this domain] | [COVERED / PARTIAL / GAP] |
+
+**Coverage Summary**: [Statement on whether the framework has requisite variety. Identify any domains where system variety exceeds framework control variety, and recommend additional artifacts or governance mechanisms to close the gaps.]
+
+### Good Regulator Check
+
+> **Conant-Ashby Theorem**: "Every good regulator of a system must be a model of that system."
+
+[Assessment of whether this framework faithfully models the system it governs. Does the Document Map represent every significant system component? Are relationships and dependencies between components reflected in the phase structure? Identify any aspects of the system that are not represented in the framework's governance structure.]
 
 ### Guiding Principles Alignment
 
