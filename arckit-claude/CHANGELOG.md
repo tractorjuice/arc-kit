@@ -5,6 +5,20 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.3.1] - 2026-03-18
+
+### Added
+
+- Mermaid `wardley-beta` dual output for Wardley map commands — generates both OWM syntax and Mermaid diagram blocks
+- Mermaid wardley-beta examples added to mapping references
+- Mermaid viewing guidance added to wardley and value chain guides
+- Claude Code v2.1.78 agent frontmatter support (`effort`, `maxTurns`, `disallowedTools`) and `StopFailure` hook
+- Mermaid special character escaping guidance for diagram command
+
+### Fixed
+
+- Missing component declaration for pipeline parent in Mermaid example
+
 ## [4.3.0] - 2026-03-16
 
 ### Added

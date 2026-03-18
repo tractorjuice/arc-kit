@@ -1,5 +1,7 @@
 ---
 name: arckit-gcp-research
+maxTurns: 40
+disallowedTools: ["Edit"]
 description: |
   Use this agent when the user needs Google Cloud-specific technology research using the Google Developer Knowledge MCP server to match project requirements to Google Cloud services, architecture patterns, Architecture Framework guidance, and Security Command Center controls. Examples:
 

@@ -1,5 +1,7 @@
 ---
 name: arckit-research
+maxTurns: 50
+disallowedTools: ["Edit"]
 description: |
   Use this agent when the user needs technology and service market research for a project, including build vs buy analysis, vendor evaluation, TCO comparison, and UK Government Digital Marketplace search. This agent performs extensive web research autonomously. Examples:
 

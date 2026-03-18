@@ -1,5 +1,7 @@
 ---
 name: arckit-framework
+maxTurns: 30
+disallowedTools: ["Edit"]
 description: |
   Use this agent when the user wants to transform existing project artifacts into a structured framework with phased organization, an overview document, and an executive guide. This agent reads all project artifacts and synthesises them into a coherent framework structure. Examples:
 
