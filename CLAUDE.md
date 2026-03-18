@@ -214,6 +214,7 @@ project/
 **`scripts/converter.py`**: Config-driven converter using `AGENT_CONFIG` dictionary — adding a new AI target only requires a new dict entry. Converts plugin commands (`arckit-claude/commands/*.md`) to all configured output formats (currently: Codex Markdown `.codex/`, Codex Skills `arckit-codex/skills/arckit-*/` with `SKILL.md` + `agents/openai.yaml`, OpenCode Markdown `.opencode/` + `arckit-opencode/`, Gemini extension TOML `arckit-gemini/`, Copilot prompt `.prompt.md` `arckit-copilot/`). The `"skill"` format creates directory-per-command with YAML frontmatter (name, description) and `allow_implicit_invocation: false`. Rewrites `${CLAUDE_PLUGIN_ROOT}` paths, copies supporting files to extension dirs, and extracts full agent prompts for non-Claude targets. For the Codex extension, also generates `config.toml` (MCP servers + agent roles), per-agent `.toml` files with `developer_instructions`, and rewrites skill command references (`/arckit:X` -> `/prompts:arckit.X`). Key functions: `rewrite_paths(prompt, config)`, `format_output(description, prompt, fmt)`, `convert(commands_dir, agents_dir)`, `copy_extension_files(plugin_dir)`, `generate_codex_config_toml()`, `generate_agent_toml_files()`, `rewrite_codex_skills()`, `generate_gemini_agents()`, `generate_gemini_hooks()`, `generate_gemini_policies()`, `generate_copilot_agents()`, `generate_copilot_instructions()` — all driven by `AGENT_CONFIG`
 **`scripts/bump-version.sh`**: Updates all 13 version files in one go (VERSION, pyproject.toml, README.md, docs, plugin, extensions)
 **`scripts/generate-release-notes.sh`**: Parses git log between tags into Keep a Changelog sections (Added/Fixed/Changed/Breaking Changes). Filters out `chore: bump version` commits. Auto-detects previous tag if none supplied
+**`scripts/push-extensions.sh`**: Pushes extension directories to their separate GitHub repos (`tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.). Clones each repo, syncs files, commits, and pushes. Uses `GH_TOKEN` for auth. Usage: `./scripts/push-extensions.sh` (all) or `./scripts/push-extensions.sh gemini codex` (selective). Skips repos that don't exist on GitHub yet
 
 ## Adding a New Slash Command
 
@@ -378,6 +379,8 @@ python scripts/converter.py
 git add -A && git commit -m "chore: bump version to X.Y.Z"
 git tag -a vX.Y.Z -m "vX.Y.Z"
 git push && git push --tags
+# 7. Push to extension repos (Gemini, Codex, etc.)
+./scripts/push-extensions.sh
 ```
 
 **Adding new package data files**: Update `pyproject.toml` `[tool.hatch.build.targets.wheel.shared-data]`
