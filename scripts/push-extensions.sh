@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -euo pipefail
+set -uo pipefail
 
 # push-extensions.sh — Push extension directories to their separate GitHub repos.
 # Usage: ./scripts/push-extensions.sh [extension...]
@@ -8,9 +8,12 @@ set -euo pipefail
 #   ./scripts/push-extensions.sh              # Push all extensions
 #   ./scripts/push-extensions.sh gemini codex # Push only gemini and codex
 #
-# Requires: gh CLI authenticated with push access to tractorjuice/* repos.
+# Requires: GH_TOKEN with repo scope, or gh CLI authenticated with push access.
 
 REPO_OWNER="tractorjuice"
+
+# ── Auth: prefer GH_TOKEN PAT for push (codespaces scope GITHUB_TOKEN to one repo)
+AUTH_TOKEN="${GH_TOKEN:-${GITHUB_TOKEN:-}}"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 WORK_DIR=$(mktemp -d)
@@ -84,10 +87,11 @@ for target in "${TARGETS[@]}"; do
     continue
   fi
 
-  # Clone into temp dir
+  # Clone into temp dir using token-authenticated URL
   clone_path="$WORK_DIR/$repo_name"
+  clone_url="https://x-access-token:${AUTH_TOKEN}@github.com/${REPO_OWNER}/${repo_name}.git"
   echo "  Cloning ${REPO_OWNER}/${repo_name}..."
-  if ! gh repo clone "${REPO_OWNER}/${repo_name}" "$clone_path" -- --depth 1 2>/dev/null; then
+  if ! git clone --depth 1 --quiet "$clone_url" "$clone_path" 2>/dev/null; then
     red "  Failed to clone ${REPO_OWNER}/${repo_name}"
     ((FAILED++))
     continue
