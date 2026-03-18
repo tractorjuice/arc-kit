@@ -1251,6 +1251,7 @@ The visualization helps:
 ---
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
+- **Mermaid special characters**: In Mermaid node labels, parentheses `()`, braces `{}`, brackets `[]`, and angle brackets `<>` are interpreted as shape delimiters, NOT literal characters. To include them as text, either wrap the entire label in double quotes (e.g., `C3["dim = Σ(var * peso)"]`) or use Mermaid HTML entities: `#40;` for `(`, `#41;` for `)`, `#123;` for `{`, `#125;` for `}`. Always validate that generated Mermaid renders without parse errors before writing the file.
 
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **DIAG** per-type checks pass. Fix any failures before proceeding.
 

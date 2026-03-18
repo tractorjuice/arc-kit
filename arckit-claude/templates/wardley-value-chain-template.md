@@ -109,6 +109,35 @@ component {InfrastructureF} [0.12, 0.90]
 style wardley
 ```
 
+<details>
+<summary>Mermaid Value Chain Map (renders in GitHub, VS Code, and other Mermaid-enabled viewers)</summary>
+
+> **Note**: Mermaid Wardley Maps use the `wardley-beta` keyword. This feature is in Mermaid's develop branch and may not render in all viewers yet. No sourcing decorators at the value chain stage — those are added when creating the full Wardley Map.
+
+```mermaid
+wardley-beta
+title {context_name} Value Chain
+size [1100, 800]
+
+anchor {UserNeed} [0.95, 0.63]
+
+component {CapabilityA} [0.70, 0.45]
+component {CapabilityB} [0.70, 0.72]
+component {ComponentC} [0.42, 0.38]
+component {ComponentD} [0.40, 0.65]
+component {ComponentE} [0.38, 0.80]
+component {InfrastructureF} [0.12, 0.90]
+
+{UserNeed} -> {CapabilityA}
+{UserNeed} -> {CapabilityB}
+{CapabilityA} -> {ComponentC}
+{CapabilityA} -> {ComponentD}
+{CapabilityB} -> {ComponentE}
+{ComponentC} -> {InfrastructureF}
+```
+
+</details>
+
 ---
 
 ## Component Inventory

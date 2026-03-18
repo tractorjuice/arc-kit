@@ -52,6 +52,42 @@ evolve {Component_Name} {evolution_end} label {label_text}
 style wardley
 ```
 
+<details>
+<summary>Mermaid Wardley Map (renders in GitHub, VS Code, and other Mermaid-enabled viewers)</summary>
+
+> **Note**: Mermaid Wardley Maps use the `wardley-beta` keyword. This feature is in Mermaid's develop branch and may not render in all viewers yet.
+
+```mermaid
+wardley-beta
+title {map_name}
+size [1100, 800]
+
+anchor {anchor_component} [0.95, 0.63]
+
+component {Component_Name} [visibility, evolution] (build|buy|outsource)
+component {Component_Name} [visibility, evolution] (buy) (inertia)
+{Component_Name} -> {Dependency_Name}
+
+pipeline {Pipeline_Parent} {
+  component "{Child_1}" [evolution_1]
+  component "{Child_2}" [evolution_2]
+}
+
+evolve {Component_Name} {target_evolution}
+
+note "{note_text}" [visibility, evolution]
+annotations [0.05, 0.05]
+annotation {N},[visibility, evolution] "{annotation_text}"
+```
+
+**Decorator Guide**:
+- `(build)` — Genesis/Custom components built in-house (triangle marker)
+- `(buy)` — Product/Commodity components procured from market (diamond marker)
+- `(outsource)` — Components outsourced to vendors (square marker)
+- `(inertia)` — Components with resistance to change (vertical line)
+
+</details>
+
 ---
 
 ## Evolution Stages Reference

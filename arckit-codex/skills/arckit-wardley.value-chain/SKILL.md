@@ -295,6 +295,19 @@ The value chain document must include:
 3. **Value Chain Diagram**:
    - ASCII placeholder showing the chain structure (visibility levels and component names)
    - Complete OWM syntax for https://create.wardleymaps.ai
+   - Mermaid `wardley-beta` equivalent in collapsible `<details>` block (no sourcing decorators at value chain stage)
+
+### Mermaid Value Chain Map
+
+After generating the OWM code block, generate a Mermaid `wardley-beta` equivalent inside a `<details>` block (as shown in the template). At the value chain stage, no sourcing decorators are used (build/buy analysis has not been performed yet).
+
+**Syntax differences from OWM** (apply these when translating):
+
+- Start with `wardley-beta` keyword (not `style wardley` at end)
+- Add `size [1100, 800]` after title
+- Wrap note text in double quotes: `note "text" [vis, evo]`
+- Remove `style wardley` line
+- Use ` ```mermaid ` as the code fence language identifier
 
 4. **Component Inventory**: All components with visibility scores, descriptions, and dependency references
 

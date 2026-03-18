@@ -1,15 +1,19 @@
 #!/usr/bin/env node
 /**
- * ArcKit Stop Hook — Session Learner
+ * ArcKit Stop / StopFailure Hook — Session Learner
  *
- * Fires when a session ends (Stop event). Analyses recent git commits
- * to build a session summary and appends it to .arckit/memory/sessions.md.
+ * Fires when a session ends (Stop event) or when a turn fails due to an
+ * API error such as rate limit or auth failure (StopFailure event).
+ *
+ * Analyses recent git commits to build a session summary and appends it
+ * to .arckit/memory/sessions.md. On StopFailure, also records the error
+ * reason so the session log captures interrupted work.
  *
  * Uses timestamp tracking (.arckit/memory/.last-session) to capture
  * exactly the commits from this session — no overlap, no gaps.
  *
- * Hook Type: Stop (Notification)
- * Input (stdin):  JSON with session_id, cwd, etc.
+ * Hook Type: Stop / StopFailure (Notification)
+ * Input (stdin):  JSON with session_id, cwd, error (StopFailure only), etc.
  * Output (stdout): empty (notification hook, no output required)
  */
 
@@ -21,6 +25,10 @@ import { DOC_TYPES } from '../config/doc-types.mjs';
 
 const data = parseHookInput();
 const cwd = data.cwd || '.';
+
+// Detect StopFailure — extract error reason if present
+const isFailure = !!(data.error || data.reason || data.hookEventName === 'StopFailure');
+const failureReason = data.error?.message || data.error?.type || data.reason || data.error || null;
 
 // Only proceed if we're in a project with .arckit directory
 if (!isDir(join(cwd, '.arckit'))) {
@@ -46,12 +54,14 @@ try {
     timeout: 5000,
   }).trim();
 } catch {
-  process.exit(0);
+  // On failure events, continue even without commits
+  if (!isFailure) process.exit(0);
 }
 
-if (!commits) process.exit(0);
+// For normal Stop, require commits; for StopFailure, always log
+if (!commits && !isFailure) process.exit(0);
 
-const commitLines = commits.split('\n').filter(Boolean);
+const commitLines = commits ? commits.split('\n').filter(Boolean) : [];
 const commitCount = commitLines.length;
 
 // Detect changed files from recent commits
@@ -116,7 +126,15 @@ const now = new Date();
 const dateStr = now.toISOString().substring(0, 10);
 const timeStr = now.toISOString().substring(11, 16);
 
-let entry = `### ${dateStr} ${timeStr} — ${sessionType}\n\n`;
+const failureLabel = isFailure
+  ? ` (${typeof failureReason === 'string' ? failureReason : 'api_error'})`
+  : '';
+const entryType = isFailure ? `failure${failureLabel}` : sessionType;
+
+let entry = `### ${dateStr} ${timeStr} — ${entryType}\n\n`;
+if (isFailure) {
+  entry += `- **Status:** session interrupted by API error\n`;
+}
 entry += `- **Commits:** ${commitCount} | **Files changed:** ${files.length}\n`;
 
 if (projectArtifacts.size > 0) {

@@ -356,6 +356,49 @@ evolve API 0.75
 
 Paste into [OnlineWardleyMaps](https://create.wardleymaps.ai) to render.
 
+<details>
+<summary>Mermaid Wardley Map (with sourcing decorators)</summary>
+
+```mermaid
+wardley-beta
+title TechnoGadget Inc.
+size [1100, 800]
+
+anchor Customer [0.95, 0.63]
+
+component Smart thermostat [0.65, 0.46] (build)
+component Mobile app [0.79, 0.34] (build)
+component Cloud infrastructure [0.05, 0.75] (buy)
+component Data analytics [0.22, 0.36] (build)
+component Customer support [0.86, 0.81] (outsource)
+component Marketing and sales [0.51, 0.66] (buy)
+component R&D [0.50, 0.22] (build)
+component API [0.34, 0.28] (build)
+
+Customer -> Smart thermostat
+Customer -> Customer support
+Customer -> Mobile app
+
+Smart thermostat -> Mobile app
+Smart thermostat -> Cloud infrastructure
+Smart thermostat -> Data analytics
+Smart thermostat -> API
+
+Mobile app -> API
+
+API -> Cloud infrastructure
+API -> Data analytics
+
+Cloud infrastructure -> Data analytics
+Cloud infrastructure -> Customer support
+Cloud infrastructure -> Marketing and sales
+Cloud infrastructure -> R&D
+
+evolve API 0.75
+```
+
+</details>
+
 ### Component Positions
 
 | Component | Visibility | Evolution | Stage | Notes |
@@ -478,6 +521,8 @@ validation:
   no_orphan_components:         # Every component connects to at least one other?
   strategic_question_answered:  # Does the map help answer a specific decision?
 ```
+
+> **Mermaid equivalent**: When generating value chain maps, the `wardley-beta` Mermaid block uses the same coordinates but omits sourcing decorators (build/buy analysis happens in the subsequent `/arckit.wardley` step). See the value chain template for the Mermaid placeholder format.
 
 ---
 

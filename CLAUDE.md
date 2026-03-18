@@ -157,7 +157,7 @@ You are [role description]...
 4. Return summary only
 ```
 
-**Plugin agent frontmatter**: Only `name` (required), `description` (required), `model` (optional) are valid. Fields like `color`, `permissionMode`, `tools` are invalid in plugin context and cause errors.
+**Plugin agent frontmatter**: Valid fields are `name` (required), `description` (required), `model` (optional), `effort` (optional), `maxTurns` (optional), `disallowedTools` (optional). Fields like `color`, `permissionMode`, `tools` are invalid in plugin context and cause errors. Requires Claude Code v2.1.78+ for `effort`, `maxTurns`, and `disallowedTools`.
 
 **When to make a command an agent**: If the command performs heavy WebSearch/WebFetch/MCP calls (>10 calls), reads many artifacts, or produces large intermediate context. The slash command becomes a thin wrapper that launches the agent via Task tool, with a fallback to direct execution.
 
