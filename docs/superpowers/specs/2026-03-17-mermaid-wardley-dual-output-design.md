@@ -27,7 +27,7 @@ ArcKit currently generates OWM syntax exclusively across its 2 map-producing com
 
 The `wardley-beta` keyword uses this syntax (coordinates identical to OWM):
 
-```
+```text
 wardley-beta
 title Map Title
 size [1100, 800]
@@ -114,6 +114,7 @@ annotation {N},[visibility, evolution] "{annotation_text}"
 ```
 
 **Decorator Guide**:
+
 - `(build)` — Genesis/Custom components built in-house (triangle marker)
 - `(buy)` — Product/Commodity components procured from market (diamond marker)
 - `(outsource)` — Components outsourced to vendors (square marker)
@@ -156,6 +157,7 @@ pipeline Parent {
 ```
 
 **Syntax differences from OWM** (apply these when translating):
+
 - Start with `wardley-beta` keyword (not `style wardley` at end)
 - Add `size [1100, 800]` after title
 - Wrap note text in double quotes: `note "text" [vis, evo]`
@@ -164,6 +166,8 @@ pipeline Parent {
 - Remove `style wardley` line
 - Remove the `label` keyword and any text after the target evolution number on `evolve` lines (Mermaid does not support evolve labels)
 - Use ` ```mermaid ` as the code fence language identifier (not ` ```wardley-beta ` or ` ```text `)
+
+```text
 ```
 
 **Edit B** — Update "Output Contents" bullet 2 (around line 413):
@@ -279,6 +283,7 @@ Add Mermaid equivalents of the existing worked examples. Each example gets a `wa
 ### 5. Post-Implementation
 
 Run `python scripts/converter.py` to propagate command changes to:
+
 - `arckit-codex/skills/` (Codex CLI)
 - `arckit-opencode/commands/` (OpenCode CLI)
 - `arckit-gemini/commands/` (Gemini CLI)

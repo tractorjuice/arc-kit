@@ -132,6 +132,7 @@ frontmatter.pop("effort", None)
 ### Frontmatter Example
 
 Before:
+
 ```yaml
 ---
 description: Create comprehensive business and technical requirements
@@ -142,6 +143,7 @@ handoffs:
 ```
 
 After:
+
 ```yaml
 ---
 description: Create comprehensive business and technical requirements
