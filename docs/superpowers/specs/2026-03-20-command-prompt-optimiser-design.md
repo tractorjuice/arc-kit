@@ -16,12 +16,35 @@ When starting a run, the program instructs Claude to:
 
 1. Accept a target command name from the user (e.g. `requirements`).
 2. Create branch `autoresearch/<command>-<date>` (e.g. `autoresearch/requirements-mar20`).
-3. Read three files for full context:
+3. Read the command file and identify its dependencies:
    - `arckit-claude/commands/<command>.md` — the prompt to optimise
-   - `arckit-claude/templates/<command>-template.md` — the expected output structure (read-only)
+   - The template file referenced in the command's instructions (search for `templates/` in the command `.md` to find the actual filename — names don't always match the command, e.g. `research` uses `research-findings-template.md`)
    - `arckit-claude/references/quality-checklist.md` — general quality criteria (read-only)
-4. Create a disposable scratch project: `mkdir -p scratch/projects/001-test-project/` with a minimal `README.md`.
-5. Establish baseline: run the command as-is against the scratch project, score the output, log the result as the first row in `results.tsv`.
+4. If the command delegates to an agent (contains "Launch the agent" or Task tool invocation), follow its "Alternative: Direct Execution" or fallback section instead. Agent-delegated commands cannot be meaningfully optimised through their thin wrapper alone.
+5. Create a realistic scratch project with prerequisite artifacts:
+
+   ```
+   scratch/
+   └── projects/
+       ├── 000-global/
+       │   └── ARC-000-PRIN-v1.0.md    # 5-6 architecture principles
+       └── 001-test-project/
+           ├── README.md                 # Project name and description
+           └── ARC-001-STKE-v1.0.md     # 3-4 stakeholders with goals
+   ```
+
+   These prerequisite files are **read-only** — they provide stable input context so the only variable is the command prompt.
+6. Define a fixed test argument for `$ARGUMENTS`: use a descriptive input like `"001"` (to target the scratch project). This is **read-only** — the same input every iteration ensures the only variable is the command prompt.
+7. Establish baseline: run the command as-is, score the output, log the result as the first row in `results.tsv`.
+
+### How Commands Are Executed
+
+Commands cannot be invoked as slash commands from `program.md`. Instead, Claude reads `arckit-claude/commands/<command>.md` and follows its instructions directly, as if the user had typed `/arckit:<command>`. When doing so:
+
+- Substitute `$ARGUMENTS` with the fixed test argument (step 6)
+- Replace all `${CLAUDE_PLUGIN_ROOT}` references with `arckit-claude/` (the local plugin directory)
+- Ignore references to "ArcKit Project Context hook" — instead, manually scan `scratch/projects/` for existing artifacts
+- Write generated artifacts to paths under `scratch/projects/`
 
 ## Evaluation — Two Layers
 
@@ -41,7 +64,9 @@ A structural failure means the iteration is scored `FAIL 0.0` and discarded imme
 
 ### Layer 2: LLM-as-Judge (qualitative score, 1.0–10.0)
 
-After passing structural checks, Claude evaluates the generated artifact on five dimensions, each scored 1–10:
+After passing structural checks, Claude evaluates the generated artifact on five dimensions, each scored 1–10.
+
+**Scoring discipline**: Adopt an adversarial reviewer persona. Actively look for weaknesses. Do not anchor on the score you expect — score each dimension independently by citing specific evidence from the document. If a section is present but shallow, it should score low on Specificity and Actionability regardless of structural correctness. Re-read the template and quality checklist before every scoring pass to prevent anchor drift.
 
 | Dimension | What it measures |
 |-----------|-----------------|
@@ -65,21 +90,35 @@ LOOP FOREVER:
      best practices
 3. Edit arckit-claude/commands/<command>.md with the change
 4. Git commit with a short description of what changed
-5. Clean the scratch project (delete previously generated artifacts)
-6. Run the command against the scratch project
-   - The command will read the template, create the project structure,
-     and write the artifact
+5. Clean the scratch project (delete previously generated artifacts,
+   keep read-only prerequisite files)
+6. Execute the command instructions against the scratch project
+   (see "How Commands Are Executed" above)
 7. Score the output:
    a. Run structural checks — if FAIL, skip LLM scoring, score = 0.0
    b. If PASS, run LLM-as-judge across five dimensions
    c. Compute combined score (mean of five dimensions)
-8. Log to results.tsv:
+8. Compare to previous best score:
+   - If improved by >= 0.3 → KEEP
+   - If less than 0.3 improvement → DISCARD
+9. Log to results.tsv:
    commit | structural | score | status | description
-9. Compare to previous best score:
-   - If improved (higher score) → KEEP (advance the branch)
-   - If equal or worse → DISCARD (git reset --hard to previous commit)
-10. Go to step 1
+10. If DISCARD: revert the command file to its previous-best content:
+    git checkout <previous-best-commit> -- arckit-claude/commands/<command>.md
+    Then commit the revert with description "revert: <description> (no improvement)"
+    Do NOT use git reset --hard — this preserves the full history
+    including discard rows in results.tsv
+11. Go to step 1
 ```
+
+### Plateau Detection
+
+If the last 5 consecutive iterations have all been discarded (no score improvement), log a `plateau` marker in results.tsv and shift strategy:
+
+- Re-read the template line by line looking for sections the prompt doesn't address
+- Review the quality checklist for uncovered criteria
+- Try prompt simplification (removing instructions that don't contribute to score)
+- Try combining ideas from previous near-misses in the results history
 
 ## Results TSV
 
@@ -92,27 +131,35 @@ b2c3d4e	PASS	7.2	keep	added explicit instruction to fill all NFR subcategories
 c3d4e5f	FAIL	0.0	discard	removed Document Control instruction (broke structure)
 d4e5f6g	PASS	7.1	discard	reordered sections (no improvement)
 e5f6g7h	PASS	7.6	keep	added example requirement IDs in prompt
+f6g7h8i	PASS	7.5	discard	added glossary instruction (no improvement)
+g7h8i9j	PASS	7.4	discard	reworded traceability section
+h8i9j0k	PASS	7.6	discard	added stakeholder cross-ref reminder
+i9j0k1l	PASS	7.3	discard	moved NFR subcategories earlier in prompt
+j0k1l2m	PASS	7.5	plateau	5 consecutive discards — shifting strategy
 ```
 
 ## Constraints
 
 These mirror autoresearch's rules:
 
-- **Only modify the command `.md` file.** The template, quality checklist, evaluation criteria, and scratch project scaffolding are read-only — like autoresearch's `prepare.py`.
+- **Only modify the command `.md` file.** The template, quality checklist, evaluation criteria, prerequisite artifacts, and scratch project scaffolding are read-only — like autoresearch's `prepare.py`.
 - **One change per iteration.** Isolate variables. If you change two things and the score improves, you don't know which helped.
+- **Minimum delta of 0.3.** Keep only if the score improves by >= 0.3. This filters noise from non-deterministic generation and evaluation.
 - **Never stop.** Do not pause to ask the human. Keep iterating until manually interrupted. If you run out of ideas, re-read the template, the quality checklist, and the results history for new angles.
 - **Simplicity criterion.** A marginal score improvement that adds significant prompt complexity is not worth it. Conversely, simplifying the prompt while maintaining the score is a win — keep it.
 - **No new dependencies.** Don't introduce MCP servers, external tools, or scripts that the command doesn't already use.
 - **Log everything.** Every iteration gets a row in `results.tsv`, whether kept or discarded. The history is the research record.
+- **No git reset --hard.** Use targeted `git checkout` + revert commits to preserve full history.
 
 ## What Is Read-Only
 
 | File | Why |
 |------|-----|
-| `arckit-claude/templates/<command>-template.md` | The template defines expected output structure — changing it would move the goalposts |
+| Template file (found via command instructions) | The template defines expected output structure — changing it would move the goalposts |
 | `arckit-claude/references/quality-checklist.md` | The evaluation standard must be stable for scores to be comparable |
 | Evaluation rubric (above) | Same reason — fixed metric like `val_bpb` |
-| Scratch project scaffolding | Controlled input so the only variable is the prompt |
+| Scratch project prerequisite files (PRIN, STKE, README) | Controlled input so the only variable is the prompt |
+| Test argument (`$ARGUMENTS` value) | Same input every iteration isolates the prompt as the variable |
 
 ## What Is NOT In Scope
 
@@ -121,6 +168,7 @@ These mirror autoresearch's rules:
 - No multi-command sweeps in a single run (one command per branch)
 - No template modifications
 - No changes to the plugin structure or agent system
+- Agent-delegated commands that lack a direct-execution fallback
 
 ## File Location
 
