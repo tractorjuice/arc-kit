@@ -1,6 +1,7 @@
 ---
 description: Create strategic Wardley Maps for architecture decisions and build vs buy analysis
 argument-hint: "<system or domain, e.g. 'NHS appointment system', 'cloud strategy'>"
+effort: max
 handoffs:
   - command: roadmap
     description: Create strategic roadmap from evolution analysis

@@ -1,6 +1,7 @@
 ---
 description: Create comprehensive business and technical requirements
 argument-hint: "<project ID or feature, e.g. '001', 'authentication module'>"
+effort: max
 handoffs:
   - command: data-model
     description: Create data model from data requirements
