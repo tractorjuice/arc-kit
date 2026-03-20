@@ -80,11 +80,13 @@ $ARGUMENTS
    - User workflows
 
    **Non-Functional Requirements (NFR-xxx)**:
-   - Performance (response time, throughput, concurrent users)
-   - Security (authentication, authorisation, encryption, compliance)
-   - Scalability (growth projections, load handling)
-   - Reliability (uptime SLA, MTBF, MTTR)
-   - Compliance (regulations, standards, certifications)
+   - Performance (NFR-P: response time, throughput, concurrent users)
+   - Availability and Resilience (NFR-A: uptime SLA, disaster recovery RPO/RTO, failover)
+   - Scalability (NFR-S: growth projections, horizontal/vertical scaling, data volume)
+   - Security (NFR-SEC: authentication, authorisation, encryption, secrets management, vulnerability management)
+   - Compliance (NFR-C: GDPR, audit logging, regulatory reporting, data residency)
+   - Usability (NFR-U: accessibility WCAG 2.2 AA, localisation, user onboarding)
+   - Maintainability and Observability (NFR-M: logging, metrics, tracing, documentation, runbooks)
 
    **Integration Requirements (INT-xxx)**:
    - Upstream/downstream systems
