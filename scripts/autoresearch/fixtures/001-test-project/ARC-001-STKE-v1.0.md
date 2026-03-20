@@ -29,7 +29,7 @@
 
 ### Power/Interest Grid
 
-```
+```text
 High Power │ Service Owner (SRO)   │ Head of Digital
            │ [Manage Closely]      │ [Keep Satisfied]
            ├───────────────────────┼──────────────────────────────
