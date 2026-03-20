@@ -109,13 +109,18 @@ The combined score is the arithmetic mean of the five dimensions, rounded to one
    - If improved by >= 0.3 → KEEP
    - If less than 0.3 improvement → DISCARD
 9. Log to `results.tsv` (append a new row — see "Output Format" below)
-10. If DISCARD: revert the command file to its previous-best content:
+10. **Print status line** after logging:
+    ```
+    [iter N] score: X.X (best: Y.Y) | status: keep/discard | keeps: K discards: D | streak: S/5 to plateau
+    ```
+    This gives the human live visibility in the terminal without needing to read `results.tsv`.
+11. If DISCARD: revert the command file to its previous-best content:
     ```
     git checkout <previous-best-commit> -- arckit-claude/commands/<command>.md
     ```
     Then commit the revert: `"revert: <description> (no improvement)"`
     Do NOT use `git reset --hard` or `git revert`
-11. Go to step 1
+12. Go to step 1
 
 ### Plateau Detection
 
