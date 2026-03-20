@@ -1,6 +1,7 @@
 ---
 description: Generate requirements traceability matrix from requirements to design to tests
 argument-hint: "<project ID or scope, e.g. '001', 'FR-xxx only'>"
+effort: high
 ---
 
 You are helping an enterprise architect create a comprehensive traceability matrix that traces requirements through design to implementation and testing.

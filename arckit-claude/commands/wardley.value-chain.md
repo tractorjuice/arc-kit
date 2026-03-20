@@ -1,6 +1,7 @@
 ---
 description: Decompose user needs into value chains for Wardley Mapping
 argument-hint: "<user need or domain, e.g. 'online shopping', 'patient booking'>"
+effort: max
 handoffs:
   - command: wardley
     description: Create Wardley Map from this value chain

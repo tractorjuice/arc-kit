@@ -2,6 +2,7 @@
 name: arckit-datascout
 maxTurns: 50
 disallowedTools: ["Edit"]
+effort: max
 description: |
   Use this agent when the user needs to discover external data sources — APIs, datasets, open data portals, and commercial data providers — to fulfil project requirements. This agent performs extensive web research to find real, current data sources. Examples:
 

@@ -1,6 +1,7 @@
 ---
 description: Synthesise strategic artifacts into executive-level Architecture Strategy document
 argument-hint: "<project ID or focus, e.g. '001', 'cloud-first strategy'>"
+effort: max
 handoffs:
   - command: requirements
     description: Create detailed requirements from strategy

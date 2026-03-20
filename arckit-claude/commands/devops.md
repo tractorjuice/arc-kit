@@ -1,6 +1,7 @@
 ---
 description: Create DevOps strategy with CI/CD pipelines, IaC, container orchestration, and developer experience
 argument-hint: "<project ID or platform, e.g. '001', 'GitHub Actions on AWS'>"
+effort: high
 ---
 
 # /arckit:devops - DevOps Strategy Command

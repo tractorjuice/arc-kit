@@ -2,6 +2,7 @@
 description: Research AWS services and architecture patterns using AWS Knowledge MCP for authoritative guidance
 argument-hint: "<topic or use case, e.g. 'serverless data pipeline', 'EKS networking'>"
 tags: [aws, amazon, cloud, architecture, mcp, research, well-architected, security-hub]
+effort: high
 handoffs:
   - command: diagram
     description: Create AWS architecture diagrams

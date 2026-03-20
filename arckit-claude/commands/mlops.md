@@ -1,6 +1,7 @@
 ---
 description: Create MLOps strategy with model lifecycle, training pipelines, serving, monitoring, and governance
 argument-hint: "<project ID or ML platform, e.g. '001', 'SageMaker'>"
+effort: max
 ---
 
 # /arckit:mlops - MLOps Strategy Command

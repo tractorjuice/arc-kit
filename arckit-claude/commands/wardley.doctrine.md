@@ -1,6 +1,7 @@
 ---
 description: Assess organizational doctrine maturity using Wardley's 4-phase framework
 argument-hint: "<organization or project, e.g. 'DWP Benefits Team', 'Platform Engineering'>"
+effort: max
 handoffs:
   - command: wardley
     description: Create or refine Wardley Map informed by doctrine gaps

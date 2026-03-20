@@ -1,6 +1,7 @@
 ---
 description: Create Strategic Outline Business Case (SOBC) using UK Government Green Book 5-case model
 argument-hint: "<project ID or initiative, e.g. '001', 'cloud migration programme'>"
+effort: max
 handoffs:
   - command: requirements
     description: Define detailed requirements after SOBC approval

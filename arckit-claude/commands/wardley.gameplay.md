@@ -1,6 +1,7 @@
 ---
 description: Analyze strategic play options from Wardley Maps using 60+ gameplay patterns
 argument-hint: "<strategic context, e.g. 'cloud migration', 'market entry for chatbot'>"
+effort: max
 handoffs:
   - command: roadmap
     description: Create roadmap to execute selected plays

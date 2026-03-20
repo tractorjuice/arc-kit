@@ -81,6 +81,7 @@ annotation {N},[visibility, evolution] "{annotation_text}"
 ```
 
 **Decorator Guide**:
+
 - `(build)` — Genesis/Custom components built in-house (triangle marker)
 - `(buy)` — Product/Commodity components procured from market (diamond marker)
 - `(outsource)` — Components outsourced to vendors (square marker)

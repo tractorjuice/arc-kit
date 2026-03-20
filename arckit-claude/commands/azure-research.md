@@ -2,6 +2,7 @@
 description: Research Azure services and architecture patterns using Microsoft Learn MCP for authoritative guidance
 argument-hint: "<topic or use case, e.g. 'Azure API Management', 'Entra ID'>"
 tags: [azure, microsoft, cloud, architecture, mcp, research, well-architected, security-benchmark]
+effort: high
 handoffs:
   - command: diagram
     description: Create Azure architecture diagrams

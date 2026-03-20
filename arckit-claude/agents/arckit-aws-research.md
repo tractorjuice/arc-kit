@@ -2,6 +2,7 @@
 name: arckit-aws-research
 maxTurns: 40
 disallowedTools: ["Edit"]
+effort: high
 description: |
   Use this agent when the user needs AWS-specific technology research using the AWS Knowledge MCP server to match project requirements to AWS services, architecture patterns, Well-Architected guidance, and Security Hub controls. Examples:
 

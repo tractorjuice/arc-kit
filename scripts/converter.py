@@ -52,6 +52,27 @@ def extract_agent_prompt(content):
     return content
 
 
+def copy_agent_stripped(src_path, dest_path):
+    """Copy an agent file to dest, stripping the effort field from frontmatter."""
+    with open(src_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    if content.startswith("---"):
+        parts = content.split("---", 2)
+        if len(parts) > 2:
+            try:
+                fm = yaml.safe_load(parts[1]) or {}
+            except yaml.YAMLError:
+                fm = {}
+            fm.pop("effort", None)
+            rebuilt = "---\n" + yaml.dump(fm, default_flow_style=False, allow_unicode=True) + "---" + parts[2]
+            with open(dest_path, "w", encoding="utf-8") as f:
+                f.write(rebuilt)
+            return
+    # No frontmatter — plain copy
+    with open(dest_path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+
 def render_handoffs_section(handoffs, command_format="/arckit:{cmd}"):
     """Render handoffs list as a markdown Suggested Next Steps section."""
     if not handoffs:
@@ -268,6 +289,8 @@ def convert(commands_dir, agents_dir):
         frontmatter, command_prompt = extract_frontmatter_and_prompt(command_content)
         description = frontmatter.get("description", "")
         handoffs = frontmatter.get("handoffs", [])
+        # Strip effort field — only meaningful for Claude Code plugin
+        frontmatter.pop("effort", None)
 
         # For agent-delegating commands, use the full agent prompt
         # (non-Claude targets don't support the Task/agent architecture)
@@ -900,11 +923,11 @@ if __name__ == "__main__":
                 for filename in sorted(os.listdir(agents_dir)):
                     if filename.endswith(".md"):
                         src_agent = os.path.join(agents_dir, filename)
-                        shutil.copy2(
+                        copy_agent_stripped(
                             src_agent,
                             os.path.join(local_agents_dir, filename),
                         )
-                        shutil.copy2(
+                        copy_agent_stripped(
                             src_agent,
                             os.path.join(ext_agents_dir, filename),
                         )
