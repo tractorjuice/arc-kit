@@ -13,9 +13,11 @@ To set up a new experiment, work with the user to:
 1. **Agree on a target command.** The user tells you which command to optimise (e.g. `requirements`). The file is at `arckit-claude/commands/<command>.md`.
 
 2. **Create the branch.** Run:
-   ```
+
+   ```bash
    git checkout -b autoresearch/<command>-<tag>
    ```
+
    where `<tag>` is today's date (e.g. `mar20`). The branch must not already exist.
 
 3. **Read the in-scope files.** Read these files for full context:
@@ -34,8 +36,9 @@ To set up a new experiment, work with the user to:
 6. **Set the test argument.** `$ARGUMENTS` = `"001"` for every iteration. This is fixed — the same input each time so the only variable is the prompt.
 
 7. **Initialize results.tsv.** Create `results.tsv` with just the header row:
-   ```
-   commit	structural	score	status	description
+
+   ```text
+   commit structural score status description
    ```
 
 8. **Run the baseline.** Execute the command unmodified against the scratch project (see "How Commands Are Executed" below). Score it using both evaluation layers. Log the result as the first data row in `results.tsv` with status `keep` and description `baseline`. Then begin the experiment loop.
@@ -92,7 +95,7 @@ The combined score is the arithmetic mean of the five dimensions, rounded to one
 
 ## 4. The Experiment Loop
 
-### LOOP FOREVER:
+### LOOP FOREVER
 
 1. Read the current command prompt and review `results.tsv` history
 2. Identify ONE specific improvement to the prompt
@@ -110,14 +113,18 @@ The combined score is the arithmetic mean of the five dimensions, rounded to one
    - If less than 0.3 improvement → DISCARD
 9. Log to `results.tsv` (append a new row — see "Output Format" below)
 10. **Print status line** after logging:
-    ```
+
+    ```text
     [iter N] score: X.X (best: Y.Y) | status: keep/discard | keeps: K discards: D | streak: S/5 to plateau
     ```
+
     This gives the human live visibility in the terminal without needing to read `results.tsv`.
 11. If DISCARD: revert the command file to its previous-best content:
-    ```
+
+    ```bash
     git checkout <previous-best-commit> -- arckit-claude/commands/<command>.md
     ```
+
     Then commit the revert: `"revert: <description> (no improvement)"`
     Do NOT use `git reset --hard` or `git revert`
 12. Go to step 1
@@ -137,11 +144,12 @@ If the last 5 consecutive iterations have all been discarded (no score improveme
 
 Tab-separated, NOT comma-separated (commas break in descriptions). Header row plus one row per experiment:
 
-```
-commit	structural	score	status	description
+```text
+commit structural score status description
 ```
 
 Columns:
+
 1. git commit hash (short, 7 chars)
 2. structural check result: `PASS` or `FAIL`
 3. combined LLM-as-judge score (e.g. `7.4`) — use `0.0` for structural failures
@@ -150,18 +158,18 @@ Columns:
 
 Example:
 
-```
-commit	structural	score	status	description
-a1b2c3d	PASS	6.8	keep	baseline
-b2c3d4e	PASS	7.2	keep	added explicit instruction to fill all NFR subcategories
-c3d4e5f	FAIL	0.0	discard	removed Document Control instruction (broke structure)
-d4e5f6g	PASS	7.1	discard	reordered sections (no improvement)
-e5f6g7h	PASS	7.6	keep	added example requirement IDs in prompt
-f6g7h8i	PASS	7.5	discard	added glossary instruction (no improvement)
-g7h8i9j	PASS	7.4	discard	reworded traceability section
-h8i9j0k	PASS	7.6	discard	added stakeholder cross-ref reminder
-i9j0k1l	PASS	7.3	discard	moved NFR subcategories earlier in prompt
-j0k1l2m	PASS	7.5	plateau	5 consecutive discards — shifting strategy
+```text
+commit structural score status description
+a1b2c3d PASS 6.8 keep baseline
+b2c3d4e PASS 7.2 keep added explicit instruction to fill all NFR subcategories
+c3d4e5f FAIL 0.0 discard removed Document Control instruction (broke structure)
+d4e5f6g PASS 7.1 discard reordered sections (no improvement)
+e5f6g7h PASS 7.6 keep added example requirement IDs in prompt
+f6g7h8i PASS 7.5 discard added glossary instruction (no improvement)
+g7h8i9j PASS 7.4 discard reworded traceability section
+h8i9j0k PASS 7.6 discard added stakeholder cross-ref reminder
+i9j0k1l PASS 7.3 discard moved NFR subcategories earlier in prompt
+j0k1l2m PASS 7.5 plateau 5 consecutive discards — shifting strategy
 ```
 
 ---
@@ -169,9 +177,11 @@ j0k1l2m	PASS	7.5	plateau	5 consecutive discards — shifting strategy
 ## 6. What You CAN Do / CANNOT Do
 
 **What you CAN do:**
+
 - Modify `arckit-claude/commands/<command>.md` — this is the only file you edit. Everything is fair game: instruction wording, section ordering, examples, emphasis, formatting, adding/removing guidance.
 
 **What you CANNOT do:**
+
 - Modify the template file. It defines expected output structure — changing it moves the goalposts.
 - Modify `arckit-claude/references/quality-checklist.md`. The evaluation standard must be stable.
 - Modify the evaluation rubric. It's the fixed metric, like `val_bpb`.
@@ -207,7 +217,7 @@ Each iteration takes roughly 2-3 minutes. That's ~20-30 experiments per hour. If
 
 ## 10. Usage
 
-```
+```bash
 # Start a run:
 # Human tells Claude: "read scripts/autoresearch/program.md and optimise the requirements command"
 # Claude reads this file, follows the setup, and enters the loop
