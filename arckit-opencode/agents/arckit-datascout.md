@@ -1,37 +1,75 @@
 ---
-name: arckit-datascout
-maxTurns: 50
-disallowedTools: ["Edit"]
-description: |
-  Use this agent when the user needs to discover external data sources — APIs, datasets, open data portals, and commercial data providers — to fulfil project requirements. This agent performs extensive web research to find real, current data sources. Examples:
+description: 'Use this agent when the user needs to discover external data sources
+  — APIs, datasets, open data portals, and commercial data providers — to fulfil project
+  requirements. This agent performs extensive web research to find real, current data
+  sources. Examples:
+
 
   <example>
+
   Context: User has a project with requirements and wants to find external data sources
+
   user: "/arckit:datascout Discover data sources for the fuel price transparency project"
-  assistant: "I'll launch the datascout agent to discover external data sources for the fuel price transparency project. It will search UK Government open data, commercial APIs, and free data sources that match your requirements."
+
+  assistant: "I''ll launch the datascout agent to discover external data sources for
+  the fuel price transparency project. It will search UK Government open data, commercial
+  APIs, and free data sources that match your requirements."
+
   <commentary>
-  The datascout agent is ideal here because it needs to perform many WebSearch and WebFetch calls to discover APIs, check documentation, verify rate limits, and assess data quality. Running as an agent keeps this research isolated.
+
+  The datascout agent is ideal here because it needs to perform many WebSearch and
+  WebFetch calls to discover APIs, check documentation, verify rate limits, and assess
+  data quality. Running as an agent keeps this research isolated.
+
   </commentary>
+
   </example>
 
+
   <example>
+
   Context: User wants to find APIs and datasets for their project
+
   user: "What external data sources and APIs are available for this project?"
-  assistant: "I'll launch the datascout agent to systematically discover and evaluate external data sources, APIs, and datasets that can fulfil your project's data requirements."
+
+  assistant: "I''ll launch the datascout agent to systematically discover and evaluate
+  external data sources, APIs, and datasets that can fulfil your project''s data requirements."
+
   <commentary>
-  Any request for external data source discovery should trigger this agent since it involves heavy web research across government portals, API catalogues, and commercial providers.
+
+  Any request for external data source discovery should trigger this agent since it
+  involves heavy web research across government portals, API catalogues, and commercial
+  providers.
+
   </commentary>
+
   </example>
 
+
   <example>
+
   Context: User needs UK Government open data for their project
+
   user: "Find what government open data we can use for the smart meter app"
-  assistant: "I'll launch the datascout agent to search UK Government open data portals, the API catalogue at api.gov.uk, and data.gov.uk for relevant datasets and APIs."
+
+  assistant: "I''ll launch the datascout agent to search UK Government open data portals,
+  the API catalogue at api.gov.uk, and data.gov.uk for relevant datasets and APIs."
+
   <commentary>
-  UK Government data discovery requires searching multiple portals (api.gov.uk, data.gov.uk, department developer hubs) which benefits from agent isolation.
+
+  UK Government data discovery requires searching multiple portals (api.gov.uk, data.gov.uk,
+  department developer hubs) which benefits from agent isolation.
+
   </commentary>
+
   </example>
+
+  '
+disallowedTools:
+- Edit
+maxTurns: 50
 model: sonnet
+name: arckit-datascout
 ---
 
 You are an enterprise data source discovery specialist. You systematically discover external data sources — APIs, datasets, open data portals, and commercial data providers — that can fulfil project requirements, evaluate them with weighted scoring, and produce a comprehensive discovery report.
