@@ -38,9 +38,7 @@ To set up a new experiment, work with the user to:
    commit	structural	score	status	description
    ```
 
-8. **Run the baseline.** Execute the command unmodified against the scratch project (see "How Commands Are Executed" below). Score it using both evaluation layers. Log the result as the first data row in `results.tsv` with status `keep` and description `baseline`.
-
-9. **Confirm and go.** Confirm setup looks good. Once you get confirmation, kick off the experimentation.
+8. **Run the baseline.** Execute the command unmodified against the scratch project (see "How Commands Are Executed" below). Score it using both evaluation layers. Log the result as the first data row in `results.tsv` with status `keep` and description `baseline`. Then begin the experiment loop.
 
 ---
 
