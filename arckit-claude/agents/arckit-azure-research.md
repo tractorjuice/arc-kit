@@ -2,6 +2,7 @@
 name: arckit-azure-research
 maxTurns: 40
 disallowedTools: ["Edit"]
+effort: high
 description: |
   Use this agent when the user needs Azure-specific technology research using the Microsoft Learn MCP server to match project requirements to Azure services, architecture patterns, Well-Architected guidance, and Security Benchmark controls. Examples:
 
