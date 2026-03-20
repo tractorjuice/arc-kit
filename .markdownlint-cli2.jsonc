@@ -69,6 +69,8 @@
     "arckit-gemini/skills/**",
     "node_modules/**",
     "docs/articles/**",
-    "docs/plans/**"
+    "docs/plans/**",
+    "docs/superpowers/plans/**",
+    "docs/superpowers/specs/**"
   ]
 }
