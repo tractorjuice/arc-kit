@@ -74,17 +74,19 @@ $ARGUMENTS
    - Stakeholder needs
 
    **Functional Requirements (FR-xxx)**:
-   - User personas and their needs
-   - User stories and use cases
-   - Features and capabilities
-   - User workflows
+   - User personas (2-4) with role, goals, pain points, technical proficiency
+   - Use cases (UC-xxx) with main flow, alternative flows, exception flows, and business rules — follow the template's UC structure
+   - Detailed functional requirements (FR-xxx) with acceptance criteria in Given/When/Then format
+   - User workflows and feature capabilities
 
    **Non-Functional Requirements (NFR-xxx)**:
-   - Performance (response time, throughput, concurrent users)
-   - Security (authentication, authorisation, encryption, compliance)
-   - Scalability (growth projections, load handling)
-   - Reliability (uptime SLA, MTBF, MTTR)
-   - Compliance (regulations, standards, certifications)
+   - Performance (NFR-P: response time, throughput, concurrent users)
+   - Availability and Resilience (NFR-A: uptime SLA, disaster recovery RPO/RTO, failover)
+   - Scalability (NFR-S: growth projections, horizontal/vertical scaling, data volume)
+   - Security (NFR-SEC: authentication, authorisation, encryption, secrets management, vulnerability management)
+   - Compliance (NFR-C: GDPR, audit logging, regulatory reporting, data residency)
+   - Usability (NFR-U: accessibility WCAG 2.2 AA, localisation, user onboarding)
+   - Maintainability and Observability (NFR-M: logging, metrics, tracing, documentation, runbooks)
 
    **Integration Requirements (INT-xxx)**:
    - Upstream/downstream systems
