@@ -88,8 +88,6 @@ $ARGUMENTS
    - Usability (NFR-U: accessibility WCAG 2.2 AA, localisation, user onboarding)
    - Maintainability and Observability (NFR-M: logging, metrics, tracing, documentation, runbooks)
 
-   For each NFR, derive specific targets from the project context (stakeholder goals, business requirements, user volumes) rather than using generic industry defaults. Justify why each target was chosen — e.g., "99.9% uptime because BR-001 requires 24/7 citizen self-service and call centre cost reduction depends on digital channel reliability."
-
    **Integration Requirements (INT-xxx)**:
    - Upstream/downstream systems
    - APIs and protocols
