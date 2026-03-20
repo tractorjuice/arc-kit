@@ -74,10 +74,10 @@ $ARGUMENTS
    - Stakeholder needs
 
    **Functional Requirements (FR-xxx)**:
-   - User personas and their needs
-   - User stories and use cases
-   - Features and capabilities
-   - User workflows
+   - User personas (2-4) with role, goals, pain points, technical proficiency
+   - Use cases (UC-xxx) with main flow, alternative flows, exception flows, and business rules — follow the template's UC structure
+   - Detailed functional requirements (FR-xxx) with acceptance criteria in Given/When/Then format
+   - User workflows and feature capabilities
 
    **Non-Functional Requirements (NFR-xxx)**:
    - Performance (NFR-P: response time, throughput, concurrent users)
