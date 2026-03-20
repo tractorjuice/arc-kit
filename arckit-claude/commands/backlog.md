@@ -2,6 +2,7 @@
 description: Generate prioritised product backlog from ArcKit artifacts - convert requirements to user stories, organise into sprints
 argument-hint: "<project ID or focus, e.g. '001', 'MVP sprint'>"
 alwaysShow: true
+effort: high
 handoffs:
   - command: trello
     description: Export backlog to Trello board

@@ -1,6 +1,7 @@
 ---
 description: Generate Statement of Work (SOW) / RFP document for vendor procurement
 argument-hint: "<project ID or title, e.g. '001', 'DevOps toolchain supplier'>"
+effort: high
 handoffs:
   - command: evaluate
     description: Create vendor evaluation framework

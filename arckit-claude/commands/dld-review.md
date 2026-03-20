@@ -1,6 +1,7 @@
 ---
 description: Review Detailed Design (DLD) for implementation readiness
 argument-hint: "<project ID or DLD path, e.g. '001'>"
+effort: high
 ---
 
 You are helping an enterprise architect review a Detailed Design (DLD) document to ensure the design is ready for implementation with all technical details properly specified.

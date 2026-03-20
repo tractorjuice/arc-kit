@@ -1,6 +1,7 @@
 ---
 description: Document architectural decisions with options analysis and traceability
 argument-hint: "<decision topic, e.g. 'API gateway selection', 'database platform'>"
+effort: high
 handoffs:
   - command: hld-review
     description: Reflect decision in High-Level Design

@@ -2,6 +2,7 @@
 description: Score vendor proposals against evaluation criteria with persistent structured storage
 argument-hint: "<action> <args>, e.g. 'vendor Acme --project=001', 'compare --project=001', 'audit --project=001'"
 tags: [vendor, scoring, evaluation, procurement, comparison, audit]
+effort: high
 handoffs:
   - command: evaluate
     description: Create or update evaluation framework before scoring

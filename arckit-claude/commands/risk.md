@@ -1,6 +1,7 @@
 ---
 description: Create comprehensive risk register following HM Treasury Orange Book principles
 argument-hint: "<project ID or category, e.g. '001', 'procurement risks'>"
+effort: high
 handoffs:
   - command: sobc
     description: Feed risk register into SOBC Management Case

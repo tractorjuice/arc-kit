@@ -1,6 +1,7 @@
 ---
 description: Create comprehensive data model with entity relationships, GDPR compliance, and data governance
 argument-hint: "<project ID or domain, e.g. '001', 'patient records'>"
+effort: high
 handoffs:
   - command: hld-review
     description: Validate database technology choices

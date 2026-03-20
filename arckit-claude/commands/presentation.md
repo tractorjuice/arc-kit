@@ -1,6 +1,7 @@
 ---
 description: Generate MARP presentation slides from existing project artifacts for governance boards and stakeholder briefings
 argument-hint: "<project ID and audience, e.g. '001 executive board'>"
+effort: high
 ---
 
 You are helping an enterprise architect **generate a MARP-format presentation** from existing ArcKit project artifacts. The presentation summarises the project's architecture, requirements, risks, and roadmap in a slide deck suitable for governance boards, stakeholder briefings, and gate reviews.
