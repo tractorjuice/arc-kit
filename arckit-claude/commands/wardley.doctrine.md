@@ -216,10 +216,11 @@ Based on the critical gaps and phase analysis, produce a prioritized roadmap.
 - **Quick wins**: Identify 2-3 improvements achievable in 30-60 days that will produce visible results. Early wins build momentum.
 - **Systemic fixes**: Some doctrine gaps require structural changes (team size, decision rights, incentive structures). Sequence structural fixes before asking for behavioral change.
 - **Measurement**: Every action should have a measurable success criterion. Without measurement, doctrine improvement is aspirational rather than systematic.
+- **Project-specific**: Every roadmap action must reference a specific project deliverable, artifact, or team activity — never use generic actions like "establish feedback loops" without specifying what feedback, from whom, measured how, and by when. Tie each action to a specific requirement (BR/FR/NFR), stakeholder (STK), or principle (P-xxx) where applicable.
 
 ### Immediate Actions (0-3 months)
 
-Focus: Quick wins and Phase I foundations. Address the most critical Phase I gaps. Establish a common language baseline. Create initial feedback loops. These actions should produce tangible, observable change.
+Focus: Quick wins and Phase I foundations. Address the most critical Phase I gaps. Establish a common language baseline. Create initial feedback loops. Each action must specify: what to do, who owns it, how to measure success, and which doctrine principle it improves.
 
 ### Short-Term Actions (3-12 months)
 
