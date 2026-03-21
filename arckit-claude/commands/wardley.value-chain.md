@@ -339,9 +339,9 @@ After generating the OWM code block, generate a Mermaid `wardley-beta` equivalen
    - Bottlenecks and single points of failure
    - Resilience gaps
 
-7. **Validation Checklist**: Completed checklist confirming chain quality
+7. **Validation Checklist**: Include the completed checklist from Step 6 as a visible section — show each check as passed/failed with evidence
 
-8. **Visibility Assessment**: Table showing how each component was scored on the Y-axis
+8. **Visibility Assessment**: Table with columns: Component, Visibility Score, Rationale. For each component, explain *why* it received that score using the assessment questions from Step 5 (e.g., "0.85 — citizen interacts directly via booking UI; failure immediately visible" not just "0.85 — high visibility")
 
 9. **Assumptions and Open Questions**: Documented assumptions made during decomposition
 
