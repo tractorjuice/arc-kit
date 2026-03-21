@@ -202,15 +202,18 @@ Apply the user's selections: the escalation level determines the governance foru
   - Stakeholder consensus or dissenting views
   - Risk appetite alignment
 
-   **Consequences**:
+   **Consequences** (derive from project context — use actual metrics from requirements, not generic statements):
 
 - **Positive**: Benefits, capabilities enabled, compliance achieved
-  - Include measurable outcomes (metrics: baseline → target)
+  - Include measurable outcomes with project-specific metrics (e.g., "API response time: 500ms → < 200ms per NFR-P-001" not just "improved performance")
+  - Tie each benefit to a specific requirement or stakeholder goal
 - **Negative**: Accepted trade-offs, limitations, technical debt
-  - Include mitigation strategies
+  - Include mitigation strategies with owners and timelines
+  - Be explicit about what is lost or constrained — vague trade-offs are not useful
 - **Neutral**: Changes needed (training, infrastructure, process, vendors)
 - **Risks and Mitigations**: Create table with risk, likelihood, impact, mitigation, owner
   - Link to risk register (RISK-xxx)
+- **After-action review**: Schedule a review 1 month after implementation to verify assumptions and outcomes match expectations
 
    **Validation & Compliance**:
 
