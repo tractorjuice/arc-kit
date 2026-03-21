@@ -12,13 +12,19 @@ To set up a new experiment, work with the user to:
 
 1. **Agree on a target command.** The user tells you which command to optimise (e.g. `requirements`). The file is at `arckit-claude/commands/<command>.md`.
 
-2. **Create the branch.** Run:
+2. **Create a worktree.** Run:
 
    ```bash
-   git checkout -b autoresearch/<command>-<tag>
+   git worktree add ../autoresearch-<command> -b autoresearch/<command>-<tag>
    ```
 
-   where `<tag>` is today's date (e.g. `mar20`). The branch must not already exist.
+   where `<tag>` is today's date (e.g. `mar21`). The branch must not already exist. Then `cd` into the worktree:
+
+   ```bash
+   cd ../autoresearch-<command>
+   ```
+
+   All subsequent work happens in this worktree. The main checkout stays clean.
 
 3. **Read the in-scope files.** Read these files for full context:
    - `arckit-claude/commands/<command>.md` — the prompt you will optimise. This is the ONLY file you modify.
@@ -74,6 +80,10 @@ Read the generated artifact and verify ALL of the following. If ANY check fails,
 5. **Template sections present**: All major sections from the template file appear in the output
 6. **File path correct**: Written to a path under `scratch/projects/`
 7. **Domain-specific IDs correct**: Where applicable — BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx for requirements; RISK-xxx for risk registers; etc.
+8. **Wardley Map math validation** (WARD commands only — skip for non-Wardley artifacts):
+   a. **Stage-evolution alignment**: For each component in the Component Inventory table, the Stage column must match the evolution value (0.00-0.24 = Genesis, 0.25-0.49 = Custom, 0.50-0.74 = Product, 0.75-1.00 = Commodity)
+   b. **Coordinate range**: All visibility and evolution values must be in [0.00, 1.00]
+   c. **OWM-to-table consistency**: Component coordinates in the `wardley` code block must exactly match the Component Inventory table — no mismatches between the map code and the written analysis
 
 ### Layer 2: LLM-as-Judge (qualitative score, 1.0–10.0)
 
@@ -211,7 +221,13 @@ Each iteration takes roughly 2-3 minutes. That's ~20-30 experiments per hour. If
 
 ## 9. Ephemeral Files
 
-`results.tsv` and the `scratch/` directory are ephemeral — they live on the experiment branch and are not merged to main. The experiment branch tip (the improved command `.md`) is the deliverable.
+The worktree, `results.tsv`, and the `scratch/` directory are ephemeral. The experiment branch tip (the improved command `.md`) is the deliverable.
+
+**After the run:**
+
+- Cherry-pick the kept commits onto a clean branch for the PR
+- Remove the worktree: `git worktree remove ../autoresearch-<command>`
+- Delete the experiment branch if no longer needed: `git branch -D autoresearch/<command>-<tag>`
 
 ---
 
@@ -220,10 +236,13 @@ Each iteration takes roughly 2-3 minutes. That's ~20-30 experiments per hour. If
 ```bash
 # Start a run:
 # Human tells Claude: "read scripts/autoresearch/program.md and optimise the requirements command"
-# Claude reads this file, follows the setup, and enters the loop
+# Claude reads this file, creates a worktree, and enters the loop
 
 # Stop a run:
-# Human interrupts Claude at any time. The branch tip has the best prompt so far.
+# Human interrupts Claude at any time. The worktree has the best prompt so far.
+
+# Clean up:
+# git worktree remove ../autoresearch-<command>
 ```
 
 The human's only interactions are: starting the run, and optionally stopping it.

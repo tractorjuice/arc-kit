@@ -20,12 +20,12 @@ Replace `requirements` with any command name (e.g., `adr`, `backlog`, `risk`, `s
 
 Claude will:
 
-1. Create a branch (`autoresearch/requirements-mar21`)
-2. Set up a scratch project with fixture data
+1. Create a git worktree (`../autoresearch-requirements`) on a new branch -- your main checkout stays clean
+2. Set up a scratch project with fixture data inside the worktree
 3. Run the command, score the output, log the baseline
 4. Enter the experiment loop -- tweaking, re-running, keeping or discarding
 
-To stop: interrupt Claude at any time. The branch tip has the best prompt.
+To stop: interrupt Claude at any time. The worktree has the best prompt.
 
 ---
 
@@ -69,7 +69,7 @@ This gives live terminal visibility without needing to read files.
 
 ### Layer 1: Structural Gate (pass/fail)
 
-Seven binary checks that must all pass:
+Eight checks that must all pass:
 
 1. Document Control table with all 14 required fields
 2. Document ID follows `ARC-NNN-TYPE-vX.Y` pattern
@@ -78,6 +78,7 @@ Seven binary checks that must all pass:
 5. All major template sections present
 6. File written to correct path
 7. Domain-specific IDs correct (BR-xxx, FR-xxx, etc.)
+8. Wardley Map math validation (WARD commands only): stage-evolution alignment, coordinate range [0.00-1.00], OWM-to-table consistency
 
 If any check fails, the iteration scores `FAIL 0.0` and is discarded immediately.
 
@@ -194,7 +195,7 @@ scripts/autoresearch/
       ARC-001-STKE-v1.0.md    # Stakeholder analysis (4 stakeholders)
 ```
 
-The scratch project (`scratch/`) and results TSV are created on the experiment branch and not merged to main. The branch tip (the improved command `.md`) is the deliverable.
+The experiment runs in a **git worktree** (`../autoresearch-<command>`), keeping the main checkout clean. The scratch project, results TSV, and all experiment commits live in the worktree. The branch tip (the improved command `.md`) is the deliverable.
 
 ---
 
@@ -204,7 +205,8 @@ The scratch project (`scratch/`) and results TSV are created on the experiment b
 - **Review the results.tsv** -- the discard history tells you what didn't work, which is as valuable as what did
 - **Check against standards** -- before starting a run, review relevant external standards (e.g., UK Gov ADR Framework for ADRs, GDS Service Standard for assessments) to prime the system with specific gaps to target
 - **Create a PR for the prompt change only** -- the experiment branch has noise (scratch files, results, reverts); cherry-pick the kept commits onto a clean branch
-- **One command per branch** -- each optimisation run gets its own `autoresearch/<command>-<date>` branch
+- **One command per worktree** -- each optimisation run gets its own `../autoresearch-<command>` worktree
+- **Cleanup** -- after cherry-picking results, remove the worktree: `git worktree remove ../autoresearch-<command>`
 
 ---
 
