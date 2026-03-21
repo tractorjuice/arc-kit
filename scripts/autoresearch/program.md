@@ -80,10 +80,16 @@ Read the generated artifact and verify ALL of the following. If ANY check fails,
 5. **Template sections present**: All major sections from the template file appear in the output
 6. **File path correct**: Written to a path under `scratch/projects/`
 7. **Domain-specific IDs correct**: Where applicable — BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx for requirements; RISK-xxx for risk registers; etc.
-8. **Wardley Map math validation** (WARD commands only — skip for non-Wardley artifacts):
+8. **Wardley Map math validation** (WARD/WVCH commands only — skip for non-Wardley artifacts). Based on the mathematical model M = (V, E, u, v, e, t) from `tractorjuice/wardleymap_math_model`:
    a. **Stage-evolution alignment**: For each component in the Component Inventory table, the Stage column must match the evolution value (0.00-0.24 = Genesis, 0.25-0.49 = Custom, 0.50-0.74 = Product, 0.75-1.00 = Commodity)
    b. **Coordinate range**: All visibility and evolution values must be in [0.00, 1.00]
    c. **OWM-to-table consistency**: Component coordinates in the `wardley` code block must exactly match the Component Inventory table — no mismatches between the map code and the written analysis
+   d. **DAG acyclicity**: Dependencies must form a directed acyclic graph — no circular dependencies
+   e. **Visibility ordering**: If component A depends on component B, then visibility(A) >= visibility(B) — parents must be higher than children in the value chain
+   f. **Strategic metric consistency**: Compute these metrics for each component and verify the strategic analysis is consistent:
+      - Differentiation Pressure: D(v) = visibility(v) x (1 - evolution(v)) — high D should be flagged as strategic differentiators
+      - Commodity Leverage: K(v) = (1 - visibility(v)) x evolution(v) — high K should be flagged as commodity candidates
+      - Dependency Risk: R(a,b) = visibility(a) x (1 - evolution(b)) — high R should be flagged as risk areas
 
 ### Layer 2: LLM-as-Judge (qualitative score, 1.0–10.0)
 
