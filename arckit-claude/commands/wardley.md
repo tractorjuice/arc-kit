@@ -39,12 +39,19 @@ Wardley Mapping is a strategic situational awareness technique that maps:
 
 ### Evolution Stages
 
-| Stage | Evolution | Characteristics | Strategic Action |
-|-------|-----------|-----------------|------------------|
-| **Genesis** | 0.00-0.25 | Novel, uncertain, rapidly changing | Build only if strategic differentiator, R&D focus |
-| **Custom** | 0.25-0.50 | Bespoke, emerging practices, competitive advantage | Build vs Buy critical decision, invest in IP |
-| **Product** | 0.50-0.75 | Products with feature differentiation, maturing market | Buy from vendors, compare features, standardize |
+| Stage | Evolution Range | Characteristics | Strategic Action |
+|-------|----------------|-----------------|------------------|
+| **Genesis** | 0.00-0.24 | Novel, uncertain, rapidly changing | Build only if strategic differentiator, R&D focus |
+| **Custom** | 0.25-0.49 | Bespoke, emerging practices, competitive advantage | Build vs Buy critical decision, invest in IP |
+| **Product** | 0.50-0.74 | Products with feature differentiation, maturing market | Buy from vendors, compare features, standardize |
 | **Commodity** | 0.75-1.00 | Utility, standardized, industrialized | Always use commodity/cloud, never build |
+
+**CRITICAL — Stage-Evolution Alignment** (enforced by `validate-wardley-math.mjs`):
+
+- The Stage label MUST match the evolution value: Genesis < 0.25, Custom 0.25-0.49, Product 0.50-0.74, Commodity >= 0.75
+- **Avoid exact boundary values** (0.25, 0.50, 0.75) — use values clearly within a stage (e.g., 0.72 for Product, 0.78 for Commodity) to prevent ambiguity
+- OWM code block coordinates MUST exactly match the Component Inventory table — any mismatch is rejected
+- Example: GOV.UK Design System is a widely adopted standard — position at 0.72 (Product) not 0.75+ (Commodity)
 
 ## User Input
 
@@ -449,6 +456,7 @@ The Wardley Map document must include:
 
 3. **Component Inventory**:
    - All components with visibility, evolution, stage classification
+   - **Positioning rationale** for each component: explain *why* it sits at that evolution stage (e.g., "0.42 Custom — bespoke scheduling logic with no off-the-shelf equivalent for UK Government appointment rules" not just "Custom — scheduling engine"). Reference market evidence, project requirements, or architecture principles
    - Strategic notes for each component
 
 4. **Evolution Analysis**:
