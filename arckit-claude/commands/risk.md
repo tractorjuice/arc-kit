@@ -82,43 +82,20 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 
 6. **Identify risks across Orange Book categories**:
 
-   Use these risk categories aligned to Orange Book framework:
+   Use the Orange Book Annex 4 risk categories. Not all categories will apply to every project — assess which are relevant and note any that are explicitly not applicable:
 
-   **STRATEGIC Risks**:
-   - Risks to strategic objectives and organizational goals
-   - Competitive position, market changes, policy changes
-   - Stakeholder drivers under threat
-   - Example: "Strategic direction changes mid-project"
-
-   **OPERATIONAL Risks**:
-   - Risks to operations, service delivery, business continuity
-   - Resource availability, skills gaps, dependencies
-   - Process failures, quality issues
-   - Example: "Insufficient cloud migration expertise in team"
-
-   **FINANCIAL Risks**:
-   - Budget overruns, funding shortfalls, ROI not achieved
-   - Cost escalation, currency fluctuations
-   - Economic downturn impact
-   - Example: "Cloud costs exceed budget by 40%"
-
-   **COMPLIANCE/REGULATORY Risks**:
-   - Non-compliance with laws, regulations, policies
-   - Audit findings, regulatory penalties
-   - Data protection (GDPR, DPA 2018), procurement rules
-   - Example: "GDPR non-compliance due to data transfer"
-
-   **REPUTATIONAL Risks**:
-   - Damage to reputation, stakeholder confidence, public perception
-   - Media scrutiny, parliamentary questions (UK Gov)
-   - Service failures visible to public
-   - Example: "High-profile service outage damages citizen trust"
-
-   **TECHNOLOGY Risks**:
-   - Technical failure, cyber security, legacy system issues
-   - Vendor lock-in, technology obsolescence
-   - Integration challenges, scalability limitations
-   - Example: "Legacy integration fails during peak load"
+   - **STRATEGY**: Risks from poorly defined strategy, flawed assumptions, or macro-environment change (political, economic, social, technological, environmental, legislative)
+   - **PEOPLE**: Risks from ineffective leadership, suboptimal culture, insufficient capacity/capability, industrial action, HR non-compliance
+   - **GOVERNANCE**: Risks from unclear plans, priorities, authorities, accountabilities, or ineffective oversight
+   - **TECHNOLOGY**: Risks from technology not delivering expected services — inadequate development, performance, or resilience
+   - **OPERATIONS**: Risks from inadequate/ineffective internal processes — fraud, error, impaired service quality, non-compliance, poor value for money
+   - **LEGAL**: Risks from defective transactions, claims, liability, or failure to meet legal/regulatory requirements or protect assets (IP)
+   - **FINANCIAL**: Risks from not managing finances per requirements — poor investment returns, failure to manage assets/liabilities, non-compliant reporting
+   - **COMMERCIAL**: Risks from weaknesses in commercial partnerships, supply chains, and contracts — poor performance, vendor lock-in, poor VfM
+   - **INFORMATION**: Risks from failure to produce robust data/information or exploit it to full potential
+   - **SECURITY**: Risks from failure to prevent unauthorised access to estate and information, including cyber security and GDPR non-compliance
+   - **PROJECT/PROGRAMME**: Risks that programmes/projects are not aligned with priorities or fail to deliver requirements/benefits to time, cost, quality
+   - **REPUTATIONAL**: Risks from adverse events, ethical violations, systemic failures, or poor quality leading to damage to reputation and trust
 
 7. **For EACH risk identified, create comprehensive risk profile**:
 
@@ -131,14 +108,14 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
 
    Populate the template with:
 
-   **Risk Identification**:
+   **Risk Identification** (Orange Book Annex 5: Cause → Event → Consequence structure):
    - **Risk ID**: R-001, R-002, R-003, etc. (sequential)
-   - **Category**: STRATEGIC | OPERATIONAL | FINANCIAL | COMPLIANCE | REPUTATIONAL | TECHNOLOGY
+   - **Category**: From Orange Book Annex 4 categories above
    - **Risk Title**: Short, clear description (5-10 words)
-   - **Risk Description**: Detailed description of the risk (2-3 sentences)
-   - **Root Cause**: What underlying issue creates this risk?
-   - **Trigger Events**: What events would cause this risk to materialize?
-   - **Consequences if Realized**: What happens if this risk occurs? (tangible impacts)
+   - **Cause(s)**: What underlying conditions or failures give rise to this risk? (1-3 specific causes)
+   - **Event**: What could happen? State as a single clear event statement
+   - **Consequence(s)**: What are the outcomes if the event happens? Include tangible impacts on objectives, costs, timelines, and stakeholders
+   - **Early Warning Indicators**: What signals would indicate this risk is materialising? (D15 — key performance/risk indicators including early warnings)
    - **Affected Stakeholders**: Link to ARC-{PROJECT_ID}-STKE-v*.md (who is impacted?)
    - **Related Objectives**: Link to stakeholder goals/business objectives that are threatened
 
