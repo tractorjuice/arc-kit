@@ -115,6 +115,7 @@ Evidence: [1-3 sentences of specific evidence from the map, domain context, or u
 Primary components affected: [component names from the WARD artifact]
 Impact: High / Medium / Low
 Strategic implication for this landscape: [Specific — not a copy of the generic implication from the reference]
+Recommended action: [What the project team should do about this pattern — a specific, executable action referencing a component, requirement, or stakeholder. Never "monitor the market" without specifying what to monitor, who monitors it, and what triggers a response]
 Time horizon: < 12 months / 1-3 years / 3+ years
 ```
 
