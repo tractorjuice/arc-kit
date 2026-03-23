@@ -85,19 +85,23 @@ Search govreposcrape with 8-12 queries covering the domain from broad to specifi
 **Query tier structure**:
 
 **Broad queries** (domain-level, use `limit: 50`):
+
 - Cover the primary domain at a high level
 - Use general domain terms plus "government" or "UK"
 - Example: "health data integration UK government"
 
 **Medium queries** (sub-domain level, use `limit: 20`):
+
 - Cover each identified sub-domain
 - Example: "FHIR patient record API NHS", "appointment booking health service"
 
 **Specific queries** (technology/standard level, use `limit: 20`):
+
 - Target specific technologies, standards, or patterns
 - Example: "FHIR R4 resource NHS implementation", "HL7 messaging health care"
 
 **Organisational queries** (department-level, use `limit: 20`):
+
 - Target specific departments likely active in this domain
 - Example: "NHS Digital patient data platform", "DHSC health data service"
 
@@ -108,6 +112,7 @@ Good govreposcrape queries are descriptive natural language (3-500 characters). 
 Combine all results from Step 4. Deduplicate (same repo appearing in multiple searches). Group remaining repos by organisation (GitHub org name).
 
 For each organisation, note:
+
 - Number of repos found in this domain
 - Types of repos (APIs, services, libraries, tools, infrastructure)
 - Whether it appears to be a major contributor or minor presence
@@ -138,6 +143,7 @@ Also fetch `https://raw.githubusercontent.com/{org}/{repo}/main/README.md` for r
 Build an organisation contribution map for the domain:
 
 For each active organisation:
+
 - Department/agency name
 - Number of domain repos
 - Types of contributions (API clients, services, tools, standards implementations)
@@ -146,6 +152,7 @@ For each active organisation:
 - Activity level (Active/Maintained/Legacy/Archived)
 
 Identify:
+
 - **Major players**: Organisations with 3+ active domain repos
 - **Minor contributors**: 1-2 repos, occasional contributions
 - **Historical contributors**: Repos now archived or inactive
@@ -166,6 +173,7 @@ Aggregate technology data across all repositories:
 Identify domain standards and patterns:
 
 **Government standards** (look for references in READMEs and descriptions):
+
 - GDS Service Standard compliance
 - GOV.UK Design System usage
 - Gov.uk Notify for notifications
@@ -174,6 +182,7 @@ Identify domain standards and patterns:
 - Common cross-government patterns (UPRN, Companies House API, HMRC API)
 
 **Architecture patterns**:
+
 - What architectural patterns appear repeatedly? (microservices, event-driven, API-first)
 - What deployment patterns? (containerised, serverless, traditional VM)
 - What testing approaches?
@@ -202,6 +211,7 @@ Identify teams working on similar problems who might benefit from sharing:
 - Areas where a single shared implementation could replace multiple isolated ones
 
 For each opportunity, note:
+
 - Organisations involved
 - Overlap description
 - Potential benefit (effort saved, consistency improved, standards alignment)

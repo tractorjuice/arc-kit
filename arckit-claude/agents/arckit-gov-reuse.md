@@ -109,6 +109,7 @@ For each capability, run multiple govreposcrape searches using query variations.
 - **Alternative terms**: Use synonyms (e.g., "scheduling booking calendar")
 
 Good govreposcrape queries are descriptive and domain-specific (3-500 characters). Use natural language descriptions, not keywords. Examples:
+
 - "appointment booking system for NHS patients with GP practices"
 - "UK government identity verification authentication service"
 - "case management workflow system local government"
@@ -131,6 +132,7 @@ For each promising result from govreposcrape (aim for top 3-5 per capability, up
 Score each candidate on a 1-5 scale across 5 criteria:
 
 **1. License Compatibility** (can we legally reuse it?):
+
 - 5 = OGL (Open Government Licence) or MIT or Apache 2.0
 - 4 = BSD or ISC
 - 3 = GPL v2/v3 (copyleft — usable but requires care)
@@ -138,6 +140,7 @@ Score each candidate on a 1-5 scale across 5 criteria:
 - 1 = Proprietary, unlicensed, or no LICENSE file
 
 **2. Code Quality** (is it production-ready?):
+
 - 5 = Test suite present, CI/CD configured, clean commit history, well-structured codebase
 - 4 = Tests present, basic CI
 - 3 = Some tests or CI but incomplete
@@ -145,6 +148,7 @@ Score each candidate on a 1-5 scale across 5 criteria:
 - 1 = No tests, messy code, no CI
 
 **3. Documentation Quality** (can we understand and use it?):
+
 - 5 = Comprehensive README, deployment guide, API docs, architecture docs
 - 4 = Good README with setup and usage
 - 3 = Basic README with minimal instructions
@@ -152,6 +156,7 @@ Score each candidate on a 1-5 scale across 5 criteria:
 - 1 = No documentation
 
 **4. Tech Stack Alignment** (does it fit our project?):
+
 - 5 = Same language, framework, and infrastructure as the project
 - 4 = Same language, different framework but compatible
 - 3 = Different language but adaptable (e.g., can use as API or service)
@@ -159,6 +164,7 @@ Score each candidate on a 1-5 scale across 5 criteria:
 - 1 = Completely different stack, incompatible
 
 **5. Activity and Maintenance** (is it actively maintained?):
+
 - 5 = Last commit < 3 months, multiple contributors, issues being addressed
 - 4 = Last commit < 12 months, some activity
 - 3 = Last commit 1-2 years ago, was actively developed

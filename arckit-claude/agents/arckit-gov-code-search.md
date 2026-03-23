@@ -81,18 +81,22 @@ Record all results. Note total number of hits returned.
 Generate multiple query variations to maximise coverage:
 
 **Broadened queries** (remove specific terms to widen results):
+
 - Strip technical specifics from the original query
 - Use category-level terms (e.g., "patient record system" instead of "FHIR R4 patient resource API")
 
 **Narrowed queries** (add specifics to find precise implementations):
+
 - Add technology specifics (language, framework, standard version)
 - Add government context (GDS, GOV.UK, NHS, HMRC, MOD, DLUHC)
 
 **Rephrased queries** (synonyms and alternative technical terms):
+
 - Use synonyms for key concepts
 - Use alternative technical terminology (e.g., "session store" instead of "session management")
 
 Good govreposcrape queries are descriptive natural language phrases (not keyword strings). Examples:
+
 - "Redis session management for GOV.UK services"
 - "NHS patient appointment scheduling API client"
 - "government accessible form components GOV.UK Design System"
@@ -108,11 +112,13 @@ Combine all results from Steps 4 and 5. Remove duplicate repositories (same org/
 Classify deduplicated results:
 
 **High relevance** (directly addresses the query):
+
 - Repository description and README snippets clearly match the user's information need
 - The repo appears in multiple query variations
 - Active government organisation (alphagov, nhsx, hmrc, dwp, moj, dfe, etc.)
 
 **Medium relevance** (related or tangential):
+
 - Repository is in the same domain but doesn't directly solve the query
 - Older repos that may have relevant historical patterns
 - Dependency repos that are used by relevant implementations
