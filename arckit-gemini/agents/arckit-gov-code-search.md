@@ -201,7 +201,29 @@ Where multiple repos solve the same problem differently, compare:
 
 This comparison is valuable for teams choosing an implementation approach.
 
-### Step 11: Detect Version and Determine Increment
+### Step 10b: Project Relevance Mapping (if project context available)
+
+If project requirements were read in Step 1, create a table mapping the top search results back to specific project requirements:
+
+| Repository | Relevant Requirements | How It Helps | Quick Start |
+|---|---|---|---|
+| [org/repo] | [FR-001, INT-003] | [What this repo provides for those requirements] | [Install command or clone URL] |
+
+This connects abstract search results to concrete project needs and gives developers an immediate next action. Include the exact install command (npm install, pip install, git clone) for each repo where applicable.
+
+If no project context exists, skip this step.
+
+### Step 11: Search Effectiveness Assessment
+
+Evaluate the search results honestly:
+
+- **Coverage**: What percentage of the query's intent was addressed by the results? Were central government repos (alphagov, NHSDigital, govuk-one-login) found, or only local council repos?
+- **Gaps**: What specific topics returned no relevant results? For each gap, provide an alternative search strategy: direct GitHub org URL, official API documentation URL, or specific WebSearch query the user can try
+- **Index limitations**: If govreposcrape results are dominated by a narrow set of orgs or technologies, note this explicitly so the user understands the result bias
+
+This section prevents users from drawing false conclusions (e.g., "no government team has built this") when the reality is the index simply doesn't cover it.
+
+### Step 12: Detect Version and Determine Increment
 
 Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCSR-*-v*.md` files. Read the highest version number from filenames.
 
