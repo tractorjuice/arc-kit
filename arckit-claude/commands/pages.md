@@ -166,7 +166,10 @@ projects/
 │   │   ├── ARC-001-DSCT-{NNN}-v1.0.md  # Data Source Discovery
 │   │   ├── ARC-001-AWRS-{NNN}-v1.0.md  # AWS Research
 │   │   ├── ARC-001-AZRS-{NNN}-v1.0.md  # Azure Research
-│   │   └── ARC-001-GCRS-{NNN}-v1.0.md  # GCP Research
+│   │   ├── ARC-001-GCRS-{NNN}-v1.0.md  # GCP Research
+│   │   ├── ARC-001-GOVR-{NNN}-v1.0.md  # Government Reuse Assessment
+│   │   ├── ARC-001-GCSR-{NNN}-v1.0.md  # Government Code Search Report
+│   │   └── ARC-001-GLND-{NNN}-v1.0.md  # Government Landscape Analysis
 │   ├── reviews/
 │   │   ├── ARC-001-HLDR-v1.0.md        # HLD Review
 │   │   └── ARC-001-DLDR-v1.0.md        # DLD Review
@@ -245,6 +248,9 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | AZRS | `ARC-*-AZRS-*.md` | Azure Research |
 | | GCRS | `ARC-*-GCRS-*.md` | GCP Research |
 | | DSCT | `ARC-*-DSCT-*.md` | Data Source Discovery |
+| | GOVR | `ARC-*-GOVR-*.md` | Government Reuse Assessment |
+| | GCSR | `ARC-*-GCSR-*.md` | Government Code Search Report |
+| | GLND | `ARC-*-GLND-*.md` | Government Landscape Analysis |
 | **Reporting** | | | |
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
 
