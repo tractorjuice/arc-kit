@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ArcKit Hero Image</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px;
+    height: 627px;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  }
+  .container {
+    width: 1200px;
+    height: 627px;
+    position: relative;
+    overflow: hidden;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+<svg width="1200" height="627" viewBox="0 0 1200 627" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+
+    <!-- Grid pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#1e3a5f" stroke-width="0.5" opacity="0.4"/>
+    </pattern>
+
+    <!-- Glow filters -->
+    <filter id="glowBlue" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="glowGreen" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="glowAmber" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+    <filter id="glowPurple" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <!-- Soft glow for nodes -->
+    <filter id="nodeGlowBlue" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="12" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="nodeGlowGreen" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="12" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="nodeGlowAmber" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="12" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="nodeGlowPurple" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="12" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Center text glow -->
+    <filter id="centerGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Arrowhead markers -->
+    <marker id="arrowBlue" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3b82f6"/>
+    </marker>
+    <marker id="arrowGreen" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#22c55e"/>
+    </marker>
+    <marker id="arrowAmber" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#a855f7"/>
+    </marker>
+
+    <!-- Radial highlight for center circle -->
+    <radialGradient id="centerCircleGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#1e3a5f; stop-opacity:0.8"/>
+      <stop offset="100%" style="stop-color:#0f172a; stop-opacity:0.9"/>
+    </radialGradient>
+
+    <!-- Node gradients -->
+    <linearGradient id="gradBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1d4ed8"/>
+      <stop offset="100%" style="stop-color:#3b82f6"/>
+    </linearGradient>
+    <linearGradient id="gradGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#15803d"/>
+      <stop offset="100%" style="stop-color:#22c55e"/>
+    </linearGradient>
+    <linearGradient id="gradAmber" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#b45309"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+    <linearGradient id="gradPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7e22ce"/>
+      <stop offset="100%" style="stop-color:#a855f7"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="627" fill="url(#bgGrad)"/>
+
+  <!-- Subtle grid overlay -->
+  <rect width="1200" height="627" fill="url(#grid)" opacity="0.6"/>
+
+  <!-- Ambient glow blobs -->
+  <ellipse cx="600" cy="314" rx="280" ry="200" fill="#1e40af" opacity="0.06"/>
+  <ellipse cx="380" cy="200" rx="180" ry="130" fill="#3b82f6" opacity="0.04"/>
+  <ellipse cx="820" cy="430" rx="180" ry="130" fill="#a855f7" opacity="0.04"/>
+
+  <!-- ===== TITLE SECTION ===== -->
+  <text x="600" y="72" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="38" font-weight="700" fill="#f8fafc" letter-spacing="-0.5">
+    Self-Improving Architecture Tools
+  </text>
+  <text x="600" y="106" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="18" font-weight="400" fill="#94a3b8" letter-spacing="0.2">
+    ArcKit optimises its own prompts autonomously
+  </text>
+
+  <!-- Subtle divider line -->
+  <line x1="440" y1="122" x2="760" y2="122" stroke="#334155" stroke-width="1"/>
+
+  <!-- ===== CIRCULAR FLOW DIAGRAM ===== -->
+  <!-- Center at (600, 360), radius ~155 for node centers -->
+
+  <!-- Circular track (dashed) -->
+  <circle cx="600" cy="360" r="155" fill="none" stroke="#334155" stroke-width="1.5" stroke-dasharray="6,4" opacity="0.5"/>
+
+  <!-- Center circle -->
+  <circle cx="600" cy="360" r="88" fill="url(#centerCircleGrad)" stroke="#334155" stroke-width="1.5"/>
+
+  <!-- Center score text -->
+  <!-- "8.0" fading out -->
+  <text x="580" y="348" text-anchor="end"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="28" font-weight="700" fill="#64748b" filter="url(#centerGlow)">8.0</text>
+
+  <!-- Arrow between scores -->
+  <text x="600" y="348" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="22" font-weight="400" fill="#475569">→</text>
+
+  <!-- "9.2" bright -->
+  <text x="622" y="348" text-anchor="start"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="28" font-weight="800" fill="#22c55e" filter="url(#centerGlow)">9.2</text>
+
+  <!-- Score label -->
+  <text x="600" y="372" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="500" fill="#64748b" letter-spacing="1.5">QUALITY SCORE</text>
+
+  <!-- Iteration count -->
+  <text x="600" y="395" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="400" fill="#475569">12 iterations</text>
+
+  <!-- ===== CONNECTING ARCS (curved paths between nodes) ===== -->
+  <!-- Execute (top, 600,205) → Score (right, 755,360) -->
+  <path d="M 648,222 Q 730,260 738,308"
+        fill="none" stroke="#3b82f6" stroke-width="2.5" opacity="0.8"
+        marker-end="url(#arrowBlue)"/>
+
+  <!-- Score (right, 755,360) → Decide (bottom, 600,515) -->
+  <path d="M 738,412 Q 730,468 688,490"
+        fill="none" stroke="#22c55e" stroke-width="2.5" opacity="0.8"
+        marker-end="url(#arrowGreen)"/>
+
+  <!-- Decide (bottom, 600,515) → Iterate (left, 445,360) -->
+  <path d="M 512,490 Q 468,462 462,412"
+        fill="none" stroke="#f59e0b" stroke-width="2.5" opacity="0.8"
+        marker-end="url(#arrowAmber)"/>
+
+  <!-- Iterate (left, 445,360) → Execute (top, 600,205) -->
+  <path d="M 462,308 Q 468,252 552,222"
+        fill="none" stroke="#a855f7" stroke-width="2.5" opacity="0.8"
+        marker-end="url(#arrowPurple)"/>
+
+  <!-- ===== NODE: EXECUTE (top center) ===== -->
+  <!-- Glow halo -->
+  <rect x="530" y="185" width="140" height="52" rx="12" fill="#3b82f6" opacity="0.2" filter="url(#nodeGlowBlue)"/>
+  <!-- Node box -->
+  <rect x="530" y="185" width="140" height="52" rx="12" fill="url(#gradBlue)" stroke="#60a5fa" stroke-width="1.5"/>
+  <!-- Step number -->
+  <text x="548" y="207" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" font-weight="600" fill="#bfdbfe" opacity="0.9">01</text>
+  <text x="600" y="207" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="15" font-weight="700" fill="#ffffff" letter-spacing="0.5">EXECUTE</text>
+  <text x="600" y="225" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" font-weight="400" fill="#bfdbfe">Run prompt on benchmark</text>
+
+  <!-- ===== NODE: SCORE (right) ===== -->
+  <!-- Glow halo -->
+  <rect x="688" y="334" width="134" height="52" rx="12" fill="#22c55e" opacity="0.2" filter="url(#nodeGlowGreen)"/>
+  <!-- Node box -->
+  <rect x="688" y="334" width="134" height="52" rx="12" fill="url(#gradGreen)" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="707" y="356" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" font-weight="600" fill="#bbf7d0" opacity="0.9">02</text>
+  <text x="755" y="356" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="15" font-weight="700" fill="#ffffff" letter-spacing="0.5">SCORE</text>
+  <text x="755" y="374" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" font-weight="400" fill="#bbf7d0">LLM judge evaluation</text>
+
+  <!-- ===== NODE: DECIDE (bottom center) ===== -->
+  <!-- Glow halo -->
+  <rect x="530" y="487" width="140" height="52" rx="12" fill="#f59e0b" opacity="0.2" filter="url(#nodeGlowAmber)"/>
+  <!-- Node box -->
+  <rect x="530" y="487" width="140" height="52" rx="12" fill="url(#gradAmber)" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="548" y="509" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" font-weight="600" fill="#fef3c7" opacity="0.9">03</text>
+  <text x="600" y="509" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="15" font-weight="700" fill="#ffffff" letter-spacing="0.5">DECIDE</text>
+  <text x="600" y="527" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" font-weight="400" fill="#fef3c7">Accept or retry?</text>
+
+  <!-- ===== NODE: ITERATE (left) ===== -->
+  <!-- Glow halo -->
+  <rect x="378" y="334" width="134" height="52" rx="12" fill="#a855f7" opacity="0.2" filter="url(#nodeGlowPurple)"/>
+  <!-- Node box -->
+  <rect x="378" y="334" width="134" height="52" rx="12" fill="url(#gradPurple)" stroke="#c084fc" stroke-width="1.5"/>
+  <text x="397" y="356" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" font-weight="600" fill="#f3e8ff" opacity="0.9">04</text>
+  <text x="445" y="356" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="15" font-weight="700" fill="#ffffff" letter-spacing="0.5">ITERATE</text>
+  <text x="445" y="374" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" font-weight="400" fill="#f3e8ff">Rewrite prompt</text>
+
+  <!-- ===== LEFT SIDE STATS PANEL ===== -->
+  <rect x="60" y="190" width="220" height="310" rx="12" fill="#0f172a" stroke="#1e3a5f" stroke-width="1" opacity="0.9"/>
+  <rect x="60" y="190" width="220" height="310" rx="12" fill="#1e293b" opacity="0.5"/>
+
+  <!-- Stats header -->
+  <text x="170" y="216" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#64748b" letter-spacing="1.5">EXPERIMENT LOG</text>
+  <line x1="80" y1="224" x2="260" y2="224" stroke="#1e3a5f" stroke-width="1"/>
+
+  <!-- Stat rows -->
+  <!-- Row 1 -->
+  <circle cx="88" cy="246" r="4" fill="#3b82f6"/>
+  <text x="100" y="250" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" fill="#94a3b8">Iteration 1</text>
+  <text x="258" y="250" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#64748b">8.0</text>
+
+  <!-- Row 2 -->
+  <circle cx="88" cy="270" r="4" fill="#22c55e"/>
+  <text x="100" y="274" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" fill="#94a3b8">Iteration 4</text>
+  <text x="258" y="274" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#86efac">8.4</text>
+
+  <!-- Row 3 -->
+  <circle cx="88" cy="294" r="4" fill="#22c55e"/>
+  <text x="100" y="298" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" fill="#94a3b8">Iteration 7</text>
+  <text x="258" y="298" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#86efac">8.7</text>
+
+  <!-- Row 4 -->
+  <circle cx="88" cy="318" r="4" fill="#22c55e"/>
+  <text x="100" y="322" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" fill="#94a3b8">Iteration 10</text>
+  <text x="258" y="322" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#86efac">9.0</text>
+
+  <!-- Row 5 - best -->
+  <circle cx="88" cy="342" r="4" fill="#22c55e"/>
+  <rect x="76" y="332" width="190" height="20" rx="4" fill="#14532d" opacity="0.4"/>
+  <text x="100" y="346" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#f0fdf4">Iteration 12</text>
+  <text x="258" y="346" text-anchor="end" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="12" font-weight="700" fill="#22c55e">9.2 ✓</text>
+
+  <line x1="80" y1="362" x2="260" y2="362" stroke="#1e3a5f" stroke-width="1"/>
+
+  <!-- Delta stat -->
+  <text x="170" y="384" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" fill="#64748b">Improvement</text>
+  <text x="170" y="408" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="26" font-weight="800" fill="#22c55e">+15%</text>
+
+  <line x1="80" y1="424" x2="260" y2="424" stroke="#1e3a5f" stroke-width="1"/>
+
+  <!-- Command badge -->
+  <text x="170" y="445" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" fill="#64748b">Command optimised</text>
+  <rect x="96" y="452" width="148" height="24" rx="6" fill="#1e3a5f" opacity="0.8" stroke="#3b82f6" stroke-width="1"/>
+  <text x="170" y="469" text-anchor="middle"
+        font-family="'Courier New', Courier, monospace"
+        font-size="12" font-weight="600" fill="#60a5fa">/arckit.requirements</text>
+
+  <!-- ===== RIGHT SIDE PANEL ===== -->
+  <rect x="920" y="190" width="220" height="310" rx="12" fill="#0f172a" stroke="#1e3a5f" stroke-width="1" opacity="0.9"/>
+  <rect x="920" y="190" width="220" height="310" rx="12" fill="#1e293b" opacity="0.5"/>
+
+  <!-- Panel header -->
+  <text x="1030" y="216" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#64748b" letter-spacing="1.5">HOW IT WORKS</text>
+  <line x1="940" y1="224" x2="1120" y2="224" stroke="#1e3a5f" stroke-width="1"/>
+
+  <!-- Step descriptions -->
+  <!-- Execute -->
+  <rect x="938" y="234" width="24" height="24" rx="6" fill="#1d4ed8" opacity="0.8"/>
+  <text x="950" y="250" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="700" fill="#fff">E</text>
+  <text x="972" y="243" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#93c5fd">Execute</text>
+  <text x="972" y="257" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#64748b">Claude runs prompt on</text>
+  <text x="972" y="269" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#64748b">real architecture tasks</text>
+
+  <!-- Score -->
+  <rect x="938" y="289" width="24" height="24" rx="6" fill="#15803d" opacity="0.8"/>
+  <text x="950" y="305" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="700" fill="#fff">S</text>
+  <text x="972" y="298" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#86efac">Score</text>
+  <text x="972" y="312" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#64748b">LLM judge scores output</text>
+  <text x="972" y="324" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#64748b">quality 1–10</text>
+
+  <!-- Decide -->
+  <rect x="938" y="344" width="24" height="24" rx="6" fill="#b45309" opacity="0.8"/>
+  <text x="950" y="360" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="700" fill="#fff">D</text>
+  <text x="972" y="353" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#fcd34d">Decide</text>
+  <text x="972" y="367" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#64748b">Accept if score &gt; threshold,</text>
+  <text x="972" y="379" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#64748b">else queue for rewrite</text>
+
+  <!-- Iterate -->
+  <rect x="938" y="399" width="24" height="24" rx="6" fill="#7e22ce" opacity="0.8"/>
+  <text x="950" y="415" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="700" fill="#fff">I</text>
+  <text x="972" y="408" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" font-weight="600" fill="#d8b4fe">Iterate</text>
+  <text x="972" y="422" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#64748b">Claude rewrites prompt</text>
+  <text x="972" y="434" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#64748b">using failure analysis</text>
+
+  <line x1="940" y1="448" x2="1120" y2="448" stroke="#1e3a5f" stroke-width="1"/>
+  <text x="1030" y="466" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#475569">Fully autonomous · No human in loop</text>
+  <text x="1030" y="482" text-anchor="middle"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="10" fill="#475569">until convergence</text>
+
+  <!-- ===== BOTTOM BAR ===== -->
+  <line x1="60" y1="590" x2="1140" y2="590" stroke="#1e3a5f" stroke-width="1" opacity="0.6"/>
+
+  <!-- ArcKit wordmark -->
+  <text x="60" y="614"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="22" font-weight="800" fill="#f8fafc" letter-spacing="-0.5">Arc</text>
+  <text x="103" y="614"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="22" font-weight="800" fill="#3b82f6" letter-spacing="-0.5">Kit</text>
+  <text x="138" y="614"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="12" font-weight="400" fill="#475569" letter-spacing="0.3"> · Enterprise Architecture Governance Toolkit</text>
+
+  <!-- Right attribution -->
+  <text x="1140" y="614" text-anchor="end"
+        font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif"
+        font-size="11" fill="#334155">Inspired by karpathy/autoresearch</text>
+
+</svg>
+</div>
+</body>
+</html>
