@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.5.0] - 2026-03-23
+
 ### Added
 
 - **govreposcrape MCP server** — Semantic search over 24,500+ UK government repositories (no API key required)
@@ -17,6 +19,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Government Code for Data Integration step in `/arckit.datascout` agent — discovers existing API client libraries
 - Government Implementation Patterns step in AWS, Azure, and GCP research agents — checks for government precedent
 - Document type codes: GOVR (Government Reuse Assessment), GCSR (Government Code Search Report), GLND (Government Landscape Analysis)
+- GOVR, GCSR, GLND added to `/arckit.pages` artifact type list
+
+## [4.4.0] - 2026-03-21
+
+### Added
+
+- Wardley map mathematical model metrics in commands and autoresearch
+- Git worktree isolation for autoresearch
+- Autoresearch guide for self-improving command prompts
+- Rate limit display in statusline
+
+### Fixed
+
+- Sync guides between arckit-claude and docs directories
 
 ## [4.3.1] - 2026-03-18
 

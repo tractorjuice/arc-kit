@@ -5,6 +5,32 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.5.0] - 2026-03-23
+
+### Added
+
+- **govreposcrape MCP server** — Semantic search over 24,500+ UK government repositories (no API key required)
+- `/arckit.gov-reuse` command and agent — Discover reusable UK government code before building from scratch
+- `/arckit.gov-code-search` command and agent — Search UK government repositories using natural language queries
+- `/arckit.gov-landscape` command and agent — Map the UK government code landscape for a domain
+- Government Code Reuse Check step in `/arckit.research` agent — adds "Reuse Government Code" as 5th build-vs-buy option
+- Government Code for Data Integration step in `/arckit.datascout` agent — discovers existing API client libraries
+- Government Implementation Patterns step in AWS, Azure, and GCP research agents — checks for government precedent
+- Document type codes: GOVR, GCSR, GLND with templates, guides, and quality checks
+- GOVR, GCSR, GLND added to `/arckit.pages` artifact type list
+
+## [4.4.0] - 2026-03-21
+
+### Added
+
+- Wardley map mathematical model metrics in commands and autoresearch
+- Git worktree isolation for autoresearch
+- Autoresearch guide for self-improving command prompts
+
+### Fixed
+
+- Sync guides between arckit-claude and docs directories
+
 ## [4.3.1] - 2026-03-18
 
 ### Added
