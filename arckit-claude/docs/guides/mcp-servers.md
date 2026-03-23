@@ -41,7 +41,7 @@ The plugin loads MCP servers and hooks at startup. **A restart is required** aft
 
 After restart, open the plugin manager (`/plugin`) and navigate to **Installed**. You should see:
 
-- **Commands**: 64 slash commands
+- **Commands**: 67 slash commands
 - **Agents**: 6 autonomous research agents
 - **Skills**: 1 (Wardley Mapping)
 - **Hooks**: SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest
@@ -164,7 +164,7 @@ Invalid MCP server config for 'google-developer-knowledge': Missing environment 
 Invalid MCP server config for 'datacommons-mcp': Missing environment variables: DATA_COMMONS_API_KEY
 ```
 
-**These errors are harmless.** They mean you haven't configured the optional API keys. All 64 commands, 6 agents, hooks, and skills work without them. Only `/arckit:gcp-research` and Data Commons lookups are affected.
+**These errors are harmless.** They mean you haven't configured the optional API keys. All 67 commands, 9 agents, hooks, and skills work without them. Only `/arckit:gcp-research` and Data Commons lookups are affected.
 
 **To fix**: Set the environment variables as described above and restart Claude Code.
 

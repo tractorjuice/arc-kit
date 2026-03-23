@@ -1,7 +1,7 @@
 {
   "name": "arckit",
   "version": "4.5.1",
-  "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 64 commands for architecture artifacts, vendor procurement, and UK Government compliance",
+  "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 67 commands for architecture artifacts, vendor procurement, and UK Government compliance",
   "contextFileName": "GEMINI.md",
   "mcpServers": {
     "aws-knowledge": {
@@ -21,6 +21,9 @@
       "headers": {
         "X-API-Key": "${DATA_COMMONS_API_KEY}"
       }
+    },
+    "govreposcrape": {
+      "httpUrl": "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp"
     }
   },
   "themes": [
