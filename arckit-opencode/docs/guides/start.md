@@ -166,7 +166,7 @@ Each command automatically creates numbered project directories (001-\*, 002-\*)
 | Cloud Migration | Platform strategy | `aws-research` / `azure-research` → `platform-design` → `wardley` |
 | Data Platform | Data architecture | `data-model` → `datascout` → `data-mesh-contract` |
 
-See [WORKFLOW-DIAGRAMS.md](../../WORKFLOW-DIAGRAMS.md) for visual workflow diagrams.
+See [WORKFLOW-DIAGRAMS.md](../WORKFLOW-DIAGRAMS.md) for visual workflow diagrams.
 
 ---
 

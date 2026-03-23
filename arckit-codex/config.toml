@@ -21,6 +21,10 @@ type = "http"
 url = "https://api.datacommons.org/mcp"
 headers = { "X-API-Key" = "${DATA_COMMONS_API_KEY}" }
 
+[mcp_servers.govreposcrape]
+type = "http"
+url = "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp"
+
 # ── Agent Roles (experimental) ──────────────────────
 # Requires: codex multi-agent feature flag enabled
 
@@ -48,6 +52,18 @@ config_file = "agents/arckit-framework.toml"
 [agents.roles.arckit-gcp-research]
 description = "Use this agent when the user needs Google Cloud-specific technology research using the Google Developer Knowledge MCP server to match project requirements to Google Cloud services, architecture patterns, Architecture Framework guidance, and Security Command Center controls. Examples:"
 config_file = "agents/arckit-gcp-research.toml"
+
+[agents.roles.arckit-gov-code-search]
+description = "Use this agent when the user wants to search UK government repositories using natural language queries. This agent provides general-purpose semantic search across 24,500+ government repos via govreposcrape. Examples:"
+config_file = "agents/arckit-gov-code-search.toml"
+
+[agents.roles.arckit-gov-landscape]
+description = "Use this agent when the user wants to understand what UK government has built in a domain — mapping organisations, technology patterns, standards, and maturity levels. Examples:"
+config_file = "agents/arckit-gov-landscape.toml"
+
+[agents.roles.arckit-gov-reuse]
+description = "Use this agent when the user wants to discover reusable UK government open-source code before building from scratch. This agent searches 24,500+ government repositories via govreposcrape and assesses candidates for reusability. Examples:"
+config_file = "agents/arckit-gov-reuse.toml"
 
 [agents.roles.arckit-research]
 description = "Use this agent when the user needs technology and service market research for a project, including build vs buy analysis, vendor evaluation, TCO comparison, and UK Government Digital Marketplace search. This agent performs extensive web research autonomously. Examples:"

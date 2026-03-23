@@ -96,6 +96,29 @@ All artifacts must pass these 10 checks:
 - Architecture diagram (Mermaid) showing service relationships
 - Pricing tier analysis with estimated monthly costs
 
+### GOVR -- Government Reuse Assessment
+
+- Reuse candidates scored on 5 criteria (license, code quality, documentation, tech stack, activity)
+- License compatibility matrix present
+- Tech stack alignment table comparing candidate tech to project tech
+- Gap analysis covering capabilities with no reusable code found
+- Recommended reuse strategy per candidate (Fork / Library / Reference / None)
+
+### GCSR -- Government Code Search Report
+
+- Search results grouped by relevance (high/medium)
+- Repository profiles include org, language, license, last activity
+- Code patterns section identifying common approaches across results
+- Implementation approaches comparison table
+
+### GLND -- Government Landscape Analysis
+
+- Organisation landscape map with repo counts and activity levels
+- Technology stack analysis covering languages, frameworks, databases
+- Standards and patterns adoption table
+- Maturity assessment per repository (activity, docs, tests, CI/CD, community)
+- Collaboration opportunities identified
+
 ### SOW -- Statement of Work
 
 - Scope clearly defined with in-scope and out-of-scope lists

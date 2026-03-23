@@ -636,6 +636,51 @@ graph TD
 
 ---
 
+## 7. Government Code Discovery
+
+For UK Government projects, run these commands during Alpha/Beta to check for reusable code before building from scratch. Uses the govreposcrape MCP server (no API key required).
+
+```mermaid
+graph TD
+    %% Prerequisites
+    A[requirements] --> B[gov-reuse]
+    C[gov-code-search] -.-> B
+
+    %% Discovery flow
+    B -.-> D[research]
+    B -.-> E[adr]
+
+    %% Landscape analysis
+    F[gov-landscape] -.-> G[framework]
+    F -.-> H[wardley]
+    C -.-> B
+
+    style A fill:#90EE90
+    style B fill:#87CEEB
+    style C fill:#87CEEB
+    style D fill:#90EE90
+    style E fill:#FFA500
+    style F fill:#87CEEB
+    style G fill:#90EE90
+    style H fill:#90EE90
+```
+
+**Key:**
+
+- **Blue boxes** = Government code discovery commands (use govreposcrape MCP)
+- **Green boxes** = Standard workflow commands that consume discovery outputs
+- **Orange boxes** = Decision records informed by reuse assessment
+
+**When to use:**
+
+- Run `gov-code-search` first to find relevant existing code
+- Run `gov-reuse` after requirements to assess specific reuse opportunities before build-vs-buy
+- Run `gov-landscape` to understand the broader government code ecosystem for a domain
+
+**Duration**: 0.5-2 days (before or during research phase)
+
+---
+
 ## Command Dependency Legend
 
 ### Dependency Types in Diagrams
@@ -653,7 +698,7 @@ graph TD
 | 3 | Business Justification | sobc |
 | 4 | Requirements | requirements |
 | 5 | Strategic Planning & Synthesis | platform-design, roadmap, strategy, framework, glossary |
-| 6 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, gcp-research*, datascout, dfd, wardley, wardley.value-chain, wardley.doctrine, wardley.gameplay, wardley.climate, diagram, adr |
+| 6 | Detailed Design | data-model, data-mesh-contract, dpia, research, azure-research*, aws-research*, gcp-research*, datascout, gov-reuse†, gov-code-search†, gov-landscape†, dfd, wardley, wardley.value-chain, wardley.doctrine, wardley.gameplay, wardley.climate, diagram, adr |
 | 7 | Procurement | sow, dos, gcloud-search, gcloud-clarify, evaluate, score |
 | 8 | Design Reviews | hld-review, dld-review |
 | 9 | Implementation | backlog |
@@ -665,6 +710,7 @@ graph TD
 
 > **\*** `azure-research` and `aws-research` are alternatives to `research` for cloud-specific projects. Each requires its respective MCP server.
 > **datascout** discovers external data sources (APIs, datasets, open data portals) and feeds into data-model and research.
+> **†** `gov-reuse`, `gov-code-search`, and `gov-landscape` use the govreposcrape MCP server (no API key required) to search 24,500+ UK government repositories.
 
 ---
 

@@ -24,7 +24,7 @@ import sys
 
 # Multi-instance document types that require sequence numbers
 # Keep in sync with arckit-claude/config/doc-types.mjs MULTI_INSTANCE_TYPES
-MULTI_INSTANCE_TYPES = {"ADR", "DIAG", "DFD", "WARD", "DMC", "RSCH", "AWRS", "AZRS", "GCRS", "DSCT"}
+MULTI_INSTANCE_TYPES = {"ADR", "DIAG", "DFD", "WARD", "DMC", "RSCH", "AWRS", "AZRS", "GCRS", "DSCT", "WGAM", "WCLM", "WVCH", "GOVR", "GCSR", "GLND"}
 
 
 def is_multi_instance(doc_type):

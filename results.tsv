@@ -1,0 +1,4 @@
+commit	structural	score	status	description
+ed1349d	FAIL	0.0	discard	baseline (retroactively failed: GOV.UK Design System evo 0.78 labelled Product not Commodity)
+d685c02	FAIL	0.0	discard	stage boundary fix + positioning rationale (GOV.UK Design System 0.75 still labelled Product)
+add6956	PASS	9.0	keep	fix stage boundaries + avoid boundary values + positioning rationale + GOV.UK Design System example

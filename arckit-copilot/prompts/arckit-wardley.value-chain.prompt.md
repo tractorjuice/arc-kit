@@ -142,6 +142,14 @@ For each dependency you draw, verify:
 - Is this a direct dependency, or does it go via an intermediate component?
 - Have you captured all meaningful dependencies, or only the obvious ones?
 
+### Mathematical Validation (from `tractorjuice/wardleymap_math_model`)
+
+The value chain must satisfy these mathematical constraints:
+
+- **DAG acyclicity**: The dependency graph must be a directed acyclic graph — no circular dependencies
+- **Visibility ordering**: For each dependency edge A → B, visibility(A) >= visibility(B) — parents must be higher than children. If this constraint is violated, either the dependency direction is wrong or the visibility scores need adjustment
+- **Anchor constraint**: The anchor node must have the highest visibility (>= 0.90)
+
 ## Step 5: Assess Visibility (Y-axis)
 
 Read `.arckit/skills/wardley-mapping/references/evolution-stages.md` for supporting context on component characteristics.

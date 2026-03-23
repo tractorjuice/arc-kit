@@ -40,7 +40,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 64 commands, 6 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 67 commands, 9 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
 > **Why v2.1.71?** This version fixes background agent completion notifications missing output file paths (critical for ArcKit's 6 research agents), resolves plugin installation loss across multiple instances, fixes plugin hooks being silently dropped with `${CLAUDE_PLUGIN_ROOT}` templates, and includes all prior fixes for memory leaks in subagents, MCP server cache leaks, and worktree config sharing.
 
@@ -50,7 +50,7 @@ Then install from the Discover tab. Claude Code is the **primary development pla
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
-Zero-config: all 64 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+Zero-config: all 67 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
 
 **GitHub Copilot** (VS Code) — install the ArcKit CLI and scaffold prompt files:
 
@@ -77,7 +77,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v4.4.0](https://github.com/tractorjuice/arc-kit/releases/tag/v4.4.0)
+**Latest Release**: [v4.5.0](https://github.com/tractorjuice/arc-kit/releases/tag/v4.5.0)
 
 ### Platform Support
 
@@ -790,10 +790,10 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 | Feature | Claude Code | Gemini CLI | Copilot | Codex / OpenCode |
 |---------|:-----------:|:----------:|:-------:|:----------------:|
-| 64 slash commands | ✅ | ✅ | ✅ | ✅ |
+| 67 slash commands | ✅ | ✅ | ✅ | ✅ |
 | Templates & scripts | ✅ | ✅ | ✅ | ✅ |
-| Bundled MCP servers (AWS, Azure, GCP, DataCommons) | ✅ | ✅ (3 servers) | — | Manual setup |
-| **Autonomous research agents** (6 agents for research, datascout, cloud research, framework) | ✅ | — | ✅ (6 agents) | — |
+| Bundled MCP servers (AWS, Azure, GCP, DataCommons, govreposcrape) | ✅ | ✅ (3 servers) | — | Manual setup |
+| **Autonomous research agents** (9 agents for research, datascout, cloud research, gov code discovery, framework) | ✅ | — | ✅ (9 agents) | — |
 | **SessionStart hook** (auto-detect version + projects) | ✅ | — | — | — |
 | **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | — | — | — |
 | **PreToolUse hook** (ARC filename auto-correction) | ✅ | — | — | — |
@@ -808,7 +808,7 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 **Hooks** provide automated governance: filenames are auto-corrected to ArcKit conventions, project context is injected into every prompt so commands know what artifacts exist, MCP tools are auto-approved, and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
 
-Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 64 commands as prompt files and 6 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
+Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 67 commands as prompt files and 9 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
 
 ### Why Commands, Not Skills
 
@@ -939,7 +939,7 @@ Customize ArcKit templates without modifying defaults:
 
 ## Complete Command Reference
 
-All 64 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 67 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
 
 ### Status Legend
 
@@ -1028,6 +1028,16 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 | `/arckit.datascout` | Discover external data sources (APIs, datasets, open data portals) to fulfil project requirements | [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-DSCT-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-DSCT-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/ARC-001-DSCT-v1.0.md) | 🟣 Experimental |
 
 > **Note**: The Google Developer Knowledge MCP requires an API key (`GOOGLE_API_KEY` environment variable). See the [GCP Research guide](docs/guides/gcp-research.md) for setup instructions.
+
+### Government Code Discovery
+
+These commands use the [govreposcrape MCP](https://github.com/MHCLG/govreposcrape-mcp) server to search 24,500+ UK government repositories. The Claude Code plugin bundles the MCP server automatically. No API key required.
+
+| Command | Description | Examples | Status |
+|---------|-------------|----------|--------|
+| `/arckit.gov-code-search` | Search 24,500+ UK government repositories using natural language | — | 🟣 Experimental |
+| `/arckit.gov-landscape` | Map the UK government code landscape for a domain | — | 🟣 Experimental |
+| `/arckit.gov-reuse` | Discover reusable UK government code before building from scratch | — | 🟣 Experimental |
 
 ### Procurement
 
@@ -1213,7 +1223,7 @@ Full guidance lives in `docs/` and the static site.
 
 - Quick tour: [docs/index.html](docs/index.html) (mirrors the public landing page).
 - Core guides: [docs/guides/principles.md](docs/guides/principles.md), [docs/guides/requirements.md](docs/guides/requirements.md), [docs/guides/procurement.md](docs/guides/procurement.md), [docs/guides/design-review.md](docs/guides/design-review.md).
-- Reference packs: [WORKFLOW-DIAGRAMS.md](docs/WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](docs/DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 64×64 command matrix.
+- Reference packs: [WORKFLOW-DIAGRAMS.md](docs/WORKFLOW-DIAGRAMS.md) and [DEPENDENCY-MATRIX.md](docs/DEPENDENCY-MATRIX.md) cover lifecycle visualisations and the 67×67 command matrix.
 - Traceability: [docs/guides/traceability.md](docs/guides/traceability.md) documents end-to-end requirements coverage.
 
 ## Relationship to Spec Kit
@@ -1289,7 +1299,7 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 **Which commands are affected?**
 
 - 🔴 HIGH RISK: `/arckit.sobc`, `/arckit.requirements`, `/arckit.data-model`, `/arckit.sow`
-- 🟢 MITIGATED (agent): `/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research`, `/arckit.gcp-research` — run as autonomous agents in separate context windows
+- 🟢 MITIGATED (agent): `/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research`, `/arckit.gcp-research`, `/arckit.gov-reuse`, `/arckit.gov-code-search`, `/arckit.gov-landscape` — run as autonomous agents in separate context windows
 - 🟡 MEDIUM RISK: `/arckit.risk`, `/arckit.evaluate`, `/arckit.principles`
 
 **See full guide**: [docs/TOKEN-LIMITS.md](docs/TOKEN-LIMITS.md)
@@ -1335,7 +1345,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v4.4.0](https://github.com/tractorjuice/arc-kit/releases/tag/v4.4.0)
+- **Latest Version**: [v4.5.0](https://github.com/tractorjuice/arc-kit/releases/tag/v4.5.0)
 
 ---
 

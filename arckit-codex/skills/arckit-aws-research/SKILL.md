@@ -146,6 +146,24 @@ For each requirement category, use MCP tools extensively (or their STANDALONE eq
 - Calculate based on projected usage with eu-west-2 pricing
 - Include optimization: Reserved Instances, Savings Plans, Spot, Graviton, S3 Intelligent-Tiering
 
+### Step 7b: Government Implementation Patterns
+
+Search govreposcrape for existing UK government implementations using the AWS services recommended above:
+
+1. **Search by service**: For each recommended AWS service, query govreposcrape:
+   - "[AWS service] UK government", "AWS [service] implementation"
+   - Example: "AWS Lambda UK government", "Amazon DynamoDB government"
+   - Use `resultMode: "snippets"` and `limit: 5` per query
+2. **Note findings**: For each relevant result:
+   - Which department/organisation uses this service
+   - Architecture patterns observed (serverless, containerised, etc.)
+   - Common configurations or companion services
+3. **Include in output**: Add a "Government Precedent" subsection to each service recommendation:
+   - If precedent found: "[Org] uses [service] for [purpose]" — adds confidence to recommendation
+   - If no precedent found: "No UK government precedent identified" — note as a consideration (not a blocker)
+
+If govreposcrape tools are unavailable, skip this step silently and proceed.
+
 ### Step 8: Generate Architecture Diagram
 
 Create a Mermaid diagram showing:
