@@ -142,6 +142,26 @@ For each category:
 - Search for ISO 27001, SOC 2, GDPR compliance, UK data residency
 - Check for security incidents in past 2 years
 
+### Step 5b: Government Code Reuse Check
+
+Search govreposcrape for existing UK government implementations of each research category:
+
+For each category identified in Step 4:
+
+1. **Search govreposcrape**: Query "[category] UK government implementation", "[category] open source government", "[category] GDS"
+   - Use `resultMode: "snippets"` and `limit: 10` per query
+2. **Assess results**: For each relevant result, note:
+   - Repository name and GitHub organisation
+   - Technology stack (language, frameworks)
+   - Activity level (last commit date, stars)
+   - License (OGL, MIT, Apache-2.0, etc.)
+3. **Feed into Build vs Buy**: Add a 5th option to the analysis: **Reuse Government Code**
+   - Alongside: Build Custom / Buy SaaS / Adopt Open Source / GOV.UK Platform / Reuse Government Code
+   - For reuse candidates: estimate integration/adaptation effort instead of full build effort
+   - TCO impact: typically lower license cost but integration effort varies
+
+If govreposcrape tools are unavailable, skip this step silently and proceed — all research continues via WebSearch/WebFetch.
+
 ### Step 6: Build vs Buy Analysis
 
 For each category, compare:
@@ -150,6 +170,7 @@ For each category, compare:
 - **Buy SaaS**: Vendor options, subscription costs, integration effort, 3-year TCO
 - **Adopt Open Source**: Hosting costs, setup effort, maintenance, support, 3-year TCO
 - **GOV.UK Platform** (if UK Gov): Free/subsidized options, eligibility, integration
+- **Reuse Government Code** (if UK Gov): Existing implementations found via govreposcrape, integration/adaptation effort, 3-year TCO
 
 Provide a recommendation with rationale.
 

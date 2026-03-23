@@ -272,6 +272,16 @@ For each component, determine:
    - Rapid commoditization risk
    - Skills gap risk
 
+5. **Mathematical Strategic Metrics** (from `tractorjuice/wardleymap_math_model`):
+
+   Compute these metrics for each component and include a summary table in the output:
+
+   - **Differentiation Pressure**: D(v) = visibility(v) x (1 - evolution(v)) — high D (> 0.4) indicates components where the organisation should invest in differentiation. These should appear in the \"Build\" category.
+   - **Commodity Leverage**: K(v) = (1 - visibility(v)) x evolution(v) — high K (> 0.4) indicates hidden infrastructure that should be commoditised. These should appear in the \"Buy/Rent\" category.
+   - **Dependency Risk**: R(a,b) = visibility(a) x (1 - evolution(b)) — high R (> 0.4) flags visible components depending on immature dependencies. These should appear in the Risk Analysis section.
+
+   **Validation**: The metrics must be consistent with the strategic recommendations. A component with high D flagged as \"Buy\" or a component with high K flagged as \"Build\" indicates a positioning or strategy error — review and correct.
+
 ### Wardley Book Knowledge (if Pinecone MCP available)
 
 If the `search-records` tool from the Pinecone MCP is available, use it to search the Wardley Mapping book corpus for relevant strategic context. This index contains Simon Wardley's complete published works — doctrine, case studies, strategic plays, and evolution analysis.

@@ -199,6 +199,25 @@ If the `search_indicators` and `get_observations` tools from the Data Commons MC
 
 If the Data Commons tools are not available, skip this step silently and proceed — all data discovery continues via WebSearch/WebFetch in subsequent steps.
 
+### Step 5e: Government Code for Data Integration
+
+Search govreposcrape for existing government code that integrates with the data sources being researched:
+
+1. **Search by data source**: For each data source category, query govreposcrape:
+   - "[data source] API integration", "[data source] client library"
+   - "[department] data pipeline", "[API name] SDK"
+   - Use `resultMode: "snippets"` and `limit: 10` per query
+2. **Discover reusable integration code**: Look for:
+   - API client libraries (e.g., Companies House API wrapper, OS Data Hub client)
+   - Data adapters and ETL pipelines
+   - Data validation and transformation utilities
+3. **Include in evaluation**: Add "Existing Government Integration Code" field to source evaluation cards in Step 7:
+   - Link to discovered repos
+   - Note language/framework compatibility
+   - Adjust integration effort estimates downward where reusable code exists
+
+If govreposcrape tools are unavailable, skip this step silently and proceed.
+
 ### Step 6: Category-Specific Research
 
 For each identified category, perform systematic research:

@@ -139,6 +139,24 @@ For each requirement category, use MCP tools extensively (or their STANDALONE eq
 - Calculate based on projected usage with UK region pricing
 - Include optimization: Reserved Instances, Azure Hybrid Benefit, Spot VMs, auto-scaling
 
+### Step 7b: Government Implementation Patterns
+
+Search govreposcrape for existing UK government implementations using the Azure services recommended above:
+
+1. **Search by service**: For each recommended Azure service, query govreposcrape:
+   - "[Azure service] UK government", "Azure [service] implementation"
+   - Example: "Azure Functions UK government", "Cosmos DB government"
+   - Use `resultMode: "snippets"` and `limit: 5` per query
+2. **Note findings**: For each relevant result:
+   - Which department/organisation uses this service
+   - Architecture patterns observed (serverless, containerised, etc.)
+   - Common configurations or companion services
+3. **Include in output**: Add a "Government Precedent" subsection to each service recommendation:
+   - If precedent found: "[Org] uses [service] for [purpose]" — adds confidence to recommendation
+   - If no precedent found: "No UK government precedent identified" — note as a consideration (not a blocker)
+
+If govreposcrape tools are unavailable, skip this step silently and proceed.
+
 ### Step 8: Generate Architecture Diagram
 
 Create a Mermaid diagram showing:
