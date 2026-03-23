@@ -70,6 +70,9 @@ export const DOC_TYPES = {
   'AWRS':      { name: 'AWS Research',                     category: 'Research' },
   'AZRS':      { name: 'Azure Research',                   category: 'Research' },
   'GCRS':      { name: 'GCP Research',                     category: 'Research' },
+  'GOVR':      { name: 'Government Reuse Assessment',     category: 'Research' },
+  'GCSR':      { name: 'Government Code Search Report',   category: 'Research' },
+  'GLND':      { name: 'Government Landscape Analysis',   category: 'Research' },
   // Reporting
   'STORY':     { name: 'Project Story',                    category: 'Reporting' },
 };
@@ -79,6 +82,7 @@ export const MULTI_INSTANCE_TYPES = new Set([
   'ADR', 'DIAG', 'DFD', 'WARD', 'DMC',
   'RSCH', 'AWRS', 'AZRS', 'GCRS', 'DSCT',
   'WGAM', 'WCLM', 'WVCH',
+  'GOVR', 'GCSR', 'GLND',
 ]);
 
 // Type code -> required subdirectory
@@ -99,6 +103,9 @@ export const SUBDIR_MAP = {
   'AZRS': 'research',
   'GCRS': 'research',
   'DSCT': 'research',
+  'GOVR': 'research',
+  'GCSR': 'research',
+  'GLND': 'research',
 };
 
 // Derived: set of all valid type codes
