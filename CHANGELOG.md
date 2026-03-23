@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.5.2] - 2026-03-23
+
+### Fixed
+
+- Add govreposcrape MCP server to Gemini extension
+- Update command count from 64 to 67 across all docs, HTML pages, plugin manifests, and extension configs
+- Update agent count from 6 to 9 and hook count from 4 to 5 in docs
+
 ## [4.5.0] - 2026-03-23
 
 ### Added
