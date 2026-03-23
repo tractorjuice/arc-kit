@@ -903,7 +903,7 @@ payment-modernization/
 │   ├── agents/                            # Agent configs
 │   └── config.toml                        # MCP servers + agent roles
 ├── .github/
-│   ├── prompts/arckit-*.prompt.md         # GitHub Copilot prompt files (64 commands)
+│   ├── prompts/arckit-*.prompt.md         # GitHub Copilot prompt files (67 commands)
 │   ├── agents/arckit-*.agent.md           # GitHub Copilot custom agents (6 agents)
 │   └── copilot-instructions.md            # Repo-wide Copilot context
 └── .opencode/commands/                    # OpenCode CLI commands
