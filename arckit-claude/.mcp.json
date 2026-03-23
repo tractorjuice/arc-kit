@@ -21,6 +21,10 @@
       "headers": {
         "X-API-Key": "${DATA_COMMONS_API_KEY}"
       }
+    },
+    "govreposcrape": {
+      "type": "http",
+      "url": "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp"
     }
   }
 }
