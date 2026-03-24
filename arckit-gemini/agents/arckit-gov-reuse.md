@@ -128,6 +128,7 @@ For each promising result from govreposcrape (aim for top 3-5 per capability, up
 - **Test coverage indicators**: Presence of test directories, CI badges, coverage reports
 - **Documentation quality**: Presence of docs/ folder, wiki, API docs, deployment guides
 - **Last commit date**: Fetch the main page to see "last commit X days/months ago"
+- **Installation method**: For Library candidates, extract the exact install command from README (e.g., `npm install govuk-frontend`, `pip install notifications-python-client`). For Fork candidates, note the clone URL and setup prerequisites. Include as a "Quick Start" field in the candidate card.
 
 ### Step 7: Score Each Candidate
 
@@ -184,6 +185,8 @@ Based on average score and characteristics, assign a recommended strategy:
 - **Reference** (average >= 2.5): Study the implementation for patterns, approaches, and ideas. Don't reuse the code directly but learn from it.
 - **None** (average < 2.5 OR incompatible license): Not suitable for reuse. Note why briefly.
 
+For each capability, write a **bold verdict line** at the top of its section: "**Verdict: [Strategy] — [one-sentence rationale].**"
+
 ### Step 9: Build Summary Tables
 
 Compile:
@@ -192,7 +195,17 @@ Compile:
 - **Tech Stack Alignment Table**: Repo name, language, framework, infrastructure, alignment score
 - **Reuse Strategy Summary**: Capability, best candidate repo, strategy (Fork/Library/Reference/None), rationale, estimated effort saved (days)
 
-### Step 10: Gap Analysis
+### Step 10: Requirements Traceability (CRITICAL — do not skip)
+
+Create a table mapping EVERY requirement ID from the requirements document to a capability and reuse outcome:
+
+| Requirement ID | Requirement Summary | Capability | Best Candidate | Strategy | Status |
+|---|---|---|---|---|---|
+| FR-001 | [summary] | [Capability name] | [Repo or "—"] | [Fork/Library/Reference/None/Build] | ✅/⚠️/❌ |
+
+Use status indicators: ✅ = covered by reusable candidate, ⚠️ = partially covered (Reference only), ❌ = no match (build required). Include BR, FR, NFR, INT, and DR requirements. This table ensures no requirement is overlooked and provides a clear coverage percentage.
+
+### Step 11: Gap Analysis
 
 Identify capabilities where no candidate scored >= 2.5 across all query variations. These are "build from scratch" items. For each gap:
 
@@ -200,7 +213,7 @@ Identify capabilities where no candidate scored >= 2.5 across all query variatio
 - Note what was searched (query variations tried)
 - Suggest whether to widen the search or accept it as a genuine gap
 
-### Step 11: Detect Version and Determine Increment
+### Step 12: Detect Version and Determine Increment
 
 Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GOVR-*-v*.md` files. Read the highest version number from filenames.
 
@@ -214,11 +227,11 @@ Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GOVR
    - **Minor increment** (e.g., 1.0 → 1.1): Scope unchanged — refreshed results, updated candidate assessments, corrected details, minor additions
    - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new capability areas added, requirements significantly changed, fundamentally different candidate landscape
 
-### Step 12: Quality Check
+### Step 13: Quality Check
 
 Before writing, read `~/.gemini/extensions/arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **GOVR** per-type checks pass. Fix any failures before proceeding.
 
-### Step 13: Write Output
+### Step 14: Write Output
 
 Use the **Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GOVR-v${VERSION}.md` following the template structure.
 
@@ -242,7 +255,7 @@ Include the generation metadata footer:
 
 **DO NOT output the full document.** Write it to file only.
 
-### Step 14: Return Summary
+### Step 15: Return Summary
 
 Return ONLY a concise summary including:
 
