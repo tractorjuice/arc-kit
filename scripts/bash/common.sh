@@ -113,9 +113,10 @@ check_git() {
     return 0
 }
 
-# Slugify a string (convert to kebab-case)
+# Slugify a string (convert to kebab-case, preserving accented characters)
 slugify() {
-    echo "$1" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9]\+/-/g' | sed 's/^-\|-$//g'
+    local lower="${1,,}"
+    echo "$lower" | sed 's/[^[:alnum:]]\+/-/g' | sed 's/^-\|-$//g'
 }
 
 # ============================================================================
