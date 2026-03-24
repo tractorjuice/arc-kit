@@ -216,7 +216,27 @@ For each opportunity, note:
 - Potential benefit (effort saved, consistency improved, standards alignment)
 - Suggested action (propose shared repo, reach out to team, use existing lib)
 
-### Step 13: Gap Analysis
+### Step 13: Project Relevance Mapping (if project context available)
+
+If project requirements were read in Step 1, connect the landscape findings back to the project:
+
+| Landscape Finding | Relevant Requirements | Implication for Project | Action |
+|---|---|---|---|
+| [Dominant tech stack / pattern / org / gap] | [FR-xxx, INT-xxx, etc.] | [How this finding affects project decisions] | [Adopt / Investigate / Avoid / Build] |
+
+This prevents the landscape analysis from being purely academic — it shows the user how each finding concretely affects their project. Include Quick Start commands (npm install, pip install, git clone) for any directly adoptable findings.
+
+If no project context exists, skip this step.
+
+### Step 13b: Search Effectiveness Assessment
+
+Evaluate the govreposcrape results honestly:
+
+- **Coverage**: Which parts of the domain were well-represented? Which had no results?
+- **Org bias**: Were results dominated by a narrow set of organisations (e.g., only local councils)?
+- **Gaps vs reality**: For each gap, clarify whether the gap means "no one has built this" or "the index doesn't cover the orgs that likely built this" — and provide alternative search strategies (direct GitHub org URLs, official documentation) for each gap
+
+### Step 14: Gap Analysis
 
 Identify what's missing in the domain based on what you'd expect to find:
 
@@ -225,7 +245,7 @@ Identify what's missing in the domain based on what you'd expect to find:
 - Areas where all implementations are old/archived (no active alternatives)
 - Cross-government infrastructure that's being duplicated instead of shared
 
-### Step 14: Detect Version and Determine Increment
+### Step 15: Detect Version and Determine Increment
 
 Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GLND-*-v*.md` files. Read the highest version number from filenames.
 
@@ -239,11 +259,11 @@ Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GLND
    - **Minor increment** (e.g., 1.0 → 1.1): Same domain scope — refreshed activity data, new repos added, corrected details
    - **Major increment** (e.g., 1.0 → 2.0): Domain scope materially changed, new sub-domains added, significantly different landscape
 
-### Step 15: Quality Check
+### Step 16: Quality Check
 
 Before writing, read `~/.gemini/extensions/arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **GLND** per-type checks pass. Fix any failures before proceeding.
 
-### Step 16: Write Output
+### Step 17: Write Output
 
 Use the **Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GLND-v${VERSION}.md` following the template structure.
 
@@ -267,7 +287,7 @@ Include the generation metadata footer:
 
 **DO NOT output the full document.** Write it to file only.
 
-### Step 17: Return Summary
+### Step 18: Return Summary
 
 Return ONLY a concise summary including:
 
