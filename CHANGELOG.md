@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.0] - 2026-03-24
+
+### Changed
+
+- All 9 agents now use `model: inherit` instead of hardcoded `sonnet` — agents use whatever model the user is running (Opus users get Opus, Sonnet users get Sonnet)
+- Added `effort: high` to 10 commands: analyze, dfd, diagram, gcloud-clarify, gcloud-search, impact, principles, principles-compliance, servicenow, story (58 of 67 commands now have effort set)
+- Autoresearch: `effort:` and `model:` are now tuneable parameters alongside prompt text
+- Autoresearch: plateau threshold increased from 5 to 15 consecutive discards
+- Autoresearch: results.tsv now tracks effort and model columns
+
 ## [4.5.3] - 2026-03-24
 
 ### Fixed
