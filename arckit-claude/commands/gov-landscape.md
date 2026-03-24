@@ -62,7 +62,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 9. Surface collaboration opportunities: organisations solving similar problems, shared components, potential reuse
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
 
-10. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GOVL-v1.0.md` using Write tool
+10. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GLND-v1.0.md` using Write tool
 11. Show summary only (not full document)
 
 ### Output

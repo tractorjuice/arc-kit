@@ -44,7 +44,7 @@ Add a time qualifier ("in the last 2 years") or a department name to scope the l
 /arckit.gov-landscape <domain>
 ```
 
-Outputs: `projects/<id>/research/ARC-<id>-GOVL-v1.0.md`
+Outputs: `projects/<id>/research/ARC-<id>-GLND-v1.0.md`
 
 > **Auto-versioning**: Re-running this command when a document already exists automatically increments the version.
 

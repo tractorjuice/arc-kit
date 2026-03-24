@@ -173,11 +173,11 @@ Use Glob to find existing `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCSR
    - **Minor increment** (e.g., 1.0 → 1.1): Same query scope — refreshed results, updated repo details, minor additions
    - **Major increment** (e.g., 1.0 → 2.0): Substantially different query, new capability areas, significantly different results landscape
 
-### Step 12: Quality Check
+### Step 13: Quality Check
 
 Before writing, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **GCSR** per-type checks pass. Fix any failures before proceeding.
 
-### Step 13: Write Output
+### Step 14: Write Output
 
 Use the **Write tool** to save the complete document to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCSR-v${VERSION}.md` following the template structure.
 
@@ -201,7 +201,7 @@ Include the generation metadata footer:
 
 **DO NOT output the full document.** Write it to file only.
 
-### Step 14: Return Summary
+### Step 15: Return Summary
 
 Return ONLY a concise summary including:
 

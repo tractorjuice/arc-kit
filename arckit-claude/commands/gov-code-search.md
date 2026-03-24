@@ -60,7 +60,7 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
 7. Identify the most common implementation patterns and any emerging standards
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
 
-8. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GOCS-v1.0.md` (or a standalone report if no project context) using Write tool
+8. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GCSR-v1.0.md` (or a standalone report if no project context) using Write tool
 9. Show summary only (not full document)
 
 ### Output
