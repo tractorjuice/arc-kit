@@ -68,7 +68,7 @@ description: 'Use this agent when the user needs to discover external data sourc
 disallowedTools:
 - Edit
 maxTurns: 50
-model: sonnet
+model: inherit
 name: arckit-datascout
 ---
 

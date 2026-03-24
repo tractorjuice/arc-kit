@@ -58,7 +58,7 @@ If discarded, the prompt is reverted via `git checkout` to the previous best ver
 After each iteration, a status line is printed:
 
 ```text
-[iter 3] score: 9.2 (best: 8.8) | status: keep | keeps: 3 discards: 1 | streak: 0/5 to plateau
+[iter 3] score: 9.2 (best: 8.8) | effort: high model: inherit | status: keep | keeps: 3 discards: 1 | streak: 0/15 to plateau
 ```
 
 This gives live terminal visibility without needing to read files.
@@ -100,9 +100,9 @@ Scoring uses an adversarial reviewer persona to prevent self-evaluation bias.
 
 ## What Gets Modified (and What Doesn't)
 
-**Editable** (the only variable):
+**Editable** (the only variables):
 
-- `arckit-claude/commands/<command>.md` -- the prompt being optimised
+- `arckit-claude/commands/<command>.md` -- the prompt being optimised, including `effort:` and `model:` YAML frontmatter fields
 
 **Read-only** (the fixed benchmark):
 
@@ -118,10 +118,10 @@ This mirrors autoresearch's design: `prepare.py` is read-only, `train.py` is the
 
 ## Constraints
 
-- **One change per iteration** -- isolate variables
+- **One change per iteration** -- isolate variables (prompt text, effort, or model -- not multiple at once)
 - **Minimum delta of 0.3** -- filters noise from non-deterministic evaluation
 - **Simplicity criterion** -- marginal improvement + added complexity = not worth it; simplification + same score = keep
-- **Log everything** -- every iteration gets a row in `results.tsv`
+- **Log everything** -- every iteration gets a row in `results.tsv` including effort and model values
 - **No git reset --hard** -- use targeted `git checkout` + revert commits
 
 ---
@@ -131,23 +131,25 @@ This mirrors autoresearch's design: `prepare.py` is read-only, `train.py` is the
 Results are logged to `results.tsv` (tab-separated):
 
 ```text
-commit  structural  score  status   description
-a1b2c3d PASS        8.4    keep     baseline
-b2c3d4e PASS        8.8    keep     expand NFR subcategories
-c3d4e5f PASS        9.0    discard  derive NFR targets from context (delta < 0.3)
-d4e5f6g PASS        9.2    keep     add use case structure instruction
+commit  structural  score  effort  model    status   description
+a1b2c3d PASS        8.4    high    inherit  keep     baseline
+b2c3d4e PASS        8.8    high    inherit  keep     expand NFR subcategories
+c3d4e5f PASS        9.0    high    inherit  discard  derive NFR targets from context (delta < 0.3)
+d4e5f6g PASS        9.2    high    inherit  keep     add use case structure instruction
+e5f6g7h PASS        9.1    max     inherit  discard  changed effort to max (no improvement)
 ```
 
 Status values: `keep`, `discard`, `plateau`, `crash`.
 
 ### Plateau Detection
 
-If 5 consecutive iterations are discarded, the system shifts strategy:
+If 15 consecutive iterations are discarded, the system shifts strategy:
 
 - Re-reads the template for unaddressed sections
 - Reviews the quality checklist for uncovered criteria
 - Tries prompt simplification
 - Combines ideas from previous near-misses
+- Tries changing `effort:` or `model:` if not already tested
 
 ---
 

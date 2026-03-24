@@ -66,7 +66,7 @@ description: 'Use this agent when the user wants to understand what UK governmen
 disallowedTools:
 - Edit
 maxTurns: 50
-model: sonnet
+model: inherit
 name: arckit-gov-landscape
 ---
 
