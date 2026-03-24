@@ -14,6 +14,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mermaid `wardley-beta` test suite — 98% pass rate on 147 real-world maps, ArcKit syntax 100% valid (#271)
 - Hooks documentation guide (`docs/guides/hooks.md`) across all distribution formats
 - Paperclip plugin scaffolding with TypeScript source, bash/python scripts, and VERSION file
+- Citation traceability for external documents — generated artifacts now include inline citation markers (`[DOC-CN]`) and a structured "External References" section with Document Register, Citations, and Unreferenced Documents tables (#158)
+- Shared citation instructions file (`arckit-claude/references/citation-instructions.md`) referenced by all 43 commands and 7 agents that read external documents
 
 ### Fixed
 
