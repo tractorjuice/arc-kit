@@ -38,7 +38,7 @@ claude --plugin-dir /path/to/arc-kit/arckit-claude
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.63?** This version includes memory leak fixes for subagents and long-running sessions, which directly improves stability for ArcKit's 6 research agents. It also fixes MCP server cache leaks (important for the 4 bundled MCP servers), resolves stale skill caching after `/clear`, and adds worktree config sharing for multi-repo workflows.
+> **Why v2.1.63?** This version includes memory leak fixes for subagents and long-running sessions, which directly improves stability for ArcKit's 9 research agents. It also fixes MCP server cache leaks (important for the 5 bundled MCP servers), resolves stale skill caching after `/clear`, and adds worktree config sharing for multi-repo workflows.
 
 ## Quick Start
 
@@ -66,9 +66,9 @@ After installing the plugin:
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Commands | 64 | Slash commands for architecture artifacts |
+| Commands | 67 | Slash commands for architecture artifacts |
 | Skills | 1 | Conversational Wardley Mapping with interactive guidance |
-| Agents | 6 | Autonomous research agents |
+| Agents | 9 | Autonomous research agents |
 | Templates | 45 | Document templates with UK Government compliance |
 | Scripts | 6 | Helper bash scripts |
 | Guides | 52 | Command usage documentation |
@@ -203,7 +203,7 @@ projects/
 
 ## MCP Servers
 
-The plugin includes 4 MCP (Model Context Protocol) servers for cloud research:
+The plugin includes 5 MCP (Model Context Protocol) servers for cloud and government research:
 
 | MCP Server | API Key Required | Used By |
 |------------|-----------------|---------|
@@ -211,6 +211,7 @@ The plugin includes 4 MCP (Model Context Protocol) servers for cloud research:
 | Microsoft Learn | No | `/arckit:azure-research` |
 | Google Developer Knowledge | Yes (`GOOGLE_API_KEY`) | `/arckit:gcp-research` |
 | Data Commons | Yes (`DATA_COMMONS_API_KEY`) | Data statistics lookups |
+| govreposcrape | No | `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landscape` |
 
 AWS Knowledge and Microsoft Learn work out of the box with no configuration. The Google and Data Commons servers require API keys — if you don't set them, you'll see errors in the plugin UI, but **all other commands work normally**.
 

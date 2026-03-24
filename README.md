@@ -40,9 +40,9 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 67 commands, 9 autonomous research agents, 4 automation hooks (session init, project context injection, filename enforcement, output validation), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 67 commands, 9 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.71?** This version fixes background agent completion notifications missing output file paths (critical for ArcKit's 6 research agents), resolves plugin installation loss across multiple instances, fixes plugin hooks being silently dropped with `${CLAUDE_PLUGIN_ROOT}` templates, and includes all prior fixes for memory leaks in subagents, MCP server cache leaks, and worktree config sharing.
+> **Why v2.1.71?** This version fixes background agent completion notifications missing output file paths (critical for ArcKit's 9 research agents), resolves plugin installation loss across multiple instances, fixes plugin hooks being silently dropped with `${CLAUDE_PLUGIN_ROOT}` templates, and includes all prior fixes for memory leaks in subagents, MCP server cache leaks, and worktree config sharing.
 
 **Gemini CLI** — install the ArcKit extension:
 
@@ -62,7 +62,7 @@ pip install git+https://github.com/tractorjuice/arc-kit.git
 arckit init my-project --ai copilot
 ```
 
-Creates `.github/prompts/arckit-*.prompt.md` (64 prompt files), `.github/agents/arckit-*.agent.md` (6 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arckit-requirements`, `/arckit-stakeholders`, etc.
+Creates `.github/prompts/arckit-*.prompt.md` (67 prompt files), `.github/agents/arckit-*.agent.md` (9 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arckit-requirements`, `/arckit-stakeholders`, etc.
 
 **Codex CLI** — install the ArcKit CLI:
 
@@ -77,7 +77,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v4.5.2](https://github.com/tractorjuice/arc-kit/releases/tag/v4.5.2)
+**Latest Release**: [v4.5.3](https://github.com/tractorjuice/arc-kit/releases/tag/v4.5.3)
 
 ### Platform Support
 
@@ -835,7 +835,7 @@ cd my-project && code .
 /arckit-requirements Create comprehensive requirements
 ```
 
-This creates `.github/prompts/arckit-*.prompt.md` (64 prompt files), `.github/agents/arckit-*.agent.md` (6 custom agents), and `.github/copilot-instructions.md` (repo-wide context).
+This creates `.github/prompts/arckit-*.prompt.md` (67 prompt files), `.github/agents/arckit-*.agent.md` (9 custom agents), and `.github/copilot-instructions.md` (repo-wide context).
 
 ### Using with Codex CLI
 
@@ -904,7 +904,7 @@ payment-modernization/
 │   └── config.toml                        # MCP servers + agent roles
 ├── .github/
 │   ├── prompts/arckit-*.prompt.md         # GitHub Copilot prompt files (67 commands)
-│   ├── agents/arckit-*.agent.md           # GitHub Copilot custom agents (6 agents)
+│   ├── agents/arckit-*.agent.md           # GitHub Copilot custom agents (9 agents)
 │   └── copilot-instructions.md            # Repo-wide Copilot context
 └── .opencode/commands/                    # OpenCode CLI commands
 ```
@@ -1345,7 +1345,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v4.5.2](https://github.com/tractorjuice/arc-kit/releases/tag/v4.5.2)
+- **Latest Version**: [v4.5.3](https://github.com/tractorjuice/arc-kit/releases/tag/v4.5.3)
 
 ---
 

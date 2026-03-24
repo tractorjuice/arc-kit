@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.5.3] - 2026-03-24
+
+### Fixed
+
+- Update agent count from 6 to 9 in README, plugin README, and remote-control guides
+- Update MCP server count from 4 to 5 in plugin README (add govreposcrape)
+- Update automation hook count from 4 to 5 in README
+- Update Copilot prompt file and agent counts in README
+- Merge optimised gov agent prompts (gov-reuse 9.4, gov-code-search 8.8, gov-landscape 8.6)
+
 ## [4.5.2] - 2026-03-23
 
 ### Fixed
