@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Autoresearch: plateau threshold increased from 5 to 15 consecutive discards
 - Autoresearch: results.tsv now tracks effort and model columns
 
+### Fixed
+
+- Preserve accented characters in `slugify()` function — use locale-aware `[:alnum:]` instead of `[a-z0-9]`
+
 ## [4.5.3] - 2026-03-24
 
 ### Fixed
