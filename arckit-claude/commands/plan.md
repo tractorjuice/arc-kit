@@ -52,6 +52,7 @@ Read existing project artifacts to tailor the plan:
 - Read any **external documents** listed in the project context (`external/` files) — extract existing timelines, milestones, dependencies, resource allocations, constraints
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise programme plans, portfolio roadmaps, cross-project dependency frameworks
 - If no external planning docs found but they would improve the plan, ask: "Do you have any existing project plans, Gantt charts, or dependency maps? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ## Step 1c: Interactive Configuration
 

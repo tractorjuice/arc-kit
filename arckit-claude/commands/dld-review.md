@@ -55,6 +55,7 @@ $ARGUMENTS
    - Read any **external documents** listed in the project context (`external/` files) — extract performance test results, security scan reports, infrastructure specifications
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise design standards, implementation guidelines, cross-project technical architecture patterns
    - If no vendor DLD found, ask: "Please provide the DLD document path or paste key sections. I can read PDFs, Word docs, and images directly. Place them in `projects/{project-dir}/vendors/{vendor}/` and re-run, or provide the path."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 5. **Obtain the DLD document**:
    - Ask: "Please provide the DLD document path or paste key sections"

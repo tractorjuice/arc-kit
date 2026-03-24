@@ -58,6 +58,7 @@ $ARGUMENTS
    - Read any **external documents** listed in the project context (`external/` files) — extract entity definitions, relationships, data types, constraints, existing schemas, migration requirements
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise data dictionaries, master data management standards, cross-project data architecture patterns
    - If no external docs exist but they would improve the data model, ask: "Do you have any existing database schemas, ERD diagrams, or data dictionaries? I can read PDFs, images, and SQL files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 4. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/data-model-template.md` exists in the project root
