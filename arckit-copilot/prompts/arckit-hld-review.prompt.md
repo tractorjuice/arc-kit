@@ -49,6 +49,7 @@ ${input:topic:Enter project name or topic}
    - Read any **external documents** listed in the project context (`external/` files) — extract reference architectures, compliance evidence, performance benchmarks
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise architecture standards, design review checklists, cross-project reference architectures
    - If no vendor HLD found, ask: "Please provide the HLD document path or paste key sections. I can read PDFs, Word docs, and images directly. Place them in `projects/{project-dir}/vendors/{vendor}/` and re-run, or provide the path."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 4. **Obtain the HLD document**:
    - Ask user: "Please provide the HLD document path or paste key sections"

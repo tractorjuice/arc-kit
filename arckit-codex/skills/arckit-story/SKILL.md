@@ -74,6 +74,7 @@ with a limited story based on available artifacts.
 - Read any **external documents** listed in the project context (`external/` files) — extract project history, key milestones, lessons learned, user research insights, governance decisions
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise reporting templates, programme dashboards, cross-project narrative standards
 - If no external docs exist but they would enrich the project story, ask: "Do you have any project reports, user research findings, or governance decision records? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### Step 1: Identify the target project
 

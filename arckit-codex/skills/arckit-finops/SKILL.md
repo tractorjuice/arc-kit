@@ -73,6 +73,7 @@ Parse the user input for:
 - Read any **global policies** listed in the project context (`000-global/policies/`) — extract budget thresholds, chargeback models, cost centre mappings, procurement approval limits
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise cost management policies, cloud spending reports, cross-project FinOps maturity benchmarks
 - If no external FinOps docs found but they would improve cost analysis, ask: "Do you have any cloud billing reports, cost allocation data, or financial policies? I can read PDFs and CSV files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### Phase 2: Analysis
 

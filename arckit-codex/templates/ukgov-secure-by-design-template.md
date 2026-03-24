@@ -1015,15 +1015,26 @@
 
 ## External References
 
-| Document | Type | Source | Key Extractions | Path |
-|----------|------|--------|-----------------|------|
-| Government Functional Standard GovS 007: Security | Policy | Cabinet Office | 9 security principles, security lifecycle, protective security disciplines | https://www.gov.uk/government/publications/government-functional-standard-govs-007-security |
-| UK Government Cyber Security Standard | Policy | Cabinet Office (July 2025) | CAF profiles, GovAssure, SbD confidence, exception management | https://www.gov.uk/government/publications/government-cyber-security-standard |
-| NCSC Vulnerability Monitoring Service (VMS) | Service | NCSC | Vulnerability scanning, 8-day domain / 32-day general remediation benchmarks | https://www.ncsc.gov.uk/information/vulnerability-monitoring-service |
-| Government Cyber Action Plan | Policy | Cabinet Office (February 2026) | £210m investment, four pillars: Skills, Tooling, Resilience, Collaboration | https://www.gov.uk/government/publications/government-cyber-action-plan |
-| Government Cyber Security Profession | Framework | Cabinet Office | CCP certification, DDaT alignment, career framework | https://www.gov.uk/government/publications/government-cyber-security-profession |
-| Government Cyber Academy | Training | Cabinet Office | Cyber security learning areas, professional development | https://www.gov.uk/government/publications/government-cyber-academy |
+> This section provides traceability from generated content back to source documents.
+> Follow citation instructions in the project's citation reference guide.
+
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
 | *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
 
 ---
 

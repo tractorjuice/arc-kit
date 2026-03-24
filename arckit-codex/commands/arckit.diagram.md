@@ -39,6 +39,7 @@ Read existing artifacts from the project context to understand what to diagram:
 - Read any **external documents** listed in the project context (`external/` files) — extract component topology, data flows, network boundaries, deployment architecture, integration points
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise architecture blueprints, reference architecture diagrams, cross-project integration maps
 - If no external diagrams exist but they would improve the output, ask: "Do you have any existing architecture diagrams or design images to reference? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ## Step 1c: Interactive Configuration
 

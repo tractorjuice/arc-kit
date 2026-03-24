@@ -81,6 +81,7 @@ Parse the user input for:
 - Read any **external documents** listed in the project context (`external/` files) — extract current pipeline configurations, deployment procedures, environment specifications, infrastructure-as-code patterns
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise CI/CD standards, platform engineering guidelines, cross-project DevOps maturity benchmarks
 - If no external docs exist but they would improve the strategy, ask: "Do you have any existing CI/CD configurations, deployment runbooks, or infrastructure documentation? I can read PDFs and YAML files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### Phase 2: Analysis
 

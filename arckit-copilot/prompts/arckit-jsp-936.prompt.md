@@ -81,6 +81,7 @@ If no artifacts found, work with user-provided description.
 - Read any **global policies** listed in the project context (`000-global/policies/`) — extract MOD AI strategy, defence AI ethical principles, JSP 936 compliance requirements
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise MOD AI governance frameworks, defence innovation standards, cross-project AI assurance evidence
 - If no external MOD AI docs found, ask: "Do you have any MOD AI assurance reports, DSTL guidance, or safety case documentation? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 **Gathering rules** (apply to all user questions in this command):
 

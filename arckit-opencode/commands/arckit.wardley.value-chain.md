@@ -36,6 +36,7 @@ $ARGUMENTS
 - Read any **external documents** listed in the project context (`external/` files) — extract: existing component lists, system architecture diagrams, dependency maps, integration catalogues.
 - Read any **enterprise standards** in `projects/000-global/external/` — extract: enterprise component library, shared service catalogue, cross-project reuse opportunities.
 - If no existing value chain documents are found but they would improve accuracy, ask: "Do you have any existing architecture diagrams, component lists, or dependency maps? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ## Step 2: Identify the Anchor (User Need)
 

@@ -46,6 +46,7 @@ ${input:topic:Enter project name or topic}
    - Read any **global policies** listed in the project context (`000-global/policies/`) — extract mandatory compliance requirements, technology constraints, security standards
    - Read any **enterprise standards** in `projects/000-global/external/` — extract cross-project requirements patterns
    - If no external docs exist but they would significantly improve requirements, ask: "Do you have any RFP/ITT documents, legacy system specifications, or user research reports? I can read PDFs and Word docs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 4. **Read the template** (with user override support):
    - **First**, check if `.arckit/templates/requirements-template.md` exists in the project root

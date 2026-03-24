@@ -56,6 +56,7 @@ $ARGUMENTS
    - Read any **global policies** listed in the project context (`000-global/policies/`) — extract procurement thresholds, mandatory contractual terms, approved supplier lists, framework agreements
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise procurement templates, contract frameworks, cross-project commercial benchmarks
    - If no external docs exist but they would improve the SoW, ask: "Do you have any previous SoW templates, RFP/ITT documents, or procurement policies? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 5. **Interactive Configuration**:
 
