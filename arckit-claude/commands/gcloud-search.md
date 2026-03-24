@@ -1,6 +1,7 @@
 ---
 description: Find G-Cloud services on UK Digital Marketplace with live search and comparison
 argument-hint: "<search query, e.g. 'cloud hosting NHS', 'SOC Lot 1'>"
+effort: high
 ---
 
 You are helping an enterprise architect find and compare G-Cloud services on the UK Digital Marketplace.

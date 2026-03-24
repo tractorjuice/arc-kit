@@ -68,7 +68,7 @@ description: 'Use this agent when the user wants to discover reusable UK governm
 disallowedTools:
 - Edit
 maxTurns: 40
-model: sonnet
+model: inherit
 name: arckit-gov-reuse
 ---
 

@@ -67,7 +67,7 @@ description: 'Use this agent when the user needs AWS-specific technology researc
 disallowedTools:
 - Edit
 maxTurns: 40
-model: sonnet
+model: inherit
 name: arckit-aws-research
 ---
 

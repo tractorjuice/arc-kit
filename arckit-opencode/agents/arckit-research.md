@@ -69,7 +69,7 @@ description: 'Use this agent when the user needs technology and service market r
 disallowedTools:
 - Edit
 maxTurns: 50
-model: sonnet
+model: inherit
 name: arckit-research
 ---
 

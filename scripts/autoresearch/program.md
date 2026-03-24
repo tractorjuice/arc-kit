@@ -30,6 +30,7 @@ To set up a new experiment, work with the user to:
    - `arckit-claude/commands/<command>.md` — the prompt you will optimise. This is the ONLY file you modify.
    - The template file referenced in the command's instructions (search for `templates/` in the command `.md` to find the actual filename — names don't always match the command name). Read-only.
    - `arckit-claude/references/quality-checklist.md` — quality criteria. Read-only.
+   - Note the current `effort:` and `model:` values in the command's YAML frontmatter — these are tuneable parameters (see section 4).
 
 4. **Check for agent delegation.** If the command contains "Launch the agent" or references the Task tool to delegate to an agent, you MUST follow its "Alternative: Direct Execution" or fallback section instead. Agent wrappers are too thin to optimise meaningfully.
 
@@ -44,7 +45,7 @@ To set up a new experiment, work with the user to:
 7. **Initialize results.tsv.** Create `results.tsv` with just the header row:
 
    ```text
-   commit structural score status description
+   commit structural score effort model status description
    ```
 
 8. **Run the baseline.** Execute the command unmodified against the scratch project (see "How Commands Are Executed" below). Score it using both evaluation layers. Log the result as the first data row in `results.tsv` with status `keep` and description `baseline`. Then begin the experiment loop.
@@ -115,7 +116,8 @@ The combined score is the arithmetic mean of the five dimensions, rounded to one
 
 1. Read the current command prompt and review `results.tsv` history
 2. Identify ONE specific improvement to the prompt
-   - Draw ideas from: low-scoring dimensions, structural failures, template gaps, quality checklist criteria, prompt engineering best practices, or previous near-misses in results history
+   - Draw ideas from: low-scoring dimensions, structural failures, template gaps, quality checklist criteria, prompt engineering best practices, previous near-misses in results history, or effort/model tuning (see below)
+   - **Effort and model tuning**: The `effort:` and `model:` fields in the YAML frontmatter are tuneable parameters, just like the prompt text. Valid effort values: `low`, `medium`, `high`, `max`. Valid model values: `sonnet`, `opus`, `haiku`, `inherit` (inherits user's session model). Consider testing different combinations — a well-written prompt at `high` effort may outperform a mediocre prompt at `max` effort, and `inherit` may be better than a hardcoded model. Treat these as single-variable changes: change effort OR model OR prompt text in one iteration, not multiple at once.
 3. Edit `arckit-claude/commands/<command>.md` with the change
 4. Git commit with a short description of what changed
 5. Clean the scratch project: delete previously generated artifacts but keep the read-only fixture files (PRIN, STKE, README)
@@ -131,7 +133,7 @@ The combined score is the arithmetic mean of the five dimensions, rounded to one
 10. **Print status line** after logging:
 
     ```text
-    [iter N] score: X.X (best: Y.Y) | status: keep/discard | keeps: K discards: D | streak: S/5 to plateau
+    [iter N] score: X.X (best: Y.Y) | effort: high model: inherit | status: keep/discard | keeps: K discards: D | streak: S/15 to plateau
     ```
 
     This gives the human live visibility in the terminal without needing to read `results.tsv`.
@@ -147,12 +149,13 @@ The combined score is the arithmetic mean of the five dimensions, rounded to one
 
 ### Plateau Detection
 
-If the last 5 consecutive iterations have all been discarded (no score improvement), log a `plateau` marker in `results.tsv` and shift strategy:
+If the last 15 consecutive iterations have all been discarded (no score improvement), log a `plateau` marker in `results.tsv` and shift strategy:
 
 - Re-read the template line by line looking for sections the prompt doesn't address
 - Review the quality checklist for uncovered criteria
 - Try prompt simplification (removing instructions that don't contribute to score)
 - Try combining ideas from previous near-misses in the results history
+- Try changing `effort:` or `model:` if you haven't already — a different thinking level or model may unlock gains that prompt wording alone cannot
 
 ---
 
@@ -161,7 +164,7 @@ If the last 5 consecutive iterations have all been discarded (no score improveme
 Tab-separated, NOT comma-separated (commas break in descriptions). Header row plus one row per experiment:
 
 ```text
-commit structural score status description
+commit structural score effort model status description
 ```
 
 Columns:
@@ -169,23 +172,25 @@ Columns:
 1. git commit hash (short, 7 chars)
 2. structural check result: `PASS` or `FAIL`
 3. combined LLM-as-judge score (e.g. `7.4`) — use `0.0` for structural failures
-4. status: `keep`, `discard`, `plateau`, or `crash`
-5. short text description of what this experiment tried
+4. effort value used for this iteration (e.g. `high`, `max`, or `-` if not set)
+5. model value used for this iteration (e.g. `inherit`, `sonnet`, or `-` if not set)
+6. status: `keep`, `discard`, `plateau`, or `crash`
+7. short text description of what this experiment tried
 
 Example:
 
 ```text
-commit structural score status description
-a1b2c3d PASS 6.8 keep baseline
-b2c3d4e PASS 7.2 keep added explicit instruction to fill all NFR subcategories
-c3d4e5f FAIL 0.0 discard removed Document Control instruction (broke structure)
-d4e5f6g PASS 7.1 discard reordered sections (no improvement)
-e5f6g7h PASS 7.6 keep added example requirement IDs in prompt
-f6g7h8i PASS 7.5 discard added glossary instruction (no improvement)
-g7h8i9j PASS 7.4 discard reworded traceability section
-h8i9j0k PASS 7.6 discard added stakeholder cross-ref reminder
-i9j0k1l PASS 7.3 discard moved NFR subcategories earlier in prompt
-j0k1l2m PASS 7.5 plateau 5 consecutive discards — shifting strategy
+commit structural score effort model status description
+a1b2c3d PASS 6.8 high inherit keep baseline
+b2c3d4e PASS 7.2 high inherit keep added explicit instruction to fill all NFR subcategories
+c3d4e5f FAIL 0.0 high inherit discard removed Document Control instruction (broke structure)
+d4e5f6g PASS 7.1 high inherit discard reordered sections (no improvement)
+e5f6g7h PASS 7.6 high inherit keep added example requirement IDs in prompt
+f6g7h8i PASS 7.5 max inherit discard changed effort to max (no improvement)
+g7h8i9j PASS 7.4 high inherit discard reworded traceability section
+h8i9j0k PASS 7.6 high inherit discard added stakeholder cross-ref reminder
+i9j0k1l PASS 7.3 high inherit discard moved NFR subcategories earlier in prompt
+j0k1l2m PASS 7.5 high inherit plateau 15 consecutive discards — shifting strategy
 ```
 
 ---
@@ -194,7 +199,7 @@ j0k1l2m PASS 7.5 plateau 5 consecutive discards — shifting strategy
 
 **What you CAN do:**
 
-- Modify `arckit-claude/commands/<command>.md` — this is the only file you edit. Everything is fair game: instruction wording, section ordering, examples, emphasis, formatting, adding/removing guidance.
+- Modify `arckit-claude/commands/<command>.md` — this is the only file you edit. Everything is fair game: instruction wording, section ordering, examples, emphasis, formatting, adding/removing guidance, and the `effort:` / `model:` YAML frontmatter fields.
 
 **What you CANNOT do:**
 

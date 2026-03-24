@@ -72,7 +72,7 @@ description: 'Use this agent when the user needs Google Cloud-specific technolog
 disallowedTools:
 - Edit
 maxTurns: 40
-model: sonnet
+model: inherit
 name: arckit-gcp-research
 ---
 
