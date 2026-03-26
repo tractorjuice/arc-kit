@@ -71,6 +71,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - Read any **global policies** listed in the project context (`000-global/policies/`) — extract spending thresholds, approval gates, Green Book discount rates, procurement rules
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise investment frameworks, strategic business plans, cross-project portfolio investment context
    - If no external docs exist but they would improve the business case, ask: "Do you have any budget documents, financial forecasts, or market research? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 4. **Determine project context**:
    - If user mentions "UK Government", "public sector", "department", "ministry" → Use full Green Book format
@@ -82,7 +83,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - Extract stakeholder drivers (these explain WHY project needed)
    - Extract conflicts (these become risks/mitigations)
    - Extract outcomes (these become success criteria)
-   - Note: EVERY benefit in SOBC MUST trace to a stakeholder goal
+   - **Inline goal referencing**: Throughout ALL five cases, when asserting a benefit, cost driver, risk, or decision, include the stakeholder goal ID and quote the goal text directly from the STKE document. Example: "The digital channel will reduce call centre costs by 40% (SRO Goal G-001: 'Reduce call centre operating costs by 40%')". This makes every claim directly verifiable against the stakeholder analysis and creates pervasive traceability throughout the document, not just in appendix tables.
 
 6. **Interactive Configuration**:
 
@@ -152,6 +153,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
      - Expected ROI range
      - Payback period estimate
    - **Recommended Option**: Which option and why
+   - **Appraisal Summary Table (AST)**: Per Green Book 2026, include a single comparison table summarising ALL shortlisted options side-by-side. Columns: Option Name, 3-Year Cost (ROM), 3-Year Benefits, NPV (at 3.5%), BCR, Stakeholder Goals Met (%), Key Risks, Recommendation (Reject/Accept). This is the PRIMARY decision-making tool for the approving body — put it in the Recommended Option section so reviewers can compare at a glance.
 
    **C. Commercial Case**:
    - **Procurement Strategy**:
@@ -203,16 +205,12 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
 8. **Ensure complete traceability**:
 
-   Every element must link back to stakeholder analysis:
+   Include a **Cross-Case Traceability Matrix** in the appendices. One row per stakeholder goal, quoting the EXACT goal text from ARC-{PROJECT_ID}-STKE-v*.md:
 
-   ```text
-   Stakeholder Driver D-1 (CFO: Reduce costs - FINANCIAL, HIGH)
-     → Strategic Case: Cost pressure driving change
-       → Economic Case: Benefit B-1: £2M annual savings (maps to CFO Goal G-1)
-         → Financial Case: 18-month payback acceptable to CFO
-           → Management Case: CFO sits on steering committee (RACI: Accountable)
-             → Success Criterion: CFO Outcome O-1 measured monthly
-   ```
+   | Stakeholder | Goal (quoted from STKE) | Strategic Driver | Benefit ID | £ Impact (3yr) | RACI Role | Success Measure | Review Point |
+   |-------------|------------------------|------------------|-----------|----------------|-----------|-----------------|--------------|
+
+   Every benefit, risk, and financial figure in the body must be traceable back to this matrix. If something in the document cannot be traced to a stakeholder goal, it should not be in the SOBC.
 
 9. **Include decision framework**:
    - **Recommendation**: Which option to proceed with?
@@ -410,7 +408,14 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 
 **DO NOT** output the full document in your response. This would exceed token limits.
 
-### 3. Show Summary Only
+### 3. Verify and Patch
+
+After writing, re-read the first 300 lines of the output file and check:
+- Does Part A contain a **Theory of Change** section (Inputs → Outputs → Outcomes → Impacts)? If missing, use Edit to insert it after Strategic Fit.
+- Does Part B contain a **CSF Assessment Matrix** (RED/AMBER/GREEN table)? If missing, use Edit to insert it before Options Analysis.
+- Does the Recommended Option section include **switching values** (% change that breaks recommendation)? If missing, use Edit to add them after sensitivity analysis.
+
+### 4. Show Summary Only
 
 After writing the file, show ONLY a concise summary:
 
