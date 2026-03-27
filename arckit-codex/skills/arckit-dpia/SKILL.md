@@ -203,6 +203,8 @@ Generate the DPIA by:
      - **Severity** (impact on individuals): Minimal, Significant, Severe
      - **Overall Risk**: Low (green), Medium (amber), High (red)
    - Link to existing risks in ARC-*-RISK-*.md if they exist
+   - After the risk assessment, calculate a **DPIA Risk Score**: (High risks × 3 + Medium × 2 + Low × 1) / (total risks × 3) × 100%. Lower is better. This provides a single trackable privacy risk metric
+   - Add a **Data Processing → Risk Traceability Matrix** showing which processing activities (from Section 3) create which privacy risks. This ensures every processing activity has been risk-assessed and no activities are missing from the risk analysis
 
 8. **Section 6: Mitigations**:
    - For each high/medium risk, propose mitigations:
