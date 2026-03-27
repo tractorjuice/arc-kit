@@ -1528,6 +1528,14 @@ The footer should be populated with:
 
 ---
 
+After the backlog content, add:
+
+**Story Quality Score (INVEST)**: Validate each story against the INVEST criteria (Independent, Negotiable, Valuable, Estimable, Small, Testable). Calculate percentage of stories that pass all 6 criteria. Flag stories that fail any criterion with the specific failure. Score = passing stories / total stories × 100%.
+
+**Requirements Coverage Analysis**: Map each requirement (BR/FR/NFR/INT/DR) to the story(ies) that implement it. Calculate coverage percentage. Flag requirements with NO stories (delivery gaps) and stories with NO requirement traceability (scope creep risk).
+
+**Definition of Ready Checklist**: Include a standard Definition of Ready that each story must meet before entering a sprint: acceptance criteria defined, dependencies identified, estimated, design constraints noted, testable.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **BKLG** per-type checks pass. Fix any failures before proceeding.
 
 ### Step 14: Final Output
