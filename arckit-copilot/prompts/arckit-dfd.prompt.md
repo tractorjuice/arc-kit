@@ -237,6 +237,12 @@ flowchart LR
 | Data Store (parallel lines) | `[("label")]` | `D1[("D1: Transactions")]` |
 | Data Flow (arrow) | `-->│label│` | `A -->│data│ B` |
 
+After the DFD content, add:
+
+**DFD Completeness Score**: Calculate percentage of data flows that have all elements defined: source, destination, data type, trust boundary crossing, encryption status. Score = complete / total × 100%.
+
+**Data Flow-to-Requirements Traceability**: Map each data flow to the requirement(s) that mandate it.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **DFD** per-type checks pass. Fix any failures before proceeding.
 
 ## Step 4: Generate the Output Document
