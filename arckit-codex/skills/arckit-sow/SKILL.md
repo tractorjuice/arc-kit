@@ -305,6 +305,12 @@ You should:
 
 Create the comprehensive Statement of Work following the template structure.
 
+After the SOW content, add:
+
+**SOW Completeness Score**: Calculate as percentage of key SOW sections substantively filled: scope, deliverables with acceptance criteria, payment milestones, assumptions, dependencies, change control, SLA/KPIs. Score = filled / 7 × 100%.
+
+**Requirements-to-Deliverables Traceability**: Map each SOW deliverable to the requirement(s) it fulfils. Flag requirements with no deliverable coverage (scope gaps) and deliverables with no requirement justification (scope creep risk).
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **SOW** per-type checks pass. Fix any failures before proceeding.
 
 ### 2. Write Directly to File
