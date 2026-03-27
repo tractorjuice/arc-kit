@@ -142,6 +142,12 @@ The footer should be populated with:
 
 Create directory: `projects/[project]/procurement/`
 
+After the DOS content, add:
+
+**Requirements Coverage Score**: Calculate percentage of project requirements addressed by the DOS specification. Flag requirements not covered by the procurement scope.
+
+**Evaluation Criteria Traceability**: Map each evaluation criterion to the requirement(s) or stakeholder goal it validates. Ensure weightings total 100%.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **DOS** per-type checks pass. Fix any failures before proceeding.
 
 Generate `projects/[project]/procurement/ARC-{PROJECT_ID}-DOS-v1.0.md`:
