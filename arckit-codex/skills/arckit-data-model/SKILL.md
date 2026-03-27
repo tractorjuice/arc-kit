@@ -168,7 +168,11 @@ $ARGUMENTS
      - Data quality monitoring approach
      - Data quality issue resolution process
 
-   **I. Requirements Traceability**:
+   **I. Data Model Completeness Score**: Calculate percentage of entities that have all 5 elements defined: (1) attributes, (2) relationships, (3) GDPR classification, (4) data quality rules, (5) CRUD matrix entry. Score = complete entities / total entities × 100%.
+
+   **J. GDPR Coverage Matrix**: For each entity containing PII, show: lawful basis, retention period, subject rights implementation, DPIA requirement. Flag entities with incomplete GDPR coverage.
+
+   **K. Requirements Traceability**:
    - Create traceability table:
 
      ```text
