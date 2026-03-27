@@ -264,6 +264,12 @@ The footer should be populated with:
 
 ---
 
+After the strategy content, add:
+
+**Strategy Completeness Score**: Calculate percentage of strategy sections that are substantively filled (not just headers): current state, target state, gap analysis, themes, roadmap, governance, KPIs. Score = filled sections / total sections × 100%.
+
+**Principles-to-Strategy Alignment Matrix**: Map each architecture principle (P-001 through P-006) to the strategic themes it supports. Identify themes with no principle coverage — these may need new principles or external governance.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **STRAT** per-type checks pass. Fix any failures before proceeding.
 
 ### 9. Write the Strategy File
