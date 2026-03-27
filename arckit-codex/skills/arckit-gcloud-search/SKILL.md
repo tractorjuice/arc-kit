@@ -139,6 +139,10 @@ The footer should be populated with:
 
 Create directory: `projects/[project]/procurement/`
 
+After the search results, add:
+
+**Requirements Fit Score**: For each shortlisted service, calculate percentage of project requirements it meets. Rank services by fit score.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLD** per-type checks pass. Fix any failures before proceeding.
 
 Generate `projects/[project]/procurement/ARC-{PROJECT_ID}-GCLD-v1.0.md`:
