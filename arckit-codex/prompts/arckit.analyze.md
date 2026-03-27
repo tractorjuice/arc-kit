@@ -130,7 +130,7 @@ Load only minimal necessary context from each artifact:
 
 - Risk categories (Strategic, Operational, Financial, Compliance, Reputational, Technology)
 - Inherent vs Residual risk scores (5×5 matrix)
-- Risk responses (4Ts: Tolerate, Treat, Transfer, Terminate)
+- Risk responses (Orange Book 2023: Avoid, Take/Increase, Retain, Change Likelihood, Change Consequences, Share)
 - Risk owners (should align with RACI matrix)
 - Risk appetite and tolerance levels
 
@@ -147,10 +147,13 @@ Load only minimal necessary context from each artifact:
 - Business requirements (BR-xxx)
 - Functional requirements (FR-xxx)
 - Non-functional requirements (NFR-xxx)
-  - Security (NFR-S-xxx)
+  - Security (NFR-SEC-xxx)
   - Performance (NFR-P-xxx)
+  - Scalability (NFR-S-xxx)
+  - Availability (NFR-A-xxx)
+  - Accessibility (NFR-ACC-xxx)
+  - Maintainability (NFR-M-xxx)
   - Compliance (NFR-C-xxx)
-  - Accessibility (NFR-A-xxx)
 - Integration requirements (INT-xxx)
 - Data requirements (DR-xxx)
 - Success criteria
@@ -319,7 +322,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 
 - Requirements with zero design coverage (not addressed in HLD/DLD)
 - Critical MUST requirements not covered
-- Security requirements (NFR-S-xxx) not reflected in security architecture
+- Security requirements (NFR-SEC-xxx) not reflected in security architecture
 - Performance requirements (NFR-P-xxx) not validated in design
 - Compliance requirements (NFR-C-xxx) not addressed
 
@@ -388,7 +391,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 - High/Very High inherent risks have mitigation requirements?
 - Risks reflected in design (risk mitigation controls in HLD/DLD)?
 - Risk owners assigned and aligned with RACI matrix?
-- Risk responses appropriate (4Ts: Tolerate, Treat, Transfer, Terminate)?
+- Risk responses appropriate (Orange Book 2023: Avoid, Take/Increase, Retain, Change Likelihood, Change Consequences, Share)?
 
 **Risk-SOBC Alignment** (if ARC-*-SOBC-*.md exists):
 
@@ -399,7 +402,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 **Risk-Requirements Alignment**:
 
 - Risk mitigation actions translated into requirements?
-- Security risks addressed by NFR-S-xxx requirements?
+- Security risks addressed by NFR-SEC-xxx requirements?
 - Compliance risks addressed by NFR-C-xxx requirements?
 
 **Missing Risk Assessment**:
@@ -594,7 +597,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 
 **Security Coverage**:
 
-- Security requirements (NFR-S-xxx) exist?
+- Security requirements (NFR-SEC-xxx) exist?
 - Threat model documented?
 - Security architecture in HLD?
 - Security implementation in DLD?
@@ -649,7 +652,7 @@ Use this heuristic to prioritise findings:
 - Missing non-functional requirements category (no security, no performance)
 - Stakeholder: Requirement conflicts not documented or resolved
 - Risk: Medium risks with no mitigation plan
-- Risk: Risk responses not appropriate (4Ts misapplied)
+- Risk: Risk responses not appropriate (Orange Book treatment options misapplied)
 - SOBC: Benefits not measurable or verifiable
 - SOBC: Option analysis missing Do Nothing baseline
 - Data Model: Database schema in DLD doesn't match data model entities
@@ -1177,7 +1180,15 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 - **MOD SbD Score**: {percentage}%
 
 ### Overall Governance Health
-**Score**: {percentage}%
+**Score**: {percentage}% — calculated as weighted average across dimensions:
+- Requirements Quality (20%): requirement completeness, testability, MoSCoW coverage
+- Principles Alignment (15%): compliance with P-001 through P-006
+- Traceability (15%): stakeholder → requirement → design → test coverage
+- Risk Management (15%): risk register completeness, Orange Book treatment appropriateness
+- Business Case (10%): SOBC 5-case completeness, Green Book compliance
+- UK Gov Compliance (15%): TCoP, Service Standard, NCSC CAF coverage
+- Documentation Quality (10%): no placeholders, consistent IDs, clean markdown
+
 **Grade**: A / B / C / D / F
 
 **Grade Thresholds**:
@@ -1185,7 +1196,14 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 - B (80-89%): Good governance, minor issues
 - C (70-79%): Adequate governance, address high-priority issues
 - D (60-69%): Poor governance, major rework needed
-- F (<60%): Insufficient governance, do not proceed
+- F ( < 60%): Insufficient governance, do not proceed
+
+### Cross-Artifact Framework Consistency
+Check that artifacts use consistent framework terminology:
+- Risk register uses Orange Book 2023 treatment options (not legacy 4Ts)
+- SOBC uses Green Book 2026 options terminology (BAU, Do Minimum, Preferred Way Forward)
+- Requirements use standardised NFR sub-prefixes (NFR-SEC, NFR-P, NFR-S, NFR-A, NFR-ACC, NFR-M, NFR-C)
+- Flag any artifacts using outdated framework terminology
 
 ---
 
@@ -1204,6 +1222,16 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 
 3. **If only LOW issues**: ✅ **READY TO PROCEED**
    - Address LOW issues during implementation as improvements
+
+### Remediation Roadmap
+
+Generate a prioritised table mapping each finding to the ArcKit command that resolves it, with estimated effort and the governance dimension it improves:
+
+| Priority | Finding ID | ArcKit Command | Governance Dimension | Est. Effort | Expected Score Impact |
+|----------|-----------|----------------|---------------------|-------------|----------------------|
+| 1 (Critical) | GAP-001 | `/arckit:requirements` | Requirements Quality (+20%) | 2-3 hours | +15-20 points |
+
+Include a **projected health score** showing what the governance score would be after all Critical and High findings are resolved.
 
 ### Suggested Commands
 
