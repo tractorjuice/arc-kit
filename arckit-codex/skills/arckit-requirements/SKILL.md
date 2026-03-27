@@ -68,12 +68,14 @@ $ARGUMENTS
    - Features and capabilities
    - User workflows
 
-   **Non-Functional Requirements (NFR-xxx)**:
-   - Performance (response time, throughput, concurrent users)
-   - Security (authentication, authorisation, encryption, compliance)
-   - Scalability (growth projections, load handling)
-   - Reliability (uptime SLA, MTBF, MTTR)
-   - Compliance (regulations, standards, certifications)
+   **Non-Functional Requirements (NFR-xxx)** — use sub-prefixes consistently:
+   - NFR-P: Performance (response time, throughput, concurrent users)
+   - NFR-SEC: Security (authentication, authorisation, encryption)
+   - NFR-S: Scalability (growth projections, load handling)
+   - NFR-A: Availability (uptime SLA, MTBF, MTTR)
+   - NFR-ACC: Accessibility (WCAG 2.2 AA, assistive technology support, screen reader compatibility) — mandatory for UK Gov public-facing services
+   - NFR-M: Maintainability (code standards, documentation, supportability)
+   - NFR-C: Compliance (regulations, standards, certifications)
 
    **Integration Requirements (INT-xxx)**:
    - Upstream/downstream systems
@@ -91,8 +93,9 @@ $ARGUMENTS
    - Unique ID (BR-001, FR-001, NFR-P-001, etc.)
    - Clear requirement statement
    - Acceptance criteria (testable)
-   - Priority (MUST/SHOULD/MAY)
-   - Rationale
+   - Priority using MoSCoW: MUST (non-negotiable), SHOULD (important but not critical), COULD (desirable if budget allows), WON'T (explicitly excluded from this release)
+   - Rationale (why this requirement exists)
+   - Dependencies (which other requirements must be met first, e.g., "Depends on: INT-001, DR-002")
 
 7. **Align with stakeholder goals and architecture principles**:
    - If stakeholder analysis exists, trace requirements back to stakeholder goals:
@@ -102,6 +105,7 @@ $ARGUMENTS
      - Example: "NFR-S-001 aligns with Security by Design principle (SEC-001)"
    - Ensure high-priority stakeholder drivers get MUST requirements
    - Document which stakeholder benefits from each requirement
+   - After generating all requirements, include a **Requirements Coverage Matrix** showing each stakeholder goal and which requirements address it. Flag any stakeholder goals with NO requirements (coverage gaps). This ensures nothing from the stakeholder analysis is missed
 
 8. **Identify and resolve conflicting requirements**:
    - Review stakeholder analysis `conflict analysis` section for known competing drivers
