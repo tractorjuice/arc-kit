@@ -336,6 +336,10 @@ After generating the OWM code block, generate a Mermaid `wardley-beta` equivalen
 
 ---
 
+After the value chain, add:
+
+**Value Chain Coverage Score**: Calculate percentage of user needs with complete chains. Flag incomplete chains.
+
 **Before writing the file**, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 0.5 visibility`, `> 0.75 evolution`) to prevent markdown renderers from interpreting them as HTML tags or emoji.

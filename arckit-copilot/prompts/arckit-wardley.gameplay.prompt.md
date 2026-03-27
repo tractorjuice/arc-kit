@@ -532,6 +532,10 @@ Some plays must be sequenced carefully:
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
 
+After the gameplay analysis, add:
+
+**Gameplay Applicability Score**: For each recommended gameplay, rate applicability (High/Medium/Low) based on current strategic position and available resources.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus any applicable **WARD** per-type checks pass. Fix any failures before proceeding.
 
 ## Final Output

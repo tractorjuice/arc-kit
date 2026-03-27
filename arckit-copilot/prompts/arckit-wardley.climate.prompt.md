@@ -541,6 +541,10 @@ Selective relevance assessment is a quality signal. An assessment that declares 
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
 
+After the climate analysis, add:
+
+**Climate Impact Score**: Calculate weighted impact across all identified climatic patterns. Rate each as Low/Medium/High impact on the value chain.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus any applicable **WARD** per-type checks pass. Fix any failures before proceeding.
 
 ## Final Output

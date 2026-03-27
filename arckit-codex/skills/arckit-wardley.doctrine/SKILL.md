@@ -327,6 +327,10 @@ The doctrine assessment document must include:
 
 ---
 
+After the doctrine assessment, add:
+
+**Doctrine Maturity Score**: Calculate percentage of doctrine principles achieved across all 4 phases. Score = achieved / total * 100%.
+
 **Before writing the file**, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
 
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3.0 score`, `> 4.0 maturity`) to prevent markdown renderers from interpreting them as HTML tags or emoji.
