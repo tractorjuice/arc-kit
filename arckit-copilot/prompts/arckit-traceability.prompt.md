@@ -151,6 +151,10 @@ ${input:topic:Enter project name or topic}
    - Non-blocking gaps (fix in next sprint)
    - Technical debt to track
 
+After the traceability matrix, add:
+
+**Coverage Score**: Calculate forward traceability coverage (% of requirements with at least one design/test link) and backward traceability coverage (% of design elements traced to a requirement). Flag orphaned requirements (no downstream) and orphaned design elements (no upstream).
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **TRAC** per-type checks pass. Fix any failures before proceeding.
 
 8. **Write output**:
