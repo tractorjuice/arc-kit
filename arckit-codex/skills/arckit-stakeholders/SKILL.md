@@ -91,13 +91,20 @@ $ARGUMENTS
    - Identify synergies (drivers that align across stakeholders)
    - Propose resolution strategies for conflicts
 
-   **Phase 6: Engagement Plan**
+   **Phase 6: Impact and Change Readiness Assessment**
+   - For each stakeholder, assess:
+     - **Impact Score** (-3 to +3): How positively or negatively the project affects them (-3 = severely negative, +3 = strongly positive)
+     - **Change Readiness** (Low/Medium/High): How ready they are to adopt the change, based on capability, willingness, and support
+     - **Engagement Priority**: Derived from Power × |Impact| — stakeholders with high power and high impact (positive or negative) need the most engagement
+   - Create a **Change Impact Heat Map** table showing all stakeholders with their impact, readiness, and engagement priority
+
+   **Phase 7: Engagement Plan**
    - Create stakeholder-specific messaging addressing their drivers
    - Define communication frequency and channels
-   - Assess change impact and resistance risk
-   - Identify champions, fence-sitters, and resisters
+   - For each stakeholder, specify the engagement action that addresses their specific impact score and readiness level
+   - Identify champions (high impact, high readiness), fence-sitters (low impact), and resisters (negative impact, low readiness)
 
-   **Phase 7: Governance**
+   **Phase 8: Governance**
    - Define RACI matrix for key decisions
    - Document escalation path
    - Create risk register for stakeholder-related risks
