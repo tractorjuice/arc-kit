@@ -7,13 +7,13 @@ You are helping an enterprise architect create a Strategic Outline Business Case
 
 ## About SOBC
 
-A **Strategic Outline Business Case (SOBC)** is the first stage in the UK Government business case lifecycle:
+A **Strategic Outline Business Case (SOBC)** is the first stage in the UK Government business case lifecycle, within the broader **ROAMEF cycle** (Rationale → Objectives → Appraisal → Monitoring → Evaluation → Feedback):
 
-- **SOBC**: Strategic Outline (this command) - High-level case for change, done BEFORE detailed requirements
-- **OBC**: Outline Business Case - After some design work, with refined costs
-- **FBC**: Full Business Case - Detailed case with accurate costs, ready for final approval
+- **SOBC**: Strategic Outline (this command) - Rationale, objectives, longlist appraisal, preferred way forward. Done BEFORE detailed requirements
+- **OBC**: Outline Business Case - Shortlist appraisal, identification of preferred option with refined costs
+- **FBC**: Full Business Case - Review and iterate appraisal following procurement process, ready for final approval
 
-This command creates the **SOBC** - the strategic case to secure approval to proceed with requirements and design.
+This command creates the **SOBC** following the **HM Treasury Green Book (2026)** Five Case Model. The Five Cases provide five interconnected perspectives on the same proposal — they should be developed iteratively, not sequentially.
 
 ## User Input
 
@@ -112,9 +112,11 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
    **Five Cases (HM Treasury Green Book Model)**:
 
-   **A. Strategic Case**:
+   **A. Strategic Case** (Green Book 2026: rationale and objectives for the intervention):
    - **Problem Statement**: What's broken? (from stakeholder pain points)
    - **Strategic Fit**: How does this align with organizational strategy?
+   - **Theory of Change**: The logical chain showing how the intervention leads to outcomes: Inputs → Activities → Outputs → Outcomes → Impact. This is a Green Book 2026 requirement — show the causal logic from investment to benefits
+   - **SMART Spending Objectives**: Specific, Measurable, Achievable, Realistic, Time-limited objectives linked to stakeholder goals
    - **Stakeholder Drivers**: Map to stakeholder analysis
      - Link EACH driver to strategic imperative
      - Show intensity (CRITICAL/HIGH/MEDIUM)
@@ -122,17 +124,19 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - **Dependencies**: What else must happen?
    - **Why Now?**: Urgency and opportunity cost
 
-   **B. Economic Case**:
-   - **Options Analysis** (CRITICAL):
-     - Option 0: Do Nothing (baseline)
-     - Option 1: Minimal viable solution
-     - Option 2: Balanced approach (often recommended)
-     - Option 3: Comprehensive solution
+   **B. Economic Case** (Green Book 2026: longlist and shortlist of options):
+   - **Critical Success Factors**: Attributes an option must have to achieve objectives (filter for options appraisal)
+   - **Options Analysis** (Green Book 2026 shortlist — ideally 5 options). IMPORTANT: Use ONLY these Green Book 2026 option labels — do not substitute with "Balanced", "Comprehensive", or other names:
+     - Option 0: Business as Usual (BAU) — mandatory benchmark showing outcome without intervention
+     - Option 1: Do Minimum — just achieves objectives
+     - Option 2: Preferred Way Forward — best combination of costs/benefits (often recommended)
+     - Option 3: More Ambitious — higher benefits but higher costs/risks
+     - Option 4: Less Ambitious — lower benefits but lower costs/risks (if 5 options selected)
      - For EACH option:
        - High-level costs (rough order of magnitude)
        - Benefits delivered (% of stakeholder goals met)
        - Risks
-       - Pros/cons
+       - Assessment against Critical Success Factors
    - **Benefits Mapping**:
      - Link EACH benefit to specific stakeholder goal from ARC-{PROJECT_ID}-STKE-v*.md
      - Quantify where possible (use stakeholder outcomes for metrics)
@@ -145,7 +149,9 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
      - Qualitative assessment (this is strategic, not detailed)
      - Expected ROI range
      - Payback period estimate
-   - **Recommended Option**: Which option and why
+   - **Appraisal Summary Table (AST)** — Green Book 2026 recommended format comparing shortlisted options side by side: monetisable costs/benefits, unmonetisable impacts, risks, public sector financial impact, distributional effects
+   - **Value for Money Judgment** — balanced judgment based on 6 Green Book 2026 factors: (1) performance against objectives/CSFs, (2) monetisable costs and benefits, (3) unmonetisable costs and benefits, (4) public sector financial impact, (5) distributional effects on groups and places, (6) risk and uncertainty
+   - **Recommended Option**: Which option and why, with explicit VFM rationale
 
    **C. Commercial Case**:
    - **Procurement Strategy**:
