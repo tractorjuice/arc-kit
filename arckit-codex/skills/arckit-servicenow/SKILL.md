@@ -570,6 +570,12 @@ Before presenting the ServiceNow design to the user, verify:
 
 ## Output Instructions
 
+After the ServiceNow design, add:
+
+**ITSM Coverage Score**: Calculate percentage of ITIL processes covered by the ServiceNow design: incident, change, problem, service request, CMDB, SLA. Score = covered / total × 100%.
+
+**Process-to-Requirements Traceability**: Map each ServiceNow workflow to the requirement it automates.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **SNOW** per-type checks pass. Fix any failures before proceeding.
 
 **CRITICAL - Use Write Tool for Large Documents**:
