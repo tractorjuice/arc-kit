@@ -97,6 +97,12 @@ Generate a comprehensive TCoP review document by:
      - **Major increment** (e.g., 1.0 → 2.0): Scope materially changed — new TCoP points assessed, fundamentally different compliance posture, significant project changes
    - For v1.1+/v2.0+: Add a Revision History entry describing what changed from the previous version
 
+    After the per-point assessment, add:
+
+    **TCoP Compliance Score**: Calculate as (Compliant × 1.0 + Partially × 0.5 + Non-Compliant × 0) / 13 × 100%. This gives a single trackable percentage.
+
+    **Principles-to-TCoP Traceability Matrix**: Map each architecture principle (P-001 through P-006) to the TCoP points it supports. Highlight TCoP points with no architecture principle coverage — these need separate governance controls.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **TCOP** per-type checks pass. Fix any failures before proceeding.
 
 10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-TCOP-v${VERSION}.md`
