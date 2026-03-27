@@ -232,6 +232,12 @@ The footer should be populated with:
 
 ---
 
+After the DLD review, add:
+
+**DLD Review Coverage Score**: Calculate percentage of HLD design elements validated at detailed level. Flag HLD elements with no DLD coverage.
+
+**Interface-to-Requirements Traceability**: Map each interface specification to the integration requirement it satisfies.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **DLDR** per-type checks pass. Fix any failures before proceeding.
 
 9. **Write outputs**:
