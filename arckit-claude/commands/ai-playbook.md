@@ -280,11 +280,15 @@ Create detailed report with:
 - [ ] Bias Audit Report
 - [ ] User Research Report
 
-**Action Plan**:
+**Action Plan** (structured as a remediation roadmap):
 
-- High priority (before deployment)
-- Medium priority (within 3 months)
-- Low priority (continuous improvement)
+- High priority (before deployment) — with specific owner from STKE RACI, effort in days, and cost estimate
+- Medium priority (within 3 months) — same detail
+- Low priority (continuous improvement) — same detail
+
+Include a **total investment summary** and **AI Ethics Score improvement projection** showing the expected score after all high-priority actions are completed
+
+Add an **Architecture Principles → AI Ethics Traceability Matrix** mapping each principle (P-001 through P-006) to the AI ethics principles it supports. Identify AI ethics principles with no architecture principle coverage
 
 8. **Map to existing ArcKit artifacts**:
 
