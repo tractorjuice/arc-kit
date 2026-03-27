@@ -1535,6 +1535,12 @@ The footer should be populated with:
 
 ---
 
+After the backlog content, add:
+
+**Backlog Coverage Score**: Calculate percentage of requirements covered by at least one user story. Flag requirements with no story (coverage gaps).
+
+**Story Quality Score**: Calculate percentage of stories with all INVEST criteria met (Independent, Negotiable, Valuable, Estimable, Small, Testable). Score = qualifying stories / total stories × 100%.
+
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **BKLG** per-type checks pass. Fix any failures before proceeding.
 
 ### Step 14: Final Output
