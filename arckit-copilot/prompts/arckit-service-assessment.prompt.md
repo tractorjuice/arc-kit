@@ -656,6 +656,10 @@ For each Service Standard point, assign a RAG rating based on evidence found:
 - **🟡 Amber (Nearly Ready)**: 10+ points Green/Amber, max 2 Red
 - **🔴 Red (Not Ready)**: More than 2 Red points or fewer than 10 Green/Amber
 
+**Readiness Score** (quantitative): Calculate as (Green × 1.0 + Amber × 0.5 + Red × 0) / 14 × 100%. This gives a single percentage score for tracking improvement over time.
+
+After the per-point assessment, add an **Evidence-to-Standard Traceability Matrix** showing which ArcKit artifacts provide evidence for which Service Standard points. This shows at a glance where evidence coverage is strong and where it's missing, and helps the team prioritise artifact creation.
+
 ### Step 6: Generate Recommendations
 
 For each gap identified, generate specific, actionable recommendations:
