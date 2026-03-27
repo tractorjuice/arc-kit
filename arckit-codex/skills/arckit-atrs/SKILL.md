@@ -311,6 +311,12 @@ The footer should be populated with:
 
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **ATRS** per-type checks pass. Fix any failures before proceeding.
 
+    After the assessment, add:
+
+    **ATRS Completeness Score**: Calculate the percentage of ATRS mandatory fields that are fully populated (not "to be confirmed" or similar). Provides a trackable readiness metric.
+
+    **Architecture Principles → ATRS Traceability Matrix**: Map each principle (P-001 through P-006) to the ATRS sections it supports. Identify ATRS sections with no architecture principle coverage — these represent governance gaps.
+
 11. **Generate comprehensive ATRS record**:
 
 Output location: `projects/{project-dir}/ARC-{PROJECT_ID}-ATRS-v1.0.md`
