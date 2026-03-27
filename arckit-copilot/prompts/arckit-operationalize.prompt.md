@@ -302,6 +302,12 @@ Before saving, verify:
 
 ### Phase 5: Output
 
+After the operational readiness content, add:
+
+**Operational Readiness Score**: Calculate percentage of readiness criteria met: runbooks, SLAs, monitoring, incident response, DR tested, training complete. Score = met / total × 100%.
+
+**SLA-to-Requirements Traceability**: Map each SLA/SLO to the NFR requirement it satisfies.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **OPS** per-type checks pass. Fix any failures before proceeding.
 
 **CRITICAL - Use Write Tool**:
