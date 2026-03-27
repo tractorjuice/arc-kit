@@ -261,6 +261,12 @@ Verify before saving:
 - [ ] Secret management defined
 - [ ] Rollback procedures documented
 
+After the DevOps strategy, add:
+
+**DevOps Maturity Score**: Calculate maturity across DORA metrics dimensions: deployment frequency, lead time, change failure rate, MTTR. Rate each as Beginner/Intermediate/Advanced.
+
+**Principles-to-Pipeline Traceability**: Map each architecture principle to the pipeline stage(s) that enforce it.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **DEVOPS** per-type checks pass. Fix any failures before proceeding.
 
 ### Phase 5: Output
