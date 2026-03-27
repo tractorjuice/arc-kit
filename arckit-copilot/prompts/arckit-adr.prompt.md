@@ -275,6 +275,10 @@ Apply the user's selections: the escalation level determines the governance foru
 - Link to stakeholder goals (from ARC-{PROJECT_ID}-STKE-v*.md)
 - Link to risk mitigations (from ARC-{PROJECT_ID}-RISK-v*.md)
 - Link to research findings (which sections analyzed these options)
+
+   After the options analysis, add a **Decision Quality Assessment** table scoring the ADR on MADR v4.0 completeness: does it have (1) clear context, (2) decision drivers, (3) 3+ considered options, (4) pros/cons per option, (5) decision outcome, (6) consequences documented, (7) links to related decisions? Score as X/7 with a percentage.
+
+   Add a **Principles Alignment Matrix** showing how the chosen option aligns or conflicts with each architecture principle (P-001 through P-006). For conflicts, document the justification for proceeding despite the conflict
 - Link to Wardley maps (evolution stage influences choice)
 - Link to roadmap (which theme/initiative this supports)
 - Create bidirectional traceability chain
