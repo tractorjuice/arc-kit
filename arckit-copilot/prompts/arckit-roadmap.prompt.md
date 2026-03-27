@@ -361,6 +361,12 @@ The footer should be populated with:
 
 ---
 
+After the roadmap content, add:
+
+**Roadmap Coverage Score**: Calculate as percentage of stakeholder goals addressed by at least one roadmap milestone. Score = addressed goals / total goals × 100%.
+
+**Goals-to-Milestones Traceability Matrix**: Map each stakeholder goal to the roadmap milestone(s) that deliver it. Flag goals with no milestone coverage (delivery gaps).
+
 ### 9. Write the Roadmap File
 
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **ROAD** per-type checks pass. Fix any failures before proceeding.
