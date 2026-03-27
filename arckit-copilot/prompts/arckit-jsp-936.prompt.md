@@ -3461,6 +3461,14 @@ Now, **compile all documentation** into a comprehensive JSP 936 AI Assurance pac
 
 3. **Review for completeness**: Check that all JSP 936 requirements are addressed (27 requirements: 5 principles + risk classification + governance + 8 phases + approval + monitoring)
 
+After the assessment content, add:
+
+**JSP 936 Compliance Score**: Calculate as percentage of JSP 936 requirements met (across 5 principles, risk classification, governance, 8 lifecycle phases, approval, and monitoring). Score = met / 27 × 100%. Also show per-principle compliance.
+
+**Assurance Evidence Traceability Matrix**: Map each JSP 936 requirement to the evidence that satisfies it (ArcKit artifacts, test results, governance records). Flag requirements with no evidence (assurance gaps).
+
+**Remediation Roadmap**: Prioritised table mapping each gap to actions, owners, effort, and expected compliance score improvement. Include projected score after all critical gaps are resolved.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **JSP936** per-type checks pass. Fix any failures before proceeding.
 
 4. **Write the document** to the project directory:
