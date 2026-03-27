@@ -144,6 +144,12 @@ Generate Document ID: `ARC-{PROJECT_ID}-MMOD-v1.0` (for filename: `ARC-{PROJECT_
 
 ### 9. Quality Check
 
+After the maturity assessment, add:
+
+**Overall Maturity Score**: Calculate weighted average maturity across all assessed dimensions. Score = sum(dimension score × weight) / sum(weights) × 100%.
+
+**Maturity-to-Goals Traceability**: Map each maturity dimension to the stakeholder goal it supports.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
 
 ### 10. Write the Maturity Model File
