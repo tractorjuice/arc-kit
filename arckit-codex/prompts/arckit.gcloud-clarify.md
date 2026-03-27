@@ -252,6 +252,10 @@ The footer should be populated with:
 
 ### 6. Generate Output Document
 
+After the clarification questions, add:
+
+**Gap-to-Question Traceability**: Map each clarification question to the specific gap or requirement it addresses. Ensure no identified gaps are left without questions.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **GCLC** per-type checks pass. Fix any failures before proceeding.
 
 Create `projects/[project]/procurement/ARC-{PROJECT_ID}-GCLC-v1.0.md`:
