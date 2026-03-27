@@ -220,6 +220,12 @@ The footer should be populated with:
 
 ---
 
+After the HLD review, add:
+
+**HLD Review Coverage Score**: Calculate percentage of requirements covered by the high-level design. Flag requirements with no design coverage (architecture gaps).
+
+**Design Decision-to-ADR Traceability**: Map each design decision to the ADR that documents it.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **HLDR** per-type checks pass. Fix any failures before proceeding.
 
 8. **Write output**:
