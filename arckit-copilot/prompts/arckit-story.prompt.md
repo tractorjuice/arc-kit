@@ -722,6 +722,12 @@ Read the story template:
 - Ensure all tables are complete with real counts
 - Write full narrative paragraphs for each chapter with real project details
 
+After the project story, add:
+
+**Story Completeness Score**: Calculate percentage of story elements present: timeline, key metrics, stakeholder quotes, lessons learned, visual aids. Score = present / total × 100%.
+
+**Metrics-to-Goals Traceability**: Map each metric cited in the story to the stakeholder goal it evidences.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **STORY** per-type checks pass. Fix any failures before proceeding.
 
 ### Step 14: Write ARC-{PROJECT_ID}-STORY-v${VERSION}.md Using Write Tool
