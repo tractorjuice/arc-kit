@@ -1390,6 +1390,12 @@ The footer should be populated with:
 
 ---
 
+After the analysis, add:
+
+**Governance Health Score**: Calculate weighted average across all governance dimensions assessed (TCoP, principles, requirements, security). Score = sum(dimension score) / sum(max possible) × 100%.
+
+**Artifact Dependency Map**: Show which artifacts depend on which others, highlighting missing dependencies that weaken governance.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **ANAL** per-type checks pass. Fix any failures before proceeding.
 
 ### 7. Write Analysis Report to File
