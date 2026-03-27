@@ -327,6 +327,12 @@ Generate actionable next steps:
 
 ### 6. Generate Assessment Document
 
+After the compliance assessment, add:
+
+**Principles Compliance Score**: Calculate as percentage of principles that are Fully Compliant (vs Partial/Non-Compliant). Score = compliant / total principles × 100%.
+
+**Compliance Trend Analysis**: If previous versions exist, show how compliance has changed over time.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **PRIN-COMP** per-type checks pass. Fix any failures before proceeding.
 
 Use the **Write tool** to create:
