@@ -355,6 +355,12 @@ For EACH architecture principle:
 
 Use the document ID `ARC-{PROJECT_ID}-CONF-v{VERSION}` (e.g., `ARC-001-CONF-v1.0`).
 
+After the conformance assessment, add:
+
+**Conformance Score**: Calculate as percentage of criteria that are Compliant (vs Partial/Non-Compliant). Score = compliant / total criteria × 100%.
+
+**ADR-to-Implementation Drift Analysis**: For each ADR assessed, show the decision made vs the actual implementation, highlighting any drift with severity (Low/Medium/High). This is the core value of conformance assessment.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **CONF** per-type checks pass. Fix any failures before proceeding.
 
 **Use the Write tool** to save the document to `projects/{project-dir}/ARC-{PROJECT_ID}-CONF-v{VERSION}.md`.
