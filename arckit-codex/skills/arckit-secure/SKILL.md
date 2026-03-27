@@ -129,6 +129,8 @@ Generate a comprehensive Secure by Design assessment document by:
 
 9. **Calculate overall CAF score**: X/14 principles achieved
 
+    After the CAF assessment, add a **Principles-to-CAF Traceability Matrix** showing how each Architecture Principle (P-001 through P-006) maps to specific CAF principles. For example: P-003 (Security by Design) maps to A1 (Governance), A2 (Risk Management), B2 (Identity & Access), B3 (Data Security), B4 (System Security). This shows which architecture principles provide evidence for which CAF principles, and highlights any CAF principles that have NO supporting architecture principle (gaps in security governance)
+
 10. **Assess UK Government Cyber Security Standard compliance**:
 
     **9.1 GovAssure Status** — For critical systems subject to GovAssure assurance:
@@ -180,6 +182,14 @@ Generate a comprehensive Secure by Design assessment document by:
     - High priority (1-3 months) - significant risk reduction
     - Medium priority (3-6 months) - continuous improvement
     - Include VMS enrollment and Cyber Action Plan alignment actions where applicable
+
+    After the recommendations, add a **Security Remediation Roadmap** table mapping each action to:
+    - The GDS service phase it must be completed by (Alpha/Beta/Live)
+    - The specific stakeholder owner from the RACI matrix (use actual names from STKE artifact)
+    - The CAF principle(s) it remediates
+    - Estimated effort (days) and cost where possible
+
+    Also add a **CAF Maturity Summary** — for each of the 4 CAF objectives (A-D), calculate a maturity percentage: (achieved principles + 0.5 × partially achieved) / total principles × 100%. This gives a quantitative maturity score per objective, not just pass/fail
 
 14. **Detect version**: Before generating the document ID, check if a previous version exists:
     - Look for existing `ARC-{PROJECT_ID}-SECD-v*.md` files in the project directory
