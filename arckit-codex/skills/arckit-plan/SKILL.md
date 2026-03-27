@@ -454,6 +454,12 @@ The footer should be populated with:
 
 ## Step 4: Write the Plan
 
+After the plan content, add:
+
+**Plan Completeness Score**: Calculate as percentage of plan elements defined: WBS, dependencies, critical path, resource allocation, milestones, risk mitigations, governance gates. Score = defined elements / 7 × 100%.
+
+**Stakeholder-to-Milestone Traceability**: Map each key stakeholder to the milestones they care about and the gates where they have approval authority (from RACI). This ensures governance is aligned to the plan.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **PLAN** per-type checks pass. Fix any failures before proceeding.
 
 1. **Determine output location**:
