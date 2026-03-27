@@ -248,6 +248,12 @@ Verify before saving:
 
 **CRITICAL - Use Write Tool**: MLOps documents are large. Use Write tool to save.
 
+After the MLOps strategy, add:
+
+**MLOps Maturity Score**: Calculate maturity across lifecycle stages: data, training, deployment, monitoring. Rate each as Manual/Semi-Automated/Fully-Automated.
+
+**Model-to-Requirements Traceability**: Map each model capability to the requirement(s) it fulfils.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **MLOPS** per-type checks pass. Fix any failures before proceeding.
 
 1. **Save file** to `projects/{project-name}/ARC-{PROJECT_ID}-MLOPS-v1.0.md`
