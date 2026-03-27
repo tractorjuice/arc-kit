@@ -163,6 +163,12 @@ The footer should be populated with:
 
 ---
 
+After the evaluation content, add:
+
+**Evaluation Objectivity Score**: Calculate as percentage of criteria with quantified (not subjective) scoring evidence. Score = quantified criteria / total criteria × 100%.
+
+**Requirements-to-Evaluation Traceability**: Map each evaluation criterion to the requirement(s) it validates. Flag requirements with no evaluation criterion (untested requirements) and criteria with no requirement basis (unnecessary criteria).
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **EVAL** per-type checks pass. Fix any failures before proceeding.
 
 4. **Write output** to `projects/{project-dir}/ARC-{PROJECT_ID}-EVAL-v1.0.md`
