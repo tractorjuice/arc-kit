@@ -287,6 +287,12 @@ The footer should be populated with:
 
 ---
 
+After the MOD assessment, add:
+
+**MOD Security Maturity Score**: Calculate maturity across CAAT control areas. Rate each as Not Implemented/Partial/Full.
+
+**Control-to-Threat Traceability**: Map each security control to the threat(s) it mitigates from the threat model.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **SECD-MOD** per-type checks pass. Fix any failures before proceeding.
 
 10. **Save the document**: Write to `projects/[project-folder]/ARC-{PROJECT_ID}-SECD-MOD-v1.0.md`
