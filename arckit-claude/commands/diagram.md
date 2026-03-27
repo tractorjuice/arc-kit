@@ -1031,6 +1031,14 @@ After generating the diagram, evaluate it against the following quality criteria
 | 8 (Node placement) | Reorder declarations to place connected elements adjacent; group tightly-coupled components in a subgraph |
 | 9 (Element count) | Split diagram at natural architectural boundaries (see Step 5b) |
 
+### Diagram Quality Score
+
+Calculate: passing criteria / 9 × 100%. Include this score in the output for tracking diagram quality over iterations.
+
+### Component-to-Requirement Traceability
+
+After the quality gate, add a table mapping each diagram element (system, container, component) to the requirement(s) it addresses. Flag elements with no requirement traceability (potentially out of scope) and requirements with no diagram element (missing from the architecture).
+
 ### Iterative Review Loop
 
 **IMPORTANT:** Do not proceed to Step 6 until the quality gate passes. Follow this loop:
