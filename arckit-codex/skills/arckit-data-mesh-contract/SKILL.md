@@ -403,6 +403,12 @@ The footer should be populated with:
 
 ---
 
+After the contract content, add:
+
+**Contract Completeness Score**: Calculate percentage of contract sections fully defined: schema, SLAs, quality metrics, ports, ownership, lineage. Score = defined / total × 100%.
+
+**Consumer-to-SLA Traceability**: Map each data consumer to the SLAs they depend on.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **DMC** per-type checks pass. Fix any failures before proceeding.
 
 ### Step 8: Write the Contract File
