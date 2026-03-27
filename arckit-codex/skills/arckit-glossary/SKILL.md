@@ -65,7 +65,7 @@ Load the glossary template structure:
 
 ### 3. Extract Terms from Artifacts
 
-Systematically scan all available artifacts and extract:
+Systematically scan all available artifacts and extract a minimum of 50 terms (aim for comprehensive coverage — do not omit terms to keep the document short):
 
 - **Domain-specific terms** — Business and technical terms with definitions inferred from context
 - **Acronyms and abbreviations** — Every acronym used in any artifact, with full expansion
@@ -88,13 +88,22 @@ For each term, record:
 
 Populate the template with extracted terms, organized alphabetically within categories. Each entry should:
 
-- Provide a clear, jargon-free definition
+- Provide a **project-contextualised** definition — not a generic textbook definition, but what this term means *for this specific project*. For example, "Zero-Trust: Security model requiring strict identity verification... In this project, zero-trust means [specific architectural implication from P-003]"
 - Reference the source artifact Document ID(s)
 - Note the category for filtering
-- Cross-reference related terms where applicable
+- Cross-reference related terms using "See also: **Term**" where applicable (not just bold formatting)
 - Flag any terms with inconsistent definitions across artifacts
 
 Include a separate **Acronyms** table for quick reference.
+
+Organize the Glossary table into **category sub-sections** (Business Terms, Technical Terms, Governance Terms, etc.) with separate table headers per section — do not use a single flat table.
+
+After the Traceability section, add a **Terminology Consistency Notes** section listing any terms that are referred to by different names or abbreviations across artifacts (e.g., "SRO" / "Service Owner" / "Senior Responsible Owner"). For each, specify the **canonical term** to use going forward. This helps standardize project language.
+
+After that, add a **Usage Guide** section explaining:
+- How other project documents should reference this glossary (e.g., "On first use of a glossary term in any artifact, italicise it and note '(see Glossary)'")
+- When to update the glossary (after each new artifact is created)
+- How to propose new terms (submit to the Lead Architect for inclusion)
 
 ### 5. Auto-Populate Document Control
 
