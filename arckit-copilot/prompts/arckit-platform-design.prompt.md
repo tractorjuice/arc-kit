@@ -341,6 +341,12 @@ Before generating the document ID, check if a previous version exists:
 
 ### Step 7: Write the Document
 
+After the platform design, add:
+
+**Platform Readiness Score**: Calculate percentage of platform capabilities that are production-ready vs planned. Score = ready / total × 100%.
+
+**Capability-to-Consumer Traceability**: Map each platform capability to the teams/services that will consume it.
+
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **PLAT** per-type checks pass. Fix any failures before proceeding.
 
 **USE THE WRITE TOOL** to create the platform design document:
