@@ -3468,6 +3468,12 @@ Now, **compile all documentation** into a comprehensive JSP 936 AI Assurance pac
 
 3. **Review for completeness**: Check that all JSP 936 requirements are addressed (27 requirements: 5 principles + risk classification + governance + 8 phases + approval + monitoring)
 
+After the JSP 936 assessment, add:
+
+**JSP 936 Compliance Score**: Calculate percentage of JSP 936 requirements met. Score = met / total × 100%.
+
+**Control-to-Threat Traceability**: Map each JSP 936 control to the defence threat(s) it mitigates.
+
 Before writing the file, read `~/.gemini/extensions/arckit/references/quality-checklist.md` and verify all **Common Checks** plus the **JSP936** per-type checks pass. Fix any failures before proceeding.
 
 4. **Write the document** to the project directory:
