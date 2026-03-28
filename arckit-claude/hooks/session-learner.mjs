@@ -17,11 +17,14 @@
  * Output (stdout): empty (notification hook, no output required)
  */
 
-import { writeFileSync, mkdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { writeFileSync, readFileSync, mkdirSync } from 'node:fs';
+import { join, basename } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { isDir, isFile, readText, parseHookInput } from './hook-utils.mjs';
 import { DOC_TYPES } from '../config/doc-types.mjs';
+
+// Decision keywords for commit message pattern matching (TiM Phase 1)
+const DECISION_RE = /\b(chose|decided|selected|switched to|migrated to|replaced|opted for|instead of|trade-off|over .+ because)\b/i;
 
 const data = parseHookInput();
 const cwd = data.cwd || '.';
@@ -114,6 +117,112 @@ function classifySession(categories) {
 }
 
 const sessionType = classifySession(allCategories);
+
+// ── TiM Phase 1: Decision Thought Extraction ──
+
+const thoughtsFile = join(memoryDir, 'thoughts.jsonl');
+const newThoughts = [];
+
+// Read existing thoughts for dedup and ID generation
+let existingThoughts = [];
+if (isFile(thoughtsFile)) {
+  const raw = readText(thoughtsFile);
+  if (raw) {
+    existingThoughts = raw.trim().split('\n').filter(Boolean).map(line => {
+      try { return JSON.parse(line); } catch { return null; }
+    }).filter(Boolean);
+  }
+}
+
+const recentContent = new Set(existingThoughts.slice(0, 20).map(t => t.content));
+let nextId = existingThoughts.reduce((max, t) => {
+  const n = parseInt(t.id?.replace('t-', ''), 10);
+  return n > max ? n : max;
+}, 0) + 1;
+
+const dateStr_ = new Date().toISOString().substring(0, 10);
+
+// Path 1: Commit message decision patterns
+for (const summary of commitLines) {
+  const spaceIdx = summary.indexOf(' ');
+  const msg = spaceIdx > 0 ? summary.substring(spaceIdx + 1) : summary;
+  if (!DECISION_RE.test(msg)) continue;
+  if (recentContent.has(msg)) continue;
+
+  // Find project number from changed files associated with this session
+  let projNum = '000';
+  for (const f of files) {
+    const pm = f.match(/ARC-(\d{3})-/);
+    if (pm) { projNum = pm[1]; break; }
+  }
+
+  // Derive tags from artifact categories in this session
+  const tags = [...allCategories].map(c => c.toLowerCase());
+
+  newThoughts.push({
+    id: `t-${String(nextId++).padStart(3, '0')}`,
+    created: dateStr_,
+    project: projNum,
+    type: 'decision',
+    content: msg,
+    source: 'commit',
+    artifact: null,
+    tags: tags.length > 0 ? tags : ['general'],
+  });
+  recentContent.add(msg);
+}
+
+// Path 2: ADR content parsing
+const adrFiles = files.filter(f => /ARC-\d{3}-ADR-/.test(f));
+for (const adrFile of adrFiles) {
+  const adrPath = join(cwd, adrFile);
+  if (!isFile(adrPath)) continue;
+
+  let adrContent;
+  try { adrContent = readFileSync(adrPath, 'utf8'); } catch { continue; }
+
+  // Extract decision text from ## Decision heading or **Decision:** bold line
+  let decision = null;
+  const headingMatch = adrContent.match(/^##\s+(?:Context and )?Decision\s*\n+([\s\S]*?)(?=\n##\s|\n---|\Z)/im);
+  if (headingMatch) {
+    // Take first non-empty paragraph
+    const paragraphs = headingMatch[1].split(/\n\n/).map(p => p.trim()).filter(Boolean);
+    if (paragraphs.length > 0) decision = paragraphs[0].replace(/\n/g, ' ').trim();
+  }
+
+  if (!decision) {
+    const boldMatch = adrContent.match(/\*\*Decision\*\*:\s*(.+)/i);
+    if (boldMatch) decision = boldMatch[1].trim();
+  }
+
+  if (!decision || recentContent.has(decision)) continue;
+
+  // Extract project number from filename
+  const projMatch = adrFile.match(/ARC-(\d{3})-/);
+  const projNum = projMatch ? projMatch[1] : '000';
+
+  newThoughts.push({
+    id: `t-${String(nextId++).padStart(3, '0')}`,
+    created: dateStr_,
+    project: projNum,
+    type: 'decision',
+    content: decision,
+    source: 'adr',
+    artifact: basename(adrFile),
+    tags: ['architecture'],
+  });
+  recentContent.add(decision);
+}
+
+// Write thoughts to JSONL (prepend new, trim to 100)
+if (newThoughts.length > 0) {
+  mkdirSync(memoryDir, { recursive: true });
+  const newLines = newThoughts.map(t => JSON.stringify(t));
+  const allLines = [...newLines, ...existingThoughts.map(t => JSON.stringify(t))];
+  writeFileSync(thoughtsFile, allLines.slice(0, 100).join('\n') + '\n');
+}
+
+// ── End TiM Phase 1 ──
 
 // Extract commit message summaries (strip hashes)
 const commitSummaries = commitLines.map(line => {

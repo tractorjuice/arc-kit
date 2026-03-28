@@ -125,6 +125,25 @@ if (isFile(sessionsFile)) {
   }
 }
 
+// Surface recent decision thoughts (TiM Phase 1)
+const thoughtsFile = join(cwd, '.arckit', 'memory', 'thoughts.jsonl');
+if (isFile(thoughtsFile)) {
+  const thoughtsRaw = readText(thoughtsFile);
+  if (thoughtsRaw) {
+    const thoughts = thoughtsRaw.trim().split('\n').filter(Boolean).slice(0, 5).map(line => {
+      try { return JSON.parse(line); } catch { return null; }
+    }).filter(Boolean);
+
+    if (thoughts.length > 0) {
+      context += '\n\n## Recent Decisions\n';
+      for (const t of thoughts) {
+        const artifactRef = t.artifact ? ` (${t.artifact})` : '';
+        context += `- [${t.created}] ${t.content}${artifactRef}\n`;
+      }
+    }
+  }
+}
+
 // Output additionalContext
 const output = {
   hookSpecificOutput: {
