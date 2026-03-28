@@ -482,7 +482,7 @@ def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
                 first_line = desc.strip().split("\n")[0].strip()
                 toml_name = filename.replace(".md", "")
 
-                lines.append(f"[agents.roles.{name}]")
+                lines.append(f"[agents.{name}]")
                 escaped_desc = first_line.replace('"', '\\"')
                 lines.append(f'description = "{escaped_desc}"')
                 lines.append(f'config_file = "agents/{toml_name}.toml"')
@@ -510,9 +510,11 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
         with open(agent_path, "r", encoding="utf-8") as f:
             content = f.read()
 
-        prompt = extract_agent_prompt(content)
+        frontmatter, prompt = extract_frontmatter_and_prompt(content)
         prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", path_prefix)
         prompt_escaped = prompt.replace("\\", "\\\\").replace('"""', '\\"\\"\\"')
+
+        agent_name = frontmatter.get("name", filename.replace(".md", ""))
 
         toml_name = filename.replace(".md", ".toml")
         toml_path = os.path.join(output_dir, toml_name)
@@ -520,6 +522,8 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
         toml_content = (
             f"# Auto-generated from arckit-claude/agents/{filename}\n"
             f"# Do not edit — edit the source and re-run scripts/converter.py\n"
+            f"\n"
+            f'name = "{agent_name}"\n'
             f"\n"
             f'developer_instructions = """\n'
             f"{prompt_escaped}\n"
