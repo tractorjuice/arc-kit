@@ -1,6 +1,6 @@
 ---
 name: plantuml-syntax
-description: "This skill should be used when the user asks about PlantUML syntax for any diagram type including C4-PlantUML, sequence, class, activity, state, ER, component, deployment, or use case diagrams. Also applies when troubleshooting PlantUML rendering errors, fixing layout conflicts between Rel_Down and Lay_Right, styling with skinparams or themes, or asking about C4 directional relationships and tier-based layout patterns."
+description: "This skill should be used when the user asks about PlantUML syntax for C4-PlantUML, sequence, class, activity, state, ER, component, deployment, or use case diagrams, rendering errors, layout conflicts, skinparams, or themes."
 ---
 
 # PlantUML Syntax Reference
