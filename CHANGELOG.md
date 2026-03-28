@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.2] - 2026-03-28
+
+### Fixed
+
+- Add `name` field to generated Codex agent `.toml` files — Codex CLI requires a non-empty name (#269)
+- Flatten `[agents.roles.X]` to `[agents.X]` in Codex `config.toml` to prevent `roles` being misinterpreted as a malformed agent role (#269)
+
 ## [4.6.1] - 2026-03-28
 
 ### Fixed
