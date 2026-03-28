@@ -106,35 +106,68 @@ function owmToMermaid(owmContent, filename) {
   const mermaidLines = ['wardley-beta'];
   let hasTitleLine = false;
 
-  // First pass: collect build/buy/outsource markers and component names
-  const sourcing = {}; // { normalizedName: 'build'|'buy'|'outsource' }
-  const componentNames = new Set(); // Track all declared component names (original)
-  const nameMap = {}; // { originalName: quotedName } for link rewriting
+  // ── PASS 1: Collect metadata for pipeline child detection ──
+  const sourcing = {};       // { normalizedName: 'build'|'buy'|'outsource' }
+  const compCoords = {};     // { name: { vis, evo } }
+  const pipelineRanges = {}; // { name: { min, max } }
 
   for (const rawLine of lines) {
     const trimmed = rawLine.trim();
-    // Collect sourcing
+    if (trimmed.startsWith('//')) continue;
+
+    // Sourcing markers
     const srcMatch = trimmed.match(/^(build|buy|outsource)\s+(.+)/i);
     if (srcMatch) {
       sourcing[srcMatch[2].trim().toLowerCase()] = srcMatch[1].toLowerCase();
     }
-    // Collect component names
-    const compMatch = trimmed.match(/^component\s+(.+?)\s*\[/);
+
+    // Component coordinates
+    const compMatch = trimmed.match(/^component\s+(.+?)\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\]/);
     if (compMatch) {
-      const origName = compMatch[1].trim();
-      componentNames.add(origName);
-      nameMap[origName] = quoteName(origName);
+      compCoords[compMatch[1].trim()] = {
+        vis: parseFloat(compMatch[2]),
+        evo: parseFloat(compMatch[3]),
+      };
     }
-    // Collect anchor names
-    const anchorMatch = trimmed.match(/^anchor\s+(.+?)\s*\[/);
-    if (anchorMatch) {
-      const origName = anchorMatch[1].trim();
-      componentNames.add(origName);
-      nameMap[origName] = quoteName(origName);
+
+    // Pipeline range declarations
+    const pipeMatch = trimmed.match(/^pipeline\s+(.+?)\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\]\s*$/);
+    if (pipeMatch) {
+      pipelineRanges[pipeMatch[1].trim()] = {
+        min: parseFloat(pipeMatch[2]),
+        max: parseFloat(pipeMatch[3]),
+      };
     }
   }
 
-  // Second pass: convert lines
+  // ── PASS 1b: Detect pipeline children ──
+  // A child has visibility within ±0.05 of parent AND evolution within [min, max]
+  const pipelineChildren = {};  // { parentName: [{ name, evo }] }
+  const isPipelineChild = new Set(); // names consumed as children
+
+  for (const [pipeName, range] of Object.entries(pipelineRanges)) {
+    const parent = compCoords[pipeName];
+    if (!parent) continue;
+
+    const children = [];
+    for (const [cName, cCoord] of Object.entries(compCoords)) {
+      if (cName === pipeName) continue;
+      if (isPipelineChild.has(cName)) continue; // already claimed
+      if (Math.abs(cCoord.vis - parent.vis) <= 0.05 &&
+          cCoord.evo >= range.min - 0.01 && cCoord.evo <= range.max + 0.01) {
+        children.push({ name: cName, evo: cCoord.evo });
+      }
+    }
+
+    if (children.length > 0) {
+      // Sort children by evolution
+      children.sort((a, b) => a.evo - b.evo);
+      pipelineChildren[pipeName] = children;
+      for (const c of children) isPipelineChild.add(c.name);
+    }
+  }
+
+  // ── PASS 2: Convert lines ──
   let inPipelineBlock = false;
   let pendingPipelineName = null;
 
@@ -192,12 +225,12 @@ function owmToMermaid(owmContent, filename) {
       continue;
     }
 
-    // Pipeline with range [min, max] - drop (no Mermaid equivalent without children)
+    // Pipeline with range [min, max] — skip (handled via pipelineChildren injection)
     if (/^pipeline\s+.+\[\s*[\d.]+\s*,\s*[\d.]+\s*\]\s*$/.test(trimmed)) {
       continue;
     }
 
-    // Pipeline block start
+    // Pipeline block start (OWM inline {} style)
     if (/^pipeline\s+/i.test(trimmed) && !trimmed.match(/\[[\d]/)) {
       const nameMatch = trimmed.match(/^pipeline\s+(.+?)(?:\s*\{)?\s*$/i);
       if (nameMatch) {
@@ -223,7 +256,6 @@ function owmToMermaid(owmContent, filename) {
     // Closing brace for pipeline block
     if ((inPipelineBlock || pendingPipelineName) && trimmed === '}') {
       if (pendingPipelineName) {
-        // Pipeline with no children — skip entirely
         pendingPipelineName = null;
       } else {
         mermaidLines.push('}');
@@ -234,46 +266,46 @@ function owmToMermaid(owmContent, filename) {
 
     // Component
     if (/^component\s+/i.test(trimmed)) {
-      // Extract name and coordinates
       const compMatch = trimmed.match(/^component\s+(.+?)\s*(\[[\d.,\s]+\])/);
-      if (!compMatch) {
-        // Malformed component line — skip
-        continue;
-      }
+      if (!compMatch) continue; // Malformed — skip
 
-      let compName = compMatch[1].trim();
+      const compName = compMatch[1].trim();
       const coords = compMatch[2];
-
-      // Handle inertia (may appear after coords or label)
       const hasInertia = /\binertia\s*$/i.test(trimmed);
 
-      // Quote the name
+      // Skip components consumed as pipeline children (they'll be emitted in the pipeline block)
+      if (isPipelineChild.has(compName)) continue;
+
       const qName = quoteName(compName);
 
-      // Build the line
+      // Build component line
       let line;
       if (inPipelineBlock) {
-        // Pipeline children: quote name, use single coord
         const innerCoord = coords.replace(/[\[\]]/g, '').trim();
-        // Pipeline children may have 1 or 2 coords — keep as-is
         line = `  component ${qName.startsWith('"') ? qName : `"${compName}"`} [${innerCoord}]`;
       } else {
         line = `component ${qName} ${coords}`;
       }
 
-      // Add sourcing decorators
+      // Decorators
       const decorators = [];
       if (sourcing[compName.toLowerCase()]) {
         decorators.push(`(${sourcing[compName.toLowerCase()]})`);
       }
-      if (hasInertia) {
-        decorators.push('(inertia)');
-      }
-      if (decorators.length > 0) {
-        line += ' ' + decorators.join(' ');
-      }
+      if (hasInertia) decorators.push('(inertia)');
+      if (decorators.length > 0) line += ' ' + decorators.join(' ');
 
       mermaidLines.push(line);
+
+      // If this component is a pipeline parent, inject the pipeline block
+      if (pipelineChildren[compName] && !inPipelineBlock) {
+        mermaidLines.push(`pipeline ${qName} {`);
+        for (const child of pipelineChildren[compName]) {
+          mermaidLines.push(`  component ${quoteName(child.name)} [${child.evo}]`);
+        }
+        mermaidLines.push('}');
+      }
+
       continue;
     }
 
