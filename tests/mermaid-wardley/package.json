@@ -10,7 +10,8 @@
     "test": "node validate.mjs && node render.mjs"
   },
   "dependencies": {
-    "mermaid": "https://pkg.pr.new/mermaid@7147",
-    "@mermaid-js/mermaid-cli": "^11.4.0"
+    "@mermaid-js/mermaid-cli": "^11.4.0",
+    "jsdom": "^29.0.1",
+    "mermaid": "https://pkg.pr.new/mermaid@7147"
   }
 }
