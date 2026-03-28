@@ -1,6 +1,6 @@
 ---
 name: mermaid-syntax
-description: "This skill should be used when the user asks about Mermaid diagram syntax, how to write a specific Mermaid diagram type (flowchart, sequence, class, state, ER, Gantt, pie, mindmap, timeline, git graph, quadrant, C4, sankey, XY chart, block, packet, kanban, architecture, radar, treemap, user journey, ZenUML), Mermaid node shapes, edge labels, styling, configuration, theming, layout options, or troubleshooting Mermaid rendering errors and syntax gotchas."
+description: "This skill should be used when the user asks about Mermaid diagram syntax, how to write flowchart, sequence, class, state, ER, Gantt, C4, mindmap, timeline, or other diagram types, node shapes, styling, theming, or rendering errors."
 ---
 
 # Mermaid Syntax Reference

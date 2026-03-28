@@ -1,6 +1,6 @@
 ---
 name: architecture-workflow
-description: "This skill should be used when the user asks how to start an architecture project, which ArcKit commands to run and in what order, what workflow path to follow, how to onboard a project, or what comes next after a command. Common triggers: getting started with ArcKit, recommend a workflow, new project setup, guide me through, command sequence, next steps, arckit start."
+description: "This skill should be used when the user asks how to start an architecture project, which ArcKit commands to run and in what order, what workflow to follow, getting started, new project setup, guide me through, or what comes next."
 ---
 
 # Architecture Workflow

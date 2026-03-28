@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.1] - 2026-03-28
+
+### Fixed
+
+- Trim all 4 skill descriptions to under 250 characters for Claude Code v2.1.86 context cap (#215)
+
 ## [4.6.0] - 2026-03-24
 
 ### Changed

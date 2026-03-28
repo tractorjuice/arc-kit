@@ -1,6 +1,6 @@
 ---
 name: wardley-mapping
-description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, situational awareness, technology evolution, competitive landscape, creating maps, value chain decomposition, gameplay patterns, doctrine assessment, doctrine maturity, climatic patterns, climate assessment, build vs. buy decisions, inertia analysis, D&D alignment of strategies, peace/war/wonder cycles, play-position matrix, pioneers/settlers/planners, or quantitative evolution scoring including differentiation pressure, commodity leverage, weak signal detection, and readiness scores."
+description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, creating maps, value chain decomposition, gameplay patterns, doctrine assessment, climatic patterns, build vs. buy, or inertia analysis."
 ---
 
 # Wardley Mapping
