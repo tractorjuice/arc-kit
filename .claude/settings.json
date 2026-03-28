@@ -1,8 +1,4 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "bash /workspaces/arc-kit/.claude/statusline.sh"
-  },
   "permissions": {
     "allow": [
       "mcp__aws-knowledge__aws___get_regional_availability",
@@ -14,6 +10,10 @@
       "mcp__plugin_microsoft-docs_microsoft-learn__microsoft_code_sample_search",
       "mcp__plugin_microsoft-docs_microsoft-learn__microsoft_docs_fetch"
     ]
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "bash /workspaces/arc-kit/.claude/statusline.sh"
   },
   "enabledPlugins": {
     "plugin-dev@claude-plugins-official": true,
