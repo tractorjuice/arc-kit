@@ -22,10 +22,10 @@ npm run render
 npm test
 ```
 
-## Fixtures
+## Synthetic Fixtures
 
-| File | Tests | Expected |
-|------|-------|----------|
+| File | Tests | Result |
+|------|-------|--------|
 | `01-basic-map.mmd` | Core syntax: title, size, anchor, component, links | PASS |
 | `02-decorators.mmd` | Sourcing decorators: build, buy, outsource, inertia | PASS |
 | `03-pipeline.mmd` | Pipeline parent/child syntax | PASS |
@@ -33,7 +33,27 @@ npm test
 | `05-notes-annotations.mmd` | Notes and numbered annotations | PASS |
 | `06-complex-full.mmd` | Realistic 22-component map with all features | PASS |
 | `07-edge-cases.mmd` | Spaces, quotes, boundary coords, 30+ components | PASS |
-| `08-new-features.mmd` | Exploratory: new Mermaid features not yet in ArcKit | Mixed |
+| `08a-08k` | New Mermaid features (market, flows, dashed, evolve labels, etc.) | ALL PASS |
+
+## Real-World Maps
+
+Tests 147 maps from [swardley/WARDLEY-MAP-REPOSITORY](https://github.com/swardley/WARDLEY-MAP-REPOSITORY), converted from OWM to Mermaid `wardley-beta` format.
+
+```bash
+# Clone the source maps (one-time)
+git clone --depth 1 https://github.com/swardley/WARDLEY-MAP-REPOSITORY.git owm-maps
+
+# Run real-world validation (default: 100 maps)
+node test-real-maps.mjs
+
+# All 147 maps
+node test-real-maps.mjs --limit 200
+
+# Save converted .mmd files for inspection
+node test-real-maps.mjs --limit 200 --save-converted --verbose
+```
+
+**Results**: 144/147 pass (98%). 3 failures are source data errors in the original maps (typos, malformed coordinates).
 
 ## Mermaid Version
 
