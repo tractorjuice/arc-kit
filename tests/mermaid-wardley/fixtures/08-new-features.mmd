@@ -1,0 +1,54 @@
+wardley-beta
+title New Features Exploration
+size [1100, 800]
+
+# Custom evolution stage labels
+evolution Genesis -> Custom Built -> Product -> Commodity
+
+anchor User [0.95, 0.55]
+
+# (market) decorator
+component Market Component [0.80, 0.70] (market)
+
+# Standard decorators for reference
+component Build Thing [0.75, 0.20] (build)
+component Buy Thing [0.70, 0.60] (buy)
+
+# Label offset for positioning
+component Offset Label Test [0.65, 0.50] label [-20, 10]
+
+# Dashed arrow (weak dependency)
+User -> Market Component
+Market Component -.-> Build Thing
+
+# Long arrow
+Build Thing --> Buy Thing
+
+# Flow forward (arrow at target)
+Buy Thing +> Offset Label Test
+
+# Flow backward (arrow at source)
+Offset Label Test +< Build Thing
+
+# Bidirectional flow
+Market Component +<> Buy Thing
+
+# Labeled flow
+Build Thing +'data feed'> Market Component
+
+# Link annotation (semicolon syntax)
+User -> Buy Thing; primary procurement path
+
+# Evolve
+evolve Build Thing 0.45
+
+# Accelerator and deaccelerator
+accelerator "Cloud Migration" [0.55, 0.80]
+deaccelerator "Regulatory Compliance" [0.60, 0.30]
+
+# Note
+note "Testing all new Mermaid features" [0.40, 0.50]
+
+# Annotations
+annotations [0.05, 0.05]
+annotation 1,[0.81, 0.75] "Market sourcing strategy"
