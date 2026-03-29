@@ -59,7 +59,7 @@ node test-real-maps.mjs --limit 200 --save-converted --verbose
 
 Currently uses the pre-release build from PR #7147:
 
-```
+```json
 "mermaid": "https://pkg.pr.new/mermaid@7147"
 ```
 
