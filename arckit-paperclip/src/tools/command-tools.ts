@@ -1,5 +1,5 @@
-import commands from "../data/commands.json";
-import { CommandEntry } from "../types";
+import commands from "../data/commands.json" with { type: "json" };
+import { CommandEntry } from "../types.js";
 
 const typedCommands: CommandEntry[] = commands as CommandEntry[];
 

@@ -1,7 +1,9 @@
-import { execFileSync } from "child_process";
-import * as path from "path";
-import * as fs from "fs";
+import { execFileSync } from "node:child_process";
+import * as path from "node:path";
+import * as fs from "node:fs";
+import { fileURLToPath } from "node:url";
 
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const SCRIPTS_DIR = path.resolve(__dirname, "../../scripts/bash");
 
 export function registerUtilityTools(ctx: any): void {

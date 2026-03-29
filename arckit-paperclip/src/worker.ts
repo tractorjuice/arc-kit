@@ -1,6 +1,6 @@
 import { definePlugin, runWorker } from "@paperclipai/plugin-sdk";
-import { registerCommandTools } from "./tools/command-tools";
-import { registerUtilityTools } from "./tools/utility-tools";
+import { registerCommandTools } from "./tools/command-tools.js";
+import { registerUtilityTools } from "./tools/utility-tools.js";
 
 const plugin = definePlugin({
   async setup(ctx) {
@@ -12,4 +12,5 @@ const plugin = definePlugin({
   },
 });
 
-runWorker(plugin);
+export default plugin;
+runWorker(plugin, import.meta.url);

@@ -1,7 +1,7 @@
-import commands from "./data/commands.json";
-import { CommandEntry } from "./types";
+import commands from "./data/commands.json" with { type: "json" };
+import { CommandEntry } from "./types.js";
 // Read version from package.json at build time
-import pkg from "../package.json";
+import pkg from "../package.json" with { type: "json" };
 
 const typedCommands: CommandEntry[] = commands as CommandEntry[];
 
