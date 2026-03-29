@@ -109,6 +109,19 @@ update_file "arckit-codex/VERSION" "overwrite"
 echo "$NEW_VERSION" > arckit-copilot/VERSION
 update_file "arckit-copilot/VERSION" "overwrite"
 
+# ── 14. arckit-paperclip/VERSION ──────────────────────────────────────────
+
+echo "$NEW_VERSION" > arckit-paperclip/VERSION
+update_file "arckit-paperclip/VERSION" "overwrite"
+
+# ── 15. arckit-paperclip/package.json ─────────────────────────────────────
+
+if [[ -f arckit-paperclip/package.json ]]; then
+  jq --arg v "$NEW_VERSION" '.version = $v' arckit-paperclip/package.json > arckit-paperclip/package.json.tmp
+  mv arckit-paperclip/package.json.tmp arckit-paperclip/package.json
+  update_file "arckit-paperclip/package.json" ".version"
+fi
+
 # ── Summary ─────────────────────────────────────────────────────────────────
 
 echo ""
@@ -119,7 +132,7 @@ echo ""
 echo "── Verification ──"
 echo ""
 echo "VERSION files:"
-grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION arckit-copilot/VERSION
+grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION arckit-copilot/VERSION arckit-paperclip/VERSION
 echo ""
 echo "pyproject.toml:"
 grep "^version" pyproject.toml
