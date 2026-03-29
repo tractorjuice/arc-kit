@@ -85,12 +85,16 @@ async function main() {
     const outputPath = join(outputDir, `${name}.svg`);
 
     try {
-      await execFileAsync(mmdc, [
+      const args = [
         '-i', inputPath,
         '-o', outputPath,
         '-p', puppeteerConfig,
         '-b', 'transparent',
-      ], { timeout: 30000 });
+      ];
+      // Apply CSS for font styling if the file exists
+      const cssFile = join(__dirname, 'wardley-style.css');
+      try { statSync(cssFile); args.push('-C', cssFile); } catch {}
+      await execFileAsync(mmdc, args, { timeout: 30000 });
 
       const size = fileSize(outputPath);
       console.log(`  ${GREEN}RENDERED${RESET}  ${name}  ${DIM}(${size})${RESET}`);
