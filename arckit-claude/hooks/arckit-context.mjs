@@ -12,7 +12,8 @@
  */
 
 import { readdirSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
 import {
   isDir, isFile, mtimeMs, readText,
@@ -49,7 +50,7 @@ const projectsDir = join(repoRoot, 'projects');
 if (!isDir(projectsDir)) process.exit(0);
 
 // Read ArcKit version from plugin VERSION file
-const pluginRoot = resolve(import.meta.url.replace('file://', ''), '..', '..');
+const pluginRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const arckitVersion = readText(join(pluginRoot, 'VERSION'))?.trim() || 'unknown';
 
 // Build context string

@@ -29,7 +29,7 @@ export function registerUtilityTools(ctx: any): void {
     async (params: { name: string }) => {
       const result = execFileSync(
         "bash",
-        [path.join(SCRIPTS_DIR, "create-project.sh"), params.name, "--json"],
+        [path.join(SCRIPTS_DIR, "create-project.sh"), "--name", params.name, "--json"],
         { encoding: "utf-8", timeout: 30000 }
       );
       let data;

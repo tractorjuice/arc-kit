@@ -50,7 +50,13 @@ try {
     process.exit(0);
   }
 
-  const data = await res.json();
+  let data;
+  try {
+    data = await res.json();
+  } catch {
+    console.log(JSON.stringify({}));
+    process.exit(0);
+  }
   const latestTag = data.tag_name || '';
   const latestVersion = latestTag.replace(/^v/, '');
 

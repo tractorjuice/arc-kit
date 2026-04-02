@@ -71,7 +71,21 @@ After installing the plugin:
 | Agents | 9 | Autonomous research agents |
 | Templates | 45 | Document templates with UK Government compliance |
 | Scripts | 6 | Helper bash scripts |
+| Hooks | 17 | Automation hooks across 7 event types |
 | Guides | 52 | Command usage documentation |
+
+## Hooks
+
+Automation hooks run automatically to provide context and enforce standards. See the [Hooks Guide](docs/guides/hooks.md) for full details.
+
+| Event | Hooks | Purpose |
+|-------|-------|---------|
+| SessionStart | arckit-session, version-check | Inject version/context, check for updates |
+| Stop / StopFailure | session-learner | Record session activity for future context |
+| UserPromptSubmit | arckit-context, secret-detection, + 6 command-specific | Project context, secret scanning, pre-processing |
+| PreToolUse | validate-arc-filename, score-validator, file-protection, secret-file-scanner | Filename enforcement, security, validation |
+| PostToolUse | update-manifest | Keep manifest.json in sync |
+| PermissionRequest | allow-mcp-tools | Auto-allow bundled MCP servers |
 
 ## Template Customization
 

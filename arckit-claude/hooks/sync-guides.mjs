@@ -649,12 +649,16 @@ if (isFile(customTemplatePath)) {
   templateSource = 'plugin default';
 }
 
+function escapeHtml(str) {
+  return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
 if (templatePath) {
   let html = readFileSync(templatePath, 'utf8');
-  html = html.replace(/\{\{REPO\}\}/g, repoInfo.repo);
-  html = html.replace(/\{\{REPO_URL\}\}/g, repoInfo.repoUrl);
-  html = html.replace(/\{\{CONTENT_BASE_URL\}\}/g, repoInfo.contentBaseUrl);
-  html = html.replace(/\{\{VERSION\}\}/g, version);
+  html = html.replace(/\{\{REPO\}\}/g, escapeHtml(repoInfo.repo));
+  html = html.replace(/\{\{REPO_URL\}\}/g, escapeHtml(repoInfo.repoUrl));
+  html = html.replace(/\{\{CONTENT_BASE_URL\}\}/g, escapeHtml(repoInfo.contentBaseUrl));
+  html = html.replace(/\{\{VERSION\}\}/g, escapeHtml(version));
 
   const docsDir = join(repoRoot, 'docs');
   if (!isDir(docsDir)) mkdirSync(docsDir, { recursive: true });

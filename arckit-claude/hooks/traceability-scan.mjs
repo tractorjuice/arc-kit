@@ -16,7 +16,8 @@
  * Output (stdout): JSON with additionalContext containing structured findings
  */
 
-import { join, resolve } from 'node:path';
+import { join, dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import {
   isDir, isFile, readText, listDir,
   findRepoRoot, extractDocType, extractVersion,
@@ -396,7 +397,7 @@ lines.push('**All requirement IDs extracted and cross-referenced.**');
 lines.push('');
 
 // Read ArcKit version from plugin VERSION file
-const pluginRoot = resolve(import.meta.url.replace('file://', ''), '..', '..');
+const pluginRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const arckitVersion = readText(join(pluginRoot, 'VERSION'))?.trim() || 'unknown';
 
 lines.push('### Project');

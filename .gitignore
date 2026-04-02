@@ -74,4 +74,6 @@ docs/articles/
 
 # Git worktrees
 .worktrees/
-.worktrees/
+
+# Test output
+tests/*/output/

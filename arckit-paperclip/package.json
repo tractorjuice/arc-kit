@@ -22,7 +22,9 @@
   },
   "files": [
     "dist/",
-    "scripts/"
+    "scripts/",
+    "templates/",
+    "references/"
   ],
   "author": "tractorjuice",
   "license": "MIT",

@@ -13,7 +13,7 @@
  */
 
 import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { join } from 'node:path';
 
 function isDir(p) {
   try { return statSync(p).isDirectory(); } catch { return false; }
@@ -56,7 +56,8 @@ const now = Date.now();
 const maxAge = 300000; // 5 minutes in ms
 
 // Walk projects/*/wardley-maps/ looking for ARC-*-WARD-*.md
-const projectsDir = resolve('projects');
+const cwd = data.cwd || process.cwd();
+const projectsDir = join(cwd, 'projects');
 if (isDir(projectsDir)) {
   const projectDirs = readdirSync(projectsDir).sort();
   for (const pd of projectDirs) {
