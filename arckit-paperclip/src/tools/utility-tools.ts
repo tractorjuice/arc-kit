@@ -66,23 +66,35 @@ export function registerUtilityTools(ctx: any): void {
             type: "string",
             description: "Version number (default: 1.0)",
           },
+          projectDir: {
+            type: "string",
+            description:
+              "Project directory path for multi-instance types (ADR, DIAG, DFD, WARD, DMC, etc.) to auto-detect next sequence number",
+          },
         },
         required: ["projectId", "docType"],
       },
     },
-    async (params: { projectId: string; docType: string; version?: string }) => {
+    async (params: { projectId: string; docType: string; version?: string; projectDir?: string }) => {
       const ver = params.version || "1.0";
-      const result = execFileSync(
-        "bash",
-        [
-          path.join(SCRIPTS_DIR, "generate-document-id.sh"),
-          params.projectId,
-          params.docType,
-          ver,
-          "--filename",
-        ],
-        { encoding: "utf-8", timeout: 10000 }
-      );
+      const MULTI_INSTANCE_TYPES = [
+        "ADR", "DIAG", "DFD", "WARD", "DMC", "RSCH", "AWRS", "AZRS",
+        "GCRS", "DSCT", "WGAM", "WCLM", "WVCH", "GOVR", "GCSR", "GLND",
+      ];
+      const args = [
+        path.join(SCRIPTS_DIR, "generate-document-id.sh"),
+        params.projectId,
+        params.docType,
+        ver,
+        "--filename",
+      ];
+      if (MULTI_INSTANCE_TYPES.includes(params.docType.toUpperCase()) && params.projectDir) {
+        args.push("--next-num", params.projectDir);
+      }
+      const result = execFileSync("bash", args, {
+        encoding: "utf-8",
+        timeout: 10000,
+      });
       return {
         content: result.trim(),
         data: { docId: result.trim() },

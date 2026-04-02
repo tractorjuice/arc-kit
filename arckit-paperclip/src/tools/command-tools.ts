@@ -23,7 +23,8 @@ export function registerCommandTools(ctx: any): void {
         },
       },
       async (params: { topic: string }) => {
-        const parts: string[] = [`## Instructions\n\n${cmd.prompt}`];
+        const prompt = cmd.prompt.replaceAll("{topic}", params.topic);
+        const parts: string[] = [`## Instructions\n\n${prompt}`];
         if (cmd.template) {
           parts.push(`## Template\n\n${cmd.template}`);
         }

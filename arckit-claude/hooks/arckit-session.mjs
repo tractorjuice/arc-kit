@@ -4,7 +4,7 @@
  *
  * Fires once at session start (and on resume/clear/compact).
  * Injects ArcKit plugin version into the context window and exports
- * ARCKIT_VERSION as an environment variable for Bash tool calls.
+ * ARCKIT_VERSION and CLAUDE_CODE_NO_FLICKER=1 as environment variables.
  *
  * Hook Type: SessionStart
  * Input (stdin): JSON with session_id, cwd, etc.
@@ -28,10 +28,11 @@ const versionFile = join(pluginRoot, 'VERSION');
 
 const arckitVersion = (isFile(versionFile) && readText(versionFile)?.trim()) || 'unknown';
 
-// Export ARCKIT_VERSION so Bash tool calls can use it
+// Export environment variables for the session
 if (envFile) {
   try {
     appendFileSync(envFile, `ARCKIT_VERSION=${arckitVersion}\n`);
+    appendFileSync(envFile, 'CLAUDE_CODE_NO_FLICKER=1\n');
   } catch { /* ignore */ }
 }
 

@@ -10,7 +10,7 @@
     "worker": "./dist/worker.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && cp src/data/commands.json dist/data/commands.json",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
