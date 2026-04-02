@@ -32,13 +32,13 @@ claude --plugin-dir /path/to/arc-kit/arckit-claude
 
 ## Prerequisites
 
-- **Claude Code** v2.1.63 or later (recommended minimum)
+- **Claude Code** v2.1.90 or later (recommended minimum)
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.63?** This version includes memory leak fixes for subagents and long-running sessions, which directly improves stability for ArcKit's 9 research agents. It also fixes MCP server cache leaks (important for the 5 bundled MCP servers), resolves stale skill caching after `/clear`, and adds worktree config sharing for multi-repo workflows.
+> **Why v2.1.90?** This version fixes PostToolUse hooks causing "File content has changed" failures during consecutive edits (affects ArcKit's output validation hooks), fixes PreToolUse JSON blocking with exit code 2 (affects ArcKit's filename and template validation hooks), eliminates per-turn JSON serialization of MCP tool schemas (performance win for ArcKit's 5 bundled MCP servers), and includes all prior fixes for hook `if` condition filtering, absolute `file_path` in hooks, autocompact thrash loops, memory leaks, and agent completion notifications.
 
 ## Quick Start
 
