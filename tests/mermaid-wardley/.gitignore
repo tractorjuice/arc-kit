@@ -1,0 +1,5 @@
+node_modules/
+output/*.svg
+output/*.png
+owm-maps/
+output/converted/

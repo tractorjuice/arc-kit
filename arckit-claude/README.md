@@ -32,13 +32,13 @@ claude --plugin-dir /path/to/arc-kit/arckit-claude
 
 ## Prerequisites
 
-- **Claude Code** v2.1.63 or later (recommended minimum)
+- **Claude Code** v2.1.90 or later (recommended minimum)
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.63?** This version includes memory leak fixes for subagents and long-running sessions, which directly improves stability for ArcKit's 9 research agents. It also fixes MCP server cache leaks (important for the 5 bundled MCP servers), resolves stale skill caching after `/clear`, and adds worktree config sharing for multi-repo workflows.
+> **Why v2.1.90?** This version fixes PostToolUse hooks causing "File content has changed" failures during consecutive edits (affects ArcKit's output validation hooks), fixes PreToolUse JSON blocking with exit code 2 (affects ArcKit's filename and template validation hooks), eliminates per-turn JSON serialization of MCP tool schemas (performance win for ArcKit's 5 bundled MCP servers), and includes all prior fixes for hook `if` condition filtering, absolute `file_path` in hooks, autocompact thrash loops, memory leaks, and agent completion notifications.
 
 ## Quick Start
 
@@ -71,7 +71,21 @@ After installing the plugin:
 | Agents | 9 | Autonomous research agents |
 | Templates | 45 | Document templates with UK Government compliance |
 | Scripts | 6 | Helper bash scripts |
+| Hooks | 17 | Automation hooks across 7 event types |
 | Guides | 52 | Command usage documentation |
+
+## Hooks
+
+Automation hooks run automatically to provide context and enforce standards. See the [Hooks Guide](docs/guides/hooks.md) for full details.
+
+| Event | Hooks | Purpose |
+|-------|-------|---------|
+| SessionStart | arckit-session, version-check | Inject version/context, check for updates |
+| Stop / StopFailure | session-learner | Record session activity for future context |
+| UserPromptSubmit | arckit-context, secret-detection, + 6 command-specific | Project context, secret scanning, pre-processing |
+| PreToolUse | validate-arc-filename, score-validator, file-protection, secret-file-scanner | Filename enforcement, security, validation |
+| PostToolUse | update-manifest | Keep manifest.json in sync |
+| PermissionRequest | allow-mcp-tools | Auto-allow bundled MCP servers |
 
 ## Template Customization
 

@@ -1,0 +1,112 @@
+import commands from "./data/commands.json" with { type: "json" };
+import { CommandEntry } from "./types.js";
+// Read version from package.json at build time
+import pkg from "../package.json" with { type: "json" };
+
+const typedCommands: CommandEntry[] = commands as CommandEntry[];
+
+const commandTools = typedCommands.map((cmd) => ({
+  name: cmd.name,
+  displayName: cmd.name,
+  description: cmd.description,
+  parametersSchema: {
+    type: "object" as const,
+    properties: {
+      topic: {
+        type: "string" as const,
+        description: "Project name or topic",
+      },
+    },
+    required: ["topic"],
+  },
+}));
+
+const utilityTools = [
+  {
+    name: "arckit-create-project",
+    displayName: "arckit-create-project",
+    description: "Create a numbered ArcKit project directory",
+    parametersSchema: {
+      type: "object" as const,
+      properties: {
+        name: {
+          type: "string" as const,
+          description: "Project name (will be slugified)",
+        },
+      },
+      required: ["name"],
+    },
+  },
+  {
+    name: "arckit-generate-doc-id",
+    displayName: "arckit-generate-doc-id",
+    description: "Generate a document ID and filename",
+    parametersSchema: {
+      type: "object" as const,
+      properties: {
+        projectId: {
+          type: "string" as const,
+          description: "Project number (e.g., 001)",
+        },
+        docType: {
+          type: "string" as const,
+          description: "Document type code (e.g., REQ, ADR, SOBC)",
+        },
+        version: {
+          type: "string" as const,
+          description: "Version number (default: 1.0)",
+        },
+      },
+      required: ["projectId", "docType"],
+    },
+  },
+  {
+    name: "arckit-check-prerequisites",
+    displayName: "arckit-check-prerequisites",
+    description: "Validate that ArcKit prerequisites exist",
+    parametersSchema: {
+      type: "object" as const,
+      properties: {},
+    },
+  },
+  {
+    name: "arckit-list-projects",
+    displayName: "arckit-list-projects",
+    description: "List all ArcKit projects with artifact counts",
+    parametersSchema: {
+      type: "object" as const,
+      properties: {
+        format: {
+          type: "string" as const,
+          description: "Output format: table or json",
+          enum: ["table", "json"],
+        },
+      },
+    },
+  },
+  {
+    name: "arckit-check",
+    displayName: "arckit-check",
+    description: "Check that ArcKit plugin files are present and readable",
+    parametersSchema: {
+      type: "object" as const,
+      properties: {},
+    },
+  },
+];
+
+export const manifest = {
+  id: "arckit",
+  apiVersion: 1,
+  version: pkg.version,
+  displayName: "ArcKit",
+  description:
+    "Enterprise Architecture Governance & Vendor Procurement Toolkit — 67 commands for generating architecture artifacts",
+  author: "tractorjuice",
+  categories: ["workspace", "automation"],
+  capabilities: ["process.spawn", "issues.read"],
+  entrypoints: {
+    worker: "./dist/worker.js",
+  },
+  tools: [...commandTools, ...utilityTools],
+};

@@ -187,6 +187,18 @@ AGENT_CONFIG = {
         "has_context_hook": False,
         "has_sync_guides_hook": False,
     },
+    "paperclip": {
+        "name": "Paperclip",
+        "output_dir": "arckit-paperclip/src/data",
+        "format": "json",
+        "path_prefix": "scripts/bash",
+        "arg_placeholder": "{topic}",
+        "extension_dir": "arckit-paperclip",
+        "copy_commands_to_extension": False,
+        "copy_agents_to_extension": False,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
+    },
 }
 
 
@@ -264,6 +276,39 @@ def format_output(description, prompt, fmt):
         return f'---\ndescription: "{escaped}"\n---\n\n{prompt}\n'
 
 
+def format_json_entry(name, description, prompt, template_content, handoffs):
+    """Build a single JSON-serializable entry for commands.json."""
+    processed_handoffs = []
+    for h in (handoffs or []):
+        entry = {
+            "command": f"arckit-{h.get('command', '')}",
+            "description": h.get("description", ""),
+        }
+        if h.get("condition"):
+            entry["condition"] = h["condition"]
+        processed_handoffs.append(entry)
+
+    return {
+        "name": f"arckit-{name}",
+        "description": description,
+        "prompt": prompt,
+        "template": template_content,
+        "handoffs": processed_handoffs,
+    }
+
+
+def read_template_for_command(name, templates_dir):
+    """Read the template file for a command, if one exists.
+
+    Template naming convention: {name}-template.md
+    """
+    template_path = os.path.join(templates_dir, f"{name}-template.md")
+    if os.path.isfile(template_path):
+        with open(template_path, "r", encoding="utf-8") as f:
+            return f.read()
+    return None
+
+
 def convert(commands_dir, agents_dir):
     """Convert plugin commands to all configured AI agent formats.
 
@@ -275,6 +320,7 @@ def convert(commands_dir, agents_dir):
 
     agent_map = build_agent_map(agents_dir)
     counts = {agent_id: 0 for agent_id in AGENT_CONFIG}
+    paperclip_entries = []
 
     for filename in sorted(os.listdir(commands_dir)):
         if not filename.endswith(".md"):
@@ -308,6 +354,20 @@ def convert(commands_dir, agents_dir):
 
         base_name = filename.replace(".md", "")
 
+        # Collect entry for Paperclip JSON format
+        if "paperclip" in AGENT_CONFIG:
+            pc_config = AGENT_CONFIG["paperclip"]
+            pc_prompt = rewrite_paths(prompt, pc_config)
+            pc_prompt = rewrite_hook_dependencies(pc_prompt, pc_config)
+            template_content = read_template_for_command(
+                base_name,
+                os.path.join(os.path.dirname(commands_dir.rstrip(os.sep)), "templates"),
+            )
+            paperclip_entries.append(
+                format_json_entry(base_name, description, pc_prompt, template_content, handoffs)
+            )
+            counts["paperclip"] += 1
+
         # Check for standalone command override once (result is agent-independent)
         standalone_path = os.path.join(
             os.path.dirname(commands_dir.rstrip(os.sep)), "commands-standalone", filename
@@ -320,6 +380,9 @@ def convert(commands_dir, agents_dir):
             _, standalone_prompt = extract_frontmatter_and_prompt(standalone_content)
 
         for agent_id, config in AGENT_CONFIG.items():
+            if config["format"] == "json":
+                continue  # Handled separately (single file for all commands)
+
             if has_standalone and not config.get("has_sync_guides_hook", False):
                 # Use standalone version for platforms lacking required hook
                 rewritten = rewrite_paths(standalone_prompt, config)
@@ -394,6 +457,15 @@ def convert(commands_dir, agents_dir):
                 print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
                 counts[agent_id] += 1
 
+    # Write Paperclip commands.json (single file for all commands)
+    if "paperclip" in AGENT_CONFIG and paperclip_entries:
+        pc_config = AGENT_CONFIG["paperclip"]
+        os.makedirs(pc_config["output_dir"], exist_ok=True)
+        out_path = os.path.join(pc_config["output_dir"], "commands.json")
+        with open(out_path, "w", encoding="utf-8") as f:
+            json.dump(paperclip_entries, f, indent=2, ensure_ascii=False)
+        print(f"  {'Paperclip:':14s}Generated {out_path} ({len(paperclip_entries)} commands)")
+
     return counts
 
 
@@ -426,6 +498,18 @@ def copy_extension_files(plugin_dir):
                 shutil.copytree(src, dst)
                 file_count = sum(len(files) for _, _, files in os.walk(dst))
                 print(f"  Copied: {src} -> {dst} ({file_count} files)")
+
+
+def copy_paperclip_files(plugin_dir, paperclip_dir):
+    """Copy bash scripts to Paperclip extension for utility tools."""
+    src = os.path.join(plugin_dir, "scripts", "bash")
+    dst = os.path.join(paperclip_dir, "scripts", "bash")
+    if os.path.isdir(src):
+        if os.path.isdir(dst):
+            shutil.rmtree(dst)
+        shutil.copytree(src, dst)
+        file_count = sum(len(files) for _, _, files in os.walk(dst))
+        print(f"  Copied: {src} -> {dst} ({file_count} files)")
 
 
 def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
@@ -975,6 +1059,10 @@ if __name__ == "__main__":
     print()
     print("Generating Copilot instructions...")
     generate_copilot_instructions("arckit-copilot/copilot-instructions.md")
+
+    print()
+    print("Copying Paperclip utility scripts...")
+    copy_paperclip_files(plugin_dir, "arckit-paperclip")
 
     print()
     total = sum(counts.values())

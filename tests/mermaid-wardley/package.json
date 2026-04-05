@@ -1,0 +1,17 @@
+{
+  "name": "arckit-mermaid-wardley-tests",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Validates ArcKit's generated Mermaid wardley-beta syntax against the real Mermaid parser",
+  "scripts": {
+    "validate": "node validate.mjs",
+    "render": "node render.mjs",
+    "test": "node validate.mjs && node render.mjs"
+  },
+  "dependencies": {
+    "@mermaid-js/mermaid-cli": "^11.4.0",
+    "jsdom": "^29.0.1",
+    "mermaid": "https://pkg.pr.new/mermaid@7147"
+  }
+}

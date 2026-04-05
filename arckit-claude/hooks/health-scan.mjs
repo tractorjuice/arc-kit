@@ -178,7 +178,7 @@ function readArtifactMetadata(artifact) {
     if (meta.verdict === 'APPROVED WITH CONDITIONS') {
       meta.conditions = extractConditions(content);
       meta.unresolvedConditions = meta.conditions.filter(
-        () => !hasResolutionEvidence(content)
+        (c) => !content.toLowerCase().includes(c.toLowerCase())
       );
     }
   }

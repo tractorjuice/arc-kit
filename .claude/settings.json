@@ -21,6 +21,7 @@
     "commit-commands@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
-    "marketing@knowledge-work-plugins": true
+    "marketing@knowledge-work-plugins": true,
+    "codex@openai-codex": true
   }
 }
