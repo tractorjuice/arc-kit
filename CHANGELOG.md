@@ -7,12 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [4.6.2] - 2026-03-28
+## [4.6.2] - 2026-04-05
+
+### Added
+
+- Mermaid `wardley-beta` test suite — 98% pass rate on 147 real-world maps, ArcKit syntax 100% valid (#271)
+- Hooks documentation guide (`docs/guides/hooks.md`) across all distribution formats
+- Paperclip plugin scaffolding with TypeScript source, bash/python scripts, and VERSION file
 
 ### Fixed
 
+- Resolve 6 hook bugs and add hooks documentation (#271)
 - Add `name` field to generated Codex agent `.toml` files — Codex CLI requires a non-empty name (#269)
 - Flatten `[agents.roles.X]` to `[agents.X]` in Codex `config.toml` to prevent `roles` being misinterpreted as a malformed agent role (#269)
+- Bump minimum Claude Code version to v2.1.90 across all documentation
 
 ## [4.6.1] - 2026-03-28
 
