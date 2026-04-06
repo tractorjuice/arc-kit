@@ -1,0 +1,14 @@
+{
+  "extraKnownMarketplaces": {
+    "arc-kit": {
+      "source": {
+        "source": "github",
+        "repo": "tractorjuice/arc-kit",
+        "ref": "feat/autoresearch-all-commands"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "arckit@arc-kit": true
+  }
+}

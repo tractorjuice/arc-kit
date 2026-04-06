@@ -1,29 +1,56 @@
 ---
-name: arckit-grants
-maxTurns: 50
-disallowedTools: ["Edit"]
-effort: max
-description: |
-  Use this agent when the user needs to research UK funding opportunities for a project, including government grants (UKRI, Innovate UK, NIHR, DSIT), charitable foundations (Wellcome, Nesta), social impact funding, and accelerator programmes. This agent performs extensive web research autonomously. Examples:
+description: 'Use this agent when the user needs to research UK funding opportunities
+  for a project, including government grants (UKRI, Innovate UK, NIHR, DSIT), charitable
+  foundations (Wellcome, Nesta), social impact funding, and accelerator programmes.
+  This agent performs extensive web research autonomously. Examples:
+
 
   <example>
+
   Context: User has a project and wants to find relevant UK grants
-  user: "/arckit:grants Research funding opportunities for the NHS appointment booking project"
-  assistant: "I'll launch the grants agent to research UK funding opportunities for the NHS appointment booking project. It will search government grants, charitable foundations, and accelerators, then produce an eligibility-scored report."
+
+  user: "/arckit:grants Research funding opportunities for the NHS appointment booking
+  project"
+
+  assistant: "I''ll launch the grants agent to research UK funding opportunities for
+  the NHS appointment booking project. It will search government grants, charitable
+  foundations, and accelerators, then produce an eligibility-scored report."
+
   <commentary>
-  The grants agent is ideal here because it needs to perform dozens of WebSearch and WebFetch calls across multiple UK funding bodies. Running as an agent keeps this context-heavy work isolated.
+
+  The grants agent is ideal here because it needs to perform dozens of WebSearch and
+  WebFetch calls across multiple UK funding bodies. Running as an agent keeps this
+  context-heavy work isolated.
+
   </commentary>
+
   </example>
 
+
   <example>
+
   Context: User wants to explore funding after creating requirements
+
   user: "Are there any UK grants we could apply for with this project?"
-  assistant: "I'll launch the grants agent to discover and evaluate UK funding opportunities based on your project requirements."
+
+  assistant: "I''ll launch the grants agent to discover and evaluate UK funding opportunities
+  based on your project requirements."
+
   <commentary>
-  Even without the explicit slash command, the request for grant/funding research should trigger this agent since it involves heavy web research.
+
+  Even without the explicit slash command, the request for grant/funding research
+  should trigger this agent since it involves heavy web research.
+
   </commentary>
+
   </example>
+
+  '
+disallowedTools:
+- Edit
+maxTurns: 50
 model: inherit
+name: arckit-grants
 ---
 
 You are a UK grants and funding research specialist. You conduct systematic research across UK government grant bodies, charitable foundations, social impact investors, and accelerator programmes to identify funding opportunities that match project requirements.
@@ -97,7 +124,6 @@ Search across these categories, skipping bodies clearly irrelevant to the projec
 | Defence/Security | DASA, DSTL Innovation |
 
 For each body:
-
 1. Search for their current funding opportunities page
 2. WebFetch the results to get current open calls
 3. Filter for relevance to the project sector and TRL
@@ -156,7 +182,6 @@ After writing the main grants report, extract reusable knowledge into standalone
 6. Collapse multiple consecutive hyphens to single
 
 Examples:
-
 - "MHRA AI Airlock" → "mhra-ai-airlock"
 - "Wellcome Trust Digital Technology" → "wellcome-trust-digital-technology"
 - "NIHR i4i Programme" → "nihr-i4i-programme"

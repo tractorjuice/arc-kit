@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing 67 slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI, OpenCode CLI) to generate architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
+ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing 68 slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI, OpenCode CLI) to generate architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
 
 **Six distribution formats** exist side-by-side in this repo:
 
@@ -142,6 +142,7 @@ Some commands delegate to **autonomous agents** (`arckit-claude/agents/arckit-{n
 | `arckit-gov-reuse` | `/arckit.gov-reuse` | Government code reuse assessment via govreposcrape |
 | `arckit-gov-code-search` | `/arckit.gov-code-search` | Government code semantic search via govreposcrape |
 | `arckit-gov-landscape` | `/arckit.gov-landscape` | Government code landscape analysis via govreposcrape |
+| `arckit-grants` | `/arckit.grants` | UK government grants, charitable funding, and accelerator programme research |
 
 **Agent file structure** (`arckit-claude/agents/arckit-{name}.md`):
 
