@@ -54,12 +54,13 @@ If the Task tool is unavailable or the user prefers inline execution, fall back 
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/grants-template.md` (default)
    - **Tip**: Users can customize templates with `/arckit:customize grants`
-3. Build project funding profile from requirements
-4. Use WebSearch and WebFetch across UK grant bodies
-5. Score eligibility and build comparison table
-6. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
-7. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GRNT-{NNN}-v1.0.md` using Write tool
-8. Show summary only (not full document)
+3. Read existing project artifacts (REQ, STKE, SOBC) to build project funding profile — extract sector, organisation type, TRL, budget, timeline, key objectives
+4. Read any external documents (`external/`, `policies/`) and apply **citation traceability**: follow `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md` for inline `[DOC_ID-CN]` markers and the External References section
+5. Use WebSearch and WebFetch across UK grant bodies (UKRI, Innovate UK, NIHR, DSIT, DASA, Wellcome, Nesta, Health Foundation, 360Giving/GrantNav, accelerators). All funding data must come from live web searches — do not use general knowledge for amounts or deadlines
+6. Score each grant High/Medium/Low against the project profile with rationale
+7. Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** pass. Fix any failures before proceeding.
+8. Write to `projects/{project-dir}/research/ARC-{PROJECT_ID}-GRNT-{NNN}-v1.0.md` using Write tool
+9. Show summary only (not full document)
 
 ### Flags
 
