@@ -73,6 +73,7 @@ export const DOC_TYPES = {
   'GOVR':      { name: 'Government Reuse Assessment',     category: 'Research' },
   'GCSR':      { name: 'Government Code Search Report',   category: 'Research' },
   'GLND':      { name: 'Government Landscape Analysis',   category: 'Research' },
+  'GRNT':      { name: 'Grants Research',                  category: 'Research' },
   // Reporting
   'STORY':     { name: 'Project Story',                    category: 'Reporting' },
 };
@@ -82,7 +83,7 @@ export const MULTI_INSTANCE_TYPES = new Set([
   'ADR', 'DIAG', 'DFD', 'WARD', 'DMC',
   'RSCH', 'AWRS', 'AZRS', 'GCRS', 'DSCT',
   'WGAM', 'WCLM', 'WVCH',
-  'GOVR', 'GCSR', 'GLND',
+  'GOVR', 'GCSR', 'GLND', 'GRNT',
 ]);
 
 // Type code -> required subdirectory
@@ -106,6 +107,7 @@ export const SUBDIR_MAP = {
   'GOVR': 'research',
   'GCSR': 'research',
   'GLND': 'research',
+  'GRNT': 'research',
 };
 
 // Derived: set of all valid type codes
