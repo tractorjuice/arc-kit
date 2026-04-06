@@ -5,6 +5,14 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.6.3] - 2026-04-06
+
+### Added
+
+- Document version badges in pages sidebar — every document shows its version (e.g., v1.0) with an inline dropdown selector when multiple versions of the same document exist
+- Citation traceability for external documents — inline citation markers (`[DOC-CN]`) and structured "External References" section (#158, #207)
+- Shared citation instructions file referenced by all 43 commands and 7 research agents
+
 ## [4.6.2] - 2026-04-05
 
 ### Added

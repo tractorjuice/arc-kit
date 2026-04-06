@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@antv/infographic": "^0.2.16"
+  }
+}

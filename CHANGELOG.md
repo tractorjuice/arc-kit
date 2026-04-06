@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.3] - 2026-04-06
+
+### Added
+
+- Document version badges in pages sidebar — every document shows its version (e.g., v1.0) with an inline dropdown selector when multiple versions of the same document exist
+- Citation traceability for external documents — inline citation markers (`[DOC-CN]`) and structured "External References" section with Document Register, Citations, and Unreferenced Documents tables (#158, #207)
+- Shared citation instructions file referenced by all 43 commands and 7 research agents
+
 ## [4.6.2] - 2026-04-05
 
 ### Added
@@ -14,8 +22,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Mermaid `wardley-beta` test suite — 98% pass rate on 147 real-world maps, ArcKit syntax 100% valid (#271)
 - Hooks documentation guide (`docs/guides/hooks.md`) across all distribution formats
 - Paperclip plugin scaffolding with TypeScript source, bash/python scripts, and VERSION file
-- Citation traceability for external documents — generated artifacts now include inline citation markers (`[DOC-CN]`) and a structured "External References" section with Document Register, Citations, and Unreferenced Documents tables (#158)
-- Shared citation instructions file (`arckit-claude/references/citation-instructions.md`) referenced by all 43 commands and 7 agents that read external documents
 
 ### Fixed
 

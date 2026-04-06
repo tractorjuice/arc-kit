@@ -355,6 +355,35 @@
             margin-left: 4px;
         }
 
+        .app-nav-version {
+            float: right;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .app-nav-versioned {
+            display: flex;
+            align-items: center;
+        }
+
+        .app-nav-versioned a {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .app-nav-version-select {
+            flex-shrink: 0;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 3px;
+            padding: 0 4px;
+            margin-right: 0.5rem;
+            cursor: pointer;
+        }
+
         /* Main Content - Full Width, Left Aligned */
         .app-content-wrapper {
             flex: 1;
@@ -3706,6 +3735,93 @@
                     closeMobileSidebar();
                 });
             });
+
+            // Add change handlers for version selects
+            container.querySelectorAll('.app-nav-version-select').forEach(select => {
+                // Prevent select clicks from triggering the parent link
+                select.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                });
+
+                select.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                    const newPath = select.value;
+                    // Select is a sibling of the <a>, not nested inside it
+                    const link = select.parentElement.querySelector('a[data-path]');
+                    if (link) {
+                        link.href = '#' + newPath;
+                        link.dataset.path = newPath;
+                    }
+                    window.location.hash = newPath;
+                    loadDocument(newPath);
+
+                    // Update active state
+                    container.querySelectorAll('a').forEach(a => a.classList.remove('active'));
+                    if (link) link.classList.add('active');
+
+                    closeMobileSidebar();
+                });
+            });
+        }
+
+        // ── Version display helpers ──
+
+        function extractVersion(documentId) {
+            if (!documentId) return null;
+            const m = documentId.match(/-v(\d+\.\d+)$/);
+            return m ? m[1] : null;
+        }
+
+        function baseDocId(documentId) {
+            return documentId ? documentId.replace(/-v\d+(\.\d+)?$/, '') : null;
+        }
+
+        function renderVersionedDocList(docs) {
+            // Group by base document ID
+            const groups = {};
+            const order = [];
+            docs.forEach(doc => {
+                const key = baseDocId(doc.documentId) || doc.path;
+                if (!groups[key]) {
+                    groups[key] = [];
+                    order.push(key);
+                }
+                groups[key].push(doc);
+            });
+
+            // Sort each group by version ascending (highest last = default)
+            Object.values(groups).forEach(group => {
+                group.sort((a, b) => {
+                    const va = extractVersion(a.documentId) || '0';
+                    const vb = extractVersion(b.documentId) || '0';
+                    return va.localeCompare(vb, undefined, { numeric: true });
+                });
+            });
+
+            let html = '';
+            order.forEach(key => {
+                const group = groups[key];
+                const latest = group[group.length - 1]; // highest version
+                const title = latest.title || latest.documentId || 'Untitled';
+
+                if (group.length === 1) {
+                    // Single version: static badge
+                    const ver = extractVersion(latest.documentId);
+                    const badge = ver ? ` <span class="app-nav-version">v${ver}</span>` : '';
+                    html += `<li><a href="#${latest.path}" data-path="${latest.path}">${title}${badge}</a></li>`;
+                } else {
+                    // Multiple versions: link + sibling select (select outside <a> for valid HTML)
+                    let options = '';
+                    group.forEach(doc => {
+                        const ver = extractVersion(doc.documentId) || '?';
+                        const sel = doc === latest ? ' selected' : '';
+                        options += `<option value="${doc.path}"${sel}>v${ver}</option>`;
+                    });
+                    html += `<li class="app-nav-versioned"><a href="#${latest.path}" data-path="${latest.path}">${title}</a><select class="app-nav-version-select">${options}</select></li>`;
+                }
+            });
+
+            return html;
         }
 
         function buildNavSection(title, documents, sectionId) {
@@ -3722,9 +3838,7 @@
             let listHtml = '';
             Object.keys(byCategory).forEach(category => {
                 listHtml += `<li class="app-nav-category">${category}</li>`;
-                byCategory[category].forEach(doc => {
-                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                });
+                listHtml += renderVersionedDocList(byCategory[category]);
             });
 
             return `
@@ -3769,58 +3883,44 @@
 
                 Object.keys(byCategory).forEach(category => {
                     listHtml += `<li class="app-nav-category">${category}</li>`;
-                    byCategory[category].forEach(doc => {
-                        listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                    });
+                    listHtml += renderVersionedDocList(byCategory[category]);
                 });
             }
 
             // Diagrams
             if (project.diagrams && project.diagrams.length > 0) {
                 listHtml += `<li class="app-nav-category">Diagrams</li>`;
-                project.diagrams.forEach(doc => {
-                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                });
+                listHtml += renderVersionedDocList(project.diagrams);
             }
 
             // Decisions (ADRs)
             if (project.decisions && project.decisions.length > 0) {
                 listHtml += `<li class="app-nav-category">Decisions</li>`;
-                project.decisions.forEach(doc => {
-                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                });
+                listHtml += renderVersionedDocList(project.decisions);
             }
 
             // Wardley Maps
             if (project.wardleyMaps && project.wardleyMaps.length > 0) {
                 listHtml += `<li class="app-nav-category">Wardley Maps</li>`;
-                project.wardleyMaps.forEach(doc => {
-                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                });
+                listHtml += renderVersionedDocList(project.wardleyMaps);
             }
 
             // Data Contracts
             if (project.dataContracts && project.dataContracts.length > 0) {
                 listHtml += `<li class="app-nav-category">Data Contracts</li>`;
-                project.dataContracts.forEach(doc => {
-                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                });
+                listHtml += renderVersionedDocList(project.dataContracts);
             }
 
             // Research
             if (project.research && project.research.length > 0) {
                 listHtml += `<li class="app-nav-category">Research</li>`;
-                project.research.forEach(doc => {
-                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                });
+                listHtml += renderVersionedDocList(project.research);
             }
 
             // Reviews
             if (project.reviews && project.reviews.length > 0) {
                 listHtml += `<li class="app-nav-category">Reviews</li>`;
-                project.reviews.forEach(doc => {
-                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                });
+                listHtml += renderVersionedDocList(project.reviews);
             }
 
             // Vendors
@@ -3829,7 +3929,9 @@
                 project.vendors.forEach(vendor => {
                     if (vendor.documents) {
                         vendor.documents.forEach(doc => {
-                            listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${vendor.name}: ${doc.title}</a></li>`;
+                            const ver = extractVersion(doc.documentId);
+                            const badge = ver ? ` <span class="app-nav-version">v${ver}</span>` : '';
+                            listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${vendor.name}: ${doc.title}${badge}</a></li>`;
                         });
                     }
                 });
@@ -3838,17 +3940,13 @@
             // Vendor Profiles
             if (project.vendorProfiles && project.vendorProfiles.length > 0) {
                 listHtml += `<li class="app-nav-category">Vendor Profiles</li>`;
-                project.vendorProfiles.forEach(doc => {
-                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                });
+                listHtml += renderVersionedDocList(project.vendorProfiles);
             }
 
             // Tech Notes
             if (project.techNotes && project.techNotes.length > 0) {
                 listHtml += `<li class="app-nav-category">Tech Notes</li>`;
-                project.techNotes.forEach(doc => {
-                    listHtml += `<li><a href="#${doc.path}" data-path="${doc.path}">${doc.title}</a></li>`;
-                });
+                listHtml += renderVersionedDocList(project.techNotes);
             }
 
             // External Documents (mention only - not clickable)
@@ -4560,8 +4658,22 @@
                     } else {
                         loadDocument(path);
 
-                        // Mark as active
-                        const link = document.querySelector(`a[data-path="${path}"]`);
+                        // Mark as active — check both direct links and version selects
+                        let link = document.querySelector(`a[data-path="${path}"]`);
+                        if (!link) {
+                            // Path might be a non-default version — find its select option
+                            const option = document.querySelector(`.app-nav-version-select option[value="${path}"]`);
+                            if (option) {
+                                option.selected = true;
+                                const select = option.closest('select');
+                                const parentLink = select ? select.parentElement.querySelector('a[data-path]') : null;
+                                if (parentLink) {
+                                    parentLink.href = '#' + path;
+                                    parentLink.dataset.path = path;
+                                    link = parentLink;
+                                }
+                            }
+                        }
                         if (link) link.classList.add('active');
                     }
                 } else {
