@@ -81,6 +81,8 @@ For each body:
 2. WebFetch the results to get current open calls
 3. Filter for relevance to the project sector and TRL
 
+**360Giving/GrantNav**: Search `grantnav.threesixtygiving.org` with project-relevant keywords (e.g., "digital government", "appointment booking", "NHS digital"). GrantNav aggregates published grant data from 200+ UK funders — use it to discover funders not in the list above and to find historical grants that indicate active programmes in the project's domain.
+
 ### Step 5: Gather Grant Details
 
 For each relevant grant found, collect via WebSearch/WebFetch:
