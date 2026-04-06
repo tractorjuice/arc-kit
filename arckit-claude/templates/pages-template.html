@@ -362,14 +362,25 @@
             font-weight: 400;
         }
 
+        .app-nav-versioned {
+            display: flex;
+            align-items: center;
+        }
+
+        .app-nav-versioned a {
+            flex: 1;
+            min-width: 0;
+        }
+
         .app-nav-version-select {
-            float: right;
+            flex-shrink: 0;
             font-size: 0.7rem;
             color: var(--text-muted);
             background: transparent;
             border: 1px solid var(--border-color);
             border-radius: 3px;
             padding: 0 4px;
+            margin-right: 0.5rem;
             cursor: pointer;
         }
 
@@ -3734,9 +3745,9 @@
 
                 select.addEventListener('change', (e) => {
                     e.stopPropagation();
-                    e.preventDefault();
                     const newPath = select.value;
-                    const link = select.closest('a');
+                    // Select is a sibling of the <a>, not nested inside it
+                    const link = select.parentElement.querySelector('a[data-path]');
                     if (link) {
                         link.href = '#' + newPath;
                         link.dataset.path = newPath;
@@ -3791,21 +3802,22 @@
             order.forEach(key => {
                 const group = groups[key];
                 const latest = group[group.length - 1]; // highest version
+                const title = latest.title || latest.documentId || 'Untitled';
 
                 if (group.length === 1) {
                     // Single version: static badge
                     const ver = extractVersion(latest.documentId);
                     const badge = ver ? ` <span class="app-nav-version">v${ver}</span>` : '';
-                    html += `<li><a href="#${latest.path}" data-path="${latest.path}">${latest.title}${badge}</a></li>`;
+                    html += `<li><a href="#${latest.path}" data-path="${latest.path}">${title}${badge}</a></li>`;
                 } else {
-                    // Multiple versions: inline select
+                    // Multiple versions: link + sibling select (select outside <a> for valid HTML)
                     let options = '';
                     group.forEach(doc => {
                         const ver = extractVersion(doc.documentId) || '?';
                         const sel = doc === latest ? ' selected' : '';
                         options += `<option value="${doc.path}"${sel}>v${ver}</option>`;
                     });
-                    html += `<li><a href="#${latest.path}" data-path="${latest.path}"${latest.title} <select class="app-nav-version-select">${options}</select></a></li>`;
+                    html += `<li class="app-nav-versioned"><a href="#${latest.path}" data-path="${latest.path}">${title}</a><select class="app-nav-version-select">${options}</select></li>`;
                 }
             });
 
@@ -4654,7 +4666,7 @@
                             if (option) {
                                 option.selected = true;
                                 const select = option.closest('select');
-                                const parentLink = select ? select.closest('a') : null;
+                                const parentLink = select ? select.parentElement.querySelector('a[data-path]') : null;
                                 if (parentLink) {
                                     parentLink.href = '#' + path;
                                     parentLink.dataset.path = path;
