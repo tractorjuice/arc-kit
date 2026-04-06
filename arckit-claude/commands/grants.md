@@ -22,7 +22,7 @@ $ARGUMENTS
 
 ## Instructions
 
-This command researches UK funding opportunities — government grants (UKRI, Innovate UK, NIHR, DSIT, DASA), charitable foundations (Wellcome, Nesta, Health Foundation), social impact investors, and accelerator programmes — matching eligibility to the project's requirements.
+This command researches UK funding opportunities — government grants (UKRI, Innovate UK, NIHR, DSIT, DASA), charitable foundations (Wellcome, Nesta, Health Foundation), social impact investors, accelerator programmes, and open grants data (360Giving/GrantNav) — matching eligibility to the project's requirements.
 
 **This command delegates to the `arckit-grants` agent** which runs as an autonomous subprocess. This keeps the extensive web research (dozens of WebSearch and WebFetch calls across UK funding bodies) isolated from your main conversation context.
 

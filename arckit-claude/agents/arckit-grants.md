@@ -95,6 +95,7 @@ Search across these categories, skipping bodies clearly irrelevant to the projec
 | Social Impact | Big Society Capital, Access Foundation, Social Enterprise UK |
 | Accelerators | Techstars, Barclays Eagle Labs, Digital Catapult, KTN |
 | Defence/Security | DASA, DSTL Innovation |
+| Open Data | 360Giving (threesixtygiving.org) — search GrantNav for historical and active grants from 200+ UK funders |
 
 For each body:
 

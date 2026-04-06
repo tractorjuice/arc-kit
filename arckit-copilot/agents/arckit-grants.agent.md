@@ -83,8 +83,10 @@ Search across these categories, skipping bodies clearly irrelevant to the projec
 | Social Impact | Big Society Capital, Access Foundation, Social Enterprise UK |
 | Accelerators | Techstars, Barclays Eagle Labs, Digital Catapult, KTN |
 | Defence/Security | DASA, DSTL Innovation |
+| Open Data | 360Giving (threesixtygiving.org) — search GrantNav for historical and active grants from 200+ UK funders |
 
 For each body:
+
 1. Search for their current funding opportunities page
 2. WebFetch the results to get current open calls
 3. Filter for relevance to the project sector and TRL
@@ -143,6 +145,7 @@ After writing the main grants report, extract reusable knowledge into standalone
 6. Collapse multiple consecutive hyphens to single
 
 Examples:
+
 - "MHRA AI Airlock" → "mhra-ai-airlock"
 - "Wellcome Trust Digital Technology" → "wellcome-trust-digital-technology"
 - "NIHR i4i Programme" → "nihr-i4i-programme"
