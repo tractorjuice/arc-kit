@@ -84,6 +84,7 @@ Read all documents listed in the "Read Available Documents" section above before
 - Read any **external documents** listed in the project context (`external/` files) — extract existing CI relationships, SLA targets, support tiers, incident categories, change workflows
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise ITSM standards, CMDB governance policies, cross-project service catalogue standards
 - If no external docs exist but they would improve the ServiceNow design, ask: "Do you have any existing CMDB exports, SLA documents, or support model documentation? I can read PDFs and CSV files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### Phase 2: Analysis and Mapping
 

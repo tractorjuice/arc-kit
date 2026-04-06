@@ -44,6 +44,8 @@ For each artifact found, catalogue:
 
 If fewer than 3 artifacts are found, warn the user that more artifacts are needed for a meaningful framework and suggest which commands to run first.
 
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
+
 **Requisite Variety Assessment**: After cataloguing, identify the distinct concern domains present in the project (e.g., security, data governance, integration, compliance, operations, user experience). Compare these against the artifact types available. If the project's system variety significantly exceeds the framework's control variety — for example, requirements reference security, data privacy, and operational resilience but no RISK, DPIA, or OPS artifacts exist — flag the specific gaps and recommend commands to close them. Record this assessment for use in the Design Philosophy section of the FWRK overview.
 
 ### Step 2: Read the Template

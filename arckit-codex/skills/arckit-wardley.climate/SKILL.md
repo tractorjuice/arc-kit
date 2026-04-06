@@ -58,6 +58,7 @@ $ARGUMENTS
 - Read any **external documents** listed in the project context (`external/` files) — extract market analysis, industry reports, analyst forecasts, competitive intelligence. These are the primary evidence sources for climate pattern detection.
 - Read any **enterprise standards** in `projects/000-global/external/` — extract cross-project strategic context, portfolio-level climate assessments, enterprise technology landscape reports
 - If no external market documents found but they would materially improve the assessment, ask: "Do you have any market research reports, analyst forecasts, or competitive landscape documents? These significantly improve climate pattern evidence quality. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ## Step 2: Read Reference Material
 

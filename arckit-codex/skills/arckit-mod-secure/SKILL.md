@@ -161,6 +161,7 @@ Generate a comprehensive Secure by Design assessment document using the **contin
    - Read any **global policies** listed in the project context (`000-global/policies/`) — extract MOD security standards, classification requirements, ITAR restrictions
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise MOD security baselines, accreditation templates, cross-project security assurance evidence
    - If no external MOD security docs found, ask: "Do you have any JSP 440 compliance reports, CAAT assessment results, or supplier security attestations? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 5. **Assess using NIST Cybersecurity Framework** (as mandated by SbD):
 

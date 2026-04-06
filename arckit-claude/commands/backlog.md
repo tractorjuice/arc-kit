@@ -149,6 +149,7 @@ Extract project metadata:
 - Read any **external documents** listed in the project context (`external/` files) — extract existing user stories, velocity data, sprint history, team capacity, component architecture from vendor HLD/DLD documents
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise backlog standards, Definition of Ready/Done templates, cross-project estimation benchmarks
 - If no external docs exist but they would improve backlog accuracy, ask: "Do you have any vendor design documents or existing backlog exports? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### Step 2c: Interactive Configuration
 

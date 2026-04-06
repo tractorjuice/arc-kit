@@ -75,6 +75,7 @@ Parse the user input for:
 - Read any **external documents** listed in the project context (`external/` files) — extract SLA targets, support tier definitions, escalation procedures, DR/BCP plans, on-call rotas
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise operational standards, SLA frameworks, cross-project support model benchmarks
 - If no external operational docs found but they would improve the readiness pack, ask: "Do you have any existing SLA documents, support procedures, or DR/BCP plans? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### Phase 2: Analysis
 

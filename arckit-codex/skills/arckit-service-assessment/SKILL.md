@@ -117,6 +117,7 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 - Read any **external documents** listed in the project context (`external/` files) — extract previous assessment results, assessor feedback, action items, evidence gaps identified
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise service standards, previous GDS assessment reports, cross-project assessment benchmarks
 - If no external docs exist but they would improve preparation, ask: "Do you have any previous GDS assessment reports or assessor feedback? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### Step 3: Map Evidence to Service Standard Points
 

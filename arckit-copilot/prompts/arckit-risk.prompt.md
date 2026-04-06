@@ -60,6 +60,7 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
    - Read any **external documents** listed in the project context (`external/` files) — extract previous risk findings, mitigation effectiveness, residual risks, lessons learned
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise risk frameworks, threat intelligence reports
    - If no external risk docs exist but they would improve the assessment, ask: "Do you have a risk appetite statement, previous risk assessments, or external threat reports? I can read PDFs directly. Place them in `projects/000-global/policies/` and re-run, or skip."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 4. **Determine project context**:
    - If user mentions "UK Government", "public sector", "department", "ministry" → Include regulatory/parliamentary risks

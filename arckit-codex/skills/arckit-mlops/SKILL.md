@@ -77,6 +77,7 @@ Parse the user input for:
 - Read any **external documents** listed in the project context (`external/` files) — extract ML pipeline configurations, model performance metrics, training data specifications, model cards
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise ML governance policies, model registry standards, cross-project ML infrastructure patterns
 - If no external MLOps docs found but they would improve the strategy, ask: "Do you have any existing ML pipeline configurations, model cards, or model evaluation reports? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### Phase 2: Analysis
 

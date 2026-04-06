@@ -65,6 +65,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - Read any **global policies** listed in the project context (`000-global/policies/`) — extract spending thresholds, approval gates, Green Book discount rates, procurement rules
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise investment frameworks, strategic business plans, cross-project portfolio investment context
    - If no external docs exist but they would improve the business case, ask: "Do you have any budget documents, financial forecasts, or market research? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 4. **Determine project context**:
    - If user mentions "UK Government", "public sector", "department", "ministry" → Use full Green Book format

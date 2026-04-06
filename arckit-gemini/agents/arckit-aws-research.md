@@ -69,6 +69,8 @@ Scan for external (non-ArcKit) documents the user may have provided:
 
 **Important**: This agent works without external documents. They enhance output quality but are never blocking.
 
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `~/.gemini/extensions/arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
+
 ### Step 2: Read Available Documents
 
 Find the project directory in `projects/` (user may specify name/number, otherwise use most recent). Scan for existing artifacts:

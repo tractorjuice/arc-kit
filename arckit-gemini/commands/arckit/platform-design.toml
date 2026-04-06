@@ -192,6 +192,7 @@ Read `projects/000-global/ARC-000-PRIN-*.md`:
 - Read any **external documents** listed in the project context (`external/` files) — extract current platform architecture, ecosystem participants, API catalogues, platform metrics
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise platform strategy, shared service catalogues, cross-project platform integration standards
 - If no external platform docs found but they would improve the design, ask: \"Do you have any existing platform documentation, ecosystem maps, or API catalogues? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip.\"
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `~/.gemini/extensions/arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the \"External References\" section in the template.
 
 ---
 

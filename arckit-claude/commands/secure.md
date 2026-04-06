@@ -81,6 +81,7 @@ Generate a comprehensive Secure by Design assessment document by:
    - Read any **global policies** listed in the project context (`000-global/policies/`) — extract security requirements, acceptable risk levels, mandatory controls, certification scope, validity dates
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise security baselines, penetration test reports, cross-project security assessment patterns
    - If no external docs exist but they would improve the assessment, ask: "Do you have any existing security assessments, pen test reports, or threat models? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 5. **Assess security using NCSC CAF (14 principles across 4 objectives)**:
 

@@ -45,6 +45,7 @@ $ARGUMENTS
    - The hook has NOT read external documents or vendor prose — Read these if needed for component names, test evidence, or implementation details
    - Read any **enterprise standards** in `projects/000-global/external/` if relevant
    - If no external docs found but they would improve traceability coverage, ask the user
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 4. **Build the traceability matrix**:
 

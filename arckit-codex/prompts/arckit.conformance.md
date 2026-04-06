@@ -96,6 +96,7 @@ c. `.arckit/conformance-rules.md` in the project root (if exists):
 - Read any **external documents** listed in the project context (`external/` files) — extract audit findings, compliance gaps, certification evidence, remediation plans
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise compliance frameworks, cross-project conformance benchmarks
 - If no external docs exist but they would improve the assessment, note this as an assessment limitation
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### 2. Identify the Target Project
 

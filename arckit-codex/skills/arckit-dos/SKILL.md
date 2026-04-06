@@ -60,6 +60,7 @@ This command generates DOS-compliant procurement documentation from your existin
 - Read any **external documents** listed in the project context (`external/` files) — extract team capability evidence, previous submission scores, buyer requirements, evaluation feedback
 - Read any **enterprise standards** in `projects/000-global/external/` — extract organization-wide procurement templates, DOS framework guidance, approved supplier capabilities
 - If no external DOS docs exist but they would improve the submission, ask: "Do you have any contractor CVs, previous DOS submissions, or buyer requirement documents? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 **Gathering rules** (apply to all user questions in this command):
 

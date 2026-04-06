@@ -59,6 +59,7 @@ Read existing project artifacts to understand what to diagram:
 
 - Read any **external documents** listed in the project context (`external/` files) — extract existing data flow diagrams, process descriptions, system interfaces
 - If no external docs exist but they would improve the output, ask: "Do you have any existing data flow diagrams or system interface documents? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ## Step 1c: Interactive Configuration
 

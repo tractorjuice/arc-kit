@@ -70,6 +70,7 @@ ${input:topic:Enter project name or topic}
 - Read any **external documents** listed in the project context (`external/` files) — extract existing component positions, evolution assessments, strategic plays, market context
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise technology landscape maps, market analysis reports, cross-project strategic context
 - If no external Wardley maps found but they would improve strategic context, ask: "Do you have any existing Wardley maps (images or OWM syntax) or strategic analysis documents? I can read images and PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ## Step 2: Determine the Mapping Mode
 

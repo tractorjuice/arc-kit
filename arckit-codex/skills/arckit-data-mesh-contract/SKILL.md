@@ -171,6 +171,7 @@ Read the data mesh contract template:
 - Read any **external documents** listed in the project context (`external/` files) — extract existing data product definitions, SLA terms, schema specifications, data quality rules
 - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise data governance standards, data sharing agreements, cross-project data catalogue conventions
 - If no external docs exist but they would improve the output, ask: "Do you have any existing data contracts, data product SLAs, or schema specifications? I can read PDFs, YAML, and JSON files directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ### Step 5: Gather Context from Existing Artifacts
 

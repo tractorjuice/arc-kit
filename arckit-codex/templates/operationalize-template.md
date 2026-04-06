@@ -1000,10 +1000,26 @@ curl -f https://[service]/health
 
 ## External References
 
-| Document | Type | Source | Key Extractions | Path |
-|----------|------|--------|-----------------|------|
-| NCSC Vulnerability Monitoring Service (VMS) | Service | NCSC | Vulnerability scanning, 8-day domain / 32-day general remediation benchmarks | https://www.ncsc.gov.uk/information/vulnerability-monitoring-service |
+> This section provides traceability from generated content back to source documents.
+> Follow citation instructions in the project's citation reference guide.
+
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
 | *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
 
 ---
 

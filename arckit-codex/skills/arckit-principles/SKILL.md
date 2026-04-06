@@ -26,6 +26,7 @@ $ARGUMENTS
 
    - Read any **global policies** listed in the project context (`000-global/policies/`) — extract existing architecture principles, TOGAF standards, departmental policies, technology standards
    - If no external governance documents found, ask: "Do you have any existing architecture principles, governance frameworks, or departmental technology standards? I can read PDFs and Word docs directly. Place them in `projects/000-global/policies/` and re-run, or skip to create principles from scratch."
+   - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 3. **Understand the request**: The user may be:
    - Creating principles from scratch for a new organization

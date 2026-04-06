@@ -55,6 +55,7 @@ $ARGUMENTS
 - Read any **external documents** listed in the project context (`external/` files) — extract existing strategic analysis, competitive intelligence, market research
 - Read any **enterprise standards** in `projects/000-global/external/` — extract cross-project strategic context, portfolio-level plays in progress
 - If no external strategic documents found but they would improve gameplay selection, note: "External competitive intelligence or market research documents would enrich this analysis. Place them in `projects/{project-dir}/external/` and re-run."
+- **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
 ## Step 2: Read Reference Material
 
