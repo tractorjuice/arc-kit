@@ -463,6 +463,8 @@ All test repos now use the arckit plugin via the marketplace instead of synced f
 
 **Traceability Chain**: Stakeholders → Goals → Requirements (BR/FR/NFR/INT/DR) → Data Model → Components → User Stories
 
+**Citation Traceability**: When commands read external documents (`external/`, `policies/`, `vendors/`), they add inline citation markers (`[DOC_ID-CN]`) and populate an "External References" section with Document Register, Citations table, and Unreferenced Documents. Citation format is defined in `arckit-claude/references/citation-instructions.md`.
+
 **Requirement ID Prefixes**:
 
 - BR-xxx: Business Requirements

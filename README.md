@@ -27,6 +27,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 - ✅ Conducting formal design reviews (HLD/DLD)
 - 🔧 ServiceNow service management design
 - 🔗 Maintaining requirements traceability
+- 📎 Citation traceability for external documents (inline `[DOC-CN]` markers with source quotes)
 
 ---
 
@@ -764,7 +765,7 @@ Publish all project documentation as an interactive website:
 
 - **Static Site Generation**: Generates `docs/index.html` and `docs/manifest.json` — deployable to any static host (GitHub Pages, Netlify, Vercel, S3, etc.)
 - **Mermaid Diagram Rendering**: All architecture diagrams render inline with mermaid.js
-- **Project Navigation**: Sidebar with collapsible project tree and document categories
+- **Project Navigation**: Sidebar with collapsible project tree, document categories, and version badges — documents with multiple versions show an inline dropdown selector
 - **GOV.UK Styling**: Professional government design system styling
 - **Document Index**: Manifest.json provides programmatic access to all artifacts
 
