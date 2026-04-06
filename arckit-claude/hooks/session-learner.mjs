@@ -23,9 +23,6 @@ import { execFileSync } from 'node:child_process';
 import { isDir, isFile, readText, parseHookInput } from './hook-utils.mjs';
 import { DOC_TYPES } from '../config/doc-types.mjs';
 
-// Decision keywords for commit message pattern matching (TiM Phase 1)
-const DECISION_RE = /\b(chose|decided|selected|switched to|migrated to|replaced|opted for|instead of|trade-off|over .+ because)\b/i;
-
 const data = parseHookInput();
 const cwd = data.cwd || '.';
 
@@ -142,37 +139,7 @@ let nextId = existingThoughts.reduce((max, t) => {
 
 const dateStr_ = new Date().toISOString().substring(0, 10);
 
-// Path 1: Commit message decision patterns
-for (const summary of commitLines) {
-  const spaceIdx = summary.indexOf(' ');
-  const msg = spaceIdx > 0 ? summary.substring(spaceIdx + 1) : summary;
-  if (!DECISION_RE.test(msg)) continue;
-  if (recentContent.has(msg)) continue;
-
-  // Find project number from changed files associated with this session
-  let projNum = '000';
-  for (const f of files) {
-    const pm = f.match(/ARC-(\d{3})-/);
-    if (pm) { projNum = pm[1]; break; }
-  }
-
-  // Derive tags from artifact categories in this session
-  const tags = [...allCategories].map(c => c.toLowerCase());
-
-  newThoughts.push({
-    id: `t-${String(nextId++).padStart(3, '0')}`,
-    created: dateStr_,
-    project: projNum,
-    type: 'decision',
-    content: msg,
-    source: 'commit',
-    artifact: null,
-    tags: tags.length > 0 ? tags : ['general'],
-  });
-  recentContent.add(msg);
-}
-
-// Path 2: ADR content parsing
+// ADR content parsing — extract decisions from ADR files modified this session
 const adrFiles = files.filter(f => /ARC-\d{3}-ADR-/.test(f));
 for (const adrFile of adrFiles) {
   const adrPath = join(cwd, adrFile);
