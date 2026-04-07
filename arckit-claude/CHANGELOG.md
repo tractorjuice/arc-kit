@@ -5,6 +5,14 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.6.4] - 2026-04-07
+
+### Added
+
+- `/arckit.grants` command — research UK grants, charitable funding, and accelerator programmes with eligibility scoring (#277)
+- `arckit-grants` agent — autonomous web research across 7 categories of UK funding bodies including 360Giving/GrantNav
+- `GRNT` document type and grants template with citation traceability
+
 ## [4.6.3] - 2026-04-06
 
 ### Added

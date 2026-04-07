@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.4] - 2026-04-07
+
+### Added
+
+- `/arckit.grants` command (68th command) — research UK government grants, charitable funding, and accelerator programmes with eligibility scoring (#277)
+- `arckit-grants` agent (10th agent) — autonomous web research across UKRI, Innovate UK, NIHR, DSIT, DASA, Wellcome, Nesta, Health Foundation, 360Giving/GrantNav, and accelerators
+- `GRNT` document type for grants research reports (Research category, `research/` subdirectory)
+- Grants template with project funding profile, per-grant eligibility scoring, comparison table, recommended strategy, and citation traceability
+
 ## [4.6.3] - 2026-04-06
 
 ### Added

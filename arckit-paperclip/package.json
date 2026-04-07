@@ -1,6 +1,6 @@
 {
   "name": "@tractorjuice/arckit-paperclip",
-  "version": "4.6.3",
+  "version": "4.6.4",
   "description": "ArcKit Enterprise Architecture Governance plugin for Paperclip",
   "type": "module",
   "main": "dist/worker.js",
