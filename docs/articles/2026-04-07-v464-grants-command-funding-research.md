@@ -22,7 +22,7 @@ The grants command takes a project with requirements and produces a comprehensiv
 
 ### The Research Process
 
-The command delegates to the `arckit-grants` agent, which runs as an autonomous subprocess performing 30-50 web searches in isolation from your main conversation. The process follows nine steps:
+The command delegates to the `arckit-grants` agent, which runs as an autonomous subprocess performing 30 to 50 web searches in isolation from your main conversation. The process follows nine steps:
 
 **Step 1: Read project context.** The agent reads the project's requirements (REQ), stakeholder analysis (STKE), and business case (SOBC) to understand the domain, budget, objectives, and compliance landscape.
 
@@ -32,7 +32,7 @@ The command delegates to the `arckit-grants` agent, which runs as an autonomous 
 
 For each body, the agent searches for current funding opportunities pages, fetches the results, and filters for relevance to the project sector and TRL.
 
-**Step 4: Gather grant details.** For each relevant grant, the agent collects via live web searches: grant name and programme, funding body, funding range (min-max), eligibility criteria, application deadline, TRL requirements, application process summary, success rate (if published), and a direct URL to the application page.
+**Step 4: Gather grant details.** For each relevant grant, the agent collects via live web searches: grant name and programme, funding body, funding range (min to max), eligibility criteria, application deadline, TRL requirements, application process summary, success rate (if published), and a direct URL to the application page.
 
 **Step 5: Score eligibility.** Each grant is rated against the project funding profile. High means the project meets all eligibility criteria with sector and TRL aligned. Medium means the project meets most criteria but may need minor adaptation or partner involvement. Low means a partial match with significant gaps. Every score includes a rationale explaining what matches and what gaps exist.
 
@@ -52,9 +52,9 @@ The grants report follows ArcKit's standard document control format with these s
 
 **Summary Comparison** presents all grants side by side for quick comparison across funder, amount, deadline, eligibility, TRL, and score.
 
-**Recommended Funding Strategy** identifies the top three grants with rationale, provides an application timeline with specific dates and actions, highlights complementary funding combinations (e.g., Innovate UK for the security layer plus KTP for capability building), and calculates total potential funding if all recommended applications succeed.
+**Recommended Funding Strategy** identifies the top three grants with rationale, provides an application timeline with specific dates and actions, highlights complementary funding combinations (for example, Innovate UK for the security layer plus KTP for capability building), and calculates total potential funding if all recommended applications succeed.
 
-**Risks and Considerations** covers application effort vs probability, co-funding requirements, reporting obligations, and timeline alignment with project milestones.
+**Risks and Considerations** covers application effort versus probability, co-funding requirements, reporting obligations, and timeline alignment with project milestones.
 
 **Spawned Knowledge** lists tech notes created or updated from this research.
 
@@ -74,11 +74,11 @@ The agent searches GrantNav with project-relevant keywords to discover funders n
 
 Running `/arckit.grants 001` against a UK government Digital Appointment Booking Service project (a citizen-facing booking, rescheduling, and cancellation service as part of a digital transformation programme), the agent found 12 grants across government R&D, health, and accelerator categories.
 
-Three scored High: GDS Modern Digital Government Funding Pilots, NHS Digital Tools Funding, and NHS Unified Tech Fund. Four scored Medium: Innovate UK Secure Software for Resilient Growth (deadline 29 April), Knowledge Transfer Partnership, Frontier AI Discovery Phase 1, and NIHR i4i FAST. Five scored Low and were filtered out as poor fit due to startup focus, wrong sector, or insufficient funding scale.
+Three scored High: GDS Modern Digital Government Funding Pilots, NHS Digital Tools Funding, and NHS Unified Tech Fund. Four scored Medium: Innovate UK Secure Software for Resilient Growth (deadline 29 April), Knowledge Transfer Partnership, Frontier AI Discovery Phase 1, and NIHR i4i FAST. Five scored Low and were filtered out as a poor fit due to startup focus, wrong sector, or insufficient funding scale.
 
 The recommended strategy combined three non-conflicting funding streams: GDS departmental funding for core delivery, Innovate UK's Secure Software grant for security hardening (leveraging the project's GOV.UK One Login and TLS 1.3 requirements), and a KTP for capability building. Total competitive grant funding potential: £377,000 to £1,106,000, excluding departmental allocations.
 
-The report included an application timeline with specific dates, identified that Smart Grants (historically the best general-purpose Innovate UK fund) are paused for 2025/26, and flagged the imminent Secure Software deadline as requiring immediate SME partner identification.
+The report included an application timeline with specific dates. It identified that Smart Grants, historically the best general-purpose Innovate UK fund, are paused for 2025/26, and flagged the imminent Secure Software deadline as requiring immediate SME partner identification.
 
 ---
 
@@ -94,7 +94,7 @@ The GRNT document type is a multi-instance research artifact (like RSCH), stored
 
 This release also includes improvements from v4.6.3:
 
-**Document version badges in the pages sidebar.** Every document now shows its version number (e.g., v1.0) in the sidebar navigation. When multiple versions of the same document type exist, they collapse into a single entry with an inline dropdown selector, defaulting to the latest version.
+**Document version badges in the pages sidebar.** Every document now shows its version number (for example, v1.0) in the sidebar navigation. When multiple versions of the same document type exist, they collapse into a single entry with an inline dropdown selector, defaulting to the latest version.
 
 **Citation traceability for external documents.** All 43 commands and 7 research agents now support inline citation markers when reading external documents from project directories. Generated artifacts include a structured External References section with a Document Register, Citations, and Unreferenced Documents list, providing full traceability from findings back to source material.
 
