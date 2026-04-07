@@ -24,56 +24,41 @@ The grants command takes a project with requirements and produces a comprehensiv
 
 The command delegates to the `arckit-grants` agent, which runs as an autonomous subprocess performing 30-50 web searches in isolation from your main conversation. The process follows nine steps:
 
-1. **Read project context.** The agent reads the project's requirements (REQ), stakeholder analysis (STKE), and business case (SOBC) to understand the domain, budget, objectives, and compliance landscape.
+**Step 1: Read project context.** The agent reads the project's requirements (REQ), stakeholder analysis (STKE), and business case (SOBC) to understand the domain, budget, objectives, and compliance landscape.
 
-2. **Build a funding profile.** From the requirements and user input, the agent extracts: sector (health, defence, education, digital, etc.), organisation type (public sector, SME, charity, academic, NHS trust), Technology Readiness Level (TRL 1-9), funding range sought, project timeline, and key objectives.
+**Step 2: Build a funding profile.** From the requirements and user input, the agent extracts sector, organisation type, Technology Readiness Level (TRL 1-9), funding range sought, project timeline, and key objectives.
 
-3. **Search UK funding bodies.** The agent searches across seven categories, skipping bodies clearly irrelevant to the project sector:
+**Step 3: Search UK funding bodies.** The agent searches across seven categories, skipping bodies clearly irrelevant to the project sector: Government R&D (UKRI, Innovate UK, DSIT, BEIS), Health (NIHR, MHRA AI Airlock, NHS England), Charitable (Wellcome Trust, Nesta, Health Foundation, Nuffield Foundation), Social Impact (Big Society Capital, Access Foundation, Social Enterprise UK), Accelerators (Techstars, Barclays Eagle Labs, Digital Catapult, KTN), Defence/Security (DASA, DSTL Innovation), and Open Data (360Giving/GrantNav covering 200+ UK funders).
 
-   | Category | Bodies |
-   |----------|--------|
-   | Government R&D | UKRI, Innovate UK, DSIT, BEIS |
-   | Health | NIHR, MHRA AI Airlock, NHS England |
-   | Charitable | Wellcome Trust, Nesta, Health Foundation, Nuffield Foundation |
-   | Social Impact | Big Society Capital, Access Foundation, Social Enterprise UK |
-   | Accelerators | Techstars, Barclays Eagle Labs, Digital Catapult, KTN |
-   | Defence/Security | DASA, DSTL Innovation |
-   | Open Data | 360Giving/GrantNav (200+ UK funders) |
+For each body, the agent searches for current funding opportunities pages, fetches the results, and filters for relevance to the project sector and TRL.
 
-   For each body, the agent searches for current funding opportunities pages, fetches the results, and filters for relevance to the project sector and TRL.
+**Step 4: Gather grant details.** For each relevant grant, the agent collects via live web searches: grant name and programme, funding body, funding range (min-max), eligibility criteria, application deadline, TRL requirements, application process summary, success rate (if published), and a direct URL to the application page.
 
-4. **Gather grant details.** For each relevant grant, the agent collects via live web searches: grant name and programme, funding body, funding range (min-max), eligibility criteria, application deadline, TRL requirements, application process summary, success rate (if published), and a direct URL to the application page.
+**Step 5: Score eligibility.** Each grant is rated against the project funding profile. High means the project meets all eligibility criteria with sector and TRL aligned. Medium means the project meets most criteria but may need minor adaptation or partner involvement. Low means a partial match with significant gaps. Every score includes a rationale explaining what matches and what gaps exist.
 
-5. **Score eligibility.** Each grant is rated against the project funding profile:
-   - **High** — project meets all eligibility criteria, sector and TRL align, organisation type qualifies
-   - **Medium** — project meets most criteria, may need minor adaptation or partner involvement
-   - **Low** — partial match, significant gaps in eligibility or sector mismatch
+**Step 6: Write the report.** The agent produces a structured document following ArcKit's standard template, written to the project's research directory.
 
-   Every score includes a rationale explaining what matches and what gaps exist.
+**Step 7: Spawn knowledge.** For each grant programme researched in depth, the agent creates a standalone tech note. These persist beyond the current project, so future research runs can discover and build on them. Existing notes are updated rather than duplicated.
 
-6. **Write the report.** The agent produces a structured document following ArcKit's standard template, written to `projects/{dir}/research/ARC-{NNN}-GRNT-{NNN}-v1.0.md`.
-
-7. **Spawn knowledge.** For each grant programme researched in depth, the agent creates a standalone tech note in `projects/{dir}/tech-notes/`. These persist beyond the current project, so future research runs can discover and build on them. Existing notes are updated rather than duplicated.
-
-8. **Return a summary.** The full report is written to file. Only a concise summary appears in the conversation: total grants found, top matches with funding amounts, nearest deadlines, and suggested next steps.
+**Step 8: Return a summary.** The full report is written to file. Only a concise summary appears in the conversation: total grants found, top matches with funding amounts, nearest deadlines, and suggested next steps.
 
 ### The Output Document
 
 The grants report follows ArcKit's standard document control format with these sections:
 
-**Project Funding Profile** — a table summarising the project's sector, organisation type, TRL, funding sought, and timeline, extracted from requirements.
+**Project Funding Profile** summarises the project's sector, organisation type, TRL, funding sought, and timeline, extracted from requirements.
 
-**Grant Opportunities** — one detailed section per grant, sorted by eligibility score (High first). Each includes a structured table (funding body, programme, range, deadline, TRL, score), eligibility criteria, score rationale, application process summary, and URL.
+**Grant Opportunities** provides one detailed section per grant, sorted by eligibility score (High first). Each includes the funding body, programme, range, deadline, TRL requirement, score, eligibility criteria, score rationale, application process summary, and URL.
 
-**Summary Comparison Table** — all grants in a single table for quick comparison across funder, amount, deadline, eligibility, TRL, and score.
+**Summary Comparison** presents all grants side by side for quick comparison across funder, amount, deadline, eligibility, TRL, and score.
 
-**Recommended Funding Strategy** — the top three grants with rationale, an application timeline with specific dates and actions, complementary funding combinations (e.g., Innovate UK for the security layer plus KTP for capability building), and total potential funding if all recommended applications succeed.
+**Recommended Funding Strategy** identifies the top three grants with rationale, provides an application timeline with specific dates and actions, highlights complementary funding combinations (e.g., Innovate UK for the security layer plus KTP for capability building), and calculates total potential funding if all recommended applications succeed.
 
-**Risks and Considerations** — application effort vs probability, co-funding requirements, reporting obligations, and timeline alignment with project milestones.
+**Risks and Considerations** covers application effort vs probability, co-funding requirements, reporting obligations, and timeline alignment with project milestones.
 
-**Spawned Knowledge** — a list of tech notes created or updated from this research.
+**Spawned Knowledge** lists tech notes created or updated from this research.
 
-**External References** — citation traceability linking findings back to source documents using ArcKit's `[DOC_ID-CN]` marker format.
+**External References** provides citation traceability linking findings back to source documents using ArcKit's inline marker format.
 
 ---
 
@@ -87,11 +72,9 @@ The agent searches GrantNav with project-relevant keywords to discover funders n
 
 ## Real-World Example
 
-Running `/arckit.grants 001` against a UK government Digital Appointment Booking Service project (a citizen-facing booking, rescheduling, and cancellation service as part of a digital transformation programme), the agent found 12 grants across government R&D, health, and accelerator categories:
+Running `/arckit.grants 001` against a UK government Digital Appointment Booking Service project (a citizen-facing booking, rescheduling, and cancellation service as part of a digital transformation programme), the agent found 12 grants across government R&D, health, and accelerator categories.
 
-- **3 High-scoring grants**: GDS Modern Digital Government Funding Pilots, NHS Digital Tools Funding, and NHS Unified Tech Fund
-- **4 Medium-scoring grants**: Innovate UK Secure Software for Resilient Growth (deadline 29 April), Knowledge Transfer Partnership, Frontier AI Discovery Phase 1, and NIHR i4i FAST
-- **5 Low-scoring grants**: filtered out as poor fit due to startup focus, wrong sector, or insufficient funding scale
+Three scored High: GDS Modern Digital Government Funding Pilots, NHS Digital Tools Funding, and NHS Unified Tech Fund. Four scored Medium: Innovate UK Secure Software for Resilient Growth (deadline 29 April), Knowledge Transfer Partnership, Frontier AI Discovery Phase 1, and NIHR i4i FAST. Five scored Low and were filtered out as poor fit due to startup focus, wrong sector, or insufficient funding scale.
 
 The recommended strategy combined three non-conflicting funding streams: GDS departmental funding for core delivery, Innovate UK's Secure Software grant for security hardening (leveraging the project's GOV.UK One Login and TLS 1.3 requirements), and a KTP for capability building. Total competitive grant funding potential: £377,000 to £1,106,000, excluding departmental allocations.
 
@@ -101,13 +84,9 @@ The report included an application timeline with specific dates, identified that
 
 ## Integration with the ArcKit Workflow
 
-The grants command fits into the existing architecture governance workflow through three handoffs:
+The grants command fits into the existing architecture governance workflow through three handoffs. `/arckit.sobc` feeds grant funding data into the Strategic Outline Business Case's Economic Case, updating cost-benefit analysis with confirmed or potential funding streams. `/arckit.plan` creates a project plan aligned to grant milestones and application deadlines. `/arckit.risk` adds grant-specific risks to the risk register: application rejection, co-funding requirements, reporting obligations, and compliance constraints.
 
-- **`/arckit.sobc`** — feed grant funding data into the Strategic Outline Business Case's Economic Case, updating cost-benefit analysis with confirmed or potential funding streams
-- **`/arckit.plan`** — create a project plan aligned to grant milestones and application deadlines
-- **`/arckit.risk`** — add grant-specific risks to the risk register: application rejection, co-funding requirements, reporting obligations, and compliance constraints
-
-The GRNT document type is a multi-instance research artifact (like RSCH), stored in the project's `research/` subdirectory. It appears in the pages documentation site under the Research category, and the new version display feature (also in v4.6.4) means multiple versions of a grants report are distinguishable in the sidebar.
+The GRNT document type is a multi-instance research artifact (like RSCH), stored in the project's research subdirectory. It appears in the pages documentation site under the Research category, and the new version display feature (also in v4.6.4) means multiple versions of a grants report are distinguishable in the sidebar.
 
 ---
 
@@ -117,7 +96,7 @@ This release also includes improvements from v4.6.3:
 
 **Document version badges in the pages sidebar.** Every document now shows its version number (e.g., v1.0) in the sidebar navigation. When multiple versions of the same document type exist, they collapse into a single entry with an inline dropdown selector, defaulting to the latest version.
 
-**Citation traceability for external documents.** All 43 commands and 7 research agents now support inline citation markers (`[DOC_ID-CN]`) when reading external documents from `external/`, `policies/`, or `vendors/` directories. Generated artifacts include a structured External References section with a Document Register, Citations table, and Unreferenced Documents list, providing full traceability from findings back to source material.
+**Citation traceability for external documents.** All 43 commands and 7 research agents now support inline citation markers when reading external documents from project directories. Generated artifacts include a structured External References section with a Document Register, Citations, and Unreferenced Documents list, providing full traceability from findings back to source material.
 
 ---
 
