@@ -241,7 +241,7 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit.maturity-model` | [maturity-model.md](guides/maturity-model.md) | ✅ Complete |
 | `/arckit.score` | [score.md](guides/score.md) | ✅ Complete |
 
-**Coverage**: 67/67 commands documented (100%)
+**Coverage**: 68/68 commands documented (100%)
 
 ---
 
