@@ -145,6 +145,17 @@ echo "  plugins[0].version: $(jq -r '.plugins[0].version' .claude-plugin/marketp
 echo "  metadata.version:   $(jq -r '.metadata.version' .claude-plugin/marketplace.json)  (should be 1.0.0)"
 echo ""
 
+# Lint check
+echo "── Lint ──"
+echo ""
+if npx markdownlint-cli2 "**/*.md" 2>&1; then
+  echo "  ✓ No lint errors"
+else
+  echo ""
+  echo "  ⚠ Lint errors found — fix before committing"
+fi
+echo ""
+
 # Reminders
 echo "── Reminders ──"
 echo ""
