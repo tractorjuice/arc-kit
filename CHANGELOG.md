@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.5] - 2026-04-08
+
+### Fixed
+
+- Pages dashboard not showing global project documents from subdirectories (research, diagrams, decisions, wardley-maps, data-contracts, reviews)
+
 ## [4.6.4] - 2026-04-07
 
 ### Added

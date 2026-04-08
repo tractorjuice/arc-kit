@@ -250,7 +250,7 @@ function scanGlobalDocs(repoRoot) {
 
   if (!isDir(globalDir)) return { global, globalExternal, globalPolicies };
 
-  // Global ARC-*.md files
+  // Global ARC-*.md files (root level)
   for (const f of listDir(globalDir)) {
     const fp = join(globalDir, f);
     if (isFile(fp) && f.startsWith('ARC-') && f.endsWith('.md')) {
@@ -259,6 +259,27 @@ function scanGlobalDocs(repoRoot) {
       global.push({
         path: `projects/000-global/${f}`,
         title: meta.title,
+        category: meta.category,
+        documentId: extractDocId(f),
+      });
+    }
+  }
+
+  // Global ARC-*.md files in subdirectories (research/, diagrams/, decisions/, etc.)
+  const subdirSet = new Set(Object.values(SUBDIR_MAP));
+  subdirSet.add('reviews');
+  for (const dirName of subdirSet) {
+    const subDir = join(globalDir, dirName);
+    if (!isDir(subDir)) continue;
+    for (const f of listDir(subDir)) {
+      const fp = join(subDir, f);
+      if (!isFile(fp) || !f.startsWith('ARC-') || !f.endsWith('.md')) continue;
+      const heading = extractFirstHeading(fp);
+      const typeCode = extractDocType(f);
+      const meta = DOC_TYPE_META[typeCode] || { category: 'Other', title: typeCode };
+      global.push({
+        path: `projects/000-global/${dirName}/${f}`,
+        title: heading || meta.title,
         category: meta.category,
         documentId: extractDocId(f),
       });
