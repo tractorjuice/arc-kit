@@ -35,7 +35,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 ### Installation
 
-**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.90+**):
+**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.97+**):
 
 ```text
 /plugin marketplace add tractorjuice/arc-kit
@@ -43,7 +43,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 68 commands, 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.90?** This version fixes PostToolUse hooks causing "File content has changed" failures during consecutive edits, fixes PreToolUse JSON blocking with exit code 2, eliminates per-turn JSON serialization of MCP tool schemas (performance win for ArcKit's 5 bundled servers), and includes all prior fixes for hook `if` condition filtering, absolute `file_path` in hooks, agent completion notifications, and memory leaks in subagents and MCP servers.
+> **Why v2.1.97?** This version fixes `claude plugin update` silently missing updates for git-based plugins (critical for ArcKit distribution), fixes a MCP HTTP/SSE memory leak (~50 MB/hr on reconnects, affects ArcKit's 5 bundled servers), adds proper exponential backoff for 429 retries (benefits research agents), fixes Stop/SubagentStop hooks failing on long sessions (affects session-learner), fixes subagent working directory leaks, and includes all prior v2.1.90–v2.1.94 fixes for hooks, MCP performance, and agent stability.
 
 **Gemini CLI** — install the ArcKit extension:
 
@@ -1214,7 +1214,7 @@ Key references live in `docs/` and top-level guides:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.90+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.97+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---
@@ -1273,7 +1273,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## Tips
 
-### Continuous Governance Monitoring (Claude Code v2.1.90+)
+### Continuous Governance Monitoring (Claude Code v2.1.97+)
 
 Use the `/loop` command to run health checks on a recurring interval during long architecture sessions:
 
