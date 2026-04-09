@@ -232,14 +232,23 @@ def create_agent(client: Anthropic, agent_config: dict) -> tuple:
     return agent
 
 
-def create_environment(client: Anthropic) -> object:
-    """Create a cloud environment with unrestricted networking."""
+def get_or_create_environment(client: Anthropic) -> str:
+    """Get environment ID from ARCKIT_ENVIRONMENT_ID env var, or create one.
+
+    Set ARCKIT_ENVIRONMENT_ID to reuse a single environment across runs.
+    """
+    env_id = os.environ.get("ARCKIT_ENVIRONMENT_ID")
+    if env_id:
+        print(f"Using environment: {env_id}")
+        return env_id
+
     environment = client.beta.environments.create(
         name="arckit-env",
         config={"type": "cloud", "networking": {"type": "unrestricted"}},
     )
     print(f"Environment created: {environment.id}")
-    return environment
+    print(f"  Tip: export ARCKIT_ENVIRONMENT_ID={environment.id} to reuse")
+    return environment.id
 
 
 def create_session(
@@ -327,6 +336,10 @@ def main() -> None:
               aws-research, azure-research, gcp-research,
               gov-reuse, gov-code-search, gov-landscape
 
+            Environment variables:
+              ANTHROPIC_API_KEY       Required. Anthropic API key.
+              ARCKIT_ENVIRONMENT_ID   Optional. Reuse a shared environment.
+
             Examples:
               %(prog)s --list
               %(prog)s research --repo https://github.com/user/project \\
@@ -347,7 +360,6 @@ def main() -> None:
     parser.add_argument("--github-token", help="GitHub token for repo access")
     parser.add_argument("--session-id", help="Resume an existing session")
     parser.add_argument("--agent-id", help="Reuse an existing agent ID")
-    parser.add_argument("--environment-id", help="Reuse an existing environment ID")
 
     args = parser.parse_args()
 
@@ -384,13 +396,8 @@ def main() -> None:
         agent = create_agent(client, agent_config)
         agent_id = agent.id
 
-    # Create environment (or reuse)
-    if args.environment_id:
-        env_id = args.environment_id
-        print(f"Reusing environment: {env_id}")
-    else:
-        environment = create_environment(client)
-        env_id = environment.id
+    # Get or create environment
+    env_id = get_or_create_environment(client)
 
     # Create session and run
     session = create_session(
