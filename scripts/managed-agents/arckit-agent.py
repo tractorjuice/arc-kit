@@ -303,6 +303,8 @@ def run_session(client: Anthropic, session_id: str, prompt: str) -> None:
                         print(block.text, end="", flush=True)
                 case "agent.tool_use":
                     print(f"\n  [{event.name}]", flush=True)
+                case "agent.mcp_tool_use":
+                    print(f"\n  [mcp:{event.mcp_server_name}.{event.name}]", flush=True)
                 case "session.status_idle":
                     print("\n\nAgent finished.", flush=True)
                     break
