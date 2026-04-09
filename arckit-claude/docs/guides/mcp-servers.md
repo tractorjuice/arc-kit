@@ -10,7 +10,7 @@ This guide covers installing the ArcKit plugin, configuring MCP servers, and com
 
 ### Prerequisites
 
-- **Claude Code** v2.1.90 or later (or **Claude Cowork** desktop app)
+- **Claude Code** v2.1.97 or later (or **Claude Cowork** desktop app)
 - **Bash** shell (for helper scripts)
 
 ### Step 1: Add the marketplace
