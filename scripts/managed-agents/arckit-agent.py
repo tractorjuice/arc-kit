@@ -156,7 +156,14 @@ def load_mcp_servers() -> tuple[list[dict], list[dict]]:
             continue
 
         servers.append({"type": "url", "name": name, "url": url})
-        toolsets.append({"type": "mcp_toolset", "mcp_server_name": name})
+        toolsets.append({
+            "type": "mcp_toolset",
+            "mcp_server_name": name,
+            "default_config": {
+                "enabled": True,
+                "permission_policy": {"type": "always_allow"},
+            },
+        })
 
     return servers, toolsets
 
