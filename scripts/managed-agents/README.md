@@ -1,8 +1,8 @@
 # ArcKit Managed Agents
 
-Prototype scripts for deploying ArcKit agents as [Claude Managed Agents](https://platform.claude.com/docs/en/managed-agents/overview) via the Anthropic API.
+Deploy any of the 10 ArcKit agents as [Claude Managed Agents](https://platform.claude.com/docs/en/managed-agents/overview) via the Anthropic API.
 
-Managed Agents run in cloud containers with built-in tools (bash, file ops, web search/fetch) and support long-running, asynchronous execution. This enables headless governance workflows, CI/CD integration, and custom UIs.
+Managed Agents run in cloud containers with built-in tools (bash, file ops, web search/fetch) and MCP servers. This enables headless governance workflows, CI/CD integration, and custom UIs.
 
 Tracking issue: [#282](https://github.com/tractorjuice/arc-kit/issues/282)
 
@@ -13,34 +13,48 @@ pip install anthropic
 export ANTHROPIC_API_KEY="your-api-key"
 ```
 
-## Scripts
-
-### `research-agent.py`
-
-Deploys the `arckit-research` agent for market research, vendor evaluation, build vs buy analysis, and TCO comparison.
+## Usage
 
 ```bash
-# With a project repo (agent reads requirements, writes research doc)
-python research-agent.py \
+# List available agents
+python arckit-agent.py --list
+
+# Deploy with a project repo (recommended — agent reads requirements, writes artifacts)
+python arckit-agent.py research \
     --repo "https://github.com/tractorjuice/arckit-test-project-v1" \
     --github-token "$GITHUB_TOKEN" \
     --prompt "Research technology options for the M365 migration project"
 
-# Without a repo (web research only)
-python research-agent.py \
-    --prompt "Research authentication solutions for a UK Government project"
+# Deploy without a repo (web research only, no artifact access)
+python arckit-agent.py grants \
+    --prompt "Research UK funding for a digital identity programme"
 
 # Resume an existing session
-python research-agent.py \
+python arckit-agent.py research \
     --session-id "sess_abc123" \
     --prompt "Also research payment processing options"
 
 # Reuse agent and environment from a previous run
-python research-agent.py \
+python arckit-agent.py research \
     --agent-id "agent_abc123" \
     --environment-id "env_abc123" \
     --prompt "Research options for a new project"
 ```
+
+## Available Agents
+
+| Agent | Description | MCP Servers Used |
+|---|---|---|
+| `research` | Market research, vendor eval, build vs buy, TCO | govreposcrape |
+| `grants` | UK government grants and funding research | (none) |
+| `datascout` | Data source discovery, API catalogue search | DataCommons (optional) |
+| `framework` | Transform artifacts into structured framework | (none) |
+| `aws-research` | AWS service research | AWS Knowledge |
+| `azure-research` | Azure service research | Microsoft Learn |
+| `gcp-research` | GCP service research | Google Developer Knowledge |
+| `gov-reuse` | Government code reuse assessment | govreposcrape |
+| `gov-code-search` | Government code semantic search | govreposcrape |
+| `gov-landscape` | Government code landscape analysis | govreposcrape |
 
 ## Architecture
 
@@ -50,37 +64,42 @@ You / CI ──────────────> Anthropic Cloud
                               │
                     ┌─────────┴──────────┐
                     │  Managed Agent      │
-                    │  (arckit-research)  │
+                    │  (any arckit-*)     │
                     │                     │
-                    │  Tools:             │
-                    │  - web_search       │
-                    │  - web_fetch        │
+                    │  Built-in tools:    │
+                    │  - web_search/fetch │
                     │  - read/write/edit  │
                     │  - bash/glob/grep   │
                     │                     │
+                    │  MCP servers:       │
+                    │  - AWS Knowledge    │
+                    │  - Microsoft Learn  │
+                    │  - govreposcrape    │
+                    │                     │
                     │  Mounted repos:     │
-                    │  - /workspace/arc-kit (templates)
-                    │  - /workspace/project (artifacts)
+                    │  - /workspace/arc-kit│
+                    │  - /workspace/project│
                     └─────────────────────┘
                               │
                     SSE stream (events)
-                              │
                               v
                     Your terminal / app
 ```
 
-## Differences from Plugin Agents
+## How It Works
 
-| Feature | Plugin (Claude Code) | Managed Agent (API) |
-|---|---|---|
-| Execution | Local, interactive | Cloud, async |
-| MCP servers | Local stdio (npx) | Remote HTTP only |
-| Hooks | 18 hooks supported | Not supported |
-| Templates | `${CLAUDE_PLUGIN_ROOT}/` | Mounted via GitHub repo |
-| Skills | Plugin auto-discovery | Custom skill upload |
-| Auth | Claude Code session | API key + vaults |
-| Cost | Subscription | Per-token API billing |
+1. **Loads the full agent prompt** from `arckit-claude/agents/arckit-{name}.md` with only `${CLAUDE_PLUGIN_ROOT}` path rewrites
+2. **Registers all 5 MCP servers** (AWS Knowledge, Microsoft Learn, Google Dev Knowledge, DataCommons, govreposcrape)
+3. **Mounts GitHub repos** via session resources (ArcKit for templates, project repo for artifacts)
+4. **Streams events** via SSE as the agent works
+
+## Known Limitations
+
+- **Custom header auth**: Google Developer Knowledge (`X-Goog-Api-Key`) and DataCommons (`X-API-Key`) use custom headers that don't map to the managed agents `static_bearer` vault type. These servers connect but auth fails; agents fall back to STANDALONE mode (web search).
+- **No hooks**: Managed agents don't support the hook system. Filename validation, output scoring, and session learning don't run.
+- **No plugin context**: No `${CLAUDE_PLUGIN_ROOT}` expansion at runtime (rewritten to mount path at agent creation).
+- **Cost**: API token billing per session, not Claude Code subscription.
 
 ## Status
 
-This is an experimental prototype (Phase 1 of [#282](https://github.com/tractorjuice/arc-kit/issues/282)). The research agent runs without MCP servers, using web search for all data gathering.
+Experimental prototype (Phase 1 of [#282](https://github.com/tractorjuice/arc-kit/issues/282)).
