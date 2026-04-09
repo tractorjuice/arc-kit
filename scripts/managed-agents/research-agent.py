@@ -88,48 +88,71 @@ def load_mcp_servers() -> tuple[list[dict], list[dict]]:
 
     servers = []
     toolsets = []
-    skipped = []
+    auth_needed = []  # (name, url, env_var, env_val) for vault creation
 
     for name, spec in config.get("mcpServers", {}).items():
         url = spec.get("url", "")
 
-        # Resolve env var references in headers
-        headers = {}
-        has_missing_key = False
-        for hdr_name, hdr_val in spec.get("headers", {}).items():
-            # Handle ${ENV_VAR} patterns
-            if hdr_val.startswith("${") and hdr_val.endswith("}"):
-                env_var = hdr_val[2:-1]
-                env_val = os.environ.get(env_var)
-                if not env_val:
-                    has_missing_key = True
-                    skipped.append(f"{name} (missing {env_var})")
-                    break
-                headers[hdr_name] = env_val
-            else:
-                headers[hdr_name] = hdr_val
-
-        if has_missing_key:
-            continue
-
+        # All servers go into the agent definition (no headers — auth via vaults)
         server = {"type": "url", "name": name, "url": url}
-        if headers:
-            server["headers"] = headers
         servers.append(server)
         toolsets.append({"type": "mcp_toolset", "mcp_server_name": name})
 
-    if skipped:
-        print(f"  Skipped MCP servers: {', '.join(skipped)}")
+        # Track servers that need vault credentials
+        for hdr_val in spec.get("headers", {}).values():
+            if hdr_val.startswith("${") and hdr_val.endswith("}"):
+                env_var = hdr_val[2:-1]
+                env_val = os.environ.get(env_var, "")
+                auth_needed.append((name, url, env_var, env_val))
 
-    return servers, toolsets
+    return servers, toolsets, auth_needed
 
 
-def create_agent(client: Anthropic) -> dict:
-    """Create the ArcKit research managed agent with MCP servers."""
+def create_vault(client: Anthropic, auth_needed: list[tuple]) -> str | None:
+    """Create a vault with static_bearer credentials for MCP servers that need auth.
+
+    Returns the vault ID, or None if no credentials were needed/available.
+    """
+    credentials = []
+    for name, url, env_var, env_val in auth_needed:
+        if env_val:
+            credentials.append((name, url, env_val))
+        else:
+            print(f"  Warning: {name} needs {env_var} but it's not set — skipping credential")
+
+    if not credentials:
+        return None
+
+    vault = client.beta.vaults.create(
+        display_name="ArcKit MCP credentials",
+    )
+    print(f"Vault created: {vault.id}")
+
+    for name, url, token in credentials:
+        client.beta.vaults.credentials.create(
+            vault_id=vault.id,
+            display_name=f"ArcKit {name}",
+            auth={
+                "type": "static_bearer",
+                "mcp_server_url": url,
+                "token": token,
+            },
+        )
+        print(f"  Credential added: {name}")
+
+    return vault.id
+
+
+def create_agent(client: Anthropic) -> tuple:
+    """Create the ArcKit research managed agent with MCP servers.
+
+    Returns (agent, auth_needed) where auth_needed is a list of
+    MCP servers that require vault credentials.
+    """
     system_prompt = load_system_prompt()
     print(f"Loaded system prompt: {len(system_prompt)} chars from {os.path.normpath(_AGENT_FILE)}")
 
-    mcp_servers, mcp_toolsets = load_mcp_servers()
+    mcp_servers, mcp_toolsets, auth_needed = load_mcp_servers()
     print(f"MCP servers: {[s['name'] for s in mcp_servers]}")
 
     tools = [{"type": "agent_toolset_20260401"}] + mcp_toolsets
@@ -144,7 +167,7 @@ def create_agent(client: Anthropic) -> dict:
         mcp_servers=mcp_servers if mcp_servers else None,
     )
     print(f"Agent created: {agent.id} (version {agent.version})")
-    return agent
+    return agent, auth_needed
 
 
 def create_environment(client: Anthropic) -> dict:
@@ -167,10 +190,9 @@ def create_session(
     *,
     repo_url: str | None = None,
     github_token: str | None = None,
-    project_repo_url: str | None = None,
-    project_github_token: str | None = None,
+    vault_id: str | None = None,
 ) -> dict:
-    """Start a session, optionally mounting GitHub repos."""
+    """Start a session, optionally mounting GitHub repos and vault credentials."""
     resources = []
 
     # Always mount ArcKit repo for templates and references
@@ -186,8 +208,7 @@ def create_session(
 
     # Optionally mount the user's project repo
     if repo_url:
-        token = project_github_token or github_token
-        if not token:
+        if not github_token:
             print(
                 "Warning: --github-token required to mount repos. "
                 "Skipping repo mount.",
@@ -198,17 +219,22 @@ def create_session(
                 {
                     "type": "github_repository",
                     "url": repo_url,
-                    "authorization_token": token,
+                    "authorization_token": github_token,
                     "mount_path": "/workspace/project",
                 }
             )
 
-    session = client.beta.sessions.create(
-        agent=agent_id,
-        environment_id=environment_id,
-        title="ArcKit Research Session",
-        resources=resources if resources else None,
-    )
+    kwargs = {
+        "agent": agent_id,
+        "environment_id": environment_id,
+        "title": "ArcKit Research Session",
+    }
+    if resources:
+        kwargs["resources"] = resources
+    if vault_id:
+        kwargs["vault_ids"] = [vault_id]
+
+    session = client.beta.sessions.create(**kwargs)
     print(f"Session created: {session.id} (status: {session.status})")
     return session
 
@@ -304,8 +330,15 @@ def main() -> None:
         agent_id = args.agent_id
         print(f"Reusing agent: {agent_id}")
     else:
-        agent = create_agent(client)
+        agent, _ = create_agent(client)
         agent_id = agent.id
+
+    # Always check for MCP servers needing vault credentials
+    # (vault is per-session, so create fresh each time)
+    _, _, auth_needed = load_mcp_servers()
+    vault_id = None
+    if auth_needed:
+        vault_id = create_vault(client, auth_needed)
 
     # Create environment (or reuse)
     if args.environment_id:
@@ -322,6 +355,7 @@ def main() -> None:
         env_id,
         repo_url=args.repo,
         github_token=args.github_token,
+        vault_id=vault_id,
     )
 
     # Run
