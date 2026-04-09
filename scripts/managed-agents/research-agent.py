@@ -28,167 +28,120 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import os
+import re
 import sys
 import textwrap
 
 from anthropic import Anthropic
 
 # ---------------------------------------------------------------------------
-# Agent system prompt — adapted from arckit-claude/agents/arckit-research.md
-# Paths rewritten from ${CLAUDE_PLUGIN_ROOT}/... to /workspace/arc-kit/...
+# Agent system prompt — loaded from arckit-claude/agents/arckit-research.md
+# with ${CLAUDE_PLUGIN_ROOT} paths rewritten to /workspace/arc-kit/arckit-claude
 # (the ArcKit repo is mounted at /workspace/arc-kit via GitHub resource)
 # ---------------------------------------------------------------------------
 
 ARCKIT_REPO = "https://github.com/tractorjuice/arc-kit"
 ARCKIT_MOUNT = "/workspace/arc-kit"
 
-SYSTEM_PROMPT = textwrap.dedent(f"""\
-You are an enterprise architecture market research specialist. You conduct \
-systematic technology and service research to identify solutions that meet \
-project requirements, perform build vs buy analysis, and produce vendor \
-recommendations with TCO comparisons.
+# Path to the canonical agent prompt (relative to repo root)
+_AGENT_FILE = os.path.join(
+    os.path.dirname(__file__), "..", "..", "arckit-claude", "agents", "arckit-research.md"
+)
 
-## Your Core Responsibilities
 
-1. Read and analyze project requirements to identify research categories
-2. Conduct extensive web research for each category (SaaS, open source, managed services, UK Gov platforms)
-3. Gather real pricing, reviews, compliance data, and integration details via web_search and web_fetch
-4. Produce build vs buy recommendations with 3-year TCO analysis
-5. Write a comprehensive research document to file
-6. Return only a summary to the caller
+def load_system_prompt() -> str:
+    """Load the full agent prompt from the canonical source file.
 
-## Process
+    Strips YAML frontmatter and rewrites ${CLAUDE_PLUGIN_ROOT} paths
+    to the managed-agent mount path. This ensures the managed agent
+    always uses the exact same prompt as the plugin agent.
+    """
+    with open(os.path.normpath(_AGENT_FILE)) as f:
+        content = f.read()
 
-### Step 1: Read Available Documents
+    # Strip YAML frontmatter (--- ... ---)
+    content = re.sub(r"\A---\n.*?^---\n", "", content, count=1, flags=re.DOTALL | re.MULTILINE)
 
-Find the project directory in `projects/` (user may specify name/number, otherwise \
-use the most recent). Scan for existing artifacts:
+    # Rewrite plugin paths to mounted repo paths
+    content = content.replace(
+        "${CLAUDE_PLUGIN_ROOT}",
+        f"{ARCKIT_MOUNT}/arckit-claude",
+    )
 
-**MANDATORY** (warn if missing):
-- `ARC-*-REQ-*.md` in `projects/{{project}}/` — Requirements specification
-  - Extract: FR (features/capabilities), NFR (performance, security, scalability, compliance), INT (integration), DR (data) requirements
-  - If missing: STOP and tell the user that requirements must exist first
-- `ARC-000-PRIN-*.md` in `projects/000-global/` — Architecture principles
+    return content.strip()
 
-**RECOMMENDED** (read if available):
-- `ARC-*-STKE-*.md` — Stakeholder analysis
-- `ARC-*-DATA-*.md` — Data model
 
-**OPTIONAL** (read if available):
-- `ARC-*-RISK-*.md` — Risk register
+def load_mcp_servers() -> tuple[list[dict], list[dict]]:
+    """Load MCP server definitions from the plugin's .mcp.json.
 
-Detect if UK Government project (look for "UK Government", "Ministry of", \
-"Department for", "NHS", "MOD" in project name or requirements).
+    Returns (mcp_servers, mcp_toolsets) for the agent definition.
+    Servers requiring API keys are included only if the env var is set.
+    """
+    import json
 
-### Step 1b: Check for External Documents (optional)
+    mcp_json = os.path.join(
+        os.path.dirname(__file__), "..", "..", "arckit-claude", ".mcp.json"
+    )
+    with open(os.path.normpath(mcp_json)) as f:
+        config = json.load(f)
 
-Scan for external documents in `projects/{{project}}/external/` (PDF, DOCX, MD). \
-Extract market landscape data, vendor rankings, pricing benchmarks.
+    servers = []
+    toolsets = []
+    skipped = []
 
-### Step 2: Read Template
+    for name, spec in config.get("mcpServers", {}).items():
+        url = spec.get("url", "")
 
-Read `{ARCKIT_MOUNT}/arckit-claude/templates/research-findings-template.md` for output structure.
+        # Resolve env var references in headers
+        headers = {}
+        has_missing_key = False
+        for hdr_name, hdr_val in spec.get("headers", {}).items():
+            # Handle ${ENV_VAR} patterns
+            if hdr_val.startswith("${") and hdr_val.endswith("}"):
+                env_var = hdr_val[2:-1]
+                env_val = os.environ.get(env_var)
+                if not env_val:
+                    has_missing_key = True
+                    skipped.append(f"{name} (missing {env_var})")
+                    break
+                headers[hdr_name] = env_val
+            else:
+                headers[hdr_name] = hdr_val
 
-### Step 3: Extract and Categorize Requirements
+        if has_missing_key:
+            continue
 
-Read the requirements document and extract FR-xxx, NFR-xxx, INT-xxx, DR-xxx requirements.
+        server = {"type": "url", "name": name, "url": url}
+        if headers:
+            server["headers"] = headers
+        servers.append(server)
+        toolsets.append({"type": "mcp_toolset", "mcp_server_name": name})
 
-### Step 4: Dynamically Identify Research Categories
+    if skipped:
+        print(f"  Skipped MCP servers: {', '.join(skipped)}")
 
-**CRITICAL**: Do NOT use a fixed list. Analyze requirements for keywords that \
-indicate technology needs and discover categories dynamically.
-
-### Step 5: Conduct Web Research for Each Category
-
-**Use web_search and web_fetch extensively.** Do NOT rely on general knowledge alone.
-
-For each category:
-- **Vendor Discovery**: web_search "[category] SaaS", "[category] vendors comparison"
-- **Vendor Details**: web_fetch vendor pricing and feature pages
-- **Reviews**: web_search "[vendor] G2 reviews", "[vendor] vs [competitor]"
-- **Open Source**: web_search "[category] open source", web_fetch GitHub repos
-- **UK Government**: web_fetch Digital Marketplace, GOV.UK platform pages
-- **Cost/TCO**: Search for pricing calculators and cost comparisons
-- **Compliance**: Search for ISO 27001, SOC 2, GDPR, UK data residency
-
-### Step 6: Build vs Buy Analysis
-
-For each category, compare:
-- **Build Custom**: Effort, cost, timeline, skills needed, 3-year TCO
-- **Buy SaaS**: Vendor options, subscription costs, integration effort, 3-year TCO
-- **Adopt Open Source**: Hosting costs, setup effort, maintenance, 3-year TCO
-- **GOV.UK Platform** (if UK Gov): Free/subsidized options, eligibility
-- **Reuse Government Code** (if UK Gov): Existing implementations
-
-### Step 7: Create TCO Summary
-
-Build a blended TCO table: Year 1, Year 2, Year 3, 3-Year total. \
-Include alternative scenarios and risk-adjusted TCO.
-
-### Step 8: Requirements Traceability
-
-Map every requirement to a recommended solution or flag as a gap.
-
-### Step 9: Detect Version and Determine Increment
-
-Check for existing `ARC-*-RSCH-*.md` files. Use version 1.0 if none exist.
-
-### Step 10: Write the Document
-
-Read `{ARCKIT_MOUNT}/arckit-claude/references/quality-checklist.md` and verify \
-all Common Checks plus RSCH per-type checks pass.
-
-**Use the write tool** to save the document to \
-`projects/{{project-dir}}/research/ARC-{{PROJECT_ID}}-RSCH-v{{VERSION}}.md`.
-
-Include the generation metadata footer:
-```
-Generated by: ArcKit research agent (Managed Agents)
-Generated on: {{DATE}}
-Project: {{PROJECT_NAME}} (Project {{PROJECT_ID}})
-AI Model: {{model name}}
-```
-
-**DO NOT output the full document.** Write it to file only.
-
-### Step 11: Return Summary
-
-Return ONLY a concise summary including:
-- Project name and file path created
-- Number of categories researched
-- Build vs buy recommendation summary
-- Estimated 3-year TCO range
-- Top 3 recommended vendors
-- Key findings (3-5 bullet points)
-
-## Quality Standards
-
-- All pricing must come from web_search/web_fetch, not general knowledge
-- Cross-reference pricing from multiple sources
-- Prefer official vendor websites for pricing and features
-- Include URLs as citations in research findings
-- For UK Gov projects: ALWAYS check Digital Marketplace first
-- TCO projections must be 3 years minimum
-
-## Edge Cases
-
-- **No requirements found**: Stop immediately, tell user requirements must exist
-- **Vendor pricing hidden**: Mark as "Contact for quote"
-- **Reviews scarce**: Note "Limited public reviews available"
-""")
+    return servers, toolsets
 
 
 def create_agent(client: Anthropic) -> dict:
-    """Create the ArcKit research managed agent."""
+    """Create the ArcKit research managed agent with MCP servers."""
+    system_prompt = load_system_prompt()
+    print(f"Loaded system prompt: {len(system_prompt)} chars from {os.path.normpath(_AGENT_FILE)}")
+
+    mcp_servers, mcp_toolsets = load_mcp_servers()
+    print(f"MCP servers: {[s['name'] for s in mcp_servers]}")
+
+    tools = [{"type": "agent_toolset_20260401"}] + mcp_toolsets
+
     agent = client.beta.agents.create(
         name="ArcKit Research Agent",
         description="Enterprise architecture market research: vendor evaluation, "
         "build vs buy analysis, TCO comparison, UK Gov Digital Marketplace search.",
         model="claude-sonnet-4-6",
-        system=SYSTEM_PROMPT,
-        tools=[
-            {"type": "agent_toolset_20260401"},
-        ],
+        system=system_prompt,
+        tools=tools,
+        mcp_servers=mcp_servers if mcp_servers else None,
     )
     print(f"Agent created: {agent.id} (version {agent.version})")
     return agent
