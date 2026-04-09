@@ -148,14 +148,15 @@ def load_mcp_servers() -> tuple[list[dict], list[dict]]:
     for name, spec in config.get("mcpServers", {}).items():
         url = spec.get("url", "")
 
-        # All servers go into the agent definition (no headers — auth via vaults)
+        # Skip servers that require custom header auth (X-Goog-Api-Key,
+        # X-API-Key) — managed agents only supports Bearer token vaults,
+        # so these fail on connect and generate session errors.
+        # TODO: re-enable when managed agents supports custom header vaults.
+        if spec.get("headers"):
+            continue
+
         servers.append({"type": "url", "name": name, "url": url})
         toolsets.append({"type": "mcp_toolset", "mcp_server_name": name})
-
-        # Note: servers with custom headers (X-Goog-Api-Key, X-API-Key)
-        # cannot use static_bearer vaults — Bearer auth doesn't match.
-        # These servers fall back gracefully (agents have STANDALONE mode).
-        # TODO: revisit when managed agents supports custom header vaults.
 
     return servers, toolsets
 
