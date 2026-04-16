@@ -1,0 +1,160 @@
+# ArcKit
+
+> ArcKit is an Enterprise Architecture Governance & Vendor Procurement toolkit that provides 68 AI-assisted slash commands for Claude Code, Gemini CLI, GitHub Copilot, Codex CLI, and OpenCode CLI. It transforms architecture governance from scattered documents into a systematic, template-driven workflow covering requirements, stakeholders, risk, business cases, architecture (C4, Wardley, ADRs), research, vendor procurement (G-Cloud/DOS), UK Government compliance (GDS, TCoP, Secure by Design, NCSC CAF, Orange/Green Book), DevOps/MLOps/FinOps, and traceability.
+
+ArcKit is distributed as a Claude Code plugin, a Gemini CLI extension, a GitHub Copilot prompt pack, a Codex CLI extension, an OpenCode CLI extension, and a Python CLI (`arckit init`). Source code and issue tracker: https://github.com/tractorjuice/arc-kit.
+
+Every command reads a template from `.arckit/templates/`, creates or reuses a numbered project directory (`projects/NNN-name/`), writes a versioned artifact (`ARC-NNN-<TYPE>-vX.Y.md`) using the Write tool to avoid token limits, and maintains traceability: Stakeholders → Goals → Requirements (BR/FR/NFR/INT/DR) → Data Model → Components → User Stories.
+
+## Start here
+
+- [ArcKit homepage](https://arckit.org/): Overview, quick start, installation for all five AI assistants.
+- [Getting Started](https://arckit.org/getting-started.html): First-time setup for Claude Code, Gemini, Copilot, Codex, and OpenCode.
+- [Documentation index](https://arckit.org/README.md): Complete index of guides grouped by workflow phase.
+- [README on GitHub](https://github.com/tractorjuice/arc-kit/blob/main/README.md): Installation, platform matrix, command catalogue.
+- [The ArcKit Book](https://arckit.org/book/ARCKIT-BOOK.md): 3,000+ line comprehensive guide covering every subsystem (commands, agents, hooks, skills, MCP, multi-AI distribution, templates, autoresearch).
+
+## Commands
+
+- [Command reference](https://arckit.org/commands.html): Searchable HTML catalogue of all 68 commands with parameters and examples.
+- [Dependency matrix](https://arckit.org/DEPENDENCY-MATRIX.md): Which commands require which prerequisites.
+- [Workflow diagrams](https://arckit.org/WORKFLOW-DIAGRAMS.md): Visual flow from project init through procurement.
+- [Guides index](https://arckit.org/guides.html): Per-command usage guides.
+
+## Guides by phase
+
+### Onboarding and setup
+
+- [Getting started walkthrough](https://arckit.org/guides/start.md): `/arckit.start` onboarding.
+- [Project initialization](https://arckit.org/guides/init.md): `/arckit.init` and `arckit init` CLI.
+- [Template customization](https://arckit.org/guides/customize.md): Override templates in `.arckit/templates-custom/`.
+- [Template builder](https://arckit.org/guides/template-builder.md): Build new document templates.
+- [Upgrading ArcKit](https://arckit.org/guides/upgrading.md): Version upgrade procedure.
+- [Productivity tips](https://arckit.org/guides/productivity.md): Workflow optimization.
+
+### Discovery
+
+- [Requirements](https://arckit.org/guides/requirements.md): `/arckit.requirements` (BR/FR/NFR/INT/DR).
+- [Stakeholders](https://arckit.org/guides/stakeholders.md): `/arckit.stakeholders` drivers, goals, outcomes.
+- [Technology research](https://arckit.org/guides/research.md): `/arckit.research` build vs buy, TCO.
+- [Data source discovery](https://arckit.org/guides/datascout.md): `/arckit.datascout` API catalogue scoring.
+
+### Planning and strategy
+
+- [Project plan](https://arckit.org/guides/plan.md): `/arckit.plan` timeline and sequencing.
+- [Business case (SOBC)](https://arckit.org/guides/business-case.md): `/arckit.sobc` HM Treasury Green Book.
+- [Architecture strategy](https://arckit.org/guides/strategy.md): `/arckit.strategy`.
+- [Roadmap](https://arckit.org/guides/roadmap.md): `/arckit.roadmap`.
+- [Product backlog](https://arckit.org/guides/backlog.md): `/arckit.backlog` user stories and epics.
+
+### Architecture design
+
+- [Architecture principles](https://arckit.org/guides/principles.md): `/arckit.principles`.
+- [C4 diagrams](https://arckit.org/guides/diagram.md): `/arckit.diagram` Mermaid visualizations.
+- [Data model](https://arckit.org/guides/data-model.md): `/arckit.data-model` ERD, GDPR.
+- [ADRs](https://arckit.org/guides/adr.md): `/arckit.adr` Architecture Decision Records.
+- [Design reviews](https://arckit.org/guides/design-review.md): `/arckit.hld-review`, `/arckit.dld-review`.
+- [Data flow diagrams](https://arckit.org/guides/dfd.md): `/arckit.dfd`.
+- [Framework design](https://arckit.org/guides/framework.md): `/arckit.framework` principles, patterns, guidance.
+- [Platform design](https://arckit.org/guides/platform-design.md): `/arckit.platform-design`.
+- [Wardley Mapping](https://arckit.org/guides/wardley.md): `/arckit.wardley` strategic visualization.
+- [Wardley value chain](https://arckit.org/guides/wardley-value-chain.md): `/arckit.wardley.value-chain`.
+- [Wardley doctrine](https://arckit.org/guides/wardley-doctrine.md): `/arckit.wardley.doctrine`.
+- [Wardley gameplay](https://arckit.org/guides/wardley-gameplay.md): `/arckit.wardley.gameplay`.
+- [Wardley climate](https://arckit.org/guides/wardley-climate.md): `/arckit.wardley.climate`.
+- [Data mesh contract](https://arckit.org/guides/data-mesh-contract.md): `/arckit.data-mesh-contract`.
+
+### Governance and traceability
+
+- [Risk management](https://arckit.org/guides/risk-management.md): `/arckit.risk` HM Treasury Orange Book.
+- [Traceability](https://arckit.org/guides/traceability.md): `/arckit.traceability` requirement chains.
+- [Principles compliance](https://arckit.org/guides/principles-compliance.md): `/arckit.principles-compliance`.
+- [Project analysis](https://arckit.org/guides/analyze.md): `/arckit.analyze`.
+- [Artifact health](https://arckit.org/guides/artifact-health.md): `/arckit.health`.
+- [Architecture search](https://arckit.org/guides/search.md): `/arckit.search`.
+- [Impact assessment](https://arckit.org/guides/impact.md): `/arckit.impact`.
+- [Conformance](https://arckit.org/guides/conformance.md): `/arckit.conformance`.
+- [Maturity model](https://arckit.org/guides/maturity-model.md): `/arckit.maturity-model`.
+
+### UK Government compliance
+
+- [Technology Code of Practice](https://arckit.org/guides/uk-government/technology-code-of-practice.md): `/arckit.tcop`.
+- [Secure by Design](https://arckit.org/guides/uk-government/secure-by-design.md): `/arckit.secure`.
+- [DPIA](https://arckit.org/guides/dpia.md): `/arckit.dpia` Data Protection Impact Assessment.
+- [Service Assessment](https://arckit.org/guides/service-assessment.md): `/arckit.service-assessment` GDS.
+- [AI Playbook](https://arckit.org/guides/uk-government/ai-playbook.md): `/arckit.ai-playbook`.
+- [Algorithmic Transparency (ATRS)](https://arckit.org/guides/uk-government/algorithmic-transparency.md): `/arckit.atrs`.
+- [MOD Secure by Design](https://arckit.org/guides/uk-mod/secure-by-design.md): `/arckit.mod-secure`.
+- [JSP 936 AI Assurance](https://arckit.org/guides/jsp-936.md): `/arckit.jsp-936`.
+- [GovS 007 Security](https://arckit.org/guides/govs-007-security.md).
+- [National Data Strategy](https://arckit.org/guides/national-data-strategy.md).
+- [Data Quality Framework](https://arckit.org/guides/data-quality-framework.md).
+- [Codes of Practice (Rainbow of Books)](https://arckit.org/guides/codes-of-practice.md).
+
+### Operations
+
+- [DevOps strategy](https://arckit.org/guides/devops.md): `/arckit.devops` CI/CD, IaC, containers.
+- [MLOps strategy](https://arckit.org/guides/mlops.md): `/arckit.mlops` ML lifecycle.
+- [FinOps strategy](https://arckit.org/guides/finops.md): `/arckit.finops` cloud cost management.
+- [Operational readiness](https://arckit.org/guides/operationalize.md): `/arckit.operationalize` SRE runbooks.
+
+### Vendor procurement
+
+- [Statement of Work](https://arckit.org/guides/procurement.md): `/arckit.sow`.
+- [Vendor evaluation](https://arckit.org/guides/evaluate.md): `/arckit.evaluate`.
+- [Vendor scoring](https://arckit.org/guides/score.md): `/arckit.score`.
+- [Digital Marketplace (G-Cloud, DOS)](https://arckit.org/guides/uk-government/digital-marketplace.md): `/arckit.gcloud-search`, `/arckit.gcloud-clarify`, `/arckit.dos`.
+
+### Cloud research integrations
+
+- [AWS research](https://arckit.org/guides/aws-research.md): `/arckit.aws-research` via AWS Knowledge MCP.
+- [Azure research](https://arckit.org/guides/azure-research.md): `/arckit.azure-research` via Microsoft Learn MCP.
+- [GCP research](https://arckit.org/guides/gcp-research.md): `/arckit.gcp-research` via Google Developer Knowledge MCP.
+- [MCP servers](https://arckit.org/guides/mcp-servers.md): Plugin MCP server configuration.
+- [Pinecone MCP](https://arckit.org/guides/pinecone-mcp.md): Wardley Mapping book corpus search.
+- [ServiceNow](https://arckit.org/guides/servicenow.md): Service catalogue design.
+- [Trello export](https://arckit.org/guides/trello.md): `/arckit.trello` backlog export.
+
+### Reporting and publishing
+
+- [Project story](https://arckit.org/guides/story.md): `/arckit.story` narrative.
+- [Presentation](https://arckit.org/guides/presentation.md): `/arckit.presentation` MARP decks.
+- [Glossary](https://arckit.org/guides/glossary.md): `/arckit.glossary` terminology.
+- [GitHub Pages](https://arckit.org/guides/pages.md): `/arckit.pages` documentation site generator.
+
+## Roles
+
+- [Roles overview](https://arckit.org/roles.html): Which commands each DDaT role uses.
+- [DDaT role guides index](https://arckit.org/guides/roles/README.md): 18 role-specific guides aligned to the UK DDaT Capability Framework.
+
+## Use cases
+
+- [Use cases](https://arckit.org/use-cases.html): New project, vendor procurement, design review, audit traceability.
+
+## Source code and distributions
+
+- [Main repository](https://github.com/tractorjuice/arc-kit): Monorepo containing all six distributions.
+- [CLAUDE.md (project guide)](https://github.com/tractorjuice/arc-kit/blob/main/CLAUDE.md): Architecture overview and conventions for contributors.
+- [Claude Code plugin](https://github.com/tractorjuice/arc-kit/tree/main/arckit-claude): `/plugin marketplace add tractorjuice/arc-kit`.
+- [Gemini CLI extension](https://github.com/tractorjuice/arckit-gemini): `gemini extensions install tractorjuice/arckit-gemini`.
+- [Codex CLI extension](https://github.com/tractorjuice/arckit-codex): Skills, agents, MCP servers for Codex.
+- [OpenCode CLI extension](https://github.com/tractorjuice/arc-kit/tree/main/arckit-opencode): Commands for OpenCode.
+- [GitHub Copilot extension](https://github.com/tractorjuice/arc-kit/tree/main/arckit-copilot): Prompt files and custom agents for VS Code.
+- [Python CLI package](https://github.com/tractorjuice/arc-kit/tree/main/src/arckit_cli): `pip install git+https://github.com/tractorjuice/arc-kit.git`.
+- [Changelog](https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md): Release history.
+- [Contributing guide](https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md).
+
+## Optional
+
+- [Contributors](https://arckit.org/contributors.html): Credits and acknowledgements.
+- [Guide viewer](https://arckit.org/guide-viewer.html): Standalone viewer for individual guides.
+- [Knowledge compounding](https://arckit.org/guides/knowledge-compounding.md): Reusable vendor profiles.
+- [Session memory](https://arckit.org/guides/session-memory.md): Cross-session state.
+- [Remote control](https://arckit.org/guides/remote-control.md): Remote architecture governance.
+- [Hooks reference](https://arckit.org/guides/hooks.md): Claude Code hook automation.
+- [Security hooks](https://arckit.org/guides/security-hooks.md): Three-layer secret protection.
+- [Autoresearch](https://arckit.org/guides/autoresearch.md): Autonomous research loops.
+- [C4 layout science](https://arckit.org/guides/c4-layout-science.md): Research-backed diagram layouts.
+- [File migration](https://arckit.org/guides/migration.md): Migrate to new naming convention.
+- [Testing plugin branches](https://arckit.org/guides/testing-plugin-branches.md): Preview unreleased plugin builds.
+- [Sitemap](https://arckit.org/sitemap.xml): XML sitemap of the site.
