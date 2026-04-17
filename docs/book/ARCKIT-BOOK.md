@@ -166,7 +166,7 @@ ArcKit has been tested on 22 real-world projects spanning healthcare, defence, g
 
 Then enable it from the Discover tab. The plugin provides all 68 commands, 10 agents, 17 hooks, 4 skills, and 5 MCP servers. Updates are automatic.
 
-> **Minimum version**: Claude Code v2.1.97 or later is required.
+> **Minimum version**: Claude Code v2.1.112 or later is required.
 
 **Gemini CLI**:
 
@@ -2365,7 +2365,7 @@ npx markdownlint-cli2 --fix "**/*.md"
 
 ### Claude Code Platform Compatibility
 
-ArcKit actively tracks Claude Code releases for capabilities that improve the plugin. Issue #215 consolidates this tracking from v2.1.83 through v2.1.97.
+ArcKit actively tracks Claude Code releases for capabilities that improve the plugin. Issue #215 consolidates this tracking from v2.1.83 through v2.1.112.
 
 **Minimum version history:**
 
@@ -2373,6 +2373,7 @@ ArcKit actively tracks Claude Code releases for capabilities that improve the pl
 |------|---------|--------|
 | Pre-April 2026 | v2.1.90 | PreToolUse blocking fix, MCP performance |
 | 9 April 2026 | v2.1.97 | Plugin update detection, MCP memory leak, 429 backoff |
+| 17 April 2026 | v2.1.112 | Opus 4.7 `xhigh` effort, auto mode without flag, read-only bash glob patterns, carries all v2.1.98-2.1.111 fixes |
 
 **Key Claude Code fixes that affected ArcKit:**
 
@@ -2381,6 +2382,12 @@ ArcKit actively tracks Claude Code releases for capabilities that improve the pl
 - **v2.1.92**: Stop hook semantics fix (affects session-learner); plugin MCP stuck 'connecting' fix; Write tool 60% faster for large files
 - **v2.1.94**: `keep-coding-instructions` frontmatter for compaction persistence; fixed agents stuck after 429 with long Retry-After
 - **v2.1.97**: MCP SSE memory leak fix (~50 MB/hr); 429 exponential backoff fix; `claude plugin update` detects new commits
+- **v2.1.98**: Subagent MCP tool inheritance from dynamically-injected servers fixed; compound Bash permission bypass (security); `Monitor` tool added for streaming background script events
+- **v2.1.101**: Sub-agents in isolated worktrees can Read/Edit their own worktree; MCP tools on first turn of headless sessions; OS CA certificate store trusted by default; POSIX `which` fallback command injection fix
+- **v2.1.105**: `monitors` plugin manifest key; skill description cap raised 250->1,536; PreCompact hook blocking; marketplace plugin `package.json` auto-install (critical for Paperclip); WebFetch strips `<style>`/`<script>`
+- **v2.1.108**: `ENABLE_PROMPT_CACHING_1H` env var for 1-hour prompt cache; model can invoke built-in slash commands via Skill tool; policy-managed plugins auto-update from any project
+- **v2.1.110**: MCP tool calls no longer hang on SSE/HTTP connection drop (affects 5 MCP servers); stdio MCP stray non-JSON line fix (regression from v2.1.105); `/tui` fullscreen toggle; push notification tool
+- **v2.1.111**: Opus 4.7 `xhigh` effort level; `/ultrareview` cloud PR review; `/less-permission-prompts` skill; read-only bash glob patterns no longer trigger permission prompts; auto mode without `--enable-auto-mode`
 
 ArcKit is one of the most complex Claude Code plugins in existence. Its 17 hooks, 10 agents, and 5 MCP servers push the platform's capabilities, making it both a beneficiary and a stress-tester of Claude Code features.
 
@@ -2581,7 +2588,7 @@ As of v4.6.6, ArcKit has 18 open issues on GitHub. Here are the most significant
 #### In Progress
 
 - **#282: Managed agent deployment** -- Deploy ArcKit agents as Claude Managed Agents via the Anthropic API. Prototype merged in v4.6.6. Full deployment automation still in progress
-- **#215: Claude Code v2.1.83-2.1.97 capabilities** -- 14 high-value platform features to adopt, including `userConfig` (org-level settings), `initialPrompt` (auto-starting agents), `keep-coding-instructions` (compaction resilience), and `PostCompact` hooks
+- **#215: Claude Code v2.1.83-2.1.112 capabilities** -- 23 high-value platform features to adopt, including `userConfig` (org-level settings), `initialPrompt` (auto-starting agents), `keep-coding-instructions` (compaction resilience), `PostCompact` hooks, `monitors` manifest (background monitors), the 1,536-char skill description cap, and Opus 4.7 `xhigh` effort level
 - **#283: Citation traceability for MCP and web results** -- Currently citations only cover documents from `external/`. MCP search results and WebFetch URLs should also be cited with source URLs
 
 #### Security
@@ -3041,7 +3048,7 @@ A: Edit `.mcp.json` in the plugin root (for plugin-wide) or `.claude/settings.js
 ### Troubleshooting
 
 **Q: The plugin isn't loading or seems outdated.**
-A: Check your Claude Code version (minimum v2.1.97). Try `claude plugin update`. If using a branch for testing, ensure the settings use `"ref"` not `"branch"`.
+A: Check your Claude Code version (minimum v2.1.112). Try `claude plugin update`. If using a branch for testing, ensure the settings use `"ref"` not `"branch"`.
 
 **Q: Commands are generating truncated documents.**
 A: This usually means the Write tool path is wrong. Check that the project directory exists. Also check that the command is using the Write tool (not inline output).

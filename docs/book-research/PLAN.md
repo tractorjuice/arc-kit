@@ -232,7 +232,7 @@ Research has already been compiled from git history, memory files, changelogs, a
 | `06-hints-tips-and-lessons.md` | 5 design principles; 6 notable bugs with lessons (Orange Book 4Ts, Green Book terminology, effort trap, branch vs ref, hook async timing, slugify encoding); tips for command authors; tips for plugin users; security considerations; autoresearch workflow | Ch 5, Ch 6, Ch 11, Ch 12 |
 | `07-community-and-contributors.md` | All contributors profiled: tractorjuice (950 commits), @umag (Gemini), @DavidROliverBA (security/health), @alefbt (OpenCode), @johnfelipe (40+ issues); community impact | Ch 1, Ch 13 |
 | `08-security-architecture.md` | Full threat model (5 vectors ranked); current 3-layer defenses; identified gaps; 8 prioritized protections with effort estimates | Ch 7, Ch 8 |
-| `09-claude-code-platform-evolution.md` | Issue #215 tracking; 14 high-value capabilities; version-by-version fixes (v2.1.89-v2.1.97); minimum version history; ArcKit as platform stress-tester | Ch 6, Ch 7, Ch 12 |
+| `09-claude-code-platform-evolution.md` | Issue #215 tracking; 23 high-value capabilities; version-by-version fixes (v2.1.89-v2.1.112); minimum version history; ArcKit as platform stress-tester | Ch 6, Ch 7, Ch 12 |
 | `10-existing-articles-index.md` | 11 published articles (Medium/LinkedIn) with descriptions; hero images inventory; article adaptation notes | Ch 1, Ch 13 |
 | `11-statistics-and-numbers.md` | Every metric: 68 commands, 10 agents, 17 hooks, 5 MCP, 7 formats, 129 releases, 971 commits; growth trajectory table; autoresearch results; Wardley test suite results; MCP coverage; UK Gov coverage | All chapters, Appendices |
 

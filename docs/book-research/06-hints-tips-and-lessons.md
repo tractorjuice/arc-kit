@@ -118,7 +118,7 @@ Don't default to max -- it wastes tokens on simple commands and can sometimes re
 
 ArcKit checks for updates on session start. If you see an update notification, restart Claude Code to pick up the new plugin version.
 
-**Minimum Claude Code version**: v2.1.97 (as of April 2026)
+**Minimum Claude Code version**: v2.1.112 (as of April 2026)
 
 ### Project Structure
 
