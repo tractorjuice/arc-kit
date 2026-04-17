@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "@antv/infographic": "^0.2.16"
+  },
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.12.0"
   }
 }
