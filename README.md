@@ -35,7 +35,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 ### Installation
 
-**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.97+**):
+**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.112+**):
 
 ```text
 /plugin marketplace add tractorjuice/arc-kit
@@ -43,7 +43,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 68 commands, 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.97?** This version fixes `claude plugin update` silently missing updates for git-based plugins (critical for ArcKit distribution), fixes a MCP HTTP/SSE memory leak (~50 MB/hr on reconnects, affects ArcKit's 5 bundled servers), adds proper exponential backoff for 429 retries (benefits research agents), fixes Stop/SubagentStop hooks failing on long sessions (affects session-learner), fixes subagent working directory leaks, and includes all prior v2.1.90–v2.1.94 fixes for hooks, MCP performance, and agent stability.
+> **Why v2.1.112?** This version unlocks the `xhigh` effort tier on Claude Opus 4.7 (used by ArcKit's deep-research agents and synthesis commands), enables Auto mode without `--enable-auto-mode`, restores Opus 4.7 availability for Auto mode, and ships read-only bash glob patterns without permission prompts (reduces friction for ArcKit helper scripts). It also carries forward the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
 
 **Gemini CLI** — install the ArcKit extension:
 
@@ -1214,7 +1214,7 @@ Key references live in `docs/` and top-level guides:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.97+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.112+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---
@@ -1273,7 +1273,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guid
 
 ## Tips
 
-### Continuous Governance Monitoring (Claude Code v2.1.97+)
+### Continuous Governance Monitoring
 
 Use the `/loop` command to run health checks on a recurring interval during long architecture sessions:
 

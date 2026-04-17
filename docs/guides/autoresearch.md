@@ -202,6 +202,7 @@ The experiment runs in a **git worktree** (`../autoresearch-<command>`), keeping
 ## Tips
 
 - **Run overnight** -- each iteration takes 2-3 minutes, so you get 20-30 experiments per hour
+- **Extend the prompt cache TTL for overnight runs** -- set `ENABLE_PROMPT_CACHING_1H=1` (Claude Code v2.1.108+) before launching Claude. The default 5-minute prompt cache expires between iterations once Claude pauses to think, score, and write `results.tsv`; the 1-hour TTL keeps the template, fixtures, and accumulated `results.tsv` warm across the full overnight run, materially reducing token cost. Pair with `ANTHROPIC_API_KEY` billing dashboards to confirm cache-read rates climb.
 - **Review the results.tsv** -- the discard history tells you what didn't work, which is as valuable as what did
 - **Check against standards** -- before starting a run, review relevant external standards (e.g., UK Gov ADR Framework for ADRs, GDS Service Standard for assessments) to prime the system with specific gaps to target
 - **Create a PR for the prompt change only** -- the experiment branch has noise (scratch files, results, reverts); cherry-pick the kept commits onto a clean branch
