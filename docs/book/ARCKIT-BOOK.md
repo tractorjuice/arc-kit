@@ -371,47 +371,7 @@ ArcKit provides five pre-defined workflow paths tailored to different project ty
 
 For private sector and non-UK government projects without AI components. Follows the full DSM from plan through story.
 
-```mermaid
-graph TD
-    A[plan] --> B[principles]
-    B --> C[stakeholders]
-    C --> D[risk]
-    D --> E[sobc]
-    E --> F[requirements]
-    F --> G[data-model]
-    F --> K[research]
-    K --> L[wardley]
-    L --> M[roadmap]
-    M --> O[sow]
-    O --> P[evaluate]
-    P --> Q[hld-review]
-    Q --> R[dld-review]
-    R --> T[backlog]
-    T --> U[servicenow]
-    U --> V[traceability]
-    V --> W[analyze]
-    W --> X[story]
-
-    style A fill:#87CEEB
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#90EE90
-    style G fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#FFA500
-    style R fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#9370DB
-    style V fill:#9370DB
-    style W fill:#9370DB
-    style X fill:#FFD700
-```
+![Standard project path workflow](images/workflow-standard-path.svg)
 
 **Key Milestones**: SOBC Approval -> Requirements Sign-off -> DPIA Complete -> ADR Approved -> Sprint 1 -> Go Live
 
@@ -419,54 +379,7 @@ graph TD
 
 Adds UK-specific procurement (G-Cloud search, Digital Marketplace) and compliance gates (TCoP, Secure by Design, Service Assessment).
 
-```mermaid
-graph TD
-    A[plan] --> B[principles]
-    B --> C[stakeholders]
-    C --> D[risk]
-    D --> E[sobc]
-    E --> F[requirements]
-    F --> K[research]
-    K --> L[wardley]
-    L --> M[roadmap]
-    B -.-> N[gcloud-search]
-    M --> N
-    N --> O[gcloud-clarify]
-    O --> P[evaluate]
-    P --> R[hld-review]
-    R --> S[dld-review]
-    S --> U[backlog]
-    U --> W[servicenow]
-    W --> X[traceability]
-    X --> X1[tcop]
-    X1 --> X2[secure]
-    X2 --> Y[analyze]
-    Y --> Z[service-assessment]
-    Z --> AA[story]
-
-    style A fill:#87CEEB
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style U fill:#FFA500
-    style W fill:#9370DB
-    style X fill:#9370DB
-    style X1 fill:#FF6B6B
-    style X2 fill:#FF6B6B
-    style Y fill:#9370DB
-    style Z fill:#FF6B6B
-    style AA fill:#FFD700
-```
+![UK Government project path workflow](images/workflow-uk-gov-path.svg)
 
 **Key Milestones**: SOBC Approval -> Requirements Sign-off -> G-Cloud Clarifications -> Service Assessment -> Go Live
 
@@ -498,53 +411,11 @@ The most comprehensive path. Adds JSP 936 AI safety assurance on top of the MOD 
 
 ### Workflow Decision Tree
 
-```mermaid
-graph TD
-    START[Start New Project] --> Q1{UK Government?}
-    Q1 -->|No| W1[Standard Project Path]
-    Q1 -->|Yes| Q3{MOD/Defence?}
-    Q3 -->|No| Q4{AI/ML Components?}
-    Q3 -->|Yes| Q5{AI/ML Components?}
-    Q4 -->|No| W3[UK Gov Path]
-    Q4 -->|Yes| W4[UK Gov AI Path]
-    Q5 -->|No| W5[MOD Defence Path]
-    Q5 -->|Yes| W6[MOD Defence AI Path]
-```
+![Workflow decision tree](images/workflow-decision-tree.svg)
 
 ### Typical Project Timeline (Gantt)
 
-```mermaid
-gantt
-    title UK Government AI Project (Typical 12-month)
-    dateFormat YYYY-MM-DD
-    section Discovery
-    plan                    :a1, 2026-01-01, 1w
-    principles              :a2, after a1, 1w
-    stakeholders            :a3, after a2, 2w
-    risk                    :a4, after a3, 2w
-    sobc                    :a5, after a4, 2w
-    section Alpha
-    requirements            :b1, after a5, 3w
-    data-model              :b2, after b1, 2w
-    research                :b3, after b2, 2w
-    wardley                 :b4, after b3, 2w
-    gcloud-search           :b5, after b4, 2w
-    evaluate                :b6, after b5, 2w
-    section Beta
-    hld-review              :c1, after b6, 2w
-    dld-review              :c2, after c1, 2w
-    backlog                 :c3, after c2, 1w
-    Sprint 1-8              :c4, after c3, 16w
-    section Live Prep
-    servicenow              :d1, after c4, 1w
-    devops                  :d1a, after d1, 1w
-    traceability            :d2, after d1a, 1w
-    analyze                 :d3, after d2, 1w
-    service-assessment      :d4, after d3, 2w
-    secure                  :d8, after d4, 1w
-    section Live
-    Go Live                 :milestone, after d8, 0d
-```
+![Typical 12-month UK Government AI project Gantt chart](images/workflow-gantt.svg)
 
 ### Additional Workflow Paths
 
@@ -556,21 +427,7 @@ gantt
 
 ArcKit includes a dedicated Wardley Mapping pipeline with four specialized commands:
 
-```mermaid
-graph TD
-    A[requirements] --> B[wardley.value-chain]
-    C[principles] -.-> B
-    D[stakeholders] -.-> B
-    B --> E[wardley]
-    E --> F[wardley.doctrine]
-    E --> G[wardley.climate]
-    E --> H[wardley.gameplay]
-    G -.-> H
-    F -.-> H
-    E --> I[roadmap]
-    E --> J[strategy]
-    H -.-> J
-```
+![Wardley mapping suite pipeline](images/wardley-suite.svg)
 
 1. **wardley.value-chain**: Decomposes user needs into value chains with component identification
 2. **wardley**: Creates the Wardley Map with dual output (OWM syntax for create.wardleymaps.ai + Mermaid wardley-beta diagram blocks)
@@ -615,14 +472,7 @@ component NHS Spine [0.60, 0.35]
 
 2. **Mermaid wardley-beta** for rendering in documentation and GitHub:
 
-```mermaid
-wardley-beta
-    title NHS Appointment Booking
-    component Patient [0.95, 0.55]
-    component Booking UI [0.90, 0.65]
-    component Appointment API [0.75, 0.50]
-    evolve Appointment API 0.70
-```
+![Example Wardley map: NHS appointment booking](images/wardley-example-nhs.svg)
 
 The Mermaid wardley-beta test suite validated ArcKit's syntax against 147 real-world maps from Simon Wardley's Map Repository. Results: 18/18 synthetic fixtures pass (100%), 144/147 real-world maps pass (98%). The 3 failures are source data errors in original maps. ArcKit's Wardley syntax is 100% valid.
 
@@ -1311,46 +1161,7 @@ The hook system's most dramatic impact was removing duplicated code from command
 
 ### Hook Architecture Diagram
 
-```mermaid
-graph TD
-    subgraph "Session Lifecycle"
-        SS[SessionStart] --> |arckit-session.mjs| CTX1[Inject version + project root]
-        SS --> |version-check.mjs| VER[Check for plugin updates]
-    end
-
-    subgraph "Every User Message"
-        UPS[UserPromptSubmit] --> |arckit-context.mjs| CTX2[Inject full project inventory]
-        UPS --> |secret-detection.mjs| SEC1[Scan for secrets in input]
-    end
-
-    subgraph "Command-Specific Preprocessing"
-        UPS --> |/arckit:pages| SYNC[sync-guides.mjs]
-        UPS --> |/arckit:health| HLTH[health-scan.mjs]
-        UPS --> |/arckit:traceability| TRAC[traceability-scan.mjs]
-        UPS --> |/arckit:analyze| GOV[governance-scan.mjs]
-        UPS --> |/arckit:search| SRCH[search-scan.mjs]
-        UPS --> |/arckit:impact| IMP[impact-scan.mjs]
-    end
-
-    subgraph "Before Write/Edit"
-        PTU[PreToolUse] --> |Write| VAL[validate-arc-filename.mjs]
-        PTU --> |Write| SCORE[score-validator.mjs]
-        PTU --> |Edit or Write| FP[file-protection.mjs]
-        PTU --> |Edit or Write| SFS[secret-file-scanner.mjs]
-    end
-
-    subgraph "After Write"
-        POTU[PostToolUse] --> |Write| MAN[update-manifest.mjs]
-    end
-
-    subgraph "Session End"
-        STOP[Stop / StopFailure] --> |session-learner.mjs| LEARN[Capture session insights]
-    end
-
-    subgraph "Permissions"
-        PERM[PermissionRequest] --> |mcp__*| ALLOW[allow-mcp-tools.mjs]
-    end
-```
+![ArcKit hook architecture](images/hook-architecture.svg)
 
 ### The Boilerplate Reduction Story
 
@@ -1629,23 +1440,7 @@ This means the research command on Claude Code is a clean delegation wrapper, wh
 
 ### The Conversion Pipeline Diagram
 
-```mermaid
-graph TD
-    SRC[arckit-claude/commands/*.md] --> CONV[converter.py]
-    AGT[arckit-claude/agents/*.md] --> CONV
-    
-    CONV --> CC[Claude Code Plugin<br/>Markdown + YAML]
-    CONV --> GEM[Gemini Extension<br/>TOML]
-    CONV --> CDX[Codex Extension<br/>SKILL.md + YAML]
-    CONV --> OC[OpenCode Extension<br/>Markdown]
-    CONV --> COP[Copilot Extension<br/>.prompt.md + .agent.md]
-    CONV --> PC[Paperclip Plugin<br/>commands.json]
-    
-    CC --> HOOKS[hooks.json]
-    CC --> MCP[.mcp.json]
-    GEM --> GHUB1[tractorjuice/arckit-gemini]
-    CDX --> GHUB2[tractorjuice/arckit-codex]
-```
+![Multi-AI distribution conversion pipeline](images/conversion-pipeline.svg)
 
 ### Extension Repositories
 
@@ -1762,16 +1557,7 @@ This conflict resolution section is mandatory when conflicts exist. The requirem
 
 ArcKit's document system enforces a traceability chain through cross-references:
 
-```mermaid
-graph LR
-    A[Stakeholders] --> B[Goals]
-    B --> C[Requirements]
-    C --> D[Data Model]
-    D --> E[Components]
-    E --> F[User Stories]
-    C --> G[Risk Register]
-    C --> H[Wardley Map]
-```
+![Traceability chain: stakeholders to user stories](images/traceability-chain.svg)
 
 Each document references its predecessors. Requirements cite stakeholder goals with explicit tracing:
 
