@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `docs/llms.txt` — LLM-friendly site index for arckit.org following the [llmstxt.org](https://llmstxt.org/) standard. Indexes the homepage, getting started, command/guide catalogue, DDaT role guides, use cases, and source distributions. Added to `sitemap.xml`.
+- `/arckit.pages` now generates `docs/llms.txt` in downstream ArcKit project repositories alongside `index.html` and `manifest.json`. Uses `raw.githubusercontent.com` URLs for project markdown artifacts and relative paths for the site-local dashboard and guides. Hand-curated `docs/llms.txt` files (without the ArcKit generation marker) are preserved across re-runs.
 - Document `ENABLE_PROMPT_CACHING_1H=1` (Claude Code v2.1.108+) recommendation in MCP setup and autoresearch guides for long ArcKit workflows and overnight optimisation runs (#215)
 
 ### Changed

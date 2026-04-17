@@ -2043,6 +2043,7 @@ payment-modernization/
 - **Guide library** -- all 90+ usage guides rendered as a searchable catalogue
 - **Getting started walkthrough** -- interactive onboarding for new team members
 - **Manifest-driven** -- `docs/manifest.json` (auto-updated by the `update-manifest.mjs` hook) drives the document listing
+- **LLM/agent index** -- `docs/llms.txt` (llmstxt.org format) is generated alongside the dashboard, linking every artifact, guide, and project for LLM discovery. Hand-curated versions without the ArcKit generation marker are preserved on re-runs
 
 The pages dashboard is hosted on GitHub Pages via `docs/index.html`. The `sync-guides.mjs` hook automatically copies guide files before generation.
 
@@ -2070,6 +2071,7 @@ The pages command (`/arckit.pages`) is a unique command in ArcKit because almost
 4. Reads the plugin VERSION file
 5. Processes `pages-template.html` with all gathered data and writes `docs/index.html`
 6. Scans ALL projects, artifacts, vendors, external files and writes `docs/manifest.json`
+7. Generates `docs/llms.txt` (llmstxt.org format) from the manifest for LLM/agent discovery, skipping hand-curated files that lack the ArcKit generation marker
 
 **What the command does** (Step 5 only):
 

@@ -18,6 +18,8 @@ The Pages Generator creates a `docs/index.html` file that:
 - **Follows** GOV.UK Design System styling
 - **Works** with any static hosting provider (GitHub Pages, Netlify, Vercel, S3, etc.)
 
+It also writes a `docs/llms.txt` index (per the [llmstxt.org](https://llmstxt.org/) standard) so LLM agents and crawlers can efficiently discover and fetch every artifact in the repository. The file is regenerated on each run, except when it exists without the ArcKit generation marker — hand-curated `docs/llms.txt` files are preserved.
+
 ## Your Task
 
 **User Request**: $ARGUMENTS
@@ -34,8 +36,9 @@ Generate a documentation site for this ArcKit repository.
 4. Reads plugin VERSION
 5. Processes `pages-template.html` → writes `docs/index.html`
 6. Scans all projects, artifacts, vendors, external files → writes `docs/manifest.json`
+7. Generates `docs/llms.txt` (llmstxt.org format) for LLM/agent discovery, unless a hand-curated version exists without the ArcKit generation marker
 
-**CRITICAL: The hook's hook context contains ALL document stats you need. Use ONLY those stats for the Step 5 summary. Do NOT call any tools — no Read, Write, Glob, Grep, or Bash. Do NOT read manifest.json or any other file. The hook has already written docs/index.html and docs/manifest.json with correct data. Go directly to Step 5 and output the summary using the stats from the hook context.**
+**CRITICAL: The hook's hook context contains ALL document stats you need. Use ONLY those stats for the Step 5 summary. Do NOT call any tools — no Read, Write, Glob, Grep, or Bash. Do NOT read manifest.json or any other file. The hook has already written docs/index.html, docs/manifest.json, and docs/llms.txt with correct data. Go directly to Step 5 and output the summary using the stats from the hook context.**
 
 The following reference sections document the manifest structure and data tables used by the hook. They are preserved here for maintenance reference only — the command does not need to process them.
 
@@ -426,6 +429,7 @@ Documentation Site Generated
 Files Created:
 - docs/index.html (main page)
 - docs/manifest.json (document index)
+- docs/llms.txt (LLM/agent index, llmstxt.org format — skipped if hand-curated)
 
 Repository: {repo}
 Projects Found: {count}

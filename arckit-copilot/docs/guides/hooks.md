@@ -54,7 +54,7 @@ These fire only when the matched command is invoked:
 
 | Hook | Fires on | Purpose |
 |------|----------|---------|
-| **sync-guides** | `/arckit:pages` | Syncs guide files and regenerates `docs/index.html` from the pages template |
+| **sync-guides** | `/arckit:pages` | Syncs guide files, regenerates `docs/index.html` from the pages template, builds `docs/manifest.json`, and writes `docs/llms.txt` (llmstxt.org format) for LLM/agent discovery |
 | **health-scan** | `/arckit:health` | Pre-scans all artifacts for staleness, broken traceability, unresolved conditions, and version drift |
 | **traceability-scan** | `/arckit:traceability` | Pre-extracts requirement IDs from REQ files, cross-references ADRs and vendor documents, computes coverage |
 | **governance-scan** | `/arckit:analyze` | Pre-scans governance posture across projects — compliance gaps, missing artifacts, risk exposure |

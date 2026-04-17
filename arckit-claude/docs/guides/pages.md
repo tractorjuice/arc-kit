@@ -26,6 +26,7 @@ Output:
 
 - `docs/index.html` - Main documentation site
 - `docs/manifest.json` - Document index
+- `docs/llms.txt` - LLM/agent-friendly markdown index ([llmstxt.org](https://llmstxt.org/) format) linking to every artifact, guide, and project. Hand-curated `docs/llms.txt` files (without the ArcKit generation marker) are preserved.
 
 ---
 

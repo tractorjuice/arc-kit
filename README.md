@@ -784,6 +784,7 @@ Publish all project documentation as an interactive website:
 - **Project Navigation**: Sidebar with collapsible project tree, document categories, and version badges — documents with multiple versions show an inline dropdown selector
 - **GOV.UK Styling**: Professional government design system styling
 - **Document Index**: Manifest.json provides programmatic access to all artifacts
+- **LLM Discovery**: Generates `docs/llms.txt` ([llmstxt.org](https://llmstxt.org/) format) so LLM agents and crawlers can index every artifact, guide, and project. Hand-curated `docs/llms.txt` files (without the ArcKit generation marker) are preserved on re-runs
 
 **When to use**: When you want to share project documentation with stakeholders via a professional web interface, or to create a portfolio view of all architecture artifacts.
 
