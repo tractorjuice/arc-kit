@@ -11,6 +11,7 @@ The creator and primary maintainer. Built the CLI, plugin, converter, hooks syst
 ### @umag / Magistr (5 contributions, 2 merged PRs)
 
 One of ArcKit's earliest contributors. Key contributions:
+
 - **PR #3**: Fixed package distribution -- solved how markdown files were bundled into the wheel
 - **PR #5**: Built Gemini CLI support from scratch -- made ArcKit multi-platform
 - Filed the first real bug report (#2) about command installation
@@ -20,6 +21,7 @@ Magistr's Gemini contribution was transformative -- it established the multi-pla
 ### @DavidROliverBA / David R Oliver (11 commits, 4 merged PRs)
 
 A BA Engineering professional and ArcKit's most prolific feature contributor:
+
 - **PR #56**: Security hooks for secret detection and file protection -- foundation of the three-layer security model
 - **PR #57**: Enhanced diagram command with C4 layout science and validation checklist
 - **PR #59**: Vendor profile and tech note generation from research output
@@ -31,6 +33,7 @@ David's contributions consistently pushed ArcKit toward being a more rigorous, p
 ### @alefbt / Yehuda Korotkin (4 contributions, 1 merged PR)
 
 Brought ArcKit to its fourth platform:
+
 - **PR #45**: Full OpenCode CLI support -- commands, guides, templates, and skills
 - Earlier draft (PR #36) that evolved into the final implementation
 
@@ -41,6 +44,7 @@ Adding an entirely new platform integration expanded ArcKit's reach to yet anoth
 ### @johnfelipe / Felipe (40+ issues filed)
 
 ArcKit's most active community member by a wide margin. Since issue #1 ("Feature request: web UI/UX"), highlights include:
+
 - **Architecture conformance checking** (#55) -- influenced `/arckit.principles-compliance`
 - **PlantUML diagram support** (#78) -- led to PlantUML syntax skill
 - **Interactive diagrams on web pages** (#66) -- shaped `/arckit.pages`

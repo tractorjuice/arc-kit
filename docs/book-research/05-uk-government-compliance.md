@@ -45,6 +45,7 @@ ArcKit has deep UK public sector compliance coverage, making it uniquely suited 
 ## Document Classification
 
 Templates support UK Government classification levels:
+
 - PUBLIC
 - OFFICIAL
 - OFFICIAL-SENSITIVE

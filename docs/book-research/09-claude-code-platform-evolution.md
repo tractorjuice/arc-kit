@@ -26,6 +26,7 @@ ArcKit actively tracks Claude Code releases for capabilities that improve the pl
 ## Platform Fixes That Affected ArcKit
 
 ### v2.1.89
+
 - Hook `if` compound-command bug fix
 - `file_path` now absolute in PreToolUse/PostToolUse hooks
 - Hook output >50K saved to disk instead of context
@@ -33,6 +34,7 @@ ArcKit actively tracks Claude Code releases for capabilities that improve the pl
 - Autocompact thrash loop fix
 
 ### v2.1.90
+
 - PostToolUse format-on-save hook no longer causes "File content has changed" failures
 - PreToolUse JSON exit-code-2 blocking fix (affects ArcKit's blocking hooks)
 - MCP tool schema JSON.stringify eliminated (performance win for 5 MCP servers)
@@ -40,22 +42,26 @@ ArcKit actively tracks Claude Code releases for capabilities that improve the pl
 - `CLAUDE_CODE_PLUGIN_KEEP_MARKETPLACE_ON_FAILURE` for offline environments
 
 ### v2.1.91
+
 - Plugin `bin/` executables -- ArcKit's 6 bash scripts could ship under `bin/`
 - `disableSkillShellExecution` setting -- could break ArcKit commands that invoke bash scripts
 
 ### v2.1.92
+
 - Stop hook semantics fix -- restores `preventContinuation:true` behavior (relevant to session-learner.mjs)
 - Plugin MCP servers stuck 'connecting' fix (affects ArcKit's 5 MCP servers)
 - Subagent spawning fix in tmux (affects ArcKit's 10 agents)
 - Write tool 60% faster for large files with tabs/`&`/`$` (common in architecture documents)
 
 ### v2.1.94
+
 - `keep-coding-instructions` frontmatter -- persist instructions across compaction
 - Default effort changed medium->high for API-key users
 - Fixed `${CLAUDE_PLUGIN_ROOT}` resolving for local-marketplace plugins
 - Fixed agents stuck after 429 with long Retry-After (affects 10 ArcKit agents)
 
 ### v2.1.97 (Current Minimum)
+
 - MCP SSE memory leak ~50 MB/hr on reconnects fixed (benefits 5 MCP servers)
 - 429 exponential backoff fix (was burning all retries in ~13s, benefits research agents)
 - Stop/SubagentStop hooks no longer fail on long sessions (benefits session-learner.mjs)
@@ -74,6 +80,7 @@ ArcKit actively tracks Claude Code releases for capabilities that improve the pl
 ## The Relationship Between ArcKit and Claude Code
 
 ArcKit is one of the most complex Claude Code plugins in existence, pushing the platform's capabilities in areas like:
+
 - Hook system (17 registered handlers across 7 event types)
 - Agent system (10 autonomous agents with isolated contexts)
 - MCP integration (5 external servers)

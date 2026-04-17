@@ -19,7 +19,8 @@ Commands MUST use the Write tool to save documents to files. This was learned th
 If a command makes >10 WebSearch/WebFetch calls, it should delegate to an agent. The agent runs in its own context window, preventing research results from consuming the main conversation's context.
 
 **The thin wrapper pattern**:
-```
+
+```text
 Slash command (5-10 lines) -> Task tool -> Agent (full prompt) -> Write document -> Return summary
 ```
 
@@ -74,6 +75,7 @@ The `slugify()` function in bash scripts used `[a-z0-9]` to filter characters. T
 ### Prerequisites Check
 
 Every command should check prerequisites before generating:
+
 1. Run `check-prerequisites.sh` to validate environment
 2. Check for required input documents (e.g., requirements before data model)
 3. Read the project structure via `list-projects.sh`
@@ -81,6 +83,7 @@ Every command should check prerequisites before generating:
 ### Template Customization
 
 Users can override any template by placing a modified copy in `.arckit/templates-custom/`. The `/arckit.customize` command makes this easy. Common customizations:
+
 - Remove UK Government sections for non-UK projects
 - Add organization-specific Document Control fields
 - Change requirement ID prefixes
@@ -93,6 +96,7 @@ Some document types allow multiple instances per project: ADR, DIAG, WARD (Wardl
 ### Citation Traceability
 
 If your command reads external documents, add citation traceability:
+
 1. Reference the shared citation instructions file
 2. Add inline markers: `[DOC_ID-CN]`
 3. Populate the External References section (Document Register, Citations, Unreferenced Documents)
@@ -100,6 +104,7 @@ If your command reads external documents, add citation traceability:
 ### Effort Tuning
 
 Set `effort:` in frontmatter based on command complexity:
+
 - **max**: Deep analysis that benefits from extended reasoning (requirements, research, SOBC)
 - **high**: Analytical commands (analyze, diagrams, impact)
 - **medium**: Standard generation (most commands)
@@ -118,6 +123,7 @@ ArcKit checks for updates on session start. If you see an update notification, r
 ### Project Structure
 
 Always let ArcKit manage project structure:
+
 1. Use `create-project.sh` to create numbered project directories
 2. Use `generate-document-id.sh` for document IDs
 3. Put cross-project artifacts in `projects/000-global/`
@@ -125,6 +131,7 @@ Always let ArcKit manage project structure:
 ### The Pages Dashboard
 
 `/arckit.pages` generates an interactive HTML dashboard with:
+
 - Document listing with version badges
 - Interactive dependency map visualization
 - Health indicators for stale artifacts

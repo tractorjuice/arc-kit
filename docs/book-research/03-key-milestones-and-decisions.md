@@ -73,6 +73,7 @@ Four specialized commands built from three Wardley Mapping books:
 **Test suite** (v4.6.2): 98% pass rate on 147 real-world maps from swardley/WARDLEY-MAP-REPOSITORY. 18/18 synthetic fixtures pass. The 3 failures are source data errors, not ArcKit issues. ArcKit's Wardley syntax is 100% valid.
 
 **Notable findings from testing**:
+
 - `#` comments not supported in wardley-beta grammar
 - Component names with special chars or keyword prefixes require quoting
 - OWM pipeline `[min, max]` ranges converted via visibility/evolution matching
@@ -82,12 +83,14 @@ Four specialized commands built from three Wardley Mapping books:
 An automated prompt optimization system (`scripts/autoresearch/program.md`):
 
 **How it works**:
+
 1. Uses git worktree isolation to test prompt variations without affecting main
 2. Scores on 5 dimensions: Completeness, Specificity, Traceability, Actionability, Clarity (mean 1-10)
 3. Keep threshold: >= 0.3 improvement. Plateau: 15 consecutive discards
 4. Tuneable parameters: prompt text, `effort:` frontmatter, `model:` frontmatter
 
 **Key findings**:
+
 - Verifying commands against actual UK Gov framework content (WebFetch gov.uk) yields ~20% improvement
 - `effort: high` can sometimes HURT quality (observed on glossary command -- reduced contextual specificity)
 - **risk command**: Orange Book had wrong 4Ts framework -- replaced with 6 treatment options. Added Three Lines Model, cascade analysis

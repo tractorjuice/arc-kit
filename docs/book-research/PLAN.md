@@ -12,15 +12,17 @@ A single Markdown file: `docs/book/ARCKIT-BOOK.md` (with a `docs/book/` director
 
 ## Book Structure (13 Chapters)
 
-```
+```text
 docs/book/ARCKIT-BOOK.md
 ```
 
 ### Front Matter
+
 - Title, version (4.6.6), date, author attribution
 - Table of contents with chapter links
 
 ### Chapter 1: What is ArcKit? (Introduction)
+
 - The problem: architecture governance is broken (scattered docs, inconsistent enforcement, lost traceability)
 - The solution: structured, AI-assisted governance with template-driven generation
 - The 68-command toolkit at a glance
@@ -28,6 +30,7 @@ docs/book/ARCKIT-BOOK.md
 - UK Government context (GDS, TCoP, NCSC, Orange/Green Book)
 
 ### Chapter 2: Getting Started
+
 - Installation paths (Claude Code plugin, Gemini extension, Copilot, Codex CLI, OpenCode CLI)
 - `arckit init` and project scaffolding
 - `/arckit.start` onboarding flow
@@ -35,6 +38,7 @@ docs/book/ARCKIT-BOOK.md
 - First workflow: principles -> stakeholders -> requirements
 
 ### Chapter 3: The ArcKit Workflow (The 16-Phase Lifecycle)
+
 - Phase-by-phase walkthrough (Plan -> Principles -> Stakeholders -> Risk -> SOBC -> Requirements -> Data Model -> DPIA -> DataScout -> Research -> Grants -> Wardley -> Roadmap -> Strategy -> ADR -> Procurement -> Design Review -> Backlog -> Trello -> ServiceNow -> DevOps/MLOps/FinOps -> Operationalize -> Traceability -> Analyze -> Compliance -> Story -> Presentation -> Pages)
 - Dependency Structure Matrix explained with diagram
 - Five workflow paths (Standard, AI/ML, UK Government, Procurement-focused, Quick Start)
@@ -64,6 +68,7 @@ graph LR
 ```
 
 ### Chapter 4: Commands Deep Dive (All 68 Commands)
+
 - Organized by tier/category (Foundation, Strategic Context, Requirements & Data, Research & Discovery, Wardley Mapping, Procurement, Design Review, Sprint Planning, Operations, Compliance, Reporting)
 - For each command: purpose, inputs (mandatory/recommended/optional predecessors), outputs (doc type code, template used), effort level, handoffs, agent delegation (if any)
 - Command anatomy: YAML frontmatter fields (`description`, `argument-hint`, `effort`, `handoffs`, `tags`)
@@ -71,6 +76,7 @@ graph LR
 - The "conversational gathering" pattern (max 2 rounds of AskUserQuestion)
 
 ### Chapter 5: The Prompt Engineering Anatomy
+
 - How a command prompt is structured (frontmatter -> user input -> instructions -> steps)
 - The instruction patterns that recur across all 68 commands:
   - Project context hook awareness ("The ArcKit Project Context hook has already detected...")
@@ -85,6 +91,7 @@ graph LR
 - Handoffs schema and workflow navigation
 
 ### Chapter 6: The Agent System
+
 - Why agents exist (context isolation for research-heavy commands)
 - All 10 agents: research, datascout, aws-research, azure-research, gcp-research, framework, gov-reuse, gov-code-search, gov-landscape, grants
 - Agent file structure (frontmatter: `name`, `description`, `model`, `effort`, `maxTurns`, `disallowedTools`)
@@ -94,6 +101,7 @@ graph LR
 - Agent line counts: research (373), datascout (473), gov-landscape (323), etc.
 
 ### Chapter 7: The Hook System (21 Hooks)
+
 - Hook lifecycle events: SessionStart, Stop, StopFailure, UserPromptSubmit, PreToolUse, PostToolUse, PermissionRequest
 - All hooks listed with purpose:
   - `arckit-session.mjs` -- version injection, project detection
@@ -118,11 +126,13 @@ graph LR
 - Security hooks: secret detection, file protection, secret file scanning
 
 ### Chapter 8: Skills, MCP Servers & References
+
 - 4 Skills: architecture-workflow, mermaid-syntax (30 reference files, 23 diagram types), plantuml-syntax (10 reference files), wardley-mapping (5 reference files + Pinecone MCP)
 - 5 MCP Servers: AWS Knowledge, Microsoft Learn, Google Developer Knowledge, Data Commons, govreposcrape (24,500+ UK gov repos)
 - 2 Shared references: `citation-instructions.md`, `quality-checklist.md` (10 common + 47 per-type checks)
 
 ### Chapter 9: Multi-AI Distribution Architecture
+
 - The source-of-truth model: `arckit-claude/commands/*.md` is canonical
 - `scripts/converter.py`: config-driven conversion via `AGENT_CONFIG` dictionary
 - Six output formats and their differences:
@@ -136,6 +146,7 @@ graph LR
 - Extension repos: `tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, pushed via `scripts/push-extensions.sh`
 
 ### Chapter 10: The Template & Document System
+
 - 63 templates in `arckit-claude/templates/`
 - Document Control standard (14 fields)
 - Revision History format
@@ -147,6 +158,7 @@ graph LR
 - Requirement ID prefixes (BR-xxx, FR-xxx, NFR-xxx, INT-xxx, DR-xxx)
 
 ### Chapter 11: The Autoresearch System (Self-Improving Prompts)
+
 - Inspired by karpathy/autoresearch
 - The experiment loop: read -> identify -> edit -> commit -> clean -> execute -> score -> compare -> keep/discard -> log
 - Two-layer evaluation: structural gate (8 checks, pass/fail) + LLM-as-judge (5 dimensions, 1-10)
@@ -157,6 +169,7 @@ graph LR
 - Status line output for live monitoring
 
 ### Chapter 12: Development & Operations
+
 - Version management: 13 version files, `scripts/bump-version.sh`
 - Release automation: `scripts/generate-release-notes.sh`, GitHub Actions on `v*` tag push
 - Development workflow: feature branch -> PR -> merge -> bump -> tag -> push
@@ -167,6 +180,7 @@ graph LR
 - Pages dashboard: `docs/index.html` with GOV.UK styling, dark mode, Mermaid/PlantUML rendering, interactive zoom/pan, dependency map visualization
 
 ### Chapter 13: Highlights from the Commit History
+
 Cherry-picked milestones from the 50-commit history:
 
 | Commit | Highlight | Why It Matters |
@@ -192,6 +206,7 @@ Cherry-picked milestones from the 50-commit history:
 | v4.6.6 (2026-04-09) | Managed agent deployment | Deploy agents via Anthropic API |
 
 ### Appendices
+
 - A: Complete Command Reference Table (68 commands with doc type code, effort, agent delegation, tier)
 - B: Document Type Code Registry (all 49+ codes with categories)
 - C: Hook Reference (all 21 hooks with event, matcher, purpose)
