@@ -32,13 +32,13 @@ claude --plugin-dir /path/to/arc-kit/arckit-claude
 
 ## Prerequisites
 
-- **Claude Code** v2.1.97 or later (recommended minimum)
+- **Claude Code** v2.1.112 or later (recommended minimum)
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.97?** This version fixes `claude plugin update` silently missing updates for git-based plugins (critical for ArcKit distribution), fixes a MCP HTTP/SSE memory leak (~50 MB/hr on reconnects, affects ArcKit's 5 bundled MCP servers), adds proper exponential backoff for 429 retries (benefits ArcKit's 10 research agents), fixes Stop/SubagentStop hooks failing on long sessions (affects session-learner), fixes subagent working directory leaks, and includes all prior v2.1.90–v2.1.94 fixes for hooks, MCP performance, and agent stability.
+> **Why v2.1.112?** This version unlocks the `xhigh` effort tier on Claude Opus 4.7 (used by ArcKit's deep-research agents and synthesis commands), enables Auto mode without `--enable-auto-mode`, restores Opus 4.7 availability for Auto mode, and ships read-only bash glob patterns without permission prompts (reduces friction for ArcKit helper scripts). It also carries forward the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
 
 ## Quick Start
 

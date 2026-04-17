@@ -10,8 +10,21 @@ This guide covers installing the ArcKit plugin, configuring MCP servers, and com
 
 ### Prerequisites
 
-- **Claude Code** v2.1.97 or later (or **Claude Cowork** desktop app)
+- **Claude Code** v2.1.112 or later (or **Claude Cowork** desktop app)
 - **Bash** shell (for helper scripts)
+
+### Optional: Long-session prompt cache (Claude Code v2.1.108+)
+
+Long ArcKit workflows -- requirements -> data-model -> components -> stories, or any chain that re-reads the same templates, principles, and project artifacts -- benefit from the 1-hour prompt cache TTL introduced in Claude Code v2.1.108. The default 5-minute TTL expires between commands when you pause to review output, file the next prompt, or step away.
+
+Set the env var before launching Claude:
+
+```bash
+export ENABLE_PROMPT_CACHING_1H=1
+claude
+```
+
+Recommended for: overnight `autoresearch` runs, multi-command workflows (`/arckit:requirements` -> `/arckit:data-model` -> `/arckit:components`), and research agents that re-read large project context. Verify cache uplift in your Anthropic billing dashboard (`cache_read_input_tokens` should grow as a fraction of input tokens).
 
 ### Step 1: Add the marketplace
 
