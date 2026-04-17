@@ -14,7 +14,7 @@ Research material compiled from git history, memory files, changelogs, articles,
 | 06 | [Hints, Tips, and Lessons](06-hints-tips-and-lessons.md) | Design principles, bugs that taught us something, tips for authors and users |
 | 07 | [Community and Contributors](07-community-and-contributors.md) | tractorjuice, @umag, @DavidROliverBA, @alefbt, @johnfelipe, and others |
 | 08 | [Security Architecture](08-security-architecture.md) | Threat model, current defenses, identified gaps, prioritized protections |
-| 09 | [Claude Code Platform Evolution](09-claude-code-platform-evolution.md) | Issue #215 tracking, 14 high-value capabilities, platform fixes that affected ArcKit |
+| 09 | [Claude Code Platform Evolution](09-claude-code-platform-evolution.md) | Issue #215 tracking, 23 high-value capabilities, platform fixes that affected ArcKit |
 | 10 | [Existing Articles Index](10-existing-articles-index.md) | 11 published articles available for adaptation (Medium, LinkedIn) |
 | 11 | [Statistics and Numbers](11-statistics-and-numbers.md) | Every metric in one place -- commands, agents, releases, growth trajectory |
 

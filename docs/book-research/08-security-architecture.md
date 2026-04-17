@@ -17,11 +17,13 @@ A comprehensive security analysis was performed on 2 April 2026 for ArcKit's 5 M
 ### Current Defenses
 
 **Layer 1: Agent Isolation**
+
 - Research agents run as subprocesses via Task tool
 - Each agent has its own context window
 - Agent output is summarized before returning to main conversation
 
 **Layer 2: Hook-Based Validation**
+
 - `allow-mcp-tools.mjs`: Prefix allowlist for MCP tool invocations
 - `file-protection.mjs`: Prevents writes to protected paths
 - `secret-file-scanner.mjs`: Scans for secrets in file operations
@@ -29,6 +31,7 @@ A comprehensive security analysis was performed on 2 April 2026 for ArcKit's 5 M
 - `secret-detection.mjs`: UserPromptSubmit hook for detecting secrets in user input
 
 **Layer 3: Agent Constraints**
+
 - `disallowedTools` in agent frontmatter (available since Claude Code v2.1.78)
 - STANDALONE fallback for platforms without hook support
 

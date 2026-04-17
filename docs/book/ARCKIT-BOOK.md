@@ -166,7 +166,7 @@ ArcKit has been tested on 22 real-world projects spanning healthcare, defence, g
 
 Then enable it from the Discover tab. The plugin provides all 68 commands, 10 agents, 17 hooks, 4 skills, and 5 MCP servers. Updates are automatic.
 
-> **Minimum version**: Claude Code v2.1.97 or later is required.
+> **Minimum version**: Claude Code v2.1.112 or later is required.
 
 **Gemini CLI**:
 
@@ -371,47 +371,7 @@ ArcKit provides five pre-defined workflow paths tailored to different project ty
 
 For private sector and non-UK government projects without AI components. Follows the full DSM from plan through story.
 
-```mermaid
-graph TD
-    A[plan] --> B[principles]
-    B --> C[stakeholders]
-    C --> D[risk]
-    D --> E[sobc]
-    E --> F[requirements]
-    F --> G[data-model]
-    F --> K[research]
-    K --> L[wardley]
-    L --> M[roadmap]
-    M --> O[sow]
-    O --> P[evaluate]
-    P --> Q[hld-review]
-    Q --> R[dld-review]
-    R --> T[backlog]
-    T --> U[servicenow]
-    U --> V[traceability]
-    V --> W[analyze]
-    W --> X[story]
-
-    style A fill:#87CEEB
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#90EE90
-    style G fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style Q fill:#FFA500
-    style R fill:#FFA500
-    style T fill:#FFA500
-    style U fill:#9370DB
-    style V fill:#9370DB
-    style W fill:#9370DB
-    style X fill:#FFD700
-```
+![Standard project path workflow](images/workflow-standard-path.svg)
 
 **Key Milestones**: SOBC Approval -> Requirements Sign-off -> DPIA Complete -> ADR Approved -> Sprint 1 -> Go Live
 
@@ -419,54 +379,7 @@ graph TD
 
 Adds UK-specific procurement (G-Cloud search, Digital Marketplace) and compliance gates (TCoP, Secure by Design, Service Assessment).
 
-```mermaid
-graph TD
-    A[plan] --> B[principles]
-    B --> C[stakeholders]
-    C --> D[risk]
-    D --> E[sobc]
-    E --> F[requirements]
-    F --> K[research]
-    K --> L[wardley]
-    L --> M[roadmap]
-    B -.-> N[gcloud-search]
-    M --> N
-    N --> O[gcloud-clarify]
-    O --> P[evaluate]
-    P --> R[hld-review]
-    R --> S[dld-review]
-    S --> U[backlog]
-    U --> W[servicenow]
-    W --> X[traceability]
-    X --> X1[tcop]
-    X1 --> X2[secure]
-    X2 --> Y[analyze]
-    Y --> Z[service-assessment]
-    Z --> AA[story]
-
-    style A fill:#87CEEB
-    style B fill:#87CEEB
-    style C fill:#87CEEB
-    style D fill:#87CEEB
-    style E fill:#90EE90
-    style F fill:#90EE90
-    style K fill:#90EE90
-    style L fill:#90EE90
-    style M fill:#90EE90
-    style N fill:#90EE90
-    style O fill:#90EE90
-    style P fill:#90EE90
-    style R fill:#FFA500
-    style S fill:#FFA500
-    style U fill:#FFA500
-    style W fill:#9370DB
-    style X fill:#9370DB
-    style X1 fill:#FF6B6B
-    style X2 fill:#FF6B6B
-    style Y fill:#9370DB
-    style Z fill:#FF6B6B
-    style AA fill:#FFD700
-```
+![UK Government project path workflow](images/workflow-uk-gov-path.svg)
 
 **Key Milestones**: SOBC Approval -> Requirements Sign-off -> G-Cloud Clarifications -> Service Assessment -> Go Live
 
@@ -498,53 +411,11 @@ The most comprehensive path. Adds JSP 936 AI safety assurance on top of the MOD 
 
 ### Workflow Decision Tree
 
-```mermaid
-graph TD
-    START[Start New Project] --> Q1{UK Government?}
-    Q1 -->|No| W1[Standard Project Path]
-    Q1 -->|Yes| Q3{MOD/Defence?}
-    Q3 -->|No| Q4{AI/ML Components?}
-    Q3 -->|Yes| Q5{AI/ML Components?}
-    Q4 -->|No| W3[UK Gov Path]
-    Q4 -->|Yes| W4[UK Gov AI Path]
-    Q5 -->|No| W5[MOD Defence Path]
-    Q5 -->|Yes| W6[MOD Defence AI Path]
-```
+![Workflow decision tree](images/workflow-decision-tree.svg)
 
 ### Typical Project Timeline (Gantt)
 
-```mermaid
-gantt
-    title UK Government AI Project (Typical 12-month)
-    dateFormat YYYY-MM-DD
-    section Discovery
-    plan                    :a1, 2026-01-01, 1w
-    principles              :a2, after a1, 1w
-    stakeholders            :a3, after a2, 2w
-    risk                    :a4, after a3, 2w
-    sobc                    :a5, after a4, 2w
-    section Alpha
-    requirements            :b1, after a5, 3w
-    data-model              :b2, after b1, 2w
-    research                :b3, after b2, 2w
-    wardley                 :b4, after b3, 2w
-    gcloud-search           :b5, after b4, 2w
-    evaluate                :b6, after b5, 2w
-    section Beta
-    hld-review              :c1, after b6, 2w
-    dld-review              :c2, after c1, 2w
-    backlog                 :c3, after c2, 1w
-    Sprint 1-8              :c4, after c3, 16w
-    section Live Prep
-    servicenow              :d1, after c4, 1w
-    devops                  :d1a, after d1, 1w
-    traceability            :d2, after d1a, 1w
-    analyze                 :d3, after d2, 1w
-    service-assessment      :d4, after d3, 2w
-    secure                  :d8, after d4, 1w
-    section Live
-    Go Live                 :milestone, after d8, 0d
-```
+![Typical 12-month UK Government AI project Gantt chart](images/workflow-gantt.svg)
 
 ### Additional Workflow Paths
 
@@ -556,21 +427,7 @@ gantt
 
 ArcKit includes a dedicated Wardley Mapping pipeline with four specialized commands:
 
-```mermaid
-graph TD
-    A[requirements] --> B[wardley.value-chain]
-    C[principles] -.-> B
-    D[stakeholders] -.-> B
-    B --> E[wardley]
-    E --> F[wardley.doctrine]
-    E --> G[wardley.climate]
-    E --> H[wardley.gameplay]
-    G -.-> H
-    F -.-> H
-    E --> I[roadmap]
-    E --> J[strategy]
-    H -.-> J
-```
+![Wardley mapping suite pipeline](images/wardley-suite.svg)
 
 1. **wardley.value-chain**: Decomposes user needs into value chains with component identification
 2. **wardley**: Creates the Wardley Map with dual output (OWM syntax for create.wardleymaps.ai + Mermaid wardley-beta diagram blocks)
@@ -615,14 +472,7 @@ component NHS Spine [0.60, 0.35]
 
 2. **Mermaid wardley-beta** for rendering in documentation and GitHub:
 
-```mermaid
-wardley-beta
-    title NHS Appointment Booking
-    component Patient [0.95, 0.55]
-    component Booking UI [0.90, 0.65]
-    component Appointment API [0.75, 0.50]
-    evolve Appointment API 0.70
-```
+![Example Wardley map: NHS appointment booking](images/wardley-example-nhs.svg)
 
 The Mermaid wardley-beta test suite validated ArcKit's syntax against 147 real-world maps from Simon Wardley's Map Repository. Results: 18/18 synthetic fixtures pass (100%), 144/147 real-world maps pass (98%). The 3 failures are source data errors in original maps. ArcKit's Wardley syntax is 100% valid.
 
@@ -685,7 +535,7 @@ $ARGUMENTS
 |-------|---------|---------|
 | `description` | Short description shown in command lists | "Create comprehensive requirements" |
 | `argument-hint` | Placeholder shown to user before input | `"<project ID or feature>"` |
-| `effort` | Model reasoning effort override | `low`, `medium`, `high`, `max` |
+| `effort` | Model reasoning effort override | `low`, `medium`, `high`, `xhigh` (Opus 4.7, Claude Code v2.1.111+), `max` |
 | `handoffs` | Suggested next commands after completion | See schema below |
 | `tags` | Searchable keywords | `[research, vendor, procurement]` |
 
@@ -1311,46 +1161,7 @@ The hook system's most dramatic impact was removing duplicated code from command
 
 ### Hook Architecture Diagram
 
-```mermaid
-graph TD
-    subgraph "Session Lifecycle"
-        SS[SessionStart] --> |arckit-session.mjs| CTX1[Inject version + project root]
-        SS --> |version-check.mjs| VER[Check for plugin updates]
-    end
-
-    subgraph "Every User Message"
-        UPS[UserPromptSubmit] --> |arckit-context.mjs| CTX2[Inject full project inventory]
-        UPS --> |secret-detection.mjs| SEC1[Scan for secrets in input]
-    end
-
-    subgraph "Command-Specific Preprocessing"
-        UPS --> |/arckit:pages| SYNC[sync-guides.mjs]
-        UPS --> |/arckit:health| HLTH[health-scan.mjs]
-        UPS --> |/arckit:traceability| TRAC[traceability-scan.mjs]
-        UPS --> |/arckit:analyze| GOV[governance-scan.mjs]
-        UPS --> |/arckit:search| SRCH[search-scan.mjs]
-        UPS --> |/arckit:impact| IMP[impact-scan.mjs]
-    end
-
-    subgraph "Before Write/Edit"
-        PTU[PreToolUse] --> |Write| VAL[validate-arc-filename.mjs]
-        PTU --> |Write| SCORE[score-validator.mjs]
-        PTU --> |Edit or Write| FP[file-protection.mjs]
-        PTU --> |Edit or Write| SFS[secret-file-scanner.mjs]
-    end
-
-    subgraph "After Write"
-        POTU[PostToolUse] --> |Write| MAN[update-manifest.mjs]
-    end
-
-    subgraph "Session End"
-        STOP[Stop / StopFailure] --> |session-learner.mjs| LEARN[Capture session insights]
-    end
-
-    subgraph "Permissions"
-        PERM[PermissionRequest] --> |mcp__*| ALLOW[allow-mcp-tools.mjs]
-    end
-```
+![ArcKit hook architecture](images/hook-architecture.svg)
 
 ### The Boilerplate Reduction Story
 
@@ -1629,23 +1440,7 @@ This means the research command on Claude Code is a clean delegation wrapper, wh
 
 ### The Conversion Pipeline Diagram
 
-```mermaid
-graph TD
-    SRC[arckit-claude/commands/*.md] --> CONV[converter.py]
-    AGT[arckit-claude/agents/*.md] --> CONV
-    
-    CONV --> CC[Claude Code Plugin<br/>Markdown + YAML]
-    CONV --> GEM[Gemini Extension<br/>TOML]
-    CONV --> CDX[Codex Extension<br/>SKILL.md + YAML]
-    CONV --> OC[OpenCode Extension<br/>Markdown]
-    CONV --> COP[Copilot Extension<br/>.prompt.md + .agent.md]
-    CONV --> PC[Paperclip Plugin<br/>commands.json]
-    
-    CC --> HOOKS[hooks.json]
-    CC --> MCP[.mcp.json]
-    GEM --> GHUB1[tractorjuice/arckit-gemini]
-    CDX --> GHUB2[tractorjuice/arckit-codex]
-```
+![Multi-AI distribution conversion pipeline](images/conversion-pipeline.svg)
 
 ### Extension Repositories
 
@@ -1762,16 +1557,7 @@ This conflict resolution section is mandatory when conflicts exist. The requirem
 
 ArcKit's document system enforces a traceability chain through cross-references:
 
-```mermaid
-graph LR
-    A[Stakeholders] --> B[Goals]
-    B --> C[Requirements]
-    C --> D[Data Model]
-    D --> E[Components]
-    E --> F[User Stories]
-    C --> G[Risk Register]
-    C --> H[Wardley Map]
-```
+![Traceability chain: stakeholders to user stories](images/traceability-chain.svg)
 
 Each document references its predecessors. Requirements cite stakeholder goals with explicit tracing:
 
@@ -2367,7 +2153,7 @@ npx markdownlint-cli2 --fix "**/*.md"
 
 ### Claude Code Platform Compatibility
 
-ArcKit actively tracks Claude Code releases for capabilities that improve the plugin. Issue #215 consolidates this tracking from v2.1.83 through v2.1.97.
+ArcKit actively tracks Claude Code releases for capabilities that improve the plugin. Issue #215 consolidates this tracking from v2.1.83 through v2.1.112.
 
 **Minimum version history:**
 
@@ -2375,6 +2161,7 @@ ArcKit actively tracks Claude Code releases for capabilities that improve the pl
 |------|---------|--------|
 | Pre-April 2026 | v2.1.90 | PreToolUse blocking fix, MCP performance |
 | 9 April 2026 | v2.1.97 | Plugin update detection, MCP memory leak, 429 backoff |
+| 17 April 2026 | v2.1.112 | Opus 4.7 `xhigh` effort, auto mode without flag, read-only bash glob patterns, carries all v2.1.98-2.1.111 fixes |
 
 **Key Claude Code fixes that affected ArcKit:**
 
@@ -2383,6 +2170,12 @@ ArcKit actively tracks Claude Code releases for capabilities that improve the pl
 - **v2.1.92**: Stop hook semantics fix (affects session-learner); plugin MCP stuck 'connecting' fix; Write tool 60% faster for large files
 - **v2.1.94**: `keep-coding-instructions` frontmatter for compaction persistence; fixed agents stuck after 429 with long Retry-After
 - **v2.1.97**: MCP SSE memory leak fix (~50 MB/hr); 429 exponential backoff fix; `claude plugin update` detects new commits
+- **v2.1.98**: Subagent MCP tool inheritance from dynamically-injected servers fixed; compound Bash permission bypass (security); `Monitor` tool added for streaming background script events
+- **v2.1.101**: Sub-agents in isolated worktrees can Read/Edit their own worktree; MCP tools on first turn of headless sessions; OS CA certificate store trusted by default; POSIX `which` fallback command injection fix
+- **v2.1.105**: `monitors` plugin manifest key; skill description cap raised 250->1,536; PreCompact hook blocking; marketplace plugin `package.json` auto-install (critical for Paperclip); WebFetch strips `<style>`/`<script>`
+- **v2.1.108**: `ENABLE_PROMPT_CACHING_1H` env var for 1-hour prompt cache; model can invoke built-in slash commands via Skill tool; policy-managed plugins auto-update from any project
+- **v2.1.110**: MCP tool calls no longer hang on SSE/HTTP connection drop (affects 5 MCP servers); stdio MCP stray non-JSON line fix (regression from v2.1.105); `/tui` fullscreen toggle; push notification tool
+- **v2.1.111**: Opus 4.7 `xhigh` effort level; `/ultrareview` cloud PR review; `/less-permission-prompts` skill; read-only bash glob patterns no longer trigger permission prompts; auto mode without `--enable-auto-mode`
 
 ArcKit is one of the most complex Claude Code plugins in existence. Its 17 hooks, 10 agents, and 5 MCP servers push the platform's capabilities, making it both a beneficiary and a stress-tester of Claude Code features.
 
@@ -2410,6 +2203,8 @@ ArcKit's development has surfaced many lessons relevant to anyone building Claud
 
 **10. Hook output size**: Hook output >50K characters (since v2.1.89) is saved to disk instead of context. Keep hook output concise. The `arckit-context.mjs` hook had to be optimized to stay under this limit.
 
+**11. Prompt cache TTL for long sessions**: Set `ENABLE_PROMPT_CACHING_1H=1` (Claude Code v2.1.108+) to extend the prompt cache TTL from 5 minutes to 1 hour. ArcKit workflows chain multiple commands (`requirements` -> `data-model` -> `research` -> `sobc`) over many minutes. The default 5-minute TTL expires between commands, forcing re-reads of templates, principles, and project context. The 1-hour TTL keeps everything warm across the full session -- documented in the autoresearch guide and MCP setup guide.
+
 ### Security Architecture
 
 A comprehensive security analysis was performed for ArcKit's 5 MCP servers on 2 April 2026.
@@ -2430,13 +2225,28 @@ A comprehensive security analysis was performed for ArcKit's 5 MCP servers on 2 
 2. **Hook-based validation**: File protection, secret scanning, filename validation
 3. **Agent constraints**: `disallowedTools` in frontmatter for least-privilege
 
-**Identified gaps** (not yet implemented): No validation of MCP response content before it enters agent context. No injection detection. No URL domain validation.
+**Identified gaps** (not yet implemented): No validation of MCP response content before it enters agent context. No injection detection. No URL domain validation. Issue #273 tracks hardening.
+
+**Prioritised protections** (not yet implemented):
+
+| Priority | Protection | Effort |
+|----------|-----------|--------|
+| Do first | Agent prompt hardening (untrusted-data instructions) | 1-2 hrs |
+| Do first | `disallowedTools` in agent frontmatter | 30 min |
+| Do first | URL domain allowlists per agent | 1 hr |
+| Next sprint | PostToolUse MCP response scanner hook | 4-6 hrs |
+| Next sprint | Output document validator (PreToolUse Write) | 4-6 hrs |
+| Next sprint | govreposcrape content quarantine pattern | 2-3 hrs |
+| Nice to have | Data freshness stamps in documents | 2 hrs |
+| Quarterly | MCP tool definition integrity monitor | 4-6 hrs |
+
+Priority ordering reflects blast radius: the "do first" items are quick wins that raise the cost of a successful injection. The scanner and validator hooks add defence-in-depth. The govreposcrape content quarantine isolates the highest-risk MCP server. Data freshness stamps and the integrity monitor address longer-tail concerns around stale data and rug-pull attacks.
 
 ---
 
 ## Chapter 13: Highlights from the Commit History
 
-ArcKit's development spans 971 commits, 129 tagged releases, and 6 months (14 October 2025 to 9 April 2026). Here are the milestone moments.
+ArcKit's development spans 954 commits, 129 tagged releases, and 6 months (14 October 2025 to 9 April 2026). Here are the milestone moments.
 
 ### The Beginning (October 2025)
 
@@ -2583,7 +2393,7 @@ As of v4.6.6, ArcKit has 18 open issues on GitHub. Here are the most significant
 #### In Progress
 
 - **#282: Managed agent deployment** -- Deploy ArcKit agents as Claude Managed Agents via the Anthropic API. Prototype merged in v4.6.6. Full deployment automation still in progress
-- **#215: Claude Code v2.1.83-2.1.97 capabilities** -- 14 high-value platform features to adopt, including `userConfig` (org-level settings), `initialPrompt` (auto-starting agents), `keep-coding-instructions` (compaction resilience), and `PostCompact` hooks
+- **#215: Claude Code v2.1.83-2.1.112 capabilities** -- 23 high-value platform features to adopt, including `userConfig` (org-level settings), `initialPrompt` (auto-starting agents), `keep-coding-instructions` (compaction resilience), `PostCompact` hooks, `monitors` manifest (background monitors), the 1,536-char skill description cap, and Opus 4.7 `xhigh` effort level
 - **#283: Citation traceability for MCP and web results** -- Currently citations only cover documents from `external/`. MCP search results and WebFetch URLs should also be cited with source URLs
 
 #### Security
@@ -2982,7 +2792,7 @@ cd test && codex
 | **Document Control** | The standardized 14-field metadata table at the top of every ArcKit-generated document |
 | **DOS** | Digital Outcomes and Specialists -- UK Government procurement framework for digital services |
 | **DSM** | Dependency Structure Matrix -- the tier-based ordering of ArcKit's 68 commands |
-| **Effort** | YAML frontmatter field that controls AI model reasoning depth (low/medium/high/max) |
+| **Effort** | YAML frontmatter field that controls AI model reasoning depth (low/medium/high/xhigh/max). `xhigh` is Opus 4.7 only (Claude Code v2.1.111+); other models fall back to `high` |
 | **Frontmatter** | YAML metadata block at the top of command and agent files, delimited by `---` |
 | **G-Cloud** | UK Government cloud procurement framework |
 | **GDS** | Government Digital Service -- UK Government body responsible for digital standards |
@@ -3043,7 +2853,7 @@ A: Edit `.mcp.json` in the plugin root (for plugin-wide) or `.claude/settings.js
 ### Troubleshooting
 
 **Q: The plugin isn't loading or seems outdated.**
-A: Check your Claude Code version (minimum v2.1.97). Try `claude plugin update`. If using a branch for testing, ensure the settings use `"ref"` not `"branch"`.
+A: Check your Claude Code version (minimum v2.1.112). Try `claude plugin update`. If using a branch for testing, ensure the settings use `"ref"` not `"branch"`.
 
 **Q: Commands are generating truncated documents.**
 A: This usually means the Write tool path is wrong. Check that the project directory exists. Also check that the command is using the Write tool (not inline output).
@@ -3080,4 +2890,4 @@ A: See Appendix D for the complete process. In brief: create the command file, c
 
 *Generated by ArcKit -- Enterprise Architecture Governance Toolkit*
 *Version 4.6.6 -- April 2026*
-*971 commits, 129 releases, 68 commands, 10 agents, 17 hooks, 5 MCP servers, 7 distribution formats*
+*954 commits, 129 releases, 68 commands, 10 agents, 17 hooks, 5 MCP servers, 7 distribution formats*
