@@ -7,10 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.10] - 2026-04-18
+
 ### Added
 
-- Plugin `monitors` manifest key (Claude Code v2.1.105+) with a `stale-artifact-scan` monitor that runs at session start. The monitor (`arckit-claude/scripts/bash/detect-stale-artifacts.sh`) scans `projects/` for ARC-*.md artifacts whose Document Control `Next Review Date` is overdue or whose `Status: DRAFT` is 14+ days old, emitting one notification per stale file (capped at 10). Silent in non-ArcKit repos (#215)
-- Autoresearch guide documents the built-in `Monitor` tool (v2.1.98+) for streaming overnight autoresearch progress from a second session without blocking the experiment loop (#215)
+- Plugin `monitors` manifest key (Claude Code v2.1.105+) with a `stale-artifact-scan` monitor that runs at session start. The monitor (`arckit-claude/scripts/bash/detect-stale-artifacts.sh`) scans `projects/` for ARC-*.md artifacts whose Document Control `Next Review Date` is overdue or whose `Status: DRAFT` is 14+ days old, emitting one notification per stale file (capped at 10). Silent in non-ArcKit repos (#215, #300)
+- Autoresearch guide documents the built-in `Monitor` tool (v2.1.98+) for streaming overnight autoresearch progress from a second session without blocking the experiment loop (#215, #300)
 
 ## [4.6.9] - 2026-04-18
 

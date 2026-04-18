@@ -7,14 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.10] - 2026-04-18
+
 ### Added
 
-- `monitors` key in `plugin.json` registering a `stale-artifact-scan` background monitor (Claude Code v2.1.105+). At session start, the plugin runs `scripts/bash/detect-stale-artifacts.sh` which scans `projects/` for artifacts with overdue `Next Review Date` or long-unchanged `DRAFT` status and emits one notification line per stale file. Exits silently when the cwd is not an ArcKit project (#215)
+- `monitors` key in `plugin.json` registering a `stale-artifact-scan` background monitor (Claude Code v2.1.105+). At session start, the plugin runs `scripts/bash/detect-stale-artifacts.sh` which scans `projects/` for artifacts with overdue `Next Review Date` or long-unchanged `DRAFT` status and emits one notification line per stale file. Exits silently when the cwd is not an ArcKit project (#215, #300)
 - `scripts/bash/detect-stale-artifacts.sh` — one-shot scanner invoked by the new monitor. Caps output at 10 lines; appends a pointer to `/arckit.health` for the full list.
 
 ### Changed
 
-- Autoresearch guide adds a "Watching progress without blocking the main session" paragraph recommending the built-in `Monitor` tool (v2.1.98+) for streaming overnight runs from a second session (#215).
+- Autoresearch guide adds a "Watching progress without blocking the main session" paragraph recommending the built-in `Monitor` tool (v2.1.98+) for streaming overnight runs from a second session (#215, #300).
 
 ## [4.6.9] - 2026-04-18
 
