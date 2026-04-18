@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.8] - 2026-04-18
+
 ### Added
 
-- Plugin `userConfig` (Claude Code v2.1.83+) in `plugin.json` with 5 fields: `GOOGLE_API_KEY` and `DATA_COMMONS_API_KEY` (sensitive, stored in system keychain) for MCP authentication, plus `organisation_name`, `default_classification`, and `governance_framework` for Document Control defaults. Claude Code prompts once at enable time (#215)
+- Plugin `userConfig` (Claude Code v2.1.83+) in `plugin.json` with 5 fields: `GOOGLE_API_KEY` and `DATA_COMMONS_API_KEY` (sensitive, stored in system keychain) for MCP authentication, plus `organisation_name`, `default_classification`, and `governance_framework` for Document Control defaults. Claude Code prompts once at enable time (#215, #298)
 
 ### Changed
 
