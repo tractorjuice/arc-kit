@@ -9,6 +9,14 @@
   "repository": "https://github.com/tractorjuice/arc-kit",
   "license": "MIT",
   "mcpServers": "./.mcp.json",
+  "monitors": [
+    {
+      "name": "stale-artifact-scan",
+      "command": "bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/detect-stale-artifacts.sh",
+      "description": "Detect ArcKit artifacts with overdue reviews or long-unchanged drafts",
+      "when": "always"
+    }
+  ],
   "userConfig": {
     "GOOGLE_API_KEY": {
       "description": "Google API key for the google-developer-knowledge MCP server (optional — leave blank to disable)",
