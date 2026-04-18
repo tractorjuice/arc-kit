@@ -43,9 +43,6 @@ description: 'Use this agent when the user wants to transform existing project a
   </example>
 
   '
-disallowedTools:
-- Edit
-maxTurns: 30
 model: inherit
 name: arckit-framework
 ---

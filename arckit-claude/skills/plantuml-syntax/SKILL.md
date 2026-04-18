@@ -1,6 +1,10 @@
 ---
 name: plantuml-syntax
 description: "This skill should be used when the user asks about PlantUML syntax for C4-PlantUML, sequence, class, activity, state, ER, component, deployment, or use case diagrams, rendering errors, layout conflicts, skinparams, or themes."
+paths:
+  - "**/*.puml"
+  - "**/*.plantuml"
+  - "**/ARC-*-DIAG-*.md"
 ---
 
 # PlantUML Syntax Reference

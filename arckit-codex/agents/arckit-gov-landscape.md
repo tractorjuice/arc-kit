@@ -63,9 +63,6 @@ description: 'Use this agent when the user wants to understand what UK governmen
   </example>
 
   '
-disallowedTools:
-- Edit
-maxTurns: 50
 model: inherit
 name: arckit-gov-landscape
 ---

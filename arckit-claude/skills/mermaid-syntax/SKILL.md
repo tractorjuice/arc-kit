@@ -1,6 +1,10 @@
 ---
 name: mermaid-syntax
 description: "This skill should be used when the user asks about Mermaid diagram syntax, how to write flowchart, sequence, class, state, ER, Gantt, C4, mindmap, timeline, or other diagram types, node shapes, styling, theming, or rendering errors."
+paths:
+  - "**/*.mmd"
+  - "**/*.mermaid"
+  - "**/ARC-*-DIAG-*.md"
 ---
 
 # Mermaid Syntax Reference

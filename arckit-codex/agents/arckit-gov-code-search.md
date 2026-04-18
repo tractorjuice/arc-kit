@@ -63,9 +63,6 @@ description: 'Use this agent when the user wants to search UK government reposit
   </example>
 
   '
-disallowedTools:
-- Edit
-maxTurns: 40
 model: inherit
 name: arckit-gov-code-search
 ---

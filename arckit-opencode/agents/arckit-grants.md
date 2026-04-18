@@ -46,9 +46,6 @@ description: 'Use this agent when the user needs to research UK funding opportun
   </example>
 
   '
-disallowedTools:
-- Edit
-maxTurns: 50
 model: inherit
 name: arckit-grants
 ---

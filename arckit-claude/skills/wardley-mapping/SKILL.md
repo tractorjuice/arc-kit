@@ -1,6 +1,9 @@
 ---
 name: wardley-mapping
 description: "This skill should be used when the user asks about Wardley Mapping, evolution stages, strategic positioning, creating maps, value chain decomposition, gameplay patterns, doctrine assessment, climatic patterns, build vs. buy, or inertia analysis."
+paths:
+  - "**/ARC-*-WARD-*.md"
+  - "**/*.wardley"
 ---
 
 # Wardley Mapping
