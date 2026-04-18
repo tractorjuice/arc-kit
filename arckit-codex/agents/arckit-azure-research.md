@@ -67,9 +67,6 @@ description: 'Use this agent when the user needs Azure-specific technology resea
   </example>
 
   '
-disallowedTools:
-- Edit
-maxTurns: 40
 model: inherit
 name: arckit-azure-research
 ---

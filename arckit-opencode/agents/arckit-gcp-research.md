@@ -69,9 +69,6 @@ description: 'Use this agent when the user needs Google Cloud-specific technolog
   </example>
 
   '
-disallowedTools:
-- Edit
-maxTurns: 40
 model: inherit
 name: arckit-gcp-research
 ---

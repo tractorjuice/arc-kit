@@ -66,9 +66,6 @@ description: 'Use this agent when the user needs technology and service market r
   </example>
 
   '
-disallowedTools:
-- Edit
-maxTurns: 50
 model: inherit
 name: arckit-research
 ---

@@ -65,9 +65,6 @@ description: 'Use this agent when the user needs to discover external data sourc
   </example>
 
   '
-disallowedTools:
-- Edit
-maxTurns: 50
 model: inherit
 name: arckit-datascout
 ---

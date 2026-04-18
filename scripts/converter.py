@@ -6,6 +6,20 @@ import shutil
 import yaml
 
 
+CLAUDE_ONLY_COMMAND_FIELDS = (
+    "effort",
+    "keep-coding-instructions",
+    "paths",
+)
+
+CLAUDE_ONLY_AGENT_FIELDS = (
+    "effort",
+    "initialPrompt",
+    "maxTurns",
+    "disallowedTools",
+)
+
+
 def build_agent_map(agents_dir):
     """Build a map from command name to agent file path and content.
 
@@ -53,7 +67,7 @@ def extract_agent_prompt(content):
 
 
 def copy_agent_stripped(src_path, dest_path):
-    """Copy an agent file to dest, stripping the effort field from frontmatter."""
+    """Copy an agent file to dest, stripping Claude-only frontmatter fields."""
     with open(src_path, "r", encoding="utf-8") as f:
         content = f.read()
     if content.startswith("---"):
@@ -63,7 +77,8 @@ def copy_agent_stripped(src_path, dest_path):
                 fm = yaml.safe_load(parts[1]) or {}
             except yaml.YAMLError:
                 fm = {}
-            fm.pop("effort", None)
+            for field in CLAUDE_ONLY_AGENT_FIELDS:
+                fm.pop(field, None)
             rebuilt = "---\n" + yaml.dump(fm, default_flow_style=False, allow_unicode=True) + "---" + parts[2]
             with open(dest_path, "w", encoding="utf-8") as f:
                 f.write(rebuilt)
@@ -335,8 +350,9 @@ def convert(commands_dir, agents_dir):
         frontmatter, command_prompt = extract_frontmatter_and_prompt(command_content)
         description = frontmatter.get("description", "")
         handoffs = frontmatter.get("handoffs", [])
-        # Strip effort field — only meaningful for Claude Code plugin
-        frontmatter.pop("effort", None)
+        # Strip Claude-only fields — they have no meaning for Codex/OpenCode/Gemini/Copilot targets
+        for field in CLAUDE_ONLY_COMMAND_FIELDS:
+            frontmatter.pop(field, None)
 
         # For agent-delegating commands, use the full agent prompt
         # (non-Claude targets don't support the Task/agent architecture)
@@ -496,8 +512,43 @@ def copy_extension_files(plugin_dir):
                 if os.path.isdir(dst):
                     shutil.rmtree(dst)
                 shutil.copytree(src, dst)
+                if dst_rel == "skills":
+                    strip_claude_only_skill_fields(dst)
                 file_count = sum(len(files) for _, _, files in os.walk(dst))
                 print(f"  Copied: {src} -> {dst} ({file_count} files)")
+
+
+def strip_claude_only_skill_fields(skills_dir):
+    """Strip Claude-only frontmatter fields (e.g. paths) from SKILL.md files."""
+    if not os.path.isdir(skills_dir):
+        return
+    for root, _dirs, files in os.walk(skills_dir):
+        for filename in files:
+            if filename != "SKILL.md":
+                continue
+            filepath = os.path.join(root, filename)
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+            if not content.startswith("---"):
+                continue
+            parts = content.split("---", 2)
+            if len(parts) <= 2:
+                continue
+            try:
+                fm = yaml.safe_load(parts[1]) or {}
+            except yaml.YAMLError:
+                continue
+            if "paths" not in fm:
+                continue
+            fm.pop("paths", None)
+            rebuilt = (
+                "---\n"
+                + yaml.dump(fm, default_flow_style=False, allow_unicode=True, sort_keys=False)
+                + "---"
+                + parts[2]
+            )
+            with open(filepath, "w", encoding="utf-8") as f:
+                f.write(rebuilt)
 
 
 def copy_paperclip_files(plugin_dir, paperclip_dir):

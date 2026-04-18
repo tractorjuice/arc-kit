@@ -125,11 +125,13 @@
         "hooks": [
           {
             "type": "command",
+            "if": "Write(/projects/**)",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.mjs",
             "timeout": 5
           },
           {
             "type": "command",
+            "if": "Write(/projects/**/vendors/scores.json)",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/score-validator.mjs",
             "timeout": 5
           }
@@ -157,6 +159,7 @@
         "hooks": [
           {
             "type": "command",
+            "if": "Write(/projects/**)",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/update-manifest.mjs",
             "timeout": 5
           }

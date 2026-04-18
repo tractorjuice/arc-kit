@@ -64,9 +64,6 @@ description: 'Use this agent when the user needs AWS-specific technology researc
   </example>
 
   '
-disallowedTools:
-- Edit
-maxTurns: 40
 model: inherit
 name: arckit-aws-research
 ---
