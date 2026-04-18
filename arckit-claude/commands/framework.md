@@ -2,6 +2,7 @@
 description: Transform existing project artifacts into a structured, phased framework with overview and executive guide
 argument-hint: "<project ID or name, e.g. '001', 'data governance framework'>"
 effort: max
+keep-coding-instructions: true
 handoffs:
   - command: glossary
     description: Generate glossary of framework terminology

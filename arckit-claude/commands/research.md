@@ -3,6 +3,7 @@ description: Research technology, services, and products to meet requirements wi
 argument-hint: "<topic, e.g. 'CRM platforms for charity', 'API management tools'>"
 tags: [research, build-vs-buy, vendor, procurement, digital-marketplace, tco, saas, open-source]
 effort: max
+keep-coding-instructions: true
 handoffs:
   - command: wardley
     description: Create Wardley Map from research evolution positioning
