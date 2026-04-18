@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.12] - 2026-04-18
+
+### Fixed
+
+- Plugin manifest rejected by Claude Code v2.1.114 with `userConfig.*.type: Invalid option` and `userConfig.*.title: expected string, received undefined` errors. Added the now-required `title` (human-readable label shown in the enable-time prompt) and `type: "string"` to all five `userConfig` entries in `.claude-plugin/plugin.json` (#302). Without this fix the plugin fails to install on Claude Code v2.1.114+.
+
 ## [4.6.11] - 2026-04-18
 
 ### Added
