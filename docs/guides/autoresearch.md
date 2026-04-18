@@ -27,6 +27,16 @@ Claude will:
 
 To stop: interrupt Claude at any time. The worktree has the best prompt.
 
+### Watching progress without blocking the main session
+
+For long overnight runs, open a second Claude Code session in the worktree directory and ask it to `Monitor` the results log:
+
+```text
+Monitor scripts/autoresearch/runs/*.log and summarise each new iteration
+```
+
+The `Monitor` tool (Claude Code v2.1.98+) tails stdout from a background `tail -F` and delivers each new scoring line to Claude as a notification. You get progress updates on demand without interrupting the experiment loop in the main session. Requires Claude Code v2.1.98 or later.
+
 ---
 
 ## How It Works

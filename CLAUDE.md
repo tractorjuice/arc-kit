@@ -198,6 +198,27 @@ Runtime substitution uses `${user_config.KEY}`:
 - **`.mcp.json`** — already wired for `GOOGLE_API_KEY` and `DATA_COMMONS_API_KEY` headers. The converter rewrites `${user_config.KEY}` → `${KEY}` for non-Claude extensions (Codex, Gemini, OpenCode, Copilot) since those platforms fall back to shell env vars.
 - **Command / agent bodies** — non-sensitive values can be referenced (e.g. `${user_config.organisation_name}` in a Document Control block). Sensitive values are never substituted into prompt content.
 
+### Plugin Monitors
+
+Background monitors declared via the `monitors` key in `arckit-claude/.claude-plugin/plugin.json` (v2.1.105+). Each entry runs as a persistent subprocess in the session's working directory; stdout lines are delivered to Claude as session notifications.
+
+Schema: `name` (unique id), `command` (shell command, supports `${CLAUDE_PLUGIN_ROOT}` and `${user_config.*}`), `description`, `when` (`always` — default, starts at session-start; or `on-skill-invoke:<skill>`).
+
+Current monitor:
+
+- `stale-artifact-scan` — runs `arckit-claude/scripts/bash/detect-stale-artifacts.sh` at session start in repos that have a `projects/` directory. Emits one line per artifact whose Document Control `Next Review Date` is overdue, or whose status is `DRAFT` and hasn't been touched in 14+ days. Exits silently in non-ArcKit repos.
+
+Monitors are Claude-only — the converter does not propagate `monitors` to Codex/Gemini/OpenCode/Copilot extension manifests (those platforms have their own notification mechanisms).
+
+### Monitor Tool (user-facing)
+
+The built-in `Monitor` tool (Claude Code v2.1.98+) tails stdout from a background Bash process and delivers each line to Claude as an in-session notification. Model-driven: the user or the model picks it up from natural language ("monitor the autoresearch log for progress"). No plugin configuration is needed.
+
+Recommended ArcKit usage:
+
+- **Long `/arckit.research` or `/arckit.datascout` runs** — redirect agent bash/shell output to a log file and ask Claude to `Monitor` the tail, so progress surfaces without blocking the main conversation.
+- **Overnight autoresearch loops** (see `docs/guides/autoresearch.md`) — tail the scoring log from a second session via `tail -F scripts/autoresearch/runs/*.log` wrapped by Monitor.
+
 ### Plugin Hooks
 
 Hook handlers live under `arckit-claude/hooks/` and are registered in `arckit-claude/hooks/hooks.json`. Supported hook events include `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop`, `StopFailure`, `PermissionRequest`, plus the newer `PostCompact` (v2.1.76), `FileChanged`/`CwdChanged`/`TaskCreated` (v2.1.83–84), `PermissionDenied` (v2.1.89), and `PreCompact` blocking (v2.1.105).
