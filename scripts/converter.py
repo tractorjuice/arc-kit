@@ -20,6 +20,20 @@ CLAUDE_ONLY_AGENT_FIELDS = (
 )
 
 
+USER_CONFIG_PLACEHOLDER_RE = re.compile(r"\$\{user_config\.([A-Za-z_][A-Za-z0-9_]*)\}")
+
+
+def rewrite_user_config_placeholders(value):
+    """Rewrite Claude Code `${user_config.KEY}` placeholders to plain `${KEY}`.
+
+    Non-Claude extensions (Codex, Gemini, OpenCode, Copilot) don't support
+    plugin user config and fall back to shell environment variables.
+    """
+    if not isinstance(value, str):
+        return value
+    return USER_CONFIG_PLACEHOLDER_RE.sub(r"${\1}", value)
+
+
 def build_agent_map(agents_dir):
     """Build a map from command name to agent file path and content.
 
@@ -585,10 +599,10 @@ def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
                     if key == "headers":
                         header_parts = []
                         for hk, hv in value.items():
-                            header_parts.append(f'"{hk}" = "{hv}"')
+                            header_parts.append(f'"{hk}" = "{rewrite_user_config_placeholders(hv)}"')
                         lines.append(f"headers = {{ {', '.join(header_parts)} }}")
                     else:
-                        lines.append(f'{key} = "{value}"')
+                        lines.append(f'{key} = "{rewrite_user_config_placeholders(value)}"')
                 lines.append("")
 
     # Agent roles section

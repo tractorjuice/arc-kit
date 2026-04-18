@@ -8,5 +8,24 @@
   },
   "repository": "https://github.com/tractorjuice/arc-kit",
   "license": "MIT",
-  "mcpServers": "./.mcp.json"
+  "mcpServers": "./.mcp.json",
+  "userConfig": {
+    "GOOGLE_API_KEY": {
+      "description": "Google API key for the google-developer-knowledge MCP server (optional — leave blank to disable)",
+      "sensitive": true
+    },
+    "DATA_COMMONS_API_KEY": {
+      "description": "Data Commons API key for the datacommons-mcp MCP server (optional — leave blank to disable)",
+      "sensitive": true
+    },
+    "organisation_name": {
+      "description": "Organisation name used in generated Document Control headers (e.g. 'Acme Ltd' or 'HM Revenue & Customs')"
+    },
+    "default_classification": {
+      "description": "Default document classification: PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE, or SECRET"
+    },
+    "governance_framework": {
+      "description": "Default governance framework: 'UK Gov' for Service Standard/TCoP/NCSC CAF, or 'Generic' for non-government"
+    }
+  }
 }
