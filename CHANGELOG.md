@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.11] - 2026-04-18
+
 ### Added
 
-- `keep-coding-instructions: true` on 5 long-running commands (`requirements`, `research`, `sobc`, `datascout`, `framework`) — persists the command's instructions across `/compact` so Claude Code doesn't drop the template and traceability rules mid-run. Requires Claude Code v2.1.94+; the converter already strips the field for non-Claude extensions (Phase 1 work, now activated) (#215)
+- `keep-coding-instructions: true` on 5 long-running commands (`requirements`, `research`, `sobc`, `datascout`, `framework`) — persists the command's instructions across `/compact` so Claude Code doesn't drop the template and traceability rules mid-run. Requires Claude Code v2.1.94+; the converter already strips the field for non-Claude extensions (Phase 1 work, now activated) (#215, #301)
 
 ## [4.6.10] - 2026-04-18
 
