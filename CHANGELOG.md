@@ -7,15 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.7] - 2026-04-18
+
 ### Added
 
 - `docs/llms.txt` — LLM-friendly site index for arckit.org following the [llmstxt.org](https://llmstxt.org/) standard. Indexes the homepage, getting started, command/guide catalogue, DDaT role guides, use cases, and source distributions. Added to `sitemap.xml`.
 - `/arckit.pages` now generates `docs/llms.txt` in downstream ArcKit project repositories alongside `index.html` and `manifest.json`. Uses `raw.githubusercontent.com` URLs for project markdown artifacts and relative paths for the site-local dashboard and guides. Hand-curated `docs/llms.txt` files (without the ArcKit generation marker) are preserved across re-runs.
 - Document `ENABLE_PROMPT_CACHING_1H=1` (Claude Code v2.1.108+) recommendation in MCP setup and autoresearch guides for long ArcKit workflows and overnight optimisation runs (#215)
+- Phase 1 adoption of Claude Code v2.1.84+ plugin capabilities (#215, #297):
+  - `paths:` globs on all 4 plugin skills (`architecture-workflow`, `mermaid-syntax`, `plantuml-syntax`, `wardley-mapping`) for sharper auto-activation on ArcKit artifact patterns
+  - `if:` conditions (v2.1.85+) on `validate-arc-filename`, `score-validator`, and `update-manifest` hooks to narrow triggering to `projects/**` writes and avoid unnecessary Node process spawns
+  - `CLAUDE.md` documents new command frontmatter (`keep-coding-instructions`, `xhigh` effort value), agent frontmatter (`initialPrompt`), skill frontmatter (`paths:`), and hook `if:` field with permission rule syntax examples
 
 ### Changed
 
 - Bump minimum Claude Code version to v2.1.112 to unlock Opus 4.7 `xhigh` effort tier and Auto mode for deep-research agents and synthesis commands (#215)
+- `scripts/converter.py` extends Claude-only-field stripping for non-Claude targets: commands drop `keep-coding-instructions` and `paths`; agents drop `initialPrompt`, `maxTurns`, and `disallowedTools` in addition to `effort`; reference skills copied to extension dirs have `paths:` stripped post-copy (#215, #297)
 
 ## [4.6.6] - 2026-04-09
 
