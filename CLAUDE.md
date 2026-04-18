@@ -183,7 +183,12 @@ The converter strips `paths:` for non-Claude targets (Codex skills use their own
 
 ### Plugin User Configuration
 
-Plugin-level user config is declared in `arckit-claude/.claude-plugin/plugin.json` under the `userConfig` key (v2.1.83+). Claude Code prompts the user for each field at plugin enable time. Per-field schema supports `description` (shown in the prompt) and `sensitive: true` (stores the value in the system keychain rather than plaintext `settings.json`).
+Plugin-level user config is declared in `arckit-claude/.claude-plugin/plugin.json` under the `userConfig` key (v2.1.83+). Claude Code prompts the user for each field at plugin enable time. Per-field schema:
+
+- `title` (required, v2.1.114+) — short human-readable label shown at the top of the prompt
+- `type` (required, v2.1.114+) — one of `string`, `number`, `boolean`, `directory`, `file`
+- `description` (required) — longer help text shown under the prompt
+- `sensitive: true` (optional) — stores the value in the system keychain rather than plaintext `settings.json`; default `false`
 
 Current fields:
 

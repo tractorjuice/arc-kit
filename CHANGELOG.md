@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.12] - 2026-04-18
+
+### Fixed
+
+- Plugin manifest rejected by Claude Code v2.1.114 with `userConfig.*.type` and `userConfig.*.title` validation errors. Added the newly-required `title` and `type: "string"` fields to all five `userConfig` entries in `arckit-claude/.claude-plugin/plugin.json`. Without this fix the plugin fails to install on Claude Code v2.1.114+ (#302)
+
 ## [4.6.11] - 2026-04-18
 
 ### Added

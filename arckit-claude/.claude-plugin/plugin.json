@@ -1,6 +1,6 @@
 {
   "name": "arckit",
-  "version": "4.6.11",
+  "version": "4.6.12",
   "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 68 slash commands for generating architecture artifacts",
   "author": {
     "name": "TractorJuice",
@@ -19,21 +19,31 @@
   ],
   "userConfig": {
     "GOOGLE_API_KEY": {
+      "title": "Google API Key",
       "description": "Google API key for the google-developer-knowledge MCP server (optional — leave blank to disable)",
+      "type": "string",
       "sensitive": true
     },
     "DATA_COMMONS_API_KEY": {
+      "title": "Data Commons API Key",
       "description": "Data Commons API key for the datacommons-mcp MCP server (optional — leave blank to disable)",
+      "type": "string",
       "sensitive": true
     },
     "organisation_name": {
-      "description": "Organisation name used in generated Document Control headers (e.g. 'Acme Ltd' or 'HM Revenue & Customs')"
+      "title": "Organisation Name",
+      "description": "Organisation name used in generated Document Control headers (e.g. 'Acme Ltd' or 'HM Revenue & Customs')",
+      "type": "string"
     },
     "default_classification": {
-      "description": "Default document classification: PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE, or SECRET"
+      "title": "Default Classification",
+      "description": "Default document classification: PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE, or SECRET",
+      "type": "string"
     },
     "governance_framework": {
-      "description": "Default governance framework: 'UK Gov' for Service Standard/TCoP/NCSC CAF, or 'Generic' for non-government"
+      "title": "Governance Framework",
+      "description": "Default governance framework: 'UK Gov' for Service Standard/TCoP/NCSC CAF, or 'Generic' for non-government",
+      "type": "string"
     }
   }
 }
