@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.9] - 2026-04-18
+
+### Added
+
+- SessionStart version check now warns when the Claude Code client is below the documented minimum (v2.1.112). Detection prefers `$CLAUDE_CODE_VERSION` env var and falls back to `spawnSync('claude', ['--version'])` with a 2s timeout. Warning lists features lost on older clients (userConfig, hook `if:`, skill `paths:`, Opus 4.7 `xhigh`/Auto mode). Silent on detection failure (#215, #299)
+
 ## [4.6.8] - 2026-04-18
 
 ### Added

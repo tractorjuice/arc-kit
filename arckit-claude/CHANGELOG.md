@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.9] - 2026-04-18
+
+### Added
+
+- `version-check.mjs` SessionStart hook now also checks the running Claude Code client version and warns when below v2.1.112. Complements the pre-existing plugin self-update check; both warnings combine into a single `additionalContext` block when they fire together (#215, #299)
+
 ## [4.6.8] - 2026-04-18
 
 ### Added
