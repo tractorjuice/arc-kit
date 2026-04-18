@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `keep-coding-instructions: true` (Claude Code v2.1.94+) on `requirements`, `research`, `sobc`, `datascout`, and `framework` commands. These long-running commands now keep their template and traceability instructions in context across `/compact`, preventing Claude from "forgetting" Document Control structure, requirement ID conventions, and citation patterns mid-run (#215)
+
 ## [4.6.10] - 2026-04-18
 
 ### Added

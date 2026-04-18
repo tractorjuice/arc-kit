@@ -3,6 +3,7 @@ description: Discover external data sources (APIs, datasets, open data portals) 
 argument-hint: "<data need, e.g. 'real-time traffic data UK', 'company financials'>"
 tags: [data, api, open-data, datasets, data-sources, discovery, uk-gov, data-integration]
 effort: max
+keep-coding-instructions: true
 handoffs:
   - command: data-model
     description: Add discovered sources to data model
