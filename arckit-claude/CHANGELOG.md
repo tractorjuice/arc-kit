@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Plugin `userConfig` (Claude Code v2.1.83+) in `plugin.json` with 5 fields: `GOOGLE_API_KEY` and `DATA_COMMONS_API_KEY` (sensitive, stored in system keychain) for MCP authentication, plus `organisation_name`, `default_classification`, and `governance_framework` for Document Control defaults. Claude Code prompts once at enable time (#215)
+
+### Changed
+
+- `arckit-claude/.mcp.json` now references `${user_config.GOOGLE_API_KEY}` and `${user_config.DATA_COMMONS_API_KEY}` instead of shell env vars. The converter rewrites these to `${KEY}` for non-Claude extensions so Codex/Gemini/OpenCode continue to read from the shell environment.
+
 ## [4.6.7] - 2026-04-18
 
 ### Added

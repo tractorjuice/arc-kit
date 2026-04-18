@@ -181,6 +181,23 @@ Plugin skills live in `arckit-claude/skills/{name}/SKILL.md` with YAML frontmatt
 
 The converter strips `paths:` for non-Claude targets (Codex skills use their own `allow_implicit_invocation` mechanism).
 
+### Plugin User Configuration
+
+Plugin-level user config is declared in `arckit-claude/.claude-plugin/plugin.json` under the `userConfig` key (v2.1.83+). Claude Code prompts the user for each field at plugin enable time. Per-field schema supports `description` (shown in the prompt) and `sensitive: true` (stores the value in the system keychain rather than plaintext `settings.json`).
+
+Current fields:
+
+- `GOOGLE_API_KEY` (sensitive) — powers the `google-developer-knowledge` MCP server
+- `DATA_COMMONS_API_KEY` (sensitive) — powers the `datacommons-mcp` MCP server
+- `organisation_name` — injected into generated Document Control headers
+- `default_classification` — default value for Document Control `Classification` field (PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET)
+- `governance_framework` — `UK Gov` for Service Standard/TCoP/NCSC CAF or `Generic`
+
+Runtime substitution uses `${user_config.KEY}`:
+
+- **`.mcp.json`** — already wired for `GOOGLE_API_KEY` and `DATA_COMMONS_API_KEY` headers. The converter rewrites `${user_config.KEY}` → `${KEY}` for non-Claude extensions (Codex, Gemini, OpenCode, Copilot) since those platforms fall back to shell env vars.
+- **Command / agent bodies** — non-sensitive values can be referenced (e.g. `${user_config.organisation_name}` in a Document Control block). Sensitive values are never substituted into prompt content.
+
 ### Plugin Hooks
 
 Hook handlers live under `arckit-claude/hooks/` and are registered in `arckit-claude/hooks/hooks.json`. Supported hook events include `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop`, `StopFailure`, `PermissionRequest`, plus the newer `PostCompact` (v2.1.76), `FileChanged`/`CwdChanged`/`TaskCreated` (v2.1.83–84), `PermissionDenied` (v2.1.89), and `PreCompact` blocking (v2.1.105).

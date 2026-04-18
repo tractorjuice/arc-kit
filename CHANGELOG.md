@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Plugin `userConfig` (Claude Code v2.1.83+) — plugin prompts at enable time for `GOOGLE_API_KEY` / `DATA_COMMONS_API_KEY` (both sensitive, stored in system keychain) plus org defaults (`organisation_name`, `default_classification`, `governance_framework`). `.mcp.json` uses `${user_config.KEY}` placeholders; the converter rewrites these to `${KEY}` shell env vars for Codex/Gemini/OpenCode/Copilot targets (#215)
+
+### Changed
+
+- Existing users enabling v4.6.8+ in Claude Code will be prompted once for MCP API keys and org defaults; existing `GOOGLE_API_KEY` / `DATA_COMMONS_API_KEY` shell env vars continue to work for non-plugin contexts (Codex / Gemini / OpenCode / Copilot).
+
 ## [4.6.7] - 2026-04-18
 
 ### Added
