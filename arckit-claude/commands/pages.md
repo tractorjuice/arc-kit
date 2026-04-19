@@ -256,6 +256,31 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | GLND | `ARC-*-GLND-*.md` | Government Landscape Analysis |
 | **Reporting** | | | |
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
+| **Compliance (Community-contributed — EU)** | | | |
+| | RGPD | `ARC-*-RGPD-*.md` | GDPR Compliance Assessment |
+| | NIS2 | `ARC-*-NIS2-*.md` | NIS2 Compliance Assessment |
+| | AIACT | `ARC-*-AIACT-*.md` | EU AI Act Compliance Assessment |
+| | DORA | `ARC-*-DORA-*.md` | DORA Compliance Assessment |
+| | CRA | `ARC-*-CRA-*.md` | EU Cyber Resilience Act Assessment |
+| | DSA | `ARC-*-DSA-*.md` | EU Digital Services Act Assessment |
+| | DATAACT | `ARC-*-DATAACT-*.md` | EU Data Act Compliance Assessment |
+| **Compliance (Community-contributed — French Government)** | | | |
+| | CNIL | `ARC-*-CNIL-*.md` | CNIL / French GDPR Assessment |
+| | SECNUM | `ARC-*-SECNUM-*.md` | SecNumCloud 3.2 Assessment |
+| | DINUM | `ARC-*-DINUM-*.md` | DINUM Standards Assessment |
+| | ANSSI | `ARC-*-ANSSI-*.md` | ANSSI Security Posture Assessment |
+| | DR | `ARC-*-DR-*.md` | Diffusion Restreinte Handling Assessment |
+| | ALGO | `ARC-*-ALGO-*.md` | Public Algorithm Transparency Notice |
+| | PSSI | `ARC-*-PSSI-*.md` | Information System Security Policy |
+| **Architecture (Community-contributed — French Government)** | | | |
+| | CARTO | `ARC-*-CARTO-*.md` | ANSSI Information System Cartography |
+| **Governance (Community-contributed — French Government)** | | | |
+| | EBIOS | `ARC-*-EBIOS-*.md` | EBIOS Risk Manager Study |
+| **Procurement (Community-contributed — French Government)** | | | |
+| | MARPUB | `ARC-*-MARPUB-*.md` | French Public Procurement |
+| | REUSE | `ARC-*-REUSE-*.md` | Public Code Reuse Assessment |
+
+> **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit.pages` includes the artifact in the dashboard.
 
 ### Reference: Manifest Structure
 
