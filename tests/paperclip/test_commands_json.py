@@ -24,7 +24,7 @@ def test_commands_is_list(commands):
 
 
 def test_commands_count(commands):
-    assert len(commands) == 68, f"Expected 68 commands, got {len(commands)}"
+    assert len(commands) == 86, f"Expected 86 commands, got {len(commands)}"
 
 
 def test_every_entry_has_required_fields(commands):
