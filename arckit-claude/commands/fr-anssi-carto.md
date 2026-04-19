@@ -1,5 +1,5 @@
 ---
-description: "[EXPERIMENTAL] Produce an ANSSI-methodology information system cartography across four reading levels — business, application, system, and network"
+description: "[COMMUNITY] Produce an ANSSI-methodology information system cartography across four reading levels — business, application, system, and network"
 argument-hint: "<project ID or system description, e.g. '001', 'ministry human resources platform with 3 data centres'>"
 effort: high
 handoffs:
@@ -18,7 +18,7 @@ handoffs:
 ---
 
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect produce an **ANSSI information system cartography** following the ANSSI guide "Cartographie du système d'information" (2021). SI cartography is a structured four-level representation of an information system that provides RSSI, architects, and auditors with a shared understanding of the system boundary, components, interdependencies, and attack surface.
 

@@ -232,9 +232,9 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 
 ---
 
-## EU & French Regulatory Compliance (Experimental)
+## EU & French Regulatory Compliance (Community)
 
-> ⚠️ **Experimental — community-contributed.** The 18 commands below were contributed by [@thomas-jardinet](https://github.com/thomas-jardinet) and have not yet been validated against current ANSSI / CNIL / EU regulatory text. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations may lag the current source — verify before use. Each command surfaces with an `[EXPERIMENTAL]` prefix in `/help` listings and renders a warning banner before generating.
+> ⚠️ **Community-contributed — domain-maintained by [@thomas-jardinet](https://github.com/thomas-jardinet).** The 18 commands below cover EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act) and French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, etc.). They are not part of the officially-maintained baseline — output should be reviewed by qualified DPO / RSSI / legal counsel before reliance, and citations to ANSSI / CNIL / EU regulations may lag current source text. Each command surfaces with a `[COMMUNITY]` prefix in `/help` listings and renders a warning banner before generating.
 
 **EU regulations** (member-state-neutral baselines, applicable across EU/EEA):
 

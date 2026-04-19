@@ -1,10 +1,10 @@
 ---
-description: '[EXPERIMENTAL] Conduct an EBIOS Risk Manager risk analysis study following the ANSSI methodology — five workshops from study framing to risk treatment and homologation recommendation'
+description: '[COMMUNITY] Conduct an EBIOS Risk Manager risk analysis study following the ANSSI methodology — five workshops from study framing to risk treatment and homologation recommendation'
 agent: 'agent'
 tools: ['readFile', 'editFiles', 'runCommand', 'codebase', 'search']
 ---
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect conduct an **EBIOS Risk Manager risk analysis** following the ANSSI (Agence Nationale de la Sécurité des Systèmes d'Information) methodology. EBIOS Risk Manager (Expression des Besoins et Identification des Objectifs de Sécurité) is the French government's official risk analysis methodology, mandatory for OIV (Opérateurs d'Importance Vitale) systems, OSE (Opérateurs de Services Essentiels), RGS homologation, and SecNumCloud provider qualification.
 

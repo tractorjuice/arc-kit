@@ -1,10 +1,10 @@
 ---
-description: '[EXPERIMENTAL] Assess compliance with ANSSI security recommendations — Guide d''hygiène informatique (42 measures) and cloud security recommendations'
+description: '[COMMUNITY] Assess compliance with ANSSI security recommendations — Guide d''hygiène informatique (42 measures) and cloud security recommendations'
 agent: 'agent'
 tools: ['readFile', 'editFiles', 'runCommand', 'codebase', 'search']
 ---
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect assess compliance with **ANSSI security recommendations** for a French information system. ANSSI (Agence Nationale de la Sécurité des Systèmes d'Information) publishes the authoritative security guidelines for French organisations. The primary reference is the **Guide d'hygiène informatique** (42 measures), complemented by the **ANSSI cloud security recommendations** (2021) for cloud-hosted or hybrid systems.
 

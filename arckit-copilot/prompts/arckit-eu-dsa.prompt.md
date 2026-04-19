@@ -1,10 +1,10 @@
 ---
-description: '[EXPERIMENTAL] Assess EU Digital Services Act (DSA, Regulation 2022/2065) compliance obligations for online intermediary services, platforms, and very large online platforms'
+description: '[COMMUNITY] Assess EU Digital Services Act (DSA, Regulation 2022/2065) compliance obligations for online intermediary services, platforms, and very large online platforms'
 agent: 'agent'
 tools: ['readFile', 'editFiles', 'runCommand', 'codebase', 'search']
 ---
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect generate a **EU Digital Services Act (DSA) Compliance Assessment** (Regulation EU 2022/2065) for an online intermediary service operating in the European Union. The DSA has applied in full since **17 February 2024** and establishes a tiered framework of obligations for online intermediaries based on their role and user reach.
 

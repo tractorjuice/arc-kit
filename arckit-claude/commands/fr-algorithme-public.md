@@ -1,5 +1,5 @@
 ---
-description: "[EXPERIMENTAL] Generate a public algorithm transparency notice complying with Article L311-3-1 CRPA (Loi République Numérique) for French public administration algorithmic decisions"
+description: "[COMMUNITY] Generate a public algorithm transparency notice complying with Article L311-3-1 CRPA (Loi République Numérique) for French public administration algorithmic decisions"
 argument-hint: "<project ID or algorithm description, e.g. '001', 'school admissions prioritisation algorithm used by the rectorate'>"
 effort: medium
 handoffs:
@@ -18,7 +18,7 @@ handoffs:
 ---
 
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect generate a **public algorithm transparency notice** complying with Article L311-3-1 of the Code des Relations entre le Public et l'Administration (CRPA), introduced by the **Loi pour une République Numérique** (7 October 2016, Article 4). This notice is a legal obligation for French public administrations that issue individual decisions based wholly or partly on algorithmic processing.
 

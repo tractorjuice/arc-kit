@@ -1,5 +1,5 @@
 ---
-description: "[EXPERIMENTAL] Generate French public procurement documentation aligned with code de la commande publique, UGAP catalogue, and DINUM digital standards"
+description: "[COMMUNITY] Generate French public procurement documentation aligned with code de la commande publique, UGAP catalogue, and DINUM digital standards"
 argument-hint: "<project ID or procurement description, e.g. '001', 'digital identity platform €2.5M ministry'>"
 effort: high
 handoffs:
@@ -11,7 +11,7 @@ handoffs:
 ---
 
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect generate **French public procurement documentation** (Dossier de Consultation des Entreprises) aligned with the Code de la Commande Publique, UGAP, and DINUM digital doctrine requirements.
 

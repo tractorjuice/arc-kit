@@ -1,8 +1,8 @@
 ---
-description: "[EXPERIMENTAL] Assess Diffusion Restreinte (DR) handling compliance — marking, storage, transmission, and destruction rules for French administrative sensitive information"
+description: "[COMMUNITY] Assess Diffusion Restreinte (DR) handling compliance — marking, storage, transmission, and destruction rules for French administrative sensitive information"
 ---
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect assess **Diffusion Restreinte (DR) handling compliance** for a French information system. DR is a French administrative protection mention applied to information whose disclosure would harm the interests of the French State or third parties, without reaching the level requiring formal classification under IGI 1300 (Confidentiel Défense and above).
 

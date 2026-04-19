@@ -1,9 +1,9 @@
 ---
 name: arckit-fr-dinum
-description: "[EXPERIMENTAL] Assess compliance with French digital administration standards — RGI, RGAA, RGESN, RGS, and DINUM doctrine cloud de l'État"
+description: "[COMMUNITY] Assess compliance with French digital administration standards — RGI, RGAA, RGESN, RGS, and DINUM doctrine cloud de l'État"
 ---
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect generate a **DINUM Standards Compliance Assessment** for a French public sector digital service. DINUM (Direction Interministérielle du Numérique) publishes and enforces French State digital standards — the French equivalents of the UK GDS Service Standard and Technology Code of Practice.
 

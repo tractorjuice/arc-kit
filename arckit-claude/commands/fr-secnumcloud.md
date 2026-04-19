@@ -1,5 +1,5 @@
 ---
-description: "[EXPERIMENTAL] Assess SecNumCloud 3.2 qualification compliance for French sovereign cloud procurement and OIV/OSE obligations"
+description: "[COMMUNITY] Assess SecNumCloud 3.2 qualification compliance for French sovereign cloud procurement and OIV/OSE obligations"
 argument-hint: "<project ID or cloud service description, e.g. '001', 'health data platform for CHR'>"
 effort: high
 handoffs:
@@ -14,7 +14,7 @@ handoffs:
 ---
 
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect generate a **SecNumCloud 3.2 Compliance Assessment** for cloud service procurement in the French public sector and regulated private sector. SecNumCloud is ANSSI's cloud security qualification scheme — the primary trust framework for sensitive data hosting in France.
 

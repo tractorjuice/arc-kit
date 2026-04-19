@@ -1,8 +1,8 @@
 ---
-description: "[EXPERIMENTAL] Assess CNIL-specific GDPR obligations for French deployments — cookies, health data (HDS), minors, délibérations CNIL, and French enforcement patterns"
+description: "[COMMUNITY] Assess CNIL-specific GDPR obligations for French deployments — cookies, health data (HDS), minors, délibérations CNIL, and French enforcement patterns"
 ---
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect generate a **French CNIL Compliance Assessment** — the French-specific GDPR layer applied by the CNIL (Commission Nationale de l'Informatique et des Libertés). Run this after `/arckit.eu-rgpd` to add French obligations that go beyond the EU GDPR baseline.
 

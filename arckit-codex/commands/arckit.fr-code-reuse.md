@@ -1,8 +1,8 @@
 ---
-description: "[EXPERIMENTAL] Assess public code reuse opportunities before building from scratch — search code.gouv.fr, the SILL, and European public code repositories; produce a build-vs-reuse decision matrix"
+description: "[COMMUNITY] Assess public code reuse opportunities before building from scratch — search code.gouv.fr, the SILL, and European public code repositories; produce a build-vs-reuse decision matrix"
 ---
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect assess **public code reuse opportunities** before commissioning new development for a French public administration project. French administrations are required by the **Circulaire du Premier Ministre n°6264-SG (27 April 2021)** and the **Loi pour une République Numérique (2016, Art. 16)** to:
 
