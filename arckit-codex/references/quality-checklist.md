@@ -466,6 +466,18 @@ All artifacts must pass these 10 checks:
 - DSFR applicability assessed for citizen-facing services
 - Executive summary compliance table populated per referential
 
+### IRN -- Indice de Résilience Numérique Self-Assessment
+
+- All 8 IRN pillars present (RES-1 through RES-8)
+- Organisational layers in scope determined (5 layers, each marked in/out of scope with justification)
+- R/NR scoring placeholders created — AI must NOT pre-fill scores; official aDRI grid must be applied by the assessor
+- Link to official aDRI repository displayed prominently (gitlab.com/digitalresilienceinitiative/adri-irn)
+- Licence incompatibility note (CC BY-NC-ND 4.0 vs MIT) and living-repo rationale included in document
+- Scoring summary matrix (8 pillars × 5 layers) present
+- Preliminary observations from project artifacts noted (not from reproduced aDRI criteria)
+- Document classified OFFICIAL-SENSITIVE (dependency mapping reveals strategic vulnerabilities)
+- IRN framework version referenced (verify current version at official repository)
+
 ### CNIL -- French GDPR / CNIL Assessment
 
 - CNIL cookie guidelines (Délibération 2020-091) assessed — reject button prominence, no cookie wall, 6-month validity

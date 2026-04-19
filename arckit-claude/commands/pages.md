@@ -275,6 +275,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | **Architecture (Community-contributed — French Government)** | | | |
 | | CARTO | `ARC-*-CARTO-*.md` | ANSSI Information System Cartography |
 | **Governance (Community-contributed — French Government)** | | | |
+| | IRN | `ARC-*-IRN-*.md` | IRN — Indice de Résilience Numérique |
 | | EBIOS | `ARC-*-EBIOS-*.md` | EBIOS Risk Manager Study |
 | **Procurement (Community-contributed — French Government)** | | | |
 | | MARPUB | `ARC-*-MARPUB-*.md` | French Public Procurement |

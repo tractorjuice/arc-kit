@@ -92,6 +92,7 @@ export const DOC_TYPES = {
   'DSA':       { name: 'EU Digital Services Act Assessment',           category: 'Compliance' },
   'DATAACT':   { name: 'EU Data Act Compliance Assessment',            category: 'Compliance' },
   // French Government (Community-contributed, maintained by @thomas-jardinet)
+  'IRN':       { name: 'IRN — Indice de Résilience Numérique',         category: 'Governance' },
   'CNIL':      { name: 'CNIL / French GDPR Assessment',                category: 'Compliance' },
   'SECNUM':    { name: 'SecNumCloud 3.2 Assessment',                   category: 'Compliance' },
   'MARPUB':    { name: 'French Public Procurement',                    category: 'Procurement' },

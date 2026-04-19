@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Community-contributed)
+
+- `/arckit.fr-irn` — [COMMUNITY] structure an IRN (Indice de Résilience Numérique) self-assessment following the aDRI framework — 8 resilience pillars × 5 organisational layers. References the official methodology at gitlab.com/digitalresilienceinitiative/adri-irn rather than reproducing scoring criteria (CC BY-NC-ND 4.0 licence incompatible with ArcKit's MIT licence; living standard that evolves actively). Generates `ARC-{id}-IRN-v1.0.md` with scoring scaffold, pre-populated context from existing project artifacts, and clear handoff to the official aDRI evaluation grid.
+
 ## [4.7.2] - 2026-04-19
 
 ### Added
