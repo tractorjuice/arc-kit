@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.7.2] - 2026-04-19
+
+### Added
+
+- `## Key References` tables in all 18 EU/French community commands (`arckit-claude/commands/{eu-,fr-}*.md`) pointing to authoritative regulatory sources — EUR-Lex, ANSSI, CNIL, EDPB, ENISA, MITRE (#321)
+- 18 new usage guides in `arckit-claude/docs/guides/{eu-,fr-}*.md` covering every EU/French community command. All guides carry `Guide Origin: Community` to preserve provenance. Each guide follows the standard ArcKit guide format: inputs table, command syntax, document structure, workflow, review checklist (#321)
+
+### Changed
+
+- Regenerated extension artefacts for the 18 community commands via `scripts/converter.py`
+
 ## [4.7.1] - 2026-04-19
 
 ### Fixed

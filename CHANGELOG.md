@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.7.2] - 2026-04-19
+
+### Added
+
+- `## Key References` tables in all 18 EU/French community commands pointing to authoritative regulatory sources (EUR-Lex, ANSSI, CNIL, EDPB, ENISA, MITRE), following the existing pattern used by official ArcKit commands (#321)
+- 36 new usage guides (18 commands × 2 locations: `docs/guides/` + `arckit-claude/docs/guides/`) for the EU/FR community commands, all carrying `Guide Origin: Community` to preserve provenance. Each guide follows the standard ArcKit guide format: inputs table, syntax, document structure, one-page workflow, review checklist (#321)
+- `tests/plugin/test_template_consistency.py` — parametrised test asserting every command-referenced template exists in both `arckit-claude/templates/` and `.arckit/templates/`, and that the two directories stay in sync (#321)
+- `tests/plugin/test_commands_structure.py` — `STRICT_COMMANDS` set covering the 18 community commands; enforces presence of `## User Input`, `## Instructions`, `## Success Criteria`, `## Example Usage`, labelled code fences, and no trailing spaces (#321)
+- `docs/superpowers/specs/2026-04-19-community-commands-table-design.md` and `docs/superpowers/plans/2026-04-19-community-commands-table.md` — spec and implementation plan for adding a dedicated community-commands table to `docs/commands.html` (not yet implemented)
+
+### Fixed
+
+- Multiple stale command-count references across `docs/`: `commands.html` hero stat, `<h2>` heading, meta tags, schema, and filter UI all showed `67` instead of the correct baseline of `68` (the `/arckit.grants` row was also missing from the main table and has been added). `docs/getting-started.html` updated from "67 commands" to "68 commands" in 5 locations
+- Internal inconsistency in `docs/DEPENDENCY-MATRIX.md`: REQ fan-in was listed as "36 commands" in one place and "37 commands" in another (list contains 37); stakeholders fan-out was listed as both "22 commands" and "23 commands" (list contains 23). Corrected to match the actual lists
+- Stale historical reference "all 40 commands across 16 tiers" in `docs/WORKFLOW-DIAGRAMS.md` updated to 68
+
+### Changed
+
+- `README.md` and `docs/DEPENDENCY-MATRIX.md` updated to document the 18 EU/FR community commands: README adds a `### Phase 14.5: Compliance Assessment (EU and French Government)` workflow section (top-line count stays at 68 — community counted separately per policy); DEPENDENCY-MATRIX adds a `2026-04-19` changelog entry with dependency graph and typical compliance paths (#321)
+- Regenerated extension artefacts for the 18 community commands via `scripts/converter.py`: Paperclip `src/data/commands.json` refreshed to include new Key References; 90 community guide files copied into extension directories (`arckit-codex/docs/guides/`, `arckit-copilot/docs/guides/`, `arckit-gemini/docs/guides/`, `arckit-opencode/docs/guides/`, `arckit-paperclip/docs/guides/`)
+
 ## [4.7.1] - 2026-04-19
 
 ### Fixed
