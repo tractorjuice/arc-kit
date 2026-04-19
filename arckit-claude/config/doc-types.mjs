@@ -1,8 +1,15 @@
 /**
- * ArcKit Document Type Codes — Single Source of Truth
+ * ArcKit Document Type Codes — Single Source of Truth (for hooks)
  *
  * Every hook and tool that needs doc-type metadata imports from here.
- * If you add or rename a type code, update ONLY this file.
+ * If you add or rename a type code, update this file FIRST.
+ *
+ * ⚠️ DUAL REGISTRATION REQUIRED — also update `arckit-claude/commands/pages.md`
+ * (the `/arckit.pages` dashboard generator has its own "Only include these
+ * known artifact types" allow-list inside the prompt). Without an entry
+ * there, generated artifacts are silently omitted from the rendered
+ * dashboard sidebar even though the manifest hook records them correctly.
+ * See PR #317 for context — long term the two registries should be unified.
  *
  * NOTE: scripts/bash/generate-document-id.sh has its own MULTI_INSTANCE_TYPES
  * list (bash, 10 entries). Keep it in sync manually — low drift risk.
