@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.13] - 2026-04-19
+
+### Fixed
+
+- `stale-artifact-scan` monitor exited 1 mid-loop in real ArcKit repos. Two bundled fixes in `arckit-claude/scripts/bash/detect-stale-artifacts.sh`: (a) dropped an unused `source common.sh` line that was leaking `errexit + pipefail` into the monitor and aborting the script the first time a `grep | sed | tr` pipeline returned no match; (b) made the Document Control `Status` grep robust to `**markdown bold**` and anchored it so it no longer accidentally matches `| status |` rows in entity-attribute tables further down the file. Net effect: monitor now exits 0 and surfaces both review-overdue *and* DRAFT-unchanged artifacts (the latter were silently skipped before) (#307)
+
 ## [4.6.12] - 2026-04-18
 
 ### Fixed

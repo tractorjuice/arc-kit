@@ -15,10 +15,6 @@
 
 set -u
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# shellcheck source=./common.sh
-source "$SCRIPT_DIR/common.sh" 2>/dev/null || true
-
 cwd="$(pwd)"
 if [[ ! -d "$cwd/projects" ]]; then
   exit 0
@@ -39,11 +35,14 @@ fi
 while IFS= read -r -d '' file; do
   [[ $stale_count -ge $max_report ]] && break
 
-  # Pull Document Control table fields
+  # Pull Document Control table fields. Anchor Status to a row whose label is
+  # exactly "Status" (with optional **markdown bold**) so we don't match
+  # entity-attribute tables further down the file.
   next_review="$(grep -m1 -i "Next Review Date" "$file" 2>/dev/null \
     | sed -E 's/.*\| *([0-9]{4}-[0-9]{2}-[0-9]{2}).*/\1/')"
-  status="$(grep -m1 -i "^| *Status" "$file" 2>/dev/null \
-    | sed -E 's/.*\| *(DRAFT|IN_REVIEW|APPROVED|PUBLISHED|SUPERSEDED|ARCHIVED).*/\1/i' \
+  status="$(grep -m1 -iE '^\| *\*{0,2} *Status *\*{0,2} *\|' "$file" 2>/dev/null \
+    | grep -oiE '(DRAFT|IN_REVIEW|APPROVED|PUBLISHED|SUPERSEDED|ARCHIVED)' \
+    | head -1 \
     | tr '[:lower:]' '[:upper:]')"
   last_modified="$(grep -m1 -i "Last Modified" "$file" 2>/dev/null \
     | sed -E 's/.*\| *([0-9]{4}-[0-9]{2}-[0-9]{2}).*/\1/')"

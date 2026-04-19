@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.6.13] - 2026-04-19
+
+### Fixed
+
+- `stale-artifact-scan` monitor (`scripts/bash/detect-stale-artifacts.sh`) failed with exit 1 in real ArcKit repos, terminating mid-loop after the first artifact. Root cause: the script sourced `common.sh` (whose `set -euo pipefail` leaked into the monitor), so any `grep | sed | tr` pipeline that returned no match would abort via the assignment. Removed the unused `source` line. Also rewrote the Document Control `Status` grep to handle bolded markdown (`| **Status** |`) and anchored it so it no longer matches unrelated `| status |` rows in entity-attribute tables. Reproduced and verified against `tractorjuice/arckit-test-project-v2-hmrc-chatbot` (was: 1 line + exit 1; now: 7 lines + exit 0) (#307)
+
 ## [4.6.12] - 2026-04-18
 
 ### Fixed
