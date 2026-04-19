@@ -108,6 +108,7 @@ For each of the **8 IRN pillars**, create a structured section:
 **RES-8 — Résilience Environnementale** (Carbon footprint, green IT, digital sustainability)
 
 For each pillar × organisational layer in scope:
+
 - Summarise what is known from project artifacts (pre-populate where possible)
 - Leave a scoring placeholder (R / NR / ? — to be filled using the official aDRI grid)
 - Flag any obvious dependencies or risks identified from existing artifacts
