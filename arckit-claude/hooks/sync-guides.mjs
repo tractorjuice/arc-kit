@@ -134,6 +134,17 @@ const GUIDE_CATEGORIES = {
   // Reporting
   'pages': 'Reporting', 'story': 'Reporting', 'presentation': 'Reporting',
   'glossary': 'Reporting',
+  // Community — EU regulatory (all Compliance)
+  'eu-ai-act': 'Compliance', 'eu-cra': 'Compliance', 'eu-data-act': 'Compliance',
+  'eu-dora': 'Compliance', 'eu-dsa': 'Compliance', 'eu-nis2': 'Compliance',
+  'eu-rgpd': 'Compliance',
+  // Community — French public sector (majority Compliance, some Architecture/Governance/Procurement)
+  'fr-algorithme-public': 'Compliance', 'fr-anssi': 'Compliance',
+  'fr-dinum': 'Compliance', 'fr-pssi': 'Compliance',
+  'fr-rgpd': 'Compliance', 'fr-secnumcloud': 'Compliance',
+  'fr-anssi-carto': 'Architecture', 'fr-code-reuse': 'Architecture',
+  'fr-dr': 'Governance', 'fr-ebios': 'Governance',
+  'fr-marche-public': 'Procurement',
 };
 
 const GUIDE_STATUS = {};
@@ -141,6 +152,7 @@ for (const name of ['plan','principles','stakeholders','stakeholder-analysis','r
 for (const name of ['dpia','research','strategy','roadmap','adr','hld-review','dld-review','backlog','servicenow','analyze','service-assessment','tcop','secure','presentation','artifact-health','design-review','procurement','knowledge-compounding','c4-layout-science','security-hooks','codes-of-practice','data-quality-framework','govs-007-security','national-data-strategy','upgrading','start','conformance','productivity','remote-control','mcp-servers','search','score','impact']) GUIDE_STATUS[name] = 'beta';
 for (const name of ['data-mesh-contract','ai-playbook','atrs','pages','template-builder']) GUIDE_STATUS[name] = 'alpha';
 for (const name of ['platform-design','wardley','azure-research','aws-research','gcp-research','datascout','dos','gcloud-search','gcloud-clarify','trello','devops','mlops','finops','operationalize','mod-secure','jsp-936','migration','pinecone-mcp','dfd','framework','health','maturity-model','glossary','init']) GUIDE_STATUS[name] = 'experimental';
+for (const name of ['eu-ai-act','eu-cra','eu-data-act','eu-dora','eu-dsa','eu-nis2','eu-rgpd','fr-algorithme-public','fr-anssi','fr-anssi-carto','fr-code-reuse','fr-dinum','fr-dr','fr-ebios','fr-marche-public','fr-pssi','fr-rgpd','fr-secnumcloud']) GUIDE_STATUS[name] = 'community';
 
 const ROLE_FAMILIES = {
   'enterprise-architect': 'Architecture', 'solution-architect': 'Architecture',
