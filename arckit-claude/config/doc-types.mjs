@@ -76,6 +76,26 @@ export const DOC_TYPES = {
   'GRNT':      { name: 'Grants Research',                  category: 'Research' },
   // Reporting
   'STORY':     { name: 'Project Story',                    category: 'Reporting' },
+  // EU Regulatory Compliance (Community-contributed, maintained by @thomas-jardinet)
+  'RGPD':      { name: 'GDPR Compliance Assessment',                   category: 'Compliance' },
+  'NIS2':      { name: 'NIS2 Compliance Assessment',                   category: 'Compliance' },
+  'AIACT':     { name: 'EU AI Act Compliance Assessment',              category: 'Compliance' },
+  'DORA':      { name: 'DORA Compliance Assessment',                   category: 'Compliance' },
+  'CRA':       { name: 'EU Cyber Resilience Act Assessment',           category: 'Compliance' },
+  'DSA':       { name: 'EU Digital Services Act Assessment',           category: 'Compliance' },
+  'DATAACT':   { name: 'EU Data Act Compliance Assessment',            category: 'Compliance' },
+  // French Government (Community-contributed, maintained by @thomas-jardinet)
+  'CNIL':      { name: 'CNIL / French GDPR Assessment',                category: 'Compliance' },
+  'SECNUM':    { name: 'SecNumCloud 3.2 Assessment',                   category: 'Compliance' },
+  'MARPUB':    { name: 'French Public Procurement',                    category: 'Procurement' },
+  'DINUM':     { name: 'DINUM Standards Assessment',                   category: 'Compliance' },
+  'EBIOS':     { name: 'EBIOS Risk Manager Study',                     category: 'Governance' },
+  'ANSSI':     { name: 'ANSSI Security Posture Assessment',            category: 'Compliance' },
+  'CARTO':     { name: 'ANSSI Information System Cartography',         category: 'Architecture' },
+  'DR':        { name: 'Diffusion Restreinte Handling Assessment',     category: 'Compliance' },
+  'ALGO':      { name: 'Public Algorithm Transparency Notice',         category: 'Compliance' },
+  'PSSI':      { name: 'Information System Security Policy',           category: 'Compliance' },
+  'REUSE':     { name: 'Public Code Reuse Assessment',                 category: 'Procurement' },
 };
 
 // Multi-instance types that require sequence numbers (e.g. ADR-001, RSCH-002)
