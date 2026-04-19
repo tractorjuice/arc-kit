@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.7.0] - 2026-04-19
+
+### Added (Community-contributed)
+
+> ⚠️ The 18 EU and French regulatory commands below are community-contributed and have not yet been validated against current ANSSI / CNIL / EU regulatory text. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations may lag the current source — verify before use. Domain maintainer: [@thomas-jardinet](https://github.com/thomas-jardinet) — auto-requested for review on `eu-*` / `fr-*` changes via `.github/CODEOWNERS`.
+
+**EU regulations** (member-state-neutral):
+
+- `/arckit.eu-rgpd` — GDPR (EU 2016/679) compliance assessment
+- `/arckit.eu-nis2` — NIS2 Directive — operators of essential / important entities
+- `/arckit.eu-ai-act` — EU AI Act (Regulation 2024/1689) — risk classification + conformity
+- `/arckit.eu-dora` — DORA (EU 2022/2554) — financial sector ICT resilience
+- `/arckit.eu-cra` — Cyber Resilience Act (Regulation 2024/2847) — products with digital elements
+- `/arckit.eu-dsa` — Digital Services Act (Regulation 2022/2065) — platforms / VLOPs
+- `/arckit.eu-data-act` — Data Act (Regulation 2023/2854) — connected products / DAPS
+
+**French government** (apply on top of EU baseline):
+
+- `/arckit.fr-secnumcloud` — SecNumCloud 3.2 qualification (sovereign cloud, OIV/OSE)
+- `/arckit.fr-dinum` — RGI / RGAA / RGESN / RGS / doctrine cloud de l'État
+- `/arckit.fr-marche-public` — Code de la commande publique procurement docs
+- `/arckit.fr-rgpd` — CNIL-specific GDPR layer (cookies, HDS, age 15)
+- `/arckit.fr-ebios` — EBIOS Risk Manager 5-workshop study (ANSSI)
+- `/arckit.fr-anssi` — ANSSI Guide d'hygiène informatique (42 measures)
+- `/arckit.fr-anssi-carto` — ANSSI IS cartography (4 reading levels)
+- `/arckit.fr-dr` — Diffusion Restreinte handling (II 901/SGDSN/ANSSI)
+- `/arckit.fr-algorithme-public` — Article L311-3-1 CRPA transparency notice
+- `/arckit.fr-pssi` — Information System Security Policy per ANSSI/RGS
+- `/arckit.fr-code-reuse` — Public code reuse (code.gouv.fr, SILL, EUPL)
+
+### Added
+
+- `.github/CODEOWNERS` — establishes domain ownership; @thomas-jardinet is auto-requested for review on `eu-*` / `fr-*` changes (#316)
+
+### Fixed
+
+- `validate-arc-filename.mjs` PreToolUse hook was blocking every Write call from the new EU and FR commands with exit code 2 ("Unknown document type code"). Registered all 18 codes (RGPD, NIS2, AIACT, DORA, CRA, DSA, DATAACT, CNIL, SECNUM, MARPUB, DINUM, EBIOS, ANSSI, CARTO, DR, ALGO, PSSI, REUSE) in `config/doc-types.mjs` — the single source of truth that all 6 ArcKit hooks import for display names and categorisation. The 7 EU commands shipped via #314 had been broken at the hook layer until #316 hotfixed them (#316)
+
 ## [4.6.13] - 2026-04-19
 
 ### Fixed

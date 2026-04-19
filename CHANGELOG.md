@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.7.0] - 2026-04-19
+
 ### Added (Community-contributed)
 
-> ⚠️ The EU regulatory commands below are community-contributed and have not yet been validated against current EU regulatory text. Output should be reviewed by qualified DPO / legal counsel before reliance. Citations may lag the current source — verify before use. Domain maintainer: [@thomas-jardinet](https://github.com/thomas-jardinet).
+> ⚠️ The 18 EU and French regulatory commands below are community-contributed and have not yet been validated against current ANSSI / CNIL / EU regulatory text. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations may lag the current source — verify before use. Domain maintainer: [@thomas-jardinet](https://github.com/thomas-jardinet) — auto-requested for review on `eu-*` / `fr-*` changes via `.github/CODEOWNERS`.
 
 - `/arckit.eu-rgpd` — [COMMUNITY] generate GDPR (EU 2016/679) compliance assessment for EU/EEA data processing — member-state-neutral, covers all DPAs, cross-border transfers, breach notification
 - `/arckit.eu-nis2` — [COMMUNITY] assess NIS2 Directive compliance obligations for EU member state operators of essential services and important entities
@@ -29,6 +31,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/arckit.fr-algorithme-public` — [COMMUNITY] public algorithm transparency notice (Article L311-3-1 CRPA)
 - `/arckit.fr-pssi` — [COMMUNITY] generate an Information System Security Policy (PSSI) per ANSSI/RGS
 - `/arckit.fr-code-reuse` — [COMMUNITY] public code reuse assessment (code.gouv.fr, SILL, EUPL) before building
+
+### Added
+
+- `.github/CODEOWNERS` — establishes domain ownership; `@thomas-jardinet` is auto-requested for review on changes to `eu-*` / `fr-*` commands and templates. Repo owner `@tractorjuice` remains final approver via the default `*` rule.
+- README — new "EU & French Regulatory Compliance (Community)" section listing all 18 commands with maintainer credit (#316)
+- `docs/contributors.html` — new card for `@thomas-jardinet` (Code Contributor + Domain Maintainer EU & FR); contributor count 7 → 8 (#316)
+
+### Fixed
+
+- `validate-arc-filename.mjs` PreToolUse hook was blocking every Write call from the new EU and FR commands with exit code 2 ("Unknown document type code"). Registered all 18 codes (RGPD, NIS2, AIACT, DORA, CRA, DSA, DATAACT, CNIL, SECNUM, MARPUB, DINUM, EBIOS, ANSSI, CARTO, DR, ALGO, PSSI, REUSE) in `arckit-claude/config/doc-types.mjs` — the single source of truth that all 6 ArcKit hooks import for display names and categorisation. The 7 EU commands shipped via #314 had been broken at the hook layer until #316 hotfixed them (#316)
 
 ## [4.6.13] - 2026-04-19
 
