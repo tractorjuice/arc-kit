@@ -211,6 +211,18 @@ Next steps:
 - **DPIA is a legal requirement**: When 2+ EDPB criteria are met, the DPIA is mandatory before processing starts. Non-compliance can result in supervisory authority enforcement.
 - **Use Write Tool**: GDPR assessments are typically 3,000–6,000 words. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| GDPR full text (Regulation 2016/679) | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2016/679/oj |
+| EDPB — European Data Protection Board (guidelines and opinions) | EDPB | https://edpb.europa.eu/ |
+| EU-US Data Privacy Framework | European Commission | https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-transfers_en |
+| CNIL (French DPA) | CNIL | https://www.cnil.fr/ |
+| EDPB DPIA guidelines (WP248) | EDPB | https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-92017-data-protection-impact-assessment_en |
+| Standard Contractual Clauses (SCCs) | European Commission | https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/standard-contractual-clauses-scc_en |
+| DPA contacts across EU member states | EDPB | https://edpb.europa.eu/about-edpb/about-edpb/members_en |
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-RGPD-v{VERSION}.md`

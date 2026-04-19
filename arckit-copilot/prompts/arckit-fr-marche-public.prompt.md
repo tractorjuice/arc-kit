@@ -231,6 +231,20 @@ Next steps:
 - **Cloud Act clause**: The data localisation clause explicitly addresses extraterritorial laws (Cloud Act, FISA). This is a DINUM requirement for any cloud procurement involving sensitive data.
 - **Use Write Tool**: Procurement files are typically 3,000–6,000 words. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| Code de la commande publique | Légifrance | https://www.legifrance.gouv.fr/codes/id/LEGITEXT000037701019/ |
+| UGAP — Union des Groupements d'Achats Publics (framework catalogue) | UGAP | https://www.ugap.fr/ |
+| BOAMP — Bulletin Officiel des Annonces des Marchés Publics | DILA | https://www.boamp.fr/ |
+| TED / JOUE — EU procurement journal (above EU thresholds) | EU Publications Office | https://ted.europa.eu/ |
+| ANSSI-qualified security providers (PASSI, PRIS, PDIS) | ANSSI | https://cyber.gouv.fr/qualification-des-prestataires-de-services |
+| DINUM digital doctrine — standards for public IS procurement | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |
+| Procurement thresholds (updated annually) | DAJ / Légifrance | https://www.economie.gouv.fr/daj/marches-publics |
+
+> **Note for reviewers**: French public procurement is governed by the Code de la commande publique (transposing EU Directives 2014/24 and 2014/25). UGAP is a French central purchasing body — pre-competed framework agreements that public buyers can call off without running a full tender. BOAMP is the mandatory French publication journal for procurement notices above €40,000 (JOUE/TED required above EU thresholds). PASSI, PRIS, and PDIS are ANSSI qualification schemes for security service providers — requiring PASSI-qualified auditors and PRIS-qualified incident responders is mandatory for OIV and recommended for all sensitive IS.
+
 ## Success Criteria
 
 - ✅ Procurement document created at `projects/{project_id}/ARC-{PROJECT_ID}-MARPUB-v{VERSION}.md`

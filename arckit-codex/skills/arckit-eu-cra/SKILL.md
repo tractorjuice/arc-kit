@@ -228,6 +228,20 @@ Next steps:
 - **Open source stewards have lighter obligations**: If the project is an open source foundation or steward (not commercialising the software), the CRA applies lighter obligations — document this clearly in the assessment.
 - **Use Write Tool**: CRA assessments cover 12+ security requirements and a conformity assessment process. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| CRA (Regulation 2024/2847) — full text | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2024/2847/oj |
+| ENISA — CRA guidance and product security resources | ENISA | https://www.enisa.europa.eu/topics/cybersecurity-policy/cyber-resilience-act |
+| European Commission — CRA implementation page | European Commission | https://digital-strategy.ec.europa.eu/en/policies/cyber-resilience-act |
+| CERT-FR — vulnerability disclosure and reporting (France) | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
+| ANSSI — French national cybersecurity agency (market surveillance authority) | ANSSI | https://cyber.gouv.fr/ |
+| CycloneDX — SBOM standard | OWASP | https://cyclonedx.org/ |
+| SPDX — SBOM standard | Linux Foundation | https://spdx.dev/ |
+
+> **Note for reviewers**: The CRA (Cyber Resilience Act) is the EU's first regulation imposing mandatory cybersecurity requirements on products with digital elements — hardware and software sold on the EU market. It applies to manufacturers, importers, and distributors. Products are classified as Default (most products), Important Class I (e.g. browsers, password managers, VPNs, routers), or Critical Class II (e.g. OS, industrial control systems, smart meters). Application deadline is 11 December 2027. The SBOM (Software Bill of Materials) requirement means manufacturers must know and disclose all software components in their products — this is a significant supply chain transparency obligation.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-CRA-v{VERSION}.md`

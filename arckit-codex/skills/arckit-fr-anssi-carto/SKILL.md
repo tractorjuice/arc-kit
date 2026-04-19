@@ -196,6 +196,15 @@ Next steps:
 - **Living document**: The cartography must be updated when the IS architecture changes significantly. A stale cartography is worse than no cartography — it gives false confidence. Set a review trigger on major architectural change.
 - **Visual diagrams**: This command produces a structured text cartography. Use `/arckit.diagram` to generate visual Mermaid or PlantUML diagrams from the cartography data for presentations and homologation dossiers.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| Guide de cartographie du système d'information | ANSSI | https://cyber.gouv.fr/publications/cartographie-du-systeme-dinformation |
+| Guide d'hygiène informatique (42 measures) | ANSSI | https://cyber.gouv.fr/publications/guide-dhygiene-informatique |
+| EBIOS Risk Manager guide (Workshop 3 ecosystem map) | ANSSI | https://cyber.gouv.fr/publications/la-methode-ebios-risk-manager |
+| ANSSI publications catalogue | ANSSI | https://cyber.gouv.fr/publications |
+
 ## Success Criteria
 
 - ✅ Cartography document created at `projects/{project_id}/ARC-{PROJECT_ID}-CARTO-v{VERSION}.md`

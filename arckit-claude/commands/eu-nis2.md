@@ -230,6 +230,19 @@ Next steps:
 - **Member state variations**: NIS2 transposition varies. Germany (NIS2UmsuCG) and France have extended scope beyond EU minimum. Verify national transposition law for each member state of operation.
 - **Use Write Tool**: NIS2 assessments cover 8 sections with technical and regulatory depth. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| NIS2 Directive (2022/2555) — full text | EUR-Lex | https://eur-lex.europa.eu/eli/dir/2022/2555/oj |
+| ENISA — NIS2 guidance and resources | ENISA | https://www.enisa.europa.eu/topics/cybersecurity-policy/nis-directive-new |
+| ANSSI — French NCA for NIS2 (and OIV/OSE authority) | ANSSI | https://cyber.gouv.fr/ |
+| CERT-FR — incident reporting contact (France) | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
+| NIS Cooperation Group — member state guidance documents | NIS CG | https://ec.europa.eu/digital-single-market/en/nis-directive |
+| ENISA NIS Investments report (sector benchmarks) | ENISA | https://www.enisa.europa.eu/publications/nis-investments |
+
+> **Note for reviewers**: NIS2 replaced the original NIS Directive (2016/1148) in January 2023, with member state transposition deadline of October 2024. France transposed NIS2 through amendments to the Loi de Programmation Militaire (LPM), building on an existing OIV/OSE framework — ANSSI is the single competent authority for both regimes. "OIV" (Opérateurs d'Importance Vitale — critical infrastructure operators) is a French national designation that predates NIS2 and carries stricter obligations; "OSE" (Opérateurs de Services Essentiels) is the NIS/NIS2 designation. Entities can be both.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-NIS2-v{VERSION}.md`

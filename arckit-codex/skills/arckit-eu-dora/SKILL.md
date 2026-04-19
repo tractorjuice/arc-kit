@@ -203,6 +203,20 @@ Next steps:
 - **TLPT requires regulatory agreement**: For significant entities, TLPT scope must be agreed with ACPR/AMF before testing. Allow 3–6 months lead time.
 - **Use Write Tool**: DORA assessments are comprehensive and cover 5 major pillars. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| DORA (Regulation 2022/2554) — full text | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2022/2554/oj |
+| EBA — DORA regulatory technical standards and guidelines | EBA | https://www.eba.europa.eu/regulation-and-policy/operational-resilience |
+| EIOPA — DORA guidance for insurance sector | EIOPA | https://www.eiopa.europa.eu/digital-operational-resilience-act_en |
+| ESMA — DORA guidance for investment sector | ESMA | https://www.esma.europa.eu/convergence/digital-operational-resilience |
+| ACPR — French banking/insurance supervisor (DORA national enforcement) | ACPR | https://acpr.banque-france.fr/ |
+| AMF — French financial markets authority | AMF | https://www.amf-france.org/ |
+| ENISA — ICT risk and financial sector cybersecurity | ENISA | https://www.enisa.europa.eu/topics/cybersecurity-policy/financial-sector |
+
+> **Note for reviewers**: DORA (Digital Operational Resilience Act) applies to the entire EU financial sector — banks, insurers, investment firms, payment institutions, crypto-asset service providers, and their critical ICT third-party providers. It is enforced by the European Supervisory Authorities (EBA, EIOPA, ESMA) jointly. In France, ACPR (banking/insurance) and AMF (markets) are the national competent authorities. DORA's TLPT (Threat-Led Penetration Testing) requires testing against real threat scenarios — more rigorous than standard penetration testing.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-DORA-v{VERSION}.md`

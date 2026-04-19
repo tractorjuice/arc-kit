@@ -198,6 +198,18 @@ Next steps:
 - **Recommender systems and AI Act overlap**: Recommender systems may simultaneously fall under DSA (transparency) and AI Act (high-risk if employment/benefits context). Run `/arckit.eu-ai-act` if AI-driven.
 - **Use Write Tool**: DSA assessments vary significantly by tier. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| DSA (Regulation 2022/2065) — full text | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2022/2065/oj |
+| European Commission — DSA implementation and VLOP designations | European Commission | https://digital-strategy.ec.europa.eu/en/policies/digital-services-act-package |
+| ARCOM — French Digital Services Coordinator | ARCOM | https://www.arcom.fr/ |
+| European Board for Digital Services | European Commission | https://digital-strategy.ec.europa.eu/en/policies/digital-services-act-package |
+| DSA transparency database (VLOP content moderation decisions) | European Commission | https://transparency.dsa.ec.europa.eu/ |
+
+> **Note for reviewers**: The DSA (Digital Services Act) applies to online intermediary services operating in the EU — regardless of where the provider is based. It uses a tiered approach: basic obligations for all intermediaries, additional obligations for hosting providers, further obligations for online platforms (social media, marketplaces, app stores), and the strictest obligations for Very Large Online Platforms (VLOPs) and Search Engines (VLOSEs) with 45M+ monthly active EU users. ARCOM (Autorité de Régulation de la Communication Audiovisuelle et Numérique) is the French Digital Services Coordinator — the national enforcement body for France-established providers. The DSA has fully applied since 17 February 2024.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-DSA-v{VERSION}.md`

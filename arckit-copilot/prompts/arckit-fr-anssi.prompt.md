@@ -203,6 +203,17 @@ Next steps:
 - **ANSSI cloud recommendations are separate from SecNumCloud**: The cloud recommendations assess the security of the architecture; SecNumCloud is a provider qualification programme. Both are relevant for cloud-hosted sensitive systems.
 - **CERT-FR subscription (Measure 41)**: Free subscription at cert.ssi.gouv.fr — flag this if not already done; it costs nothing and provides critical threat intelligence.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| Guide d'hygiène informatique (42 measures) | ANSSI | https://cyber.gouv.fr/publications/guide-dhygiene-informatique |
+| Cloud security recommendations (2021) | ANSSI | https://cyber.gouv.fr/publications/prestataires-de-service-informatique-en-nuage-securite-et-resilience |
+| ANSSI publications catalogue | ANSSI | https://cyber.gouv.fr/publications |
+| CERT-FR security advisories (Measure 41) | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
+| ANSSI-qualified provider lists (PASSI/PRIS/PDIS) | ANSSI | https://cyber.gouv.fr/qualification-des-prestataires-de-services |
+| RGS v2.0 (Référentiel Général de Sécurité) | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-ANSSI-v{VERSION}.md`
