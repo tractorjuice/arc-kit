@@ -17,3 +17,9 @@ arckit-claude/templates/eu-*-template.md       @thomas-jardinet @tractorjuice
 arckit-claude/commands/fr-*.md                 @thomas-jardinet @tractorjuice
 arckit-claude/templates/fr-*-template.md       @thomas-jardinet @tractorjuice
 .arckit/templates/fr-*-template.md             @thomas-jardinet @tractorjuice
+
+# Austrian government commands — seed contribution (see #304)
+# Uncomment the @gtonic lines below once @gtonic accepts CODEOWNERS for at-* files.
+# arckit-claude/commands/at-*.md               @gtonic @tractorjuice
+# arckit-claude/templates/at-*-template.md     @gtonic @tractorjuice
+# .arckit/templates/at-*-template.md           @gtonic @tractorjuice
