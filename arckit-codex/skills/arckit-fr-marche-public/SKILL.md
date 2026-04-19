@@ -143,10 +143,25 @@ Show threshold determination to the user before generating the full document.
      - Evaluation: 2-3 weeks
      - Award and contracting: 3-4 weeks
 
-9. **Section 7: Digital State Doctrine Compliance**
-   - DINUM checklist: cloud-first, RGI, RGAA, RGESN, open source, GDPR/DPA
-   - PSSIE and RGS target level
-   - Cross-reference DINUM artifact conclusions if available
+9. **Section 7: ANSSI-Qualified Security Provider Selection**
+   If the procurement includes cybersecurity services (audit, incident response, SOC/detection), include selection criteria requiring ANSSI qualification:
+
+   | ANSSI Qualification | Scope | When to Require |
+   |--------------------|--------------------|----------------|
+   | PASSI (Prestataires d'Audit de Sécurité des SI) | Penetration testing, technical audits | Any IS security audit or pentest |
+   | PRIS (Prestataires de Réponse aux Incidents de Sécurité) | Incident response, forensics | IR retainer or OIV/OSE obligation |
+   | PDIS (Prestataires de Détection des Incidents de Sécurité) | SOC, threat detection, SIEM management | Managed detection services |
+   | PDCS (Prestataires de Cybersécurité pour les Collectivités) | Local authority-specific cybersecurity | Collectivités territoriales only |
+
+   - For OIV/OSE systems: require PASSI qualification for any IS audit; PRIS for incident response services — both are mandatory under the sectoral arrêté or NIS2 obligations
+   - Include qualification requirement in the technical specifications (CCTP), not just as selection criterion
+   - Qualification lists are published on ssi.gouv.fr — advise buyers to verify currency at contract signature
+   - ANSSI qualifications are not certifications: they require reassessment — confirm current validity in tender evaluation
+
+10. **Section 8: Digital State Doctrine Compliance**
+    - DINUM checklist: cloud-first, RGI, RGAA, RGESN, open source, GDPR/DPA
+    - PSSIE and RGS target level
+    - Cross-reference DINUM artifact conclusions if available
 
 Before writing the file, read `.arckit/references/quality-checklist.md` and verify all **Common Checks** pass.
 

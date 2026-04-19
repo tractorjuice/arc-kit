@@ -21,6 +21,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/arckit.eu-dsa` — assess EU Digital Services Act (DSA, Regulation 2022/2065) compliance obligations for online intermediary services, platforms, and very large online platforms (VLOPs/VLOSEs)
 - `/arckit.eu-data-act` — assess EU Data Act (Regulation 2023/2854) compliance for connected product manufacturers, data holders, and data processing service providers (DAPS)
 - `/arckit.fr-ebios` — conduct an EBIOS Risk Manager risk analysis following the ANSSI methodology — five workshops from study framing to risk treatment and homologation recommendation
+- `/arckit.fr-anssi` — assess compliance with the ANSSI Guide d'hygiène informatique (42 measures) and ANSSI cloud security recommendations
+- `/arckit.fr-anssi-carto` — produce an ANSSI-methodology information system cartography across four reading levels — business, application, system, and network
+- `/arckit.fr-dr` — assess Diffusion Restreinte (DR) handling compliance — marking, storage, transmission, and destruction rules under II 901/SGDSN/ANSSI
+- `/arckit.fr-algorithme-public` — generate a public algorithm transparency notice complying with Article L311-3-1 CRPA (Loi République Numérique) for French public administration algorithmic decisions
+- `/arckit.fr-pssi` — generate an Information System Security Policy (PSSI) covering security objectives, principles, organisational structure, and applicable ANSSI/RGS standards
+- `/arckit.fr-code-reuse` — assess public code reuse opportunities before building — search code.gouv.fr, SILL, and European public code repositories; produce build-vs-reuse decision matrix
+- `fr-marche-public`: added ANSSI-qualified security provider selection section (PASSI / PRIS / PDIS / PDCS) with OIV/OSE mandatory qualification requirements
 
 ## [4.6.11] - 2026-04-18
 
