@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Experimental — community-contributed)
+
+> ⚠️ The commands below are community-contributed and have not yet been validated against current ANSSI / CNIL / EU regulatory text. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations may lag the current source — verify before use.
+
+- `/arckit.fr-secnumcloud` — [EXPERIMENTAL] assess SecNumCloud 3.2 qualification compliance for French sovereign cloud procurement and OIV/OSE obligations
+- `/arckit.fr-marche-public` — [EXPERIMENTAL] generate French public procurement documentation aligned with code de la commande publique, UGAP catalogue, and DINUM digital standards
+- `/arckit.fr-dinum` — [EXPERIMENTAL] assess compliance with French digital administration standards: RGI, RGAA, RGESN, RGS, and DINUM doctrine cloud de l'État
+- `/arckit.eu-nis2` — [EXPERIMENTAL] assess NIS2 Directive compliance obligations for EU member state operators of essential services and important entities
+- `/arckit.eu-rgpd` — [EXPERIMENTAL] generate GDPR (EU 2016/679) compliance assessment for EU/EEA data processing — member-state-neutral
+- `/arckit.fr-rgpd` — [EXPERIMENTAL] French CNIL-specific GDPR layer: cookies, HDS, age 15, CNIL référentiels — supplements `/arckit.eu-rgpd`
+- `/arckit.eu-ai-act` — [EXPERIMENTAL] assess EU AI Act (Regulation 2024/1689) compliance, risk classification, and conformity requirements
+- `/arckit.eu-dora` — [EXPERIMENTAL] assess DORA (EU 2022/2554) compliance for financial sector entities operating in the EU
+- `/arckit.eu-cra` — [EXPERIMENTAL] assess EU Cyber Resilience Act (Regulation 2024/2847) for products with digital elements
+- `/arckit.eu-dsa` — [EXPERIMENTAL] assess EU Digital Services Act (Regulation 2022/2065) for online intermediaries, platforms, and VLOPs
+- `/arckit.eu-data-act` — [EXPERIMENTAL] assess EU Data Act (Regulation 2023/2854) for connected products, data holders, and DAPS
+- `/arckit.fr-ebios` — [EXPERIMENTAL] EBIOS Risk Manager 5-workshop study following the ANSSI methodology
+- `/arckit.fr-anssi` — [EXPERIMENTAL] assess compliance with the ANSSI Guide d'hygiène informatique (42 measures) and cloud recommendations
+- `/arckit.fr-anssi-carto` — [EXPERIMENTAL] ANSSI-methodology IS cartography across business / application / system / network levels
+- `/arckit.fr-dr` — [EXPERIMENTAL] Diffusion Restreinte handling compliance (II 901/SGDSN/ANSSI)
+- `/arckit.fr-algorithme-public` — [EXPERIMENTAL] public algorithm transparency notice (Article L311-3-1 CRPA)
+- `/arckit.fr-pssi` — [EXPERIMENTAL] generate an Information System Security Policy (PSSI) per ANSSI/RGS
+- `/arckit.fr-code-reuse` — [EXPERIMENTAL] public code reuse assessment (code.gouv.fr, SILL, EUPL) before building
+
 ## [4.6.13] - 2026-04-19
 
 ### Fixed
