@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added (Community-contributed)
+
+> ⚠️ The 3 Austrian regulatory commands below are a seed contribution inviting a domain maintainer. They have not yet been validated against current Datenschutzbehörde (DSB) / BMI / A-SIT / BVergG 2018 text. Items marked `[NEEDS VERIFICATION]` in generated output must be confirmed by an Austrian practitioner (DPO / CISO / Vergabejurist) before external reliance. See #304 for the overlay design.
+
+- `/arckit.at-dsgvo` — [COMMUNITY] assess Austrian DSG / DSGVO obligations — Datenschutzbehörde patterns, §§12–13 DSG image processing, ELGA/GTelG health, §96a ArbVG employee monitoring, age 14 consent
+- `/arckit.at-nisg` — [COMMUNITY] assess Austrian NISG 2024 (NIS2 transposition) — Essential/Important designation, GovCERT reporting, KSÖ, AT sectoral authorities
+- `/arckit.at-bvergg` — [COMMUNITY] generate Austrian BVergG 2018 procurement documentation — Oberschwellen/Unterschwellen, ANKÖ, Bestbieterprinzip, BVwG review
+
+Registered 3 new doc type codes (ATDSG, ATNISG, BVERGG) in both `arckit-claude/config/doc-types.mjs` and `arckit-claude/commands/pages.md` (dual-registration pattern established in #317).
+
 ## [4.7.1] - 2026-04-19
 
 ### Fixed

@@ -103,6 +103,10 @@ export const DOC_TYPES = {
   'ALGO':      { name: 'Public Algorithm Transparency Notice',         category: 'Compliance' },
   'PSSI':      { name: 'Information System Security Policy',           category: 'Compliance' },
   'REUSE':     { name: 'Public Code Reuse Assessment',                 category: 'Procurement' },
+  // Austrian Government (Community-contributed, maintained by @gtonic)
+  'ATDSG':     { name: 'Austrian Data Protection Assessment',          category: 'Compliance' },
+  'ATNISG':    { name: 'Austrian NISG (NIS2) Assessment',              category: 'Compliance' },
+  'BVERGG':    { name: 'Austrian Public Procurement (BVergG 2018)',    category: 'Procurement' },
 };
 
 // Multi-instance types that require sequence numbers (e.g. ADR-001, RSCH-002)
