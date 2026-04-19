@@ -72,6 +72,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. From the artifacts, extract:
+
 - System name, description, and technical architecture summary
 - Data assets that will become Workshop 1 essential values
 - External entities (third parties, partners, interconnections) for Workshop 3 ecosystem map

@@ -182,6 +182,7 @@
 | [Measure description] | ❌ | 🔴 High | [Role] | [Date] |
 
 **Priority levels**:
+
 - 🔴 High: deploy before go-live or within 30 days
 - 🟠 Medium: deploy within 90 days
 - 🟡 Low: deploy within 12 months

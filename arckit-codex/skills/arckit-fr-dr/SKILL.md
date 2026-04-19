@@ -59,6 +59,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Extract:
+
 - Types of information produced, processed, or stored by the system
 - Existing handling procedures for sensitive information
 - IT systems used for storage and transmission
@@ -85,6 +86,7 @@ Read all documents from Step 0. Extract:
 #### Step 4b: Marking and Labelling Compliance
 
 For each electronic document type assessed as DR:
+
 - Is "DIFFUSION RESTREINTE" applied in header and footer of every page?
 - Is the DR mention included in document metadata?
 - Are DR document references tracked in a registry?
@@ -128,6 +130,7 @@ For each electronic document type assessed as DR:
 #### Step 4h: IS Compliance for DR Processing
 
 Assess the IS against the II 901 requirements for systems processing DR:
+
 - IS registered as DR-capable with FSSI
 - IS homologated for DR (EBIOS study conducted)
 - User sessions individually authenticated

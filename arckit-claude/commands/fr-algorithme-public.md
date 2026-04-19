@@ -70,6 +70,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Extract:
+
 - All algorithmic processes that produce individual administrative decisions
 - Data inputs used by each algorithm
 - Decision types and their impact on citizens
@@ -119,6 +120,7 @@ For each algorithm subject to the transparency obligation, document in plain lan
 #### Step 4d: Citizen Rights and Recourse
 
 For each algorithm, document:
+
 1. **Right to explanation**: How can a citizen request an explanation of the algorithmic decision applied to them? Who is the contact point and what is the response time?
 2. **Right to human review**: Can the citizen request that a human decision-maker review the algorithmic output? What is the process?
 3. **Right to contest**: What administrative appeal mechanism exists? What is the jurisdiction for judicial review?

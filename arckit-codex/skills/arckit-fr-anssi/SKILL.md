@@ -58,6 +58,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. From the artifacts, extract:
+
 - System deployment environment: cloud (IaaS/PaaS/SaaS), on-premise, hybrid
 - Existing security controls — which of the 42 hygiene measures may already be implemented
 - OIV/OSE designation — affects applicability priority (OIV must apply all measures)
@@ -119,6 +120,7 @@ If the system uses cloud services, assess ANSSI cloud security recommendations (
 #### Step 4d: Gap Analysis and Remediation Plan
 
 For each non-compliant or partial measure:
+
 - Assign priority: 🔴 High (deploy before go-live or OIV obligation), 🟠 Medium (within 90 days), 🟡 Low (within 12 months)
 - Assign owner (role, not individual)
 - Propose a concrete remediation action

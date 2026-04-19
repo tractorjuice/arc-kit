@@ -45,6 +45,7 @@
 ## 1. State Cloud Doctrine (Doctrine cloud de l'État — Circular 6264/SG)
 
 The French cloud-first policy mandates evaluation in order:
+
 1. Internal government cloud (cloud de l'État — Trusted Digital Space)
 2. Trusted commercial cloud (SecNumCloud-qualified offers)
 3. Standard commercial cloud (justified exception only)

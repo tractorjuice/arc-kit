@@ -104,6 +104,7 @@
 ### 4.1 Security Annex (mandatory)
 
 The services must comply with:
+
 - RGS v2.0 (security accreditation of the information system before go-live)
 - State Information Systems Security Policy (PSSIE)
 - ANSSI IT hygiene guide (42 measures)
@@ -116,6 +117,7 @@ All data processed under this contract must be hosted and processed exclusively 
 ### 4.3 Reversibility Clause
 
 In accordance with the DINUM reversibility circular:
+
 - Reversibility plan provided before project start
 - Data export in open formats (RGI-compliant)
 - Migration period: [X] months
@@ -129,6 +131,7 @@ Specific developments carried out under this contract must be published as open 
 ### 4.5 GDPR / Data Processing Agreement
 
 The contractor must provide a Data Processing Agreement (DPA) compliant with GDPR Article 28 covering:
+
 - Processing purposes and data categories
 - Sub-processor authorisation and list
 - Security measures (Article 32)

@@ -55,6 +55,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Extract key information for the procurement file:
+
 - Total estimated value (from requirements or user input)
 - Data categories (drives sovereignty and certification clauses)
 - Security classification level (drives RGS requirements)

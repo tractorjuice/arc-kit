@@ -12,6 +12,7 @@ You are helping an enterprise architect assess **public code reuse opportunities
 3. **Contribute improvements back upstream** when forking existing public code
 
 The primary French public code resources are:
+
 - **[code.gouv.fr](https://code.gouv.fr/sources/)**: Open source repositories published by French public administrations
 - **[SILL](https://code.gouv.fr/sill/)** (Socle Interministériel de Logiciels Libres): DINUM-maintained list of recommended free and open source software for the French State
 
@@ -61,6 +62,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Extract:
+
 - All components or functional areas that need to be built or sourced
 - Technology stack constraints (language, framework, deployment platform)
 - Data classification constraints (e.g. cannot use components that send data to third parties for sensitive data)
@@ -79,6 +81,7 @@ Read all documents from Step 0. Extract:
 #### Step 4a: Component Decomposition
 
 Break down the system into discrete components that can each be assessed independently for reuse. For each component, assign a COMP-xx ID and note:
+
 - Functional domain (identity, document management, API gateway, notification, payment, etc.)
 - Technical complexity (high/medium/low)
 - Data sensitivity (does this component handle sensitive or classified data?)
@@ -98,6 +101,7 @@ For each COMP-xx, search [code.gouv.fr/sources](https://code.gouv.fr/sources/) f
 8. **Publisher credibility**: Is the publishing entity a reputable public administration, and is the code actively maintained?
 
 Notable code.gouv.fr repositories to always consider by domain:
+
 - **Identity/authentication**: check for FranceConnect integration components, Keycloak configurations published by ministries
 - **Document management**: check for open source ECM or GED components published by DGFIP, MEF, or similar
 - **API management**: check for API gateways and catalogue tools published by API.gouv.fr / DINUM
@@ -119,6 +123,7 @@ The SILL is organised by category. Key categories to check: identity and access 
 #### Step 4d: European and International Public Code
 
 For components with no French public code match, extend the search to:
+
 - **Joinup (EU)**: [joinup.ec.europa.eu](https://joinup.ec.europa.eu) — EU institutions and member state public code
 - **GitHub government organisations**: Other EU member state government organisations publishing relevant code
 - **eGovernment core vocabularies**: Semantic interoperability components from data.europa.eu
@@ -126,6 +131,7 @@ For components with no French public code match, extend the search to:
 #### Step 4e: Licence Compatibility Analysis
 
 For each component selected for reuse, verify licence compatibility:
+
 - **EUPL-1.2** is the recommended licence for French public code (Circulaire 2021)
 - Assess compatibility between the candidate licence and the project's intended licence
 - Flag any copyleft obligations (GPL, AGPL) that require publishing modifications
@@ -135,6 +141,7 @@ For each component selected for reuse, verify licence compatibility:
 #### Step 4f: Build-vs-Reuse Decision Matrix
 
 For each component, produce a decision with justification:
+
 - **Reuse as-is**: Component meets requirements without modification; integrate directly
 - **Fork and adapt**: Component partially meets requirements; fork and adapt with a commitment to contribute improvements back
 - **Assemble from SILL components**: No single component meets needs but SILL software can be assembled to cover requirements
@@ -144,6 +151,7 @@ For each component, produce a decision with justification:
 #### Step 4g: Contribution-Back Plan
 
 For any component that is forked:
+
 - Document planned improvements that will be contributed back upstream
 - Identify the upstream repository and contribution process
 - Note timeline for contribution (aligned with project delivery milestones)
@@ -151,6 +159,7 @@ For any component that is forked:
 #### Step 4h: Publication Obligation
 
 Assess which code developed for this project must be published as open source:
+
 - Code developed by or for a public administration must be published unless: national security, trade secrets, third-party intellectual property, or legal prohibition prevents publication
 - Document exceptions with justification
 - For publishable code: recommend publishing on code.gouv.fr via the DINUM publication process

@@ -58,6 +58,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Extract:
+
 - Business processes and essential data assets (Level 1 inputs)
 - Application inventory and interdependencies (Level 2 inputs)
 - Server, database, and infrastructure inventory (Level 3 inputs)

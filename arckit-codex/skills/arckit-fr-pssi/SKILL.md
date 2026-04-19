@@ -59,6 +59,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Extract:
+
 - Organisation type and regulatory status (ministry / agency / OIV / OSE / local authority / private)
 - IS scope (what systems, how many users, how many sites)
 - Essential values and main threats (from EBIOS if available)
@@ -88,6 +89,7 @@ The PSSI is a governance document, not a technical checklist. It must be readabl
 #### Step 4b: Security Context
 
 From EBIOS study or threat assessment:
+
 1. **Essential values**: What assets does the IS protect (citizen data, payment processing, national defence, public health records)?
 2. **Main threats**: What are the plausible threat sources given the organisation's profile (state-sponsored attackers, cybercriminals, insider threats)?
 3. **Regulatory context**: What are the consequences of a security failure (reputational, financial, legal, mission impact)?
@@ -97,6 +99,7 @@ If no EBIOS study exists, derive the threat context from the organisation's prof
 #### Step 4c: Security Objectives
 
 Define clear, measurable security objectives for each security property:
+
 1. **Confidentiality**: What information must be kept confidential and from whom?
 2. **Integrity**: What data or processes must be protected from unauthorised modification?
 3. **Availability**: What systems must remain available and to what SLA?
@@ -108,6 +111,7 @@ Map each objective to an RGS level (*, **, ***) if the organisation is RGS-subje
 #### Step 4d: Security Principles
 
 Define 8–12 high-level security principles that will guide all security decisions in the organisation. Principles should be:
+
 - Simple and memorable
 - Actionable by architects and developers
 - Consistent with ANSSI recommendations
@@ -127,6 +131,7 @@ Reference the standard principles from the template (need-to-know, least privile
 #### Step 4f: Applicable Standards and Baseline
 
 List all standards and guides the PSSI references:
+
 - RGS v2.0 and target levels per system
 - ANSSI Guide d'hygiène informatique (42 measures) — compliance level
 - EBIOS RM (risk analysis methodology in use)
@@ -137,6 +142,7 @@ List all standards and guides the PSSI references:
 #### Step 4g: Security Domains
 
 For each of the seven security domains in the template (access management, network security, workstation security, application security, data protection, physical security, business continuity), define:
+
 - The principle that applies in this domain
 - The minimum standard required
 - The reference to the detailed technical measure (without duplicating the ANSSI guide)

@@ -46,6 +46,7 @@
 This Information System Security Policy (PSSI) defines the security objectives, principles, and organisational framework for protecting the information systems of [ORGANISATION NAME]. It constitutes the reference document for all security measures and serves as the basis for the security plans of all projects and systems within scope.
 
 This PSSI is established in accordance with:
+
 - The Référentiel Général de Sécurité (RGS v2.0), published by ANSSI
 - Circulaire du Premier Ministre n°5926/SG on information systems security
 - [Any sector-specific obligations — OIV arrêté sectoriel, OSE designation, etc.]

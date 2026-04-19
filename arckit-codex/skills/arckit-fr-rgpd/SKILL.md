@@ -55,6 +55,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Identify:
+
 - Presence of health data (données de santé) → triggers HDS section
 - Presence of data subjects who may be minors → triggers age consent section (15 years in France)
 - Presence of cookies/analytics tracking → triggers CNIL cookie guidelines section

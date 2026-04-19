@@ -53,6 +53,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Note especially:
+
 - Entity type and size (determines which referentiels are mandatory vs recommended)
 - Whether the service is citizen-facing (triggers DSFR, FranceConnect, RGAA mandatory)
 - Data sensitivity (drives cloud doctrine tier)

@@ -36,6 +36,7 @@
 **Overall recommendation**: [Proceed with / Do not proceed with / Proceed conditionally with] [Provider/Option]
 
 **Key findings**:
+
 - [Finding 1]
 - [Finding 2]
 - [Finding 3]
@@ -45,6 +46,7 @@
 ## 1. Context and Scope
 
 ### 1.1 Project Sensitivity Level
+
 [Describe data types, classification level, regulatory obligations]
 
 ### 1.2 Applicable Regulatory Framework
@@ -130,16 +132,19 @@ Legend: ✅ Confirmed | ⚠️ Residual risk | 🔄 In progress | ❌ Not met
 ### 5.1 Recommended Patterns for Sensitive Workloads
 
 **Pattern A — Full air-gap** (highly sensitive data, OIV/SIIV designation)
+
 - Dedicated infrastructure, no internet connectivity
 - Sovereign HSM for key management
 - Recommended provider: Outscale dedicated zones
 
 **Pattern B — Qualified sovereign cloud** (sensitive data, public administration)
+
 - SecNumCloud 3.2 qualified IaaS
 - Customer-managed encryption keys (BYOK/HYOK)
 - Recommended providers: Outscale, S3NS PREMI3NS (with FISA risk acceptance)
 
 **Pattern C — Sovereign hybrid cloud** (mixed-sensitivity data)
+
 - Sensitive workloads on qualified cloud
 - Non-sensitive on standard commercial cloud
 - Clear data classification and flow control required

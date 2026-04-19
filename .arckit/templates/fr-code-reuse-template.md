@@ -67,7 +67,7 @@ Software developed by or for the administration must be published as open source
 Features and components being assessed for reuse:
 
 | ID | Component / Feature | Technical Domain | Complexity | Priority |
-|----|--------------------|-----------------|-----------|---------| 
+|----|--------------------|-----------------|-----------|---------|
 | COMP-01 | [e.g. Identity and authentication] | [IAM] | [High / Medium / Low] | [Must-have] |
 | COMP-02 | [e.g. Document management] | [ECM] | | |
 | COMP-03 | [e.g. API gateway] | [Integration] | | |
