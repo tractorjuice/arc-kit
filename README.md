@@ -232,6 +232,38 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 
 ---
 
+## EU & French Regulatory Compliance (Community)
+
+> ⚠️ **Community-contributed — domain-maintained by [@thomas-jardinet](https://github.com/thomas-jardinet).** The 18 commands below cover EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act) and French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, etc.). They are not part of the officially-maintained baseline — output should be reviewed by qualified DPO / RSSI / legal counsel before reliance, and citations to ANSSI / CNIL / EU regulations may lag current source text. Each command surfaces with a `[COMMUNITY]` prefix in `/help` listings and renders a warning banner before generating.
+
+**EU regulations** (member-state-neutral baselines, applicable across EU/EEA):
+
+- `/arckit.eu-rgpd` — GDPR (EU 2016/679) compliance assessment — legal basis, data subject rights, transfers, DPIA screening, breach notification
+- `/arckit.eu-nis2` — NIS2 Directive — operators of essential / important entities, Article 21 measures, incident reporting timelines
+- `/arckit.eu-ai-act` — EU AI Act (Regulation 2024/1689) — risk classification (prohibited / high-risk / GPAI), conformity routes
+- `/arckit.eu-dora` — Digital Operational Resilience Act (EU 2022/2554) — financial sector ICT risk, TLPT, third-party register
+- `/arckit.eu-cra` — Cyber Resilience Act (Regulation 2024/2847) — products with digital elements, SBOM, VDP, CE marking
+- `/arckit.eu-dsa` — Digital Services Act (Regulation 2022/2065) — intermediaries, platforms, VLOPs, ARCOM
+- `/arckit.eu-data-act` — Data Act (Regulation 2023/2854) — connected products, B2B FRAND, cloud switching, Article 27
+
+**French government** (apply on top of the EU baseline for French deployments):
+
+- `/arckit.fr-secnumcloud` — SecNumCloud 3.2 qualification (sovereign cloud, OIV/OSE, extraterritorial risk)
+- `/arckit.fr-dinum` — DINUM standards: RGI, RGAA, RGESN, RGS, doctrine cloud de l'État, FranceConnect, DSFR
+- `/arckit.fr-marche-public` — French public procurement (code de la commande publique, UGAP, sovereignty clauses)
+- `/arckit.fr-rgpd` — CNIL-specific GDPR layer (cookies Délibération 2020-091, HDS, age 15, DPO registration)
+- `/arckit.fr-ebios` — EBIOS Risk Manager — 5-workshop study (VM/ER/SR/CO/SS/SO/MS IDs, MITRE ATT&CK, homologation)
+- `/arckit.fr-anssi` — ANSSI Guide d'hygiène informatique (42 measures) + cloud security recommendations
+- `/arckit.fr-anssi-carto` — ANSSI SI cartography across business / application / system / network levels
+- `/arckit.fr-dr` — Diffusion Restreinte handling under II 901 / SGDSN / ANSSI
+- `/arckit.fr-algorithme-public` — Public algorithm transparency notice (Article L311-3-1 CRPA, Loi République Numérique)
+- `/arckit.fr-pssi` — Information System Security Policy (PSSI) per ANSSI / RGS
+- `/arckit.fr-code-reuse` — Public code reuse assessment (code.gouv.fr, SILL, EUPL) — build-vs-reuse decision matrix
+
+These layer cleanly on the existing baseline — `fr-rgpd` extends `eu-rgpd`, `fr-pssi` references `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows.
+
+---
+
 ## The ArcKit Workflow
 
 ArcKit guides you through the enterprise architecture lifecycle:

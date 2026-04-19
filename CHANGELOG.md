@@ -18,6 +18,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/arckit.eu-cra` — [COMMUNITY] assess EU Cyber Resilience Act (Regulation 2024/2847) for products with digital elements
 - `/arckit.eu-dsa` — [COMMUNITY] assess EU Digital Services Act (Regulation 2022/2065) for online intermediaries, platforms, and VLOPs
 - `/arckit.eu-data-act` — [COMMUNITY] assess EU Data Act (Regulation 2023/2854) for connected products, data holders, and DAPS
+- `/arckit.fr-secnumcloud` — [COMMUNITY] assess SecNumCloud 3.2 qualification for French sovereign cloud procurement and OIV/OSE obligations
+- `/arckit.fr-marche-public` — [COMMUNITY] generate French public procurement documentation aligned with code de la commande publique, UGAP catalogue, and DINUM standards
+- `/arckit.fr-dinum` — [COMMUNITY] assess French digital administration standards: RGI, RGAA, RGESN, RGS, and DINUM doctrine cloud de l'État
+- `/arckit.fr-rgpd` — [COMMUNITY] French CNIL-specific GDPR layer: cookies, HDS, age 15, CNIL référentiels — supplements `/arckit.eu-rgpd`
+- `/arckit.fr-ebios` — [COMMUNITY] EBIOS Risk Manager 5-workshop study following the ANSSI methodology
+- `/arckit.fr-anssi` — [COMMUNITY] assess compliance with the ANSSI Guide d'hygiène informatique (42 measures) and cloud recommendations
+- `/arckit.fr-anssi-carto` — [COMMUNITY] ANSSI-methodology IS cartography across business / application / system / network levels
+- `/arckit.fr-dr` — [COMMUNITY] Diffusion Restreinte handling compliance (II 901/SGDSN/ANSSI)
+- `/arckit.fr-algorithme-public` — [COMMUNITY] public algorithm transparency notice (Article L311-3-1 CRPA)
+- `/arckit.fr-pssi` — [COMMUNITY] generate an Information System Security Policy (PSSI) per ANSSI/RGS
+- `/arckit.fr-code-reuse` — [COMMUNITY] public code reuse assessment (code.gouv.fr, SILL, EUPL) before building
 
 ## [4.6.13] - 2026-04-19
 
