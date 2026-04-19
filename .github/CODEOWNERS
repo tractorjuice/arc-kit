@@ -1,0 +1,19 @@
+# ArcKit code ownership
+# https://docs.github.com/en/repositories/managing-your-repositories-settings-and-features/customizing-your-repository/about-code-owners
+#
+# Domain maintainers are auto-requested for review when files in their
+# scope change. They are not required reviewers — the repository owner
+# remains the final approver.
+
+# Default — repo maintainer reviews everything not otherwise scoped.
+*                                              @tractorjuice
+
+# EU regulatory commands — community-maintained by @thomas-jardinet
+arckit-claude/commands/eu-*.md                 @thomas-jardinet @tractorjuice
+arckit-claude/templates/eu-*-template.md       @thomas-jardinet @tractorjuice
+.arckit/templates/eu-*-template.md             @thomas-jardinet @tractorjuice
+
+# French government commands — community-maintained by @thomas-jardinet
+arckit-claude/commands/fr-*.md                 @thomas-jardinet @tractorjuice
+arckit-claude/templates/fr-*-template.md       @thomas-jardinet @tractorjuice
+.arckit/templates/fr-*-template.md             @thomas-jardinet @tractorjuice
