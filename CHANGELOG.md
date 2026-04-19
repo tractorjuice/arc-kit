@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `/arckit.eu-ai-act` — assess EU AI Act (Regulation 2024/1689) compliance obligations, risk classification, and conformity requirements for AI systems
 - `/arckit.eu-dora` — assess DORA (Digital Operational Resilience Act, EU 2022/2554) compliance for financial sector entities operating in the EU
 - `/arckit.eu-cra` — assess EU Cyber Resilience Act (CRA, Regulation 2024/2847) compliance obligations for products with digital elements placed on the EU market
+- `/arckit.eu-dsa` — assess EU Digital Services Act (DSA, Regulation 2022/2065) compliance obligations for online intermediary services, platforms, and very large online platforms (VLOPs/VLOSEs)
+- `/arckit.eu-data-act` — assess EU Data Act (Regulation 2023/2854) compliance for connected product manufacturers, data holders, and data processing service providers (DAPS)
+- `/arckit.fr-ebios` — conduct an EBIOS Risk Manager risk analysis following the ANSSI methodology — five workshops from study framing to risk treatment and homologation recommendation
 
 ## [4.6.11] - 2026-04-18
 

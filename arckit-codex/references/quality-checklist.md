@@ -346,3 +346,104 @@ All artifacts must pass these 10 checks:
 - Each principle has a unique number, name, rationale, and implications
 - Principles categorized (business, data, application, technology)
 - No contradictions between principles
+
+### SECNUM -- SecNumCloud Assessment
+
+- Provider qualification matrix covers all six major candidates (S3NS, Outscale, OVHcloud, Bleu, NumSpot, Cloud Temple)
+- Qualification vs Visa distinction explicitly noted (critical procurement risk)
+- Extraterritorial legal risk assessed per provider (Cloud Act, FISA-702 at minimum)
+- OIV/OSE designation status determined with LPM obligations mapped (or explicitly marked N/A)
+- Architecture pattern (A/B/C) recommended based on data sensitivity level
+- Decision matrix includes clear recommendation with rationale
+- ANSSI position on FISA-702 residual risk documented
+
+### MARPUB -- French Public Procurement
+
+- Threshold analysis completed (< €40k / < €215k / > €215k) with recommended procedure
+- BOAMP and JOUE publication requirements determined
+- Award criteria weights total exactly 100%
+- Data localisation clause (EU territory, extraterritorial law prohibition) included
+- Reversibility clause (DINUM standards) included
+- GDPR/DPA clause included if personal data detected
+- HDS certification clause included if health data detected
+- UGAP catalogue guidance referenced with instruction to verify at ugap.fr
+
+### DINUM -- DINUM Standards Assessment
+
+- All five referentiels addressed: Doctrine cloud, RGI, RGAA, RGESN, RGS
+- Mandatory vs recommended status correctly assigned per entity type and size
+- RGAA 4.1 compliance rate stated (% or "To be assessed via RGAA audit")
+- RGS target security level determined (*//**/***) with homologation status
+- FranceConnect/ProConnect applicability assessed
+- DSFR applicability assessed for citizen-facing services
+- Executive summary compliance table populated per referential
+
+### CNIL -- French GDPR / CNIL Assessment
+
+- CNIL cookie guidelines (Délibération 2020-091) assessed — reject button prominence, no cookie wall, 6-month validity
+- Analytics tool CNIL compliance noted (Matomo vs Google Analytics ruling January 2022)
+- HDS certification requirement assessed (mandatory if health data present)
+- Age of digital consent set to 15 years (French specificity — not GDPR default 16)
+- DPO registration with CNIL assessed (notifications.cnil.fr)
+- Post-mortem digital legacy rights (Art. 85 Loi 78-17) addressed
+- CNIL enforcement priority self-assessment completed
+
+### NIS2 -- NIS2 Compliance Assessment
+
+- Entity classification determined (Essential / Important / Out of scope) with Annex I/II sector reference
+- National competent authority and CSIRT identified per member state
+- All ten Article 21 minimum security measures assessed with status
+- Four-stage incident reporting timeline documented (24h / 72h / on request / 1 month)
+- 24-hour reporting readiness explicitly assessed
+- Supply chain security (Article 21(2)(d)) requirements mapped
+- Management body accountability (Article 20) obligations flagged
+- OIV/OSE overlap noted for French entities
+
+### RGPD -- EU GDPR Assessment
+
+- Organisation role determined (controller / processor / joint controller)
+- Lead supervisory authority identified from main EU establishment
+- All processing activities mapped to Article 6(1) legal basis
+- Special category data (Article 9) mapped to specific conditions
+- EDPB 9-criteria DPIA screening completed with decision (REQUIRED / RECOMMENDED / NOT REQUIRED)
+- International transfers assessed with Schrems II requirements (TIA, SCCs 2021)
+- Processor inventory with Article 28 DPA compliance checked
+- 72-hour breach notification process assessed
+- French deployment flagged for `/arckit.fr-rgpd` follow-up
+
+### AIACT -- EU AI Act Assessment
+
+- In-scope determination made (AI system definition assessed)
+- Prohibited practices (Article 5) explicitly checked — system halted if prohibited
+- Risk classification clearly stated (Default / Important Class I / Critical Class II / GPAI) with Annex reference
+- Conformity route determined (internal control vs notified body)
+- High-risk requirements (Articles 8–17) assessed if applicable
+- GPAI model obligations (Articles 53–55) assessed if applicable
+- EU database registration requirement assessed
+- Application timeline with relevant deadlines included (Feb 2025 / Aug 2025 / Aug 2026 / Dec 2027)
+
+### DORA -- DORA Assessment
+
+- Entity type and competent authority (ACPR/AMF/ECB) determined
+- Simplified regime (Article 16) eligibility assessed
+- Maturity table (L1–L5) for all five pillars: ICT Risk, Incident Reporting, Testing, Third-Party, Concentration
+- Three-stage incident reporting timeline: 4h initial (max 24h) / 72h / 1 month
+- 4-hour reporting readiness explicitly assessed
+- ICT third-party register with criticality assessment present
+- Article 30 mandatory contract provisions checklist completed
+- Concentration risk assessed with exit strategy documented
+- TLPT (Threat-Led Penetration Testing) assessed for significant entities
+
+### CRA -- EU Cyber Resilience Act Assessment
+
+- In-scope determination made (product with digital elements, EU market, no sector exclusion)
+- Open source scenario assessed (commercial vs non-commercial, steward obligations)
+- Risk classification stated (Default / Important Class I / Critical Class II)
+- Conformity route determined (Module A / B+C / H)
+- All 12 Annex I Part I security requirements assessed
+- All 7 Annex I Part II vulnerability management requirements assessed
+- SBOM requirements assessed (machine-readable, format specified — SPDX or CycloneDX)
+- VDP assessed (published, accessible, contact mechanism)
+- Four-stage incident reporting timeline (24h / 24h / 72h / 14 days) assessed
+- 24-hour reporting capability to ENISA and CERT-FR assessed
+- CRA application deadline (11 December 2027) noted in gap timeline

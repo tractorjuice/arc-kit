@@ -447,3 +447,51 @@ All artifacts must pass these 10 checks:
 - Four-stage incident reporting timeline (24h / 24h / 72h / 14 days) assessed
 - 24-hour reporting capability to ENISA and CERT-FR assessed
 - CRA application deadline (11 December 2027) noted in gap timeline
+
+### DSA -- EU Digital Services Act Assessment
+
+- Provider tier clearly determined (conduit / caching / hosting / online platform / VLOP / VLOSE)
+- Monthly active EU users assessed against 45M VLOP/VLOSE threshold
+- Micro/small enterprise exemption assessed (< 50 employees AND < €10M turnover)
+- General Chapter II obligations assessed (all intermediaries): transparency reports, single point of contact, cooperation with orders
+- Hosting Article 16 notice-and-action obligation assessed if applicable
+- Online platform obligations (Articles 17–28) assessed if applicable: statement of reasons, complaint handling, trusted flaggers, dark patterns, advertising transparency, recommender systems
+- VLOP/VLOSE Chapter IV obligations assessed or explicitly marked N/A: annual systemic risk assessment (Art. 34), independent audit (Art. 37), advertising repository (Art. 39), researcher access (Art. 40)
+- ARCOM as French Digital Services Coordinator documented
+- Gap analysis with priority actions generated (🔴 for VLOP legally required, 🟠 for standard platforms)
+- GDPR intersection noted for personal data in recommender systems and advertising
+
+### DATAACT -- EU Data Act Compliance Assessment
+
+- Organisation role(s) determined: manufacturer / data holder / DAPS / public sector body (with rationale)
+- Connected product in-scope status assessed (product generates data by virtue of use, placed on EU market)
+- Personal data vs non-personal data split identified; GDPR intersection documented
+- User data access rights (Chapter II) assessed if manufacturer/data holder: pre-purchase disclosure, real-time access, free of charge, machine-readable format
+- Third-party sharing at user request (Article 5) assessed: FRAND conditions, trade secret protection
+- B2B data sharing obligations (Chapter III) assessed: FRAND terms, SME compensation cap, use restrictions (no re-identification, no use to compete)
+- Public sector exceptional access (Chapter V) assessed or explicitly marked N/A
+- Cloud switching obligations (Chapter VI) assessed if DAPS or marked N/A: 30-day notice, 180-day max, no barriers, interoperable export
+- Egress charge elimination by September 2027 (Article 29) assessed
+- International transfer restrictions (Article 27) assessed: technical/organisational measures to prevent unlawful non-EU government access
+- Trade secret safeguards documented (process to identify, confidentiality agreement, TOMs)
+- Gap timeline references both key dates: 12 September 2025 and 12 September 2027
+
+### EBIOS -- EBIOS Risk Manager Study
+
+- Workshop 1: Study scope and boundary explicitly defined (included / excluded systems)
+- Workshop 1: Essential values (VM-xx) identified from data model and requirements
+- Workshop 1: Feared events (ER-xx) defined for each essential value with ANSSI 4-level severity rating
+- Workshop 1: Security baseline documented (ANSSI hygiene, RGS, ISO 27001, sector-specific)
+- Workshop 2: Risk source catalogue covers all standard categories (state-sponsored, cybercriminal, hacktivist, malicious insider, opportunist, accidental insider)
+- Workshop 2: Pertinence assessment made with justification for each retained or excluded risk source
+- Workshop 2: Risk source–target pairs (CO-xx) defined for all retained sources
+- Workshop 3: Ecosystem map includes all stakeholders with trust level and dependency criticality
+- Workshop 3: Strategic scenarios (SS-xx) defined with gravity, likelihood, and risk level (ANSSI scale)
+- Workshop 4: Operational scenarios (SO-xx) break down high-risk strategic scenarios into technical attack sequences
+- Workshop 4: MITRE ATT&CK mapping provided for each operational scenario
+- Workshop 5: Treatment option chosen (Reduce / Avoid / Transfer / Accept) for each significant risk
+- Workshop 5: Security measures (MS-xx) defined with type (Technical / Organisational / Legal), owner, and priority
+- Workshop 5: Residual risk assessment made after measures applied
+- Workshop 5: Homologation recommendation clearly stated (Proceed / Proceed with conditions / Do not proceed)
+- Document classified OFFICIAL-SENSITIVE minimum
+- Homologation Authority (Autorité d'Homologation) named in Document Control
