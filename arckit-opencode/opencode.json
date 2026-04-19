@@ -18,6 +18,14 @@
         "X-Goog-Api-Key": "${GOOGLE_API_KEY}"
       },
       "enabled": false
+    },
+    "exa": {
+      "type": "remote",
+      "url": "https://mcp.exa.ai/mcp",
+      "headers": {
+        "x-api-key": "${EXA_API_KEY}"
+      },
+      "enabled": true
     }
   }
 }

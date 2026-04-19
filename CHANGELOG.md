@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Bundled **Exa MCP server** (`https://mcp.exa.ai/mcp`) in the Claude Code, Gemini CLI, and OpenCode configs. Exposes `web_search_exa`, `web_fetch_exa`, and `web_search_advanced_exa` for general web search and URL-to-markdown retrieval — useful for vendor discovery, market research, regulatory/news context for business cases, and any topic not covered by the cloud-vendor docs servers. Works out of the box on the free tier; new optional `EXA_API_KEY` userConfig entry lifts free-tier rate limits.
+
 ## [4.6.13] - 2026-04-19
 
 ### Fixed

@@ -25,6 +25,13 @@
     "govreposcrape": {
       "type": "http",
       "url": "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp"
+    },
+    "exa": {
+      "type": "http",
+      "url": "https://mcp.exa.ai/mcp",
+      "headers": {
+        "x-api-key": "${user_config.EXA_API_KEY}"
+      }
     }
   }
 }

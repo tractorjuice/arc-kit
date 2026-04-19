@@ -85,9 +85,9 @@ To have the plugin auto-enable for anyone who opens your repo, add `.claude/sett
 
 ## MCP Servers
 
-ArcKit includes 4 bundled MCP (Model Context Protocol) servers for cloud research, plus support for optional third-party MCPs like Pinecone.
+ArcKit includes 5 bundled MCP (Model Context Protocol) servers for cloud research, general web research, and public data, plus support for optional third-party MCPs like Pinecone.
 
-> **Two servers work out of the box** (AWS Knowledge, Microsoft Learn). The other two require free API keys (Google Developer Knowledge, Data Commons). If you don't configure the API keys, you'll see errors in the plugin UI — **these are harmless and all other commands work normally**.
+> **Three servers work out of the box** (AWS Knowledge, Microsoft Learn, Exa). The other two require free API keys (Google Developer Knowledge, Data Commons). If you don't configure the API keys, you'll see errors in the plugin UI — **these are harmless and all other commands work normally**. Exa also accepts an optional `EXA_API_KEY` to lift free-tier rate limits.
 
 ---
 
@@ -97,6 +97,7 @@ ArcKit includes 4 bundled MCP (Model Context Protocol) servers for cloud researc
 |------------|---------|---------|--------|
 | AWS Knowledge | Not required | `/arckit:aws-research` | Works out of the box |
 | Microsoft Learn | Not required | `/arckit:azure-research` | Works out of the box |
+| Exa | `EXA_API_KEY` (optional) | General web search for vendor/market research | Works out of the box |
 | Google Developer Knowledge | `GOOGLE_API_KEY` | `/arckit:gcp-research` | Requires setup |
 | Data Commons | `DATA_COMMONS_API_KEY` | Data statistics lookups | Requires setup |
 
@@ -121,6 +122,26 @@ Provides access to official Microsoft and Azure documentation, code samples, and
 - **Commands**: `/arckit:azure-research`
 - **Tools**: `microsoft_docs_search`, `microsoft_code_sample_search`, `microsoft_docs_fetch`
 - **Setup**: None — works immediately after plugin installation
+
+### Exa
+
+Provides general web search and URL-to-markdown retrieval for topics that the cloud-vendor docs servers don't cover: vendor discovery, market research, regulatory/news context for business cases, and ad-hoc citations. Useful alongside `/arckit:research`, `/arckit:sobc`, `/arckit:evaluate`, and the `arckit-datascout` agent.
+
+- **Type**: HTTP (remote endpoint) — `https://mcp.exa.ai/mcp`
+- **Tools**: `web_search_exa` (clean, ready-to-use search results), `web_fetch_exa` (fetch one or more URLs as markdown), `web_search_advanced_exa` (filters for domain, date range, highlights, subpage crawling)
+- **Setup**: None for the free tier — works immediately after plugin installation
+
+**Optional — lift free-tier rate limits**:
+
+1. Create a key at [dashboard.exa.ai](https://dashboard.exa.ai/api-keys)
+2. Set the environment variable:
+
+```bash
+# Add to your shell profile (~/.bashrc, ~/.zshrc, etc.)
+export EXA_API_KEY="your-api-key-here"
+```
+
+3. Restart Claude Code
 
 ---
 
@@ -177,7 +198,7 @@ Invalid MCP server config for 'google-developer-knowledge': Missing environment 
 Invalid MCP server config for 'datacommons-mcp': Missing environment variables: DATA_COMMONS_API_KEY
 ```
 
-**These errors are harmless.** They mean you haven't configured the optional API keys. All 68 commands, 10 agents, hooks, and skills work without them. Only `/arckit:gcp-research` and Data Commons lookups are affected.
+**These errors are harmless.** They mean you haven't configured the optional API keys. All 68 commands, 10 agents, hooks, and skills work without them. Only `/arckit:gcp-research` and Data Commons lookups are affected. You may also see the Exa server work without `EXA_API_KEY` on its free tier — set the key if you hit rate limits.
 
 **To fix**: Set the environment variables as described above and restart Claude Code.
 
@@ -231,6 +252,13 @@ The plugin's bundled MCP configuration (`.mcp.json`):
       "url": "https://api.datacommons.org/mcp",
       "headers": {
         "X-API-Key": "${DATA_COMMONS_API_KEY}"
+      }
+    },
+    "exa": {
+      "type": "http",
+      "url": "https://mcp.exa.ai/mcp",
+      "headers": {
+        "x-api-key": "${EXA_API_KEY}"
       }
     }
   }
@@ -295,6 +323,7 @@ For detailed workflows and real-world examples, see the [Architecture Productivi
 - [Microsoft Learn MCP](https://learn.microsoft.com/api/mcp) — Azure documentation server
 - [Google Developer Knowledge MCP](https://developerknowledge.googleapis.com/mcp) — Google Cloud documentation server
 - [Data Commons](https://datacommons.org) — Public statistical data
+- [Exa MCP](https://exa.ai/docs/reference/exa-mcp) — General web search and page retrieval
 - [Model Context Protocol](https://modelcontextprotocol.io/) — MCP specification
 - [Anthropic Skills](https://github.com/anthropics/skills) — Document skills (PDF, DOCX, PPTX, XLSX)
 - [Claude Plugins Directory](https://claude.com/plugins) — Browse all available plugins

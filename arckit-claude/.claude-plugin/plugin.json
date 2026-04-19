@@ -30,6 +30,12 @@
       "type": "string",
       "sensitive": true
     },
+    "EXA_API_KEY": {
+      "title": "Exa API Key",
+      "description": "Exa API key for the exa MCP server — general web search for vendor/market research (optional — leave blank to use the free tier with rate limits)",
+      "type": "string",
+      "sensitive": true
+    },
     "organisation_name": {
       "title": "Organisation Name",
       "description": "Organisation name used in generated Document Control headers (e.g. 'Acme Ltd' or 'HM Revenue & Customs')",

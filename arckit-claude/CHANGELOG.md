@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Bundled **Exa MCP server** (`https://mcp.exa.ai/mcp`) in `arckit-claude/.mcp.json`. Exposes `web_search_exa`, `web_fetch_exa`, and `web_search_advanced_exa` for general web search and URL-to-markdown retrieval. Works out of the box on the free tier; new `EXA_API_KEY` entry added to `userConfig` in `plugin.json` to lift rate limits when configured.
+
 ## [4.6.13] - 2026-04-19
 
 ### Fixed
