@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `/arckit.fr-secnumcloud` — assess SecNumCloud 3.2 qualification compliance for French sovereign cloud procurement and OIV/OSE obligations
+- `/arckit.fr-marche-public` — generate French public procurement documentation aligned with code de la commande publique, UGAP catalogue, and DINUM digital standards
+- `/arckit.fr-dinum` — assess compliance with French digital administration standards: RGI, RGAA, RGESN, RGS, and DINUM doctrine cloud de l'État
+- `/arckit.eu-nis2` — assess NIS2 Directive compliance obligations for EU member state operators of essential services and important entities
+- `/arckit.eu-rgpd` — generate GDPR (EU 2016/679) compliance assessment for EU/EEA data processing — member-state-neutral, covers all DPAs, cross-border transfers, breach notification
+- `/arckit.fr-rgpd` — French CNIL-specific GDPR layer: cookies (Délibération 2020-091), health data (HDS certification), minors (age 15), CNIL référentiels, and enforcement patterns; supplements `/arckit.eu-rgpd`
+- `/arckit.eu-ai-act` — assess EU AI Act (Regulation 2024/1689) compliance obligations, risk classification, and conformity requirements for AI systems
+- `/arckit.eu-dora` — assess DORA (Digital Operational Resilience Act, EU 2022/2554) compliance for financial sector entities operating in the EU
+- `/arckit.eu-cra` — assess EU Cyber Resilience Act (CRA, Regulation 2024/2847) compliance obligations for products with digital elements placed on the EU market
+
 ## [4.6.11] - 2026-04-18
 
 ### Added
