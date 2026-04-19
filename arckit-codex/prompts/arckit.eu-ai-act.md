@@ -230,6 +230,19 @@ Next steps:
 - **GPAI models are a separate track**: Even if the AI system using a GPAI model is not high-risk, the GPAI model provider has its own obligations under Articles 53–55.
 - **Use Write Tool**: AI Act assessments cover multiple risk levels and detailed technical requirements. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| EU AI Act (Regulation 2024/1689) — full text | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2024/1689/oj |
+| EU AI Office — implementation guidance and GPAI codes of practice | European Commission | https://digital-strategy.ec.europa.eu/en/policies/ai-office |
+| AI Act application timeline and obligations summary | European Commission | https://digital-strategy.ec.europa.eu/en/policies/european-approach-artificial-intelligence |
+| ENISA — AI cybersecurity guidance | ENISA | https://www.enisa.europa.eu/topics/artificial-intelligence |
+| MITRE ATLAS — adversarial ML threat matrix | MITRE | https://atlas.mitre.org/ |
+| ANSSI — AI security guidance (French context) | ANSSI | https://cyber.gouv.fr/publications |
+
+> **Note for reviewers**: The EU AI Act is the world's first comprehensive AI regulation, applying to providers and deployers of AI systems in the EU regardless of where the provider is based. It uses a risk-based approach: prohibited practices (e.g. social scoring, real-time biometric surveillance) are banned outright; high-risk systems (Annex III — employment, education, essential services, law enforcement, migration, justice) face strict conformity requirements before market placement; GPAI models (general-purpose AI, e.g. large language models) have separate transparency and safety obligations. Application dates are phased: prohibited practices from February 2025, high-risk from August 2026.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-AIACT-v{VERSION}.md`

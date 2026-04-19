@@ -202,6 +202,21 @@ Next steps:
 - **DSFR and RGAA**: Using DSFR components provides partial RGAA compliance by design. Note this in the assessment — it reduces the audit scope but does not eliminate the obligation.
 - **Use Write Tool**: DINUM assessments cover 5+ referentiels and are typically 2,000-4,000 words. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| RGAA 4.1 — Référentiel Général d'Accessibilité pour les Administrations | DINUM | https://accessibilite.numerique.gouv.fr/ |
+| RGESN — Référentiel Général d'Écoconception de Services Numériques | DINUM / MTE | https://ecoresponsable.numerique.gouv.fr/publications/referentiel-general-ecoconception/ |
+| RGI 2.0 — Référentiel Général d'Interopérabilité | DINUM | https://www.numerique.gouv.fr/publications/interoperabilite/ |
+| RGS v2.0 — Référentiel Général de Sécurité | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
+| DSFR — Système de Design de l'État | DINUM | https://www.systeme-de-design.gouv.fr/ |
+| FranceConnect — identity federation | DINUM | https://franceconnect.gouv.fr/ |
+| Doctrine cloud de l'État — cloud-first policy | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |
+| API.gouv.fr — government API catalogue | DINUM | https://api.gouv.fr/ |
+
+> **Note for reviewers**: DINUM (Direction Interministérielle du Numérique) is France's central digital government directorate, equivalent in purpose to the UK's GDS (Government Digital Service). The RGI, RGAA, RGESN, and RGS are mandatory referentiels for French public IS — not voluntary standards. The DSFR (Design System of the French State) is the official component library for all public-facing government digital services, analogous to the GOV.UK Design System.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-DINUM-v{VERSION}.md`

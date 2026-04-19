@@ -229,6 +229,19 @@ Next steps:
 - **Relationship with EBIOS**: The PSSI and EBIOS RM are complementary. EBIOS provides the risk analysis that justifies the PSSI's security objectives. The PSSI provides the governance framework that gives EBIOS its authority. Ideally, EBIOS comes before or alongside the PSSI.
 - **Applicable to private sector too**: While the RGS/Circulaire obligations apply specifically to public administrations, the PSSI format is applicable to any French organisation that wants to formalise its security governance — OIV private operators, OSE in the financial sector, large enterprises.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| Guide PSSI — methodology for drafting a security policy | ANSSI | https://cyber.gouv.fr/publications/politique-de-securite-des-systemes-dinformation |
+| RGS v2.0 (Référentiel Général de Sécurité) — mandatory for public IS | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
+| Guide d'hygiène informatique (42 measures) — PSSI baseline reference | ANSSI | https://cyber.gouv.fr/publications/guide-dhygiene-informatique |
+| EBIOS Risk Manager — risk analysis methodology referenced in PSSI | ANSSI | https://cyber.gouv.fr/publications/la-methode-ebios-risk-manager |
+| CERT-FR — incident notification contact | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
+| NIS2 Directive — Article 21 security measures (for OSE) | EUR-Lex | https://eur-lex.europa.eu/eli/dir/2022/2555/oj |
+
+> **Note for reviewers**: The PSSI (Politique de Sécurité des Systèmes d'Information) is the French equivalent of an Information Security Policy. It is mandatory for French public administrations under the Circulaire du Premier Ministre n°5926/SG and the RGS. The RGS (Référentiel Général de Sécurité) is the French government's security standard framework, published by ANSSI — analogous in purpose to ISO 27001 but specific to French public IS.
+
 ## Success Criteria
 
 - ✅ PSSI document created at `projects/{project_id}/ARC-{PROJECT_ID}-PSSI-v{VERSION}.md`

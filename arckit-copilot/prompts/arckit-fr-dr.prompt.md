@@ -209,6 +209,18 @@ Next steps:
 - **IS homologation required**: An IS that processes DR information must be homologated by the RSSI or relevant authority. The homologation is based on an EBIOS risk analysis. Flag this if the IS is not yet homologated.
 - **Cloud and DR**: Storing DR information in cloud requires ANSSI-approved infrastructure. Non-qualified providers (including major US hyperscalers) should not be used for DR without explicit ANSSI assessment.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| Diffusion Restreinte — guidance and governing instruction (II 901) | ANSSI / SGDSN | https://cyber.gouv.fr/la-mention-diffusion-restreinte |
+| SGDSN (Secrétariat Général de la Défense et de la Sécurité Nationale) | SGDSN | https://www.sgdsn.gouv.fr/ |
+| RGS v2.0 — IS homologation requirements | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
+| ANSSI-approved encryption products (list) | ANSSI | https://cyber.gouv.fr/produits-services-et-organismes-qualifies |
+| CERT-FR — security incident reporting | CERT-FR / ANSSI | https://www.cert.ssi.gouv.fr/ |
+
+> **Note for reviewers**: The II 901/SGDSN/ANSSI instruction governing electronic DR systems is an interministerial instruction not publicly distributed in full. The ANSSI page above provides the publicly accessible guidance. DR is an administrative protection mention, distinct from the IGI 1300 formal classification scheme (Confidentiel Défense and above), which is managed by SGDSN and is outside the scope of this command.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-DR-v{VERSION}.md`

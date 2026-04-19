@@ -211,6 +211,20 @@ Next steps:
 - **French age of consent is 15, not 16**: France chose the lower limit allowed by GDPR (member states can set 13–16). Do not apply the GDPR default of 16.
 - **Use Write Tool**: CNIL assessments cover multiple French-specific regulations and are typically 2,500–4,500 words. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| CNIL — official website and guidance | CNIL | https://www.cnil.fr/ |
+| Délibération 2020-091 — cookies and consent (French rules) | CNIL | https://www.cnil.fr/fr/cookies-et-autres-traceurs/regles/cookies/que-dit-la-loi |
+| Loi n°78-17 Informatique et Libertés (amended) | Légifrance | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000000886460 |
+| HDS — Hébergement de Données de Santé (health data hosting) | ANS (Agence du Numérique en Santé) | https://esante.gouv.fr/secteur/hebergement-des-donnees-de-sante |
+| DPO registration with CNIL | CNIL | https://notifications.cnil.fr/ |
+| CNIL AIPD / DPIA guidance and tool (PIA) | CNIL | https://www.cnil.fr/fr/outil-pia-telechargez-et-installez-le-logiciel-de-la-cnil |
+| GDPR full text | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2016/679/oj |
+
+> **Note for reviewers**: This command covers France-specific GDPR obligations layered on top of the baseline EU GDPR (covered by `/arckit.eu-rgpd`). Key French specifics: the age of digital consent is **15** (not the GDPR default of 16), HDS (Hébergement de Données de Santé) is a mandatory French certification for any cloud provider hosting health data, and the CNIL has issued specific guidance on analytics tools — notably ruling that Google Analytics transfers personal data to the US unlawfully (2022). The CNIL is the French Data Protection Authority (DPA), member of the EDPB.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-CNIL-v{VERSION}.md`

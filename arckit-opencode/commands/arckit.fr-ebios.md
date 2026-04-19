@@ -258,6 +258,19 @@ Next steps:
 - **effort: max**: EBIOS is one of ArcKit's most complex commands, spanning five workshops and requiring deep analysis of requirements, architecture, and threat landscape. This justifies the `effort: max` setting.
 - **Use Write Tool**: EBIOS studies are typically 4,000–12,000 words. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| EBIOS Risk Manager — official guide (2018, updated 2023) | ANSSI | https://cyber.gouv.fr/publications/la-methode-ebios-risk-manager |
+| EBIOS RM — club EBIOS (community and tools) | Club EBIOS | https://www.club-ebios.org/ |
+| MITRE ATT&CK framework (Workshop 4 technique mapping) | MITRE | https://attack.mitre.org/ |
+| RGS v2.0 — homologation requirements | ANSSI | https://cyber.gouv.fr/referentiel-general-de-securite |
+| ANSSI — OIV (Opérateurs d'Importance Vitale) obligations | ANSSI | https://cyber.gouv.fr/les-oiv-quest-ce-que-cest |
+| NIS2 Directive — OSE (Opérateurs de Services Essentiels) obligations | EUR-Lex | https://eur-lex.europa.eu/eli/dir/2022/2555/oj |
+
+> **Note for reviewers**: EBIOS Risk Manager is the French government's official cybersecurity risk analysis methodology, published by ANSSI (the French national cybersecurity agency). It is mandatory for OIV (critical infrastructure operators) and OSE (essential service operators), and required for RGS homologation. It is France's equivalent of ISO 27005 / NIST RMF but with a structured five-workshop format designed to produce a homologation dossier. "Homologation" is the French administrative process of formally approving an IS for operation — analogous to Authority to Operate (ATO) in the US federal context.
+
 ## Success Criteria
 
 - ✅ EBIOS study document created at `projects/{project_id}/ARC-{PROJECT_ID}-EBIOS-v{VERSION}.md`

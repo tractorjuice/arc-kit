@@ -249,6 +249,20 @@ Next steps:
 - **EUPL-1.2 is the recommended licence**: When publishing code developed for a French public administration, the EUPL-1.2 licence is recommended by DINUM. It is compatible with most major open source licences.
 - **Joinup for EU public code**: Beyond France, the EU Joinup platform catalogues public code from EU institutions and all member states. Consider it for components where no French equivalent exists.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| code.gouv.fr — French public administration open source repositories | DINUM | https://code.gouv.fr/sources/ |
+| SILL (Socle Interministériel de Logiciels Libres) — recommended open source software for the French State | DINUM | https://code.gouv.fr/sill/ |
+| Circulaire PM n°6264-SG (2021) — open source obligation for public administrations | DINUM | https://www.numerique.gouv.fr/publications/politique-logiciel-libre/ |
+| Loi République Numérique Art. 16 — code publication obligation | Légifrance | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000033202746 |
+| EUPL-1.2 licence — recommended for French public code | Joinup / EC | https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12 |
+| Joinup — EU public code catalogue | European Commission | https://joinup.ec.europa.eu/ |
+| DINUM mission logiciels libres | DINUM | https://code.gouv.fr/ |
+
+> **Note for reviewers**: French public administrations are legally required to search for existing open source code before commissioning new development (Circulaire 2021), and to publish code developed for them as open source unless exceptions apply (Loi République Numérique 2016). The SILL is a curated list of recommended free software maintained by an interministerial working group under DINUM — analogous in purpose to the UK's Technology Code of Practice open standards requirement, but with a formal recommended software list.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-REUSE-v{VERSION}.md`

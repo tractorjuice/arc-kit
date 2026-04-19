@@ -373,9 +373,9 @@ principles-compliance → conformance → analyze → service-assessment → sto
 ## Version
 
 - **ArcKit Version**: 1.6.0
-- **Matrix Date**: 2026-03-16
-- **Commands Documented**: 64
-- **Matrix Rows**: 58 (56 document-generating commands + 2 external documents)
+- **Matrix Date**: 2026-04-19
+- **Commands Documented**: 82
+- **Matrix Rows**: 58 (existing) + 18 EU/FR commands in separate section below (see Changelog 2026-04-19)
 - **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.impact`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
@@ -641,3 +641,59 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Updated Templates**:
   - architecture-diagram-template.md: Added ATRS to Linked Artifacts
   - wardley-map-template.md: Added AI Playbook/ATRS mapping sections for AI systems
+
+### 2026-04-19 - EU and French Government Compliance Commands
+
+Added 18 new commands covering EU regulations and French public sector governance. These are Tier 13 compliance-assessment commands that are largely independent of each other but consume the standard project artifacts (REQ, RISK, DATA, SECD) and cross-reference each other via handoffs.
+
+**New EU commands**:
+
+- `/arckit.eu-rgpd` — GDPR / French CNIL compliance. Depends on: requirements (M), data-model (R), dpia (O). Produces ARC-*-RGPD-*.md
+- `/arckit.eu-ai-act` — EU AI Act (Reg 2024/1689) compliance. Depends on: requirements (M), risk (R), data-model (R). Produces ARC-*-AIACT-*.md
+- `/arckit.eu-nis2` — NIS2 Directive compliance + French OIV/OSE. Depends on: requirements (M), risk (M), secure (R). Produces ARC-*-NIS2-*.md
+- `/arckit.eu-dora` — DORA (Reg 2022/2554) compliance for financial entities. Depends on: requirements (M), risk (M), secure (R). Produces ARC-*-DORA-*.md
+- `/arckit.eu-cra` — Cyber Resilience Act (Reg 2024/2847) compliance. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-CRA-*.md
+- `/arckit.eu-dsa` — Digital Services Act (Reg 2022/2065) compliance. Depends on: requirements (M), risk (R). Produces ARC-*-DSA-*.md
+- `/arckit.eu-data-act` — EU Data Act (Reg 2023/2854) compliance. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-DATAACT-*.md
+
+**New French commands**:
+
+- `/arckit.fr-rgpd` — French GDPR with CNIL specifics. Depends on: requirements (M), data-model (R), eu-rgpd (O). Produces ARC-*-RGPD-*.md (FR variant)
+- `/arckit.fr-ebios` — EBIOS Risk Manager (5 workshops). Depends on: requirements (M), risk (M), data-model (R). Produces ARC-*-EBIOS-*.md
+- `/arckit.fr-anssi` — ANSSI 42 Cybersecurity Hygiene Measures. Depends on: requirements (M), risk (R). Produces ARC-*-ANSSI-*.md
+- `/arckit.fr-anssi-carto` — ANSSI IS Cartography (4 levels). Depends on: requirements (M), data-model (R), diagram (O). Produces ARC-*-CARTO-*.md
+- `/arckit.fr-secnumcloud` — SecNumCloud qualification assessment. Depends on: requirements (M), fr-ebios (R), fr-anssi (R). Produces ARC-*-SECNUM-*.md
+- `/arckit.fr-dinum` — DINUM digital doctrine (RGI, RGAA, cloud doctrine, SILL). Depends on: requirements (M), principles (R). Produces ARC-*-DINUM-*.md
+- `/arckit.fr-marche-public` — French public procurement (Code de la Commande Publique). Depends on: requirements (M), stakeholders (R). Produces ARC-*-MARCHE-*.md
+- `/arckit.fr-pssi` — PSSI (IS Security Policy for French public sector). Depends on: requirements (M), fr-ebios (R), fr-anssi (R), fr-anssi-carto (R). Produces ARC-*-PSSI-*.md
+- `/arckit.fr-dr` — Diffusion Restreinte document and IS handling. Depends on: requirements (M), fr-anssi (R). Produces ARC-*-DR-*.md
+- `/arckit.fr-algorithme-public` — French Public Algorithm Transparency Notice. Depends on: requirements (M), data-model (R). Produces ARC-*-ALGO-*.md
+- `/arckit.fr-code-reuse` — French Public Code Reuse Assessment. Depends on: requirements (M), research (R). Produces ARC-*-REUSE-*.md
+
+**Key inter-dependencies among EU/FR commands**:
+
+- `fr-ebios` → feeds `fr-secnumcloud` (M), `fr-pssi` (R), `fr-anssi` (R)
+- `fr-anssi` → feeds `fr-pssi` (R), `fr-secnumcloud` (R), `fr-dr` (R)
+- `fr-anssi-carto` → feeds `fr-pssi` (R)
+- `eu-rgpd` / `fr-rgpd` → consumed by `fr-algorithme-public` (O) and `eu-ai-act` (O)
+- `eu-nis2` → feeds `eu-dora` (O), `eu-cra` (O) when product used by NIS2 entities
+- `risk` → feeds all compliance commands (R or M)
+
+**Typical French public sector compliance path**:
+
+```text
+requirements → risk → data-model →
+fr-ebios → fr-anssi → fr-anssi-carto → fr-secnumcloud → fr-pssi →
+eu-rgpd → fr-rgpd → eu-nis2 → fr-dr → fr-algorithme-public →
+fr-dinum → fr-marche-public → fr-code-reuse
+```
+
+**Typical EU private sector compliance path** (connected product / cloud provider):
+
+```text
+requirements → risk → data-model →
+eu-rgpd → eu-nis2 → eu-cra → eu-data-act → eu-dsa → eu-ai-act
+```
+
+- **Updated**: Commands Documented count from 64 to 82 (86 total; 4 utility commands not in matrix: customize, template-builder, health, search, impact, init, start, score, fr-code-reuse, gov-reuse, gov-code-search, gov-landscape are in matrix)
+- **Updated**: Matrix version date to 2026-04-19

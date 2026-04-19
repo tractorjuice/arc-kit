@@ -201,6 +201,20 @@ Next steps:
 - **Qualification status changes**: SecNumCloud qualifications are maintained only as long as providers continue to meet requirements. Include a contractual clause requiring maintained qualification throughout the contract period.
 - **Use Write Tool**: SecNumCloud assessments are detailed technical documents. Always use the Write tool.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| SecNumCloud qualification scheme — official page | ANSSI | https://cyber.gouv.fr/secnumcloud |
+| SecNumCloud 3.2 referential (requirements document) | ANSSI | https://cyber.gouv.fr/publications/referentiel-secnumcloud-32 |
+| List of SecNumCloud-qualified providers | ANSSI | https://cyber.gouv.fr/prestataires-de-service-qualifies-secnumcloud |
+| UGAP catalogue — sovereign cloud framework agreements | UGAP | https://www.ugap.fr/ |
+| ANSSI — OIV obligations | ANSSI | https://cyber.gouv.fr/les-oiv-quest-ce-que-cest |
+| NIS2 Directive — OSE obligations | EUR-Lex | https://eur-lex.europa.eu/eli/dir/2022/2555/oj |
+| DINUM cloud doctrine for French public administration | DINUM | https://www.numerique.gouv.fr/services/cloud/doctrine/ |
+
+> **Note for reviewers**: SecNumCloud is France's national cloud security qualification scheme, administered by ANSSI. It is the French equivalent of — and more stringent than — the EU's EUCS (European Cybersecurity Certification Scheme for Cloud Services). SecNumCloud 3.2 explicitly prohibits extraterritorial law exposure (US CLOUD Act, China MLSA), making it the required scheme for French government sensitive data and OIV systems. A key distinction: **SecNumCloud visa ≠ SecNumCloud qualification** — some providers hold a visa (provisional) rather than full qualification; only full qualification satisfies OIV/OSE and ministerial requirements.
+
 ## Success Criteria
 
 - ✅ Assessment document created at `projects/{project_id}/ARC-{PROJECT_ID}-SECNUM-v{VERSION}.md`

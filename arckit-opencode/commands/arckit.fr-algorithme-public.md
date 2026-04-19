@@ -196,6 +196,19 @@ Next steps:
 - **Distinction from GDPR Article 22**: GDPR Article 22 applies to fully automated decisions with legal or significant effects when personal data is involved. Article L311-3-1 CRPA applies more broadly — to any individual administrative decision based on algorithmic processing, including when a human reviews the algorithmic output.
 - **ATRS parallel**: The UK equivalent is the Algorithmic Transparency Recording Standard (ATRS). The CRPA obligation is more legally binding than ATRS, which is a voluntary standard in the UK.
 
+## Key References
+
+| Document | Publisher | URL |
+|----------|-----------|-----|
+| Art. L311-3-1 CRPA (algorithmic transparency obligation) | Légifrance | https://www.legifrance.gouv.fr/codes/article_lc/LEGIARTI000033218710/ |
+| Loi n°2016-1321 pour une République Numérique (source legislation) | Légifrance | https://www.legifrance.gouv.fr/loda/id/JORFTEXT000033202746 |
+| algorithmes.data.gouv.fr — public algorithm register | DINUM | https://algorithmes.data.gouv.fr/ |
+| CNIL guidance on algorithms and automated decisions | CNIL | https://www.cnil.fr/fr/algorithmes |
+| GDPR Article 22 — automated individual decision-making | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2016/679/oj |
+| EU AI Act (Regulation 2024/1689) — for ML-based algorithms | EUR-Lex | https://eur-lex.europa.eu/eli/reg/2024/1689/oj |
+
+> **Note for reviewers**: Art. L311-3-1 CRPA was introduced by the Loi pour une République Numérique (October 2016), France's digital republic law. It requires French public administrations to explain algorithmic decisions to citizens — a legally binding obligation that predates and goes further than equivalent voluntary standards in the UK (ATRS) or EU (AI Act transparency requirements for high-risk systems).
+
 ## Success Criteria
 
 - ✅ Transparency notice document created at `projects/{project_id}/ARC-{PROJECT_ID}-ALGO-v{VERSION}.md`
