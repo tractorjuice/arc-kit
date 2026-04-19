@@ -1,8 +1,8 @@
 # NIS2 Compliance Assessment
 
-> **Template Origin**: Community (Experimental) | **ArcKit Version**: [VERSION] | **Command**: `/arckit.eu-nis2`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.eu-nis2`
 >
-> ⚠️ **Experimental** — community-contributed; not yet validated against current ANSSI/CNIL/EU regulatory text. Verify all citations before relying on output.
+> ⚠️ **Community-contributed** — not yet validated against current ANSSI/CNIL/EU regulatory text. Verify all citations before relying on output.
 
 ## Document Control
 

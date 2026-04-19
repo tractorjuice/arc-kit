@@ -1,5 +1,5 @@
 ---
-description: "[EXPERIMENTAL] Assess EU AI Act (Regulation 2024/1689) compliance obligations, risk classification, and conformity requirements for AI systems"
+description: "[COMMUNITY] Assess EU AI Act (Regulation 2024/1689) compliance obligations, risk classification, and conformity requirements for AI systems"
 argument-hint: "<project ID or AI system description, e.g. '001', 'automated CV screening tool for public employment service'>"
 effort: high
 handoffs:
@@ -14,7 +14,7 @@ handoffs:
 ---
 
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect generate an **EU AI Act Compliance Assessment** (Regulation EU 2024/1689) for an AI system deployed in the European Union. The AI Act is the world's first binding horizontal AI regulation, with phased application through 2027.
 

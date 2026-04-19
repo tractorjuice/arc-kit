@@ -7,17 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added (Experimental — community-contributed)
+### Added (Community-contributed)
 
-> ⚠️ The EU regulatory commands below are community-contributed and have not yet been validated against current EU regulatory text. Output should be reviewed by qualified DPO / legal counsel before reliance. Citations may lag the current source — verify before use.
+> ⚠️ The EU regulatory commands below are community-contributed and have not yet been validated against current EU regulatory text. Output should be reviewed by qualified DPO / legal counsel before reliance. Citations may lag the current source — verify before use. Domain maintainer: [@thomas-jardinet](https://github.com/thomas-jardinet).
 
-- `/arckit.eu-rgpd` — [EXPERIMENTAL] generate GDPR (EU 2016/679) compliance assessment for EU/EEA data processing — member-state-neutral, covers all DPAs, cross-border transfers, breach notification
-- `/arckit.eu-nis2` — [EXPERIMENTAL] assess NIS2 Directive compliance obligations for EU member state operators of essential services and important entities
-- `/arckit.eu-ai-act` — [EXPERIMENTAL] assess EU AI Act (Regulation 2024/1689) compliance, risk classification, and conformity requirements
-- `/arckit.eu-dora` — [EXPERIMENTAL] assess DORA (EU 2022/2554) compliance for financial sector entities operating in the EU
-- `/arckit.eu-cra` — [EXPERIMENTAL] assess EU Cyber Resilience Act (Regulation 2024/2847) for products with digital elements
-- `/arckit.eu-dsa` — [EXPERIMENTAL] assess EU Digital Services Act (Regulation 2022/2065) for online intermediaries, platforms, and VLOPs
-- `/arckit.eu-data-act` — [EXPERIMENTAL] assess EU Data Act (Regulation 2023/2854) for connected products, data holders, and DAPS
+- `/arckit.eu-rgpd` — [COMMUNITY] generate GDPR (EU 2016/679) compliance assessment for EU/EEA data processing — member-state-neutral, covers all DPAs, cross-border transfers, breach notification
+- `/arckit.eu-nis2` — [COMMUNITY] assess NIS2 Directive compliance obligations for EU member state operators of essential services and important entities
+- `/arckit.eu-ai-act` — [COMMUNITY] assess EU AI Act (Regulation 2024/1689) compliance, risk classification, and conformity requirements
+- `/arckit.eu-dora` — [COMMUNITY] assess DORA (EU 2022/2554) compliance for financial sector entities operating in the EU
+- `/arckit.eu-cra` — [COMMUNITY] assess EU Cyber Resilience Act (Regulation 2024/2847) for products with digital elements
+- `/arckit.eu-dsa` — [COMMUNITY] assess EU Digital Services Act (Regulation 2022/2065) for online intermediaries, platforms, and VLOPs
+- `/arckit.eu-data-act` — [COMMUNITY] assess EU Data Act (Regulation 2023/2854) for connected products, data holders, and DAPS
 
 ## [4.6.13] - 2026-04-19
 

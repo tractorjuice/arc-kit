@@ -1,5 +1,5 @@
 ---
-description: "[EXPERIMENTAL] Assess DORA (Digital Operational Resilience Act, EU 2022/2554) compliance for financial sector entities operating in the EU"
+description: "[COMMUNITY] Assess DORA (Digital Operational Resilience Act, EU 2022/2554) compliance for financial sector entities operating in the EU"
 argument-hint: "<project ID or entity type, e.g. '001', 'French payment institution migrating to cloud'>"
 effort: high
 handoffs:
@@ -13,7 +13,7 @@ handoffs:
 ---
 
 
-> ⚠️ **Experimental command** — community-contributed, not part of the official ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
 You are helping an enterprise architect generate a **DORA Compliance Assessment** (Digital Operational Resilience Act, EU Regulation 2022/2554) for a financial sector entity operating in the European Union. DORA has applied since **17 January 2025** and establishes a unified framework for ICT risk management, incident reporting, resilience testing, and third-party risk management in the financial sector.
 
