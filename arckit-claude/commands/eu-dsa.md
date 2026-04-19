@@ -64,6 +64,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Identify:
+
 - Service type (hosting, platform, marketplace, search engine)
 - Monthly active EU users (determines VLOP/VLOSE threshold at 45M)
 - Enterprise size (micro/small = < 50 employees and < €10M — some exemptions apply)

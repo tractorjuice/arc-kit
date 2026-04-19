@@ -158,6 +158,7 @@ Lawful basis codes: (a) Consent | (b) Contract | (c) Legal obligation | (d) Vita
 | [Provider] | [Service] | ☐ | ☐ | [Date] |
 
 Data Processing Agreement (DPA) must include:
+
 - [ ] Processing only on controller's instructions
 - [ ] Confidentiality obligations on authorised persons
 - [ ] Appropriate security measures (Article 32)

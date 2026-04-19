@@ -53,6 +53,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Identify:
+
 - Role: controller / processor / joint controller (from stakeholder analysis or user input)
 - Special category data presence (Article 9) → stricter requirements
 - International transfers → Schrems II / TIA requirements
@@ -84,6 +85,7 @@ Based on the data model and requirements, automatically score the EDPB 9 criteri
 | 9 | Prevents exercising rights | No SAR/deletion/portability mechanism |
 
 **DPIA Decision**:
+
 - 2+ criteria: DPIA REQUIRED (Article 35) → recommend running `/arckit.dpia`
 - 1 criterion: DPIA RECOMMENDED
 - 0 criteria: DPIA NOT REQUIRED (but document the screening)

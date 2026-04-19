@@ -180,6 +180,7 @@
 | Notified body engaged (if Class I/II) | ☐ | [Description] | [Action] | Sep 2026 (notification bodies) |
 
 **Key CRA dates**:
+
 - 11 September 2026: Notification body obligations apply
 - 11 December 2027: Full CRA obligations apply
 

@@ -53,6 +53,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Identify:
+
 - Entity type (bank, payment institution, insurance, investment firm, crypto-asset, CCP, etc.)
 - Competent authority (ACPR / AMF / ECB / other)
 - Size (microenterprise eligibility for simplified regime)

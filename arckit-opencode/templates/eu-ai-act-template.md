@@ -217,7 +217,7 @@
 | Authority | Role |
 |-----------|------|
 | ANSSI | Cybersecurity requirements for AI systems; technical advisory |
-| CNIL | GDPR interface with AI Act; AI and fundamental rights | 
+| CNIL | GDPR interface with AI Act; AI and fundamental rights |
 | French AI Office (future) | Market surveillance for AI Act |
 | Comité National de l'IA | Government AI strategy coordination |
 
@@ -228,6 +228,7 @@
 | [Gap description] | [Art. XX] | 🔴 High | [Role] | [Date] |
 
 **Key AI Act application dates**:
+
 - February 2025: Prohibited AI practices apply
 - August 2025: GPAI model obligations apply
 - August 2026: High-risk AI (Annex III) obligations apply
