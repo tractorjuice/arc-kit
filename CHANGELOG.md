@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.7.1] - 2026-04-19
+
+### Fixed
+
+- `/arckit.pages` was silently omitting the 18 v4.7.0 community-contributed type codes (RGPD, NIS2, AIACT, DORA, CRA, DSA, DATAACT, CNIL, SECNUM, MARPUB, DINUM, EBIOS, ANSSI, CARTO, DR, ALGO, PSSI, REUSE) from the rendered dashboard. The `update-manifest.mjs` hook correctly recorded the artifacts in `docs/manifest.json` (it reads from `arckit-claude/config/doc-types.mjs`), but the `/arckit.pages` prompt has its own hardcoded "Only include these known artifact types" allow-list at `arckit-claude/commands/pages.md:198` that was missing the new codes. Added all 18 to the table grouped by category, plus a note pointing back to `doc-types.mjs` as the single source of truth (#317)
+
+### Documentation
+
+- `arckit-claude/config/doc-types.mjs` — added a prominent `⚠️ DUAL REGISTRATION REQUIRED` warning at the top so future contributors know to update both `doc-types.mjs` and `pages.md` when adding new type codes (#317)
+
 ## [4.7.0] - 2026-04-19
 
 ### Added (Community-contributed)
