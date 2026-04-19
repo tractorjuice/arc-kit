@@ -346,3 +346,91 @@ All artifacts must pass these 10 checks:
 - Each principle has a unique number, name, rationale, and implications
 - Principles categorized (business, data, application, technology)
 - No contradictions between principles
+
+### NIS2 -- NIS2 Compliance Assessment
+
+- Entity classification determined (Essential / Important / Out of scope) with Annex I/II sector reference
+- National competent authority and CSIRT identified per member state
+- All ten Article 21 minimum security measures assessed with status
+- Four-stage incident reporting timeline documented (24h / 72h / on request / 1 month)
+- 24-hour reporting readiness explicitly assessed
+- Supply chain security (Article 21(2)(d)) requirements mapped
+- Management body accountability (Article 20) obligations flagged
+- OIV/OSE overlap noted for French entities
+
+### RGPD -- EU GDPR Assessment
+
+- Organisation role determined (controller / processor / joint controller)
+- Lead supervisory authority identified from main EU establishment
+- All processing activities mapped to Article 6(1) legal basis
+- Special category data (Article 9) mapped to specific conditions
+- EDPB 9-criteria DPIA screening completed with decision (REQUIRED / RECOMMENDED / NOT REQUIRED)
+- International transfers assessed with Schrems II requirements (TIA, SCCs 2021)
+- Processor inventory with Article 28 DPA compliance checked
+- 72-hour breach notification process assessed
+- French deployment flagged for `/arckit.fr-rgpd` follow-up
+
+### AIACT -- EU AI Act Assessment
+
+- In-scope determination made (AI system definition assessed)
+- Prohibited practices (Article 5) explicitly checked — system halted if prohibited
+- Risk classification clearly stated (Default / Important Class I / Critical Class II / GPAI) with Annex reference
+- Conformity route determined (internal control vs notified body)
+- High-risk requirements (Articles 8–17) assessed if applicable
+- GPAI model obligations (Articles 53–55) assessed if applicable
+- EU database registration requirement assessed
+- Application timeline with relevant deadlines included (Feb 2025 / Aug 2025 / Aug 2026 / Dec 2027)
+
+### DORA -- DORA Assessment
+
+- Entity type and competent authority (ACPR/AMF/ECB) determined
+- Simplified regime (Article 16) eligibility assessed
+- Maturity table (L1–L5) for all five pillars: ICT Risk, Incident Reporting, Testing, Third-Party, Concentration
+- Three-stage incident reporting timeline: 4h initial (max 24h) / 72h / 1 month
+- 4-hour reporting readiness explicitly assessed
+- ICT third-party register with criticality assessment present
+- Article 30 mandatory contract provisions checklist completed
+- Concentration risk assessed with exit strategy documented
+- TLPT (Threat-Led Penetration Testing) assessed for significant entities
+
+### CRA -- EU Cyber Resilience Act Assessment
+
+- In-scope determination made (product with digital elements, EU market, no sector exclusion)
+- Open source scenario assessed (commercial vs non-commercial, steward obligations)
+- Risk classification stated (Default / Important Class I / Critical Class II)
+- Conformity route determined (Module A / B+C / H)
+- All 12 Annex I Part I security requirements assessed
+- All 7 Annex I Part II vulnerability management requirements assessed
+- SBOM requirements assessed (machine-readable, format specified — SPDX or CycloneDX)
+- VDP assessed (published, accessible, contact mechanism)
+- Four-stage incident reporting timeline (24h / 24h / 72h / 14 days) assessed
+- 24-hour reporting capability to ENISA and CERT-FR assessed
+- CRA application deadline (11 December 2027) noted in gap timeline
+
+### DSA -- EU Digital Services Act Assessment
+
+- Provider tier clearly determined (conduit / caching / hosting / online platform / VLOP / VLOSE)
+- Monthly active EU users assessed against 45M VLOP/VLOSE threshold
+- Micro/small enterprise exemption assessed (< 50 employees AND < €10M turnover)
+- General Chapter II obligations assessed (all intermediaries): transparency reports, single point of contact, cooperation with orders
+- Hosting Article 16 notice-and-action obligation assessed if applicable
+- Online platform obligations (Articles 17–28) assessed if applicable: statement of reasons, complaint handling, trusted flaggers, dark patterns, advertising transparency, recommender systems
+- VLOP/VLOSE Chapter IV obligations assessed or explicitly marked N/A: annual systemic risk assessment (Art. 34), independent audit (Art. 37), advertising repository (Art. 39), researcher access (Art. 40)
+- ARCOM as French Digital Services Coordinator documented
+- Gap analysis with priority actions generated (🔴 for VLOP legally required, 🟠 for standard platforms)
+- GDPR intersection noted for personal data in recommender systems and advertising
+
+### DATAACT -- EU Data Act Compliance Assessment
+
+- Organisation role(s) determined: manufacturer / data holder / DAPS / public sector body (with rationale)
+- Connected product in-scope status assessed (product generates data by virtue of use, placed on EU market)
+- Personal data vs non-personal data split identified; GDPR intersection documented
+- User data access rights (Chapter II) assessed if manufacturer/data holder: pre-purchase disclosure, real-time access, free of charge, machine-readable format
+- Third-party sharing at user request (Article 5) assessed: FRAND conditions, trade secret protection
+- B2B data sharing obligations (Chapter III) assessed: FRAND terms, SME compensation cap, use restrictions (no re-identification, no use to compete)
+- Public sector exceptional access (Chapter V) assessed or explicitly marked N/A
+- Cloud switching obligations (Chapter VI) assessed if DAPS or marked N/A: 30-day notice, 180-day max, no barriers, interoperable export
+- Egress charge elimination by September 2027 (Article 29) assessed
+- International transfer restrictions (Article 27) assessed: technical/organisational measures to prevent unlawful non-EU government access
+- Trade secret safeguards documented (process to identify, confidentiality agreement, TOMs)
+- Gap timeline references both key dates: 12 September 2025 and 12 September 2027
