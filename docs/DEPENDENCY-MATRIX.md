@@ -326,7 +326,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### Commands That Are Frequently Consumed (High Fan-In)
 
-**ARC-*-REQ-*.md** - consumed by 36 commands:
+**ARC-*-REQ-*.md** - consumed by 37 commands:
 
 - data-model (M), data-mesh-contract (M), platform-design (M), dpia (M), research (M), azure-research (M), aws-research (M), gcp-research (M), datascout (M), wardley (M), roadmap (M), adr (M), sow (M), dos (M), gcloud-search (R), gcloud-clarify (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), servicenow (M), devops (M), mlops (M), finops (M), operationalize (M), traceability (R), analyze (R), principles-compliance (M), service-assessment (M), tcop (M), ai-playbook (M), atrs (M), secure (M), mod-secure (M), jsp-936 (M), story (R), pages (R)
 
@@ -351,7 +351,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 **requirements** produces ARC-*-REQ-*.md → consumed by 37 commands (highest)
 **principles** produces ARC-000-PRIN-v*.md → consumed by 21 commands
-**stakeholders** produces ARC-*-STKE-*.md → consumed by 22 commands
+**stakeholders** produces ARC-*-STKE-*.md → consumed by 23 commands
 **HLD** (external) → consumed by 7 commands
 **risk** produces ARC-*-RISK-*.md → consumed by 6 commands
 **platform-design** produces ARC-*-PLAT-v*.md → consumed by 6 commands

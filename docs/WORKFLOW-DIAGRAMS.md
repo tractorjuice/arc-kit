@@ -864,5 +864,5 @@ graph LR
   - Added conformance to Compliance-Only Path and Gantt chart
   - Updated Tier 13 Compliance to include conformance
   - Previous: Added missing style definitions for finops nodes in all workflow diagrams
-  - Previous: Updated Tier Groupings table to include all 40 commands across 16 tiers
+  - Previous: Updated Tier Groupings table to include all 68 commands across 16 tiers
   - Previous: Added principles-compliance to Operations & Quality tier
