@@ -434,3 +434,149 @@ All artifacts must pass these 10 checks:
 - International transfer restrictions (Article 27) assessed: technical/organisational measures to prevent unlawful non-EU government access
 - Trade secret safeguards documented (process to identify, confidentiality agreement, TOMs)
 - Gap timeline references both key dates: 12 September 2025 and 12 September 2027
+
+### SECNUM -- SecNumCloud Assessment
+
+- Provider qualification matrix covers all six major candidates (S3NS, Outscale, OVHcloud, Bleu, NumSpot, Cloud Temple)
+- Qualification vs Visa distinction explicitly noted (critical procurement risk)
+- Extraterritorial legal risk assessed per provider (Cloud Act, FISA-702 at minimum)
+- OIV/OSE designation status determined with LPM obligations mapped (or explicitly marked N/A)
+- Architecture pattern (A/B/C) recommended based on data sensitivity level
+- Decision matrix includes clear recommendation with rationale
+- ANSSI position on FISA-702 residual risk documented
+
+### MARPUB -- French Public Procurement
+
+- Threshold analysis completed (< €40k / < €215k / > €215k) with recommended procedure
+- BOAMP and JOUE publication requirements determined
+- Award criteria weights total exactly 100%
+- Data localisation clause (EU territory, extraterritorial law prohibition) included
+- Reversibility clause (DINUM standards) included
+- GDPR/DPA clause included if personal data detected
+- HDS certification clause included if health data detected
+- UGAP catalogue guidance referenced with instruction to verify at ugap.fr
+
+### DINUM -- DINUM Standards Assessment
+
+- All five referentiels addressed: Doctrine cloud, RGI, RGAA, RGESN, RGS
+- Mandatory vs recommended status correctly assigned per entity type and size
+- RGAA 4.1 compliance rate stated (% or "To be assessed via RGAA audit")
+- RGS target security level determined (*//**/***) with homologation status
+- FranceConnect/ProConnect applicability assessed
+- DSFR applicability assessed for citizen-facing services
+- Executive summary compliance table populated per referential
+
+### CNIL -- French GDPR / CNIL Assessment
+
+- CNIL cookie guidelines (Délibération 2020-091) assessed — reject button prominence, no cookie wall, 6-month validity
+- Analytics tool CNIL compliance noted (Matomo vs Google Analytics ruling January 2022)
+- HDS certification requirement assessed (mandatory if health data present)
+- Age of digital consent set to 15 years (French specificity — not GDPR default 16)
+- DPO registration with CNIL assessed (notifications.cnil.fr)
+- Post-mortem digital legacy rights (Art. 85 Loi 78-17) addressed
+- CNIL enforcement priority self-assessment completed
+
+### EBIOS -- EBIOS Risk Manager Study
+
+- Workshop 1: Study scope and boundary explicitly defined (included / excluded systems)
+- Workshop 1: Essential values (VM-xx) identified from data model and requirements
+- Workshop 1: Feared events (ER-xx) defined for each essential value with ANSSI 4-level severity rating
+- Workshop 1: Security baseline documented (ANSSI hygiene, RGS, ISO 27001, sector-specific)
+- Workshop 2: Risk source catalogue covers all standard categories (state-sponsored, cybercriminal, hacktivist, malicious insider, opportunist, accidental insider)
+- Workshop 2: Pertinence assessment made with justification for each retained or excluded risk source
+- Workshop 2: Risk source–target pairs (CO-xx) defined for all retained sources
+- Workshop 3: Ecosystem map includes all stakeholders with trust level and dependency criticality
+- Workshop 3: Strategic scenarios (SS-xx) defined with gravity, likelihood, and risk level (ANSSI scale)
+- Workshop 4: Operational scenarios (SO-xx) break down high-risk strategic scenarios into technical attack sequences
+- Workshop 4: MITRE ATT&CK mapping provided for each operational scenario
+- Workshop 5: Treatment option chosen (Reduce / Avoid / Transfer / Accept) for each significant risk
+- Workshop 5: Security measures (MS-xx) defined with type (Technical / Organisational / Legal), owner, and priority
+- Workshop 5: Residual risk assessment made after measures applied
+- Workshop 5: Homologation recommendation clearly stated (Proceed / Proceed with conditions / Do not proceed)
+- Document classified OFFICIAL-SENSITIVE minimum
+- Homologation Authority (Autorité d'Homologation) named in Document Control
+
+### ANSSI -- ANSSI Security Posture Assessment
+
+- System scope and deployment environment (cloud / on-premise / hybrid) documented
+- All 42 hygiene measures assessed with status (✅ Implemented / ⚠️ Partial / ❌ Not implemented / N/A)
+- Not-applicable measures documented with justification
+- Cloud security recommendations (ANSSI 2021) assessed if cloud services are used
+- Cloud provider qualification status (SecNumCloud / EU-qualified / Other) assessed if applicable
+- Gap analysis produced with priority (🔴 High / 🟠 Medium / 🟡 Low), owner, and remediation action for each gap
+- Summary score (N / 42 implemented) reported
+- OIV / OSE designation noted where it affects applicability priority
+- Document classified OFFICIAL-SENSITIVE minimum (assessment reveals security gaps)
+
+### CARTO -- ANSSI Information System Cartography
+
+- Level 1 (business): business processes, essential assets (VM-xx), and external actors documented
+- Level 2 (application): application inventory, interdependencies, and SaaS/external services documented
+- Level 3 (system): server and database inventory, identity infrastructure, and admin paths documented
+- Level 4 (network): network segments, external interconnections, and internet entry points documented
+- Sensitive flows identified and mapped across all four levels (crossing trust boundaries or carrying sensitive data)
+- Attack surface summary produced: internet-exposed entry points, admin interface exposure, third-party interconnections
+- Unencrypted sensitive flows flagged
+- Security recommendations prioritised from attack surface findings
+- VM-xx IDs consistent with EBIOS study if one exists for the same project
+- Document classified OFFICIAL-SENSITIVE minimum (cartography reveals attack surface)
+
+### DR -- Diffusion Restreinte Handling Assessment
+
+- Scope clearly bounded: DR only, IGI 1300 out of scope explicitly stated
+- DR asset inventory completed (document types, data categories that carry or should carry the DR mention)
+- Governing instruction cited: II 901/SGDSN/ANSSI for electronic systems
+- Electronic marking and labelling compliance assessed (header/footer on every page, metadata, registry)
+- Access control and need-to-know compliance assessed (individual authorisation, revocation on role change)
+- Electronic storage compliance assessed (system qualification, encryption at rest, key management, logging)
+- Electronic transmission compliance assessed (approved channels only, no unencrypted internet, no standard email)
+- Physical handling assessed if applicable (marking, secure storage, transport, printing)
+- Destruction procedures assessed (ANSSI-approved wiping for electronic media, cross-cut shredding for paper, destruction log)
+- IS homologation status for DR processing noted (homologation required under RGS/EBIOS)
+- FSSI role identified and contact documented
+- Document itself classified DIFFUSION RESTREINTE
+
+### ALGO -- Public Algorithm Transparency Notice
+
+- Legal obligation scope determined: public administration, individual decisions, algorithmic basis (Art. L311-3-1 CRPA)
+- All algorithms subject to the obligation identified and assigned ALGO-xx IDs
+- Each algorithm described in plain language (purpose, inputs, parameters and their influence, output)
+- Human oversight step documented (fully automated vs human-in-the-loop)
+- Data inventory completed (personal data, legal basis, minimisation)
+- GDPR Article 22 intersection assessed (fully automated decisions with legal/significant effects)
+- AI Act intersection flagged if ML/AI techniques used (high-risk Annex III categories)
+- DPIA requirement assessed (systematic profiling, sensitive data at scale)
+- Citizen rights documented: explanation, human review, contestation, GDPR rights
+- Publication plan documented (algorithmes.data.gouv.fr + administration website)
+- Document classified PUBLIC (notice must be publicly accessible)
+
+### PSSI -- Information System Security Policy
+
+- Organisation type and regulatory context determined (ministry / agency / OIV / OSE / local authority / private)
+- OIV / OSE designation and applicable sectoral obligations noted
+- RGS target level stated per security property if RGS-subject
+- Security context documented: essential values and main threats (from EBIOS or derived from profile)
+- Security objectives defined for each property: Confidentiality / Integrity / Availability / Traceability / Authentication
+- At least 8 security principles defined, consistent with ANSSI recommendations
+- Organisational structure documented: Highest Authority (AA), RSSI, (FSSI,) DPO, DSI, CSSI
+- Security governance committees documented (steering, operational, homologation board)
+- All 7 security domains covered: access management, network, workstations, applications, data, physical, business continuity
+- User obligations defined
+- Incident management framework defined (declaration, qualification, ANSSI/CERT-FR notification, containment)
+- Applicable standards referenced (RGS, ANSSI hygiene, EBIOS, ISO 27001, sector-specific)
+- Approval by Highest Authority flagged as required (PSSI is DRAFT until signed)
+- Document classified OFFICIAL-SENSITIVE minimum
+
+### REUSE -- Public Code Reuse Assessment
+
+- All components decomposed and assigned COMP-xx IDs
+- code.gouv.fr searched for each component with results documented (found / not found / partial match)
+- SILL (Socle Interministériel de Logiciels Libres) checked for each functional domain
+- European / international public code checked for components with no French match (Joinup, EU member state repos)
+- Licence compatibility assessed for all candidate components (EUPL-1.2 recommended for publication)
+- Build-vs-reuse decision made with justification for each component (reuse / fork / SILL assembly / procure / build)
+- Contribution-back plan documented for any forked component
+- Publication obligation assessed: which project code must be published on code.gouv.fr
+- Exceptions to publication obligation documented with justification (security, trade secret, third-party IP)
+- Reused components register populated (source, version, licence, integration method)
+- Circulaire PM n°6264-SG (2021) compliance — evidence that reuse was assessed before commissioning new development
