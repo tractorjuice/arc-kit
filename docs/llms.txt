@@ -1,6 +1,6 @@
 # ArcKit
 
-> ArcKit is an Enterprise Architecture Governance & Vendor Procurement toolkit that provides 68 AI-assisted slash commands for Claude Code, Gemini CLI, GitHub Copilot, Codex CLI, and OpenCode CLI. It transforms architecture governance from scattered documents into a systematic, template-driven workflow covering requirements, stakeholders, risk, business cases, architecture (C4, Wardley, ADRs), research, vendor procurement (G-Cloud/DOS), UK Government compliance (GDS, TCoP, Secure by Design, NCSC CAF, Orange/Green Book), DevOps/MLOps/FinOps, and traceability.
+> ArcKit is an Enterprise Architecture Governance & Vendor Procurement toolkit that provides 68 AI-assisted slash commands for Claude Code, Gemini CLI, GitHub Copilot, Codex CLI, and OpenCode CLI, plus 18 community-contributed EU and French regulatory commands. It transforms architecture governance from scattered documents into a systematic, template-driven workflow covering requirements, stakeholders, risk, business cases, architecture (C4, Wardley, ADRs), research, vendor procurement (G-Cloud/DOS), UK Government compliance (GDS, TCoP, Secure by Design, NCSC CAF, Orange/Green Book), EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), French government compliance (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), DevOps/MLOps/FinOps, and traceability.
 
 ArcKit is distributed as a Claude Code plugin, a Gemini CLI extension, a GitHub Copilot prompt pack, a Codex CLI extension, an OpenCode CLI extension, and a Python CLI (`arckit init`). Source code and issue tracker: https://github.com/tractorjuice/arc-kit.
 
@@ -90,6 +90,34 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [National Data Strategy](https://arckit.org/guides/national-data-strategy.md).
 - [Data Quality Framework](https://arckit.org/guides/data-quality-framework.md).
 - [Codes of Practice (Rainbow of Books)](https://arckit.org/guides/codes-of-practice.md).
+
+### EU & French regulatory compliance (community-contributed)
+
+> ⚠️ Community-maintained by [@thomas-jardinet](https://github.com/thomas-jardinet) — output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. See [README EU & French Regulatory Compliance section](https://github.com/tractorjuice/arc-kit/blob/main/README.md#eu--french-regulatory-compliance-community).
+
+EU regulations (member-state-neutral baselines):
+
+- [GDPR (EU 2016/679)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-rgpd.md): `/arckit.eu-rgpd` legal basis, transfers, DPIA screening, breach notification.
+- [NIS2 Directive](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-nis2.md): `/arckit.eu-nis2` operators of essential / important entities, Article 21 measures.
+- [EU AI Act (Regulation 2024/1689)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-ai-act.md): `/arckit.eu-ai-act` risk classification, conformity routes, GPAI obligations.
+- [DORA (EU 2022/2554)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-dora.md): `/arckit.eu-dora` financial sector ICT resilience, TLPT, third-party register.
+- [EU Cyber Resilience Act (Regulation 2024/2847)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-cra.md): `/arckit.eu-cra` products with digital elements, SBOM, VDP, CE marking.
+- [EU Digital Services Act (Regulation 2022/2065)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-dsa.md): `/arckit.eu-dsa` intermediaries, platforms, VLOPs.
+- [EU Data Act (Regulation 2023/2854)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/eu-data-act.md): `/arckit.eu-data-act` connected products, B2B FRAND, cloud switching.
+
+French government (apply on top of EU baseline):
+
+- [SecNumCloud 3.2](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-secnumcloud.md): `/arckit.fr-secnumcloud` ANSSI sovereign cloud qualification, OIV/OSE.
+- [DINUM standards](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-dinum.md): `/arckit.fr-dinum` RGI, RGAA, RGESN, RGS, doctrine cloud de l'État.
+- [French public procurement](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-marche-public.md): `/arckit.fr-marche-public` code de la commande publique, UGAP, sovereignty clauses.
+- [CNIL / French GDPR](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-rgpd.md): `/arckit.fr-rgpd` cookies (Délibération 2020-091), HDS, age 15, CNIL référentiels.
+- [EBIOS Risk Manager](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-ebios.md): `/arckit.fr-ebios` 5-workshop ANSSI risk study with homologation recommendation.
+- [ANSSI hygiene measures](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-anssi.md): `/arckit.fr-anssi` Guide d'hygiène informatique (42 measures) + cloud recommendations.
+- [ANSSI cartography](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-anssi-carto.md): `/arckit.fr-anssi-carto` IS cartography across business / application / system / network levels.
+- [Diffusion Restreinte handling](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-dr.md): `/arckit.fr-dr` II 901 / SGDSN / ANSSI marking, storage, transmission, destruction.
+- [Public algorithm transparency](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-algorithme-public.md): `/arckit.fr-algorithme-public` Article L311-3-1 CRPA notice.
+- [Information System Security Policy (PSSI)](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-pssi.md): `/arckit.fr-pssi` per ANSSI / RGS.
+- [Public code reuse](https://github.com/tractorjuice/arc-kit/blob/main/arckit-claude/commands/fr-code-reuse.md): `/arckit.fr-code-reuse` code.gouv.fr, SILL, EUPL build-vs-reuse decision matrix.
 
 ### Operations
 
