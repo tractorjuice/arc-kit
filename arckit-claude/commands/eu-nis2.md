@@ -67,6 +67,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Identify:
+
 - Entity sector (Annex I Essential / Annex II Important / out of scope)
 - Organisation size (> 250 employees / 50–250 / < 50)
 - Member state(s) of operation
@@ -90,6 +91,7 @@ Before generating the assessment, determine entity classification:
 **Annex II — Important Entities**: Postal and courier, Waste management, Chemicals, Food, Manufacturing (medical devices, computers, transport equipment), Digital providers (online marketplaces, search engines, social networks), Research
 
 **Size thresholds**:
+
 - Essential Entity: sector-qualified AND (> 250 employees OR > €50M revenue)
 - Important Entity: sector-qualified AND (50–250 employees OR €10–50M revenue)
 - Microenterprises (< 10 employees, < €2M) may benefit from simplified obligations

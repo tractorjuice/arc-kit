@@ -53,6 +53,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Identify:
+
 - Is this an AI system under the AI Act definition? (machine-based, infers outputs, varying autonomy)
 - Organisation's role: provider (develops/places on market) vs deployer (uses it)
 - General-purpose AI model assessment (trained on broad data, > 10²⁵ FLOPs?)
@@ -72,6 +73,7 @@ Read all documents from Step 0. Identify:
 Before generating the assessment, determine risk classification:
 
 **PROHIBITED (Article 5 — applicable February 2025)**:
+
 - Social scoring by public authorities
 - Subliminal manipulation beyond conscious awareness
 - Exploitation of vulnerabilities (age, disability, socioeconomic)
@@ -85,6 +87,7 @@ If ANY prohibited practice applies → STOP and flag: the AI system cannot be pl
 **HIGH RISK — Annex I** (safety components of products covered by sector legislation): Machinery, toys, recreational craft, lifts, ATEX, medical devices, in vitro diagnostics, aviation, agricultural vehicles, railway
 
 **HIGH RISK — Annex III** (standalone AI systems):
+
 - Biometric identification and categorisation (with exceptions)
 - Critical infrastructure safety components (road, water, gas, electricity, heating, internet)
 - Education and vocational training (admission, assessment, monitoring, grading)

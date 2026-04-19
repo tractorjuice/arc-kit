@@ -52,6 +52,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Identify:
+
 - Role(s): manufacturer / data holder / data processing service provider / public sector body
 - Connected product presence: IoT, industrial equipment, smart appliances, vehicles, medical devices
 - Cloud/data processing services: IaaS, PaaS, SaaS, edge — triggers switching obligations

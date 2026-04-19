@@ -154,6 +154,7 @@ Maturity scale: L1 = Initial / L2 = Developing / L3 = Defined / L4 = Managed / L
 ### 5.2 Mandatory Contract Provisions (Article 30)
 
 All ICT contracts must include:
+
 - [ ] Service level descriptions with quantitative/qualitative performance targets
 - [ ] Notice periods and reporting obligations to financial entity
 - [ ] Data processing location (country/region)
@@ -165,6 +166,7 @@ All ICT contracts must include:
 ### 5.3 Critical ITPP Oversight (Article 31+)
 
 If using a provider designated as **critical ICT third-party provider** (CITPP) by ESAs:
+
 - [ ] Enhanced contractual requirements applied
 - [ ] Lead overseer cooperation established
 - [ ] Participation in ESA oversight activities committed

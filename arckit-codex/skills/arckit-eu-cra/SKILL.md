@@ -53,6 +53,7 @@ Identify the target project from the hook context. If the project doesn't exist:
 ### Step 2: Read Source Artifacts
 
 Read all documents from Step 0. Identify:
+
 - Product type: hardware or software?
 - Market: placed on EU market?
 - Sector regulation exclusions: medical devices (MDR), aviation (EASA), automotive, marine — if excluded, the CRA does not apply
@@ -72,17 +73,20 @@ Read all documents from Step 0. Identify:
 Before generating the assessment, determine:
 
 **In-Scope Check**:
+
 1. Is it a product with digital elements? (hardware + software, or standalone software)
 2. Is it placed or made available on the EU market?
 3. Is it excluded by sector legislation? (MDR, EASA, automotive, marine, civil aviation)
 
 **Open Source Assessment**:
+
 - Non-commercial open source → out of scope
 - Open source with paid support/commercial activity → in scope for supported version
 - Open source integrated in commercial product → manufacturer responsible for full product
 - Open source steward (foundation) → lighter obligations (security policy, CVE participation)
 
 **Risk Classification (Annex III)**:
+
 - **Class I (Important)**: Identity management software, browsers, password managers, VPNs, network monitoring, industrial control systems, smart home security devices, firewalls, intrusion detection/prevention
 - **Class II (Critical)**: HSMs, smart meters, critical infrastructure components, industrial automation PLCs, card readers, smart meters, voting systems, medical devices covered by MDR (if in scope)
 - **Default**: All other products with digital elements

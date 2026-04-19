@@ -178,6 +178,7 @@
 | [Gap description] | [Art. XX] | 🔴 High | [Role] | [Date] |
 
 **Key Data Act dates**:
+
 - 12 September 2025: Most Data Act obligations apply
 - 12 September 2027: Egress charge elimination for switching
 
