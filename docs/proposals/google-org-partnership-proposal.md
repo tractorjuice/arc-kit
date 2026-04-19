@@ -15,7 +15,7 @@
 
 Government technology programmes fail at alarming rates — and fragmented, manual architecture governance is a root cause. But the problem is not just that governance is slow. For hundreds of smaller government agencies, arm's-length bodies, and local authorities, comprehensive architecture governance has been **effectively impossible** — they simply lack the 20-person architecture teams that large departments rely on. The result is that the organisations closest to citizens often have the weakest governance protecting the services those citizens depend on.
 
-ArcKit changes what is possible. It is an open-source, AI-powered toolkit that enables a team of two or three architects to produce governance of the same depth and quality that previously required a department of twenty. Across 14+ UK Government domains — from NHS digital health to Cabinet Office AI strategy to Scottish Courts digital transformation — ArcKit has compressed 4-6 week governance processes to 3-5 days while simultaneously raising compliance coverage from a typical 40-60% to 90%+. The platform is production-ready (v2.8.5), MIT-licensed, and works across four major AI coding assistants.
+ArcKit changes what is possible. It is an open-source, AI-powered toolkit that enables a team of two or three architects to produce governance of the same depth and quality that previously required a department of twenty. Across 14+ UK Government domains — from NHS digital health to Cabinet Office AI strategy to Scottish Courts digital transformation — ArcKit has compressed 4-6 week governance processes to 3-5 days while simultaneously raising compliance coverage from a typical 40-60% to 90%+. The platform is production-ready (v4.6.13), MIT-licensed, and works across four major AI coding assistants. As of 19 April 2026, ArcKit is **#3 on GitHub Trending (Today)** — 865 stars, 112 forks, and **+263 stars in a single day** — independent validation that architects and engineering teams are actively discovering and adopting the toolkit in the open.
 
 This proposal seeks $1.5M-$2.5M to take ArcKit from proven case studies to systematic government infrastructure: piloting in 15+ departments, rigorously measuring impact, building training capacity, and preparing for international replication. In partnership with [Partner Organisation] — who bring [eligible status, government relationships, and evaluation expertise] — and with Google.org's support through the Accelerator programme, we aim to demonstrate that AI-assisted architecture governance can permanently democratise access to world-class governance for every government team, regardless of size.
 
@@ -55,6 +55,7 @@ ArcKit is not a concept seeking its first government user. The platform has been
 - **Compliance frameworks built from government standards**: Every ArcKit compliance module (GDS Service Standard, Technology Code of Practice, NCSC CAF, Orange Book, Green Book) was developed against the official published frameworks and tested against government project requirements
 - **Digital Marketplace integration**: ArcKit includes live G-Cloud and DOS procurement automation, directly integrating with the UK Government's Digital Marketplace
 - **Multi-department applicability demonstrated**: Case studies span civilian (NHS, HMRC, ONS), justice (Scottish Courts), defence (MOD JSP 936), transport (National Highways), and cross-government (Cabinet Office GenAI, API Aggregator) domains
+- **Organic developer-community traction**: On 19 April 2026, ArcKit reached **#3 on GitHub Trending (Today)** with 865 stars, 112 forks, and +263 stars in a single day — ranked alongside projects from Thunderbird and OpenAI. This is rapid unprompted adoption by architects and engineering teams beyond the original UK Government pilot scenarios, and a leading indicator of grassroots demand that precedes formal procurement cycles
 
 **For the formal application**, we will secure:
 
@@ -544,11 +545,12 @@ ArcKit's use of generative and agentic AI goes beyond incremental efficiency gai
 
 | Factor | Evidence |
 |--------|---------|
-| **Production-ready** | v2.8.5 with 51 commands, 5 agents, 4 hooks, 4 MCP integrations |
+| **Production-ready** | v4.6.13 with 68 commands, 10 agents, automation hooks, and MCP integrations |
 | **Proven deployment** | 14+ public case studies across UK Government |
 | **Active development** | Regular releases, active development team |
-| **Zero-config installation** | Plugin marketplace (Claude Code), extension install (Gemini CLI) |
-| **Existing user base** | Open-source project with GitHub repository and documentation |
+| **Zero-config installation** | Plugin marketplace (Claude Code), extension install (Gemini CLI, Codex CLI, OpenCode CLI, Copilot) |
+| **Organic adoption signal** | #3 on GitHub Trending (Today) on 19 April 2026 — 865 stars, 112 forks, +263 stars in one day, ranked alongside Thunderbird and OpenAI projects, achieved without paid marketing |
+| **Existing user base** | Open-source project with GitHub repository, marketplace plugin, and documentation portal |
 
 ### Scalability
 
@@ -665,6 +667,6 @@ This case study demonstrates a complete ArcKit lifecycle for a justice sector AI
 
 ---
 
-**ArcKit** | [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit) | MIT License | v2.8.5
+**ArcKit** | [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit) | MIT License | v4.6.13 | #3 on GitHub Trending (Today), 19 April 2026 — 865 stars, 112 forks, +263 stars/day
 
 *This document is a template for joint application discussion. All [Partner Organisation] placeholders should be replaced with the confirmed partner details. Budget figures are indicative and should be refined collaboratively.*
