@@ -29,6 +29,16 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 - 🔗 Maintaining requirements traceability
 - 📎 Citation traceability for external documents (inline `[DOC-CN]` markers with source quotes)
 
+## Star History
+
+<a href="https://www.star-history.com/?repos=tractorjuice%2Farc-kit&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left" />
+ </picture>
+</a>
+
 ---
 
 ## Quick Start
@@ -1593,16 +1603,6 @@ MIT License - see [LICENSE](LICENSE) for details
 ## Acknowledgements
 
 ArcKit is inspired by the methodology and patterns from [Spec Kit](https://github.com/github/spec-kit), adapted for enterprise architecture governance workflows.
-
-## Star History
-
-<a href="https://www.star-history.com/?repos=tractorjuice%2Farc-kit&type=date&legend=top-left">
- <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left" />
- </picture>
-</a>
 
 ---
 
