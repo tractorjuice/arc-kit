@@ -49,6 +49,16 @@ A comprehensive book-length guide to ArcKit — covering every subsystem (comman
 
 ### Installation
 
+**ArcKit CLI** (for OpenAI Codex CLI, OpenCode CLI, GitHub Copilot, and Roo Code scaffolding):
+
+```bash
+# Install with pip
+pip install git+https://github.com/tractorjuice/arc-kit.git
+
+# Or install with uv
+uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
+```
+
 **Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.112+**):
 
 ```text
@@ -70,14 +80,20 @@ Zero-config: all 68 commands, templates, scripts, and bundled MCP servers (AWS K
 **GitHub Copilot** (VS Code) — install the ArcKit CLI and scaffold prompt files:
 
 ```bash
-# Install with pip
-pip install git+https://github.com/tractorjuice/arc-kit.git
-
 # Scaffold a project with Copilot prompt files
 arckit init my-project --ai copilot
 ```
 
 Creates `.github/prompts/arckit-*.prompt.md` (68 prompt files), `.github/agents/arckit-*.agent.md` (10 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arckit-requirements`, `/arckit-stakeholders`, etc.
+
+**Roo Code** (VS Code) — install the ArcKit CLI and scaffold Roo project files:
+
+```bash
+# Scaffold a project with Roo Code mode files and rules
+arckit init my-project --ai roocode
+```
+
+Creates `.roomodes`, `.roo/rules/`, `.roo/skills/`, and a project README. Open the workspace in VS Code and select an ArcKit custom mode from the Roo Code mode picker.
 
 **Codex CLI** — install the ArcKit CLI:
 
@@ -96,14 +112,16 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 
 ### Platform Support
 
-| Platform | Claude Code Plugin | Gemini CLI Extension | GitHub Copilot | Codex / OpenCode CLI |
-|----------|-------------------|---------------------|----------------|---------------------|
-| macOS | Full support | Full support | Full support | Full support |
-| Linux | Full support | Full support | Full support | Full support |
-| Windows (WSL2) | Full support | Full support | Full support | Full support |
-| Windows (native) | Full support | Full support | Full support | Partial |
+| Platform | Claude Code Plugin | OpenAI Codex CLI | Gemini CLI Extension | OpenCode CLI | GitHub Copilot | Roo Code |
+|----------|-------------------|------------------|---------------------|--------------|----------------|----------|
+| macOS | Full support | Full support | Full support | Full support | Full support | Full support |
+| Linux | Full support | Full support | Full support | Full support | Full support | Full support |
+| Windows (WSL2) | Full support | Full support | Full support | Full support | Full support | Full support |
+| Windows (native) | Full support | Partial | Full support | Partial | Full support | Full support |
 
-**Windows users**: The Claude Code plugin, Gemini CLI extension, and GitHub Copilot prompt files work natively on all platforms. For Codex CLI / OpenCode CLI on native Windows (without WSL), some commands containing inline bash snippets may require [Git Bash](https://git-scm.com/downloads/win) or [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). We recommend WSL2 for the best experience.
+**Windows users**: The Claude Code plugin, OpenAI Codex CLI, Gemini CLI extension, GitHub Copilot prompt files, OpenCode CLI commands, and Roo Code workspace files work natively on all platforms. For Codex CLI / OpenCode CLI on native Windows (without WSL), some commands containing inline bash snippets may require [Git Bash](https://git-scm.com/downloads/win) or [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). We recommend WSL2 for the best experience.
+
+Roo Code project scaffolding is also available via `arckit init --ai roocode` and uses `.roomodes`, `.roo/rules/`, and `.roo/skills/` in the workspace root.
 
 ### Initialize a Project
 
@@ -117,6 +135,16 @@ arckit init payment-modernization --ai copilot
 
 # Or initialize in current directory
 arckit init . --ai copilot
+```
+
+**Roo Code** (VS Code):
+
+```bash
+# Create a new architecture governance project
+arckit init payment-modernization --ai roocode
+
+# Or initialize in current directory
+arckit init . --ai roocode
 ```
 
 **OpenCode CLI**:
@@ -151,6 +179,11 @@ cd payment-modernization && code .
 /arckit-principles Create principles for a financial services company
 /arckit-requirements Build a payment processing system...
 
+# Roo Code (VS Code)
+cd payment-modernization && code .
+# In Roo Code, choose the matching ArcKit mode from the mode picker:
+# ArcKit Plan, ArcKit Principles, ArcKit Requirements, etc.
+
 # Codex CLI
 cd payment-modernization
 codex
@@ -167,6 +200,8 @@ codex
 **Gemini CLI extension**: Updates via `gemini extensions update arckit`.
 
 **GitHub Copilot**: Re-run `arckit init --here --ai copilot` to update prompt files, agents, and instructions.
+
+**Roo Code**: Re-run `arckit init --here --ai roocode` to refresh `.roomodes`, `.roo/rules/`, `.roo/skills/`, and the project README.
 
 **Codex CLI**:
 
@@ -1025,10 +1060,11 @@ Publish all project documentation as an interactive website:
 | Assistant | Support | Notes |
 |-----------|---------|-------|
 | [Claude Code](https://www.anthropic.com/claude-code) | ✅ Premier | **Primary platform.** Plugin with agents, hooks, MCP servers, and auto-updates |
-| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ Full | Extension with commands, MCP servers, and auto-updates |
-| [GitHub Copilot](https://github.com/features/copilot) | ✅ Core | VS Code prompt files, custom agents, and repo-wide instructions (`arckit init --ai copilot`) |
 | [OpenAI Codex CLI](https://chatgpt.com/features/codex) | ✅ Core | CLI with commands and templates. ChatGPT Plus/Pro/Enterprise ([Setup Guide](.codex/README.md)) |
+| [Gemini CLI](https://github.com/google-gemini/gemini-cli) | ✅ Full | Extension with commands, MCP servers, and auto-updates |
 | [OpenCode CLI](https://opencode.net/cli) | ✅ Core | CLI with commands and templates |
+| [GitHub Copilot](https://github.com/features/copilot) | ✅ Core | VS Code prompt files, custom agents, and repo-wide instructions (`arckit init --ai copilot`) |
+| [Roo Code](https://docs.roocode.com/) | ✅ Core | VS Code custom modes, rules, skills, and repo README (`arckit init --ai roocode`) |
 
 > **Platform Support**: ArcKit is developed and tested on **Linux**. Windows has limited support — hooks (session init, project context, filename validation, MCP auto-allow) require bash and jq which are not available on stock Windows. For the best experience on Windows, use a **devcontainer** or **WSL2**.
 
@@ -1036,27 +1072,27 @@ Publish all project documentation as an interactive website:
 
 Claude Code is the **primary development platform** for ArcKit and provides capabilities not available in other formats:
 
-| Feature | Claude Code | Gemini CLI | Copilot | Codex / OpenCode |
-|---------|:-----------:|:----------:|:-------:|:----------------:|
-| 68 slash commands | ✅ | ✅ | ✅ | ✅ |
-| Templates & scripts | ✅ | ✅ | ✅ | ✅ |
-| Bundled MCP servers (AWS, Azure, GCP, DataCommons, govreposcrape) | ✅ | ✅ (3 servers) | — | Manual setup |
-| **Autonomous research agents** (10 agents for research, datascout, cloud research, gov code discovery, grants, framework) | ✅ | — | ✅ (10 agents) | — |
-| **SessionStart hook** (auto-detect version + projects) | ✅ | — | — | — |
-| **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | — | — | — |
-| **PreToolUse hook** (ARC filename auto-correction) | ✅ | — | — | — |
-| **PermissionRequest hook** (auto-allow MCP documentation tools) | ✅ | — | — | — |
-| **Per-command Stop hooks** (output validation, e.g. Wardley Map math checks) | ✅ | — | — | — |
-| Wardley Mapping skill (with Pinecone MCP book corpus) | ✅ | — | — | — |
-| Mermaid Syntax Reference skill (23 diagram types + config) | ✅ | ✅ | — | ✅ |
-| Automatic marketplace updates | ✅ | ✅ | Manual reinstall | Manual reinstall |
-| Zero-config installation | ✅ | ✅ | `arckit init` required | `arckit init` required |
+| Feature | Claude Code | Gemini CLI | Copilot | Codex / OpenCode | Roo Code |
+|---------|:-----------:|:----------:|:-------:|:----------------:|:-------:|
+| 68 slash commands | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Templates & scripts | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Bundled MCP servers (AWS, Azure, GCP, DataCommons, govreposcrape) | ✅ | ✅ (3 servers) | — | Manual setup | — |
+| **Autonomous research agents** (10 agents for research, datascout, cloud research, gov code discovery, grants, framework) | ✅ | — | ✅ (10 agents) | — | — |
+| **SessionStart hook** (auto-detect version + projects) | ✅ | — | — | — | — |
+| **UserPromptSubmit hook** (project context injection on every prompt) | ✅ | — | — | — | — |
+| **PreToolUse hook** (ARC filename auto-correction) | ✅ | — | — | — | — |
+| **PermissionRequest hook** (auto-allow MCP documentation tools) | ✅ | — | — | — | — |
+| **Per-command Stop hooks** (output validation, e.g. Wardley Map math checks) | ✅ | — | — | — | — |
+| Wardley Mapping skill (with Pinecone MCP book corpus) | ✅ | — | — | — | ✅ |
+| Mermaid Syntax Reference skill (23 diagram types + config) | ✅ | ✅ | — | ✅ | ✅ |
+| Automatic marketplace updates | ✅ | ✅ | Manual reinstall | Manual reinstall | — |
+| Zero-config installation | ✅ | ✅ | `arckit init` required | `arckit init` required | `arckit init` required |
 
 **Agents** run research-heavy commands (market research, data source discovery, cloud service evaluation) in isolated context windows, keeping the main conversation clean and enabling dozens of WebSearch/WebFetch/MCP calls without context bloat.
 
 **Hooks** provide automated governance: filenames are auto-corrected to ArcKit conventions, project context is injected into every prompt so commands know what artifacts exist, MCP tools are auto-approved, and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
 
-Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 68 commands as prompt files and 10 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
+Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 68 commands as prompt files and 10 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding. Roo Code provides custom modes, rules, skills, and a project README, but not the hook and MCP automation that Claude Code ships with the plugin.
 
 ### Why Commands, Not Skills
 
@@ -1073,7 +1109,12 @@ For GitHub Copilot users in VS Code, ArcKit commands are delivered as prompt fil
 
 ```bash
 # Install and create project (3 steps, zero config)
+# Install with pip
 pip install git+https://github.com/tractorjuice/arc-kit.git
+
+# Or install with uv
+uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
+
 arckit init my-project --ai copilot
 cd my-project && code .
 
@@ -1091,7 +1132,12 @@ For OpenAI Codex CLI users, ArcKit commands are delivered as skills and auto-dis
 
 ```bash
 # Install and create project (3 steps, zero config)
+# Install with pip
 pip install git+https://github.com/tractorjuice/arc-kit.git
+
+# Or install with uv
+uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.git
+
 arckit init my-project --ai codex
 cd my-project && codex
 
@@ -1445,7 +1491,7 @@ Key references live in `docs/` and top-level guides:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.112+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.112+ (via plugin), [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), [GitHub Copilot](https://github.com/features/copilot) (via VS Code), or [Roo Code](https://docs.roocode.com/) (via VS Code scaffolding)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---
@@ -1459,6 +1505,9 @@ cd arc-kit
 
 # Install in development mode
 pip install -e .
+
+# Or using uv
+uv pip install -e .
 
 # Run the CLI
 arckit init my-project
@@ -1572,6 +1621,9 @@ ls .github/prompts/arckit-*.prompt.md
 
 # For OpenCode CLI, check if commands directory exists
 ls .opencode/commands/
+
+# For Roo Code, check if the workspace files exist
+ls .roomodes .roo/rules/
 ```
 
 **Template not found**: Ensure you've run `/arckit.principles` first
