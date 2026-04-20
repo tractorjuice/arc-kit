@@ -39,7 +39,7 @@ client = httpx.Client(verify=ssl_context)
 # Agent configuration for ArcKit
 # Note: Claude Code support has moved to the ArcKit plugin (arckit-claude/).
 # Gemini CLI support has moved to the ArcKit Gemini extension (arckit-gemini/).
-# The CLI now only supports Codex.
+# The CLI supports Codex, OpenCode, Copilot, and Roo Code project scaffolding.
 AGENT_CONFIG = {
     "codex": {
         "name": "OpenAI Codex CLI",
@@ -57,6 +57,12 @@ AGENT_CONFIG = {
         "name": "GitHub Copilot",
         "folder": ".github/",
         "install_url": "https://github.com/features/copilot",
+        "requires_cli": False,
+    },
+    "roocode": {
+        "name": "Roo Code",
+        "folder": ".roo/",
+        "install_url": "https://docs.roocode.com/",
         "requires_cli": False,
     },
 }
@@ -168,6 +174,13 @@ def get_data_paths():
             "copilot_prompts": base_path / "arckit-copilot" / "prompts",
             "copilot_agents": base_path / "arckit-copilot" / "agents",
             "copilot_instructions": base_path / "arckit-copilot" / "copilot-instructions.md",
+            "roocode_root": base_path / "arckit-roocode",
+            "roocode_roomodes": base_path / "arckit-roocode" / ".roomodes",
+            "roocode_roo": base_path / "arckit-roocode" / ".roo",
+            "roocode_skills": base_path / "arckit-roocode" / "skills",
+            "roocode_templates": base_path / "arckit-roocode" / "templates",
+            "roocode_references": base_path / "arckit-roocode" / "references",
+            "roocode_scripts": base_path / "arckit-roocode" / "scripts",
         }
 
     # First, check if running from source (development mode)
@@ -238,13 +251,17 @@ def create_project_structure(
     ]
 
     if all_ai:
-        # Create directories for all AI assistants (Codex and OpenCode)
+        # Create directories for all AI assistants supported by the CLI
         directories.extend(
             [
                 ".codex/agents",
                 ".agents/skills",
                 ".opencode/commands",
                 ".opencode/agents",
+                ".github/prompts",
+                ".github/agents",
+                ".roo/rules",
+                ".roo/skills",
             ]
         )
     else:
@@ -258,6 +275,9 @@ def create_project_structure(
         elif ai_assistant == "copilot":
             directories.append(f"{agent_folder}prompts")
             directories.append(f"{agent_folder}agents")
+        elif ai_assistant == "roocode":
+            directories.append(".roo/rules")
+            directories.append(".roo/skills")
 
     for directory in directories:
         (project_path / directory).mkdir(parents=True, exist_ok=True)
@@ -322,7 +342,7 @@ def init(
         None,
         help="Name for your new project directory (optional, use '.' for current directory)",
     ),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot, roocode"),
     no_git: bool = typer.Option(
         False, "--no-git", help="Skip git repository initialization"
     ),
@@ -332,7 +352,7 @@ def init(
     all_ai: bool = typer.Option(
         False,
         "--all-ai",
-        help="Install commands for all CLI-supported AI assistants (codex)",
+        help="Install commands for all CLI-supported AI assistants (codex, opencode, copilot, roocode)",
     ),
     minimal: bool = typer.Option(
         False, "--minimal", help="Minimal install: skip docs and guides"
@@ -411,6 +431,7 @@ def init(
         console.print("1. codex (OpenAI Codex CLI)")
         console.print("2. opencode (OpenCode CLI)")
         console.print("3. copilot (GitHub Copilot in VS Code)")
+        console.print("4. roocode (Roo Code in VS Code)")
         console.print()
         console.print("[dim]For Claude Code, use the ArcKit plugin instead:[/dim]")
         console.print("[dim]  /plugin marketplace add tractorjuice/arc-kit[/dim]")
@@ -420,7 +441,7 @@ def init(
         )
 
         choice = typer.prompt("Enter choice", default="1")
-        ai_map = {"1": "codex", "2": "opencode", "3": "copilot"}
+        ai_map = {"1": "codex", "2": "opencode", "3": "copilot", "4": "roocode"}
         ai_assistant = ai_map.get(choice, "codex")
 
     if ai_assistant == "claude":
@@ -590,7 +611,7 @@ def init(
             )
 
     # Copy Copilot prompt files and agents
-    if ai_assistant == "copilot":
+    if ai_assistant == "copilot" or all_ai:
         console.print("[cyan]Setting up Copilot environment...[/cyan]")
 
         # Copy prompt files to .github/prompts/
@@ -627,6 +648,37 @@ def init(
             console.print(f"[green]✓[/green] Copied copilot-instructions.md")
 
         console.print("[green]✓[/green] Copilot environment configured")
+
+    if ai_assistant == "roocode" or all_ai:
+        console.print("[cyan]Setting up Roo Code environment...[/cyan]")
+
+        roocode_root_src = data_paths.get("roocode_root")
+        if roocode_root_src and roocode_root_src.exists():
+            roomodes_src = data_paths.get("roocode_roomodes")
+            roocode_dir_src = data_paths.get("roocode_roo")
+            roocode_skills_src = data_paths.get("roocode_skills")
+
+            if roomodes_src and roomodes_src.exists():
+                shutil.copy2(roomodes_src, project_path / ".roomodes")
+                console.print(f"[green]✓[/green] Copied .roomodes")
+
+            if roocode_dir_src and roocode_dir_src.exists():
+                roocode_dst = project_path / ".roo"
+                roocode_dst.mkdir(parents=True, exist_ok=True)
+                shutil.copytree(roocode_dir_src, roocode_dst, dirs_exist_ok=True)
+                console.print(f"[green]✓[/green] Copied .roo/ rules and shared files")
+
+            if roocode_skills_src and roocode_skills_src.exists():
+                skills_dst = project_path / ".roo" / "skills"
+                skills_dst.mkdir(parents=True, exist_ok=True)
+                shutil.copytree(roocode_skills_src, skills_dst, dirs_exist_ok=True)
+                console.print(f"[green]✓[/green] Copied Roo Code skills to .roo/skills/")
+        else:
+            console.print(
+                f"[yellow]Warning: Roo Code bundle not found at {roocode_root_src}[/yellow]"
+            )
+
+        console.print("[green]✓[/green] Roo Code environment configured")
 
     console.print("[green]✓[/green] Templates configured")
 
@@ -679,6 +731,8 @@ def init(
     # Determine command prefix based on AI assistant
     if ai_assistant == "codex":
         p = "$arckit-"  # skill invocation
+    elif ai_assistant == "roocode":
+        p = "ArcKit "  # custom mode label
     elif ai_assistant == "copilot":
         p = "/arckit-"  # copilot prompt invocation
     else:
@@ -953,6 +1007,17 @@ export OPENCODE_HOME="$PWD/.opencode"
         next_steps.append("3. Open Copilot Chat and type: [cyan]/arckit-principles[/cyan]")
         next_steps.append(
             "4. Create your first project: [cyan]/arckit-requirements[/cyan]"
+        )
+    elif ai_assistant == "roocode":
+        next_steps.append("2. Open in VS Code: [cyan]code .[/cyan]")
+        next_steps.append(
+            "3. In Roo Code, select an ArcKit custom mode from the mode picker"
+        )
+        next_steps.append(
+            "4. Start with [cyan]ArcKit Plan[/cyan] or [cyan]ArcKit Principles[/cyan]"
+        )
+        next_steps.append(
+            "5. Create your first project with [cyan]ArcKit Requirements[/cyan]"
         )
 
     console.print(Panel("\n".join(next_steps), title="Next Steps", border_style="cyan"))
