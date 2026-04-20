@@ -172,6 +172,10 @@ See the [full index](guides/roles/README.md) for details.
 - [Token Limits Solutions](TOKEN-LIMITS.md) - Handling large projects with AI token limits
 - Document Control Standard - See [CLAUDE.md](../CLAUDE.md#document-control-standard) for the canonical specification
 
+### Contributing
+
+- [Custom Commands Authoring](guides/custom-commands.md) - Add a new `/arckit.*` command: converter fan-out, frontmatter reference, worked example, testing checklist
+
 ---
 
 ## 📊 Documentation Coverage
