@@ -9,14 +9,14 @@
 | **Document ID** | {VENDOR_SLUG}-profile |
 | **Document Type** | Vendor Profile |
 | **Project** | {PROJECT_NAME} (Project {PROJECT_ID}) |
-| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Classification** | ${default_classification} (fallback: [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]) |
 | **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
 | **Version** | 1.0 |
 | **Created Date** | {YYYY-MM-DD} |
 | **Last Modified** | {YYYY-MM-DD} |
 | **Review Cycle** | On-Demand |
 | **Next Review Date** | {YYYY-MM-DD} |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Owner** | ${organisation_name} ([OWNER_NAME_AND_ROLE]) |
 | **Reviewed By** | [REVIEWER_NAME] ([YYYY-MM-DD]) or PENDING |
 | **Approved By** | [APPROVER_NAME] ([YYYY-MM-DD]) or PENDING |
 | **Distribution** | [DISTRIBUTION_LIST] |

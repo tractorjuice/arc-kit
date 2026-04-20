@@ -269,6 +269,10 @@ function pct(covered, total) {
 
 const data = parseHookInput();
 
+const configuredOrgName = (process.env.CLAUDE_PLUGIN_OPTION_ORGANISATION_NAME || '').trim();
+const configuredClassification = (process.env.CLAUDE_PLUGIN_OPTION_DEFAULT_CLASSIFICATION || '').trim();
+const configuredGovernanceFramework = (process.env.CLAUDE_PLUGIN_OPTION_GOVERNANCE_FRAMEWORK || '').trim();
+
 // Guard: hooks.json matcher triggers on substring "/arckit:analyze" which can
 // false-positive when another command's expanded body mentions /arckit:analyze.
 // Accept raw slash command OR the Skill-expanded body (unique description/heading).
@@ -660,12 +664,64 @@ for (const projectName of projectDirs) {
   // Section 14: Document Control Fields
   lines.push('### Document Control Fields');
   lines.push('');
+  if (configuredOrgName || configuredClassification || configuredGovernanceFramework) {
+    lines.push('**Configured Plugin Defaults**:');
+    lines.push(`- **organisation_name**: ${configuredOrgName || '\u2014 not set \u2014'}`);
+    lines.push(`- **default_classification**: ${configuredClassification || '\u2014 not set \u2014'}`);
+    lines.push(`- **governance_framework**: ${configuredGovernanceFramework || '\u2014 not set \u2014'}`);
+    lines.push('');
+  }
   lines.push('| File | Classification | Status | Owner |');
   lines.push('|------|----------------|--------|-------|');
   for (const meta of artifactMeta) {
     lines.push(`| ${meta.relPath} | ${meta.classification || '\u2014'} | ${meta.status || '\u2014'} | ${meta.owner || '\u2014'} |`);
   }
   lines.push('');
+
+  if (configuredClassification || configuredOrgName) {
+    const mismatchedClassification = [];
+    const missingOrMismatchedOwner = [];
+
+    for (const meta of artifactMeta) {
+      if (configuredClassification) {
+        const actual = (meta.classification || '').trim().toUpperCase();
+        const expected = configuredClassification.toUpperCase();
+        if (!actual || actual !== expected) {
+          mismatchedClassification.push(meta.relPath);
+        }
+      }
+
+      if (configuredOrgName) {
+        const actualOwner = (meta.owner || '').trim().toLowerCase();
+        const expectedOwner = configuredOrgName.toLowerCase();
+        if (!actualOwner || !actualOwner.includes(expectedOwner)) {
+          missingOrMismatchedOwner.push(meta.relPath);
+        }
+      }
+    }
+
+    if (mismatchedClassification.length > 0 || missingOrMismatchedOwner.length > 0) {
+      lines.push('### Plugin Default Alignment Gaps');
+      lines.push('');
+      if (mismatchedClassification.length > 0) {
+        lines.push(`- **Classification differs from configured default** (${configuredClassification}): ${mismatchedClassification.join(', ')}`);
+      }
+      if (missingOrMismatchedOwner.length > 0) {
+        lines.push(`- **Owner missing or does not reference configured organisation** (${configuredOrgName}): ${missingOrMismatchedOwner.join(', ')}`);
+      }
+      lines.push('');
+    }
+  }
+
+  if (configuredGovernanceFramework) {
+    const frameworkNormalized = configuredGovernanceFramework.toLowerCase();
+    if (frameworkNormalized === 'generic' && presentUkGov.length > 0) {
+      lines.push('### Governance Framework Note');
+      lines.push('');
+      lines.push(`- Plugin is configured for Generic governance, but UK Gov artifacts are present: ${presentUkGov.join(', ')}. Verify this is intentional.`);
+      lines.push('');
+    }
+  }
 
   // Section 15: What to do
   lines.push('### What to do');

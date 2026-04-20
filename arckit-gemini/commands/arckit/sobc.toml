@@ -76,8 +76,11 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
    - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `~/.gemini/extensions/arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the \"External References\" section in the template.
 
 4. **Determine project context**:
-   - If user mentions \"UK Government\", \"public sector\", \"department\", \"ministry\" → Use full Green Book format
-   - Otherwise → Use Green Book structure but adapt language for private sector
+  - Primary selector: `${governance_framework}` (`UK Gov` or `Generic`)
+  - If value is empty/unknown, infer from user/project context; default to `UK Gov`
+  - If mode is `UK Gov` → Use full Green Book behavior
+  - If mode is `Generic` → Keep core business case content but remove UK-specific sections/references (GDS Service Standard, TCoP, NCSC CAF, Orange Book, Green Book mandates)
+  - User/project context can explicitly override the default mode
    - Check stakeholder analysis for government-specific stakeholders (Minister, Permanent Secretary, Treasury, NAO)
 
 5. **Read stakeholder analysis carefully**:
@@ -255,12 +258,12 @@ Before generating the document ID, check if a previous version exists:
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → \"Strategic Outline Business Case (SOBC)\"
-- `[CLASSIFICATION]` → Default to \"OFFICIAL\" for UK Gov, \"INTERNAL\" for private sector
+- `[CLASSIFICATION]` → Default to `${default_classification}`; if unavailable use `OFFICIAL` for UK Gov mode and `PUBLIC` for Generic mode
 - `[STATUS]` → \"DRAFT\" for new documents
 
-**User-specified fields** (must be confirmed with user):
+**User-specified fields** (use defaults first, then confirm if needed):
 
-- `[OWNER]` → Who owns this business case? (typically from stakeholder RACI matrix)
+- `[OWNER]` → Default to `${organisation_name}` (typically from stakeholder RACI matrix)
 - `[REVIEWED_BY]` → Who will review? (mark as \"PENDING\" if not yet reviewed)
 - `[APPROVED_BY]` → Who must approve? (mark as \"PENDING\" if not yet approved)
 
@@ -274,7 +277,7 @@ Before generating the document ID, check if a previous version exists:
 11. **Use appropriate language**:
 
 - **UK Government**: Use Green Book terminology (intervention, public value, social benefit, spending controls)
-- **Private Sector**: Adapt to commercial language (investment, shareholder value, competitive advantage)
+- **Generic**: Adapt to commercial/non-UK language (investment, organizational value, competitive advantage)
 - **Always**: Link to stakeholder analysis for credibility
 
 12. **Flag uncertainties**:
@@ -332,6 +335,8 @@ Provide:
 - Management Case: Deadline-driven, stakeholder compliance team owns
 
 ## UK Government Specific Guidance
+
+Apply this section only when governance mode is `UK Gov`. For `Generic`, skip this section and keep only core business-case analysis.
 
 **Key HM Treasury references**: The Green Book provides the 5-case model, the [Magenta Book](https://www.gov.uk/government/publications/the-magenta-book) provides evaluation design guidance (theory of change, proportionality, impact evaluation), and the [Sourcing Playbook](https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks) covers should-cost modelling and market assessment. See `docs/guides/codes-of-practice.md` for the full Rainbow of Books mapping.
 

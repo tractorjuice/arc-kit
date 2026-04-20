@@ -15,6 +15,12 @@ $ARGUMENTS
 
 > **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
+**Governance framework mode**:
+- Use `${governance_framework}` as the default mode selector.
+- Treat empty/unknown values as `UK Gov`.
+- If mode is `Generic`, keep algorithmic transparency, risk, and accountability content but remove UK-specific mandates/references (ATRS publication obligations, GDS Service Standard, TCoP, NCSC CAF, Orange/Green Book).
+- If mode is `UK Gov`, keep current ATRS behavior.
+
 1. **Understand ATRS requirements**:
    - ATRS is **MANDATORY** for all central government departments and arm's length bodies
    - Two-tier structure: Tier 1 (public summary) + Tier 2 (detailed technical)
@@ -276,8 +282,8 @@ Before completing the document, populate ALL document control fields in the head
 *User-provided fields* (extract from project metadata or user input):
 
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
-- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
-- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+- `[OWNER_NAME_AND_ROLE]` → Default to `${organisation_name}`; if unavailable, prompt user
+- `[CLASSIFICATION]` → Default to `${default_classification}`; if unavailable use `OFFICIAL` for UK Gov mode and `PUBLIC` for Generic mode
 
 *Calculated fields*:
 

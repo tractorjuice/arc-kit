@@ -16,6 +16,12 @@ ${input:topic:Enter project name or topic}
 
 > **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
+**Governance framework mode**:
+- Use `${governance_framework}` as the default mode selector.
+- Treat empty/unknown values as `UK Gov`.
+- If mode is `Generic`, exclude UK Government-specific references (GDS Service Standard, Technology Code of Practice, NCSC CAF, Orange/Green Book) unless the user explicitly requests them.
+- If mode is `UK Gov`, keep current UK Government guidance behavior.
+
 1. **Identify the target project**:
    - Use the **ArcKit Project Context** (above) to find the project matching the user's input (by name or number)
    - If no match, create a new project:
@@ -175,8 +181,8 @@ Before generating the document ID, check if a previous version exists:
 **User-provided fields** (extract from project metadata or user input):
 
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
-- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
-- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+- `[OWNER_NAME_AND_ROLE]` → Default to `${organisation_name}`; if unavailable, prompt user
+- `[CLASSIFICATION]` → Default to `${default_classification}`; if unavailable, use `OFFICIAL` for UK Gov and `PUBLIC` for Generic
 
 **Calculated fields**:
 

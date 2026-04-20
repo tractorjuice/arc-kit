@@ -18,6 +18,12 @@ The Technology Code of Practice is a set of 13 criteria to help government desig
 
 **TCoP Reference**: https://www.gov.uk/guidance/the-technology-code-of-practice
 
+**Governance framework mode**:
+- Use `${governance_framework}` as the default mode selector.
+- Treat empty/unknown values as `UK Gov`.
+- If mode is `Generic`, produce a generic technology governance review (same structure and evidence depth) and skip UK-specific obligations/references (TCoP, GDS Service Standard, NCSC CAF, Orange/Green Book mandates).
+- If mode is `UK Gov`, keep current TCoP behavior.
+
 ## Your Task
 
 Generate a comprehensive TCoP review document by:
@@ -123,8 +129,8 @@ Before completing the document, populate ALL document control fields in the head
 **User-provided fields** (extract from project metadata or user input):
 
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
-- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
-- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+- `[OWNER_NAME_AND_ROLE]` → Default to `${organisation_name}`; if unavailable, prompt user
+- `[CLASSIFICATION]` → Default to `${default_classification}`; if unavailable use `OFFICIAL` for UK Gov mode and `PUBLIC` for Generic mode
 
 **Calculated fields**:
 

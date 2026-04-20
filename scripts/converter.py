@@ -94,12 +94,13 @@ def copy_agent_stripped(src_path, dest_path):
             for field in CLAUDE_ONLY_AGENT_FIELDS:
                 fm.pop(field, None)
             rebuilt = "---\n" + yaml.dump(fm, default_flow_style=False, allow_unicode=True) + "---" + parts[2]
+            rebuilt = rewrite_user_config_placeholders(rebuilt)
             with open(dest_path, "w", encoding="utf-8") as f:
                 f.write(rebuilt)
             return
     # No frontmatter — plain copy
     with open(dest_path, "w", encoding="utf-8") as f:
-        f.write(content)
+        f.write(rewrite_user_config_placeholders(content))
 
 
 def render_handoffs_section(handoffs, command_format="/arckit:{cmd}"):
@@ -248,7 +249,7 @@ def rewrite_paths(prompt, config):
     if config.get("arg_placeholder"):
         result = result.replace("$ARGUMENTS", config["arg_placeholder"])
 
-    return result
+    return rewrite_user_config_placeholders(result)
 
 
 def rewrite_hook_dependencies(prompt, config):
@@ -334,8 +335,37 @@ def read_template_for_command(name, templates_dir):
     template_path = os.path.join(templates_dir, f"{name}-template.md")
     if os.path.isfile(template_path):
         with open(template_path, "r", encoding="utf-8") as f:
-            return f.read()
+            return rewrite_user_config_placeholders(f.read())
     return None
+
+
+def rewrite_user_config_placeholders_in_tree(root_dir):
+    """Rewrite `${user_config.KEY}` to `${KEY}` in text files under root_dir."""
+    if not os.path.isdir(root_dir):
+        return
+
+    text_exts = {
+        ".md", ".json", ".toml", ".yaml", ".yml", ".txt",
+        ".mjs", ".js", ".py", ".sh", ".cfg", ".ini",
+    }
+
+    for root, _dirs, files in os.walk(root_dir):
+        for filename in files:
+            _, ext = os.path.splitext(filename)
+            if ext.lower() not in text_exts:
+                continue
+
+            file_path = os.path.join(root, filename)
+            try:
+                with open(file_path, "r", encoding="utf-8") as f:
+                    content = f.read()
+            except (UnicodeDecodeError, OSError):
+                continue
+
+            rewritten = rewrite_user_config_placeholders(content)
+            if rewritten != content:
+                with open(file_path, "w", encoding="utf-8") as f:
+                    f.write(rewritten)
 
 
 def convert(commands_dir, agents_dir):
@@ -419,6 +449,8 @@ def convert(commands_dir, agents_dir):
             else:
                 rewritten = rewrite_paths(prompt, config)
                 rewritten = rewrite_hook_dependencies(rewritten, config)
+
+            rewritten = rewrite_user_config_placeholders(rewritten)
 
             # Determine handoff command format based on target
             if config["format"] == "prompt":
@@ -528,6 +560,7 @@ def copy_extension_files(plugin_dir):
                 shutil.copytree(src, dst)
                 if dst_rel == "skills":
                     strip_claude_only_skill_fields(dst)
+                rewrite_user_config_placeholders_in_tree(dst)
                 file_count = sum(len(files) for _, _, files in os.walk(dst))
                 print(f"  Copied: {src} -> {dst} ({file_count} files)")
 
@@ -661,6 +694,7 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
 
         frontmatter, prompt = extract_frontmatter_and_prompt(content)
         prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", path_prefix)
+        prompt = rewrite_user_config_placeholders(prompt)
         prompt_escaped = prompt.replace("\\", "\\\\").replace('"""', '\\"\\"\\"')
 
         agent_name = frontmatter.get("name", filename.replace(".md", ""))
@@ -785,6 +819,7 @@ def generate_gemini_agents(agents_dir, output_dir):
 
         # Rewrite paths: ${CLAUDE_PLUGIN_ROOT} -> ~/.gemini/extensions/arckit
         prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", gemini_path_prefix)
+        prompt = rewrite_user_config_placeholders(prompt)
 
         # Rewrite Read instructions to shell commands
         prompt = re.sub(
@@ -957,6 +992,7 @@ def generate_copilot_agents(agents_dir, output_dir):
 
         prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
         prompt = prompt.replace(CONTEXT_HOOK_NOTE, CONTEXT_HOOK_REPLACEMENT)
+        prompt = rewrite_user_config_placeholders(prompt)
 
         fm_str = yaml.dump(copilot_fm, default_flow_style=False, sort_keys=False).rstrip()
         out_filename = filename.replace(".md", ".agent.md")
@@ -1060,6 +1096,7 @@ if __name__ == "__main__":
                             os.path.join(src_dir, filename),
                             os.path.join(ext_commands_dir, filename),
                         )
+                rewrite_user_config_placeholders_in_tree(ext_commands_dir)
                 print(
                     f"  Copied {counts[agent_id]} commands to {config['name']} extension: {ext_commands_dir}"
                 )
@@ -1084,6 +1121,8 @@ if __name__ == "__main__":
                             src_agent,
                             os.path.join(ext_agents_dir, filename),
                         )
+                rewrite_user_config_placeholders_in_tree(local_agents_dir)
+                rewrite_user_config_placeholders_in_tree(ext_agents_dir)
                 print(
                     f"  Copied agents to {local_agents_dir} and {ext_agents_dir}"
                 )

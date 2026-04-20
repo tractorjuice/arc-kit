@@ -18,7 +18,7 @@
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | On-Demand |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Owner** | ${user_config.organisation_name} ([OWNER_NAME_AND_ROLE]) |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | [DISTRIBUTION_LIST] |

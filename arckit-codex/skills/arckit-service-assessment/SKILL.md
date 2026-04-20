@@ -57,6 +57,12 @@ Generate a comprehensive GDS Service Standard assessment preparation report that
 
 > **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
+**Governance framework mode**:
+- Use `${governance_framework}` as the default mode selector.
+- Treat empty/unknown values as `UK Gov`.
+- If mode is `Generic`, run a generic service-readiness assessment instead of UK GDS-only framing: keep architecture/risk/user evidence checks but exclude mandatory references to GDS Service Standard, TCoP, NCSC CAF, Orange/Green Book.
+- If mode is `UK Gov`, keep the existing 14-point GDS assessment behavior.
+
 **Read the template** (with user override support):
 
 - **First**, check if `.arckit/templates/service-assessment-prep-template.md` exists in the project root
