@@ -29,6 +29,10 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 - 🔗 Maintaining requirements traceability
 - 📎 Citation traceability for external documents (inline `[DOC-CN]` markers with source quotes)
 
+## 📖 The ArcKit Book
+
+A comprehensive book-length guide to ArcKit — covering every subsystem (commands, agents, hooks, skills, MCP servers, multi-AI distribution, templates, autoresearch) — now lives in its own repository: **[tractorjuice/arckit-book](https://github.com/tractorjuice/arckit-book)**.
+
 ## Star History
 
 <a href="https://www.star-history.com/?repos=tractorjuice%2Farc-kit&type=date&legend=top-left">

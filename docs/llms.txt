@@ -12,7 +12,7 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 - [Getting Started](https://arckit.org/getting-started.html): First-time setup for Claude Code, Gemini, Copilot, Codex, and OpenCode.
 - [Documentation index](https://arckit.org/README.md): Complete index of guides grouped by workflow phase.
 - [README on GitHub](https://github.com/tractorjuice/arc-kit/blob/main/README.md): Installation, platform matrix, command catalogue.
-- [The ArcKit Book](https://arckit.org/book/ARCKIT-BOOK.md): 3,000+ line comprehensive guide covering every subsystem (commands, agents, hooks, skills, MCP, multi-AI distribution, templates, autoresearch).
+- [The ArcKit Book](https://github.com/tractorjuice/arckit-book/blob/main/docs/book/ARCKIT-BOOK.md): comprehensive guide covering every subsystem (commands, agents, hooks, skills, MCP, multi-AI distribution, templates, autoresearch). Lives in its own repository at [tractorjuice/arckit-book](https://github.com/tractorjuice/arckit-book).
 
 ## Commands
 
