@@ -9,7 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added (Community-contributed)
 
-- `/arckit.fr-irn` — [COMMUNITY] structure an IRN (Indice de Résilience Numérique) self-assessment following the aDRI framework — 8 resilience pillars × 5 organisational layers. References the official methodology at gitlab.com/digitalresilienceinitiative/adri-irn rather than reproducing scoring criteria (CC BY-NC-ND 4.0 licence incompatible with ArcKit's MIT licence; living standard that evolves actively). Generates `ARC-{id}-IRN-v1.0.md` with scoring scaffold, pre-populated context from existing project artifacts, and clear handoff to the official aDRI evaluation grid.
+- `/arckit.fr-irn` — [COMMUNITY] structure an IRN (Indice de Résilience Numérique) self-assessment following the aDRI framework — 8 resilience pillars × 5 organisational layers. References the official methodology at gitlab.com/digitalresilienceinitiative/adri-irn rather than reproducing scoring criteria (CC BY-NC-ND 4.0 licence incompatible with ArcKit's MIT licence; living standard that evolves actively). Generates `ARC-{id}-IRN-v1.0.md` with scoring scaffold, pre-populated context from existing project artifacts, and clear handoff to the official aDRI evaluation grid (#322)
+
+### Fixed
+
+- Extensions: propagate the `.guide-status.community` CSS rule to `pages-template.html` so community-contributed guides render with the correct visual marker in the generated dashboard (#327)
+- `sync-guides` hook: register the 18 EU/FR community guide stems so `/arckit.pages` includes them when syncing guide cards into the dashboard
+
+### Docs
+
+- Added @gtonic as a code contributor and Austrian domain maintainer in `docs/contributors.html` (hero stat 8 → 9, Community Impact refreshed to include Austrian regulatory coverage) (#328)
+- Moved the architecture book, research, and plan content out to a dedicated `tractorjuice/arckit-book` repo and updated pointers in `wiki.json` accordingly (#324, #325)
+- Added `.devin/wiki.json` to steer DeepWiki generation
+- Added a Star History chart to `README.md` above Quick Start, with cache-buster query to keep the badge fresh
+- Tidied `docs/superpowers/`: deleted shipped plans/specs and added a README explaining the directory's purpose (#326)
+- Added design spec and implementation plan for consolidating the dual artifact-type registry (`arckit-claude/config/doc-types.mjs` + the `/arckit.pages` allow-list) into a single source of truth — design only, not yet implemented
 
 ## [4.7.2] - 2026-04-19
 
