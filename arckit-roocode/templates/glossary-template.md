@@ -1,0 +1,131 @@
+# Glossary: [PROJECT_NAME]
+
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.glossary`
+
+## Document Control
+
+| Field | Value |
+|-------|-------|
+| **Document ID** | ARC-[PROJECT_ID]-GLOS-v[VERSION] |
+| **Document Type** | Project Glossary |
+| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
+| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
+| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
+| **Version** | [VERSION] |
+| **Created Date** | [YYYY-MM-DD] |
+| **Last Modified** | [YYYY-MM-DD] |
+| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
+| **Next Review Date** | [YYYY-MM-DD] |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Reviewed By** | [REVIEWER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Approved By** | [APPROVER_NAME] ([YYYY-MM-DD]) or PENDING |
+| **Distribution** | [DISTRIBUTION_LIST] |
+
+## Revision History
+
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.glossary` command | PENDING | PENDING |
+
+---
+
+## Purpose
+
+This glossary provides a single, authoritative reference for all terminology, acronyms, and abbreviations used within the [PROJECT_NAME] project. It ensures consistent understanding across all stakeholders, reduces ambiguity in architecture artifacts, and supports onboarding of new team members.
+
+**Scope**: All terms, acronyms, and abbreviations referenced in project architecture documents, requirements, designs, and communications.
+
+**Authority**: Enterprise Architecture team, with contributions from all project workstreams.
+
+**Usage**: All project documentation SHOULD reference this glossary for canonical definitions. When a term has a project-specific meaning that differs from common usage, the glossary definition takes precedence.
+
+---
+
+## Conventions
+
+- Terms are listed in **alphabetical order** within each section
+- **Bold** terms within definitions indicate cross-references to other glossary entries
+- The **Source Artifact** column references the document where the term was first defined or is most relevant
+- The **Category** column classifies terms to aid filtering and navigation (e.g., Business, Technical, Security, Data, Integration, Governance)
+- Acronyms and abbreviations are listed separately for quick lookup
+- Where a term has multiple meanings in different contexts, each meaning is listed as a separate row with the context noted
+
+---
+
+## Glossary
+
+| Term | Definition | Source Artifact | Category |
+|------|------------|-----------------|----------|
+| [TERM] | [DEFINITION] | [ARC-PROJECT_ID-ARTIFACT-vN.md] | [CATEGORY] |
+| [TERM] | [DEFINITION] | [ARC-PROJECT_ID-ARTIFACT-vN.md] | [CATEGORY] |
+| [TERM] | [DEFINITION] | [ARC-PROJECT_ID-ARTIFACT-vN.md] | [CATEGORY] |
+| [TERM] | [DEFINITION] | [ARC-PROJECT_ID-ARTIFACT-vN.md] | [CATEGORY] |
+| [TERM] | [DEFINITION] | [ARC-PROJECT_ID-ARTIFACT-vN.md] | [CATEGORY] |
+
+---
+
+## Acronyms & Abbreviations
+
+| Acronym | Expansion | Context |
+|---------|-----------|---------|
+| [ACRONYM] | [EXPANSION] | [CONTEXT] |
+| [ACRONYM] | [EXPANSION] | [CONTEXT] |
+| [ACRONYM] | [EXPANSION] | [CONTEXT] |
+| [ACRONYM] | [EXPANSION] | [CONTEXT] |
+| [ACRONYM] | [EXPANSION] | [CONTEXT] |
+
+---
+
+## Standards Reference Table
+
+| Standard | Version | Relevance | URL |
+|----------|---------|-----------|-----|
+| [STANDARD_NAME] | [VERSION] | [RELEVANCE_TO_PROJECT] | [URL] |
+| [STANDARD_NAME] | [VERSION] | [RELEVANCE_TO_PROJECT] | [URL] |
+| [STANDARD_NAME] | [VERSION] | [RELEVANCE_TO_PROJECT] | [URL] |
+
+---
+
+## Traceability
+
+This glossary was compiled from terms found in the following architecture artifacts:
+
+| Document | Document ID | Terms Contributed |
+|----------|-------------|-------------------|
+| Requirements Specification | ARC-[PROJECT_ID]-REQ-v[N].md | [COUNT] terms |
+| Stakeholder Analysis | ARC-[PROJECT_ID]-STKE-v[N].md | [COUNT] terms |
+| Risk Register | ARC-[PROJECT_ID]-RISK-v[N].md | [COUNT] terms |
+| Data Model | ARC-[PROJECT_ID]-DMOD-v[N].md | [COUNT] terms |
+| Architecture Principles | ARC-000-PRIN-v[N].md | [COUNT] terms |
+| Architecture Decision Records | ARC-[PROJECT_ID]-ADR-*.md | [COUNT] terms |
+
+## External References
+
+> This section provides traceability from generated content back to source documents.
+> Follow citation instructions in the project's citation reference guide.
+
+### Document Register
+
+| Doc ID | Filename | Type | Source Location | Description |
+|--------|----------|------|-----------------|-------------|
+| *None provided* | — | — | — | — |
+
+### Citations
+
+| Citation ID | Doc ID | Page/Section | Category | Quoted Passage |
+|-------------|--------|--------------|----------|----------------|
+| — | — | — | — | — |
+
+### Unreferenced Documents
+
+| Filename | Source Location | Reason |
+|----------|-----------------|--------|
+| — | — | — |
+
+---
+
+**Generated by**: ArcKit `/arckit.glossary` command
+**Generated on**: [DATE]
+**ArcKit Version**: [VERSION]
+**Project**: [PROJECT_NAME]
+**Model**: [AI_MODEL]
