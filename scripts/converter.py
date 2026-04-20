@@ -127,6 +127,45 @@ def render_handoffs_section(handoffs, command_format="/arckit:{cmd}"):
     return "\n".join(lines)
 
 
+def render_roocode_handoffs_section(handoffs):
+    """Render handoffs as Roo Code mode suggestions."""
+    if not handoffs:
+        return ""
+    lines = [
+        "",
+        "## Suggested Next Steps",
+        "",
+        "After completing this mode, consider:",
+        "",
+    ]
+    for h in handoffs:
+        cmd = h.get("command", "")
+        desc = h.get("description", "")
+        cond = h.get("condition", "")
+        line = f"- Switch to the ArcKit {cmd} mode"
+        if desc:
+            line += f" -- {desc}"
+        if cond:
+            line += f" *(when {cond})*"
+        lines.append(line)
+    lines.append("")
+    return "\n".join(lines)
+
+
+def rewrite_roocode_command_refs(prompt):
+    """Rewrite ArcKit slash-command references into Roo Code mode references."""
+    # Specific command names first (e.g. /arckit:research -> ArcKit research)
+    result = re.sub(r"/arckit:(\w[\w.-]*)", r"ArcKit \1", prompt)
+    result = re.sub(r"/arckit\.(\w[\w.-]*)", r"ArcKit \1", result)
+    result = re.sub(r"/prompts:arckit\.(\w[\w.-]*)", r"ArcKit \1", result)
+    # Generic/wildcard references last (e.g. `/arckit:*` or bare `/arckit:`)
+    result = re.sub(r"/arckit:\*", "ArcKit", result)
+    result = re.sub(r"/arckit:(?=\s|`|$)", "ArcKit", result)
+    # Collapse "ArcKit `ArcKit X`" -> "ArcKit `X`" (avoids double-prefix in footers)
+    result = re.sub(r"ArcKit `ArcKit ([\w][\w.-]*)`", r"ArcKit `\1`", result)
+    return result
+
+
 EXTENSION_FILE_ACCESS_BLOCK = """\
 **IMPORTANT — Gemini Extension File Access**:
 This command runs as a Gemini CLI extension. The extension directory \
@@ -530,6 +569,23 @@ def copy_extension_files(plugin_dir):
                     strip_claude_only_skill_fields(dst)
                 file_count = sum(len(files) for _, _, files in os.walk(dst))
                 print(f"  Copied: {src} -> {dst} ({file_count} files)")
+
+
+def rewrite_roocode_skill_refs(skills_dir):
+    """Rewrite ArcKit command references in all skill markdown files for Roo Code."""
+    if not os.path.isdir(skills_dir):
+        return
+    for root, _dirs, files in os.walk(skills_dir):
+        for filename in files:
+            if not filename.endswith(".md"):
+                continue
+            filepath = os.path.join(root, filename)
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+            rewritten = rewrite_roocode_command_refs(content)
+            if rewritten != content:
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write(rewritten)
 
 
 def strip_claude_only_skill_fields(skills_dir):
@@ -1018,13 +1074,236 @@ projects/
     print(f"  Generated: {output_path}")
 
 
+def generate_roocode_bundle(commands_dir, agents_dir, plugin_dir, output_dir):
+    """Generate Roo Code project scaffolding from ArcKit command sources."""
+    os.makedirs(output_dir, exist_ok=True)
+    roo_dir = os.path.join(output_dir, ".roo")
+    rules_root = os.path.join(roo_dir, "rules")
+    skills_dst = os.path.join(output_dir, "skills")
+    commands_dst = os.path.join(output_dir, "commands")
+    agents_dst = os.path.join(output_dir, "agents")
+    os.makedirs(rules_root, exist_ok=True)
+    os.makedirs(skills_dst, exist_ok=True)
+    os.makedirs(commands_dst, exist_ok=True)
+    os.makedirs(agents_dst, exist_ok=True)
+
+    shared_rules_path = os.path.join(rules_root, "00-arckit-context.md")
+    shared_rules = """\
+# ArcKit Roo Code Context
+
+ArcKit is an enterprise architecture governance toolkit for project work in Roo Code.
+
+## Working Rules
+
+- Use the shared ArcKit templates in `.arckit/templates/` for document generation.
+- Keep project artifacts in `projects/` with numbered directories.
+- Prefer the existing ArcKit templates and scripts over ad hoc document structures.
+- Follow the instructions in the active mode-specific rule file under `.roo/rules-<slug>/`.
+- Preserve user-authored content when refreshing or re-running setup.
+"""
+    with open(shared_rules_path, "w", encoding="utf-8") as f:
+        f.write(shared_rules)
+
+    agent_map = build_agent_map(agents_dir)
+    modes = []
+    count = 0
+
+    for filename in sorted(os.listdir(commands_dir)):
+        if not filename.endswith(".md"):
+            continue
+
+        command_path = os.path.join(commands_dir, filename)
+        with open(command_path, "r", encoding="utf-8") as f:
+            command_content = f.read()
+
+        frontmatter, command_prompt = extract_frontmatter_and_prompt(command_content)
+        description = frontmatter.get("description", "")
+        handoffs = frontmatter.get("handoffs", [])
+
+        if filename in agent_map:
+            agent_path, agent_prompt = agent_map[filename]
+            prompt = agent_prompt
+            if "$ARGUMENTS" not in prompt:
+                prompt += "\n\n## User Request\n\n```text\n$ARGUMENTS\n```\n"
+            source_label = f"{command_path} (agent: {agent_path})"
+        else:
+            prompt = command_prompt
+            source_label = command_path
+
+        prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
+        prompt = prompt.rstrip("\n")
+        prompt = prompt.replace(CONTEXT_HOOK_NOTE, CONTEXT_HOOK_REPLACEMENT)
+        prompt = rewrite_roocode_command_refs(prompt)
+
+        roocode_handoffs = render_roocode_handoffs_section(handoffs)
+        if roocode_handoffs:
+            prompt = prompt + roocode_handoffs
+
+        base_name = filename.replace(".md", "")
+        mode_name = "ArcKit " + base_name.replace("-", " ").title()
+        mode_slug = base_name
+        mode_rules_dir = os.path.join(roo_dir, f"rules-{mode_slug}")
+        os.makedirs(mode_rules_dir, exist_ok=True)
+        rules_path = os.path.join(mode_rules_dir, "01-instructions.md")
+
+        with open(rules_path, "w", encoding="utf-8") as f:
+            f.write(prompt + "\n")
+
+        # Write a properly-formatted command file (stripped Claude-only fields)
+        escaped_desc = description.replace("\\", "\\\\").replace('"', '\\"')
+        cmd_content = f'---\ndescription: "{escaped_desc}"\n---\n\n{prompt}\n'
+        with open(os.path.join(commands_dst, filename), "w", encoding="utf-8") as f:
+            f.write(cmd_content)
+
+        rules_rel_path = f".roo/rules-{mode_slug}/01-instructions.md"
+        mode_entry = {
+            "slug": mode_slug,
+            "name": mode_name,
+            "description": description or f"ArcKit {base_name.replace('-', ' ').title()} mode",
+            "roleDefinition": description or f"You are the ArcKit {base_name.replace('-', ' ').title()} mode.",
+            "whenToUse": f"Use this mode when you need the ArcKit {base_name.replace('-', ' ').title()} workflow.",
+            "groups": ["read", "edit", "browser", "command", "mcp"],
+            "source": "project",
+            "customInstructions": (
+                "Follow the shared ArcKit rules in `.roo/rules/00-arckit-context.md` "
+                f"and the mode-specific rules file at `{rules_rel_path}`."
+            ),
+            "rulesFiles": [
+                {
+                    "relativePath": rules_rel_path,
+                    "content": prompt + "\n",
+                }
+            ],
+        }
+        modes.append(mode_entry)
+        print(f"  Roo Code:     {source_label} -> {rules_path}")
+        count += 1
+
+    roomodes_path = os.path.join(output_dir, ".roomodes")
+    roomodes_content = {"customModes": modes}
+    with open(roomodes_path, "w", encoding="utf-8") as f:
+        yaml.dump(roomodes_content, f, default_flow_style=False, sort_keys=False, allow_unicode=True)
+    print(f"  Generated: {roomodes_path}")
+
+    # Copy agents with Claude-only fields stripped and command refs rewritten
+    if os.path.isdir(agents_dir):
+        for filename in sorted(os.listdir(agents_dir)):
+            if not filename.endswith(".md"):
+                continue
+            src_path = os.path.join(agents_dir, filename)
+            with open(src_path, "r", encoding="utf-8") as f:
+                content = f.read()
+            if content.startswith("---"):
+                parts = content.split("---", 2)
+                if len(parts) > 2:
+                    try:
+                        fm = yaml.safe_load(parts[1]) or {}
+                    except yaml.YAMLError:
+                        fm = {}
+                    for field in CLAUDE_ONLY_AGENT_FIELDS:
+                        fm.pop(field, None)
+                    # Rewrite command refs inside description (e.g. example user: lines)
+                    if "description" in fm and isinstance(fm["description"], str):
+                        fm["description"] = rewrite_roocode_command_refs(fm["description"])
+                    body = parts[2].replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
+                    body = rewrite_roocode_command_refs(body)
+                    content = "---\n" + yaml.dump(fm, default_flow_style=False, allow_unicode=True) + "---" + body
+            with open(os.path.join(agents_dst, filename), "w", encoding="utf-8") as f:
+                f.write(content)
+        agent_count = len([f for f in os.listdir(agents_dst) if f.endswith(".md")])
+        print(f"  Copied: {agents_dir} -> {agents_dst} ({agent_count} agents)")
+
+    skills_src = os.path.join(plugin_dir, "skills")
+    if os.path.isdir(skills_src):
+        if os.path.isdir(skills_dst):
+            shutil.rmtree(skills_dst)
+        shutil.copytree(skills_src, skills_dst)
+        strip_claude_only_skill_fields(skills_dst)
+        rewrite_roocode_skill_refs(skills_dst)
+        file_count = sum(len(files) for _, _, files in os.walk(skills_dst))
+        print(f"  Copied: {skills_src} -> {skills_dst} ({file_count} files)")
+
+    # Copy supporting files so the bundle is self-contained (matches Codex/OpenCode/Gemini/Copilot)
+    supporting_copies = [
+        ("templates", "templates"),
+        ("references", "references"),
+        ("scripts/bash", "scripts/bash"),
+        ("docs/guides", "docs/guides"),
+    ]
+    # Copy single files
+    single_file_copies = [
+        ("docs/DEPENDENCY-MATRIX.md", "docs/DEPENDENCY-MATRIX.md"),
+        (".mcp.json", ".mcp.json"),
+        ("LICENSE", "LICENSE"),
+    ]
+    for src_rel, dst_rel in supporting_copies:
+        src = os.path.join(plugin_dir, src_rel)
+        dst = os.path.join(output_dir, dst_rel)
+        if os.path.isdir(src):
+            if os.path.isdir(dst):
+                shutil.rmtree(dst)
+            shutil.copytree(src, dst)
+            file_count = sum(len(files) for _, _, files in os.walk(dst))
+            print(f"  Copied: {src} -> {dst} ({file_count} files)")
+    for src_rel, dst_rel in single_file_copies:
+        src = os.path.join(plugin_dir, src_rel)
+        dst = os.path.join(output_dir, dst_rel)
+        if os.path.isfile(src):
+            os.makedirs(os.path.dirname(dst), exist_ok=True) if os.path.dirname(dst) else None
+            shutil.copy2(src, dst)
+            print(f"  Copied: {src} -> {dst}")
+
+    # Remove stale Gemini-specific files that don't apply to Roo Code
+    for stale_dir in ("hooks", "policies"):
+        stale_path = os.path.join(output_dir, stale_dir)
+        if os.path.isdir(stale_path):
+            shutil.rmtree(stale_path)
+            print(f"  Removed stale Gemini file: {stale_path}")
+
+    readme_path = os.path.join(output_dir, "README.md")
+    readme_content = """# ArcKit for Roo Code
+
+Enterprise Architecture Governance & Vendor Procurement Toolkit for Roo Code.
+
+> **Auto-generated**: Files in this directory are generated from plugin commands by `python scripts/converter.py`. Do not edit them directly - edit the source in `arckit-claude/commands/` and re-run the converter.
+
+## Contents
+
+- `.roomodes` with ArcKit custom modes
+- `.roo/rules/` shared Roo Code rules
+- `.roo/rules-<mode>/` mode-specific instructions
+- `commands/` command prompts (reference, one per mode)
+- `agents/` autonomous agent definitions
+- `skills/` reusable ArcKit skills
+- `templates/` document templates
+- `references/` quality checklist and citation instructions
+- `scripts/bash/` helper scripts
+- `docs/guides/` command usage guides
+- `.mcp.json` MCP server configuration (AWS Knowledge, Microsoft Learn, GCP)
+
+## Usage
+
+Copy the bundle into a Roo Code workspace root, then open the project in VS Code and select an ArcKit custom mode from the Roo Code mode picker.
+"""
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write(readme_content)
+    print(f"  Generated: {readme_path}")
+
+    version_src = os.path.join(plugin_dir, "VERSION")
+    if os.path.isfile(version_src):
+        shutil.copy2(version_src, os.path.join(output_dir, "VERSION"))
+        print(f"  Copied: {version_src} -> {os.path.join(output_dir, 'VERSION')}")
+
+    return count
+
+
 if __name__ == "__main__":
     commands_dir = "arckit-claude/commands/"
     agents_dir = "arckit-claude/agents/"
     plugin_dir = "arckit-claude"
 
     print(
-        "Converting plugin commands to Codex, OpenCode, Gemini, and Copilot extension formats..."
+        "Converting plugin commands to Codex, OpenCode, Gemini, Copilot, and Roo Code extension formats..."
     )
     print()
     print(f"Source:       {commands_dir}")
@@ -1124,6 +1403,10 @@ if __name__ == "__main__":
     print()
     print("Generating Copilot instructions...")
     generate_copilot_instructions("arckit-copilot/copilot-instructions.md")
+
+    print()
+    print("Generating Roo Code bundle...")
+    generate_roocode_bundle(commands_dir, agents_dir, plugin_dir, "arckit-roocode")
 
     print()
     print("Copying Paperclip utility scripts...")
