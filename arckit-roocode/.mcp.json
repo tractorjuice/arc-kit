@@ -1,0 +1,30 @@
+{
+  "mcpServers": {
+    "aws-knowledge": {
+      "type": "http",
+      "url": "https://knowledge-mcp.global.api.aws"
+    },
+    "microsoft-learn": {
+      "type": "http",
+      "url": "https://learn.microsoft.com/api/mcp"
+    },
+    "google-developer-knowledge": {
+      "type": "http",
+      "url": "https://developerknowledge.googleapis.com/mcp",
+      "headers": {
+        "X-Goog-Api-Key": "${user_config.GOOGLE_API_KEY}"
+      }
+    },
+    "datacommons-mcp": {
+      "type": "http",
+      "url": "https://api.datacommons.org/mcp",
+      "headers": {
+        "X-API-Key": "${user_config.DATA_COMMONS_API_KEY}"
+      }
+    },
+    "govreposcrape": {
+      "type": "http",
+      "url": "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp"
+    }
+  }
+}
