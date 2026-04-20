@@ -33,9 +33,9 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 <a href="https://www.star-history.com/?repos=tractorjuice%2Farc-kit&type=date&legend=top-left">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&theme=dark&legend=top-left" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left" />
-   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&theme=dark&legend=top-left&v=20260420" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left&v=20260420" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=tractorjuice/arc-kit&type=date&legend=top-left&v=20260420" />
  </picture>
 </a>
 
