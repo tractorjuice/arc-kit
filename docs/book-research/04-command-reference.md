@@ -142,9 +142,9 @@
 
 ## Command Naming Across Platforms
 
-| Claude Code | Codex CLI | Gemini CLI | OpenCode CLI | Copilot |
-|------------|-----------|------------|--------------|---------|
-| `/arckit.requirements` | `$arckit-requirements` | `/arckit:requirements` | `/arckit.requirements` | `/arckit-requirements` |
+| Claude Code | Codex CLI | Gemini CLI | OpenCode CLI | GitHub Copilot | Roo Code |
+|------------|-----------|------------|--------------|----------------|----------|
+| `/arckit.requirements` | `$arckit-requirements` | `/arckit:requirements` | `/arckit.requirements` | `/arckit-requirements` | `ArcKit Requirements` |
 
 ## Effort Levels
 

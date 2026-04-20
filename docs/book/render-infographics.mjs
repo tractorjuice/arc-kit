@@ -85,7 +85,7 @@ data
     - label Strengths
       items
         - 68 commands covering full governance lifecycle
-        - 7 distribution formats from single source
+        - 8 distribution formats from single source
         - Template-driven consistency with citation traceability
         - Self-improving prompts via autoresearch
     - label Weaknesses

@@ -1,8 +1,8 @@
 # Architecture and Design
 
-## The Seven Distribution Formats
+## The Eight Distribution Formats
 
-ArcKit ships in seven formats from a single source of truth (`arckit-claude/commands/*.md`):
+ArcKit ships in eight formats from a single source of truth (`arckit-claude/commands/*.md`):
 
 | # | Format | Target | Location | Install Method |
 |---|--------|--------|----------|----------------|
@@ -12,9 +12,10 @@ ArcKit ships in seven formats from a single source of truth (`arckit-claude/comm
 | 4 | OpenCode CLI extension | OpenCode CLI | `arckit-opencode/` | `arckit init --ai opencode` |
 | 5 | Codex CLI extension | Codex CLI | `arckit-codex/` | Published as `tractorjuice/arckit-codex` |
 | 6 | Copilot extension | GitHub Copilot | `arckit-copilot/` | `arckit init --ai copilot` |
-| 7 | Paperclip plugin | Paperclip AI | `arckit-paperclip/` | npm: `@tractorjuice/arckit-paperclip` (not yet published) |
+| 7 | Roo Code bundle | Roo Code | `arckit-roocode/` | `arckit init --ai roocode` |
+| 8 | Paperclip plugin | Paperclip AI | `arckit-paperclip/` | npm: `@tractorjuice/arckit-paperclip` (not yet published) |
 
-### The Converter -- One Source, Seven Targets
+### The Converter -- One Source, Eight Targets
 
 `scripts/converter.py` is the engine that makes multi-platform possible. It's config-driven via an `AGENT_CONFIG` dictionary -- adding a new AI target only requires a new dict entry.
 
@@ -23,13 +24,14 @@ ArcKit ships in seven formats from a single source of truth (`arckit-claude/comm
 - Reads plugin commands (`arckit-claude/commands/*.md`) with YAML frontmatter
 - Rewrites `${CLAUDE_PLUGIN_ROOT}` paths per target
 - Extracts agent prompts and inlines them for non-Claude targets (which don't support the Task/agent architecture)
-- Generates format-specific output: Markdown (Codex/OpenCode), TOML (Gemini), `.prompt.md` (Copilot), JSON (Paperclip)
+- Generates format-specific output: Markdown (Codex/OpenCode), TOML (Gemini), `.prompt.md` (Copilot), JSON (Paperclip), Roo Code project scaffolding
 - Copies supporting files (templates, scripts, docs) to each extension directory
 - For Codex: generates `config.toml` (MCP servers + agent roles), per-agent `.toml` files, rewrites skill command references
 - For Gemini: generates agents, hooks, policies with GDS theme
+- For Roo Code: generates `.roomodes`, `.roo/rules/`, `.roo/skills/`, commands, agents, `.mcp.json`, and a workspace README
 - Renders `handoffs:` frontmatter as "Suggested Next Steps" sections
 
-**Key functions**: `rewrite_paths()`, `format_output()`, `convert()`, `copy_extension_files()`, `generate_codex_config_toml()`, `generate_agent_toml_files()`, `rewrite_codex_skills()`, `generate_gemini_agents()`, `generate_gemini_hooks()`, `generate_gemini_policies()`, `generate_copilot_agents()`, `generate_copilot_instructions()`
+**Key functions**: `rewrite_paths()`, `format_output()`, `convert()`, `copy_extension_files()`, `generate_codex_config_toml()`, `generate_agent_toml_files()`, `rewrite_codex_skills()`, `generate_gemini_agents()`, `generate_gemini_hooks()`, `generate_gemini_policies()`, `generate_copilot_agents()`, `generate_copilot_instructions()`, `generate_roocode_bundle()`
 
 ## The Plugin Architecture (Claude Code)
 

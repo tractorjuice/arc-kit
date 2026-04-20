@@ -33,7 +33,7 @@ Initially, each AI target had hand-maintained command files. The converter autom
 2. **Config-driven refactor**: `AGENT_CONFIG` dictionary made adding targets declarative
 3. **Agent extraction**: Non-Claude targets get full agent prompts inlined (they can't spawn subagents)
 4. **Hook-aware conversion**: Standalone overrides for platforms without hook support
-5. **Current state**: One `python scripts/converter.py` call generates all 6 non-Claude formats
+5. **Current state**: One `python scripts/converter.py` call generates all 7 non-Claude formats
 
 ## The Agent System -- Context Isolation (v1.0.3 onwards)
 

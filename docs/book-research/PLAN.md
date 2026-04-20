@@ -2,7 +2,7 @@
 
 ## Context
 
-ArcKit is a mature (v4.6.6, 50 commits on main) Enterprise Architecture Governance & Vendor Procurement Toolkit with 68 slash commands, 10 autonomous agents, 21 hooks, 4 skills, 5 MCP servers, and 6 distribution formats (Claude Code plugin, Gemini CLI extension, Codex CLI, OpenCode CLI, Copilot, and a new Paperclip format). It has 22 test repositories demonstrating real-world use cases. The existing documentation is scattered across README.md (105KB), CLAUDE.md (25KB), CHANGELOG.md (127KB), 90+ guides, and inline command prompts. There is no single narrative document that tells the full story of what ArcKit is, how it works internally, and how to get the most from it.
+ArcKit is a mature (v4.6.6, 50 commits on main) Enterprise Architecture Governance & Vendor Procurement Toolkit with 68 slash commands, 10 autonomous agents, 21 hooks, 4 skills, 5 MCP servers, and 8 distribution targets (Claude Code plugin, Gemini CLI extension, OpenAI Codex CLI, OpenCode CLI, GitHub Copilot, Roo Code, Paperclip format, and the CLI package). It has 22 test repositories demonstrating real-world use cases. The existing documentation is scattered across README.md (105KB), CLAUDE.md (25KB), CHANGELOG.md (127KB), 90+ guides, and inline command prompts. There is no single narrative document that tells the full story of what ArcKit is, how it works internally, and how to get the most from it.
 
 The user wants a **comprehensive book** covering architecture, design, commands, prompts, hints/tips, and commit highlights -- a single authoritative reference.
 
@@ -26,12 +26,12 @@ docs/book/ARCKIT-BOOK.md
 - The problem: architecture governance is broken (scattered docs, inconsistent enforcement, lost traceability)
 - The solution: structured, AI-assisted governance with template-driven generation
 - The 68-command toolkit at a glance
-- Six distribution formats and why they exist
+- Eight distribution targets and why they exist
 - UK Government context (GDS, TCoP, NCSC, Orange/Green Book)
 
 ### Chapter 2: Getting Started
 
-- Installation paths (Claude Code plugin, Gemini extension, Copilot, Codex CLI, OpenCode CLI)
+- Installation paths (Claude Code plugin, Gemini extension, Copilot, OpenAI Codex CLI, OpenCode CLI, Roo Code)
 - `arckit init` and project scaffolding
 - `/arckit.start` onboarding flow
 - Project structure walkthrough (`projects/`, `000-global/`, numbered project dirs)
@@ -225,9 +225,9 @@ Research has already been compiled from git history, memory files, changelogs, a
 | Research File | Content | Use In Chapters |
 |---------------|---------|-----------------|
 | `01-origin-story-and-timeline.md` | First commit to v4.6.6; 971 commits, 129 releases, 6 months; version era breakdown (v0.x-v4.x); commit cadence by month; contributor counts | Ch 1 (intro), Ch 13 (history) |
-| `02-architecture-and-design.md` | 7 distribution formats table; converter architecture; plugin components (commands, agents, hooks, MCP, skills); data path resolution; document system (control standard, IDs, traceability chain, citation, templates, handoffs) | Ch 4, 5, 6, 7, 8, 9, 10 |
+| `02-architecture-and-design.md` | 8 distribution formats table; converter architecture; plugin components (commands, agents, hooks, MCP, skills); data path resolution; document system (control standard, IDs, traceability chain, citation, templates, handoffs) | Ch 4, 5, 6, 7, 8, 9, 10 |
 | `03-key-milestones-and-decisions.md` | Plugin pivot (v2.0.0); Gemini multi-platform moment; converter evolution; agent system origin; hooks system growth; Wardley suite; autoresearch findings (Orange Book 4Ts error, Green Book terminology, effort trap); citation traceability; govreposcrape; token limit crisis; managed agents | Ch 3, 6, 7, 11, 13 |
-| `04-command-reference.md` | All 68 commands organized by category with agent flags; command naming across 5 platforms; effort levels | Ch 4, Appendix A |
+| `04-command-reference.md` | All 68 commands organized by category with agent flags; command naming across 6 platforms; effort levels | Ch 4, Appendix A |
 | `05-uk-government-compliance.md` | Every UK Gov framework covered (Green/Orange Book, GDS, NCSC CAF, MOD JSP 453/936, AI Playbook, ATRS, DPIA, govreposcrape, grants); document classification levels; 15 test project descriptions | Ch 1, Ch 3, Ch 5 |
 | `06-hints-tips-and-lessons.md` | 5 design principles; 6 notable bugs with lessons (Orange Book 4Ts, Green Book terminology, effort trap, branch vs ref, hook async timing, slugify encoding); tips for command authors; tips for plugin users; security considerations; autoresearch workflow | Ch 5, Ch 6, Ch 11, Ch 12 |
 | `07-community-and-contributors.md` | All contributors profiled: tractorjuice (950 commits), @umag (Gemini), @DavidROliverBA (security/health), @alefbt (OpenCode), @johnfelipe (40+ issues); community impact | Ch 1, Ch 13 |

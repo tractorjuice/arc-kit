@@ -68,7 +68,7 @@ Every document ArcKit generates follows the same structure:
 - **Citation traceability** linking findings to source documents
 - A **standard footer** recording the generation tool, date, version, and AI model
 
-The key insight is that AI coding assistants (Claude Code, Gemini CLI, Codex CLI, GitHub Copilot, OpenCode CLI) are not just for writing code. They are document generation engines with web research capabilities. ArcKit harnesses this by providing carefully crafted prompts -- each one a 50-200 line instruction set -- that guide the AI through a structured governance process.
+The key insight is that AI coding assistants (Claude Code, Gemini CLI, Codex CLI, GitHub Copilot, OpenCode CLI, Roo Code) are not just for writing code. They are document generation engines with web research capabilities. ArcKit harnesses this by providing carefully crafted prompts -- each one a 50-200 line instruction set -- that guide the AI through a structured governance process.
 
 ### ArcKit at a Glance
 
@@ -83,11 +83,11 @@ The key insight is that AI coding assistants (Claude Code, Gemini CLI, Codex CLI
 | Automation hooks | 17 registered |
 | Skills (reference knowledge) | 4 |
 | MCP servers (external data) | 5 |
-| Distribution formats | 7 |
+| Distribution formats | 8 |
 | Document templates | 62 |
 | Test repositories | 22 |
 
-### Seven Distribution Formats
+### Eight Distribution Formats
 
 ![ArcKit Distribution Formats](images/arckit-platforms.svg)
 
@@ -99,11 +99,12 @@ ArcKit runs on every major AI coding assistant:
 | 2 | **Gemini CLI extension** | Gemini CLI | `gemini extensions install tractorjuice/arckit-gemini` |
 | 3 | **Codex CLI extension** | Codex CLI | Published repo: `tractorjuice/arckit-codex` |
 | 4 | **OpenCode CLI extension** | OpenCode CLI | `arckit init --ai opencode` |
-| 5 | **Copilot extension** | GitHub Copilot | `arckit init --ai copilot` |
-| 6 | **CLI package** | pip/uv | `pip install arckit-cli` then `arckit init` |
-| 7 | **Paperclip plugin** | Paperclip AI | npm: `@tractorjuice/arckit-paperclip` |
+| 5 | **GitHub Copilot extension** | GitHub Copilot | `arckit init --ai copilot` |
+| 6 | **Roo Code bundle** | Roo Code | `arckit init --ai roocode` |
+| 7 | **CLI package** | pip/uv | `pip install arckit-cli` then `arckit init` |
+| 8 | **Paperclip plugin** | Paperclip AI | npm: `@tractorjuice/arckit-paperclip` |
 
-All seven formats are generated from a single source of truth: the Claude Code plugin commands in `arckit-claude/commands/*.md`. A config-driven converter (`scripts/converter.py`) transforms these into each target format, rewriting paths, inlining agent prompts, and adapting to platform-specific conventions.
+All eight formats are generated from a single source of truth: the Claude Code plugin commands in `arckit-claude/commands/*.md`. A config-driven converter (`scripts/converter.py`) transforms these into each target format, rewriting paths, inlining agent prompts, and adapting to platform-specific conventions.
 
 ### UK Government Context
 
@@ -135,7 +136,7 @@ ArcKit is a **prompt-driven governance automation system**. It uses AI coding as
 
 3. **Real-time research**: MCP servers provide access to AWS, Azure, GCP documentation and 24,500+ UK government repositories. Research commands don't rely on training data -- they search the web.
 
-4. **Multi-platform**: The same governance process works across Claude Code, Gemini, Codex, OpenCode, Copilot, and Paperclip. Switch tools without switching processes.
+4. **Multi-platform**: The same governance process works across Claude Code, Gemini, Codex, OpenCode, GitHub Copilot, Roo Code, and Paperclip. Switch tools without switching processes.
 
 5. **Self-improving**: The autoresearch system iteratively optimizes command prompts, verifying them against actual government framework content.
 
@@ -269,7 +270,8 @@ All of this happens transparently. You never see the hooks run -- they just make
 | Gemini CLI | `/arckit:{name}` | `/arckit:requirements NHS booking system` |
 | Codex CLI | `$arckit-{name}` (skill) | `$arckit-requirements NHS booking system` |
 | OpenCode CLI | `/arckit.{name}` | `/arckit.requirements NHS booking system` |
-| Copilot | `/arckit-{name}` (prompt) | `/arckit-requirements NHS booking system` |
+| GitHub Copilot | `/arckit-{name}` (prompt) | `/arckit-requirements NHS booking system` |
+| Roo Code | `ArcKit {Mode}` | `ArcKit Requirements NHS booking system` |
 
 ### Your First Workflow
 
@@ -1724,7 +1726,7 @@ Earlier individual PRs that were merged separately (in v4.5.x):
 
 ### Version Management
 
-ArcKit maintains 15 version files across its 7 distribution formats:
+ArcKit maintains 15 version files across its 8 distribution formats:
 
 | File | Format |
 |------|--------|
@@ -1883,7 +1885,7 @@ The converter also handles edge cases:
 
 #### Version Bump Script
 
-`scripts/bump-version.sh` is deceptively important. With 15 version files across 7 distribution formats, manual updates are error-prone. The script:
+`scripts/bump-version.sh` is deceptively important. With 15 version files across 8 distribution formats, manual updates are error-prone. The script:
 
 1. Validates the version argument format
 2. Runs markdown lint check
@@ -2015,6 +2017,7 @@ payment-modernization/
 | `--ai codex` | Codex CLI format (skills + agents) |
 | `--ai opencode` | OpenCode CLI format |
 | `--ai copilot` | GitHub Copilot format (.prompt.md + .agent.md) |
+| `--ai roocode` | Roo Code format (.roomodes + .roo/) |
 | `--ai claude` | Redirects to plugin installation |
 | `--ai gemini` | Redirects to extension installation |
 | `--minimal` | Skip docs, guides, and reference files |
@@ -2437,7 +2440,7 @@ These issues represent the community's vision for where ArcKit goes next. The co
 
 ### The Big Picture
 
-ArcKit started as a CLI tool with three slash commands on 14 October 2025. Six months later, it is a comprehensive enterprise architecture governance toolkit with 68 commands, 10 autonomous agents, 17 hooks, 5 MCP servers, and 7 distribution formats. It serves the UK Government, NHS, MOD, and private sector across 22 test repositories.
+ArcKit started as a CLI tool with three slash commands on 14 October 2025. Six months later, it is a comprehensive enterprise architecture governance toolkit with 68 commands, 10 autonomous agents, 17 hooks, 5 MCP servers, and 8 distribution formats. It serves the UK Government, NHS, MOD, and private sector across 22 test repositories.
 
 The project demonstrates something broader: that AI coding assistants are not just for writing code. They are document generation engines, research tools, and governance automation platforms. ArcKit harnesses this by providing carefully crafted prompts -- each one a 50-400 line instruction set -- that guide the AI through structured processes.
 
@@ -2447,7 +2450,7 @@ The result is architecture governance that is:
 - **Traceable** -- Citation markers, requirement IDs, and cross-references create an auditable chain from stakeholder needs to implementation
 - **Comprehensive** -- 68 commands cover the full lifecycle from initial planning through go-live
 - **Current** -- MCP servers provide real-time access to documentation, and autoresearch ensures prompts reflect actual framework content
-- **Accessible** -- Seven AI platforms, auto-updating distribution, zero-config for Claude Code users
+- **Accessible** -- Eight AI platforms, auto-updating distribution, zero-config for Claude Code users
 - **Self-improving** -- The autoresearch system validates and optimizes command prompts against real-world frameworks
 
 The architecture governance problem isn't solved. But ArcKit proves that structured, AI-assisted governance is practical, scalable, and dramatically more efficient than the manual alternative.
@@ -2896,10 +2899,10 @@ A: Yes. Place PDFs, Word docs, Markdown files, or spreadsheets in `projects/{pro
 A: ArcKit generates documents locally in your project directory. No data is sent to ArcKit servers (there are no ArcKit servers). MCP server calls go to AWS, Microsoft, Google, and govreposcrape APIs. Web searches go through the AI assistant's normal web search capability. Document classification (PUBLIC/OFFICIAL/OFFICIAL-SENSITIVE/SECRET) is metadata only -- ArcKit does not enforce data handling controls.
 
 **Q: How do I contribute a new command?**
-A: See Appendix D for the complete process. In brief: create the command file, create a template, create a guide, run the converter, update docs, and submit a PR. The converter automatically generates all 6 non-Claude formats from your single command file.
+A: See Appendix D for the complete process. In brief: create the command file, create a template, create a guide, run the converter, update docs, and submit a PR. The converter automatically generates all 7 non-Claude formats from your single command file.
 
 ---
 
 *Generated by ArcKit -- Enterprise Architecture Governance Toolkit*
 *Version 4.6.13 -- April 2026*
-*954 commits, 129 releases, 68 commands, 10 agents, 17 hooks, 5 MCP servers, 7 distribution formats*
+*954 commits, 129 releases, 68 commands, 10 agents, 17 hooks, 5 MCP servers, 8 distribution formats*

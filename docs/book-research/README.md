@@ -7,7 +7,7 @@ Research material compiled from git history, memory files, changelogs, articles,
 | # | File | Description |
 |---|------|-------------|
 | 01 | [Origin Story and Timeline](01-origin-story-and-timeline.md) | From first commit to v4.6.6 -- 971 commits, 129 releases, 6 months |
-| 02 | [Architecture and Design](02-architecture-and-design.md) | Seven distribution formats, converter, plugin architecture, hooks, MCP, skills |
+| 02 | [Architecture and Design](02-architecture-and-design.md) | Eight distribution formats, converter, plugin architecture, hooks, MCP, skills |
 | 03 | [Key Milestones and Decisions](03-key-milestones-and-decisions.md) | Plugin pivot, agent system, Wardley suite, autoresearch, citation traceability |
 | 04 | [Command Reference](04-command-reference.md) | All 68 commands categorized with agent flags and effort levels |
 | 05 | [UK Government Compliance](05-uk-government-compliance.md) | Green Book, Orange Book, GDS, NCSC CAF, MOD, AI Playbook, govreposcrape |
