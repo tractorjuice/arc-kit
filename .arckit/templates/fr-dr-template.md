@@ -11,14 +11,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-DR-v[VERSION] |
 | **Document Type** | Diffusion Restreinte Handling Assessment |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | DIFFUSION RESTREINTE |
+| **Classification** | [CLASSIFICATION] |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | Annual |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE — Fonctionnaire de Sécurité des Systèmes d'Information or equivalent] |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | RESTRICTED — DR assessment itself contains sensitive handling information |

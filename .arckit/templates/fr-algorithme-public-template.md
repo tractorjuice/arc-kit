@@ -11,14 +11,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-ALGO-v[VERSION] |
 | **Document Type** | Public Algorithm Transparency Notice |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | PUBLIC — this notice must be publicly accessible |
+| **Classification** | [CLASSIFICATION] |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | On algorithm change or annual |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | ${user_config.organisation_name} ([OWNER_NAME_AND_ROLE]) |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | PUBLIC — published on data.gouv.fr / algorithmes.data.gouv.fr |

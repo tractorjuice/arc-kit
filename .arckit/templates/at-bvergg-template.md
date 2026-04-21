@@ -11,14 +11,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-BVERGG-v[VERSION] |
 | **Document Type** | Austrian Public Procurement Documentation |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [OFFICIAL] |
+| **Classification** | [CLASSIFICATION] |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | Per procurement |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [Vergabestelle / Procurement Officer] |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
 | **Reviewed By** | [Vergabejurist / PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | [DISTRIBUTION_LIST] |

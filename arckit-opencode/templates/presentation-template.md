@@ -10,14 +10,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-PRES-v[VERSION] |
 | **Document Type** | Architecture Presentation |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | ${default_classification} (fallback: [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]) |
+| **Classification** | [CLASSIFICATION] |
 | **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | [On-Demand] |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | ${organisation_name} ([OWNER_NAME_AND_ROLE]) |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
 | **Reviewed By** | [REVIEWER_NAME] on [DATE] or [PENDING] |
 | **Approved By** | [APPROVER_NAME] on [DATE] or [PENDING] |
 | **Distribution** | [DISTRIBUTION_LIST] |
@@ -245,7 +245,7 @@ gantt
 
 ## Questions & Discussion
 
-**Contact**: ${organisation_name} ([OWNER_NAME_AND_ROLE])
+**Contact**: [OWNER_NAME_AND_ROLE]
 **Document**: `ARC-[PROJECT_ID]-PRES-v[VERSION].md`
 **Next Review**: [NEXT_REVIEW_DATE]
 

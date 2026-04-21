@@ -18,7 +18,7 @@
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | At project start and on major functional change |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | ${organisation_name} ([OWNER_NAME_AND_ROLE]) |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | [DISTRIBUTION_LIST] |

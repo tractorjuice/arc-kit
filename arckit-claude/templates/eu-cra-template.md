@@ -11,14 +11,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-CRA-v[VERSION] |
 | **Document Type** | EU Cyber Resilience Act Compliance Assessment |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE] |
+| **Classification** | [CLASSIFICATION] |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | Annual |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | ${user_config.organisation_name} ([OWNER_NAME_AND_ROLE]) |
+| **Owner** | [OWNER_NAME_AND_ROLE] |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | [DISTRIBUTION_LIST] |
