@@ -23,6 +23,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 - [Upgrading ArcKit](guides/upgrading.md) - Version upgrade instructions
 - [Remote Control](guides/remote-control.md) - Remote architecture governance
 - [Productivity](guides/productivity.md) - Workflow optimization tips
+- [ArcKit at Enterprise Scale](guides/enterprise-scale.md) - Multi-repo, multi-application topology and governance
 
 ### Discovery
 
