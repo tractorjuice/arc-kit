@@ -18,6 +18,17 @@ export const KEYWORDS = new Set([
   'annotation', 'accelerator', 'deaccelerator', 'label',
 ]);
 
+// wardley-beta requires integer label offsets. OWM sources occasionally carry
+// fractional offsets (legacy renderers allowed them); round to the nearest
+// integer so the Mermaid parser accepts them. Returns null if the label
+// string doesn't parse as two numbers.
+function normaliseLabel(labelStr) {
+  if (!labelStr) return null;
+  const m = labelStr.match(/\[\s*(-?\d+(?:\.\d+)?)\s*,\s*(-?\d+(?:\.\d+)?)\s*\]/);
+  if (!m) return null;
+  return `[${Math.round(parseFloat(m[1]))}, ${Math.round(parseFloat(m[2]))}]`;
+}
+
 // Matches the Mermaid wardley-beta NAME_WITH_SPACES terminal verbatim:
 //   [A-Za-z][A-Za-z0-9_()&]*(?:[ \t]+[A-Za-z(][A-Za-z0-9_()&]*)*
 // A name is safe unquoted iff it matches this; anything else (hyphens,
@@ -116,11 +127,13 @@ export function owmToMermaid(owmContent, filename) {
       sourcing[srcMatch[2].trim().toLowerCase()] = srcMatch[1].toLowerCase();
     }
 
-    const compMatch = trimmed.match(/^component\s+(.+?)\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\]/);
+    const compMatch = trimmed.match(/^component\s+(.+?)\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\](.*)$/);
     if (compMatch) {
+      const labelMatch = compMatch[4].match(/\blabel\s+(\[-?[\d.,\s-]+\])/);
       compCoords[compMatch[1].trim()] = {
         vis: parseFloat(compMatch[2]),
         evo: parseFloat(compMatch[3]),
+        label: labelMatch ? labelMatch[1] : null,
       };
     }
 
@@ -164,7 +177,7 @@ export function owmToMermaid(owmContent, filename) {
       if (isPipelineChild.has(cName)) continue;
       if (Math.abs(cCoord.vis - parent.vis) <= 0.05 &&
           cCoord.evo >= range.min - 0.01 && cCoord.evo <= range.max + 0.01) {
-        children.push({ name: cName, evo: cCoord.evo });
+        children.push({ name: cName, evo: cCoord.evo, label: cCoord.label });
       }
     }
 
@@ -217,6 +230,8 @@ export function owmToMermaid(owmContent, filename) {
     }
 
     if (/^anchor\s+/i.test(trimmed)) {
+      // wardley-beta's `anchor` rule doesn't accept a `label` clause; drop any
+      // OWM label on anchors and emit the bare anchor. Components keep them.
       const anchorMatch = trimmed.match(/^anchor\s+(.+?)\s*(\[[\d.,\s]+\])/);
       if (anchorMatch) {
         const qName = quoteName(anchorMatch[1].trim());
@@ -276,12 +291,15 @@ export function owmToMermaid(owmContent, filename) {
     }
 
     if (/^component\s+/i.test(trimmed)) {
-      const compMatch = trimmed.match(/^component\s+(.+?)\s*(\[[\d.,\s]+\])/);
+      const compMatch = trimmed.match(/^component\s+(.+?)\s*(\[[\d.,\s]+\])(.*)$/);
       if (!compMatch) continue;
 
       const compName = compMatch[1].trim();
       const coords = compMatch[2];
+      const rest = compMatch[3];
       const hasInertia = /\binertia\s*$/i.test(trimmed);
+      const rawLabelMatch = rest.match(/\blabel\s+(\[[^\]]+\])/);
+      const label = normaliseLabel(rawLabelMatch && rawLabelMatch[1]);
 
       if (isPipelineChild.has(compName)) continue;
 
@@ -295,6 +313,10 @@ export function owmToMermaid(owmContent, filename) {
         line = `component ${qName} ${coords}`;
       }
 
+      // wardley-beta requires `label` to precede decorators, so append it
+      // before the (build)/(buy)/(outsource)/(inertia) markers.
+      if (label) line += ` label ${label}`;
+
       const decorators = [];
       if (sourcing[compName.toLowerCase()]) {
         decorators.push(`(${sourcing[compName.toLowerCase()]})`);
@@ -307,7 +329,10 @@ export function owmToMermaid(owmContent, filename) {
       if (pipelineChildren[compName] && !inPipelineBlock) {
         mermaidLines.push(`pipeline ${qName} {`);
         for (const child of pipelineChildren[compName]) {
-          mermaidLines.push(`  component ${quoteName(child.name)} [${child.evo}]`);
+          let childLine = `  component ${quoteName(child.name)} [${child.evo}]`;
+          const childLabel = normaliseLabel(child.label);
+          if (childLabel) childLine += ` label ${childLabel}`;
+          mermaidLines.push(childLine);
         }
         mermaidLines.push('}');
       }
