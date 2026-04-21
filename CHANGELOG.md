@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.9.0] - 2026-04-21
+
+### Added
+
+- OWM → Mermaid `wardley-beta` conversion fidelity suite: `tests/mermaid-wardley/test-fidelity.mjs` parses every Wardley map in `swardley/WARDLEY-MAP-REPOSITORY`, converts via `convert.mjs`, re-parses, and reports component / anchor / link retention, `|Δε|`, `|Δν|`, pooled drift distribution. Methodology modelled on `tractorjuice/wardleymap_math_model/skills/wardley-map-workspace/compare_all_25.py`. Current result: 100% component / anchor / link retention, `|Δε|` = 0 exactly across 4,905 matched pairs (#339)
+
+### Fixed
+
+- Wardley converter now handles OWM's hybrid `pipeline X [min, max] { 1-D children }` syntax and `evolve` names containing `/.X`. Real-world parse rate 144/147 → 146/147 (the remaining failure is an upstream source-data typo unfixable at the converter layer) (#340)
+- Wardley command guidance (`/arckit.wardley`, `/arckit.wardley.value-chain`) plus converter adopt **conditional quoting** based on the `wardley-beta` grammar's `NAME_WITH_SPACES` terminal. Quote names that fall outside `[A-Za-z][A-Za-z0-9_()&]*(?:[ \t]+[A-Za-z(][A-Za-z0-9_()&]*)*` — hyphens, dots, slashes, leading digits — or whose first word matches / prefixes a reserved keyword (`labelling`, `marketplace`, `evolved`, `build release cycle`). Previously-unquoted hyphenated names like `Real-Time Data Processing` or `GPT-4 LLM Service` broke rendering because Mermaid's lexer read the `-` as the start of `->` (#341)
+
+### Changed
+
+- Pages-template CDN bumped `mermaid@11.4.1` → `mermaid@11.14.0` across all six `pages-template.html` files (plugin + 5 extensions + `.arckit/templates/`). Mermaid 11.14.0 (2026-04-01) ships the `wardley-beta` diagram type, so generated `docs/index.html` pages now render Wardley maps inline (#337)
+- Test suite `tests/mermaid-wardley/` moves from the `pkg.pr.new/mermaid@7147` pre-release build to official `mermaid@^11.14.0`. No behaviour drift — 18/18 synthetic fixtures + 144/147 real-world maps pass, same as pre-release (#338)
+
+### Companion
+
+- Published [`tractorjuice/wardley-maps-mermaid`](https://github.com/tractorjuice/wardley-maps-mermaid) — a public mirror of `swardley/WARDLEY-MAP-REPOSITORY` with each of the 147 maps converted to Mermaid `wardley-beta` alongside the OWM source. All 147 render cleanly under Mermaid 11.14.0. Includes `tools/convert.mjs` + `tools/regenerate.mjs` for local regeneration. Content licensed CC-BY-SA 4.0 matching upstream
+
 ## [4.8.0] - 2026-04-20
 
 ### Added (Community-contributed)

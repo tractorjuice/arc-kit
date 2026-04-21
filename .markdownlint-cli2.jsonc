@@ -71,6 +71,11 @@
     "docs/articles/**",
     "docs/plans/**",
     "docs/superpowers/plans/**",
-    "docs/superpowers/specs/**"
+    "docs/superpowers/specs/**",
+    "tests/mermaid-wardley/owm-maps/**",
+    "tests/mermaid-wardley/node_modules/**",
+    "tests/mermaid-wardley/output/**",
+    "research/**",
+    ".pytest_cache/**"
   ]
 }

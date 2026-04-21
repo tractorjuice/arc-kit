@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.9.0] - 2026-04-21
+
+### Added
+
+- Mermaid `wardley-beta` rendering now works in generated `docs/index.html` pages — CDN bumped to `mermaid@11.14.0` (2026-04-01 release) which ships the Wardley diagram type as a stable feature (#337)
+
+### Fixed
+
+- `/arckit.wardley` and `/arckit.wardley.value-chain` now emit correctly-quoted names in generated `wardley-beta` blocks using a grammar-driven conditional rule. Hyphenated names like `Real-Time Data Processing` or `GPT-4 LLM Service` previously broke rendering because Mermaid's lexer read the `-` as `->`. Simple multi-word names like `API Gateway` stay unquoted (#341)
+
+### Companion
+
+- [`tractorjuice/wardley-maps-mermaid`](https://github.com/tractorjuice/wardley-maps-mermaid) — public mirror of `swardley/WARDLEY-MAP-REPOSITORY` with 147 OWM-to-Mermaid conversions, all rendering cleanly under Mermaid 11.14.0+
+
 ## [4.8.0] - 2026-04-20
 
 ### Added (Community-contributed)
