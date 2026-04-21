@@ -313,6 +313,7 @@ After generating the OWM code block, generate a Mermaid `wardley-beta` equivalen
 
 - Start with `wardley-beta` keyword (not `style wardley` at end)
 - Add `size [1100, 800]` after title
+- **Wrap every component and anchor name in double quotes** — e.g. `component "Real-Time Data Processing" [0.55, 0.60]`. Unquoted names that contain a hyphen (`-`) are tokenised as arrow (`->`) and break rendering. Quoting all names (including for the left and right sides of link lines like `"Real-Time Data Processing" -> "Event Streaming Platform"`) is the safe default.
 - Wrap note text in double quotes: `note "text" [vis, evo]`
 - Remove `style wardley` line
 - Use ` ```mermaid ` as the code fence language identifier
