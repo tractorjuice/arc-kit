@@ -62,18 +62,18 @@ wardley-beta
 title {map_name}
 size [1100, 800]
 
-anchor "{anchor_component}" [0.95, 0.63]
+anchor {anchor_component} [0.95, 0.63]
 
-component "{Component_Name}" [visibility, evolution] (build|buy|outsource)
-component "{Component_Name}" [visibility, evolution] (buy) (inertia)
-"{Component_Name}" -> "{Dependency_Name}"
+component {Component_Name} [visibility, evolution] (build|buy|outsource)
+component {Component_Name} [visibility, evolution] (buy) (inertia)
+{Component_Name} -> {Dependency_Name}
 
-pipeline "{Pipeline_Parent}" {
+pipeline {Pipeline_Parent} {
   component "{Child_1}" [evolution_1]
   component "{Child_2}" [evolution_2]
 }
 
-evolve "{Component_Name}" {target_evolution}
+evolve {Component_Name} {target_evolution}
 
 note "{note_text}" [visibility, evolution]
 annotations [0.05, 0.05]

@@ -119,22 +119,24 @@ wardley-beta
 title {context_name} Value Chain
 size [1100, 800]
 
-anchor "{UserNeed}" [0.95, 0.63]
+anchor {UserNeed} [0.95, 0.63]
 
-component "{CapabilityA}" [0.70, 0.45]
-component "{CapabilityB}" [0.70, 0.72]
-component "{ComponentC}" [0.42, 0.38]
-component "{ComponentD}" [0.40, 0.65]
-component "{ComponentE}" [0.38, 0.80]
-component "{InfrastructureF}" [0.12, 0.90]
+component {CapabilityA} [0.70, 0.45]
+component {CapabilityB} [0.70, 0.72]
+component {ComponentC} [0.42, 0.38]
+component {ComponentD} [0.40, 0.65]
+component {ComponentE} [0.38, 0.80]
+component {InfrastructureF} [0.12, 0.90]
 
-"{UserNeed}" -> "{CapabilityA}"
-"{UserNeed}" -> "{CapabilityB}"
-"{CapabilityA}" -> "{ComponentC}"
-"{CapabilityA}" -> "{ComponentD}"
-"{CapabilityB}" -> "{ComponentE}"
-"{ComponentC}" -> "{InfrastructureF}"
+{UserNeed} -> {CapabilityA}
+{UserNeed} -> {CapabilityB}
+{CapabilityA} -> {ComponentC}
+{CapabilityA} -> {ComponentD}
+{CapabilityB} -> {ComponentE}
+{ComponentC} -> {InfrastructureF}
 ```
+
+> When substituting placeholders, wrap the replacement in double quotes if it contains any character outside `[A-Za-z0-9_()& ]` (e.g. hyphens, dots, slashes) or starts with a digit. Simple multi-word names stay unquoted.
 
 </details>
 
