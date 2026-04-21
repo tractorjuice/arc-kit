@@ -18,10 +18,42 @@ export const KEYWORDS = new Set([
   'annotation', 'accelerator', 'deaccelerator', 'label',
 ]);
 
+// Matches the Mermaid wardley-beta NAME_WITH_SPACES terminal verbatim:
+//   [A-Za-z][A-Za-z0-9_()&]*(?:[ \t]+[A-Za-z(][A-Za-z0-9_()&]*)*
+// A name is safe unquoted iff it matches this; anything else (hyphens,
+// dots, slashes, digit-start, standalone ampersand between spaces, etc.)
+// must be wrapped in "..." — which the grammar accepts as STRING in every
+// place a name appears.
+const SAFE_NAME = /^[A-Za-z][A-Za-z0-9_()&]*(?:[ \t]+[A-Za-z(][A-Za-z0-9_()&]*)*$/;
+
+// Keywords that shadow grammar terminals. These must be quoted when they
+// appear either (a) as the first *word* of a name (e.g. `build release
+// cycle`) OR (b) as a prefix of the first word followed by letters
+// (e.g. `labelling`, `marketplace`, `evolved`, `building`) — the Mermaid
+// lexer tokenises the keyword greedily in both cases.
+const RESERVED_PREFIXES = [
+  'market', 'build', 'buy', 'outsource', 'inertia', 'pipeline', 'evolve',
+  'anchor', 'component', 'note', 'title', 'size', 'evolution', 'annotation',
+  'annotations', 'accelerator', 'deaccelerator', 'label',
+];
+
+function startsWithReserved(name) {
+  const first = name.split(/\s+/, 1)[0].toLowerCase();
+  for (const kw of RESERVED_PREFIXES) {
+    if (first === kw) return true;
+    if (first.length > kw.length && first.startsWith(kw) && /[a-z]/.test(first[kw.length])) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export function quoteName(name) {
   if (!name) return name;
   if (name.startsWith('"') && name.endsWith('"')) return name;
-  // Always quote — safest approach to avoid keyword collisions
+  if (SAFE_NAME.test(name) && !startsWithReserved(name)) {
+    return name;
+  }
   return `"${name.replace(/"/g, "'")}"`;
 }
 
