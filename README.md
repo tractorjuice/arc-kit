@@ -55,7 +55,15 @@ A comprehensive book-length guide to ArcKit — covering every subsystem (comman
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 68 commands, 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+Then install from the Discover tab.
+
+> **Tip: lighter marketplace clone.** The command above clones the full arc-kit monorepo (~100 MB) because it hosts five other AI-assistant distributions, 147 vendored Wardley maps, and research docs you don't need. To fetch just the plugin's directories, add the marketplace via the CLI with `--sparse`:
+>
+> ```bash
+> claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude
+> ```
+>
+> This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 68 commands, 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
 > **Why v2.1.112?** This version unlocks the `xhigh` effort tier on Claude Opus 4.7 (used by ArcKit's deep-research agents and synthesis commands), enables Auto mode without `--enable-auto-mode`, restores Opus 4.7 availability for Auto mode, and ships read-only bash glob patterns without permission prompts (reduces friction for ArcKit helper scripts). It also carries forward the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
 

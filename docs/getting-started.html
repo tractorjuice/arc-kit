@@ -379,6 +379,8 @@
                     <h2 class="govuk-heading-m app-step__title">Install ArcKit Plugin</h2>
                     <div class="app-code-block">/plugin marketplace add tractorjuice/arc-kit</div>
                     <p class="govuk-body govuk-!-margin-top-3">Then install from the Discover tab. The plugin provides all 68 commands, 9 autonomous research agents, 5 automation hooks, and bundled MCP servers. Updates are automatic via the marketplace.</p>
+                    <p class="govuk-body govuk-!-margin-top-2"><strong>Lighter clone:</strong> to skip the other AI-assistant distributions in the monorepo (~100&nbsp;MB), add the marketplace from your shell with sparse-checkout:</p>
+                    <div class="app-code-block">claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude</div>
                 </div>
 
                 <div class="app-step">
