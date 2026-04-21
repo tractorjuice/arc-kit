@@ -1,6 +1,6 @@
 # Mermaid Wardley-Beta Test Suite
 
-Validates ArcKit's generated Mermaid `wardley-beta` syntax against the real Mermaid parser from [PR #7147](https://github.com/mermaid-js/mermaid/pull/7147).
+Validates ArcKit's generated Mermaid `wardley-beta` syntax against the official Mermaid parser. `wardley-beta` shipped in [mermaid@11.14.0](https://github.com/mermaid-js/mermaid/releases/tag/mermaid%4011.14.0) (2026-04-01), originally landed in [PR #7147](https://github.com/mermaid-js/mermaid/pull/7147).
 
 ## Setup
 
@@ -57,13 +57,13 @@ node test-real-maps.mjs --limit 200 --save-converted --verbose
 
 ## Mermaid Version
 
-Currently uses the pre-release build from PR #7147:
+Pinned to the official release:
 
 ```json
-"mermaid": "https://pkg.pr.new/mermaid@7147"
+"mermaid": "^11.14.0"
 ```
 
-Once the next Mermaid minor release ships (11.14.0+), update to `mermaid@latest`.
+`wardley-beta` shipped natively in 11.14.0 — no pre-release builds required.
 
 ## Troubleshooting
 
@@ -72,5 +72,3 @@ Once the next Mermaid minor release ships (11.14.0+), update to `mermaid@latest`
 ```bash
 sudo apt-get install -y libgbm1 libnss3 libatk-bridge2.0-0 libdrm2 libxkbcommon0 libxcomposite1 libxdamage1 libxrandr2 libgbm-dev
 ```
-
-**pkg.pr.new URL expired**: Switch to `mermaid@next` or `mermaid@latest` if the PR build is no longer available.
