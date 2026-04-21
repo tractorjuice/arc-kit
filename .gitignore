@@ -77,3 +77,7 @@ docs/articles/
 
 # Test output
 tests/*/output/
+
+# Local experiments — not part of the published toolkit
+tools/wardley-lsp/
+tests/mermaid-wardley/
