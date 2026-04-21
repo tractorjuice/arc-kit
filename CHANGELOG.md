@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Wardley converter now handles OWM's hybrid `pipeline X [min, max] { 1-D children }` syntax and `evolve` names containing `/.X`. Real-world parse rate 144/147 → 146/147 (the remaining failure is an upstream source-data typo unfixable at the converter layer) (#340)
 - Wardley command guidance (`/arckit.wardley`, `/arckit.wardley.value-chain`) plus converter adopt **conditional quoting** based on the `wardley-beta` grammar's `NAME_WITH_SPACES` terminal. Quote names that fall outside `[A-Za-z][A-Za-z0-9_()&]*(?:[ \t]+[A-Za-z(][A-Za-z0-9_()&]*)*` — hyphens, dots, slashes, leading digits — or whose first word matches / prefixes a reserved keyword (`labelling`, `marketplace`, `evolved`, `build release cycle`). Previously-unquoted hyphenated names like `Real-Time Data Processing` or `GPT-4 LLM Service` broke rendering because Mermaid's lexer read the `-` as the start of `->` (#341)
+- Wardley converter preserves `label [x, y]` offsets from OWM sources across all three emission sites (top-level components, explicit pipeline-block children, auto-injected pipeline children). Previously every label was silently dropped — 20 lost in `sustainability/introduction example` alone. Respects the three `wardley-beta` grammar rules found along the way: label offsets must be integers (rounded at emission), `anchor` doesn't accept `label` (dropped silently), and `label` must precede decorators on a component line (#344)
 
 ### Changed
 
