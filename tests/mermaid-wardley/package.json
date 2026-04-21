@@ -7,6 +7,8 @@
   "scripts": {
     "validate": "node validate.mjs",
     "render": "node render.mjs",
+    "real-maps": "node test-real-maps.mjs --limit 200",
+    "fidelity": "node test-fidelity.mjs --limit 200",
     "test": "node validate.mjs && node render.mjs"
   },
   "dependencies": {
