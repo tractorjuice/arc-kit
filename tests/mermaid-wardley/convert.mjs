@@ -43,7 +43,8 @@ export function findMapFiles(dir) {
       } else if (entry.isFile()) {
         const name = entry.name;
         if (name === 'LICENSE' || name === '.DS_Store' || name === 'README.md') continue;
-        if (/\.(svg|png|jpg|jpeg|gif|md|txt)$/i.test(name)) continue;
+        // Skip binaries, docs, scripts, and our own generated Mermaid output
+        if (/\.(svg|png|jpg|jpeg|gif|md|txt|mmd|mjs|js|ts|json|ya?ml)$/i.test(name)) continue;
         try {
           const content = readFileSync(full, 'utf8');
           if (content.includes('component ') || content.includes('title ')) {
@@ -69,9 +70,13 @@ export function owmToMermaid(owmContent, filename) {
   const sourcing = {};
   const compCoords = {};
   const pipelineRanges = {};
+  // Pipelines whose range declaration is followed (possibly across a blank
+  // line) by an explicit `{` block. Their children inside `{}` are
+  // authoritative; PASS 1b should not also auto-inject implicit children.
+  const pipelinesWithExplicitBlock = new Set();
 
-  for (const rawLine of lines) {
-    const trimmed = rawLine.trim();
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].trim();
     if (trimmed.startsWith('//')) continue;
 
     const srcMatch = trimmed.match(/^(build|buy|outsource)\s+(.+)/i);
@@ -87,12 +92,25 @@ export function owmToMermaid(owmContent, filename) {
       };
     }
 
-    const pipeMatch = trimmed.match(/^pipeline\s+(.+?)\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\]\s*$/);
+    const pipeMatch = trimmed.match(/^pipeline\s+(.+?)\s*\[\s*([\d.]+)\s*,\s*([\d.]+)\s*\]\s*(\{?)\s*$/);
     if (pipeMatch) {
-      pipelineRanges[pipeMatch[1].trim()] = {
+      const name = pipeMatch[1].trim();
+      pipelineRanges[name] = {
         min: parseFloat(pipeMatch[2]),
         max: parseFloat(pipeMatch[3]),
       };
+      // Explicit block on same line: `pipeline X [a,b] {`
+      if (pipeMatch[4] === '{') {
+        pipelinesWithExplicitBlock.add(name);
+      } else {
+        // Look ahead for a `{` on a following line (skipping blanks/comments)
+        for (let j = i + 1; j < lines.length; j++) {
+          const t = lines[j].trim();
+          if (!t || t.startsWith('//')) continue;
+          if (t === '{' || t.startsWith('{')) pipelinesWithExplicitBlock.add(name);
+          break;
+        }
+      }
     }
   }
 
@@ -101,6 +119,10 @@ export function owmToMermaid(owmContent, filename) {
   const isPipelineChild = new Set();
 
   for (const [pipeName, range] of Object.entries(pipelineRanges)) {
+    // Pipelines with an explicit `{ ... }` block own their children directly;
+    // skip implicit vis/evo proximity detection for those.
+    if (pipelinesWithExplicitBlock.has(pipeName)) continue;
+
     const parent = compCoords[pipeName];
     if (!parent) continue;
 
@@ -171,7 +193,22 @@ export function owmToMermaid(owmContent, filename) {
       continue;
     }
 
-    if (/^pipeline\s+.+\[\s*[\d.]+\s*,\s*[\d.]+\s*\]\s*$/.test(trimmed)) {
+    // OWM `pipeline X [min, max]` with optional trailing `{`. If the pipeline
+    // has an explicit `{ ... }` block (same line or next), open a Mermaid
+    // pipeline block using the parent's name. Otherwise skip — children are
+    // injected via the implicit detection in PASS 1b.
+    const pipeRangeMatch = trimmed.match(/^pipeline\s+(.+?)\s*\[\s*[\d.]+\s*,\s*[\d.]+\s*\]\s*(\{?)\s*$/i);
+    if (pipeRangeMatch) {
+      const name = pipeRangeMatch[1].trim();
+      if (pipelinesWithExplicitBlock.has(name)) {
+        const pName = quoteName(name);
+        if (pipeRangeMatch[2] === '{') {
+          mermaidLines.push(`pipeline ${pName} {`);
+          inPipelineBlock = true;
+        } else {
+          pendingPipelineName = pName;
+        }
+      }
       continue;
     }
 
@@ -247,7 +284,10 @@ export function owmToMermaid(owmContent, filename) {
     }
 
     if (/^evolve\s+/i.test(trimmed)) {
-      const evolveMatch = trimmed.match(/^evolve\s+(.+?)\s+([\d.]+)/i);
+      // Require the position to be a properly-formed number followed by
+      // whitespace or EOL — avoids misparsing names containing ".X" (e.g.
+      // `evolve Lamp / .Net 0.72` would previously capture "." as position).
+      const evolveMatch = trimmed.match(/^evolve\s+(.+?)\s+(\d+(?:\.\d+)?)(?=\s|$)/i);
       if (evolveMatch) {
         const eName = quoteName(evolveMatch[1].trim());
         mermaidLines.push(`evolve ${eName} ${evolveMatch[2]}`);
