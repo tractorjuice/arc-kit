@@ -6,6 +6,7 @@
  *   1. Stage-evolution alignment (Component Inventory tables)
  *   2. Coordinate range validation (all values in [0.00, 1.00])
  *   3. OWM syntax consistency (wardley code block vs Component Inventory)
+ *   4. Mermaid wardley-beta syntax (unquoted bare-digit tokens break rendering)
  *
  * Input (stdin):  JSON { stop_hook_active, ... }
  * Output (stdout): JSON with "decision": "block" and "reason" on failure, or empty on success
@@ -170,6 +171,81 @@ for (const compName of Object.keys(owmVis)) {
   }
 }
 
+// --- Check 4: Mermaid wardley-beta syntax (unquoted bare-digit tokens) ---
+//
+// The wardley-beta parser tokenises bare numeric words (like `2031`, `27001`)
+// as numeric literals, which breaks rendering with errors such as:
+//   "Parse error on line N, column M: Expecting token of type '[' but found '2031'."
+// Any name containing a whitespace-separated pure-digit word MUST be quoted
+// everywhere it appears — component/anchor declarations, both sides of `->`
+// edges, `evolve` targets, and `pipeline` parents.
+
+const mermaidErrors = [];
+let inMermaidBlock = false;
+let inMermaidWardley = false;
+
+function extractNameZones(line) {
+  // component NAME [v, e] (decorators)
+  let m = line.match(/^\s*component\s+(.+?)\s*\[/);
+  if (m) return [m[1]];
+  // anchor NAME [v, e]
+  m = line.match(/^\s*anchor\s+(.+?)\s*\[/);
+  if (m) return [m[1]];
+  // evolve NAME 0.45 (trailing number is the target evolution coord)
+  m = line.match(/^\s*evolve\s+(.+?)\s+[0-9.]+\s*$/);
+  if (m) return [m[1]];
+  // pipeline NAME [v1, v2]? (brackets optional)
+  m = line.match(/^\s*pipeline\s+(.+?)(?:\s*\[|\s*$)/);
+  if (m) return [m[1]];
+  // edge: NAME -> NAME (single arrow, two zones)
+  if (line.includes('->') && !/^\s*(?:component|anchor|evolve|pipeline|note|annotation|annotations|title|size|style)\b/.test(line)) {
+    const parts = line.split('->');
+    if (parts.length === 2) return [parts[0], parts[1]];
+  }
+  return [];
+}
+
+function bareDigitWords(nameZone) {
+  // Strip quoted substrings and decorator groups so we only inspect unquoted words
+  const stripped = nameZone
+    .replace(/"[^"]*"/g, '')
+    .replace(/\([^)]*\)/g, '')
+    .trim();
+  if (!stripped) return [];
+  return stripped.split(/\s+/).filter((w) => /^\d+$/.test(w));
+}
+
+for (let i = 0; i < contentLines.length; i++) {
+  const line = contentLines[i];
+  const trimmed = line.trim();
+
+  if (/^```mermaid\b/.test(trimmed)) {
+    inMermaidBlock = true;
+    inMermaidWardley = false;
+    continue;
+  }
+  if (inMermaidBlock && /^```/.test(trimmed)) {
+    inMermaidBlock = false;
+    inMermaidWardley = false;
+    continue;
+  }
+  if (!inMermaidBlock) continue;
+
+  if (!inMermaidWardley) {
+    if (/^wardley-beta\b/.test(trimmed)) inMermaidWardley = true;
+    continue;
+  }
+
+  for (const zone of extractNameZones(line)) {
+    const bad = bareDigitWords(zone);
+    if (bad.length > 0) {
+      mermaidErrors.push(
+        `- Line ${i + 1}: unquoted name '${zone.trim()}' contains bare numeric word(s) '${bad.join("', '")}' — wrap the whole name in double quotes everywhere it appears (declaration, both sides of '->', 'evolve' targets, 'pipeline' parents)`
+      );
+    }
+  }
+}
+
 // --- Build error report ---
 const reportParts = [];
 
@@ -181,6 +257,9 @@ if (errors.length > 0) {
 }
 if (owmErrors.length > 0) {
   reportParts.push('**OWM Coordinate Mismatches:**\n' + owmErrors.join('\n'));
+}
+if (mermaidErrors.length > 0) {
+  reportParts.push('**Mermaid wardley-beta Syntax Errors (bare numeric tokens break rendering):**\n' + mermaidErrors.join('\n'));
 }
 
 if (reportParts.length > 0) {
