@@ -28,6 +28,19 @@
     <link rel="stylesheet" href="heroes.css">
 
     <style>
+        /*
+         * Font Override for Non-GOV.UK Domains
+         * GDS Transport is licensed only for *.gov.uk — ArcKit is on GitHub Pages.
+         */
+        body,
+        .govuk-template,
+        .govuk-template__body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                         Helvetica, Arial, sans-serif, "Apple Color Emoji",
+                         "Segoe UI Emoji", "Segoe UI Symbol" !important;
+        }
+        [class*="govuk-"] { font-family: inherit; }
+
         /* Nav Bar */
         .app-nav-bar {
             background: #0b0c0c;

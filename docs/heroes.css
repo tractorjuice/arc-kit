@@ -296,10 +296,10 @@
 }
 
 /* ============================================================
-   Variant: Articles  — magenta/plum, editorial diagonal stripes
+   Variant: Articles  — indigo, editorial diagonal stripes
    ============================================================ */
 .app-page-hero--articles {
-    background: linear-gradient(135deg, #912b88 0%, #4c2c92 100%);
+    background: linear-gradient(135deg, #303f9f 0%, #1a237e 100%);
 }
 
 .app-page-hero--articles::before {
