@@ -11,14 +11,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-REUSE-v[VERSION] |
 | **Document Type** | Public Code Reuse Assessment |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [CLASSIFICATION] |
+| **Classification** | ${user_config.default_classification} (fallback: [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]) |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | At project start and on major functional change |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Owner** | ${user_config.organisation_name} ([OWNER_NAME_AND_ROLE]) |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | [DISTRIBUTION_LIST] |

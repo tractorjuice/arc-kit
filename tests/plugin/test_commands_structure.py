@@ -229,3 +229,25 @@ def test_no_trailing_spaces(command):
     assert not offenders, (
         f"{name}: trailing whitespace on lines {offenders[:10]}"
     )
+
+
+def test_targeted_commands_reference_governance_framework():
+    """Core UK-vs-Generic commands must branch on governance_framework."""
+    target_files = [
+        "requirements.md",
+        "sobc.md",
+        "service-assessment.md",
+        "tcop.md",
+        "secure.md",
+    ]
+
+    for name in target_files:
+        path = os.path.join(COMMANDS_DIR, name)
+        with open(path, "r", encoding="utf-8") as f:
+            body = f.read()
+        assert "${user_config.governance_framework}" in body, (
+            f"{name}: missing ${'{user_config.governance_framework}'} mode selector"
+        )
+        assert "If mode is `Generic`" in body, (
+            f"{name}: missing Generic-mode behavior guidance"
+        )

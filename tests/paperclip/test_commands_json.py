@@ -2,6 +2,7 @@
 
 import json
 import os
+import glob
 import pytest
 
 COMMANDS_JSON_PATH = os.path.join(
@@ -24,7 +25,13 @@ def test_commands_is_list(commands):
 
 
 def test_commands_count(commands):
-    assert len(commands) == 87, f"Expected 87 commands, got {len(commands)}"
+    source_commands = glob.glob(
+        os.path.join(
+            os.path.dirname(__file__), "..", "..", "arckit-claude", "commands", "*.md"
+        )
+    )
+    expected = len(source_commands)
+    assert len(commands) == expected, f"Expected {expected} commands, got {len(commands)}"
 
 
 def test_every_entry_has_required_fields(commands):
@@ -62,6 +69,17 @@ def test_no_unrewritten_plugin_root_paths(commands):
         if cmd["template"]:
             assert "${CLAUDE_PLUGIN_ROOT}" not in cmd["template"], (
                 f"{cmd['name']} still has ${{CLAUDE_PLUGIN_ROOT}} in template"
+            )
+
+
+def test_no_unrewritten_user_config_placeholders(commands):
+    for cmd in commands:
+        assert "${user_config." not in cmd["prompt"], (
+            f"{cmd['name']} still has Claude-only user_config placeholder in prompt"
+        )
+        if cmd["template"]:
+            assert "${user_config." not in cmd["template"], (
+                f"{cmd['name']} still has Claude-only user_config placeholder in template"
             )
 
 

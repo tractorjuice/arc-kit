@@ -11,14 +11,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-AIACT-v[VERSION] |
 | **Document Type** | EU AI Act Compliance Assessment |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [CLASSIFICATION] |
+| **Classification** | ${default_classification} (fallback: [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]) |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | Annual |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Owner** | ${organisation_name} ([OWNER_NAME_AND_ROLE]) |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | [DISTRIBUTION_LIST] |

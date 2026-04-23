@@ -11,14 +11,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-NIS2-v[VERSION] |
 | **Document Type** | NIS2 Compliance Assessment |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [OFFICIAL / OFFICIAL-SENSITIVE] |
+| **Classification** | ${default_classification} (fallback: [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]) |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | Annual |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Owner** | ${organisation_name} ([OWNER_NAME_AND_ROLE]) |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | [DISTRIBUTION_LIST] |

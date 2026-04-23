@@ -79,3 +79,29 @@ def test_plugin_and_cli_templates_are_in_sync():
     if only_in_cli:
         messages.append(f"In .arckit/templates/ but not arckit-claude/templates/: {sorted(only_in_cli)}")
     assert not messages, "\n".join(messages)
+
+
+def test_plugin_templates_use_user_config_defaults():
+    """Plugin templates should reference Claude userConfig placeholders."""
+    for path in sorted(glob.glob(os.path.join(PLUGIN_TEMPLATES_DIR, "*.md"))):
+        with open(path, "r", encoding="utf-8") as f:
+            body = f.read()
+        assert "${user_config.default_classification}" in body, (
+            f"{os.path.basename(path)} missing ${'{user_config.default_classification}'}"
+        )
+        assert "${user_config.organisation_name}" in body, (
+            f"{os.path.basename(path)} missing ${'{user_config.organisation_name}'}"
+        )
+
+
+def test_cli_templates_use_env_style_defaults():
+    """CLI templates should use non-Claude env-style placeholders."""
+    for path in sorted(glob.glob(os.path.join(CLI_TEMPLATES_DIR, "*.md"))):
+        with open(path, "r", encoding="utf-8") as f:
+            body = f.read()
+        assert "${default_classification}" in body, (
+            f"{os.path.basename(path)} missing ${'{default_classification}'}"
+        )
+        assert "${organisation_name}" in body, (
+            f"{os.path.basename(path)} missing ${'{organisation_name}'}"
+        )

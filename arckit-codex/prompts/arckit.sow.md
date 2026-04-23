@@ -194,8 +194,8 @@ Before generating the document ID, check if a previous version exists:
 **User-provided fields** (extract from project metadata or user input):
 
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
-- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
-- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+- `[OWNER_NAME_AND_ROLE]` → Default to `${organisation_name}`; if unavailable, prompt user
+- `[CLASSIFICATION]` → Default to `${default_classification}`; if unavailable use `OFFICIAL` for UK Gov mode and `PUBLIC` for Generic mode
 
 **Calculated fields**:
 

@@ -221,12 +221,12 @@ Before completing the document, populate document information fields:
 - `[DOCUMENT_TYPE_NAME]` → Document purpose
 - `ARC-[PROJECT_ID]-DATA-v[VERSION]` → Generated document ID
 - `[STATUS]` → "DRAFT" for new documents
-- `[CLASSIFICATION]` → Default to "OFFICIAL" (UK Gov) or "PUBLIC"
+- `[CLASSIFICATION]` → Default to `${default_classification}`; if unavailable use `OFFICIAL` for UK Gov mode and `PUBLIC` for Generic mode
 
 ### User-provided fields
 
 - `[PROJECT_NAME]` → Full project name
-- `[OWNER_NAME_AND_ROLE]` → Document owner
+- `[OWNER_NAME_AND_ROLE]` → Default to `${organisation_name}`; if unavailable, prompt user
 
 ### Revision History
 

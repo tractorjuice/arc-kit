@@ -11,14 +11,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-PSSI-v[VERSION] |
 | **Document Type** | Information System Security Policy (PSSI) |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [CLASSIFICATION] |
+| **Classification** | ${default_classification} (fallback: [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]) |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | Every 3 years or on major change |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Owner** | ${organisation_name} ([OWNER_NAME_AND_ROLE]) |
 | **RSSI** | [NAME — Responsable de la Sécurité des SI] |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [Highest authority — Minister / Secretary General / Director General] |

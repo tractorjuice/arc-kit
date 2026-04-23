@@ -11,14 +11,14 @@
 | **Document ID** | ARC-[PROJECT_ID]-CARTO-v[VERSION] |
 | **Document Type** | ANSSI Information System Cartography |
 | **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [CLASSIFICATION] |
+| **Classification** | ${default_classification} (fallback: [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]) |
 | **Status** | DRAFT |
 | **Version** | [VERSION] |
 | **Created Date** | [YYYY-MM-DD] |
 | **Last Modified** | [YYYY-MM-DD] |
 | **Review Cycle** | Annual or on major architecture change |
 | **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
+| **Owner** | ${organisation_name} ([OWNER_NAME_AND_ROLE]) |
 | **Reviewed By** | [PENDING] |
 | **Approved By** | [PENDING] |
 | **Distribution** | [RESTRICTED — cartography is sensitive] |
