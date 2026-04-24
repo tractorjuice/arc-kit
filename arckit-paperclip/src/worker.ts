@@ -6,9 +6,10 @@ const plugin = definePlugin({
   async setup(ctx) {
     registerCommandTools(ctx);
     registerUtilityTools(ctx);
+    ctx.logger.info("ArcKit plugin setup complete");
   },
   async onHealth() {
-    return { status: "ok" };
+    return { status: "ok", message: "ArcKit plugin ready" };
   },
 });
 

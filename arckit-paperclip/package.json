@@ -1,7 +1,7 @@
 {
   "name": "@tractorjuice/arckit-paperclip",
   "version": "4.9.2",
-  "description": "ArcKit Enterprise Architecture Governance plugin for Paperclip",
+  "description": "ArcKit Enterprise Architecture Governance plugin for Paperclip — 68 commands for generating architecture artifacts",
   "type": "module",
   "main": "dist/worker.js",
   "types": "dist/worker.d.ts",
@@ -10,19 +10,19 @@
     "worker": "./dist/worker.js"
   },
   "scripts": {
-    "build": "tsc && cp src/data/commands.json dist/data/commands.json",
+    "build": "tsc && mkdir -p dist/data && cp src/data/commands.json dist/data/commands.json",
+    "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
-    "@paperclipai/plugin-sdk": "latest"
+    "@paperclipai/plugin-sdk": "^2026.416.0"
   },
   "devDependencies": {
-    "@types/node": "^25.5.0",
-    "typescript": "^5.4.0"
+    "@types/node": "^24.6.0",
+    "typescript": "^5.7.3"
   },
   "files": [
     "dist/",
-    "scripts/",
     "templates/",
     "references/"
   ],

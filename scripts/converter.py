@@ -565,18 +565,6 @@ def strip_claude_only_skill_fields(skills_dir):
                 f.write(rebuilt)
 
 
-def copy_paperclip_files(plugin_dir, paperclip_dir):
-    """Copy bash scripts to Paperclip extension for utility tools."""
-    src = os.path.join(plugin_dir, "scripts", "bash")
-    dst = os.path.join(paperclip_dir, "scripts", "bash")
-    if os.path.isdir(src):
-        if os.path.isdir(dst):
-            shutil.rmtree(dst)
-        shutil.copytree(src, dst)
-        file_count = sum(len(files) for _, _, files in os.walk(dst))
-        print(f"  Copied: {src} -> {dst} ({file_count} files)")
-
-
 def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
     """Generate config.toml for Codex extension with MCP servers and agent roles."""
     lines = [
@@ -1124,10 +1112,6 @@ if __name__ == "__main__":
     print()
     print("Generating Copilot instructions...")
     generate_copilot_instructions("arckit-copilot/copilot-instructions.md")
-
-    print()
-    print("Copying Paperclip utility scripts...")
-    copy_paperclip_files(plugin_dir, "arckit-paperclip")
 
     print()
     total = sum(counts.values())
