@@ -10,7 +10,7 @@ This guide covers installing the ArcKit plugin, configuring MCP servers, and com
 
 ### Prerequisites
 
-- **Claude Code** v2.1.112 or later (or **Claude Cowork** desktop app)
+- **Claude Code** v2.1.117 or later (or **Claude Cowork** desktop app)
 - **Bash** shell (for helper scripts)
 
 ### Optional: Long-session prompt cache (Claude Code v2.1.108+)

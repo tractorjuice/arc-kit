@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Documented minimum Claude Code version bumped from v2.1.112 to **v2.1.117**. The v2.1.117 release fixes Opus 4.7's `/context` calculation to use the model's native 1M window (was 200K, causing ArcKit's long deep-research and synthesis sessions to autocompact prematurely) and loads agent frontmatter `mcpServers` for `--agent` sessions (lets research agents declare their own MCP surface). Also pulls in the v2.1.116 `gh` rate-limit hint surfacing (benefits 10 research agents and govreposcrape callers), faster MCP startup with multiple stdio servers, and the WebFetch hang fix on very large HTML pages. Updated: `arckit-claude/hooks/version-check.mjs` (`MIN_CLAUDE_CODE_VERSION`), README "Why" blocks, and `mcp-servers.md` prerequisites in plugin + 5 extension dirs (#215)
+
 ## [4.9.1] - 2026-04-22
 
 ### Fixed

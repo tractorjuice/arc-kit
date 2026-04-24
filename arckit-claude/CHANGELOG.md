@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Documented minimum Claude Code version bumped from v2.1.112 to **v2.1.117**. `version-check.mjs` SessionStart hook updated (`MIN_CLAUDE_CODE_VERSION = '2.1.117'`); warning copy now lists the Opus 4.7 `/context` size fix (1M instead of 200K — long research sessions no longer autocompact early) and `--agent` `mcpServers` loading as the headline v2.1.117 reasons. `arckit-claude/README.md` and `arckit-claude/docs/guides/mcp-servers.md` updated to match (#215)
+
 ## [4.9.1] - 2026-04-22
 
 ### Fixed
