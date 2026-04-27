@@ -478,6 +478,29 @@
             font-size: 2.25rem;
         }
 
+        /* HTML deck artifacts (e.g. ARC-001-DECK-v1.0.html) */
+        .app-deck-newtab {
+            display: inline-block;
+            margin-top: 0.75rem;
+            font-size: 0.875rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .app-deck-newtab:hover {
+            text-decoration: underline;
+        }
+
+        .app-deck-frame {
+            display: block;
+            width: 100%;
+            height: 80vh;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background: #fff;
+        }
+
         /* Loading State */
         .app-loading {
             display: flex;
@@ -1874,7 +1897,7 @@
         }
 
         function extractTitle(path) {
-            const filename = path.split('/').pop().replace('.md', '');
+            const filename = path.split('/').pop().replace(/\.(md|html)$/i, '');
             return filename
                 .replace(/-/g, ' ')
                 .replace(/\b\w/g, l => l.toUpperCase());
@@ -3988,6 +4011,14 @@
             // Hide TOC while loading
             toc.style.display = 'none';
 
+            // HTML artifacts (e.g. ARC-001-DECK-v1.0.html, AntV Infographic output) —
+            // mount in an iframe rather than parsing as markdown. Skips TOC, mermaid,
+            // PlantUML, and link-rewriting which only apply to markdown.
+            if (path.endsWith('.html')) {
+                loadHtmlArtifact(path, content);
+                return;
+            }
+
             // Show loading
             content.innerHTML = `
                 <div class="app-loading">
@@ -4122,6 +4153,42 @@
 
                 content.replaceChildren(header, notice);
             }
+        }
+
+        // Render an HTML artifact (e.g. DECK files) inside an iframe.
+        // Built with safe DOM methods — no innerHTML, no markdown parsing.
+        function loadHtmlArtifact(path, content) {
+            const title = extractTitle(path);
+            const breadcrumbText = path.split('/').slice(0, -1).join(' / ');
+            const src = getRawUrl(path);
+
+            const header = document.createElement('div');
+            header.className = 'app-doc-header';
+            const breadcrumb = document.createElement('div');
+            breadcrumb.className = 'app-doc-breadcrumb';
+            breadcrumb.textContent = breadcrumbText;
+            const titleEl = document.createElement('h1');
+            titleEl.className = 'app-doc-title';
+            titleEl.textContent = title;
+            const newTab = document.createElement('a');
+            newTab.className = 'app-deck-newtab';
+            newTab.href = src;
+            newTab.target = '_blank';
+            newTab.rel = 'noopener noreferrer';
+            newTab.textContent = 'Open in new tab ↗';
+            header.appendChild(breadcrumb);
+            header.appendChild(titleEl);
+            header.appendChild(newTab);
+
+            const frame = document.createElement('iframe');
+            frame.className = 'app-deck-frame';
+            frame.src = src;
+            frame.title = title;
+            frame.setAttribute('allowfullscreen', '');
+            frame.setAttribute('loading', 'lazy');
+
+            content.replaceChildren(header, frame);
+            document.getElementById('main-content').scrollTo(0, 0);
         }
 
         // ============================================

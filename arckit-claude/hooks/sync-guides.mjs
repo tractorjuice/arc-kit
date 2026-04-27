@@ -90,6 +90,19 @@ const DOC_TYPE_META = Object.fromEntries(
   Object.entries(DOC_TYPES).map(([code, { name, category }]) => [code, { category, title: name }])
 );
 
+// Per-type expected file extension (default '.md'). Types declaring a custom
+// extension in DOC_TYPES (e.g. 'DECK' → '.html') override the default.
+const EXT_BY_TYPE = Object.fromEntries(
+  Object.entries(DOC_TYPES).map(([code, meta]) => [code, meta.extension || '.md'])
+);
+const VALID_EXTS = new Set(Object.values(EXT_BY_TYPE));
+function hasArcExt(filename) {
+  for (const ext of VALID_EXTS) {
+    if (filename.endsWith(ext)) return true;
+  }
+  return false;
+}
+
 const GUIDE_CATEGORIES = {
   // Getting Started
   'init': 'Getting Started', 'start': 'Getting Started', 'upgrading': 'Getting Started',
@@ -179,33 +192,42 @@ const ROLE_COMMAND_COUNTS = {
 
 // ── Doc type extraction from filename ──
 
-// Match compound types first (SECD-MOD, PRIN-COMP), then simple types
+// Match compound types first (SECD-MOD, PRIN-COMP), then simple types.
+// Returns null if the file's extension does not match the type's registered
+// extension (e.g. ARC-001-DECK-v1.0.md is rejected — DECK requires .html).
 function extractDocType(filename) {
-  // ARC-001-SECD-MOD-v1.0.md → SECD-MOD
+  // ARC-001-SECD-MOD-v1.0.md  → SECD-MOD
   // ARC-001-PRIN-COMP-v1.0.md → PRIN-COMP
-  // ARC-001-REQ-v1.0.md → REQ
-  // ARC-001-ADR-001-v1.0.md → ADR
-  const m = filename.match(/^ARC-\d{3}-(.+)-v\d+(\.\d+)?\.md$/);
+  // ARC-001-REQ-v1.0.md       → REQ
+  // ARC-001-ADR-001-v1.0.md   → ADR
+  // ARC-001-DECK-v1.0.html    → DECK
+  const m = filename.match(/^ARC-\d{3}-(.+)-v\d+(\.\d+)?\.([a-z0-9]+)$/i);
   if (!m) return null;
-  let rest = m[1]; // e.g. "SECD-MOD", "REQ", "ADR-001"
+  const fileExt = `.${m[3].toLowerCase()}`;
+  if (!VALID_EXTS.has(fileExt)) return null;
+  let rest = m[1];
+
+  const matchesExt = (code) => (EXT_BY_TYPE[code] || '.md') === fileExt;
 
   // Try compound types first (longest match)
   for (const code of Object.keys(DOC_TYPE_META)) {
     if (code.includes('-') && rest.startsWith(code)) {
-      return code;
+      return matchesExt(code) ? code : null;
     }
   }
 
   // Strip trailing -NNN for multi-instance types
   rest = rest.replace(/-\d{3}$/, '');
 
-  if (DOC_TYPE_META[rest]) return rest;
-  return rest; // unknown type, return as-is
+  if (DOC_TYPE_META[rest]) return matchesExt(rest) ? rest : null;
+  // Unknown type — accept only legacy markdown files
+  return fileExt === '.md' ? rest : null;
 }
 
 function extractDocId(filename) {
-  // ARC-001-REQ-v1.0.md → ARC-001-REQ-v1.0
-  return filename.replace(/\.md$/, '');
+  // ARC-001-REQ-v1.0.md  → ARC-001-REQ-v1.0
+  // ARC-001-DECK-v1.0.html → ARC-001-DECK-v1.0
+  return filename.replace(/\.[a-z0-9]+$/i, '');
 }
 
 // ── Manifest building ──
@@ -262,22 +284,24 @@ function scanGlobalDocs(repoRoot) {
 
   if (!isDir(globalDir)) return { global, globalExternal, globalPolicies };
 
-  // Global ARC-*.md files (root level)
+  // Global ARC-* files (root level) — accepts any extension registered in DOC_TYPES
   for (const f of listDir(globalDir)) {
     const fp = join(globalDir, f);
-    if (isFile(fp) && f.startsWith('ARC-') && f.endsWith('.md')) {
+    if (isFile(fp) && f.startsWith('ARC-') && hasArcExt(f)) {
       const typeCode = extractDocType(f);
+      if (!typeCode) continue;
       const meta = DOC_TYPE_META[typeCode] || { category: 'Other', title: typeCode };
       global.push({
         path: `projects/000-global/${f}`,
         title: meta.title,
         category: meta.category,
         documentId: extractDocId(f),
+        extension: EXT_BY_TYPE[typeCode] || '.md',
       });
     }
   }
 
-  // Global ARC-*.md files in subdirectories (research/, diagrams/, decisions/, etc.)
+  // Global ARC-* files in subdirectories (research/, diagrams/, decisions/, etc.)
   const subdirSet = new Set(Object.values(SUBDIR_MAP));
   subdirSet.add('reviews');
   for (const dirName of subdirSet) {
@@ -285,15 +309,19 @@ function scanGlobalDocs(repoRoot) {
     if (!isDir(subDir)) continue;
     for (const f of listDir(subDir)) {
       const fp = join(subDir, f);
-      if (!isFile(fp) || !f.startsWith('ARC-') || !f.endsWith('.md')) continue;
-      const heading = extractFirstHeading(fp);
+      if (!isFile(fp) || !f.startsWith('ARC-') || !hasArcExt(f)) continue;
       const typeCode = extractDocType(f);
+      if (!typeCode) continue;
       const meta = DOC_TYPE_META[typeCode] || { category: 'Other', title: typeCode };
+      const ext = EXT_BY_TYPE[typeCode] || '.md';
+      // Only markdown artifacts have an extractable H1 heading
+      const heading = ext === '.md' ? extractFirstHeading(fp) : null;
       global.push({
         path: `projects/000-global/${dirName}/${f}`,
         title: heading || meta.title,
         category: meta.category,
         documentId: extractDocId(f),
+        extension: ext,
       });
     }
   }
@@ -360,17 +388,19 @@ function scanProject(repoRoot, projectName) {
     external: [],
   };
 
-  // Core documents in project root
+  // Core documents in project root — accepts any extension registered in DOC_TYPES
   for (const f of listDir(projectDir)) {
     const fp = join(projectDir, f);
-    if (!isFile(fp) || !f.startsWith('ARC-') || !f.endsWith('.md')) continue;
+    if (!isFile(fp) || !f.startsWith('ARC-') || !hasArcExt(f)) continue;
     const typeCode = extractDocType(f);
+    if (!typeCode) continue;
     const meta = DOC_TYPE_META[typeCode] || { category: 'Other', title: typeCode };
     project.documents.push({
       path: `${projectPath}/${f}`,
       title: meta.title,
       category: meta.category,
       documentId: extractDocId(f),
+      extension: EXT_BY_TYPE[typeCode] || '.md',
     });
   }
 
@@ -387,15 +417,18 @@ function scanProject(repoRoot, projectName) {
     if (!isDir(subDir)) continue;
     for (const f of listDir(subDir)) {
       const fp = join(subDir, f);
-      if (!isFile(fp) || !f.startsWith('ARC-') || !f.endsWith('.md')) continue;
-      // For multi-instance types, read first heading for title
-      const heading = extractFirstHeading(fp);
+      if (!isFile(fp) || !f.startsWith('ARC-') || !hasArcExt(f)) continue;
       const typeCode = extractDocType(f);
+      if (!typeCode) continue;
       const meta = DOC_TYPE_META[typeCode] || { category: 'Other', title: typeCode };
+      const ext = EXT_BY_TYPE[typeCode] || '.md';
+      // For multi-instance markdown types, read first heading for title
+      const heading = ext === '.md' ? extractFirstHeading(fp) : null;
       project[key].push({
         path: `${projectPath}/${dirName}/${f}`,
         title: heading || meta.title,
         documentId: extractDocId(f),
+        extension: ext,
       });
     }
   }

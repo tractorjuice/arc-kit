@@ -154,6 +154,7 @@ projects/
 │   ├── ARC-001-AIPB-v1.0.md     # AI Playbook Assessment
 │   ├── ARC-001-ATRS-v1.0.md     # ATRS Record
 │   ├── ARC-001-PRIN-COMP-v1.0.md # Principles Compliance
+│   ├── ARC-001-DECK-v1.0.html    # Executive Deck (HTML — e.g. AntV Infographic, Reveal.js)
 │   │
 │   ├── # Multi-instance Documents (subdirectories)
 │   ├── diagrams/
@@ -256,6 +257,8 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | GLND | `ARC-*-GLND-*.md` | Government Landscape Analysis |
 | **Reporting** | | | |
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
+| | PRES | `ARC-*-PRES-*.md` | Presentation (MARP) |
+| | DECK | `ARC-*-DECK-*.html` | Executive Deck (HTML) |
 | **Compliance (Community-contributed — EU)** | | | |
 | | RGPD | `ARC-*-RGPD-*.md` | GDPR Compliance Assessment |
 | | NIS2 | `ARC-*-NIS2-*.md` | NIS2 Compliance Assessment |
