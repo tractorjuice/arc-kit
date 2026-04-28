@@ -4,7 +4,7 @@
  *
  * Auto-approves permission requests for the read-only MCP documentation tools
  * bundled with ArcKit (AWS Knowledge, Microsoft Learn, Google Developer Knowledge,
- * DataCommons). Non-MCP tools fall through to the normal permission dialog.
+ * DataCommons, govreposcrape). Non-MCP tools fall through to the normal permission dialog.
  *
  * Hook Type: PermissionRequest
  * Input (stdin):  JSON { tool_name, ... }
@@ -20,6 +20,7 @@ const ALLOWED_PREFIXES = [
   'mcp__plugin_microsoft-docs_microsoft-learn__',
   'mcp__google-developer-knowledge__',
   'mcp__datacommons-mcp__',
+  'mcp__govreposcrape__',
 ];
 
 let raw = '';
