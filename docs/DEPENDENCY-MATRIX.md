@@ -374,11 +374,18 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 1.6.0
 - **Matrix Date**: 2026-04-19
-- **Commands Documented**: 82
+- **Commands Documented**: 84
 - **Matrix Rows**: 58 (existing) + 18 EU/FR commands in separate section below (see Changelog 2026-04-19)
-- **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.impact`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
+- **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.impact`, `/arckit.navigator`, `/arckit.graph-report`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-04-28 - Graph-aware diagnostic commands (#359)
+
+- **Added**: `/arckit.navigator` — project-level GPS. Read-only diagnostic. No dependencies, no outputs consumed by other commands. Listed in the utility/diagnostic exclusion note above; not added to the matrix proper.
+- **Added**: `/arckit.graph-report` — multi-project governance metrics dashboard. Read-only diagnostic. No dependencies, no outputs consumed by other commands. Listed in the utility/diagnostic exclusion note above; not added to the matrix proper.
+- **Updated**: Commands Documented count from 82 to 84.
+- **Note**: Both commands are backed by the consolidated `graph-inject.mjs` hook (#162) which injects pre-computed graph context for read-only commands. They consume *every* artifact in a project, but transitively via the graph — they don't depend on any specific producing command.
 
 ### 2026-03-16 - Wardley Mapping Suite
 
