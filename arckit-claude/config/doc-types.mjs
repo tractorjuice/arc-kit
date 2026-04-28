@@ -13,6 +13,15 @@
  *
  * NOTE: scripts/bash/generate-document-id.sh has its own MULTI_INSTANCE_TYPES
  * list (bash, 10 entries). Keep it in sync manually — low drift risk.
+ *
+ * Schema per entry:
+ *   name:      Human-readable display name shown on the dashboard sidebar.
+ *   category:  Group used for KPI charts and the "Known artifact types" table.
+ *   extension: Optional file extension (default '.md'). Set to '.html' for
+ *              types produced as standalone HTML (e.g. AntV Infographic decks,
+ *              Reveal.js exports). The /arckit.pages scanner enforces the
+ *              extension — `ARC-001-DECK-v1.0.md` and `ARC-001-REQ-v1.0.html`
+ *              are both rejected as type/extension mismatches.
  */
 
 // All valid ArcKit document type codes with display name and category.
@@ -48,6 +57,7 @@ export const DOC_TYPES = {
   'PRIN-COMP': { name: 'Principles Compliance',            category: 'Governance' },
   'CONF':      { name: 'Conformance Assessment',           category: 'Governance' },
   'PRES':      { name: 'Presentation',                     category: 'Reporting' },
+  'DECK':      { name: 'Executive Deck',                    category: 'Reporting', extension: '.html' },
   'ANAL':      { name: 'Analysis Report',                  category: 'Governance' },
   'GAPS':      { name: 'Gap Analysis',                     category: 'Governance' },
   // Compliance

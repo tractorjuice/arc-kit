@@ -32,13 +32,13 @@ claude --plugin-dir /path/to/arc-kit/arckit-claude
 
 ## Prerequisites
 
-- **Claude Code** v2.1.112 or later (recommended minimum)
+- **Claude Code** v2.1.117 or later (recommended minimum)
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.112?** This version unlocks the `xhigh` effort tier on Claude Opus 4.7 (used by ArcKit's deep-research agents and synthesis commands), enables Auto mode without `--enable-auto-mode`, restores Opus 4.7 availability for Auto mode, and ships read-only bash glob patterns without permission prompts (reduces friction for ArcKit helper scripts). It also carries forward the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
+> **Why v2.1.117?** This version corrects Opus 4.7's `/context` calculation to use the model's native 1M window instead of 200K, so ArcKit's long deep-research and synthesis sessions no longer autocompact prematurely. It also loads agent frontmatter `mcpServers` for `--agent` sessions (lets research agents declare their own MCP surface), surfaces `gh` rate-limit hints inline (benefits the 10 research agents and govreposcrape callers), and fixes WebFetch hangs on very large HTML pages. Carries forward the v2.1.111+ unlocks: Opus 4.7 `xhigh` effort tier (used by deep-research agents), Auto mode without `--enable-auto-mode`, read-only bash glob patterns without permission prompts; and the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
 
 ## Quick Start
 

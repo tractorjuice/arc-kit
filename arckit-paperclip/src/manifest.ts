@@ -1,6 +1,6 @@
+import type { PaperclipPluginManifestV1 } from "@paperclipai/plugin-sdk";
 import commands from "./data/commands.json" with { type: "json" };
 import { CommandEntry } from "./types.js";
-// Read version from package.json at build time
 import pkg from "../package.json" with { type: "json" };
 
 const typedCommands: CommandEntry[] = commands as CommandEntry[];
@@ -33,6 +33,10 @@ const utilityTools = [
           type: "string" as const,
           description: "Project name (will be slugified)",
         },
+        force: {
+          type: "boolean" as const,
+          description: "Skip principles prerequisite check",
+        },
       },
       required: ["name"],
     },
@@ -55,6 +59,14 @@ const utilityTools = [
         version: {
           type: "string" as const,
           description: "Version number (default: 1.0)",
+        },
+        projectDir: {
+          type: "string" as const,
+          description: "Project directory for multi-instance types (ADR, DIAG, etc.) to auto-detect next sequence number",
+        },
+        filename: {
+          type: "boolean" as const,
+          description: "Append .md extension (default: true)",
         },
       },
       required: ["projectId", "docType"],
@@ -87,7 +99,7 @@ const utilityTools = [
   {
     name: "arckit-check",
     displayName: "arckit-check",
-    description: "Check that ArcKit plugin files are present and readable",
+    description: "Check that ArcKit plugin data files are present and readable",
     parametersSchema: {
       type: "object" as const,
       properties: {},
@@ -95,18 +107,20 @@ const utilityTools = [
   },
 ];
 
-export const manifest = {
+const manifest: PaperclipPluginManifestV1 = {
   id: "arckit",
   apiVersion: 1,
   version: pkg.version,
   displayName: "ArcKit",
   description:
-    "Enterprise Architecture Governance & Vendor Procurement Toolkit — 67 commands for generating architecture artifacts",
+    "Enterprise Architecture Governance & Vendor Procurement Toolkit — 68 commands for generating architecture artifacts",
   author: "tractorjuice",
   categories: ["workspace", "automation"],
-  capabilities: ["process.spawn", "issues.read"],
+  capabilities: ["agent.tools.register"],
   entrypoints: {
     worker: "./dist/worker.js",
   },
   tools: [...commandTools, ...utilityTools],
 };
+
+export default manifest;

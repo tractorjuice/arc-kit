@@ -11,6 +11,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added `arckit-claude/docs/guides/custom-commands.md` — authoring guide for contributors adding new `/arckit.*` commands. Covers the converter fan-out from the plugin source to six target formats, frontmatter reference, the `$ARGUMENTS` placeholder rewriting table, template-handling differences between Paperclip (embedded) and other targets (verbatim copy), a worked `/arckit.sla` example, the commands/skills/agents/hooks decision table, and a testing checklist. Indexed in `docs/README.md` under a new Contributing subsection (#111)
 
+### Fixed
+
+- `scripts/converter.py` no longer recreates `arckit-paperclip/scripts/bash` and `arckit-paperclip/scripts/python` on every run. PR #353 deleted these script directories in favor of the TS-native `src/lib/arckit.ts`, but the converter's `copy_extension_files` loop kept blindly copying them back. New `copy_scripts_to_extension` flag (defaults `True`) on `AGENT_CONFIG` is set to `False` for paperclip; other extensions are unaffected (#356)
+
+## [4.9.3] - 2026-04-28
+
+### Added
+
+- `/arckit.pages` dashboard now surfaces HTML deck artifacts (e.g. `ARC-001-DECK-v1.0.html`) alongside markdown documents in project artifact lists. New `DECK` doc-type code registered in `arckit-claude/config/doc-types.mjs` and the `sync-guides` hook (#354)
+
+### Changed
+
+- `arckit-paperclip` plugin restructured to align with the Paperclip TS plugin authoring-guide spec. Helper bash and python scripts replaced by `src/lib/arckit.ts` library; `manifest.ts`, `command-tools.ts`, `utility-tools.ts`, and `worker.ts` simplified accordingly. Net `-2,507` LOC across the plugin, removes script-execution surface, unblocks future TS-native tool additions (#353)
+- `arckit-claude/.claude-plugin/plugin.json` declares `"$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json"` for editor autocomplete and IDE-side validation. Recognised by `claude plugin validate` since Claude Code v2.1.120; forward-compatible because Claude Code ignores `$schema` at load time, so no minimum-version bump (#215, #355)
+
+## [4.9.2] - 2026-04-24
+
+### Changed
+
+- Documented minimum Claude Code version bumped from v2.1.112 to **v2.1.117**. The v2.1.117 release fixes Opus 4.7's `/context` calculation to use the model's native 1M window (was 200K, causing ArcKit's long deep-research and synthesis sessions to autocompact prematurely) and loads agent frontmatter `mcpServers` for `--agent` sessions (lets research agents declare their own MCP surface). Also pulls in the v2.1.116 `gh` rate-limit hint surfacing (benefits 10 research agents and govreposcrape callers), faster MCP startup with multiple stdio servers, and the WebFetch hang fix on very large HTML pages. Updated: `arckit-claude/hooks/version-check.mjs` (`MIN_CLAUDE_CODE_VERSION`), README "Why" blocks, and `mcp-servers.md` prerequisites in plugin + 5 extension dirs (#215, #352)
+- `/guides` page now lists all 110 guides; articles page font and hero colour fixed (#350)
+
+### Postmortem context
+
+The v2.1.117 floor independently clears all three Claude Code regressions described in [Anthropic's April 23 postmortem](https://www.anthropic.com/engineering/april-23-postmortem) (effort default lowered Mar 4 – Apr 7, thinking-cache clearing bug Mar 26 – Apr 10 fixed in v2.1.101, "≤25 words between tool calls" verbosity rule Apr 16 – Apr 20 fixed in v2.1.116). Users on v2.1.117+ are clear of all three. ArcKit users who saw thin or context-disconnected outputs from `/arckit.requirements`, `/arckit.research`, `/arckit.sobc`, or `/arckit.autoresearch` between Mar 26 and Apr 20 should re-run on v2.1.117+ for restored quality.
+
 ## [4.9.1] - 2026-04-22
 
 ### Fixed

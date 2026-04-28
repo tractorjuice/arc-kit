@@ -225,6 +225,7 @@ AGENT_CONFIG = {
         "extension_dir": "arckit-paperclip",
         "copy_commands_to_extension": False,
         "copy_agents_to_extension": False,
+        "copy_scripts_to_extension": False,
         "has_context_hook": False,
         "has_sync_guides_hook": False,
     },
@@ -518,8 +519,11 @@ def copy_extension_files(plugin_dir):
         ext_dir = config.get("extension_dir")
         if not ext_dir:
             continue
+        copy_scripts = config.get("copy_scripts_to_extension", True)
         print(f"Copying to {config['name']} extension ({ext_dir})...")
         for src_rel, dst_rel in copies:
+            if not copy_scripts and src_rel.startswith("scripts/"):
+                continue
             src = os.path.join(plugin_dir, src_rel)
             dst = os.path.join(ext_dir, dst_rel)
             if os.path.isdir(src):
@@ -563,18 +567,6 @@ def strip_claude_only_skill_fields(skills_dir):
             )
             with open(filepath, "w", encoding="utf-8") as f:
                 f.write(rebuilt)
-
-
-def copy_paperclip_files(plugin_dir, paperclip_dir):
-    """Copy bash scripts to Paperclip extension for utility tools."""
-    src = os.path.join(plugin_dir, "scripts", "bash")
-    dst = os.path.join(paperclip_dir, "scripts", "bash")
-    if os.path.isdir(src):
-        if os.path.isdir(dst):
-            shutil.rmtree(dst)
-        shutil.copytree(src, dst)
-        file_count = sum(len(files) for _, _, files in os.walk(dst))
-        print(f"  Copied: {src} -> {dst} ({file_count} files)")
 
 
 def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
@@ -1124,10 +1116,6 @@ if __name__ == "__main__":
     print()
     print("Generating Copilot instructions...")
     generate_copilot_instructions("arckit-copilot/copilot-instructions.md")
-
-    print()
-    print("Copying Paperclip utility scripts...")
-    copy_paperclip_files(plugin_dir, "arckit-paperclip")
 
     print()
     total = sum(counts.values())

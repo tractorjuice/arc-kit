@@ -11,6 +11,7 @@ downloads/
 eggs/
 .eggs/
 lib/
+!arckit-paperclip/src/lib/
 lib64/
 parts/
 sdist/
