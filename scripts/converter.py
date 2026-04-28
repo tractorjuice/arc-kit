@@ -225,6 +225,7 @@ AGENT_CONFIG = {
         "extension_dir": "arckit-paperclip",
         "copy_commands_to_extension": False,
         "copy_agents_to_extension": False,
+        "copy_scripts_to_extension": False,
         "has_context_hook": False,
         "has_sync_guides_hook": False,
     },
@@ -518,8 +519,11 @@ def copy_extension_files(plugin_dir):
         ext_dir = config.get("extension_dir")
         if not ext_dir:
             continue
+        copy_scripts = config.get("copy_scripts_to_extension", True)
         print(f"Copying to {config['name']} extension ({ext_dir})...")
         for src_rel, dst_rel in copies:
+            if not copy_scripts and src_rel.startswith("scripts/"):
+                continue
             src = os.path.join(plugin_dir, src_rel)
             dst = os.path.join(ext_dir, dst_rel)
             if os.path.isdir(src):
