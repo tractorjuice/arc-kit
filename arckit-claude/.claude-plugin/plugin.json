@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit",
   "version": "4.9.2",
   "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 68 slash commands for generating architecture artifacts",
