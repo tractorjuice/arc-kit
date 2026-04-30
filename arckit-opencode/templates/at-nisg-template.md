@@ -6,25 +6,8 @@
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-ATNISG-v[VERSION] |
-| **Document Type** | Austrian NISG (NIS2) Assessment |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [OFFICIAL / OFFICIAL-SENSITIVE] |
-| **Status** | DRAFT |
-| **Version** | [VERSION] |
-| **Created Date** | [YYYY-MM-DD] |
-| **Last Modified** | [YYYY-MM-DD] |
-| **Review Cycle** | Annual |
-| **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
-| **Reviewed By** | [PENDING] |
-| **Approved By** | [PENDING] |
-| **Distribution** | [DISTRIBUTION_LIST] |
-| **Entity Designation** | [Essential / Important / Not in scope] |
-| **Austrian Sectoral Authority** | [E-Control / FMA / BMK / ELGA / BMI / other] |
-| **Previous NISG 2018 Status** | [BwD / None / N/A] |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## Revision History
 

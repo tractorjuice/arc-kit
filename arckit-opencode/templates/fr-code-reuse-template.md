@@ -6,23 +6,8 @@
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-REUSE-v[VERSION] |
-| **Document Type** | Public Code Reuse Assessment |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [PUBLIC / OFFICIAL] |
-| **Status** | DRAFT |
-| **Version** | [VERSION] |
-| **Created Date** | [YYYY-MM-DD] |
-| **Last Modified** | [YYYY-MM-DD] |
-| **Review Cycle** | At project start and on major functional change |
-| **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
-| **Reviewed By** | [PENDING] |
-| **Approved By** | [PENDING] |
-| **Distribution** | [DISTRIBUTION_LIST] |
-| **Legal Basis** | Loi République Numérique (2016), Art. 16; Circulaire PM n°6264-SG (2021) |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## Revision History
 

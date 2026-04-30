@@ -6,24 +6,8 @@
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-ALGO-v[VERSION] |
-| **Document Type** | Public Algorithm Transparency Notice |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | PUBLIC — this notice must be publicly accessible |
-| **Status** | DRAFT |
-| **Version** | [VERSION] |
-| **Created Date** | [YYYY-MM-DD] |
-| **Last Modified** | [YYYY-MM-DD] |
-| **Review Cycle** | On algorithm change or annual |
-| **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
-| **Reviewed By** | [PENDING] |
-| **Approved By** | [PENDING] |
-| **Distribution** | PUBLIC — published on data.gouv.fr / algorithmes.data.gouv.fr |
-| **Legal Basis** | Art. L311-3-1 CRPA (Loi République Numérique 2016, Art. 4) |
-| **DPO** | [NAME — if personal data involved] |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## Revision History
 

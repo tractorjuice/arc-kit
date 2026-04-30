@@ -7,6 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.10.0] - 2026-04-30
+
+### Added
+
+- 12-command UAE Federal Overlay as official baseline (68 → 80 commands):
+  - Federal data + security: `uae-classification`, `uae-pdpl`, `uae-ias`, `uae-cloud-residency`
+  - Federal identity: `uae-uaepass`
+  - Cabinet instruments: `uae-zero-bureaucracy`, `uae-digital-records`, `uae-data-sharing`, `uae-priorities-alignment`
+  - AI governance: `uae-ai-charter`, `uae-ai-autonomy-tier`
+  - Procurement: `uae-procurement`
+- New `classification_scheme` plugin userConfig (UK or UAE Smart Data).
+- `arckit migrate-classification` one-time CLI helper for migrating existing artefacts from UK ladder to UAE Smart Data.
+- Dual-registration CI test catching `doc-types.mjs`/`pages.md` drift.
+- New guide `docs/guides/uae-overlay.md` and maintenance doc `docs/guides/uae-overlay-maintenance.md`.
+
+### Changed
+
+- `governance_framework` userConfig description extended to recommend `UAE Federal` as a third value.
+- All ~83 templates per directory: Document Control table replaced with `<!-- DOC-CONTROL-HEADER -->` marker resolved at command-execution time.
+
+### Breaking changes
+
+None. Non-UAE projects produce byte-identical Document Control output to v4.9.4.
+
+### Deferred to v4.11 / v5.0
+
+- Bilingual Arabic / English (`uae-translate`).
+- Federal Mandate doc-types category (currently the four Cabinet instruments sit under `Governance`).
+- Sector overlays (ADHICS, Dubai ISR) as community contributions.
+
 ## [4.9.4] - 2026-04-28
 
 ### Docs

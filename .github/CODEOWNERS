@@ -22,3 +22,8 @@ arckit-claude/templates/fr-*-template.md       @thomas-jardinet @tractorjuice
 arckit-claude/commands/at-*.md                 @gtonic @tractorjuice
 arckit-claude/templates/at-*-template.md       @gtonic @tractorjuice
 .arckit/templates/at-*-template.md             @gtonic @tractorjuice
+
+# UAE Federal Overlay — official baseline, maintained by @tractorjuice (recruiting UAE domain co-maintainer)
+arckit-claude/commands/uae-*.md                @tractorjuice
+arckit-claude/templates/uae-*-template.md      @tractorjuice
+.arckit/templates/uae-*-template.md            @tractorjuice

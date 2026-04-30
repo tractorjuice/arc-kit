@@ -6,25 +6,8 @@
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-NIS2-v[VERSION] |
-| **Document Type** | NIS2 Compliance Assessment |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [OFFICIAL / OFFICIAL-SENSITIVE] |
-| **Status** | DRAFT |
-| **Version** | [VERSION] |
-| **Created Date** | [YYYY-MM-DD] |
-| **Last Modified** | [YYYY-MM-DD] |
-| **Review Cycle** | Annual |
-| **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
-| **Reviewed By** | [PENDING] |
-| **Approved By** | [PENDING] |
-| **Distribution** | [DISTRIBUTION_LIST] |
-| **Member State** | [EU Member State] |
-| **Competent Authority** | [National NIS2 authority] |
-| **Entity Designation** | [Essential / Important / Not in scope] |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## Revision History
 

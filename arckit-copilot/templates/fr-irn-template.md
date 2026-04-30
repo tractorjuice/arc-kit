@@ -14,24 +14,8 @@
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-IRN-v[VERSION] |
-| **Document Type** | IRN — Indice de Résilience Numérique Self-Assessment |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | OFFICIAL-SENSITIVE |
-| **Status** | DRAFT |
-| **Version** | [VERSION] |
-| **Created Date** | [YYYY-MM-DD] |
-| **Last Modified** | [YYYY-MM-DD] |
-| **Review Cycle** | Annual |
-| **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
-| **Reviewed By** | PENDING |
-| **Approved By** | PENDING |
-| **Distribution** | [DISTRIBUTION_LIST] |
-| **IRN Framework Version** | aDRI IRN v0.4 (verify current version at gitlab.com/digitalresilienceinitiative/adri-irn) |
-| **Assessment Type** | Self-assessment — independent certification available via aDRI |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## Revision History
 

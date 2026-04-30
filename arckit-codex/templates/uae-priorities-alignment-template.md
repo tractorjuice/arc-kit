@@ -1,0 +1,99 @@
+# UAE National Priorities Alignment Statement
+
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-priorities-alignment`
+
+## Document Control
+
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time per _partials/RENDERING.md. -->
+
+## Revision History
+
+| Version | Date | Author | Changes | Approved By | Approval Date |
+|---------|------|--------|---------|-------------|---------------|
+| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit.uae-priorities-alignment` | [PENDING] | [PENDING] |
+
+## Executive Summary
+
+[Two to three paragraphs describing how the project aligns with the four federal strategies, the headline reuse-vs-build posture, and the resource-efficiency outcome.]
+
+## Strategic Alignment Matrix
+
+| Federal strategy | Relevant pillar / programme | Project contribution | KPI / metric |
+|------------------|------------------------------|----------------------|---------------|
+| We the UAE 2031 | [pillar] | [contribution] | [KPI] |
+| National Investment Strategy 2031 (NIS 2031) | [pillar] | [contribution] | [KPI] |
+| UAE Strategy for Artificial Intelligence 2031 | [pillar] | [contribution] | [KPI] |
+| UAE Digital Economy Strategy | [pillar] | [contribution] | [KPI] |
+
+## Reuse-vs-Build Justification
+
+For every major capability the project requires, evaluate whether a federally-provided shared service exists and either adopt it or justify the build decision.
+
+| Capability | Federal shared service available? | Decision (Reuse / Build) | Justification | Risk if rejected |
+|------------|------------------------------------|--------------------------|---------------|-------------------|
+| Identity (citizens / residents) | UAE Pass | [Reuse / Build] | [justification] | [risk] |
+| Inter-entity connectivity | FedNet | [Reuse / Build] | [justification] | [risk] |
+| Hosting | UAE government cloud (per CLDR) | [Reuse / Build] | [justification] | [risk] |
+| Notifications (SMS / email) | [federal provider] | [Reuse / Build] | [justification] | [risk] |
+| Payments | [federal payment gateway] | [Reuse / Build] | [justification] | [risk] |
+| Data exchange | Government Services Data Sharing capability | [Reuse / Build] | [justification] | [risk] |
+
+> Build decisions must explicitly defend the rejection of the federal shared service. Where the shared service is incomplete or unsuitable, document the gap and the proposed reuse trajectory.
+
+## Capability Reuse Register
+
+| Capability | Federal provider | Integration mode | Onboarding status | Cost saving evidence |
+|------------|------------------|-------------------|--------------------|----------------------|
+| [capability] | [provider] | [API / federation / managed service] | [PENDING / IN PROGRESS / LIVE] | [reference] |
+
+## Resource-Efficiency Calculation
+
+| Capability | Reuse baseline cost | Build alternative cost | Lifecycle (years) | Net saving |
+|------------|---------------------|------------------------|--------------------|------------|
+| [capability] | [AED] | [AED] | [n] | [AED] |
+
+| Total programme reuse saving | [AED] |
+|------------------------------|-------|
+
+> Costs include capex, opex, and decommissioning. State the discount rate and the assumptions under each calculation.
+
+## Feasibility & Pilot Plan
+
+| Capability | Feasibility assessment | Pilot scope | Pilot success criteria | Phased rollout sequence |
+|------------|------------------------|-------------|------------------------|--------------------------|
+| [capability] | [Green / Amber / Red — rationale] | [scope] | [criteria] | [phase 1 → 2 → 3] |
+
+## External References
+
+### Document Register
+
+| Doc ID | Title | URL | Verified date |
+|--------|-------|-----|---------------|
+| UAE-CAB-2026-04-23 | UAE Cabinet meeting — Federal Government Guide to Aligning Digital Government Projects with National Priorities | <https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting> | [YYYY-MM-DD] |
+| UAE-WTU-2031 | We the UAE 2031 vision | <https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/strategies-plans-and-visions/finance-and-economy/we-the-uae-2031-vision> | [YYYY-MM-DD] |
+| UAE-AI-2031 | UAE Strategy for Artificial Intelligence 2031 | [URL] | [YYYY-MM-DD] |
+| UAE-NIS-2031 | UAE National Investment Strategy 2031 | [URL] | [YYYY-MM-DD] |
+| UAE-DES | UAE Digital Economy Strategy | [URL] | [YYYY-MM-DD] |
+
+### Citations
+
+| Citation | Doc ID | Section | Used in |
+|----------|--------|---------|---------|
+| [NPRA-1] | UAE-CAB-2026-04-23 | Federal Government Guide | Reuse-vs-Build Justification |
+| [NPRA-2] | UAE-WTU-2031 | [pillar] | Strategic Alignment Matrix |
+| [NPRA-3] | UAE-AI-2031 | [pillar] | Strategic Alignment Matrix |
+| [NPRA-4] | UAE-NIS-2031 | [pillar] | Strategic Alignment Matrix |
+| [NPRA-5] | UAE-DES | [pillar] | Strategic Alignment Matrix |
+
+### Unreferenced Documents
+
+[List any documents read during generation but not cited, or "None".]
+
+---
+
+**Generated by**: ArcKit `/arckit.uae-priorities-alignment` command
+**Generated on**: [DATE]
+**ArcKit Version**: [VERSION]
+**Project**: [PROJECT_NAME]
+**Model**: [AI_MODEL]
