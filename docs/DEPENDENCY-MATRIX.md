@@ -697,3 +697,44 @@ eu-rgpd → eu-nis2 → eu-cra → eu-data-act → eu-dsa → eu-ai-act
 
 - **Updated**: Commands Documented count from 64 to 82 (86 total; 4 utility commands not in matrix: customize, template-builder, health, search, impact, init, start, score, fr-code-reuse, gov-reuse, gov-code-search, gov-landscape are in matrix)
 - **Updated**: Matrix version date to 2026-04-19
+
+### 2026-04-30 - UAE Federal Overlay Commands (Official Baseline)
+
+Added 12 official-baseline commands covering UAE federal regulatory and digital-government instruments. These sit between requirements/data-model and the cross-cutting commands (sobc, wardley, framework). They take the official-tier count from 68 to 80.
+
+**New UAE commands** (anchored on the UAE Cabinet decree of 23 April 2026 and the federal data, identity, AI, and procurement frameworks):
+
+- `/arckit.uae-classification` — UAE Smart Data Classification Register. Depends on: requirements (R), data-model (R). Produces ARC-*-CLAS-*.md
+- `/arckit.uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-PDPL-*.md
+- `/arckit.uae-ias` — UAE Cybersecurity Council IAS v2 Statement of Applicability. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-IAS-*.md
+- `/arckit.uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment. Depends on: uae-classification (M), requirements (R). Produces ARC-*-CLDR-*.md
+- `/arckit.uae-uaepass` — UAE Pass integration design (OIDC/OAuth, claim mapping, profiles, e-signature). Depends on: requirements (M), integration (R). Produces ARC-*-UPASS-*.md
+- `/arckit.uae-zero-bureaucracy` — Service Catalogue review under Code for Government Services. Depends on: requirements (M), user-stories (R), journeys (R). Produces ARC-*-ZBUR-*.md
+- `/arckit.uae-digital-records` — Digital Records Plan (source-of-truth register, retention, official-source). Depends on: requirements (M), data-model (R), uae-classification (R). Produces ARC-*-DREC-*.md
+- `/arckit.uae-data-sharing` — Data Sharing Agreement under Data Sharing Policy. Depends on: requirements (M), uae-classification (R), uae-pdpl (R). Produces ARC-*-DSHR-*.md
+- `/arckit.uae-priorities-alignment` — National Priorities Alignment Statement. Depends on: requirements (M), sobc (R), prior UAE artefacts (O). Produces ARC-*-NPRA-*.md
+- `/arckit.uae-ai-charter` — UAE Charter for AI compliance assessment (12 principles). Depends on: requirements (M), risk (R), data-model (R). Produces ARC-*-AICH-*.md
+- `/arckit.uae-ai-autonomy-tier` — Three-tier AI autonomy posture. Depends on: requirements (M), uae-ai-charter (R), risk (R). Produces ARC-*-AUTI-*.md
+- `/arckit.uae-procurement` — Federal procurement strategy under Decree-Law No. 11 of 2023. Depends on: requirements (M), sobc (R), risk (R). Produces ARC-*-FPRO-*.md
+
+**Key inter-dependencies among UAE commands**:
+
+- `uae-classification` → feeds `uae-cloud-residency` (M), `uae-data-sharing` (R), `uae-digital-records` (R)
+- `uae-pdpl` → feeds `uae-data-sharing` (R), `risk` (M)
+- `uae-ias` → feeds `risk` (M), `uae-cloud-residency` (R)
+- `uae-ai-charter` → feeds `uae-ai-autonomy-tier` (R), `risk` (R)
+- `uae-zero-bureaucracy` / `uae-digital-records` / `uae-data-sharing` → feed `uae-priorities-alignment` (R)
+- `uae-priorities-alignment` → feeds `sobc` (R)
+
+**Canonical UAE federal pathfinder path**:
+
+```text
+principles → requirements → data-model → risk →
+uae-classification → uae-pdpl → uae-ias → uae-cloud-residency → uae-uaepass →
+uae-zero-bureaucracy → uae-digital-records → uae-data-sharing →
+uae-ai-charter → uae-ai-autonomy-tier → uae-priorities-alignment →
+uae-procurement → sobc → wardley → framework
+```
+
+- **Updated**: Commands Documented count to 94 official-baseline rows (80 baseline + 12 UAE counted in baseline; 21 community commands tracked separately in their own changelog entry above)
+- **Updated**: Matrix version date to 2026-04-30

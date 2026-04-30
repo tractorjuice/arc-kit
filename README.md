@@ -63,7 +63,7 @@ Then install from the Discover tab.
 > claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude
 > ```
 >
-> This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 68 commands, 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+> This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 80 official commands (plus 21 community-contributed), 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
 > **Why v2.1.117?** This version corrects Opus 4.7's `/context` calculation to use the model's native 1M window instead of 200K, so ArcKit's long deep-research and synthesis sessions no longer autocompact prematurely. It also loads agent frontmatter `mcpServers` for `--agent` sessions (lets research agents declare their own MCP surface), surfaces `gh` rate-limit hints inline (benefits the 10 research agents and govreposcrape callers), and fixes WebFetch hangs on very large HTML pages. Carries forward the v2.1.111+ unlocks: Opus 4.7 `xhigh` effort tier (used by deep-research agents), Auto mode without `--enable-auto-mode`, read-only bash glob patterns without permission prompts; and the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
 
@@ -73,7 +73,7 @@ Then install from the Discover tab.
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
-Zero-config: all 68 commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+Zero-config: all 80 official commands, templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
 
 **GitHub Copilot** (VS Code) — install the ArcKit CLI and scaffold prompt files:
 
@@ -85,7 +85,7 @@ pip install git+https://github.com/tractorjuice/arc-kit.git
 arckit init my-project --ai copilot
 ```
 
-Creates `.github/prompts/arckit-*.prompt.md` (68 prompt files), `.github/agents/arckit-*.agent.md` (10 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arckit-requirements`, `/arckit-stakeholders`, etc.
+Creates `.github/prompts/arckit-*.prompt.md` (80 prompt files), `.github/agents/arckit-*.agent.md` (10 custom agents), and `.github/copilot-instructions.md` (repo-wide context). Invoke commands in Copilot Chat as `/arckit-requirements`, `/arckit-stakeholders`, etc.
 
 **Codex CLI** — install the ArcKit CLI:
 
@@ -289,6 +289,43 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 - `/arckit.at-bvergg` — Bundesvergabegesetz 2018 procurement — Oberschwellen/Unterschwellen, ANKÖ publication, Bestbieterprinzip, BVwG review
 
 These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry extra `[NEEDS VERIFICATION]` markers reflecting their seed status — a future domain maintainer is expected to tighten the citations.
+
+---
+
+## UAE Federal Overlay (Official Baseline)
+
+> ✅ **Officially maintained.** The 12 commands below cover UAE federal regulatory and digital-government instruments and are part of the officially-maintained ArcKit baseline (the count of 80 includes them). They are anchored on the UAE Cabinet decree of 23 April 2026 mandating that 50% of federal services run on agentic AI by April 2028, and on the federal data, identity, AI governance, and procurement frameworks the decree references. Six citations are flagged `[NEEDS VERIFICATION]` pending Executive Regulations and authority confirmations — see [`docs/guides/uae-overlay-maintenance.md`](docs/guides/uae-overlay-maintenance.md).
+
+Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` in plugin userConfig to switch the Document Control header into UAE Smart Data classification rendering across every artefact.
+
+**Federal data and security**:
+
+- `/arckit.uae-classification` — UAE Smart Data Classification Register (Open / Shared / Confidential / Secret / Top Secret) with handling rules and declassification schedule
+- `/arckit.uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment — DPIA, lawful-basis register, data-subject-rights procedure, cross-border transfer log
+- `/arckit.uae-ias` — UAE Cybersecurity Council Information Assurance Standard v2 — Statement of Applicability against 188 controls (60 management M1–M6, 128 technical T1–T9), priority-tiered P1–P4
+- `/arckit.uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment — per-classification residency, approved CSPs (Core42 / G42, Microsoft UAE North/Central, TDRA FedNet, e& Sovereign Launchpad on AWS), shared-responsibility matrix, exit/portability plan
+
+**Federal identity**:
+
+- `/arckit.uae-uaepass` — UAE Pass integration design (OIDC/OAuth flow, claim mapping, Basic vs Verified profile selection, Service Provider onboarding, e-signature audit trail)
+
+**Cabinet instruments**:
+
+- `/arckit.uae-zero-bureaucracy` — Service Catalogue review under the UAE Code for Government Services and Zero Bureaucracy programme
+- `/arckit.uae-digital-records` — Digital Records Plan under the UAE Government Services Digital Records Policy (source-of-truth register per service, retention schedule, official-source designation)
+- `/arckit.uae-data-sharing` — Data Sharing Agreement under the UAE Government Services Data Sharing Policy ("collect once, use securely") with PDPL lawful basis per share
+- `/arckit.uae-priorities-alignment` — National Priorities Alignment Statement under the UAE Federal Government Guide — reuse-vs-build, capability-reuse register (UAE Pass, FedNet), strategy alignment to NIS 2031 / AI 2031 / We the UAE 2031
+
+**AI governance**:
+
+- `/arckit.uae-ai-charter` — UAE Charter for the Development and Use of AI compliance assessment (12 principles)
+- `/arckit.uae-ai-autonomy-tier` — Three-tier AI autonomy posture (Tier 1 internal-productivity, Tier 2 investor-facing-with-approval, Tier 3 regulated/financial) with per-tier guard-rails, approval gates, audit obligations, tier-promotion criteria
+
+**Procurement**:
+
+- `/arckit.uae-procurement` — Federal procurement strategy under Federal Decree-Law No. 11 of 2023 — ITT/RFP packs against MoF Digital Procurement Platform templates, In-Country Value (ICV) plan, evaluation report structure, contract register
+
+The commands chain together in a canonical order from `principles → uae-classification → uae-pdpl → uae-ias → uae-cloud-residency → uae-uaepass → uae-zero-bureaucracy → uae-digital-records → uae-data-sharing → uae-ai-charter → uae-ai-autonomy-tier → uae-priorities-alignment → uae-procurement → sobc → wardley → framework`. The reference implementation is the `arckit-test-project-v20-uae-moi-ipad` test repo. Full guide: [`docs/guides/uae-overlay.md`](docs/guides/uae-overlay.md).
 
 ---
 
@@ -1052,7 +1089,7 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 | Feature | Claude Code | Gemini CLI | Copilot | Codex / OpenCode |
 |---------|:-----------:|:----------:|:-------:|:----------------:|
-| 68 slash commands | ✅ | ✅ | ✅ | ✅ |
+| 80 slash commands | ✅ | ✅ | ✅ | ✅ |
 | Templates & scripts | ✅ | ✅ | ✅ | ✅ |
 | Bundled MCP servers (AWS, Azure, GCP, DataCommons, govreposcrape) | ✅ | ✅ (3 servers) | — | Manual setup |
 | **Autonomous research agents** (10 agents for research, datascout, cloud research, gov code discovery, grants, framework) | ✅ | — | ✅ (10 agents) | — |
@@ -1070,7 +1107,7 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 **Hooks** provide automated governance: filenames are auto-corrected to ArcKit conventions, project context is injected into every prompt so commands know what artifacts exist, MCP tools are auto-approved, and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
 
-Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 68 commands as prompt files and 10 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
+Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 80 official commands as prompt files and 10 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
 
 ### Why Commands, Not Skills
 
@@ -1165,7 +1202,7 @@ payment-modernization/
 │   ├── agents/                            # Agent configs
 │   └── config.toml                        # MCP servers + agent roles
 ├── .github/
-│   ├── prompts/arckit-*.prompt.md         # GitHub Copilot prompt files (68 commands)
+│   ├── prompts/arckit-*.prompt.md         # GitHub Copilot prompt files (80 commands)
 │   ├── agents/arckit-*.agent.md           # GitHub Copilot custom agents (10 agents)
 │   └── copilot-instructions.md            # Repo-wide Copilot context
 └── .opencode/commands/                    # OpenCode CLI commands

@@ -636,7 +636,91 @@ graph TD
 
 ---
 
-## 7. Government Code Discovery
+## 7. UAE Federal Workflow
+
+For UAE federal entities, contracted suppliers, and CII operators, the canonical chain runs the 12 `uae-*` commands in sequence between the standard inputs (requirements, data-model, risk) and the cross-cutting outputs (sobc, wardley, framework).
+
+```mermaid
+graph TD
+    %% Foundation
+    A[principles] --> B[requirements]
+    A --> C[data-model]
+    B --> C
+    B --> D[risk]
+
+    %% UAE federal data + security
+    C --> E[uae-classification]
+    B --> F[uae-pdpl]
+    C --> F
+    D --> F
+    B --> G[uae-ias]
+    D --> G
+    E --> H[uae-cloud-residency]
+
+    %% UAE federal identity
+    B --> I[uae-uaepass]
+
+    %% UAE Cabinet instruments
+    B --> J[uae-zero-bureaucracy]
+    E --> K[uae-digital-records]
+    C --> K
+    E --> L[uae-data-sharing]
+    F --> L
+    J --> M[uae-priorities-alignment]
+    K --> M
+    L --> M
+
+    %% UAE AI governance
+    B --> N[uae-ai-charter]
+    D --> N
+    N --> O[uae-ai-autonomy-tier]
+
+    %% Procurement
+    B --> P[uae-procurement]
+
+    %% Cross-cutting downstream
+    M --> Q[sobc]
+    P --> Q
+    Q --> R[wardley]
+    Q --> S[framework]
+
+    style A fill:#90EE90
+    style B fill:#90EE90
+    style C fill:#90EE90
+    style D fill:#90EE90
+    style E fill:#FFB347
+    style F fill:#FFB347
+    style G fill:#FFB347
+    style H fill:#FFB347
+    style I fill:#87CEEB
+    style J fill:#9370DB
+    style K fill:#9370DB
+    style L fill:#9370DB
+    style M fill:#9370DB
+    style N fill:#FFD700
+    style O fill:#FFD700
+    style P fill:#FFA07A
+    style Q fill:#90EE90
+    style R fill:#90EE90
+    style S fill:#90EE90
+```
+
+**Key:**
+
+- **Green boxes** = Foundation inputs and standard cross-cutting outputs
+- **Orange boxes (light)** = UAE federal data and security (classification, PDPL, IAS, cloud residency)
+- **Blue boxes** = UAE federal identity (UAE Pass)
+- **Purple boxes** = UAE Cabinet instruments (Zero Bureaucracy, Digital Records, Data Sharing, National Priorities Alignment)
+- **Gold boxes** = UAE AI governance (Charter, Autonomy Tier)
+- **Salmon box** = UAE federal procurement (Decree-Law No. 11 of 2023)
+
+**Prerequisites**: Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` in plugin userConfig before running. The reference implementation is the `arckit-test-project-v20-uae-moi-ipad` test repo. Full overlay guide at [`docs/guides/uae-overlay.md`](guides/uae-overlay.md).
+
+**Duration**: 4-8 weeks for a full federal pathfinder (the AI tier and procurement work runs in parallel with the data and security stream).
+
+---
+
+## 8. Government Code Discovery
 
 For UK Government projects, run these commands during Alpha/Beta to check for reusable code before building from scratch. Uses the govreposcrape MCP server (no API key required).
 
