@@ -217,12 +217,19 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | DATA | `ARC-*-DATA-*.md` | Data Model |
 | | WARD | `ARC-*-WARD-*.md` | Wardley Map |
 | | DIAG | `ARC-*-DIAG-*.md` | Architecture Diagrams |
+| | DFD | `ARC-*-DFD-*.md` | Data Flow Diagram |
 | | ADR | `ARC-*-ADR-*.md` | Architecture Decision Records |
+| | WDOC | `ARC-*-WDOC-*.md` | Wardley Doctrine Assessment |
+| | WGAM | `ARC-*-WGAM-*.md` | Wardley Gameplay Analysis |
+| | WCLM | `ARC-*-WCLM-*.md` | Wardley Climate Assessment |
+| | WVCH | `ARC-*-WVCH-*.md` | Wardley Value Chain |
 | **Governance** | | | |
 | | RISK | `ARC-*-RISK-*.md` | Risk Register |
 | | TRAC | `ARC-*-TRAC-*.md` | Traceability Matrix |
 | | PRIN-COMP | `ARC-*-PRIN-COMP-*.md` | Principles Compliance |
 | | ANAL | `ARC-*-ANAL-*.md` | Analysis Report |
+| | CONF | `ARC-*-CONF-*.md` | Conformance Assessment |
+| | GAPS | `ARC-*-GAPS-*.md` | Gap Analysis |
 | **Compliance** | | | |
 | | TCOP | `ARC-*-TCOP-*.md` | TCoP Assessment |
 | | SECD | `ARC-*-SECD-*.md` | Secure by Design |
@@ -246,6 +253,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | GCLD | `ARC-*-GCLD-*.md` | G-Cloud Search |
 | | GCLC | `ARC-*-GCLC-*.md` | G-Cloud Clarifications |
 | | DMC | `ARC-*-DMC-*.md` | Data Mesh Contract |
+| | VEND | `ARC-*-VEND-*.md` | Vendor Evaluation |
 | | | `vendors/*/*.md` | Vendor Documents |
 | **Research** | | | |
 | | AWRS | `ARC-*-AWRS-*.md` | AWS Research |
@@ -255,6 +263,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | GOVR | `ARC-*-GOVR-*.md` | Government Reuse Assessment |
 | | GCSR | `ARC-*-GCSR-*.md` | Government Code Search Report |
 | | GLND | `ARC-*-GLND-*.md` | Government Landscape Analysis |
+| | GRNT | `ARC-*-GRNT-*.md` | Grants Research |
 | **Reporting** | | | |
 | | STORY | `ARC-*-STORY-*.md` | Project Story |
 | | PRES | `ARC-*-PRES-*.md` | Presentation (MARP) |
