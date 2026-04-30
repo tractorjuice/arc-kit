@@ -958,6 +958,59 @@ export OPENCODE_HOME="$PWD/.opencode"
     console.print(Panel("\n".join(next_steps), title="Next Steps", border_style="cyan"))
 
 
+@app.command(name="migrate-classification")
+def migrate_classification(
+    apply: bool = typer.Option(
+        False,
+        "--apply",
+        help="Apply the proposed mappings (default: report only).",
+    ),
+    root: str = typer.Option(
+        "projects",
+        "--root",
+        help="Root directory to walk (default: projects).",
+    ),
+):
+    """Migrate Document Control Classification from UK ladder to UAE Smart Data ladder.
+
+    One-time helper for projects switching to the UAE Federal Overlay (v4.10).
+    Walks projects/ for ARC-* artefacts and proposes mappings:
+
+      PUBLIC -> Open, OFFICIAL -> Shared, OFFICIAL-SENSITIVE -> Confidential,
+      SECRET -> Secret, TOP SECRET -> Top Secret
+
+    Default is report-only; pass --apply to write the changes.
+    """
+    # Locate the migration script (works for source/dev, pip install, uv tool install).
+    here = Path(__file__).resolve()
+    candidates = [
+        here.parents[2] / "scripts" / "python" / "migrate_classification.py",  # source/dev
+        Path.cwd() / "scripts" / "python" / "migrate_classification.py",  # cwd-relative
+    ]
+    # Also try the get_data_paths() fallback (covers pip and uv tool installs).
+    try:
+        data_paths = get_data_paths()  # type: ignore[name-defined]
+        if data_paths and "scripts" in data_paths:
+            candidates.append(Path(data_paths["scripts"]) / "python" / "migrate_classification.py")
+    except Exception:
+        pass
+
+    script = next((c for c in candidates if c.is_file()), None)
+    if script is None:
+        console.print(
+            "[red]Error:[/red] migrate_classification.py not found. "
+            "Searched: " + ", ".join(str(c) for c in candidates)
+        )
+        raise typer.Exit(code=2)
+
+    cmd = [sys.executable, str(script), "--root", root]
+    if apply:
+        cmd.append("--apply")
+
+    result = subprocess.run(cmd)
+    raise typer.Exit(code=result.returncode)
+
+
 @app.command()
 def check():
     """Check that all required tools are installed."""
