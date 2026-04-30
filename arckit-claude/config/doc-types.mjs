@@ -118,6 +118,19 @@ export const DOC_TYPES = {
   'ATDSG':     { name: 'Austrian Data Protection Assessment',          category: 'Compliance' },
   'ATNISG':    { name: 'Austrian NISG (NIS2) Assessment',              category: 'Compliance' },
   'BVERGG':    { name: 'Austrian Public Procurement (BVergG 2018)',    category: 'Procurement' },
+  // UAE Federal Overlay (Official, maintained by @tractorjuice) — anchored on 23 April 2026 Cabinet decree
+  'PDPL':      { name: 'UAE PDPL Compliance Assessment',               category: 'Compliance' },
+  'IAS':       { name: 'UAE IAS Statement of Applicability',           category: 'Compliance' },
+  'CRES':      { name: 'UAE Sovereign Cloud Residency Assessment',     category: 'Architecture' },
+  'CLAS':      { name: 'UAE Smart Data Classification Register',       category: 'Governance' },
+  'UPASS':     { name: 'UAE Pass Integration Design',                  category: 'Architecture' },
+  'ZBUR':      { name: 'UAE Zero Bureaucracy Service Review',          category: 'Governance' },
+  'DREC':      { name: 'UAE Digital Records Plan',                     category: 'Governance' },
+  'DSHR':      { name: 'UAE Data Sharing Agreement',                   category: 'Governance' },
+  'NPRA':      { name: 'UAE National Priorities Alignment Statement',  category: 'Governance' },
+  'AICH':      { name: 'UAE AI Charter Compliance Assessment',         category: 'Compliance' },
+  'AUTI':      { name: 'UAE AI Autonomy Tier Posture',                 category: 'Architecture' },
+  'FPRO':      { name: 'UAE Federal Procurement Strategy',             category: 'Procurement' },
 };
 
 // Multi-instance types that require sequence numbers (e.g. ADR-001, RSCH-002)
