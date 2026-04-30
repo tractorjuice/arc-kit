@@ -22,3 +22,10 @@ jobs:
       - uses: DavidAnson/markdownlint-cli2-action@v19
         with:
           globs: "**/*.md"
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Dual-registration test for doc-types
+        run: node scripts/tests/test-doc-types-dual-registration.mjs
