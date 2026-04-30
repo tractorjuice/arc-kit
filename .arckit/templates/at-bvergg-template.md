@@ -6,26 +6,8 @@
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-BVERGG-v[VERSION] |
-| **Document Type** | Austrian Public Procurement Documentation |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [OFFICIAL] |
-| **Status** | DRAFT |
-| **Version** | [VERSION] |
-| **Created Date** | [YYYY-MM-DD] |
-| **Last Modified** | [YYYY-MM-DD] |
-| **Review Cycle** | Per procurement |
-| **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [Vergabestelle / Procurement Officer] |
-| **Reviewed By** | [Vergabejurist / PENDING] |
-| **Approved By** | [PENDING] |
-| **Distribution** | [DISTRIBUTION_LIST] |
-| **Contracting Authority Type** | [Klassischer Sektor / Sektorenauftraggeber / Subventioniert §4] |
-| **Threshold Tier** | [Direktvergabe / Unterschwellen / Oberschwellen] |
-| **Auftragswert (excl. VAT)** | € [value] |
-| **Selected Procedure** | [Offen / Nicht-offen / Verhandlung m.B. / Verhandlung o.B. / Dialog / Innovationspartnerschaft] |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## Revision History
 

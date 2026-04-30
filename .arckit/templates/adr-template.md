@@ -4,29 +4,8 @@
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-ADR-[NUM]-v[VERSION] |
-| **Document Type** | Architecture Decision Record |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET] |
-| **Status** | [DRAFT / IN_REVIEW / APPROVED / PUBLISHED / SUPERSEDED / ARCHIVED] |
-| **Version** | [VERSION] |
-| **Created Date** | [YYYY-MM-DD] |
-| **Last Modified** | [YYYY-MM-DD] |
-| **Review Cycle** | [Monthly / Quarterly / Annual / On-Demand] |
-| **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE] |
-| **Reviewed By** | [REVIEWER_NAME] on [DATE] or [PENDING] |
-| **Approved By** | [APPROVER_NAME] on [DATE] or [PENDING] |
-| **Distribution** | [DISTRIBUTION_LIST] |
-| **ADR Number** | ADR-[NUM] |
-| **Date** | [YYYY-MM-DD] |
-| **Author** | [AUTHOR_NAME] |
-| **Supersedes** | [ADR-XXX] (if applicable) |
-| **Superseded by** | [ADR-YYY] (if applicable) |
-| **Escalation Level** | [Team / Cross-team / Department / Cross-government] |
-| **Governance Forum** | [Architecture Review Board / TDA / Programme Board / Steering Committee] |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## Revision History
 

@@ -6,24 +6,8 @@
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| **Document ID** | ARC-[PROJECT_ID]-PSSI-v[VERSION] |
-| **Document Type** | Information System Security Policy (PSSI) |
-| **Project** | [PROJECT_NAME] (Project [PROJECT_ID]) |
-| **Classification** | [OFFICIAL-SENSITIVE — PSSI contains system security objectives] |
-| **Status** | DRAFT |
-| **Version** | [VERSION] |
-| **Created Date** | [YYYY-MM-DD] |
-| **Last Modified** | [YYYY-MM-DD] |
-| **Review Cycle** | Every 3 years or on major change |
-| **Next Review Date** | [YYYY-MM-DD] |
-| **Owner** | [OWNER_NAME_AND_ROLE — Director of Information Systems or equivalent] |
-| **RSSI** | [NAME — Responsable de la Sécurité des SI] |
-| **Reviewed By** | [PENDING] |
-| **Approved By** | [Highest authority — Minister / Secretary General / Director General] |
-| **Distribution** | [All staff / IT staff only — define circulation] |
-| **References** | RGS v2.0, Guide ANSSI PSSI, Circulaire PM 5926/SG, EBIOS RM study |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## Revision History
 
