@@ -10,13 +10,13 @@ The four Cabinet instruments do not just describe the destination; they specify 
 
 Read the decree in its operational mode and the four instruments give every federal entity an unusually clear set of artefact-level deliverables.
 
-The **UAE Code for Government Services and Zero Bureaucracy** establishes a single federal reference model for service quality, replacing fragmented entity approaches with a unified standard. This gives every federal entity a shared definition of "good" for service design, and a clear obligation to map its catalogue against the Code, publish a bureaucracy-elimination baseline, and commit to customer-experience KPIs the taskforce can evaluate.
+The **[UAE Code for Government Services and Zero Bureaucracy](https://sheikhmohammed.ae/en/latest-news/30661)** establishes a single federal reference model for service quality, replacing fragmented entity approaches with a unified standard. This gives every federal entity a shared definition of "good" for service design, and a clear obligation to map its catalogue against the Code, publish a bureaucracy-elimination baseline, and commit to customer-experience KPIs the taskforce can evaluate.
 
-The **Government Services Digital Records Policy** elevates digital records to the status of official source of core data. The implication is empowering: federal entities now have explicit federal-level authority to digitise records, publish a comprehensive records guide, and operate continuous data-quality requirements as the new normal. Every service produces a Digital Records Plan with source-of-truth designation, retention schedule, and the records-as-official-source designation.
+The **[Government Services Digital Records Policy](https://sheikhmohammed.ae/en/latest-news/30661)** elevates digital records to the status of official source of core data. The implication is empowering: federal entities now have explicit federal-level authority to digitise records, publish a comprehensive records guide, and operate continuous data-quality requirements as the new normal. Every service produces a Digital Records Plan with source-of-truth designation, retention schedule, and the records-as-official-source designation.
 
-The **Government Services Data Sharing Policy**, captured in the principle "collect once, use securely", gives federal entities the federation framework they have needed to integrate cleanly across federal, local, and private-sector boundaries. Every cross-entity data flow becomes a Data Sharing Agreement with a documented PDPL lawful basis, a federation or API plan, and an information-security treatment that satisfies the Cybersecurity Council's controls. The administrative friction that has historically slowed inter-entity collaboration is replaced with a clear operational template.
+The **[Government Services Data Sharing Policy](https://sheikhmohammed.ae/en/latest-news/30661)**, captured in the principle "collect once, use securely", gives federal entities the federation framework they have needed to integrate cleanly across federal, local, and private-sector boundaries. Every cross-entity data flow becomes a Data Sharing Agreement with a documented PDPL lawful basis, a federation or API plan, and an information-security treatment that satisfies the Cybersecurity Council's controls. The administrative friction that has historically slowed inter-entity collaboration is replaced with a clear operational template.
 
-The **Federal Government Guide to Aligning Digital Government Projects with National Priorities** ensures every digital initiative explicitly serves NIS 2031, AI 2031, the Digital Economy Strategy, and We the UAE 2031. Reuse of existing federal capabilities (UAE Pass, FedNet, the federal data-sharing surface as it lands) becomes the default rather than the exception, making every project lighter, faster, and better aligned to national strategic priorities. The artefact is a National Priorities Alignment Statement: reuse-versus-build justification, capability-reuse register, and the explicit alignment matrix.
+The **[Federal Government Guide to Aligning Digital Government Projects with National Priorities](https://sheikhmohammed.ae/en/latest-news/30661)** ensures every digital initiative explicitly serves [NIS 2031](https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/strategies-plans-and-visions/finance-and-economy/the-uae-national-investment-strategy), [AI 2031](https://ai.gov.ae/strategy/), the [Digital Economy Strategy](https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/strategies-plans-and-visions/finance-and-economy/uae-digital-economy-strategy), and [We the UAE 2031](https://wethe.ae/). Reuse of existing federal capabilities ([UAE Pass](https://docs.uaepass.ae/), FedNet, the federal data-sharing surface as it lands) becomes the default rather than the exception, making every project lighter, faster, and better aligned to national strategic priorities. The artefact is a National Priorities Alignment Statement: reuse-versus-build justification, capability-reuse register, and the explicit alignment matrix.
 
 Four instruments. Four clearly specified artefacts per service. A taskforce-readable trail across the federal portfolio.
 
@@ -113,3 +113,33 @@ ArcKit v4.10 is one piece of the supporting infrastructure stack, alongside UAE 
 Every UAE federal entity working under the decree can install ArcKit v4.10 today, configure it for UAE Federal governance and UAE Smart Data classification, and begin producing the Cabinet-mandated artefacts in their first working week. Twelve commands. Four Cabinet instruments. Eight federal baseline obligations. One coherent toolkit, ready to support the federal architecture community in delivering the most ambitious agentic-government commitment any nation has made.
 
 The decree set the agenda. ArcKit v4.10 stands ready to accelerate it.
+
+## Sources and Further Reading
+
+**Primary sources for the decree and the four Cabinet instruments**
+
+- Sheikh Mohammed bin Rashid Al Maktoum announcement, 23 April 2026: [sheikhmohammed.ae/en/latest-news/30661](https://sheikhmohammed.ae/en/latest-news/30661)
+- UAE Media Office, official Cabinet release: [mediaoffice.ae](https://mediaoffice.ae/en/news/2026/april/23-04/mohammed-bin-rashid-chairs-uae-cabinet-meeting)
+
+**Federal regulatory baseline**
+
+- Federal Decree-Law No. 45 of 2021 on the Protection of Personal Data (PDPL): [uaelegislation.gov.ae](https://uaelegislation.gov.ae/en/legislations/1972/download)
+- UAE Cybersecurity Council Information Assurance Standard v2: [csc.gov.ae](https://csc.gov.ae/en/w/uae-information-assurance-standard)
+- National Cloud Security Policy v2: [csc.gov.ae](https://csc.gov.ae/en/w/national-cloud-security-policy)
+- UAE Smart Data Classifications: [u.ae](https://u.ae/en/about-the-uae/digital-uae/data/data-operability)
+- Federal Decree-Law No. 11 of 2023 on Procurements in the Federal Government: [mof.gov.ae](https://mof.gov.ae/wp-content/uploads/2024/01/Federal-Law-No.-11-of-2023-on-Procurements-in-the-Federal-Government.pdf)
+- UAE Pass developer documentation: [docs.uaepass.ae](https://docs.uaepass.ae/)
+
+**National strategies referenced by `uae-priorities-alignment`**
+
+- UAE National Strategy for AI 2031: [ai.gov.ae/strategy](https://ai.gov.ae/strategy/)
+- UAE Charter for the Development and Use of AI: [uaelegislation.gov.ae](https://uaelegislation.gov.ae/en/policy/details/the-uae-charter-for-the-development-and-use-of-artificial-intelligence)
+- UAE Digital Economy Strategy: [u.ae](https://u.ae/en/about-the-uae/strategies-initiatives-and-awards/strategies-plans-and-visions/finance-and-economy/uae-digital-economy-strategy)
+- We the UAE 2031: [wethe.ae](https://wethe.ae/)
+
+**ArcKit**
+
+- Repository: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
+- v4.10.0 release: [github.com/tractorjuice/arc-kit/releases/tag/v4.10.0](https://github.com/tractorjuice/arc-kit/releases/tag/v4.10.0)
+- UAE overlay guide: `docs/guides/uae-overlay.md`
+- UAE overlay maintenance and citation register: `docs/guides/uae-overlay-maintenance.md`
