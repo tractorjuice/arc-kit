@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.10.1] - 2026-04-30
+
+### Changed
+
+- **UAE Federal Overlay reclassified from official-baseline to community-contributed.** The 12 `uae-*` commands shipped earlier today as part of the officially-maintained baseline (68 → 80). Within hours the maintainer reclassified them to community-contributed; v4.10.1 lands the corrective metadata. Officially-maintained baseline returns to 68; community-contributed overlays grow from 21 (EU + FR + AT) to 33; total commands available across all tiers stays at 101.
+
+  Reason: solo CODEOWNERS at the official tier is not a sustainable maintenance posture for fast-moving UAE federal regulatory text without a UAE domain co-maintainer. The official-tier citation-accuracy SLA (quarterly review across the federal corpus, regression sweep across 47 reference repositories, output that an architect can hand to counsel without a paragraph of caveats) needs more than one pair of eyes on regulatory text that is still settling. The community marker is the responsible reading frame; recruiting a UAE domain co-maintainer remains the v4.11 priority. Once one joins, the overlay becomes a candidate for official-tier promotion in a future release.
+
+  What changed (metadata only):
+  - `[COMMUNITY]` prefix added to the `description:` frontmatter on all 12 `uae-*` command files (matching the `eu-*`, `fr-*`, `at-*` pattern).
+  - Inline warning banner added immediately after the YAML frontmatter on each command body, listing UAE Cabinet / PDPL / IAS / Cybersecurity Council as the citation authorities to verify against.
+  - `Template Origin: Community` set on all 24 `uae-*` template files (12 in `arckit-claude/templates/`, 12 in `.arckit/templates/`).
+  - `EXPERIMENTAL` status tag in place of `LIVE` on the two UAE guides on `docs/guides.html`, and on the 12 UAE rows on `docs/commands.html` (`data-status="experimental"`, prefixed `[COMMUNITY]` descriptions, matching the existing 21 community rows).
+  - README "UAE Federal Overlay" section heading changed from "(Official Baseline)" to "(Community-contributed)" with updated banner copy; `docs/index.html`, `docs/articles.html`, and the launch and decree articles in `docs/articles/` updated to community framing.
+  - `arckit-claude/config/doc-types.mjs` UAE block comment updated to reflect community-contributed status with co-maintainer recruiting note.
+  - `.github/CODEOWNERS` UAE block comment updated to flag community-contributed status with promotion gated on co-maintainer commitment.
+
+  What did NOT change (fully backwards-compatible):
+  - All 12 command names (`/arckit.uae-*`).
+  - All UAE doc-type codes (`PDPL`, `IAS`, `SDC`, `NCSP`, `UPS`, `ZBUR`, `DREC`, `DSHR`, `NPRA`, `AICH`, `AAUT`, `UPRC`).
+  - All frontmatter `handoffs:` chains.
+  - All template structures and section bodies.
+  - The Document Control conditional rendering rules and the `<!-- DOC-CONTROL-HEADER -->` marker mechanism.
+  - The Smart Data classification ladder rendering when `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` are set.
+  - The canonical chain across the 12 commands.
+  - The dual-registration test (`scripts/tests/test-doc-types-dual-registration.mjs`).
+  - The `arckit migrate-classification` one-time CLI helper.
+
 ## [4.10.0] - 2026-04-30
 
 ### Added

@@ -1,6 +1,6 @@
 # UAE Zero Bureaucracy Service Catalogue Review
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-zero-bureaucracy`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-zero-bureaucracy`
 
 ## Document Control
 

@@ -1,6 +1,6 @@
 # UAE Sovereign Cloud Residency Assessment
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-cloud-residency`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-cloud-residency`
 
 ## Document Control
 

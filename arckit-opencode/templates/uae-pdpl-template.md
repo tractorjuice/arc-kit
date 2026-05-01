@@ -1,6 +1,6 @@
 # UAE PDPL Compliance Assessment
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-pdpl`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-pdpl`
 
 ## Document Control
 

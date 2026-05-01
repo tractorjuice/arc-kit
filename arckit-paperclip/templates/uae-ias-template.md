@@ -1,6 +1,6 @@
 # UAE IAS Statement of Applicability
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-ias`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-ias`
 
 ## Document Control
 

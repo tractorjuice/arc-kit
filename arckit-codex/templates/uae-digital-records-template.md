@@ -1,6 +1,6 @@
 # UAE Digital Records Plan
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-digital-records`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-digital-records`
 
 ## Document Control
 

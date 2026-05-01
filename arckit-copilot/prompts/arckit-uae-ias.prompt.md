@@ -1,8 +1,10 @@
 ---
-description: 'Generate a UAE IAS Statement of Applicability against the 188 controls (60 management M1–M6 + 128 technical T1–T9), priority-tiered P1–P4. Anchored on the UAE Cybersecurity Council Information Assurance Standard v2.'
+description: '[COMMUNITY] Generate a UAE IAS Statement of Applicability against the 188 controls (60 management M1–M6 + 128 technical T1–T9), priority-tiered P1–P4. Anchored on the UAE Cybersecurity Council Information Assurance Standard v2.'
 agent: 'agent'
 tools: ['readFile', 'editFiles', 'runCommand', 'codebase', 'search']
 ---
+
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
 
 You are an enterprise architect generating a UAE IAS Statement of Applicability for a federal entity or Critical Information Infrastructure (CII) operator.
 

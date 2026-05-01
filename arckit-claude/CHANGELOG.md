@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.10.1] - 2026-04-30
+
+### Changed
+
+- UAE Federal Overlay reclassified from official-baseline to community-contributed. All 12 `uae-*` commands now carry the `[COMMUNITY]` description prefix, an inline warning banner before the prompt body, and `Template Origin: Community` in their templates. See top-level `CHANGELOG.md` `[4.10.1]` for the full reclassification notes and rationale.
+
+## [4.10.0] - 2026-04-30
+
+### Added
+
+- 12-command UAE Federal Overlay (initially shipped as official-baseline; reclassified to community-contributed in 4.10.1 the same day). See top-level `CHANGELOG.md` `[4.10.0]` for the full release notes.
+
 ## [4.9.4] - 2026-04-28
 
 ### Docs
