@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.12.0] - 2026-05-01
+
+### Added
+
+- **`hooks/graph-rollups.mjs`** — shared module with `tagNodeHealth()`, `computeAllProjectRollups()`, and the canonical `HIGH_SEVERITY_TYPES` / `ESSENTIAL_TYPES` / `CONTEXTUAL_TYPES` / `STALE_THRESHOLD_DAYS` constants. Used by both `graph-inject.mjs` and `sync-guides.mjs` (#383).
+- **`manifest.json` enrichments** written by `sync-guides`:
+  - `dependencyGraph.nodes[*].health = { stale, draft, orphan, ageDays }` per node.
+  - New `manifest.projectHealth` block with per-project coverage %, compliance readiness %, density, top-3 recommendations, stale/draft/orphan counts.
+- **`pages-template.html`** Document Map tints nodes by health (red=stale, amber=draft, dashed=orphan), extends the legend and tooltip, and adds a new "Project Health & Next Steps" dashboard panel rendering one card per project from `manifest.projectHealth`.
+- **`docs/llms.txt`** gains an opt-in `## Project status` section listing per-project coverage / compliance / health flags / top recommendation.
+
+### Changed
+
+- `graph-inject.mjs` refactored to import constants from `graph-rollups.mjs`. No behaviour change.
+- `sync-guides.mjs` passes `{ withNodeMetadata: true }` to `scanAllArtifacts`. Manifest size grows ~60% on typical projects.
+- `docs/guides/hooks.md` refreshed: superseded per-command `*-scan.mjs` rows replaced with a single `graph-inject` row; `graph-rollups.mjs` added to Utility Files table; `sync-guides` description updated.
+
+### Breaking changes
+
+None. Manifest schema is additive.
+
 ## [4.11.0] - 2026-05-01
 
 ### Added

@@ -57,7 +57,7 @@ Scans the `projects/` directory for all `ARC-*` artifacts and applies seven dete
 
 ### Steps 1-3: Pre-processed by Hook
 
-> **Note**: The **Health Pre-processor Hook** (`health-scan.mjs`) has already completed Steps 1-3 automatically:
+> **Note**: The **Health Pre-processor Hook** (`graph-inject.mjs`, health recipe) has already completed Steps 1-3 automatically:
 >
 > 1. **Scan Scope** — identified all projects and ARC-* artifacts
 > 2. **Metadata Extraction** — read every artifact and extracted dates, statuses, requirement IDs, review verdicts, and conditions

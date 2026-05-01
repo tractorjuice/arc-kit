@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.12.0] - 2026-05-01
+
+### Added
+
+- **Document Map + Dashboard graph health rollups (#383).** The `/arckit.pages` dashboard now visualises the same health/coverage/compliance signals that `/arckit.navigator` and `/arckit.graph-report` compute, sourced from a shared rollup module so there is no duplicate scan.
+  - **`arckit-claude/hooks/graph-rollups.mjs`** — new shared module exporting `tagNodeHealth()`, `computeAllProjectRollups()`, and the canonical `HIGH_SEVERITY_TYPES` / `ESSENTIAL_TYPES` / `CONTEXTUAL_TYPES` / `STALE_THRESHOLD_DAYS` constants used by both `graph-inject.mjs` and `sync-guides.mjs`.
+  - **`manifest.json` enrichments** (written by `sync-guides`):
+    - `dependencyGraph.nodes[*].health = { stale, draft, orphan, ageDays }` per node.
+    - `manifest.projectHealth` block with per-project coverage %, compliance readiness %, density, recommendations (top 3), stale/draft/orphan counts.
+  - **Document Map** tints nodes by health (stale = red border, draft = amber dashed, orphan = existing dashed); legend extended with three health swatches; tooltip shows a `⚠ Stale (151d) · Draft` row when any flag is set.
+  - **New "Project Health & Next Steps" dashboard panel** renders one card per project with coverage / compliance gauges, health badges, and the top 3 recommended commands.
+  - **`docs/llms.txt`** gains an opt-in `## Project status` section — one line per project with coverage %, compliance %, draft/stale/orphan counts, and the top recommended next command. Lets external agents fetch llms.txt and answer "where is this repo at" without scraping the dashboard.
+
+### Changed
+
+- **`graph-inject.mjs` constants extracted** to `graph-rollups.mjs` (no behaviour change). All `/arckit.navigator`, `/arckit.graph-report`, `/arckit.health`, `/arckit.analyze`, `/arckit.traceability` outputs are byte-stable.
+- **`sync-guides.mjs`** now passes `{ withNodeMetadata: true }` to `scanAllArtifacts` so dependency-graph nodes carry version, owner, classification, and `reqIds`. Manifest size grows roughly 50–60% on typical projects (e.g. 80 KB → 127 KB for a 38-artifact project).
+- **Hooks guide** (`docs/guides/hooks.md` + `arckit-claude/docs/guides/hooks.md`) refreshed: the per-command `*-scan.mjs` rows that were superseded in v4.11.0 are now replaced with a single `graph-inject` row listing all seven matchers; `graph-rollups.mjs` added to the Utility Files table; `sync-guides` description updated to mention the new manifest enrichments.
+
+### Internal
+
+- All seven `pages-template.html` copies (plugin + `.arckit/templates/` + 5 generated extension copies) propagated via `python scripts/converter.py` after the plugin source change. The `.arckit/templates/` CLI fallback was 10 days behind the plugin source and has been re-synced.
+
+### Breaking changes
+
+None. Manifest schema is additive — older dashboard JS that does not read `dependencyGraph.nodes[*].health` or `manifest.projectHealth` continues to render correctly. Non-Claude distributions (Codex / Copilot / OpenCode / Gemini / Paperclip) ship the new template but do not run the hook, so `manifest.projectHealth` is absent and the new panel renders nothing — no regression. Wiring those distributions into the rollup is a separate piece of work.
+
 ## [4.11.0] - 2026-05-01
 
 ### Added
