@@ -22,7 +22,7 @@ Four instruments. Four clearly specified artefacts per service. A taskforce-read
 
 ## One Command per Cabinet Instrument
 
-ArcKit v4.10 ships one official-baseline command per Cabinet instrument, in a one-to-one mapping that mirrors the structure of the decree itself and lets architects deliver the four required artefacts with confidence.
+ArcKit v4.10.1 ships one community-contributed command per Cabinet instrument, in a one-to-one mapping that mirrors the structure of the decree itself and lets architects deliver the four required artefacts with confidence. The community-overlay marker reflects the maintenance posture, not the technical maturity: the canonical chain holds, the regression sweep passes, and qualified UAE federal compliance counsel should review output before reliance until a UAE domain co-maintainer joins to share the citation-accuracy load.
 
 `uae-zero-bureaucracy` produces the Service Catalogue review against the Code for Government Services, with the bureaucracy-elimination baseline and customer-experience KPIs the Code expects. The architect runs the command against an existing service definition and receives a structured artefact ready for taskforce review.
 
@@ -76,7 +76,7 @@ For the policy reader who wants the complete inventory in one place, here is the
 
 **Procurement.** `uae-procurement` (Federal Decree-Law 11/2023 procurement strategy).
 
-Twelve commands in total. Every one is anchored on a published federal instrument or, in the case of the autonomy tier, on the operational pattern federal entities have already converged on. All ship as official baseline, taking the officially-maintained command count from 68 to 80, and all are available today via marketplace install or `pip install arckit-cli`.
+Twelve commands in total. Every one is anchored on a published federal instrument or, in the case of the autonomy tier, on the operational pattern federal entities have already converged on. All ship as a community-contributed overlay (officially-maintained baseline stays at 68; community-contributed overlays grow from 21 to 33), and all are available today via marketplace install or `pip install arckit-cli`. The overlay is solo-maintained while a UAE domain co-maintainer is being recruited; once one joins, the overlay becomes a candidate for official-tier promotion.
 
 ## A Document Control Header That Speaks the Federal Language
 
@@ -102,7 +102,7 @@ A `uae-translate` utility command will produce Arabic-language companion artefac
 
 Sector-specific overlays for the Abu Dhabi Healthcare Information and Cyber Security Standard (ADHICS), the Dubai Information Security Regulation, and the Central Bank of UAE's AI guidance for financial-sector entities will land as community-contributed extensions, building on the same model that supports the existing EU, French, and Austrian community overlays in ArcKit. UAE domain experts interested in maintaining these extensions are warmly invited to reach out via the repository.
 
-The maintainer is actively recruiting a UAE-based domain co-maintainer for the official baseline as well, to share the citation-accuracy review burden as UAE federal regulatory text continues to evolve. This is a strong opportunity for a senior UAE federal architect to shape ArcKit's UAE trajectory directly.
+The maintainer is actively recruiting a UAE-based domain co-maintainer for the federal overlay as well, to share the citation-accuracy review burden as UAE federal regulatory text continues to evolve. The overlay ships as community-contributed today precisely because solo CODEOWNERS is not a sustainable maintenance posture for fast-moving federal regulatory text; a co-maintainer is the prerequisite for any future official-tier promotion. This is a strong opportunity for a senior UAE federal architect to shape ArcKit's UAE trajectory directly.
 
 ## Standing Ready for the Federal Transformation
 
