@@ -108,6 +108,34 @@ font_source = load_font(font_bold_paths, 12)
 font_source_detail = load_font(font_regular_paths, 11)
 
 
+# --- UAE flag (Pantone-matched, standard 1:2 proportions) ---
+# PMS 485 red, PMS 348 green, black, white. Vertical red band on the left
+# at 1/4 of the width; three equal horizontal bands (green/white/black) on
+# the right.
+UAE_RED = (206, 17, 38)
+UAE_GREEN = (0, 122, 51)
+UAE_BLACK = (0, 0, 0)
+UAE_WHITE = (255, 255, 255)
+
+
+def draw_uae_flag(x, y, w):
+    """Draw the UAE flag at (x, y) with width w. Height is w/2 (1:2 ratio)."""
+    h = w // 2
+    red_w = w // 4
+    band_h = h // 3
+
+    # Red vertical band (left)
+    draw.rectangle([(x, y), (x + red_w, y + h)], fill=UAE_RED)
+    # Green band (top right)
+    draw.rectangle([(x + red_w, y), (x + w, y + band_h)], fill=UAE_GREEN)
+    # White band (middle right)
+    draw.rectangle([(x + red_w, y + band_h), (x + w, y + 2 * band_h)], fill=UAE_WHITE)
+    # Black band (bottom right)
+    draw.rectangle([(x + red_w, y + 2 * band_h), (x + w, y + h)], fill=UAE_BLACK)
+    # Subtle outline so the flag reads cleanly on the dark background
+    draw.rectangle([(x, y), (x + w - 1, y + h - 1)], outline=(255, 255, 255, 40), width=1)
+
+
 # --- Top-right badges ---
 def draw_badge(text, x, y, fill_colour, outline_colour, text_colour):
     bb = draw.textbbox((0, 0), text, font=font_badge_mono)
@@ -136,6 +164,12 @@ bb = draw.textbbox((0, 0), decree_text, font=font_badge_mono)
 ubw = bb[2] - bb[0] + 18
 ubx = bx - ubw - 8
 draw_badge(decree_text, ubx, by, GREEN, GREEN, GREEN_TEXT)
+
+# UAE flag to the left of the badges (44px wide, 22px tall)
+flag_w = 44
+flag_x = ubx - flag_w - 10
+flag_y = by + 1  # align vertically with the badge text baseline
+draw_uae_flag(flag_x, flag_y, flag_w)
 
 # --- Eyebrow + Title ---
 tx, ty = 40, 52
