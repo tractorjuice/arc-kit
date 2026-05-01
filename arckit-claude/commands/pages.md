@@ -297,21 +297,21 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | ATNISG | `ARC-*-ATNISG-*.md` | Austrian NISG (NIS2) Assessment |
 | **Procurement (Community-contributed — Austrian Government)** | | | |
 | | BVERGG | `ARC-*-BVERGG-*.md` | Austrian Public Procurement (BVergG 2018) |
-| **Compliance (UAE Federal Overlay)** | | | |
+| **Compliance (Community-contributed — UAE Federal Overlay)** | | | |
 | | PDPL | `ARC-*-PDPL-*.md` | UAE PDPL Compliance Assessment |
 | | IAS | `ARC-*-IAS-*.md` | UAE IAS Statement of Applicability |
 | | AICH | `ARC-*-AICH-*.md` | UAE AI Charter Compliance Assessment |
-| **Architecture (UAE Federal Overlay)** | | | |
+| **Architecture (Community-contributed — UAE Federal Overlay)** | | | |
 | | CRES | `ARC-*-CRES-*.md` | UAE Sovereign Cloud Residency Assessment |
 | | UPASS | `ARC-*-UPASS-*.md` | UAE Pass Integration Design |
 | | AUTI | `ARC-*-AUTI-*.md` | UAE AI Autonomy Tier Posture |
-| **Governance (UAE Federal Overlay)** | | | |
+| **Governance (Community-contributed — UAE Federal Overlay)** | | | |
 | | CLAS | `ARC-*-CLAS-*.md` | UAE Smart Data Classification Register |
 | | ZBUR | `ARC-*-ZBUR-*.md` | UAE Zero Bureaucracy Service Review |
 | | DREC | `ARC-*-DREC-*.md` | UAE Digital Records Plan |
 | | DSHR | `ARC-*-DSHR-*.md` | UAE Data Sharing Agreement |
 | | NPRA | `ARC-*-NPRA-*.md` | UAE National Priorities Alignment Statement |
-| **Procurement (UAE Federal Overlay)** | | | |
+| **Procurement (Community-contributed — UAE Federal Overlay)** | | | |
 | | FPRO | `ARC-*-FPRO-*.md` | UAE Federal Procurement Strategy |
 
 > **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit.pages` includes the artifact in the dashboard.
