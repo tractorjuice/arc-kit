@@ -412,11 +412,87 @@ test('graph-inject responds to /arckit:graph-report', () => {
     assert.ok(ctx.includes('Compliance Readiness'));
     assert.ok(ctx.includes('001-fixture'));
     assert.ok(ctx.includes('002-second'));
-    // Compliance readiness section labels HIGH-severity types
-    assert.ok(ctx.includes('TCOP'));
+    // Per-regime readiness — the fixture has only universal artifacts, so the
+    // Universal row should appear and RISK (universal HIGH) should be listed.
+    assert.ok(ctx.includes('Universal'));
     assert.ok(ctx.includes('RISK'));
+    assert.ok(ctx.includes('Engaged regimes'));
     // Density interpretation legend present
     assert.ok(ctx.includes('Density'));
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('graph-inject scores community regimes in /arckit:graph-report', () => {
+  // Regression for the v4.11.0 community-awareness gap: a project with only
+  // UAE/EU/FR/AT compliance artifacts should not show 0% Universal readiness
+  // and MUST surface a per-regime row (UAE, EU, FR, Austria) in the readiness
+  // table — the old hardcoded HIGH list only recognised UK Gov + MOD.
+  const { root, projectsDir } = makeFixture();
+  try {
+    const docCtl = (id, type) =>
+      `# ${type}\n\n| Field | Value |\n|---|---|\n| **Document ID** | ${id} |\n`;
+    // UAE PDPL (HIGH severity, regime=UAE)
+    writeFileSync(join(projectsDir, '001-fixture', 'ARC-001-PDPL-v1.0.md'), docCtl('ARC-001-PDPL-v1.0', 'PDPL'));
+    // EU AI Act (HIGH severity, regime=EU)
+    writeFileSync(join(projectsDir, '001-fixture', 'ARC-001-AIACT-v1.0.md'), docCtl('ARC-001-AIACT-v1.0', 'AIACT'));
+    // French EBIOS (HIGH severity, regime=FR)
+    writeFileSync(join(projectsDir, '001-fixture', 'ARC-001-EBIOS-v1.0.md'), docCtl('ARC-001-EBIOS-v1.0', 'EBIOS'));
+    // Austrian DSG (HIGH severity, regime=AT)
+    writeFileSync(join(projectsDir, '001-fixture', 'ARC-001-ATDSG-v1.0.md'), docCtl('ARC-001-ATDSG-v1.0', 'ATDSG'));
+
+    const { code, stdout, stderr } = runHook('/arckit:graph-report', projectsDir);
+    assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
+    const out = JSON.parse(stdout);
+    const ctx = out.hookSpecificOutput.additionalContext;
+
+    // Engaged regimes column lists every community regime present.
+    assert.ok(ctx.includes('UAE'), 'expected UAE in engaged regimes');
+    assert.ok(ctx.includes('EU'), 'expected EU in engaged regimes');
+    assert.ok(ctx.includes('FR'), 'expected FR in engaged regimes');
+    assert.ok(ctx.includes('AT'), 'expected AT in engaged regimes');
+
+    // Per-regime readiness rows appear with human labels and the present types.
+    assert.ok(ctx.includes('| France |'), 'expected France readiness row');
+    assert.ok(ctx.includes('| Austria |'), 'expected Austria readiness row');
+    assert.ok(/PDPL/.test(ctx), 'PDPL should be present in UAE readiness row');
+    assert.ok(/AIACT/.test(ctx), 'AIACT should be present in EU readiness row');
+    assert.ok(/EBIOS/.test(ctx), 'EBIOS should be present in France readiness row');
+    assert.ok(/ATDSG/.test(ctx), 'ATDSG should be present in Austria readiness row');
+
+    // The project is NOT engaged with UK Gov so TCOP should NOT show as missing.
+    assert.ok(!/\| UK Gov \|/.test(ctx), 'UK Gov readiness row should be suppressed when not engaged');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('graph-inject analyze surfaces all regimes in Compliance Artifact Presence', () => {
+  // Regression for the v4.11.0 community-awareness gap: the analyze pre-processor
+  // previously listed only "UK Gov (TCOP/AIPB/ATRS)" and "MOD (SECD-MOD)". It
+  // must now show one row per regime (UK, MOD, EU, FR, AT, UAE), populated for
+  // engaged regimes and 'none found' for the rest.
+  const { root, projectsDir } = makeFixture();
+  try {
+    const docCtl = (id) =>
+      `# x\n\n| Field | Value |\n|---|---|\n| **Document ID** | ${id} |\n`;
+    writeFileSync(join(projectsDir, '001-fixture', 'ARC-001-PDPL-v1.0.md'), docCtl('ARC-001-PDPL-v1.0'));
+    writeFileSync(join(projectsDir, '001-fixture', 'ARC-001-RGPD-v1.0.md'), docCtl('ARC-001-RGPD-v1.0'));
+
+    const { code, stdout, stderr } = runHook('/arckit:analyze 001-fixture', projectsDir);
+    assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
+    const out = JSON.parse(stdout);
+    const ctx = out.hookSpecificOutput.additionalContext;
+
+    // Every regime row appears: the engaged ones populated, the unengaged
+    // ones reading 'none found' rather than being omitted.
+    assert.ok(/-\s+\*\*UK Gov\*\*.*: none found/.test(ctx), 'UK Gov row should show none found');
+    assert.ok(/-\s+\*\*MOD\*\*.*: none found/.test(ctx), 'MOD row should show none found');
+    assert.ok(/-\s+\*\*UAE\*\*.*: PDPL/.test(ctx), 'UAE row should list PDPL');
+    assert.ok(/-\s+\*\*EU\*\*.*: RGPD/.test(ctx), 'EU row should list RGPD');
+    assert.ok(/-\s+\*\*France\*\*.*: none found/.test(ctx), 'France row should appear');
+    assert.ok(/-\s+\*\*Austria\*\*.*: none found/.test(ctx), 'Austria row should appear');
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

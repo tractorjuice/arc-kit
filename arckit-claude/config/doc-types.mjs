@@ -22,6 +22,14 @@
  *              Reveal.js exports). The /arckit.pages scanner enforces the
  *              extension — `ARC-001-DECK-v1.0.md` and `ARC-001-REQ-v1.0.html`
  *              are both rejected as type/extension mismatches.
+ *   regime:    Optional jurisdiction tag — 'UK' | 'MOD' | 'EU' | 'FR' | 'AT' | 'UAE'.
+ *              Drives per-regime grouping in /arckit:navigator and
+ *              /arckit:graph-report. Universal best-practice types (RISK, SECD,
+ *              TRAC, CONF, PRIN-COMP) deliberately omit it.
+ *   severity:  Optional governance weight — 'HIGH' marks a type that counts
+ *              toward the Compliance Readiness scorecard in /arckit:graph-report.
+ *              HIGH-severity coverage is computed per-regime so a UAE-only
+ *              project is not penalised for missing UK Gov artifacts.
  */
 
 // All valid ArcKit document type codes with display name and category.
@@ -51,24 +59,24 @@ export const DOC_TYPES = {
   'DFD':       { name: 'Data Flow Diagram',                category: 'Architecture' },
   'ADR':       { name: 'Architecture Decision Records',    category: 'Architecture' },
   'PLAT':      { name: 'Platform Design',                  category: 'Architecture' },
-  // Governance
-  'RISK':      { name: 'Risk Register',                    category: 'Governance' },
-  'TRAC':      { name: 'Traceability Matrix',              category: 'Governance' },
-  'PRIN-COMP': { name: 'Principles Compliance',            category: 'Governance' },
-  'CONF':      { name: 'Conformance Assessment',           category: 'Governance' },
+  // Governance — universal best-practice (no regime tag, HIGH-severity)
+  'RISK':      { name: 'Risk Register',                    category: 'Governance', severity: 'HIGH' },
+  'TRAC':      { name: 'Traceability Matrix',              category: 'Governance', severity: 'HIGH' },
+  'PRIN-COMP': { name: 'Principles Compliance',            category: 'Governance', severity: 'HIGH' },
+  'CONF':      { name: 'Conformance Assessment',           category: 'Governance', severity: 'HIGH' },
   'PRES':      { name: 'Presentation',                     category: 'Reporting' },
   'DECK':      { name: 'Executive Deck',                    category: 'Reporting', extension: '.html' },
   'ANAL':      { name: 'Analysis Report',                  category: 'Governance' },
   'GAPS':      { name: 'Gap Analysis',                     category: 'Governance' },
-  // Compliance
-  'TCOP':      { name: 'TCoP Assessment',                  category: 'Compliance' },
-  'SECD':      { name: 'Secure by Design',                 category: 'Compliance' },
-  'SECD-MOD':  { name: 'MOD Secure by Design',             category: 'Compliance' },
-  'AIPB':      { name: 'AI Playbook Assessment',           category: 'Compliance' },
-  'ATRS':      { name: 'ATRS Record',                      category: 'Compliance' },
-  'DPIA':      { name: 'Data Protection Impact Assessment', category: 'Compliance' },
-  'JSP936':    { name: 'JSP 936 Assessment',               category: 'Compliance' },
-  'SVCASS':    { name: 'Service Assessment',               category: 'Compliance' },
+  // Compliance — UK Gov + MOD officially-maintained
+  'TCOP':      { name: 'TCoP Assessment',                  category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
+  'SECD':      { name: 'Secure by Design',                 category: 'Compliance',                severity: 'HIGH' },
+  'SECD-MOD':  { name: 'MOD Secure by Design',             category: 'Compliance', regime: 'MOD', severity: 'HIGH' },
+  'AIPB':      { name: 'AI Playbook Assessment',           category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
+  'ATRS':      { name: 'ATRS Record',                      category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
+  'DPIA':      { name: 'Data Protection Impact Assessment', category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
+  'JSP936':    { name: 'JSP 936 Assessment',               category: 'Compliance', regime: 'MOD', severity: 'HIGH' },
+  'SVCASS':    { name: 'Service Assessment',               category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
   // Operations
   'SNOW':      { name: 'ServiceNow Design',                category: 'Operations' },
   'DEVOPS':    { name: 'DevOps Strategy',                  category: 'Operations' },
@@ -94,44 +102,73 @@ export const DOC_TYPES = {
   // Reporting
   'STORY':     { name: 'Project Story',                    category: 'Reporting' },
   // EU Regulatory Compliance (Community-contributed, maintained by @thomas-jardinet)
-  'RGPD':      { name: 'GDPR Compliance Assessment',                   category: 'Compliance' },
-  'NIS2':      { name: 'NIS2 Compliance Assessment',                   category: 'Compliance' },
-  'AIACT':     { name: 'EU AI Act Compliance Assessment',              category: 'Compliance' },
-  'DORA':      { name: 'DORA Compliance Assessment',                   category: 'Compliance' },
-  'CRA':       { name: 'EU Cyber Resilience Act Assessment',           category: 'Compliance' },
-  'DSA':       { name: 'EU Digital Services Act Assessment',           category: 'Compliance' },
-  'DATAACT':   { name: 'EU Data Act Compliance Assessment',            category: 'Compliance' },
+  'RGPD':      { name: 'GDPR Compliance Assessment',                   category: 'Compliance',  regime: 'EU', severity: 'HIGH' },
+  'NIS2':      { name: 'NIS2 Compliance Assessment',                   category: 'Compliance',  regime: 'EU', severity: 'HIGH' },
+  'AIACT':     { name: 'EU AI Act Compliance Assessment',              category: 'Compliance',  regime: 'EU', severity: 'HIGH' },
+  'DORA':      { name: 'DORA Compliance Assessment',                   category: 'Compliance',  regime: 'EU', severity: 'HIGH' },
+  'CRA':       { name: 'EU Cyber Resilience Act Assessment',           category: 'Compliance',  regime: 'EU', severity: 'HIGH' },
+  'DSA':       { name: 'EU Digital Services Act Assessment',           category: 'Compliance',  regime: 'EU' },
+  'DATAACT':   { name: 'EU Data Act Compliance Assessment',            category: 'Compliance',  regime: 'EU' },
   // French Government (Community-contributed, maintained by @thomas-jardinet)
-  'IRN':       { name: 'IRN — Indice de Résilience Numérique',         category: 'Governance' },
-  'CNIL':      { name: 'CNIL / French GDPR Assessment',                category: 'Compliance' },
-  'SECNUM':    { name: 'SecNumCloud 3.2 Assessment',                   category: 'Compliance' },
-  'MARPUB':    { name: 'French Public Procurement',                    category: 'Procurement' },
-  'DINUM':     { name: 'DINUM Standards Assessment',                   category: 'Compliance' },
-  'EBIOS':     { name: 'EBIOS Risk Manager Study',                     category: 'Governance' },
-  'ANSSI':     { name: 'ANSSI Security Posture Assessment',            category: 'Compliance' },
-  'CARTO':     { name: 'ANSSI Information System Cartography',         category: 'Architecture' },
-  'DR':        { name: 'Diffusion Restreinte Handling Assessment',     category: 'Compliance' },
-  'ALGO':      { name: 'Public Algorithm Transparency Notice',         category: 'Compliance' },
-  'PSSI':      { name: 'Information System Security Policy',           category: 'Compliance' },
-  'REUSE':     { name: 'Public Code Reuse Assessment',                 category: 'Procurement' },
+  'IRN':       { name: 'IRN — Indice de Résilience Numérique',         category: 'Governance',  regime: 'FR' },
+  'CNIL':      { name: 'CNIL / French GDPR Assessment',                category: 'Compliance',  regime: 'FR', severity: 'HIGH' },
+  'SECNUM':    { name: 'SecNumCloud 3.2 Assessment',                   category: 'Compliance',  regime: 'FR', severity: 'HIGH' },
+  'MARPUB':    { name: 'French Public Procurement',                    category: 'Procurement', regime: 'FR' },
+  'DINUM':     { name: 'DINUM Standards Assessment',                   category: 'Compliance',  regime: 'FR' },
+  'EBIOS':     { name: 'EBIOS Risk Manager Study',                     category: 'Governance',  regime: 'FR', severity: 'HIGH' },
+  'ANSSI':     { name: 'ANSSI Security Posture Assessment',            category: 'Compliance',  regime: 'FR', severity: 'HIGH' },
+  'CARTO':     { name: 'ANSSI Information System Cartography',         category: 'Architecture', regime: 'FR' },
+  'DR':        { name: 'Diffusion Restreinte Handling Assessment',     category: 'Compliance',  regime: 'FR' },
+  'ALGO':      { name: 'Public Algorithm Transparency Notice',         category: 'Compliance',  regime: 'FR' },
+  'PSSI':      { name: 'Information System Security Policy',           category: 'Compliance',  regime: 'FR', severity: 'HIGH' },
+  'REUSE':     { name: 'Public Code Reuse Assessment',                 category: 'Procurement', regime: 'FR' },
   // Austrian Government (Community-contributed, maintained by @gtonic)
-  'ATDSG':     { name: 'Austrian Data Protection Assessment',          category: 'Compliance' },
-  'ATNISG':    { name: 'Austrian NISG (NIS2) Assessment',              category: 'Compliance' },
-  'BVERGG':    { name: 'Austrian Public Procurement (BVergG 2018)',    category: 'Procurement' },
+  'ATDSG':     { name: 'Austrian Data Protection Assessment',          category: 'Compliance',  regime: 'AT', severity: 'HIGH' },
+  'ATNISG':    { name: 'Austrian NISG (NIS2) Assessment',              category: 'Compliance',  regime: 'AT', severity: 'HIGH' },
+  'BVERGG':    { name: 'Austrian Public Procurement (BVergG 2018)',    category: 'Procurement', regime: 'AT' },
   // UAE Federal Overlay (Community-contributed, maintained by @tractorjuice — recruiting UAE domain co-maintainer) — anchored on 23 April 2026 Cabinet decree
-  'PDPL':      { name: 'UAE PDPL Compliance Assessment',               category: 'Compliance' },
-  'IAS':       { name: 'UAE IAS Statement of Applicability',           category: 'Compliance' },
-  'CRES':      { name: 'UAE Sovereign Cloud Residency Assessment',     category: 'Architecture' },
-  'CLAS':      { name: 'UAE Smart Data Classification Register',       category: 'Governance' },
-  'UPASS':     { name: 'UAE Pass Integration Design',                  category: 'Architecture' },
-  'ZBUR':      { name: 'UAE Zero Bureaucracy Service Review',          category: 'Governance' },
-  'DREC':      { name: 'UAE Digital Records Plan',                     category: 'Governance' },
-  'DSHR':      { name: 'UAE Data Sharing Agreement',                   category: 'Governance' },
-  'NPRA':      { name: 'UAE National Priorities Alignment Statement',  category: 'Governance' },
-  'AICH':      { name: 'UAE AI Charter Compliance Assessment',         category: 'Compliance' },
-  'AUTI':      { name: 'UAE AI Autonomy Tier Posture',                 category: 'Architecture' },
-  'FPRO':      { name: 'UAE Federal Procurement Strategy',             category: 'Procurement' },
+  'PDPL':      { name: 'UAE PDPL Compliance Assessment',               category: 'Compliance',  regime: 'UAE', severity: 'HIGH' },
+  'IAS':       { name: 'UAE IAS Statement of Applicability',           category: 'Compliance',  regime: 'UAE', severity: 'HIGH' },
+  'CRES':      { name: 'UAE Sovereign Cloud Residency Assessment',     category: 'Architecture', regime: 'UAE' },
+  'CLAS':      { name: 'UAE Smart Data Classification Register',       category: 'Governance',  regime: 'UAE' },
+  'UPASS':     { name: 'UAE Pass Integration Design',                  category: 'Architecture', regime: 'UAE' },
+  'ZBUR':      { name: 'UAE Zero Bureaucracy Service Review',          category: 'Governance',  regime: 'UAE' },
+  'DREC':      { name: 'UAE Digital Records Plan',                     category: 'Governance',  regime: 'UAE' },
+  'DSHR':      { name: 'UAE Data Sharing Agreement',                   category: 'Governance',  regime: 'UAE' },
+  'NPRA':      { name: 'UAE National Priorities Alignment Statement',  category: 'Governance',  regime: 'UAE' },
+  'AICH':      { name: 'UAE AI Charter Compliance Assessment',         category: 'Compliance',  regime: 'UAE', severity: 'HIGH' },
+  'AUTI':      { name: 'UAE AI Autonomy Tier Posture',                 category: 'Architecture', regime: 'UAE', severity: 'HIGH' },
+  'FPRO':      { name: 'UAE Federal Procurement Strategy',             category: 'Procurement', regime: 'UAE' },
 };
+
+// Derived: regimes in canonical order (officially-maintained first, then community alphabetical)
+export const REGIMES = ['UK', 'MOD', 'EU', 'FR', 'AT', 'UAE'];
+
+// Human-readable regime labels
+export const REGIME_LABELS = {
+  UK:  'UK Gov',
+  MOD: 'MOD',
+  EU:  'EU',
+  FR:  'France',
+  AT:  'Austria',
+  UAE: 'UAE',
+};
+
+// Derived: HIGH-severity type codes, grouped per regime (plus 'UNIVERSAL' for
+// types that apply regardless of jurisdiction).
+export const HIGH_SEVERITY_BY_REGIME = (() => {
+  const map = { UNIVERSAL: [] };
+  for (const r of REGIMES) map[r] = [];
+  for (const [code, info] of Object.entries(DOC_TYPES)) {
+    if (info.severity !== 'HIGH') continue;
+    const bucket = info.regime || 'UNIVERSAL';
+    (map[bucket] ||= []).push(code);
+  }
+  return map;
+})();
+
+// Derived: every HIGH-severity type code (flat list).
+export const HIGH_SEVERITY_TYPES = Object.values(HIGH_SEVERITY_BY_REGIME).flat();
 
 // Multi-instance types that require sequence numbers (e.g. ADR-001, RSCH-002)
 export const MULTI_INSTANCE_TYPES = new Set([

@@ -38,7 +38,13 @@ import {
   extractRequirementIds,
 } from './hook-utils.mjs';
 import { scanAllArtifacts } from './graph-utils.mjs';
-import { DOC_TYPES } from '../config/doc-types.mjs';
+import {
+  DOC_TYPES,
+  HIGH_SEVERITY_TYPES,
+  HIGH_SEVERITY_BY_REGIME,
+  REGIMES,
+  REGIME_LABELS,
+} from '../config/doc-types.mjs';
 
 // ── Recipe table ───────────────────────────────────────────────────────────
 
@@ -286,7 +292,7 @@ function formatImpact(graph, prompt) {
   lines.push('### Impact Severity Classification');
   lines.push('| Category | Severity | Document Types |');
   lines.push('|----------|----------|---------------|');
-  lines.push('| Compliance/Governance | HIGH | TCOP, SECD, DPIA, SVCASS, RISK, TRAC, CONF |');
+  lines.push(`| Compliance/Governance | HIGH | ${HIGH_SEVERITY_TYPES.join(', ')} |`);
   lines.push('| Architecture | MEDIUM | HLDR, DLDR, ADR, DATA, DIAG, PLAT |');
   lines.push('| Planning/Reporting | LOW | PLAN, ROAD, BKLG, SOBC, OPS, STORY, PRES |');
   lines.push('');
@@ -299,11 +305,6 @@ function formatImpact(graph, prompt) {
 
   return lines.join('\n');
 }
-
-// Doc types whose category yields HIGH severity in classifySeverity().
-// Used by /arckit:graph-report for "compliance readiness" scoring.
-const HIGH_SEVERITY_TYPES = ['TCOP', 'SECD', 'SECD-MOD', 'DPIA', 'SVCASS',
-  'RISK', 'TRAC', 'CONF', 'PRIN-COMP', 'AIPB', 'ATRS', 'JSP936'];
 
 function formatGraphReport(graph) {
   const workingProjects = graph.projects.filter(p => p !== '000-global');
@@ -340,11 +341,32 @@ function formatGraphReport(graph) {
       }
     }
 
-    // Compliance readiness: present HIGH-severity types vs total HIGH-severity types
-    const presentHigh = HIGH_SEVERITY_TYPES.filter(t => presentTypes.has(t));
-    const compliancePct = HIGH_SEVERITY_TYPES.length === 0
-      ? 0
-      : Math.round((presentHigh.length / HIGH_SEVERITY_TYPES.length) * 100);
+    // Compliance readiness — scored per-regime so projects targeting non-UK
+    // jurisdictions are not penalised for missing UK Gov / MOD artifacts.
+    // A project is considered "engaged" with a regime when any of its artifacts
+    // (HIGH-severity or otherwise) carry that regime tag in DOC_TYPES.
+    const engagedRegimes = new Set();
+    for (const t of presentTypes) {
+      const r = DOC_TYPES[t]?.regime;
+      if (r) engagedRegimes.add(r);
+    }
+
+    const readiness = {};
+    // UNIVERSAL is always scored — these types apply regardless of jurisdiction.
+    for (const bucket of ['UNIVERSAL', ...REGIMES]) {
+      if (bucket !== 'UNIVERSAL' && !engagedRegimes.has(bucket)) continue;
+      const types = HIGH_SEVERITY_BY_REGIME[bucket] || [];
+      if (types.length === 0) continue;
+      const present = types.filter(t => presentTypes.has(t));
+      const missing = types.filter(t => !presentTypes.has(t));
+      const pct = Math.round((present.length / types.length) * 100);
+      readiness[bucket] = { present, missing, pct, total: types.length };
+    }
+
+    // Headline: UNIVERSAL pct (regime-agnostic governance hygiene).
+    const headlinePct = readiness.UNIVERSAL?.pct ?? 0;
+    const headlinePresent = readiness.UNIVERSAL?.present.length ?? 0;
+    const headlineTotal = readiness.UNIVERSAL?.total ?? 0;
 
     rows.push({
       project: projectName,
@@ -352,8 +374,11 @@ function formatGraphReport(graph) {
       edgeCount: projectEdges.length,
       density,
       presentByCategory,
-      presentHigh,
-      compliancePct,
+      readiness,
+      engagedRegimes: [...engagedRegimes],
+      headlinePct,
+      headlinePresent,
+      headlineTotal,
     });
   }
 
@@ -379,10 +404,11 @@ function formatGraphReport(graph) {
 
   lines.push('### Project Comparison');
   lines.push('');
-  lines.push('| Project | Artifacts | Cross-refs | Density (refs/doc) | Compliance readiness |');
-  lines.push('|---------|-----------|------------|--------------------|----------------------|');
+  lines.push('| Project | Artifacts | Cross-refs | Density (refs/doc) | Universal readiness | Engaged regimes |');
+  lines.push('|---------|-----------|------------|--------------------|---------------------|-----------------|');
   for (const r of rows) {
-    lines.push(`| ${r.project} | ${r.artifactCount} | ${r.edgeCount} | ${r.density.toFixed(2)} | ${r.presentHigh.length}/${HIGH_SEVERITY_TYPES.length} (${r.compliancePct}%) |`);
+    const regimes = r.engagedRegimes.length > 0 ? r.engagedRegimes.join(', ') : '_none_';
+    lines.push(`| ${r.project} | ${r.artifactCount} | ${r.edgeCount} | ${r.density.toFixed(2)} | ${r.headlinePresent}/${r.headlineTotal} (${r.headlinePct}%) | ${regimes} |`);
   }
   lines.push('');
 
@@ -403,16 +429,25 @@ function formatGraphReport(graph) {
   }
   lines.push('');
 
-  lines.push('### Compliance Readiness (HIGH-severity doc types)');
+  lines.push('### Compliance Readiness (HIGH-severity doc types, scored per-regime)');
   lines.push('');
-  lines.push(`Tracks presence of ${HIGH_SEVERITY_TYPES.length} HIGH-severity types: ${HIGH_SEVERITY_TYPES.join(', ')}`);
+  lines.push('UNIVERSAL types apply regardless of jurisdiction. A regime row only appears when the project has at least one artifact tagged for that regime — projects targeting one jurisdiction are not penalised for missing artifacts from another.');
   lines.push('');
   for (const r of rows) {
-    const missing = HIGH_SEVERITY_TYPES.filter(t => !r.presentHigh.includes(t));
-    lines.push(`#### ${r.project} — ${r.compliancePct}%`);
+    lines.push(`#### ${r.project}`);
     lines.push('');
-    lines.push(`- **Present**: ${r.presentHigh.length > 0 ? r.presentHigh.join(', ') : '_none_'}`);
-    lines.push(`- **Missing**: ${missing.length > 0 ? missing.join(', ') : '_all present_'}`);
+    lines.push('| Regime | Score | Present | Missing |');
+    lines.push('|--------|-------|---------|---------|');
+    const buckets = ['UNIVERSAL', ...REGIMES.filter(reg => r.readiness[reg])];
+    for (const b of buckets) {
+      const data = r.readiness[b];
+      if (!data) continue;
+      const label = b === 'UNIVERSAL' ? 'Universal' : (REGIME_LABELS[b] || b);
+      const score = `${data.present.length}/${data.total} (${data.pct}%)`;
+      const present = data.present.length > 0 ? data.present.join(', ') : '_none_';
+      const missing = data.missing.length > 0 ? data.missing.join(', ') : '_all present_';
+      lines.push(`| ${label} | ${score} | ${present} | ${missing} |`);
+    }
     lines.push('');
   }
 
@@ -690,8 +725,14 @@ function formatAnalyzeProject(projectName, graph, arckitVersion) {
     return true;
   });
 
-  const presentUkGov = ['TCOP', 'AIPB', 'ATRS'].filter(t => typeSet.has(t));
-  const presentMod = ['SECD-MOD'].filter(t => typeSet.has(t));
+  // Per-regime artifact presence — derived from DOC_TYPES so officially-maintained
+  // and community-contributed regimes are surfaced side-by-side.
+  const presentByRegime = {};
+  for (const r of REGIMES) presentByRegime[r] = [];
+  for (const t of typeSet) {
+    const reg = DOC_TYPES[t]?.regime;
+    if (reg && presentByRegime[reg]) presentByRegime[reg].push(t);
+  }
 
   // Requirements + coverage (single-project view)
   const allRequirements = (graph.requirements || {})[projectName] || [];
@@ -786,8 +827,13 @@ function formatAnalyzeProject(projectName, graph, arckitVersion) {
 
   lines.push('### Compliance Artifact Presence');
   lines.push('');
-  lines.push(`- **UK Gov (TCOP/AIPB/ATRS)**: ${presentUkGov.length > 0 ? presentUkGov.join(', ') : 'none found'}`);
-  lines.push(`- **MOD (SECD-MOD)**: ${presentMod.length > 0 ? presentMod.join(', ') : 'none found'}`);
+  for (const reg of REGIMES) {
+    const present = presentByRegime[reg];
+    const label = REGIME_LABELS[reg] || reg;
+    const highForRegime = HIGH_SEVERITY_BY_REGIME[reg] || [];
+    const hint = highForRegime.length > 0 ? ` (HIGH: ${highForRegime.join('/')})` : '';
+    lines.push(`- **${label}**${hint}: ${present.length > 0 ? present.join(', ') : 'none found'}`);
+  }
   lines.push('');
 
   if (allRequirements.length > 0) {
