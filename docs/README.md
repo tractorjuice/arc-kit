@@ -61,6 +61,8 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 
 ### Governance
 
+- [Navigator](guides/navigator.md) - `/arckit.navigator` - Project-level GPS, recommended next command
+- [Graph Report](guides/graph-report.md) - `/arckit.graph-report` - Governance metrics dashboard across all projects
 - [Risk Management](guides/risk-management.md) - `/arckit.risk`
 - [Traceability](guides/traceability.md) - `/arckit.traceability`
 - [Principles Compliance](guides/principles-compliance.md) - `/arckit.principles-compliance`
@@ -262,4 +264,4 @@ Found a gap or want to improve documentation?
 ---
 
 **Last updated**: 2026-02-25
-**ArcKit Version**: 4.10.1
+**ArcKit Version**: 4.11.0
