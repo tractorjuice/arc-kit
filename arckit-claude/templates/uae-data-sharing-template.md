@@ -1,6 +1,6 @@
 # UAE Data Sharing Agreement
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-data-sharing`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-data-sharing`
 
 ## Document Control
 

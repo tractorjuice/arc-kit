@@ -1,6 +1,6 @@
 # UAE Pass Integration Design
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-uaepass`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-uaepass`
 
 ## Document Control
 

@@ -1,6 +1,6 @@
 # UAE AI Autonomy Tier Posture
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-ai-autonomy-tier`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-ai-autonomy-tier`
 
 ## Document Control
 

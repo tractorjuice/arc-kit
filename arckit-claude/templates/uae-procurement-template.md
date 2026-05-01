@@ -1,6 +1,6 @@
 # UAE Federal Procurement Strategy
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-procurement`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-procurement`
 
 ## Document Control
 

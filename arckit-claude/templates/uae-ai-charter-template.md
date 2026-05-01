@@ -1,6 +1,6 @@
 # UAE AI Charter Compliance Assessment
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-ai-charter`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-ai-charter`
 
 ## Document Control
 

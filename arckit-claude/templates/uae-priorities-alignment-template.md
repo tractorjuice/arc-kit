@@ -1,6 +1,6 @@
 # UAE National Priorities Alignment Statement
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-priorities-alignment`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-priorities-alignment`
 
 ## Document Control
 

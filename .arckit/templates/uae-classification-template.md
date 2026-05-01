@@ -1,6 +1,6 @@
 # UAE Smart Data Classification Register
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-classification`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.uae-classification`
 
 ## Document Control
 
