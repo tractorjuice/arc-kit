@@ -1638,9 +1638,28 @@
         .app-depmap-node.orphan rect {
             stroke-dasharray: 4,3;
         }
+        .app-depmap-node.stale rect {
+            stroke: #d4351c;
+            stroke-width: 2;
+        }
+        .app-depmap-node.draft rect {
+            stroke-dasharray: 6,3;
+            stroke: #f47738;
+        }
         .app-depmap-node.dimmed {
             opacity: 0.15;
         }
+        .app-depmap-health-badge {
+            display: inline-block;
+            margin-left: 4px;
+            padding: 1px 6px;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .app-depmap-health-badge--stale { background: #fcebeb; color: #d4351c; }
+        .app-depmap-health-badge--draft { background: #fff4e5; color: #b04300; }
+        .app-depmap-health-badge--orphan { background: #f3f2f1; color: #505a5f; }
         .app-depmap-edge {
             fill: none;
             stroke-width: 1.5;
@@ -2581,6 +2600,72 @@
             return '#d4351c';
         }
 
+        function renderProjectHealthPanel(manifest) {
+            const ph = manifest && manifest.projectHealth;
+            if (!ph || !Array.isArray(ph.projects) || ph.projects.length === 0) return '';
+
+            function pctColor(pct) {
+                if (pct >= 80) return '#00703c';
+                if (pct >= 50) return '#f47738';
+                return '#d4351c';
+            }
+
+            const cards = ph.projects.map(p => {
+                const compPct = p.compliance.pct;
+                const covPct = p.coverage.essentialPct;
+                const recHtml = (p.recommendations || []).slice(0, 3).map(r =>
+                    `<li><code>${escapeHtml(r.command)}</code> <span style="color:var(--text-secondary);font-size:12px">— Tier ${r.tier} ${escapeHtml(r.label)}</span></li>`
+                ).join('');
+                const noRec = (p.recommendations || []).length === 0
+                    ? '<li style="color:#00703c">All essentials present</li>'
+                    : '';
+                const flags = [];
+                if (p.health.stale > 0)  flags.push(`<span class="app-depmap-health-badge app-depmap-health-badge--stale">${p.health.stale} stale</span>`);
+                if (p.health.draft > 0)  flags.push(`<span class="app-depmap-health-badge app-depmap-health-badge--draft">${p.health.draft} draft</span>`);
+                if (p.health.orphan > 0) flags.push(`<span class="app-depmap-health-badge app-depmap-health-badge--orphan">${p.health.orphan} orphan</span>`);
+                const flagHtml = flags.length > 0
+                    ? flags.join(' ')
+                    : '<span style="color:#00703c;font-size:12px">&#10003; No health issues</span>';
+
+                return `
+                    <div style="border:1px solid var(--border-main);border-radius:4px;padding:1rem;background:var(--bg-surface)">
+                        <div style="display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin-bottom:0.5rem">
+                            <strong>${escapeHtml(p.project)}</strong>
+                            <span style="font-size:12px;color:var(--text-secondary)">${p.artifactCount} docs · ${p.edgeCount} refs · density ${p.density}</span>
+                        </div>
+                        <div class="app-dashboard-bar-row" style="margin:0.25rem 0">
+                            <div class="app-dashboard-bar-label" style="font-size:12px">Essential coverage</div>
+                            <div class="app-dashboard-bar-track"><div class="app-dashboard-bar-fill" style="width:${covPct}%;background:${pctColor(covPct)}"></div></div>
+                            <div class="app-dashboard-bar-value">${covPct}%</div>
+                        </div>
+                        <div class="app-dashboard-bar-row" style="margin:0.25rem 0">
+                            <div class="app-dashboard-bar-label" style="font-size:12px">Compliance readiness</div>
+                            <div class="app-dashboard-bar-track"><div class="app-dashboard-bar-fill" style="width:${compPct}%;background:${pctColor(compPct)}"></div></div>
+                            <div class="app-dashboard-bar-value">${p.compliance.presentHigh.length}/${p.compliance.total}</div>
+                        </div>
+                        <div style="margin-top:0.5rem">${flagHtml}</div>
+                        <div style="margin-top:0.75rem">
+                            <div style="font-size:12px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:0.25rem">Next steps</div>
+                            <ul style="margin:0;padding-left:1.25rem;font-size:13px">${recHtml}${noRec}</ul>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            return `
+                <div class="app-dashboard-panel" style="margin-bottom:1.5rem">
+                    <h3>Project Health & Next Steps</h3>
+                    <p style="font-size:12px;color:var(--text-secondary);margin:0 0 0.75rem 0">
+                        Coverage = essential doc types present (Tiers 1–4). Compliance = HIGH-severity governance types present.
+                        Stale = lastModified ${ph.staleThresholdDays}+ days ago. Generated ${new Date(ph.baseline).toLocaleString()}.
+                    </p>
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem">
+                        ${cards}
+                    </div>
+                </div>
+            `;
+        }
+
         function renderVendorScores(manifest) {
             let html = '';
             const projects = (manifest.projects || []).filter(p => p.vendorScores);
@@ -2776,6 +2861,9 @@
                     </div>
                 `;
             }
+
+            // Row 3.7: Compliance & Next Steps (from manifest.projectHealth)
+            html += renderProjectHealthPanel(manifest);
 
             // Row 3.5: Vendor Scores
             html += renderVendorScores(manifest);
@@ -3059,6 +3147,26 @@
                 legendEl.appendChild(item);
             }
 
+            // Health legend separator + entries
+            const healthLegend = [
+                { label: 'Stale', style: 'border:2px solid #d4351c;background:transparent' },
+                { label: 'Draft', style: 'border:2px dashed #f47738;background:transparent' },
+                { label: 'Orphan', style: 'border:1px dashed #505a5f;background:transparent' },
+            ];
+            const sep = document.createElement('span');
+            sep.style.cssText = 'border-left:1px solid var(--border-main);height:14px;margin:0 4px';
+            legendEl.appendChild(sep);
+            for (const h of healthLegend) {
+                const item = document.createElement('span');
+                item.className = 'app-depmap-legend-item';
+                const swatch = document.createElement('span');
+                swatch.className = 'app-depmap-legend-swatch';
+                swatch.style.cssText = h.style;
+                item.appendChild(swatch);
+                item.appendChild(document.createTextNode(' ' + h.label));
+                legendEl.appendChild(item);
+            }
+
             // Tooltip element
             const tooltip = document.createElement('div');
             tooltip.className = 'app-depmap-tooltip';
@@ -3180,14 +3288,20 @@
                     const pos = positions[id];
                     if (!pos) continue;
                     const color = CATEGORY_COLORS[TYPE_CATEGORIES[node.type] || 'Other'] || CATEGORY_COLORS.Other;
-                    const isOrphan = !connectedIds.has(id);
+                    const h = node.health || {};
+                    const isOrphan = !connectedIds.has(id) || !!h.orphan;
 
                     const shortTitle = (node.title || '').length > 16
                         ? node.title.substring(0, 15) + '\u2026'
                         : (node.title || id);
 
+                    const classes = ['app-depmap-node'];
+                    if (isOrphan) classes.push('orphan');
+                    if (h.stale) classes.push('stale');
+                    if (h.draft) classes.push('draft');
+
                     const g = document.createElementNS(NS, 'g');
-                    g.setAttribute('class', 'app-depmap-node' + (isOrphan ? ' orphan' : ''));
+                    g.setAttribute('class', classes.join(' '));
                     g.dataset.id = id;
                     g.dataset.path = node.path;
 
@@ -3266,6 +3380,19 @@
                             tooltip.textContent = '';
                             tooltip.appendChild(ttTitle);
                             tooltip.appendChild(ttMeta);
+
+                            const ndh = nd.health || {};
+                            if (ndh.stale || ndh.draft || ndh.orphan) {
+                                const ttHealth = document.createElement('span');
+                                ttHealth.style.cssText = 'display:block;margin-top:4px;font-weight:600;color:#d4351c';
+                                const flags = [];
+                                if (ndh.stale) flags.push('Stale (' + ndh.ageDays + 'd)');
+                                if (ndh.draft) flags.push('Draft');
+                                if (ndh.orphan) flags.push('Orphan');
+                                ttHealth.textContent = '\u26a0 ' + flags.join(' \u00b7 ');
+                                tooltip.appendChild(ttHealth);
+                            }
+
                             tooltip.style.display = 'block';
                             const r = g.getBoundingClientRect();
                             tooltip.style.left = (r.right + 8) + 'px';

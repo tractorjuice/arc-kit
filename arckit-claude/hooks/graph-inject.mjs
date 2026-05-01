@@ -38,6 +38,12 @@ import {
   extractRequirementIds,
 } from './hook-utils.mjs';
 import { scanAllArtifacts } from './graph-utils.mjs';
+import {
+  HIGH_SEVERITY_TYPES,
+  ESSENTIAL_TYPES,
+  CONTEXTUAL_TYPES,
+  STALE_THRESHOLD_DAYS,
+} from './graph-rollups.mjs';
 import { DOC_TYPES } from '../config/doc-types.mjs';
 
 // ── Recipe table ───────────────────────────────────────────────────────────
@@ -300,11 +306,6 @@ function formatImpact(graph, prompt) {
   return lines.join('\n');
 }
 
-// Doc types whose category yields HIGH severity in classifySeverity().
-// Used by /arckit:graph-report for "compliance readiness" scoring.
-const HIGH_SEVERITY_TYPES = ['TCOP', 'SECD', 'SECD-MOD', 'DPIA', 'SVCASS',
-  'RISK', 'TRAC', 'CONF', 'PRIN-COMP', 'AIPB', 'ATRS', 'JSP936'];
-
 function formatGraphReport(graph) {
   const workingProjects = graph.projects.filter(p => p !== '000-global');
   if (workingProjects.length === 0) return null;
@@ -435,28 +436,6 @@ function formatGraphReport(graph) {
 
   return lines.join('\n');
 }
-
-// Essential doc types per tier — used by navigator to compute coverage and
-// recommend the next command. Tiers represent rough dependency order.
-const ESSENTIAL_TYPES = [
-  { type: 'REQ',  tier: 1, command: '/arckit:requirements',  label: 'Requirements' },
-  { type: 'STKE', tier: 1, command: '/arckit:stakeholders',  label: 'Stakeholder Analysis' },
-  { type: 'RISK', tier: 1, command: '/arckit:risk',          label: 'Risk Register' },
-  { type: 'SOBC', tier: 2, command: '/arckit:sobc',          label: 'Strategic Outline Business Case' },
-  { type: 'ADR',  tier: 3, command: '/arckit:adr',           label: 'Architecture Decision Record' },
-  { type: 'HLDR', tier: 3, command: '/arckit:hld-review',    label: 'High-Level Design Review' },
-  { type: 'TRAC', tier: 4, command: '/arckit:traceability',  label: 'Traceability Matrix' },
-  { type: 'CONF', tier: 4, command: '/arckit:conformance',   label: 'Conformance Assessment' },
-];
-
-const CONTEXTUAL_TYPES = [
-  { type: 'DPIA', command: '/arckit:dpia',   trigger: 'processing personal data' },
-  { type: 'SECD', command: '/arckit:secure', trigger: 'security-sensitive system' },
-  { type: 'TCOP', command: '/arckit:tcop',   trigger: 'UK Gov Service Standard' },
-  { type: 'DATA', command: '/arckit:data-model', trigger: 'DR-* requirements present' },
-];
-
-const STALE_THRESHOLD_DAYS = 90;
 
 function formatNavigator(graph, prompt) {
   const projectArg = parseProjectArg(prompt, 'navigator');
