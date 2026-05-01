@@ -494,8 +494,8 @@
 
 **Key Requirements**:
 
-- [FR-01: Functional requirement example]
-- [NFR-01: Performance requirement example]
+- [FR-001: Functional requirement example]
+- [NFR-001: Performance requirement example]
 - [ETH-01: Ethical requirement example]
 - [SAF-01: Safety requirement example]
 - [SEC-01: Security requirement example]

@@ -252,7 +252,7 @@ graph TB
 | **Incident Response (IR)** | IR-1, IR-2, IR-3 | Defender, Sentinel playbooks |
 | **Posture & Vulnerability (PV)** | PV-1, PV-2, PV-3 | Defender, Update Management |
 | **Endpoint Security (ES)** | ES-1, ES-2 | Defender for Endpoint |
-| **Backup & Recovery (BR)** | BR-1, BR-2, BR-3 | Azure Backup, ASR |
+| **Backup & Recovery (BCK)** | BCK-1, BCK-2, BCK-3 | Azure Backup, ASR |
 | **DevOps Security (DS)** | DS-1, DS-2, DS-3 | DevOps, GitHub Advanced Security |
 | **Governance & Strategy (GS)** | GS-1, GS-2, GS-3 | Policy, Blueprints, Management Groups |
 

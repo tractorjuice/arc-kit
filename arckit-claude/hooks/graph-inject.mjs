@@ -45,6 +45,11 @@ import {
   REGIMES,
   REGIME_LABELS,
 } from '../config/doc-types.mjs';
+import {
+  ESSENTIAL_TYPES,
+  CONTEXTUAL_TYPES,
+  STALE_THRESHOLD_DAYS,
+} from './graph-rollups.mjs';
 
 // ── Recipe table ───────────────────────────────────────────────────────────
 
@@ -128,6 +133,11 @@ const RECIPES = [
         excludeGlobal: true,
         withRequirements: true,
         withVendors: true,
+        // formatTraceability reads node.reqIds for every non-REQ artifact to
+        // build refMap. Without withNodeMetadata, reqIds is never assigned
+        // (graph-utils.mjs:181-188), so refMap stays empty and coverage
+        // reports 0% even when sibling artifacts genuinely cite requirements.
+        withNodeMetadata: true,
         ...(arg ? { projectFilter: arg } : {}),
       };
     },
@@ -471,28 +481,6 @@ function formatGraphReport(graph) {
   return lines.join('\n');
 }
 
-// Essential doc types per tier — used by navigator to compute coverage and
-// recommend the next command. Tiers represent rough dependency order.
-const ESSENTIAL_TYPES = [
-  { type: 'REQ',  tier: 1, command: '/arckit:requirements',  label: 'Requirements' },
-  { type: 'STKE', tier: 1, command: '/arckit:stakeholders',  label: 'Stakeholder Analysis' },
-  { type: 'RISK', tier: 1, command: '/arckit:risk',          label: 'Risk Register' },
-  { type: 'SOBC', tier: 2, command: '/arckit:sobc',          label: 'Strategic Outline Business Case' },
-  { type: 'ADR',  tier: 3, command: '/arckit:adr',           label: 'Architecture Decision Record' },
-  { type: 'HLDR', tier: 3, command: '/arckit:hld-review',    label: 'High-Level Design Review' },
-  { type: 'TRAC', tier: 4, command: '/arckit:traceability',  label: 'Traceability Matrix' },
-  { type: 'CONF', tier: 4, command: '/arckit:conformance',   label: 'Conformance Assessment' },
-];
-
-const CONTEXTUAL_TYPES = [
-  { type: 'DPIA', command: '/arckit:dpia',   trigger: 'processing personal data' },
-  { type: 'SECD', command: '/arckit:secure', trigger: 'security-sensitive system' },
-  { type: 'TCOP', command: '/arckit:tcop',   trigger: 'UK Gov Service Standard' },
-  { type: 'DATA', command: '/arckit:data-model', trigger: 'DR-* requirements present' },
-];
-
-const STALE_THRESHOLD_DAYS = 90;
-
 function formatNavigator(graph, prompt) {
   const projectArg = parseProjectArg(prompt, 'navigator');
   const workingProjects = graph.projects.filter(p => p !== '000-global');
@@ -717,7 +705,7 @@ function formatAnalyzeProject(projectName, graph, arckitVersion) {
     { type: 'TRAC', command: '/arckit:traceability' },
   ];
   const hasDataReqs = artifactMeta.some(m =>
-    m.docType === 'REQ' && /\bDR-\d{3}\b/.test(m.content || '')
+    m.docType === 'REQ' && /\bDR-\d{1,3}\b/.test(m.content || '')
   );
   const missingRecommended = recommended.filter(r => {
     if (typeSet.has(r.type)) return false;
@@ -1247,7 +1235,25 @@ function formatTraceability(graph, prompt) {
 
   const projectName = graph.projects[0];
   const requirements = (graph.requirements || {})[projectName] || [];
-  if (requirements.length === 0) return null;
+  if (requirements.length === 0) {
+    // Surface the failure mode instead of silently exiting — otherwise the
+    // slash-command's manual-fallback path makes it look like the hook never ran.
+    const projectNodes = Object.values(graph.nodes).filter(n => n.project === projectName);
+    if (projectNodes.length === 0) return null;
+    return [
+      '## Traceability Pre-processor (hook)',
+      '',
+      `**No requirements extracted from \`${projectName}\`.**`,
+      '',
+      'The extractor expects requirement headings of the form:',
+      '  - `### BR-1:` / `### BR-001:` (Business)',
+      '  - `#### FR-1:` / `#### FR-001:` (Functional, NFR, INT, DR)',
+      '',
+      'Falling back to manual extraction. If the REQ document uses table-row format only',
+      '(no headings), or a non-standard ID prefix, the hook cannot help and the slash command',
+      'will read artifacts directly.',
+    ].join('\n');
+  }
 
   // Build refMap: reqId → [{ file, type, vendor }]
   // Source: every non-REQ node in this project whose reqIds list cites the ID.

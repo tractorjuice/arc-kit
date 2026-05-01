@@ -54,12 +54,8 @@ These fire only when the matched command is invoked:
 
 | Hook | Fires on | Purpose |
 |------|----------|---------|
-| **sync-guides** | `/arckit:pages` | Syncs guide files, regenerates `docs/index.html` from the pages template, builds `docs/manifest.json`, and writes `docs/llms.txt` (llmstxt.org format) for LLM/agent discovery |
-| **health-scan** | `/arckit:health` | Pre-scans all artifacts for staleness, broken traceability, unresolved conditions, and version drift |
-| **traceability-scan** | `/arckit:traceability` | Pre-extracts requirement IDs from REQ files, cross-references ADRs and vendor documents, computes coverage |
-| **governance-scan** | `/arckit:analyze` | Pre-scans governance posture across projects — compliance gaps, missing artifacts, risk exposure |
-| **search-scan** | `/arckit:search` | Pre-indexes artifact content for the search command |
-| **impact-scan** | `/arckit:impact` | Pre-analyzes cross-artifact dependency chains for impact assessment |
+| **sync-guides** | `/arckit:pages` | Syncs guide files, regenerates `docs/index.html` from the pages template, builds `docs/manifest.json` (including the v2 `dependencyGraph` with per-node `health` flags and the per-project `projectHealth` rollup that powers the dashboard's Project Health panel and Document Map tinting), and writes `docs/llms.txt` (llmstxt.org format) for LLM/agent discovery |
+| **graph-inject** | `/arckit:search`, `/arckit:impact`, `/arckit:traceability`, `/arckit:health`, `/arckit:analyze`, `/arckit:navigator`, `/arckit:graph-report` | Single recipe-driven handler that builds the artifact graph via `graph-utils.mjs` and injects the right pre-extracted context per command — search index, dependency chains, traceability matrix, health findings, governance scan, navigator coverage, or graph-report metrics. Replaces the per-command `*-scan.mjs` handlers |
 
 ## PreToolUse Hooks
 
@@ -108,7 +104,8 @@ These are shared libraries, not hooks themselves:
 | File | Purpose |
 |------|---------|
 | **hook-utils.mjs** | Shared utilities: `parseHookInput()`, `findRepoRoot()`, `extractDocType()`, file I/O helpers |
-| **graph-utils.mjs** | Dependency graph construction for impact analysis |
+| **graph-utils.mjs** | Dependency graph construction (nodes, edges, requirements, principles, risks, vendors, externals) |
+| **graph-rollups.mjs** | Shared health, coverage, and compliance computations: `tagNodeHealth()`, `computeAllProjectRollups()`, plus the canonical `ESSENTIAL_TYPES` / `HIGH_SEVERITY_TYPES` / `CONTEXTUAL_TYPES` / `STALE_THRESHOLD_DAYS` constants used by both `graph-inject` and `sync-guides` |
 | **hooks.json** | Hook registration — maps events and matchers to handler commands |
 
 ## Troubleshooting
@@ -117,4 +114,4 @@ These are shared libraries, not hooks themselves:
 
 **Hook blocking unexpectedly?** PreToolUse hooks that exit with code 2 and output JSON with `"decision": "block"` will block the tool call. Check stderr output for the hook's reasoning.
 
-**Timeout errors?** Each hook has a timeout (5–30 seconds) defined in `hooks.json`. Long-running hooks (health-scan, governance-scan) have 30-second timeouts. If a hook times out, it passes silently.
+**Timeout errors?** Each hook has a timeout (5–30 seconds) defined in `hooks.json`. Long-running invocations of `graph-inject` (e.g. for `/arckit:health` or `/arckit:analyze`) have 30-second timeouts. If a hook times out, it passes silently.

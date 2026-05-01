@@ -28,6 +28,13 @@ import {
   findRepoRoot, parseHookInput,
 } from './hook-utils.mjs';
 import { scanAllArtifacts } from './graph-utils.mjs';
+import {
+  tagNodeHealth,
+  computeAllProjectRollups,
+  HIGH_SEVERITY_TYPES,
+  ESSENTIAL_TYPES,
+  STALE_THRESHOLD_DAYS,
+} from './graph-rollups.mjs';
 
 function walkMdFiles(baseDir, currentDir = baseDir) {
   const results = [];
@@ -593,6 +600,28 @@ function buildLlmsTxt(manifest, repoInfo, version) {
   lines.push('- [Manifest](./manifest.json): Machine-readable JSON index of every artifact, guide, and project in this repository.');
   lines.push('');
 
+  // Project status — coverage / compliance / top recommendation per project,
+  // sourced from manifest.projectHealth (computed by graph-rollups.mjs).
+  // Lets external agents fetch llms.txt and answer "where is this repo at"
+  // without scraping the dashboard.
+  if (manifest.projectHealth && Array.isArray(manifest.projectHealth.projects)
+      && manifest.projectHealth.projects.length > 0) {
+    lines.push('## Project status');
+    lines.push('');
+    for (const p of manifest.projectHealth.projects) {
+      const flags = [];
+      if (p.health.draft > 0)  flags.push(`${p.health.draft} drafts`);
+      if (p.health.stale > 0)  flags.push(`${p.health.stale} stale`);
+      if (p.health.orphan > 0) flags.push(`${p.health.orphan} orphans`);
+      const flagsText = flags.length > 0 ? ` · ${flags.join(', ')}` : '';
+      const next = (p.recommendations && p.recommendations[0])
+        ? p.recommendations[0].command
+        : 'all essentials present';
+      lines.push(`- ${p.project}: ${p.coverage.essentialPct}% essential coverage · ${p.compliance.pct}% compliance readiness${flagsText} · next: ${next}`);
+    }
+    lines.push('');
+  }
+
   // Global artifacts
   if (manifest.global && manifest.global.length > 0) {
     lines.push('## Global artifacts');
@@ -744,13 +773,31 @@ function buildManifest(repoRoot, repoInfo, guideTitles) {
   if (globalPolicies.length > 0) manifest.globalPolicies = globalPolicies;
   manifest.projects = projects;
 
-  // Dependency graph for dashboard visualization
+  // Dependency graph for dashboard visualization.
+  // Pass richer opts so the graph carries enough metadata for the dashboard
+  // to render health flags, coverage, and compliance rollups without a
+  // separate scan. tagNodeHealth() then stamps stale/draft/orphan flags on
+  // each node, and computeAllProjectRollups() builds the per-project
+  // summary that the new "Project Health" panel renders.
   if (isDir(projectsDir)) {
-    const graph = scanAllArtifacts(projectsDir);
+    const graph = scanAllArtifacts(projectsDir, {
+      withNodeMetadata: true,
+    });
     if (Object.keys(graph.nodes).length > 0) {
+      const baseline = new Date();
+      tagNodeHealth(graph, baseline);
       manifest.dependencyGraph = {
         nodes: graph.nodes,
         edges: graph.edges,
+      };
+      manifest.projectHealth = {
+        baseline: baseline.toISOString(),
+        staleThresholdDays: STALE_THRESHOLD_DAYS,
+        essentialTypes: ESSENTIAL_TYPES.map(e => ({
+          type: e.type, tier: e.tier, command: e.command, label: e.label,
+        })),
+        highSeverityTypes: HIGH_SEVERITY_TYPES,
+        projects: computeAllProjectRollups(graph, baseline),
       };
     }
   }

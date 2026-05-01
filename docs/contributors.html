@@ -287,7 +287,7 @@
 
     <div class="app-page-hero app-page-hero--contributors">
         <div class="govuk-width-container app-page-hero__content">
-            <span class="app-page-hero__stat">9 Contributors</span>
+            <span class="app-page-hero__stat">10 Contributors</span>
             <h1 class="app-page-hero__title">Contributors</h1>
             <p class="app-page-hero__description">Meet the community members who have shaped ArcKit through code contributions, feature requests, and bug reports. Every contribution matters.</p>
         </div>
@@ -357,10 +357,10 @@
                             <span class="app-contributor-card__role app-contributor-card__role--feature">Domain Maintainer (EU &amp; FR)</span>
                         </div>
                     </div>
-                    <p class="govuk-body-s">Contributed 18 community-developed regulatory compliance commands covering EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act) and French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI, DR, and more). Domain maintainer for these commands via <code>.github/CODEOWNERS</code> — auto-requested for review on changes to <code>eu-*</code> / <code>fr-*</code> commands and templates. Largest single contribution to date.</p>
+                    <p class="govuk-body-s">Contributed 19 community-developed regulatory compliance commands covering EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act) and French government standards (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI, DR, IRN, and more). Domain maintainer for these commands via <code>.github/CODEOWNERS</code> — auto-requested for review on changes to <code>eu-*</code> / <code>fr-*</code> commands and templates. Largest single contribution to date.</p>
                     <ul class="app-contributor-card__highlights">
                         <li>7 EU regulatory compliance commands</li>
-                        <li>11 French government &amp; ANSSI commands</li>
+                        <li>12 French government &amp; ANSSI commands</li>
                         <li>Templates, quality checklists, and per-format converter outputs</li>
                     </ul>
                 </div>
@@ -447,11 +447,27 @@
                         <li>Improved onboarding experience</li>
                     </ul>
                 </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">B</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/Benjamest">@Benjamest</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--bug">Bug Reporter</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Reported a malformed agent role definition error in generated Codex CLI <code>.toml</code> files (<a href="https://github.com/tractorjuice/arc-kit/issues/269" class="govuk-link">#269</a>), which was traced to a missing <code>name</code> field in the converter and fixed in v4.6.2.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Identified Codex agent TOML schema bug</li>
+                        <li>Clear repro steps with full error logs</li>
+                        <li>Fix shipped in v4.6.2</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Community Summary -->
             <h2 class="govuk-heading-l govuk-!-margin-top-8">Community Impact</h2>
-            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 5 code contributors, 2 feature requesters, and 2 bug reporters, these 9 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, and EU / French / Austrian regulatory compliance coverage.</p>
+            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 5 code contributors, 2 feature requesters, and 3 bug reporters, these 10 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, and EU / French / Austrian regulatory compliance coverage.</p>
 
             <!-- Contributing CTA -->
             <div class="govuk-inset-text govuk-!-margin-top-6">
