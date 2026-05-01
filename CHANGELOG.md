@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.11.0] - 2026-05-01
+
+### Added
+
+- **`/arckit.navigator` (Live, Utility)** — project-level GPS that surfaces coverage against the essential ArcKit baseline, flags DRAFT / stale / orphan artifacts, and recommends the next slash command to run. Read-only diagnostic; no files written. Driven by the new `graph-inject` hook.
+- **`/arckit.graph-report` (Live, Utility)** — governance metrics dashboard across every working project under `projects/`. Reports coverage by category, cross-reference density, compliance readiness, and project comparison. Read-only diagnostic; no files written.
+- **`graph-inject.mjs` hook** (`arckit-claude/hooks/graph-inject.mjs`) — single graph-builder pass that consolidates what used to be five per-command scan hooks (`search-scan`, `impact-scan`, `traceability-scan`, `health-scan`, `governance-scan`). Search / impact / traceability / health / analyze commands now consume the unified graph.
+- **`graph-utils` v2** (`arckit-claude/hooks/graph-utils.mjs`) — additive opts for the graph-builder API: `withNodeMetadata`, `withContent`, `withPreview`. Backward compatible — existing callers continue to work without change; the new opts are opt-in only.
+- New guides: `docs/guides/navigator.md`, `docs/guides/graph-report.md` (mirrored to `arckit-claude/guides/`).
+
+### Changed
+
+- **Hook architecture consolidation.** `/arckit.search`, `/arckit.impact`, `/arckit.traceability`, `/arckit.health`, and `/arckit.analyze` migrated from per-command scan hooks onto the unified `graph-inject` pipeline. Net effect: one graph build per session instead of five separate scans, simpler maintenance, identical user-visible output.
+- Officially-maintained baseline: 68 → **70 commands**. Community-contributed overlays unchanged at 34 (EU 7 + FR 12 + AT 3 + UAE 12). Total commands available across all tiers: 104.
+
+### Internal
+
+- 8 PRs merged earlier today: #360, #362, #363, #364, #365, #366, #367, plus replacement PRs #377 (search) and #378 (matrix doc). All source code already on `main` before this docs/release follow-up.
+
+### Breaking changes
+
+None. All hook migrations are output-equivalent; the new commands are additive.
+
 ## [4.10.1] - 2026-04-30
 
 ### Changed

@@ -7,6 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.11.0] - 2026-05-01
+
+### Added
+
+- `/arckit.navigator` (Live) — project-level GPS that shows coverage against the essential ArcKit baseline, flags DRAFT / stale / orphan artifacts, and recommends the next slash command. Read-only.
+- `/arckit.graph-report` (Live) — governance metrics dashboard across all working projects (coverage, cross-reference density, compliance readiness, project comparison). Read-only.
+- `hooks/graph-inject.mjs` — consolidated graph-builder hook that replaces the five legacy per-command scan hooks (`search-scan`, `impact-scan`, `traceability-scan`, `health-scan`, `governance-scan`).
+- `hooks/graph-utils.mjs` v2 — additive `withNodeMetadata`, `withContent`, `withPreview` opts. Backward compatible.
+- Guides: `guides/navigator.md`, `guides/graph-report.md`.
+
+### Changed
+
+- `/arckit.search`, `/arckit.impact`, `/arckit.traceability`, `/arckit.health`, `/arckit.analyze` now consume the unified `graph-inject` pipeline instead of running their own scans.
+- Plugin description bumped to "70 slash commands". Officially-maintained baseline is 68 → 70.
+
+### Breaking changes
+
+None.
+
+### Internal
+
+- 8 PRs landed for v4.11.0: #360, #362, #363, #364, #365, #366, #367, with replacement PRs #377 (search) and #378 (matrix doc).
+
 ## [4.10.1] - 2026-04-30
 
 ### Changed
