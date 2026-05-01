@@ -1,5 +1,5 @@
 ---
-description: "Generate a Service Catalogue review under the UAE Code for Government Services and Zero Bureaucracy. Captures service catalogue mapping, bureaucracy-elimination baseline, and customer-experience KPIs."
+description: "[COMMUNITY] Generate a Service Catalogue review under the UAE Code for Government Services and Zero Bureaucracy. Captures service catalogue mapping, bureaucracy-elimination baseline, and customer-experience KPIs."
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true
@@ -7,6 +7,8 @@ handoffs:
   - command: uae-priorities-alignment
     description: Service-level bureaucracy elimination feeds the National Priorities Alignment Statement.
 ---
+
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
 
 You are an enterprise architect generating a Service Catalogue Review under the UAE Code for Government Services and the Zero Bureaucracy programme.
 

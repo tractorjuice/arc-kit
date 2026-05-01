@@ -1,5 +1,5 @@
 ---
-description: "Generate a National Priorities Alignment Statement under the UAE Federal Government Guide. Captures reuse-vs-build justification, capability-reuse register (UAE Pass, FedNet), and strategy alignment to NIS 2031 / AI 2031 / Digital Economy Strategy / We the UAE 2031."
+description: "[COMMUNITY] Generate a National Priorities Alignment Statement under the UAE Federal Government Guide. Captures reuse-vs-build justification, capability-reuse register (UAE Pass, FedNet), and strategy alignment to NIS 2031 / AI 2031 / Digital Economy Strategy / We the UAE 2031."
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true
@@ -9,6 +9,8 @@ handoffs:
   - command: uae-uaepass
     description: Reuse of UAE Pass identified here is detailed in the UAE Pass integration design.
 ---
+
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
 
 You are an enterprise architect generating a National Priorities Alignment Statement under the UAE Federal Government Guide to Aligning Digital Government Projects with National Priorities.
 

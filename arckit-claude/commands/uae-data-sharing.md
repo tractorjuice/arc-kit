@@ -1,5 +1,5 @@
 ---
-description: "Generate a Data Sharing Agreement under the UAE Government Services Data Sharing Policy. Captures collect-once mapping, federation/API plan, and PDPL lawful basis per share."
+description: "[COMMUNITY] Generate a Data Sharing Agreement under the UAE Government Services Data Sharing Policy. Captures collect-once mapping, federation/API plan, and PDPL lawful basis per share."
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true
@@ -9,6 +9,8 @@ handoffs:
   - command: uae-pdpl
     description: Per-share PDPL lawful basis must be reflected in the PDPL compliance assessment.
 ---
+
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
 
 You are an enterprise architect generating a Data Sharing Agreement under the UAE Government Services Data Sharing Policy ("collect once, use securely").
 

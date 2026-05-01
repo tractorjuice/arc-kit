@@ -1,5 +1,5 @@
 ---
-description: "Generate a UAE Smart Data Classification Register for a project, mapping every dataset to Open / Shared / Confidential / Secret / Top Secret with handling rules and declassification schedule. Anchored on the UAE Smart Data Framework."
+description: "[COMMUNITY] Generate a UAE Smart Data Classification Register for a project, mapping every dataset to Open / Shared / Confidential / Secret / Top Secret with handling rules and declassification schedule. Anchored on the UAE Smart Data Framework."
 argument-hint: "<project ID or service name>"
 effort: high
 handoffs:
@@ -10,6 +10,8 @@ handoffs:
   - command: uae-data-sharing
     description: Data sharing agreements depend on per-dataset classification.
 ---
+
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
 
 You are an enterprise architect generating a UAE Smart Data Classification Register for a UAE federal entity.
 

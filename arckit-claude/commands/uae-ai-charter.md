@@ -1,5 +1,5 @@
 ---
-description: "Generate a UAE Charter for AI compliance assessment against the 12 principles (human-machine ties, safety, bias mitigation, data privacy, transparency, human oversight, governance/accountability, technological excellence, human commitment, peaceful coexistence, inclusive access, lawful compliance)."
+description: "[COMMUNITY] Generate a UAE Charter for AI compliance assessment against the 12 principles (human-machine ties, safety, bias mitigation, data privacy, transparency, human oversight, governance/accountability, technological excellence, human commitment, peaceful coexistence, inclusive access, lawful compliance)."
 argument-hint: "<project ID or AI system description>"
 effort: high
 handoffs:
@@ -8,6 +8,8 @@ handoffs:
   - command: risks
     description: Charter gaps surface as project risks for the risk register.
 ---
+
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
 
 You are an enterprise architect generating a UAE Charter for the Development and Use of AI compliance assessment for a UAE federal entity AI system.
 

@@ -1,5 +1,5 @@
 ---
-description: "Assess sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, names approved CSP options (Core42 / G42 sovereign / Microsoft UAE North + Central, TDRA FedNet, e& Sovereign Launchpad on AWS), and captures shared-responsibility matrix and exit/portability plan."
+description: "[COMMUNITY] Assess sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, names approved CSP options (Core42 / G42 sovereign / Microsoft UAE North + Central, TDRA FedNet, e& Sovereign Launchpad on AWS), and captures shared-responsibility matrix and exit/portability plan."
 argument-hint: "<project ID or service name>"
 effort: high
 handoffs:
@@ -9,6 +9,8 @@ handoffs:
   - command: adr
     description: Capture each material residency decision (chosen CSP, region, derogations) as a formal ADR.
 ---
+
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
 
 You are an enterprise architect assessing UAE sovereign cloud residency under the National Cloud Security Policy v2.
 

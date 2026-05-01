@@ -1,5 +1,5 @@
 ---
-description: "Generate a UAE PDPL (Federal Decree-Law 45/2021) compliance assessment including DPIA, lawful-basis register, data-subject-rights procedure, and cross-border transfer log. Anchored on the UAE Data Office statutory framework."
+description: "[COMMUNITY] Generate a UAE PDPL (Federal Decree-Law 45/2021) compliance assessment including DPIA, lawful-basis register, data-subject-rights procedure, and cross-border transfer log. Anchored on the UAE Data Office statutory framework."
 argument-hint: "<project ID or service name>"
 effort: high
 keep-coding-instructions: true
@@ -11,6 +11,8 @@ handoffs:
   - command: uae-classification
     description: PDPL-relevant datasets must be classified appropriately.
 ---
+
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
 
 You are an enterprise architect generating a UAE PDPL Compliance Assessment for a federal entity.
 

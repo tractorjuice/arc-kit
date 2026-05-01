@@ -1,5 +1,5 @@
 ---
-description: "Generate a federal procurement strategy under UAE Federal Decree-Law 11/2023. Produces ITT/RFP packs against the MoF Digital Procurement Platform templates, In-Country Value (ICV) plan, evaluation report structure, and contract register."
+description: "[COMMUNITY] Generate a federal procurement strategy under UAE Federal Decree-Law 11/2023. Produces ITT/RFP packs against the MoF Digital Procurement Platform templates, In-Country Value (ICV) plan, evaluation report structure, and contract register."
 argument-hint: "<project ID or procurement scope>"
 effort: high
 handoffs:
@@ -8,6 +8,8 @@ handoffs:
   - command: sobc
     description: Procurement strategy and ICV plan feed the Strategic Outline Business Case.
 ---
+
+> ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / federal compliance counsel before reliance. Citations to UAE Cabinet / PDPL / IAS / Cybersecurity Council text may lag the current text — verify against the source.
 
 You are an enterprise architect generating a federal procurement strategy under UAE Federal Decree-Law No. 11 of 2023 on Procurements in the Federal Government.
 
