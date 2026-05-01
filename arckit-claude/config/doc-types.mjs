@@ -118,7 +118,7 @@ export const DOC_TYPES = {
   'ATDSG':     { name: 'Austrian Data Protection Assessment',          category: 'Compliance' },
   'ATNISG':    { name: 'Austrian NISG (NIS2) Assessment',              category: 'Compliance' },
   'BVERGG':    { name: 'Austrian Public Procurement (BVergG 2018)',    category: 'Procurement' },
-  // UAE Federal Overlay (Official, maintained by @tractorjuice) — anchored on 23 April 2026 Cabinet decree
+  // UAE Federal Overlay (Community-contributed, maintained by @tractorjuice — recruiting UAE domain co-maintainer) — anchored on 23 April 2026 Cabinet decree
   'PDPL':      { name: 'UAE PDPL Compliance Assessment',               category: 'Compliance' },
   'IAS':       { name: 'UAE IAS Statement of Applicability',           category: 'Compliance' },
   'CRES':      { name: 'UAE Sovereign Cloud Residency Assessment',     category: 'Architecture' },
