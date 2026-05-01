@@ -63,11 +63,11 @@ flowchart TD
 
 | BR ID | FR ID | Functional Requirement | Design Component | HLD Section | DLD Section | Test Case ID(s) | Status | Comments |
 |-------|-------|------------------------|------------------|-------------|-------------|-----------------|--------|----------|
-| BR-1 | FR-1 | [Requirement description] | [Service/Component] | [Section] | [Section] | TC-001, TC-002 | [✅ Covered \| ⚠️ Partial \| ❌ Gap] | |
-| BR-1 | FR-2 | [Requirement description] | [Service/Component] | [Section] | [Section] | TC-003 | [✅ \| ⚠️ \| ❌] | |
-| BR-2 | FR-3 | [Requirement description] | [Service/Component] | [Section] | [Section] | TC-004, TC-005 | [✅ \| ⚠️ \| ❌] | |
-| BR-2 | FR-4 | [Requirement description] | [Service/Component] | [Section] | [Section] | - | [❌ Gap] | Test cases missing |
-| BR-3 | FR-5 | [Requirement description] | Not yet designed | - | - | - | [❌ Gap] | Design not started |
+| BR-001 | FR-001 | [Requirement description] | [Service/Component] | [Section] | [Section] | TC-001, TC-002 | [✅ Covered \| ⚠️ Partial \| ❌ Gap] | |
+| BR-001 | FR-002 | [Requirement description] | [Service/Component] | [Section] | [Section] | TC-003 | [✅ \| ⚠️ \| ❌] | |
+| BR-002 | FR-003 | [Requirement description] | [Service/Component] | [Section] | [Section] | TC-004, TC-005 | [✅ \| ⚠️ \| ❌] | |
+| BR-002 | FR-004 | [Requirement description] | [Service/Component] | [Section] | [Section] | - | [❌ Gap] | Test cases missing |
+| BR-003 | FR-005 | [Requirement description] | Not yet designed | - | - | - | [❌ Gap] | Design not started |
 
 **Legend**:
 
@@ -83,9 +83,9 @@ This ensures no "orphan" design elements or tests that don't trace to requiremen
 
 | Test Case ID | Test Description | Design Component | FR ID | BR ID | Status | Comments |
 |--------------|------------------|------------------|-------|-------|--------|----------|
-| TC-001 | [Test description] | [Component] | FR-1 | BR-1 | [✅ Traced \| ⚠️ Unclear \| ❌ Orphan] | |
-| TC-002 | [Test description] | [Component] | FR-1 | BR-1 | [✅ \| ⚠️ \| ❌] | |
-| TC-003 | [Test description] | [Component] | FR-2 | BR-1 | [✅ \| ⚠️ \| ❌] | |
+| TC-001 | [Test description] | [Component] | FR-001 | BR-001 | [✅ Traced \| ⚠️ Unclear \| ❌ Orphan] | |
+| TC-002 | [Test description] | [Component] | FR-001 | BR-001 | [✅ \| ⚠️ \| ❌] | |
+| TC-003 | [Test description] | [Component] | FR-002 | BR-001 | [✅ \| ⚠️ \| ❌] | |
 | TC-099 | [Test description] | [Component] | - | - | [❌ Orphan] | Test exists but no requirement - remove or trace |
 
 ---
@@ -110,9 +110,9 @@ This ensures no "orphan" design elements or tests that don't trace to requiremen
 
 | Component/Service | Requirements Addressed | FR IDs | % of Total FRs | Comments |
 |-------------------|------------------------|--------|----------------|----------|
-| [Service A] | [X] | FR-1, FR-2, FR-5 | [Y%] | |
-| [Service B] | [X] | FR-3, FR-4, FR-7 | [Y%] | |
-| [Service C] | [X] | FR-6, FR-8 | [Y%] | |
+| [Service A] | [X] | FR-001, FR-002, FR-005 | [Y%] | |
+| [Service B] | [X] | FR-003, FR-004, FR-007 | [Y%] | |
+| [Service C] | [X] | FR-006, FR-008 | [Y%] | |
 | **Total** | **[X]** | | **100%** | |
 
 **Orphan Components**: [Components in design that don't trace to any requirement - should they be removed?]
@@ -177,8 +177,8 @@ Components in design that do NOT trace back to any requirement (potential over-e
 
 | NFR ID | Requirement | Target | Design Strategy | Test Plan | Status | Comments |
 |--------|-------------|--------|-----------------|-----------|--------|----------|
-| NFR-P-1 | API response time | <200ms (p95) | [Caching, async processing] | [Load testing plan] | [✅ \| ⚠️ \| ❌] | |
-| NFR-P-2 | Throughput | 10K TPS | [Auto-scaling, load balancing] | [Stress testing plan] | [✅ \| ⚠️ \| ❌] | |
+| NFR-P-001 | API response time | <200ms (p95) | [Caching, async processing] | [Load testing plan] | [✅ \| ⚠️ \| ❌] | |
+| NFR-P-002 | Throughput | 10K TPS | [Auto-scaling, load balancing] | [Stress testing plan] | [✅ \| ⚠️ \| ❌] | |
 
 ---
 
@@ -186,8 +186,8 @@ Components in design that do NOT trace back to any requirement (potential over-e
 
 | NFR ID | Requirement | Design Control | Implementation | Test Plan | Status | Comments |
 |--------|-------------|----------------|----------------|-----------|--------|----------|
-| NFR-SEC-1 | Authentication (SSO/MFA) | [OIDC with MFA] | [Component] | [Security test cases] | [✅ \| ⚠️ \| ❌] | |
-| NFR-SEC-2 | Encryption at rest | [AES-256, KMS] | [RDS config] | [Config audit] | [✅ \| ⚠️ \| ❌] | |
+| NFR-SEC-001 | Authentication (SSO/MFA) | [OIDC with MFA] | [Component] | [Security test cases] | [✅ \| ⚠️ \| ❌] | |
+| NFR-SEC-002 | Encryption at rest | [AES-256, KMS] | [RDS config] | [Config audit] | [✅ \| ⚠️ \| ❌] | |
 
 ---
 
@@ -195,9 +195,9 @@ Components in design that do NOT trace back to any requirement (potential over-e
 
 | NFR ID | Requirement | Target | Design Strategy | Test Plan | Status | Comments |
 |--------|-------------|--------|-----------------|-----------|--------|----------|
-| NFR-A-1 | Availability SLA | 99.95% | [Multi-AZ, health checks] | [Availability monitoring] | [✅ \| ⚠️ \| ❌] | |
-| NFR-A-2 | RPO | <15 min | [Continuous backup] | [DR drill] | [✅ \| ⚠️ \| ❌] | |
-| NFR-A-3 | RTO | <4 hours | [Automated failover] | [Failover test] | [✅ \| ⚠️ \| ❌] | |
+| NFR-A-001 | Availability SLA | 99.95% | [Multi-AZ, health checks] | [Availability monitoring] | [✅ \| ⚠️ \| ❌] | |
+| NFR-A-002 | RPO | <15 min | [Continuous backup] | [DR drill] | [✅ \| ⚠️ \| ❌] | |
+| NFR-A-003 | RTO | <4 hours | [Automated failover] | [Failover test] | [✅ \| ⚠️ \| ❌] | |
 
 ---
 
@@ -205,8 +205,8 @@ Components in design that do NOT trace back to any requirement (potential over-e
 
 | NFR ID | Requirement | Design Controls | Evidence | Audit Trail | Status | Comments |
 |--------|-------------|-----------------|----------|-------------|--------|----------|
-| NFR-C-1 | GDPR compliance | [Data residency, deletion APIs] | [Compliance doc] | [Audit logs] | [✅ \| ⚠️ \| ❌] | |
-| NFR-C-2 | Audit logging | [7-year retention, immutable] | [Log config] | [Log analysis] | [✅ \| ⚠️ \| ❌] | |
+| NFR-C-001 | GDPR compliance | [Data residency, deletion APIs] | [Compliance doc] | [Audit logs] | [✅ \| ⚠️ \| ❌] | |
+| NFR-C-002 | Audit logging | [7-year retention, immutable] | [Log config] | [Log analysis] | [✅ \| ⚠️ \| ❌] | |
 
 ---
 
@@ -218,7 +218,7 @@ This section tracks how requirement changes ripple through design and tests.
 
 | Change ID | Date | BR/FR ID | Change Description | Impacted Components | Impacted Tests | Status | Impact Level |
 |-----------|------|----------|--------------------|--------------------|----------------|--------|--------------|
-| CHG-001 | [DATE] | FR-5 | [Changed from X to Y] | [Service A, Service C] | [TC-010, TC-012] | [In Progress] | [HIGH \| MED \| LOW] |
+| CHG-001 | [DATE] | FR-005 | [Changed from X to Y] | [Service A, Service C] | [TC-010, TC-012] | [In Progress] | [HIGH \| MED \| LOW] |
 
 **Change Impact Legend**:
 

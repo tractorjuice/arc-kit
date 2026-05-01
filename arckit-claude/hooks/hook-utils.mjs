@@ -76,7 +76,13 @@ export function extractVersion(filename) {
 // ── Metadata Extraction ──
 
 const DOC_CONTROL_RE = /^\|\s*\*\*([^*]+)\*\*\s*\|\s*(.+?)\s*\|/;
-const REQ_ID_PATTERN = /\b(BR-\d{3}|FR-\d{3}|NFR-[A-Z]+-\d{3}|NFR-\d{3}|INT-\d{3}|DR-\d{3})\b/g;
+// Accept 1-3 digit IDs so cross-references in non-REQ artifacts (e.g.
+// "Relates To: BR-1, FR-3" in an RSCH/RISK/STKE/SOBC) populate node.reqIds
+// even when the REQ document uses non-padded IDs. Cross-namespace collisions
+// (e.g. Azure Security Benchmark "Backup & Recovery" historically used BR-1)
+// are handled by renaming the colliding IDs in the colliding templates rather
+// than constraining the scanner — see arckit-claude/templates/azure-research-template.md.
+const REQ_ID_PATTERN = /\b(BR-\d{1,3}|FR-\d{1,3}|NFR-[A-Z]+-\d{1,3}|NFR-\d{1,3}|INT-\d{1,3}|DR-\d{1,3})\b/g;
 
 export function extractDocControlFields(content) {
   const fields = {};
@@ -121,7 +127,7 @@ export function extractRequirementDetails(content) {
 
   // Pattern for requirement headings: ### or #### BR-001: Description text
   // Template uses ### for BR, #### for FR/NFR/INT/DR — match both levels
-  const headingRe = /^#{3,4}\s+((?:BR|FR|NFR(?:-[A-Z]+)?|INT|DR)-\d{3}):\s*(.+)/;
+  const headingRe = /^#{3,4}\s+((?:BR|FR|NFR(?:-[A-Z]+)?|INT|DR)-\d{1,3}):\s*(.+)/;
   // Priority patterns in table rows or inline markers
   const priorityRe = /\b(MUST|SHOULD|MAY)\b/;
 

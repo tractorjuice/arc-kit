@@ -128,6 +128,11 @@ const RECIPES = [
         excludeGlobal: true,
         withRequirements: true,
         withVendors: true,
+        // formatTraceability reads node.reqIds for every non-REQ artifact to
+        // build refMap. Without withNodeMetadata, reqIds is never assigned
+        // (graph-utils.mjs:181-188), so refMap stays empty and coverage
+        // reports 0% even when sibling artifacts genuinely cite requirements.
+        withNodeMetadata: true,
         ...(arg ? { projectFilter: arg } : {}),
       };
     },
@@ -661,7 +666,7 @@ function formatAnalyzeProject(projectName, graph, arckitVersion) {
     { type: 'TRAC', command: '/arckit:traceability' },
   ];
   const hasDataReqs = artifactMeta.some(m =>
-    m.docType === 'REQ' && /\bDR-\d{3}\b/.test(m.content || '')
+    m.docType === 'REQ' && /\bDR-\d{1,3}\b/.test(m.content || '')
   );
   const missingRecommended = recommended.filter(r => {
     if (typeSet.has(r.type)) return false;
@@ -1180,7 +1185,25 @@ function formatTraceability(graph, prompt) {
 
   const projectName = graph.projects[0];
   const requirements = (graph.requirements || {})[projectName] || [];
-  if (requirements.length === 0) return null;
+  if (requirements.length === 0) {
+    // Surface the failure mode instead of silently exiting — otherwise the
+    // slash-command's manual-fallback path makes it look like the hook never ran.
+    const projectNodes = Object.values(graph.nodes).filter(n => n.project === projectName);
+    if (projectNodes.length === 0) return null;
+    return [
+      '## Traceability Pre-processor (hook)',
+      '',
+      `**No requirements extracted from \`${projectName}\`.**`,
+      '',
+      'The extractor expects requirement headings of the form:',
+      '  - `### BR-1:` / `### BR-001:` (Business)',
+      '  - `#### FR-1:` / `#### FR-001:` (Functional, NFR, INT, DR)',
+      '',
+      'Falling back to manual extraction. If the REQ document uses table-row format only',
+      '(no headings), or a non-standard ID prefix, the hook cannot help and the slash command',
+      'will read artifacts directly.',
+    ].join('\n');
+  }
 
   // Build refMap: reqId → [{ file, type, vendor }]
   // Source: every non-REQ node in this project whose reqIds list cites the ID.

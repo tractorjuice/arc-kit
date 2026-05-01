@@ -532,7 +532,7 @@ All test repos now use the arckit plugin via the marketplace instead of synced f
 
 **Citation Traceability**: When commands read external documents (`external/`, `policies/`, `vendors/`), they add inline citation markers (`[DOC_ID-CN]`) and populate an "External References" section with Document Register, Citations table, and Unreferenced Documents. Citation format is defined in `arckit-claude/references/citation-instructions.md`.
 
-**Requirement ID Prefixes**:
+**Requirement ID Prefixes** (numeric suffix is 1–3 digits — both `BR-1` and `BR-001` are valid and the graph-inject hook accepts either):
 
 - BR-xxx: Business Requirements
 - FR-xxx: Functional Requirements
