@@ -127,6 +127,20 @@ html.dark-mode .govuk-inset-text {
     color: #e8e8e8;
 }
 
+html.dark-mode .govuk-back-link,
+html.dark-mode .govuk-back-link:link,
+html.dark-mode .govuk-back-link:visited {
+    color: #e8e8e8;
+}
+
+html.dark-mode .govuk-back-link:hover {
+    color: #ffffff;
+}
+
+html.dark-mode .govuk-back-link::before {
+    border-color: #e8e8e8;
+}
+
 html.dark-mode .govuk-section-break--visible {
     border-bottom-color: #555555;
 }
