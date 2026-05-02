@@ -19,6 +19,12 @@ $ARGUMENTS
 
 UK Government departments must follow NCSC (National Cyber Security Centre) guidance and achieve appropriate security certifications before deploying systems. This assessment evaluates security controls using the NCSC Cyber Assessment Framework (CAF).
 
+**Governance framework mode**:
+- Use `${user_config.governance_framework}` as the default mode selector.
+- Treat empty/unknown values as `UK Gov`.
+- If mode is `Generic`, produce a framework-neutral secure-by-design review: keep core security architecture, risk, control, and remediation analysis, but skip UK-specific obligations/references (NCSC CAF, GovAssure, GovS 007, UK Government Cyber Security Standard, Cyber Action Plan, GDS/TCoP dependencies).
+- If mode is `UK Gov`, keep current UK Government Secure by Design behavior.
+
 **Key UK Government Security References**:
 
 - NCSC Cyber Assessment Framework (CAF)
@@ -83,7 +89,10 @@ Generate a comprehensive Secure by Design assessment document by:
    - If no external docs exist but they would improve the assessment, ask: "Do you have any existing security assessments, pen test reports, or threat models? I can read PDFs and images directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
    - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
-5. **Assess security using NCSC CAF (14 principles across 4 objectives)**:
+5. **Assess security control maturity**:
+
+   - If governance mode is `UK Gov`, use **NCSC CAF (14 principles across 4 objectives)**.
+   - If governance mode is `Generic`, use a framework-neutral control set with equivalent coverage (governance, risk management, asset management, identity/access, data protection, secure configuration, monitoring/detection, incident response/recovery).
 
    **Objective A: Managing Security Risk (4 principles)**
    - A1: Governance - SIRO appointed, security policies, oversight
@@ -132,7 +141,7 @@ Generate a comprehensive Secure by Design assessment document by:
 
 9. **Calculate overall CAF score**: X/14 principles achieved
 
-10. **Assess UK Government Cyber Security Standard compliance**:
+10. **Assess UK Government Cyber Security Standard compliance** (UK Gov mode only):
 
     **9.1 GovAssure Status** — For critical systems subject to GovAssure assurance:
     - Identify which systems are in scope for the current GovAssure cycle
@@ -158,14 +167,14 @@ Generate a comprehensive Secure by Design assessment document by:
     - Identify investment alignment and funding opportunities
     - Record gaps where the project or department does not yet meet Cyber Action Plan expectations
 
-10. **Assess Government Cyber Security Profession alignment**:
+10. **Assess Government Cyber Security Profession alignment** (UK Gov mode only):
     - Determine whether the department participates in the Government Cyber Security Profession
     - Record Certified Cyber Professional (CCP) certification status for project security roles
     - Map security roles to DDaT (Digital, Data and Technology) profession framework
     - Assess engagement with the Government Cyber Academy (learning areas, completions)
     - Identify workforce development gaps and training actions
 
-11. **Map GovS 007: Security alignment**:
+11. **Map GovS 007: Security alignment** (UK Gov mode only):
     - Complete the GovS 007 principle mapping table (9 principles → CAF sections and ArcKit artefacts)
     - For principle 5 (Security culture), reference Section 11 (Government Cyber Security Profession) in addition to CAF B6
     - For principle 8 (Continuous improvement), reference Section 9.4 (Cyber Action Plan Alignment) in addition to CAF D2
@@ -222,8 +231,8 @@ Before completing the document, populate ALL document control fields in the head
 **User-provided fields** (extract from project metadata or user input):
 
 - `[PROJECT_NAME]` → Full project name from project metadata or user input
-- `[OWNER_NAME_AND_ROLE]` → Document owner (prompt user if not in metadata)
-- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "PUBLIC" otherwise (or prompt user)
+- `[OWNER_NAME_AND_ROLE]` → Default to `${user_config.organisation_name}`; if unavailable, prompt user
+- `[CLASSIFICATION]` → Default to `${user_config.default_classification}`; if unavailable use `OFFICIAL` for UK Gov mode and `PUBLIC` for Generic mode
 
 **Calculated fields**:
 
