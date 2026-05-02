@@ -144,6 +144,26 @@ html.dark-mode .govuk-warning-text__icon {
     color: #f0f0f0;
 }
 
+html.dark-mode .govuk-warning-text__text {
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-contributor-card {
+    background: #2a2a2a;
+}
+
+html.dark-mode .app-contributor-card:hover {
+    background: #333333;
+}
+
+html.dark-mode .app-contributor-card__name a {
+    color: #f0f0f0;
+}
+
+html.dark-mode .app-contributor-card__highlights li {
+    color: #d0d0d0;
+}
+
 html.dark-mode .govuk-main-wrapper {
     background: #1a1a1a;
 }
