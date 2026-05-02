@@ -56,13 +56,17 @@
 
 @media (max-width: 48em) {
     .app-nav-bar__icons {
-        position: absolute;
-        right: 0.5rem;
-        top: 0.5rem;
+        order: 2;
+        margin-left: auto;
+        margin-right: 0.5rem;
     }
 
-    .app-nav-bar__inner {
-        position: relative;
+    .app-nav-bar__toggle {
+        order: 3;
+    }
+
+    .app-nav-bar__list {
+        order: 4;
     }
 }
 
