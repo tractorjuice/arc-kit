@@ -124,6 +124,7 @@ html.dark-mode .govuk-phase-banner__text {
 
 html.dark-mode .govuk-inset-text {
     border-left-color: #555555;
+    color: #e8e8e8;
 }
 
 html.dark-mode .govuk-section-break--visible {
