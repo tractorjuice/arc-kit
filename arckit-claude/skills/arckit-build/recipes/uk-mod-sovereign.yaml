@@ -41,6 +41,29 @@ optional_targets:
                  algorithm transparency notice for the on-prem AI route
     default: false   # not all sovereign deployments are public-facing
                      # enough to warrant ATRS publication
+  # Research wave (default-on, opt-out with --exclude). Org research
+  # writes to projects/000-global/research/ so the org context is shared.
+  # Per-project research is per-project. Note: gov-reuse is omitted from
+  # the sovereign recipe because public gov-code-reuse research isn't
+  # typically applicable to MOD / accredited deployments.
+  ORG_RESEARCH:
+    description: Target organisation research — strategy, structure, existing systems. Output to projects/000-global/research/.
+    default: true
+  RESEARCH:
+    description: Technology and vendor market research (build vs buy, TCO)
+    default: true
+  AWS_RESEARCH:
+    description: AWS service availability and architecture patterns
+    default: true
+  AZURE_RESEARCH:
+    description: Azure service availability and architecture patterns
+    default: true
+  GCP_RESEARCH:
+    description: Google Cloud service availability and architecture patterns
+    default: true
+  DATASCOUT:
+    description: External data source discovery — only when REQ specifies external data ingestion
+    default: false
 
 post_build_hooks:
   - skill: arckit:health
@@ -78,6 +101,51 @@ targets:
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: STKE }
     deps: [PRIN]
+
+  # --- Research wave (default-on, parallel, before ADRs) ----------------
+  # Org research runs first (no deps) and writes to 000-global so every
+  # project in the repo inherits the same target-organisation context.
+  - id: ORG_RESEARCH
+    skill: arckit:research
+    topic: "Target organisation strategy, structure, and existing systems (sovereign deployment context)"
+    args: "{NAME} target-organisation strategy structure existing-systems sovereign-context"
+    output: { project: "000-global", type: RSCH, subfolder: research, multi_instance: true }
+    deps: []
+
+  - id: RESEARCH
+    skill: arckit:research
+    topic: "Technology and vendor market research — sovereign deployment options"
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AWS_RESEARCH
+    skill: arckit:aws-research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AWRS, subfolder: research, multi_instance: true }
+    topic: "AWS service availability + architecture patterns + sovereign / GovCloud options"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AZURE_RESEARCH
+    skill: arckit:azure-research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AZRS, subfolder: research, multi_instance: true }
+    topic: "Azure service availability + Azure Government / Azure for Sovereignty"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: GCP_RESEARCH
+    skill: arckit:gcp-research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GCRS, subfolder: research, multi_instance: true }
+    topic: "Google Cloud service availability + sovereign cloud options"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: DATASCOUT
+    skill: arckit:datascout
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DSCT, subfolder: research, multi_instance: true }
+    topic: "External data source discovery (sovereign-compatible feeds only)"
+    deps: [REQ, ORG_RESEARCH]
 
   # --- ADR set: sovereign-specific topics --------------------------------
   # Rewritten from uk-saas defaults to reflect air-gapped operation.

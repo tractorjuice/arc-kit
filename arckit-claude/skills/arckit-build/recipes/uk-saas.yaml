@@ -24,7 +24,7 @@ defaults:
   version: "1.0"
 
 # Optional targets are skipped unless explicitly enabled.
-# - default: true → built unless excluded
+# - default: true → built unless excluded with --exclude {ID}
 # - default: false (or absent) → built only with --enable {ID}
 optional_targets:
   AIP:
@@ -33,6 +33,31 @@ optional_targets:
   SVCASS:
     description: Service Standard Assessment — public-service-style
     default: true
+  # Research wave (default-on, opt-out with --exclude). All research
+  # outputs land in research/ subfolders. ORG_RESEARCH writes to
+  # projects/000-global/research/ so the org context is shared across
+  # every project in the repo. Other research targets are per-project.
+  ORG_RESEARCH:
+    description: Target organisation research — strategy, structure, existing systems. Output to projects/000-global/research/. Run before any project-specific work so subsequent technology research and ADRs inherit the org context.
+    default: true
+  RESEARCH:
+    description: Technology and vendor market research (build vs buy, TCO)
+    default: true
+  AWS_RESEARCH:
+    description: AWS service availability and architecture patterns (skip with --exclude AWS_RESEARCH if AWS not in scope)
+    default: true
+  AZURE_RESEARCH:
+    description: Azure service availability and architecture patterns (skip with --exclude AZURE_RESEARCH if Azure not in scope)
+    default: true
+  GCP_RESEARCH:
+    description: Google Cloud service availability and architecture patterns (skip with --exclude GCP_RESEARCH if GCP not in scope)
+    default: true
+  GOV_REUSE:
+    description: UK government code reuse research via govreposcrape — what's already been built across central / local / NHS
+    default: true
+  DATASCOUT:
+    description: External data source discovery (APIs, datasets, open data portals) — only when REQ specifies external data ingestion
+    default: false
 
 # Hooks run after the final target wave, in parallel.
 post_build_hooks:
@@ -87,6 +112,60 @@ targets:
     args: "{NAME}"
     output: { project: "{P}-{NAME}", type: STKE }
     deps: [PRIN]
+
+  # --- Research wave (default-on, parallel, before ADRs) ----------------
+  # Org research runs first (no deps) and writes to 000-global so every
+  # project in the repo inherits the same target-organisation context.
+  # Per-project technology research depends on the org research being
+  # in place plus REQ being known.
+  - id: ORG_RESEARCH
+    skill: arckit:research
+    topic: "Target organisation strategy, structure, and existing systems"
+    args: "{NAME} target-organisation strategy structure existing-systems"
+    output: { project: "000-global", type: RSCH, subfolder: research, multi_instance: true }
+    deps: []
+
+  - id: RESEARCH
+    skill: arckit:research
+    topic: "Technology and vendor market research (build vs buy, TCO)"
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AWS_RESEARCH
+    skill: arckit:aws-research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AWRS, subfolder: research, multi_instance: true }
+    topic: "AWS service availability + architecture patterns + UK region"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AZURE_RESEARCH
+    skill: arckit:azure-research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AZRS, subfolder: research, multi_instance: true }
+    topic: "Azure service availability + architecture patterns + UK South / UK West"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: GCP_RESEARCH
+    skill: arckit:gcp-research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GCRS, subfolder: research, multi_instance: true }
+    topic: "Google Cloud service availability + architecture patterns + europe-west2"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: GOV_REUSE
+    skill: arckit:gov-reuse
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GOVR, subfolder: research, multi_instance: true }
+    topic: "UK government code reuse search via govreposcrape"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: DATASCOUT
+    skill: arckit:datascout
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DSCT, subfolder: research, multi_instance: true }
+    topic: "External data source discovery (APIs, datasets, open data)"
+    deps: [REQ, ORG_RESEARCH]
 
   # --- ADR set (parallel, all share deps) --------------------------------
   - id: ADR-001
