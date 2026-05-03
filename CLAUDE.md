@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing 70 slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI, OpenCode CLI) to generate architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
+ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing 71 slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI, OpenCode CLI) to generate architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
 
 **Six distribution formats** exist side-by-side in this repo:
 
@@ -180,6 +180,16 @@ Plugin skills live in `arckit-claude/skills/{name}/SKILL.md` with YAML frontmatt
 - `paths:` (optional, v2.1.84+) — YAML list of globs that scope when the skill auto-activates (e.g. `["**/*.mmd", "**/ARC-*-DIAG-*.md"]`). The description still triggers the skill via keyword match when no matching files are in context.
 
 The converter strips `paths:` for non-Claude targets (Codex skills use their own `allow_implicit_invocation` mechanism).
+
+**Current plugin skills (5)**:
+
+| Skill | Type | Purpose |
+|-------|------|---------|
+| `architecture-workflow` | reference | Onboarding flow — which `/arckit:*` to run and in what order |
+| `mermaid-syntax` | reference | Mermaid diagram syntax for `/arckit:diagram` outputs |
+| `plantuml-syntax` | reference | PlantUML / C4 syntax for `/arckit:diagram` outputs |
+| `wardley-mapping` | reference | Wardley Map syntax + gameplay/doctrine/climatic patterns |
+| `arckit-build` | orchestration | Bulk-build harness — parallel artefact generation via subagent isolation, YAML-recipe-driven, resumable via `.arckit/state.json`. Skips conversion to non-Claude extensions because parallel `Agent` dispatch is a Claude Code-only capability. See `arckit-claude/skills/arckit-build/SKILL.md` and `recipes/`. |
 
 ### Plugin User Configuration
 

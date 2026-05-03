@@ -1089,7 +1089,8 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 | Feature | Claude Code | Gemini CLI | Copilot | Codex / OpenCode |
 |---------|:-----------:|:----------:|:-------:|:----------------:|
-| 70 slash commands (plus 34 community-contributed) | ✅ | ✅ | ✅ | ✅ |
+| 70 cross-AI slash commands (plus 34 community-contributed) | ✅ | ✅ | ✅ | ✅ |
+| `/arckit:build` parallel build harness (Claude-only — depends on parallel `Agent` dispatch) | ✅ | — | — | — |
 | Templates & scripts | ✅ | ✅ | ✅ | ✅ |
 | Bundled MCP servers (AWS, Azure, GCP, DataCommons, govreposcrape) | ✅ | ✅ (3 servers) | — | Manual setup |
 | **Autonomous research agents** (10 agents for research, datascout, cloud research, gov code discovery, grants, framework) | ✅ | — | ✅ (10 agents) | — |
