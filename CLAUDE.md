@@ -261,8 +261,10 @@ project/
         ├── ARC-001-STKE-v1.0.md     # Stakeholder analysis
         ├── ARC-001-RISK-v1.0.md     # Risk register
         ├── ARC-001-SOBC-v1.0.md     # Business case
-        ├── ARC-001-ADR-001-v1.0.md  # ADRs (multi-instance)
-        ├── ARC-001-DIAG-001-v1.0.md # Diagrams (multi-instance)
+        ├── decisions/
+        │   └── ARC-001-ADR-001-v1.0.md  # ADRs (multi-instance, in decisions/ subfolder)
+        ├── diagrams/
+        │   └── ARC-001-DIAG-001-v1.0.md # Diagrams (multi-instance, in diagrams/ subfolder)
         └── vendors/
 ```
 
