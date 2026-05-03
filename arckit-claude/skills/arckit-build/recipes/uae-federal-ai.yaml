@@ -1,0 +1,405 @@
+# ArcKit build recipe — UAE Federal AI (Cabinet Agentic AI Decree)
+#
+# Scope: UAE federal projects subject to the 23 April 2026 Cabinet decree
+# on agentic AI. Produces every artefact the decree mandates within its
+# 2-year compliance window: AI Charter, AI Autonomy Tier, federal use-case
+# alignment, sovereign cloud residency, UAE Pass integration, PDPL,
+# IAS Statement of Applicability, federal procurement strategy, plus the
+# core ArcKit architecture governance suite.
+#
+# Differences from uk-saas / uk-mod-sovereign
+#
+#   First recipe to include a research wave
+#     arckit:research               general AI/ML market & build-vs-buy research
+#     arckit:aws-research           UAE region availability + sovereign options
+#     arckit:azure-research         UAE North / UAE Central + Microsoft sovereign
+#     arckit:datascout              UAE federal open-data sources (optional)
+#
+#   Twelve UAE community commands all included
+#     uae-priorities-alignment      NIS2031 / AI2031 / Digital Economy alignment
+#     uae-classification            Smart Data classification register
+#     uae-pdpl                      Federal Decree-Law 45/2021 compliance
+#     uae-cloud-residency           Sovereign cloud per classification
+#     uae-uaepass                   Identity integration (Basic / Verified)
+#     uae-data-sharing              Government Services Data Sharing Policy
+#     uae-digital-records           Digital Records Plan
+#     uae-ias                       IAS 188-control SoA (60 mgmt + 128 technical)
+#     uae-ai-charter                12-principle AI Charter compliance
+#     uae-ai-autonomy-tier          Tier 1 / 2 / 3 autonomy posture
+#     uae-procurement               MoF Digital Procurement Platform pack + ICV
+#     uae-zero-bureaucracy          Service catalogue + bureaucracy elimination
+#
+#   Replaces civilian-UK SVCASS and TCoP positioning
+#     SVCASS                        dropped (UAE has its own service standard)
+#     TCOP                          kept as cross-framework tech reference
+#
+# AI-specific overlay
+#
+#   AIP (UK AI Playbook) and ATRS (algorithmic transparency) are kept as
+#   useful reference frameworks even for UAE projects — Mohammed bin Rashid
+#   School of Government adopts cross-jurisdiction patterns, and the AI
+#   Charter principles map well onto the UK Playbook gates.
+
+recipe: uae-federal-ai
+schema_version: 1
+description: >
+  UAE Federal AI — full compliance suite for the 23 April 2026 Cabinet
+  agentic AI decree. Includes a research wave (general AI market plus
+  AWS / Azure UAE region availability), all 12 UAE community commands
+  (PDPL, IAS, AI Charter, autonomy tier, cloud residency, UAE Pass,
+  data sharing, digital records, priorities alignment, procurement,
+  zero bureaucracy, classification), and the core ArcKit governance
+  suite tailored for UAE federal entities.
+
+defaults:
+  version: "1.0"
+
+optional_targets:
+  AIP:
+    description: AI Playbook (UK reference framework, useful for UAE projects with AI in scope)
+    default: true
+  ATRS:
+    description: Algorithmic Transparency Recording Standard (recommended for Tier 2/3 autonomy)
+    default: true
+  DATASCOUT:
+    description: External UAE federal open-data discovery — only when REQ specifies external data ingestion
+    default: false
+  AWS_RESEARCH:
+    description: AWS UAE region availability + sovereign options (skip if Azure-only)
+    default: true
+  AZURE_RESEARCH:
+    description: Azure UAE North / Central + Microsoft sovereign (skip if AWS-only)
+    default: true
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
+# ---------------------------------------------------------------------------
+# Targets
+# ---------------------------------------------------------------------------
+
+targets:
+
+  # --- Foundation ---------------------------------------------------------
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: GLOSSARY
+    skill: arckit:glossary
+    args: "{P}"
+    output: { project: "000-global", type: GLO }
+    deps: [PRIN]
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  # --- UAE national alignment (early — informs everything downstream) ----
+  - id: UAE_PRIORITIES
+    skill: arckit:uae-priorities-alignment
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-PRIORITIES }
+    deps: [PRIN, REQ]
+
+  # --- Research wave (parallel, before ADRs) -----------------------------
+  - id: RESEARCH
+    skill: arckit:research
+    args: "{P} agentic-ai-providers"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research, multi_instance: true }
+    topic: "Agentic AI providers (UAE-hosted vs international, build vs buy)"
+    deps: [REQ]
+
+  - id: AWS_RESEARCH
+    skill: arckit:aws-research
+    args: "{P} uae-region"
+    output: { project: "{P}-{NAME}", type: AWRS, subfolder: research, multi_instance: true }
+    topic: "AWS Middle East UAE region — services, sovereign options, residency"
+    deps: [REQ]
+
+  - id: AZURE_RESEARCH
+    skill: arckit:azure-research
+    args: "{P} uae-north uae-central"
+    output: { project: "{P}-{NAME}", type: AZRS, subfolder: research, multi_instance: true }
+    topic: "Azure UAE North / UAE Central — services, sovereign cloud, Microsoft Cloud for Sovereignty"
+    deps: [REQ]
+
+  - id: DATASCOUT
+    skill: arckit:datascout
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DSCT, subfolder: research, multi_instance: true }
+    topic: "UAE federal open-data sources and inter-entity data feeds"
+    deps: [REQ]
+
+  # --- Data classification & privacy -------------------------------------
+  - id: UAE_CLASSIFICATION
+    skill: arckit:uae-classification
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-CLAS }
+    deps: [REQ, UAE_PRIORITIES]
+
+  - id: UAE_PDPL
+    skill: arckit:uae-pdpl
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-PDPL }
+    deps: [REQ, UAE_CLASSIFICATION]
+
+  - id: UAE_DATA_SHARING
+    skill: arckit:uae-data-sharing
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-DSHARE }
+    deps: [UAE_CLASSIFICATION, UAE_PDPL]
+
+  - id: UAE_DIGITAL_RECORDS
+    skill: arckit:uae-digital-records
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-DREC }
+    deps: [REQ, UAE_CLASSIFICATION]
+
+  # --- Cloud residency + identity ----------------------------------------
+  - id: UAE_CLOUD_RESIDENCY
+    skill: arckit:uae-cloud-residency
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-CRES }
+    # Cloud residency depends on the research wave (which CSP options exist)
+    # plus classification (per-tier residency rules)
+    deps: [UAE_CLASSIFICATION, AWS_RESEARCH, AZURE_RESEARCH]
+
+  - id: UAE_UAEPASS
+    skill: arckit:uae-uaepass
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-PASS }
+    deps: [REQ, UAE_PRIORITIES]
+
+  # --- ADRs (UAE-themed, deps include research + classification) ---------
+  - id: ADR-001
+    skill: arckit:adr
+    topic: "Cloud platform and sovereign hosting (Core42, G42, Microsoft UAE, e& Sovereign)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, AWS_RESEARCH, AZURE_RESEARCH, UAE_CLOUD_RESIDENCY]
+
+  - id: ADR-002
+    skill: arckit:adr
+    topic: "Identity and access — UAE Pass integration (Basic vs Verified profile)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, UAE_UAEPASS]
+
+  - id: ADR-003
+    skill: arckit:adr
+    topic: "Data residency tier per Smart Data classification level"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, UAE_CLASSIFICATION, UAE_CLOUD_RESIDENCY]
+
+  - id: ADR-004
+    skill: arckit:adr
+    topic: "AI / LLM provider — UAE-hosted vs international, on-premise vs SaaS"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, RESEARCH, UAE_CLOUD_RESIDENCY]
+
+  - id: ADR-005
+    skill: arckit:adr
+    topic: "AI autonomy tier policy — Tier 1 internal, Tier 2 investor, Tier 3 regulated boundaries"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-006
+    skill: arckit:adr
+    topic: "Records and evidence retention under Digital Records Policy"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, UAE_DIGITAL_RECORDS]
+
+  - id: ADR-007
+    skill: arckit:adr
+    topic: "Procurement route — MoF Digital Procurement Platform with In-Country Value plan"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, UAE_PRIORITIES]
+
+  - id: ADR-008
+    skill: arckit:adr
+    topic: "Logging, audit, and observability stack (UAE residency, IAS-aligned)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  # --- Strategic / global outputs ---------------------------------------
+  - id: STRATEGY
+    skill: arckit:strategy
+    args: ""
+    output: { project: "000-global", type: STRAT }
+    deps: [PRIN, STKE, UAE_PRIORITIES]
+
+  - id: WARDLEY
+    skill: arckit:wardley
+    args: "{NAME}"
+    output: { project: "000-global", type: WARD }
+    deps: [PRIN, REQ]
+
+  # --- Risk + assurance --------------------------------------------------
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, "ADR-*", PRIN]
+
+  - id: HLD
+    skill: arckit:hld-review
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: HLD }
+    deps: [REQ, "ADR-*", PRIN]
+
+  - id: SOBC
+    skill: arckit:sobc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SOBC }
+    deps: [REQ, STKE, RISK]
+
+  - id: TCOP
+    skill: arckit:tcop
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TCOP }
+    deps: [REQ, STKE, RISK, "ADR-*"]
+
+  - id: SBD
+    skill: arckit:secure
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SBD }
+    deps: [TCOP, RISK, REQ, "ADR-*"]
+
+  - id: DPIA
+    skill: arckit:dpia
+    args: "{P} scope=full-system consultation=surveys"
+    output: { project: "{P}-{NAME}", type: DPIA }
+    # PDPL is the UAE-specific privacy law; DPIA is the universal artefact
+    # that documents privacy impact regardless of jurisdiction.
+    deps: [REQ, STKE, RISK, UAE_PDPL]
+
+  # --- AI governance (UAE Charter + autonomy tier + UK reference frames) -
+  - id: UAE_AI_CHARTER
+    skill: arckit:uae-ai-charter
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-AICH }
+    deps: [REQ, "ADR-*", RISK, UAE_PRIORITIES]
+
+  - id: UAE_AI_AUTONOMY
+    skill: arckit:uae-ai-autonomy-tier
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-AUTI }
+    deps: [REQ, RISK, UAE_AI_CHARTER]
+
+  - id: AIP
+    skill: arckit:ai-playbook
+    args: "{P} ai-mode=auto-detect-from-REQ-FRs"
+    output: { project: "{P}-{NAME}", type: AIP }
+    deps: [DPIA, RISK, REQ, ADR-004, UAE_AI_CHARTER]
+
+  - id: ATRS
+    skill: arckit:atrs
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ATRS }
+    deps: [AIP, DPIA, ADR-004, UAE_AI_AUTONOMY]
+
+  # --- Security: UAE IAS Statement of Applicability ----------------------
+  - id: UAE_IAS
+    skill: arckit:uae-ias
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-IAS }
+    deps: [REQ, "ADR-*", RISK, SBD]
+
+  # --- Diagrams ----------------------------------------------------------
+  - id: DIAG-C4
+    skill: arckit:diagram
+    topic: "c4-context"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD]
+
+  - id: DIAG-DEP
+    skill: arckit:diagram
+    topic: "deployment (UAE region, sovereign cloud)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, ADR-001, UAE_CLOUD_RESIDENCY]
+
+  - id: DIAG-DATAFLOW
+    skill: arckit:diagram
+    topic: "data-flow with classification overlay"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, UAE_CLASSIFICATION]
+
+  # --- Operational + planning -------------------------------------------
+  - id: PLAN
+    skill: arckit:plan
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: PLAN }
+    deps: [SOBC, RISK, UAE_AI_AUTONOMY]
+
+  - id: ROADMAP
+    skill: arckit:roadmap
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ROAD }
+    deps: [PLAN]
+
+  - id: DEVOPS
+    skill: arckit:devops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DEVOPS }
+    deps: [REQ, "ADR-*"]
+
+  - id: FINOPS
+    skill: arckit:finops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FINOPS }
+    deps: [REQ, RISK]
+
+  - id: OPS
+    skill: arckit:operationalize
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OPS }
+    deps: [HLD, DEVOPS, RISK, UAE_IAS]
+
+  # --- UAE federal procurement + service catalogue ----------------------
+  - id: UAE_PROCUREMENT
+    skill: arckit:uae-procurement
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-PROC }
+    deps: [STRATEGY, RISK, "ADR-*", UAE_PRIORITIES, ADR-007]
+
+  - id: UAE_ZERO_BUREAUCRACY
+    skill: arckit:uae-zero-bureaucracy
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UAE-ZBUR }
+    deps: [REQ, STKE, OPS, UAE_UAEPASS]
+
+  # --- Cross-cutting last -----------------------------------------------
+  - id: TRACE
+    skill: arckit:traceability
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRACE }
+    deps:
+      [REQ, STKE, "ADR-*", RISK, HLD, DPIA, SBD, TCOP,
+       PLAN, ROADMAP, AIP, ATRS, DEVOPS, FINOPS, OPS,
+       UAE_PRIORITIES, UAE_CLASSIFICATION, UAE_PDPL, UAE_DATA_SHARING,
+       UAE_DIGITAL_RECORDS, UAE_CLOUD_RESIDENCY, UAE_UAEPASS,
+       UAE_AI_CHARTER, UAE_AI_AUTONOMY, UAE_IAS,
+       UAE_PROCUREMENT, UAE_ZERO_BUREAUCRACY]
