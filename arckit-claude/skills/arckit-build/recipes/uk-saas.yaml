@@ -1,0 +1,271 @@
+# ArcKit build recipe — UK Government SaaS
+#
+# Recipe schema v1. Loaded by the arckit-build skill at runtime.
+#
+# Override this file by creating .arckit/recipes/uk-saas.yaml at the project
+# root. The harness checks the project override first, then falls back to this
+# default.
+#
+# Variable substitution applied by the orchestrator before passing args to
+# worker subagents:
+#   {P}     ← project ID, zero-padded (e.g. "001")
+#   {NAME}  ← project slug (e.g. "arckit-saas")
+#   {V}     ← defaults.version
+#   {TOPIC} ← target.topic (multi-instance ADR/DIAG topics)
+
+recipe: uk-saas
+schema_version: 1
+description: >
+  UK Government SaaS — full ArcKit governance suite (PRIN through TRACE
+  with TCoP/SBD/DPIA/SVCASS). Suitable for departmental SaaS launches that
+  need GDS Service Standard, NCSC CAF, and Orange/Green Book coverage.
+
+defaults:
+  version: "1.0"
+
+# Optional targets are skipped unless explicitly enabled.
+# - default: true → built unless excluded
+# - default: false (or absent) → built only with --enable {ID}
+optional_targets:
+  AIP:
+    description: AI Playbook — build only if any FR mentions AI/ML/LLM
+    default: false
+  SVCASS:
+    description: Service Standard Assessment — public-service-style
+    default: true
+
+# Hooks run after the final target wave, in parallel.
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
+# ---------------------------------------------------------------------------
+# Targets
+# ---------------------------------------------------------------------------
+# Each target is one ArcKit artefact. The orchestrator topo-sorts by `deps`
+# and dispatches one worker subagent per target per wave.
+#
+# Fields:
+#   id              Unique target identifier (used in deps lists and state.json)
+#   skill           ArcKit skill to invoke (e.g. arckit:requirements)
+#   args            Args passed to the skill, after {P}/{NAME}/{V} substitution
+#   output.project  Project directory: "000-global" or "{P}-{NAME}"
+#   output.type     ArcKit doc-type code passed to generate-document-id.sh
+#   output.subfolder           (optional) subfolder relative to project dir
+#   output.multi_instance      (optional) true → requires --next-num when
+#                              invoking generate-document-id.sh
+#   topic           (optional) Used in commit messages and state.json for
+#                   multi-instance targets where the ID alone isn't descriptive
+#   deps            List of target IDs that must complete first
+# ---------------------------------------------------------------------------
+
+targets:
+
+  # --- Wave 0 / 1: foundational ------------------------------------------
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: GLOSSARY
+    skill: arckit:glossary
+    args: "{P}"
+    output: { project: "000-global", type: GLO }
+    deps: [PRIN]
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  # --- ADR set (parallel, all share deps) --------------------------------
+  - id: ADR-001
+    skill: arckit:adr
+    topic: "Cloud platform (AWS / Azure / GCP)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-002
+    skill: arckit:adr
+    topic: "Identity & access (GOV.UK One Login vs Entra)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-003
+    skill: arckit:adr
+    topic: "Data residency & sovereignty"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-004
+    skill: arckit:adr
+    topic: "AI / LLM provider (if AI feature in scope)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-005
+    skill: arckit:adr
+    topic: "Logging & observability stack"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-006
+    skill: arckit:adr
+    topic: "Deployment topology (regions, multi-tenancy)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-007
+    skill: arckit:adr
+    topic: "Build vs buy (G-Cloud framework)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-008
+    skill: arckit:adr
+    topic: "Open-source licence policy"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  # --- Strategic / global outputs ---------------------------------------
+  - id: STRATEGY
+    skill: arckit:strategy
+    args: ""
+    output: { project: "000-global", type: STRAT }
+    deps: [PRIN, STKE]
+
+  - id: WARDLEY
+    skill: arckit:wardley
+    args: "{NAME}"
+    output: { project: "000-global", type: WARD }
+    deps: [PRIN, REQ]
+
+  # --- Risk + assurance --------------------------------------------------
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, "ADR-*", PRIN]
+
+  - id: HLD
+    skill: arckit:hld-review
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: HLDR }
+    deps: [REQ, "ADR-*", PRIN]
+
+  - id: SOBC
+    skill: arckit:sobc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SOBC }
+    deps: [REQ, STKE, RISK]
+
+  - id: TCOP
+    skill: arckit:tcop
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TCOP }
+    deps: [REQ, STKE, RISK, "ADR-*"]
+
+  - id: SBD
+    skill: arckit:secure
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SECD }
+    deps: [TCOP, RISK, REQ, "ADR-*"]
+
+  - id: DPIA
+    skill: arckit:dpia
+    args: "{P} scope=full-system consultation=surveys"
+    output: { project: "{P}-{NAME}", type: DPIA }
+    deps: [REQ, STKE, RISK]
+
+  # --- Diagrams (multi-instance, pre-allocated topics) ------------------
+  - id: DIAG-C4
+    skill: arckit:diagram
+    topic: "c4-context"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD]
+
+  - id: DIAG-SEQ
+    skill: arckit:diagram
+    topic: "sequence"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD]
+
+  - id: DIAG-DEP
+    skill: arckit:diagram
+    topic: "deployment"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, ADR-006]
+
+  # --- Operational + planning -------------------------------------------
+  - id: PLAN
+    skill: arckit:plan
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: PLAN }
+    deps: [SOBC, RISK]
+
+  - id: ROADMAP
+    skill: arckit:roadmap
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ROAD }
+    deps: [PLAN]
+
+  - id: DEVOPS
+    skill: arckit:devops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DEVOPS }
+    deps: [REQ, "ADR-*"]
+
+  - id: FINOPS
+    skill: arckit:finops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FINOPS }
+    deps: [REQ, RISK]
+
+  - id: OPS
+    skill: arckit:operationalize
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OPS }
+    deps: [HLD, DEVOPS, RISK]
+
+  # --- Optional ----------------------------------------------------------
+  - id: AIP
+    skill: arckit:ai-playbook
+    args: "{P} ai-mode=auto-detect-from-REQ-FRs"
+    output: { project: "{P}-{NAME}", type: AIPB }
+    deps: [DPIA, RISK, REQ, ADR-004]
+
+  - id: SVCASS
+    skill: arckit:service-assessment
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SVCASS }
+    deps: [TCOP, SBD, DPIA, AIP, REQ, STKE]
+
+  # --- Cross-cutting last -----------------------------------------------
+  - id: TRACE
+    skill: arckit:traceability
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRAC }
+    deps:
+      [REQ, STKE, "ADR-*", RISK, HLD, DPIA, SBD, TCOP,
+       PLAN, ROADMAP, AIP, SVCASS, DEVOPS, FINOPS, OPS]

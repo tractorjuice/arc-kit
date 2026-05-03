@@ -1,0 +1,274 @@
+# ArcKit build recipe — UK MOD / Sovereign / Air-Gapped
+#
+# For deployments into customer-controlled environments operating fully
+# disconnected from vendor services — UK Ministry of Defence, intelligence
+# community partners, accredited operators of essential services. Anchored
+# on Principle 21 (Sovereign and Air-Gapped Deployment) in the global
+# principles document.
+#
+# Differences from uk-saas:
+#   - arckit:mod-secure  (MOD Secure by Design / CAAT) replaces arckit:secure
+#   - arckit:jsp-936     (JSP 936 AI assurance) added, gated on ADR-004
+#                        (on-premise AI) being in scope
+#   - arckit:atrs        (Algorithmic Transparency Recording Standard) added
+#                        for the on-prem AI route
+#   - SVCASS dropped     (sovereign deployments are not citizen-facing
+#                        public services — GDS Service Standard does not apply)
+#   - ADR topics rewritten for air-gapped operation (no public cloud,
+#                        no GOV.UK One Login, sealed-media distribution, etc.)
+#   - arckit:pages and arckit:health post-build hooks unchanged
+
+recipe: uk-mod-sovereign
+schema_version: 1
+description: >
+  UK MOD / sovereign / air-gapped — full ArcKit governance suite
+  with MOD Secure by Design (CAAT), JSP 936 AI assurance, and ATRS,
+  scoped to disconnected on-premise deployments. Anchored on
+  Principle 21 (Sovereign and Air-Gapped Deployment).
+
+defaults:
+  version: "1.0"
+
+optional_targets:
+  AIP:
+    description: AI Playbook — build only if any FR mentions AI/ML/LLM
+    default: true   # on-prem AI is a primary scenario for sovereign use
+  JSP_936:
+    description: JSP 936 AI assurance — required if AI/ML/LLM in scope
+    default: true
+  ATRS:
+    description: Algorithmic Transparency Recording Standard — public
+                 algorithm transparency notice for the on-prem AI route
+    default: false   # not all sovereign deployments are public-facing
+                     # enough to warrant ATRS publication
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
+# ---------------------------------------------------------------------------
+# Targets
+# ---------------------------------------------------------------------------
+
+targets:
+
+  # --- Wave 0 / 1: foundational ------------------------------------------
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: GLOSSARY
+    skill: arckit:glossary
+    args: "{P}"
+    output: { project: "000-global", type: GLO }
+    deps: [PRIN]
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  # --- ADR set: sovereign-specific topics --------------------------------
+  # Rewritten from uk-saas defaults to reflect air-gapped operation.
+  # Topics mirror the ADRs already authored for project 002 so the recipe
+  # can be re-run idempotently against existing artefacts.
+  - id: ADR-001
+    skill: arckit:adr
+    topic: "Air-gapped operation model — disconnected runtime, no outbound egress"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-002
+    skill: arckit:adr
+    topic: "Signed release bundle — Cosign + CycloneDX SBOM + SLSA L3 + offline verification"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-003
+    skill: arckit:adr
+    topic: "Cleared-personnel access model for sovereign deployments"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-004
+    skill: arckit:adr
+    topic: "On-premise AI model integration (sovereign mode, no cloud LLM egress)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-005
+    skill: arckit:adr
+    topic: "Customer-controlled telemetry, time source, certificate authority, package mirror"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-006
+    skill: arckit:adr
+    topic: "JSP 440 / Security Aspects Letter alignment — controls inheritance and accreditation pathway"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-007
+    skill: arckit:adr
+    topic: "Distribution model — sealed media default with cross-domain diode option"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-008
+    skill: arckit:adr
+    topic: "Long-term support release line for sovereign deployments"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  # --- Strategic / global outputs ---------------------------------------
+  - id: STRATEGY
+    skill: arckit:strategy
+    args: ""
+    output: { project: "000-global", type: STRAT }
+    deps: [PRIN, STKE]
+
+  - id: WARDLEY
+    skill: arckit:wardley
+    args: "{NAME}"
+    output: { project: "000-global", type: WARD }
+    deps: [PRIN, REQ]
+
+  # --- Risk + assurance --------------------------------------------------
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, "ADR-*", PRIN]
+
+  - id: HLD
+    skill: arckit:hld-review
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: HLDR }
+    deps: [REQ, "ADR-*", PRIN]
+
+  - id: SOBC
+    skill: arckit:sobc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SOBC }
+    deps: [REQ, STKE, RISK]
+
+  - id: TCOP
+    skill: arckit:tcop
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TCOP }
+    deps: [REQ, STKE, RISK, "ADR-*"]
+
+  # MOD Secure by Design replaces standard SBD for sovereign deployments
+  - id: MOD_SBD
+    skill: arckit:mod-secure
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SECD-MOD }
+    deps: [TCOP, RISK, REQ, "ADR-*"]
+
+  - id: DPIA
+    skill: arckit:dpia
+    args: "{P} scope=full-system consultation=surveys"
+    output: { project: "{P}-{NAME}", type: DPIA }
+    deps: [REQ, STKE, RISK]
+
+  # --- Diagrams (multi-instance, pre-allocated topics) ------------------
+  - id: DIAG-C4
+    skill: arckit:diagram
+    topic: "c4-context"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD]
+
+  - id: DIAG-AIRGAP
+    skill: arckit:diagram
+    topic: "air-gap-boundary"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, ADR-001]
+
+  - id: DIAG-DEP
+    skill: arckit:diagram
+    topic: "deployment (sealed-media install)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, ADR-007]
+
+  # --- Operational + planning -------------------------------------------
+  - id: PLAN
+    skill: arckit:plan
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: PLAN }
+    deps: [SOBC, RISK]
+
+  - id: ROADMAP
+    skill: arckit:roadmap
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ROAD }
+    deps: [PLAN]
+
+  - id: DEVOPS
+    skill: arckit:devops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DEVOPS }
+    deps: [REQ, "ADR-*"]
+
+  - id: FINOPS
+    skill: arckit:finops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FINOPS }
+    deps: [REQ, RISK]
+
+  - id: OPS
+    skill: arckit:operationalize
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OPS }
+    deps: [HLD, DEVOPS, RISK]
+
+  # --- Optional AI/ML governance ----------------------------------------
+  - id: AIP
+    skill: arckit:ai-playbook
+    args: "{P} ai-mode=on-premise"
+    output: { project: "{P}-{NAME}", type: AIPB }
+    deps: [DPIA, RISK, REQ, ADR-004]
+
+  - id: JSP_936
+    skill: arckit:jsp-936
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: JSP936 }
+    deps: [AIP, MOD_SBD, RISK, ADR-004]
+
+  - id: ATRS
+    skill: arckit:atrs
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ATRS }
+    deps: [AIP, DPIA, ADR-004]
+
+  # --- Cross-cutting last -----------------------------------------------
+  # Note: SVCASS deliberately omitted — sovereign deployments are not
+  # citizen-facing public services subject to GDS Service Standard.
+  - id: TRACE
+    skill: arckit:traceability
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRAC }
+    deps:
+      [REQ, STKE, "ADR-*", RISK, HLD, DPIA, MOD_SBD, TCOP,
+       PLAN, ROADMAP, AIP, JSP_936, DEVOPS, FINOPS, OPS]
