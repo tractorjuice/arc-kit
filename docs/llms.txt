@@ -157,7 +157,23 @@ French government (apply on top of EU baseline):
 
 ## Use cases
 
-- [Use cases](https://arckit.org/use-cases.html): New project, vendor procurement, design review, audit traceability.
+- [Use cases](https://arckit.org/use-cases.html): New project, vendor procurement, design review, audit traceability — index of 19 example projects.
+
+## Test repositories (example outputs)
+
+ArcKit maintains 43 public test repositories under the `tractorjuice` GitHub org (pattern `arckit-test-project-v{N}-{slug}`, range v0–v48). Each one is a fully AI-generated architecture project demonstrating ArcKit commands end-to-end. Selected highlights:
+
+- [v7 NHS Appointment Booking](https://github.com/tractorjuice/arckit-test-project-v7-nhs-appointment): Health digital service with NHS Spine, IG Toolkit, WCAG 2.1 AA, GDPR.
+- [v9 Cabinet Office GenAI Platform](https://github.com/tractorjuice/arckit-test-project-v9-cabinet-office-genai): Cross-government GenAI with AI Playbook, ATRS, departmental isolation.
+- [v14 Scottish Courts GenAI Strategy](https://github.com/tractorjuice/arckit-test-project-v14-scottish-courts): Justice-sector GenAI with full MLOps/FinOps/DevOps strategies.
+- [v19 UK Government API Aggregator](https://github.com/tractorjuice/arckit-test-project-v19-gov-api-aggregator): 240+ government APIs across 34+ departments, AWS & Azure research, Secure by Design.
+- [v22 GenAI Playbook](https://github.com/tractorjuice/arckit-test-project-v22-genai-playbook): Generative AI strategy, governance, risk, and implementation guidance.
+- [v44 Australian Government Architecture Governance](https://github.com/tractorjuice/arckit-test-project-v44-australian-gov): Non-UK proof-of-concept demonstrating jurisdictional reuse.
+- [v45 NS&I Project Rainbow](https://github.com/tractorjuice/arckit-test-project-v45-nsi-rainbow): Finance-sector core banking modernisation programme across 3 workstreams.
+- [v46 ArcKit SDG Mono-Repo](https://github.com/tractorjuice/arckit-test-project-v46-sdg): 17 UN SDGs covering 78 UK Government technology projects.
+- [v48 ArcKit as a Service for UK Government](https://github.com/tractorjuice/arckit-test-project-v48-arckit-as-a-service): Managed multi-tenant offering of ArcKit aligned to GDS Service Standard, TCoP, NCSC CAF, and G-Cloud — ArcKit dogfooded on its own GovTech offering.
+
+The full table (all 43 public repos) is in [CLAUDE.md](https://github.com/tractorjuice/arc-kit/blob/main/CLAUDE.md#test-repositories) and the example index in [README.md](https://github.com/tractorjuice/arc-kit/blob/main/README.md#example-repositories).
 
 ## Source code and distributions
 
