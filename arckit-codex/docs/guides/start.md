@@ -21,6 +21,44 @@
 
 ---
 
+## Vibe Start — The 3-Prompt Super Prompt
+
+If you want to skip the decision tree and let ArcKit do the heavy lifting, this is the fastest possible path from empty repo to a fully-populated project. Three prompts, no manual orchestration:
+
+```text
+1. /arckit.init  This is a project for {one-line description of what you're building}.
+
+2. /arckit.principles
+
+3. Now create all the artifacts. Take your time. Do not stop until complete.
+```
+
+### What Happens
+
+- **Prompt 1** — `init` scaffolds the `projects/` structure and the one-line description seeds the project context.
+- **Prompt 2** — `principles` generates `ARC-000-PRIN-v1.0.md`, the prerequisite that most other commands depend on.
+- **Prompt 3** — the assistant works through the standard delivery workflow autonomously: `stakeholders` → `requirements` → `risk` → `sobc` → `adr` → `data-model` → `hld-review` → `roadmap`, etc., chaining via the `handoffs:` metadata in each command's frontmatter.
+
+### When To Use It
+
+- **Greenfield projects** where you want a complete first-pass set of artifacts to react to.
+- **Demos and proofs of concept** where speed matters more than per-command supervision.
+- **Vibe-coding sessions** where you want the assistant to keep going until everything is on disk.
+
+### When Not To Use It
+
+- **Heavily regulated work** (UK Gov Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off before the next is generated.
+- **Existing projects** with artifacts already on disk — run `/arckit.navigator` first to see what is missing rather than regenerating.
+- **Token-constrained sessions** — the full chain can run dozens of commands. Use Opus 4.6 or 4.7 with the `max` or `xhigh` effort levels.
+
+### Tips For Vibe Start
+
+- Add constraints to prompt 1: `/arckit.init This is a project for X. Target users are Y. Budget is Z.`
+- Use prompt 3 verbatim — the phrase "do not stop until complete" reliably suppresses early stopping. Followed by `/arckit.health` to spot anything skipped.
+- If the run stalls, resume with: `Continue from where you stopped. Do not stop until complete.`
+
+---
+
 ## `/arckit.start` — Get Oriented
 
 **Inputs**: None required. Optionally provide a focus area.
