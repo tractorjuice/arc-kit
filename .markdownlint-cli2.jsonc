@@ -76,6 +76,7 @@
     "tests/mermaid-wardley/node_modules/**",
     "tests/mermaid-wardley/output/**",
     "research/**",
-    ".pytest_cache/**"
+    ".pytest_cache/**",
+    ".arckit/memory/**"
   ]
 }
