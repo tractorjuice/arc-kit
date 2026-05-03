@@ -1,4 +1,4 @@
-# ArcKit v4.13.0: The Build Harness - Building a full architecture in one Claude Code session
+# ArcKit v4.13.0: The Build Harness — Building a full architecture in one Claude Code session. AKA The GDS Harness
 
 `/arckit:build` is the new ArcKit build harness. Run one command and the whole architecture builds itself: requirements, stakeholder analysis, ADRs, risk register, business case, designs, secure-by-design assessment, DPIA, diagrams, traceability matrix, and post-build health check. It does this by reading a YAML recipe, computing the dependency graph, and dispatching subagents in parallel waves. One commit per wave, full audit trail, resumable state.
 
