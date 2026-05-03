@@ -61,6 +61,9 @@ optional_targets:
   ATRS:
     description: Algorithmic Transparency Recording Standard (recommended for Tier 2/3 autonomy)
     default: true
+  ORG_RESEARCH:
+    description: Target organisation research — federal entity strategy, structure, existing systems. Output to projects/000-global/research/ so the federal-entity context is shared across every UAE project in the repo. Runs first (no deps) ahead of all other research.
+    default: true
   DATASCOUT:
     description: External UAE federal open-data discovery — only when REQ specifies external data ingestion
     default: false
@@ -116,33 +119,44 @@ targets:
     deps: [PRIN, REQ]
 
   # --- Research wave (parallel, before ADRs) -----------------------------
+  # Org research runs first (no deps) and writes to projects/000-global/research/
+  # so the federal-entity context is shared across every UAE project in the
+  # repo. Per-project research targets all depend on ORG_RESEARCH so context
+  # flows organisation -> project.
+  - id: ORG_RESEARCH
+    skill: arckit:research
+    topic: "Target federal entity — strategy, mandate, structure, existing systems, current digital posture"
+    args: "{NAME} target-federal-entity strategy structure existing-systems"
+    output: { project: "000-global", type: RSCH, subfolder: research, multi_instance: true }
+    deps: []
+
   - id: RESEARCH
     skill: arckit:research
     args: "{P} agentic-ai-providers"
     output: { project: "{P}-{NAME}", type: RSCH, subfolder: research, multi_instance: true }
     topic: "Agentic AI providers (UAE-hosted vs international, build vs buy)"
-    deps: [REQ]
+    deps: [REQ, ORG_RESEARCH]
 
   - id: AWS_RESEARCH
     skill: arckit:aws-research
     args: "{P} uae-region"
     output: { project: "{P}-{NAME}", type: AWRS, subfolder: research, multi_instance: true }
     topic: "AWS Middle East UAE region — services, sovereign options, residency"
-    deps: [REQ]
+    deps: [REQ, ORG_RESEARCH]
 
   - id: AZURE_RESEARCH
     skill: arckit:azure-research
     args: "{P} uae-north uae-central"
     output: { project: "{P}-{NAME}", type: AZRS, subfolder: research, multi_instance: true }
     topic: "Azure UAE North / UAE Central — services, sovereign cloud, Microsoft Cloud for Sovereignty"
-    deps: [REQ]
+    deps: [REQ, ORG_RESEARCH]
 
   - id: DATASCOUT
     skill: arckit:datascout
     args: "{P}"
     output: { project: "{P}-{NAME}", type: DSCT, subfolder: research, multi_instance: true }
     topic: "UAE federal open-data sources and inter-entity data feeds"
-    deps: [REQ]
+    deps: [REQ, ORG_RESEARCH]
 
   # --- Data classification & privacy -------------------------------------
   - id: UAE_CLASSIFICATION
