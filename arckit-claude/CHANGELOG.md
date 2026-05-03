@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.13.1] - 2026-05-03
+
+Same-day follow-up to v4.13.0. All changes are additive enhancements to the build harness — no breaking changes, no removals.
+
+### Added
+
+- **`uae-federal-ai` recipe (#414).** Third built-in recipe for UAE Federal projects under the 23 April 2026 Cabinet agentic AI decree. 48 targets including all 12 UAE community commands (PDPL, IAS, AI Charter, autonomy tier, cloud residency, UAE Pass, data sharing, digital records, priorities alignment, procurement, zero bureaucracy, classification), an integrated research wave, and the core ArcKit governance suite. ADR topics rewritten for UAE federal AI (Core42 / G42 / Microsoft UAE / e& sovereign hosting, UAE Pass tiers, AI autonomy policy, MoF procurement route).
+- **Research wave on `uk-saas` and `uk-mod-sovereign` (#417).** Both recipes go from 31/32 → 38 targets each. Default-on per-project research targets: `RESEARCH`, `AWS_RESEARCH`, `AZURE_RESEARCH`, `GCP_RESEARCH`, plus `GOV_REUSE` (uk-saas only) and optional `DATASCOUT`. Skip what you don't need with `--exclude AWS_RESEARCH` etc.
+- **`ORG_RESEARCH` upstream target (#417, #414 amendment).** New first-wave target on all three built-in recipes. Researches the target organisation's strategy, structure, and existing systems; output goes to `projects/000-global/research/` so the org context is shared across every project in the same repo. Per-project research targets all `deps: [REQ, ORG_RESEARCH]`, so context flows organisation → project. Default on; opt out with `--exclude ORG_RESEARCH`.
+
+### Documentation
+
+- **Discovery surfaces caught up with v4.13.0 (#416).** `/arckit:build` now appears in `commands.html` (Foundation row), `guides.html` (Getting Started list, count 10 → 11), and a new "Meta: Build Harness" section in `DEPENDENCY-MATRIX.md`. The matrix entry explains why the harness isn't a row/column in the DSM (depends on every other command transitively).
+- **sitemap.xml + llms.txt + getting-started.html (#415).** sitemap adds `articles.html` and `article-viewer.html`, refreshes `lastmod=2026-05-03` on the home / commands / guides / getting-started entries. llms.txt updated to 71 commands + 34 community, mentions the build harness with all three recipes and the new build guide, plus a new "Articles and essays" section. getting-started gains a "Faster path (Claude Code only)" notification banner introducing The GDS Harness immediately under the existing Vibe Start banner.
+- **Getting-started recipe counts updated** to reflect the post-research-wave shape (uk-saas: 31→38, uk-mod-sovereign: 32→38, uae-federal-ai: 47→48). Banner now also describes the `ORG_RESEARCH` pattern and how to opt out.
+
+### Architecture notes
+
+- All three built-in recipes now share a consistent research-flow shape: `ORG_RESEARCH` (no deps, global) → per-project research targets (deps on REQ + ORG_RESEARCH). Recipe authors writing custom recipes are encouraged to follow this pattern.
+- The research targets do not gate ADRs in any recipe — research is informational. Architects read the research outputs when drafting ADRs rather than the harness blocking on them. This keeps the wave plan tight and makes opting research targets in/out a fluid decision per build.
+
 ## [4.13.0] - 2026-05-03
 
 ### Added

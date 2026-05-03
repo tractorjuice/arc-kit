@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.13.1] - 2026-05-03
+
+Same-day follow-up to v4.13.0. All additive enhancements to the build harness.
+
+### Added
+
+- **`uae-federal-ai` recipe (#414).** Third built-in recipe for UAE Cabinet agentic AI decree compliance: 48 targets, all 12 UAE community commands, integrated research wave.
+- **Research wave on `uk-saas` and `uk-mod-sovereign` (#417).** Default-on per-project research targets (RESEARCH, AWS, Azure, GCP, GOV_REUSE for UK only, DATASCOUT optional). Both recipes now ship 38 targets each.
+- **`ORG_RESEARCH` upstream target (#417, #414 amendment).** New first-wave target on all three built-in recipes. Researches the target organisation once per repo, output to `projects/000-global/research/`, shared across every project.
+
+### Documentation
+
+- `/arckit:build` listed in `commands.html`, `guides.html`, and `DEPENDENCY-MATRIX.md` (#416).
+- `sitemap.xml`, `llms.txt`, and `getting-started.html` refreshed for v4.13.0+ (#415).
+- Getting-started recipe-count banner updated to reflect the post-research-wave shape.
+
 ## [4.13.0] - 2026-05-03
 
 ### Added
