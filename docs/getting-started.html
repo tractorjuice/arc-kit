@@ -591,6 +591,23 @@ arckit init my-project --ai copilot</code></pre></div>
                 </div>
             </div>
 
+            <!-- Vibe Start -->
+            <div class="govuk-notification-banner govuk-!-margin-top-6" role="region" aria-labelledby="vibe-start-title">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="vibe-start-title">Fast path</h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <h3 class="govuk-notification-banner__heading">Vibe Start — the 3-prompt super prompt</h3>
+                    <p class="govuk-body">Skip the decision tree. Three prompts take you from empty repo to a fully-populated project. ArcKit chains commands via the <code>handoffs:</code> metadata in each command's frontmatter.</p>
+                    <div class="app-code-block">/arckit.init  This is a project for {one-line description of what you're building}.</div>
+                    <div class="app-code-block govuk-!-margin-top-2">/arckit.principles</div>
+                    <div class="app-code-block govuk-!-margin-top-2">Now create all the artifacts. Take your time. Do not stop until complete.</div>
+                    <p class="govuk-body govuk-!-margin-top-3"><strong>When to use it:</strong> greenfield projects, demos, proofs of concept, vibe-coding sessions where you want a complete first-pass set of artifacts to react to.</p>
+                    <p class="govuk-body"><strong>When not to use it:</strong> heavily regulated work (Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off; existing projects with artifacts already on disk (run <code>/arckit.navigator</code> first); token-constrained sessions.</p>
+                    <p class="govuk-body govuk-!-margin-bottom-0"><strong>If the run stalls:</strong> resume with <em>"Continue from where you stopped. Do not stop until complete."</em> Then run <code>/arckit.health</code> to spot anything skipped. Full guide: <a href="guide-viewer.html?guide=start" class="govuk-link">Getting Started with ArcKit</a>.</p>
+                </div>
+            </div>
+
             <!-- Step 6 -->
             <div class="app-step">
                 <span class="app-step__number">6</span>
