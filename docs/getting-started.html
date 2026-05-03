@@ -597,7 +597,7 @@ arckit init my-project --ai copilot</code></pre></div>
                     <h2 class="govuk-notification-banner__title" id="vibe-start-title">Fast path</h2>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <h3 class="govuk-notification-banner__heading">Vibe Start — the 3-prompt super prompt</h3>
+                    <h3 class="govuk-notification-banner__heading">Vibe Start &mdash; the 3-prompt super prompt</h3>
                     <p class="govuk-body">Skip the decision tree. Three prompts take you from empty repo to a fully-populated project. ArcKit chains commands via the <code>handoffs:</code> metadata in each command's frontmatter.</p>
                     <div class="app-code-block">/arckit.init  This is a project for {one-line description of what you're building}.</div>
                     <div class="app-code-block govuk-!-margin-top-2">/arckit.principles</div>
@@ -605,6 +605,25 @@ arckit init my-project --ai copilot</code></pre></div>
                     <p class="govuk-body govuk-!-margin-top-3"><strong>When to use it:</strong> greenfield projects, demos, proofs of concept, vibe-coding sessions where you want a complete first-pass set of artifacts to react to.</p>
                     <p class="govuk-body"><strong>When not to use it:</strong> heavily regulated work (Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off; existing projects with artifacts already on disk (run <code>/arckit.navigator</code> first); token-constrained sessions.</p>
                     <p class="govuk-body govuk-!-margin-bottom-0"><strong>If the run stalls:</strong> resume with <em>"Continue from where you stopped. Do not stop until complete."</em> Then run <code>/arckit.health</code> to spot anything skipped. Full guide: <a href="guide-viewer.html?guide=start" class="govuk-link">Getting Started with ArcKit</a>.</p>
+                </div>
+            </div>
+
+            <!-- The GDS Harness -->
+            <div class="govuk-notification-banner govuk-!-margin-top-4" role="region" aria-labelledby="gds-harness-title">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="gds-harness-title">Faster path (Claude Code only)</h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <h3 class="govuk-notification-banner__heading">The GDS Harness &mdash; <code>/arckit:build</code></h3>
+                    <p class="govuk-body">New in v4.13.0. Run one command and the whole architecture builds itself: requirements, stakeholder analysis, ADRs, risk register, business case, designs, Secure-by-Design assessment, DPIA, diagrams, traceability matrix, plus the post-build health check. Reads a YAML recipe, dispatches subagents in parallel waves, commits each wave atomically.</p>
+                    <div class="app-code-block">/arckit:build 001 --plan</div>
+                    <div class="app-code-block govuk-!-margin-top-2">/arckit:build 001</div>
+                    <div class="app-code-block govuk-!-margin-top-2">/arckit:build 002 --recipe uk-mod-sovereign</div>
+                    <div class="app-code-block govuk-!-margin-top-2">/arckit:build 003 --recipe uae-federal-ai</div>
+                    <p class="govuk-body govuk-!-margin-top-3"><strong>Three built-in recipes:</strong> <code>uk-saas</code> (31 targets, UK civilian SaaS), <code>uk-mod-sovereign</code> (32 targets, MOD / air-gapped with JSP 936 and MOD Secure by Design), and <code>uae-federal-ai</code> (47 targets, UAE Cabinet agentic AI decree compliance with all 12 UAE community commands plus an integrated research wave).</p>
+                    <p class="govuk-body"><strong>Customize:</strong> copy a recipe to <code>.arckit/recipes/{name}.yaml</code> and edit. The harness reads project overrides first, falling back to the plugin defaults &mdash; your customisations survive plugin updates.</p>
+                    <p class="govuk-body"><strong>Resumable:</strong> state persists to <code>projects/{P}/.arckit/state.json</code>. If a wave fails, fix the underlying issue and run <code>/arckit:build 001 --resume</code> to pick up exactly where it stopped.</p>
+                    <p class="govuk-body govuk-!-margin-bottom-0"><strong>When to use it:</strong> end-to-end governance builds where you want a full template-driven artefact set committed in atomic, reviewable waves. Full guide: <a href="guide-viewer.html?guide=build" class="govuk-link">Build Harness Guide</a>.</p>
                 </div>
             </div>
 

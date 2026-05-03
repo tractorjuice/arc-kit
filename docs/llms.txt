@@ -1,6 +1,6 @@
 # ArcKit
 
-> ArcKit is an Enterprise Architecture Governance & Vendor Procurement toolkit that provides 68 AI-assisted slash commands for Claude Code, Gemini CLI, GitHub Copilot, Codex CLI, and OpenCode CLI, plus 18 community-contributed EU and French regulatory commands. It transforms architecture governance from scattered documents into a systematic, template-driven workflow covering requirements, stakeholders, risk, business cases, architecture (C4, Wardley, ADRs), research, vendor procurement (G-Cloud/DOS), UK Government compliance (GDS, TCoP, Secure by Design, NCSC CAF, Orange/Green Book), EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), French government compliance (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), DevOps/MLOps/FinOps, and traceability.
+> ArcKit is an Enterprise Architecture Governance & Vendor Procurement toolkit that provides 71 AI-assisted slash commands for Claude Code, Gemini CLI, GitHub Copilot, Codex CLI, and OpenCode CLI, plus 34 community-contributed EU, French, Austrian, and UAE regulatory commands. It transforms architecture governance from scattered documents into a systematic, template-driven workflow covering requirements, stakeholders, risk, business cases, architecture (C4, Wardley, ADRs), research, vendor procurement (G-Cloud/DOS), UK Government compliance (GDS, TCoP, Secure by Design, NCSC CAF, Orange/Green Book), EU regulations (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), French government compliance (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), Austrian compliance (DSG/DSGVO, NISG, BVergG), UAE Federal compliance (PDPL, IAS, AI Charter, sovereign cloud, UAE Pass), DevOps/MLOps/FinOps, and traceability. ArcKit v4.13.0 adds /arckit:build, a Claude Code-only parallel build harness that orchestrates end-to-end artefact generation against a YAML recipe (uk-saas, uk-mod-sovereign, uae-federal-ai).
 
 ArcKit is distributed as a Claude Code plugin, a Gemini CLI extension, a GitHub Copilot prompt pack, a Codex CLI extension, an OpenCode CLI extension, and a Python CLI (`arckit init`). Source code and issue tracker: https://github.com/tractorjuice/arc-kit.
 
@@ -16,7 +16,8 @@ Every command reads a template from `.arckit/templates/`, creates or reuses a nu
 
 ## Commands
 
-- [Command reference](https://arckit.org/commands.html): Searchable HTML catalogue of all 68 commands with parameters and examples.
+- [Command reference](https://arckit.org/commands.html): Searchable HTML catalogue of all 71 commands with parameters and examples.
+- [Build harness guide](https://arckit.org/guides/build.md): `/arckit:build` parallel artefact generation via subagent isolation with YAML recipes (Claude Code only, v4.13.0+).
 - [Dependency matrix](https://arckit.org/DEPENDENCY-MATRIX.md): Which commands require which prerequisites.
 - [Workflow diagrams](https://arckit.org/WORKFLOW-DIAGRAMS.md): Visual flow from project init through procurement.
 - [Guides index](https://arckit.org/guides.html): Per-command usage guides.
@@ -149,6 +150,11 @@ French government (apply on top of EU baseline):
 - [Presentation](https://arckit.org/guides/presentation.md): `/arckit.presentation` MARP decks.
 - [Glossary](https://arckit.org/guides/glossary.md): `/arckit.glossary` terminology.
 - [GitHub Pages](https://arckit.org/guides/pages.md): `/arckit.pages` documentation site generator.
+
+## Articles and essays
+
+- [Articles index](https://arckit.org/articles.html): Long-form essays on ArcKit's design, the GDS / G-Cloud / UN Global Platform context, and platform-by-platform comparisons.
+- [Why ArcKit needed a build harness](https://arckit.org/article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation): v4.13.0 launch piece for `/arckit:build` (The GDS Harness) — orchestration model, recipes, live-run evidence.
 
 ## Roles
 
