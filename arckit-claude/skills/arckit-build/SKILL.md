@@ -4,12 +4,10 @@ description: "This skill should be used when the user asks to bulk-build ArcKit 
 paths:
   - "projects/**/.arckit/state.json"
   - "projects/**/ARC-*-*.md"
-  - ".claude/skills/arckit-build/SKILL.md"
-  - ".claude/skills/arckit-build/recipes/*.yaml"
   - ".arckit/recipes/*.yaml"
 ---
 
-# ArcKit Build Harness (v0.3)
+# ArcKit Build Harness (v0.4)
 
 You are running the ArcKit build harness. Your job is **orchestration only** — never read or write artefact content yourself. Spawn subagents for that.
 
@@ -21,6 +19,7 @@ You are running the ArcKit build harness. Your job is **orchestration only** —
 - **State is sacred** — update `projects/{P}-{NAME}/.arckit/state.json` after every wave, before moving on.
 - **Single message, multiple Agent calls** for parallelism within a wave. Never loop sequential Agent calls.
 - **Idempotency**: if state says `complete` and the file exists at the recorded path, skip.
+- **Trust the path-allocation hook.** ArcKit's `validate-arc-filename.mjs` PreToolUse hook is the authoritative path normalizer — it allocates sequence numbers, applies subfolders, pads project IDs at write time. The orchestrator and workers never construct paths by string substitution or call `generate-document-id.sh` directly. Read the corrected path back from the Write tool result.
 
 ## Args
 
@@ -41,11 +40,16 @@ You are running the ArcKit build harness. Your job is **orchestration only** —
 Recipes are external YAML files. Lookup precedence for `--recipe NAME` (first hit wins):
 
 1. **Project override**: `.arckit/recipes/{NAME}.yaml` — user customizations preserved across plugin updates
-2. **Skill default**: `.claude/skills/arckit-build/recipes/{NAME}.yaml` — ships with this skill
+2. **Plugin default**: `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{NAME}.yaml` — ships with the ArcKit plugin
 
-Default recipe is `uk-saas`. To customize, copy the skill default to `.arckit/recipes/uk-saas.yaml` and edit there.
+Default recipe is `uk-saas`. To customize, copy the plugin default to `.arckit/recipes/uk-saas.yaml` and edit there:
 
-**Built-in recipes** (in `.claude/skills/arckit-build/recipes/`):
+```bash
+mkdir -p .arckit/recipes
+cp "${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/uk-saas.yaml" .arckit/recipes/uk-saas.yaml
+```
+
+**Built-in recipes** (shipped with the plugin):
 
 | Recipe | Use case |
 |--------|----------|
@@ -54,7 +58,7 @@ Default recipe is `uk-saas`. To customize, copy the skill default to `.arckit/re
 
 ### Recipe schema (v1)
 
-See `.claude/skills/arckit-build/recipes/uk-saas.yaml` for an annotated reference. Top-level keys:
+See `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/uk-saas.yaml` for an annotated reference. Top-level keys:
 
 - `recipe` — recipe name (string, must match filename stem)
 - `schema_version` — recipe schema version (currently `1`)
@@ -72,11 +76,13 @@ Each `targets[]` entry:
 | `skill` | yes | ArcKit skill name (e.g. `arckit:requirements`) |
 | `args` | yes | Args string passed to the skill, after substitution |
 | `output.project` | yes | `"000-global"` or `"{P}-{NAME}"` |
-| `output.type` | yes | ArcKit doc-type code (`PRIN`, `REQ`, `ADR`, `DIAG`, …) |
-| `output.subfolder` | no | Relative subfolder; absent = project root |
-| `output.multi_instance` | no | `true` requires `--next-num` on the helper |
+| `output.type` | yes | ArcKit doc-type code (`PRIN`, `REQ`, `ADR`, `DIAG`, …) — used for state.json keys, NOT for path construction |
+| `output.subfolder` | no | Orientation hint shown in `--plan` and worker prompts; the actual subfolder is enforced by `validate-arc-filename.mjs`'s `SUBDIR_MAP` at write time |
+| `output.multi_instance` | no | Orientation hint; the hook's `MULTI_INSTANCE_TYPES` list is authoritative |
 | `topic` | no | Used in commit messages and `{TOPIC}` substitution |
 | `deps` | yes | List of target IDs, may include glob `"ADR-*"` |
+
+The `output.subfolder` / `output.multi_instance` fields document recipe author intent for human readers and `--plan` output, but the path-allocation hook is the source of truth at write time. If a recipe says `subfolder: decisions` for a single-instance type the hook doesn't recognise, the file lands wherever the hook decides — debug via the hook, not the recipe.
 
 ### Variable substitution
 
@@ -126,7 +132,6 @@ For each wave, in order:
 ### 1. Plan dispatch
 
 Print:
-
 ```
 Wave {N}/{total}: {targets joined}
   - estimated agents: {len(wave)}
@@ -146,11 +151,7 @@ Project: {PROJECT_ID} ({PROJECT_NAME})
 Target: {TARGET_ID}
 Skill to invoke: {SKILL}
 Skill args: {ARGS_RESOLVED}
-Doc type: {TYPE}
-Output project dir: {PROJECT_DIR}      # e.g. projects/001-arckit-saas
-Output subfolder: {SUBFOLDER}          # e.g. decisions, or empty
-Multi-instance: {MULTI_INSTANCE}       # true | false
-Expected output path: {EXPECTED_PATH}  # for validation only
+Expected directory: {EXPECTED_DIR}     # for orientation only — actual filename is hook-allocated
 
 Inputs you may read (only these):
 {INPUT_PATHS_BULLETED}
@@ -174,22 +175,18 @@ Steps:
    Document the choice you made in your final report so the orchestrator can record it.
    Never block waiting for an answer.
 
-2. Resolve the output filename via the ArcKit helper —
-   **positional args first, flags last**:
+2. Capture the actual file path the skill wrote to. Inside the Write tool call,
+   the ArcKit `validate-arc-filename.mjs` PreToolUse hook normalizes the path
+   (allocates the next sequence number for multi-instance types like ADR/DIAG,
+   moves into the correct subfolder, pads project IDs). The hook returns the
+   corrected path as `updatedInput.file_path` and the actual write proceeds
+   there. You will see this corrected path in the Skill tool's result.
 
-   - Single-instance:
-     ```
-     ACTUAL_PATH="{PROJECT_DIR}/$(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {PROJECT_ID} {TYPE} {VERSION} --filename)"
-     ```
-   - Multi-instance ({MULTI_INSTANCE}=true):
-     ```
-     ACTUAL_PATH="{PROJECT_DIR}/{SUBFOLDER}/$(bash ${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh {PROJECT_ID} {TYPE} {VERSION} --filename --next-num {PROJECT_DIR}/{SUBFOLDER})"
-     ```
+   Read `ACTUAL_PATH` from that result. Do NOT call `generate-document-id.sh`
+   yourself or construct paths by string substitution — the hook is the
+   authoritative path allocator.
 
-   Capture the resolved path into `ACTUAL_PATH`. The helper returns only the bare filename;
-   the harness composes the full path. Do not hardcode.
-
-3. Sanity check via Bash:
+3. Sanity check the corrected path via Bash:
    - `test -f "$ACTUAL_PATH"` returns success
    - `[ "$(wc -l < "$ACTUAL_PATH")" -gt 100 ]`
    - `grep -c '^## Document Control\|^| Document ID' "$ACTUAL_PATH"` returns ≥ 1
@@ -213,7 +210,6 @@ When all return, collect summaries.
 ### 4. Validate
 
 For each target in wave:
-
 - File exists at expected path (`test -f`).
 - Line count > 100 (`wc -l`).
 - Document control header present (`grep -c '^## Document Control'` ≥ 1).
@@ -242,7 +238,6 @@ For failures: `status: "failed"`, `error: "..."`, `wave: {WAVE_N}`.
 ### 6. Git commit
 
 If `--no-commit` not set:
-
 ```bash
 git add {OUTPUT_PATHS} projects/{P}-{NAME}/.arckit/state.json
 git commit -m "$(cat <<'EOF'
@@ -258,7 +253,6 @@ EOF
 ### 7. Halt-on-fail
 
 If any agent in the wave reported `FAIL` or validation failed:
-
 - **DO write state.json** — record `status: "failed"`, `error: "..."`, `wave: {WAVE_N}` for failed targets, and `status: "complete"` for the targets in the wave that *did* succeed. State is needed for `--resume`.
 - **Do NOT git commit** (don't half-commit a wave). Successfully-written artefacts are left in the working tree; they get bundled into the resume commit.
 - Surface to user: per-target outcome, error summary, suggested remediation.
