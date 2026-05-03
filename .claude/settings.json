@@ -57,6 +57,7 @@
     "security-guidance@claude-plugins-official": true,
     "superpowers@claude-plugins-official": true,
     "marketing@knowledge-work-plugins": true,
-    "codex@openai-codex": true
+    "codex@openai-codex": true,
+    "arckit@arc-kit": true
   }
 }
