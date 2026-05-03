@@ -132,6 +132,7 @@ For each wave, in order:
 ### 1. Plan dispatch
 
 Print:
+
 ```
 Wave {N}/{total}: {targets joined}
   - estimated agents: {len(wave)}
@@ -210,6 +211,7 @@ When all return, collect summaries.
 ### 4. Validate
 
 For each target in wave:
+
 - File exists at expected path (`test -f`).
 - Line count > 100 (`wc -l`).
 - Document control header present (`grep -c '^## Document Control'` ≥ 1).
@@ -238,6 +240,7 @@ For failures: `status: "failed"`, `error: "..."`, `wave: {WAVE_N}`.
 ### 6. Git commit
 
 If `--no-commit` not set:
+
 ```bash
 git add {OUTPUT_PATHS} projects/{P}-{NAME}/.arckit/state.json
 git commit -m "$(cat <<'EOF'
@@ -253,6 +256,7 @@ EOF
 ### 7. Halt-on-fail
 
 If any agent in the wave reported `FAIL` or validation failed:
+
 - **DO write state.json** — record `status: "failed"`, `error: "..."`, `wave: {WAVE_N}` for failed targets, and `status: "complete"` for the targets in the wave that *did* succeed. State is needed for `--resume`.
 - **Do NOT git commit** (don't half-commit a wave). Successfully-written artefacts are left in the working tree; they get bundled into the resume commit.
 - Surface to user: per-target outcome, error summary, suggested remediation.
