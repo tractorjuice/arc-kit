@@ -1238,7 +1238,7 @@ Customize ArcKit templates without modifying defaults:
 
 ## Complete Command Reference
 
-All 67 ArcKit commands with maturity status and example outputs from public test repositories (20 test repos, v0–v19).
+All 67 ArcKit commands with maturity status and example outputs from public test repositories (43 public test repos across v0–v48).
 
 ### Status Legend
 
@@ -1267,6 +1267,35 @@ All 67 ArcKit commands with maturity status and example outputs from public test
 | v17 | [arckit-test-project-v17-fuel-prices](https://github.com/tractorjuice/arckit-test-project-v17-fuel-prices) | UK Government Fuel Price Transparency Service |
 | v18 | [arckit-test-project-v18-smart-meter](https://github.com/tractorjuice/arckit-test-project-v18-smart-meter) | UK Smart Meter Data Consumer App |
 | v19 | [arckit-test-project-v19-gov-api-aggregator](https://github.com/tractorjuice/arckit-test-project-v19-gov-api-aggregator) | UK Government API Aggregator |
+| v21 | [arckit-test-project-v21-criminal-courts](https://github.com/tractorjuice/arckit-test-project-v21-criminal-courts) | Independent Review of the Criminal Courts — Tech & AI |
+| v22 | [arckit-test-project-v22-genai-playbook](https://github.com/tractorjuice/arckit-test-project-v22-genai-playbook) | UK Government GenAI Playbook |
+| v23 | [arckit-test-project-v23-ccs-procurement-ai](https://github.com/tractorjuice/arckit-test-project-v23-ccs-procurement-ai) | CCS AI Procurement Intelligence Platform |
+| v24 | [arckit-test-project-v24-cabinet-office-ai](https://github.com/tractorjuice/arckit-test-project-v24-cabinet-office-ai) | Cabinet Office Cross-Government AI Governance |
+| v25 | [arckit-test-project-v25-dbt-trade-ai](https://github.com/tractorjuice/arckit-test-project-v25-dbt-trade-ai) | DBT International Trade AI Analytics |
+| v26 | [arckit-test-project-v26-dfe-education-ai](https://github.com/tractorjuice/arckit-test-project-v26-dfe-education-ai) | DfE AI in Education Governance & Standards |
+| v27 | [arckit-test-project-v27-defra-environment-ai](https://github.com/tractorjuice/arckit-test-project-v27-defra-environment-ai) | DEFRA Environmental AI & Ecological Data |
+| v28 | [arckit-test-project-v28-desnz-energy-ai](https://github.com/tractorjuice/arckit-test-project-v28-desnz-energy-ai) | DESNZ Energy Grid AI & Net Zero Modelling |
+| v29 | [arckit-test-project-v29-dhsc-health-ai](https://github.com/tractorjuice/arckit-test-project-v29-dhsc-health-ai) | DHSC Health & Social Care AI Governance |
+| v30 | [arckit-test-project-v30-dluhc-planning-ai](https://github.com/tractorjuice/arckit-test-project-v30-dluhc-planning-ai) | DLUHC Planning & Housing Data Intelligence |
+| v31 | [arckit-test-project-v31-dsit-responsible-ai](https://github.com/tractorjuice/arckit-test-project-v31-dsit-responsible-ai) | DSIT Responsible AI & Innovation Standards |
+| v32 | [arckit-test-project-v32-dft-transport-ai](https://github.com/tractorjuice/arckit-test-project-v32-dft-transport-ai) | DfT Transport Network AI & Journey Intelligence |
+| v33 | [arckit-test-project-v33-dwp-benefits-ai](https://github.com/tractorjuice/arckit-test-project-v33-dwp-benefits-ai) | DWP Benefits Processing AI & Employment Intelligence |
+| v34 | [arckit-test-project-v34-fcdo-diplomatic-ai](https://github.com/tractorjuice/arckit-test-project-v34-fcdo-diplomatic-ai) | FCDO Diplomatic Intelligence & Consular AI |
+| v35 | [arckit-test-project-v35-gld-legal-ai](https://github.com/tractorjuice/arckit-test-project-v35-gld-legal-ai) | GLD Legal AI & Litigation Intelligence |
+| v36 | [arckit-test-project-v36-hmlr-land-ai](https://github.com/tractorjuice/arckit-test-project-v36-hmlr-land-ai) | HMLR Land Registration AI & Property Intelligence |
+| v37 | [arckit-test-project-v37-hmrc-tax-ai](https://github.com/tractorjuice/arckit-test-project-v37-hmrc-tax-ai) | HMRC Tax Compliance AI & Revenue Intelligence |
+| v38 | [arckit-test-project-v38-hmt-fiscal-ai](https://github.com/tractorjuice/arckit-test-project-v38-hmt-fiscal-ai) | HMT Fiscal Modelling AI & Economic Intelligence |
+| v39 | [arckit-test-project-v39-home-office-borders-ai](https://github.com/tractorjuice/arckit-test-project-v39-home-office-borders-ai) | Home Office Borders, Immigration & Security AI |
+| v40 | [arckit-test-project-v40-mod-defence-ai](https://github.com/tractorjuice/arckit-test-project-v40-mod-defence-ai) | MoD Defence AI Strategy & Operational Assurance |
+| v41 | [arckit-test-project-v41-moj-justice-ai](https://github.com/tractorjuice/arckit-test-project-v41-moj-justice-ai) | MoJ Justice System AI & Court Innovation |
+| v42 | [arckit-test-project-v42-no10-ds-policy-ai](https://github.com/tractorjuice/arckit-test-project-v42-no10-ds-policy-ai) | No.10 Data Science Policy Intelligence Platform |
+| v43 | [arckit-test-project-v43-iai-gov-ai-products](https://github.com/tractorjuice/arckit-test-project-v43-iai-gov-ai-products) | i.AI Government AI Products & Delivery |
+| v44 | [arckit-test-project-v44-australian-gov](https://github.com/tractorjuice/arckit-test-project-v44-australian-gov) | Australian Government — Architecture Governance (non-UK PoC) |
+| v45 | [arckit-test-project-v45-nsi-rainbow](https://github.com/tractorjuice/arckit-test-project-v45-nsi-rainbow) | NS&I Digital Modernisation Programme (Project Rainbow) |
+| v46 | [arckit-test-project-v46-gds-local](https://github.com/tractorjuice/arckit-test-project-v46-gds-local) | GDS Local |
+| v46 | [arckit-test-project-v46-sdg](https://github.com/tractorjuice/arckit-test-project-v46-sdg) | ArcKit SDG Mono-Repo (17 UN SDGs, 78 UK Gov projects) |
+| v47 | [arckit-test-project-v47-dft-transforming-city-regions](https://github.com/tractorjuice/arckit-test-project-v47-dft-transforming-city-regions) | DfT Transforming City Regions funding system |
+| v48 | [arckit-test-project-v48-arckit-as-a-service](https://github.com/tractorjuice/arckit-test-project-v48-arckit-as-a-service) | ArcKit as a Service for UK Government |
 
 ### Foundation
 
