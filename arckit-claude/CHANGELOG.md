@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.13.0] - 2026-05-03
+
+### Added
+
+- **`/arckit:build` parallel build harness (#410).** New skill `arckit-build` and slash command `/arckit:build` orchestrate parallel `/arckit:*` artefact generation via subagent isolation. Reads a YAML recipe, computes the dependency DAG, dispatches one `general-purpose` subagent per target per wave, validates outputs, and commits each wave as one atomic git commit. State persisted to `projects/{P}/.arckit/state.json` for resumability across sessions and recipe edits. Two built-in recipes ship with the plugin: `uk-saas` (31 targets — UK Government civilian SaaS with GDS Service Standard, TCoP, NCSC CAF coverage) and `uk-mod-sovereign` (32 targets — MOD / sovereign / air-gapped with `mod-secure` + `jsp-936`, no SVCASS, sealed-media distribution). Recipe schema v1 supports glob deps (`ADR-*`), variable substitution (`{P}/{NAME}/{V}/{TOPIC}`), `optional_targets` with `--enable`/`--exclude` flags, and project overrides via `.arckit/recipes/{name}.yaml`. Worker prompt trusts the existing `validate-arc-filename.mjs` PreToolUse hook for path allocation rather than constructing filenames itself, so multi-instance numbering, subfolder placement, and project-ID padding are all consistent with single-skill invocations. Skill version banner v0.4. Claude-only — `scripts/converter.py` skips both the skill and the slash command for Codex / OpenCode / Gemini / Copilot extensions because parallel `Agent` dispatch is a Claude Code-specific capability.
+- **Provenance stamping hook (#409).** New `provenance-stamp.mjs` PostToolUse hook on `Write|Edit` against `projects/**` injects a `## Build Provenance` block into every ArcKit artefact, recording build context (recipe / wave / target / topic) from `state.json`, requested effort from command frontmatter, and effective effort derived via the silent-downgrade matrix (model parsed from the existing `AI Model:` footer line). Block is delimited by HTML comments and rewritten in place on subsequent edits (idempotent). Complements rather than duplicates the human-authored footer the command writes; the block stamps only fields the model cannot authoritatively self-report. When the model doesn't support the requested level, the block reads e.g. `Effective Effort: high (downgraded from max — model does not support that level)` — the auditable signal issue #407 was filed for.
+- **Build harness launch article + hero (#411).** Long-form essay at `docs/articles/2026-05-03-build-harness-parallel-architecture-generation.md` plus a 1600x900 hero image with wave-plan visualization (9 waves, GDS palette). Surfaced on both `articles.html` (top of grid) and `index.html` (top of "Latest writing" teaser).
+- **`uk-mod-sovereign` recipe.** Sovereign / air-gapped variant with eight rewritten ADR topics, `mod-secure` replacing standard SbD, JSP 936 AI assurance, and ATRS algorithmic transparency as opt-in. Anchored on Principle 21 (Sovereign and Air-Gapped Deployment).
+
+### Fixed
+
+- **CLAUDE.md ADR/DIAG path documentation (#408).** The "Project Structure Created by `arckit init`" tree showed ADRs and diagrams at project root, but `/arckit:adr` and `/arckit:diagram` actually write to `decisions/` and `diagrams/` subfolders (verified against test repos v1, v3, v17). Tree updated to show the correct subfolder layout.
+
+### Architecture notes
+
+- The `validate-arc-filename.mjs` hook is now treated as the authoritative path allocator for ArcKit artefacts. The build harness's worker prompt trusts the hook to normalize paths at write time rather than redundantly invoking `generate-document-id.sh` itself. Recipe `output.subfolder` and `output.multi_instance` fields are documented as orientation hints for `--plan` output; the hook's `SUBDIR_MAP` and multi-instance-types list are the runtime source of truth.
+
 ## [4.12.3] - 2026-05-01
 
 ### Fixed

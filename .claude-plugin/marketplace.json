@@ -13,7 +13,7 @@
       "name": "arckit",
       "source": "./arckit-claude",
       "description": "70 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
-      "version": "4.12.3",
+      "version": "4.13.0",
       "author": {
         "name": "TractorJuice"
       },

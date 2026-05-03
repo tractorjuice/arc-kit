@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.13.0] - 2026-05-03
+
+### Added
+
+- **`/arckit:build` parallel build harness (#410).** New plugin skill and slash command for end-to-end ArcKit artefact generation. Reads a YAML recipe, dispatches one subagent per target per wave in parallel, commits each wave as one atomic git commit, and persists progress to `projects/{P}/.arckit/state.json` for resumability. Ships two built-in recipes: `uk-saas` (31 targets) and `uk-mod-sovereign` (32 targets). Custom recipes go in `.arckit/recipes/{name}.yaml`. Claude Code only — depends on parallel Agent tool dispatch which other targets do not support.
+- **Provenance stamping hook (#409).** `provenance-stamp.mjs` injects a machine-readable `## Build Provenance` block into every ArcKit artefact, recording build recipe / wave / target plus requested vs effective effort levels. Auditable trail for governance reviewers.
+- **Build harness launch article (#411).** New essay at `docs/articles/2026-05-03-build-harness-parallel-architecture-generation.md` with hero image. Surfaced on `articles.html` and `index.html`.
+- **`uk-mod-sovereign` recipe.** Sovereign / air-gapped variant for MOD and accredited environments. Replaces civilian SbD with MOD Secure by Design, adds JSP 936 AI assurance, drops Service Standard assessment, rewrites all eight ADR topics for sovereign deployment.
+
+### Fixed
+
+- **CLAUDE.md ADR/DIAG path documentation (#408).** The project structure tree now shows ADRs in `decisions/` and diagrams in `diagrams/` subfolders, matching what `/arckit:adr` and `/arckit:diagram` actually produce.
+
 ## [4.12.3] - 2026-05-01
 
 ### Fixed
