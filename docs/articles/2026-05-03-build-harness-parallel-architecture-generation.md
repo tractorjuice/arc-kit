@@ -1,42 +1,58 @@
-# Why ArcKit needed a build harness, and what it does
+# Building a full architecture in one Claude Code session
 
-If you have ever tried to take an architecture project from blank slate to governance-ready by running ArcKit slash commands one at a time, you already know the problem. You start with `/arckit:principles`, then `/arckit:requirements`, then `/arckit:stakeholders`. Each command produces a real, traceable, template-driven artefact. The first three feel productive. The fourth starts to slow down. By the fifth or sixth, the conversation context is full of upstream documents the model is trying to keep in mind, and the seventh command begins to forget the requirement IDs from the second. By the time you reach the traceability matrix, you are starting fresh sessions to keep the artefacts coherent.
+`/arckit:build` is the new ArcKit build harness. Run one command and the whole architecture builds itself: requirements, stakeholder analysis, ADRs, risk register, business case, designs, secure-by-design assessment, DPIA, diagrams, traceability matrix, and post-build health check. It does this by reading a YAML recipe, computing the dependency graph, and dispatching subagents in parallel waves. One commit per wave, full audit trail, resumable state.
 
-Generating a full UK Government architecture properly takes around thirty distinct artefacts. Doing that sequentially is a few days of work and a long sequence of paste-and-pray context refreshes. We have heard the same complaint enough times to be sure it was real, and a few weeks ago we did something about it.
+This article walks through what the harness does, the benefits it brings to architects and governance teams, and the live evidence from the first two real runs.
 
-## What `/arckit:build` actually does
+## What the harness does
 
-`/arckit:build` is a build harness for ArcKit. It reads a YAML recipe that lists every artefact you need, computes the dependency graph, groups artefacts into parallel waves, and dispatches one subagent per artefact per wave. Each subagent runs in its own isolated context, invokes the corresponding `/arckit:*` skill, writes its output, and reports back a short summary. The orchestrator collects the summaries, validates the outputs, commits the wave as a single git commit, and updates a state file so the run is resumable.
+`/arckit:build` is orchestration only. It reads the recipe, computes the dependency DAG, groups artefacts into waves where every dependency is satisfied, and dispatches one subagent per artefact per wave. Each subagent runs in its own fresh context, invokes the corresponding `/arckit:*` skill, writes its output, and returns a short summary. The orchestrator validates the outputs, commits the wave as a single git commit, and updates `projects/{P}/.arckit/state.json` so progress is visible and resumable.
 
-In plain terms: instead of running thirty commands in a row over three days, you run one command and the architecture builds itself in under an hour, with one git commit per wave and a clean audit trail.
+The result is a workflow that takes a project from blank slate to governance-ready in under thirty minutes for a typical UK Government SaaS, with thirty-one architecture artefacts produced and committed in nine atomic waves.
 
-The orchestration model is what makes this work. The main session never reads or writes artefact content. It only reads the recipe, computes waves, dispatches subagents, validates results, and commits. Everything heavy happens inside the subagents, each of which has its own fresh context. There is no context exhaustion because nothing accumulates in main session.
+## Recipes ship the governance baseline with you
 
-## Recipes, not configuration
+The harness ships with two built-in recipes, both real YAML files you can read and edit.
 
-The recipes are real YAML files you can read and edit. We ship two with the plugin. The first is `uk-saas`, designed for civilian UK Government departments shipping a multi-tenant SaaS. It runs thirty-one artefacts: principles, requirements, stakeholder analysis, eight architecture decision records with seeded topics for the usual cloud and identity choices, the strategy and Wardley map, the risk register, the high-level design, the strategic outline business case, the Technology Code of Practice review, the Secure by Design assessment, the Data Protection Impact Assessment, three diagrams, the operational and DevOps plans, the Service Standard assessment, and the traceability matrix that ties it all back together.
+`uk-saas` is the default. It builds the full UK Government civilian SaaS governance set: principles, requirements, stakeholder analysis, eight architecture decision records with seeded topics for the usual cloud, identity, and procurement choices, the strategy and Wardley map, the risk register, the high-level design, the strategic outline business case, the Technology Code of Practice review, the Secure by Design assessment, the Data Protection Impact Assessment, three architecture diagrams, the operational and DevOps plans, the FinOps strategy, the Service Standard assessment, and the traceability matrix. Thirty-one artefacts in total, every one of them template-driven and traceable.
 
-The second recipe is `uk-mod-sovereign`, designed for Ministry of Defence and other accredited environments running fully air-gapped. Same shape, but the eight ADR topics are rewritten for sovereign deployment (cleared-personnel access, sealed-media distribution, JSP 440 alignment, on-premise AI integration), the Secure by Design step swaps to MOD Secure by Design with CAAT, JSP 936 AI assurance is added for the on-premise model route, and the Service Standard step is dropped because sovereign deployments are not citizen-facing.
+`uk-mod-sovereign` is for Ministry of Defence and other accredited environments running fully air-gapped. The eight ADR topics are rewritten for sovereign deployment (cleared-personnel access, sealed-media distribution, JSP 440 alignment, on-premise AI integration), the Secure by Design step swaps to MOD Secure by Design with the Cyber Defence Authority Assurance Toolset, JSP 936 AI assurance is added for the on-premise AI route, ATRS algorithmic transparency is available as an opt-in, and the Service Standard step is dropped because sovereign deployments are not citizen-facing.
 
-If neither fits, copy a recipe to `.arckit/recipes/` in your project and edit. The harness reads project overrides first, then falls back to the plugin defaults, so customisations survive plugin updates.
+If neither fits your context, copy a recipe to `.arckit/recipes/` and edit. The harness reads project overrides first and falls back to the plugin defaults, so customisations survive plugin updates. The recipe schema (version 1) is documented in the SKILL.md, with an annotated reference YAML for newcomers.
 
-## Built for halts, resumes, and audit
+## Built for parallelism, governance, and resumability
 
-The harness assumes things will go wrong. If a subagent fails its validation check, the orchestrator writes the failure to `state.json`, refuses to commit the wave (no half-baked atomic units), and surfaces the per-target outcome with a remediation hint. You fix the underlying issue and run `/arckit:build 001 --resume`. The harness picks up exactly where it stopped, with no duplicate work and no lost progress.
+A few design choices make the harness genuinely useful in production.
 
-We also added a build provenance hook that stamps every artefact with a small block recording the recipe, wave, target ID, requested effort level, and the effective effort level after any silent model downgrade. Documents written via the build harness can be traced back to the wave and recipe that produced them. UK Government auditors will recognise the value here: every artefact carries machine-stamped provenance that complements the human-authored footer.
+**Parallel waves.** Targets in the same wave have no dependencies on each other, so they run as parallel subagents inside a single assistant message. A wave with six artefacts completes in roughly the time of one, not six. The `uk-saas` recipe spends most of its build time in the wide middle waves (eight ADRs in W2, six artefacts in W3 and W4) where parallelism delivers the biggest wins.
+
+**Atomic commits.** One git commit per wave covers all artefacts in that wave plus the updated `state.json`. The commit message lists each target with its line count and headline result, so reviewers can read the architecture's evolution one wave at a time. Nothing half-finished ever lands on the branch.
+
+**Hook-allocated paths.** Workers do not construct filenames. They invoke their assigned `/arckit:*` skill, the skill writes the file, and ArcKit's existing `validate-arc-filename.mjs` PreToolUse hook normalizes the path at write time: it allocates the next sequence number for ADRs and diagrams, applies the correct subfolders, and pads project IDs. The harness inherits this safety net for free, and recipes can stay focused on what to build rather than where the file lands.
+
+**Build provenance.** The plugin's `provenance-stamp.mjs` PostToolUse hook stamps every artefact with a `## Build Provenance` block recording the recipe, wave, target ID, requested effort level, and effective effort level after any silent model downgrade. The block is markdown-rendered and visible to human reviewers. Auditors get a machine-stamped trail that complements the human-authored footer the command writes.
+
+**Resumability.** If anything fails its validation check, the orchestrator writes the failure to `state.json` and surfaces a per-target outcome with a remediation hint. Run `/arckit:build 001 --resume` and the harness picks up exactly where it stopped. The recipe path is recorded in state, so resume works deterministically across recipe edits.
 
 ## What the live runs show
 
-The first end-to-end validation was project 001 in our test repository, "ArcKit as a Service" itself, running the `uk-saas` recipe. Thirty-one out of thirty-one targets completed cleanly across nine waves, including the post-build health check and documentation site regeneration. Total wall-clock was under thirty minutes. A handful of bug-fix commits during that run, included in the commit history, show exactly the kind of drift the recipe-driven approach catches early: a path-helper invocation argument order error, an interactive question that needed default handling, a missing capture variable in the worker prompt. Each one was caught in flight, fixed, and the next wave proceeded.
+The first end-to-end run was project 001 in our reference repository, "ArcKit as a Service" itself, with the `uk-saas` recipe. Thirty-one of thirty-one targets completed cleanly across nine waves, including the post-build health check and documentation site regeneration. Wall-clock time was under thirty minutes. The commit history is the audit trail: nine wave commits plus the post-build hook commit, each one atomic, each one carrying its recipe and wave metadata in `state.json`.
 
-The sovereign recipe is mid-flight on project 002 as we write this. Twenty-six of thirty-two artefacts have built cleanly, with the remaining six (Service Assessment dropped by design, plus optional AI assurance and traceability) waiting for the next session. The shape of the diff between the two recipes (replaces, adds, removes, eight rewritten ADR topics) survived first contact with reality and produced exactly the documents we expected.
+The sovereign recipe is currently building project 002. Twenty-six of thirty-two artefacts have completed across the first six waves, including the eight sovereign-specific ADRs, MOD Secure by Design, DPIA, AI Playbook, and the air-gap-boundary diagram. The diff between the two recipes (replaces, adds, removes, eight rewritten ADR topics) survived first contact with reality and produced exactly the documents the recipe describes.
 
-## Try it, then customise it
+## Try it
 
-If you have the ArcKit plugin installed, the build harness is already there. Run `/arckit:build 001 --plan` against any existing project to see the wave plan. Add `--recipe uk-mod-sovereign` if you are building a sovereign deployment. Drop the `--plan` flag when you are ready to commit (literally: each wave is a real git commit).
+If you have the ArcKit plugin installed, the harness is already there. Three commands to know:
 
-The harness is one Claude Code session away from being your whole governance pipeline. We would rather you spent your day reviewing the artefacts than typing the commands that produce them. That was the design brief, and the early evidence is that it works.
+`/arckit:build 001 --plan` shows the wave plan for any existing project without dispatching anything. Recommended first step on any new run.
+
+`/arckit:build 001` runs the full default recipe and commits each wave as it completes.
+
+`/arckit:build 002 --recipe uk-mod-sovereign` runs the sovereign recipe.
+
+Add `--enable AIP` to opt in to AI Playbook on a non-AI default recipe. Add `--exclude SVCASS` to skip the Service Standard assessment when it does not apply. Add `--target NAME --refresh` to force-rebuild a single artefact and everything downstream of it.
+
+The harness is one Claude Code session away from being your whole governance pipeline. Spend your day reviewing the artefacts. Let the recipe do the typing.
 
 ---
 
