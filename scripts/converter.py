@@ -345,6 +345,11 @@ def convert(commands_dir, agents_dir):
     Reads each plugin command once, resolves agent prompts once, then
     writes output formats with appropriate path rewriting driven by AGENT_CONFIG.
     """
+    # Commands that depend on Claude Code-only features (parallel Agent dispatch,
+    # plugin skills, etc.). Skipped when generating non-Claude formats because
+    # they would silently fail or behave incorrectly on those platforms.
+    claude_only_commands = {"build.md"}
+
     for config in AGENT_CONFIG.values():
         os.makedirs(config["output_dir"], exist_ok=True)
 
@@ -354,6 +359,10 @@ def convert(commands_dir, agents_dir):
 
     for filename in sorted(os.listdir(commands_dir)):
         if not filename.endswith(".md"):
+            continue
+
+        if filename in claude_only_commands:
+            print(f"  Skipped Claude-only command: {filename}")
             continue
 
         command_path = os.path.join(commands_dir, filename)
@@ -515,6 +524,11 @@ def copy_extension_files(plugin_dir):
         ("references", "references"),
     ]
 
+    # Skills that depend on Claude Code-only features (parallel Agent tool
+    # dispatch, plugin hooks). Skipped when copying to non-Claude extensions
+    # because they would either silently fail or behave incorrectly there.
+    claude_only_skills = {"arckit-build"}
+
     for config in AGENT_CONFIG.values():
         ext_dir = config.get("extension_dir")
         if not ext_dir:
@@ -531,6 +545,12 @@ def copy_extension_files(plugin_dir):
                     shutil.rmtree(dst)
                 shutil.copytree(src, dst)
                 if dst_rel == "skills":
+                    # Skip Claude-only skills for non-Claude targets
+                    for skill_name in claude_only_skills:
+                        skill_path = os.path.join(dst, skill_name)
+                        if os.path.isdir(skill_path):
+                            shutil.rmtree(skill_path)
+                            print(f"  Skipped Claude-only skill: {skill_name}")
                     strip_claude_only_skill_fields(dst)
                 file_count = sum(len(files) for _, _, files in os.walk(dst))
                 print(f"  Copied: {src} -> {dst} ({file_count} files)")
