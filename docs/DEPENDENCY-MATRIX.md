@@ -259,6 +259,16 @@ Publishing command that generates documentation site:
   - Generates GitHub Pages site with Mermaid diagram support
   - Best run when project has substantial documentation to publish
 
+### Meta: Build Harness (orchestrator, not in matrix)
+
+`/arckit:build` is a meta-command that orchestrates parallel execution of every other command listed in this matrix according to a YAML recipe. It produces no artifact of its own — it dispatches subagents that each run one of the per-tier commands above.
+
+- **build** → Depends on: a recipe file (`.arckit/recipes/{name}.yaml` or `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{name}.yaml`)
+  - Built-in recipes: `uk-saas` (31 targets), `uk-mod-sovereign` (32 targets), `uae-federal-ai` (47 targets including a research wave)
+  - Computes the dependency DAG from the recipe and dispatches one parallel wave at a time
+  - **Claude Code only** — depends on parallel `Agent` tool dispatch
+  - Excluded from the matrix above because it depends on every other command transitively
+
 ---
 
 ## Critical Paths
