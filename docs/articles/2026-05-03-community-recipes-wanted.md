@@ -65,6 +65,16 @@ Recipes will land with the contributor's name in the commit history and in the r
 
 These aren't exclusive. If your jurisdiction isn't on the list, that's not a no.
 
+## And another category: consultancy and firm recipes
+
+A recipe is a YAML file describing a coherent governance bundle. Nothing in that definition restricts it to public sector. Every Big 4 advisory practice and every strategy consultancy has its own house style for how an architecture engagement should be structured: which artefacts get produced, in which order, against which risk frameworks, with which approval gates. That house style is institutional knowledge, often locked inside slide decks and SharePoint sites.
+
+We'd happily ship a recipe like `mckinsey-arch`, `deloitte-arch`, `pwc-tech`, `ey-tech`, `kpmg-advisory`, `accenture-tech`, `bcg-platinion`, or `bain-tech` if a contributor inside one of those firms wanted to formalise their internal governance bundle as an open recipe. The benefit cuts both ways: the firm gets a public, executable, version-controlled artefact catalogue; ArcKit users get more options when bidding into engagements where a particular firm's playbook is expected.
+
+The same applies to system integrators, in-house architecture practices at large enterprises, and academic governance frameworks (TOGAF-aligned, Zachman-aligned). If you maintain a governance template inside a consultancy, a SI, a bank, or a university, your recipe could ship alongside `uk-saas` and benefit thousands of architects who have to reinvent the same wheel every time they start a new engagement.
+
+Recipes are composition, not endorsement. Shipping a `mckinsey-arch` recipe doesn't mean ArcKit recommends McKinsey, and adopting it doesn't make a project a McKinsey project. It just means there's a turnkey way to run a McKinsey-style engagement governance flow if that's what the situation calls for.
+
 The ArcKit community is small and the build harness is new. The first dozen recipes get to define what jurisdiction-specific governance looks like in this toolchain. Worth claiming yours.
 
 ---
