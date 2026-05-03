@@ -1,5 +1,5 @@
 {
-  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection, filename enforcement, MCP tool auto-allow, and security protection (file protection, secret detection, secret file scanning)",
+  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection, filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), and provenance stamping on artefact writes (PostToolUse Write|Edit)",
   "hooks": {
     "Stop": [
       {
@@ -181,6 +181,23 @@
             "type": "command",
             "if": "Write(/projects/**)",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/update-manifest.mjs",
+            "timeout": 5
+          },
+          {
+            "type": "command",
+            "if": "Write(/projects/**)",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs",
+            "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": "Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Edit(/projects/**)",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs",
             "timeout": 5
           }
         ]
