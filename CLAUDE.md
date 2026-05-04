@@ -234,6 +234,18 @@ Recommended ArcKit usage:
 - **Long `/arckit.research` or `/arckit.datascout` runs** — redirect agent bash/shell output to a log file and ask Claude to `Monitor` the tail, so progress surfaces without blocking the main conversation.
 - **Overnight autoresearch loops** (see `docs/guides/autoresearch.md`) — tail the scoring log from a second session via `tail -F scripts/autoresearch/runs/*.log` wrapped by Monitor.
 
+### Remote Control + push notifications (user-facing)
+
+[Claude Code Remote Control](https://code.claude.com/docs/en/remote-control) (v2.1.110+) lets users drive a local session from claude.ai/code or the mobile app. Combined with `/config → Push when Claude decides`, the phone gets a notification when long-running work finishes or hits a decision point. ArcKit's minimum Claude Code floor (v2.1.117) already covers this.
+
+Best fit for ArcKit:
+
+- **Research-heavy commands** (`/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research`, `/arckit.gcp-research`, `/arckit.grants`) — agents routinely run 10+ minutes; user guides cover the pattern in each guide's "Long runs" section.
+- **Overnight `autoresearch` loops** — see `docs/guides/autoresearch.md` § "Phone pings via Remote Control".
+- **Stale-artifact monitor** — pair the `stale-artifact-scan` monitor (above) with RC + push so artifact owners get a phone nudge when reviews lapse.
+
+Constraints: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, the local `claude` process must keep running, and `/ultrareview` flows do not compose with RC. RC is Claude Code only — the converter does not propagate any RC-related config to Codex/Gemini/OpenCode/Copilot extensions.
+
 ### Plugin Hooks
 
 Hook handlers live under `arckit-claude/hooks/` and are registered in `arckit-claude/hooks/hooks.json`. Supported hook events include `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop`, `StopFailure`, `PermissionRequest`, plus the newer `PostCompact` (v2.1.76), `FileChanged`/`CwdChanged`/`TaskCreated` (v2.1.83–84), `PermissionDenied` (v2.1.89), and `PreCompact` blocking (v2.1.105).

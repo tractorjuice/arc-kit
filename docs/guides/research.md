@@ -34,6 +34,20 @@ Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
 
 ---
 
+## Long runs: Remote Control + push notifications
+
+`/arckit.research` frequently exceeds 10 minutes once the agent starts pulling vendor pricing pages, G-Cloud listings, and product reviews. To avoid babysitting the terminal, pair it with [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control):
+
+```bash
+claude remote-control
+```
+
+Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (vendor shortlist confirmation, build vs buy direction). ArcKit's minimum Claude Code floor (v2.1.117) already covers the v2.1.110 RC requirement.
+
+Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
+
+---
+
 ## Output Highlights
 
 - Option catalogue with pros, cons, pricing, support model.

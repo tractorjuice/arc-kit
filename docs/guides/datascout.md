@@ -62,6 +62,20 @@ Outputs: `projects/<id>/ARC-<id>-DSCT-v1.0.md`
 
 ---
 
+## Long runs: Remote Control + push notifications
+
+`/arckit.datascout` frequently exceeds 10 minutes as the agent crawls open data portals, API catalogues, and commercial provider documentation. To avoid babysitting the terminal, pair it with [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control):
+
+```bash
+claude remote-control
+```
+
+Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (data source shortlist confirmation, licensing trade-off). ArcKit's minimum Claude Code floor (v2.1.117) already covers the v2.1.110 RC requirement.
+
+Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
+
+---
+
 ## Output Highlights
 
 - **Data needs analysis** extracted from requirements (DR/FR/INT/NFR)

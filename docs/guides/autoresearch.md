@@ -37,6 +37,18 @@ Monitor scripts/autoresearch/runs/*.log and summarise each new iteration
 
 The `Monitor` tool (Claude Code v2.1.98+) tails stdout from a background `tail -F` and delivers each new scoring line to Claude as a notification. You get progress updates on demand without interrupting the experiment loop in the main session. Requires Claude Code v2.1.98 or later.
 
+### Phone pings via Remote Control
+
+For overnight runs where you actually walk away from the laptop, pair the autoresearch session with [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control):
+
+```bash
+claude remote-control
+```
+
+Drive the worktree session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone pings when an iteration keeps a change above the score threshold or when the loop hits a decision point. Combined with `ENABLE_PROMPT_CACHING_1H=1` (see Tips below), you can run autoresearch overnight and check progress from anywhere.
+
+Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off, and the local `claude` process must keep running. ArcKit's minimum Claude Code floor (v2.1.117) already covers the v2.1.110 RC requirement.
+
 ---
 
 ## How It Works
