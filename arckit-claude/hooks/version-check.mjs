@@ -8,7 +8,7 @@
  *   2. Claude Code minimum — reads `$CLAUDE_CODE_VERSION` (if set) or runs
  *      `claude --version` via spawnSync, and warns when the client is below
  *      MIN_CLAUDE_CODE_VERSION (features like userConfig, hook `if:`, skill
- *      `paths:` depend on v2.1.83+/v2.1.117+). Silent on detection failure.
+ *      `paths:` depend on v2.1.83+/v2.1.121+). Silent on detection failure.
  *
  * Hook Type: SessionStart
  * Input (stdin): JSON with session_id, cwd, etc.
@@ -20,7 +20,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isFile, readText, parseHookInput } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.117';
+const MIN_CLAUDE_CODE_VERSION = '2.1.121';
 
 parseHookInput(); // consume stdin (required by hook protocol)
 
@@ -42,7 +42,11 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Hook \`if:\` conditions that narrow triggering (needs v2.1.85)\n` +
     `- Opus 4.7 \`xhigh\` effort tier and Auto mode (needs v2.1.111)\n` +
     `- Opus 4.7 \`/context\` correctly sized to 1M instead of 200K — long research sessions no longer autocompact early (needs v2.1.117)\n` +
-    `- Agent frontmatter \`mcpServers\` loaded for \`--agent\` sessions (needs v2.1.117)\n\n` +
+    `- Agent frontmatter \`mcpServers\` loaded for \`--agent\` sessions (needs v2.1.117)\n` +
+    `- \`claude plugin tag\` validates plugin/marketplace version agreement before release (needs v2.1.118)\n` +
+    `- Hook \`duration_ms\` recorded on PostToolUse for session telemetry (needs v2.1.119)\n` +
+    `- MCP server \`alwaysLoad\` skips tool-search deferral so AWS Knowledge / Microsoft Learn tools are loaded eagerly (needs v2.1.121)\n` +
+    `- PostToolUse \`hookSpecificOutput.updatedToolOutput\` for all tools — provenance and manifest hooks now surface their work to the model (needs v2.1.121)\n\n` +
     `Update with: \`claude update\``
   );
   process.stderr.write(`[ArcKit] Claude Code v${clientVersion} is below required v${MIN_CLAUDE_CODE_VERSION}\n`);
