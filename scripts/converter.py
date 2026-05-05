@@ -605,9 +605,14 @@ def generate_codex_config_toml(mcp_json_path, agents_dir, output_path):
         if servers:
             lines.append("# ── MCP Servers ─────────────────────────────────────")
             lines.append("")
+            # Claude Code-only MCP fields that other platforms (Codex/Gemini/OpenCode)
+            # don't understand and shouldn't see in their generated configs.
+            CLAUDE_ONLY_MCP_FIELDS = {"alwaysLoad"}
             for name, server in servers.items():
                 lines.append(f"[mcp_servers.{name}]")
                 for key, value in server.items():
+                    if key in CLAUDE_ONLY_MCP_FIELDS:
+                        continue
                     if key == "headers":
                         header_parts = []
                         for hk, hv in value.items():

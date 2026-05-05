@@ -213,6 +213,10 @@ Runtime substitution uses `${user_config.KEY}`:
 - **`.mcp.json`** — already wired for `GOOGLE_API_KEY` and `DATA_COMMONS_API_KEY` headers. The converter rewrites `${user_config.KEY}` → `${KEY}` for non-Claude extensions (Codex, Gemini, OpenCode, Copilot) since those platforms fall back to shell env vars.
 - **Command / agent bodies** — non-sensitive values can be referenced (e.g. `${user_config.organisation_name}` in a Document Control block). Sensitive values are never substituted into prompt content.
 
+#### MCP `alwaysLoad` (v2.1.121)
+
+Per-server `"alwaysLoad": true` in `.mcp.json` skips Claude Code's tool-search deferral so the server's tools are loaded eagerly at session start. ArcKit sets it on `aws-knowledge` and `microsoft-learn` because the AWS/Azure research commands always reach for these on the first turn — eager loading removes a discovery round-trip. Other MCP servers (`google-developer-knowledge`, `datacommons-mcp`, `govreposcrape`) remain deferred since they're only used by specific commands. The `alwaysLoad` field is passed through unchanged for the Codex/Gemini/OpenCode extensions; those platforms ignore unknown keys.
+
 ### Plugin Monitors
 
 Background monitors declared via the `monitors` key in `arckit-claude/.claude-plugin/plugin.json` (v2.1.105+). Each entry runs as a persistent subprocess in the session's working directory; stdout lines are delivered to Claude as session notifications.
@@ -477,13 +481,24 @@ git checkout main && git pull
 ./scripts/bump-version.sh X.Y.Z
 # 5. Regenerate Codex/OpenCode/Gemini formats
 python scripts/converter.py
-# 6. Commit, tag, push — GitHub Release created automatically
+# 6. Validate plugin/marketplace version agreement (Claude Code v2.1.118+)
+claude plugin tag arckit-claude --dry-run
+# 7. (optional) Prune orphaned plugin dependencies
+claude plugin prune --dry-run
+# 8. Commit, tag, push — GitHub Release created automatically
 git add -A && git commit -m "chore: bump version to X.Y.Z"
 git tag -a vX.Y.Z -m "vX.Y.Z"
 git push && git push --tags
-# 7. Push to extension repos (Gemini, Codex, etc.)
+# 9. Push to extension repos (Gemini, Codex, etc.)
 ./scripts/push-extensions.sh
 ```
+
+> **Note on `claude plugin tag`**: This command creates `{plugin-name}--vX.Y.Z` style tags
+> (e.g. `arckit--v4.14.0`), which would not trigger `.github/workflows/release.yml` (it
+> matches `v[0-9]+.[0-9]+.[0-9]+`). We use `--dry-run` for its validation behaviour only —
+> it cross-checks `arckit-claude/.claude-plugin/plugin.json` against the marketplace entry
+> in `.claude-plugin/marketplace.json` and exits non-zero on mismatch, catching version
+> drift before the real `git tag -a vX.Y.Z` runs.
 
 **Adding new package data files**: Update `pyproject.toml` `[tool.hatch.build.targets.wheel.shared-data]`
 

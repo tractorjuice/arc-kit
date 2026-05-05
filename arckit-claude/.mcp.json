@@ -2,11 +2,13 @@
   "mcpServers": {
     "aws-knowledge": {
       "type": "http",
-      "url": "https://knowledge-mcp.global.api.aws"
+      "url": "https://knowledge-mcp.global.api.aws",
+      "alwaysLoad": true
     },
     "microsoft-learn": {
       "type": "http",
-      "url": "https://learn.microsoft.com/api/mcp"
+      "url": "https://learn.microsoft.com/api/mcp",
+      "alwaysLoad": true
     },
     "google-developer-knowledge": {
       "type": "http",
