@@ -43,14 +43,23 @@
  * Hook Type: PostToolUse
  * Matcher:   Write|Edit
  * Input:     JSON { tool_name, tool_input: { file_path }, cwd }
- * Output:    none
+ * Output:    On successful stamp, a hookSpecificOutput payload with
+ *            updatedToolOutput so the model can see what was recorded
+ *            (Claude Code v2.1.121+). Silent when no stamp was needed
+ *            (e.g. block was null, or content unchanged) so the original
+ *            tool output is preserved.
+ *
+ *            For Write tool calls this hook runs after update-manifest.mjs
+ *            and its updatedToolOutput overwrites that hook's. To avoid
+ *            losing the manifest signal, we re-surface it here when a
+ *            docs/manifest.json file exists at the repo root.
  * Exit:      0 always
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, basename, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isFile, findRepoRoot, parseHookInput } from './hook-utils.mjs';
+import { isFile, findRepoRoot, parseHookInput, emitUpdatedToolOutput } from './hook-utils.mjs';
 
 const PLUGIN_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -281,5 +290,37 @@ const block = buildProvenanceBlock({
   timestamp: new Date().toISOString(),
 });
 
-if (block !== null) stampFile(filePath, block);
+const stamped = block !== null && stampFile(filePath, block);
+
+// Emit hookSpecificOutput.updatedToolOutput so the model sees what the hook
+// did. Silent when nothing changed so the original tool output is preserved.
+if (stamped) {
+  const verb = tool === 'Edit' ? 'edited' : 'written';
+  const lines = [`File ${verb}: ${filePath}`];
+
+  // Effort signal — what the model knows it asked for vs what was applied.
+  if (effortRequested && effortEffective) {
+    const effortMsg = effortDowngraded
+      ? `effort: requested=${effortRequested}, effective=${effortEffective} (downgraded — model does not support that level)`
+      : `effort: requested=${effortRequested}, effective=${effortEffective}`;
+    lines.push(`[ArcKit] provenance stamped (${effortMsg})`);
+  } else if (build) {
+    lines.push(`[ArcKit] provenance stamped (build: ${build.recipe || '?'}/${build.target})`);
+  } else {
+    lines.push(`[ArcKit] provenance stamped`);
+  }
+
+  // Re-surface the update-manifest signal on Write — that hook ran first
+  // and its updatedToolOutput is overwritten by ours. Re-check the same
+  // precondition (manifest file exists) so we only mention it when relevant.
+  if (tool === 'Write' && repoRoot) {
+    const manifestPath = join(repoRoot, 'docs', 'manifest.json');
+    if (isFile(manifestPath)) {
+      lines.push(`[ArcKit] docs/manifest.json auto-updated`);
+    }
+  }
+
+  emitUpdatedToolOutput(lines.join('\n'));
+}
+
 process.exit(0);

@@ -265,6 +265,12 @@ Stamped fields:
 
 If neither effort nor build context is available (e.g. a non-ArcKit command edited the file), the hook skips stamping entirely — no empty block. Existing artefacts pre-dating the hook are stamped on the next Write/Edit.
 
+When a stamp is actually written, the hook emits `hookSpecificOutput.updatedToolOutput` (Claude Code v2.1.121+) so the model sees a one-line summary — effort requested vs. effective, downgrade reason if any, and (on Write) a confirmation that `docs/manifest.json` was auto-updated by `update-manifest.mjs` upstream. On no-op runs (no harness fields, file unchanged) the hook stays silent and the original tool output is preserved.
+
+#### Manifest auto-update (`update-manifest.mjs`)
+
+Companion PostToolUse hook on `Write` against `projects/**` that incrementally updates `docs/manifest.json` so the documentation site stays current without a full `/arckit:pages` re-run. On a successful update it emits `hookSpecificOutput.updatedToolOutput` with the document ID and target slot (e.g. `ARC-001-REQ-v1.0 → 001-test/documents`). Because `provenance-stamp.mjs` runs after this hook and overwrites its `updatedToolOutput`, the manifest signal is re-surfaced from `provenance-stamp.mjs` whenever a `docs/manifest.json` exists.
+
 ### Project Structure Created by `arckit init`
 
 ```text

@@ -301,6 +301,32 @@ export function extractRiskEntries(content) {
   return risks;
 }
 
+// ── Hook Output ──
+
+/**
+ * Emit a PostToolUse `hookSpecificOutput.updatedToolOutput` payload to stdout.
+ * Replaces the tool output the model sees with our string. Use this when the
+ * hook actually did something the model should know about (e.g. stamped a
+ * file, updated a manifest); stay silent (do not call this) when the hook
+ * was a no-op so the original tool output is preserved.
+ *
+ * Available since Claude Code v2.1.121 for all tools (was Bash-only before).
+ * When multiple PostToolUse hooks emit on the same tool call, the last hook's
+ * payload wins — so a downstream hook must include any signal earlier hooks
+ * needed to surface.
+ *
+ * @param {string} text - The string to present to the model as the tool output.
+ */
+export function emitUpdatedToolOutput(text) {
+  const payload = {
+    hookSpecificOutput: {
+      hookEventName: 'PostToolUse',
+      updatedToolOutput: text,
+    },
+  };
+  process.stdout.write(JSON.stringify(payload));
+}
+
 // ── Hook Input ──
 
 /**

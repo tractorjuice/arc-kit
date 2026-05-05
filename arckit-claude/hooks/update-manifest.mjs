@@ -14,14 +14,21 @@
  * Hook Type: PostToolUse
  * Matcher: Write
  * Input (stdin):  JSON { tool_name, tool_input: { file_path, content }, cwd }
- * Output (stdout): none (PostToolUse hooks are silent)
+ * Output (stdout): On successful manifest update, a hookSpecificOutput
+ *                  payload with updatedToolOutput so the model sees that
+ *                  the manifest stayed in sync (Claude Code v2.1.121+).
+ *                  Silent on no-op so original tool output is preserved.
+ *                  NOTE: provenance-stamp.mjs also runs on PostToolUse Write
+ *                  and emits its own updatedToolOutput, which will overwrite
+ *                  this one. provenance-stamp re-surfaces the manifest signal
+ *                  in its message — see that hook for the merged output.
  * Exit codes:      0 always
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join, basename, resolve } from 'node:path';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
-import { isDir, isFile, findRepoRoot, parseHookInput } from './hook-utils.mjs';
+import { isDir, isFile, findRepoRoot, parseHookInput, emitUpdatedToolOutput } from './hook-utils.mjs';
 
 // ── Static data (derived from central config) ──
 
@@ -161,6 +168,9 @@ if (projectDirName === '000-global') {
   // Update timestamp and write
   manifest.generated = new Date().toISOString();
   writeFileSync(manifestPath, JSON.stringify(manifest, null, 2), 'utf8');
+  emitUpdatedToolOutput(
+    `File written: ${filePath}\n[ArcKit] docs/manifest.json updated: ${documentId} → global`,
+  );
   process.exit(0);
 }
 
@@ -206,4 +216,7 @@ project[targetKey].push(newEntry);
 // Update timestamp and write
 manifest.generated = new Date().toISOString();
 writeFileSync(manifestPath, JSON.stringify(manifest, null, 2), 'utf8');
+emitUpdatedToolOutput(
+  `File written: ${filePath}\n[ArcKit] docs/manifest.json updated: ${documentId} → ${projectDirName}/${targetKey}`,
+);
 process.exit(0);
