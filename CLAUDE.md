@@ -287,6 +287,8 @@ Events are appended to `.arckit/memory/.telemetry.jsonl` during the session. `se
 
 Telemetry is best-effort — any failure (write error, malformed line, missing field) is swallowed silently so it never breaks a session.
 
+When `docs/` exists (i.e. the project has run `/arckit:pages`), `session-learner.mjs` also writes a structured rollup to `docs/telemetry.json` (newer-first, capped at 50 sessions) so the dashboard can render a "Session Telemetry" + "Recent Sessions" panel. Each record contains `{ ts, type, isFailure, commits, filesChanged, artifacts, telemetry: { toolCalls, p50, p95, agents, mcp } }`. The dashboard fetches `telemetry.json` with the same graceful-fallback pattern as `health.json` — projects without a `docs/` directory render the dashboard exactly as before.
+
 > **Note on `type: "mcp_tool"` (v2.1.118)**: This Claude Code feature lets a hook *invoke* an MCP tool as its action (alternative to `type: "command"` / `type: "prompt"`). It does **not** filter hooks to fire only on MCP tool calls. ArcKit logs `govreposcrape` calls via the existing tool-name matcher pattern (`mcp__govreposcrape__.*`); no `type: "mcp_tool"` registration is needed for telemetry.
 
 ### Project Structure Created by `arckit init`

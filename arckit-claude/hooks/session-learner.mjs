@@ -158,10 +158,16 @@ if (commitSummaries.length > 0) {
 }
 
 // ── Telemetry summary (Claude Code v2.1.84 / v2.1.118 / v2.1.119) ──
-// Read .telemetry.jsonl written by telemetry.mjs across the session,
-// roll it up into a one-line summary, and truncate so it doesn't grow
-// across sessions. Silent when the file is absent or empty.
+// Read .telemetry.jsonl written by telemetry.mjs across the session.
+// Two outputs:
+//   1. Prose one-liner appended to the session entry below (sessions.md)
+//   2. Structured rollup written to docs/telemetry.json (newer-first,
+//      capped at 50) so the pages dashboard can render a "Recent Activity"
+//      panel without extra fetches.
+// Silent when the file is absent or empty. Truncate after reading so the
+// next session starts clean.
 const telemetryFile = join(memoryDir, '.telemetry.jsonl');
+let telemetryRollup = null;
 if (isFile(telemetryFile)) {
   const raw = readText(telemetryFile) || '';
   const events = [];
@@ -176,6 +182,7 @@ if (isFile(telemetryFile)) {
   if (events.length > 0) {
     const summary = summariseTelemetry(events);
     if (summary) entry += `- **Telemetry:** ${summary}\n`;
+    telemetryRollup = rollupTelemetry(events);
   }
   // Truncate (delete) so next session starts clean. Failure is non-fatal.
   try { unlinkSync(telemetryFile); } catch { /* ignore */ }
@@ -207,6 +214,46 @@ const trimmed = entries.slice(0, 30);
 const output = header.trimEnd() + '\n\n' + trimmed.join('\n') + '\n';
 
 writeFileSync(sessionsFile, output);
+
+// ── Dashboard rollup (docs/telemetry.json) ────────────────────────────
+// Persist a structured per-session record so the pages dashboard can show
+// a "Recent Activity" panel. Only write when docs/ already exists (i.e.
+// the project has run /arckit:pages) — we don't want to materialise a
+// docs/ directory just for telemetry. Failure is non-fatal.
+const docsDir = join(cwd, 'docs');
+if (isDir(docsDir)) {
+  const dashboardFile = join(docsDir, 'telemetry.json');
+  let dashboard = { generated: now.toISOString(), sessions: [] };
+  if (isFile(dashboardFile)) {
+    try {
+      const parsed = JSON.parse(readText(dashboardFile) || '{}');
+      if (Array.isArray(parsed.sessions)) dashboard.sessions = parsed.sessions;
+    } catch {
+      // Corrupt file — start over rather than fail.
+    }
+  }
+
+  const sessionRecord = {
+    ts: now.toISOString(),
+    type: entryType,
+    isFailure,
+    commits: commitCount,
+    filesChanged: files.length,
+    artifacts: serialiseArtifacts(projectArtifacts),
+  };
+  if (telemetryRollup) sessionRecord.telemetry = telemetryRollup;
+
+  // Newer-first; cap at 50 (≈ a few weeks of daily use).
+  dashboard.sessions.unshift(sessionRecord);
+  dashboard.sessions = dashboard.sessions.slice(0, 50);
+  dashboard.generated = now.toISOString();
+
+  try {
+    writeFileSync(dashboardFile, JSON.stringify(dashboard, null, 2));
+  } catch {
+    // Non-fatal — telemetry must never break a session.
+  }
+}
 
 // Write timestamp for next session boundary
 writeFileSync(lastSessionFile, now.toISOString());
@@ -271,4 +318,71 @@ function summariseTelemetry(events) {
   }
 
   return parts.length > 0 ? parts.join(' | ') : null;
+}
+
+/**
+ * Same input as summariseTelemetry, but returns a structured object for
+ * docs/telemetry.json. Shape matches what the pages dashboard renders:
+ *
+ *   {
+ *     toolCalls: 47,
+ *     p50: 12,
+ *     p95: 4200,
+ *     agents: [{name: "arckit-research", count: 2}, ...],
+ *     mcp:    [{server: "govreposcrape", count: 8}, ...]
+ *   }
+ *
+ * Returns null when there are no meaningful events.
+ */
+function rollupTelemetry(events) {
+  const all = [];
+  const agents = new Map();
+  const mcp = new Map();
+
+  for (const ev of events) {
+    if (ev.kind === 'hook_duration' && typeof ev.duration_ms === 'number') {
+      all.push(ev.duration_ms);
+    } else if (ev.kind === 'mcp_call' && ev.server) {
+      mcp.set(ev.server, (mcp.get(ev.server) || 0) + 1);
+    } else if (ev.kind === 'agent_spawn' && ev.agent) {
+      agents.set(ev.agent, (agents.get(ev.agent) || 0) + 1);
+    }
+  }
+
+  if (all.length === 0 && agents.size === 0 && mcp.size === 0) return null;
+
+  const result = {};
+  if (all.length > 0) {
+    all.sort((a, b) => a - b);
+    result.toolCalls = all.length;
+    result.p50 = all[Math.floor(all.length * 0.5)];
+    result.p95 = all[Math.floor(all.length * 0.95)];
+  }
+  if (agents.size > 0) {
+    result.agents = [...agents.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([name, count]) => ({ name, count }));
+  }
+  if (mcp.size > 0) {
+    result.mcp = [...mcp.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([server, count]) => ({ server, count }));
+  }
+  return result;
+}
+
+/**
+ * Convert the projectArtifacts Map<projectNum, Map<category, Set<typeName>>>
+ * into a plain JSON-serialisable shape for docs/telemetry.json.
+ */
+function serialiseArtifacts(projectArtifactsMap) {
+  const out = [];
+  for (const [projNum, catMap] of [...projectArtifactsMap.entries()].sort()) {
+    const categories = {};
+    for (const [category, names] of catMap) {
+      categories[category] = [...names].sort();
+    }
+    out.push({ project: projNum, categories });
+  }
+  return out;
 }
