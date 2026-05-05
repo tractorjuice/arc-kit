@@ -271,6 +271,24 @@ When a stamp is actually written, the hook emits `hookSpecificOutput.updatedTool
 
 Companion PostToolUse hook on `Write` against `projects/**` that incrementally updates `docs/manifest.json` so the documentation site stays current without a full `/arckit:pages` re-run. On a successful update it emits `hookSpecificOutput.updatedToolOutput` with the document ID and target slot (e.g. `ARC-001-REQ-v1.0 → 001-test/documents`). Because `provenance-stamp.mjs` runs after this hook and overwrites its `updatedToolOutput`, the manifest signal is re-surfaced from `provenance-stamp.mjs` whenever a `docs/manifest.json` exists.
 
+#### Session telemetry (`telemetry.mjs` + `session-learner.mjs`)
+
+Lightweight telemetry recorder registered for three events:
+
+- **PostToolUse** (matcher `.*`) — records `{ tool, duration_ms }` for every tool call (Claude Code v2.1.119+ `duration_ms` field). Pure-latency records exclude `TaskCreate` and `mcp__govreposcrape__*` calls so the duration histogram isn't polluted by long-running async tools.
+- **PostToolUse** (same registration, branched by tool name) — records `{ server, tool, args }` for `mcp__govreposcrape__*` calls. Args are sanitised (long strings replaced with length markers, nested objects flattened to `<object>`) so the JSONL stays small.
+- **TaskCreated** (matcher `.*`, Claude Code v2.1.84+) — records `{ agent }` for every agent spawn via the Task tool.
+
+Events are appended to `.arckit/memory/.telemetry.jsonl` during the session. `session-learner.mjs` reads, summarises, and truncates the file at Stop / StopFailure, adding a single line to each session entry, e.g.:
+
+```text
+- **Telemetry:** 47 tool calls (p50=12ms, p95=4200ms) | 3 agents (arckit-research×2, arckit-datascout) | MCP: govreposcrape×8
+```
+
+Telemetry is best-effort — any failure (write error, malformed line, missing field) is swallowed silently so it never breaks a session.
+
+> **Note on `type: "mcp_tool"` (v2.1.118)**: This Claude Code feature lets a hook *invoke* an MCP tool as its action (alternative to `type: "command"` / `type: "prompt"`). It does **not** filter hooks to fire only on MCP tool calls. ArcKit logs `govreposcrape` calls via the existing tool-name matcher pattern (`mcp__govreposcrape__.*`); no `type: "mcp_tool"` registration is needed for telemetry.
+
 ### Project Structure Created by `arckit init`
 
 ```text

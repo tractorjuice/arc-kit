@@ -17,7 +17,7 @@
  * Output (stdout): empty (notification hook, no output required)
  */
 
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, unlinkSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { isDir, isFile, readText, parseHookInput } from './hook-utils.mjs';
@@ -157,6 +157,30 @@ if (commitSummaries.length > 0) {
   }
 }
 
+// ── Telemetry summary (Claude Code v2.1.84 / v2.1.118 / v2.1.119) ──
+// Read .telemetry.jsonl written by telemetry.mjs across the session,
+// roll it up into a one-line summary, and truncate so it doesn't grow
+// across sessions. Silent when the file is absent or empty.
+const telemetryFile = join(memoryDir, '.telemetry.jsonl');
+if (isFile(telemetryFile)) {
+  const raw = readText(telemetryFile) || '';
+  const events = [];
+  for (const line of raw.split('\n')) {
+    if (!line.trim()) continue;
+    try {
+      events.push(JSON.parse(line));
+    } catch {
+      // skip malformed line — telemetry must never break a session
+    }
+  }
+  if (events.length > 0) {
+    const summary = summariseTelemetry(events);
+    if (summary) entry += `- **Telemetry:** ${summary}\n`;
+  }
+  // Truncate (delete) so next session starts clean. Failure is non-fatal.
+  try { unlinkSync(telemetryFile); } catch { /* ignore */ }
+}
+
 // Ensure memory directory exists
 mkdirSync(memoryDir, { recursive: true });
 
@@ -188,3 +212,63 @@ writeFileSync(sessionsFile, output);
 writeFileSync(lastSessionFile, now.toISOString());
 
 process.exit(0);
+
+// ── Helpers ────────────────────────────────────────────────────────────
+
+/**
+ * Roll up telemetry events from telemetry.mjs into a single line for
+ * the session entry. Records:
+ *   - hook_duration{tool, duration_ms}: per-tool latency histogram
+ *   - mcp_call{server, tool, args}:     MCP call count (govreposcrape only)
+ *   - agent_spawn{agent}:               agent spawn counts
+ *
+ * Returns a one-line string or null if nothing meaningful to report.
+ */
+function summariseTelemetry(events) {
+  const durationsByTool = new Map(); // tool → array of duration_ms
+  const mcpCalls = new Map();        // server → count
+  const agentSpawns = new Map();     // agent → count
+
+  for (const ev of events) {
+    if (ev.kind === 'hook_duration' && ev.tool && typeof ev.duration_ms === 'number') {
+      if (!durationsByTool.has(ev.tool)) durationsByTool.set(ev.tool, []);
+      durationsByTool.get(ev.tool).push(ev.duration_ms);
+    } else if (ev.kind === 'mcp_call' && ev.server) {
+      mcpCalls.set(ev.server, (mcpCalls.get(ev.server) || 0) + 1);
+    } else if (ev.kind === 'agent_spawn' && ev.agent) {
+      agentSpawns.set(ev.agent, (agentSpawns.get(ev.agent) || 0) + 1);
+    }
+  }
+
+  const parts = [];
+
+  if (durationsByTool.size > 0) {
+    // Compute total tool calls and overall p50/p95
+    const all = [];
+    for (const arr of durationsByTool.values()) all.push(...arr);
+    all.sort((a, b) => a - b);
+    const p50 = all[Math.floor(all.length * 0.5)];
+    const p95 = all[Math.floor(all.length * 0.95)];
+    parts.push(`${all.length} tool calls (p50=${p50}ms, p95=${p95}ms)`);
+  }
+
+  if (agentSpawns.size > 0) {
+    const total = [...agentSpawns.values()].reduce((a, b) => a + b, 0);
+    const top = [...agentSpawns.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 3)
+      .map(([a, n]) => (n > 1 ? `${a}×${n}` : a))
+      .join(', ');
+    parts.push(`${total} agent${total === 1 ? '' : 's'} (${top})`);
+  }
+
+  if (mcpCalls.size > 0) {
+    const top = [...mcpCalls.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .map(([s, n]) => `${s}×${n}`)
+      .join(', ');
+    parts.push(`MCP: ${top}`);
+  }
+
+  return parts.length > 0 ? parts.join(' | ') : null;
+}

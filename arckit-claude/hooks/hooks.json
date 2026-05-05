@@ -1,5 +1,5 @@
 {
-  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection, filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), and provenance stamping on artefact writes (PostToolUse Write|Edit)",
+  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection, filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns)",
   "hooks": {
     "Stop": [
       {
@@ -199,6 +199,28 @@
             "if": "Edit(/projects/**)",
             "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs",
             "timeout": 5
+          }
+        ]
+      },
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/telemetry.mjs",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "TaskCreated": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/telemetry.mjs",
+            "timeout": 3
           }
         ]
       }
