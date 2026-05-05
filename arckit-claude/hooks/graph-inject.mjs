@@ -965,8 +965,28 @@ function formatHealth(graph, prompt, repoRoot) {
   const sinceArg = text.match(/\bSINCE\s*=\s*(\d{4}-\d{2}-\d{2})/i)?.[1] || null;
   const projectArg = parseProjectArg(prompt, 'health');
 
-  if (graph.projects.length === 0) return null;
-  if (projectArg && graph.projects.length === 0) return null;
+  if (graph.projects.length === 0) {
+    // Surface the failure mode instead of silently exiting — otherwise the
+    // slash-command's manual-fallback path (commands/health.md) makes it look
+    // like the hook never ran. Same pattern as formatTraceability above.
+    const reasons = [
+      `- The repo only has \`projects/000-global/\` artefacts (excluded by the health recipe via \`excludeGlobal: true\`).`,
+      `- The \`projects/\` tree exists but contains no numbered \`NNN-*\` project directories.`,
+    ];
+    if (projectArg) {
+      reasons.push(`- Project filter \`${projectArg}\` matched no project.`);
+    }
+    return [
+      '## Health Pre-processor (hook)',
+      '',
+      `**No projects scanned.** \`graph.projects\` is empty after \`scanAllArtifacts({ excludeGlobal: true })\`.`,
+      '',
+      'Likely causes:',
+      ...reasons,
+      '',
+      'Falling back to manual extraction — the slash command will read artifacts directly.',
+    ].join('\n');
+  }
 
   const baseline = sinceArg ? new Date(sinceArg) : new Date();
   const minLevel = SEVERITY_ORDER[severityArg] || 1;
