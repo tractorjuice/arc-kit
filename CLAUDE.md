@@ -236,7 +236,7 @@ Recommended ArcKit usage:
 
 ### Remote Control + push notifications (user-facing)
 
-[Claude Code Remote Control](https://code.claude.com/docs/en/remote-control) (v2.1.110+) lets users drive a local session from claude.ai/code or the mobile app. Combined with `/config → Push when Claude decides`, the phone gets a notification when long-running work finishes or hits a decision point. ArcKit's minimum Claude Code floor (v2.1.117) already covers this.
+[Claude Code Remote Control](https://code.claude.com/docs/en/remote-control) (v2.1.110+) lets users drive a local session from claude.ai/code or the mobile app. Combined with `/config → Push when Claude decides`, the phone gets a notification when long-running work finishes or hits a decision point. ArcKit's minimum Claude Code floor (v2.1.121) already covers this.
 
 Best fit for ArcKit:
 
