@@ -108,5 +108,4 @@ After completing this command, consider running:
 
 - `$arckit-au-pia` -- NDB playbook is the operational complement to AUPIA APP 11 mitigation; APP 11 references NDB.
 - `$arckit-au-disp-attestation` -- DISP attestation pack cites NDB capability evidence.
-- `$arckit-au-soci-cirmp` -- SOCI cyber incident reporting (12hr / 72hr) runs in parallel to NDB notification — playbook must coordinate both.
-- `$arckit-risks` -- NDB-relevant risks tagged into the project risk register.
+- `$arckit-risk` -- NDB-relevant risks tagged into the project risk register.

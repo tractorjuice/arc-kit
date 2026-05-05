@@ -101,4 +101,4 @@ After completing this command, consider running:
 
 - `/arckit-au-e8-posture` -- DSS Criterion 5 (Make it secure) feeds into the E8 maturity posture assessment.
 - `/arckit-au-pia` -- DSS Criterion 7 (Protect users' privacy) feeds into the Privacy Impact Assessment.
-- `/arckit-risks` -- DSS gaps surface as delivery and compliance risks for the risk register.
+- `/arckit-risk` -- DSS gaps surface as delivery and compliance risks for the risk register.

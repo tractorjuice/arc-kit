@@ -135,7 +135,7 @@
         "description": "AI training / inference data security cites ISM Domain 9 (System Hardening) + Domain 12 (Cryptography)."
       },
       {
-        "command": "arckit-risks",
+        "command": "arckit-risk",
         "description": "AI-specific risks (bias, drift, prompt injection, training-data exposure) feed the project risk register."
       }
     ]
@@ -179,7 +179,7 @@
         "description": "DSS Criterion 7 (Protect users' privacy) feeds into the Privacy Impact Assessment."
       },
       {
-        "command": "arckit-risks",
+        "command": "arckit-risk",
         "description": "DSS gaps surface as delivery and compliance risks for the risk register."
       }
     ]
@@ -195,11 +195,7 @@
         "description": "E8 posture feeds the ISM control applicability statement — target ML drives which ISM controls are mandatory."
       },
       {
-        "command": "arckit-au-aescsf",
-        "description": "Energy-sector projects layer AESCSF capability domains on top of the E8 baseline."
-      },
-      {
-        "command": "arckit-risks",
+        "command": "arckit-risk",
         "description": "E8 gaps surface as security risks for the project risk register."
       }
     ]
@@ -223,7 +219,7 @@
         "description": "E8 is a mitigation subset of ISM. The ISM applicability statement extends beyond E8 to cover personnel security, physical security, and information governance controls."
       },
       {
-        "command": "arckit-risks",
+        "command": "arckit-risk",
         "description": "ISM control gaps surface as security risks for the project risk register."
       }
     ]
@@ -243,11 +239,7 @@
         "description": "DISP attestation pack cites NDB capability evidence."
       },
       {
-        "command": "arckit-au-soci-cirmp",
-        "description": "SOCI cyber incident reporting (12hr / 72hr) runs in parallel to NDB notification — playbook must coordinate both."
-      },
-      {
-        "command": "arckit-risks",
+        "command": "arckit-risk",
         "description": "NDB-relevant risks tagged into the project risk register."
       }
     ]
@@ -267,7 +259,7 @@
         "description": "APP 11 (security of personal information) informs E8 target maturity level."
       },
       {
-        "command": "arckit-risks",
+        "command": "arckit-risk",
         "description": "Privacy risks surface in the project risk register."
       }
     ]

@@ -8,10 +8,10 @@ handoffs:
     description: NDB playbook is the operational complement to AUPIA APP 11 mitigation; APP 11 references NDB.
   - command: au-disp-attestation
     description: DISP attestation pack cites NDB capability evidence.
-  - command: au-soci-cirmp
-    description: SOCI cyber incident reporting (12hr / 72hr) runs in parallel to NDB notification — playbook must coordinate both.
-  - command: risks
+  - command: risk
     description: NDB-relevant risks tagged into the project risk register.
+# Note: when the au-energy sector recipe lands (#440), au-soci-cirmp becomes a fourth handoff —
+# SOCI cyber incident reporting (12hr / 72hr) runs in parallel to NDB notification.
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a Privacy Officer and legal counsel before adoption. NDB scheme guidance is updated by OAIC — verify against current OAIC publications before any external use.

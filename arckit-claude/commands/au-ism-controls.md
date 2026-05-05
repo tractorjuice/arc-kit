@@ -10,7 +10,7 @@ handoffs:
     description: ISM is the technical-controls instantiation of PSPF Information Security outcome — feeds the PSPF assessment.
   - command: au-e8-posture
     description: E8 is a mitigation subset of ISM. The ISM applicability statement extends beyond E8 to cover personnel security, physical security, and information governance controls.
-  - command: risks
+  - command: risk
     description: ISM control gaps surface as security risks for the project risk register.
 ---
 

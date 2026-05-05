@@ -111,4 +111,4 @@ After completing this command, consider running:
 - `$arckit-au-disp-attestation` -- ISM applicability is a primary input to the DISP Member self-attestation pack.
 - `$arckit-au-pspf` -- ISM is the technical-controls instantiation of PSPF Information Security outcome — feeds the PSPF assessment.
 - `$arckit-au-e8-posture` -- E8 is a mitigation subset of ISM. The ISM applicability statement extends beyond E8 to cover personnel security, physical security, and information governance controls.
-- `$arckit-risks` -- ISM control gaps surface as security risks for the project risk register.
+- `$arckit-risk` -- ISM control gaps surface as security risks for the project risk register.

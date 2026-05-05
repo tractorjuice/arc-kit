@@ -8,7 +8,7 @@ handoffs:
     description: DSS Criterion 5 (Make it secure) feeds into the E8 maturity posture assessment.
   - command: au-pia
     description: DSS Criterion 7 (Protect users' privacy) feeds into the Privacy Impact Assessment.
-  - command: risks
+  - command: risk
     description: DSS gaps surface as delivery and compliance risks for the risk register.
 ---
 

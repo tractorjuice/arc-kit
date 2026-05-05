@@ -6,10 +6,10 @@ effort: high
 handoffs:
   - command: au-ism-controls
     description: E8 posture feeds the ISM control applicability statement — target ML drives which ISM controls are mandatory.
-  - command: au-aescsf
-    description: Energy-sector projects layer AESCSF capability domains on top of the E8 baseline.
-  - command: risks
+  - command: risk
     description: E8 gaps surface as security risks for the project risk register.
+# Note: when the au-energy sector recipe lands (#440), au-aescsf becomes a third handoff —
+# AESCSF capability domains layer on top of the E8 baseline for energy-sector projects.
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a qualified CISO or security assessor before reliance. Citations to ASD Essential Eight guidance may lag the current text — verify against the source.

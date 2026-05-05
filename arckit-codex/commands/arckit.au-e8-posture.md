@@ -94,5 +94,4 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
 After completing this command, consider running:
 
 - `/arckit:au-ism-controls` -- E8 posture feeds the ISM control applicability statement — target ML drives which ISM controls are mandatory.
-- `/arckit:au-aescsf` -- Energy-sector projects layer AESCSF capability domains on top of the E8 baseline.
-- `/arckit:risks` -- E8 gaps surface as security risks for the project risk register.
+- `/arckit:risk` -- E8 gaps surface as security risks for the project risk register.

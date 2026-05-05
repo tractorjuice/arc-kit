@@ -109,4 +109,4 @@ After completing this command, consider running:
 
 - `/arckit-au-dss` -- PIA findings feed DSS Criterion 7 (Protect users' privacy).
 - `/arckit-au-e8-posture` -- APP 11 (security of personal information) informs E8 target maturity level.
-- `/arckit-risks` -- Privacy risks surface in the project risk register.
+- `/arckit-risk` -- Privacy risks surface in the project risk register.

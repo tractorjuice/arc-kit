@@ -108,4 +108,4 @@ After completing this command, consider running:
 - `$arckit-au-pia` -- AI fairness + automated decision-making findings feed APP 6 + APP 11 in the PIA.
 - `$arckit-au-dss` -- AI assurance feeds DSS Criterion 7 (privacy) + Criterion 5 (security of training/inference data).
 - `$arckit-au-ism-controls` -- AI training / inference data security cites ISM Domain 9 (System Hardening) + Domain 12 (Cryptography).
-- `$arckit-risks` -- AI-specific risks (bias, drift, prompt injection, training-data exposure) feed the project risk register.
+- `$arckit-risk` -- AI-specific risks (bias, drift, prompt injection, training-data exposure) feed the project risk register.

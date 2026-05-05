@@ -8,7 +8,7 @@ handoffs:
     description: PIA findings feed DSS Criterion 7 (Protect users' privacy).
   - command: au-e8-posture
     description: APP 11 (security of personal information) informs E8 target maturity level.
-  - command: risks
+  - command: risk
     description: Privacy risks surface in the project risk register.
 ---
 
