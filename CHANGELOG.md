@@ -186,6 +186,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - **`Toolchain` trailing index.** Each agent body now ends with a flat list of templates, helper scripts, MCP servers, external tools, and related ArcKit commands — the equivalent of financial-services' `Skills this agent uses` adapted to ArcKit's reality (our agents don't dispatch sub-skills).
   - **Converter:** `tools` added to `CLAUDE_ONLY_AGENT_FIELDS` so the allowlist strips cleanly when generating Codex/OpenCode/Gemini/Copilot/Paperclip extensions (which have their own tool models). `Guardrails`, `What you produce`, and `Toolchain` body sections propagate unchanged to all 6 downstream formats.
   - **CLAUDE.md:** corrected outdated guidance — `tools` is now a valid plugin agent frontmatter field (allowlist), with `disallowedTools` applied first then the allowlist resolved against what remains.
+- **Australian Federal / DISP-supplier Overlay (community)** — 8 new `au-*` commands covering ASD Essential Eight Maturity Model (`au-e8-posture`), ASD Information Security Manual 17-domain Statement of Applicability (`au-ism-controls`), Privacy Act 1988 s33D + 13 APPs Privacy Impact Assessment (`au-pia`), OAIC Notifiable Data Breach Response Playbook (`au-ndb-playbook`), DTA Digital Service Standard 13-criteria conformance (`au-dss`), Protective Security Policy Framework outcomes scorecard (`au-pspf`), DTA AI Assurance Framework + Responsible AI Policy v2.0 baseline (`au-ai-assurance`), and DISP Member self-attestation pack (`au-disp-attestation`). Closes #424. Contributor: @royster70 (community classification, domain co-maintainer).
+- 8 new templates in `arckit-claude/templates/au-*-template.md` plus mirrors in `.arckit/templates/`.
+- 8 new type codes registered in `arckit-claude/config/doc-types.mjs`: `AUE8`, `AUISM`, `AUPIA`, `AUNDB`, `AUDSS`, `AUPSPF`, `AUAIA`, `AUDISP`. New regime `AU` added to `REGIMES` / `REGIME_LABELS` (with corrective inclusion of pre-existing `CA` regime that was missing from the list).
+- New `au-federal` build recipe with 35 targets across 9 build waves + 2 post-build hooks. Wave shape mirrors `ca-federal-fitaa` (foundation → research + early domain → mid-domain → late ADRs → flagship → synthesis), with `AU_DISP` as the consolidation flagship pulling evidence from `AU_E8`, `AU_ISM`, `AU_PIA`, `AU_NDB`, `AU_PSPF`. Maintainer's verbatim validation snippet from #424 returns `ok` against the recipe.
+- `arckit-build/SKILL.md` recipes table updated to list `au-federal` (and `ca-federal-fitaa`, which was previously missing from the documented table despite being shipped in v4.15.0).
+- Single overlay guide at `docs/guides/au-federal-overlay.md` covering all 8 commands and the recipe; per-command guides will follow in a subsequent PR if maintainer prefers the Canada-style per-command guide pattern.
+- Codex / OpenCode / Copilot / Paperclip / Gemini extension formats regenerated for the 8 new commands.
+
+### Changed
+
+- `arckit-claude/commands/pages.md` allow-list extended to include the 8 AU type codes (dual registration with `doc-types.mjs` per the existing convention).
+- Total command count: 117 → 125 (71 official + 54 community).
+- Sibling sector recipe `au-energy` (AESCSF + SOCI Act + AER ring-fencing) drafted but held in #440 — separate PR after `au-federal` lands and a sector test fixture is identified.
 
 ## [4.15.2] - 2026-05-05
 

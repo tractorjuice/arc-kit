@@ -360,6 +360,27 @@ The commands chain together in a canonical order from `principles → uae-classi
 
 ---
 
+## Australian Federal / DISP-supplier Overlay (8 commands)
+
+Federal Australian regulatory baseline as a `[COMMUNITY]` overlay — covering ASD Essential Eight Maturity Model (E8 ML0–ML3), ASD Information Security Manual (17 control domains), DTA Digital Service Standard (13 criteria), Privacy Act 1988 + 13 Australian Privacy Principles, OAIC Notifiable Data Breach scheme, Defence Industry Security Program (DISP, Levels 1–3), Protective Security Policy Framework (4 outcomes / 16 core requirements), Commonwealth Procurement Rules (November 2025 overhaul), DTA AI Assurance Framework + Responsible AI Policy v2.0, PGPA Act s16, and IRAP. Anchored on the multi-anchor compliance stack required of Federal entities and Defence-cleared suppliers (DISP Members).
+
+| Command | Type code | Purpose |
+|---|---|---|
+| `/arckit:au-e8-posture` | `AUE8` | ASD Essential Eight Maturity Model assessment (ML0 → ML3) across all 8 mitigation strategies |
+| `/arckit:au-ism-controls` | `AUISM` | ASD Information Security Manual Statement of Applicability across 17 control domains |
+| `/arckit:au-pia` | `AUPIA` | Privacy Act 1988 s33D Privacy Impact Assessment against the 13 Australian Privacy Principles |
+| `/arckit:au-ndb-playbook` | `AUNDB` | OAIC Notifiable Data Breach scheme operational response playbook (Privacy Act Part IIIC) |
+| `/arckit:au-dss` | `AUDSS` | DTA Digital Service Standard conformance against the 13 criteria |
+| `/arckit:au-pspf` | `AUPSPF` | Protective Security Policy Framework outcomes scorecard (4 outcomes / 16 core requirements) |
+| `/arckit:au-ai-assurance` | `AUAIA` | DTA AI Assurance Framework + Responsible AI Policy v2.0 baseline (incl. ISO 42001 readiness, AI Accountable Officer designation, Privacy Act Dec 2026 AI-decision notification) |
+| `/arckit:au-disp-attestation` | `AUDISP` | DISP Member self-attestation pack across the four DISP security domains (governance, personnel, physical, information & cyber) plus FOCI declaration, supply chain, and annual board attestation |
+
+Build recipe: [`au-federal.yaml`](arckit-claude/skills/arckit-build/recipes/au-federal.yaml) — 35 targets, 9 build waves. The recipe swaps `arckit:tcop` → `arckit:au-dss`, `arckit:secure` → `arckit:au-e8-posture`, and `arckit:dpia` → `arckit:au-pia` from the `uk-saas` baseline, then chains the 8 community commands so `AU_DISP` (the flagship attestation) consolidates evidence from `AU_E8`, `AU_ISM`, `AU_PIA`, `AU_NDB`, `AU_PSPF`. Reference test fixture: `arckit-test-project-v44-australian-gov`. Full guide: [`docs/guides/au-federal-overlay.md`](docs/guides/au-federal-overlay.md).
+
+> **Help wanted**: looking for an Australian federal enterprise architect (or DISP-cleared supplier architect) to co-maintain this overlay alongside @royster70. Open an issue or DM @tractorjuice. A sibling sector recipe `au-energy` covering AESCSF, SOCI Act CIRMP, and AER ring-fencing for energy-sector / SOCI-covered critical-asset operators is drafted in #440 but held until a sector test fixture is in place.
+
+---
+
 ## The ArcKit Workflow
 
 ArcKit guides you through the enterprise architecture lifecycle:

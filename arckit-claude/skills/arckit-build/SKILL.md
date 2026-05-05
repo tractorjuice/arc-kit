@@ -57,6 +57,8 @@ cp "${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/uk-saas.yaml" .arckit/reci
 | `uk-saas` | UK Government managed multi-tenant SaaS — civilian departments |
 | `uk-mod-sovereign` | UK MOD / sovereign / air-gapped — `mod-secure` + `jsp-936`, no SVCASS, sealed-media distribution |
 | `uae-federal-ai` | UAE Federal AI — full Cabinet agentic AI decree compliance with all 12 UAE community commands, integrated research wave (general AI + AWS / Azure UAE region availability), plus core ArcKit governance |
+| `ca-federal-fitaa` | Canada Federal FITAA-class — full compliance suite (FITAA Bill C-70 2024, Privacy Act, ATIP, AIA, Charter, ITSG-33, SOIA, GC sovereign cloud, GC Digital Standards, Official Languages Act, PSPC, OCAP®) for federal Canadian digital services |
+| `au-federal` | Australian Federal Government / DISP-supplier compliance — eleven regulatory anchors (ASD E8 + ISM, DTA DSS, Privacy Act 1988 + 13 APPs, OAIC NDB, DISP, PSPF, CPR Nov 2025, DTA AI Assurance + Responsible AI Policy v2.0, PGPA Act s16, IRAP) with all 8 au-* community commands plus the core ArcKit governance suite |
 
 ### Recipe schema (v1)
 
