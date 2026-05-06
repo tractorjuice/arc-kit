@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Prompt-injection hardening across all 10 research agents (#442).** Adopts patterns from `anthropics/financial-services` reference plugins:
+  - **Tools allowlist (item 18).** Every research agent (`research`, `datascout`, `grants`, `aws-research`, `azure-research`, `gcp-research`, `gov-reuse`, `gov-code-search`, `gov-landscape`, `framework`) migrated from `disallowedTools: ["Edit"]` (denylist) to explicit `tools:` allowlist. New tools added to the Claude Code harness in future versions no longer auto-grant to existing agents. MCP entries enumerated per server (glob unsupported in plugin agent frontmatter — verified against current Claude Code docs).
+  - **Guardrails section (item 1, partial).** Each agent body now opens with `## Guardrails` covering three primitives: untrusted-input boundary (web/MCP results never executed as instructions), citation discipline (every figure traceable to a URL or `[UNSOURCED]`), and human-decision boundary (named accountable officer per agent — SRO for research, bid director for grants, architecture board for cloud-research, etc.). The third financial-services primitive — write-tool isolation — defers to the future reader/orchestrator/writer split (#442 item 1, full).
+  - **`What you produce` output contract.** Each agent body now front-loads its deliverable spec — "Given X, you deliver: 1, 2, 3" — replacing the scattered output description that previously lived inside `Your Core Responsibilities` and the Process steps.
+  - **`Toolchain` trailing index.** Each agent body now ends with a flat list of templates, helper scripts, MCP servers, external tools, and related ArcKit commands — the equivalent of financial-services' `Skills this agent uses` adapted to ArcKit's reality (our agents don't dispatch sub-skills).
+  - **Converter:** `tools` added to `CLAUDE_ONLY_AGENT_FIELDS` so the allowlist strips cleanly when generating Codex/OpenCode/Gemini/Copilot/Paperclip extensions (which have their own tool models). `Guardrails`, `What you produce`, and `Toolchain` body sections propagate unchanged to all 6 downstream formats.
+  - **CLAUDE.md:** corrected outdated guidance — `tools` is now a valid plugin agent frontmatter field (allowlist), with `disallowedTools` applied first then the allowlist resolved against what remains.
+
 ## [4.15.2] - 2026-05-05
 
 Documentation-only patch.

@@ -91,7 +91,7 @@ Some commands delegate to **autonomous agents** (`arckit-claude/agents/arckit-{n
 | `arckit-gov-landscape` | `/arckit.gov-landscape` | Government code landscape analysis |
 | `arckit-grants` | `/arckit.grants` | UK government grants and funding research |
 
-**Agent frontmatter**: valid fields are `name` (required), `description` (required), `model`, `effort`, `maxTurns`, `disallowedTools`, `initialPrompt`. Fields like `color`, `permissionMode`, `tools` are invalid in plugin context. Claude-only fields are stripped by the converter.
+**Agent frontmatter**: valid fields are `name` (required), `description` (required), `model`, `effort`, `maxTurns`, `tools`, `disallowedTools`, `initialPrompt`. `tools` is an allowlist (only the listed tools are available); `disallowedTools` is a denylist applied first, then the allowlist is resolved against what remains. Heavy-research agents in this plugin use `tools` (allowlist) for prompt-injection hardening — see `arckit-claude/agents/arckit-research.md` for the canonical shape, including MCP tool naming (`mcp__<server>__<tool>`). Fields like `color` and `permissionMode` remain invalid in plugin context. Claude-only fields (`effort`, `initialPrompt`, `maxTurns`, `disallowedTools`, `tools`) are stripped by the converter.
 
 Agents are Claude Code only — Codex/OpenCode/Gemini equivalents inline the full agent prompt.
 

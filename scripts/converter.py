@@ -17,6 +17,7 @@ CLAUDE_ONLY_AGENT_FIELDS = (
     "initialPrompt",
     "maxTurns",
     "disallowedTools",
+    "tools",
 )
 
 

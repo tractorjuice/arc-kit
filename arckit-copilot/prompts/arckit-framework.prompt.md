@@ -1,7 +1,7 @@
 ---
 description: 'Transform existing project artifacts into a structured, phased framework with overview and executive guide'
 agent: 'arckit-framework'
-tools: ['readFile', 'editFiles', 'runCommand', 'codebase', 'search']
+tools: ['fetch', 'readFile', 'editFiles', 'runCommand', 'codebase', 'search']
 ---
 
 Use the `arckit-framework` agent to handle this request.
