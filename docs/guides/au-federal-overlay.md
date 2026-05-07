@@ -46,7 +46,7 @@ Before running the commands, set the plugin userConfig values:
 | `organisation_name` | the Federal entity name (or the contracting Defence supplier name) |
 | `default_classification` | one of `UNOFFICIAL`, `OFFICIAL`, `OFFICIAL:Sensitive`, `PROTECTED`, `SECRET`, `TOP SECRET` |
 
-These switch the Document Control header into PSPF classification rendering. With them set, every artefact across the entire toolkit (au-* or otherwise) uses the PSPF classification taxonomy.
+> **Note on rendering**: The PSPF classification taxonomy is applied to AU artefacts via a per-command override at the marker-resolution step (mirrors the Canadian-overlay pattern in `ca-pia.md:32`). Each `au-*` command instructs the resolver to swap the standard UK classification line for `UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET`, so the AU artefacts come out with PSPF rendering regardless of these userConfig values. The `governance_framework` and `classification_scheme` settings are still useful as documented intent (project records, downstream tooling, traceability), and a future enhancement (a dedicated `document-control-au.md` partial + extended `RENDERING.md` routing) will make them drive global rendering for **non-AU** artefacts produced inside an AU project too. Until then, set these for clarity but do not rely on them to switch the global Document Control header.
 
 If you are a Defence supplier rather than a Federal entity, set `organisation_name` to your supplier name and use the `au-disp-attestation` command to produce the DISP Member self-attestation pack — the rest of the overlay still applies to the project itself, with the contracting Federal entity treated as the "system owner".
 
@@ -124,8 +124,8 @@ Reference test fixture: [`arckit-test-project-v44-australian-gov`](https://githu
 
 If you are migrating an existing UK-classified ArcKit project to the AU overlay:
 
-1. Update plugin userConfig: switch `governance_framework` to `AU Federal`, `classification_scheme` to `PSPF`, and pick a `default_classification` from the PSPF taxonomy.
-2. Re-run `/arckit:health` to re-validate Document Control headers against the PSPF ladder.
+1. Update plugin userConfig: switch `governance_framework` to `AU Federal`, `classification_scheme` to `PSPF`, and pick a `default_classification` from the PSPF taxonomy. (See the *Note on rendering* in Prerequisites — under the current per-command override approach these settings record intent; the AU artefacts get PSPF rendering through their own commands rather than via global routing.)
+2. Re-run `/arckit:health` to validate the Document Control headers in any newly-generated AU artefacts against the PSPF ladder.
 3. Replace UK-specific artefacts where AU equivalents exist:
    - `ARC-*-DPIA-*.md` → re-generate as `ARC-*-AUPIA-*.md` via `/arckit.au-pia`
    - `ARC-*-SECD-*.md` (Secure-by-Design) → re-generate as `ARC-*-AUE8-*.md` via `/arckit.au-e8-posture`
