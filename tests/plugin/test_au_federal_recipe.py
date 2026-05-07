@@ -339,3 +339,228 @@ def test_au_federal_in_recipes_table():
     assert re.search(r"\|\s*`au-federal`\s*\|", content), (
         "au-federal not in the | `name` | use case | recipes table"
     )
+
+
+# ---------------------------------------------------------------------------
+# Maintainer review #441 — regression guards for fixed blockers and items
+# https://github.com/tractorjuice/arc-kit/pull/441 (Code Review)
+# ---------------------------------------------------------------------------
+
+
+# Doc-type code per command, used by Blocker 3 / Item #7 tests.
+AU_COMMAND_TO_TYPE = dict(zip(AU_COMMANDS, [
+    "AUE8", "AUISM", "AUPIA", "AUNDB", "AUDSS", "AUPSPF", "AUAIA", "AUDISP",
+]))
+
+UAE_COMMANDS = [
+    "uae-ai-autonomy-tier", "uae-ai-charter", "uae-classification",
+    "uae-cloud-residency", "uae-data-sharing", "uae-digital-records",
+    "uae-ias", "uae-pdpl", "uae-priorities-alignment", "uae-procurement",
+    "uae-uaepass", "uae-zero-bureaucracy",
+]
+
+
+@pytest.mark.parametrize("cmd", AU_COMMANDS)
+def test_blocker1_template_has_document_control_heading_in_plugin_dir(cmd):
+    """Blocker 1 (review #441): each AU template needs '## Document Control'
+    heading directly above the <!-- DOC-CONTROL-HEADER --> marker.
+    Mirrors ca-pia-template.md:5 pattern. Without it, partial inlining produces
+    a Document Control table with no preceding section heading."""
+    path = os.path.join(PLUGIN_TEMPLATES_DIR, f"{cmd}-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert "## Document Control\n\n<!-- DOC-CONTROL-HEADER -->" in text, (
+        f"{cmd}-template.md missing '## Document Control' heading above marker"
+    )
+
+
+@pytest.mark.parametrize("cmd", AU_COMMANDS)
+def test_blocker1_template_has_document_control_heading_in_cli_dir(cmd):
+    """Blocker 1 dual-sync: same heading must exist in .arckit/templates/."""
+    path = os.path.join(CLI_TEMPLATES_DIR, f"{cmd}-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert "## Document Control\n\n<!-- DOC-CONTROL-HEADER -->" in text, (
+        f".arckit/templates/{cmd}-template.md missing '## Document Control' heading"
+    )
+
+
+@pytest.mark.parametrize("cmd", AU_COMMANDS)
+def test_blocker2a_command_overrides_uk_classification_to_au(cmd):
+    """Blocker 2a (review #441): each AU command must instruct the resolver to
+    swap the standard UK classification line for the PSPF scheme.
+    RENDERING.md only routes UAE today; everything else falls back to the UK
+    partial. Without this override the artefact ships with UK header but AU body."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    # Required canonical phrasing (mirrors ca-pia.md:32 pattern)
+    required_terms = [
+        "Australian classification scheme",
+        "UNOFFICIAL",
+        "OFFICIAL:Sensitive",
+        "PROTECTED",
+        "replace the standard UK line",
+    ]
+    for term in required_terms:
+        assert term in text, (
+            f"{cmd}.md missing AU classification override term: {term!r}"
+        )
+
+
+@pytest.mark.parametrize("cmd", AU_COMMANDS)
+def test_blocker3_doc_id_invocation_passes_project_id(cmd):
+    """Blocker 3 (review #441): generate-document-id.sh signature is
+    PROJECT_ID DOC_TYPE [VERSION]. AU commands must pass <PROJECT_ID> first.
+    Bug was inherited from uae-* (also fixed in the same review pass)."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    code = AU_COMMAND_TO_TYPE[cmd]
+    correct = f"generate-document-id.sh <PROJECT_ID> {code} --filename"
+    bare = f"generate-document-id.sh {code} --filename"
+    assert correct in text, f"{cmd}.md must use: {correct!r}"
+    assert bare not in text, (
+        f"{cmd}.md still has bare 'generate-document-id.sh {code} --filename'"
+    )
+
+
+@pytest.mark.parametrize("cmd", UAE_COMMANDS)
+def test_blocker3_same_pass_uae_doc_id_invocation_fixed(cmd):
+    """Same-pass tidy (review #441): UAE commands shared the same
+    generate-document-id.sh invocation bug. AU PR fixes both AU and UAE so the
+    inherited defect doesn't propagate further."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    if not os.path.isfile(path):
+        pytest.skip(f"{cmd}.md not present")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    # No bare invocation should remain (CODE = uppercase letters/digits only).
+    bare_matches = re.findall(
+        r"generate-document-id\.sh ([A-Z][A-Z0-9]+) --filename", text
+    )
+    assert not bare_matches, (
+        f"{cmd}.md still has bare invocations for codes: {bare_matches}"
+    )
+
+
+@pytest.mark.parametrize("cmd", AU_COMMANDS)
+def test_item7_au_command_has_create_project_lookup(cmd):
+    """Item #7 (review #441): every AU command must include the
+    create-project.sh lookup step before generate-document-id.sh, matching the
+    pattern used by ca-* and the other 5 AU commands."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert "scripts/bash/create-project.sh" in text, (
+        f"{cmd}.md missing create-project.sh lookup step"
+    )
+
+
+@pytest.mark.parametrize("cmd", AU_COMMANDS)
+def test_item8_no_non_canonical_name_frontmatter(cmd):
+    """Item #8 (review #441): the `name:` frontmatter field is non-canonical —
+    not used by ca-*, uae-*, fr-*, and not in CLAUDE.md schema. Strip from AU."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    # First frontmatter block (between leading --- delimiters)
+    fm = re.match(r"---\n(.*?)\n---\n", text, re.DOTALL)
+    assert fm, f"{cmd}.md has no frontmatter"
+    fm_body = fm.group(1)
+    assert not re.search(r"^name:\s", fm_body, re.MULTILINE), (
+        f"{cmd}.md has non-canonical `name:` frontmatter field"
+    )
+
+
+@pytest.mark.parametrize("cmd", AU_COMMANDS)
+def test_item10_marker_step_references_rendering_md(cmd):
+    """Item #10 (review #441): every marker-resolution step must say
+    'per `RENDERING.md`' — keeps the reference path explicit for the resolver."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert re.search(
+        r"Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING\.md`\.",
+        text,
+    ), f"{cmd}.md marker step missing 'per `RENDERING.md`' reference"
+
+
+@pytest.mark.parametrize(
+    "cmd", ["au-e8-posture", "au-ndb-playbook"]
+)
+def test_item12_no_440_yaml_comment_leak_in_frontmatter(cmd):
+    """Item #12 (review #441): YAML comments referencing #440 inside the
+    frontmatter would pass through the converter to non-Claude targets unchanged.
+    Removed in this review pass to prevent leakage."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    fm = re.match(r"---\n(.*?)\n---\n", text, re.DOTALL)
+    assert fm, f"{cmd}.md has no frontmatter"
+    assert "#440" not in fm.group(1), (
+        f"{cmd}.md frontmatter still references #440 (YAML comment leak risk)"
+    )
+
+
+def test_item9_ism_controls_count_matches_listed_items():
+    """Item #9 (review #441): au-ism-controls.md previously declared
+    'all 12 ISM control domains' but listed 17 items. Reconcile to 17 areas."""
+    path = os.path.join(COMMANDS_DIR, "au-ism-controls.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert "all 17 ISM control areas" in text, (
+        "au-ism-controls.md must declare 'all 17 ISM control areas' "
+        "(was 'all 12 ISM control domains' before review fix)"
+    )
+    assert "all 12 ISM control domains" not in text, (
+        "au-ism-controls.md still has stale 'all 12 ISM control domains' phrasing"
+    )
+
+
+def test_item14_disp_step1_lists_aupspf_as_input():
+    """Item #14 (review #441): AU_DISP recipe deps include AU_PSPF, but the
+    command's Process step 1 didn't list AUPSPF. Reconciled by adding it as a
+    primary input."""
+    path = os.path.join(COMMANDS_DIR, "au-disp-attestation.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert "ARC-{P}-AUPSPF-v*" in text, (
+        "au-disp-attestation.md Process step 1 must list AUPSPF as an input "
+        "(matches AU_DISP recipe deps)"
+    )
+
+
+@pytest.mark.parametrize("templates_dir", [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR])
+def test_item16_pspf_template_no_offset_numbering(templates_dir):
+    """Item #16 (review #441): au-pspf-template.md previously rendered
+    Outcome 1–4 as `## 2.`–`## 5.` (offset). Drop section numbers so headings
+    align with PSPF outcome numbers themselves."""
+    path = os.path.join(templates_dir, "au-pspf-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    # Should NOT have any "## N. Outcome M" form
+    offset_form = re.findall(r"^##\s+\d+\.\s+Outcome\s+\d", text, flags=re.MULTILINE)
+    assert not offset_form, (
+        f"au-pspf-template.md still has offset-numbered Outcome headings: {offset_form}"
+    )
+    # Should have clean "## Outcome N: ..." form
+    clean_form = re.findall(r"^##\s+Outcome\s+\d+:", text, flags=re.MULTILINE)
+    assert len(clean_form) == 4, (
+        f"au-pspf-template.md should have 4 '## Outcome N:' headings, found {len(clean_form)}"
+    )
+
+
+@pytest.mark.parametrize(
+    "cmd", ["au-ndb-playbook", "au-pspf"]
+)
+def test_item5_template_footer_has_arckit_version_line(cmd):
+    """Item #5 (review #441): au-ndb-playbook and au-pspf templates were
+    missing **ArcKit Version**: [VERSION] in the Standard Footer."""
+    for templates_dir in [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR]:
+        path = os.path.join(templates_dir, f"{cmd}-template.md")
+        with open(path, "r", encoding="utf-8") as f:
+            text = f.read()
+        assert "**ArcKit Version**: [VERSION]" in text, (
+            f"{templates_dir}/{cmd}-template.md missing ArcKit Version line"
+        )
