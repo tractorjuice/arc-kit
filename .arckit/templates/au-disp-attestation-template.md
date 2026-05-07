@@ -254,7 +254,6 @@ I/we attest that the information in this pack is accurate to the best of my/our 
 | DTA Digital Service Standard | `ARC-{P}-AUDSS-v*` | Service-design assurance evidence (where applicable) |
 | AI Assurance Assessment | `ARC-{P}-AUAIA-v*` | AI-system risk-control evidence (where applicable) |
 
-
 ### Document Register
 
 | Doc ID | Filename | Type | Source | Description |
