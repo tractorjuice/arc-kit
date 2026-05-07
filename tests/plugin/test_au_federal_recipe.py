@@ -564,3 +564,290 @@ def test_item5_template_footer_has_arckit_version_line(cmd):
         assert "**ArcKit Version**: [VERSION]" in text, (
             f"{templates_dir}/{cmd}-template.md missing ArcKit Version line"
         )
+
+
+# ---------------------------------------------------------------------------
+# Framework fidelity (Tier 1 A — encode the regulator-set contract numbers)
+#
+# These are *contract* numbers defined by the regulator, not implementation
+# choices. If a future edit accidentally drops a section, the test names the
+# missing item rather than just failing on a count mismatch.
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize("templates_dir", [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR])
+def test_pia_template_has_all_13_app_sections(templates_dir):
+    """Privacy Act 1988 Schedule 1 defines exactly 13 Australian Privacy
+    Principles. The PIA template must have a per-APP assessment section for
+    each of APP 1 through APP 13 (no gaps, no duplicates beyond the Mermaid
+    flow legend)."""
+    path = os.path.join(templates_dir, "au-pia-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    headings = re.findall(r"^###\s+APP\s*(\d{1,2})\b", text, flags=re.MULTILINE)
+    declared = sorted({int(h) for h in headings})
+    expected = list(range(1, 14))
+    assert declared == expected, (
+        f"au-pia-template.md APP sections = {declared}; expected {expected} "
+        f"(missing: {sorted(set(expected) - set(declared))}, "
+        f"extra: {sorted(set(declared) - set(expected))})"
+    )
+
+
+@pytest.mark.parametrize("templates_dir", [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR])
+def test_e8_template_has_all_8_strategies(templates_dir):
+    """ASD Essential Eight defines exactly 8 mitigation strategies. The E8
+    template must have a per-strategy section heading for each of strategy 1
+    through 8 — and the official names must match the ASD canonical labels."""
+    path = os.path.join(templates_dir, "au-e8-posture-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    headings = re.findall(r"^###\s+(\d)\.\s+(.+?)$", text, flags=re.MULTILINE)
+    nums = sorted({int(n) for n, _ in headings})
+    assert nums == list(range(1, 9)), (
+        f"au-e8-posture-template.md strategy headings = {nums}; expected 1..8"
+    )
+    by_num = {int(n): name for n, name in headings}
+    canonical = {
+        1: "Application Control",
+        2: "Patch Applications",
+        3: "Configure Microsoft Office Macro",   # heading allows trailing words
+        4: "User Application Hardening",
+        5: "Restrict Administrative Privileges",
+        6: "Patch Operating Systems",
+        7: "Multi-Factor Authentication",
+        8: "Regular Backups",
+    }
+    for n, expected_prefix in canonical.items():
+        actual = by_num[n]
+        assert expected_prefix in actual, (
+            f"E8 strategy {n}: expected name beginning with {expected_prefix!r}, "
+            f"got {actual!r}"
+        )
+
+
+@pytest.mark.parametrize("templates_dir", [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR])
+def test_ism_template_has_all_17_domains(templates_dir):
+    """The ISM applicability statement covers 17 control areas (15 ASD ISM
+    chapter domains + 2 cross-cutting areas: Cloud/IaaS and Working-Off-Site).
+    Numbering matches the count in au-ism-controls.md (item #9 fix)."""
+    path = os.path.join(templates_dir, "au-ism-controls-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    headings = re.findall(r"^###\s+Domain\s+(\d{1,2}):", text, flags=re.MULTILINE)
+    nums = sorted({int(h) for h in headings})
+    assert nums == list(range(1, 18)), (
+        f"au-ism-controls-template.md Domain headings = {nums}; expected 1..17"
+    )
+
+
+@pytest.mark.parametrize("templates_dir", [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR])
+def test_pspf_template_has_all_4_outcomes(templates_dir):
+    """PSPF defines 4 security outcomes (Governance, Information, Personnel,
+    Physical). Must have one `## Outcome N: ...` heading per outcome, with
+    no offset numbering (item #16 fix)."""
+    path = os.path.join(templates_dir, "au-pspf-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    headings = re.findall(r"^##\s+Outcome\s+(\d):\s+(.+?)$", text, flags=re.MULTILINE)
+    nums = sorted({int(n) for n, _ in headings})
+    assert nums == [1, 2, 3, 4], (
+        f"au-pspf-template.md Outcome headings = {nums}; expected [1, 2, 3, 4]"
+    )
+    by_num = {int(n): name for n, name in headings}
+    canonical = {
+        1: "Security Governance",
+        2: "Information Security",
+        3: "Personnel Security",
+        4: "Physical Security",
+    }
+    for n, expected in canonical.items():
+        assert expected in by_num[n], (
+            f"PSPF Outcome {n}: expected {expected!r} in heading, got {by_num[n]!r}"
+        )
+
+
+@pytest.mark.parametrize("templates_dir", [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR])
+def test_disp_template_has_all_4_security_domains(templates_dir):
+    """DISP self-attestation covers 4 security domains (Governance, Personnel,
+    Physical, Information & Cyber). Must appear as `### Domain N:` headings."""
+    path = os.path.join(templates_dir, "au-disp-attestation-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    headings = re.findall(r"^###\s+Domain\s+(\d):\s+(.+?)$", text, flags=re.MULTILINE)
+    nums = sorted({int(n) for n, _ in headings})
+    assert nums == [1, 2, 3, 4], (
+        f"au-disp-attestation-template.md Domain headings = {nums}; expected [1, 2, 3, 4]"
+    )
+
+
+@pytest.mark.parametrize("templates_dir", [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR])
+def test_dss_template_has_all_13_criteria(templates_dir):
+    """DTA Digital Service Standard defines 13 criteria. Must have one
+    `### Criterion N: ...` heading per criterion, numbered 1..13."""
+    path = os.path.join(templates_dir, "au-dss-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    headings = re.findall(
+        r"^###\s+Criterion\s+(\d{1,2}):", text, flags=re.MULTILINE
+    )
+    nums = sorted({int(h) for h in headings})
+    assert nums == list(range(1, 14)), (
+        f"au-dss-template.md Criterion headings = {nums}; expected 1..13"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Recipe ↔ source consistency (Tier 1 B — drift catcher)
+#
+# Catches the kind of bug commit 247d5aa9 fixed: handoff/skill references
+# pointing at command files that don't exist, or doc-type codes referenced
+# from the recipe that aren't registered.
+# ---------------------------------------------------------------------------
+
+
+def test_recipe_au_targets_resolve_to_existing_commands(recipe):
+    """Every AU target's `skill:` must resolve to an existing au-*.md command
+    file under arckit-claude/commands/. Catches typos and renames before they
+    surface as runtime failures inside `/arckit:build`."""
+    missing = []
+    for t in recipe["targets"]:
+        skill = t.get("skill", "")
+        # Only check AU targets — non-AU skills are out of scope for this overlay
+        if not (skill.startswith("arckit:au-") or skill.startswith("arckit.au-")):
+            continue
+        cmd_name = skill.split(":", 1)[1].split(".", 1)[-1]
+        cmd_path = os.path.join(COMMANDS_DIR, f"{cmd_name}.md")
+        if not os.path.isfile(cmd_path):
+            missing.append((t["id"], skill, cmd_path))
+    assert not missing, f"Recipe AU targets reference missing command files: {missing}"
+
+
+def test_recipe_au_target_doc_types_registered_in_doc_types_mjs(recipe, doc_types_source):
+    """Every AU target's output.type must be a registered code in
+    arckit-claude/config/doc-types.mjs. Catches drift between recipe codes
+    and the central doc-type registry."""
+    unregistered = []
+    for t in recipe["targets"]:
+        type_code = (t.get("output") or {}).get("type", "")
+        # Only check AU codes (start with 'AU')
+        if not type_code.startswith("AU"):
+            continue
+        pattern = rf"['\"]{type_code}['\"]\s*:"
+        if not re.search(pattern, doc_types_source):
+            unregistered.append((t["id"], type_code))
+    assert not unregistered, (
+        f"Recipe AU targets reference unregistered doc-type codes: {unregistered}"
+    )
+
+
+def test_recipe_au_target_count_matches_au_command_count(recipe):
+    """Number of AU targets in the recipe must equal the number of au-*.md
+    command files in arckit-claude/commands/. Catches scope drift in either
+    direction (command added without recipe target, or vice versa)."""
+    au_targets = [
+        t for t in recipe["targets"]
+        if (t.get("output") or {}).get("type", "").startswith("AU")
+    ]
+    au_commands = sorted(
+        os.path.basename(p)[:-3] for p in glob.glob(os.path.join(COMMANDS_DIR, "au-*.md"))
+    )
+    assert len(au_targets) == len(au_commands), (
+        f"AU target count ({len(au_targets)}) != au-*.md command count "
+        f"({len(au_commands)}); commands: {au_commands}; "
+        f"target IDs: {[t['id'] for t in au_targets]}"
+    )
+
+
+@pytest.mark.parametrize("cmd", AU_COMMANDS)
+def test_au_command_handoffs_resolve_to_existing_commands(cmd):
+    """Every `handoffs[].command:` entry in an AU command's frontmatter must
+    resolve to a real command file. Belt-and-braces vs the existing repo-wide
+    handoff test — this one parametrises by AU command so failures point at
+    the source overlay, not just at a generic file path."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    fm = re.match(r"---\n(.*?)\n---\n", text, re.DOTALL)
+    assert fm, f"{cmd}.md has no frontmatter"
+    try:
+        meta = yaml.safe_load(fm.group(1))
+    except yaml.YAMLError as e:
+        pytest.fail(f"{cmd}.md frontmatter is not valid YAML: {e}")
+    handoffs = meta.get("handoffs") or []
+    missing = []
+    for h in handoffs:
+        target = h.get("command") if isinstance(h, dict) else None
+        if not target:
+            continue
+        target_path = os.path.join(COMMANDS_DIR, f"{target}.md")
+        if not os.path.isfile(target_path):
+            missing.append(target)
+    assert not missing, (
+        f"{cmd}.md handoffs reference missing commands: {missing}"
+    )
+
+
+# ---------------------------------------------------------------------------
+# Authoritative anchor URL presence (Tier 1 E — traceability guard)
+#
+# Each AU command body declares an "Authoritative anchors" section listing
+# primary regulatory URLs. If one disappears in a future edit, the artefact
+# loses provenance and /arckit:health won't catch it. Anchor on URL fragments
+# (host + path) so the test isn't brittle against query strings.
+# ---------------------------------------------------------------------------
+
+
+REQUIRED_AUTHORITATIVE_URLS = {
+    # Privacy Act 1988 (Cth) + OAIC PIA guidance
+    "au-pia": [
+        "legislation.gov.au",
+        "oaic.gov.au",
+    ],
+    # ASD Essential Eight Maturity Model
+    "au-e8-posture": [
+        "cyber.gov.au",
+    ],
+    # ASD Information Security Manual
+    "au-ism-controls": [
+        "cyber.gov.au",
+    ],
+    # PSPF + ASD ISM
+    "au-pspf": [
+        "protectivesecurity.gov.au",
+    ],
+    # DTA Digital Service Standard
+    "au-dss": [
+        "dta.gov.au",
+    ],
+    # OAIC Notifiable Data Breach scheme
+    "au-ndb-playbook": [
+        "oaic.gov.au",
+    ],
+    # DTA Responsible AI Policy v2.0 (lives on the DTA's digital.gov.au domain,
+    # not dta.gov.au which serves the DSS).
+    "au-ai-assurance": [
+        "digital.gov.au",
+    ],
+    # DISP — Department of Defence supplier accreditation
+    "au-disp-attestation": [
+        "defence.gov.au",
+    ],
+}
+
+
+@pytest.mark.parametrize(
+    "cmd,urls",
+    list(REQUIRED_AUTHORITATIVE_URLS.items()),
+)
+def test_au_command_cites_authoritative_url(cmd, urls):
+    """Each AU command must cite at least one authoritative regulatory URL
+    fragment in its body. Guards against a future edit that drops the
+    Authoritative anchors block — without it, traceability collapses."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    missing = [u for u in urls if u not in text]
+    assert not missing, (
+        f"{cmd}.md missing authoritative URL fragment(s): {missing}"
+    )
