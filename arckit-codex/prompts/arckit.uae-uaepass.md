@@ -23,7 +23,7 @@ You are an enterprise architect generating a UAE Pass integration design for a U
    - **Then**, `.arckit/templates-custom/uae-uaepass-template.md`
    - **Fallback**, `.arckit/templates/uae-uaepass-template.md`
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
-4. Use `scripts/bash/generate-document-id.sh UPASS --filename` for the artefact filename.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> UPASS --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **Scope** — which user journeys require UAE Pass authentication, in-scope user populations (citizens, residents, visitors), and the Service Provider category being onboarded.

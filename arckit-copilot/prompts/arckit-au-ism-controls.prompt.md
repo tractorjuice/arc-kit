@@ -46,15 +46,15 @@ The Australian Signals Directorate (ASD) Information Security Manual (ISM) is th
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist.
 
-4. Use `scripts/bash/generate-document-id.sh AUISM --filename` for the artefact filename.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AUISM --filename` for the artefact filename.
 
-5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) — replace the standard UK line in the header.
 
 6. Generate the following sections:
 
    - **System Context** — system name, classification level (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET), deployment model, IRAP assessment status, sovereignty position. Classification drives applicability — controls applicable at OFFICIAL:Sensitive are a subset of those at PROTECTED.
 
-   - **Control Domain Applicability Matrix** — table covering all 12 ISM control domains, marking applicability per system classification:
+   - **Control Domain Applicability Matrix** — table covering all 17 ISM control areas (15 ASD ISM chapter domains plus 2 cross-cutting areas — Cloud/IaaS and Working-Off-Site), marking applicability per system classification:
      1. **Cyber Security Governance** — security risk management, security documentation, change management
      2. **Cyber Security Incidents** — detection, reporting, response, business continuity
      3. **Outsourced Services** — managed service providers, cloud, supply chain

@@ -23,7 +23,7 @@ You are an enterprise architect generating a Data Sharing Agreement under the UA
    - **Then**, `.arckit/templates-custom/uae-data-sharing-template.md`
    - **Fallback**, `.arckit/templates/uae-data-sharing-template.md`
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
-4. Use `scripts/bash/generate-document-id.sh DSHR --filename` for the artefact filename.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> DSHR --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **Sharing Parties** — provider entity, consumer entity, joint-controller status, service-level commitments.

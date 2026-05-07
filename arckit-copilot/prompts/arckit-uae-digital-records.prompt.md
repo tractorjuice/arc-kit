@@ -25,7 +25,7 @@ You are an enterprise architect generating a Digital Records Plan under the UAE 
    - **Then**, `.arckit/templates/uae-digital-records-template.md`
    - **Fallback**, `.arckit/templates/uae-digital-records-template.md`
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
-4. Use `scripts/bash/generate-document-id.sh DREC --filename` for the artefact filename.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> DREC --filename` for the artefact filename.
 5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 6. Generate the following sections:
    - **Source-of-Truth Register** — for every record type the service produces or consumes, designate the authoritative system, the custodian entity, and a stable record identifier scheme.

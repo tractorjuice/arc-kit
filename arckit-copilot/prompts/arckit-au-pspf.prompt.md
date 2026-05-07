@@ -48,11 +48,13 @@ PSPF is structured around **four security outcomes** with **16 core requirements
    - Then: `.arckit/templates/au-pspf-template.md`
    - Fallback: `.arckit/templates/au-pspf-template.md`
 
-3. Use `scripts/bash/generate-document-id.sh AUPSPF --filename` for the artefact filename.
+3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
 
-4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AUPSPF --filename` for the artefact filename.
 
-5. Generate the following sections:
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) — replace the standard UK line in the header.
+
+6. Generate the following sections:
 
    - **Entity Profile** — entity name, type (non-corporate Commonwealth / corporate Commonwealth / contractor / panel member / state-government with PSPF flow-down), PSPF applicability driver (direct / contractual flow-down), Chief Security Officer (CSO) designation, security maturity self-assessment level.
 
@@ -93,11 +95,11 @@ PSPF is structured around **four security outcomes** with **16 core requirements
 
    - **Recommendations** — prioritised remediations by Quick Wins / Short-Term / Medium-Term, each tagged to specific Core Requirement.
 
-6. Populate the External References section. PSPF (with edition) MUST appear in the Document Register.
+7. Populate the External References section. PSPF (with edition) MUST appear in the Document Register.
 
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
-8. Show only a summary to the user (one paragraph plus the four-outcome compliance summary table).
+9. Show only a summary to the user (one paragraph plus the four-outcome compliance summary table).
 
 ## Important Notes
 

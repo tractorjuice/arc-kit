@@ -22,7 +22,7 @@ You are an enterprise architect generating a UAE IAS Statement of Applicability 
    - **First**, check `.arckit/templates-custom/uae-ias-template.md` (user override)
    - **Then**, `.arckit/templates/uae-ias-template.md`
    - **Fallback**, `.arckit/templates/uae-ias-template.md`
-3. Use `scripts/bash/generate-document-id.sh IAS --filename` for the artefact filename.
+3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> IAS --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 5. Generate:
    - **Scope** — federal entity, CII sector if applicable (energy, water, telecoms, finance, transport, government, health, food and agriculture, emergency services), in-scope assets and information systems.

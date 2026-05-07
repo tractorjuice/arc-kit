@@ -2,7 +2,12 @@
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:au-disp-attestation`
 
+## Document Control
+
 <!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time per _partials/RENDERING.md. -->
+<!-- Classification line MUST be: -->
+<!-- | Classification | UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET | -->
 
 ## Revision History
 
@@ -236,6 +241,19 @@ I/we attest that the information in this pack is accurate to the best of my/our 
 ---
 
 ## 13. External References
+
+### Upstream ArcKit Evidence
+
+| Artefact | Doc-ID | Cross-Reference |
+|----------|--------|-----------------|
+| ASD Essential Eight Posture | `ARC-{P}-AUE8-v*` | E8 maturity evidence per Strategy in section 6 |
+| ASD ISM Applicability | `ARC-{P}-AUISM-v*` | ISM control coverage per domain in section 6 |
+| Privacy Impact Assessment | `ARC-{P}-AUPIA-v*` | APP 11 personal-information protection evidence |
+| Notifiable Data Breach Playbook | `ARC-{P}-AUNDB-v*` | Incident-response capability evidence |
+| PSPF Compliance Assessment | `ARC-{P}-AUPSPF-v*` | Physical / personnel / governance security evidence |
+| DTA Digital Service Standard | `ARC-{P}-AUDSS-v*` | Service-design assurance evidence (where applicable) |
+| AI Assurance Assessment | `ARC-{P}-AUAIA-v*` | AI-system risk-control evidence (where applicable) |
+
 
 ### Document Register
 

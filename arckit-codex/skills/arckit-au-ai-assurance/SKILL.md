@@ -44,11 +44,13 @@ Australia's AI assurance landscape combines several frameworks that together gov
    - Then: `.arckit/templates/au-ai-assurance-template.md`
    - Fallback: `.arckit/templates/au-ai-assurance-template.md`
 
-3. Use `scripts/bash/generate-document-id.sh AUAIA --filename` for the artefact filename.
+3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
 
-4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AUAIA --filename` for the artefact filename.
 
-5. Generate the following sections:
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) — replace the standard UK line in the header.
+
+6. Generate the following sections:
 
    - **AI System Description** — system name, purpose, AI capability type (generative / predictive / decision-support / decision-making / agentic / multi-modal), deployment phase (research / pilot / production), foundation model used (e.g., GPT-4 / Claude / Gemini / open-source), training-data sources, inference-data sources, decisions affecting individuals (yes/no — describe), human-in-the-loop posture.
 
@@ -86,11 +88,11 @@ Australia's AI assurance landscape combines several frameworks that together gov
 
    - **Recommendations** — prioritised AI assurance actions grouped by Quick Wins / Short-Term / Medium-Term, each tagged to which framework it satisfies.
 
-6. Populate the External References section. DTA AI Policy v2.0, AU AI Ethics Principles, ISO 42001 (Australian Standard), Privacy Act 1988 MUST appear in the Document Register.
+7. Populate the External References section. DTA AI Policy v2.0, AU AI Ethics Principles, ISO 42001 (Australian Standard), Privacy Act 1988 MUST appear in the Document Register.
 
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
-8. Show only a summary to the user (one paragraph plus the DTA + Ethics Principles compliance summary table).
+9. Show only a summary to the user (one paragraph plus the DTA + Ethics Principles compliance summary table).
 
 ## Important Notes
 

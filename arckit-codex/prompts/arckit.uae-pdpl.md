@@ -22,7 +22,7 @@ You are an enterprise architect generating a UAE PDPL Compliance Assessment for 
    - **First**, check `.arckit/templates-custom/uae-pdpl-template.md` (user override)
    - **Then**, `.arckit/templates-custom/uae-pdpl-template.md`
    - **Fallback**, `.arckit/templates/uae-pdpl-template.md`
-3. Use `scripts/bash/generate-document-id.sh PDPL --filename` for the artefact filename.
+3. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> PDPL --filename` for the artefact filename.
 4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
 5. Generate the following sections:
    - **Scope** — what processing is covered, what carve-outs apply. Note free-zone regimes DIFC DPL and ADGM DPR are out of scope of the federal PDPL; healthcare data may also fall under ADHICS.
