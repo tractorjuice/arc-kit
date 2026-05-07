@@ -1,5 +1,4 @@
 ---
-name: au-pia
 description: "[COMMUNITY] Generate a Privacy Impact Assessment (PIA) for Australian Government entities under Privacy Act 1988 s33D, assessing compliance with all 13 Australian Privacy Principles (APPs)."
 argument-hint: "<project ID or system, e.g. '001', 'Citizen Identity Verification'>"
 effort: high
@@ -57,9 +56,9 @@ Australian Government agencies covered by the Privacy Act 1988 must conduct PIAs
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
 
-4. Use `scripts/bash/generate-document-id.sh AUPIA --filename` for the artefact filename.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AUPIA --filename` for the artefact filename.
 
-5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) — replace the standard UK line in the header.
 
 6. Generate the following sections:
 

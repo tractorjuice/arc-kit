@@ -1,5 +1,4 @@
 ---
-name: au-e8-posture
 description: "[COMMUNITY] Generate an ASD Essential Eight maturity posture assessment for Australian Government projects against all eight mitigation strategies at ML0–ML3."
 argument-hint: "<project ID or system, e.g. '001', 'MyGov Portal'>"
 effort: high
@@ -8,8 +7,6 @@ handoffs:
     description: E8 posture feeds the ISM control applicability statement — target ML drives which ISM controls are mandatory.
   - command: risk
     description: E8 gaps surface as security risks for the project risk register.
-# Note: when the au-energy sector recipe lands (#440), au-aescsf becomes a third handoff —
-# AESCSF capability domains layer on top of the E8 baseline for energy-sector projects.
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a qualified CISO or security assessor before reliance. Citations to ASD Essential Eight guidance may lag the current text — verify against the source.
@@ -52,9 +49,9 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
 
-4. Use `scripts/bash/generate-document-id.sh AUE8 --filename` for the artefact filename.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AUE8 --filename` for the artefact filename.
 
-5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`.
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) — replace the standard UK line in the header.
 
 6. Generate the following sections:
 

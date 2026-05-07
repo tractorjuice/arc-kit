@@ -1,5 +1,4 @@
 ---
-name: au-ndb-playbook
 description: "[COMMUNITY] Generate a Notifiable Data Breach (NDB) scheme response playbook under Privacy Act 1988 Part IIIC — eligible-data-breach test, 30-day OAIC notification timeline, individual notification, containment, and lessons-learned framework."
 argument-hint: "<project ID or system, e.g. '001'>"
 effort: medium
@@ -10,8 +9,6 @@ handoffs:
     description: DISP attestation pack cites NDB capability evidence.
   - command: risk
     description: NDB-relevant risks tagged into the project risk register.
-# Note: when the au-energy sector recipe lands (#440), au-soci-cirmp becomes a fourth handoff —
-# SOCI cyber incident reporting (12hr / 72hr) runs in parallel to NDB notification.
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a Privacy Officer and legal counsel before adoption. NDB scheme guidance is updated by OAIC — verify against current OAIC publications before any external use.
@@ -57,11 +54,13 @@ A working NDB playbook is operational — it must be executable under time press
    - Then: `.arckit/templates/au-ndb-playbook-template.md`
    - Fallback: `${CLAUDE_PLUGIN_ROOT}/templates/au-ndb-playbook-template.md`
 
-3. Use `scripts/bash/generate-document-id.sh AUNDB --filename` for the artefact filename.
+3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.
 
-4. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AUNDB --filename` for the artefact filename.
 
-5. Generate the following sections:
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) — replace the standard UK line in the header.
+
+6. Generate the following sections:
 
    - **Entity Profile** — APP entity status, Privacy Officer designation, accountable officer for NDB response, business hours + after-hours contact details, key incident-team roles.
 
@@ -97,11 +96,11 @@ A working NDB playbook is operational — it must be executable under time press
 
    - **Tabletop Exercise Plan** — annual tabletop scenario, evidence retention, lessons-learned cycle.
 
-6. Populate the External References section. Privacy Act 1988 + OAIC NDB scheme guidance MUST appear in the Document Register.
+7. Populate the External References section. Privacy Act 1988 + OAIC NDB scheme guidance MUST appear in the Document Register.
 
-7. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
+8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
-8. Show only a summary to the user (one paragraph plus the 30-day timeline summary).
+9. Show only a summary to the user (one paragraph plus the 30-day timeline summary).
 
 ## Important Notes
 

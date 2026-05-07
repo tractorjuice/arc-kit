@@ -1,5 +1,4 @@
 ---
-name: au-disp-attestation
 description: "[COMMUNITY] Generate a DISP (Defence Industry Security Program) Member self-attestation pack covering E8 ML2, ISM applicability, governance, personnel security, and incident reporting — supports DISP Levels 1, 2, 3."
 argument-hint: "<project ID or system, e.g. '001'>"
 effort: high
@@ -45,6 +44,7 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
    - The project's E8 posture artefact (`ARC-{P}-AUE8-v*`) — primary input
    - The project's ISM applicability statement (`ARC-{P}-AUISM-v*`) — primary input
    - The project's PIA (`ARC-{P}-AUPIA-v*`) — APP 11 cross-reference
+   - The project's PSPF assessment (`ARC-{P}-AUPSPF-v*`) — physical / personnel / information security evidence
    - The project's RISK artefact — for SecRisk register integration
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
@@ -55,9 +55,9 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if needed.
 
-4. Use `scripts/bash/generate-document-id.sh AUDISP --filename` for the artefact filename.
+4. Use `scripts/bash/generate-document-id.sh <PROJECT_ID> AUDISP --filename` for the artefact filename.
 
-5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker.
+5. Resolve the `<!-- DOC-CONTROL-HEADER -->` marker per `RENDERING.md`. Use the Australian classification scheme (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET) — replace the standard UK line in the header.
 
 6. Generate the following sections:
 

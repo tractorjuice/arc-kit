@@ -2,7 +2,12 @@
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:au-dss`
 
+## Document Control
+
 <!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time per _partials/RENDERING.md. -->
+<!-- Classification line MUST be: -->
+<!-- | Classification | UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET | -->
 
 ## Revision History
 
