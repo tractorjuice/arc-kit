@@ -232,34 +232,49 @@ style wardley
 
 ### Mermaid Wardley Map (Enhanced)
 
-After generating the OWM code block, generate a Mermaid `wardley-beta` equivalent inside a `<details>` block (as shown in the template). The Mermaid version adds sourcing strategy decorators derived from the Build vs Buy analysis:
+After generating the OWM code block, generate the Mermaid `wardley-beta` equivalent **by running the bundled converter** rather than re-emitting the syntax by hand. Hand-rolled `wardley-beta` is brittle: the parser eagerly tokenises hyphens as `->`, treats bare numeric words (`NIS 2031`) as numeric literals, and matches keywords (`label`, `evolve`, `pipeline`) at any word boundary, so a single missed quote breaks rendering. The converter resolves this by emitting every name as a double-quoted STRING, and it also handles pipeline child detection, `evolve`-label stripping, and sourcing-decorator pass-through.
 
-- Components with evolution < 0.50 that are strategic differentiators: `(build)`
-- Components procured from market (Product stage): `(buy)`
-- Components outsourced to vendors: `(outsource)`
-- Commodity/utility components: no decorator (or `(buy)` if via G-Cloud/marketplace)
-- Components with identified inertia: append `(inertia)`
+**Procedure**:
 
-**Pipeline translation**: Convert OWM `pipeline Name [vis, evo_start, evo_end]` to Mermaid's named-child format where pipeline variants are identified:
+1. Write the OWM block (exactly as it will appear in the artifact's primary code block) to a temp file:
 
-```text
-pipeline Parent {
-  component "Variant A" [evo_a]
-  component "Variant B" [evo_b]
-}
-```
+   ```bash
+   cat > /tmp/arckit-wardley.owm <<'OWM'
+   title …
+   anchor …
+   component …
+   …
+   build CustomComponent
+   buy CommodityComponent
+   outsource VendorComponent
+   …
+   style wardley
+   OWM
+   ```
 
-**Syntax differences from OWM** (apply these when translating):
+   - To get sourcing decorators (`(build)`, `(buy)`, `(outsource)`) on the Mermaid output, include matching `build <Name>` / `buy <Name>` / `outsource <Name>` lines in the OWM source. The converter reads them and emits the decorator next to the component declaration; it strips them from the Mermaid output (they are OWM-only directives).
+   - Keep `inertia` on the component line in OWM (`component Foo [v, e] inertia`); the converter appends `(inertia)` automatically.
 
-- Start with `wardley-beta` keyword (not `style wardley` at end)
-- Add `size [1100, 800]` after title
-- **Quote names that contain non-simple characters or any bare numeric word.** A name is "simple" (safe unquoted) only when every whitespace-separated word starts with a letter and matches `[A-Za-z][A-Za-z0-9_()&]*`. Wrap the name in double quotes if it contains hyphens, dots, slashes, colons, apostrophes, commas (`.NET`, `GPT-4`, `GOV.UK`, `Real-Time`, `C#`, `F#`, `Zero-Trust`, `End-to-End`), **or if any whitespace-separated word is purely digits** (`NIS 2031`, `ISO 27001`, `Log4j 2024`, `Windows 11`). Bare numeric words are tokenised as numeric literals by the `wardley-beta` parser and break rendering with `Expecting token of type '[' but found '2031'`. Hyphens break rendering by tokenising as the start of `->`. Quote the name everywhere it appears — component/anchor declarations, both sides of `->` link arrows, `evolve` targets, and `pipeline` parents. Simple multi-word names like `Data Processing` stay unquoted.
-- Wrap note text in double quotes: `note "text" [vis, evo]`
-- Annotations use comma separator: `annotation N,[vis, evo] "text"`
-- Add `annotations [0.05, 0.05]` to position the annotation list
-- Remove `style wardley` line
-- Remove the `label` keyword and any text after the target evolution number on `evolve` lines (Mermaid does not support evolve labels)
-- Use ` ```mermaid ` as the code fence language identifier (not ` ```wardley-beta ` or ` ```text `)
+2. Run the converter and capture the output:
+
+   ```bash
+   node ${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-mermaid.mjs /tmp/arckit-wardley.owm
+   ```
+
+3. Place the converter output verbatim inside a `<details>` block fenced with ` ```mermaid `:
+
+   ```markdown
+   <details>
+   <summary>Mermaid Wardley Map</summary>
+
+   ```mermaid
+   <converter stdout>
+   ```
+
+   </details>
+   ```
+
+**Do not re-author the wardley-beta block by hand.** If the converter output is missing something the source OWM expressed, fix the OWM input and re-run — do not edit the Mermaid output directly. The Stop hook (`validate-wardley-math.mjs`) checks both blocks for consistency.
 
 ### Strategic Analysis
 

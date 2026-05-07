@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.19.2] - 2026-05-07
+
+### Changed
+
+- **`/arckit:wardley` now uses a vendored OWM → wardley-beta converter.** Adds `arckit-claude/scripts/owm-to-mermaid.mjs`. Replaces 30 lines of hand-rolled syntax-translation rules in `commands/wardley.md` with a three-step procedure that runs `node ${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-mermaid.mjs <owm-file>` and pastes the output. Eliminates the failure modes of hand-emitted `wardley-beta` (hyphens lexed as `->`, bare numeric words `NIS 2031` mistaken for literals, `label`/`evolve`/`pipeline` matched as keywords at word boundaries). Converter quotes every name as a STRING and handles pipeline child detection, `evolve`-label stripping, and sourcing-decorator pass-through.
+
 ## [4.19.1] - 2026-05-07
 
 ### Fixed

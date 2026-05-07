@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.19.2] - 2026-05-07
+
+### Changed
+
+- **`/arckit:wardley` now invokes a vendored OWM → wardley-beta converter instead of regenerating Mermaid syntax by hand.** Adds `arckit-claude/scripts/owm-to-mermaid.mjs` (363 lines, kebab-cased). The script originated as `tests/mermaid-wardley/convert.mjs` in this repo (PRs #339, #340, #341, #344), was untracked in #348, and evolved at `tractorjuice/wardleymap_math_model` with explicit-block pipeline handling and evolution-stage quoting before being re-vendored here. The wardley command's "Mermaid Wardley Map (Enhanced)" section (previously 30 lines of fragile syntax-translation rules) is replaced with a three-step procedure: write OWM to a temp file, run `node ${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-mermaid.mjs <file>`, paste stdout verbatim into the `<details>` block. Sourcing decorators (`build`/`buy`/`outsource`/`inertia`) flow from OWM directives the converter already reads. Hand-rolled `wardley-beta` was brittle — the parser eagerly tokenises hyphens as `->`, treats bare numeric words (`NIS 2031`) as numeric literals, and matches keywords (`label`, `evolve`, `pipeline`) at any word boundary. The converter sidesteps all of these by emitting every name as a double-quoted STRING.
+
+### Notes
+
+- Claude-only this release. Non-Claude extensions (Codex / Gemini / OpenCode / Copilot) of `/arckit:wardley` reference `${CLAUDE_PLUGIN_ROOT}/scripts/owm-to-mermaid.mjs`, which gets path-rewritten by `scripts/converter.py` but the script itself is not yet copied to those extensions (the converter currently propagates `scripts/{bash,python}` only). Follow-up patch will widen the converter's copy list to include `arckit-claude/scripts/`.
+
 ## [4.19.1] - 2026-05-07
 
 ### Fixed
