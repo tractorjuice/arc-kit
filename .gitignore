@@ -73,6 +73,11 @@ arckit-gemini/docs/
 docs/articles/
 .tmp*
 
+# Local investor / pitch drafts (kept off the published toolkit; tracked
+# docs/INVESTOR-REPORT.md is the single shared artefact)
+docs/INVESTOR-DECK.*
+docs/INVESTOR-REPORT-hero.*
+
 # Git worktrees
 .worktrees/
 
