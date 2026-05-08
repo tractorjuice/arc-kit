@@ -89,7 +89,7 @@ A working NDB playbook is operational — it must be executable under time press
 
    - **Tabletop Exercise Plan** — annual tabletop scenario, evidence retention, lessons-learned cycle.
 
-7. Populate the External References section. Privacy Act 1988 + OAIC NDB scheme guidance MUST appear in the Document Register.
+7. Populate the External References section per `.arckit/references/citation-instructions.md`. Privacy Act 1988 + OAIC NDB scheme guidance MUST appear in the Document Register.
 
 8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 

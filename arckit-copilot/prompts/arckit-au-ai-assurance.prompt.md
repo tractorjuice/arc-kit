@@ -89,7 +89,7 @@ Australia's AI assurance landscape combines several frameworks that together gov
 
    - **Recommendations** — prioritised AI assurance actions grouped by Quick Wins / Short-Term / Medium-Term, each tagged to which framework it satisfies.
 
-7. Populate the External References section. DTA AI Policy v2.0, AU AI Ethics Principles, ISO 42001 (Australian Standard), Privacy Act 1988 MUST appear in the Document Register.
+7. Populate the External References section per `.arckit/references/citation-instructions.md`. DTA AI Policy v2.0, AU AI Ethics Principles, ISO 42001 (Australian Standard), Privacy Act 1988 MUST appear in the Document Register.
 
 8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 

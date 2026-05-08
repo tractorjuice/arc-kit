@@ -94,7 +94,7 @@ PSPF is structured around **four security outcomes** with **16 core requirements
 
    - **Recommendations** — prioritised remediations by Quick Wins / Short-Term / Medium-Term, each tagged to specific Core Requirement.
 
-7. Populate the External References section. PSPF (with edition) MUST appear in the Document Register.
+7. Populate the External References section per `.arckit/references/citation-instructions.md`. PSPF (with edition) MUST appear in the Document Register.
 
 8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 

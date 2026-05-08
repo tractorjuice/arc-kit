@@ -85,7 +85,7 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
 
    - **Attestation Statement** — formal CSO + Director sign-off statement attesting to the accuracy of the pack, with signature blocks, date, and re-attestation cadence.
 
-7. Populate the External References section. The DISP Membership Pack (with edition) MUST appear in the Document Register.
+7. Populate the External References section per `.arckit/references/citation-instructions.md`. The DISP Membership Pack (with edition) MUST appear in the Document Register.
 
 8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 
