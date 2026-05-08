@@ -29,7 +29,7 @@ Use the overlay if any of the following apply to the project:
 - The project provides services to the **Department of Defence** or its supply chain — **DISP membership** is required for Levels 1–3 supplier accreditation.
 - The system is in scope of **PSPF** (Protective Security Policy Framework) — applies to all non-corporate Commonwealth entities under PGPA Act.
 - The procurement is run under the **November 2025 Commonwealth Procurement Rules** overhaul (AUD 125k SME-only thresholds, AI transparency clauses, ethical conduct in VfM).
-- The project includes AI/ML/LLM in scope and is subject to the **DTA AI Assurance Framework + Responsible AI Policy v2.0** (effective December 2025).
+- The project includes AI/ML/LLM in scope and is subject to the **DTA AI Assurance Framework + Responsible AI Policy v2.0** (effective December 2025) and the **NAIC Essential AI Practices ("AI6")** operational guidance.
 
 For non-AU projects the overlay is dormant: existing UK, MOD, EU, French, Austrian, UAE, and Canada overlays are unchanged.
 
@@ -86,7 +86,7 @@ Generates a Protective Security Policy Framework outcomes scorecard against the 
 
 #### `/arckit.au-ai-assurance`
 
-Generates a DTA AI Assurance Framework baseline aligned to Responsible AI Policy v2.0 (effective December 2025), incorporating ISO 42001 readiness mapping, AI Accountable Officer designation, foundation-model selection and sovereignty, AI-use disclosure requirements, and Privacy Act AI-decision notification provisions (December 2026 commencement). Handoffs: `au-pia` (APP cross-refs for AI-decision notification), `au-e8-posture` (DLP cross-refs), `risk` (AI-specific risks), `adr` (AI/LLM provider decision is architecturally significant).
+Generates a DTA AI Assurance Framework baseline aligned to Responsible AI Policy v2.0 (effective December 2025), incorporating ISO 42001 readiness mapping, AI Accountable Officer designation, foundation-model selection and sovereignty, AI-use disclosure requirements, and Privacy Act AI-decision notification provisions (December 2026 commencement). Also covers **AU Essential AI Practices ("AI6")** — the National AI Centre's 6 essential practices for safe and responsible AI adoption (accountability / impact assessment / risk management / information sharing / testing-and-monitoring / human control), with each practice anchored to the canonical [ai.gov.au Foundations](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-foundations) and [Implementation Guidance](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-implementation-guidance) pages. Handoffs: `au-pia` (APP cross-refs for AI-decision notification), `au-e8-posture` (DLP cross-refs), `risk` (AI-specific risks), `adr` (AI/LLM provider decision is architecturally significant).
 
 ### DISP attestation (consolidation)
 
@@ -157,5 +157,7 @@ The overlay is currently solo-maintained by [@royster70](https://github.com/roys
 - [Protective Security Policy Framework (PSPF)](https://www.protectivesecurity.gov.au/)
 - [Commonwealth Procurement Rules](https://www.finance.gov.au/government/procurement/commonwealth-procurement-rules) (November 2025 overhaul)
 - [DTA AI Assurance Framework + Responsible AI Policy v2.0](https://www.digital.gov.au/policy/ai/policy)
+- [NAIC Essential AI Practices (AI6) — Foundations](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-foundations)
+- [NAIC Essential AI Practices — Implementation Guidance](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-implementation-guidance)
 - [PGPA Act 2013 s16](https://www.legislation.gov.au/Details/C2024C00310)
 - [Information Security Registered Assessors Program (IRAP)](https://www.cyber.gov.au/about-us/programs-and-services/irap)

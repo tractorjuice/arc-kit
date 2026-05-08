@@ -990,3 +990,24 @@ def test_ai6_template_external_references_include_ai6(templates_dir):
         f"{templates_dir}/au-ai-assurance-template.md missing AI6 URL "
         f"fragment(s) in External References: {missing}"
     )
+
+
+def test_ai6_overlay_guide_mentions_ai6():
+    """The user-facing overlay guide must describe AI6 as part of the
+    `au-ai-assurance` command's coverage so users understand what's included.
+    Catches a doc/source drift where a command's body covers AI6 but the guide
+    only mentions DTA Responsible AI Policy."""
+    guide_path = os.path.join(REPO_ROOT, "docs", "guides", "au-federal-overlay.md")
+    with open(guide_path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert "AI6" in text, (
+        "docs/guides/au-federal-overlay.md must mention AI6 (acronym) — "
+        "users should see it described alongside the DTA AI Assurance Framework"
+    )
+    assert "Essential AI Practices" in text, (
+        "docs/guides/au-federal-overlay.md must mention 'Essential AI Practices' "
+        "(canonical NAIC framework name)"
+    )
+    assert "essential-ai-practices/guidance-ai-adoption-foundations" in text, (
+        "docs/guides/au-federal-overlay.md must link to the canonical AI6 source"
+    )

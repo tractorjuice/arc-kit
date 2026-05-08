@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **AU Essential AI Practices ("AI6") added to `/arckit:au-ai-assurance` (PR #441 round-2 currency update)** — National AI Centre (NAIC) framework, the most operationally-current Australian AI guidance. Adds AI6 Foundations + Implementation Guidance to the Authoritative anchors block, a new Process step section "AU Essential AI Practices (AI6) Alignment" enumerating the 6 NAIC practices (Decide who is accountable / Understand impacts and plan accordingly / Measure and manage risks / Share essential information / Test and monitor / Maintain human control), and section 4 in `au-ai-assurance-template.md` with a 6-row assessment table mirroring the existing AU AI Ethics Principles structure. Template sections 4–11 renumbered to 5–12. Document Register and Verification table extended with both `ai.gov.au` URL fragments. Public-domain content only — no proprietary cross-walks to ISO 42001 / NIST AI RMF / AI Verify.
+
+### Fixed
+
+- **`au-federal` round-2 review fixes (PR #441)** — addressing maintainer review IMPORTANT items 2, 3, 4:
+  - **#2** `au-ai-assurance`, `au-disp-attestation`, `au-ndb-playbook`, `au-pspf` now reference `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md` from their External References step. Brings all 8 AU commands to parity with the canonical `ca-*` pattern.
+  - **#3** `AUDSS` (DTA Digital Service Standard Conformance) and `AUPSPF` (PSPF Scorecard) bumped to `severity: 'HIGH'` in `doc-types.mjs` — both go to senior accountable officers (DTA conformance / CSO), matching the heuristic the other 6 AU codes follow.
+  - **#4** `arckit-claude/skills/arckit-build/recipes/au-federal.yaml` now declares top-level `flagship: AU_DISP` explicitly. (`ca-federal-fitaa.yaml` shares the omission — could be a one-line follow-up sweep across recipes.)
+- **`au-disp-attestation-template.md` lint propagation** — maintainer's `c18eefab` removed a consecutive blank line in the canonical template; converter regen now propagates that fix to the four extension copies (Codex / OpenCode / Copilot / Paperclip).
+- **`arckit-paperclip/src/data/commands.json` surgical regen** — round-1 UAE doc-id fix (12 entries) and round-2 AU updates (4 entries) propagated while preserving the maintainer's selective revert for the 5 v4.16+ Claude-only entries (datascout, gov-reuse, grants, pages, wardley).
+- **Branch rebased onto upstream/main (PR #441 round-3 follow-through)** — converter outputs regenerated against the v4.21.0 release; PR-side resolution for the 4 `arckit-codex/` and `arckit-paperclip/` `pages` extension files plus the merged AU additions to `arckit-claude/commands/pages.md`, `arckit-claude/config/doc-types.mjs`, and `arckit-claude/skills/arckit-build/SKILL.md`.
+
+### Tests
+
+- **`test_au_federal_recipe.py` expanded from 168 → 190 tests** across the existing 5-tier coverage architecture:
+  - 11 round-2 regression guards (citation-instructions parity / severity flags / flagship key)
+  - 11 AI6 framework-fidelity tests (canonical practice names enumerated, template section presence, Verification URL fragments)
+
 ## [4.21.0] - 2026-05-15
 
 ### Added
