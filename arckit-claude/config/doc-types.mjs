@@ -159,8 +159,8 @@ export const DOC_TYPES = {
   'AUISM':     { name: 'AU ISM Statement of Applicability',            category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   'AUPIA':     { name: 'AU Privacy Impact Assessment (Privacy Act 1988)', category: 'Compliance', regime: 'AU', severity: 'HIGH' },
   'AUNDB':     { name: 'AU Notifiable Data Breach Response Playbook',  category: 'Compliance',  regime: 'AU' },
-  'AUDSS':     { name: 'AU DTA Digital Service Standard Conformance',  category: 'Governance',  regime: 'AU' },
-  'AUPSPF':    { name: 'AU Protective Security Policy Framework Scorecard', category: 'Governance', regime: 'AU' },
+  'AUDSS':     { name: 'AU DTA Digital Service Standard Conformance',  category: 'Governance',  regime: 'AU', severity: 'HIGH' },
+  'AUPSPF':    { name: 'AU Protective Security Policy Framework Scorecard', category: 'Governance', regime: 'AU', severity: 'HIGH' },
   'AUAIA':     { name: 'AU AI Assurance Baseline (DTA AI Policy v2.0)', category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   'AUDISP':    { name: 'AU DISP Member Self-Attestation Pack',         category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
 };
