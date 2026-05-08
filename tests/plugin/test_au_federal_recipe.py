@@ -851,3 +851,51 @@ def test_au_command_cites_authoritative_url(cmd, urls):
     assert not missing, (
         f"{cmd}.md missing authoritative URL fragment(s): {missing}"
     )
+
+
+# ---------------------------------------------------------------------------
+# Maintainer review #441 round 2 — IMPORTANT items 2, 3, 4
+# Round-2 review: https://github.com/tractorjuice/arc-kit/pull/441 (#issuecomment)
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.parametrize("cmd", AU_COMMANDS)
+def test_round2_item2_command_references_citation_instructions(cmd):
+    """Round-2 IMPORTANT #2: every AU command must reference
+    `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md` from its
+    External References step. Round 1 had this in only 4 of 8 commands;
+    round 2 added it to au-ai-assurance, au-disp-attestation,
+    au-ndb-playbook, au-pspf to bring all 8 to parity."""
+    path = os.path.join(COMMANDS_DIR, f"{cmd}.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert "references/citation-instructions.md" in text, (
+        f"{cmd}.md missing citation-instructions.md reference in External "
+        f"References step"
+    )
+
+
+@pytest.mark.parametrize("type_code", ["AUDSS", "AUPSPF"])
+def test_round2_item3_audss_aupspf_severity_high(doc_types_source, type_code):
+    """Round-2 IMPORTANT #3: AUDSS (DTA Digital Service Standard Conformance)
+    and AUPSPF (PSPF Scorecard) are both assessment-class artefacts going to
+    senior accountable officers. Per the maintainer's heuristic, they should
+    carry severity: 'HIGH' to match AUE8 / AUISM / AUPIA / AUAIA / AUDISP.
+    AUNDB (response playbook) is reasonably non-HIGH and remains so."""
+    pattern = rf"['\"]?{type_code}['\"]?\s*:\s*\{{[^}}]*severity:\s*['\"]HIGH['\"]"
+    assert re.search(pattern, doc_types_source), (
+        f"doc-types.mjs entry for {type_code} must declare severity: 'HIGH' "
+        f"(senior-accountable-officer assessment heuristic)"
+    )
+
+
+def test_round2_item4_recipe_declares_au_disp_flagship(recipe):
+    """Round-2 IMPORTANT #4: au-federal.yaml previously omitted the top-level
+    `flagship:` key even though both the comment header and the README name
+    AU_DISP as the consolidation flagship. Explicitly declaring it makes the
+    build runner's job unambiguous."""
+    flagship = recipe.get("flagship")
+    assert flagship == "AU_DISP", (
+        f"au-federal.yaml must set top-level flagship: AU_DISP "
+        f"(currently: {flagship!r})"
+    )
