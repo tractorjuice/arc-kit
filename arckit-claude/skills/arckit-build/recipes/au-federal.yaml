@@ -44,6 +44,7 @@
 
 recipe: au-federal
 schema_version: 1
+flagship: AU_DISP
 description: >
   Australian Federal Government / DISP-supplier compliance — full
   compliance suite covering eleven regulatory anchors (ASD Essential Eight,
