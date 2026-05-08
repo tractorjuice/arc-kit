@@ -20,6 +20,7 @@ Australia's AI assurance landscape combines several frameworks that together gov
 
 - **DTA Responsible AI Policy v2.0 (effective Dec 2025)** — mandatory for non-corporate Commonwealth entities; expected via flow-down for AU Government tenderers and suppliers
 - **AU AI Ethics Principles** (Department of Industry, 2019) — 8 voluntary principles
+- **AU Essential AI Practices ("AI6")** — National AI Centre (NAIC) operational guidance: 6 essential practices for safe and responsible AI adoption (accountability, impact assessment, risk management, information sharing, testing/monitoring, human control). Foundations + Implementation Guidance issued via ai.gov.au.
 - **ISO 42001:2023 — AI Management Systems** — Australian Standard adopted Feb 2024; certification expected to become baseline for AI-intensive vendors
 - **Privacy Act 1988 (Cth)** — AI decision-making notification required from Dec 2026 (Tranche 1 reform)
 - **Online Safety Act + AI-generated content provisions**
@@ -29,6 +30,8 @@ Australia's AI assurance landscape combines several frameworks that together gov
 
 - DTA Responsible AI Policy v2.0 — <https://www.digital.gov.au/policy/ai/policy>
 - AU AI Ethics Principles — <https://www.industry.gov.au/publications/australias-artificial-intelligence-ethics-framework/australias-ai-ethics-principles>
+- AU Essential AI Practices (AI6) — Guidance for AI Adoption: Foundations — <https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-foundations>
+- AU Essential AI Practices — Implementation Guidance — <https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-implementation-guidance>
 - Privacy Act 1988 (Cth) — <https://www.legislation.gov.au/Details/C2024C00301>
 
 ## Process
@@ -75,6 +78,16 @@ Australia's AI assurance landscape combines several frameworks that together gov
 
      For each principle: status (Aligned / Partial / Not Aligned), evidence, gap, mitigation.
 
+   - **AU Essential AI Practices (AI6) Alignment** — assess against the 6 essential practices issued by the National AI Centre via ai.gov.au:
+     1. Decide who is accountable
+     2. Understand impacts and plan accordingly
+     3. Measure and manage risks
+     4. Share essential information
+     5. Test and monitor
+     6. Maintain human control
+
+     For each practice: status (Implemented / Partial / Not Implemented / Not Applicable), evidence (artefact references where possible), gap, action. Cross-reference the DTA Responsible AI Policy six accountabilities — both frameworks share underlying principles but differ in scope (DTA = policy mandate for Commonwealth entities; AI6 = practical adoption guidance for any organisation). The AI6 *Implementation Guidance* on ai.gov.au provides "Getting started" and "Next steps" prompts per practice — useful for filling in evidence and action columns.
+
    - **ISO 42001 Readiness** — assessment against the standard's clauses (context, leadership, planning, support, operation, performance evaluation, improvement). Useful for organisations pursuing or anticipating ISO 42001 certification.
 
    - **Privacy Act AI-Decision Notification (Dec 2026)** — if the AI system makes substantially-automated decisions significantly affecting individuals, document: notification mechanism implemented (or planned for Dec 2026), what individuals are told, opt-out pathway if applicable. Cross-reference AUPIA APP 6 + APP 11.
@@ -89,7 +102,7 @@ Australia's AI assurance landscape combines several frameworks that together gov
 
    - **Recommendations** — prioritised AI assurance actions grouped by Quick Wins / Short-Term / Medium-Term, each tagged to which framework it satisfies.
 
-7. Populate the External References section per `.arckit/references/citation-instructions.md`. DTA AI Policy v2.0, AU AI Ethics Principles, ISO 42001 (Australian Standard), Privacy Act 1988 MUST appear in the Document Register.
+7. Populate the External References section per `.arckit/references/citation-instructions.md`. DTA AI Policy v2.0, AU AI Ethics Principles, AU Essential AI Practices (AI6) — Foundations + Implementation Guidance, ISO 42001 (Australian Standard), and Privacy Act 1988 MUST appear in the Document Register.
 
 8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
 

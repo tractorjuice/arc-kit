@@ -70,7 +70,24 @@
 
 ---
 
-## 4. ISO 42001 Readiness
+## 4. AU Essential AI Practices (AI6) Alignment
+
+National AI Centre (NAIC) operational practices for safe and responsible AI adoption — see [Guidance for AI Adoption: Foundations](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-foundations) and the deeper [Implementation Guidance](https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-implementation-guidance) (each practice has Getting started + Next steps prompts on the source).
+
+| # | Practice | Status | Evidence | Gap | Action |
+|---|----------|--------|----------|-----|--------|
+| 1 | Decide who is accountable | [✅/⚠️/❌/N/A] | [Cite accountable AI officer designation; cross-ref DTA Responsible AI Policy section 2] | [Gap] | [Action] |
+| 2 | Understand impacts and plan accordingly | [✅/⚠️/❌/N/A] | [Cite impact assessment / PIA / DPIA where relevant] | [Gap] | [Action] |
+| 3 | Measure and manage risks | [✅/⚠️/❌/N/A] | [Cite RISK register entries; AI-specific risk methodology] | [Gap] | [Action] |
+| 4 | Share essential information | [✅/⚠️/❌/N/A] | [Cite transparency artefacts; AI use disclosure; user-facing notices] | [Gap] | [Action] |
+| 5 | Test and monitor | [✅/⚠️/❌/N/A] | [Cite testing methodology; monitoring dashboards; drift detection] | [Gap] | [Action] |
+| 6 | Maintain human control | [✅/⚠️/❌/N/A] | [Cite human-in-the-loop posture; intervention pathways; redress mechanism] | [Gap] | [Action] |
+
+**Cross-framework note**: AI6 practices align closely with the DTA Responsible AI Policy v2.0 six accountabilities (section 2 of this assessment) but are framed as adoption *practices* rather than policy *accountabilities*. Use both lenses; the differences in framing surface different evidence gaps.
+
+---
+
+## 5. ISO 42001 Readiness
 
 | Clause | Topic | Readiness | Notes |
 |--------|-------|-----------|-------|
@@ -86,7 +103,7 @@
 
 ---
 
-## 5. Privacy Act AI-Decision Notification (Dec 2026)
+## 6. Privacy Act AI-Decision Notification (Dec 2026)
 
 | Aspect | Detail |
 |--------|--------|
@@ -98,7 +115,7 @@
 
 ---
 
-## 6. Fairness Assessment
+## 7. Fairness Assessment
 
 | Aspect | Detail |
 |--------|--------|
@@ -111,7 +128,7 @@
 
 ---
 
-## 7. Security of AI Training + Inference Data
+## 8. Security of AI Training + Inference Data
 
 | Aspect | Detail |
 |--------|--------|
@@ -125,7 +142,7 @@
 
 ---
 
-## 8. Model Lifecycle Governance
+## 9. Model Lifecycle Governance
 
 | Aspect | Detail |
 |--------|--------|
@@ -138,7 +155,7 @@
 
 ---
 
-## 9. Vendor / Foundation-Model Disclosure
+## 10. Vendor / Foundation-Model Disclosure
 
 | Aspect | Detail |
 |--------|--------|
@@ -152,7 +169,7 @@
 
 ---
 
-## 10. Recommendations
+## 11. Recommendations
 
 ### Quick Wins ( < 30 days)
 
@@ -174,7 +191,7 @@
 
 ---
 
-## 11. External References
+## 12. External References
 
 ### Document Register
 
@@ -182,6 +199,8 @@
 |--------|----------|------|--------|-------------|
 | DTAAI | DTA Responsible AI Policy v2.0 | Policy | digital.gov.au | Effective Dec 2025 |
 | AUAIEP | AU AI Ethics Principles | Framework | industry.gov.au | 8 voluntary principles |
+| AI6F | AU Essential AI Practices — Foundations | Operational Guidance | ai.gov.au (NAIC) | 6 essential practices for safe and responsible AI adoption |
+| AI6IG | AU Essential AI Practices — Implementation Guidance | Operational Guidance | ai.gov.au (NAIC) | Per-practice Getting started + Next steps prompts |
 | ISO42001 | ISO 42001:2023 (AS adopted Feb 2024) | Standard | standards.org.au | AI Management Systems |
 | PA88 | Privacy Act 1988 (Cth) | Legislation | legislation.gov.au | AI-decision notification Dec 2026 |
 | AUPIA | ARC-{P}-AUPIA-v* | ArcKit Artefact | projects/ | APP 6 + APP 11 cross-ref |
@@ -194,6 +213,8 @@
 |----------|-----|-------------------|
 | DTA Responsible AI Policy | https://www.digital.gov.au/policy/ai/policy | [YYYY-MM-DD] |
 | AU AI Ethics Principles | https://www.industry.gov.au/publications/australias-artificial-intelligence-ethics-framework/australias-ai-ethics-principles | [YYYY-MM-DD] |
+| AU Essential AI Practices (AI6) — Foundations | https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-foundations | [YYYY-MM-DD] |
+| AU Essential AI Practices — Implementation Guidance | https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-implementation-guidance | [YYYY-MM-DD] |
 | Privacy Act 1988 | https://www.legislation.gov.au/Details/C2024C00301 | [YYYY-MM-DD] |
 
 ---

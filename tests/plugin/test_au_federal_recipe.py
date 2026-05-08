@@ -824,10 +824,13 @@ REQUIRED_AUTHORITATIVE_URLS = {
     "au-ndb-playbook": [
         "oaic.gov.au",
     ],
-    # DTA Responsible AI Policy v2.0 (lives on the DTA's digital.gov.au domain,
-    # not dta.gov.au which serves the DSS).
+    # AU AI assurance cites multiple authorities across separate gov.au domains:
+    # - digital.gov.au — DTA Responsible AI Policy v2.0
+    # - ai.gov.au — National AI Centre's Essential AI Practices (AI6)
+    # Both must be present.
     "au-ai-assurance": [
         "digital.gov.au",
+        "ai.gov.au",
     ],
     # DISP — Department of Defence supplier accreditation
     "au-disp-attestation": [
@@ -898,4 +901,92 @@ def test_round2_item4_recipe_declares_au_disp_flagship(recipe):
     assert flagship == "AU_DISP", (
         f"au-federal.yaml must set top-level flagship: AU_DISP "
         f"(currently: {flagship!r})"
+    )
+
+
+# ---------------------------------------------------------------------------
+# AU Essential AI Practices ("AI6") — NAIC Dec 2025 currency
+#
+# AI6 is the National AI Centre's 6 essential practices for safe and responsible
+# AI adoption (canonical: ai.gov.au). Round-2 added it to au-ai-assurance.md
+# because it's the most operationally-current Australian AI guidance and would
+# be a notable omission in a 2026 AI Assurance assessment.
+# ---------------------------------------------------------------------------
+
+
+AI6_PRACTICES = [
+    "Decide who is accountable",
+    "Understand impacts and plan accordingly",
+    "Measure and manage risks",
+    "Share essential information",
+    "Test and monitor",
+    "Maintain human control",
+]
+
+
+def test_ai6_command_references_ai6_framework():
+    """au-ai-assurance.md must reference the AI6 framework by canonical name
+    (Essential AI Practices) and the National AI Centre as publisher."""
+    path = os.path.join(COMMANDS_DIR, "au-ai-assurance.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert "Essential AI Practices" in text, (
+        "au-ai-assurance.md must reference 'Essential AI Practices' (AI6) by name"
+    )
+    assert "National AI Centre" in text or "NAIC" in text, (
+        "au-ai-assurance.md must attribute AI6 to the National AI Centre (NAIC)"
+    )
+    assert "AI6" in text, (
+        "au-ai-assurance.md must use the 'AI6' shorthand for searchability"
+    )
+
+
+@pytest.mark.parametrize("practice", AI6_PRACTICES)
+def test_ai6_command_lists_each_essential_practice(practice):
+    """au-ai-assurance.md must list each of the 6 AI6 practices by canonical
+    NAIC wording in the AI6 Practices Alignment section so that artefacts
+    generated against the command do not drift from the source framework."""
+    path = os.path.join(COMMANDS_DIR, "au-ai-assurance.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert practice in text, (
+        f"au-ai-assurance.md missing canonical AI6 practice wording: {practice!r}"
+    )
+
+
+@pytest.mark.parametrize("templates_dir", [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR])
+def test_ai6_template_has_alignment_section_with_all_6_practices(templates_dir):
+    """au-ai-assurance-template.md must have an `## 4. AU Essential AI Practices
+    (AI6) Alignment` section containing a table row for each of the 6 practices.
+    Mirrors the per-principle structure of the existing AU AI Ethics Principles
+    section (now section 3)."""
+    path = os.path.join(templates_dir, "au-ai-assurance-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    assert "## 4. AU Essential AI Practices (AI6) Alignment" in text, (
+        f"{templates_dir}/au-ai-assurance-template.md missing AI6 section heading"
+    )
+    missing = [p for p in AI6_PRACTICES if p not in text]
+    assert not missing, (
+        f"{templates_dir}/au-ai-assurance-template.md AI6 section missing "
+        f"practice rows: {missing}"
+    )
+
+
+@pytest.mark.parametrize("templates_dir", [PLUGIN_TEMPLATES_DIR, CLI_TEMPLATES_DIR])
+def test_ai6_template_external_references_include_ai6(templates_dir):
+    """The Verification table in External References must include both AI6
+    canonical URLs (Foundations + Implementation Guidance) so that reviewers
+    can dereference the source the assessment was built against."""
+    path = os.path.join(templates_dir, "au-ai-assurance-template.md")
+    with open(path, "r", encoding="utf-8") as f:
+        text = f.read()
+    required_urls = [
+        "essential-ai-practices/guidance-ai-adoption-foundations",
+        "essential-ai-practices/guidance-ai-adoption-implementation-guidance",
+    ]
+    missing = [u for u in required_urls if u not in text]
+    assert not missing, (
+        f"{templates_dir}/au-ai-assurance-template.md missing AI6 URL "
+        f"fragment(s) in External References: {missing}"
     )
