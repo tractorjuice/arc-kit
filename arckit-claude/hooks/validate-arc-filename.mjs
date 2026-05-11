@@ -16,8 +16,12 @@
  * Hook Type: PreToolUse
  * Matcher: Write
  * Input (stdin):  JSON { tool_name, tool_input: { file_path, content }, ... }
- * Output (stdout): JSON with updatedInput for corrected path, or empty for pass-through
- * Exit codes:      0 = allow (with or without corrections), 2 = block (invalid type code)
+ * Output (stdout): JSON with updatedInput for corrected path, {decision: 'block', reason}
+ *                  for invalid type code (model-visible so it can self-correct), or empty
+ *                  for pass-through.
+ * Exit code:       0 in all cases. The block path emits JSON with decision='block' so the
+ *                  rejection reason is fed back to the model rather than failing as a hard
+ *                  permission error (which only the user would see).
  */
 
 import { readFileSync, readdirSync, mkdirSync } from 'node:fs';
@@ -110,10 +114,11 @@ if (tm) {
 // --- Validate doc type code ---
 if (!KNOWN_TYPES.has(docType)) {
   const validList = [...KNOWN_TYPES].sort().join(' ');
-  process.stderr.write(
-    `ArcKit: Unknown document type code '${docType}'. Valid codes: ${validList}\n`
-  );
-  process.exit(2);
+  console.log(JSON.stringify({
+    decision: 'block',
+    reason: `ArcKit: Unknown document type code '${docType}' in '${filename}'. Valid codes: ${validList}. Rename the file using one of those codes and retry.`,
+  }));
+  process.exit(0);
 }
 
 // --- Normalize project ID (3-digit zero-padded) ---
