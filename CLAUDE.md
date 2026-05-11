@@ -129,7 +129,7 @@ Notable hooks: provenance stamping, manifest auto-update, session telemetry, sec
 
 ### Plugin Monitors
 
-Background monitors declared via the `monitors` key in `plugin.json` (v2.1.105+). Each entry runs as a persistent subprocess; stdout lines are delivered as session notifications. Schema: `name`, `command` (supports `${CLAUDE_PLUGIN_ROOT}` and `${user_config.*}`), `description`, `when` (`always` or `on-skill-invoke:<skill>`).
+Background monitors declared via the `experimental.monitors` key in `plugin.json` (v2.1.105+, moved under `experimental` in v2.1.129). Each entry runs as a persistent subprocess; stdout lines are delivered as session notifications. Schema: `name`, `command` (supports `${CLAUDE_PLUGIN_ROOT}` and `${user_config.*}`), `description`, `when` (`always` or `on-skill-invoke:<skill>`).
 
 Current monitor: `stale-artifact-scan` runs `arckit-claude/scripts/bash/detect-stale-artifacts.sh` at session start in repos with `projects/`, emitting one line per artefact whose Document Control `Next Review Date` is overdue, or whose status is `DRAFT` and untouched in 14+ days.
 

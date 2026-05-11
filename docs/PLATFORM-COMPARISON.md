@@ -15,7 +15,7 @@ Compiled from official docs in early 2026. Sources cited at the end.
 | Subagents | 18 frontmatter fields, allow + deny tool lists | Allowlist only, per-agent MCP isolation | Sandbox + MCP filters, no per-tool list |
 | Hooks | **31 events**, 5 handler types, `if:` filter | ~11 events, command handler | 6 events, regex matcher |
 | MCP servers | `alwaysLoad`, `headersHelper`, per-subagent inline | All eager-load, per-extension | `enabled`/`required`, OAuth store |
-| Background monitors | `monitors` key (stdout → notifications) | None | None |
+| Background monitors | `experimental.monitors` key (stdout → notifications) | None | None |
 | User config (typed) | `userConfig` + keychain | `settings[]` + envVar | env var only |
 | Plugin root variable | `${CLAUDE_PLUGIN_ROOT}`, `${CLAUDE_PLUGIN_DATA}` | `${extensionPath}`, `${workspacePath}`, `${/}` | implicit (relative paths) |
 | Distribution | `/plugin marketplace add` | `gemini extensions install` + gallery | `/plugins` + `marketplace.json` |
@@ -166,7 +166,7 @@ Handler: `command` (JSON stdio + exit-code-2 block). Matcher: regex only — no 
 - **Channels** (`channels`) — message injection for Telegram/Slack/Discord-style integrations, each bound to an MCP server with per-channel `userConfig`.
 - **Plugin-shipped settings.json** — currently supports `agent` (default subagent) and `subagentStatusLine` keys.
 - **Plugin dependencies** — `dependencies` array with semver constraints; `claude plugin prune`/`autoremove` for orphans.
-- **Background monitors** (`monitors` key) — persistent subprocess; `when: always` or `on-skill-invoke:<skill>`; stdout → in-session notifications.
+- **Background monitors** (`experimental.monitors` key, moved from top-level in v2.1.129) — persistent subprocess; `when: always` or `on-skill-invoke:<skill>`; stdout → in-session notifications.
 
 ### Gemini CLI
 

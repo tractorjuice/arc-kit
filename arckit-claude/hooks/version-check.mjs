@@ -20,7 +20,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isFile, readText, parseHookInput } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.121';
+const MIN_CLAUDE_CODE_VERSION = '2.1.129';
 
 parseHookInput(); // consume stdin (required by hook protocol)
 
@@ -46,7 +46,9 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- \`claude plugin tag\` validates plugin/marketplace version agreement before release (needs v2.1.118)\n` +
     `- Hook \`duration_ms\` recorded on PostToolUse for session telemetry (needs v2.1.119)\n` +
     `- MCP server \`alwaysLoad\` skips tool-search deferral so AWS Knowledge / Microsoft Learn tools are loaded eagerly (needs v2.1.121)\n` +
-    `- PostToolUse \`hookSpecificOutput.updatedToolOutput\` for all tools — provenance and manifest hooks now surface their work to the model (needs v2.1.121)\n\n` +
+    `- PostToolUse \`hookSpecificOutput.updatedToolOutput\` for all tools — provenance and manifest hooks now surface their work to the model (needs v2.1.121)\n` +
+    `- Plugin \`monitors\` declared under the \`experimental\` block — ArcKit's \`stale-artifact-scan\` monitor will not load on older clients (needs v2.1.129)\n` +
+    `- 1-hour prompt cache TTL fix — \`ENABLE_PROMPT_CACHING_1H\` was being silently downgraded to 5 minutes on earlier versions (needs v2.1.129)\n\n` +
     `Update with: \`claude update\``
   );
   process.stderr.write(`[ArcKit] Claude Code v${clientVersion} is below required v${MIN_CLAUDE_CODE_VERSION}\n`);
