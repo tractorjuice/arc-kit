@@ -2,11 +2,13 @@
 
 Real AI, small teams, accelerated programmes.
 
-OpenAI launched The OpenAI Deployment Company yesterday with around four billion dollars of initial investment, nineteen capital partners, and a hundred and fifty engineers folded in from the Tomoro acquisition. What matters is not the headline number. It is the name they chose for the people doing the work. Not consultants. Forward Deployed Engineers.
+Today we are launching [ArcKit FDE](https://tractorjuice.github.io/arckit-fde/): real AI in the room, small embedded teams, accelerating UK public sector programmes through the gates that usually stall them. Bootstrap any project in a week, fixed price £25K for the four-artefact governance pack, then stay embedded as long as the architecture position needs keeping alive.
+
+The name borrows from a category that OpenAI just made explicit. Yesterday they launched The OpenAI Deployment Company with around four billion dollars of initial investment, nineteen capital partners, and a hundred and fifty engineers folded in from the Tomoro acquisition. What matters is not the headline number. It is the name they chose for the people doing the work. Not consultants. Forward Deployed Engineers.
 
 That distinction is not cosmetic. Read the [OpenAI page on FDE](https://openai.com/business/the-openai-deployment-company/) and the model is clear. Engineers embedded inside the customer environment, using real AI to build against the actual constraints that live there: security models, permissions, compliance, legacy infrastructure, governance. The constraints are the operating environment, not edge cases.
 
-That is exactly the model UK public sector architecture needs. So today we are launching [ArcKit FDE](https://tractorjuice.github.io/arckit-fde/): real AI in the room, small embedded teams, accelerating UK public sector programmes through the gates that usually stall them.
+That is exactly the model UK public sector architecture needs.
 
 ## What real AI in the room looks like
 
@@ -34,15 +36,15 @@ Public sector programmes do not fail in greenfield workshops. They stall at the 
 
 ArcKit FDE is built to compress those stalls. Three programme stages where the compression shows up:
 
-1. *Before the next gate.* The first sprint produces a governance pack with Green Book, Orange Book, Service Standard and TCoP evidence baked in. Five days, not three months.
+1. *Before the next gate.* The bootstrap sprint produces a governance pack with Green Book, Orange Book, Service Standard and TCoP evidence baked in. Five days, not three months. Fixed price of £25K for the pack itself, not a weekly retainer.
 2. *Before procurement.* Requirements with evidence tags, scored evaluation criteria, build versus buy on the record, G-Cloud and DOS clarifications drafted. Weeks faster than the usual market engagement preparation.
 3. *Before assurance.* Service assessment readiness, Secure by Design, DPIA, ATRS records, AI Playbook compliance. Evidence in the format the gatekeepers accept, ready for the date in the diary.
 
 The point is not that AI does the work for you. The point is that AI plus a senior architect, embedded, can move a programme through a stage in a fraction of the calendar time. Programmes that were not going to make the date can now make the date.
 
-## What the first sprint produces
+## What the bootstrap sprint produces
 
-Five days. Twenty-five thousand pounds. Four artefacts.
+Five days. Twenty-five thousand pounds, fixed price for the pack. Four artefacts.
 
 Principles are decision rules that connect policy intent to delivery trade-offs. Not aspirational posters. Tagged to Green Book point one and Service Standard point one.
 
@@ -56,7 +58,7 @@ By Friday afternoon the programme has a board-readable pack. The follow-on weeks
 
 ## Where to start
 
-If you have a programme that is heading into a board, a procurement, an assurance review or an architecture gate, and you are not yet sure the evidence holds up, the first sprint is what it was built for.
+If you have a programme that is heading into a board, a procurement, an assurance review or an architecture gate, and you are not yet sure the evidence holds up, the bootstrap sprint is what it was built for. £25K, one week, board-ready pack on Friday.
 
 Site: [arckit.org/fde](https://tractorjuice.github.io/arckit-fde/)
 
