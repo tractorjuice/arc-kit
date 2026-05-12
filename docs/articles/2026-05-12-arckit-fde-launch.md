@@ -1,34 +1,34 @@
 # We are launching ArcKit FDE: embedded architects for UK public sector
 
-Real AI, small teams, accelerated programmes.
+Real agentic AI, small teams, accelerated programmes.
 
-Today we are launching [ArcKit FDE](https://tractorjuice.github.io/arckit-fde/): real AI in the room, small embedded teams, accelerating UK public sector programmes through the gates that usually stall them. Bootstrap any project in a week. Fixed price £25K for the four-artefact governance pack. Optional embedded follow-on after that.
+Today we are launching [ArcKit FDE](https://tractorjuice.github.io/arckit-fde/): real agentic AI in the room, small embedded teams, accelerating UK public sector programmes through the gates that usually stall them. Bootstrap any project in a week. Fixed price £25K for the four-artefact governance pack. Optional embedded follow-on after that.
 
 The name borrows from a category that OpenAI just made explicit. Yesterday they launched The OpenAI Deployment Company with around four billion dollars of initial investment, nineteen capital partners, and a hundred and fifty engineers folded in from the Tomoro acquisition. What matters is not the headline number. It is the name they chose for the people doing the work. Not consultants. Forward Deployed Engineers.
 
-That distinction is not cosmetic. Read the [OpenAI page on FDE](https://openai.com/business/the-openai-deployment-company/) and the model is clear. Engineers embedded inside the customer environment, using real AI to build against the actual constraints that live there: security models, permissions, compliance, legacy infrastructure, governance. The constraints are the operating environment, not edge cases.
+That distinction is not cosmetic. Read the [OpenAI page on FDE](https://openai.com/business/the-openai-deployment-company/) and the model is clear. Engineers embedded inside the customer environment, using real agentic AI to build against the actual constraints that live there: security models, permissions, compliance, legacy infrastructure, governance. The constraints are the operating environment, not edge cases.
 
 That is exactly the model UK public sector architecture needs.
 
-## What real AI in the room looks like
+## What real agentic AI in the room looks like
 
-ArcKit FDE engineers do not bring slide decks. They bring an AI-native toolkit and the seniority to drive it.
+ArcKit FDE engineers do not bring slide decks. They bring an agentic AI-native toolkit and the seniority to drive it.
 
-The toolkit is [ArcKit](https://arckit.org), one hundred and seventeen AI commands running on Claude Code, Codex, Gemini, OpenCode and Copilot. It generates principles, requirements, risk registers, ADRs, designs, traceability matrices, business cases, procurement packs, AI assurance evidence, and conformance reports against UK public sector standards. The same artefacts that traditionally need a Big 4 bench for three months.
+The toolkit is [ArcKit](https://arckit.org), one hundred and seventeen agentic AI commands running on Claude Code, Codex, Gemini, OpenCode and Copilot. It generates principles, requirements, risk registers, ADRs, designs, traceability matrices, business cases, procurement packs, AI assurance evidence, and conformance reports against UK public sector standards. The same artefacts that traditionally need a Big 4 bench for three months.
 
-The seniority is the operator. An ArcKit FDE is a senior architect running the toolkit live inside the programme, making the judgement calls AI cannot make, and carrying the evidence trail that boards, auditors and technical authorities will eventually demand.
+The seniority is the operator. An ArcKit FDE is a senior architect running the toolkit live inside the programme, making the judgement calls agentic AI cannot make, and carrying the evidence trail that boards, auditors and technical authorities will eventually demand.
 
-This is not consulting with AI quietly bolted on. It is AI doing the structural work in the open, with a senior architect deciding what good looks like, in your environment, on your timeline.
+This is not consulting with agentic AI quietly bolted on. It is agentic AI doing the structural work in the open, with a senior architect deciding what good looks like, in your environment, on your timeline.
 
 ## Small teams, by design
 
 A typical engagement is one or two FDEs. That is the whole delivery team.
 
-The economics make sense because AI absorbs the work that used to require analysts, junior consultants and review cycles. The toolkit produces structured first drafts. The FDE corrects, challenges, and writes the parts that need human judgement. The output is shorter to produce, easier to defend, and cheaper to maintain.
+The economics make sense because agentic AI absorbs the work that used to require analysts, junior consultants and review cycles. The toolkit produces structured first drafts. The FDE corrects, challenges, and writes the parts that need human judgement. The output is shorter to produce, easier to defend, and cheaper to maintain.
 
 The politics make sense too. One or two people can sit inside a programme without disturbing it. They report to the senior responsible owner. They join the same calls as the delivery leads. They do not need an off-site delivery centre, a project management office, or a status reporting cadence. They are inside the work.
 
-Programmes used to choose between speed and seniority. With AI in the loop, both are available from the same small team.
+Programmes used to choose between speed and seniority. With agentic AI in the loop, both are available from the same small team.
 
 ## Accelerating programmes that usually stall
 
@@ -40,7 +40,7 @@ ArcKit FDE is built to compress those stalls. Three programme stages where the c
 2. *Before procurement.* Requirements with evidence tags, scored evaluation criteria, build versus buy on the record, G-Cloud and DOS clarifications drafted. Weeks faster than the usual market engagement preparation.
 3. *Before assurance.* Service assessment readiness, Secure by Design, DPIA, ATRS records, AI Playbook compliance. Evidence in the format the gatekeepers accept, ready for the date in the diary.
 
-The point is not that AI does the work for you. The point is that AI plus a senior architect, embedded, can move a programme through a stage in a fraction of the calendar time. Programmes that were not going to make the date can now make the date.
+The point is not that agentic AI does the work for you. The point is that agentic AI plus a senior architect, embedded, can move a programme through a stage in a fraction of the calendar time. Programmes that were not going to make the date can now make the date.
 
 ## What the bootstrap sprint produces
 
