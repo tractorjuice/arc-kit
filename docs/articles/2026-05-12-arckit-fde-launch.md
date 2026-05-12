@@ -2,7 +2,7 @@
 
 Real AI, small teams, accelerated programmes.
 
-Today we are launching [ArcKit FDE](https://tractorjuice.github.io/arckit-fde/): real AI in the room, small embedded teams, accelerating UK public sector programmes through the gates that usually stall them. Bootstrap any project in a week, fixed price £25K for the four-artefact governance pack, then stay embedded as long as the architecture position needs keeping alive.
+Today we are launching [ArcKit FDE](https://tractorjuice.github.io/arckit-fde/): real AI in the room, small embedded teams, accelerating UK public sector programmes through the gates that usually stall them. Bootstrap any project in a week. Fixed price £25K for the four-artefact governance pack. Optional embedded follow-on after that.
 
 The name borrows from a category that OpenAI just made explicit. Yesterday they launched The OpenAI Deployment Company with around four billion dollars of initial investment, nineteen capital partners, and a hundred and fifty engineers folded in from the Tomoro acquisition. What matters is not the headline number. It is the name they chose for the people doing the work. Not consultants. Forward Deployed Engineers.
 
