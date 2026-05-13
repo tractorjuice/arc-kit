@@ -111,6 +111,7 @@ Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor 
 - [Azure Research](guides/azure-research.md) - `/arckit.azure-research` (Requires Microsoft Learn MCP)
 - [GCP Research](guides/gcp-research.md) - `/arckit.gcp-research` (Requires Google Developer Knowledge MCP)
 - [MCP Servers](guides/mcp-servers.md) - Plugin MCP server configuration
+- [MCP Catalogue](MCP-CATALOGUE.md) - Every MCP tool, server, and consumer command
 - [Pinecone MCP](guides/pinecone-mcp.md) - Wardley Mapping book corpus search
 - [Trello Export](guides/trello.md) - `/arckit.trello` - Export backlog to Trello
 - [ServiceNow](guides/servicenow.md) - ServiceNow service catalogue design
