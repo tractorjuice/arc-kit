@@ -213,6 +213,185 @@ The harness reads the recipe from `.arckit/recipes/` first (precedence per `arck
 
 ---
 
+## Layer C — Currency + review-feedback updates since PR open
+
+The scorecard's Layer A (SKILL.md content quality against the AU SMB engagement) and Layer B (recipe wave-plan structural validity) are **snapshots at PR open (2026-05-06)**. Layer C captures changes that landed **after** the original validation runs — both review-feedback fixes (round-2) and currency updates beyond the maintainer's review (AI6).
+
+Layer C's evidence type differs from A and B:
+
+| Layer | Evidence type | Strength |
+|-------|---------------|----------|
+| A | Validated against real client artefacts (AU SMB engagement, NDA-locked) | Strongest — but not reviewable without NDA |
+| B | Mechanical / structural (schema validates, topological sort completes) | Reviewable, deterministic |
+| C | Source verification + mechanical grep (URL liveness, canonical-wording match, regression-test pass) | Reviewable; weaker than A but stronger than self-assertion |
+
+Layer A's headline claims (9 runs, 25/25, 220 AU references in artefacts, 0 UK leakage) remain anchored to the original SMB engagement and are not affected by the changes below — that engagement predates the round-2 + AI6 work and is not being re-run.
+
+### Update 1 — Round-2 review-feedback fixes (2026-05-07)
+
+**Why added**: Responding to maintainer review #441 round 2, which identified 4 IMPORTANT items after the round-1 BLOCKERS were resolved.
+
+**What was changed**:
+
+| Round-2 item | What changed | Files |
+|--------------|--------------|-------|
+| #2 citation-instructions parity | 4 AU commands gained `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md` reference in their External References step. Brings all 8 AU commands to parity with the canonical `ca-*` pattern. | `au-ai-assurance`, `au-disp-attestation`, `au-ndb-playbook`, `au-pspf` |
+| #3 severity flags | `AUDSS` (DTA Digital Service Standard Conformance) + `AUPSPF` (PSPF Scorecard) bumped to `severity: 'HIGH'`. Both go to senior accountable officers (DTA conformance / CSO), matching the heuristic the other 6 AU codes follow. | `arckit-claude/config/doc-types.mjs` |
+| #4 flagship key | Top-level `flagship: AU_DISP` declared explicitly in recipe YAML — previously documented only in the comment header + README. | `arckit-claude/skills/arckit-build/recipes/au-federal.yaml` |
+| DISP template lint propagation | Maintainer's `c18eefab` removed a consecutive blank line in the canonical `au-disp-attestation-template.md`; converter regen propagates the fix to the four extension copies. | `arckit-{codex,opencode,copilot,paperclip}/templates/au-disp-attestation-template.md` |
+| Paperclip surgical regen | `commands.json` updated for 16 entries (4 AU + 12 UAE — the latter propagating the round-1 doc-id fix that the maintainer's surgical merge had inadvertently missed for paperclip) while preserving the 5 v4.16+ Claude-only entries (datascout/gov-reuse/grants/pages/wardley) byte-identical to `c18eefab`. | `arckit-paperclip/src/data/commands.json` |
+| Documentation catch-up | `CHANGELOG.md [Unreleased]` block populated with the round-2 + AI6 entries; `docs/guides/au-federal-overlay.md` describes AI6 in the `au-ai-assurance` section and Reference Anchors. | `CHANGELOG.md`, `docs/guides/au-federal-overlay.md` |
+
+**Mechanical verification commands**:
+
+```bash
+# Item #2 — all 8 AU commands reference citation-instructions
+grep -lE 'references/citation-instructions\.md' arckit-claude/commands/au-*.md | wc -l
+# Expected: 8
+
+# Item #3 — AUDSS + AUPSPF carry severity: 'HIGH'
+grep -E "'AU(DSS|PSPF)':.*severity: 'HIGH'" arckit-claude/config/doc-types.mjs | wc -l
+# Expected: 2
+
+# Item #4 — recipe declares flagship: AU_DISP
+grep -c '^flagship: AU_DISP$' arckit-claude/skills/arckit-build/recipes/au-federal.yaml
+# Expected: 1
+
+# UAE doc-id signature (round-1 fix propagated to paperclip JSON via surgical regen)
+grep -c "generate-document-id.sh <PROJECT_ID>" arckit-paperclip/src/data/commands.json
+# Expected: >= 20 (8 AU + 12 UAE entries)
+```
+
+**Test coverage** — 11 new regression-guard assertions in `tests/plugin/test_au_federal_recipe.py`:
+
+| Test name | Cardinality | What it asserts |
+|-----------|-------------|------------------|
+| `test_round2_item2_command_references_citation_instructions[...]` | 8 (parametrised) | Every AU command references `citation-instructions.md` |
+| `test_round2_item3_audss_aupspf_severity_high[AUDSS]` / `[AUPSPF]` | 2 | Both bumped to `severity: 'HIGH'` |
+| `test_round2_item4_recipe_declares_au_disp_flagship` | 1 | Recipe top-level declares `flagship: AU_DISP` |
+
+Run: `pytest tests/plugin/test_au_federal_recipe.py -k round2` — expected 11 passing.
+
+### Update 2 — AU Essential AI Practices (AI6) currency addition (2026-05-08)
+
+**Why added**: The National AI Centre (NAIC) published its 6 Essential AI Practices ("AI6") framework in October 2025; the current Foundations + Implementation Guidance pages on `ai.gov.au` are the most operationally-current Australian AI guidance for 2026. The original `au-ai-assurance` command covered DTA Responsible AI Policy v2.0, AU AI Ethics Principles, ISO 42001, and Privacy Act AI-decision notification — but not AI6 by name. An AI Assurance assessment for any AU project in 2026 without an AI6 alignment section would be a notable omission. Currency-update commit beyond the maintainer's review scope.
+
+**Source verification**:
+
+| Source | URL fragment | Last verified | Status |
+|--------|--------------|---------------|--------|
+| NAIC Essential AI Practices — Foundations | `ai.gov.au/.../guidance-ai-adoption-foundations` | 2026-05-08 | 200 OK (verified via `curl`) |
+| NAIC Essential AI Practices — Implementation Guidance | `ai.gov.au/.../guidance-ai-adoption-implementation-guidance` | 2026-05-08 | Linked directly from Foundations page; same publisher (NAIC) |
+
+**Six canonical AI6 practices** (preserved verbatim from `ai.gov.au` page headings):
+
+| # | Practice | Source anchor on ai.gov.au |
+|---|----------|-----------------------------|
+| 1 | Decide who is accountable | `#1-decide-who-is-accountable` |
+| 2 | Understand impacts and plan accordingly | `#2-understand-impacts-and-plan-accordingly` |
+| 3 | Measure and manage risks | `#3-measure-and-manage-risks-implement-ai-specific-risk-management` |
+| 4 | Share essential information | `#4-share-essential-information` |
+| 5 | Test and monitor | `#5-test-and-monitor` |
+| 6 | Maintain human control | `#6-maintain-human-control` |
+
+**Mechanical verification commands**:
+
+```bash
+# AI6 framework named in au-ai-assurance.md
+grep -cE "AI6|Essential AI Practices|National AI Centre|NAIC" \
+  arckit-claude/commands/au-ai-assurance.md
+# Expected: >= 4 (Context + Anchors + Process step + External Refs)
+
+# All 6 canonical practice names present
+for p in "Decide who is accountable" \
+         "Understand impacts and plan accordingly" \
+         "Measure and manage risks" \
+         "Share essential information" \
+         "Test and monitor" \
+         "Maintain human control"; do
+  grep -q "$p" arckit-claude/commands/au-ai-assurance.md && echo "OK: $p" \
+    || echo "MISS: $p"
+done
+# Expected: 6 OK lines
+
+# Canonical URLs in External References (Foundations + Implementation Guidance)
+grep -cE "essential-ai-practices/guidance-ai-adoption-(foundations|implementation-guidance)" \
+  arckit-claude/templates/au-ai-assurance-template.md
+# Expected: >= 2
+
+# Overlay guide describes AI6 (catches doc/source drift)
+grep -cE "AI6|Essential AI Practices" docs/guides/au-federal-overlay.md
+# Expected: >= 3 (au-ai-assurance section + use-case bullets + Reference Anchors)
+
+# Confidentiality boundary — no proprietary cross-walks leaked.
+# Scoped to arckit-claude/ (the actual PR content). docs/ is free to describe
+# the exclusion in prose — see "Public-domain scope" below for what's omitted.
+# Uses crosswalk-shaped patterns rather than mere co-occurrence to avoid
+# false-positives on legitimate listings (e.g., "DTA Policy, AI6, ISO 42001
+# MUST appear in the Document Register" is a list, not a crosswalk).
+grep -rE "AI6\s*↔|↔\s*AI6|AI6.*crosswalk|crosswalk.*AI6|AI6.*mapped to|mapped to.*AI6|AI6.*coverage analysis" \
+  arckit-claude/ 2>/dev/null | wc -l
+# Expected: 0
+# Rationale: AI6 ↔ ISO 42001 / NIST AI RMF / Singapore AI Verify crosswalks are
+# the contributor's commercial advisory IP and are explicitly excluded from this PR.
+```
+
+**Test coverage** — 11 new pytest assertions in `tests/plugin/test_au_federal_recipe.py`:
+
+| Test name | Cardinality | What it asserts |
+|-----------|-------------|------------------|
+| `test_ai6_command_references_ai6_framework` | 1 | au-ai-assurance.md references AI6, Essential AI Practices, NAIC |
+| `test_ai6_command_lists_each_essential_practice[...]` | 6 (parametrised) | Each canonical practice name appears verbatim |
+| `test_ai6_template_has_alignment_section_with_all_6_practices[...]` | 2 | Both template paths (canonical + CLI dual-sync) have section 4 with 6-row table |
+| `test_ai6_template_external_references_include_ai6[...]` | 2 | Verification table includes both Foundations + Implementation URLs |
+
+Plus 1 documentation-drift guard:
+
+| `test_ai6_overlay_guide_mentions_ai6` | 1 | docs/guides/au-federal-overlay.md cites AI6 + canonical name + Foundations URL |
+
+Run: `pytest tests/plugin/test_au_federal_recipe.py -k ai6` — expected 12 passing (11 framework-fidelity + 1 doc-drift guard).
+
+**Public-domain scope**:
+
+The AI6 addition uses **only public-domain NAIC content** — framework name, 6 practice titles, canonical URLs, cross-framework alignment to DTA Responsible AI Policy v2.0 (DTA's own published policy) and AU AI Ethics Principles (Department of Industry's own framework).
+
+Explicitly **excluded** (protected as separate commercial advisory IP, not part of this PR):
+
+- AI6 ↔ ISO/IEC 42001 control-area mapping
+- AI6 ↔ NIST AI RMF function mapping
+- AI6 ↔ Singapore IMDA AI Verify (85 testable criteria) mapping
+- AI6 coverage analysis / gap percentages against any of the above
+- Implementation methodology for assessing each practice
+
+The confidentiality-grep above (`grep -rE "AI6\s*↔|crosswalk|mapped to|coverage analysis" arckit-claude/`) mechanically verifies the exclusion against the PR's actual content (canonical commands + templates + config). A reviewer running it without context can confirm no proprietary mapping has been accidentally published. The grep is deliberately scoped to `arckit-claude/` — `docs/` is free to describe what's excluded in prose (such as the bullets above) without tripping the test.
+
+### Drift since PR open — Layer A mechanical claims rerun
+
+| Original PR-open claim | Value at 2026-05-08 | Drift | Cause |
+|------------------------|---------------------|-------|-------|
+| UK leakage in PR commands = 2 | 2 | 0 | Intentional comparisons in `au-dss` + `au-pia` unchanged |
+| AU framework presence in PR commands = 188 | 190 | +2 | AI6 addition contributes "NAIC" + canonical anchor mentions |
+| AU type code count = 8 | 8 | 0 | No new codes (AI6 is content within `AUAIA`, not a new code) |
+| Recipe target count = 35 | 35 | 0 | AI6 sits within the existing `AU_AI` target, not a new target |
+| pytest test count *(new metric — not tracked at PR open)* | 191 | n/a | Grew through rounds: 61 baseline → 168 (round-1 + Tier 1) → 179 (round-2) → 190 (AI6) → 191 (doc-drift guard) |
+
+### Test architecture evolution
+
+The test suite has grown from 61 baseline tests at PR open to 191 at HEAD across the 5-tier architecture established in round 1:
+
+| Tier | Purpose | Baseline | Round 1 | Round 2 | AI6 | HEAD |
+|------|---------|----------|---------|---------|-----|------|
+| Existence + integration | Files / schemas / IDs / registrations exist and resolve | 61 | 61 | 61 | 61 | 61 |
+| Review-guard (round 1) | Each round-1 blocker / important item encoded as assertion | — | 76 | 76 | 76 | 76 |
+| Tier 1 (framework / source / provenance) | Regulator-defined contract numbers; recipe ↔ source ↔ doc-types consistency; authoritative URL fragments | — | 31 | 31 | 31 | 31 |
+| Review-guard (round 2) | Each round-2 IMPORTANT item encoded as assertion | — | — | 11 | 11 | 11 |
+| Currency (AI6) + doc-drift | AI6 framework fidelity + guide describes AI6 | — | — | — | 11 | 12 |
+| **Total** | | **61** | **168** | **179** | **190** | **191** |
+
+All tiers green at HEAD.
+
+---
+
 ## Pre-publication redactions
 
 The underlying artefacts contain client-specific evidence references that are NOT included in this PR:
@@ -239,4 +418,5 @@ If reviewers need to see the underlying artefacts to validate the headline numbe
 ---
 
 **Generated**: 2026-05-06 by @royster70 for tractorjuice/arc-kit#424 PR submission.
+**Layer C addendum**: 2026-05-08 — round-2 review-feedback fixes (#441) + AI6 currency update; existing Layer A and Layer B sections preserved as the original PR-open snapshot.
 **Cross-references**: [`arckit-claude/skills/arckit-build/recipes/au-federal.yaml`](../arckit-claude/skills/arckit-build/recipes/au-federal.yaml); [`docs/guides/au-federal-overlay.md`](guides/au-federal-overlay.md); underlying artefacts available on request under NDA.
