@@ -7,11 +7,15 @@ on:
       - "**/*.md"
       - ".markdownlint-cli2.jsonc"
       - ".github/workflows/lint-markdown.yml"
+      - "scripts/check_references.py"
+      - "arckit-claude/.claude-plugin/plugin.json"
   pull_request:
     paths:
       - "**/*.md"
       - ".markdownlint-cli2.jsonc"
       - ".github/workflows/lint-markdown.yml"
+      - "scripts/check_references.py"
+      - "arckit-claude/.claude-plugin/plugin.json"
 
 jobs:
   lint:
@@ -22,6 +26,16 @@ jobs:
       - uses: DavidAnson/markdownlint-cli2-action@v19
         with:
           globs: "**/*.md"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Python deps for reference linter
+        run: pip install pyyaml
+
+      - name: Cross-reference linter
+        run: python3 scripts/check_references.py
 
       - uses: actions/setup-node@v4
         with:
