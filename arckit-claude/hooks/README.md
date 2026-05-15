@@ -60,15 +60,20 @@ Lightweight telemetry recorder registered for three events:
 - **PostToolUse** (same registration, branched by tool name) — records `{ server, tool, args }` for `mcp__govreposcrape__*` calls. Args are sanitised (long strings replaced with length markers, nested objects flattened to `<object>`) so the JSONL stays small.
 - **TaskCreated** (matcher `.*`, Claude Code v2.1.84+) — records `{ agent }` for every agent spawn via the Task tool.
 
+Every record also carries an **`effort`** field (Claude Code v2.1.133+) when the harness supplies one — read from hookInput `effort.level` or the `$CLAUDE_EFFORT` env var. Omitted on older clients or when no explicit effort was set. The effort tag enables comparing e.g. p95 latency at `xhigh` vs `max` for the same tool, and supports the Phase 5 audit of which `effort: max` commands could be downgraded.
+
+The session-level effort is also surfaced in `.arckit/memory/sessions.md` (one extra line per entry) and in the `docs/telemetry.json` per-session record (top-level `effort` field), so the dashboard "Recent Sessions" panel can colour-code sessions by effort tier.
+
 Events are appended to `.arckit/memory/.telemetry.jsonl` during the session. `session-learner.mjs` reads, summarises, and truncates the file at Stop / StopFailure, adding a single line to each session entry, e.g.:
 
 ```text
+- **Effort:** high
 - **Telemetry:** 47 tool calls (p50=12ms, p95=4200ms) | 3 agents (arckit-research×2, arckit-datascout) | MCP: govreposcrape×8
 ```
 
 Telemetry is best-effort — any failure (write error, malformed line, missing field) is swallowed silently so it never breaks a session.
 
-When `docs/` exists (i.e. the project has run `/arckit:pages`), `session-learner.mjs` also writes a structured rollup to `docs/telemetry.json` (newer-first, capped at 50 sessions) so the dashboard can render a "Session Telemetry" + "Recent Sessions" panel. Each record contains `{ ts, type, isFailure, commits, filesChanged, artifacts, telemetry: { toolCalls, p50, p95, agents, mcp } }`. The dashboard fetches `telemetry.json` with the same graceful-fallback pattern as `health.json` — projects without a `docs/` directory render the dashboard exactly as before.
+When `docs/` exists (i.e. the project has run `/arckit:pages`), `session-learner.mjs` also writes a structured rollup to `docs/telemetry.json` (newer-first, capped at 50 sessions) so the dashboard can render a "Session Telemetry" + "Recent Sessions" panel. Each record contains `{ ts, type, isFailure, effort?, commits, filesChanged, artifacts, telemetry: { toolCalls, p50, p95, agents, mcp } }`. The dashboard fetches `telemetry.json` with the same graceful-fallback pattern as `health.json` — projects without a `docs/` directory render the dashboard exactly as before.
 
 > **Note on `type: "mcp_tool"` (v2.1.118)**: This Claude Code feature lets a hook *invoke* an MCP tool as its action (alternative to `type: "command"` / `type: "prompt"`). It does **not** filter hooks to fire only on MCP tool calls. ArcKit logs `govreposcrape` calls via the existing tool-name matcher pattern (`mcp__govreposcrape__.*`); no `type: "mcp_tool"` registration is needed for telemetry.
 

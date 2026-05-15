@@ -10,19 +10,24 @@
  *
  * Records (one of):
  *
- *   {"ts":"...","kind":"hook_duration","tool":"Write","duration_ms":42}
+ *   {"ts":"...","kind":"hook_duration","tool":"Write","duration_ms":42,"effort":"high"}
  *     - emitted on PostToolUse for every tool with duration_ms (Claude Code
  *       v2.1.119+). Skipped silently when duration_ms is absent (older
  *       client, PreToolUse-rejected calls, etc.)
  *
- *   {"ts":"...","kind":"mcp_call","server":"govreposcrape","tool":"...","args":{...}}
+ *   {"ts":"...","kind":"mcp_call","server":"govreposcrape","tool":"...","args":{...},"effort":"high"}
  *     - emitted on PostToolUse for MCP calls matching `mcp__govreposcrape__.*`.
  *       Records the called tool name and its arguments (sanitised — only
  *       primitive values kept, large blobs replaced with `<…>`).
  *
- *   {"ts":"...","kind":"agent_spawn","agent":"arckit-research"}
+ *   {"ts":"...","kind":"agent_spawn","agent":"arckit-research","effort":"max"}
  *     - emitted on TaskCreated (v2.1.84+). Records the spawned agent's
  *       subagent_type so session-learner can summarise agent usage.
+ *
+ * Every record also carries the session's `effort` level (Claude Code
+ * v2.1.133+) when the harness supplies one — read from hookInput
+ * `effort.level` or the `$CLAUDE_EFFORT` env var. Omitted on older
+ * clients or when no explicit effort was set.
  *
  * Hook Type:  PostToolUse | TaskCreated
  * Input:      JSON hook input (shape varies by event)
@@ -48,6 +53,13 @@ if (!isDir(join(cwd, '.arckit')) && !isDir(join(cwd, 'projects'))) process.exit(
 
 const event = data.hook_event_name || data.hookEventName || '';
 const tool = data.tool_name || '';
+
+// Effort level the call was running at (Claude Code v2.1.133+). Preferred:
+// hookInput `effort.level`. Fallback: `$CLAUDE_EFFORT` env var. Null on
+// older clients or when no explicit effort was set. Attached to every
+// record so downstream analysis can compare e.g. p95 latency at `xhigh`
+// vs `max` for the same tool.
+const effortLevel = (data.effort && typeof data.effort === 'object' ? data.effort.level : null) || process.env.CLAUDE_EFFORT || null;
 
 let record = null;
 const ts = new Date().toISOString();
@@ -82,6 +94,7 @@ if (event === 'TaskCreated' || tool === 'TaskCreate') {
 }
 
 if (record) {
+  if (effortLevel) record.effort = effortLevel;
   const memoryDir = join(cwd, '.arckit', 'memory');
   try {
     mkdirSync(memoryDir, { recursive: true });

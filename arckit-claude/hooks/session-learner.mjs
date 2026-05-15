@@ -30,6 +30,11 @@ const cwd = data.cwd || '.';
 const isFailure = !!(data.error || data.reason || data.hookEventName === 'StopFailure');
 const failureReason = data.error?.message || data.error?.type || data.reason || data.error || null;
 
+// Effort level the session was running at (Claude Code v2.1.133+).
+// Preferred: hookInput `effort.level`. Fallback: `$CLAUDE_EFFORT` env var.
+// May be null on older clients or when no explicit effort was set.
+const effortLevel = (data.effort && typeof data.effort === 'object' ? data.effort.level : null) || process.env.CLAUDE_EFFORT || null;
+
 // Only proceed if we're inside an ArcKit project. Detect either:
 //   - .arckit/ — CLI scaffolding from `arckit init`
 //   - projects/ — plugin-only install
@@ -138,6 +143,9 @@ let entry = `### ${dateStr} ${timeStr} — ${entryType}\n\n`;
 if (isFailure) {
   entry += `- **Status:** session interrupted by API error\n`;
 }
+if (effortLevel) {
+  entry += `- **Effort:** ${effortLevel}\n`;
+}
 entry += `- **Commits:** ${commitCount} | **Files changed:** ${files.length}\n`;
 
 if (projectArtifacts.size > 0) {
@@ -244,6 +252,7 @@ if (isDir(docsDir)) {
     filesChanged: files.length,
     artifacts: serialiseArtifacts(projectArtifacts),
   };
+  if (effortLevel) sessionRecord.effort = effortLevel;
   if (telemetryRollup) sessionRecord.telemetry = telemetryRollup;
 
   // Newer-first; cap at 50 (≈ a few weeks of daily use).
