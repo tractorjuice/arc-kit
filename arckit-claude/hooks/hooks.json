@@ -192,6 +192,13 @@
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/score-validator.mjs"],
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "if": "Write(/projects/**/wardley-maps/**)",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/validate-wardley-math.mjs"],
+            "timeout": 5
           }
         ]
       },

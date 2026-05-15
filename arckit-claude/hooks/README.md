@@ -102,5 +102,5 @@ See `hooks.json` for the full registration. Current handler files in this direct
 - `sync-guides.mjs` — keep `docs/guides/` in sync with `arckit-claude/guides/`
 - `update-manifest.mjs` — see above
 - `validate-arc-filename.mjs` — enforce `ARC-NNN-*-vN.N.md` naming
-- `validate-wardley-math.mjs` — Wardley Map syntax validation
+- `validate-wardley-math.mjs` — Wardley Map artefact validation (PreToolUse:Write, scoped to `Write(/projects/**/wardley-maps/**)`): stage/evolution alignment, coordinate range `[0.00, 1.00]` for both Component Inventory rows and OWM `component` declarations, cross-reference between OWM and inventory, Mermaid `wardley-beta` bare-digit token check. Recognises both ` ```wardley ` and ` ```owm ` fence aliases. Blocks via `{decision: "block"}` so the model self-corrects.
 - `version-check.mjs` — warn on Claude Code version drift

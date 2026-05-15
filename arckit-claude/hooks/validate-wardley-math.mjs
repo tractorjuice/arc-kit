@@ -1,27 +1,26 @@
 #!/usr/bin/env node
 /**
- * ArcKit Wardley Map Math Validation
+ * ArcKit PreToolUse (Write) Hook — Wardley Map Math Validation
  *
- * Validates a generated Wardley Map document for consistency:
+ * Validates a Wardley Map document about to be written for consistency:
  *   1. Stage-evolution alignment (Component Inventory tables)
  *   2. Coordinate range validation (all values in [0.00, 1.00])
- *   3. OWM syntax consistency (wardley code block vs Component Inventory)
+ *   3. OWM syntax consistency (wardley/owm code block vs Component Inventory)
  *   4. Mermaid wardley-beta syntax (unquoted bare-digit tokens break rendering)
  *
- * Input (stdin):  JSON { stop_hook_active, ... }
- * Output (stdout): JSON with "decision": "block" and "reason" on failure, or empty on success
- * Exit codes:      0 always (block via JSON decision, not exit code)
+ * Hook Type: PreToolUse
+ * Matcher: Write
+ * Scoped via an `if:` rule in hooks.json that matches Write calls under
+ * projects/<id>/wardley-maps/ so it only runs for ARC Wardley Map artefacts.
+ *
+ * Input (stdin):  JSON { tool_name, tool_input: { file_path, content }, ... }
+ * Output (stdout): JSON { decision: "block", reason } on failure; empty on pass.
+ * Exit code:       0 in all cases (block via JSON decision so the reason is fed
+ *                  back to the model instead of producing a hard permission error).
  */
 
-import { readFileSync, readdirSync, statSync } from 'node:fs';
-import { join } from 'node:path';
-
-function isDir(p) {
-  try { return statSync(p).isDirectory(); } catch { return false; }
-}
-function isFile(p) {
-  try { return statSync(p).isFile(); } catch { return false; }
-}
+import { readFileSync } from 'node:fs';
+import { basename } from 'node:path';
 
 function evolutionToStage(evo) {
   const val = parseFloat(evo);
@@ -47,44 +46,15 @@ try {
   process.exit(0);
 }
 
-// If this is already a re-fire after a block, allow stop to prevent infinite loops
-if (data.stop_hook_active) process.exit(0);
+const filePath = (data.tool_input || {}).file_path || '';
+const content = (data.tool_input || {}).content || '';
 
-// --- Find most recently modified WARD file ---
-let wardFile = null;
-let newestMtime = 0;
-const now = Date.now();
-const maxAge = 300000; // 5 minutes in ms
+// Defense-in-depth: the `if:` rule in hooks.json already narrows this,
+// but skip cleanly if either field is empty or the path isn't a Wardley artefact.
+if (!filePath || !content) process.exit(0);
+if (!filePath.includes('/wardley-maps/')) process.exit(0);
 
-// Walk projects/*/wardley-maps/ looking for ARC-*-WARD-*.md
-const cwd = data.cwd || process.cwd();
-const projectsDir = join(cwd, 'projects');
-if (isDir(projectsDir)) {
-  const projectDirs = readdirSync(projectsDir).sort();
-  for (const pd of projectDirs) {
-    const wmDir = join(projectsDir, pd, 'wardley-maps');
-    if (!isDir(wmDir)) continue;
-    for (const f of readdirSync(wmDir)) {
-      const fp = join(wmDir, f);
-      if (!isFile(fp)) continue;
-      if (!f.startsWith('ARC-') || !(f.includes('-WARD-') || f.includes('-WVCH-')) || !f.endsWith('.md')) continue;
-      try {
-        const mt = statSync(fp).mtimeMs;
-        const age = now - mt;
-        if (age <= maxAge && mt > newestMtime) {
-          newestMtime = mt;
-          wardFile = fp;
-        }
-      } catch { /* skip */ }
-    }
-  }
-}
-
-// No recent wardley file found - not a wardley run, allow stop
-if (!wardFile) process.exit(0);
-
-const filename = wardFile.split('/').pop();
-const content = readFileSync(wardFile, 'utf8');
+const filename = basename(filePath);
 const contentLines = content.split('\n');
 
 const errors = [];
@@ -131,13 +101,15 @@ for (const line of contentLines) {
 }
 
 // --- Check 3: OWM syntax consistency ---
+// Accepts both ```wardley and ```owm fence aliases (OnlineWardleyMaps uses both).
 const owmVis = {};
 const owmEvo = {};
 let inWardley = false;
 const componentRe = /^\s*component\s+(.+?)\s+\[\s*([0-9.]+)\s*,\s*([0-9.]+)\s*\]/;
+const owmFenceOpenRe = /^\s*```(?:wardley|owm)\b/;
 
 for (const line of contentLines) {
-  if (/^\s*```wardley/.test(line)) {
+  if (owmFenceOpenRe.test(line)) {
     inWardley = true;
     continue;
   }
@@ -151,6 +123,16 @@ for (const line of contentLines) {
       const compName = cm[1].trim();
       owmVis[compName] = cm[2];
       owmEvo[compName] = cm[3];
+
+      // Also enforce OWM coordinate range — the plane is unit square [0, 1].
+      const oVisF = parseFloat(cm[2]);
+      const oEvoF = parseFloat(cm[3]);
+      if (oVisF < 0.0 || oVisF > 1.0) {
+        errors.push(`- '${compName}' OWM block has visibility ${cm[2]} outside valid range [0.00, 1.00]`);
+      }
+      if (oEvoF < 0.0 || oEvoF > 1.0) {
+        errors.push(`- '${compName}' OWM block has evolution ${cm[3]} outside valid range [0.00, 1.00]`);
+      }
     }
   }
 }
@@ -264,7 +246,7 @@ if (mermaidErrors.length > 0) {
 
 if (reportParts.length > 0) {
   const report = reportParts.join('\n\n');
-  const reason = `Wardley Map validation errors in ${filename}:\n\n${report}\n\nFix these errors in the document, then stop again.`;
+  const reason = `Wardley Map validation errors in ${filename}:\n\n${report}\n\nFix these errors and re-issue the Write.`;
   console.log(JSON.stringify({ decision: 'block', reason }));
 }
 
