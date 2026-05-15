@@ -17,6 +17,10 @@ All entries use the **exec form** of the command field — `command` is the exec
 
 This avoids shell-parsing of the command string and the quoting / metacharacter pitfalls that come with it. `${CLAUDE_PLUGIN_ROOT}` and other Claude Code variables are substituted by the harness before exec. When adding a new hook, use this form rather than the legacy single-string `command: "node /path/to/x.mjs"`.
 
+## `continueOnBlock: true` on PostToolUse (v2.1.139+)
+
+All PostToolUse entries (`update-manifest`, `provenance-stamp`, `telemetry`) set `continueOnBlock: true`. These hooks are observational — they stamp artefacts, refresh `docs/manifest.json`, and record telemetry. If one of them ever emits `decision: "block"` (whether by a bug, schema rejection, or unexpected crash propagating as a block decision), the user's turn must continue: a manifest refresh or provenance stamp failing should never derail the conversation. The block decision is still logged by the harness, so regressions remain visible. PreToolUse and UserPromptSubmit hooks (e.g. `file-protection`, `secret-detection`, `validate-arc-filename`) intentionally retain default block semantics — they exist to gate dangerous tool calls.
+
 ## `if:` Field for Narrow Triggering
 
 Individual hook entries support an `if:` field (Claude Code v2.1.85+) using **permission rule syntax** to narrow triggering and avoid unnecessary Node process spawns. Examples:

@@ -168,6 +168,7 @@ Handler: `command` (JSON stdio + exit-code-2 block). Matcher: regex only — no 
 - **Plugin dependencies** — `dependencies` array with semver constraints; `claude plugin prune`/`autoremove` for orphans.
 - **Background monitors** (`experimental.monitors` key, moved from top-level in v2.1.129) — persistent subprocess; `when: always` or `on-skill-invoke:<skill>`; stdout → in-session notifications.
 - **Hook `args: string[]` exec form** (v2.1.139) — alternative to the legacy single-string `command` field; harness execs the binary directly instead of parsing a shell-quoted command line. ArcKit uses this form for all 16 registered hook entries.
+- **PostToolUse `continueOnBlock: true`** (v2.1.139) — observational PostToolUse hooks (stamping, manifest refresh, telemetry) can opt out of block semantics so a hook failure never derails the user's turn. Block-as-gate semantics are reserved for genuine PreToolUse / UserPromptSubmit guards.
 
 ### Gemini CLI
 
