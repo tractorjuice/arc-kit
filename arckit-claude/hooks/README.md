@@ -102,5 +102,13 @@ See `hooks.json` for the full registration. Current handler files in this direct
 - `sync-guides.mjs` — keep `docs/guides/` in sync with `arckit-claude/guides/`
 - `update-manifest.mjs` — see above
 - `validate-arc-filename.mjs` — enforce `ARC-NNN-*-vN.N.md` naming
-- `validate-wardley-math.mjs` — Wardley Map artefact validation (PreToolUse:Write, scoped to `Write(/projects/**/wardley-maps/**)`): stage/evolution alignment, coordinate range `[0.00, 1.00]` for both Component Inventory rows and OWM `component` declarations, cross-reference between OWM and inventory, Mermaid `wardley-beta` bare-digit token check. Recognises both ` ```wardley ` and ` ```owm ` fence aliases. Blocks via `{decision: "block"}` so the model self-corrects.
+- `validate-wardley-math.mjs` — Wardley Map artefact validation (PreToolUse:Write, scoped to `Write(/projects/**/wardley-maps/**)`). Recognises both ` ```wardley ` and ` ```owm ` fence aliases. Blocks via `{decision: "block"}` so the model self-corrects. Checks:
+  - **Stage / evolution alignment** of Component Inventory table rows
+  - **Coordinate range `[0.00, 1.00]`** for both Component Inventory rows and OWM declarations
+  - **OWM ↔ Component Inventory cross-reference** — coords must agree
+  - **Dangling OWM references** — `evolve` / `pipeline` / edges must target a `component` / `anchor` / `note` / `submap` / `market` declared earlier in the same block
+  - **Annotation index reuse** — each `annotation N [...]` ID must be unique
+  - **Pipeline range** — `pipeline NAME [v1, v2]` endpoints in `[0.00, 1.00]` and `v1 < v2`
+  - **OWM style whitelist** — `style` must be one of `wardley`, `colour`, `plain`, `handwritten`, `dark`
+  - **Mermaid `wardley-beta` bare-digit tokens** — Wardley-template-specific check; general Mermaid validation belongs to issue #435 (sibling validator)
 - `version-check.mjs` — warn on Claude Code version drift
