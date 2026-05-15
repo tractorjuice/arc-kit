@@ -1890,6 +1890,7 @@
         // ============================================
         let manifest = null;
         let healthData = null;
+        let telemetryData = null;
         let documentCache = new Map();
         let allDocuments = [];
         let currentTocObserver = null;
@@ -2174,6 +2175,17 @@
                                 project: projectName,
                                 category: 'Tech Notes',
                                 searchText: `${doc.title} tech note technology ${projectName}`.toLowerCase()
+                            });
+                        });
+                    }
+
+                    if (project.dataSourceProfiles) {
+                        project.dataSourceProfiles.forEach(doc => {
+                            allDocuments.push({
+                                ...doc,
+                                project: projectName,
+                                category: 'Data Source Profiles',
+                                searchText: `${doc.title} data source profile api dataset ${projectName}`.toLowerCase()
                             });
                         });
                     }
@@ -2950,6 +2962,107 @@
                         <div class="app-dashboard-panel">
                             <h3>Findings by Type</h3>
                             ${healthRightHtml}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Row 6: Session Telemetry (only if telemetryData exists)
+            if (telemetryData && Array.isArray(telemetryData.sessions) && telemetryData.sessions.length > 0) {
+                const sessions = telemetryData.sessions;
+                const recent = sessions.slice(0, 10); // last 10 for aggregates
+                const display = sessions.slice(0, 5);  // last 5 in the table
+
+                // Aggregate over last 10 sessions
+                let totalToolCalls = 0;
+                let totalAgents = 0;
+                let totalMcp = 0;
+                let p50Sum = 0;
+                let p50Count = 0;
+                const effortMix = {}; // tier → count
+                recent.forEach(s => {
+                    if (typeof s.effort === 'string' && s.effort) {
+                        effortMix[s.effort] = (effortMix[s.effort] || 0) + 1;
+                    }
+                    const t = s.telemetry;
+                    if (!t) return;
+                    if (typeof t.toolCalls === 'number') totalToolCalls += t.toolCalls;
+                    if (typeof t.p50 === 'number') { p50Sum += t.p50; p50Count++; }
+                    if (Array.isArray(t.agents)) t.agents.forEach(a => { totalAgents += a.count || 0; });
+                    if (Array.isArray(t.mcp)) t.mcp.forEach(m => { totalMcp += m.count || 0; });
+                });
+                const medianP50 = p50Count > 0 ? Math.round(p50Sum / p50Count) : null;
+
+                // Effort tier ordering for stable rendering (low → max).
+                const EFFORT_ORDER = ['low', 'medium', 'high', 'xhigh', 'max'];
+                const effortEntries = EFFORT_ORDER
+                    .filter(k => effortMix[k])
+                    .map(k => `${k}: ${effortMix[k]}`)
+                    .concat(
+                        Object.keys(effortMix)
+                            .filter(k => !EFFORT_ORDER.includes(k))
+                            .map(k => `${k}: ${effortMix[k]}`)
+                    );
+                const effortMixLabel = effortEntries.length > 0 ? effortEntries.join(' · ') : '—';
+
+                let activityLeftHtml = `
+                    <div class="app-dashboard-bar-row">
+                        <div class="app-dashboard-bar-label" style="min-width:130px">Tool calls</div>
+                        <div class="app-dashboard-bar-value">${totalToolCalls.toLocaleString()}</div>
+                    </div>
+                    <div class="app-dashboard-bar-row">
+                        <div class="app-dashboard-bar-label" style="min-width:130px">Median p50 latency</div>
+                        <div class="app-dashboard-bar-value">${medianP50 !== null ? medianP50 + ' ms' : '—'}</div>
+                    </div>
+                    <div class="app-dashboard-bar-row">
+                        <div class="app-dashboard-bar-label" style="min-width:130px">Agents spawned</div>
+                        <div class="app-dashboard-bar-value">${totalAgents.toLocaleString()}</div>
+                    </div>
+                    <div class="app-dashboard-bar-row">
+                        <div class="app-dashboard-bar-label" style="min-width:130px">MCP calls</div>
+                        <div class="app-dashboard-bar-value">${totalMcp.toLocaleString()}</div>
+                    </div>
+                    <div class="app-dashboard-bar-row">
+                        <div class="app-dashboard-bar-label" style="min-width:130px">Effort mix</div>
+                        <div class="app-dashboard-bar-value" style="font-size:0.8rem">${escapeHtml(effortMixLabel)}</div>
+                    </div>
+                `;
+                activityLeftHtml += `<p style="color:var(--text-muted);font-size:0.75rem;margin-top:0.75rem;">Across last ${recent.length} session${recent.length === 1 ? '' : 's'} — ${sessions.length} total tracked.</p>`;
+
+                let activityRightHtml = '<ul class="app-dashboard-checklist">';
+                display.forEach(s => {
+                    const dt = s.ts ? new Date(s.ts) : null;
+                    const dateLabel = dt ? `${dt.toLocaleDateString()} ${dt.toTimeString().slice(0, 5)}` : '?';
+                    const t = s.telemetry || {};
+                    const parts = [];
+                    if (typeof t.toolCalls === 'number') parts.push(`${t.toolCalls} tools`);
+                    if (typeof t.p50 === 'number') parts.push(`p50=${t.p50}ms`);
+                    if (Array.isArray(t.agents) && t.agents.length > 0) {
+                        const total = t.agents.reduce((sum, a) => sum + (a.count || 0), 0);
+                        parts.push(`${total} agent${total === 1 ? '' : 's'}`);
+                    }
+                    if (Array.isArray(t.mcp) && t.mcp.length > 0) {
+                        const total = t.mcp.reduce((sum, m) => sum + (m.count || 0), 0);
+                        parts.push(`${total} MCP`);
+                    }
+                    const summary = parts.length > 0 ? parts.join(' · ') : 'no telemetry';
+                    const failureMark = s.isFailure ? ' <span style="color:#d4351c">⚠</span>' : '';
+                    const effortChip = (typeof s.effort === 'string' && s.effort)
+                        ? ` <span style="display:inline-block;font-size:0.7rem;padding:1px 6px;border-radius:8px;background:var(--surface-muted,#eef2f7);color:var(--text-muted);margin-left:4px">${escapeHtml(s.effort)}</span>`
+                        : '';
+                    activityRightHtml += `<li><strong>${escapeHtml(dateLabel)}</strong>${failureMark} — <span style="color:var(--text-muted)">${escapeHtml(s.type || 'general')}</span>${effortChip}: ${escapeHtml(summary)}</li>`;
+                });
+                activityRightHtml += '</ul>';
+
+                html += `
+                    <div class="app-dashboard-panels">
+                        <div class="app-dashboard-panel">
+                            <h3>Session Telemetry</h3>
+                            ${activityLeftHtml}
+                        </div>
+                        <div class="app-dashboard-panel">
+                            <h3>Recent Sessions</h3>
+                            ${activityRightHtml}
                         </div>
                     </div>
                 `;
@@ -4105,6 +4218,12 @@
                 listHtml += renderVersionedDocList(project.techNotes);
             }
 
+            // Data Source Profiles
+            if (project.dataSourceProfiles && project.dataSourceProfiles.length > 0) {
+                listHtml += `<li class="app-nav-category">Data Source Profiles</li>`;
+                listHtml += renderVersionedDocList(project.dataSourceProfiles);
+            }
+
             // External Documents (mention only - not clickable)
             if (project.external && project.external.length > 0) {
                 listHtml += `<li class="app-nav-category">External Documents</li>`;
@@ -4785,6 +4904,18 @@
                     }
                 } catch (e) {
                     // health.json not available — dashboard renders without health panel
+                }
+
+                // Optionally load session telemetry (graceful if missing).
+                // Written by arckit-claude/hooks/session-learner.mjs at Stop /
+                // StopFailure when docs/ exists. See "Plugin Hooks" in CLAUDE.md.
+                try {
+                    const telemetryResponse = await fetch('telemetry.json');
+                    if (telemetryResponse.ok) {
+                        telemetryData = await telemetryResponse.json();
+                    }
+                } catch (e) {
+                    // telemetry.json not available — dashboard renders without activity panel
                 }
 
                 // Update footer
