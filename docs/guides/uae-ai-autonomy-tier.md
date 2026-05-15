@@ -77,6 +77,7 @@ Output: `projects/<id>/ARC-<id>-AUTI-v1.0.md`
 
 ## Key Notes
 
+- **Central Bank AI guidance** `[NEEDS VERIFICATION]`: The exact citation for UAE Central Bank AI guidance for Tier 3 regulated/financial workloads, and the boundary with Securities and Commodities Authority (SCA) guidance for capital-markets entities, is not yet pinned down — confirm sector-regulator obligations before publication. See `uae-overlay-maintenance.md` gap #5.
 - **No single regulatory anchor**: The three-tier model is an ArcKit synthesis. Run alongside `/arckit.uae-ai-charter` for the regulatory grounding.
 - **Cabinet 50% mandate**: Federal entities pursuing the 23 April 2026 agentic-AI mandate should keep tier-promotion criteria pre-published — the regulator may request them.
 - **Run after charter**: Charter posture is an input — run `/arckit.uae-ai-charter` first.

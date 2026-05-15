@@ -13,7 +13,6 @@
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Processing activities and personal-data flows |
 | Data requirements (`ARC-<id>-DR-v1.0.md`) | Personal-data categories collected |
 | Data model (`ARC-<id>-DMOD-v1.0.md`) | Personal-data entities and relationships |
-| Smart Data Classification Register (`ARC-<id>-CLAS-v*.md`) | Sensitivity tags per dataset |
 
 ---
 
