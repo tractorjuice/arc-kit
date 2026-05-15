@@ -1,5 +1,5 @@
 {
-  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection, filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns). All entries use the `args: string[]` exec form (Claude Code v2.1.139+) to avoid shell-string parsing. PostToolUse entries set `continueOnBlock: true` (v2.1.139+) so a stamping / telemetry / manifest hook can never derail the user's turn — they are observational and must fail soft.",
+  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection (UserPromptSubmit + PostCompact rehydrate), filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns). All entries use the `args: string[]` exec form (Claude Code v2.1.139+) to avoid shell-string parsing. PostToolUse entries set `continueOnBlock: true` (v2.1.139+) so a stamping / telemetry / manifest hook can never derail the user's turn — they are observational and must fail soft.",
   "hooks": {
     "Stop": [
       {
@@ -282,6 +282,19 @@
             "type": "command",
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/allow-mcp-tools.mjs"],
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/postcompact-rehydrate.mjs"],
             "timeout": 5
           }
         ]

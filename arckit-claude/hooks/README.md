@@ -77,6 +77,14 @@ When `docs/` exists (i.e. the project has run `/arckit:pages`), `session-learner
 
 > **Note on `type: "mcp_tool"` (v2.1.118)**: This Claude Code feature lets a hook *invoke* an MCP tool as its action (alternative to `type: "command"` / `type: "prompt"`). It does **not** filter hooks to fire only on MCP tool calls. ArcKit logs `govreposcrape` calls via the existing tool-name matcher pattern (`mcp__govreposcrape__.*`); no `type: "mcp_tool"` registration is needed for telemetry.
 
+## Project Context Re-Injection (`postcompact-rehydrate.mjs`)
+
+PostCompact hook (Claude Code v2.1.76+) that re-injects the same project context the `UserPromptSubmit` hook produces — project inventory, ARC-* artifact listings (top-level + subdirectories), vendor profiles, external documents, global policies. Fires once per `/compact` or auto-compaction.
+
+Companion to `keep-coding-instructions: true` (v2.1.94): that flag preserves the static command body across compaction, but dynamic project state is filesystem-derived and would otherwise be lost in the summary until the user types the next `/arckit:` prompt. The PostCompact rehydration closes that gap.
+
+Reuses `buildProjectContext` from `project-context-builder.mjs` (same builder as `arckit-context.mjs` and `inject-agent-context.mjs`). No new marker-file convention — the filesystem (`projects/`, ARC artefact files, `external/`, `policies/`) is the source of truth, so the post-compact view is always consistent with the live repo state. Exits silently with `{}` when no `projects/` directory exists.
+
 ## All Registered Hooks
 
 See `hooks.json` for the full registration. Current handler files in this directory:
@@ -86,6 +94,7 @@ See `hooks.json` for the full registration. Current handler files in this direct
 - `file-protection.mjs` — guards critical files
 - `graph-inject.mjs` / `graph-rollups.mjs` / `graph-utils.mjs` — requirement-graph injection
 - `hook-utils.mjs` — shared helpers
+- `postcompact-rehydrate.mjs` — see above
 - `provenance-stamp.mjs` — see above
 - `score-validator.mjs` — vendor-score validation
 - `secret-detection.mjs` / `secret-file-scanner.mjs` — secret-leak prevention
