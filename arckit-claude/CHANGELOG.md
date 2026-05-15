@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - **`session-learner.mjs` and `telemetry.mjs` capture session effort level** (#215 item #27). Claude Code v2.1.133 started passing `effort.level` in hook input JSON and `$CLAUDE_EFFORT` as an env var. The effort tier is now recorded on every telemetry JSONL record (`hook_duration`, `mcp_call`, `agent_spawn`) and on every `.arckit/memory/sessions.md` entry, plus the `docs/telemetry.json` per-session record. Enables effort-aware p95 comparison (e.g. `xhigh` vs `max` for the same tool) and supports the Phase 5 audit of which `effort: max` commands could be downgraded. Silently omitted on older clients or when no explicit effort was set.
+- **Effort mix surfaced on the `/arckit:pages` dashboard.** The Session Telemetry panel now shows an "Effort mix" row (e.g. `high: 4 · max: 2`) aggregated across the last 10 sessions, and each row in the Recent Sessions list carries an effort-tier chip next to the session type. Rendered only when at least one session has an effort tag — pre-v2.1.133 captures degrade gracefully to the previous layout.
 
 ### Changed
 
