@@ -167,6 +167,7 @@ Handler: `command` (JSON stdio + exit-code-2 block). Matcher: regex only — no 
 - **Plugin-shipped settings.json** — currently supports `agent` (default subagent) and `subagentStatusLine` keys.
 - **Plugin dependencies** — `dependencies` array with semver constraints; `claude plugin prune`/`autoremove` for orphans.
 - **Background monitors** (`experimental.monitors` key, moved from top-level in v2.1.129) — persistent subprocess; `when: always` or `on-skill-invoke:<skill>`; stdout → in-session notifications.
+- **Hook `args: string[]` exec form** (v2.1.139) — alternative to the legacy single-string `command` field; harness execs the binary directly instead of parsing a shell-quoted command line. ArcKit uses this form for all 16 registered hook entries.
 
 ### Gemini CLI
 

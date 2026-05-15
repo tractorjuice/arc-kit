@@ -123,7 +123,7 @@ Substitution uses `${user_config.KEY}`. Sensitive values are never substituted i
 
 ### Plugin Hooks
 
-Hook handlers live in `arckit-claude/hooks/` and are registered in `arckit-claude/hooks/hooks.json`. Individual hook entries support an `if:` field (v2.1.85+) using permission rule syntax (e.g. `"Write(/projects/**)"`) to narrow triggering and avoid unnecessary Node spawns.
+Hook handlers live in `arckit-claude/hooks/` and are registered in `arckit-claude/hooks/hooks.json`. All entries use the **exec form** (`command: "node"` + `args: ["${CLAUDE_PLUGIN_ROOT}/hooks/<name>.mjs"]`, v2.1.139+) so the harness execs the binary directly instead of parsing a shell-quoted command line. Individual hook entries also support an `if:` field (v2.1.85+) using permission rule syntax (e.g. `"Write(/projects/**)"`) to narrow triggering and avoid unnecessary Node spawns.
 
 Notable hooks: provenance stamping, manifest auto-update, session telemetry, secret detection, requirement-graph injection. **For full details on each hook, see [`arckit-claude/hooks/README.md`](arckit-claude/hooks/README.md).**
 

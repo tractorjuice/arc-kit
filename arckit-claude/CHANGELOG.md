@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **All 16 hook entries in `hooks.json` migrated to `args: string[]` exec form** (#215 item #24). Claude Code v2.1.139 added the exec form (`command: "node"` + `args: ["..."]`) as an alternative to the legacy single-string `command: "node /path/to/x.mjs"`. The harness now execs the binary directly instead of parsing a shell-quoted command line, eliminating shell-quoting / metacharacter pitfalls in `${CLAUDE_PLUGIN_ROOT}`-substituted paths. `arckit-claude/hooks/README.md` and `docs/PLATFORM-COMPARISON.md` document the new form.
+- **Minimum Claude Code version bumped to v2.1.139** (from v2.1.129). Required by the `args` exec form. Also picks up v2.1.133 subagent skill discovery fix (relevant to ArcKit's 13 agents) and v2.1.136 SessionStart env staleness fix (relevant to the `inject-arckit-context` pattern). SessionStart `version-check.mjs` hook updated.
+
 ## [4.20.3] - 2026-05-11
 
 ### Fixed

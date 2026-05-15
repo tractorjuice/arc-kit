@@ -1,5 +1,5 @@
 {
-  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection, filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns)",
+  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection, filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns). All entries use the `args: string[]` exec form (Claude Code v2.1.139+) to avoid shell-string parsing.",
   "hooks": {
     "Stop": [
       {
@@ -7,7 +7,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/session-learner.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/session-learner.mjs"],
             "timeout": 10
           }
         ]
@@ -19,7 +20,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/session-learner.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/session-learner.mjs"],
             "timeout": 10
           }
         ]
@@ -31,12 +33,14 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-session.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/arckit-session.mjs"],
             "timeout": 5
           },
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/version-check.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/version-check.mjs"],
             "timeout": 5
           }
         ]
@@ -48,12 +52,14 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/arckit-context.mjs"],
             "timeout": 10
           },
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/secret-detection.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/secret-detection.mjs"],
             "timeout": 5
           }
         ]
@@ -63,7 +69,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/sync-guides.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/sync-guides.mjs"],
             "timeout": 15
           }
         ]
@@ -73,7 +80,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs"],
             "timeout": 30
           }
         ]
@@ -83,7 +91,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs"],
             "timeout": 20
           }
         ]
@@ -93,7 +102,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs"],
             "timeout": 30
           }
         ]
@@ -103,7 +113,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs"],
             "timeout": 15
           }
         ]
@@ -113,7 +124,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs"],
             "timeout": 20
           }
         ]
@@ -123,7 +135,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs"],
             "timeout": 15
           }
         ]
@@ -133,7 +146,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/graph-inject.mjs"],
             "timeout": 20
           }
         ]
@@ -145,7 +159,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/allow-plugin-internals.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/allow-plugin-internals.mjs"],
             "timeout": 5
           }
         ]
@@ -155,7 +170,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/inject-agent-context.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/inject-agent-context.mjs"],
             "timeout": 10
           }
         ]
@@ -166,13 +182,15 @@
           {
             "type": "command",
             "if": "Write(/projects/**)",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/validate-arc-filename.mjs"],
             "timeout": 5
           },
           {
             "type": "command",
             "if": "Write(/projects/**/vendors/scores.json)",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/score-validator.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/score-validator.mjs"],
             "timeout": 5
           }
         ]
@@ -182,12 +200,14 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/file-protection.mjs"],
             "timeout": 5
           },
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/secret-file-scanner.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/secret-file-scanner.mjs"],
             "timeout": 5
           }
         ]
@@ -200,13 +220,15 @@
           {
             "type": "command",
             "if": "Write(/projects/**)",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/update-manifest.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/update-manifest.mjs"],
             "timeout": 5
           },
           {
             "type": "command",
             "if": "Write(/projects/**)",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs"],
             "timeout": 5
           }
         ]
@@ -217,7 +239,8 @@
           {
             "type": "command",
             "if": "Edit(/projects/**)",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs"],
             "timeout": 5
           }
         ]
@@ -227,7 +250,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/telemetry.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/telemetry.mjs"],
             "timeout": 3
           }
         ]
@@ -239,7 +263,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/telemetry.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/telemetry.mjs"],
             "timeout": 3
           }
         ]
@@ -251,7 +276,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ${CLAUDE_PLUGIN_ROOT}/hooks/allow-mcp-tools.mjs",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/allow-mcp-tools.mjs"],
             "timeout": 5
           }
         ]

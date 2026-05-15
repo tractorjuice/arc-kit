@@ -2,6 +2,21 @@
 
 Hook handlers live in this directory and are registered in `hooks.json`. Supported hook events include `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop`, `StopFailure`, `PermissionRequest`, plus the newer `PostCompact` (v2.1.76), `FileChanged`/`CwdChanged`/`TaskCreated` (v2.1.83–84), `PermissionDenied` (v2.1.89), and `PreCompact` blocking (v2.1.105).
 
+## `args:` Exec Form (v2.1.139+)
+
+All entries use the **exec form** of the command field — `command` is the executable name and `args: string[]` is the argument list, no shell involved:
+
+```json
+{
+  "type": "command",
+  "command": "node",
+  "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs"],
+  "timeout": 5
+}
+```
+
+This avoids shell-parsing of the command string and the quoting / metacharacter pitfalls that come with it. `${CLAUDE_PLUGIN_ROOT}` and other Claude Code variables are substituted by the harness before exec. When adding a new hook, use this form rather than the legacy single-string `command: "node /path/to/x.mjs"`.
+
 ## `if:` Field for Narrow Triggering
 
 Individual hook entries support an `if:` field (Claude Code v2.1.85+) using **permission rule syntax** to narrow triggering and avoid unnecessary Node process spawns. Examples:
