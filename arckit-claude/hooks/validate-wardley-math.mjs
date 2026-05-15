@@ -1,17 +1,26 @@
 #!/usr/bin/env node
 /**
- * ArcKit PreToolUse (Write) Hook — Wardley Map Math Validation
+ * ArcKit PreToolUse (Write) Hook — Wardley Map Math + OWM Lint
  *
  * Validates a Wardley Map document about to be written for consistency:
  *   1. Stage-evolution alignment (Component Inventory tables)
  *   2. Coordinate range validation (all values in [0.00, 1.00])
  *   3. OWM syntax consistency (wardley/owm code block vs Component Inventory)
- *   4. Mermaid wardley-beta syntax (unquoted bare-digit tokens break rendering)
+ *   4. OWM parser-class lint (dangling refs, annotation reuse, pipeline
+ *      range, style-name typos) — see issue #436 failure-class list
+ *   5. Mermaid wardley-beta syntax (unquoted bare-digit tokens break rendering)
  *
  * Hook Type: PreToolUse
  * Matcher: Write
  * Scoped via an `if:` rule in hooks.json that matches Write calls under
  * projects/<id>/wardley-maps/ so it only runs for ARC Wardley Map artefacts.
+ *
+ * Scope vs sibling issue #435 (Mermaid block validator):
+ *   This hook owns OWM/`wardley`-fenced blocks inside Wardley artefacts.
+ *   General Mermaid validation belongs in #435's `mermaid-block-scanner`.
+ *   The narrow `wardley-beta` bare-digit check below stays here because it
+ *   targets a Wardley-template-specific rendering trap, not general Mermaid
+ *   correctness; the two hooks therefore coexist without overlap.
  *
  * Input (stdin):  JSON { tool_name, tool_input: { file_path, content }, ... }
  * Output (stdout): JSON { decision: "block", reason } on failure; empty on pass.
@@ -21,6 +30,23 @@
 
 import { readFileSync } from 'node:fs';
 import { basename } from 'node:path';
+
+const VALID_OWM_STYLES = new Set(['wardley', 'colour', 'plain', 'handwritten', 'dark']);
+// OWM statement keywords that must NOT be treated as edges even if a line
+// happens to contain `->` (e.g. in a `title` or `note` string).
+const OWM_STATEMENT_KEYWORDS = new Set([
+  'component', 'anchor', 'note', 'submap', 'market',
+  'pipeline', 'evolve', 'title', 'style', 'size',
+  'annotation', 'annotations', 'build', 'sourcing',
+  'y-axis', 'inertia', 'url',
+]);
+
+function normalizeName(raw) {
+  // Strip surrounding whitespace and surrounding double quotes.
+  let s = raw.trim();
+  if (s.startsWith('"') && s.endsWith('"') && s.length >= 2) s = s.slice(1, -1);
+  return s;
+}
 
 function evolutionToStage(evo) {
   const val = parseFloat(evo);
@@ -49,8 +75,6 @@ try {
 const filePath = (data.tool_input || {}).file_path || '';
 const content = (data.tool_input || {}).content || '';
 
-// Defense-in-depth: the `if:` rule in hooks.json already narrows this,
-// but skip cleanly if either field is empty or the path isn't a Wardley artefact.
 if (!filePath || !content) process.exit(0);
 if (!filePath.includes('/wardley-maps/')) process.exit(0);
 
@@ -60,11 +84,15 @@ const contentLines = content.split('\n');
 const errors = [];
 const stageErrors = [];
 const owmErrors = [];
+const danglingErrors = [];
+const annotationErrors = [];
+const pipelineRangeErrors = [];
+const styleErrors = [];
 
-// Regex for table rows: | Component | 0.XX | 0.XX | Stage | ... |
+// Regex for Component Inventory table rows: | Component | 0.XX | 0.XX | Stage | ... |
 const tableRowRe = /^\|\s*([^|]+?)\s*\|\s*(\d+\.\d+)\s*\|\s*(\d+\.\d+)\s*\|\s*(Genesis|Custom|Product|Commodity)\s*\|/;
 
-// --- Check 1 & 2: Stage-evolution alignment and coordinate range ---
+// --- Checks 1 & 2: Stage-evolution alignment and coordinate range (table) ---
 const tableVis = {};
 const tableEvo = {};
 
@@ -76,16 +104,13 @@ for (const line of contentLines) {
   const evo = m[3];
   const stage = m[4];
 
-  // Skip template placeholder rows
   if (comp.includes('{') || comp === 'Component') continue;
 
-  // Check stage-evolution alignment
   const expected = evolutionToStage(evo);
   if (stage !== expected) {
     stageErrors.push(`- '${comp}' has evolution ${evo} but Stage is '${stage}' (expected '${expected}')`);
   }
 
-  // Check coordinate range
   const visF = parseFloat(vis);
   const evoF = parseFloat(evo);
   if (visF < 0.0 || visF > 1.0) {
@@ -95,20 +120,41 @@ for (const line of contentLines) {
     errors.push(`- '${comp}' has evolution ${evo} outside valid range [0.00, 1.00]`);
   }
 
-  // Store for cross-reference
   tableVis[comp] = vis;
   tableEvo[comp] = evo;
 }
 
-// --- Check 3: OWM syntax consistency ---
-// Accepts both ```wardley and ```owm fence aliases (OnlineWardleyMaps uses both).
+// --- Walk OWM/wardley block(s) ---
+// Accepts both ```wardley and ```owm fence aliases.
+// Single pass collects:
+//   - declared: components/anchors/notes/submaps/markets (and pipelines)
+//   - references: from evolve, pipeline, and `A -> B` edges (including `link`)
+//   - annotation index usage (for reuse detection)
+//   - style declarations (for whitelist check)
+//   - pipeline coord brackets (for range check)
+//   - component coord cross-reference vs the Component Inventory table
+
 const owmVis = {};
 const owmEvo = {};
-let inWardley = false;
-const componentRe = /^\s*component\s+(.+?)\s+\[\s*([0-9.]+)\s*,\s*([0-9.]+)\s*\]/;
-const owmFenceOpenRe = /^\s*```(?:wardley|owm)\b/;
+const declared = new Map();           // normalized name -> {line, raw}
+const annotationFirstLine = new Map(); // id (number) -> firstLine (1-indexed)
+const references = [];                // {name, line, kind}
 
-for (const line of contentLines) {
+let inWardley = false;
+const owmFenceOpenRe = /^\s*```(?:wardley|owm)\b/;
+// Coord groups allow a leading `-` so out-of-range negative values still
+// match the pattern (and get flagged by the range checks below) rather than
+// silently slipping through.
+const componentDeclRe = /^\s*(component|anchor|note|submap|market)\s+(.+?)\s+\[\s*(-?[0-9.]+)\s*,\s*(-?[0-9.]+)\s*\]/;
+const pipelineRe = /^\s*pipeline\s+(.+?)\s+\[\s*(-?[0-9.]+)\s*,\s*(-?[0-9.]+)\s*\]/;
+const evolveRe = /^\s*evolve\s+(.+?)\s+[0-9.]+\s*$/;
+const annotationRe = /^\s*annotation\s+(\d+)\s+\[/;
+const styleRe = /^\s*style\s+(\S+)/;
+
+for (let i = 0; i < contentLines.length; i++) {
+  const line = contentLines[i];
+  const ln = i + 1;
+
   if (owmFenceOpenRe.test(line)) {
     inWardley = true;
     continue;
@@ -117,24 +163,111 @@ for (const line of contentLines) {
     inWardley = false;
     continue;
   }
-  if (inWardley) {
-    const cm = line.match(componentRe);
-    if (cm) {
-      const compName = cm[1].trim();
-      owmVis[compName] = cm[2];
-      owmEvo[compName] = cm[3];
+  if (!inWardley) continue;
 
-      // Also enforce OWM coordinate range — the plane is unit square [0, 1].
-      const oVisF = parseFloat(cm[2]);
-      const oEvoF = parseFloat(cm[3]);
-      if (oVisF < 0.0 || oVisF > 1.0) {
-        errors.push(`- '${compName}' OWM block has visibility ${cm[2]} outside valid range [0.00, 1.00]`);
-      }
-      if (oEvoF < 0.0 || oEvoF > 1.0) {
-        errors.push(`- '${compName}' OWM block has evolution ${cm[3]} outside valid range [0.00, 1.00]`);
-      }
+  // Skip blank/comment-only lines fast
+  const trimmed = line.trim();
+  if (!trimmed || trimmed.startsWith('//')) continue;
+
+  // --- Component / anchor / note / submap / market declarations ---
+  const dm = line.match(componentDeclRe);
+  if (dm) {
+    const compName = normalizeName(dm[2]);
+    const vis = dm[3];
+    const evo = dm[4];
+
+    // First-write wins for the declared set; later duplicates are tolerated
+    // (OWM permits but discourages them; ignore vs. erroring keeps the
+    // hook focused on the issue's failure classes).
+    if (!declared.has(compName)) declared.set(compName, { line: ln, raw: dm[2] });
+
+    if (dm[1] === 'component' || dm[1] === 'anchor') {
+      owmVis[compName] = vis;
+      owmEvo[compName] = evo;
     }
+
+    const visF = parseFloat(vis);
+    const evoF = parseFloat(evo);
+    if (visF < 0.0 || visF > 1.0) {
+      errors.push(`- '${compName}' OWM ${dm[1]} has visibility ${vis} outside valid range [0.00, 1.00] (line ${ln})`);
+    }
+    if (evoF < 0.0 || evoF > 1.0) {
+      errors.push(`- '${compName}' OWM ${dm[1]} has evolution ${evo} outside valid range [0.00, 1.00] (line ${ln})`);
+    }
+    continue;
   }
+
+  // --- Pipeline declarations ---
+  // `pipeline NAME [v1, v2]` — NAME must reference an already-declared
+  // component; the bracket pair carries evolution-axis endpoints, both of
+  // which must sit inside the unit interval.
+  const pm = line.match(pipelineRe);
+  if (pm) {
+    const pipeName = normalizeName(pm[1]);
+    const p1 = parseFloat(pm[2]);
+    const p2 = parseFloat(pm[3]);
+
+    references.push({ name: pipeName, line: ln, kind: 'pipeline' });
+
+    if (p1 < 0.0 || p1 > 1.0 || p2 < 0.0 || p2 > 1.0) {
+      pipelineRangeErrors.push(
+        `- Line ${ln}: pipeline '${pipeName}' has range [${pm[2]}, ${pm[3]}] — both endpoints must sit in [0.00, 1.00]`
+      );
+    }
+    if (p1 >= p2) {
+      pipelineRangeErrors.push(
+        `- Line ${ln}: pipeline '${pipeName}' has range [${pm[2]}, ${pm[3]}] — first endpoint must be strictly less than the second`
+      );
+    }
+    continue;
+  }
+
+  // --- evolve TARGET 0.45 ---
+  const em = line.match(evolveRe);
+  if (em) {
+    references.push({ name: normalizeName(em[1]), line: ln, kind: 'evolve' });
+    continue;
+  }
+
+  // --- Annotations ---
+  const am = line.match(annotationRe);
+  if (am) {
+    const id = parseInt(am[1], 10);
+    if (annotationFirstLine.has(id)) {
+      annotationErrors.push(
+        `- Line ${ln}: annotation index ${id} reused (first declared on line ${annotationFirstLine.get(id)}) — each annotation needs a unique numeric ID`
+      );
+    } else {
+      annotationFirstLine.set(id, ln);
+    }
+    continue;
+  }
+
+  // --- Style name whitelist ---
+  const sm = line.match(styleRe);
+  if (sm) {
+    if (!VALID_OWM_STYLES.has(sm[1])) {
+      const valid = [...VALID_OWM_STYLES].sort().join(', ');
+      styleErrors.push(
+        `- Line ${ln}: unknown OWM style '${sm[1]}' — valid styles: ${valid}`
+      );
+    }
+    continue;
+  }
+
+  // --- Edges: NAME -> NAME (and `link NAME -> NAME`) ---
+  if (!line.includes('->')) continue;
+  let edgeLine = trimmed;
+  if (/^link\s+/.test(edgeLine)) edgeLine = edgeLine.replace(/^link\s+/, '');
+  const firstWord = edgeLine.split(/\s+/)[0].toLowerCase();
+  if (OWM_STATEMENT_KEYWORDS.has(firstWord)) continue;
+
+  const parts = edgeLine.split('->');
+  if (parts.length !== 2) continue;
+  const left = normalizeName(parts[0]);
+  const right = normalizeName(parts[1]);
+  if (left) references.push({ name: left, line: ln, kind: 'edge' });
+  if (right) references.push({ name: right, line: ln, kind: 'edge' });
 }
 
 // Cross-reference OWM coordinates vs table coordinates
@@ -153,33 +286,40 @@ for (const compName of Object.keys(owmVis)) {
   }
 }
 
-// --- Check 4: Mermaid wardley-beta syntax (unquoted bare-digit tokens) ---
+// --- Dangling-reference check ---
+// For each reference, the target must have been declared somewhere in the
+// OWM block. Reports first-seen line per (name, kind) to keep output short.
+{
+  const seen = new Set();
+  for (const ref of references) {
+    if (declared.has(ref.name)) continue;
+    const key = `${ref.kind}:${ref.name}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    danglingErrors.push(
+      `- Line ${ref.line}: ${ref.kind} references undeclared name '${ref.name}' — declare with \`component ${ref.name} [v, e]\` (or anchor/note/submap/market) earlier in the block`
+    );
+  }
+}
+
+// --- Check 5: Mermaid wardley-beta syntax (unquoted bare-digit tokens) ---
 //
-// The wardley-beta parser tokenises bare numeric words (like `2031`, `27001`)
-// as numeric literals, which breaks rendering with errors such as:
-//   "Parse error on line N, column M: Expecting token of type '[' but found '2031'."
-// Any name containing a whitespace-separated pure-digit word MUST be quoted
-// everywhere it appears — component/anchor declarations, both sides of `->`
-// edges, `evolve` targets, and `pipeline` parents.
+// Scoped to wardley-beta diagrams only — general Mermaid validation is the
+// territory of issue #435 / `mermaid-block-scanner` (not this hook).
 
 const mermaidErrors = [];
 let inMermaidBlock = false;
 let inMermaidWardley = false;
 
 function extractNameZones(line) {
-  // component NAME [v, e] (decorators)
   let m = line.match(/^\s*component\s+(.+?)\s*\[/);
   if (m) return [m[1]];
-  // anchor NAME [v, e]
   m = line.match(/^\s*anchor\s+(.+?)\s*\[/);
   if (m) return [m[1]];
-  // evolve NAME 0.45 (trailing number is the target evolution coord)
   m = line.match(/^\s*evolve\s+(.+?)\s+[0-9.]+\s*$/);
   if (m) return [m[1]];
-  // pipeline NAME [v1, v2]? (brackets optional)
   m = line.match(/^\s*pipeline\s+(.+?)(?:\s*\[|\s*$)/);
   if (m) return [m[1]];
-  // edge: NAME -> NAME (single arrow, two zones)
   if (line.includes('->') && !/^\s*(?:component|anchor|evolve|pipeline|note|annotation|annotations|title|size|style)\b/.test(line)) {
     const parts = line.split('->');
     if (parts.length === 2) return [parts[0], parts[1]];
@@ -188,7 +328,6 @@ function extractNameZones(line) {
 }
 
 function bareDigitWords(nameZone) {
-  // Strip quoted substrings and decorator groups so we only inspect unquoted words
   const stripped = nameZone
     .replace(/"[^"]*"/g, '')
     .replace(/\([^)]*\)/g, '')
@@ -239,6 +378,18 @@ if (errors.length > 0) {
 }
 if (owmErrors.length > 0) {
   reportParts.push('**OWM Coordinate Mismatches:**\n' + owmErrors.join('\n'));
+}
+if (danglingErrors.length > 0) {
+  reportParts.push('**Dangling OWM References:**\n' + danglingErrors.join('\n'));
+}
+if (annotationErrors.length > 0) {
+  reportParts.push('**Annotation Index Reuse:**\n' + annotationErrors.join('\n'));
+}
+if (pipelineRangeErrors.length > 0) {
+  reportParts.push('**Pipeline Range Errors:**\n' + pipelineRangeErrors.join('\n'));
+}
+if (styleErrors.length > 0) {
+  reportParts.push('**Unknown OWM Style:**\n' + styleErrors.join('\n'));
 }
 if (mermaidErrors.length > 0) {
   reportParts.push('**Mermaid wardley-beta Syntax Errors (bare numeric tokens break rendering):**\n' + mermaidErrors.join('\n'));
