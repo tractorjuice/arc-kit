@@ -1,5 +1,5 @@
 {
-  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection, filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns). All entries use the `args: string[]` exec form (Claude Code v2.1.139+) to avoid shell-string parsing.",
+  "description": "ArcKit hooks: session init, version check, session learner (Stop + StopFailure), project context injection, filename enforcement, MCP tool auto-allow, security protection (file protection, secret detection, secret file scanning), provenance stamping on artefact writes (PostToolUse Write|Edit), and telemetry recording (PostToolUse for hook duration_ms + govreposcrape MCP calls; TaskCreated for agent spawns). All entries use the `args: string[]` exec form (Claude Code v2.1.139+) to avoid shell-string parsing. PostToolUse entries set `continueOnBlock: true` (v2.1.139+) so a stamping / telemetry / manifest hook can never derail the user's turn — they are observational and must fail soft.",
   "hooks": {
     "Stop": [
       {
@@ -222,14 +222,16 @@
             "if": "Write(/projects/**)",
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/update-manifest.mjs"],
-            "timeout": 5
+            "timeout": 5,
+            "continueOnBlock": true
           },
           {
             "type": "command",
             "if": "Write(/projects/**)",
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs"],
-            "timeout": 5
+            "timeout": 5,
+            "continueOnBlock": true
           }
         ]
       },
@@ -241,7 +243,8 @@
             "if": "Edit(/projects/**)",
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs"],
-            "timeout": 5
+            "timeout": 5,
+            "continueOnBlock": true
           }
         ]
       },
@@ -252,7 +255,8 @@
             "type": "command",
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/telemetry.mjs"],
-            "timeout": 3
+            "timeout": 3,
+            "continueOnBlock": true
           }
         ]
       }
