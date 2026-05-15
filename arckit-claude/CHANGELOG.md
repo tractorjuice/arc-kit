@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`session-learner.mjs` and `telemetry.mjs` capture session effort level** (#215 item #27). Claude Code v2.1.133 started passing `effort.level` in hook input JSON and `$CLAUDE_EFFORT` as an env var. The effort tier is now recorded on every telemetry JSONL record (`hook_duration`, `mcp_call`, `agent_spawn`) and on every `.arckit/memory/sessions.md` entry, plus the `docs/telemetry.json` per-session record. Enables effort-aware p95 comparison (e.g. `xhigh` vs `max` for the same tool) and supports the Phase 5 audit of which `effort: max` commands could be downgraded. Silently omitted on older clients or when no explicit effort was set.
+
 ### Changed
 
 - **All 16 hook entries in `hooks.json` migrated to `args: string[]` exec form** (#215 item #24). Claude Code v2.1.139 added the exec form (`command: "node"` + `args: ["..."]`) as an alternative to the legacy single-string `command: "node /path/to/x.mjs"`. The harness now execs the binary directly instead of parsing a shell-quoted command line, eliminating shell-quoting / metacharacter pitfalls in `${CLAUDE_PLUGIN_ROOT}`-substituted paths. `arckit-claude/hooks/README.md` and `docs/PLATFORM-COMPARISON.md` document the new form.
