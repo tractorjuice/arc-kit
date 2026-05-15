@@ -42,6 +42,8 @@ export GOOGLE_API_KEY="your-api-key-here"
 
 After installation, restart Claude Code to load the MCP server.
 
+**Slow corporate network?** On TLS-inspecting proxies, VPN tunnels, or congested links, large-scope research prompts can exceed Claude Code's default per-request fetch timeout. Set `MCP_TOOL_TIMEOUT=300000` (5 minutes, in milliseconds) before launching Claude — see [MCP per-request timeout](mcp-servers.md#optional-mcp-per-request-timeout-claude-code-v21142) in the MCP setup guide. Requires Claude Code v2.1.142+.
+
 ### Project Prerequisites
 
 - Requirements document (`ARC-*-REQ-*.md`) - **MANDATORY**

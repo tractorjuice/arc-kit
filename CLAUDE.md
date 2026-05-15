@@ -74,6 +74,8 @@ Commands exist in multiple formats across the distribution. The plugin source is
 
 Effort and `keep-coding-instructions` are stripped by the converter for non-Claude targets.
 
+**Fast mode** (`/fast` toggle) runs the current Opus model with faster output — same model, no smaller-model downgrade. As of Claude Code v2.1.142 the default backing model for `/fast` is **Opus 4.7** (was Opus 4.6 pre-v2.1.142). `/fast` is unrelated to the `effort:` frontmatter — the two compose: a command with `effort: xhigh` still benefits from `/fast` if the user has toggled it.
+
 ### Agent System
 
 Some commands delegate to **autonomous agents** (`arckit-claude/agents/arckit-{name}.md`) that run as subprocesses via the Task tool. Agents are used for commands that perform extensive web research (>10 WebSearch/WebFetch/MCP calls) to keep that context isolated from the main conversation.

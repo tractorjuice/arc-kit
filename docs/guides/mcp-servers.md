@@ -35,6 +35,20 @@ claude
 
 Recommended for: overnight `autoresearch` runs, multi-command workflows (`/arckit:requirements` -> `/arckit:data-model` -> `/arckit:components`), and research agents that re-read large project context. Verify cache uplift in your Anthropic billing dashboard (`cache_read_input_tokens` should grow as a fraction of input tokens).
 
+### Optional: MCP per-request timeout (Claude Code v2.1.142+)
+
+The three bundled cloud-research MCP servers (`aws-knowledge`, `microsoft-learn`, `google-developer-knowledge`) are remote HTTP servers reached from your machine. Behind corporate proxies, TLS-inspecting gateways, or slow links, individual fetches inside a single tool call can exceed Claude Code's default per-request timeout — surfacing as `MCP tool call failed: timeout` in the middle of a long `/arckit:aws-research`, `/arckit:azure-research`, or `/arckit:gcp-research` run.
+
+Claude Code v2.1.142 made `MCP_TOOL_TIMEOUT` honour the per-request fetch timeout for remote servers (previously it only governed initial connect). Raise it for cloud-research sessions on slow networks:
+
+```bash
+# 5-minute per-request timeout (default is 60s)
+export MCP_TOOL_TIMEOUT=300000
+claude
+```
+
+The value is milliseconds. Recommended for: corporate networks with TLS-inspecting proxies, VPN-tunnelled connections, and large-scope research prompts that trigger many `microsoft_docs_fetch` / `aws___read_documentation` / `get_document` calls in sequence. On a healthy direct connection the default is fine — only set this when you see timeout failures.
+
 ### Step 1: Add the marketplace
 
 In Claude Code, run:
