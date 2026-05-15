@@ -112,7 +112,9 @@ The combined score is the arithmetic mean of the five dimensions, rounded to one
 
 ## 4. The Experiment Loop
 
-### LOOP FOREVER
+### LOOP UNTIL STOP CONDITION
+
+The loop runs until one of three explicit stop conditions fires (see step 12 below) — score target reached, iteration budget exhausted, or double plateau detected. There is no "loop forever" mode.
 
 1. Read the current command prompt and review `results.tsv` history
 2. Identify ONE specific improvement to the prompt
@@ -145,7 +147,13 @@ The combined score is the arithmetic mean of the five dimensions, rounded to one
 
     Then commit the revert: `"revert: <description> (no improvement)"`
     Do NOT use `git reset --hard` or `git revert`
-12. Go to step 1
+12. **Check stopping conditions** before going back to step 1:
+    - **Score target hit** — if `best >= 9.5`: log a row with status `complete` and description `score target reached (best={best})`, then exit the loop.
+    - **Iteration budget** — if `iter >= 30`: log a row with status `budget-exhausted` and description `30-iteration budget reached (best={best})`, then exit the loop.
+    - **Double plateau** — if the Plateau Detection trigger has fired twice in this run (i.e. two `plateau` rows already logged and the second was within the last 10 iterations): log a row with status `complete` and description `double plateau — diminishing returns`, then exit the loop.
+    - Otherwise: Go to step 1.
+
+    These thresholds are tunable. To extend a run, change the constants here (e.g. `>= 9.7` for higher target, `>= 50` for longer budget) and re-launch — do not let the LLM negotiate past a hit threshold mid-run.
 
 ### Plateau Detection
 
@@ -156,6 +164,8 @@ If the last 15 consecutive iterations have all been discarded (no score improvem
 - Try prompt simplification (removing instructions that don't contribute to score)
 - Try combining ideas from previous near-misses in the results history
 - Try changing `effort:` or `model:` if you haven't already — a different thinking level or model may unlock gains that prompt wording alone cannot
+
+The plateau strategy shift resets the discard streak to 0. If a second plateau marker is logged within 10 iterations of the first, step 12's double-plateau condition fires and the run exits — that's the diminishing-returns signal that further iteration is unlikely to pay off.
 
 ---
 

@@ -4,7 +4,7 @@
 
 ArcKit includes an autonomous prompt optimisation system inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch). It lets Claude Code iteratively improve any command prompt by running it, scoring the output, tweaking the prompt, and keeping or discarding the change based on whether quality improved.
 
-You start a run and walk away. The system loops until you stop it.
+You start a run and walk away. The system loops until a stop condition fires — score target hit, iteration budget exhausted, or double plateau detected. See [Stopping Conditions](#stopping-conditions) below for the defaults and how to tune them.
 
 ---
 
@@ -25,7 +25,7 @@ Claude will:
 3. Run the command, score the output, log the baseline
 4. Enter the experiment loop -- tweaking, re-running, keeping or discarding
 
-To stop: interrupt Claude at any time. The worktree has the best prompt.
+To stop early: interrupt Claude at any time. Otherwise the loop self-terminates on a stop condition (see [Stopping Conditions](#stopping-conditions)). Either way, the worktree has the best prompt.
 
 ### Watching progress without blocking the main session
 
@@ -72,6 +72,7 @@ Each iteration follows the same cycle:
 8. **Compare** to the previous best score
 9. **Keep or discard** based on a minimum delta threshold (>= 0.3)
 10. **Log** the result to `results.tsv`
+11. **Check stop conditions** — exit if score target hit, iteration budget exhausted, or double plateau detected (see [Stopping Conditions](#stopping-conditions))
 
 If discarded, the prompt is reverted via `git checkout` to the previous best version. The full history (including discards) is preserved in `results.tsv`.
 
@@ -160,16 +161,30 @@ c3d4e5f PASS        9.0    discard  derive NFR targets from context (delta < 0.3
 d4e5f6g PASS        9.2    keep     add use case structure instruction
 ```
 
-Status values: `keep`, `discard`, `plateau`, `crash`.
+Status values: `keep`, `discard`, `plateau`, `crash`, `complete`, `budget-exhausted`.
 
 ### Plateau Detection
 
-If 5 consecutive iterations are discarded, the system shifts strategy:
+If 15 consecutive iterations are discarded, the system shifts strategy:
 
 - Re-reads the template for unaddressed sections
 - Reviews the quality checklist for uncovered criteria
 - Tries prompt simplification
 - Combines ideas from previous near-misses
+
+A `plateau` row is logged when the trigger fires; the strategy shift resets the discard streak.
+
+### Stopping Conditions
+
+The loop runs until one of three explicit stop conditions fires (no "run forever" mode). All three are tunable inline at the top of step 12 in `program.md`:
+
+| Condition | Default | Final status row | Meaning |
+|-----------|---------|------------------|---------|
+| Score target | `best >= 9.5` | `complete` | Quality target reached; further iteration unlikely to pay off |
+| Iteration budget | `iter >= 30` | `budget-exhausted` | Token budget bounded; rerun with higher cap if more headroom is wanted |
+| Double plateau | 2 `plateau` rows within 10 iterations | `complete` | Strategy shift exhausted; diminishing returns |
+
+The final status row carries the reason in its `description` field so `results.tsv` self-documents why the run ended. To extend a run, edit the constants in `program.md` step 12 and re-launch — the constraints in section 4 prohibit the LLM from negotiating past a hit threshold mid-run.
 
 ---
 
