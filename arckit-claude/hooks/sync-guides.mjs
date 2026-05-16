@@ -944,6 +944,7 @@ function escapeHtml(str) {
 if (templatePath) {
   let html = readFileSync(templatePath, 'utf8');
   html = html.replace(/\{\{REPO\}\}/g, escapeHtml(repoInfo.repo));
+  html = html.replace(/\{\{REPO_OWNER\}\}/g, escapeHtml(repoInfo.owner));
   html = html.replace(/\{\{REPO_URL\}\}/g, escapeHtml(repoInfo.repoUrl));
   html = html.replace(/\{\{CONTENT_BASE_URL\}\}/g, escapeHtml(repoInfo.contentBaseUrl));
   html = html.replace(/\{\{VERSION\}\}/g, escapeHtml(version));
