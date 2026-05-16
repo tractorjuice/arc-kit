@@ -340,22 +340,130 @@
         "@graph": [
             {
                 "@type": "Organization",
+                "@id": "https://arckit.org/#organization",
                 "name": "ArcKit",
                 "url": "https://arckit.org",
-                "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit"
+                "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://arckit.org/assets/ArcKit_Logo_Horizontal_Light.svg",
+                    "contentUrl": "https://arckit.org/assets/ArcKit_Logo_Horizontal_Light.svg"
+                },
+                "sameAs": [
+                    "https://github.com/tractorjuice/arc-kit"
+                ]
             },
             {
                 "@type": "WebSite",
+                "@id": "https://arckit.org/#website",
                 "name": "ArcKit",
                 "url": "https://arckit.org",
-                "description": "117 AI-assisted commands for systematic, compliant architecture governance across UK, EU, France, Austria, Canada, and UAE jurisdictions."
+                "description": "117 AI-assisted commands for systematic, compliant architecture governance across UK, EU, France, Austria, Canada, and UAE jurisdictions.",
+                "publisher": { "@id": "https://arckit.org/#organization" },
+                "inLanguage": "en-GB"
             },
             {
                 "@type": "WebPage",
                 "@id": "https://arckit.org/",
+                "url": "https://arckit.org/",
                 "name": "ArcKit - Enterprise Architecture Governance & Vendor Procurement",
                 "description": "117 AI-assisted commands for systematic, compliant project delivery — UK Government baseline plus EU, France, Austria, Canada, and UAE community overlays.",
-                "isPartOf": { "@id": "https://arckit.org" }
+                "isPartOf": { "@id": "https://arckit.org/#website" },
+                "about": { "@id": "https://arckit.org/#software" },
+                "primaryImageOfPage": "https://arckit.org/og-image.png"
+            },
+            {
+                "@type": "SoftwareApplication",
+                "@id": "https://arckit.org/#software",
+                "name": "ArcKit",
+                "alternateName": "ArcKit Enterprise Architecture Toolkit",
+                "url": "https://arckit.org",
+                "applicationCategory": "DeveloperApplication",
+                "applicationSubCategory": "Enterprise Architecture Governance",
+                "operatingSystem": "macOS, Linux, Windows",
+                "description": "ArcKit is an open-source Enterprise Architecture Governance and Vendor Procurement toolkit distributed as a plugin or extension for AI coding assistants — Claude Code, Gemini CLI, GitHub Copilot, OpenAI Codex CLI, and OpenCode CLI. It provides 117 slash commands (71 official UK Government baseline plus 46 community-contributed overlays for the EU, France, Austria, Canada, and the UAE) that generate architecture artefacts using versioned templates with full traceability.",
+                "softwareVersion": "4.21.0",
+                "license": "https://github.com/tractorjuice/arc-kit/blob/main/LICENSE",
+                "codeRepository": "https://github.com/tractorjuice/arc-kit",
+                "offers": {
+                    "@type": "Offer",
+                    "price": "0",
+                    "priceCurrency": "GBP"
+                },
+                "publisher": { "@id": "https://arckit.org/#organization" },
+                "featureList": [
+                    "Requirements, stakeholders, risk, and Strategic Outline Business Case generation",
+                    "Architecture artefacts: ADRs, C4 diagrams, Wardley Maps, HLD/DLD reviews",
+                    "Vendor procurement: G-Cloud and DOS evaluation, SOW/RFP, scoring",
+                    "UK Government compliance: GDS Service Standard, TCoP, Secure by Design, NCSC CAF, Orange/Green Book",
+                    "EU regulatory overlays: GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act",
+                    "French compliance: SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI",
+                    "Austrian compliance: DSG/DSGVO, NISG, BVergG",
+                    "Canada Federal compliance: FITAA, Privacy Act PIA, ATIP, AIA, ITSG-33, GC Digital Standards",
+                    "UAE Federal compliance: PDPL, IAS, AI Charter, sovereign cloud residency, UAE Pass"
+                ]
+            },
+            {
+                "@type": "FAQPage",
+                "@id": "https://arckit.org/#faq",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is ArcKit?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "ArcKit is an open-source Enterprise Architecture Governance and Vendor Procurement toolkit. It provides 117 AI-assisted slash commands (71 official plus 46 community-contributed overlays) that turn architecture governance from scattered documents into a systematic, template-driven workflow with full traceability from stakeholders through requirements to design and tests."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Which AI coding assistants does ArcKit work with?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "ArcKit ships in five distribution formats covering Claude Code (premier), Google Gemini CLI, GitHub Copilot, OpenAI Codex CLI, and OpenCode CLI. The same commands and templates are available across every supported assistant."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Which jurisdictions and compliance frameworks does ArcKit cover?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "The official baseline covers UK Government frameworks: GDS Service Standard, Technology Code of Practice, Secure by Design, NCSC Cyber Assessment Framework, HM Treasury Orange and Green Books, and G-Cloud/DOS procurement. Community-maintained overlays add the European Union (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), France (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), Austria (DSG/DSGVO, NISG, BVergG), Canada Federal (FITAA, Privacy Act PIA, ATIP, AIA, ITSG-33, GC Digital Standards), and the UAE Federal (PDPL, IAS, AI Charter, sovereign cloud residency, UAE Pass)."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How do I install ArcKit?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "For Claude Code, run \"/plugin marketplace add tractorjuice/arc-kit\" then \"/plugin install arckit-claude\". For Gemini CLI, run \"gemini extensions install tractorjuice/arckit-gemini\". For Codex CLI, OpenCode CLI, or GitHub Copilot, install the Python CLI with \"pip install arckit\" and run \"arckit init --ai codex|opencode|copilot\" inside your project."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Is ArcKit free and open source?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes. ArcKit is released under the MIT licence with source code on GitHub at tractorjuice/arc-kit. You only pay for the underlying AI assistant subscription (Claude Code, Gemini, Copilot, Codex, or OpenCode)."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What artefacts does ArcKit generate?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "ArcKit generates the full lifecycle of enterprise architecture artefacts: business requirements, functional and non-functional requirements, stakeholder analyses, risk registers, Strategic Outline Business Cases, architecture decision records, C4 model and PlantUML diagrams, Wardley Maps, high- and low-level design reviews, vendor evaluation frameworks, SOW/RFP packs, traceability matrices, compliance assessments, and operational readiness documentation."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "How does ArcKit maintain traceability between artefacts?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Every artefact uses versioned identifiers in the form ARC-NNN-TYPE-vX.Y (for example ARC-001-REQ-v1.0). Requirements use typed prefixes (BR for business, FR for functional, NFR for non-functional, INT for integration, DR for data) and feed forward through the chain Stakeholders → Goals → Requirements → Data Model → Components → User Stories. The /arckit:traceability command renders the matrix on demand."
+                        }
+                    }
+                ]
             }
         ]
     }
