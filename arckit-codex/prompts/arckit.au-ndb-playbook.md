@@ -42,7 +42,7 @@ A working NDB playbook is operational — it must be executable under time press
 
 2. Read the template:
    - First: `.arckit/templates-custom/au-ndb-playbook-template.md`
-   - Then: `.arckit/templates/au-ndb-playbook-template.md`
+   - Then: `.arckit/templates-custom/au-ndb-playbook-template.md`
    - Fallback: `.arckit/templates/au-ndb-playbook-template.md`
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.

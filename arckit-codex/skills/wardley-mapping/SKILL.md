@@ -9,6 +9,8 @@ description: This skill should be used when the user asks about Wardley Mapping,
 
 A strategic mapping technique created by Simon Wardley for understanding competitive landscape, technology evolution, and making informed architectural decisions. A Wardley Map visualizes four dimensions: the **value chain** (components needed to meet user needs), **evolution** (how components mature over time), the **landscape** (competitive environment), and **movement** (how the landscape changes).
 
+**This skill ships reference material, not runnable scripts.** Read the relevant section here (or the linked references) with `Read`, apply the OnlineWardleyMaps syntax, and write the map into the user's artefact. Do not `Bash`-execute anything from this skill — there is no script to run.
+
 ## Map Structure
 
 The following diagram illustrates the conceptual axes of a Wardley Map. For the generation template with placeholders, see the Map Template section below.

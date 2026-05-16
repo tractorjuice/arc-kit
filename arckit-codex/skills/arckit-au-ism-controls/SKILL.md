@@ -40,7 +40,7 @@ The Australian Signals Directorate (ASD) Information Security Manual (ISM) is th
 
 2. Read the template:
    - First: `.arckit/templates-custom/au-ism-controls-template.md` (user override)
-   - Then: `.arckit/templates/au-ism-controls-template.md`
+   - Then: `.arckit/templates-custom/au-ism-controls-template.md`
    - Fallback: `.arckit/templates/au-ism-controls-template.md`
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist.

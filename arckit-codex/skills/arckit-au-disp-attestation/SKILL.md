@@ -40,7 +40,7 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
 
 2. Read the template:
    - First: `.arckit/templates-custom/au-disp-attestation-template.md` (user override)
-   - Then: `.arckit/templates/au-disp-attestation-template.md`
+   - Then: `.arckit/templates-custom/au-disp-attestation-template.md`
    - Fallback: `.arckit/templates/au-disp-attestation-template.md`
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if needed.

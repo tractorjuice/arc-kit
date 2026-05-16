@@ -2979,7 +2979,11 @@
                 let totalMcp = 0;
                 let p50Sum = 0;
                 let p50Count = 0;
+                const effortMix = {}; // tier → count
                 recent.forEach(s => {
+                    if (typeof s.effort === 'string' && s.effort) {
+                        effortMix[s.effort] = (effortMix[s.effort] || 0) + 1;
+                    }
                     const t = s.telemetry;
                     if (!t) return;
                     if (typeof t.toolCalls === 'number') totalToolCalls += t.toolCalls;
@@ -2988,6 +2992,18 @@
                     if (Array.isArray(t.mcp)) t.mcp.forEach(m => { totalMcp += m.count || 0; });
                 });
                 const medianP50 = p50Count > 0 ? Math.round(p50Sum / p50Count) : null;
+
+                // Effort tier ordering for stable rendering (low → max).
+                const EFFORT_ORDER = ['low', 'medium', 'high', 'xhigh', 'max'];
+                const effortEntries = EFFORT_ORDER
+                    .filter(k => effortMix[k])
+                    .map(k => `${k}: ${effortMix[k]}`)
+                    .concat(
+                        Object.keys(effortMix)
+                            .filter(k => !EFFORT_ORDER.includes(k))
+                            .map(k => `${k}: ${effortMix[k]}`)
+                    );
+                const effortMixLabel = effortEntries.length > 0 ? effortEntries.join(' · ') : '—';
 
                 let activityLeftHtml = `
                     <div class="app-dashboard-bar-row">
@@ -3005,6 +3021,10 @@
                     <div class="app-dashboard-bar-row">
                         <div class="app-dashboard-bar-label" style="min-width:130px">MCP calls</div>
                         <div class="app-dashboard-bar-value">${totalMcp.toLocaleString()}</div>
+                    </div>
+                    <div class="app-dashboard-bar-row">
+                        <div class="app-dashboard-bar-label" style="min-width:130px">Effort mix</div>
+                        <div class="app-dashboard-bar-value" style="font-size:0.8rem">${escapeHtml(effortMixLabel)}</div>
                     </div>
                 `;
                 activityLeftHtml += `<p style="color:var(--text-muted);font-size:0.75rem;margin-top:0.75rem;">Across last ${recent.length} session${recent.length === 1 ? '' : 's'} — ${sessions.length} total tracked.</p>`;
@@ -3027,7 +3047,10 @@
                     }
                     const summary = parts.length > 0 ? parts.join(' · ') : 'no telemetry';
                     const failureMark = s.isFailure ? ' <span style="color:#d4351c">⚠</span>' : '';
-                    activityRightHtml += `<li><strong>${escapeHtml(dateLabel)}</strong>${failureMark} — <span style="color:var(--text-muted)">${escapeHtml(s.type || 'general')}</span>: ${escapeHtml(summary)}</li>`;
+                    const effortChip = (typeof s.effort === 'string' && s.effort)
+                        ? ` <span style="display:inline-block;font-size:0.7rem;padding:1px 6px;border-radius:8px;background:var(--surface-muted,#eef2f7);color:var(--text-muted);margin-left:4px">${escapeHtml(s.effort)}</span>`
+                        : '';
+                    activityRightHtml += `<li><strong>${escapeHtml(dateLabel)}</strong>${failureMark} — <span style="color:var(--text-muted)">${escapeHtml(s.type || 'general')}</span>${effortChip}: ${escapeHtml(summary)}</li>`;
                 });
                 activityRightHtml += '</ul>';
 

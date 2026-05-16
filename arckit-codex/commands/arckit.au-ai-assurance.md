@@ -43,7 +43,7 @@ Australia's AI assurance landscape combines several frameworks that together gov
 
 2. Read the template:
    - First: `.arckit/templates-custom/au-ai-assurance-template.md`
-   - Then: `.arckit/templates/au-ai-assurance-template.md`
+   - Then: `.arckit/templates-custom/au-ai-assurance-template.md`
    - Fallback: `.arckit/templates/au-ai-assurance-template.md`
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.

@@ -248,7 +248,7 @@ Return ONLY a concise summary to the caller including:
 
 ## Toolchain
 
-- **Templates** — `.arckit/templates/framework-overview-template.md` · `.arckit/templates/framework-executive-guide-template.md` (overrides at `.arckit/templates-custom/...`)
+- **Templates** — `.arckit/templates/framework-overview-template.md` (overrides at `.arckit/templates-custom/...`). The Executive Guide is generated narrative — no template; written from artifact synthesis.
 - **Helpers** — `.arckit/scripts/bash/create-project.sh` · `.arckit/scripts/bash/generate-document-id.sh`
 - **External tools** — none (no web, no MCP — synthesis only)
 - **Related commands** — `/arckit:navigator` (project coverage) · `/arckit:traceability` (cross-reference validation) · `/arckit:strategy` (executive synthesis)

@@ -133,10 +133,9 @@ $ARGUMENTS
 
 ## Instructions
 
-1. **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/sla-template.md` exists in the project root
-   - **If found**: Read the user's customised template
-   - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/sla-template.md` (default)
+1. **Read the template**:
+   - Read `.arckit/templates/sla-template.md` from the project root.
+   - If the file is missing, stop and ask the user to create it (custom commands ship their template alongside the command).
 
 2. **Read the project requirements**:
    - Locate `projects/<project-id>/ARC-<id>-REQ-v*.md`

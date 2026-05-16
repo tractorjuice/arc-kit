@@ -39,7 +39,7 @@ The Digital Transformation Agency (DTA) Digital Service Standard sets the mandat
 
 2. Read the template:
    - **First**, check `.arckit/templates-custom/au-dss-template.md` (user override)
-   - **Then**, `.arckit/templates/au-dss-template.md`
+   - **Then**, `.arckit/templates-custom/au-dss-template.md`
    - **Fallback**, `.arckit/templates/au-dss-template.md`
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.

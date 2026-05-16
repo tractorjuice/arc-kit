@@ -44,7 +44,7 @@ PSPF is structured around **four security outcomes** with **16 core requirements
 
 2. Read the template:
    - First: `.arckit/templates-custom/au-pspf-template.md`
-   - Then: `.arckit/templates/au-pspf-template.md`
+   - Then: `.arckit/templates-custom/au-pspf-template.md`
    - Fallback: `.arckit/templates/au-pspf-template.md`
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.

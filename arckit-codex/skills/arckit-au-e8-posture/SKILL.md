@@ -38,7 +38,7 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
 
 2. Read the template:
    - **First**, check `.arckit/templates-custom/au-e8-posture-template.md` (user override)
-   - **Then**, `.arckit/templates/au-e8-posture-template.md`
+   - **Then**, `.arckit/templates-custom/au-e8-posture-template.md`
    - **Fallback**, `.arckit/templates/au-e8-posture-template.md`
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.

@@ -43,7 +43,7 @@ Australian Government agencies covered by the Privacy Act 1988 must conduct PIAs
 
 2. Read the template:
    - **First**, check `.arckit/templates-custom/au-pia-template.md` (user override)
-   - **Then**, `.arckit/templates/au-pia-template.md`
+   - **Then**, `.arckit/templates-custom/au-pia-template.md`
    - **Fallback**, `.arckit/templates/au-pia-template.md`
 
 3. Use `scripts/bash/create-project.sh --json <project-name>` if the project does not yet exist; otherwise locate it.

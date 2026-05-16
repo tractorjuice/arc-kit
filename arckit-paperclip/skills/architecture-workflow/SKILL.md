@@ -1,8 +1,11 @@
 ---
 name: architecture-workflow
-description: This skill should be used when the user asks how to start an architecture
-  project, which ArcKit commands to run and in what order, what workflow to follow,
-  getting started, new project setup, guide me through, or what comes next.
+description: This skill should be used when the user is starting an architecture project
+  or asking what to run next. Load whenever the task sounds like 'I'm starting a new
+  project', 'guide me through', 'what command should I run', 'what comes next', 'how
+  do I begin', 'help me get started', 'which /arckit:* in what order', 'set up a new
+  project', 'new system build', or 'where do I start'. Recommends a tailored command
+  sequence based on sector, project type, current stage, and timeline.
 ---
 
 # Architecture Workflow
