@@ -9,6 +9,8 @@ description: This skill should be used when the user asks about PlantUML syntax 
 
 A comprehensive reference for PlantUML diagram types with a focus on C4-PlantUML for architecture diagrams. This skill provides syntax documentation adapted from the [SpillwaveSolutions/plantuml](https://github.com/SpillwaveSolutions/plantuml) project, supplemented with ArcKit-specific C4 layout conflict rules and best practices.
 
+**This skill ships reference material, not runnable scripts.** Read the relevant reference file with `Read`, apply the syntax, and write the diagram into the user's artefact. Do not `Bash`-execute anything from `references/` — they are PlantUML/C4 syntax docs, not commands.
+
 ## Supported Diagram Types
 
 Select the appropriate diagram type and read the corresponding reference file:

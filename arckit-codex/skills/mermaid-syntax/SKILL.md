@@ -9,6 +9,8 @@ description: This skill should be used when the user asks about Mermaid diagram 
 
 A comprehensive reference for all 23 Mermaid diagram types plus configuration and theming. This skill provides official Mermaid syntax documentation sourced from the [mermaid-skill](https://github.com/WH-2099/mermaid-skill) project (auto-synced from upstream Mermaid docs).
 
+**This skill ships reference material, not runnable scripts.** Read the relevant reference file with `Read`, apply the syntax, and write the diagram into the user's artefact. Do not `Bash`-execute anything from `references/` — they are Mermaid syntax docs, not commands.
+
 To look up syntax for a specific diagram type, identify the type from the table below and read the corresponding reference file.
 
 ## Supported Diagram Types

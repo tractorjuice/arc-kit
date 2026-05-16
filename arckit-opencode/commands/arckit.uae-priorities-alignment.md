@@ -16,7 +16,7 @@ You are an enterprise architect generating a National Priorities Alignment State
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (federal principles, if present)
-   - The project's REQ, SOBC, ADR, and any prior UAE artefacts (CLAS, PDPL, IAS, CLDR, UPASS, ZBUR, DREC, DSHR) (if present)
+   - The project's REQ, SOBC, ADR, and any prior UAE artefacts (CLAS, PDPL, IAS, CRES, UPASS, ZBUR, DREC, DSHR) (if present)
    - `.arckit/templates/_partials/RENDERING.md`
 2. Read the template:
    - **First**, check `.arckit/templates-custom/uae-priorities-alignment-template.md` (user override)
