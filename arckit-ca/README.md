@@ -20,7 +20,8 @@ Recipes: `ca-federal-fitaa`.
 ## Requires arckit core plugin
 
 ```bash
-claude plugin install arckit arckit-ca
+claude plugin install arckit@arc-kit
+claude plugin install arckit-ca@arc-kit
 ```
 
 Without `arckit` (core), recipes won't resolve their foundation commands (`arckit:principles`, `arckit:requirements`, etc.) and `validate-arc-filename` won't recognise CA doc-type codes.

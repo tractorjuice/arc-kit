@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-ca",
   "version": "5.0.0",
-  "description": "Canadian Federal Overlay for ArcKit — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA, and federal cloud residency. Recipe: ca-federal-fitaa. Requires arckit core plugin.",
+  "description": "Canadian Federal Overlay for ArcKit — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA, and federal cloud residency. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"

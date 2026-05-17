@@ -20,7 +20,8 @@ Recipes: No recipes ship in this overlay yet.
 ## Requires arckit core plugin
 
 ```bash
-claude plugin install arckit arckit-fr
+claude plugin install arckit@arc-kit
+claude plugin install arckit-fr@arc-kit
 ```
 
 Without `arckit` (core), recipes won't resolve their foundation commands (`arckit:principles`, `arckit:requirements`, etc.) and `validate-arc-filename` won't recognise FR doc-type codes.
