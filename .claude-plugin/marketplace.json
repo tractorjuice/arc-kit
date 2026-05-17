@@ -12,8 +12,8 @@
     {
       "name": "arckit",
       "source": "./arckit-claude",
-      "description": "70 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
-      "version": "4.22.0",
+      "description": "71 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
+      "version": "5.0.0",
       "author": {
         "name": "TractorJuice"
       },
@@ -27,6 +27,104 @@
         "procurement",
         "vendor-evaluation",
         "uk-government"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "arckit-uae",
+      "source": "./arckit-uae",
+      "description": "UAE Federal Overlay — 12 commands for PDPL, IAS, AI Charter, autonomy, sovereign cloud, UAE Pass",
+      "version": "5.0.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "uae",
+        "compliance"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "arckit-fr",
+      "source": "./arckit-fr",
+      "description": "French Public Sector Overlay — 12 commands for DINUM, ANSSI, RGPD/CNIL, EBIOS, PSSI, SecNumCloud",
+      "version": "5.0.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "france",
+        "anssi",
+        "compliance"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "arckit-ca",
+      "source": "./arckit-ca",
+      "description": "Canadian Federal Overlay — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA",
+      "version": "5.0.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "canada",
+        "federal",
+        "compliance"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "arckit-eu",
+      "source": "./arckit-eu",
+      "description": "EU Overlay — 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA",
+      "version": "5.0.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "eu",
+        "compliance",
+        "gdpr"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "arckit-at",
+      "source": "./arckit-at",
+      "description": "Austrian Overlay — 3 commands for DSG/DSGVO, NISG, and Bundesvergabegesetz public procurement",
+      "version": "5.0.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "austria",
+        "compliance"
       ],
       "category": "productivity"
     }
