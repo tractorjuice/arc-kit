@@ -57,6 +57,7 @@ cp "${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/uk-saas.yaml" .arckit/reci
 | `uk-saas` | UK Government managed multi-tenant SaaS — civilian departments |
 | `uk-mod-sovereign` | UK MOD / sovereign / air-gapped — `mod-secure` + `jsp-936`, no SVCASS, sealed-media distribution |
 | `uae-federal-ai` | UAE Federal AI — full Cabinet agentic AI decree compliance with all 12 UAE community commands, integrated research wave (general AI + AWS / Azure UAE region availability), plus core ArcKit governance |
+| `uae-agentic-transformation` | UAE Federal Agentic AI Transformation — focused 24-month playbook for the 23 April 2026 Cabinet framework's 50%-of-services-by-April-2028 target; ADRs reshaped around agentic architecture (orchestration, human-in-the-loop, observability, kill-switch); PLAN + ROADMAP timeboxed to the 24-month window |
 
 ### Recipe schema (v1)
 

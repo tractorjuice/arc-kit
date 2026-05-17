@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.22.0] - 2026-05-17
+
+### Added
+
+- **New build recipe: `uae-agentic-transformation`**. Focused 24-month playbook for the 23 April 2026 UAE Cabinet framework targeting 50% of federal services on agentic AI by April 2028. Distinct from the broader `uae-federal-ai` recipe — ADRs reshaped around agentic architecture (orchestration framework, human-in-the-loop boundaries, foundation-model selection, observability for autonomous decisions, kill-switch / rollback), `UAE_ZERO_BUREAUCRACY` positioned as the framework-mandated process-redesign artefact, `PLAN` + `ROADMAP` timeboxed to the 24-month window with the 50%-portfolio target. Includes all 12 UAE community commands plus core ArcKit governance; uses canonical doc-type codes from `config/doc-types.mjs`. 49 targets.
+
 ## [4.21.0] - 2026-05-15
 
 ### Added

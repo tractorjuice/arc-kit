@@ -1,0 +1,422 @@
+# ArcKit build recipe — UAE Federal Agentic AI Transformation (2026-2028)
+#
+# Scope: UAE federal entities executing the 23 April 2026 UAE Cabinet
+# framework on agentic AI (announced by Sheikh Mohammed bin Rashid Al
+# Maktoum, chaired by H.H. Sheikh Mansour bin Zayed Al Nahyan, task force
+# led by Mohammad Al Gergawi, Minister of Cabinet Affairs).
+#
+# Headline mandate
+#
+#   - 50% of federal government sectors, services, and operations on
+#     autonomous (agentic) AI by April 2028 (24-month window).
+#   - Process redesign — policies and procedures rebuilt around agentic
+#     execution, not AI bolted onto existing workflows.
+#   - Three same-day adopted policies (Code for Government Services,
+#     Digital Records Policy, Data-Sharing Policy "collect once, use
+#     securely across entities") are baseline obligations.
+#   - Ministers, Directors-General, and federal entity heads are
+#     personally KPI'd on adoption speed and AI mastery.
+#
+# Terminology note: the public 23 April 2026 announcement is described
+# as a Cabinet *framework* (or "new government model"), not a numbered
+# Federal Decree-Law or Cabinet Resolution. Anchor compliance artefacts
+# on the framework's public obligations rather than a specific instrument
+# number. Use `uae-federal-ai` if you need the broader UAE federal AI
+# governance suite; use this recipe when the project is specifically
+# delivering against the 24-month agentic transformation target.
+#
+# Differences from `uae-federal-ai.yaml`
+#
+#   - Tighter focus on agentic-AI obligations (autonomy tier, Charter,
+#     process redesign, service portfolio target).
+#   - ADR topics reshaped around agentic architecture: agent orchestration
+#     framework, human-in-the-loop boundaries, observability for
+#     autonomous decisions, rollback / kill-switch design.
+#   - PLAN + ROADMAP args timebox the 24-month / April 2028 target and
+#     50%-of-services portfolio milestone.
+#   - Uses the canonical doc-type codes from
+#     arckit-claude/config/doc-types.mjs (NPRA, AICH, AUTI, CLAS, PDPL,
+#     CRES, UPASS, DSHR, DREC, ZBUR, IAS, FPRO) rather than UAE-prefixed
+#     aliases.
+
+recipe: uae-agentic-transformation
+schema_version: 1
+description: >
+  UAE Federal Agentic AI Transformation — 24-month transformation
+  playbook targeting 50% of federal services running on agentic AI by
+  April 2028, aligned with the 23 April 2026 UAE Cabinet framework, the
+  unified Code for Government Services, Digital Records Policy, and
+  Data-Sharing Policy ("collect once, use securely"). Produces all 12
+  UAE community artefacts plus core ArcKit governance, with ADRs and
+  planning specifically scoped to agentic execution.
+
+defaults:
+  version: "1.0"
+
+optional_targets:
+  AIP:
+    description: AI Playbook (UK reference framework; gates map well to UAE Charter principles)
+    default: true
+  ATRS:
+    description: Algorithmic Transparency Recording Standard (recommended for Tier 2 / Tier 3 autonomy)
+    default: true
+  ORG_RESEARCH:
+    description: Target federal entity research — mandate, structure, existing systems, digital posture. Output to projects/000-global/research/ so shared across every UAE project in the repo. Runs first (no deps).
+    default: true
+  AWS_RESEARCH:
+    description: AWS Middle East UAE region — Bedrock Agents, sovereign options (skip if Azure-only)
+    default: true
+  AZURE_RESEARCH:
+    description: Azure UAE North / UAE Central — Azure AI Foundry agents, Microsoft Cloud for Sovereignty (skip if AWS-only)
+    default: true
+  DATASCOUT:
+    description: External UAE federal open-data and inter-entity data-feed discovery — only when REQ specifies external data ingestion
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
+# ---------------------------------------------------------------------------
+# Targets
+# ---------------------------------------------------------------------------
+
+targets:
+
+  # --- Foundation --------------------------------------------------------
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: ORG_RESEARCH
+    skill: arckit:research
+    topic: "Target federal entity — mandate, structure, existing systems, current digital posture, candidate services for agentic transformation"
+    args: "{NAME} target-federal-entity mandate structure existing-systems candidate-services"
+    output: { project: "000-global", type: RSCH, subfolder: research, multi_instance: true }
+    deps: []
+
+  - id: GLOSSARY
+    skill: arckit:glossary
+    args: "{P}"
+    output: { project: "000-global", type: GLO }
+    deps: [PRIN]
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN, ORG_RESEARCH]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN, ORG_RESEARCH]
+
+  # --- National strategy alignment (early — informs everything) ---------
+  - id: UAE_PRIORITIES
+    skill: arckit:uae-priorities-alignment
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: NPRA }
+    deps: [PRIN, REQ]
+
+  # --- Research wave (parallel, before ADRs) ----------------------------
+  - id: RESEARCH
+    skill: arckit:research
+    args: "{P} agentic-ai-providers"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research, multi_instance: true }
+    topic: "Agentic AI providers — Bedrock Agents, Azure AI Foundry agents, OpenAI Assistants, UAE-hosted alternatives, build-vs-buy"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AWS_RESEARCH
+    skill: arckit:aws-research
+    args: "{P} uae-region bedrock-agents"
+    output: { project: "{P}-{NAME}", type: AWRS, subfolder: research, multi_instance: true }
+    topic: "AWS Middle East (UAE) — Bedrock Agents, sovereign options, residency, region service availability"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AZURE_RESEARCH
+    skill: arckit:azure-research
+    args: "{P} uae-north uae-central azure-ai-foundry"
+    output: { project: "{P}-{NAME}", type: AZRS, subfolder: research, multi_instance: true }
+    topic: "Azure UAE North / UAE Central — AI Foundry agents, Microsoft Cloud for Sovereignty, residency"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: DATASCOUT
+    skill: arckit:datascout
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DSCT, subfolder: research, multi_instance: true }
+    topic: "UAE federal open-data sources and inter-entity data feeds (data sharing under collect-once policy)"
+    deps: [REQ, ORG_RESEARCH]
+
+  # --- Classification + privacy (data foundation for agentic AI) -------
+  - id: UAE_CLASSIFICATION
+    skill: arckit:uae-classification
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: CLAS }
+    deps: [REQ, UAE_PRIORITIES]
+
+  - id: UAE_PDPL
+    skill: arckit:uae-pdpl
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: PDPL }
+    deps: [REQ, UAE_CLASSIFICATION]
+
+  - id: UAE_DATA_SHARING
+    skill: arckit:uae-data-sharing
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DSHR }
+    deps: [UAE_CLASSIFICATION, UAE_PDPL]
+
+  - id: UAE_DIGITAL_RECORDS
+    skill: arckit:uae-digital-records
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DREC }
+    deps: [REQ, UAE_CLASSIFICATION]
+
+  # --- Cloud residency + identity ---------------------------------------
+  - id: UAE_CLOUD_RESIDENCY
+    skill: arckit:uae-cloud-residency
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: CRES }
+    deps: [UAE_CLASSIFICATION, AWS_RESEARCH, AZURE_RESEARCH]
+
+  - id: UAE_UAEPASS
+    skill: arckit:uae-uaepass
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: UPASS }
+    deps: [REQ, UAE_PRIORITIES]
+
+  # --- Service catalogue + bureaucracy elimination (process redesign) --
+  # The 23 April 2026 framework mandates redesigning policies, processes
+  # and procedures around agentic execution — zero-bureaucracy is the
+  # primary artefact that captures the redesigned service catalogue.
+  - id: UAE_ZERO_BUREAUCRACY
+    skill: arckit:uae-zero-bureaucracy
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ZBUR }
+    deps: [REQ, STKE, UAE_UAEPASS]
+
+  # --- ADRs (agentic-specific decisions) --------------------------------
+  - id: ADR-001
+    skill: arckit:adr
+    topic: "Cloud platform and sovereign hosting (Core42, G42 sovereign, Microsoft UAE, e& Sovereign Launchpad on AWS)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, AWS_RESEARCH, AZURE_RESEARCH, UAE_CLOUD_RESIDENCY]
+
+  - id: ADR-002
+    skill: arckit:adr
+    topic: "Identity and access — UAE Pass integration (Basic vs Verified profile, citizen agent interactions)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, UAE_UAEPASS]
+
+  - id: ADR-003
+    skill: arckit:adr
+    topic: "Agent orchestration framework — LangGraph / Bedrock Agents / Azure AI Foundry / custom"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, RESEARCH, UAE_CLOUD_RESIDENCY]
+
+  - id: ADR-004
+    skill: arckit:adr
+    topic: "Human-in-the-loop boundaries — when agents must defer, escalate, or pause (per autonomy tier)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-005
+    skill: arckit:adr
+    topic: "Foundation model selection — UAE-hosted (Falcon, Jais) vs international (Anthropic, OpenAI, Google) per classification tier"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, RESEARCH, UAE_CLASSIFICATION, UAE_CLOUD_RESIDENCY]
+
+  - id: ADR-006
+    skill: arckit:adr
+    topic: "Observability and audit for autonomous decisions — trace capture, replay, evidence retention"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, UAE_DIGITAL_RECORDS]
+
+  - id: ADR-007
+    skill: arckit:adr
+    topic: "Rollback and kill-switch — circuit breakers, canary rollout, manual override during phased 24-month rollout"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-008
+    skill: arckit:adr
+    topic: "Procurement route — MoF Digital Procurement Platform with In-Country Value plan for agentic AI platforms"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, UAE_PRIORITIES]
+
+  # --- Strategy + Wardley ----------------------------------------------
+  - id: STRATEGY
+    skill: arckit:strategy
+    args: ""
+    output: { project: "000-global", type: STRAT }
+    deps: [PRIN, STKE, UAE_PRIORITIES]
+
+  - id: WARDLEY
+    skill: arckit:wardley
+    args: "{NAME}"
+    output: { project: "000-global", type: WARD }
+    deps: [PRIN, REQ]
+
+  # --- Risk + assurance -------------------------------------------------
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, "ADR-*", PRIN]
+
+  - id: HLD
+    skill: arckit:hld-review
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: HLD }
+    deps: [REQ, "ADR-*", PRIN]
+
+  - id: SOBC
+    skill: arckit:sobc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SOBC }
+    deps: [REQ, STKE, RISK]
+
+  - id: TCOP
+    skill: arckit:tcop
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TCOP }
+    deps: [REQ, STKE, RISK, "ADR-*"]
+
+  - id: SBD
+    skill: arckit:secure
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SBD }
+    deps: [TCOP, RISK, REQ, "ADR-*"]
+
+  - id: DPIA
+    skill: arckit:dpia
+    args: "{P} scope=full-system consultation=surveys"
+    output: { project: "{P}-{NAME}", type: DPIA }
+    deps: [REQ, STKE, RISK, UAE_PDPL]
+
+  # --- AI governance (Charter, autonomy tier, reference frameworks) ----
+  - id: UAE_AI_CHARTER
+    skill: arckit:uae-ai-charter
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AICH }
+    deps: [REQ, "ADR-*", RISK, UAE_PRIORITIES]
+
+  - id: UAE_AI_AUTONOMY
+    skill: arckit:uae-ai-autonomy-tier
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUTI }
+    deps: [REQ, RISK, UAE_AI_CHARTER, ADR-004, ADR-007]
+
+  - id: AIP
+    skill: arckit:ai-playbook
+    args: "{P} ai-mode=auto-detect-from-REQ-FRs"
+    output: { project: "{P}-{NAME}", type: AIP }
+    deps: [DPIA, RISK, REQ, ADR-005, UAE_AI_CHARTER]
+
+  - id: ATRS
+    skill: arckit:atrs
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ATRS }
+    deps: [AIP, DPIA, ADR-005, UAE_AI_AUTONOMY]
+
+  # --- Security baseline ------------------------------------------------
+  - id: UAE_IAS
+    skill: arckit:uae-ias
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: IAS }
+    deps: [REQ, "ADR-*", RISK, SBD]
+
+  # --- Diagrams ---------------------------------------------------------
+  - id: DIAG-C4
+    skill: arckit:diagram
+    topic: "c4-context"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD]
+
+  - id: DIAG-AGENT
+    skill: arckit:diagram
+    topic: "agent-orchestration (multi-agent flow, tool invocations, human-in-the-loop checkpoints)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, ADR-003, ADR-004]
+
+  - id: DIAG-DEP
+    skill: arckit:diagram
+    topic: "deployment (UAE region, sovereign cloud, agent runtime placement)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, ADR-001, UAE_CLOUD_RESIDENCY]
+
+  - id: DIAG-DATAFLOW
+    skill: arckit:diagram
+    topic: "data-flow with classification overlay and agent data access boundaries"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, UAE_CLASSIFICATION]
+
+  # --- Planning + roadmap (24-month timebox, 50% portfolio target) -----
+  - id: PLAN
+    skill: arckit:plan
+    args: "{P} timebox=24-months target-date=2028-04-23 portfolio-target=50-percent-services-agentic"
+    output: { project: "{P}-{NAME}", type: PLAN }
+    deps: [SOBC, RISK, UAE_AI_AUTONOMY, UAE_ZERO_BUREAUCRACY]
+
+  - id: ROADMAP
+    skill: arckit:roadmap
+    args: "{P} horizon=24-months milestones=quarterly target-date=2028-04-23"
+    output: { project: "{P}-{NAME}", type: ROAD }
+    deps: [PLAN]
+
+  # --- Operational ------------------------------------------------------
+  - id: DEVOPS
+    skill: arckit:devops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DEVOPS }
+    deps: [REQ, "ADR-*"]
+
+  - id: FINOPS
+    skill: arckit:finops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FINOPS }
+    deps: [REQ, RISK]
+
+  - id: OPS
+    skill: arckit:operationalize
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OPS }
+    deps: [HLD, DEVOPS, RISK, UAE_IAS, ADR-007]
+
+  # --- Federal procurement ---------------------------------------------
+  - id: UAE_PROCUREMENT
+    skill: arckit:uae-procurement
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FPRO }
+    deps: [STRATEGY, RISK, "ADR-*", UAE_PRIORITIES, ADR-008]
+
+  # --- Cross-cutting last ----------------------------------------------
+  - id: TRACE
+    skill: arckit:traceability
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRACE }
+    deps:
+      [REQ, STKE, "ADR-*", RISK, HLD, DPIA, SBD, TCOP,
+       PLAN, ROADMAP, AIP, ATRS, DEVOPS, FINOPS, OPS,
+       UAE_PRIORITIES, UAE_CLASSIFICATION, UAE_PDPL, UAE_DATA_SHARING,
+       UAE_DIGITAL_RECORDS, UAE_CLOUD_RESIDENCY, UAE_UAEPASS,
+       UAE_AI_CHARTER, UAE_AI_AUTONOMY, UAE_IAS,
+       UAE_PROCUREMENT, UAE_ZERO_BUREAUCRACY]

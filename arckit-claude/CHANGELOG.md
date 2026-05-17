@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.22.0] - 2026-05-17
+
+### Added
+
+- **New `arckit-build` recipe: `uae-agentic-transformation`** (49 targets). Purpose-built for the 23 April 2026 UAE Cabinet framework on agentic AI (50% of federal services autonomous by April 2028). Distinct from the broader `uae-federal-ai` recipe — ADRs reshaped around agentic architecture: cloud + sovereign hosting, UAE Pass identity, agent orchestration framework, human-in-the-loop boundaries, foundation-model selection per classification, observability for autonomous decisions, rollback / kill-switch, federal procurement. `UAE_ZERO_BUREAUCRACY` positioned as the framework-mandated process-redesign artefact. `PLAN` + `ROADMAP` args carry `timebox=24-months target-date=2028-04-23 portfolio-target=50-percent-services-agentic`. Includes all 12 UAE community commands. Uses canonical doc-type codes from `config/doc-types.mjs` (`NPRA`, `AICH`, `AUTI`, `CLAS`, `PDPL`, `CRES`, `UPASS`, `DSHR`, `DREC`, `ZBUR`, `IAS`, `FPRO`). Registered in `arckit-claude/skills/arckit-build/SKILL.md` built-in recipes table.
+
 ## [4.21.0] - 2026-05-15
 
 ### Added
