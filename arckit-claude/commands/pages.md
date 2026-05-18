@@ -334,6 +334,16 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | OCAP | `ARC-*-OCAP-*.md` | Canada First Nations OCAP Sovereignty Assessment |
 | **Procurement (Community-contributed — Canada Federal Overlay)** | | | |
 | | PROC | `ARC-*-PROC-*.md` | Canada Federal Procurement Strategy |
+| **Compliance (Community-contributed — Australian Federal / DISP-supplier Overlay)** | | | |
+| | AUE8 | `ARC-*-AUE8-*.md` | AU Essential Eight Maturity Posture |
+| | AUISM | `ARC-*-AUISM-*.md` | AU ISM Statement of Applicability |
+| | AUPIA | `ARC-*-AUPIA-*.md` | AU Privacy Impact Assessment (Privacy Act 1988) |
+| | AUNDB | `ARC-*-AUNDB-*.md` | AU Notifiable Data Breach Response Playbook |
+| | AUAIA | `ARC-*-AUAIA-*.md` | AU AI Assurance Baseline (DTA AI Policy v2.0) |
+| | AUDISP | `ARC-*-AUDISP-*.md` | AU DISP Member Self-Attestation Pack |
+| **Governance (Community-contributed — Australian Federal / DISP-supplier Overlay)** | | | |
+| | AUDSS | `ARC-*-AUDSS-*.md` | AU DTA Digital Service Standard Conformance |
+| | AUPSPF | `ARC-*-AUPSPF-*.md` | AU Protective Security Policy Framework Scorecard |
 
 > **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit.pages` includes the artifact in the dashboard.
 
