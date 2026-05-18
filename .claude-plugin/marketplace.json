@@ -34,7 +34,7 @@
       "name": "arckit-uae",
       "source": "./arckit-uae",
       "description": "UAE Federal Overlay — 12 commands for PDPL, IAS, AI Charter, autonomy, sovereign cloud, UAE Pass",
-      "version": "5.0.0-alpha.1",
+      "version": "5.0.0-alpha.9",
       "author": {
         "name": "TractorJuice"
       },
@@ -53,7 +53,7 @@
       "name": "arckit-fr",
       "source": "./arckit-fr",
       "description": "French Public Sector Overlay — 12 commands for DINUM, ANSSI, RGPD/CNIL, EBIOS, PSSI, SecNumCloud",
-      "version": "5.0.0-alpha.3",
+      "version": "5.0.0-alpha.9",
       "author": {
         "name": "TractorJuice"
       },
@@ -73,7 +73,7 @@
       "name": "arckit-ca",
       "source": "./arckit-ca",
       "description": "Canadian Federal Overlay — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA",
-      "version": "5.0.0-alpha.2",
+      "version": "5.0.0-alpha.9",
       "author": {
         "name": "TractorJuice"
       },
@@ -93,7 +93,7 @@
       "name": "arckit-eu",
       "source": "./arckit-eu",
       "description": "EU Overlay — 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA",
-      "version": "5.0.0-alpha.4",
+      "version": "5.0.0-alpha.9",
       "author": {
         "name": "TractorJuice"
       },
@@ -113,7 +113,7 @@
       "name": "arckit-at",
       "source": "./arckit-at",
       "description": "Austrian Overlay — 3 commands for DSG/DSGVO, NISG, and Bundesvergabegesetz public procurement",
-      "version": "5.0.0-alpha.5",
+      "version": "5.0.0-alpha.9",
       "author": {
         "name": "TractorJuice"
       },
@@ -132,7 +132,7 @@
       "name": "arckit-au",
       "source": "./arckit-au",
       "description": "Australian Federal Overlay — 8 commands for ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988, OAIC NDB, PSPF, AI Assurance, DISP attestation",
-      "version": "5.0.0-alpha.1",
+      "version": "5.0.0-alpha.9",
       "author": {
         "name": "TractorJuice"
       },

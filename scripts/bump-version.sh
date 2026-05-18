@@ -86,15 +86,31 @@ jq --arg v "$NEW_VERSION" '.plugins |= map(.version = $v)' .claude-plugin/market
 mv .claude-plugin/marketplace.json.tmp .claude-plugin/marketplace.json
 update_file ".claude-plugin/marketplace.json" "all .plugins[].version (metadata.version unchanged)"
 
-# ── 8a–8e. Community plugin manifests + VERSION files ─────────────────────
+# ── 8a–8f. Community plugin manifests + VERSION files ─────────────────────
+#
+# Each community plugin pins its `arckit` dependency to the current core
+# version with an exact (`=`) semver constraint. bump-version.sh keeps
+# .version AND .dependencies[arckit].version in lockstep so the 6 plugins
+# always ship as a coherent set.
 
-for jurisdiction in uae fr ca eu at; do
+for jurisdiction in uae fr ca eu at au; do
   manifest="arckit-${jurisdiction}/.claude-plugin/plugin.json"
   version_file="arckit-${jurisdiction}/VERSION"
   if [[ -f "$manifest" ]]; then
-    jq --arg v "$NEW_VERSION" '.version = $v' "$manifest" > "${manifest}.tmp"
+    jq --arg v "$NEW_VERSION" '
+      .version = $v
+      | .dependencies = (
+          (.dependencies // [])
+          | map(
+              if type == "object" and .name == "arckit"
+              then .version = "=" + $v
+              else .
+              end
+            )
+        )
+    ' "$manifest" > "${manifest}.tmp"
     mv "${manifest}.tmp" "$manifest"
-    update_file "$manifest" ".version"
+    update_file "$manifest" ".version + .dependencies[arckit].version"
   fi
   if [[ -f "$version_file" ]]; then
     echo "$NEW_VERSION" > "$version_file"

@@ -37,6 +37,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 All doc-type codes remain in `arckit-claude/config/doc-types.mjs` — community plugins ship commands and recipes only. This keeps `validate-arc-filename.mjs` single-sourced.
 
+### Note on plugin dependencies (Claude Code v2.1.110+)
+
+All 6 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`) declare an exact (`=`) dependency on the `arckit` core plugin. Installing any community plugin auto-installs core; uninstalling with `--prune` cleans it up. The exact pin keeps the 6 plugins shipping as a coherent set — `scripts/bump-version.sh` updates `.version` and `.dependencies[arckit].version` in lockstep on every release.
+
 ## [4.22.0] - 2026-05-17
 
 ### Added

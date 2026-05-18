@@ -1,12 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-uae",
-  "version": "5.0.0-alpha.1",
+  "version": "5.0.0-alpha.9",
   "description": "UAE Federal Overlay for ArcKit — 12 commands for UAE PDPL, IAS, AI Charter, autonomy tiers, sovereign cloud residency, UAE Pass, and federal procurement. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
   },
   "repository": "https://github.com/tractorjuice/arc-kit",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=5.0.0-alpha.8"
+    }
+  ]
 }

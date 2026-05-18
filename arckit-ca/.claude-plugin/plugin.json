@@ -1,12 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-ca",
-  "version": "5.0.0-alpha.2",
+  "version": "5.0.0-alpha.9",
   "description": "Canadian Federal Overlay for ArcKit — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA, and federal cloud residency. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
   },
   "repository": "https://github.com/tractorjuice/arc-kit",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=5.0.0-alpha.8"
+    }
+  ]
 }

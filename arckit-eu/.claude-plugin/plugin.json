@@ -1,12 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-eu",
-  "version": "5.0.0-alpha.4",
+  "version": "5.0.0-alpha.9",
   "description": "EU Overlay for ArcKit — 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
   },
   "repository": "https://github.com/tractorjuice/arc-kit",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=5.0.0-alpha.8"
+    }
+  ]
 }
