@@ -95,12 +95,12 @@ This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`)
 
 ## v5.0.0+ — multi-plugin release flow
 
-After v5.0.0 the marketplace ships 6 plugins (`arckit` core + 5 community overlays). All 6 share one version, bumped together.
+After v5.0.0 the marketplace ships 7 plugins (`arckit` core + 6 community overlays: UAE, FR, CA, EU, AT, AU). All 7 share one version, bumped together.
 
 Step 7 changes — validate every plugin manifest:
 
 ```bash
-for p in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at; do
+for p in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au; do
   claude plugin tag "$p" --dry-run || exit 1
 done
 ```
