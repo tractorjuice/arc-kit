@@ -507,7 +507,7 @@
 
     <div class="app-page-hero app-page-hero--commands">
         <div class="govuk-width-container app-page-hero__content">
-            <span class="app-page-hero__stat">117 AI Commands</span>
+            <span class="app-page-hero__stat">125 AI Commands</span>
             <h1 class="app-page-hero__title">AI Command Reference</h1>
             <p class="app-page-hero__description">Sortable table with filters and full dependency matrix &mdash; every ArcKit command at a glance.</p>
         </div>
@@ -515,8 +515,22 @@
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
     <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
-        <h2 class="govuk-heading-l">70 ArcKit AI Commands</h2>
+        <h2 class="govuk-heading-l">125 ArcKit AI Commands</h2>
         <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
+
+        <div class="govuk-inset-text">
+            <p class="govuk-body"><strong>Which plugin ships which command?</strong> As of v5.0.0 ArcKit splits across 7 marketplace plugins. The <strong>Tier</strong> column tells you whether a command ships in <code>arckit</code> (Core) or in one of the 6 community plugins:</p>
+            <ul class="govuk-list govuk-list--bullet">
+                <li><strong>Tier = Core</strong> → ships in <code>arckit</code> (71 commands)</li>
+                <li><strong>Tier = Community + Jurisdiction = UAE</strong> → <code>arckit-uae</code> (12)</li>
+                <li><strong>Tier = Community + Jurisdiction = France</strong> → <code>arckit-fr</code> (12)</li>
+                <li><strong>Tier = Community + Jurisdiction = Canada</strong> → <code>arckit-ca</code> (12)</li>
+                <li><strong>Tier = Community + Jurisdiction = EU</strong> → <code>arckit-eu</code> (7)</li>
+                <li><strong>Tier = Community + Jurisdiction = Austria</strong> → <code>arckit-at</code> (3)</li>
+                <li><strong>Tier = Community + Jurisdiction = Australia</strong> → <code>arckit-au</code> (8)</li>
+            </ul>
+            <p class="govuk-body">Install only what you need: <code>claude plugin install arckit arckit-uae</code> picks up core + UAE. Community plugins auto-install <code>arckit</code> as a declared dependency. See <a href="getting-started.html#step-2" class="govuk-link">Getting Started</a> for install snippets.</p>
+        </div>
 
         <!-- Status Legend -->
         <div class="app-status-legend">
@@ -572,6 +586,7 @@
                     <option value="eu-overlay">EU Regulatory Overlay (Community)</option>
                     <option value="fr-overlay">French Government Overlay (Community)</option>
                     <option value="at-overlay">Austrian Government Overlay (Community)</option>
+                    <option value="au-overlay">Australian Federal Overlay (Community)</option>
                 </select>
             </div>
             <div>
@@ -585,6 +600,7 @@
                     <option value="austria">Austria</option>
                     <option value="canada">Canada</option>
                     <option value="uae">UAE</option>
+                    <option value="australia">Australia</option>
                 </select>
             </div>
             <div>
@@ -1969,6 +1985,78 @@
                         <td class="description">[COMMUNITY] Austrian public procurement under Bundesvergabegesetz 2018 — federal/sub-federal scope, SME thresholds, e-procurement obligations</td>
                         <td>Austrian Government Overlay</td>
                         <td>Austria</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="au-overlay" data-jurisdiction="australia" data-tier="community">
+                        <td><code>/arckit.au-e8-posture</code></td>
+                        <td class="description">[COMMUNITY] ASD Essential Eight ML0–ML3 maturity assessment (8 mitigation strategies)</td>
+                        <td>Australian Federal Overlay</td>
+                        <td>Australia</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="au-overlay" data-jurisdiction="australia" data-tier="community">
+                        <td><code>/arckit.au-pia</code></td>
+                        <td class="description">[COMMUNITY] Privacy Act 1988 s33D Privacy Impact Assessment (13 APPs)</td>
+                        <td>Australian Federal Overlay</td>
+                        <td>Australia</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="au-overlay" data-jurisdiction="australia" data-tier="community">
+                        <td><code>/arckit.au-dss</code></td>
+                        <td class="description">[COMMUNITY] DTA Digital Service Standard (13 criteria) compliance assessment</td>
+                        <td>Australian Federal Overlay</td>
+                        <td>Australia</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="au-overlay" data-jurisdiction="australia" data-tier="community">
+                        <td><code>/arckit.au-ism-controls</code></td>
+                        <td class="description">[COMMUNITY] ASD Information Security Manual Statement of Applicability (17 control domains)</td>
+                        <td>Australian Federal Overlay</td>
+                        <td>Australia</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="au-overlay" data-jurisdiction="australia" data-tier="community">
+                        <td><code>/arckit.au-ndb-playbook</code></td>
+                        <td class="description">[COMMUNITY] OAIC Notifiable Data Breach response playbook (Privacy Act 1988 Part IIIC)</td>
+                        <td>Australian Federal Overlay</td>
+                        <td>Australia</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="au-overlay" data-jurisdiction="australia" data-tier="community">
+                        <td><code>/arckit.au-pspf</code></td>
+                        <td class="description">[COMMUNITY] Protective Security Policy Framework (4 outcomes / 16 core requirements)</td>
+                        <td>Australian Federal Overlay</td>
+                        <td>Australia</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="au-overlay" data-jurisdiction="australia" data-tier="community">
+                        <td><code>/arckit.au-ai-assurance</code></td>
+                        <td class="description">[COMMUNITY] DTA AI Assurance Framework + Responsible AI Policy v2.0 baseline (ISO 42001 readiness, Privacy Act AI-decision notification per Dec 2026 amendments)</td>
+                        <td>Australian Federal Overlay</td>
+                        <td>Australia</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="au-overlay" data-jurisdiction="australia" data-tier="community">
+                        <td><code>/arckit.au-disp-attestation</code></td>
+                        <td class="description">[COMMUNITY] DISP Member self-attestation pack (4 domains: Governance, Personnel, Physical, Information &amp; Cyber) — consolidates evidence from E8 + ISM + PIA + NDB + PSPF</td>
+                        <td>Australian Federal Overlay</td>
+                        <td>Australia</td>
                         <td>Community</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
