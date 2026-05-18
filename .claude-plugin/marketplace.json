@@ -13,7 +13,7 @@
       "name": "arckit",
       "source": "./arckit-claude",
       "description": "71 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
-      "version": "5.0.0-alpha.4",
+      "version": "5.0.0-alpha.5",
       "author": {
         "name": "TractorJuice"
       },
@@ -113,7 +113,7 @@
       "name": "arckit-at",
       "source": "./arckit-at",
       "description": "Austrian Overlay — 3 commands for DSG/DSGVO, NISG, and Bundesvergabegesetz public procurement",
-      "version": "5.0.0-alpha.1",
+      "version": "5.0.0-alpha.5",
       "author": {
         "name": "TractorJuice"
       },
