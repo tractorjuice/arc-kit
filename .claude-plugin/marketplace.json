@@ -13,7 +13,7 @@
       "name": "arckit",
       "source": "./arckit-claude",
       "description": "71 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
-      "version": "5.0.0-alpha.3",
+      "version": "5.0.0-alpha.4",
       "author": {
         "name": "TractorJuice"
       },
@@ -93,7 +93,7 @@
       "name": "arckit-eu",
       "source": "./arckit-eu",
       "description": "EU Overlay — 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA",
-      "version": "5.0.0-alpha.1",
+      "version": "5.0.0-alpha.4",
       "author": {
         "name": "TractorJuice"
       },
