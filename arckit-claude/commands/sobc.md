@@ -254,7 +254,7 @@ Before generating the document ID, check if a previous version exists:
 - `[VERSION]` → Determined version from Step 0
 - `[DATE]` / `[YYYY-MM-DD]` → Current date in YYYY-MM-DD format
 - `[DOCUMENT_TYPE_NAME]` → "Strategic Outline Business Case (SOBC)"
-- `[CLASSIFICATION]` → Default to "OFFICIAL" for UK Gov, "INTERNAL" for private sector
+- `[CLASSIFICATION]` → Default to `${user_config.default_classification}`; if unavailable, use "OFFICIAL" for UK Gov, "INTERNAL" for private sector
 - `[STATUS]` → "DRAFT" for new documents
 
 **User-specified fields** (must be confirmed with user):
