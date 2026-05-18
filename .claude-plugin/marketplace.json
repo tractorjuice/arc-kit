@@ -13,7 +13,7 @@
       "name": "arckit",
       "source": "./arckit-claude",
       "description": "71 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
-      "version": "5.0.0-alpha.1",
+      "version": "5.0.0-alpha.2",
       "author": {
         "name": "TractorJuice"
       },
@@ -73,7 +73,7 @@
       "name": "arckit-ca",
       "source": "./arckit-ca",
       "description": "Canadian Federal Overlay — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA",
-      "version": "5.0.0-alpha.1",
+      "version": "5.0.0-alpha.2",
       "author": {
         "name": "TractorJuice"
       },

@@ -64,11 +64,11 @@ done
 **Verification:**
 
 ```bash
-grep -L "classification scheme\|UK line in the header" arckit-claude/commands/<prefix>-*.md
+grep -L "classification scheme\|UK line in the header" arckit-<prefix>/commands/<prefix>-*.md
 # Files printed = files MISSING the override
 ```
 
-**Working precedent:** `arckit-claude/commands/ca-pia.md:32`:
+**Working precedent:** `arckit-ca/commands/ca-pia.md:32`:
 > Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
 
 **Proper long-term fix (separate PR):** ship a `document-control-<regime>.md` partial, extend RENDERING.md routing, extend `plugin.json` userConfig to accept the regime governance framework value.
@@ -82,10 +82,10 @@ grep -L "classification scheme\|UK line in the header" arckit-claude/commands/<p
 **Verification:**
 
 ```bash
-grep -n "generate-document-id.sh" arckit-claude/commands/<prefix>-*.md | grep -v "<PROJECT_ID>\|{P}"
+grep -n "generate-document-id.sh" arckit-<prefix>/commands/<prefix>-*.md | grep -v "<PROJECT_ID>\|{P}"
 ```
 
-**Working precedent:** `arckit-claude/commands/ca-pia.md:32`:
+**Working precedent:** `arckit-ca/commands/ca-pia.md:32`:
 > `scripts/bash/generate-document-id.sh <PROJECT_ID> PIA --filename`
 
 **Note:** `uae-*` commands share this bug. Worth fixing in the same sweep.
@@ -161,7 +161,7 @@ For each new `xx-*` command file:
   ```python
   import yaml, glob, pathlib
   cmds = {pathlib.Path(p).stem for p in glob.glob('arckit-claude/commands/*.md')}
-  for f in glob.glob('arckit-claude/commands/<prefix>-*.md'):
+  for f in glob.glob('arckit-<prefix>/commands/<prefix>-*.md'):
       fm = yaml.safe_load(open(f).read().split('---')[1])
       for h in (fm or {}).get('handoffs', []):
           if h['command'] not in cmds: print(f, '→', h['command'])
@@ -175,7 +175,7 @@ For each new `xx-*` command file:
 For non-UK overlays, grep for unintended UK terminology:
 
 ```bash
-grep -rE '\b(NCSC|ICO|Cyber Essentials|GovS|UK GDPR|GDS|Cabinet Office|DPA 2018|DPIA)\b' arckit-claude/commands/<prefix>-*.md arckit-claude/templates/<prefix>-*.md
+grep -rE '\b(NCSC|ICO|Cyber Essentials|GovS|UK GDPR|GDS|Cabinet Office|DPA 2018|DPIA)\b' arckit-<prefix>/commands/<prefix>-*.md arckit-claude/templates/<prefix>-*.md
 ```
 
 A small number of intentional comparison references is fine (PR #441 had 2 in `au-dss.md` + `au-pia.md`) — author should call them out in the PR body. Anything else is leakage.
@@ -199,10 +199,10 @@ for f in arckit-claude/templates/*-template.md; do
 done | grep -E "<prefix>-"
 
 # B2: missing classification override
-grep -L "classification scheme\|UK line in the header" arckit-claude/commands/<prefix>-*.md
+grep -L "classification scheme\|UK line in the header" arckit-<prefix>/commands/<prefix>-*.md
 
 # B3: generate-document-id.sh mis-invocation
-grep -n "generate-document-id.sh [A-Z]\+ --filename" arckit-claude/commands/<prefix>-*.md
+grep -n "generate-document-id.sh [A-Z]\+ --filename" arckit-<prefix>/commands/<prefix>-*.md
 
 # B4: converter drift
 python scripts/converter.py && git status --porcelain | grep -v "memory/"
