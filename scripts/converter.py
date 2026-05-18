@@ -203,6 +203,26 @@ CONTEXT_HOOK_REPLACEMENT = (
 )
 
 
+# --- Plugin source directories merged into each non-Claude extension output ---
+#
+# After the v5.0.0 plugin split, commands live across 6 directories. Non-Claude
+# extensions stay monolithic (per the v5 spec), so the converter walks every
+# source and merges into one output per format.
+#
+# Order: community plugins first, core last. Filenames are jurisdiction-prefixed
+# (uae-*, fr-*, ca-*, eu-*, at-*) so collisions don't happen, but if they ever
+# did, core-last means core wins.
+
+PLUGIN_SOURCES = [
+    "arckit-uae",
+    "arckit-fr",
+    "arckit-ca",
+    "arckit-eu",
+    "arckit-at",
+    "arckit-claude",  # core last
+]
+
+
 # --- Agent configuration: adding a new AI target = adding a dictionary entry ---
 
 AGENT_CONFIG = {
@@ -397,11 +417,19 @@ def read_template_for_command(name, templates_dir):
     return None
 
 
-def convert(commands_dir, agents_dir):
+def convert(commands_dirs, agents_dir):
     """Convert plugin commands to all configured AI agent formats.
 
-    Reads each plugin command once, resolves agent prompts once, then
-    writes output formats with appropriate path rewriting driven by AGENT_CONFIG.
+    Reads each plugin command once across all source directories, resolves
+    agent prompts once, then writes output formats with appropriate path
+    rewriting driven by AGENT_CONFIG.
+
+    Args:
+        commands_dirs: List of source command directories to merge
+            (e.g. ["arckit-uae/commands/", ..., "arckit-claude/commands/"]).
+            Multiple sources land in the same monolithic extension output per
+            the v5.0.0 plugin split design.
+        agents_dir: Single agents directory (agents stay in core).
     """
     # Commands that depend on Claude Code-only features (parallel Agent dispatch,
     # plugin skills, etc.). Skipped when generating non-Claude formats because
@@ -421,10 +449,35 @@ def convert(commands_dir, agents_dir):
     counts = {agent_id: 0 for agent_id in AGENT_CONFIG}
     paperclip_entries = []
 
-    for filename in sorted(os.listdir(commands_dir)):
-        if not filename.endswith(".md"):
+    # Build merged file list across all plugin sources. Each entry is
+    # (commands_dir, filename) so per-source path lookups (templates,
+    # standalone overrides) resolve against the correct plugin's tree.
+    merged_files = []
+    seen_filenames = set()
+    for commands_dir in commands_dirs:
+        if not os.path.isdir(commands_dir):
             continue
+        for filename in sorted(os.listdir(commands_dir)):
+            if not filename.endswith(".md"):
+                continue
+            if filename in seen_filenames:
+                # Collision (community vs core, or community vs community).
+                # Filenames are jurisdiction-prefixed so this shouldn't
+                # happen in practice; warn loudly if it does.
+                print(
+                    f"  WARNING: duplicate filename {filename} in {commands_dir} "
+                    f"— skipping (first occurrence wins)"
+                )
+                continue
+            seen_filenames.add(filename)
+            merged_files.append((commands_dir, filename))
 
+    # Sort by filename so extension output order doesn't depend on the
+    # PLUGIN_SOURCES iteration order (paperclip's commands.json ordering
+    # was previously alphabetical across all commands; preserve that).
+    merged_files.sort(key=lambda entry: entry[1])
+
+    for commands_dir, filename in merged_files:
         if filename in claude_only_commands:
             print(f"  Skipped Claude-only command: {filename}")
             continue
@@ -573,14 +626,24 @@ def convert(commands_dir, agents_dir):
     return counts
 
 
-def copy_extension_files(plugin_dir):
-    """Copy supporting files from plugin to all extension directories.
+def copy_extension_files(plugin_sources):
+    """Copy supporting files from all plugin sources to extension directories.
 
-    Copies templates, scripts, guides, and skills so the extensions are
-    self-contained when published as separate repos.
+    After the v5.0.0 plugin split, `templates/` lives in 6 different source
+    directories (one per plugin). Non-Claude extensions stay monolithic, so
+    templates from every source are merged into one `templates/` per extension.
+    Other directories (scripts, guides, config, schemas, skills, references)
+    only exist in `arckit-claude` and are copied from there.
+
+    Args:
+        plugin_sources: List of plugin source dirs (e.g. ["arckit-uae", ...,
+            "arckit-claude"]). The last entry MUST be the core plugin
+            ("arckit-claude") since that's where scripts/guides/etc. live.
     """
-    copies = [
-        ("templates", "templates"),
+    core_plugin_dir = plugin_sources[-1]
+
+    # Categories that exist only in the core plugin and are copied from there.
+    core_only_copies = [
         ("scripts/bash", "scripts/bash"),
         ("scripts/python", "scripts/python"),
         ("scripts/validate-handoff.mjs", "scripts/validate-handoff.mjs"),
@@ -603,10 +666,40 @@ def copy_extension_files(plugin_dir):
             continue
         copy_scripts = config.get("copy_scripts_to_extension", True)
         print(f"Copying to {config['name']} extension ({ext_dir})...")
-        for src_rel, dst_rel in copies:
+
+        # Merge templates from every plugin source into one templates/ dir.
+        ext_templates_dir = os.path.join(ext_dir, "templates")
+        if os.path.isdir(ext_templates_dir):
+            shutil.rmtree(ext_templates_dir)
+        os.makedirs(ext_templates_dir, exist_ok=True)
+        merged_template_count = 0
+        for src_plugin in plugin_sources:
+            src_templates = os.path.join(src_plugin, "templates")
+            if not os.path.isdir(src_templates):
+                continue
+            for entry in os.listdir(src_templates):
+                src_path = os.path.join(src_templates, entry)
+                dst_path = os.path.join(ext_templates_dir, entry)
+                if os.path.isfile(src_path):
+                    shutil.copy2(src_path, dst_path)
+                    merged_template_count += 1
+                elif os.path.isdir(src_path):
+                    if os.path.isdir(dst_path):
+                        shutil.rmtree(dst_path)
+                    shutil.copytree(src_path, dst_path)
+                    merged_template_count += sum(
+                        len(files) for _, _, files in os.walk(dst_path)
+                    )
+        print(
+            f"  Merged templates from {len(plugin_sources)} plugin source(s) "
+            f"-> {ext_templates_dir} ({merged_template_count} files)"
+        )
+
+        # Core-only categories
+        for src_rel, dst_rel in core_only_copies:
             if not copy_scripts and src_rel.startswith("scripts/"):
                 continue
-            src = os.path.join(plugin_dir, src_rel)
+            src = os.path.join(core_plugin_dir, src_rel)
             dst = os.path.join(ext_dir, dst_rel)
             if os.path.isdir(src):
                 if os.path.isdir(dst):
@@ -1464,15 +1557,22 @@ projects/
 
 
 if __name__ == "__main__":
-    commands_dir = "arckit-claude/commands/"
+    commands_dirs = [os.path.join(src, "commands") for src in PLUGIN_SOURCES]
     agents_dir = "arckit-claude/agents/"
-    plugin_dir = "arckit-claude"
+    plugin_dir = "arckit-claude"  # for downstream functions that only touch core
 
     print(
         "Converting plugin commands to Codex, OpenCode, Gemini, and Copilot extension formats..."
     )
     print()
-    print(f"Source:       {commands_dir}")
+    print(f"Sources:      {len(PLUGIN_SOURCES)} plugin dirs")
+    for src in PLUGIN_SOURCES:
+        cmd_count = (
+            len([f for f in os.listdir(os.path.join(src, "commands"))
+                 if f.endswith(".md")])
+            if os.path.isdir(os.path.join(src, "commands")) else 0
+        )
+        print(f"  {src}: {cmd_count} commands")
     print(f"Agents:       {agents_dir}")
     for config in AGENT_CONFIG.values():
         ext_dir = config.get("extension_dir")
@@ -1483,10 +1583,10 @@ if __name__ == "__main__":
     # Copy extension supporting files BEFORE convert so reference skills
     # are in place before command skills are generated on top
     print("Copying extension supporting files...")
-    copy_extension_files(plugin_dir)
+    copy_extension_files(PLUGIN_SOURCES)
 
     print()
-    counts = convert(commands_dir, agents_dir)
+    counts = convert(commands_dirs, agents_dir)
 
     # Post-processing: copy commands and agents to extension directories
     for agent_id, config in AGENT_CONFIG.items():
