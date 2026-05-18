@@ -40,24 +40,28 @@ You are running the ArcKit build harness. Your job is **orchestration only** —
 
 Recipes are external YAML files. Lookup precedence for `--recipe NAME` (first hit wins):
 
-1. **Project override**: `.arckit/recipes/{NAME}.yaml` — user customizations preserved across plugin updates
-2. **Plugin default**: `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{NAME}.yaml` — ships with the ArcKit plugin
+1. **Project override**: `.arckit/recipes/{NAME}.yaml` — user customizations preserved across plugin updates.
+2. **Core plugin**: `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{NAME}.yaml` — recipes shipped with the `arckit` core plugin (`uk-saas`, `uk-mod-sovereign`).
+3. **Sibling community plugins**: `${CLAUDE_PLUGIN_ROOT}/../arckit-*/recipes/{NAME}.yaml` — recipes shipped with installed community plugins (e.g. `arckit-uae/recipes/uae-federal-ai.yaml`, `arckit-ca/recipes/ca-federal-fitaa.yaml`).
 
-Default recipe is `uk-saas`. To customize, copy the plugin default to `.arckit/recipes/uk-saas.yaml` and edit there:
+Resolution: glob the parent directory of `${CLAUDE_PLUGIN_ROOT}` for `arckit-*/recipes/{NAME}.yaml` and take the first match. The glob works in both layouts — marketplace-installed plugins land as siblings under the same marketplace-source cache directory, and the dev-mode same-repo layout has them as sibling directories in the repo root.
+
+Default recipe is `uk-saas`. To customize, copy the core default to `.arckit/recipes/uk-saas.yaml` and edit there:
 
 ```bash
 mkdir -p .arckit/recipes
 cp "${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/uk-saas.yaml" .arckit/recipes/uk-saas.yaml
 ```
 
-**Built-in recipes** (shipped with the plugin):
+**Built-in recipes**:
 
-| Recipe | Use case |
-|--------|----------|
-| `uk-saas` | UK Government managed multi-tenant SaaS — civilian departments |
-| `uk-mod-sovereign` | UK MOD / sovereign / air-gapped — `mod-secure` + `jsp-936`, no SVCASS, sealed-media distribution |
-| `uae-federal-ai` | UAE Federal AI — full Cabinet agentic AI decree compliance with all 12 UAE community commands, integrated research wave (general AI + AWS / Azure UAE region availability), plus core ArcKit governance |
-| `uae-agentic-transformation` | UAE Federal Agentic AI Transformation — focused 24-month playbook for the 23 April 2026 Cabinet framework's 50%-of-services-by-April-2028 target; ADRs reshaped around agentic architecture (orchestration, human-in-the-loop, observability, kill-switch); PLAN + ROADMAP timeboxed to the 24-month window |
+| Recipe | Plugin | Use case |
+|--------|--------|----------|
+| `uk-saas` | `arckit` (core) | UK Government managed multi-tenant SaaS — civilian departments |
+| `uk-mod-sovereign` | `arckit` (core) | UK MOD / sovereign / air-gapped — `mod-secure` + `jsp-936`, no SVCASS, sealed-media distribution |
+| `uae-federal-ai` | `arckit-uae` | UAE Federal AI — full Cabinet agentic AI decree compliance with all 12 UAE community commands, integrated research wave (general AI + AWS / Azure UAE region availability), plus core ArcKit governance |
+| `uae-agentic-transformation` | `arckit-uae` | UAE Federal Agentic AI Transformation — focused 24-month playbook for the 23 April 2026 Cabinet framework's 50%-of-services-by-April-2028 target; ADRs reshaped around agentic architecture (orchestration, human-in-the-loop, observability, kill-switch); PLAN + ROADMAP timeboxed to the 24-month window |
+| `ca-federal-fitaa` | `arckit-ca` | Canadian Federal — FITAA, ITSG-33, GC Digital Standards |
 
 ### Recipe schema (v1)
 
@@ -390,7 +394,7 @@ State written by older versions (`state_format_version: "0.3"`) is read-compatib
 ## Failure modes to watch for
 
 - **Subagent doesn't have access to `arckit:*` skills** — detected by the smoke-test in step 6 of the run order; halts the build before any wave dispatches. Workaround if smoke-test fails: load the skill prompt in main context once, pass as plain text to agent (deferred to v0.4+).
-- **Recipe file missing or malformed** — halt at step 3 with the exact YAML parse error and the precedence list of paths checked.
+- **Recipe file missing or malformed** — halt at step 3 with the exact YAML parse error and the precedence list of paths checked. If a community recipe is requested but the corresponding community plugin isn't installed, surface a concrete install command: `"Recipe 'uae-federal-ai' not found. It ships in the arckit-uae community plugin. Install with: claude plugin install arckit-uae"`. The orchestrator maps recipe name to expected plugin via the built-in recipes table; recipes the table doesn't know about fall back to the generic precedence-list error.
 - **Skill expects interactive Q&A** — the worker prompt's defaults table covers this. The recipe's `args` field should be specific enough to skip interaction in the first place.
 - **Output path collision** — two targets writing to same path. Recipe must have unique `(output.project, output.type, output.subfolder, multi_instance)` tuples for non-multi-instance targets, and unique `id`s for multi-instance ones.
 - **State drift** — user manually deletes/edits artefacts after build. Deletions are caught by `test -f`. Edits are caught by the SHA-256 hash check (§ "Input-hash change detection") — the edited artefact's downstream targets are marked stale and rebuilt in dep order. Use `--skip-hash-check` to bypass.
