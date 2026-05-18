@@ -1,0 +1,369 @@
+# ArcKit build recipe — Australian Federal Government / DISP-supplier compliance
+#
+# Scope: Federal Australian digital services and Defence-supplier engagements
+# subject to the multi-anchor compliance stack — ASD Essential Eight, ASD ISM,
+# DTA Digital Service Standard, Privacy Act 1988 + 13 APPs, OAIC Notifiable Data
+# Breach scheme, Defence Industry Security Program (DISP), Protective Security
+# Policy Framework, DTA AI Assurance Framework + Responsible AI Policy v2.0,
+# Commonwealth Procurement Rules (November 2025), PGPA Act s16, and IRAP.
+#
+# Produces every artefact a Federal/DISP build needs: E8 maturity posture, ISM
+# Statement of Applicability, DTA DSS conformance, Privacy Act PIA, NDB scheme
+# playbook, PSPF outcome scorecard, DTA AI assurance baseline, and a DISP
+# self-attestation pack — plus the core ArcKit governance suite tailored for
+# Australian Federal entities and Defence-cleared suppliers.
+#
+# Differences from uk-saas / uk-mod-sovereign / uae-federal-ai / ca-federal-fitaa
+#
+#   Eight au-* community commands all included (Phase 1 + Phase 2 bundled per
+#   maintainer's "one PR" recommendation matching UAE/Canada precedent):
+#     au-e8-posture                 ASD Essential Eight ML0-ML3 maturity
+#     au-ism-controls               ASD ISM 17-domain Statement of Applicability
+#     au-pia                        Privacy Act 1988 s33D + 13 APPs assessment
+#     au-ndb-playbook               OAIC Notifiable Data Breach response
+#     au-dss                        DTA Digital Service Standard 13 criteria
+#     au-pspf                       PSPF 4 outcomes + 16 core requirements
+#     au-ai-assurance               DTA AI Assurance Framework + AI Policy v2.0
+#     au-disp-attestation           DISP Member self-attestation (4 domains)
+#
+#   Command swaps from the uk-saas baseline (per #424):
+#     arckit:tcop      → arckit:au-dss            (DTA DSS replaces UK TCoP)
+#     arckit:secure    → arckit:au-e8-posture     (E8 ML2 replaces UK SBD)
+#     arckit:dpia      → arckit:au-pia            (Privacy Act replaces UK GDPR)
+#
+#   Sector overlays out of scope for this recipe (separate au-energy PR #440):
+#     au-aescsf        Australian Energy Sector Cyber Security Framework
+#     au-soci-cirmp    Security of Critical Infrastructure Act CIRMP
+#
+#   Cloud research wave (IRAP-aligned; Australia regions)
+#     arckit:research               Federal/DISP procurement landscape
+#     arckit:aws-research           AWS Asia Pacific Sydney + IRAP PROTECTED
+#     arckit:azure-research         Azure Australia East/Southeast/Central + IRAP
+#     arckit:gcp-research           Google Cloud australia-southeast1 (Sydney)
+#     arckit:datascout              data.gov.au, AusTender, federal open data
+
+recipe: au-federal
+schema_version: 1
+flagship: AU_DISP
+description: >
+  Australian Federal Government / DISP-supplier compliance — full
+  compliance suite covering eleven regulatory anchors (ASD Essential Eight,
+  ASD ISM, DTA Digital Service Standard, Privacy Act 1988 + 13 APPs, OAIC
+  NDB scheme, DISP, PSPF, Commonwealth Procurement Rules Nov 2025, DTA AI
+  Assurance Framework + Responsible AI Policy v2.0, PGPA Act s16, IRAP).
+  Includes all 8 au-* community commands (E8 posture, ISM controls, PIA,
+  NDB playbook, DSS, PSPF, AI assurance, DISP attestation) plus the core
+  ArcKit governance suite tailored for Australian Federal entities and
+  Defence-cleared suppliers.
+
+defaults:
+  version: "1.0"
+
+# Optional targets are skipped unless explicitly enabled.
+# - default: true → built unless excluded with --exclude {ID}
+# - default: false (or absent) → built only with --enable {ID}
+optional_targets:
+  AIP:
+    description: AI Playbook (UK reference framework, useful cross-jurisdiction when AI is in scope; au-ai-assurance is the AU-specific equivalent)
+    default: false
+  ORG_RESEARCH:
+    description: Target federal entity research — strategy, mandate, structure, existing systems. Output to projects/000-global/research/ so the entity context is shared across every Australian Federal project in the repo. Runs first (no deps) ahead of all other research.
+    default: true
+  RESEARCH:
+    description: Australian Federal/DISP procurement landscape, build-vs-buy, comparable jurisdictions
+    default: true
+  AWS_RESEARCH:
+    description: AWS Asia Pacific Sydney + Melbourne — IRAP-assessed services, sovereign options (skip if Azure/GCP-only)
+    default: true
+  AZURE_RESEARCH:
+    description: Azure Australia East / Australia Southeast / Australia Central — IRAP PROTECTED, sovereign cloud (skip if AWS/GCP-only)
+    default: true
+  GCP_RESEARCH:
+    description: Google Cloud australia-southeast1 (Sydney) — IRAP-assessed services (skip if AWS/Azure-only)
+    default: true
+  DATASCOUT:
+    description: Australian federal open-data discovery — data.gov.au, AusTender, OAIC, ACSC publications
+    default: false
+  DATA_MODEL:
+    description: Data model with entity relationships and Privacy-Act-aligned governance (recommended for systems handling APP-defined personal information)
+    default: true
+  TRACEABILITY:
+    description: Requirements traceability matrix (recommended for DISP-supplier governance audit and PSPF reporting)
+    default: true
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
+# ---------------------------------------------------------------------------
+# Targets
+# ---------------------------------------------------------------------------
+# Each target is one ArcKit artefact. The orchestrator topo-sorts by `deps`
+# and dispatches one worker subagent per target per wave.
+# ---------------------------------------------------------------------------
+
+targets:
+
+  # --- Foundation --------------------------------------------------------
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: GLOSSARY
+    skill: arckit:glossary
+    args: "{P}"
+    output: { project: "000-global", type: GLO }
+    deps: [PRIN]
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  # --- Research wave (parallel, before ADRs) -----------------------------
+  # Org research runs first (no deps) and writes to projects/000-global/research/
+  # so the federal-entity context (Defence, Home Affairs, Services Australia,
+  # ATO, etc.) is shared across every Australian Federal project in the repo.
+  # Per-project research targets all depend on ORG_RESEARCH so context flows
+  # organisation -> project.
+  - id: ORG_RESEARCH
+    skill: arckit:research
+    topic: "Target federal entity — Defence / Home Affairs / Services Australia / ATO / DTA strategy, mandate, structure, existing systems, current digital posture"
+    args: "{NAME} target-federal-entity strategy structure existing-systems"
+    output: { project: "000-global", type: RSCH, subfolder: research, multi_instance: true }
+    deps: []
+
+  - id: RESEARCH
+    skill: arckit:research
+    topic: "Australian Federal Government and DISP-supplier procurement landscape — vendors, build vs buy, AusTender / Digital Marketplace panels, comparable jurisdictions"
+    args: "{P} federal-disp-procurement"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AWS_RESEARCH
+    skill: arckit:aws-research
+    topic: "AWS Asia Pacific Sydney + Melbourne — services, IRAP-assessed services, PROTECTED options, sovereign hosting"
+    args: "{P} ap-southeast-2 ap-southeast-4"
+    output: { project: "{P}-{NAME}", type: AWRS, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AZURE_RESEARCH
+    skill: arckit:azure-research
+    topic: "Azure Australia East / Australia Southeast / Australia Central — services, IRAP PROTECTED, Microsoft Cloud for Sovereignty"
+    args: "{P} australia-east australia-southeast australia-central"
+    output: { project: "{P}-{NAME}", type: AZRS, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: GCP_RESEARCH
+    skill: arckit:gcp-research
+    topic: "Google Cloud australia-southeast1 (Sydney) — services, IRAP-assessed offerings, residency"
+    args: "{P} australia-southeast1"
+    output: { project: "{P}-{NAME}", type: GCRS, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: DATASCOUT
+    skill: arckit:datascout
+    topic: "Australian federal open-data — data.gov.au, AusTender, OAIC, ACSC publications, federal-entity APIs"
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DSCT, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  # --- Security baseline (E8 → ISM) --------------------------------------
+  # E8 is the AU equivalent of UK Secure-by-Design (replaces arckit:secure
+  # in the uk-saas baseline). ISM extends E8 — produces the comprehensive
+  # 17-domain control set on top of the 8 mitigation strategies.
+  - id: AU_E8
+    skill: arckit:au-e8-posture
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUE8 }
+    deps: [REQ, STKE]
+
+  - id: AU_ISM
+    skill: arckit:au-ism-controls
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUISM }
+    deps: [REQ, AU_E8]
+
+  # --- Privacy + incident response (PIA → NDB) ---------------------------
+  # PIA is the AU equivalent of UK GDPR DPIA (replaces arckit:dpia in the
+  # uk-saas baseline). NDB is the operational incident-response playbook —
+  # depends on PIA because it requires the designated Privacy Officer and
+  # APP 11 control inventory from the PIA.
+  - id: AU_PIA
+    skill: arckit:au-pia
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUPIA }
+    deps: [REQ, STKE]
+
+  - id: AU_NDB
+    skill: arckit:au-ndb-playbook
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUNDB }
+    deps: [REQ, AU_PIA]
+
+  # --- Service + AI compliance (DSS, PSPF, AI assurance) -----------------
+  # DSS is the AU equivalent of UK TCoP (replaces arckit:tcop in the uk-saas
+  # baseline). PSPF Outcome 2 (information security) is instantiated by
+  # AU_ISM. AI assurance cross-references PIA (APP) and E8 (DLP).
+  - id: AU_DSS
+    skill: arckit:au-dss
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUDSS }
+    deps: [REQ, AU_E8, AU_PIA]
+
+  - id: AU_PSPF
+    skill: arckit:au-pspf
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUPSPF }
+    deps: [REQ, AU_ISM]
+
+  - id: AU_AI
+    skill: arckit:au-ai-assurance
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUAIA }
+    deps: [REQ, AU_PIA, AU_E8]
+
+  # --- DISP attestation (consolidation; depends on all prior AU artefacts)
+  # DISP self-attestation is the apex artefact for Defence-supplier scope.
+  # Consolidates the four DISP security domains (governance, personnel,
+  # physical, information & cyber) plus FOCI declaration plus supply chain
+  # plus annual board attestation — pulls evidence from E8, ISM, PIA, NDB,
+  # and PSPF. Run last in the AU-* stream.
+  - id: AU_DISP
+    skill: arckit:au-disp-attestation
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUDISP }
+    deps: [REQ, AU_E8, AU_ISM, AU_PIA, AU_NDB, AU_PSPF]
+
+  # --- ADRs (8 typical decision points per #424 design) ------------------
+  - id: ADR-001
+    skill: arckit:adr
+    topic: "Cloud platform and IRAP-assessed sovereign hosting (AWS ap-southeast-2 / Azure Australia / GCP australia-southeast1)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, AWS_RESEARCH, AZURE_RESEARCH, GCP_RESEARCH]
+
+  - id: ADR-002
+    skill: arckit:adr
+    topic: "Identity and access — myGovID / AGDIS (citizen + agency) vs Microsoft Entra ID (commercial)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-003
+    skill: arckit:adr
+    topic: "Data classification per PSPF taxonomy (UNOFFICIAL / OFFICIAL / OFFICIAL:Sensitive / PROTECTED / SECRET / TOP SECRET) and ISM control applicability"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, AU_ISM]
+
+  - id: ADR-004
+    skill: arckit:adr
+    topic: "AI / LLM provider — DTA AI Assurance Framework alignment, AI Accountable Officer designation, foundation-model selection and sovereignty"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, AU_AI, AU_PIA]
+
+  - id: ADR-005
+    skill: arckit:adr
+    topic: "Logging and audit — ISM Domain 11 event logging, audit retention windows, SIEM/Sentinel integration, privileged-event monitoring"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, AU_ISM]
+
+  - id: ADR-006
+    skill: arckit:adr
+    topic: "Deployment topology — PSPF physical-security zones, SOCI critical-asset scope (where applicable; see au-energy recipe in #440), cross-zone data flow controls"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, AU_PSPF]
+
+  - id: ADR-007
+    skill: arckit:adr
+    topic: "Build vs buy — AusTender + Digital Marketplace, DTA panels (MAS, People, DTA), CPR Nov 2025 SME-only thresholds, IRAP-assessed-vendor preference"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ, RESEARCH]
+
+  - id: ADR-008
+    skill: arckit:adr
+    topic: "Open-source policy — supply-chain security obligations, export-control implications for Defence-relevant code, IP indemnification under CPR"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  # --- Cross-cutting + design --------------------------------------------
+  - id: DATA_MODEL
+    skill: arckit:data-model
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DATA }
+    deps: [REQ, AU_PIA]
+
+  - id: HLD
+    skill: arckit:hld-review
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: HLDR }
+    deps: [REQ, "ADR-*", PRIN]
+
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, "ADR-*", PRIN, AU_E8, AU_PIA]
+
+  # --- Strategic outputs --------------------------------------------------
+  - id: STRATEGY
+    skill: arckit:strategy
+    args: ""
+    output: { project: "000-global", type: STRAT }
+    deps: [PRIN, STKE]
+
+  - id: WARDLEY
+    skill: arckit:wardley
+    args: "{NAME}"
+    output: { project: "000-global", type: WARD }
+    deps: [PRIN, REQ]
+
+  - id: SOBC
+    skill: arckit:sobc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SOBC }
+    deps: [REQ, STKE, RISK]
+
+  # --- Optional AI reference (UK Playbook cross-jurisdiction reference) --
+  - id: AIP
+    skill: arckit:ai-playbook
+    args: "{P} ai-mode=auto-detect-from-REQ-FRs"
+    output: { project: "{P}-{NAME}", type: AIPB }
+    deps: [REQ, AU_AI, AU_PIA, ADR-004]
+
+  # --- Synthesis (executive view of all AU-* artefacts) -----------------
+  - id: FRAMEWORK
+    skill: arckit:framework
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FWRK }
+    deps:
+      [SOBC, RISK,
+       AU_E8, AU_ISM, AU_PIA, AU_NDB,
+       AU_DSS, AU_PSPF, AU_AI, AU_DISP]
+
+  # --- Cross-cutting traceability ---------------------------------------
+  - id: TRACEABILITY
+    skill: arckit:traceability
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRAC }
+    deps:
+      [REQ, STKE, "ADR-*", RISK, HLD,
+       AU_E8, AU_ISM, AU_PIA, AU_NDB,
+       AU_DSS, AU_PSPF, AU_AI, AU_DISP]
