@@ -1,17 +1,18 @@
 """Hero for 2026-05-18-arckit-v5-plugin-split.md.
 
-Concept: hub-and-spoke visualisation of the v5.0.0 marketplace topology.
-Centre: `arckit` core plugin (71 commands, the UK Government baseline).
-Six surrounding nodes: the community overlay plugins, each with a
-jurisdiction flag-like indicator. Lines from each overlay back to the
-core represent the `dependencies` field auto-installing core.
+Concept: vertical hierarchy.
+  Row 1 — title block (left aligned, eyebrow + headline + subtitle).
+  Row 2 — single core plugin card centred.
+  Row 3 — six community-overlay plugin cards in a 3 wide x 2 tall grid.
+  Row 4 — stat strip footer.
 
-Distinct from prior hero layouts (flat grids, tiered stacks) by using
-a radial hub-and-spoke composition.
+Dashed dependency lines run from every community card up to the core card,
+illustrating the v5 `dependencies` field auto-install behaviour.
+
+1200x630 (Open Graph standard). Dark background.
 """
 
 from PIL import Image, ImageDraw, ImageFont
-import math
 import os
 
 WIDTH = 1200
@@ -24,7 +25,6 @@ TEXT_TERTIARY = (88, 96, 110)
 
 INDIGO = (99, 102, 241)
 INDIGO_TEXT = (165, 180, 252)
-INDIGO_DIM = (49, 46, 129)
 
 ORANGE = (217, 119, 67)
 PURPLE = (168, 85, 247)
@@ -44,7 +44,6 @@ for y in range(0, HEIGHT, 28):
 
 
 def draw_gradient_bar(y_start, y_end, alpha):
-    """Top/bottom gradient accent strips."""
     for x in range(WIDTH):
         t = x / WIDTH
         if t < 0.2:
@@ -97,144 +96,112 @@ def load_font(paths, size):
     return ImageFont.load_default()
 
 
-font_eyebrow = load_font(font_mono_paths, 11)
-font_title = load_font(font_bold_paths, 38)
+font_eyebrow = load_font(font_mono_paths, 12)
+font_title = load_font(font_bold_paths, 40)
 font_subtitle = load_font(font_regular_paths, 16)
-font_core_label = load_font(font_bold_paths, 22)
-font_core_sub = load_font(font_mono_paths, 11)
-font_node_label = load_font(font_bold_paths, 13)
-font_node_flag = load_font(font_bold_paths, 16)
+
+font_core_eyebrow = load_font(font_mono_paths, 11)
+font_core_name = load_font(font_bold_paths, 26)
+font_core_meta = load_font(font_mono_paths, 11)
+
+font_node_name = load_font(font_bold_paths, 14)
+font_node_label = load_font(font_regular_paths, 11)
 font_node_meta = load_font(font_mono_paths, 9)
-font_footer_stat = load_font(font_bold_paths, 14)
+
+font_footer_stat = load_font(font_bold_paths, 15)
 font_footer_meta = load_font(font_mono_paths, 10)
 
-# --- Header text block (top-left aligned) ---
-PAD = 64
+PAD = 56
 
-draw.text((PAD, 38), "ARCKIT V5.0.0", font=font_eyebrow, fill=INDIGO_TEXT)
-draw.text((PAD, 60), "One toolkit. Seven plugins.", font=font_title, fill=TEXT_PRIMARY)
-draw.text((PAD, 108), "Install only what you need.", font=font_title, fill=TEXT_SECONDARY)
-draw.text((PAD, 162), "The community-overlay split: arckit core + six per-jurisdiction plugins.",
+# --- Row 1: Title block (top, left-aligned) ---
+draw.text((PAD, 32), "ARCKIT V5.0.0  ·  RELEASED 18 MAY 2026", font=font_eyebrow, fill=INDIGO_TEXT)
+draw.text((PAD, 56), "One toolkit. Seven plugins.", font=font_title, fill=TEXT_PRIMARY)
+draw.text((PAD, 100), "Install only what you need.", font=font_title, fill=TEXT_SECONDARY)
+draw.text((PAD, 152),
+          "v5.0.0 splits ArcKit into seven marketplace plugins. Core plus six per-jurisdiction overlays.",
           font=font_subtitle, fill=TEXT_SECONDARY)
 
-# --- Hub-and-spoke layout ---
-CENTRE_X = WIDTH // 2
-CENTRE_Y = 380
+# --- Row 2: Core plugin card, centred ---
+CORE_W = 320
+CORE_H = 96
+CORE_X0 = (WIDTH - CORE_W) // 2
+CORE_Y0 = 200
+CORE_X1 = CORE_X0 + CORE_W
+CORE_Y1 = CORE_Y0 + CORE_H
+CORE_CENTRE_X = (CORE_X0 + CORE_X1) // 2
 
-# Core node geometry
-CORE_W = 240
-CORE_H = 110
-core_x0 = CENTRE_X - CORE_W // 2
-core_y0 = CENTRE_Y - CORE_H // 2
-core_x1 = CENTRE_X + CORE_W // 2
-core_y1 = CENTRE_Y + CORE_H // 2
-
-# Overlay nodes around the core (6 plugins).
-# Place them on a roughly elliptical orbit with the long axis horizontal,
-# leaving room above for the header and below for the footer.
-NODE_W = 168
-NODE_H = 72
-RADIUS_X = 380
-RADIUS_Y = 158
-
-# (name, label, flag emoji, command count, ring colour, text colour)
-overlays = [
-    ("arckit-uae", "UAE Federal", "AE", "12 cmds", PURPLE, (192, 132, 252)),
-    ("arckit-fr", "French Public Sector", "FR", "12 cmds", ORANGE, (232, 149, 106)),
-    ("arckit-ca", "Canada Federal", "CA", "12 cmds", SALMON, (253, 164, 175)),
-    ("arckit-eu", "EU Regulatory", "EU", "7 cmds", GOLD, (250, 204, 21)),
-    ("arckit-at", "Austrian Gov", "AT", "3 cmds", CYAN, (103, 232, 249)),
-    ("arckit-au", "Australian Federal", "AU", "8 cmds", GREEN, (134, 239, 172)),
-]
-
-# Angle assignments (radians), 6 plugins around the hub.
-# Skip the very top and bottom so the title and footer stay clean.
-angles = [
-    math.radians(150),  # upper left
-    math.radians(210),  # lower left
-    math.radians(270 - 12),  # below-centre, left
-    math.radians(270 + 12),  # below-centre, right
-    math.radians(330),  # lower right
-    math.radians(30),   # upper right
-]
-
-node_positions = []
-for (name, label, flag, count, ring, text_col), angle in zip(overlays, angles):
-    nx = CENTRE_X + int(math.cos(angle) * RADIUS_X)
-    ny = CENTRE_Y + int(math.sin(angle) * RADIUS_Y)
-    node_positions.append((name, label, flag, count, ring, text_col, nx, ny))
-
-# Draw the connection lines first so the nodes sit on top.
-for (_, _, _, _, ring, _, nx, ny) in node_positions:
-    # Compute the edge of the core rectangle along the direction of the node.
-    dx = nx - CENTRE_X
-    dy = ny - CENTRE_Y
-    if dx == 0:
-        sx = CENTRE_X
-        sy = core_y0 if dy < 0 else core_y1
-    else:
-        slope = dy / dx
-        if abs(slope) * (CORE_W / 2) <= CORE_H / 2:
-            sx = CENTRE_X + (CORE_W // 2) * (1 if dx > 0 else -1)
-            sy = CENTRE_Y + slope * (CORE_W / 2) * (1 if dx > 0 else -1)
-        else:
-            sy_off = CORE_H // 2 * (1 if dy > 0 else -1)
-            sx = CENTRE_X + (sy_off / slope)
-            sy = CENTRE_Y + sy_off
-    # And the edge of the overlay rectangle along the same line.
-    if dx == 0:
-        ex = nx
-        ey = ny + (NODE_H // 2 if dy < 0 else -NODE_H // 2)
-    else:
-        slope = dy / dx
-        if abs(slope) * (NODE_W / 2) <= NODE_H / 2:
-            ex = nx - (NODE_W // 2) * (1 if dx > 0 else -1)
-            ey = ny - slope * (NODE_W / 2) * (1 if dx > 0 else -1)
-        else:
-            ey_off = NODE_H // 2 * (1 if dy > 0 else -1)
-            ex = nx - (ey_off / slope)
-            ey = ny - ey_off
-    # Dashed line in the ring colour.
-    total = ((ex - sx) ** 2 + (ey - sy) ** 2) ** 0.5
-    if total < 1:
-        continue
-    steps = max(int(total // 14), 2)
-    for i in range(steps):
-        a = i / steps
-        b = (i + 0.55) / steps
-        x1 = sx + (ex - sx) * a
-        y1 = sy + (ey - sy) * a
-        x2 = sx + (ex - sx) * b
-        y2 = sy + (ey - sy) * b
-        draw.line([(x1, y1), (x2, y2)], fill=ring + (160,), width=2)
-
-# --- Core node ---
-# Drop shadow.
+# Drop shadow
 shadow = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
 sdraw = ImageDraw.Draw(shadow)
-sdraw.rounded_rectangle((core_x0 + 4, core_y0 + 6, core_x1 + 4, core_y1 + 6),
+sdraw.rounded_rectangle((CORE_X0 + 4, CORE_Y0 + 6, CORE_X1 + 4, CORE_Y1 + 6),
                         radius=14, fill=(0, 0, 0, 130))
 img.alpha_composite(shadow)
 
-# Card.
-draw.rounded_rectangle((core_x0, core_y0, core_x1, core_y1),
+draw.rounded_rectangle((CORE_X0, CORE_Y0, CORE_X1, CORE_Y1),
                        radius=14, fill=(22, 27, 34, 255), outline=INDIGO + (255,), width=3)
-# Eyebrow + name + meta.
-draw.text((CENTRE_X, core_y0 + 14), "CORE", font=font_eyebrow, fill=INDIGO_TEXT, anchor="mt")
-draw.text((CENTRE_X, core_y0 + 34), "arckit", font=font_core_label, fill=TEXT_PRIMARY, anchor="mt")
-draw.text((CENTRE_X, core_y0 + 68), "71 commands · UK baseline", font=font_core_sub,
-          fill=TEXT_SECONDARY, anchor="mt")
-draw.text((CENTRE_X, core_y0 + 86), "hooks · MCP · doc-types", font=font_core_sub,
-          fill=TEXT_TERTIARY, anchor="mt")
 
-# --- Overlay nodes ---
-for (name, label, flag, count, ring, text_col, nx, ny) in node_positions:
-    nx0 = nx - NODE_W // 2
-    ny0 = ny - NODE_H // 2
-    nx1 = nx + NODE_W // 2
-    ny1 = ny + NODE_H // 2
+draw.text((CORE_CENTRE_X, CORE_Y0 + 12), "CORE  ·  REQUIRED BY ALL OVERLAYS",
+          font=font_core_eyebrow, fill=INDIGO_TEXT, anchor="mt")
+draw.text((CORE_CENTRE_X, CORE_Y0 + 30), "arckit",
+          font=font_core_name, fill=TEXT_PRIMARY, anchor="mt")
+draw.text((CORE_CENTRE_X, CORE_Y0 + 64), "71 cmds  ·  hooks  ·  MCP  ·  doc-types  ·  validators",
+          font=font_core_meta, fill=TEXT_SECONDARY, anchor="mt")
 
-    # Drop shadow.
+# --- Row 3: Six community-overlay cards in a 3-wide x 2-tall grid ---
+NODE_W = 280
+NODE_H = 76
+GRID_GAP_X = 24
+GRID_GAP_Y = 18
+GRID_TOTAL_W = NODE_W * 3 + GRID_GAP_X * 2
+GRID_LEFT = (WIDTH - GRID_TOTAL_W) // 2
+GRID_TOP = 330
+
+# (plugin name, jurisdiction label, code, command count, accent colour, label colour)
+overlays = [
+    ("arckit-uae", "UAE Federal",         "AE", "12 cmds + 2 recipes", PURPLE, (216, 180, 254)),
+    ("arckit-fr",  "French Public Sector", "FR", "12 cmds",            ORANGE, (251, 180, 142)),
+    ("arckit-ca",  "Canada Federal",      "CA", "12 cmds + 1 recipe",  SALMON, (253, 175, 184)),
+    ("arckit-eu",  "EU Regulatory",       "EU", "7 cmds",              GOLD,   (250, 215, 76)),
+    ("arckit-at",  "Austrian Government", "AT", "3 cmds",              CYAN,   (125, 234, 246)),
+    ("arckit-au",  "Australian Federal",  "AU", "8 cmds + 1 recipe",   GREEN,  (140, 240, 178)),
+]
+
+node_rects = []
+for idx, (name, label, code, count, ring, text_col) in enumerate(overlays):
+    col = idx % 3
+    row = idx // 3
+    nx0 = GRID_LEFT + col * (NODE_W + GRID_GAP_X)
+    ny0 = GRID_TOP + row * (NODE_H + GRID_GAP_Y)
+    nx1 = nx0 + NODE_W
+    ny1 = ny0 + NODE_H
+    node_rects.append((nx0, ny0, nx1, ny1, name, label, code, count, ring, text_col))
+
+# Connection lines first so cards sit on top.
+# Top-row cards draw a short line up from their top edge to the core's bottom edge.
+# Bottom-row cards draw a longer line up through the gap.
+for (nx0, ny0, nx1, ny1, name, label, code, count, ring, text_col) in node_rects:
+    node_top_centre_x = (nx0 + nx1) // 2
+    # Connection enters the core at a point on its bottom edge nearest the node.
+    enter_x = max(CORE_X0 + 18, min(CORE_X1 - 18, node_top_centre_x))
+    enter_y = CORE_Y1
+    leave_x = node_top_centre_x
+    leave_y = ny0
+    # Two-segment vertical-then-vertical (with a tiny horizontal jog if needed),
+    # rendered as a dashed line. Use a single straight line for simplicity.
+    total_len = ((leave_x - enter_x) ** 2 + (leave_y - enter_y) ** 2) ** 0.5
+    steps = max(int(total_len // 12), 3)
+    for s in range(steps):
+        a = s / steps
+        b = (s + 0.55) / steps
+        x1 = enter_x + (leave_x - enter_x) * a
+        y1 = enter_y + (leave_y - enter_y) * a
+        x2 = enter_x + (leave_x - enter_x) * b
+        y2 = enter_y + (leave_y - enter_y) * b
+        draw.line([(x1, y1), (x2, y2)], fill=ring + (130,), width=2)
+
+# Render the cards.
+for (nx0, ny0, nx1, ny1, name, label, code, count, ring, text_col) in node_rects:
+    # Drop shadow
     shadow = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
     sdraw = ImageDraw.Draw(shadow)
     sdraw.rounded_rectangle((nx0 + 3, ny0 + 5, nx1 + 3, ny1 + 5),
@@ -244,35 +211,38 @@ for (name, label, flag, count, ring, text_col, nx, ny) in node_positions:
     draw.rounded_rectangle((nx0, ny0, nx1, ny1),
                            radius=11, fill=(22, 27, 34, 255), outline=ring + (255,), width=2)
 
-    # Flag-style tag chip on the left.
-    chip_x0 = nx0 + 8
-    chip_y0 = ny0 + 8
-    chip_x1 = chip_x0 + 28
-    chip_y1 = chip_y0 + 18
+    # Country code chip on the left.
+    chip_x0 = nx0 + 12
+    chip_y0 = ny0 + 14
+    chip_x1 = chip_x0 + 32
+    chip_y1 = chip_y0 + 20
     draw.rounded_rectangle((chip_x0, chip_y0, chip_x1, chip_y1),
                            radius=4, fill=ring + (255,))
     draw.text(((chip_x0 + chip_x1) // 2, (chip_y0 + chip_y1) // 2 - 1),
-              flag, font=font_node_meta, fill=(13, 17, 23), anchor="mm")
+              code, font=font_node_meta, fill=(13, 17, 23), anchor="mm")
 
-    # Plugin name (mono, bold, accent colour).
-    draw.text((chip_x1 + 8, chip_y0 + 8), name, font=font_node_label, fill=text_col,
-              anchor="lm")
-    # Human label.
-    draw.text((nx0 + 12, ny0 + 38), label, font=font_node_meta, fill=TEXT_PRIMARY)
-    # Command count.
-    draw.text((nx1 - 12, ny1 - 12), count, font=font_node_meta, fill=TEXT_TERTIARY,
-              anchor="rb")
+    # Plugin name (mono, bold, accent colour) next to chip.
+    draw.text((chip_x1 + 12, chip_y0 + 10), name,
+              font=font_node_name, fill=text_col, anchor="lm")
 
-# --- Footer stat strip ---
-footer_y = HEIGHT - 56
-draw.text((PAD, footer_y),
+    # Human label on second row.
+    draw.text((nx0 + 14, ny0 + 44), label, font=font_node_label, fill=TEXT_PRIMARY)
+
+    # Command count on right, second row.
+    draw.text((nx1 - 14, ny1 - 12), count,
+              font=font_node_meta, fill=TEXT_TERTIARY, anchor="rb")
+
+# --- Row 4: Footer stat strip ---
+FOOTER_Y = HEIGHT - 56
+draw.text((PAD, FOOTER_Y),
           "125 commands  ·  7 marketplace plugins  ·  6 jurisdictions  ·  exact-version dependencies",
           font=font_footer_stat, fill=TEXT_PRIMARY)
-draw.text((PAD, footer_y + 22),
-          "arckit.org  ·  v5.0.0  ·  Released 18 May 2026",
+draw.text((PAD, FOOTER_Y + 22),
+          "arckit.org/getting-started.html  ·  claude plugin install arckit arckit-{uae,fr,ca,eu,at,au}",
           font=font_footer_meta, fill=TEXT_TERTIARY)
 
 # --- Save ---
-out_path = os.path.join(os.path.dirname(__file__) or ".", "2026-05-18-arckit-v5-plugin-split-hero.png")
+out_path = os.path.join(os.path.dirname(__file__) or ".",
+                       "2026-05-18-arckit-v5-plugin-split-hero.png")
 img.convert("RGB").save(out_path, "PNG", optimize=True)
 print(f"Wrote {out_path}")

@@ -40,10 +40,6 @@ The split would be merely an organisational change if installing a community plu
 
 Every community plugin declares an exact dependency on `arckit` core. When you run `claude plugin install arckit-uae`, Claude Code resolves the dependency, fetches the core plugin, installs it, then installs the community plugin and reports both at the end of the install output. You do not have to know the dependency chain. You ask for the overlay you want and the toolkit installs what makes it work.
 
-The exact pin matters. v5.0.0 uses `=5.0.0` as the version constraint on every community plugin. That means the six community plugins always ship as a coherent set with the core plugin they were validated against. If the core plugin ever ships a breaking change, the community plugins do not silently track it. They hold at the version they were tested against until a new community-plugin release widens the constraint. The release flow keeps all seven plugins in lockstep. A single `scripts/bump-version.sh 5.0.0` updates every plugin manifest, every VERSION file, the marketplace catalogue, and every community plugin's dependency pin in one pass.
-
-The other half of the dependency machinery is the `claude plugin prune` command introduced in v2.1.121. When you uninstall a community plugin with the `--prune` flag, Claude Code removes the plugin and any dependencies that were auto-installed and are no longer required. The core plugin survives if you installed it yourself, gets cleaned up if you only ended up with it because a community plugin asked for it. The lifecycle is clean in both directions.
-
 ## Three-tier recipe lookup
 
 The build harness moves too. The `arckit-build` skill that powers the bulk artefact generation now does a three-tier recipe lookup. It checks project overrides first (`.arckit/recipes/{name}.yaml` for user-customised recipes that survive plugin updates), then the core plugin (for the UK Government recipes: `uk-saas` and `uk-mod-sovereign`), then sibling community plugins via a glob on `${CLAUDE_PLUGIN_ROOT}/../arckit-*/recipes/{name}.yaml`. The glob picks up `arckit-uae/recipes/uae-federal-ai.yaml`, `arckit-ca/recipes/ca-federal-fitaa.yaml`, `arckit-au/recipes/au-federal.yaml` and any future community plugin's recipes without any further code change.
@@ -74,12 +70,6 @@ For new jurisdictions, the template is now obvious. Look at `arckit-au` (the new
 
 Adding a new doc-type code is the one rule worth being explicit about. Because doc types live in `arckit-claude/config/doc-types.mjs`, any new community command that emits a new doc type requires a two-part contribution: the command in the community plugin, the doc-type registration in the core plugin. The collision check in CI catches duplicates automatically. The pattern is documented in [CONTRIBUTING.md](https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md).
 
-## A note on the Australian overlay
-
-The Australian Federal overlay is brand new in v5.0.0 and arrived through a different path than the other community plugins. [@royster70](https://github.com/royster70) authored the eight commands, eight templates, the `au-federal` recipe, the validation scorecard and the overlay maintenance guide as a single contribution validated end-to-end against a real Australian SMB engagement (DISP Level 2 in progress, OFFICIAL:Sensitive). The contribution shipped against the pre-v5 layout and was restructured into the `arckit-au` plugin directory when v5.0.0 merged. The 25 out of 25 evaluation scorecard pass, the 220 AU framework references in the validation artefacts, and the zero UK framework leakage all carry across the restructuring.
-
-The Australian overlay is the third validated community overlay (after the UAE Federal and Canada Federal overlays) and the first one that arrived with a validation scorecard published alongside it. The pattern (community contributor with domain expertise, real client engagement, mechanical-grep evidence) is the one we hope future contributions follow.
-
 ## Where to start
 
 Existing projects: open a v5.0.0 session in any project that previously used ArcKit and the migration banner will tell you exactly what to install. The whole migration usually takes one command and a `touch` to acknowledge.
@@ -88,4 +78,4 @@ New projects: the [Getting Started guide](https://arckit.org/getting-started.htm
 
 Maintainers of jurisdictional overlays: your contribution surface just got smaller and clearer. The seventh plugin (`arckit-au`) is the template for the eighth.
 
-ArcKit v5.0.0 is on [GitHub](https://github.com/tractorjuice/arc-kit/releases/tag/v5.0.0). The full changelog is in the [release notes](https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md). The seven plugins are in the marketplace at `tractorjuice/arc-kit`.
+ArcKit v5.0.0 is on [GitHub](https://github.com/tractorjuice/arc-kit/releases/tag/v5.0.0). The full changelog is in the [release notes](https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md). The seven plugins are in the marketplace at `tractorjuice/arc-kit`.  
