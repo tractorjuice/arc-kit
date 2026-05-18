@@ -13,7 +13,7 @@
       "name": "arckit",
       "source": "./arckit-claude",
       "description": "71 slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance",
-      "version": "5.0.0-alpha.2",
+      "version": "5.0.0-alpha.3",
       "author": {
         "name": "TractorJuice"
       },
@@ -53,7 +53,7 @@
       "name": "arckit-fr",
       "source": "./arckit-fr",
       "description": "French Public Sector Overlay — 12 commands for DINUM, ANSSI, RGPD/CNIL, EBIOS, PSSI, SecNumCloud",
-      "version": "5.0.0-alpha.1",
+      "version": "5.0.0-alpha.3",
       "author": {
         "name": "TractorJuice"
       },
