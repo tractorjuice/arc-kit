@@ -34,7 +34,7 @@
       "name": "arckit-uae",
       "source": "./arckit-uae",
       "description": "UAE Federal Overlay — 12 commands for PDPL, IAS, AI Charter, autonomy, sovereign cloud, UAE Pass",
-      "version": "5.0.0",
+      "version": "5.0.0-alpha.1",
       "author": {
         "name": "TractorJuice"
       },
