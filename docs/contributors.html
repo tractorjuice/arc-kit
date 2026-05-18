@@ -288,7 +288,7 @@
 
     <div class="app-page-hero app-page-hero--contributors">
         <div class="govuk-width-container app-page-hero__content">
-            <span class="app-page-hero__stat">10 Contributors</span>
+            <span class="app-page-hero__stat">12 Contributors</span>
             <h1 class="app-page-hero__title">Contributors</h1>
             <p class="app-page-hero__description">Meet the community members who have shaped ArcKit through code contributions, feature requests, and bug reports. Every contribution matters.</p>
         </div>
@@ -399,6 +399,21 @@
                         <li>Validation scorecard with reproducible mechanical-grep evidence</li>
                     </ul>
                 </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">E</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/ErbolTakhirov">@ErbolTakhirov</a></p>
+                            <span class="app-contributor-card__role app-contributor-card__role--code">Code Contributor</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Proposed and implemented <code>user_config</code> defaulting in command and agent Document Control instructions — wiring the existing <code>default_classification</code> plugin setting into the <code>[CLASSIFICATION]</code> field so artefacts pick up the user's configured default automatically (<a href="https://github.com/tractorjuice/arc-kit/pull/492" class="govuk-link">#492</a>, salvaged from <a href="https://github.com/tractorjuice/arc-kit/pull/396" class="govuk-link">#396</a>).</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li><code>${user_config.default_classification}</code> default across 38 commands and 8 agents</li>
+                        <li>Preserved per-command fallback wording (OFFICIAL / PUBLIC / INTERNAL variants)</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Feature Requesters & Bug Reporters -->
@@ -485,7 +500,7 @@
 
             <!-- Community Summary -->
             <h2 class="govuk-heading-l govuk-!-margin-top-8">Community Impact</h2>
-            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 5 code contributors, 2 feature requesters, and 3 bug reporters, these 10 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, and EU / French / Austrian regulatory compliance coverage.</p>
+            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 7 code contributors, 2 feature requesters, and 3 bug reporters, these 12 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, plugin user-config wiring, and EU / French / Austrian / Australian regulatory compliance coverage.</p>
 
             <!-- Contributing CTA -->
             <div class="govuk-inset-text govuk-!-margin-top-6">
