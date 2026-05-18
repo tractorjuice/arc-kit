@@ -63,7 +63,20 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab.
+Then install from the Discover tab. As of v5.0.0 the marketplace ships **6 plugins** — install only the jurisdictions you need:
+
+```bash
+# Core (71 commands — UK Government civilian + generic enterprise)
+claude plugin install arckit
+
+# UK + UAE federal
+claude plugin install arckit arckit-uae
+
+# Everything (117 commands across UK + UAE + FR + CA + EU + AT)
+claude plugin install arckit arckit-{uae,fr,ca,eu,at}
+```
+
+All 6 plugins come from the same `tractorjuice/arc-kit` marketplace. Community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`) require the `arckit` core plugin.
 
 > **Tip: lighter marketplace clone.** The command above clones the full arc-kit monorepo (~100 MB) because it hosts five other AI-assistant distributions, 147 vendored Wardley maps, and research docs you don't need. To fetch just the plugin's directories, add the marketplace via the CLI with `--sparse`:
 >

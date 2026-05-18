@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.0.0] - 2026-XX-XX
+
+### BREAKING
+
+- **Plugin split**: the `arckit` core plugin now ships only the 71 official-baseline commands. 46 community-overlay commands move to five new marketplace plugins: `arckit-uae` (12), `arckit-fr` (12), `arckit-ca` (12), `arckit-eu` (7), `arckit-at` (3). Install them alongside `arckit` to restore the previous full surface. See root `CHANGELOG.md` for the migration story.
+
+### Added
+
+- `hooks/v5-migration-banner.mjs` — one-shot SessionStart hook that reads `.arckit/manifest.json` and prints install suggestions for the jurisdictions a project previously used.
+
+### Changed
+
+- `skills/arckit-build/SKILL.md` — three-tier recipe lookup (project → core → sibling community plugins). Built-in recipes table gains a Plugin column and adds `ca-federal-fitaa` (previously missing despite shipping in v4.15.0).
+- `config/doc-types.mjs` — single source of truth for ALL doc-type codes, including codes used by community-plugin commands. Adding a community command that emits a new code requires a two-part PR (see root `CONTRIBUTING.md`).
+- All `uae-*`, `fr-*`, `ca-*`, `eu-*`, `at-*` commands, templates, and recipes are no longer shipped by the core plugin — moved to their respective community plugins.
+
 ## [4.22.0] - 2026-05-17
 
 ### Added

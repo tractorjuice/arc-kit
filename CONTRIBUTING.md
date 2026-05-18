@@ -223,6 +223,19 @@ All contributions must align with:
 - **GDS Service Standard**: 14 points for government services
 - **Digital Marketplace**: DOS and G-Cloud procurement frameworks
 
+## Adding a new doc-type code (v5.0.0+)
+
+Doc-type codes live in `arckit-claude/config/doc-types.mjs` regardless of which plugin the emitting command lives in. This keeps `validate-arc-filename.mjs` single-sourced and the collision check in one file.
+
+A new community command that emits a new doc type therefore requires a **two-part PR**:
+
+1. The command in `arckit-{jurisdiction}/commands/{slug}.md` (e.g. `arckit-uae/commands/uae-newthing.md`).
+2. The new code in `arckit-claude/config/doc-types.mjs` with `regime: 'UAE'` (or `FR`, `CA`, `EU`, `AT`).
+
+Reviewers check that the new code doesn't collide with existing codes — `scripts/check_doctype_collisions.py` catches duplicates automatically in CI.
+
+If the new code is the **first** of its regime, also register the regime in the `REGIMES` array and `REGIME_LABELS` object at the bottom of `doc-types.mjs`. Order convention: officially-maintained first, then community alphabetical.
+
 ## Command Naming Conventions
 
 - Use lowercase with hyphens: `/arckit.data-model`

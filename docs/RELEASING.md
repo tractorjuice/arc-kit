@@ -93,6 +93,26 @@ git push && git push --tags
 
 This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`), which would not trigger `.github/workflows/release.yml` (it matches `v[0-9]+.[0-9]+.[0-9]+`). We use `--dry-run` for its validation behaviour only — it cross-checks `arckit-claude/.claude-plugin/plugin.json` against the marketplace entry in `.claude-plugin/marketplace.json` and exits non-zero on mismatch, catching version drift before the real `git tag -a vX.Y.Z` runs.
 
+## v5.0.0+ — multi-plugin release flow
+
+After v5.0.0 the marketplace ships 6 plugins (`arckit` core + 5 community overlays). All 6 share one version, bumped together.
+
+Step 7 changes — validate every plugin manifest:
+
+```bash
+for p in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at; do
+  claude plugin tag "$p" --dry-run || exit 1
+done
+```
+
+After the umbrella tag (step 9), also create native per-plugin tags:
+
+```bash
+./scripts/tag-plugins.sh X.Y.Z
+```
+
+This creates `arckit--vX.Y.Z`, `arckit-uae--vX.Y.Z`, ..., `arckit-at--vX.Y.Z` for the Claude Code plugin system's bookkeeping. Idempotent — re-running skips tags that already exist.
+
 ## Adding New Package Data Files
 
 Update `pyproject.toml` `[tool.hatch.build.targets.wheel.shared-data]` so the file ships with the CLI wheel.
