@@ -152,18 +152,32 @@ export const DOC_TYPES = {
   'OLA':       { name: 'Canada Official Languages Act Review',         category: 'Compliance',   regime: 'CA' },
   'PROC':      { name: 'Canada Federal Procurement Strategy',          category: 'Procurement',  regime: 'CA' },
   'OCAP':      { name: 'Canada First Nations OCAP Sovereignty Assessment', category: 'Governance',   regime: 'CA' },
+  // Australian Federal Overlay (Community-contributed, maintained by @royster70) — ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988 PIA,
+  // OAIC NDB scheme, DISP, PSPF, DTA AI Assurance Framework + Responsible AI Policy v2.0
+  'AUE8':      { name: 'AU Essential Eight Maturity Posture',          category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
+  'AUISM':     { name: 'AU ISM Statement of Applicability',            category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
+  'AUPIA':     { name: 'AU Privacy Impact Assessment (Privacy Act 1988)', category: 'Compliance', regime: 'AU', severity: 'HIGH' },
+  'AUNDB':     { name: 'AU Notifiable Data Breach Response Playbook',  category: 'Compliance',  regime: 'AU' },
+  'AUDSS':     { name: 'AU DTA Digital Service Standard Conformance',  category: 'Governance',  regime: 'AU', severity: 'HIGH' },
+  'AUPSPF':    { name: 'AU Protective Security Policy Framework Scorecard', category: 'Governance', regime: 'AU', severity: 'HIGH' },
+  'AUAIA':     { name: 'AU AI Assurance Baseline (DTA AI Policy v2.0)', category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
+  'AUDISP':    { name: 'AU DISP Member Self-Attestation Pack',         category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
 };
 
 // Derived: regimes in canonical order (officially-maintained first, then community alphabetical)
-export const REGIMES = ['UK', 'MOD', 'EU', 'FR', 'AT', 'UAE'];
+// CA + AU added retroactively — both shipped doc-types without REGIMES registration
+// (CA since v4.15.0, AU in v5.0.0). REGIME_LABELS ordering matches.
+export const REGIMES = ['UK', 'MOD', 'AT', 'AU', 'CA', 'EU', 'FR', 'UAE'];
 
 // Human-readable regime labels
 export const REGIME_LABELS = {
   UK:  'UK Gov',
   MOD: 'MOD',
+  AT:  'Austria',
+  AU:  'Australia',
+  CA:  'Canada',
   EU:  'EU',
   FR:  'France',
-  AT:  'Austria',
   UAE: 'UAE',
 };
 

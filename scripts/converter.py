@@ -219,6 +219,7 @@ PLUGIN_SOURCES = [
     "arckit-ca",
     "arckit-eu",
     "arckit-at",
+    "arckit-au",
     "arckit-claude",  # core last
 ]
 
