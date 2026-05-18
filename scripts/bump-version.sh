@@ -77,11 +77,30 @@ jq --arg v "$NEW_VERSION" '.version = $v' arckit-claude/.claude-plugin/plugin.js
 mv arckit-claude/.claude-plugin/plugin.json.tmp arckit-claude/.claude-plugin/plugin.json
 update_file "arckit-claude/.claude-plugin/plugin.json" ".version"
 
-# ── 8. .claude-plugin/marketplace.json (plugins[0].version only) ───────────
+# ── 8. .claude-plugin/marketplace.json (all 6 plugin entries) ──────────────
+#
+# All 6 plugins (arckit core + 5 community: uae, fr, ca, eu, at) share one
+# version per the v5.0.0 split design. metadata.version stays at 1.0.0.
 
-jq --arg v "$NEW_VERSION" '.plugins[0].version = $v' .claude-plugin/marketplace.json > .claude-plugin/marketplace.json.tmp
+jq --arg v "$NEW_VERSION" '.plugins |= map(.version = $v)' .claude-plugin/marketplace.json > .claude-plugin/marketplace.json.tmp
 mv .claude-plugin/marketplace.json.tmp .claude-plugin/marketplace.json
-update_file ".claude-plugin/marketplace.json" ".plugins[0].version (metadata.version unchanged)"
+update_file ".claude-plugin/marketplace.json" "all .plugins[].version (metadata.version unchanged)"
+
+# ── 8a–8e. Community plugin manifests + VERSION files ─────────────────────
+
+for jurisdiction in uae fr ca eu at; do
+  manifest="arckit-${jurisdiction}/.claude-plugin/plugin.json"
+  version_file="arckit-${jurisdiction}/VERSION"
+  if [[ -f "$manifest" ]]; then
+    jq --arg v "$NEW_VERSION" '.version = $v' "$manifest" > "${manifest}.tmp"
+    mv "${manifest}.tmp" "$manifest"
+    update_file "$manifest" ".version"
+  fi
+  if [[ -f "$version_file" ]]; then
+    echo "$NEW_VERSION" > "$version_file"
+    update_file "$version_file" "overwrite"
+  fi
+done
 
 # ── 9. arckit-gemini/VERSION ───────────────────────────────────────────────
 
@@ -132,17 +151,21 @@ echo ""
 echo "── Verification ──"
 echo ""
 echo "VERSION files:"
-grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION arckit-copilot/VERSION arckit-paperclip/VERSION
+grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-uae/VERSION arckit-fr/VERSION arckit-ca/VERSION arckit-eu/VERSION arckit-at/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION arckit-copilot/VERSION arckit-paperclip/VERSION
 echo ""
 echo "pyproject.toml:"
 grep "^version" pyproject.toml
 echo ""
-echo "plugin.json:"
-jq -r '.version' arckit-claude/.claude-plugin/plugin.json
+echo "plugin.json (all 6 plugins):"
+for src in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at; do
+  if [[ -f "$src/.claude-plugin/plugin.json" ]]; then
+    printf "  %-22s %s\n" "$src/plugin.json:" "$(jq -r '.version' "$src/.claude-plugin/plugin.json")"
+  fi
+done
 echo ""
 echo "marketplace.json:"
-echo "  plugins[0].version: $(jq -r '.plugins[0].version' .claude-plugin/marketplace.json)"
 echo "  metadata.version:   $(jq -r '.metadata.version' .claude-plugin/marketplace.json)  (should be 1.0.0)"
+jq -r '.plugins[] | "  \(.name): \(.version)"' .claude-plugin/marketplace.json | sed 's/^/  /'
 echo ""
 
 # Lint check
