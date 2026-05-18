@@ -42,6 +42,12 @@
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/version-check.mjs"],
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/v5-migration-banner.mjs"],
+            "timeout": 5
           }
         ]
       }
