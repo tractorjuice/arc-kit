@@ -9,6 +9,18 @@ import tomllib
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CLAUDE_COMMANDS = REPO_ROOT / "arckit-claude" / "commands"
+
+# v5.0.0+: commands live across 6 plugin source directories (core + 5
+# community overlays). Mirror scripts/converter.py's PLUGIN_SOURCES list
+# so this test matches the converter's actual output.
+PLUGIN_COMMAND_DIRS = [
+    REPO_ROOT / "arckit-claude" / "commands",
+    REPO_ROOT / "arckit-uae" / "commands",
+    REPO_ROOT / "arckit-fr" / "commands",
+    REPO_ROOT / "arckit-ca" / "commands",
+    REPO_ROOT / "arckit-eu" / "commands",
+    REPO_ROOT / "arckit-at" / "commands",
+]
 CODEX_ROOT = REPO_ROOT / "arckit-codex"
 CODEX_SKILLS = CODEX_ROOT / "skills"
 CODEX_PROMPTS = CODEX_ROOT / "prompts"
@@ -57,11 +69,15 @@ BAD_TEMPLATE_OVERRIDE_RE = re.compile(
 
 
 def expected_command_names() -> set[str]:
-    return {
-        path.stem
-        for path in CLAUDE_COMMANDS.glob("*.md")
-        if path.name not in CLAUDE_ONLY_COMMANDS
-    }
+    names: set[str] = set()
+    for cmd_dir in PLUGIN_COMMAND_DIRS:
+        if not cmd_dir.is_dir():
+            continue
+        for path in cmd_dir.glob("*.md"):
+            if path.name in CLAUDE_ONLY_COMMANDS:
+                continue
+            names.add(path.stem)
+    return names
 
 
 def codex_skill_name(command_name: str) -> str:

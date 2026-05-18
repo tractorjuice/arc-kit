@@ -12,15 +12,30 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 CLAUDE_COMMANDS_DIR = REPO_ROOT / "arckit-claude" / "commands"
 CLAUDE_ONLY_COMMANDS = {"build.md"}
 
+# v5.0.0+: commands live across 6 plugin source directories. Mirror
+# scripts/converter.py's PLUGIN_SOURCES list so this test matches the
+# converter's actual output.
+PLUGIN_COMMAND_DIRS = [
+    REPO_ROOT / "arckit-claude" / "commands",
+    REPO_ROOT / "arckit-uae" / "commands",
+    REPO_ROOT / "arckit-fr" / "commands",
+    REPO_ROOT / "arckit-ca" / "commands",
+    REPO_ROOT / "arckit-eu" / "commands",
+    REPO_ROOT / "arckit-at" / "commands",
+]
+
 
 def expected_command_count():
-    return len(
-        [
-            path
-            for path in CLAUDE_COMMANDS_DIR.glob("*.md")
+    total = 0
+    for cmd_dir in PLUGIN_COMMAND_DIRS:
+        if not cmd_dir.is_dir():
+            continue
+        total += sum(
+            1
+            for path in cmd_dir.glob("*.md")
             if path.name not in CLAUDE_ONLY_COMMANDS
-        ]
-    )
+        )
+    return total
 
 
 @pytest.fixture
