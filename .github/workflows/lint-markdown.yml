@@ -8,6 +8,11 @@ on:
       - ".markdownlint-cli2.jsonc"
       - ".github/workflows/lint-markdown.yml"
       - "scripts/check_references.py"
+      - "scripts/check_recipes.py"
+      - "scripts/check_doctype_collisions.py"
+      - "arckit-*/recipes/**"
+      - "arckit-claude/skills/arckit-build/recipes/**"
+      - "arckit-claude/config/doc-types.mjs"
       - "arckit-claude/.claude-plugin/plugin.json"
   pull_request:
     paths:
@@ -15,6 +20,11 @@ on:
       - ".markdownlint-cli2.jsonc"
       - ".github/workflows/lint-markdown.yml"
       - "scripts/check_references.py"
+      - "scripts/check_recipes.py"
+      - "scripts/check_doctype_collisions.py"
+      - "arckit-*/recipes/**"
+      - "arckit-claude/skills/arckit-build/recipes/**"
+      - "arckit-claude/config/doc-types.mjs"
       - "arckit-claude/.claude-plugin/plugin.json"
 
 jobs:
@@ -36,6 +46,12 @@ jobs:
 
       - name: Cross-reference linter
         run: python3 scripts/check_references.py
+
+      - name: Recipe sanity linter
+        run: python3 scripts/check_recipes.py
+
+      - name: Doc-type collision check
+        run: python3 scripts/check_doctype_collisions.py
 
       - uses: actions/setup-node@v4
         with:
