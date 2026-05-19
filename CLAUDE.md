@@ -93,6 +93,8 @@ Some commands delegate to **autonomous agents** (`arckit-claude/agents/arckit-{n
 | `arckit-gov-landscape` | `/arckit.gov-landscape` | Government code landscape analysis |
 | `arckit-grants` | `/arckit.grants` | UK government grants and funding research |
 
+**Reader/writer subagents** (6 internal, not user-invocable): `datascout`, `grants`, and `gov-reuse` follow the three-tier orchestrator pattern (`arckit-claude/agents/READER-PATTERN.md`). Each ships a `arckit-{name}-reader.md` (web/MCP evidence gathering, returns JSON) and `arckit-{name}-writer.md` (renders validated payload into artefact, no network tools). Dispatched only by the corresponding orchestrator agent. **Total: 16 agents** (10 single-tier + 6 reader/writer).
+
 **Agent frontmatter**: valid fields are `name` (required), `description` (required), `model`, `effort`, `maxTurns`, `tools`, `disallowedTools`, `initialPrompt`. `tools` is an allowlist (only the listed tools are available); `disallowedTools` is a denylist applied first, then the allowlist is resolved against what remains. Heavy-research agents in this plugin use `tools` (allowlist) for prompt-injection hardening — see `arckit-claude/agents/arckit-research.md` for the canonical shape, including MCP tool naming (`mcp__<server>__<tool>`). Fields like `color` and `permissionMode` remain invalid in plugin context. Claude-only fields (`effort`, `initialPrompt`, `maxTurns`, `disallowedTools`, `tools`) are stripped by the converter.
 
 Agents are Claude Code only — Codex/OpenCode/Gemini equivalents inline the full agent prompt.
