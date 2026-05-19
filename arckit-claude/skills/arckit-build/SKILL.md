@@ -392,6 +392,20 @@ State written by older versions (`state_format_version: "0.3"`) is read-compatib
     - Post-build hook outcomes.
     - Next recommended action (e.g., "review pre-GA blockers in TCOP §Critical Issues").
 
+## Pairing with `/goal` (Claude Code v2.1.139+)
+
+`/goal` keeps Claude working across turns until a completion condition is met, showing live elapsed / turns / tokens overhead. It composes naturally with this build harness when the user's intent stretches beyond a single recipe pass:
+
+- **"Build until APPROVED"** — `/goal every artefact under projects/001-*/ has Document Control Status: APPROVED and no Next Review Date in the past`, then run `/arckit:build 001 --recipe uk-saas --resume`. The harness rebuilds stale targets; `/goal` keeps re-running it until the post-condition holds.
+- **"Refresh a stale slice"** — `/goal no artefact under projects/001-*/ has been flagged by the stale-artifact-scan monitor`, then `/arckit:build 001 --refresh REQ` (or whichever target the monitor flagged).
+- **"Drive a project to GA"** — wrap the build under a goal that also requires zero open `/arckit:conformance` violations and a green `/arckit:health` scan; `/goal` will sequence `build → conformance → health → refresh-violator → build` until clean.
+
+Caveats:
+
+- `/goal` is **Claude Code only** (not exposed in Codex / OpenCode / Gemini). Document the manual loop ("re-run `/arckit:build --resume` until state.json shows all targets complete") for non-Claude runtimes.
+- Stop-hook block cap (v2.1.143, default 8) applies — if a Stop hook keeps blocking inside the goal loop the turn ends with a warning. ArcKit's Stop hooks (`session-learner`, `session-end-stamp`) are observational and never block, so the cap should not interfere.
+- One `/goal` per session; don't nest. The harness's own halt-on-fail still fires inside the goal loop.
+
 ## Failure modes to watch for
 
 - **Subagent doesn't have access to `arckit:*` skills** — detected by the smoke-test in step 6 of the run order; halts the build before any wave dispatches. Workaround if smoke-test fails: load the skill prompt in main context once, pass as plain text to agent (deferred to v0.4+).

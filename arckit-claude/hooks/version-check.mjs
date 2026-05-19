@@ -8,7 +8,9 @@
  *   2. Claude Code minimum — reads `$CLAUDE_CODE_VERSION` (if set) or runs
  *      `claude --version` via spawnSync, and warns when the client is below
  *      MIN_CLAUDE_CODE_VERSION (features like userConfig, hook `if:`, skill
- *      `paths:` depend on v2.1.83+/v2.1.121+). Silent on detection failure.
+ *      `paths:`, plugin dependency enforcement, and the monitor/session-title
+ *      bug fix depend on v2.1.83+/v2.1.121+/v2.1.143+/v2.1.144+). Silent on
+ *      detection failure.
  *
  * Hook Type: SessionStart
  * Input (stdin): JSON with session_id, cwd, etc.
@@ -20,7 +22,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isFile, readText, parseHookInput } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.139';
+const MIN_CLAUDE_CODE_VERSION = '2.1.144';
 
 parseHookInput(); // consume stdin (required by hook protocol)
 
@@ -51,7 +53,10 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- 1-hour prompt cache TTL fix — \`ENABLE_PROMPT_CACHING_1H\` was being silently downgraded to 5 minutes on earlier versions (needs v2.1.129)\n` +
     `- Subagent skill discovery fix — ArcKit's 13 agents could not discover project / user / plugin skills on earlier versions (needs v2.1.133)\n` +
     `- SessionStart hook env vars going stale fix — the \`inject-arckit-context\` pattern relies on env vars surviving across the session (needs v2.1.136)\n` +
-    `- Hook \`args: string[]\` exec form — ArcKit hooks now use the exec form to avoid shell-string parsing; older clients only understand the legacy \`command\` string form (needs v2.1.139)\n\n` +
+    `- Hook \`args: string[]\` exec form — ArcKit hooks now use the exec form to avoid shell-string parsing; older clients only understand the legacy \`command\` string form (needs v2.1.139)\n` +
+    `- Plugin dependency enforcement — \`claude plugin disable arckit\` warns when a community overlay depends on it, instead of silently breaking the overlay (needs v2.1.143)\n` +
+    `- Session title bug fix — ArcKit's \`stale-artifact-scan\` monitor was being used to name new sessions instead of the user's first prompt (needs v2.1.144)\n` +
+    `- Skill tool headless permission fix — \`/arckit:*\` commands run via \`claude -p\` / CI failed with permission errors on v2.1.141–v2.1.143 (needs v2.1.144)\n\n` +
     `Update with: \`claude update\``
   );
   process.stderr.write(`[ArcKit] Claude Code v${clientVersion} is below required v${MIN_CLAUDE_CODE_VERSION}\n`);

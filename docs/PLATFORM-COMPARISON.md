@@ -169,6 +169,8 @@ Handler: `command` (JSON stdio + exit-code-2 block). Matcher: regex only — no 
 - **Background monitors** (`experimental.monitors` key, moved from top-level in v2.1.129) — persistent subprocess; `when: always` or `on-skill-invoke:<skill>`; stdout → in-session notifications.
 - **Hook `args: string[]` exec form** (v2.1.139) — alternative to the legacy single-string `command` field; harness execs the binary directly instead of parsing a shell-quoted command line. ArcKit uses this form for all 16 registered hook entries.
 - **PostToolUse `continueOnBlock: true`** (v2.1.139) — observational PostToolUse hooks (stamping, manifest refresh, telemetry) can opt out of block semantics so a hook failure never derails the user's turn. Block-as-gate semantics are reserved for genuine PreToolUse / UserPromptSubmit guards.
+- **Plugin dependency enforcement** (v2.1.143) — `claude plugin disable` refuses when another enabled plugin depends on the target (with a copy-pasteable disable-chain hint); `claude plugin enable` force-enables transitive dependencies. ArcKit's 6 community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`) declare `dependencies` against the core `arckit` plugin, so users now get a clear error instead of a silently-broken overlay.
+- **Plugin monitor / session-title isolation** (v2.1.144) — fixes a bug where new sessions were named from plugin monitor stdout instead of the user's first prompt. ArcKit's `stale-artifact-scan` monitor was the canonical hit, so the v2.1.144 floor restores correct session titles in `/resume` and `claude agents`.
 
 ### Gemini CLI
 
