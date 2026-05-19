@@ -48,6 +48,12 @@
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/v5-migration-banner.mjs"],
             "timeout": 5
+          },
+          {
+            "type": "command",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/notify-stale-artifacts.mjs", "--enabled=${user_config.desktop_notifications}"],
+            "timeout": 8
           }
         ]
       }

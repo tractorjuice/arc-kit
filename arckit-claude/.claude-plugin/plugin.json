@@ -52,6 +52,11 @@
       "title": "Classification Scheme",
       "description": "Classification ladder used in Document Control headers: 'UK' (PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET) or 'UAE Smart Data' (Open / Shared / Confidential / Secret / Top Secret). Defaults to UK when blank.",
       "type": "string"
+    },
+    "desktop_notifications": {
+      "title": "Desktop Notifications",
+      "description": "Enable terminal-emulator desktop notifications (OSC 9 / OSC 777) when SessionStart detects stale ArcKit artefacts. Set 'true' to enable. Works in iTerm2, Windows Terminal, WezTerm, ConEmu, urxvt, Ghostty, Warp. Defaults to disabled.",
+      "type": "string"
     }
   }
 }

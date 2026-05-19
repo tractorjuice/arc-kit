@@ -19,7 +19,7 @@ claude plugin install arckit@arc-kit
 claude plugin install arckit-eu@arc-kit
 ```
 
-Without `arckit` (core), recipes won't resolve their foundation commands (`arckit:principles`, `arckit:requirements`, etc.) and `validate-arc-filename` won't recognise EU doc-type codes.
+On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy-pasteable disable-chain hint while `arckit-eu` is enabled — earlier versions silently broke this overlay. Without `arckit` (core), recipes won't resolve their foundation commands (`arckit:principles`, `arckit:requirements`, etc.) and `validate-arc-filename` won't recognise EU doc-type codes.
 
 ## Maintainer
 
