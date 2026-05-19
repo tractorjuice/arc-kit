@@ -49,6 +49,12 @@ htmlcov/
 .arckit-debug/
 research/
 
+# Plugin runtime caches — ephemeral, project-scoped, regenerated each session
+# (see #494 close: these belong in .gitignore, not ${CLAUDE_PLUGIN_DATA})
+.arckit/memory/.last-session
+.arckit/memory/.telemetry.jsonl
+docs/telemetry.json
+
 # Projects (created by arckit init, not part of the toolkit itself)
 projects/
 
