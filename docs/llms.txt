@@ -197,6 +197,7 @@ French government (apply on top of EU baseline):
 
 - [Articles index](https://arckit.org/articles.html): Long-form essays on ArcKit's design, the GDS / G-Cloud / UN Global Platform context, and platform-by-platform comparisons.
 - [Why ArcKit needed a build harness](https://arckit.org/article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation): v4.13.0 launch piece for `/arckit:build` (The GDS Harness) — orchestration model, recipes, live-run evidence.
+- [The token budget behind ArcKit's plugin split](https://arckit.org/article-viewer.html?a=2026-05-20-plugin-split-token-budget): why v5.0.0 split into seven marketplace plugins, grounded in real `claude plugin details` token data (core ~10,042 tokens always-on, six overlays ~5,249 combined, ~34% always-on cut for single-jurisdiction users); includes an eight-step guide to splitting a monolithic plugin.
 
 ## Roles
 
