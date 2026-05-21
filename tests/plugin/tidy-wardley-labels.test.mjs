@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
 
-const { tidyMarkdown, tidyFileContent } = await import(
+const { tidyMarkdown, tidyFileContent, tidyBlock } = await import(
   resolve('arckit-claude/hooks/tidy-wardley-labels.mjs')
 );
 
@@ -69,4 +69,47 @@ test('tidyFileContent ignores a .mmd that is not wardley-beta', () => {
 
 test('tidyFileContent ignores unrelated extensions', () => {
   assert.equal(tidyFileContent('notes.txt', 'wardley-beta\n', stub), null);
+});
+
+// Integration: exercise the real vendored placement engine (no stub), so a
+// broken vendor/ re-sync is caught here rather than at hook runtime.
+test('tidyBlock adds real label offsets via the vendored engine', () => {
+  const body = [
+    'wardley-beta',
+    'size [900, 600]',
+    'component Alpha Component [0.55, 0.50]',
+    'component Beta Component [0.55, 0.50]',
+  ].join('\n');
+  const out = tidyBlock(body);
+  assert.match(out, /component Alpha Component \[0\.55, 0\.50\] label \[-?\d+, -?\d+\]/);
+  assert.match(out, /component Beta Component \[0\.55, 0\.50\] label \[-?\d+, -?\d+\]/);
+  assert.doesNotMatch(out, /\n$/, 'no trailing newline');
+});
+
+test('tidyBlock is idempotent', () => {
+  const body = 'wardley-beta\nsize [900, 600]\ncomponent A [0.5, 0.5]\ncomponent B [0.4, 0.7]';
+  const once = tidyBlock(body);
+  assert.equal(tidyBlock(once), once);
+});
+
+test('tidyMarkdown with the real engine leaves prose and OWM block intact', () => {
+  const md = [
+    '## Map',
+    '',
+    '```wardley',
+    'component A [0.5, 0.5]',
+    '```',
+    '',
+    '```mermaid',
+    'wardley-beta',
+    'size [900, 600]',
+    'component A [0.5, 0.5]',
+    'component B [0.5, 0.5]',
+    '```',
+    '',
+  ].join('\n');
+  const out = tidyMarkdown(md, tidyBlock);
+  assert.match(out, /```wardley\ncomponent A \[0\.5, 0\.5\]\n```/);
+  assert.match(out, /^## Map$/m);
+  assert.match(out, /component A \[0\.5, 0\.5\] label \[-?\d+, -?\d+\]/);
 });

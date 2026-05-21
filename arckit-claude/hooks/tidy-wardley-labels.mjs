@@ -13,56 +13,45 @@
  * the ```wardley block (owned by validate-wardley-math.mjs), prose, tables and
  * Document Control are left byte-for-byte unchanged.
  *
- * Tidying shells out to the published `wardley-tidy` tool
- * (github:tractorjuice/wardley-maps-mermaid) so the placement engine has a
- * single source of truth. Set WARDLEY_TIDY_PKG to override the package spec
- * (e.g. to pin a branch). The hook always exits 0 and never blocks — a tidy
- * failure (offline, npx unavailable) leaves the file exactly as written.
+ * The placement engine is vendored under `vendor/wardley/` (see its
+ * PROVENANCE.md) so tidying runs offline with no install step — no `npx`, no
+ * network. The hook always exits 0 and never blocks: a tidy failure leaves the
+ * file exactly as written.
  *
  * Hook Type: PostToolUse
  * Matcher:   Write|Edit  (registered in hooks.json with an `if:` glob that
  *            scopes it to artefacts under projects/.../wardley-maps/)
  * Input:     JSON { tool_name, tool_input: { file_path }, cwd }
  */
-import { readFileSync, writeFileSync, mkdtempSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
+import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { realpathSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
 import { parseHookInput } from './hook-utils.mjs';
-
-const TIDY_PKG = process.env.WARDLEY_TIDY_PKG || 'github:tractorjuice/wardley-maps-mermaid';
+import { tidyToFixpoint } from './vendor/wardley/tidy.mjs';
 
 /**
- * Tidy one chunk of wardley-beta text via the published `wardley-tidy` tool.
+ * Tidy one chunk of wardley-beta text via the vendored placement engine.
  * @param {string} text
  * @returns {string} tidied text (no trailing newline)
  */
-export function tidyBlockViaNpx(text) {
-  const dir = mkdtempSync(join(tmpdir(), 'wardley-tidy-'));
-  const file = join(dir, 'map.mmd');
-  writeFileSync(file, text, 'utf8');
-  const out = execFileSync('npx', ['--yes', TIDY_PKG, 'wardley-tidy', '--stdout', file], {
-    encoding: 'utf8',
-  });
-  return out.replace(/\n$/, '');
+export function tidyBlock(text) {
+  return tidyToFixpoint(text).text.replace(/\n$/, '');
 }
 
 /**
  * Tidy every fenced ```mermaid block holding a wardley-beta map, in place.
  * Non-mermaid fences and non-wardley mermaid blocks are returned verbatim.
  * @param {string} md markdown source
- * @param {(text: string) => string} tidyBlock
+ * @param {(text: string) => string} tidy
  * @returns {string}
  */
-export function tidyMarkdown(md, tidyBlock) {
+export function tidyMarkdown(md, tidy) {
   const fence = /(^|\n)([ \t]*)(`{3,})mermaid[ \t]*\n([\s\S]*?)\n[ \t]*\3/g;
   return md.replace(fence, (whole, pre, indent, ticks, body) => {
     if (!/^\s*wardley-beta\b/m.test(body)) {
       return whole;
     }
-    const tidied = tidyBlock(body);
+    const tidied = tidy(body);
     return `${pre}${indent}${ticks}mermaid\n${tidied}\n${indent}${ticks}`;
   });
 }
@@ -71,18 +60,18 @@ export function tidyMarkdown(md, tidyBlock) {
  * Compute the tidied content for a written file, or null if nothing to do.
  * @param {string} filePath
  * @param {string} content
- * @param {(text: string) => string} tidyBlock
+ * @param {(text: string) => string} tidy
  * @returns {string|null}
  */
-export function tidyFileContent(filePath, content, tidyBlock) {
+export function tidyFileContent(filePath, content, tidy) {
   if (/\.mmd$/i.test(filePath)) {
     if (!/^\s*wardley-beta\b/m.test(content)) {
       return null;
     }
-    return tidyBlock(content);
+    return tidy(content);
   }
   if (/\.md$/i.test(filePath)) {
-    return tidyMarkdown(content, tidyBlock);
+    return tidyMarkdown(content, tidy);
   }
   return null;
 }
@@ -104,7 +93,7 @@ function main() {
     process.exit(0);
   }
   try {
-    const next = tidyFileContent(filePath, content, tidyBlockViaNpx);
+    const next = tidyFileContent(filePath, content, tidyBlock);
     if (next != null && next !== content) {
       writeFileSync(filePath, next, 'utf8');
     }

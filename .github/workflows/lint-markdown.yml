@@ -71,3 +71,6 @@ jobs:
 
       - name: Handoff schema validator tests (gov-reuse)
         run: node tests/plugin/test_validate_gov_reuse_handoff.mjs
+
+      - name: Wardley label-tidy hook tests
+        run: node --test tests/plugin/tidy-wardley-labels.test.mjs arckit-claude/hooks/vendor/wardley/tidy.test.mjs

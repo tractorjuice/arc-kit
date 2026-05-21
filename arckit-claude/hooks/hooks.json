@@ -257,7 +257,7 @@
             "if": "Write(/projects/**/wardley-maps/**)",
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/tidy-wardley-labels.mjs"],
-            "timeout": 60,
+            "timeout": 10,
             "continueOnBlock": true
           }
         ]
@@ -278,7 +278,7 @@
             "if": "Edit(/projects/**/wardley-maps/**)",
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/tidy-wardley-labels.mjs"],
-            "timeout": 60,
+            "timeout": 10,
             "continueOnBlock": true
           }
         ]
