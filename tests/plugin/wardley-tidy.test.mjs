@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { tidyMap, tidyToFixpoint } from './tidy.mjs';
+import { resolve } from 'node:path';
+
+const { tidyMap, tidyToFixpoint } = await import(
+  resolve('arckit-claude/hooks/wardley-tidy.mjs')
+);
 
 test('adds label offsets to untuned components', () => {
   const src = [

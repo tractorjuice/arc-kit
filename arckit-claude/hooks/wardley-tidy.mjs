@@ -1,13 +1,20 @@
 #!/usr/bin/env node
 /**
- * tidy.mjs — tidy the labels of a mermaid `wardley-beta` map.
+ * wardley-tidy.mjs — tidy the labels of a mermaid `wardley-beta` map.
  *
  * Reads wardley-beta source, computes non-overlapping label positions with
  * mermaid's pure placement engine, and rewrites each `component` /
  * pipeline-child line with a computed `label [x, y]` pixel offset. Existing
  * authored labels are kept when collision-free (minimal diffs).
  *
- * Exports `tidyMap(text)`. Run directly as a CLI — see the bottom of the file.
+ * Exports `tidyMap(text)` / `tidyToFixpoint(text)`; used by the
+ * `tidy-wardley-labels.mjs` PostToolUse hook. Run directly as a CLI — see the
+ * bottom of the file.
+ *
+ * Vendored verbatim from https://github.com/tractorjuice/wardley-maps-mermaid
+ * (`tools/tidy.mjs`, commit 9abfec6adb842266bb13c12105ab8f260397084a). Only the
+ * `wardley-label-placement.mjs` import path differs from upstream. Do not
+ * hand-edit — re-sync from upstream instead (see hooks/README.md).
  *
  * Parser scope (line-oriented, not the full langium grammar):
  *   HANDLED: `size [w,h]`; `component <name> [vis,evo] [label[..]] [decorator]`;
@@ -19,7 +26,7 @@
  */
 import { realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { autoPlaceLabels, estimateLabelBox } from './wardleyLabelPlacement.mjs';
+import { autoPlaceLabels, estimateLabelBox } from './wardley-label-placement.mjs';
 
 // mermaid wardley renderer constants (getConfigValues defaults).
 const DEFAULT_WIDTH = 900;

@@ -13,10 +13,10 @@
  * the ```wardley block (owned by validate-wardley-math.mjs), prose, tables and
  * Document Control are left byte-for-byte unchanged.
  *
- * The placement engine is vendored under `vendor/wardley/` (see its
- * PROVENANCE.md) so tidying runs offline with no install step — no `npx`, no
- * network. The hook always exits 0 and never blocks: a tidy failure leaves the
- * file exactly as written.
+ * The placement engine is vendored alongside this hook (`wardley-tidy.mjs` +
+ * `wardley-label-placement.mjs`) so tidying runs offline with no install step —
+ * no `npx`, no network. The hook always exits 0 and never blocks: a tidy
+ * failure leaves the file exactly as written.
  *
  * Hook Type: PostToolUse
  * Matcher:   Write|Edit  (registered in hooks.json with an `if:` glob that
@@ -27,7 +27,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { realpathSync } from 'node:fs';
 import { parseHookInput } from './hook-utils.mjs';
-import { tidyToFixpoint } from './vendor/wardley/tidy.mjs';
+import { tidyToFixpoint } from './wardley-tidy.mjs';
 
 /**
  * Tidy one chunk of wardley-beta text via the vendored placement engine.

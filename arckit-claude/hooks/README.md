@@ -100,7 +100,7 @@ See `hooks.json` for the full registration. Current handler files in this direct
 - `secret-detection.mjs` / `secret-file-scanner.mjs` — secret-leak prevention
 - `session-learner.mjs` / `telemetry.mjs` — see above
 - `sync-guides.mjs` — keep `docs/guides/` in sync with `arckit-claude/guides/`
-- `tidy-wardley-labels.mjs` — Wardley Map label tidying (PostToolUse:Write|Edit, scoped to `(/projects/**/wardley-maps/**)`, `continueOnBlock: true`). After a Wardley artefact is written, rewrites the `label [x, y]` offsets inside its ` ```mermaid ` `wardley-beta` block so component labels don't overlap on render. Block-scoped: only the ` ```mermaid ` fence is touched — the canonical ` ```wardley ` (OWM) block, prose and tables are left byte-for-byte unchanged. The placement engine is vendored under `hooks/vendor/wardley/` (see its `PROVENANCE.md`), so tidying runs offline with no `npx`/install step. Fails soft — any tidy error leaves the file exactly as written.
+- `tidy-wardley-labels.mjs` — Wardley Map label tidying (PostToolUse:Write|Edit, scoped to `(/projects/**/wardley-maps/**)`, `continueOnBlock: true`). After a Wardley artefact is written, rewrites the `label [x, y]` offsets inside its ` ```mermaid ` `wardley-beta` block so component labels don't overlap on render. Block-scoped: only the ` ```mermaid ` fence is touched — the canonical ` ```wardley ` (OWM) block, prose and tables are left byte-for-byte unchanged. The tidy engine is vendored alongside the hook as `wardley-tidy.mjs` + `wardley-label-placement.mjs` (see "Vendored Wardley tidy engine" below), so tidying runs offline with no `npx`/install step. Fails soft — any tidy error leaves the file exactly as written.
 - `update-manifest.mjs` — see above
 - `validate-arc-filename.mjs` — enforce `ARC-NNN-*-vN.N.md` naming
 - `validate-wardley-math.mjs` — Wardley Map artefact validation (PreToolUse:Write, scoped to `Write(/projects/**/wardley-maps/**)`). Recognises both ` ```wardley ` and ` ```owm ` fence aliases. Blocks via `{decision: "block"}` so the model self-corrects. Checks:
@@ -114,3 +114,26 @@ See `hooks.json` for the full registration. Current handler files in this direct
   - **Mermaid `wardley-beta` bare-digit tokens** — Wardley-template-specific check; general Mermaid validation belongs to issue #435 (sibling validator)
 - `version-check.mjs` — warn on Claude Code version drift
 - `notify-stale-artifacts.mjs` — opt-in SessionStart desktop notification when `detect-stale-artifacts.sh` reports overdue artefacts. Gated on `${user_config.desktop_notifications}` equalling `"true"` (passed via `--enabled=...` arg so the disabled path is a fast no-op). Emits a `terminalSequence` (Claude Code v2.1.141+) stacking OSC 9 (iTerm2 / Windows Terminal / WezTerm / ConEmu) and OSC 777 (urxvt / Ghostty / Warp) notification escapes — terminals silently ignore unsupported codes per the documented allowlist. Complements the existing `stale-artifact-scan` background monitor; the monitor still streams per-line in-session notifications.
+
+## Vendored Wardley tidy engine
+
+`tidy-wardley-labels.mjs` imports two vendored modules that sit next to it in
+this directory — they are not registered hooks, just supporting code:
+
+- `wardley-tidy.mjs` — the wardley-beta label tidier (`tidyMap` /
+  `tidyToFixpoint`). Vendored verbatim from
+  [`tractorjuice/wardley-maps-mermaid`](https://github.com/tractorjuice/wardley-maps-mermaid)
+  `tools/tidy.mjs`.
+- `wardley-label-placement.mjs` — the pure placement engine, itself compiled
+  from mermaid's `wardleyLabelPlacement.ts`
+  ([`mermaid-js/mermaid`](https://github.com/mermaid-js/mermaid), MIT). Vendored
+  from the same repo's `tools/vendor/`.
+
+Both are pinned to upstream commit `9abfec6adb842266bb13c12105ab8f260397084a`.
+Local modifications: the `.js` placement module is renamed `.mjs` (arc-kit's
+root `package.json` has no `"type": "module"`), and `wardley-tidy.mjs`'s import
+is rewritten to match. No other changes — do not hand-edit; re-sync instead.
+
+**Re-sync:** copy `tools/tidy.mjs` + `tools/vendor/wardleyLabelPlacement.js`
+from upstream, apply the two rename/import edits above, update the pinned
+commit here, and run `node --test tests/plugin/wardley-tidy.test.mjs`.
