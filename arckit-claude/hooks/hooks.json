@@ -251,6 +251,14 @@
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs"],
             "timeout": 5,
             "continueOnBlock": true
+          },
+          {
+            "type": "command",
+            "if": "Write(/projects/**/wardley-maps/**)",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/tidy-wardley-labels.mjs"],
+            "timeout": 60,
+            "continueOnBlock": true
           }
         ]
       },
@@ -263,6 +271,14 @@
             "command": "node",
             "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/provenance-stamp.mjs"],
             "timeout": 5,
+            "continueOnBlock": true
+          },
+          {
+            "type": "command",
+            "if": "Edit(/projects/**/wardley-maps/**)",
+            "command": "node",
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/tidy-wardley-labels.mjs"],
+            "timeout": 60,
             "continueOnBlock": true
           }
         ]

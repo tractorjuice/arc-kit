@@ -154,6 +154,8 @@ Visualize at: https://create.wardleymaps.ai
 
 **Mermaid** (secondary): Expand the `<details>` block in your generated artifact to see the Mermaid `wardley-beta` equivalent. It renders in ArcKit generated pages with Mermaid 11.15.0 and in other Mermaid-enabled viewers that support `wardley-beta`. The Mermaid version includes sourcing strategy markers (`build`/`buy`/`outsource`/`inertia`) as visual decorators on each component.
 
+When a Wardley Map artefact is written, the `tidy-wardley-labels` hook (`PostToolUse`, see `arckit-claude/hooks/README.md`) automatically rewrites the `label [x, y]` offsets inside the Mermaid block so component labels don't overlap on render. Only the Mermaid block is adjusted — the canonical OWM block is left untouched.
+
 ---
 
 ## Key Principles

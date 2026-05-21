@@ -100,6 +100,7 @@ See `hooks.json` for the full registration. Current handler files in this direct
 - `secret-detection.mjs` / `secret-file-scanner.mjs` — secret-leak prevention
 - `session-learner.mjs` / `telemetry.mjs` — see above
 - `sync-guides.mjs` — keep `docs/guides/` in sync with `arckit-claude/guides/`
+- `tidy-wardley-labels.mjs` — Wardley Map label tidying (PostToolUse:Write|Edit, scoped to `(/projects/**/wardley-maps/**)`, `continueOnBlock: true`). After a Wardley artefact is written, rewrites the `label [x, y]` offsets inside its ` ```mermaid ` `wardley-beta` block so component labels don't overlap on render. Block-scoped: only the ` ```mermaid ` fence is touched — the canonical ` ```wardley ` (OWM) block, prose and tables are left byte-for-byte unchanged. Tidying shells out to the published `wardley-tidy` tool (`npx github:tractorjuice/wardley-maps-mermaid`); `WARDLEY_TIDY_PKG` overrides the package spec. Fails soft — if `npx` is unavailable the file is left exactly as written.
 - `update-manifest.mjs` — see above
 - `validate-arc-filename.mjs` — enforce `ARC-NNN-*-vN.N.md` naming
 - `validate-wardley-math.mjs` — Wardley Map artefact validation (PreToolUse:Write, scoped to `Write(/projects/**/wardley-maps/**)`). Recognises both ` ```wardley ` and ` ```owm ` fence aliases. Blocks via `{decision: "block"}` so the model self-corrects. Checks:
