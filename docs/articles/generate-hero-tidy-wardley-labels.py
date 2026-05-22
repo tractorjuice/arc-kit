@@ -4,7 +4,8 @@ Concept: the same Wardley Map twice. On the left, BEFORE: every label is
 drawn at Mermaid's default offset, so the clustered components collide
 into an unreadable pile. On the right, AFTER: the placement engine has
 scored each label into a clean, non-overlapping slot. A wardley-tidy
-pill sits in the gap, the transform between the two states.
+pill sits in the gap, the transform between the two states — carrying a
+compass-ring glyph that shows the candidate-slot scoring in miniature.
 
 1200x630 (Open Graph standard). Dark background.
 """
@@ -246,19 +247,77 @@ draw_card(RIGHT_X0, CARD_TOP, RIGHT_X1, CARD_BOTTOM,
 draw_wardley_map(RIGHT_X0, CARD_TOP + 46, RIGHT_X1, CARD_BOTTOM,
                  accent=GREEN, tidy=True)
 
-# --- Connecting pill between the cards ---
+# --- Connecting pill between the cards: candidate-ring glyph + wordmark ---
+# The pill is the transform between the two states. On its left, a compass
+# ring glyph shows the mechanism in miniature — a node, two faint rings,
+# eight spokes, a candidate dot at every intersection, one scored 'chosen'
+# slot in green. On its right, the wardley-tidy wordmark.
 LINK_CX = WIDTH // 2
 LINK_CY = (CARD_TOP + CARD_BOTTOM) // 2
-PILL_W, PILL_H = 134, 58
-draw.rounded_rectangle((LINK_CX - PILL_W // 2, LINK_CY - PILL_H // 2,
-                        LINK_CX + PILL_W // 2, LINK_CY + PILL_H // 2),
-                       radius=10, fill=CARD_BG, outline=CYAN + (255,), width=2)
-draw.text((LINK_CX, LINK_CY - 11), "wardley-tidy",
-          font=font_card_eyebrow, fill=CYAN, anchor="mm")
-draw.text((LINK_CX, LINK_CY + 9), "place + score",
-          font=font_card_meta, fill=TEXT_SECONDARY, anchor="mm")
+PILL_W, PILL_H = 188, 74
+px0 = LINK_CX - PILL_W // 2
+py0 = LINK_CY - PILL_H // 2
+px1 = LINK_CX + PILL_W // 2
+py1 = LINK_CY + PILL_H // 2
+
+pill_shadow = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
+psdraw = ImageDraw.Draw(pill_shadow)
+psdraw.rounded_rectangle((px0 + 3, py0 + 5, px1 + 3, py1 + 5),
+                         radius=12, fill=(0, 0, 0, 120))
+img.alpha_composite(pill_shadow)
+
+draw.rounded_rectangle((px0, py0, px1, py1),
+                       radius=12, fill=CARD_BG, outline=CYAN + (255,), width=2)
+
+# Candidate-ring glyph: faint rings + spokes drawn on an alpha layer so
+# they read as a delicate scaffold rather than hard lines.
+GLYPH_CX = px0 + 41
+GLYPH_CY = LINK_CY
+RING_R = (11, 23)
+CHOSEN_DIR = DIRS["NE"]
+
+ring_layer = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
+rdraw = ImageDraw.Draw(ring_layer)
+for r in RING_R:
+    rdraw.ellipse((GLYPH_CX - r, GLYPH_CY - r, GLYPH_CX + r, GLYPH_CY + r),
+                  outline=(139, 148, 158, 95), width=1)
+for dx, dy in DIRS.values():
+    rdraw.line([(GLYPH_CX, GLYPH_CY),
+                (GLYPH_CX + dx * RING_R[1], GLYPH_CY + dy * RING_R[1])],
+               fill=(139, 148, 158, 70), width=1)
+img.alpha_composite(ring_layer)
+
+# A candidate dot at every spoke/ring intersection; the scored winner is
+# the NE outer slot, drawn larger in green with a faint selection halo.
+for dx, dy in DIRS.values():
+    for r in RING_R:
+        dotx = GLYPH_CX + dx * r
+        doty = GLYPH_CY + dy * r
+        if (dx, dy) == CHOSEN_DIR and r == RING_R[1]:
+            halo = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
+            ImageDraw.Draw(halo).ellipse(
+                (dotx - 5, doty - 5, dotx + 5, doty + 5),
+                outline=GREEN + (170,), width=1)
+            img.alpha_composite(halo)
+            draw.ellipse((dotx - 3.2, doty - 3.2, dotx + 3.2, doty + 3.2),
+                         fill=GREEN + (255,))
+        else:
+            draw.ellipse((dotx - 2, doty - 2, dotx + 2, doty + 2),
+                         fill=(120, 128, 140, 255))
+
+# Node marker sits on top of the scaffold.
+draw.ellipse((GLYPH_CX - 4, GLYPH_CY - 4, GLYPH_CX + 4, GLYPH_CY + 4),
+             fill=BG, outline=CYAN + (255,), width=2)
+
+# Wordmark to the right of the glyph.
+TEXT_X = px0 + 80
+draw.text((TEXT_X, LINK_CY - 11), "wardley-tidy",
+          font=font_card_eyebrow, fill=CYAN, anchor="lm")
+draw.text((TEXT_X, LINK_CY + 9), "place + score",
+          font=font_card_meta, fill=TEXT_SECONDARY, anchor="lm")
+
 # Small arrowheads either side of the pill.
-for sx, sdir in ((LINK_CX - PILL_W // 2 - 14, 1), (LINK_CX + PILL_W // 2 + 14, 1)):
+for sx in (px0 - 14, px1 + 6):
     draw.polygon([(sx, LINK_CY - 5), (sx, LINK_CY + 5), (sx + 8, LINK_CY)],
                  fill=CYAN)
 
