@@ -201,6 +201,7 @@ French government (apply on top of EU baseline):
 - [The Leaf Node Problem](https://arckit.org/article-viewer.html?a=2026-05-19-leaf-node-problem): why AI pilots funded and measured by a single team optimise local KPIs instead of the enterprise outcome, mapped on a Wardley Map with three points of inertia.
 - [Your Wardley Maps belong in Git](https://arckit.org/article-viewer.html?a=2026-05-19-wardley-maps-mermaid-github): what Mermaid `wardley-beta` support changes — maps rendered natively in GitHub READMEs and Claude artifacts, 98% render success across 147 real maps.
 - [The token budget behind ArcKit's plugin split](https://arckit.org/article-viewer.html?a=2026-05-20-plugin-split-token-budget): why v5.0.0 split into seven marketplace plugins, grounded in real `claude plugin details` token data (core ~10,042 tokens always-on, six overlays ~5,249 combined, ~34% always-on cut for single-jurisdiction users); includes an eight-step guide to splitting a monolithic plugin.
+- [How ArcKit tidies Wardley Map labels](https://arckit.org/article-viewer.html?a=2026-05-22-tidy-wardley-labels): a step-by-step walkthrough of the deterministic label-placement engine behind the `tidy-wardley-labels` hook, covering the six-stage pipeline (parse, project, build obstacles, place, invert, rewrite), 32-candidate scoring, most-constrained-first ordering, manual-label preservation, and fixpoint convergence.
 
 ## Roles
 

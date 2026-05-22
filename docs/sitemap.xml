@@ -253,6 +253,12 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/article-viewer.html?a=2026-05-22-tidy-wardley-labels</loc>
+        <lastmod>2026-05-22</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/guide-viewer.html</loc>
         <lastmod>2026-05-16</lastmod>
         <changefreq>monthly</changefreq>

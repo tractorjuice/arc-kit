@@ -313,6 +313,22 @@
 
             <div class="app-article-grid">
 
+                <!-- 2026-05-22 Tidy Wardley labels -->
+                <article class="app-article-card">
+                    <a class="app-article-card__media" href="article-viewer.html?a=2026-05-22-tidy-wardley-labels">
+                        <img src="articles/2026-05-22-tidy-wardley-labels-hero.png" alt="Tidy Wardley labels hero — the heading Untangling the map, two wardley-beta cards side by side: a salmon BEFORE card whose clustered component labels Booking service, Notifications and Case store pile into an unreadable heap, and a green AFTER card with the same labels scored into clean non-overlapping slots, joined by a wardley-tidy pill, with a stats bar reading 32 candidate slots per label, most-constrained-first, weighted collision scoring, idempotent by design">
+                    </a>
+                    <div class="app-article-card__body">
+                        <div class="app-article-card__meta">
+                            <span class="app-article-card__tag app-article-card__tag--technical">Technical</span>
+                            <span class="app-article-card__date">22 May 2026</span>
+                        </div>
+                        <h2 class="govuk-heading-s app-article-card__title">How ArcKit tidies Wardley Map labels: a deterministic placement engine, stepped through</h2>
+                        <p class="app-article-card__summary">ArcKit renders every Wardley Map as a Mermaid <code>wardley-beta</code> block, and Mermaid draws every component label at the same default offset. On a real strategic map, where related components cluster, those labels land on top of each other and the map becomes correct and unreadable at the same time. ArcKit v5 fixes this with a PostToolUse hook that rewrites the label offsets automatically. This article steps through the algorithm behind it: a pure, deterministic placement engine that projects the map to pixels, generates 32 candidate slots per label, scores each against a weighted collision penalty, places the most-constrained labels first, runs a refinement pass, and converges to an idempotent result a Write hook can run on every save.</p>
+                        <a href="article-viewer.html?a=2026-05-22-tidy-wardley-labels" class="govuk-link app-article-card__link">Read article &rarr;</a>
+                    </div>
+                </article>
+
                 <!-- 2026-05-20 Plugin split token budget -->
                 <article class="app-article-card">
                     <a class="app-article-card__media" href="article-viewer.html?a=2026-05-20-plugin-split-token-budget">
