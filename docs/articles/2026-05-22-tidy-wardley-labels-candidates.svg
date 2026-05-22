@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 540" role="img" aria-label="A node marker at the centre of four dashed rings at distances 12, 22, 36 and 54 pixels, crossed by eight compass spokes; a candidate dot sits at every ring and spoke intersection, 32 in total, with one north-east candidate highlighted as the chosen lowest-scoring slot" font-family="Arial, Helvetica, sans-serif">
+  <rect width="720" height="540" fill="#ffffff"/>
+  <g stroke="#e0e0e0" stroke-width="1">
+    <line x1="300" y1="246" x2="496"   y2="246"/>
+    <line x1="300" y1="246" x2="438.6" y2="107.4"/>
+    <line x1="300" y1="246" x2="300"   y2="50"/>
+    <line x1="300" y1="246" x2="161.4" y2="107.4"/>
+    <line x1="300" y1="246" x2="104"   y2="246"/>
+    <line x1="300" y1="246" x2="161.4" y2="384.6"/>
+    <line x1="300" y1="246" x2="300"   y2="442"/>
+    <line x1="300" y1="246" x2="438.6" y2="384.6"/>
+  </g>
+  <g fill="none" stroke="#b1b4b6" stroke-width="1.2" stroke-dasharray="4 4">
+    <circle cx="300" cy="246" r="46"/>
+    <circle cx="300" cy="246" r="86"/>
+    <circle cx="300" cy="246" r="134"/>
+    <circle cx="300" cy="246" r="196"/>
+  </g>
+  <g fill="#6f777b">
+    <circle cx="346"   cy="246"   r="3.6"/><circle cx="332.5" cy="213.5" r="3.6"/>
+    <circle cx="300"   cy="200"   r="3.6"/><circle cx="267.5" cy="213.5" r="3.6"/>
+    <circle cx="254"   cy="246"   r="3.6"/><circle cx="267.5" cy="278.5" r="3.6"/>
+    <circle cx="300"   cy="292"   r="3.6"/><circle cx="332.5" cy="278.5" r="3.6"/>
+    <circle cx="386"   cy="246"   r="3.6"/><circle cx="360.8" cy="185.2" r="3.6"/>
+    <circle cx="300"   cy="160"   r="3.6"/><circle cx="239.2" cy="185.2" r="3.6"/>
+    <circle cx="214"   cy="246"   r="3.6"/><circle cx="239.2" cy="306.8" r="3.6"/>
+    <circle cx="300"   cy="332"   r="3.6"/><circle cx="360.8" cy="306.8" r="3.6"/>
+    <circle cx="434"   cy="246"   r="3.6"/><circle cx="394.8" cy="151.2" r="3.6"/>
+    <circle cx="300"   cy="112"   r="3.6"/><circle cx="205.2" cy="151.2" r="3.6"/>
+    <circle cx="166"   cy="246"   r="3.6"/><circle cx="205.2" cy="340.8" r="3.6"/>
+    <circle cx="300"   cy="380"   r="3.6"/><circle cx="394.8" cy="340.8" r="3.6"/>
+    <circle cx="496"   cy="246"   r="3.6"/><circle cx="438.6" cy="107.4" r="3.6"/>
+    <circle cx="300"   cy="50"    r="3.6"/><circle cx="161.4" cy="107.4" r="3.6"/>
+    <circle cx="104"   cy="246"   r="3.6"/><circle cx="161.4" cy="384.6" r="3.6"/>
+    <circle cx="300"   cy="442"   r="3.6"/><circle cx="438.6" cy="384.6" r="3.6"/>
+  </g>
+  <g font-size="11" fill="#505a5f" text-anchor="end">
+    <text x="291" y="204">12</text>
+    <text x="291" y="164">22</text>
+    <text x="291" y="116">36</text>
+    <text x="291" y="54">54</text>
+  </g>
+  <g font-size="11" font-weight="bold" fill="#505a5f" text-anchor="middle">
+    <text x="300"   y="34">N</text>
+    <text x="452.7" y="97">NE</text>
+    <text x="516"   y="250">E</text>
+    <text x="452.7" y="403">SE</text>
+    <text x="300"   y="466">S</text>
+    <text x="147.3" y="403">SW</text>
+    <text x="84"    y="250">W</text>
+    <text x="147.3" y="97">NW</text>
+  </g>
+  <rect x="163.2" y="329.8" width="84" height="22" rx="3" fill="#f3f2f1" stroke="#b1b4b6" stroke-width="1.4"/>
+  <text x="205.2" y="344.5" text-anchor="middle" font-size="11" fill="#505a5f">label box</text>
+  <rect x="318.8" y="174.2" width="84" height="22" rx="3" fill="#d6ebe0" stroke="#00703c" stroke-width="2"/>
+  <text x="360.8" y="189" text-anchor="middle" font-size="11" font-weight="bold" fill="#00703c">chosen</text>
+  <circle cx="300" cy="246" r="9" fill="#ffffff" stroke="#1d70b8" stroke-width="2.5"/>
+  <g>
+    <circle cx="520" cy="150" r="4" fill="#6f777b"/>
+    <text x="536" y="154" font-size="12" fill="#0b0c0c">Candidate position</text>
+    <rect x="508" y="180" width="24" height="16" rx="2" fill="#f3f2f1" stroke="#b1b4b6" stroke-width="1.4"/>
+    <text x="540" y="192" font-size="12" fill="#0b0c0c">Label bounding box</text>
+    <rect x="508" y="212" width="24" height="16" rx="2" fill="#d6ebe0" stroke="#00703c" stroke-width="1.6"/>
+    <text x="540" y="224" font-size="12" fill="#0b0c0c">Chosen (lowest score)</text>
+    <circle cx="520" cy="260" r="7" fill="#ffffff" stroke="#1d70b8" stroke-width="2.2"/>
+    <text x="536" y="264" font-size="12" fill="#0b0c0c">Node marker</text>
+  </g>
+  <text x="300" y="512" text-anchor="middle" font-size="13" fill="#0b0c0c">8 compass directions &#215; 4 slot distances = 32 candidate positions per label</text>
+</svg>
