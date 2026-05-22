@@ -34,11 +34,12 @@ CARD_CHROME = (32, 38, 46, 255)
 img = Image.new("RGBA", (WIDTH, HEIGHT), BG)
 draw = ImageDraw.Draw(img)
 
-# --- Subtle grid background ---
-for x in range(0, WIDTH, 28):
-    draw.line([(x, 0), (x, HEIGHT)], fill=(255, 255, 255, 8), width=1)
-for y in range(0, HEIGHT, 28):
-    draw.line([(0, y), (WIDTH, y)], fill=(255, 255, 255, 8), width=1)
+# --- Soft vignette: lift the centre, darken the corners ---
+glow = Image.new("RGBA", (WIDTH, HEIGHT), (0, 0, 0, 0))
+gdraw = ImageDraw.Draw(glow)
+gdraw.ellipse((WIDTH * 0.18, -HEIGHT * 0.45, WIDTH * 0.82, HEIGHT * 0.95),
+              fill=(99, 102, 241, 22))
+img.alpha_composite(glow)
 
 
 def draw_gradient_bar(y_start, y_end, alpha):
