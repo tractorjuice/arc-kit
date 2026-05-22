@@ -137,17 +137,20 @@ def draw_card(x0, y0, x1, y1, accent, eyebrow):
               eyebrow, font=font_card_eyebrow, fill=accent)
 
 
-# Shared map: a tight three-component cluster whose default labels pile
-# into an unreadable heap, plus spaced-out nodes that are fine either way.
+# Shared map: a proper value chain. User-facing components sit high
+# (visible), commodity infrastructure sits low; evolution runs left
+# (genesis) to right (commodity), so Compute lands bottom-right. The
+# three mid-chain services cluster tightly, so their default labels
+# pile into an unreadable heap.
 # (x evolution 0..1, y visibility 0..1 bottom-up, label, sourcing, after-dir)
 COMPONENTS = [
-    (0.88, 0.90, "Citizen portal",   None,    "NE"),
-    (0.58, 0.66, "Booking service",  "build", "W"),
-    (0.65, 0.61, "Notifications",    "buy",   "NE"),
-    (0.61, 0.55, "Case store",       "build", "S"),
-    (0.38, 0.38, "Identity",         "buy",   "SW"),
-    (0.20, 0.74, "Foundation model", None,    "NW"),
-    (0.09, 0.93, "Compute",          "buy",   "E"),
+    (0.72, 0.93, "Citizen portal",   None,    "E"),
+    (0.50, 0.70, "Booking service",  "build", "W"),
+    (0.58, 0.64, "Notifications",    "buy",   "NE"),
+    (0.54, 0.60, "Case store",       "build", "S"),
+    (0.80, 0.42, "Identity",         "buy",   "SW"),
+    (0.40, 0.26, "Foundation model", None,    "NW"),
+    (0.92, 0.09, "Compute",          "buy",   "NW"),
 ]
 EDGES = [(0, 1), (1, 2), (1, 3), (3, 4), (2, 4), (4, 5), (5, 6)]
 
@@ -218,12 +221,10 @@ def draw_wardley_map(x0, y0, x1, y1, accent, tidy):
                 draw.text((lx, ly), label, font=font_node,
                           fill=(230, 237, 243, 205), anchor="lm")
 
-    if tidy:
-        draw_labels()
-        draw_nodes()
-    else:
-        draw_nodes()
-        draw_labels()
+    # Labels first, node markers always on top: the components sit in the
+    # exact same seven places on both cards. Only the labels move.
+    draw_labels()
+    draw_nodes()
 
 
 CARD_TOP = 158
