@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Opt-in OWM label tidying** for `/arckit:wardley`. New `--tidy-owm` flag rewrites the canonical ` ```wardley ` (OnlineWardleyMaps) block's component `label [x, y]` offsets so labels do not overlap when rendered at <https://create.wardleymaps.ai>. Backed by `owm-tidy.mjs` — a sibling of the mermaid `wardley-tidy.mjs` that reuses the same placement engine with the OnlineWardleyMaps renderer geometry (recovered from `tractorjuice/onlinewardleymaps`). Opt-in by design: the OWM block is the author-edited source of truth and OWM is an interactive drag editor, so it is never rewritten by a silent hook (unlike the Mermaid `wardley-beta` block). Collision-free authored offsets are kept; only overlapping or untuned labels move.
+
 ## [5.0.3] - 2026-05-22
 
 ### Added

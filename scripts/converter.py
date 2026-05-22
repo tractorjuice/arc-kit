@@ -649,6 +649,10 @@ def copy_extension_files(plugin_sources):
         ("scripts/python", "scripts/python"),
         ("scripts/validate-handoff.mjs", "scripts/validate-handoff.mjs"),
         ("scripts/owm-to-mermaid.mjs", "scripts/owm-to-mermaid.mjs"),
+        # owm-tidy.mjs is invoked by /arckit:wardley --tidy-owm; ship it and its
+        # placement-engine dependency so the flag works on non-Claude CLIs too.
+        ("hooks/owm-tidy.mjs", "hooks/owm-tidy.mjs"),
+        ("hooks/wardley-label-placement.mjs", "hooks/wardley-label-placement.mjs"),
         ("docs/guides", "docs/guides"),
         ("config", "config"),
         ("schemas", "schemas"),

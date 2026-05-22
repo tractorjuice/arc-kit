@@ -137,3 +137,22 @@ is rewritten to match. No other changes — do not hand-edit; re-sync instead.
 **Re-sync:** copy `tools/tidy.mjs` + `tools/vendor/wardleyLabelPlacement.js`
 from upstream, apply the two rename/import edits above, update the pinned
 commit here, and run `node --test tests/plugin/wardley-tidy.test.mjs`.
+
+## OWM label tidier (`owm-tidy.mjs`)
+
+`owm-tidy.mjs` is the sibling of `wardley-tidy.mjs` for the canonical
+` ```wardley ` (OnlineWardleyMaps) block. It reuses the same
+`wardley-label-placement.mjs` engine but swaps the projection layer for the
+OnlineWardleyMaps renderer geometry — recovered from
+[`tractorjuice/onlinewardleymaps`](https://github.com/tractorjuice/onlinewardleymaps)
+(`PositionCalculator.js`, `constants/defaults.js`, `constants/mapstyles.js`,
+`ComponentText.js`). It exports `tidyOwm`, `tidyOwmToFixpoint` and
+`tidyMarkdown`, and runs as a CLI.
+
+Unlike the mermaid block, the OWM block is **not** tidied by a hook: it is the
+author-edited source of truth and OWM is an interactive drag editor, so tidying
+it is opt-in via `/arckit:wardley --tidy-owm`. The OWM canvas is also
+window-responsive (no fixed size), so the tidier projects against the
+documented `500x600` default — the conservative, smallest-realistic canvas.
+
+Tests: `node --test tests/plugin/owm-tidy.test.mjs`.

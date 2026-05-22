@@ -30,6 +30,16 @@ Wardley Mapping is a strategic situational awareness technique that maps:
 $ARGUMENTS
 ```
 
+### Flags
+
+- `--tidy-owm` — after building the OWM map, auto-place its component `label [x, y]`
+  offsets so labels do not overlap when rendered at <https://create.wardleymaps.ai>.
+  Opt-in: the OWM block is the canonical, author-edited source, so it is never
+  rewritten silently. See the **Tidy OWM labels** step in the *Mermaid Wardley
+  Map* procedure for where this runs. (The Mermaid `wardley-beta` block is always
+  tidied automatically by the `tidy-wardley-labels.mjs` hook on write —
+  `--tidy-owm` is only about the OWM block.)
+
 ## Step 1: Read Available Documents
 
 > **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
@@ -232,6 +242,20 @@ After generating the OWM code block, generate the Mermaid `wardley-beta` equival
 
    - To get sourcing decorators (`(build)`, `(buy)`, `(outsource)`) on the Mermaid output, include matching `build <Name>` / `buy <Name>` / `outsource <Name>` lines in the OWM source. The converter reads them and emits the decorator next to the component declaration; it strips them from the Mermaid output (they are OWM-only directives).
    - Keep `inertia` on the component line in OWM (`component Foo [v, e] inertia`); the converter appends `(inertia)` automatically.
+
+1a. **Tidy OWM labels** — *only if `--tidy-owm` was passed in `$ARGUMENTS`*. Rewrite the
+   temp file's component `label [x, y]` offsets so labels do not overlap when rendered
+   at <https://create.wardleymaps.ai>:
+
+   ```bash
+   node .arckit/hooks/owm-tidy.mjs /tmp/arckit-wardley.owm
+   ```
+
+   This rewrites `/tmp/arckit-wardley.owm` in place. Collision-free authored offsets
+   are kept; only overlapping or untuned labels are moved. The tidied temp file then
+   becomes **both** the artifact's primary ` ```wardley ` block and the converter input
+   below, so the OWM and Mermaid blocks stay consistent. If `--tidy-owm` was not
+   passed, skip this step and use the OWM block as authored.
 
 2. Run the converter and capture the output:
 
