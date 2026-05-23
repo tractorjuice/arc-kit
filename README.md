@@ -63,7 +63,7 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. As of v5.0.0 the marketplace ships **6 plugins** — install only the jurisdictions you need:
+Then install from the Discover tab. The marketplace ships **8 plugins** — install only the jurisdictions you need:
 
 ```bash
 # Core (71 commands — UK Government civilian + generic enterprise)
@@ -72,11 +72,11 @@ claude plugin install arckit
 # UK + UAE federal
 claude plugin install arckit arckit-uae
 
-# Everything (125 commands across UK + UAE + FR + CA + EU + AT + AU)
-claude plugin install arckit arckit-{uae,fr,ca,eu,at,au}
+# Everything (135 commands across UK + UAE + FR + CA + EU + AT + AU + US)
+claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us}
 ```
 
-All 7 plugins come from the same `tractorjuice/arc-kit` marketplace. Community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`) require the `arckit` core plugin.
+All 8 plugins come from the same `tractorjuice/arc-kit` marketplace. Community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-us`) require the `arckit` core plugin.
 
 > **Tip: lighter marketplace clone.** The command above clones the full arc-kit monorepo (~100 MB) because it hosts five other AI-assistant distributions, 147 vendored Wardley maps, and research docs you don't need. To fetch just the plugin's directories, add the marketplace via the CLI with `--sparse`:
 >
@@ -84,7 +84,7 @@ All 7 plugins come from the same `tractorjuice/arc-kit` marketplace. Community p
 > claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude
 > ```
 >
-> This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 71 official commands (plus 54 community-contributed), 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+> This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 71 official commands (plus 64 community-contributed), 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
 > **Why v2.1.144?** Claude Code v2.1.144 fixed a bug where new sessions were titled from plugin monitor output instead of the user's first prompt — ArcKit's `stale-artifact-scan` monitor was the canonical hit, producing sessions named "Detect ArcKit artifacts with overdue reviews…" instead of the user's actual question. Same release fixed the Skill tool failing with permission errors in headless mode (regression in v2.1.141) which affected `/arckit:*` runs via `claude -p` / CI. v2.1.143 added plugin dependency enforcement so `claude plugin disable arckit` now surfaces a copy-pasteable disable-chain hint when a community overlay (`arckit-au`, `arckit-uae`, etc.) depends on it, instead of silently breaking the overlay. v2.1.139 added the hook `args: string[]` exec form — ArcKit's 16 registered hooks now use this form so the harness execs `node <path>` directly instead of parsing a shell-quoted command string. This eliminates a whole class of quoting / metacharacter bugs in the `${CLAUDE_PLUGIN_ROOT}`-substituted paths. The same release also fixed subagents not discovering project / user / plugin skills (affects ArcKit's 16 agents) and made `/mcp` reconnect pick up `.mcp.json` edits without a restart. Builds on v2.1.136 (fix: env vars from SessionStart hooks going stale — relevant to the `inject-arckit-context` pattern; fix: MCP servers from `.mcp.json` disappearing after `/clear`), v2.1.133 (subagent skill discovery fix, hooks receive `effort.level`), and v2.1.129 (plugin manifest's `monitors`/`themes` moved under a top-level `experimental` block — ArcKit's `stale-artifact-scan` background monitor which warns when `projects/` artefacts are past their `Next Review Date` or stuck in `DRAFT` for 14+ days is declared via that key and will not load on older clients; `ENABLE_PROMPT_CACHING_1H` regression fix). Carries forward the v2.1.121 unlocks: MCP `alwaysLoad` eager-loads AWS Knowledge and Microsoft Learn tools at session start (skips a discovery round-trip on `/arckit:aws-research` and `/arckit:azure-research`), and PostToolUse `hookSpecificOutput.updatedToolOutput` so provenance-stamp and manifest hooks surface their effects to the model in-band; the v2.1.118–119 release-flow unlocks: `claude plugin tag --dry-run` validates plugin/marketplace version agreement, and the session-telemetry hook records `duration_ms` on every tool call; the v2.1.117 unlocks: Opus 4.7 `/context` correctly sized to 1M instead of 200K (long research sessions no longer autocompact early) and agent frontmatter `mcpServers` loading for `--agent` sessions; the v2.1.111+ unlocks: Opus 4.7 `xhigh` effort tier, Auto mode without `--enable-auto-mode`, read-only bash glob patterns without permission prompts; and the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
 
@@ -259,7 +259,7 @@ Costs are estimates from the Claude Code tokenizer and may differ from actual us
 ### Trimming the footprint
 
 - The five utility skills already use `paths:` globs to scope their always-on cost to relevant projects (`mermaid-syntax` only loads under `*.mmd`, `wardley-mapping` under WARD artefacts, etc.). The 71 command-skills are listed but not described in detail in the always-on context — the full prompt only loads on invocation.
-- Community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`) are independent plugins — install only the jurisdictions you need. Each adds its own always-on baseline.
+- Community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-us`) are independent plugins — install only the jurisdictions you need. Each adds its own always-on baseline.
 - Heavy commands (`jsp-936`, `analyze`, `diagram`, `backlog`) are on-invoke only; the always-on cost is unaffected by which heavy commands exist.
 
 To measure your own session footprint, run `/context all` (Claude Code v2.1.139+) for per-skill token estimates against your active model.
@@ -399,6 +399,33 @@ Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Da
 - `/arckit.uae-procurement` — Federal procurement strategy under Federal Decree-Law No. 11 of 2023 — ITT/RFP packs against MoF Digital Procurement Platform templates, In-Country Value (ICV) plan, evaluation report structure, contract register
 
 The commands chain together in a canonical order from `principles → uae-classification → uae-pdpl → uae-ias → uae-cloud-residency → uae-uaepass → uae-zero-bureaucracy → uae-digital-records → uae-data-sharing → uae-ai-charter → uae-ai-autonomy-tier → uae-priorities-alignment → uae-procurement → sobc → wardley → framework`. The reference implementation is the `arckit-test-project-v20-uae-moi-ipad` test repo. Full guide: [`docs/guides/uae-overlay.md`](docs/guides/uae-overlay.md).
+
+---
+
+## USA Federal Civilian Overlay (10 commands)
+
+> ⚠️ **Community-contributed overlay.** The 10 commands below cover US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship as the **arckit-us** community-contributed overlay (not part of the officially-maintained baseline of 71). **EO 14110 was revoked January 2025**; the live AI mandates are **OMB M-24-10 + M-25-21**. **FedRAMP completed the Rev 5 transition in 2024**. The overlay is currently solo-maintained by @tractorjuice; a US federal-civilian domain co-maintainer is being recruited (CISO / SAOP / FedRAMP PMO / CAIO backgrounds welcome) before the overlay can be re-evaluated for official-baseline promotion. Output should be reviewed by qualified US federal counsel before reliance.
+
+**In scope (v1)**: federal civilian agencies and the vendors that sell to them.
+
+**Out of scope (sibling overlays for the future)**: federal defense (CMMC / RMF / DISA STIGs), state regimes (StateRAMP / TX-RAMP / CJIS / IRS Pub 1075 / CCPA), sector-specific (HIPAA / GLBA / SOX / FERPA / PCI DSS), Section 508 accessibility (deferred to v5.2).
+
+| Command | Anchor | Doc-type |
+|---------|--------|----------|
+| `/arckit:us-fisma-categorization` | FIPS Publication 199 + NIST SP 800-60 Vol 2 Rev 1 | `FIPS199` |
+| `/arckit:us-nist-800-53` | NIST SP 800-53 Rev 5 + SP 800-53B + FedRAMP Rev 5 baselines | `NIST` |
+| `/arckit:us-fedramp-ssp` | FedRAMP SSP Template Rev 5 + NIST SP 800-37 Rev 2 | `FRSSP` |
+| `/arckit:us-fedramp-readiness` | FedRAMP 3PAO Readiness Assessment Report template | `FRRR` |
+| `/arckit:us-zero-trust` | CISA Zero Trust Maturity Model v2.0 + OMB M-22-09 + NIST SP 800-207 | `ZTA` |
+| `/arckit:us-icam` | OMB M-19-17 + NIST SP 800-63-3 (A/B/C) + FIPS 201-3 + login.gov | `ICAM` |
+| `/arckit:us-ai-rmf` | NIST AI RMF 1.0 + NIST AI 600-1 (Generative AI Profile) | `AIRMF` |
+| `/arckit:us-ai-impact` | OMB M-24-10 + OMB M-25-21 | `AIIA` |
+| `/arckit:us-privacy-pia` | E-Government Act §208 + OMB M-03-22 + Privacy Act §552a + NIST SP 800-122 | `USPIA` |
+| `/arckit:us-sbom-eo-14028` | EO 14028 + OMB M-22-18 + OMB M-23-16 + CISA Self-Attestation Form + NTIA Minimum Elements | `SBOM` |
+
+Recipe: `us-federal` (5 waves — baseline → controls → posture → ai → authorization).
+
+Install: `claude plugin install arckit arckit-us`. See [`docs/guides/us-federal-overlay.md`](docs/guides/us-federal-overlay.md) for the USA Federal Civilian overlay maintenance guide and citation register.
 
 ---
 
@@ -1162,7 +1189,7 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 | Feature | Claude Code | Gemini CLI | Copilot | Codex / OpenCode |
 |---------|:-----------:|:----------:|:-------:|:----------------:|
-| 71 cross-AI slash commands (plus 54 community-contributed) | ✅ | ✅ | ✅ | ✅ |
+| 71 cross-AI slash commands (plus 64 community-contributed) | ✅ | ✅ | ✅ | ✅ |
 | `/arckit:build` parallel build harness (Claude-only — depends on parallel `Agent` dispatch) | ✅ | — | — | — |
 | Templates & scripts | ✅ | ✅ | ✅ | ✅ |
 | Bundled MCP servers (AWS, Azure, GCP, DataCommons, govreposcrape) | ✅ | ✅ (3 servers) | — | Manual setup |
