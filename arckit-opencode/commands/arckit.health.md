@@ -31,11 +31,18 @@ $ARGUMENTS
 - Valid: ISO date `YYYY-MM-DD`
 - Useful for "what would be stale as of date X" scenarios
 
+**STALE_DRAFT_DAYS** (optional): Threshold (in days) for STALE-DRAFT findings (default: `30`)
+
+- Valid: positive integer
+- Example: `STALE_DRAFT_DAYS=14` matches the session-start monitor's legacy threshold
+
 ---
 
 ## What This Command Does
 
-Scans the `projects/` directory for all `ARC-*` artifacts and applies seven detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action. The hook also writes `docs/health.json` on every run for dashboard integration (consumed by `/arckit:pages`).
+Scans the `projects/` directory for all `ARC-*` artifacts and applies nine detection rules to identify governance health issues. Each finding is assigned a severity (HIGH, MEDIUM, or LOW) with a suggested remediation action. The hook also writes `docs/health.json` on every run for dashboard integration (consumed by `/arckit:pages`).
+
+The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of what the session-start `stale-artifact-scan` monitor surfaces, so the on-demand command and the background notification agree on the same set of artifacts.
 
 **This command does NOT modify any project files.** It is a diagnostic tool. The only file written is `docs/health.json`.
 
@@ -50,6 +57,8 @@ Scans the `projects/` directory for all `ARC-*` artifacts and applies seven dete
 | MISSING-TRACE | Missing Traceability | MEDIUM | ADR documents that do not reference any requirement (REQ, FR-xxx, NFR-xxx, BR-xxx) |
 | VERSION-DRIFT | Version Drift | LOW | Multiple versions of the same artifact type where the latest version is >3 months old |
 | STALE-EXT | Unincorporated External Files | HIGH | External file in `external/` newer than all ARC-* artifacts in the same project |
+| REVIEW-OVERDUE | Overdue Review | HIGH | Document Control `Next Review Date` is in the past, on a non-DRAFT/SUPERSEDED/ARCHIVED artifact |
+| STALE-DRAFT | Long-running Draft | MEDIUM | Artifact with `Status: DRAFT` whose `Last Modified` (or `Created Date`) is >30 days old (override via `STALE_DRAFT_DAYS=N`) |
 
 ---
 
@@ -249,6 +258,48 @@ Scans the `projects/` directory for all `ARC-*` artifacts and applies seven dete
   Action: Re-run recommended commands to incorporate external file content into architecture artifacts
 ```
 
+#### Rule 8: REVIEW-OVERDUE — Overdue Review
+
+**Scan**: All `ARC-*` artifacts in scanned projects
+
+**Logic**:
+
+1. Read the Document Control `Next Review Date` field
+2. If the date parses as `YYYY-MM-DD` and is before the baseline date: **flag as HIGH severity**
+3. Skip artifacts whose `Status` is `DRAFT`, `SUPERSEDED`, or `ARCHIVED` — a review schedule is not meaningful for not-yet-approved or retired artifacts
+
+**Rationale**: The review cycle is a governance commitment captured in Document Control. An overdue review on an approved or published artifact means the team has missed a planned reassurance gate — the artifact may now be out of date with reality but is still being treated as authoritative.
+
+**Output per finding**:
+
+```text
+[HIGH] REVIEW-OVERDUE: {filepath}
+  Next Review Date: {date} ({N} days overdue, status: {status})
+  Action: Run the review, bump the version with refreshed Document Control dates, or archive the artifact
+```
+
+#### Rule 9: STALE-DRAFT — Long-running Draft
+
+**Scan**: All `ARC-*` artifacts with `Status: DRAFT`
+
+**Logic**:
+
+1. Extract the Document Control `Status` field
+2. If status is `DRAFT`:
+   a. Extract `Last Modified` (or `Created Date` if missing)
+   b. Calculate age = baseline date − that date
+   c. If age > `STALE_DRAFT_DAYS` (default 30): **flag as MEDIUM severity**
+
+**Rationale**: A DRAFT artifact that hasn't been touched for over a month is usually one of three things — stalled work, abandoned scaffolding, or a decision that has been silently overtaken by events. Either way, it's a governance signal worth surfacing.
+
+**Output per finding**:
+
+```text
+[MEDIUM] STALE-DRAFT: {filepath}
+  Status: DRAFT, unchanged since {date} ({N} days ago, threshold {threshold})
+  Action: Promote to IN_REVIEW/APPROVED, bump the version, or archive the draft
+```
+
 ### Step 4: Compile Health Report
 
 Produce the health report as **console output only** (do NOT write a file). Structure the report as follows:
@@ -276,8 +327,10 @@ FINDINGS BY TYPE
   FORGOTTEN-ADR:    {count}
   UNRESOLVED-COND:  {count}
   STALE-EXT:        {count}
+  REVIEW-OVERDUE:   {count}
   ORPHAN-REQ:       {count}
   MISSING-TRACE:    {count}
+  STALE-DRAFT:      {count}
   VERSION-DRIFT:    {count}
 ```
 
@@ -340,16 +393,24 @@ RECOMMENDED ACTIONS (prioritised)
    Run the recommended commands listed per file to update architecture artifacts
    Why: External files (API specs, compliance reports, PoC results) contain information not yet reflected in governance artifacts
 
-5. [MEDIUM] Check {count} orphaned requirements
+5. [HIGH] Run {count} overdue reviews
+   For each flagged artifact, run the appropriate review command and bump the version
+   Why: A missed review on an approved artifact means the assurance gate has lapsed — the artifact is being trusted without current evidence
+
+6. [MEDIUM] Check {count} orphaned requirements
    Run: /arckit:adr for requirements needing architectural decisions
    Why: Requirements without ADR coverage may lack governance
 
-6. [MEDIUM] Add traceability to {count} ADRs
+7. [MEDIUM] Add traceability to {count} ADRs
    Update ADRs with requirement references
    Run: /arckit:traceability to generate full traceability matrix
    Why: Untraceable decisions reduce audit confidence
 
-7. [LOW] Review {count} artifacts with version drift
+8. [MEDIUM] Resolve {count} long-running drafts
+   Promote DRAFT artifacts to IN_REVIEW/APPROVED, bump the version, or archive them
+   Why: Drafts unchanged for over a month usually indicate stalled or abandoned work
+
+9. [LOW] Review {count} artifacts with version drift
    Confirm latest versions are current or archive old versions
    Why: Stale multi-version artifacts may indicate abandoned work
 ```
@@ -397,7 +458,9 @@ The hook automatically writes `docs/health.json` on every run. No action is need
     "STALE-EXT": 0,
     "ORPHAN-REQ": 3,
     "MISSING-TRACE": 2,
-    "VERSION-DRIFT": 1
+    "VERSION-DRIFT": 1,
+    "REVIEW-OVERDUE": 0,
+    "STALE-DRAFT": 0
   },
   "projects": [
     {
@@ -423,7 +486,7 @@ The hook automatically writes `docs/health.json` on every run. No action is need
 - `scanned.projects` — number of projects scanned
 - `scanned.artifacts` — total number of artifacts scanned across all projects
 - `summary` — finding counts by severity level (HIGH, MEDIUM, LOW) plus total
-- `byType` — finding counts per detection rule (always include all 7 rule IDs, using 0 for rules with no findings)
+- `byType` — finding counts per detection rule (always include all 9 rule IDs, using 0 for rules with no findings)
 - `projects[]` — per-project breakdown; each entry includes the project directory ID, artifact count, and an array of findings
 - Each finding includes: `severity`, `rule` (detection rule ID), `file` (artifact filename), `message` (human-readable detail), and `action` (suggested remediation)
 
@@ -539,6 +602,8 @@ Console output is the primary user-facing output. `docs/health.json` is always w
 | ADR traceability | Any age | Traceability is a governance best practice; missing references should be added when convenient |
 | Version drift | 3 months | Multiple versions indicate active iteration; 3 months of inactivity suggests the iteration has stalled |
 | External file staleness | Any age | External files newer than all artifacts indicate unincorporated content; no safe window to ignore since governance may be based on outdated information |
+| Review overdue | Any past date | The review cycle is a governance commitment captured at creation; once the date passes, the assurance gate has lapsed regardless of how recently |
+| Draft staleness | 30 days | Long enough that "actively iterating" is no longer plausible; matches the session-start monitor so both surfaces agree (override via `STALE_DRAFT_DAYS`) |
 
 ### Future Enhancements
 

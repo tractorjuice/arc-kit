@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `/arckit:health` now flags **DRAFT staleness** and **overdue reviews** — the two signals the session-start `stale-artifact-scan` monitor was already reporting (#509). Adds two detection rules: `STALE-DRAFT` (MEDIUM, status=DRAFT unchanged for > 30 days by default, configurable via `STALE_DRAFT_DAYS=N`) and `REVIEW-OVERDUE` (HIGH, Document Control `Next Review Date` in the past on non-DRAFT/SUPERSEDED/ARCHIVED artifacts). The monitor's draft threshold moves from 14 days to 30 to match. Both surfaces now agree on the same set of artifacts.
+
 ## [5.0.4] - 2026-05-22
 
 ### Added

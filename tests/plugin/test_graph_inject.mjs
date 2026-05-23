@@ -244,6 +244,7 @@ References BR-001.
     assert.ok(ctx.includes('Health Pre-processor Complete'));
     assert.ok(ctx.includes('Per-Project Findings'));
     assert.ok(ctx.includes('FORGOTTEN-ADR'), 'should emit a FORGOTTEN-ADR finding');
+    assert.ok(ctx.includes('STALE-DRAFT'), 'should emit a STALE-DRAFT finding for the long-running DRAFT REQ');
     assert.ok(ctx.includes('PROJECT: 001-fixture'));
 
     // docs/health.json side-effect
@@ -252,6 +253,95 @@ References BR-001.
     const parsed = JSON.parse(readFileSync(healthJson, 'utf8'));
     assert.equal(parsed.scanned.projects, 1);
     assert.ok(parsed.byType['FORGOTTEN-ADR'] >= 1);
+    assert.ok(parsed.byType['STALE-DRAFT'] >= 1);
+    assert.ok('REVIEW-OVERDUE' in parsed.byType, 'byType should always include REVIEW-OVERDUE');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
+test('graph-inject /arckit:health flags REVIEW-OVERDUE and respects STALE_DRAFT_DAYS override', () => {
+  const root = mkdtempSync(join(tmpdir(), 'arckit-health-rev-'));
+  const projectDir = join(root, 'projects', '001-fixture');
+  mkdirSync(projectDir, { recursive: true });
+
+  // APPROVED artifact with a Next Review Date in the past → REVIEW-OVERDUE
+  writeFileSync(
+    join(projectDir, 'ARC-001-STKE-v1.0.md'),
+    `# STKE — ARC-001-STKE-v1.0
+
+| Field | Value |
+|---|---|
+| **Document ID** | ARC-001-STKE-v1.0 |
+| **Document Type** | STKE |
+| **Status** | APPROVED |
+| **Created Date** | 2025-01-01 |
+| **Last Modified** | 2025-06-01 |
+| **Next Review Date** | 2025-09-01 |
+
+Stakeholder analysis content.
+`
+  );
+
+  // DRAFT artifact unchanged for 20 days — should NOT fire at the 30-day default,
+  // but SHOULD fire when STALE_DRAFT_DAYS=10 is supplied.
+  const recent = new Date();
+  recent.setDate(recent.getDate() - 20);
+  const recentIso = recent.toISOString().slice(0, 10);
+  writeFileSync(
+    join(projectDir, 'ARC-001-STRAT-v1.0.md'),
+    `# STRAT — ARC-001-STRAT-v1.0
+
+| Field | Value |
+|---|---|
+| **Document ID** | ARC-001-STRAT-v1.0 |
+| **Document Type** | STRAT |
+| **Status** | DRAFT |
+| **Created Date** | ${recentIso} |
+| **Last Modified** | ${recentIso} |
+
+Strategy content.
+`
+  );
+
+  // SUPERSEDED artifact with an overdue review — should be skipped
+  writeFileSync(
+    join(projectDir, 'ARC-001-RISK-v1.0.md'),
+    `# RISK — ARC-001-RISK-v1.0
+
+| Field | Value |
+|---|---|
+| **Document ID** | ARC-001-RISK-v1.0 |
+| **Document Type** | RISK |
+| **Status** | SUPERSEDED |
+| **Created Date** | 2024-01-01 |
+| **Last Modified** | 2024-06-01 |
+| **Next Review Date** | 2024-09-01 |
+
+Risk register content.
+`
+  );
+
+  try {
+    // Default threshold: STALE-DRAFT should NOT fire (20 days < 30), but REVIEW-OVERDUE should.
+    let res = runHook('/arckit:health 001', root);
+    assert.equal(res.code, 0, `exit 0, stderr: ${res.stderr}`);
+    let parsed = JSON.parse(readFileSync(join(root, 'docs', 'health.json'), 'utf8'));
+    assert.ok(parsed.byType['REVIEW-OVERDUE'] >= 1, 'APPROVED artifact with past Next Review Date should flag REVIEW-OVERDUE');
+    assert.equal(parsed.byType['STALE-DRAFT'], 0, 'DRAFT aged 20 days should NOT fire at the 30-day default');
+
+    // The SUPERSEDED artifact must not appear as REVIEW-OVERDUE
+    const findings = parsed.projects[0].findings;
+    const overdueOnSuperseded = findings.find(
+      f => f.rule === 'REVIEW-OVERDUE' && f.file.includes('RISK')
+    );
+    assert.equal(overdueOnSuperseded, undefined, 'SUPERSEDED artifacts must be skipped by REVIEW-OVERDUE');
+
+    // Override threshold to 10 → STALE-DRAFT should now fire
+    res = runHook('/arckit:health 001 STALE_DRAFT_DAYS=10', root);
+    assert.equal(res.code, 0, `exit 0, stderr: ${res.stderr}`);
+    parsed = JSON.parse(readFileSync(join(root, 'docs', 'health.json'), 'utf8'));
+    assert.ok(parsed.byType['STALE-DRAFT'] >= 1, 'STALE_DRAFT_DAYS=10 should flag the 20-day-old DRAFT');
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

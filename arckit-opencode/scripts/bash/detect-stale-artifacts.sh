@@ -7,11 +7,15 @@
 #
 # Stale criteria:
 #   1. Document Control "Next Review Date" is in the past
-#   2. Status is DRAFT and the file hasn't been touched in >14 days
+#   2. Status is DRAFT and the file hasn't been touched in >30 days
 #
 # Output format is a single notification line per artifact, readable as
 # an additionalContext signal by Claude Code. Silent exit if the cwd is
 # not an ArcKit project (no projects/ directory).
+#
+# Thresholds match the STALE-DRAFT / REVIEW-OVERDUE rules in
+# /arckit:health (graph-inject.mjs formatHealth) so the monitor is a
+# real-time push of the same signal the slash command reports on demand.
 
 set -u
 
@@ -24,11 +28,11 @@ today="$(date +%Y-%m-%d)"
 stale_count=0
 max_report=10
 
-# Resolve a GNU-style date threshold for draft staleness (14 days ago).
+# Resolve a GNU-style date threshold for draft staleness (30 days ago).
 # Falls back silently if `date -d` unsupported.
 draft_threshold=""
-if date -d "14 days ago" +%Y-%m-%d >/dev/null 2>&1; then
-  draft_threshold="$(date -d "14 days ago" +%Y-%m-%d)"
+if date -d "30 days ago" +%Y-%m-%d >/dev/null 2>&1; then
+  draft_threshold="$(date -d "30 days ago" +%Y-%m-%d)"
 fi
 
 # Iterate ARC-*.md files under projects/, ignoring symlinks and node_modules

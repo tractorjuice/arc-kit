@@ -963,6 +963,8 @@ function formatHealth(graph, prompt, repoRoot) {
   const text = prompt.replace(/^\/arckit[.:]+health\s*/i, '');
   const severityArg = (text.match(/\bSEVERITY\s*=\s*(HIGH|MEDIUM|LOW)/i)?.[1] || 'LOW').toUpperCase();
   const sinceArg = text.match(/\bSINCE\s*=\s*(\d{4}-\d{2}-\d{2})/i)?.[1] || null;
+  const draftDaysArg = text.match(/\bSTALE_DRAFT_DAYS\s*=\s*(\d+)/i)?.[1];
+  const draftThresholdDays = draftDaysArg ? Math.max(1, parseInt(draftDaysArg, 10)) : 30;
   const projectArg = parseProjectArg(prompt, 'health');
 
   if (graph.projects.length === 0) {
@@ -1154,6 +1156,46 @@ function formatHealth(graph, prompt, repoRoot) {
       }
     }
 
+    // Rule 8: REVIEW-OVERDUE — Document Control "Next Review Date" is in the past.
+    // Skip artifacts where a review schedule is not meaningful (DRAFT not yet
+    // approved, or SUPERSEDED/ARCHIVED already retired).
+    const baselineDay = baseline.toISOString().slice(0, 10);
+    for (const n of projectNodes) {
+      const fields = n.controlFields || {};
+      const nextReview = (fields['Next Review Date'] || '').trim();
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(nextReview)) continue;
+      if (nextReview >= baselineDay) continue;
+      const status = (n.status || '').toUpperCase();
+      if (status === 'DRAFT' || status === 'SUPERSEDED' || status === 'ARCHIVED') continue;
+      const overdueDays = daysBetween(nextReview, baseline);
+      findings.push({
+        severity: 'HIGH',
+        rule: 'REVIEW-OVERDUE',
+        file: rel(n),
+        message: `Next Review Date: ${nextReview} (${overdueDays} days overdue, status: ${n.status || 'Unknown'})`,
+        action: 'Run the review, bump the version with refreshed Document Control dates, or archive the artifact',
+      });
+    }
+
+    // Rule 9: STALE-DRAFT — status is DRAFT and the artifact has not been
+    // touched in > draftThresholdDays days (default 30, override via
+    // STALE_DRAFT_DAYS=N). Mirrors the session-start monitor in
+    // scripts/bash/detect-stale-artifacts.sh.
+    for (const n of projectNodes) {
+      if ((n.status || '').toUpperCase() !== 'DRAFT') continue;
+      const dateStr = n.lastModified || n.createdDate;
+      if (!dateStr) continue;
+      const age = daysBetween(dateStr, baseline);
+      if (age <= draftThresholdDays) continue;
+      findings.push({
+        severity: 'MEDIUM',
+        rule: 'STALE-DRAFT',
+        file: rel(n),
+        message: `Status: DRAFT, unchanged since ${dateStr} (${age} days ago, threshold ${draftThresholdDays})`,
+        action: 'Promote to IN_REVIEW/APPROVED, bump the version, or archive the draft',
+      });
+    }
+
     const filtered = findings.filter(f => (SEVERITY_ORDER[f.severity] || 0) >= minLevel);
     projectResults.push({
       projectId: projectName,
@@ -1167,6 +1209,7 @@ function formatHealth(graph, prompt, repoRoot) {
   const byTypeCounts = {
     'STALE-RSCH': 0, 'FORGOTTEN-ADR': 0, 'UNRESOLVED-COND': 0,
     'STALE-EXT': 0, 'ORPHAN-REQ': 0, 'MISSING-TRACE': 0, 'VERSION-DRIFT': 0,
+    'REVIEW-OVERDUE': 0, 'STALE-DRAFT': 0,
   };
   let totalArtifacts = 0;
   const projectsJson = [];
@@ -1206,6 +1249,7 @@ function formatHealth(graph, prompt, repoRoot) {
   lines.push(`- **Projects scanned**: ${jsonData.scanned.projects}`);
   lines.push(`- **Artifacts scanned**: ${jsonData.scanned.artifacts}`);
   lines.push(`- **Severity filter**: ${severityArg}`);
+  lines.push(`- **DRAFT staleness threshold**: ${draftThresholdDays} days${draftDaysArg ? ' (override)' : ' (default)'}`);
   if (projectArg) lines.push(`- **Project filter**: ${projectArg}`);
   lines.push(`- **JSON output**: docs/health.json written`);
   lines.push('');
