@@ -240,6 +240,8 @@ export function convert(owm, filename = '') {
       const cname = mcomp[1].trim();
       const coords = mcomp[2];
       const hasInertia = /\binertia\s*$/i.test(s);
+      const inlineSrcMatch = s.match(/\((build|buy|outsource)\)/i);
+      const inlineSrc = inlineSrcMatch ? inlineSrcMatch[1].toLowerCase() : null;
       // Preserve `label [dx, dy]` from the remainder after the coord closing `]`.
       // Label offsets are integers in the Label grammar (INT, not WARDLEY_NUMBER).
       const coordsEnd = s.indexOf(coords) + coords.length;
@@ -258,7 +260,8 @@ export function convert(owm, filename = '') {
       } else {
         let line = `component ${qname} ${coords}${labelSuffix}`;
         const decorators = [];
-        if (sourcing[cname.toLowerCase()]) decorators.push(`(${sourcing[cname.toLowerCase()]})`);
+        const src = inlineSrc || sourcing[cname.toLowerCase()];
+        if (src) decorators.push(`(${src})`);
         if (hasInertia) decorators.push('(inertia)');
         if (decorators.length) line += ' ' + decorators.join(' ');
         out.push(line);
@@ -276,8 +279,9 @@ export function convert(owm, filename = '') {
       continue;
     }
 
-    // evolve
-    const mev = s.match(/^evolve\s+(.+?)\s+([\d.]+)/i);
+    // evolve — anchor target at end so quoted names with embedded digits
+    // (e.g. "Foo (Project 003)") aren't mis-parsed by the lazy name group.
+    const mev = s.match(/^evolve\s+(.+?)\s+([\d.]+)\s*$/i);
     if (mev) {
       out.push(`evolve ${quoteName(mev[1].trim())} ${mev[2]}`);
       continue;

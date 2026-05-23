@@ -74,3 +74,6 @@ jobs:
 
       - name: Wardley label-tidy hook tests
         run: node --test tests/plugin/tidy-wardley-labels.test.mjs tests/plugin/wardley-tidy.test.mjs tests/plugin/owm-tidy.test.mjs
+
+      - name: OWM-to-Mermaid converter tests
+        run: node --test tests/plugin/owm-to-mermaid.test.mjs

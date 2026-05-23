@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- `owm-to-mermaid.mjs` no longer mis-parses `evolve` lines whose quoted component name contains an embedded number (#508). The target-evolution regex is now anchored at end-of-line.
+- `owm-to-mermaid.mjs` now passes inline `(build)` / `(buy)` / `(outsource)` decorators through to the Mermaid output (#508), alongside the existing `(inertia)` support. Standalone `build "<Name>"` / `buy "<Name>"` / `outsource "<Name>"` directives are no longer required for sourcing decorators on the converted map.
 - `/arckit:health` now flags **DRAFT staleness** and **overdue reviews** — the two signals the session-start `stale-artifact-scan` monitor was already reporting (#509). New detection rules `STALE-DRAFT` (MEDIUM, threshold `STALE_DRAFT_DAYS=30` by default, configurable per invocation) and `REVIEW-OVERDUE` (HIGH, skips DRAFT/SUPERSEDED/ARCHIVED). The monitor's draft threshold moves from 14 days to 30 to align with the new rule. `docs/health.json` `byType` now always includes both new rule IDs (0 when there are no findings).
 
 ## [5.0.4] - 2026-05-22
