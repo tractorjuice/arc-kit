@@ -334,6 +334,18 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | OCAP | `ARC-*-OCAP-*.md` | Canada First Nations OCAP Sovereignty Assessment |
 | **Procurement (Community-contributed — Canada Federal Overlay)** | | | |
 | | PROC | `ARC-*-PROC-*.md` | Canada Federal Procurement Strategy |
+| **Compliance (Community-contributed — USA Federal Civilian Overlay)** | | | |
+| | FIPS199 | `ARC-*-FIPS199-*.md` | US FIPS 199 System Categorization |
+| | FRSSP | `ARC-*-FRSSP-*.md` | US FedRAMP System Security Plan |
+| | FRRR | `ARC-*-FRRR-*.md` | US FedRAMP Readiness Assessment Report |
+| | AIRMF | `ARC-*-AIRMF-*.md` | US NIST AI RMF Assessment |
+| | AIIA | `ARC-*-AIIA-*.md` | US AI Impact Assessment (M-24-10 / M-25-21) |
+| | USPIA | `ARC-*-USPIA-*.md` | US Privacy Impact Assessment (E-Gov §208) |
+| | SBOM | `ARC-*-SBOM-*.md` | US SBOM + Secure-Software Self-Attestation |
+| **Architecture (Community-contributed — USA Federal Civilian Overlay)** | | | |
+| | NIST | `ARC-*-NIST-*.md` | US NIST SP 800-53 Rev 5 Tailored Control Set |
+| | ZTA | `ARC-*-ZTA-*.md` | US CISA Zero Trust Maturity Posture |
+| | ICAM | `ARC-*-ICAM-*.md` | US ICAM Architecture |
 | **Compliance (Community-contributed — Australian Federal / DISP-supplier Overlay)** | | | |
 | | AUE8 | `ARC-*-AUE8-*.md` | AU Essential Eight Maturity Posture |
 | | AUISM | `ARC-*-AUISM-*.md` | AU ISM Statement of Applicability |
