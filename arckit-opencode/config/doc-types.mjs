@@ -152,6 +152,18 @@ export const DOC_TYPES = {
   'OLA':       { name: 'Canada Official Languages Act Review',         category: 'Compliance',   regime: 'CA' },
   'PROC':      { name: 'Canada Federal Procurement Strategy',          category: 'Procurement',  regime: 'CA' },
   'OCAP':      { name: 'Canada First Nations OCAP Sovereignty Assessment', category: 'Governance',   regime: 'CA' },
+  // USA Federal Civilian Overlay (community) — FedRAMP, FISMA/NIST 800-53, CISA Zero Trust,
+  // OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21, E-Gov §208 PIA, EO 14028 SBOM
+  'FIPS199':   { name: 'US FIPS 199 System Categorization',            category: 'Compliance',   regime: 'US', severity: 'HIGH' },
+  'NIST':      { name: 'US NIST SP 800-53 Rev 5 Tailored Control Set', category: 'Architecture', regime: 'US', severity: 'HIGH' },
+  'FRSSP':     { name: 'US FedRAMP System Security Plan',              category: 'Compliance',   regime: 'US', severity: 'HIGH' },
+  'FRRR':      { name: 'US FedRAMP Readiness Assessment Report',       category: 'Compliance',   regime: 'US', severity: 'HIGH' },
+  'ZTA':       { name: 'US CISA Zero Trust Maturity Posture',          category: 'Architecture', regime: 'US' },
+  'ICAM':      { name: 'US ICAM Architecture (OMB M-19-17 / NIST SP 800-63-3)', category: 'Architecture', regime: 'US' },
+  'AIRMF':     { name: 'US NIST AI Risk Management Framework Assessment', category: 'Compliance', regime: 'US', severity: 'HIGH' },
+  'AIIA':      { name: 'US AI Impact Assessment (OMB M-24-10 / M-25-21)', category: 'Compliance', regime: 'US', severity: 'HIGH' },
+  'USPIA':     { name: 'US Privacy Impact Assessment (E-Gov §208)',    category: 'Compliance',   regime: 'US', severity: 'HIGH' },
+  'SBOM':      { name: 'US SBOM + Secure-Software Self-Attestation (EO 14028)', category: 'Compliance', regime: 'US' },
   // Australian Federal Overlay (Community-contributed, maintained by @royster70) — ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988 PIA,
   // OAIC NDB scheme, DISP, PSPF, DTA AI Assurance Framework + Responsible AI Policy v2.0
   'AUE8':      { name: 'AU Essential Eight Maturity Posture',          category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
