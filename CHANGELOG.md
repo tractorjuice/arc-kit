@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## 5.1.0 — 2026-05-23
+
+### Added
+
+- **`arckit-us`** community plugin — USA Federal Civilian Overlay with 10 commands (`us-fisma-categorization`, `us-nist-800-53`, `us-fedramp-ssp`, `us-fedramp-readiness`, `us-zero-trust`, `us-icam`, `us-ai-rmf`, `us-ai-impact`, `us-privacy-pia`, `us-sbom-eo-14028`) and the `us-federal` recipe. See [`arckit-us/CHANGELOG.md`](arckit-us/CHANGELOG.md).
+- 10 new doc-type codes registered in `arckit-claude/config/doc-types.mjs`: `FIPS199`, `NIST`, `FRSSP`, `FRRR`, `ZTA`, `ICAM`, `AIRMF`, `AIIA`, `USPIA`, `SBOM`.
+- 11 central guides under `docs/guides/us-*.md` (10 per-command + 1 overlay-level maintenance guide with citation register).
+- USA section in `docs/guides.html`, `docs/commands.html`, `docs/index.html`.
+
+### Changed
+
+- All 8 plugin manifests now at lockstep `5.1.0` (was 5.0.5).
+- Community overlay count: 6 → 7. Total command count: 125 → 135 (71 official + 64 community).
+- `scripts/bump-version.sh` jurisdiction loop now includes `us`; verification block now includes `arckit-au` and `arckit-us` (the `arckit-au` addition fixes a pre-existing verification gap).
+- `scripts/converter.py` `AGENT_CONFIG` extended with `arckit-us` source.
+
+### Statutory currency note
+
+This release ships the USA overlay against the **post-EO-14110-revocation** policy landscape: OMB M-24-10 (use of AI) and OMB M-25-21 (acquisition of AI) are the active AI assurance mandates, FedRAMP completed the Rev 5 transition in 2024, and OMB M-22-18 / M-23-16 secure-software attestation has been active since 2024.
+
 ## [5.0.5] - 2026-05-23
 
 ### Fixed
