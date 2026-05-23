@@ -1,0 +1,196 @@
+# ArcKit build recipe — US Federal Civilian
+#
+# Scope: US federal civilian agencies and the vendors that sell to them —
+# FedRAMP authorization (SSP + 3PAO Readiness), FISMA / NIST 800-53 Rev 5
+# control tailoring, CISA Zero Trust Maturity Model + OMB M-22-09, OMB M-19-17
+# ICAM (PIV + login.gov), NIST AI RMF + OMB M-24-10/M-25-21 AI assurance,
+# E-Gov Act §208 PIA, and EO 14028 secure-software / SBOM self-attestation.
+#
+# Out of scope (separate future overlays):
+#   - Federal defense (CMMC, RMF, DISA STIGs, IL4/IL5, DFARS 252.204-7012)
+#   - State regimes (StateRAMP, TX-RAMP, CJIS, IRS Pub 1075, CCPA)
+#   - Sector-specific (HIPAA, GLBA, SOX, FERPA, PCI DSS)
+#   - Section 508 accessibility (deferred to v5.2)
+#
+# Statutory currency:
+#   - EO 14110 revoked Jan 2025; active AI mandates are OMB M-24-10 + M-25-21
+#   - FedRAMP Rev 5 transition completed 2024 (Rev 4 deprecated)
+#   - OMB M-22-18 + M-23-16 secure-software attestation active since 2024
+
+recipe: us-federal
+schema_version: 1
+flagship: US_FRSSP
+description: >
+  US Federal Civilian end-to-end ATO + AI assurance pack. Produces a coherent
+  FedRAMP authorization artefact set (FIPS 199 → NIST 800-53 Rev 5 → SSP →
+  Readiness), CISA Zero Trust posture, OMB M-19-17 ICAM architecture, NIST
+  AI RMF assessment with OMB M-24-10/M-25-21 impact determination, E-Gov
+  §208 PIA, and EO 14028 SBOM self-attestation — plus the core ArcKit
+  governance suite tailored for US federal civilian agencies.
+
+defaults:
+  version: "1.0"
+
+optional_targets:
+  ORG_RESEARCH:
+    description: Target federal agency research — strategy, mandate, structure, existing systems. Output to projects/000-global/research/.
+    default: true
+  RESEARCH:
+    description: US federal civilian procurement landscape, build-vs-buy, comparable jurisdictions
+    default: true
+  AWS_RESEARCH:
+    description: AWS GovCloud (US-East / US-West) + commercial US regions — FedRAMP High services
+    default: true
+  AZURE_RESEARCH:
+    description: Azure Government (US Gov Virginia / Arizona / Texas) — FedRAMP High + IL4/IL5
+    default: true
+  GCP_RESEARCH:
+    description: Google Cloud Assured Workloads (us-central1 / us-east4 / us-west1) — FedRAMP High
+    default: true
+  DATASCOUT:
+    description: US federal open-data discovery — data.gov, api.data.gov, CISA / NIST / GSA publications
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
+# ---------------------------------------------------------------------------
+# Targets — 5 build waves
+# ---------------------------------------------------------------------------
+
+targets:
+
+  # --- Foundation (inherited from core) ---------------------------------
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  # --- Research wave (parallel, before US-specific artefacts) -----------
+  - id: ORG_RESEARCH
+    skill: arckit:research
+    topic: "Target US federal civilian agency — strategy, mandate, structure, existing systems, current digital posture"
+    args: "{NAME} target-federal-agency strategy structure existing-systems"
+    output: { project: "000-global", type: RSCH, subfolder: research, multi_instance: true }
+    deps: []
+
+  - id: AWS_RESEARCH
+    skill: arckit:aws-research
+    topic: "AWS GovCloud (US-East / US-West) — services, FedRAMP High options, sovereign hosting"
+    args: "{P} us-gov-east-1 us-gov-west-1"
+    output: { project: "{P}-{NAME}", type: AWRS, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AZURE_RESEARCH
+    skill: arckit:azure-research
+    topic: "Azure Government — services, FedRAMP High, IL4/IL5 enclaves"
+    args: "{P} usgovvirginia usgovarizona usgovtexas"
+    output: { project: "{P}-{NAME}", type: AZRS, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: GCP_RESEARCH
+    skill: arckit:gcp-research
+    topic: "Google Cloud Assured Workloads — FedRAMP High services, IL4 controls"
+    args: "{P} us-central1 us-east4 us-west1"
+    output: { project: "{P}-{NAME}", type: GCRS, subfolder: research, multi_instance: true }
+    deps: [REQ, ORG_RESEARCH]
+
+  # --- US wave 1: baseline (FIPS 199 + PIA in parallel) ----------------
+  - id: US_FIPS199
+    skill: arckit:us-fisma-categorization
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FIPS199 }
+    deps: [REQ, STKE]
+
+  - id: US_PIA
+    skill: arckit:us-privacy-pia
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: USPIA }
+    deps: [REQ, STKE]
+
+  # --- US wave 2: controls (NIST 800-53 + ICAM) ------------------------
+  - id: US_NIST
+    skill: arckit:us-nist-800-53
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: NIST }
+    deps: [REQ, US_FIPS199]
+
+  - id: US_ICAM
+    skill: arckit:us-icam
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ICAM }
+    deps: [REQ, US_FIPS199, US_PIA]
+
+  # --- US wave 3: posture (Zero Trust + SBOM) --------------------------
+  - id: US_ZTA
+    skill: arckit:us-zero-trust
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ZTA }
+    deps: [REQ, US_NIST]
+
+  - id: US_SBOM
+    skill: arckit:us-sbom-eo-14028
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SBOM }
+    deps: [REQ, US_NIST]
+
+  # --- US wave 4: AI assurance -----------------------------------------
+  - id: US_AIRMF
+    skill: arckit:us-ai-rmf
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AIRMF }
+    deps: [REQ, US_NIST, US_PIA]
+
+  - id: US_AIIA
+    skill: arckit:us-ai-impact
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AIIA }
+    deps: [REQ, US_AIRMF]
+
+  # --- US wave 5: authorization (SSP + Readiness) ----------------------
+  - id: US_FRSSP
+    skill: arckit:us-fedramp-ssp
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FRSSP }
+    deps: [REQ, US_NIST, US_ZTA, US_ICAM, US_PIA, US_SBOM]
+
+  - id: US_FRRR
+    skill: arckit:us-fedramp-readiness
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FRRR }
+    deps: [REQ, US_FRSSP]
+
+  # --- Cross-cutting (inherited from core) ------------------------------
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, US_PIA, US_AIRMF]
+
+  - id: SOBC
+    skill: arckit:sobc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SOBC }
+    deps: [REQ, STKE, RISK]
+
+  - id: FRAMEWORK
+    skill: arckit:framework
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FWRK }
+    deps: [SOBC, RISK, US_FRSSP, US_FRRR, US_ZTA, US_ICAM, US_AIRMF, US_AIIA, US_PIA, US_SBOM]
