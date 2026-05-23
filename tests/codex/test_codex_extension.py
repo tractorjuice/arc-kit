@@ -21,6 +21,7 @@ PLUGIN_COMMAND_DIRS = [
     REPO_ROOT / "arckit-eu" / "commands",
     REPO_ROOT / "arckit-at" / "commands",
     REPO_ROOT / "arckit-au" / "commands",
+    REPO_ROOT / "arckit-us" / "commands",
 ]
 CODEX_ROOT = REPO_ROOT / "arckit-codex"
 CODEX_SKILLS = CODEX_ROOT / "skills"
