@@ -817,3 +817,60 @@ principles → requirements → ca-pia → ca-atip → ca-aia (if ADM) → ca-oc
 
 - **Updated**: Total command count from 104 to 116 (70 official + 46 community = 116; community now includes 12 Canada + 12 UAE + 7 EU + 12 FR + 3 Austrian)
 - **Updated**: Matrix version date to 2026-05-04
+
+### 2026-05-23 - USA Federal Civilian Overlay Commands (Community)
+
+Added 10 community-overlay commands (`us-*`) covering US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship with the `[COMMUNITY]` description prefix and are not part of the officially-maintained baseline. Total command count moves to **135** (71 official + 64 community).
+
+**Statutory currency anchor**: EO 14110 was revoked January 2025; the live AI mandates are OMB M-24-10 + M-25-21. FedRAMP completed the Rev 5 transition in 2024.
+
+**Canonical execution chain (us-federal recipe, 5 waves)**:
+
+```text
+Wave 1 (baseline):    principles → requirements → us-fisma-categorization
+Wave 2 (controls):    us-fisma-categorization → us-nist-800-53
+Wave 3 (posture):     us-nist-800-53 → us-zero-trust → us-icam
+Wave 4 (ai):          us-ai-rmf → us-ai-impact → us-privacy-pia
+Wave 5 (authorization): us-sbom-eo-14028 → us-fedramp-ssp → us-fedramp-readiness
+                      → adr → sobc → risk → framework
+```
+
+**Handoff matrix** (extracted from `arckit-us/commands/us-*.md` frontmatter):
+
+| From command | Handoff target | Condition / rationale |
+|---|---|---|
+| `us-fisma-categorization` | `us-nist-800-53` | The FIPS 199 high-water mark drives the NIST SP 800-53 Rev 5 baseline (Low / Moderate / High) for control tailoring |
+| `us-fisma-categorization` | `us-privacy-pia` | Information types containing PII trigger an E-Government Act §208 PIA; the FIPS 199 inventory seeds the PIA personal-information register |
+| `us-fisma-categorization` | `risk` | Categorization rationale and any ambiguous information-type mappings feed the project risk register |
+| `us-nist-800-53` | `us-fedramp-ssp` | The tailored control set and implementation statements drop directly into the FedRAMP SSP control-implementation tables |
+| `us-nist-800-53` | `us-zero-trust` | Control selections (especially AC, IA, SC families) feed the CISA Zero Trust Maturity Model scoring |
+| `us-nist-800-53` | `us-sbom-eo-14028` | Supply-chain controls (SR family) cross-reference the EO 14028 secure-software attestation and SBOM register |
+| `us-nist-800-53` | `adr` | Significant tailoring decisions (compensating controls, control inheritance boundaries, parameter values) warrant ADRs |
+| `us-fedramp-ssp` | `us-fedramp-readiness` | The SSP is the primary input to the 3PAO Readiness Assessment Report; gaps surfaced during SSP authoring populate the RAR gap register |
+| `us-fedramp-ssp` | `us-zero-trust` | SSP control implementations seed the CISA Zero Trust Maturity scoring (Identity, Devices, Networks, Apps & Workloads, Data pillars) |
+| `us-fedramp-ssp` | `us-icam` | The Types of Users section and IA-family control implementations connect to the ICAM architecture |
+| `us-fedramp-readiness` | `service-assessment` | The readiness gap register feeds the broader service-assessment evidence pack |
+| `us-fedramp-readiness` | `roadmap` | Remediation actions for FedRAMP gaps drop into the architecture roadmap timeline |
+| `us-fedramp-readiness` | `risk` | Open gaps and POA&M items become entries in the project risk register |
+| `us-zero-trust` | `us-icam` | Identity-pillar gaps drive the ICAM architecture (IAL/AAL/FAL determination, PIV / login.gov integration) |
+| `us-zero-trust` | `us-nist-800-53` | Zero Trust controls map back to specific 800-53 controls (AC, IA, SC, SI families); deficient maturity stages flag controls for re-tailoring |
+| `us-zero-trust` | `adr` | Architectural decisions to reach Advanced or Optimal maturity (e.g. micro-segmentation strategy, policy-decision-point selection) warrant ADRs |
+| `us-icam` | `us-zero-trust` | ICAM is the foundation of the Zero Trust Identity pillar; IAL/AAL/FAL selections directly score ZTMM Identity functions |
+| `us-icam` | `us-privacy-pia` | Identity proofing collects and processes PII (especially IAL2/IAL3); the ICAM data flows feed the PIA personal-information inventory |
+| `us-icam` | `adr` | Identity provider selection (PIV vs login.gov vs agency-specific) and federation pattern decisions warrant ADRs |
+| `us-ai-rmf` | `us-ai-impact` | Translate AI RMF findings into the M-24-10 rights-impacting / safety-impacting determination and the M-25-21 acquisition controls |
+| `us-ai-rmf` | `us-privacy-pia` | AI systems trained on or inferencing over PII require an E-Gov Act §208 PIA; the AI RMF data inventory seeds the PIA |
+| `us-ai-rmf` | `risk` | Residual AI risks (confabulation, bias, security, value-chain) flow into the project risk register |
+| `us-ai-rmf` | `adr` | Model architecture, hosting, data-governance, and human-oversight decisions made during the RMF process warrant ADRs |
+| `us-ai-impact` | `us-ai-rmf` | The minimum-practice gaps surfaced here drive the AI RMF Govern / Map / Measure / Manage uplift backlog |
+| `us-ai-impact` | `us-privacy-pia` | Rights-impacting AI systems handling PII require an E-Gov Act §208 PIA |
+| `us-ai-impact` | `risk` | Residual M-24-10 risks (especially where minimum practices cannot be met) flow into the risk register |
+| `us-privacy-pia` | `us-icam` | PII collected by identity proofing (IAL2/IAL3) and authentication processes is documented in the PIA; the ICAM data flows must reconcile with the PIA inventory |
+| `us-privacy-pia` | `us-ai-impact` | AI systems processing PII require both the PIA and the M-24-10 rights-impacting determination; the PIA feeds the AI Impact Assessment |
+| `us-privacy-pia` | `data-model` | PII fields and lawful authorities surface as data-model attributes and access-control rules |
+| `us-sbom-eo-14028` | `us-nist-800-53` | SR (Supply Chain Risk Management) and SA (System and Services Acquisition) control family implementations must cross-reference the attestation and SBOM |
+| `us-sbom-eo-14028` | `adr` | SBOM format choice (CycloneDX vs SPDX), signing strategy (Sigstore, in-toto, SLSA level), and attestation exception requests warrant ADRs |
+| `us-sbom-eo-14028` | `risk` | Components with known unmitigated vulnerabilities or attestation exceptions feed the risk register |
+
+- **Updated**: Total command count to 135 (71 official + 64 community; community now includes 12 Canada + 12 UAE + 7 EU + 12 FR + 3 Austrian + 8 Australian + 10 USA)
+- **Updated**: Matrix version date to 2026-05-23
