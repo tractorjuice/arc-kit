@@ -147,6 +147,27 @@
         "disp"
       ],
       "category": "productivity"
+    },
+    {
+      "name": "arckit-us",
+      "source": "./arckit-us",
+      "description": "USA Federal Civilian Overlay — 10 commands for FedRAMP, FISMA/NIST 800-53, CISA Zero Trust, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10/M-25-21 AI assurance, E-Gov §208 PIA, EO 14028 SBOM",
+      "version": "5.1.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "usa",
+        "federal",
+        "fedramp",
+        "compliance"
+      ],
+      "category": "productivity"
     }
   ]
 }
