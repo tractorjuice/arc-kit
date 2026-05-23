@@ -93,7 +93,7 @@ update_file ".claude-plugin/marketplace.json" "all .plugins[].version (metadata.
 # .version AND .dependencies[arckit].version in lockstep so the 6 plugins
 # always ship as a coherent set.
 
-for jurisdiction in uae fr ca eu at au; do
+for jurisdiction in uae fr ca eu at au us; do
   manifest="arckit-${jurisdiction}/.claude-plugin/plugin.json"
   version_file="arckit-${jurisdiction}/VERSION"
   if [[ -f "$manifest" ]]; then
@@ -167,13 +167,13 @@ echo ""
 echo "── Verification ──"
 echo ""
 echo "VERSION files:"
-grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-uae/VERSION arckit-fr/VERSION arckit-ca/VERSION arckit-eu/VERSION arckit-at/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION arckit-copilot/VERSION arckit-paperclip/VERSION
+grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-uae/VERSION arckit-fr/VERSION arckit-ca/VERSION arckit-eu/VERSION arckit-at/VERSION arckit-au/VERSION arckit-us/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION arckit-copilot/VERSION arckit-paperclip/VERSION
 echo ""
 echo "pyproject.toml:"
 grep "^version" pyproject.toml
 echo ""
 echo "plugin.json (all 6 plugins):"
-for src in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at; do
+for src in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au arckit-us; do
   if [[ -f "$src/.claude-plugin/plugin.json" ]]; then
     printf "  %-22s %s\n" "$src/plugin.json:" "$(jq -r '.version' "$src/.claude-plugin/plugin.json")"
   fi
