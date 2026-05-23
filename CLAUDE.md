@@ -9,7 +9,7 @@ ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit**
 **Six distribution formats** exist side-by-side in this repo:
 
 1. **CLI package** (`src/arckit_cli/`) — Python CLI installed via `pip`/`uv`, runs `arckit init` to scaffold projects for Codex CLI or OpenCode CLI
-2. **Claude Code plugins** (`arckit-claude/`, `arckit-uae/`, `arckit-fr/`, `arckit-ca/`, `arckit-eu/`, `arckit-at/`, `arckit-au/`) — installed via marketplace (`/plugin marketplace add tractorjuice/arc-kit`). Core `arckit` ships 71 commands + all hooks/MCP/doc-types config. Six community overlays ship per-jurisdiction commands and recipes. Install only what you need; community plugins require the `arckit` core plugin.
+2. **Claude Code plugins** (`arckit-claude/`, `arckit-uae/`, `arckit-fr/`, `arckit-ca/`, `arckit-eu/`, `arckit-at/`, `arckit-au/`, `arckit-us/`) — installed via marketplace (`/plugin marketplace add tractorjuice/arc-kit`). Core `arckit` ships 71 commands + all hooks/MCP/doc-types config. Seven community overlays ship per-jurisdiction commands and recipes (UAE, France, Canada, EU, Austria, Australia, USA federal civilian). Install only what you need; community plugins require the `arckit` core plugin.
 3. **Gemini CLI extension** (`arckit-gemini/`) — published as `tractorjuice/arckit-gemini`, installed via `gemini extensions install`
 4. **OpenCode CLI extension** (`arckit-opencode/`) — scaffolded via `arckit init --ai opencode`
 5. **Codex CLI extension** (`arckit-codex/`) — published as `tractorjuice/arckit-codex`
