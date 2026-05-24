@@ -23,7 +23,7 @@ if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   exit 1
 fi
 
-PLUGINS=(arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au)
+PLUGINS=(arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au arckit-us)
 
 CREATED=0
 SKIPPED=0
