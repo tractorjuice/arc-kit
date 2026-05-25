@@ -72,11 +72,11 @@ claude plugin install arckit
 # UK + UAE federal
 claude plugin install arckit arckit-uae
 
-# Everything (135 commands across UK + UAE + FR + CA + EU + AT + AU + US)
-claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us}
+# Everything (139 commands across UK + UAE + FR + CA + EU + AT + AU + US + UK-NHS)
+claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs}
 ```
 
-All 8 plugins come from the same `tractorjuice/arc-kit` marketplace. Community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-us`) require the `arckit` core plugin.
+All 9 plugins come from the same `tractorjuice/arc-kit` marketplace. Community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-us`, `arckit-uk-nhs`) require the `arckit` core plugin.
 
 > **Tip: lighter marketplace clone.** The command above clones the full arc-kit monorepo (~100 MB) because it hosts five other AI-assistant distributions, 147 vendored Wardley maps, and research docs you don't need. To fetch just the plugin's directories, add the marketplace via the CLI with `--sparse`:
 >
@@ -84,7 +84,7 @@ All 8 plugins come from the same `tractorjuice/arc-kit` marketplace. Community p
 > claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude
 > ```
 >
-> This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 71 official commands (plus 64 community-contributed), 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+> This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 71 official commands (plus 68 community-contributed), 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
 > **Why v2.1.144?** Claude Code v2.1.144 fixed a bug where new sessions were titled from plugin monitor output instead of the user's first prompt — ArcKit's `stale-artifact-scan` monitor was the canonical hit, producing sessions named "Detect ArcKit artifacts with overdue reviews…" instead of the user's actual question. Same release fixed the Skill tool failing with permission errors in headless mode (regression in v2.1.141) which affected `/arckit:*` runs via `claude -p` / CI. v2.1.143 added plugin dependency enforcement so `claude plugin disable arckit` now surfaces a copy-pasteable disable-chain hint when a community overlay (`arckit-au`, `arckit-uae`, etc.) depends on it, instead of silently breaking the overlay. v2.1.139 added the hook `args: string[]` exec form — ArcKit's 16 registered hooks now use this form so the harness execs `node <path>` directly instead of parsing a shell-quoted command string. This eliminates a whole class of quoting / metacharacter bugs in the `${CLAUDE_PLUGIN_ROOT}`-substituted paths. The same release also fixed subagents not discovering project / user / plugin skills (affects ArcKit's 16 agents) and made `/mcp` reconnect pick up `.mcp.json` edits without a restart. Builds on v2.1.136 (fix: env vars from SessionStart hooks going stale — relevant to the `inject-arckit-context` pattern; fix: MCP servers from `.mcp.json` disappearing after `/clear`), v2.1.133 (subagent skill discovery fix, hooks receive `effort.level`), and v2.1.129 (plugin manifest's `monitors`/`themes` moved under a top-level `experimental` block — ArcKit's `stale-artifact-scan` background monitor which warns when `projects/` artefacts are past their `Next Review Date` or stuck in `DRAFT` for 14+ days is declared via that key and will not load on older clients; `ENABLE_PROMPT_CACHING_1H` regression fix). Carries forward the v2.1.121 unlocks: MCP `alwaysLoad` eager-loads AWS Knowledge and Microsoft Learn tools at session start (skips a discovery round-trip on `/arckit:aws-research` and `/arckit:azure-research`), and PostToolUse `hookSpecificOutput.updatedToolOutput` so provenance-stamp and manifest hooks surface their effects to the model in-band; the v2.1.118–119 release-flow unlocks: `claude plugin tag --dry-run` validates plugin/marketplace version agreement, and the session-telemetry hook records `duration_ms` on every tool call; the v2.1.117 unlocks: Opus 4.7 `/context` correctly sized to 1M instead of 200K (long research sessions no longer autocompact early) and agent frontmatter `mcpServers` loading for `--agent` sessions; the v2.1.111+ unlocks: Opus 4.7 `xhigh` effort tier, Auto mode without `--enable-auto-mode`, read-only bash glob patterns without permission prompts; and the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
 
@@ -94,7 +94,7 @@ All 8 plugins come from the same `tractorjuice/arc-kit` marketplace. Community p
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
-Zero-config: all 70 official commands (plus 46 community-contributed overlays), templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+Zero-config: all 71 official commands (plus 58 community-contributed overlays), templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
 
 **GitHub Copilot** (VS Code) — install the ArcKit CLI and scaffold prompt files:
 
@@ -121,7 +121,7 @@ uv tool install arckit-cli --from git+https://github.com/tractorjuice/arc-kit.gi
 uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-project
 ```
 
-**Latest Release**: [v5.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v5.3.0)
+**Latest Release**: [v5.4.0](https://github.com/tractorjuice/arc-kit/releases/tag/v5.4.0)
 
 ### Platform Support
 
@@ -259,7 +259,7 @@ Costs are estimates from the Claude Code tokenizer and may differ from actual us
 ### Trimming the footprint
 
 - The five utility skills already use `paths:` globs to scope their always-on cost to relevant projects (`mermaid-syntax` only loads under `*.mmd`, `wardley-mapping` under WARD artefacts, etc.). The 71 command-skills are listed but not described in detail in the always-on context — the full prompt only loads on invocation.
-- Community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-us`) are independent plugins — install only the jurisdictions you need. Each adds its own always-on baseline.
+- Community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-us`, `arckit-uk-nhs`) are independent plugins — install only the jurisdictions / sectors you need. Each adds its own always-on baseline. The NHS overlay is the first **sector** overlay; the others are jurisdiction-based.
 - Heavy commands (`jsp-936`, `analyze`, `diagram`, `backlog`) are on-invoke only; the always-on cost is unaffected by which heavy commands exist.
 
 To measure your own session footprint, run `/context all` (Claude Code v2.1.139+) for per-skill token estimates against your active model.
@@ -399,6 +399,26 @@ Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Da
 - `/arckit.uae-procurement` — Federal procurement strategy under Federal Decree-Law No. 11 of 2023 — ITT/RFP packs against MoF Digital Procurement Platform templates, In-Country Value (ICV) plan, evaluation report structure, contract register
 
 The commands chain together in a canonical order from `principles → uae-classification → uae-pdpl → uae-ias → uae-cloud-residency → uae-uaepass → uae-zero-bureaucracy → uae-digital-records → uae-data-sharing → uae-ai-charter → uae-ai-autonomy-tier → uae-priorities-alignment → uae-procurement → sobc → wardley → framework`. Full guide: [`docs/guides/uae-overlay.md`](docs/guides/uae-overlay.md).
+
+---
+
+## UK NHS Clinical Safety Overlay (Community-contributed)
+
+> ⚠️ **Community-contributed overlay — first sector-specific overlay in ArcKit.** The 4 commands below cover NHS clinical safety (DCB0129 manufacturer + DCB0160 deployer), NHS DTAC procurement assurance, and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device classification. Adopts Dr Marcus Baw's [SAFETY.md spec](https://github.com/pacharanero/SAFETY.md) for DCB0129/0160 file naming and YAML-frontmatter hazard log. Output is **not** clinical, legal, or regulatory advice — MUST be reviewed by a qualified Clinical Safety Officer (CSO with appropriate GMC / NMC / HCPC / GPhC registration) and, for MDR classification, by a qualified Regulatory Affairs specialist before reliance.
+
+**Clinical safety (DCB0129 + DCB0160)**:
+
+- `/arckit.uk-nhs-dcb0129` — NHS DCB0129 manufacturer Clinical Safety Case + Hazard Log. Produces a 3-file set in `projects/{NNN}/clinical-safety/`: `SAFETY.md` (front-door anchor), `SAFETY-CASE.md` (GSN-inspired safety argument), `HAZARD-LOG.md` (YAML-frontmatter hazard array + rendered Markdown table; 6 starter hazards covering wrong-patient, stale data, audit, authorisation, alert delivery, write integrity)
+- `/arckit.uk-nhs-dcb0160` — NHS DCB0160 deployer Clinical Safety Case + Deployment Hazard Log. Produces a 3-file deployer-side set in `projects/{NNN}/clinical-safety/deployment/`; 10 starter deployment hazards covering training, workflow integration, BC, parallel running, migration, local configuration, terminology, RBAC, incident reporting
+
+**Procurement and regulation**:
+
+- `/arckit.uk-nhs-dtac` — NHS Digital Technology Assessment Criteria v3 — 5 sections (Clinical Safety, Data Protection, Technical Assurance, Interoperability, Usability + Accessibility) plus AI annex. Cross-references DCB0129/0160, DPIA, ATRS, Secure by Design
+- `/arckit.uk-mdr-classification` — UK MDR 2002 (as amended) + EU MDR 2017/745 software-as-medical-device (SaMD) and AI-as-medical-device (AIaMD) classification. UKCA / UKNI / CE marking pathway, Windsor Framework NI handling, conformity-assessment route, MHRA SaMD/AIaMD Programme alignment, ISO 14971 / IEC 62304 / ISO 13485 standards mapping, post-market obligations
+
+The commands compose with — not replace — the UK government baseline (`tcop`, `secure`, `dpia`, `atrs`, `risk`, `service-assessment`). Recipe: `uk-nhs-clinical-safety` (44 targets across the clinical-safety waves). Proposed domain co-maintainer: Dr Marcus Baw ([@pacharanero](https://github.com/pacharanero)) — clinical informatician at RCPCH, openEHR, NHS England.
+
+The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — they follow Marcus's SAFETY.md spec convention so they remain readable by clinicians, MHRA reviewers, and procurement teams who do not use ArcKit. Other artefacts cross-reference them by relative path. Full design log: [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md).
 
 ---
 
@@ -1225,7 +1245,7 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 **Hooks** provide automated governance: filenames are auto-corrected to ArcKit conventions, project context is injected into every prompt so commands know what artifacts exist, MCP tools are auto-approved, and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
 
-Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 70 official commands (plus 46 community-contributed overlays) as prompt files and 10 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
+Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 71 official commands (plus 58 community-contributed overlays) as prompt files and 10 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
 
 ### Why Commands, Not Skills
 
@@ -1772,7 +1792,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v5.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v5.3.0)
+- **Latest Version**: [v5.4.0](https://github.com/tractorjuice/arc-kit/releases/tag/v5.4.0)
 
 ---
 

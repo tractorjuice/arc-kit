@@ -2,9 +2,14 @@
 /**
  * ArcKit Desktop Notification for Stale Artefacts
  *
- * Fires at SessionStart. Gated on `${user_config.desktop_notifications}`
- * being literally "true" — passed via argv[2] so users who haven't opted
- * in pay only one fast no-op spawn per session.
+ * Fires at SessionStart. Gated on the `desktop_notifications` userConfig
+ * field being literally "true", read from the
+ * `CLAUDE_PLUGIN_OPTION_DESKTOP_NOTIFICATIONS` env var that Claude Code
+ * exports to plugin subprocesses. The env-var path degrades cleanly to
+ * `undefined` when the field is unset, unlike `${user_config.*}`
+ * substitution in hooks.json args which raises
+ * `plugin option "desktop_notifications" isnt set` and aborts the hook
+ * before it can run.
  *
  * When enabled and the existing detect-stale-artifacts.sh scan reports
  * stale items, this hook emits a SessionStart `terminalSequence` (Claude
@@ -31,7 +36,7 @@ import { parseHookInput, isDir } from './hook-utils.mjs';
 
 const data = parseHookInput();
 
-const enabled = (process.argv[2] || '').toLowerCase() === '--enabled=true';
+const enabled = (process.env.CLAUDE_PLUGIN_OPTION_DESKTOP_NOTIFICATIONS || '').toLowerCase() === 'true';
 if (!enabled) {
   process.stdout.write('{}');
   process.exit(0);

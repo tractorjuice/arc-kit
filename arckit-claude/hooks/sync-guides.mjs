@@ -441,6 +441,31 @@ function scanProject(repoRoot, projectName) {
     }
   }
 
+  // Clinical safety (NHS DCB0129 + DCB0160 — Marcus Baw SAFETY.md spec)
+  // These files deliberately do NOT carry the ARC- prefix (verbatim filenames
+  // are part of the spec), so they slip through the ARC-* glob above. Scan
+  // clinical-safety/ and clinical-safety/deployment/ explicitly and surface
+  // their contents under the project documents list with category
+  // "Clinical Safety" so the manifest, dashboard, and search index pick them
+  // up. Title is the file's first heading, falling back to the basename.
+  for (const dirRel of ['clinical-safety', 'clinical-safety/deployment']) {
+    const safetyDir = join(projectDir, dirRel);
+    if (!isDir(safetyDir)) continue;
+    for (const f of listDir(safetyDir)) {
+      if (f === 'README.md' || f.startsWith('.')) continue;
+      const fp = join(safetyDir, f);
+      if (!isFile(fp) || !f.endsWith('.md')) continue;
+      const heading = extractFirstHeading(fp) || basename(f, '.md');
+      project.documents.push({
+        path: `${projectPath}/${dirRel}/${f}`,
+        title: heading,
+        category: 'Clinical Safety',
+        documentId: basename(f, '.md'),
+        extension: '.md',
+      });
+    }
+  }
+
   // Vendors
   const vendorsDir = join(projectDir, 'vendors');
   if (isDir(vendorsDir)) {

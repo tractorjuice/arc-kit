@@ -196,6 +196,31 @@
         "payments"
       ],
       "category": "productivity"
+    },
+    {
+      "name": "arckit-uk-nhs",
+      "source": "./arckit-uk-nhs",
+      "description": "UK NHS Clinical Safety Overlay — 4 commands for NHS DCB0129 (manufacturer), DCB0160 (deployer), DTAC v3, and UK/EU MDR SaMD/AIaMD classification. Adopts Marcus Baw SAFETY.md spec. Second sector-specific overlay.",
+      "version": "5.4.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "uk",
+        "nhs",
+        "clinical-safety",
+        "dcb0129",
+        "dtac",
+        "mdr",
+        "samd",
+        "healthcare"
+      ],
+      "category": "productivity"
     }
   ]
 }

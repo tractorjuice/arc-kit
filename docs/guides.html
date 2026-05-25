@@ -655,6 +655,24 @@
                 </div>
             </div>
 
+            <!-- UK NHS Clinical Safety Overlay (second sector overlay) -->
+            <div class="app-guide-category">
+                <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">
+                    <span class="app-guide-category__toggle">&#9662;</span> UK NHS Clinical Safety Overlay
+                    <span class="app-guide-category__count">5 guides</span>
+                </h2>
+                <div class="app-guide-category__body">
+                    <p class="govuk-body-s govuk-!-margin-bottom-2"><em>Second <strong>sector</strong>-specific community overlay (after UK Finance Payments). Covers NHS clinical safety (DCB0129 manufacturer + DCB0160 deployer), NHS DTAC v3 procurement assurance, and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device classification. DCB0129/0160 outputs adopt <a href="https://github.com/pacharanero/SAFETY.md" class="govuk-link">Dr Marcus Baw's SAFETY.md spec</a> verbatim for filenames and YAML-frontmatter hazard log. Domain co-maintainer (proposed): <a href="https://github.com/pacharanero" class="govuk-link">@pacharanero</a> (Dr Marcus Baw, clinical informatician at RCPCH / openEHR / NHSE). Output should be reviewed by a qualified Clinical Safety Officer (GMC / NMC / HCPC / GPhC registered) and, for MDR classification, by a qualified Regulatory Affairs specialist before reliance.</em></p>
+                    <ul class="app-guide-list">
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=uk-nhs-clinical-safety-overlay" class="govuk-link">UK NHS Clinical Safety Overlay</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">Overlay-level guide: purpose, when-to-use, the 4 commands, recipe, filename convention, doc-type codes, Phase 2 candidates, tiering (Marcus Baw 1/2/3), status, references</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=uk-nhs-dcb0129" class="govuk-link">NHS DCB0129 Manufacturer Clinical Safety Case</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">3-file output (<code>SAFETY.md</code> / <code>SAFETY-CASE.md</code> / <code>HAZARD-LOG.md</code>); 6 starter hazards covering identity, stale data, audit, authorisation, alert delivery, write integrity; DCB0129 1&ndash;5 inverted scoring scale</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=uk-nhs-dcb0160" class="govuk-link">NHS DCB0160 Deployer Clinical Safety Case</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">3-file deployer set in <code>clinical-safety/deployment/</code>; 10 starter deployment hazards covering training, workflow, BC, parallel running, migration, configuration, terminology, RBAC, incident reporting; deploying-organisation CSO / Caldicott Guardian / SIRO governance</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=uk-nhs-dtac" class="govuk-link">NHS DTAC v3 Assessment</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">5 sections (Clinical Safety, Data Protection, Technical Assurance, Interoperability, Usability/Accessibility) plus AI annex; cross-references DCB0129/0160, DPIA, ATRS, Secure by Design</span></li>
+                        <li class="app-guide-item"><a href="guide-viewer.html?guide=uk-mdr-classification" class="govuk-link">UK + EU MDR SaMD / AIaMD Classification</a> <span class="app-status-tag app-status-experimental">EXPERIMENTAL</span> <span class="app-guide-desc">UK MDR 2002 (as amended) + EU MDR 2017/745; Rule 11 reasoning; UKCA / UKNI / CE marking pathway; Windsor Framework NI handling; MHRA SaMD/AIaMD Programme alignment; post-market obligations</span></li>
+                    </ul>
+                </div>
+            </div>
+
             <!-- Operations -->
             <div class="app-guide-category">
                 <h2 class="govuk-heading-s app-guide-category__heading" onclick="toggleCategory(this)">

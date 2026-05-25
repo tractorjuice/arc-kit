@@ -519,7 +519,7 @@
         <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
 
         <div class="govuk-inset-text">
-            <p class="govuk-body"><strong>Which plugin ships which command?</strong> As of v5.1.0 ArcKit splits across 8 marketplace plugins. The <strong>Tier</strong> column tells you whether a command ships in <code>arckit</code> (Core) or in one of the 7 community plugins:</p>
+            <p class="govuk-body"><strong>Which plugin ships which command?</strong> ArcKit splits across 9 marketplace plugins. The <strong>Tier</strong> column tells you whether a command ships in <code>arckit</code> (Core) or in one of the 8 community plugins:</p>
             <ul class="govuk-list govuk-list--bullet">
                 <li><strong>Tier = Core</strong> → ships in <code>arckit</code></li>
                 <li><strong>Tier = Community + Jurisdiction = UAE</strong> → <code>arckit-uae</code></li>
@@ -530,6 +530,7 @@
                 <li><strong>Tier = Community + Jurisdiction = Australia</strong> → <code>arckit-au</code></li>
                 <li><strong>Tier = Community + Jurisdiction = USA</strong> → <code>arckit-us</code></li>
                 <li><strong>Tier = Community + Sector = UK Finance</strong> → <code>arckit-uk-finance</code> — payments slice (v1)</li>
+                <li><strong>Tier = Community + Sector = UK NHS</strong> → <code>arckit-uk-nhs</code> — clinical safety + medical-device classification</li>
             </ul>
             <p class="govuk-body">Install only what you need: <code>claude plugin install arckit arckit-uae</code> picks up core + UAE. Community plugins auto-install <code>arckit</code> as a declared dependency. See <a href="getting-started.html#step-2" class="govuk-link">Getting Started</a> for install snippets.</p>
         </div>
@@ -591,6 +592,7 @@
                     <option value="au-overlay">Australian Federal Overlay (Community)</option>
                     <option value="us-overlay">USA Federal Civilian Overlay (Community)</option>
                     <option value="uk-fs-overlay">UK Finance Payments Overlay (Community, Sector)</option>
+                    <option value="uk-nhs-overlay">UK NHS Clinical Safety Overlay (Community, Sector)</option>
                 </select>
             </div>
             <div>
@@ -607,6 +609,7 @@
                     <option value="australia">Australia</option>
                     <option value="usa">USA</option>
                     <option value="uk-finance">UK Finance (sector)</option>
+                    <option value="uk-nhs">UK NHS (sector)</option>
                 </select>
             </div>
             <div>
@@ -2072,6 +2075,11 @@
                         <td class="description">[COMMUNITY] FIPS Publication 199 system categorization mapping NIST SP 800-60 Vol 2 information types to CIA impact levels with high-water-mark rationale</td>
                         <td>USA Federal Civilian Overlay</td>
                         <td>USA</td>
+                    <tr data-status="experimental" data-category="uk-nhs-overlay" data-jurisdiction="uk-nhs" data-tier="community">
+                        <td><code>/arckit.uk-nhs-dcb0129</code></td>
+                        <td class="description">[COMMUNITY] NHS DCB0129 manufacturer Clinical Safety Case + Hazard Log. Produces 3-file output (<code>SAFETY.md</code> / <code>SAFETY-CASE.md</code> / <code>HAZARD-LOG.md</code>) in <code>clinical-safety/</code> following Marcus Baw's SAFETY.md spec. 6 starter hazards with YAML frontmatter + rendered Markdown table.</td>
+                        <td>UK NHS Clinical Safety Overlay</td>
+                        <td>UK NHS</td>
                         <td>Community</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
@@ -2081,6 +2089,11 @@
                         <td class="description">[COMMUNITY] NIST SP 800-53 Rev 5 tailoring against Low / Moderate / High baselines (SP 800-53B + FedRAMP Rev 5) with implementation/inheritance matrix</td>
                         <td>USA Federal Civilian Overlay</td>
                         <td>USA</td>
+                    <tr data-status="experimental" data-category="uk-nhs-overlay" data-jurisdiction="uk-nhs" data-tier="community">
+                        <td><code>/arckit.uk-nhs-dcb0160</code></td>
+                        <td class="description">[COMMUNITY] NHS DCB0160 deployer Clinical Safety Case + Deployment Hazard Log. 3-file deployer-side output in <code>clinical-safety/deployment/</code>. 10 starter deployment hazards covering training, workflow, BC, parallel running, migration, configuration, RBAC, incident reporting.</td>
+                        <td>UK NHS Clinical Safety Overlay</td>
+                        <td>UK NHS</td>
                         <td>Community</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
@@ -2090,6 +2103,11 @@
                         <td class="description">[COMMUNITY] FedRAMP Mod/High System Security Plan per template v3.x — 15-section structure covering boundary, interconnections, control implementations, continuous monitoring</td>
                         <td>USA Federal Civilian Overlay</td>
                         <td>USA</td>
+                    <tr data-status="experimental" data-category="uk-nhs-overlay" data-jurisdiction="uk-nhs" data-tier="community">
+                        <td><code>/arckit.uk-nhs-dtac</code></td>
+                        <td class="description">[COMMUNITY] NHS Digital Technology Assessment Criteria v3 — 5 sections (Clinical Safety, Data Protection, Technical Assurance, Interoperability, Usability/Accessibility) plus AI annex. Cross-references DCB0129/0160, DPIA, ATRS, Secure by Design.</td>
+                        <td>UK NHS Clinical Safety Overlay</td>
+                        <td>UK NHS</td>
                         <td>Community</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
@@ -2153,6 +2171,11 @@
                         <td class="description">[COMMUNITY] EO 14028 + OMB M-22-18 / M-23-16 secure-software self-attestation form + SBOM per NTIA Minimum Elements (CycloneDX / SPDX)</td>
                         <td>USA Federal Civilian Overlay</td>
                         <td>USA</td>
+                    <tr data-status="experimental" data-category="uk-nhs-overlay" data-jurisdiction="uk-nhs" data-tier="community">
+                        <td><code>/arckit.uk-mdr-classification</code></td>
+                        <td class="description">[COMMUNITY] UK MDR 2002 (as amended) + EU MDR 2017/745 software-as-medical-device (SaMD / AIaMD) classification. UKCA / UKNI / CE marking pathway, Windsor Framework NI handling, conformity-assessment route, MHRA SaMD/AIaMD Programme alignment, post-market obligations.</td>
+                        <td>UK NHS Clinical Safety Overlay</td>
+                        <td>UK NHS</td>
                         <td>Community</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>

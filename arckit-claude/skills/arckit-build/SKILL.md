@@ -63,6 +63,7 @@ cp "${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/uk-saas.yaml" .arckit/reci
 | `uae-agentic-transformation` | `arckit-uae` | UAE Federal Agentic AI Transformation — focused 24-month playbook for the 23 April 2026 Cabinet framework's 50%-of-services-by-April-2028 target; ADRs reshaped around agentic architecture (orchestration, human-in-the-loop, observability, kill-switch); PLAN + ROADMAP timeboxed to the 24-month window |
 | `ca-federal-fitaa` | `arckit-ca` | Canadian Federal — FITAA, ITSG-33, GC Digital Standards |
 | `au-federal` | `arckit-au` | Australian Federal / DISP-supplier — ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988, OAIC NDB, PSPF, AI Assurance, DISP attestation (35 targets, 9 waves) |
+| `uk-nhs-clinical-safety` | `arckit` (core, references `arckit-uk-nhs` commands) | UK NHS Clinical Safety + UK/EU MDR — NHS DCB0129 (manufacturer) + DCB0160 (deployer) clinical safety case (Marcus Baw SAFETY.md 3-file spec), NHS DTAC v3, UK MDR 2002 + EU MDR 2017/745 SaMD/AIaMD classification. Composes with UK SaaS baseline (no swaps; adds clinical safety + medical-device regulation on top). 44 targets across 8 waves. First **sector** overlay. |
 
 ### Recipe schema (v1)
 

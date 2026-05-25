@@ -52,7 +52,7 @@
           {
             "type": "command",
             "command": "node",
-            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/notify-stale-artifacts.mjs", "--enabled=${user_config.desktop_notifications}"],
+            "args": ["${CLAUDE_PLUGIN_ROOT}/hooks/notify-stale-artifacts.mjs"],
             "timeout": 8
           }
         ]

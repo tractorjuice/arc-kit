@@ -10,7 +10,7 @@ import tomllib
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CLAUDE_COMMANDS = REPO_ROOT / "arckit-claude" / "commands"
 
-# v5.0.0+: commands live across 6 plugin source directories (core + 5
+# v5.0.0+: commands live across 8 plugin source directories (core + 7
 # community overlays). Mirror scripts/converter.py's PLUGIN_SOURCES list
 # so this test matches the converter's actual output.
 PLUGIN_COMMAND_DIRS = [
@@ -22,6 +22,7 @@ PLUGIN_COMMAND_DIRS = [
     REPO_ROOT / "arckit-at" / "commands",
     REPO_ROOT / "arckit-au" / "commands",
     REPO_ROOT / "arckit-us" / "commands",
+    REPO_ROOT / "arckit-uk-nhs" / "commands",
 ]
 CODEX_ROOT = REPO_ROOT / "arckit-codex"
 CODEX_SKILLS = CODEX_ROOT / "skills"

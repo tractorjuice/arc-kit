@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.4.0] — 2026-05-27
+
+### Fixed
+
+- **`desktop_notifications` SessionStart hook no longer raises `plugin option "desktop_notifications" isnt set` on fresh installs.** The `${user_config.desktop_notifications}` argv substitution in `arckit-claude/hooks/hooks.json` aborts the hook when the user has never set the field, even with a `"default": "false"` declared in the userConfig (the default does not propagate through argv substitution on at least some Claude Code versions). The hook now reads the value from the `CLAUDE_PLUGIN_OPTION_DESKTOP_NOTIFICATIONS` env var — the documented parallel access path — which degrades cleanly to `undefined` when the field is unset. Opt-in behaviour for users who set `desktop_notifications: "true"` is unchanged.
+- **`/arckit:pages` now surfaces NHS clinical-safety artefacts**. Marcus Baw's `SAFETY.md` / `SAFETY-CASE.md` / `HAZARD-LOG.md` files (and their `clinical-safety/deployment/` companions from `/arckit:uk-nhs-dcb0160`) deliberately do not carry the `ARC-` prefix, so they were skipped by the manifest scanner in `arckit-claude/hooks/sync-guides.mjs`. The scanner now picks up any `.md` file in `projects/{NNN}/clinical-safety/` and `projects/{NNN}/clinical-safety/deployment/` under category `Clinical Safety`, using the file's first heading as the title. Marcus's filenames are preserved verbatim — only the manifest entry is added.
+
+### Added
+
+- **`arckit-uk-nhs` community plugin** — second **sector-specific** ArcKit overlay (following [`arckit-uk-finance`](#530--2026-05-27) which shipped in v5.3.0; jurisdiction overlays continue to cover legal territories). 4 commands covering NHS clinical safety (`uk-nhs-dcb0129` manufacturer, `uk-nhs-dcb0160` deployer), NHS DTAC v3 (`uk-nhs-dtac`), and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device classification (`uk-mdr-classification`). Adopts [Dr Marcus Baw's SAFETY.md spec](https://github.com/pacharanero/SAFETY.md) verbatim for DCB0129/0160 file naming and YAML-frontmatter hazard log (3-file output: `SAFETY.md`, `SAFETY-CASE.md`, `HAZARD-LOG.md` inside `projects/{NNN}/clinical-safety/`). Closes part of #424.
+- **`uk-nhs-clinical-safety` build recipe** (44 targets across 8 build waves) — composes with the UK SaaS baseline rather than replacing it (NHS digital products still need TCoP, Secure by Design, DPIA, ATRS).
+- **2 new doc-type codes** registered in `arckit-claude/config/doc-types.mjs`: `NHSDTAC`, `NHSMDR`. Both regime `UK`, category `Compliance`, severity `HIGH`. Dual-registered in `arckit-claude/commands/pages.md` allow-list per existing dual-registration pattern.
+- **Spec doc and decision log** at [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md) — every locked decision traces back to its source; §0 written specifically for Marcus Baw to review before committing as proposed domain co-maintainer.
+
+### Changed
+
+- **Top-level command count** moves from **139** to **143** (71 official + 72 community-contributed). Community count: `arckit-uae` 12 + `arckit-fr` 12 + `arckit-ca` 12 + `arckit-eu` 7 + `arckit-at` 3 + `arckit-au` 8 + `arckit-us` 10 + `arckit-uk-finance` 4 + `arckit-uk-nhs` 4 = 72.
+- **`scripts/bump-version.sh`** — added `arckit-uk-nhs` to jurisdictions loop and to verification output.
+- **`scripts/converter.py`** — added `arckit-uk-nhs` to `PLUGIN_SOURCES`. All extension formats (Codex Extension, Codex Skills, OpenCode CLI, Gemini CLI, Copilot, Paperclip) now include the 4 NHS commands.
+- **`.claude-plugin/marketplace.json`** — added 10th plugin entry for `arckit-uk-nhs` (alongside `arckit-uk-finance` from v5.3.0).
+
+### Notes for Marcus Baw
+
+Marcus's SAFETY.md / SAFETY-CASE.md / HAZARD-LOG.md files deliberately do NOT carry the `ARC-` prefix or a doc-type code — they pass through the `validate-arc-filename` hook untouched and are cross-referenced by relative path (`clinical-safety/SAFETY-CASE.md`) rather than document ID. This preserves his spec's "convention over configuration" principle while keeping the files inside an ArcKit project subdirectory so multi-project monorepos work. The Document Control block prepended to each file is the only addition to his spec.
+
 ## 5.3.0 — 2026-05-27
 
 ### Added

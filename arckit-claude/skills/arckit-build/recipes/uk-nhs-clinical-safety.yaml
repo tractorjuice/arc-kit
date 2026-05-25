@@ -1,0 +1,365 @@
+# ArcKit build recipe — UK NHS Clinical Safety
+#
+# Scope: UK NHS digital health products subject to NHS clinical-safety standards
+# (DCB0129 manufacturer / DCB0160 deployer), NHS DTAC procurement assurance, and
+# (where applicable) UK MDR 2002 + EU MDR 2017/745 software-as-medical-device
+# classification.
+#
+# Composes with the UK SaaS baseline — NHS digital products still need TCoP,
+# Secure by Design, DPIA, ATRS, Risk register, etc. No swaps from uk-saas; the
+# NHS overlay adds clinical safety and medical-device regulation on top.
+#
+# Spec doc: docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md
+# Tracking: https://github.com/tractorjuice/arc-kit/issues/424
+
+recipe: uk-nhs-clinical-safety
+schema_version: 1
+flagship: UK_NHS_DCB0129
+description: >
+  UK NHS Clinical Safety + Medical Device Regulation overlay — composes
+  with the UK SaaS governance baseline (TCoP, SBD, DPIA, ATRS) and adds
+  NHS DCB0129 manufacturer + DCB0160 deployer clinical safety cases
+  (Marcus Baw SAFETY.md 3-file spec), NHS DTAC v3 procurement assurance,
+  and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device
+  classification. Suitable for NHS-deployed digital health products
+  including SaMD / AIaMD.
+
+defaults:
+  version: "1.0"
+
+# Optional targets. default: true = built unless excluded with --exclude.
+# default: false = built only with --enable.
+optional_targets:
+  AIP:
+    description: AI Playbook — build only if any FR mentions AI/ML/LLM (very common for NHS digital health)
+    default: false
+  ATRS:
+    description: Algorithmic Transparency Recording Standard — required if any AI/ML component is clinically-facing
+    default: false
+  UK_MDR_CLASSIFICATION:
+    description: UK MDR + EU MDR SaMD/AIaMD classification — required if the product may be a medical device (decision-support, monitoring, any diagnostic / therapeutic intent)
+    default: true
+  SVCASS:
+    description: Service Standard Assessment — NHS Service Standard alignment overlaps DTAC section 5 but is broader
+    default: true
+  ORG_RESEARCH:
+    description: Target NHS organisation research (Trust / ICS / NHSE). Output to projects/000-global/research/.
+    default: true
+  RESEARCH:
+    description: Technology and vendor market research (build vs buy, TCO)
+    default: true
+  AWS_RESEARCH:
+    description: AWS service availability and architecture patterns (skip with --exclude AWS_RESEARCH if AWS not in scope)
+    default: true
+  AZURE_RESEARCH:
+    description: Azure service availability and architecture patterns (NHS often uses Azure due to OneLondon / NHS Mail integration)
+    default: true
+  GCP_RESEARCH:
+    description: Google Cloud service availability and architecture patterns
+    default: false
+  GOV_REUSE:
+    description: UK government code reuse research via govreposcrape — NHSE / NHSX / Apperta / individual Trust open-source assets
+    default: true
+  DATASCOUT:
+    description: External data source discovery (NHS Digital, NHS Business Services Authority, NHS Resolution, Trust open data)
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
+targets:
+
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: GLOSSARY
+    skill: arckit:glossary
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GLOSS }
+    deps: [PRIN]
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  - id: ORG_RESEARCH
+    skill: arckit:research
+    args: "{P} target=organisation"
+    output: { project: "000-global", type: RSCH, subfolder: research }
+    deps: []
+
+  - id: RESEARCH
+    skill: arckit:research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AWS_RESEARCH
+    skill: arckit:aws-research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research/aws }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: AZURE_RESEARCH
+    skill: arckit:azure-research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research/azure }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: GCP_RESEARCH
+    skill: arckit:gcp-research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research/gcp }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: GOV_REUSE
+    skill: arckit:gov-reuse
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GOVR, subfolder: research }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: DATASCOUT
+    skill: arckit:datascout
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DSCT, subfolder: research }
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: ADR-001
+    skill: arckit:adr
+    topic: "cloud-platform"
+    args: "{P} topic=cloud-platform — NHS cloud principles, UK region, data sovereignty for OFFICIAL-SENSITIVE clinical data"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-002
+    skill: arckit:adr
+    topic: "identity-and-access"
+    args: "{P} topic=identity-and-access — NHS login for citizens, NHS Care Identity Service 2 (CIS2) for clinicians, smartcard transitional handling"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-003
+    skill: arckit:adr
+    topic: "data-platform"
+    args: "{P} topic=data-platform — primary clinical data store, FHIR UK Core, audit log architecture"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-004
+    skill: arckit:adr
+    topic: "ai-llm-provider"
+    args: "{P} topic=ai-llm-provider — AI/ML provider, AIaMD implications, model governance, on-prem vs cloud, ATRS commitment"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-005
+    skill: arckit:adr
+    topic: "interoperability"
+    args: "{P} topic=interoperability — FHIR UK Core, SNOMED CT UK, NHS Number / PDS, GP Connect, e-RS, NHS App Connect"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-006
+    skill: arckit:adr
+    topic: "deployment-topology"
+    args: "{P} topic=deployment-topology — UK region, multi-AZ DR, network segmentation, BC fallback for clinical workflows"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-007
+    skill: arckit:adr
+    topic: "build-vs-buy"
+    args: "{P} topic=build-vs-buy — UK G-Cloud / NHS frameworks (Health Systems Support Framework, Spark DPS), Crown Commercial Service"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: ADR-008
+    skill: arckit:adr
+    topic: "logging-observability"
+    args: "{P} topic=logging-observability — DSPT-aligned, audit log retention per NHS records management code, clinical-event observability"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [PRIN, REQ]
+
+  - id: DATA
+    skill: arckit:data-model
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DATA }
+    deps: [REQ, "ADR-*"]
+
+  - id: STRATEGY
+    skill: arckit:strategy
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: STRAT }
+    deps: [PRIN, STKE]
+
+  - id: WARDLEY
+    skill: arckit:wardley
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: WARD }
+    deps: [PRIN, REQ]
+
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, "ADR-*", PRIN]
+
+  - id: HLD
+    skill: arckit:hld-review
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: HLDR }
+    deps: [REQ, DATA, "ADR-*", PRIN]
+
+  - id: SOBC
+    skill: arckit:sobc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SOBC }
+    deps: [REQ, STKE, RISK]
+
+  - id: TCOP
+    skill: arckit:tcop
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TCOP }
+    deps: [REQ, STKE, RISK, "ADR-*"]
+
+  - id: SBD
+    skill: arckit:secure
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SECD }
+    deps: [TCOP, RISK, REQ, "ADR-*"]
+
+  - id: DPIA
+    skill: arckit:dpia
+    args: "{P} scope=full-system consultation=surveys"
+    output: { project: "{P}-{NAME}", type: DPIA }
+    deps: [REQ, STKE, RISK, DATA]
+
+  - id: AIP
+    skill: arckit:ai-playbook
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AIPB }
+    deps: [DPIA, RISK, REQ, ADR-004]
+
+  - id: ATRS
+    skill: arckit:atrs
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ATRS }
+    deps: [DPIA, RISK, REQ, ADR-004]
+
+  # NHSCSCR is an informational state-key only; the command writes Marcus-
+  # conventioned filenames (SAFETY.md, SAFETY-CASE.md, HAZARD-LOG.md) inside
+  # clinical-safety/ — these do not carry an ARC- prefix or doc-type code.
+  - id: UK_NHS_DCB0129
+    skill: arckit:uk-nhs-dcb0129
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: NHSCSCR, subfolder: "clinical-safety" }
+    deps: [REQ, DATA, STKE, RISK]
+
+  # NHSDCSC is an informational state-key only; the command writes Marcus-
+  # conventioned filenames inside clinical-safety/deployment/.
+  - id: UK_NHS_DCB0160
+    skill: arckit:uk-nhs-dcb0160
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: NHSDCSC, subfolder: "clinical-safety/deployment" }
+    deps: [UK_NHS_DCB0129, REQ, RISK]
+
+  - id: UK_NHS_DTAC
+    skill: arckit:uk-nhs-dtac
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: NHSDTAC }
+    deps: [UK_NHS_DCB0129, DPIA, TCOP, SBD, HLD, DATA, ATRS, AIP]
+
+  - id: UK_MDR_CLASSIFICATION
+    skill: arckit:uk-mdr-classification
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: NHSMDR }
+    deps: [REQ, UK_NHS_DCB0129, RISK]
+
+  - id: DIAG-C4
+    skill: arckit:diagram
+    topic: "c4-context"
+    args: "{P} topic=c4-context"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD]
+
+  - id: DIAG-SEQ
+    skill: arckit:diagram
+    topic: "clinical-workflow-sequence"
+    args: "{P} topic=clinical-workflow-sequence"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, UK_NHS_DCB0129]
+
+  - id: DIAG-DEP
+    skill: arckit:diagram
+    topic: "deployment-topology"
+    args: "{P} topic=deployment-topology"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [HLD, ADR-006]
+
+  - id: PLAN
+    skill: arckit:plan
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: PLAN }
+    deps: [SOBC, RISK]
+
+  - id: ROADMAP
+    skill: arckit:roadmap
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ROAD }
+    deps: [PLAN]
+
+  - id: DEVOPS
+    skill: arckit:devops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DEVOPS }
+    deps: [REQ, "ADR-*"]
+
+  - id: FINOPS
+    skill: arckit:finops
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FINOPS }
+    deps: [REQ, RISK]
+
+  - id: OPS
+    skill: arckit:operationalize
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: OPS }
+    deps: [HLD, DEVOPS, RISK, UK_NHS_DCB0160]
+
+  - id: SVCASS
+    skill: arckit:service-assessment
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SVCASS }
+    deps: [TCOP, SBD, DPIA, UK_NHS_DTAC, REQ, STKE]
+
+  - id: TRACE
+    skill: arckit:traceability
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRAC }
+    deps:
+      - REQ
+      - DATA
+      - "ADR-*"
+      - HLD
+      - RISK
+      - UK_NHS_DCB0129
+      - UK_NHS_DCB0160
+      - UK_NHS_DTAC
+      - UK_MDR_CLASSIFICATION
+      - DPIA
+      - TCOP
+      - SBD

@@ -402,7 +402,8 @@
                     "Canada Federal compliance: FITAA, Privacy Act PIA, ATIP, AIA, ITSG-33, GC Digital Standards",
                     "UAE Federal compliance: PDPL, IAS, AI Charter, sovereign cloud residency, UAE Pass",
                     "Australian Federal / DISP-supplier compliance: ASD Essential Eight, ISM, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC NDB, PSPF, AI Assurance, DISP attestation",
-                    "USA Federal Civilian compliance: FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10/M-25-21 AI assurance, E-Gov §208 PIA, EO 14028 SBOM"
+                    "USA Federal Civilian compliance: FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10/M-25-21 AI assurance, E-Gov §208 PIA, EO 14028 SBOM",
+                    "UK NHS Clinical Safety: NHS DCB0129 (manufacturer) and DCB0160 (deployer) Clinical Safety Case + Hazard Log (adopting Marcus Baw's SAFETY.md spec), NHS DTAC v3, UK MDR 2002 + EU MDR 2017/745 SaMD/AIaMD classification"
                 ]
             },
             {
@@ -414,7 +415,7 @@
                         "name": "What is ArcKit?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "ArcKit is an open-source Enterprise Architecture Governance and Vendor Procurement toolkit. It provides AI-assisted slash commands across an official UK Government baseline plus community-contributed jurisdictional overlays (EU, France, Austria, Canada, UAE, Australia, USA) and sector overlays (UK Finance Payments) that turn architecture governance from scattered documents into a systematic, template-driven workflow with full traceability from stakeholders through requirements to design and tests."
+                            "text": "ArcKit is an open-source Enterprise Architecture Governance and Vendor Procurement toolkit. It provides AI-assisted slash commands across an official UK Government baseline plus community-contributed jurisdictional overlays (EU, France, Austria, Canada, UAE, Australia, USA) and sector overlays (UK Finance Payments, UK NHS Clinical Safety) that turn architecture governance from scattered documents into a systematic, template-driven workflow with full traceability from stakeholders through requirements to design and tests."
                         }
                     },
                     {
@@ -430,7 +431,7 @@
                         "name": "Which jurisdictions and compliance frameworks does ArcKit cover?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "The official baseline covers UK Government frameworks: GDS Service Standard, Technology Code of Practice, Secure by Design, NCSC Cyber Assessment Framework, HM Treasury Orange and Green Books, and G-Cloud/DOS procurement. Community-maintained overlays add the European Union (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), France (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), Austria (DSG/DSGVO, NISG, BVergG), Canada Federal (FITAA, Privacy Act PIA, ATIP, AIA, ITSG-33, GC Digital Standards), the UAE Federal (PDPL, IAS, AI Charter, sovereign cloud residency, UAE Pass), Australian Federal / DISP-supplier (ASD Essential Eight, ISM, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC NDB, PSPF, AI Assurance, DISP attestation), USA Federal Civilian (FedRAMP, FISMA / NIST 800-53 Rev 5, CISA Zero Trust, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10/M-25-21 AI assurance, E-Gov §208 PIA, EO 14028 SBOM), and UK Finance Payments (PSD2 SCA-RTS Articles 10, 10A, 11, 13-18 PSRs 2017, EMI/PI safeguarding under EMR 2011 + PSRs 2017, FCA Consumer Duty PS22/9, Critical Third Parties regime PS24/16 — payments slice, v1, sector overlay)."
+                            "text": "The official baseline covers UK Government frameworks: GDS Service Standard, Technology Code of Practice, Secure by Design, NCSC Cyber Assessment Framework, HM Treasury Orange and Green Books, and G-Cloud/DOS procurement. Community-maintained overlays add the European Union (GDPR, NIS2, AI Act, DORA, CRA, DSA, Data Act), France (SecNumCloud, ANSSI, EBIOS, CNIL, DINUM, PSSI), Austria (DSG/DSGVO, NISG, BVergG), Canada Federal (FITAA, Privacy Act PIA, ATIP, AIA, ITSG-33, GC Digital Standards), the UAE Federal (PDPL, IAS, AI Charter, sovereign cloud residency, UAE Pass), Australian Federal / DISP-supplier (ASD Essential Eight, ISM, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC NDB, PSPF, AI Assurance, DISP attestation), USA Federal Civilian (FedRAMP, FISMA / NIST 800-53 Rev 5, CISA Zero Trust, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10/M-25-21 AI assurance, E-Gov §208 PIA, EO 14028 SBOM), UK Finance Payments (PSD2 SCA-RTS, EMI/PI safeguarding, FCA Consumer Duty, Critical Third Parties — first sector-specific overlay), and UK NHS Clinical Safety (DCB0129, DCB0160, DTAC v3, UK MDR + EU MDR SaMD/AIaMD classification — second sector-specific overlay)."
                         }
                     },
                     {
@@ -661,6 +662,12 @@
                     <div class="app-jurisdiction-card__title">UK Finance (sector)</div>
                     <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · payments slice · sector overlay</span>
                     <p class="app-jurisdiction-card__desc">PSD2 SCA-RTS exemption design (Articles 10, 10A, 11, 13-18 PSRs 2017), EMI / PI safeguarding assessment (EMR 2011, PSRs 2017, FCA PS24/9), FCA Consumer Duty board report (PS22/9), Critical Third Parties dependency assessment (PS24/16). v1 audience: architects at established UK PSPs / EMIs / PIs scaling regulated operations.</p>
+                </a>
+                <a href="commands.html?jurisdiction=uk-nhs" class="app-jurisdiction-card govuk-link--no-visited-state">
+                    <div class="app-jurisdiction-card__flag">🩺</div>
+                    <div class="app-jurisdiction-card__title">UK NHS (sector)</div>
+                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 4 commands · second sector overlay</span>
+                    <p class="app-jurisdiction-card__desc">NHS DCB0129 (manufacturer) and DCB0160 (deployer) Clinical Safety Case + Hazard Log (Marcus Baw SAFETY.md spec), NHS DTAC v3, UK MDR 2002 + EU MDR 2017/745 software-as-medical-device (SaMD / AIaMD) classification.</p>
                 </a>
             </div>
             <p class="govuk-body govuk-!-margin-top-4"><a href="commands.html" class="govuk-link">Browse all commands &rarr;</a></p>

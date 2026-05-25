@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.4.0] - 2026-05-27
+
+### Fixed
+
+- `notify-stale-artifacts.mjs` now reads the `desktop_notifications` userConfig value from the `CLAUDE_PLUGIN_OPTION_DESKTOP_NOTIFICATIONS` env var instead of via `${user_config.*}` argv substitution in `hooks.json`. The argv substitution path aborted the hook with `plugin option "desktop_notifications" isnt set` on fresh installs where the user had never opened plugin configuration, even with `"default": "false"` declared on the userConfig field. The env-var path is documented as the parallel access mechanism ("All values are exported to plugin subprocesses as `CLAUDE_PLUGIN_OPTION_<KEY>` environment variables") and degrades cleanly to `undefined` when the field is unset. The `"default": "false"` declaration is retained as a UX nicety for the configuration prompt.
+- `hooks/sync-guides.mjs` now surfaces NHS clinical-safety artefacts in the manifest. Marcus Baw's `SAFETY.md` / `SAFETY-CASE.md` / `HAZARD-LOG.md` files (and the `clinical-safety/deployment/` companions from `/arckit:uk-nhs-dcb0160`) deliberately skip the `ARC-` prefix, so they were excluded by the project scanner. The hook now picks up any `.md` file in `projects/{NNN}/clinical-safety/` and `projects/{NNN}/clinical-safety/deployment/`, attaches them to the project's documents list with category `Clinical Safety` and the file's first heading as title. Filenames are preserved verbatim.
+
+### Added
+
+- **Two new doc-type codes** in `config/doc-types.mjs`: `NHSDTAC` (NHS Digital Technology Assessment Criteria v3), `NHSMDR` (UK MDR + EU MDR SaMD/AIaMD Classification). Required by the new `arckit-uk-nhs` community plugin. Both regime `UK`, category `Compliance`, severity `HIGH`.
+- **New recipe** `skills/arckit-build/recipes/uk-nhs-clinical-safety.yaml` (44 targets across 8 build waves, composes with `uk-saas` baseline). Consumed by `arckit-uk-nhs`.
+
+### Note
+
+The new `arckit-uk-nhs` community plugin ships 4 commands and uses the 2 doc-type codes and 1 recipe registered here in core. Marcus Baw's `SAFETY.md` / `SAFETY-CASE.md` / `HAZARD-LOG.md` files deliberately do NOT carry doc-type codes — they bypass `validate-arc-filename` and are cross-referenced by relative path.
+
 ## [5.3.0] - 2026-05-27
 
 ### Added
