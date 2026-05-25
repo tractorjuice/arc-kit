@@ -251,7 +251,7 @@ See the [full index](guides/roles/README.md) for details.
 | `/arckit.maturity-model` | [maturity-model.md](guides/maturity-model.md) | ✅ Complete |
 | `/arckit.score` | [score.md](guides/score.md) | ✅ Complete |
 
-**Coverage**: 70/70 commands documented (100%)
+**Coverage**: All core commands have user guides.
 
 ---
 

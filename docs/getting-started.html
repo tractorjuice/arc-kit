@@ -383,16 +383,16 @@
                     <span class="app-step__number">2</span>
                     <h2 class="govuk-heading-m app-step__title">Install ArcKit Plugins</h2>
                     <div class="app-code-block">/plugin marketplace add tractorjuice/arc-kit</div>
-                    <p class="govuk-body govuk-!-margin-top-3">As of v5.0.0 the marketplace ships <strong>7 plugins</strong> &mdash; install only the jurisdictions you need:</p>
-                    <div class="app-code-block"><pre><code># Core (71 commands &mdash; UK Government civilian + generic enterprise)
+                    <p class="govuk-body govuk-!-margin-top-3">As of v5.1.0 the marketplace ships <strong>8 plugins</strong> &mdash; install only the jurisdictions you need:</p>
+                    <div class="app-code-block"><pre><code># Core (UK Government civilian + generic enterprise)
 claude plugin install arckit
 
 # UK + one community overlay (e.g. UAE federal)
 claude plugin install arckit arckit-uae
 
-# Everything (125 commands across UK + UAE + FR + CA + EU + AT + AU)
-claude plugin install arckit arckit-{uae,fr,ca,eu,at,au}</code></pre></div>
-                    <p class="govuk-body govuk-!-margin-top-3">The 6 community plugins (<code>arckit-uae</code>, <code>arckit-fr</code>, <code>arckit-ca</code>, <code>arckit-eu</code>, <code>arckit-at</code>, <code>arckit-au</code>) auto-install the <code>arckit</code> core plugin as a declared dependency. Updates are automatic via the marketplace.</p>
+# Everything (UK + UAE + FR + CA + EU + AT + AU + US)
+claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us}</code></pre></div>
+                    <p class="govuk-body govuk-!-margin-top-3">The 7 community plugins (<code>arckit-uae</code>, <code>arckit-fr</code>, <code>arckit-ca</code>, <code>arckit-eu</code>, <code>arckit-at</code>, <code>arckit-au</code>, <code>arckit-us</code>) auto-install the <code>arckit</code> core plugin as a declared dependency. Updates are automatic via the marketplace.</p>
                     <p class="govuk-body govuk-!-margin-top-2"><strong>Lighter clone:</strong> to skip the other AI-assistant distributions in the monorepo (~100&nbsp;MB), add the marketplace with sparse-checkout. Each plugin directory you want to install is listed explicitly:</p>
                     <div class="app-code-block"><pre><code># Core only
 claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude
@@ -400,9 +400,9 @@ claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arcki
 # Core + UAE overlay
 claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude arckit-uae
 
-# All 7 plugins
+# All 8 plugins
 claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin \
-  arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au</code></pre></div>
+  arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au arckit-us</code></pre></div>
                 </div>
 
                 <div class="app-step">

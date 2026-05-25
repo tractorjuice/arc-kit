@@ -136,7 +136,7 @@ Output: Console only (no file created). This is a navigation aid, not a governan
 
 ```text
 ArcKit — Enterprise Architecture Governance Toolkit
-Version 4.7.1 | 70 commands | Plugin mode
+Plugin mode
 
 Your AI-powered assistant for architecture governance, vendor procurement,
 and compliance — all driven by templates and traceability.

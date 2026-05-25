@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <script>(function(){var t=localStorage.getItem('arckit-theme');if(t==='dark')document.documentElement.classList.add('dark-mode');else if(t==='light')document.documentElement.classList.add('light-mode');else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.classList.add('dark-mode')})();</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="description" content="ArcKit AI Command Reference - 125 AI commands for enterprise architecture governance, with sortable table, filters, and dependency matrix.">
+    <meta name="description" content="ArcKit AI Command Reference - ArcKit AI command reference for enterprise architecture governance, with sortable table, filters, and dependency matrix.">
     <title>AI Command Reference - ArcKit</title>
     <meta name="keywords" content="ArcKit commands, enterprise architecture commands, governance toolkit, command reference, dependency matrix, AI architecture">
     <meta name="author" content="ArcKit">
     <meta property="og:title" content="Command Reference - ArcKit">
-    <meta property="og:description" content="125 AI commands for enterprise architecture governance, with sortable table, filters, and dependency matrix.">
+    <meta property="og:description" content="ArcKit AI command reference for enterprise architecture governance, with sortable table, filters, and dependency matrix.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://arckit.org/commands.html">
     <meta property="og:site_name" content="ArcKit">
     <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Command Reference - ArcKit">
-    <meta name="twitter:description" content="125 AI commands for enterprise architecture governance, with sortable table, filters, and dependency matrix.">
+    <meta name="twitter:description" content="ArcKit AI command reference for enterprise architecture governance, with sortable table, filters, and dependency matrix.">
     <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <link rel="canonical" href="https://arckit.org/commands.html">
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
@@ -461,7 +461,7 @@
                 "@type": "WebPage",
                 "@id": "https://arckit.org/commands.html",
                 "name": "Command Reference - ArcKit",
-                "description": "125 AI commands for enterprise architecture governance, with sortable table, filters, and dependency matrix.",
+                "description": "ArcKit AI command reference for enterprise architecture governance, with sortable table, filters, and dependency matrix.",
                 "isPartOf": { "@type": "WebSite", "name": "ArcKit", "url": "https://arckit.org" }
             },
             {
@@ -507,7 +507,7 @@
 
     <div class="app-page-hero app-page-hero--commands">
         <div class="govuk-width-container app-page-hero__content">
-            <span class="app-page-hero__stat">125 AI Commands</span>
+            <span class="app-page-hero__stat">AI Command Reference</span>
             <h1 class="app-page-hero__title">AI Command Reference</h1>
             <p class="app-page-hero__description">Sortable table with filters and full dependency matrix &mdash; every ArcKit command at a glance.</p>
         </div>
@@ -515,19 +515,20 @@
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
     <div class="govuk-width-container govuk-!-margin-top-9" id="commands">
-        <h2 class="govuk-heading-l">125 ArcKit AI Commands</h2>
+        <h2 class="govuk-heading-l">ArcKit AI Commands</h2>
         <p class="govuk-body">Complete command reference with descriptions, example outputs, and maturity status:</p>
 
         <div class="govuk-inset-text">
-            <p class="govuk-body"><strong>Which plugin ships which command?</strong> As of v5.0.0 ArcKit splits across 7 marketplace plugins. The <strong>Tier</strong> column tells you whether a command ships in <code>arckit</code> (Core) or in one of the 6 community plugins:</p>
+            <p class="govuk-body"><strong>Which plugin ships which command?</strong> As of v5.1.0 ArcKit splits across 8 marketplace plugins. The <strong>Tier</strong> column tells you whether a command ships in <code>arckit</code> (Core) or in one of the 7 community plugins:</p>
             <ul class="govuk-list govuk-list--bullet">
-                <li><strong>Tier = Core</strong> → ships in <code>arckit</code> (71 commands)</li>
-                <li><strong>Tier = Community + Jurisdiction = UAE</strong> → <code>arckit-uae</code> (12)</li>
-                <li><strong>Tier = Community + Jurisdiction = France</strong> → <code>arckit-fr</code> (12)</li>
-                <li><strong>Tier = Community + Jurisdiction = Canada</strong> → <code>arckit-ca</code> (12)</li>
-                <li><strong>Tier = Community + Jurisdiction = EU</strong> → <code>arckit-eu</code> (7)</li>
-                <li><strong>Tier = Community + Jurisdiction = Austria</strong> → <code>arckit-at</code> (3)</li>
-                <li><strong>Tier = Community + Jurisdiction = Australia</strong> → <code>arckit-au</code> (8)</li>
+                <li><strong>Tier = Core</strong> → ships in <code>arckit</code></li>
+                <li><strong>Tier = Community + Jurisdiction = UAE</strong> → <code>arckit-uae</code></li>
+                <li><strong>Tier = Community + Jurisdiction = France</strong> → <code>arckit-fr</code></li>
+                <li><strong>Tier = Community + Jurisdiction = Canada</strong> → <code>arckit-ca</code></li>
+                <li><strong>Tier = Community + Jurisdiction = EU</strong> → <code>arckit-eu</code></li>
+                <li><strong>Tier = Community + Jurisdiction = Austria</strong> → <code>arckit-at</code></li>
+                <li><strong>Tier = Community + Jurisdiction = Australia</strong> → <code>arckit-au</code></li>
+                <li><strong>Tier = Community + Jurisdiction = USA</strong> → <code>arckit-us</code></li>
             </ul>
             <p class="govuk-body">Install only what you need: <code>claude plugin install arckit arckit-uae</code> picks up core + UAE. Community plugins auto-install <code>arckit</code> as a declared dependency. See <a href="getting-started.html#step-2" class="govuk-link">Getting Started</a> for install snippets.</p>
         </div>
@@ -587,6 +588,7 @@
                     <option value="fr-overlay">French Government Overlay (Community)</option>
                     <option value="at-overlay">Austrian Government Overlay (Community)</option>
                     <option value="au-overlay">Australian Federal Overlay (Community)</option>
+                    <option value="us-overlay">USA Federal Civilian Overlay (Community)</option>
                 </select>
             </div>
             <div>
@@ -601,6 +603,7 @@
                     <option value="canada">Canada</option>
                     <option value="uae">UAE</option>
                     <option value="australia">Australia</option>
+                    <option value="usa">USA</option>
                 </select>
             </div>
             <div>
@@ -616,7 +619,7 @@
                 <input type="text" id="search-filter" placeholder="Search commands, descriptions, jurisdiction…">
             </div>
             <div class="app-command-count">
-                Showing <span id="visible-count">125</span> of 125 commands
+                Showing <span id="visible-count"></span> of <span id="total-count"></span> commands
             </div>
         </div>
 
@@ -5139,6 +5142,7 @@
             });
 
             document.getElementById('visible-count').textContent = visibleCount;
+            document.getElementById('total-count').textContent = rows.length;
         }
 
         // Sort table by column
