@@ -231,7 +231,7 @@ All changes go through a feature branch and are merged to `main` via PR. Never p
 
 ## Test Repositories
 
-ArcKit maintains 43 public test repos on GitHub (pattern: `arckit-test-project-v*`, range v0–v48). All test repos use the plugin via the marketplace; only `projects/`, `docs/`, repo-specific `README.md`/`CLAUDE.md`, and `.devcontainer/` are repo-local. **For the full repo list and plugin-setup details, see [`docs/TEST-REPOS.md`](docs/TEST-REPOS.md).**
+ArcKit maintains public test repos on GitHub (pattern: `arckit-test-project-v*`). All test repos use the plugin via the marketplace; only `projects/`, `docs/`, repo-specific `README.md`/`CLAUDE.md`, and `.devcontainer/` are repo-local. **For the full repo list and plugin-setup details, see [`docs/TEST-REPOS.md`](docs/TEST-REPOS.md).**
 
 ## Key Patterns
 

@@ -613,7 +613,7 @@ Registered 3 new doc type codes (ATDSG, ATNISG, BVERGG) in both `arckit-claude/c
 - 36 new usage guides (18 commands × 2 locations: `docs/guides/` + `arckit-claude/docs/guides/`) for the EU/FR community commands, all carrying `Guide Origin: Community` to preserve provenance. Each guide follows the standard ArcKit guide format: inputs table, syntax, document structure, one-page workflow, review checklist (#321)
 - `tests/plugin/test_template_consistency.py` — parametrised test asserting every command-referenced template exists in both `arckit-claude/templates/` and `.arckit/templates/`, and that the two directories stay in sync (#321)
 - `tests/plugin/test_commands_structure.py` — `STRICT_COMMANDS` set covering the 18 community commands; enforces presence of `## User Input`, `## Instructions`, `## Success Criteria`, `## Example Usage`, labelled code fences, and no trailing spaces (#321)
-- `docs/superpowers/specs/2026-04-19-community-commands-table-design.md` and `docs/superpowers/plans/2026-04-19-community-commands-table.md` — spec and implementation plan for adding a dedicated community-commands table to `docs/commands.html` (not yet implemented)
+- Spec and implementation plan for adding a dedicated community-commands table to `docs/commands.html` (not yet implemented)
 
 ### Fixed
 

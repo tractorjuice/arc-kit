@@ -514,7 +514,7 @@ The v2.1.117 floor independently clears all three Claude Code regressions descri
 - Propagate `.guide-status.community` CSS to `pages-template.html` (#327)
 - Register 18 EU/FR community guide stems in the `sync-guides` hook
 - AT DSG template drift: sync `arckit-claude/templates/at-dsgvo-template.md` with the verified `.arckit/` copy so plugin and extension users get the enriched template
-- `docs/superpowers/README.md` MD040 lint error (missing language tag on code fence)
+- MD040 lint error in a superpowers doc (missing language tag on code fence)
 
 ### Docs
 

@@ -53,9 +53,9 @@ The mapping is conservative: `PUBLIC` becomes `Open`, `OFFICIAL` becomes `Shared
 
 ## The Reference Implementation
 
-Every ArcKit overlay needs a regression baseline, both for confidence in the release and for demonstrating the canonical chain to people who haven't run it. The UAE overlay's reference implementation is the `arckit-test-project-v20-uae-moi-ipad` test repo. It is private (the brief is sensitive enough to live inside the `tractorjuice` organisation rather than on the public test-repo set), but the artefact pipeline it exercises is the canonical chain end-to-end: principles, requirements, data-model, risk, then the twelve `uae-*` commands in canonical order, then sobc, wardley, and framework. It served as the v20 baseline for the Phase B and Phase C end-to-end gates during this release.
+Every ArcKit overlay needs a regression baseline, both for confidence in the release and for demonstrating the canonical chain to people who haven't run it. The UAE overlay's regression baseline exercises the canonical chain end-to-end: principles, requirements, data-model, risk, then the twelve `uae-*` commands in canonical order, then sobc, wardley, and framework. It served as the baseline for the Phase B and Phase C end-to-end gates during this release.
 
-The other 46 test repos remain on UK or Generic tiers; the regression sweep confirmed Document Control output is unchanged for them.
+The remaining test repos stay on UK or Generic tiers; the regression sweep confirmed Document Control output is unchanged for them.
 
 ## What's Deferred
 

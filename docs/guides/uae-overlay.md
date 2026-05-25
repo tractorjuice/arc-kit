@@ -180,12 +180,6 @@ The helper writes a unified diff to stdout. Review it before the `--apply` run. 
 
 ---
 
-## Reference Implementation
-
-Test repo `arckit-test-project-v20-uae-moi-ipad` (private, in the `tractorjuice` organisation) is the reference implementation for the overlay. It exercises the full canonical chain end-to-end and is the regression baseline for v20 in the `phase-c-canonical` test pack.
-
----
-
 ## Known Limitations
 
 The maintenance document lists six citations that the overlay flags as not-yet-verified:

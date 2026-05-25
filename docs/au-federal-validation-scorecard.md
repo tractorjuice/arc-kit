@@ -17,7 +17,7 @@ This recipe contribution has two distinct validation layers, against two differe
 | Layer | What it tests | Test fixture | Status |
 |-------|---------------|--------------|--------|
 | **A — SKILL.md content quality** | Do the 8 community commands produce credible, evidence-anchored, AU-jurisdiction-compliant artefacts when invoked against real client evidence? | A real Australian SMB engagement (DISP-track, OFFICIAL:Sensitive, pure-SaaS estate). Underlying artefacts available under NDA on request | ✅ Done — see Layer A scorecard below |
-| **B — Recipe wave-plan validity** | Does the build harness correctly schedule the 35-target DAG defined in `au-federal.yaml`? | [`arckit-test-project-v44-australian-gov`](https://github.com/tractorjuice/arckit-test-project-v44-australian-gov) — the canonical AU proof-of-concept test repo named in the maintainer's #424 References (full name; the `arckit-test-project-v44` shorthand expanded) | ✅ Schema validates `ok` locally; wave plan computed via topological sort matching the build harness algorithm |
+| **B — Recipe wave-plan validity** | Does the build harness correctly schedule the 35-target DAG defined in `au-federal.yaml`? | A scratch AU test project initialised under `arckit-au` overlay config | ✅ Schema validates `ok` locally; wave plan computed via topological sort matching the build harness algorithm |
 
 **Why two test fixtures**: SKILL.md content quality requires real-client evidence to validate the recipe produces useful compliance artefacts at OFFICIAL:Sensitive (no public AU evidence pack of comparable scope exists). Recipe wave-plan validity is mechanical / structural and is best tested against the canonical AU proof-of-concept repo.
 
@@ -198,10 +198,7 @@ Topological sort over `targets[].deps` with glob expansion (`ADR-*` → all `ADR
 ### Re-running the wave-plan dry run maintainer-side
 
 ```bash
-git clone https://github.com/tractorjuice/arckit-test-project-v44-australian-gov.git
-cd arckit-test-project-v44-australian-gov
-
-# Drop the recipe in via project override:
+# In a scratch repo with the ArcKit plugin enabled:
 mkdir -p .arckit/recipes
 cp <upstream-arc-kit>/arckit-au/recipes/au-federal.yaml .arckit/recipes/
 
@@ -408,7 +405,7 @@ If reviewers need to see the underlying artefacts to validate the headline numbe
 | Want to verify | Where to look |
 |----------------|---------------|
 | Recipe schema validates | Run the maintainer's verbatim snippet (above) — confirmed `ok` locally |
-| Wave-plan computes | Either (a) re-run the topological sort against the recipe (deterministic — same algorithm as the build harness) or (b) run `/arckit:build <project> --recipe au-federal --plan` against `arckit-test-project-v44-australian-gov` |
+| Wave-plan computes | Either (a) re-run the topological sort against the recipe (deterministic — same algorithm as the build harness) or (b) run `/arckit:build <project> --recipe au-federal --plan` against `arckit-au-test-project` |
 | Converter outputs match | After commands placed in canonical paths, run `python scripts/converter.py` and inspect generated Codex/OpenCode/Gemini/Copilot/Paperclip variants in their respective folders |
 | 0 UK leakage in artefacts | Mechanical grep — script in this scorecard above |
 | 220 AU references in artefacts | Mechanical grep — script in this scorecard above |

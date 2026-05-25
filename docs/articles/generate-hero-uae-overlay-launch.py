@@ -299,7 +299,7 @@ draw.rounded_rectangle(
 draw.text((src_x + 18, src_y + 8), "Federal stack, ratified", fill=GREEN_TEXT, font=font_callout)
 draw.text(
     (src_x + 18, src_y + 28),
-    "Reference repo: v20-uae-moi-ipad",
+    "Reference regression baseline",
     fill=TEXT_SECONDARY,
     font=font_callout_detail,
 )

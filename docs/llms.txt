@@ -221,12 +221,11 @@ ArcKit maintains 44 public test repositories under the `tractorjuice` GitHub org
 - [v14 Scottish Courts GenAI Strategy](https://github.com/tractorjuice/arckit-test-project-v14-scottish-courts): Justice-sector GenAI with full MLOps/FinOps/DevOps strategies.
 - [v19 UK Government API Aggregator](https://github.com/tractorjuice/arckit-test-project-v19-gov-api-aggregator): 240+ government APIs across 34+ departments, AWS & Azure research, Secure by Design.
 - [v22 GenAI Playbook](https://github.com/tractorjuice/arckit-test-project-v22-genai-playbook): Generative AI strategy, governance, risk, and implementation guidance.
-- [v44 Australian Government Architecture Governance](https://github.com/tractorjuice/arckit-test-project-v44-australian-gov): Non-UK proof-of-concept demonstrating jurisdictional reuse.
 - [v45 NS&I Project Rainbow](https://github.com/tractorjuice/arckit-test-project-v45-nsi-rainbow): Finance-sector core banking modernisation programme across 3 workstreams.
 - [v46 ArcKit SDG Mono-Repo](https://github.com/tractorjuice/arckit-test-project-v46-sdg): 17 UN SDGs covering 78 UK Government technology projects.
-- [v48 ArcKit as a Service for UK Government](https://github.com/tractorjuice/arckit-test-project-v48-arckit-as-a-service): Managed multi-tenant offering of ArcKit aligned to GDS Service Standard, TCoP, NCSC CAF, and G-Cloud — ArcKit dogfooded on its own GovTech offering.
+- [v50 Post Office Horizon](https://github.com/tractorjuice/arckit-test-project-v50-post-office-horizon): Architecture governance scenario for the Post Office Horizon system.
 
-The full table (all 44 public repos) is in [CLAUDE.md](https://github.com/tractorjuice/arc-kit/blob/main/CLAUDE.md#test-repositories) and the example index in [README.md](https://github.com/tractorjuice/arc-kit/blob/main/README.md#example-repositories).
+The full table of public test repos is in [CLAUDE.md](https://github.com/tractorjuice/arc-kit/blob/main/CLAUDE.md#test-repositories) and the example index in [README.md](https://github.com/tractorjuice/arc-kit/blob/main/README.md#example-repositories).
 
 ## Source code and distributions
 

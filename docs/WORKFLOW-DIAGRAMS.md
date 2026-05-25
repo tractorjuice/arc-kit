@@ -850,7 +850,7 @@ graph TD
 - **Gold boxes** = UAE AI governance (Charter, Autonomy Tier)
 - **Salmon box** = UAE federal procurement (Decree-Law No. 11 of 2023)
 
-**Prerequisites**: Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` in plugin userConfig before running. The reference implementation is the `arckit-test-project-v20-uae-moi-ipad` test repo. Full overlay guide at [`docs/guides/uae-overlay.md`](guides/uae-overlay.md).
+**Prerequisites**: Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` in plugin userConfig before running. Full overlay guide at [`docs/guides/uae-overlay.md`](guides/uae-overlay.md).
 
 **Duration**: 4-8 weeks for a full federal pathfinder (the AI tier and procurement work runs in parallel with the data and security stream).
 
