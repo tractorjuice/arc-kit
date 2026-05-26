@@ -1,0 +1,121 @@
+# ArcKit build recipe — UK Financial Services Payments Overlay
+#
+# Recipe schema v1. Loaded by the arckit-build skill at runtime.
+#
+# Override this file by creating .arckit/recipes/uk-fs-payments.yaml at the
+# project root. The harness checks the project override first, then falls
+# back to this default.
+#
+# Variable substitution applied by the orchestrator before passing args to
+# worker subagents:
+#   {P}     ← project ID, zero-padded (e.g. "001")
+#   {NAME}  ← project slug (e.g. "arckit-psp")
+#   {V}     ← defaults.version
+#   {TOPIC} ← target.topic (multi-instance ADR/DIAG topics)
+
+recipe: uk-fs-payments
+schema_version: 1
+description: >
+  UK Financial Services payments overlay — composes the ArcKit baseline
+  with FCA/PRA payments-specific artefacts for PSPs, EMIs, and Payment
+  Institutions scaling regulated operations. v1 covers SCA-RTS exemption
+  design, EMI/PI safeguarding, Consumer Duty board report, and Critical
+  Third Parties dependency assessment. Operational resilience, APP fraud
+  reimbursement, and AML/CTF Reg 18 are deferred to v2. Community-
+  contributed, EXPERIMENTAL — every output requires review by qualified
+  UK FS regulatory counsel + firm MLRO / Compliance Officer before
+  reliance.
+
+defaults:
+  version: "1.0"
+
+post_build_hooks:
+  - skill: arckit:traceability
+    args: "{P}"
+  - skill: arckit:health
+    args: ""
+
+# ---------------------------------------------------------------------------
+# Targets
+# ---------------------------------------------------------------------------
+# Baseline (PRIN, STKE, REQ, RISK, DATA, DPIA, ADR) + 4 overlay targets.
+#
+# Fields:
+#   id              Unique target identifier (used in deps lists and state.json)
+#   skill           ArcKit skill to invoke (e.g. arckit:uk-fs-sca-rts)
+#   args            Args passed to the skill, after {P}/{NAME}/{V} substitution
+#   output.project  Project directory: "{P}-{NAME}"
+#   output.type     ArcKit doc-type code (FSSCA, FSSAFE, FSCD, FSCTP)
+#   deps            List of target IDs that must complete first
+# ---------------------------------------------------------------------------
+
+targets:
+
+  # --- Foundation (ArcKit baseline) ----------------------------------------
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, PRIN]
+
+  - id: DATA
+    skill: arckit:data-model
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DATA }
+    deps: [REQ]
+
+  - id: DPIA
+    skill: arckit:dpia
+    args: "{P} scope=full-system consultation=surveys"
+    output: { project: "{P}-{NAME}", type: DPIA }
+    deps: [REQ, STKE, RISK]
+
+  - id: ADR
+    skill: arckit:adr
+    topic: "Regulatory design decisions (SCA-RTS, safeguarding, Consumer Duty)"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [REQ]
+
+  # --- UK FS Payments overlay targets -------------------------------------
+  - id: UK_FS_SCA_RTS
+    skill: arckit:uk-fs-sca-rts
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FSSCA }
+    deps: [REQ, ADR, DPIA]
+
+  - id: UK_FS_SAFEGUARDING
+    skill: arckit:uk-fs-safeguarding
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FSSAFE }
+    deps: [REQ, RISK]
+
+  - id: UK_FS_CONSUMER_DUTY
+    skill: arckit:uk-fs-consumer-duty
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FSCD }
+    deps: [STKE, REQ]
+
+  - id: UK_FS_CTP_DEPENDENCY
+    skill: arckit:uk-fs-ctp-dependency
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: FSCTP }
+    deps: [ADR, RISK]
