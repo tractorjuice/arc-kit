@@ -174,6 +174,13 @@ export const DOC_TYPES = {
   'AUPSPF':    { name: 'AU Protective Security Policy Framework Scorecard', category: 'Governance', regime: 'AU', severity: 'HIGH' },
   'AUAIA':     { name: 'AU AI Assurance Baseline (DTA AI Policy v2.0)', category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   'AUDISP':    { name: 'AU DISP Member Self-Attestation Pack',         category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
+  // UK Financial Services Payments Overlay (arckit-uk-finance) — community-contributed,
+  // EXPERIMENTAL. Outputs require review by qualified UK FS regulatory counsel + firm
+  // MLRO / Compliance Officer before reliance.
+  'FSSCA':     { name: 'UK PSD2 SCA-RTS Exemption Design',                category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  'FSSAFE':    { name: 'UK EMI / PI Safeguarding Assessment',             category: 'Compliance', regime: 'UK', severity: 'CRITICAL' },
+  'FSCD':      { name: 'UK FCA Consumer Duty Board Report',               category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  'FSCTP':     { name: 'UK Critical Third Parties Dependency Assessment', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
 };
 
 // Derived: regimes in canonical order (officially-maintained first, then community alphabetical)
