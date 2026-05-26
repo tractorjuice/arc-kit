@@ -529,6 +529,7 @@
                 <li><strong>Tier = Community + Jurisdiction = Austria</strong> → <code>arckit-at</code></li>
                 <li><strong>Tier = Community + Jurisdiction = Australia</strong> → <code>arckit-au</code></li>
                 <li><strong>Tier = Community + Jurisdiction = USA</strong> → <code>arckit-us</code></li>
+                <li><strong>Tier = Community + Sector = UK Finance</strong> → <code>arckit-uk-finance</code> — payments slice (v1)</li>
             </ul>
             <p class="govuk-body">Install only what you need: <code>claude plugin install arckit arckit-uae</code> picks up core + UAE. Community plugins auto-install <code>arckit</code> as a declared dependency. See <a href="getting-started.html#step-2" class="govuk-link">Getting Started</a> for install snippets.</p>
         </div>
@@ -589,6 +590,7 @@
                     <option value="at-overlay">Austrian Government Overlay (Community)</option>
                     <option value="au-overlay">Australian Federal Overlay (Community)</option>
                     <option value="us-overlay">USA Federal Civilian Overlay (Community)</option>
+                    <option value="uk-fs-overlay">UK Finance Payments Overlay (Community, Sector)</option>
                 </select>
             </div>
             <div>
@@ -604,6 +606,7 @@
                     <option value="uae">UAE</option>
                     <option value="australia">Australia</option>
                     <option value="usa">USA</option>
+                    <option value="uk-finance">UK Finance (sector)</option>
                 </select>
             </div>
             <div>
@@ -2150,6 +2153,42 @@
                         <td class="description">[COMMUNITY] EO 14028 + OMB M-22-18 / M-23-16 secure-software self-attestation form + SBOM per NTIA Minimum Elements (CycloneDX / SPDX)</td>
                         <td>USA Federal Civilian Overlay</td>
                         <td>USA</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-fs-overlay" data-jurisdiction="uk-finance" data-tier="community">
+                        <td><code>/arckit.uk-fs-sca-rts</code></td>
+                        <td class="description">[COMMUNITY] Generate a UK PSD2 SCA-RTS exemption design document — exemption applicability matrix, transaction risk analysis (TRA) thresholds, fraud monitoring framework, and per-exemption decision rationale.</td>
+                        <td>UK Finance Payments Overlay</td>
+                        <td>UK Finance</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-fs-overlay" data-jurisdiction="uk-finance" data-tier="community">
+                        <td><code>/arckit.uk-fs-safeguarding</code></td>
+                        <td class="description">[COMMUNITY] Generate an EMI / PI safeguarding assessment — method statement (segregation vs insurance vs guarantee), designated safeguarding bank/insurance arrangements, reconciliation cadence + sign-off chain, end-to-end client-funds flow, audit plan aligned to FCA REP-CRIM expectations.</td>
+                        <td>UK Finance Payments Overlay</td>
+                        <td>UK Finance</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-fs-overlay" data-jurisdiction="uk-finance" data-tier="community">
+                        <td><code>/arckit.uk-fs-consumer-duty</code></td>
+                        <td class="description">[COMMUNITY] Generate an FCA Consumer Duty annual Board Report — customer outcomes evidence pack across the four outcomes (Products & Services, Price & Value, Consumer Understanding, Consumer Support), price & value assessment, target market assessment, fair-value framework.</td>
+                        <td>UK Finance Payments Overlay</td>
+                        <td>UK Finance</td>
+                        <td>Community</td>
+                        <td class="examples">—</td>
+                        <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
+                    </tr>
+                    <tr data-status="experimental" data-category="uk-fs-overlay" data-jurisdiction="uk-finance" data-tier="community">
+                        <td><code>/arckit.uk-fs-ctp-dependency</code></td>
+                        <td class="description">[COMMUNITY] Generate a Critical Third Parties (CTP) dependency assessment — register of designated CTPs the firm relies on (cloud hyperscalers, payment networks, BaaS providers), materiality assessment per provider, resilience testing plan including exit and substitution drills (BoE/PRA/FCA PS24/16).</td>
+                        <td>UK Finance Payments Overlay</td>
+                        <td>UK Finance</td>
                         <td>Community</td>
                         <td class="examples">—</td>
                         <td><span class="app-status-tag app-status-experimental">Experimental</span></td>
