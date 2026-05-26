@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.3.0] — TBD
+
+### Added
+
+- **`arckit-uk-finance` community plugin** — first sector-specific overlay. Jurisdictional overlays cover countries (UAE, France, Canada, EU, Austria, Australia, USA federal civilian); sector overlays cover industry verticals. Four commands for architects at established UK PSPs / EMIs / PIs scaling regulated payment operations: SCA-RTS exemption design (`uk-fs-sca-rts`, `FSSCA`), EMI/PI safeguarding assessment (`uk-fs-safeguarding`, `FSSAFE`, CRITICAL severity flag), FCA Consumer Duty board report (`uk-fs-consumer-duty`, `FSCD`), Critical Third Parties dependency assessment (`uk-fs-ctp-dependency`, `FSCTP`). Recipe: `uk-fs-payments` (multi-wave payment system modernization). Ships EXPERIMENTAL; help-wanted call open for a UK FS domain co-maintainer (regulatory counsel / MLRO / Head of Architecture background welcome). See spec: `docs/superpowers/specs/2026-05-26-arckit-uk-finance-overlay-design.md`. See plan: `docs/superpowers/plans/2026-05-26-arckit-uk-finance-overlay.md`.
+- Four new doc-types registered in `arckit-claude/config/doc-types.mjs`: `FSSCA` (SCA-RTS), `FSSAFE` (Safeguarding), `FSCD` (Consumer Duty), `FSCTP` (Critical Third Parties).
+- New recipe `uk-fs-payments.yaml` in `arckit-claude/skills/arckit-build/recipes/`.
+- Five user-facing guides in `docs/guides/uk-fs-*.md` (one per-command + one overlay-level maintenance guide with citation register).
+- Site integration: UK Finance sector card on landing page (`docs/index.html`), accordion section in guides (`docs/guides.html`), filter option and 4 command rows on commands page (`docs/commands.html`).
+
 ## 5.1.0 — 2026-05-23
 
 ### Added

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.3.0] — TBD
+
+### Added
+
+- **Four new doc-type codes** in `config/doc-types.mjs`: `FSSCA` (SCA-RTS exemption design), `FSSAFE` (Safeguarding assessment), `FSCD` (Consumer Duty), `FSCTP` (Critical Third Parties). Required by the new `arckit-uk-finance` community plugin.
+- **New recipe** `skills/arckit-build/recipes/uk-fs-payments.yaml` (multi-wave UK finance payments modernization). Consumed by `arckit-uk-finance`.
+
+### Note
+
+The new `arckit-uk-finance` community plugin ships 4 commands and uses the 4 doc-type codes and 1 recipe registered here in core. Core plugin version remains aligned with all community-plugin versions.
+
 ## [5.0.5] - 2026-05-23
 
 ### Fixed

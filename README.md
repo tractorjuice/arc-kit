@@ -429,6 +429,23 @@ Install: `claude plugin install arckit arckit-us`. See [`docs/guides/us-federal-
 
 ---
 
+## UK Finance Payments Overlay (4 commands) — First Sector Overlay
+
+> **EXPERIMENTAL sector overlay.** The 4 commands below cover UK regulated payment system operators scaling operations under PSD2 SCA-RTS, CASS V, FCA Consumer Duty, and CREST protocols. They ship as the **arckit-uk-finance** community-contributed overlay — the first **sector-specific** overlay (distinct from the 7 jurisdictional overlays). Output requires review by qualified UK FS regulatory counsel, MLRO, and SMF holders before implementation.
+
+**Payments architecture and compliance**:
+
+- `/arckit:uk-nhs-dcb0129` — TBD
+- `/arckit:uk-nhs-dcb0160` — TBD
+- `/arckit:uk-nhs-dtac` — TBD
+- `/arckit:uk-mdr-classification` — TBD
+
+Recipe: `uk-fs-payments` (multi-wave payment system modernization).
+
+Install: `claude plugin install arckit arckit-uk-finance`. Help wanted: recruiting a UK financial services domain co-maintainer (CISO / Compliance / Head of Architecture background welcome) to transition to official-baseline status.
+
+---
+
 ## The ArcKit Workflow
 
 ArcKit guides you through the enterprise architecture lifecycle:
