@@ -181,6 +181,13 @@ export const DOC_TYPES = {
   'FSSAFE':    { name: 'UK EMI / PI Safeguarding Assessment',             category: 'Compliance', regime: 'UK', severity: 'CRITICAL' },
   'FSCD':      { name: 'UK FCA Consumer Duty Board Report',               category: 'Compliance', regime: 'UK', severity: 'HIGH' },
   'FSCTP':     { name: 'UK Critical Third Parties Dependency Assessment', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  // UK NHS Clinical Safety Overlay (arckit-uk-nhs) — community-contributed, proposed maintainer @pacharanero.
+  // NHS DTAC and UK/EU MDR SaMD/AIaMD classification. NHS DCB0129 / DCB0160 outputs (Marcus Baw SAFETY.md /
+  // SAFETY-CASE.md / HAZARD-LOG.md) deliberately do NOT carry an ArcKit doc-type code or ARC- prefix — they
+  // pass through validate-arc-filename untouched and are cross-referenced by relative path
+  // (clinical-safety/SAFETY-CASE.md) rather than document ID.
+  'NHSDTAC':   { name: 'NHS Digital Technology Assessment Criteria (DTAC v3)', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  'NHSMDR':    { name: 'UK MDR + EU MDR SaMD/AIaMD Classification',       category: 'Compliance', regime: 'UK', severity: 'HIGH' },
 };
 
 // Derived: regimes in canonical order (officially-maintained first, then community alphabetical)
