@@ -356,6 +356,11 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | **Governance (Community-contributed — Australian Federal / DISP-supplier Overlay)** | | | |
 | | AUDSS | `ARC-*-AUDSS-*.md` | AU DTA Digital Service Standard Conformance |
 | | AUPSPF | `ARC-*-AUPSPF-*.md` | AU Protective Security Policy Framework Scorecard |
+| **Compliance (Community-contributed — UK Financial Services Payments Overlay)** | | | |
+| | FSSCA | `ARC-*-FSSCA-*.md` | UK PSD2 SCA-RTS Exemption Design |
+| | FSSAFE | `ARC-*-FSSAFE-*.md` | UK EMI / PI Safeguarding Assessment |
+| | FSCD | `ARC-*-FSCD-*.md` | UK FCA Consumer Duty Board Report |
+| | FSCTP | `ARC-*-FSCTP-*.md` | UK Critical Third Parties Dependency Assessment |
 
 > **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit.pages` includes the artifact in the dashboard.
 
