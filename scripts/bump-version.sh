@@ -30,6 +30,56 @@ OLD_VERSION=$(cat VERSION)
 echo "Bumping version: $OLD_VERSION → $NEW_VERSION"
 echo ""
 
+# ── Auto-discover all Claude Code plugins on disk ───────────────────────────
+#
+# Anything with .claude-plugin/plugin.json is a plugin. Splitting out the core
+# `arckit-claude` separately mirrors how the script (and marketplace.json)
+# treats it as the umbrella plugin all community overlays depend on.
+
+mapfile -t ALL_PLUGINS < <(
+  find . -maxdepth 3 -path '*/.claude-plugin/plugin.json' -not -path '*/node_modules/*' \
+    | sed -E 's|^\./||; s|/\.claude-plugin/plugin\.json$||' \
+    | sort
+)
+COMMUNITY_PLUGINS=()
+for p in "${ALL_PLUGINS[@]}"; do
+  [[ "$p" == "arckit-claude" ]] && continue
+  COMMUNITY_PLUGINS+=("$p")
+done
+
+if [[ ${#ALL_PLUGINS[@]} -eq 0 ]]; then
+  echo "Error: no plugins discovered on disk." >&2
+  exit 1
+fi
+
+# ── Drift check: every plugin on disk must be in marketplace.json ──────────
+#
+# bump-version.sh can sync versions but cannot fabricate marketplace entries
+# (description, keywords, etc.). Catches the v5.3.0 backfill gotcha where a
+# new plugin shipped without its marketplace entry.
+
+mapfile -t MARKETPLACE_SOURCES < <(
+  jq -r '.plugins[].source | ltrimstr("./")' .claude-plugin/marketplace.json | sort
+)
+MISSING_FROM_MARKETPLACE=()
+for p in "${ALL_PLUGINS[@]}"; do
+  found=0
+  for m in "${MARKETPLACE_SOURCES[@]}"; do
+    [[ "$p" == "$m" ]] && { found=1; break; }
+  done
+  [[ $found -eq 0 ]] && MISSING_FROM_MARKETPLACE+=("$p")
+done
+
+if [[ ${#MISSING_FROM_MARKETPLACE[@]} -gt 0 ]]; then
+  echo "Error: plugin directories exist on disk but are missing from .claude-plugin/marketplace.json:" >&2
+  for p in "${MISSING_FROM_MARKETPLACE[@]}"; do
+    echo "  - $p" >&2
+  done
+  echo "" >&2
+  echo "Add a marketplace.json entry (name, source, description, keywords, etc.) for each before re-running." >&2
+  exit 1
+fi
+
 UPDATED=0
 
 update_file() {
@@ -90,12 +140,14 @@ update_file ".claude-plugin/marketplace.json" "all .plugins[].version (metadata.
 #
 # Each community plugin pins its `arckit` dependency to the current core
 # version with an exact (`=`) semver constraint. bump-version.sh keeps
-# .version AND .dependencies[arckit].version in lockstep so the 6 plugins
-# always ship as a coherent set.
+# .version AND .dependencies[arckit].version in lockstep so all community
+# plugins always ship as a coherent set. Discovery is filesystem-driven:
+# any arckit-*/.claude-plugin/plugin.json directory is treated as a
+# community plugin (excluding the core arckit-claude).
 
-for jurisdiction in uae fr ca eu at au us uk-finance; do
-  manifest="arckit-${jurisdiction}/.claude-plugin/plugin.json"
-  version_file="arckit-${jurisdiction}/VERSION"
+for plugin_dir in "${COMMUNITY_PLUGINS[@]}"; do
+  manifest="${plugin_dir}/.claude-plugin/plugin.json"
+  version_file="${plugin_dir}/VERSION"
   if [[ -f "$manifest" ]]; then
     jq --arg v "$NEW_VERSION" '
       .version = $v
@@ -167,16 +219,22 @@ echo ""
 echo "── Verification ──"
 echo ""
 echo "VERSION files:"
-grep -H "$NEW_VERSION" VERSION arckit-claude/VERSION arckit-uae/VERSION arckit-fr/VERSION arckit-ca/VERSION arckit-eu/VERSION arckit-at/VERSION arckit-au/VERSION arckit-us/VERSION arckit-uk-finance/VERSION arckit-gemini/VERSION arckit-opencode/VERSION arckit-codex/VERSION arckit-copilot/VERSION arckit-paperclip/VERSION
+VERSION_FILES=(VERSION)
+for p in "${ALL_PLUGINS[@]}"; do
+  [[ -f "$p/VERSION" ]] && VERSION_FILES+=("$p/VERSION")
+done
+# Extension repos (no plugin.json — added explicitly)
+for ext in arckit-gemini arckit-opencode arckit-codex arckit-copilot arckit-paperclip; do
+  [[ -f "$ext/VERSION" ]] && VERSION_FILES+=("$ext/VERSION")
+done
+grep -H "$NEW_VERSION" "${VERSION_FILES[@]}"
 echo ""
 echo "pyproject.toml:"
 grep "^version" pyproject.toml
 echo ""
-echo "plugin.json (all 6 plugins):"
-for src in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au arckit-us arckit-uk-finance; do
-  if [[ -f "$src/.claude-plugin/plugin.json" ]]; then
-    printf "  %-22s %s\n" "$src/plugin.json:" "$(jq -r '.version' "$src/.claude-plugin/plugin.json")"
-  fi
+echo "plugin.json (${#ALL_PLUGINS[@]} plugins):"
+for src in "${ALL_PLUGINS[@]}"; do
+  printf "  %-26s %s\n" "$src/plugin.json:" "$(jq -r '.version' "$src/.claude-plugin/plugin.json")"
 done
 echo ""
 echo "marketplace.json:"

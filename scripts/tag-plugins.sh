@@ -23,7 +23,19 @@ if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   exit 1
 fi
 
-PLUGINS=(arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au arckit-us arckit-uk-finance arckit-uk-nhs)
+# Auto-discover plugin directories: anything containing a Claude Code manifest.
+# Avoids the manual-edit gotcha caught mid-v5.4.0 release where a new plugin
+# (arckit-uk-nhs) shipped without its tag because the array wasn't updated.
+mapfile -t PLUGINS < <(
+  find . -maxdepth 3 -path '*/.claude-plugin/plugin.json' -not -path '*/node_modules/*' \
+    | sed -E 's|^\./||; s|/\.claude-plugin/plugin\.json$||' \
+    | sort
+)
+
+if [[ ${#PLUGINS[@]} -eq 0 ]]; then
+  echo "Error: no plugins discovered (no */.claude-plugin/plugin.json files found)" >&2
+  exit 1
+fi
 
 CREATED=0
 SKIPPED=0
