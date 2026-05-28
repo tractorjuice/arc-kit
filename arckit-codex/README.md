@@ -4,7 +4,7 @@
   <img src="../docs/assets/ArcKit_Logo_Horizontal_Dark.svg" alt="ArcKit" height="32">
 </p>
 
-Standalone [OpenAI Codex CLI](https://chatgpt.com/features/codex) extension for ArcKit -- Enterprise Architecture Governance & Vendor Procurement Toolkit.
+Standalone [OpenAI Codex CLI](https://chatgpt.com/features/codex) extension for ArcKit -- The Enterprise Architecture Governance Harness.
 
 > **Auto-generated**: Files in this directory are generated from plugin commands by `python scripts/converter.py`. Do not edit them directly -- edit the source in `arckit-claude/commands/` and re-run the converter.
 

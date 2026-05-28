@@ -1,6 +1,6 @@
 # ArcKit Documentation
 
-Complete documentation for ArcKit - Enterprise Architecture Governance & Vendor Procurement toolkit.
+Complete documentation for ArcKit — The Enterprise Architecture Governance Harness.
 
 ---
 

@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit",
   "version": "5.4.0",
-  "description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - 70 slash commands for generating architecture artifacts",
+  "description": "The Enterprise Architecture Governance Harness - 70 slash commands for architecture, vendor procurement, and compliance artifacts",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"

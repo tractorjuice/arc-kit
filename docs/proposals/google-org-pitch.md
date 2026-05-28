@@ -32,7 +32,7 @@ This is not just an efficiency problem. It is a structural barrier that determin
 
 ## ArcKit: What Becomes Possible
 
-**ArcKit** is an open-source, AI-powered Enterprise Architecture Governance Toolkit that does not merely speed up existing processes — it makes previously impossible governance achievable for every government team, regardless of size.
+**ArcKit** is The Enterprise Architecture Governance Harness — open-source, AI-powered, covering architecture, vendor procurement, and compliance — that does not merely speed up existing processes, it makes previously impossible governance achievable for every government team, regardless of size.
 
 **The transformational shift**: A team of 2-3 architects can now produce governance of the same depth and quality that previously required a department of 20. For hundreds of smaller government agencies, this means comprehensive architecture governance for the first time — not faster governance, but governance that was previously out of reach.
 

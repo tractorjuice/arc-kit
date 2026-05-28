@@ -832,7 +832,7 @@ ArcKit commands used in this project:
 
 | Term | Definition |
 |------|------------|
-| **ArcKit** | Enterprise Architecture Governance & Vendor Procurement Toolkit |
+| **ArcKit** | The Enterprise Architecture Governance Harness |
 | **BR** | Business Requirement |
 | **FR** | Functional Requirement |
 | **NFR** | Non-Functional Requirement (Performance, Security, Scalability, Availability, Compliance) |

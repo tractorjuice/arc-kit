@@ -1,4 +1,4 @@
-# ArcKit - Enterprise Architecture Governance Toolkit
+# ArcKit: The Enterprise Architecture Governance Harness
 
 [![GitHub Stars](https://img.shields.io/github/stars/tractorjuice/arc-kit?style=flat&logo=github)](https://github.com/tractorjuice/arc-kit/stargazers)
 [![GitHub Forks](https://img.shields.io/github/forks/tractorjuice/arc-kit?style=flat&logo=github)](https://github.com/tractorjuice/arc-kit/network/members)
@@ -7,7 +7,7 @@
 [![GitHub Issues](https://img.shields.io/github/issues/tractorjuice/arc-kit)](https://github.com/tractorjuice/arc-kit/issues)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/tractorjuice/arc-kit)
 
-![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
+![ArcKit: The Enterprise Architecture Governance Harness](docs/assets/arckit-banner-light.svg)
 
 **Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
 

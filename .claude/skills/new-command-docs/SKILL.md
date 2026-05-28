@@ -64,7 +64,7 @@ Count locations (search for the old number):
 Update the `description` field count:
 
 ```json
-"description": "Enterprise Architecture Governance & Vendor Procurement Toolkit - {N} slash commands for generating architecture artifacts"
+"description": "The Enterprise Architecture Governance Harness - {N} slash commands for architecture, vendor procurement, and compliance artifacts"
 ```
 
 ### 4. .claude-plugin/marketplace.json (root)

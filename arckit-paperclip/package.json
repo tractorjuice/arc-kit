@@ -1,7 +1,7 @@
 {
   "name": "@tractorjuice/arckit-paperclip",
   "version": "5.4.0",
-  "description": "ArcKit Enterprise Architecture Governance plugin for Paperclip — 116 commands for generating architecture artifacts",
+  "description": "ArcKit Paperclip plugin — The Enterprise Architecture Governance Harness, 116 commands for architecture, vendor procurement, and compliance artifacts",
   "type": "module",
   "main": "dist/worker.js",
   "types": "dist/worker.d.ts",

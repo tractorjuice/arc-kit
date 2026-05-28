@@ -135,7 +135,7 @@ Output: Console only (no file created). This is a navigation aid, not a governan
 ### Example Output
 
 ```text
-ArcKit — Enterprise Architecture Governance Toolkit
+ArcKit — The Enterprise Architecture Governance Harness
 Plugin mode
 
 Your AI-powered assistant for architecture governance, vendor procurement,

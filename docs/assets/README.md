@@ -64,7 +64,7 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 **README.md header:**
 
 ```markdown
-![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
+![ArcKit: The Enterprise Architecture Governance Harness](docs/assets/arckit-banner-light.svg)
 ```
 
 → Use: `arckit-banner-light.svg` (version-agnostic SVG, recommended)
@@ -264,9 +264,9 @@ When an AI assistant (Claude Code, Codex CLI, Gemini CLI) needs to:
 ### ✅ Good: README Header
 
 ```markdown
-# ArcKit - Enterprise Architecture Governance Toolkit
+# ArcKit: The Enterprise Architecture Governance Harness
 
-![ArcKit - Enterprise Architecture Governance Toolkit](docs/assets/arckit-banner-light.svg)
+![ArcKit: The Enterprise Architecture Governance Harness](docs/assets/arckit-banner-light.svg)
 ```
 
 ### ✅ Good: Website Navigation

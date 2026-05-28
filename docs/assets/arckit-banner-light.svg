@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="580" height="155" viewBox="0 0 580 155" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit - Enterprise Architecture Governance Toolkit">
-<title>ArcKit - Enterprise Architecture Governance Toolkit</title>
+<svg width="580" height="155" viewBox="0 0 580 155" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit - The Enterprise Architecture Governance Harness">
+<title>ArcKit - The Enterprise Architecture Governance Harness</title>
 
 <!-- Logo arc -->
 <g fill="none">
@@ -22,5 +22,5 @@ font-size="96" font-weight="600" fill="#1A1A1A" letter-spacing="0.5px">ArcKit</t
 
 <!-- Tagline -->
 <text x="290" y="150" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
-font-size="14" font-weight="400" fill="#666666" letter-spacing="0.3px" text-anchor="middle">Enterprise Architecture Governance Toolkit</text>
+font-size="14" font-weight="400" fill="#666666" letter-spacing="0.3px" text-anchor="middle">The Enterprise Architecture Governance Harness</text>
 </svg>

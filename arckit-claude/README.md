@@ -1,6 +1,6 @@
 # ArcKit Plugin for Claude Code
 
-Enterprise Architecture Governance & Vendor Procurement Toolkit - a Claude Code plugin providing 70 slash commands for generating architecture artifacts.
+The Enterprise Architecture Governance Harness — a Claude Code plugin providing 70 slash commands for architecture, vendor procurement, and compliance artifacts.
 
 ## Installation
 

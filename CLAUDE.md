@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Overview
 
-ArcKit is an **Enterprise Architecture Governance & Vendor Procurement Toolkit** providing slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot) to generate architecture artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
+ArcKit is **The Enterprise Architecture Governance Harness** — providing slash commands for AI coding assistants (Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot) to generate architecture, vendor procurement, and compliance artifacts. It transforms architecture governance from scattered documents into a systematic, template-driven process.
 
 **Six distribution formats** exist side-by-side in this repo:
 

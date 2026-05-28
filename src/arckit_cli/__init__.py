@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-ArcKit CLI - Enterprise Architecture Governance & Vendor Procurement Toolkit
+ArcKit CLI - The Enterprise Architecture Governance Harness
 
 A toolkit for enterprise architects to manage:
 - Architecture principles and governance
@@ -70,13 +70,13 @@ BANNER = """
 ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝
 """
 
-TAGLINE = "Enterprise Architecture Governance & Vendor Procurement"
+TAGLINE = "The Enterprise Architecture Governance Harness"
 
 console = Console()
 
 app = typer.Typer(
     name="arckit",
-    help="Enterprise Architecture Governance & Vendor Procurement Toolkit",
+    help="The Enterprise Architecture Governance Harness",
     add_completion=False,
 )
 
