@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bracket B3: angle brackets with linchpin fan">
+<title>ArcKit concept B3: brackets + asymmetric linchpin fan</title>
+
+<rect width="120" height="120" rx="20" fill="#F4F6F8"/>
+
+<!-- Angle brackets -->
+<g fill="none" stroke="#0B1F33" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="38,28 18,60 38,92" />
+  <polyline points="82,28 102,60 82,92" />
+</g>
+
+<!-- Three spokes radiating asymmetrically from a central pin -->
+<g stroke="#0B1F33" stroke-width="5" stroke-linecap="round">
+  <line x1="60" y1="64" x2="50" y2="42" />
+  <line x1="60" y1="64" x2="72" y2="46" />
+  <line x1="60" y1="64" x2="60" y2="38" />
+</g>
+
+<!-- Terminal teal nodes -->
+<g fill="#1ED3C6">
+  <circle cx="50" cy="42" r="4.5"/>
+  <circle cx="72" cy="46" r="4.5"/>
+  <circle cx="60" cy="38" r="4.5"/>
+</g>
+
+<!-- Central pin -->
+<circle cx="60" cy="64" r="6.5" fill="#0B1F33"/>
+<circle cx="60" cy="64" r="2.5" fill="#F4F6F8"/>
+
+<!-- Cursor (kept, anchors the form on a baseline) -->
+<line x1="50" y1="82" x2="70" y2="82" stroke="#1ED3C6" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bracket B1: angle brackets with anchor nodes">
+<title>ArcKit concept B1: brackets + anchor nodes</title>
+
+<rect width="120" height="120" rx="20" fill="#F4F6F8"/>
+
+<!-- Angle brackets -->
+<g fill="none" stroke="#0B1F33" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="38,28 18,60 38,92" />
+  <polyline points="82,28 102,60 82,92" />
+</g>
+
+<!-- Teal anchor nodes at bracket vertices -->
+<circle cx="18" cy="60" r="6" fill="#1ED3C6"/>
+<circle cx="102" cy="60" r="6" fill="#1ED3C6"/>
+
+<!-- Inner caret + cursor (unchanged from Bracket B) -->
+<polyline points="48,68 60,52 72,68"
+  fill="none" stroke="#0B1F33" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="50" y1="80" x2="70" y2="80" stroke="#1ED3C6" stroke-width="6" stroke-linecap="round"/>
+</svg>

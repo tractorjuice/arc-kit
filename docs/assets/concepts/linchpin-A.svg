@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Linchpin A concept">
+<title>ArcKit concept: asymmetric linchpin with anchored + open spokes</title>
+
+<rect width="120" height="120" rx="20" fill="#F4F6F8"/>
+
+<!-- Spokes radiating from centre (60,60) at varying angles + lengths -->
+<g stroke="#0B1F33" stroke-width="5" stroke-linecap="round">
+  <!-- Anchored spokes (end with teal node) -->
+  <line x1="60" y1="60" x2="92" y2="36" />
+  <line x1="60" y1="60" x2="34" y2="42" />
+  <line x1="60" y1="60" x2="86" y2="92" />
+  <!-- Open spokes (no terminal node) -->
+  <line x1="60" y1="60" x2="60" y2="24" />
+  <line x1="60" y1="60" x2="28" y2="76" />
+  <line x1="60" y1="60" x2="60" y2="98" />
+</g>
+
+<!-- Terminal nodes on the anchored spokes -->
+<g fill="#1ED3C6">
+  <circle cx="92" cy="36" r="6" />
+  <circle cx="34" cy="42" r="6" />
+  <circle cx="86" cy="92" r="6" />
+</g>
+
+<!-- Central linchpin: filled navy circle with white inner ring -->
+<circle cx="60" cy="60" r="11" fill="#0B1F33"/>
+<circle cx="60" cy="60" r="4.5" fill="#F4F6F8"/>
+</svg>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bracket B2: angle brackets with linchpin cursor">
+<title>ArcKit concept B2: brackets + linchpin-style cursor</title>
+
+<rect width="120" height="120" rx="20" fill="#F4F6F8"/>
+
+<!-- Angle brackets -->
+<g fill="none" stroke="#0B1F33" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="38,28 18,60 38,92" />
+  <polyline points="82,28 102,60 82,92" />
+</g>
+
+<!-- Inner caret (the prompt) -->
+<polyline points="46,66 60,48 74,66"
+  fill="none" stroke="#0B1F33" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+<!-- Cursor reframed as horizontal linchpin: terminal anchors + centre pin -->
+<line x1="46" y1="84" x2="74" y2="84" stroke="#1ED3C6" stroke-width="5" stroke-linecap="round"/>
+<circle cx="46" cy="84" r="4.5" fill="#1ED3C6"/>
+<circle cx="74" cy="84" r="4.5" fill="#1ED3C6"/>
+<circle cx="60" cy="84" r="5" fill="#0B1F33"/>
+</svg>

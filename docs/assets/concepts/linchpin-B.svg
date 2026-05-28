@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Linchpin B concept">
+<title>ArcKit concept: pin within concentric ring</title>
+
+<rect width="120" height="120" rx="20" fill="#F4F6F8"/>
+
+<!-- Outer ring -->
+<circle cx="60" cy="60" r="42" fill="none" stroke="#0B1F33" stroke-width="3"/>
+<!-- Inner teal "tension" arc — broken to suggest dynamic load -->
+<path d="M 60,22 A 38,38 0 1 1 22,60" fill="none" stroke="#1ED3C6" stroke-width="4" stroke-linecap="round"/>
+
+<!-- Six anchor marks where the harness attaches -->
+<g fill="#0B1F33">
+  <circle cx="60" cy="18" r="4"/>
+  <circle cx="60" cy="102" r="4"/>
+  <circle cx="18" cy="60" r="4"/>
+  <circle cx="102" cy="60" r="4"/>
+</g>
+
+<!-- Cross-spokes anchoring centre to ring -->
+<g stroke="#0B1F33" stroke-width="4" stroke-linecap="round">
+  <line x1="60" y1="35" x2="60" y2="85"/>
+  <line x1="35" y1="60" x2="85" y2="60"/>
+</g>
+
+<!-- Central linchpin -->
+<circle cx="60" cy="60" r="9" fill="#1ED3C6"/>
+<circle cx="60" cy="60" r="3.5" fill="#0B1F33"/>
+</svg>

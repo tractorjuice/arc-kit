@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Bracket+Linchpin hybrid">
+<title>ArcKit concept: brackets containing a linchpin</title>
+
+<rect width="120" height="120" rx="20" fill="#F4F6F8"/>
+
+<!-- Outer harness brackets -->
+<g fill="none" stroke="#0B1F33" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="34,24 18,24 18,96 34,96" />
+  <polyline points="86,24 102,24 102,96 86,96" />
+</g>
+
+<!-- Inner linchpin: 4 short spokes + centre pin -->
+<g stroke="#0B1F33" stroke-width="4" stroke-linecap="round">
+  <line x1="60" y1="60" x2="78" y2="44" />
+  <line x1="60" y1="60" x2="42" y2="44" />
+  <line x1="60" y1="60" x2="78" y2="76" />
+  <line x1="60" y1="60" x2="42" y2="76" />
+</g>
+<g fill="#1ED3C6">
+  <circle cx="78" cy="44" r="4.5"/>
+  <circle cx="42" cy="44" r="4.5"/>
+  <circle cx="78" cy="76" r="4.5"/>
+  <circle cx="42" cy="76" r="4.5"/>
+</g>
+<circle cx="60" cy="60" r="8" fill="#0B1F33"/>
+<circle cx="60" cy="60" r="3" fill="#F4F6F8"/>
+</svg>
