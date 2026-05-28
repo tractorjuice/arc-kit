@@ -113,7 +113,7 @@ const manifest: PaperclipPluginManifestV1 = {
   version: pkg.version,
   displayName: "ArcKit",
   description:
-    "The Enterprise Architecture Governance Harness — 116 commands for architecture, vendor procurement, and compliance artifacts",
+    "The Enterprise Architecture Governance Harness — 116 commands across strategy, architecture, delivery, and assurance",
   author: "tractorjuice",
   categories: ["workspace", "automation"],
   capabilities: ["agent.tools.register"],

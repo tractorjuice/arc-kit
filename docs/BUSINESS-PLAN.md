@@ -11,7 +11,7 @@
 
 ## 1. Executive Summary
 
-ArcKit is an open-source AI-assisted toolkit for enterprise architecture governance and vendor procurement. In ~6.5 months it has reached 1,702 GitHub stars, 201 forks, 100+ releases, and 358+ pull requests, with reported usage across the UK Government and NHS. It distributes 68 slash commands, 10 autonomous research agents and 70+ templates across six AI assistant ecosystems (Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, plus a Python CLI), reaching architects wherever they already work.
+ArcKit is The Enterprise Architecture Governance Harness — an open-source, AI-assisted toolkit covering strategy, architecture, delivery, and assurance. In ~6.5 months it has reached 1,702 GitHub stars, 201 forks, 100+ releases, and 358+ pull requests, with reported usage across the UK Government and NHS. It distributes 68 slash commands, 10 autonomous research agents and 70+ templates across six AI assistant ecosystems (Claude Code, Codex CLI, Gemini CLI, OpenCode CLI, GitHub Copilot, plus a Python CLI), reaching architects wherever they already work.
 
 The commercial thesis is straightforward. ArcKit converts hours of architecture document drafting (requirements, business cases, risk registers, ADRs, Wardley Maps, RFP packs) into minutes of template-driven, audit-ready output that maps directly to HM Treasury Green/Orange Book, GDS Service Standard, NCSC CAF, the Technology Code of Practice, and G-Cloud/DOS procurement frameworks. The same workload is currently sold by Big 4 and tier-2 strategy houses at consulting margins. ArcKit makes that spend contestable.
 

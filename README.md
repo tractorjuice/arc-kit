@@ -9,7 +9,7 @@
 
 ![ArcKit: The Enterprise Architecture Governance Harness](docs/assets/arckit-banner-light.svg)
 
-**Build better enterprise architecture through structured governance, vendor procurement, and design review workflows.**
+**Build better enterprise architecture through structured strategy, design, delivery, and assurance workflows.**
 
 ArcKit is a toolkit for enterprise architects that transforms architecture governance from scattered documents into a systematic, AI-assisted workflow for:
 

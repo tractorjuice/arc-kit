@@ -138,8 +138,8 @@ Output: Console only (no file created). This is a navigation aid, not a governan
 ArcKit — The Enterprise Architecture Governance Harness
 Plugin mode
 
-Your AI-powered assistant for architecture governance, vendor procurement,
-and compliance — all driven by templates and traceability.
+Your AI-powered harness for strategy, architecture, delivery, and assurance
+— all driven by templates and traceability.
 
 Projects
 --------

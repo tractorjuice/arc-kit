@@ -64,7 +64,7 @@ Count locations (search for the old number):
 Update the `description` field count:
 
 ```json
-"description": "The Enterprise Architecture Governance Harness - {N} slash commands for architecture, vendor procurement, and compliance artifacts"
+"description": "The Enterprise Architecture Governance Harness - {N} slash commands across strategy, architecture, delivery, and assurance"
 ```
 
 ### 4. .claude-plugin/marketplace.json (root)
@@ -72,7 +72,7 @@ Update the `description` field count:
 Update the `description` field count:
 
 ```json
-"description": "{N} slash commands for enterprise architecture artifacts, vendor procurement, and UK Government compliance"
+"description": "{N} slash commands across strategy, architecture, delivery, and assurance — including UK Government compliance"
 ```
 
 ### 5. arckit-claude/README.md

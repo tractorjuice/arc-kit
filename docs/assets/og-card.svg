@@ -45,7 +45,7 @@ font-size="32" font-weight="500" fill="#1ED3C6" letter-spacing="0.5px" text-anch
 
 <!-- Secondary line -->
 <text x="600" y="540" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
-font-size="22" font-weight="400" fill="#B1B4B6" letter-spacing="0.3px" text-anchor="middle">Architecture · Vendor Procurement · Compliance</text>
+font-size="22" font-weight="400" fill="#B1B4B6" letter-spacing="0.3px" text-anchor="middle">Strategy · Architecture · Delivery · Assurance</text>
 
 <!-- Footer URL -->
 <text x="600" y="595" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"

@@ -1,7 +1,7 @@
 # ArcKit for GitHub Copilot
 
-GitHub Copilot prompt and agent bundle for ArcKit, an enterprise architecture
-governance and vendor procurement toolkit.
+GitHub Copilot prompt and agent bundle for ArcKit — The Enterprise Architecture
+Governance Harness (strategy, architecture, delivery, and assurance).
 
 This repository is generated from the main ArcKit source repository:
 https://github.com/tractorjuice/arc-kit

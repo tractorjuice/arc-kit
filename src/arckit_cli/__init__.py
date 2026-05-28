@@ -719,7 +719,7 @@ Enterprise Architecture Governance Project
 
 ## Getting Started
 
-This project uses ArcKit for enterprise architecture governance and vendor procurement.
+This project uses ArcKit — The Enterprise Architecture Governance Harness — for strategy, architecture, delivery, and assurance.
 
 ### Available Commands
 

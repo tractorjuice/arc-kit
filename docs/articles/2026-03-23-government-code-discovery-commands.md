@@ -252,7 +252,7 @@ For strategic landscape mapping, run `/arckit:gov-landscape` with a domain descr
 
 ---
 
-*ArcKit is the open-source Enterprise Architecture Governance Harness, providing slash commands for AI coding assistants (architecture, vendor procurement, compliance). For more information, visit the [GitHub repository](https://github.com/tractorjuice/arc-kit).*
+*ArcKit is the open-source Enterprise Architecture Governance Harness, providing slash commands for AI coding assistants (strategy, architecture, delivery, assurance). For more information, visit the [GitHub repository](https://github.com/tractorjuice/arc-kit).*
 
 <!-- arckit:related-articles -->
 ## Related Articles
