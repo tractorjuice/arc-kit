@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit">
+<title>ArcKit</title>
+
+<!-- Rounded background -->
+<rect width="32" height="32" rx="6" fill="#0B1F33" />
+
+<!-- Simplified arc + 3 nodes (detail-stripped for legibility at 16-32px) -->
+<g fill="none">
+  <path d="M 4,22 A 12,12 0 0 1 28,22" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" />
+  <circle cx="5" cy="14" r="2.5" fill="#1ED3C6" />
+  <circle cx="16" cy="9.5" r="2.5" fill="#1ED3C6" />
+  <circle cx="27" cy="14" r="2.5" fill="#1ED3C6" />
+  <g stroke="#1ED3C6" stroke-width="0.9" stroke-linecap="round" stroke-opacity="0.6">
+    <line x1="5" y1="14" x2="16" y2="9.5" />
+    <line x1="16" y1="9.5" x2="27" y2="14" />
+    <line x1="5" y1="14" x2="27" y2="14" />
+  </g>
+</g>
+</svg>

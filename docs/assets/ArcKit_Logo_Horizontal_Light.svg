@@ -5,11 +5,20 @@
 <g fill="none">
   <path d="M 7.06,50.00 A 90.00,90.00 0 0 1 162.94,50.00" stroke="#0B1F33" stroke-width="10" stroke-linecap="round" />
   <path d="M 26.11,61.00 A 68.00,68.00 0 0 1 143.89,61.00" stroke="#0B1F33" stroke-width="5.00" stroke-linecap="round" />
+  <g stroke="#1ED3C6" stroke-width="1.6" stroke-linecap="round" stroke-opacity="0.55">
+    <line x1="24.78" y1="28.12" x2="94.41" y2="5.49" />
+    <line x1="94.41" y1="5.49" x2="151.88" y2="34.78" />
+    <line x1="24.78" y1="28.12" x2="151.88" y2="34.78" />
+  </g>
   <line x1="38.16" y1="42.98" x2="24.78" y2="28.12" stroke="#0B1F33" stroke-width="5.56" stroke-linecap="round" />
   <line x1="92.32" y1="25.38" x2="94.41" y2="5.49" stroke="#0B1F33" stroke-width="5.56" stroke-linecap="round" />
   <line x1="137.02" y1="48.16" x2="151.88" y2="34.78" stroke="#0B1F33" stroke-width="5.56" stroke-linecap="round" />
-  <circle cx="24.78" cy="28.12" r="6.25" fill="#1ED3C6" /><circle cx="94.41" cy="5.49" r="6.25" fill="#1ED3C6" /><circle cx="151.88" cy="34.78" r="6.25" fill="#1ED3C6" />
-  <line x1="79.00" y1="27.00" x2="91.00" y2="27.00" stroke="#0B1F33" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" /><line x1="85.00" y1="21.00" x2="85.00" y2="33.00" stroke="#0B1F33" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
+  <circle cx="24.78" cy="28.12" r="6.25" fill="#1ED3C6" />
+  <circle cx="94.41" cy="5.49" r="6.25" fill="#1ED3C6" />
+  <circle cx="151.88" cy="34.78" r="6.25" fill="#1ED3C6" />
+  <line x1="79.00" y1="27.00" x2="91.00" y2="27.00" stroke="#0B1F33" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
+  <line x1="85.00" y1="21.00" x2="85.00" y2="33.00" stroke="#0B1F33" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
 </g>
 <text x="185" y="115" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
-font-size="96" font-weight="600" fill="#0B1F33" letter-spacing="0.5px">ArcKit</text></svg>
+font-size="96" font-weight="600" fill="#0B1F33" letter-spacing="0.5px">ArcKit</text>
+</svg>
