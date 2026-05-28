@@ -289,14 +289,21 @@
             font-size: 1.125rem;
             font-weight: 700;
             text-decoration: none;
-            padding: 0.75rem 1.25rem;
-            display: block;
+            padding: 0.5rem 1.25rem;
+            display: flex;
+            align-items: center;
         }
 
         .app-nav-bar__brand:hover,
         .app-nav-bar__brand:focus {
             color: #ffffff;
             text-decoration: none;
+        }
+
+        .app-nav-bar__brand img {
+            height: 32px;
+            width: auto;
+            display: block;
         }
 
         .app-nav-bar__toggle {
@@ -482,7 +489,9 @@
 
     <nav class="app-nav-bar" aria-label="Main navigation">
         <div class="govuk-width-container app-nav-bar__inner">
-            <a href="index.html" class="app-nav-bar__brand">ArcKit</a>
+            <a href="index.html" class="app-nav-bar__brand" aria-label="ArcKit home">
+                <img src="assets/ArcKit_Logo_Horizontal_Light.svg" alt="ArcKit">
+            </a>
             <button class="app-nav-bar__toggle" aria-expanded="false" aria-controls="nav-menu" onclick="var l=document.getElementById('nav-menu');var o=l.classList.toggle('app-nav-bar__list--open');this.setAttribute('aria-expanded',o)">&#9776; Menu</button>
             <ul class="app-nav-bar__list" id="nav-menu">
                 <li class="app-nav-bar__item"><a href="commands.html">AI Commands</a></li>
@@ -509,9 +518,11 @@
     <!-- 1. Hero -->
     <div class="app-page-hero app-page-hero--home" id="hero">
         <div class="govuk-width-container app-page-hero__content">
-            <span class="app-page-hero__stat">Enterprise Architecture Toolkit</span>
-            <h1 class="app-page-hero__title">ArcKit</h1>
-            <p class="app-page-hero__description">Transform architecture chaos into systematic, audit-ready governance.</p>
+            <span class="app-page-hero__stat">The Enterprise Architecture Governance Harness</span>
+            <h1 class="app-page-hero__title app-page-hero__title--logo">
+                <img src="assets/ArcKit_Logo_Stacked_Light.svg" alt="ArcKit" width="280" height="280">
+            </h1>
+            <p class="app-page-hero__description">Wrap your AI coding assistant in a template-driven, audit-ready governance harness.</p>
             <p class="app-page-hero__version" id="hero-version"></p>
         </div>
     </div>

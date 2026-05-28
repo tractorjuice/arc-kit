@@ -62,6 +62,19 @@
     line-height: 1.15;
 }
 
+/* Logo variant — replaces title text with brand lockup */
+.app-page-hero__title--logo {
+    line-height: 0;
+    margin: 0.5rem 0 1rem;
+}
+
+.app-page-hero__title--logo img {
+    height: clamp(140px, 22vw, 220px);
+    width: auto;
+    max-width: 100%;
+    display: block;
+}
+
 /* Description text */
 .app-page-hero__description {
     color: rgba(255, 255, 255, 0.88);
