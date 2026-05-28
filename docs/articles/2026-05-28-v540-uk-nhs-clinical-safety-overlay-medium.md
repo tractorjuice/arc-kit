@@ -111,3 +111,18 @@ Ten marketplace plugins. 143 commands. Eight jurisdictions and two sectors. The 
 ---
 
 *Originally published at [arckit.org](https://arckit.org/article-viewer.html?a=2026-05-28-v540-uk-nhs-clinical-safety-overlay).*
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v5.3: The First Sector Overlay, for UK Payments (Medium)](article-viewer.html?a=2026-05-27-v530-uk-finance-payments-overlay-medium)
+- [ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay](article-viewer.html?a=2026-05-28-v540-uk-nhs-clinical-safety-overlay)
+- [ArcKit v5.3: The First Sector Overlay, for UK Payments](article-viewer.html?a=2026-05-27-v530-uk-finance-payments-overlay)
+- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

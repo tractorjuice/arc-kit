@@ -70,3 +70,18 @@ Anthropic does not ship reference architectures often. When they do, the vertica
 **Date**: 6 May 2026
 **ArcKit Version**: 4.15.2
 **Site**: [arckit.org](https://arckit.org)
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v5.3: The First Sector Overlay, for UK Payments](article-viewer.html?a=2026-05-27-v530-uk-finance-payments-overlay)
+- [Building ClaudeClaw: Autonomous Agents on Claude Code](article-viewer.html?a=2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code)
+- [ArcKit v4.13.0: The Build Harness — A Full Architecture in One Session](article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation)
+- [ArcKit v5.0.0: One Toolkit, Seven Plugins, Install Only What You Need](article-viewer.html?a=2026-05-18-arckit-v5-plugin-split)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

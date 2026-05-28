@@ -89,3 +89,18 @@ The full release notes are at [github.com/tractorjuice/arc-kit/releases/tag/v5.1
 For US resident architects who would consider the co-maintainer role: open an issue tagged `us-overlay` and `co-maintainer` with a short note on your background. The recruiting brief is in the maintenance guide.
 
 Eight jurisdictions, 135 commands, one toolkit. The federal civilian stack is the latest chapter. It will not be the last.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v5.3: The First Sector Overlay, for UK Payments](article-viewer.html?a=2026-05-27-v530-uk-finance-payments-overlay)
+- [ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay](article-viewer.html?a=2026-05-28-v540-uk-nhs-clinical-safety-overlay)
+- [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](article-viewer.html?a=2026-04-30-uae-overlay-launch)
+- [ArcKit v4.7: 18 EU and French Regulatory Commands](article-viewer.html?a=2026-04-19-v470-eu-french-regulatory)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

@@ -114,3 +114,18 @@ If you use ArcKit: open a v5.0.0 session in any existing project and the migrati
 If you maintain a plugin of your own: run `claude plugin details` first, on the whole plugin and on every unit you might split out. Let the real always-on figures decide both whether to split and how big a benefit to claim. The `dependencies` field is the tool that lets you act on the result without stranding anyone.
 
 ArcKit v5.0.0 is on [GitHub](https://github.com/tractorjuice/arc-kit/releases/tag/v5.0.0). The seven plugins are in the marketplace at `tractorjuice/arc-kit`.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v5.0.0: One Toolkit, Seven Plugins, Install Only What You Need](article-viewer.html?a=2026-05-18-arckit-v5-plugin-split)
+- [ArcKit v4.13.0: The Build Harness — A Full Architecture in One Session](article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation)
+- [ArcKit v4: First-Class Codex and Gemini Support](article-viewer.html?a=2026-03-08-v4-codex-gemini-support)
+- [Building ClaudeClaw: Autonomous Agents on Claude Code](article-viewer.html?a=2026-03-18-building-claudeclaw-autonomous-agents-on-claude-code)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

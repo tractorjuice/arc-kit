@@ -98,3 +98,18 @@ ArcKit's `/arckit:wardley` command outputs both an OnlineWardleyMaps block and a
 Valentine, M. A., Sergeeva, A., Tan, S., & Yang, D. (2024). *The Algorithm and the Org Chart: How Algorithms Can Conflict with Organizational Structures*. Proceedings of the ACM on Human-Computer Interaction, 8(CSCW2), 1 to 31. https://doi.org/10.1145/3686903
 
 Gonzalez, M. (May 2026). *Organizing Intelligence: 16 big ideas from frontier AI research that will redefine how we build, lead, and scale*, Google DeepMind, Idea 10.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [The Toolkit Drafts. The Architect Judges.](article-viewer.html?a=2026-04-30-toolkit-drafts-architect-judges)
+- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead)
+- [Launching ArcKit FDE: Embedded Architects for UK Public Sector](article-viewer.html?a=2026-05-12-arckit-fde-launch)
+- [The CAIO's First 90 Days: Delivering the UAE Cabinet AI Mandate](article-viewer.html?a=2026-04-30-uae-caio-first-90-days)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

@@ -90,4 +90,19 @@ For **Codex**, **Gemini**, and **OpenCode** users: the extensions are updated th
 
 The SDG mono-repo creation script is in development on a feature branch, expanding ArcKit's project scaffolding capabilities. The handoff system introduced in v4.0.0 continues to grow as each new command declares its logical next steps, gradually building a workflow graph that guides architects through governance processes rather than leaving them to guess which command to run next.
 
-ArcKit is open source at [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit). Join the conversation in the [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) or the [ArcKit Discord](https://discord.gg/JqgjQSnD).
+ArcKit is open source at [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit). Join the conversation in the [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) or the [ArcKit Discord](https://discord.gg/UsfzrZmr).
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v4: First-Class Codex and Gemini Support](article-viewer.html?a=2026-03-08-v4-codex-gemini-support)
+- [ArcKit v5.0.0: One Toolkit, Seven Plugins, Install Only What You Need](article-viewer.html?a=2026-05-18-arckit-v5-plugin-split)
+- [From ArcKit to McKinsey-Style Infographics in an Afternoon](article-viewer.html?a=2026-04-27-mckinsey-decks-from-arckit)
+- [Your Architecture Documents Are Connected — Now You Can See How](article-viewer.html?a=2026-03-12-document-map-medium)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

@@ -96,3 +96,18 @@ The full release notes are at [github.com/tractorjuice/arc-kit/releases/tag/v5.3
 For UK FS practitioners who would consider the co-maintainer role, open an issue tagged `co-maintainer: uk-finance` with a short note on your background. The recruiting brief is in the maintenance guide.
 
 Nine marketplace plugins. 139 commands. Eight jurisdictions and one sector. The sector axis is the latest chapter. It will not be the last.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v5.4: NHS Clinical Safety, the Second Sector Overlay](article-viewer.html?a=2026-05-28-v540-uk-nhs-clinical-safety-overlay)
+- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
+- [Five Patterns to Steal from anthropics/financial-services](article-viewer.html?a=2026-05-06-anthropics-financial-services-architecture-lesson)
+- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

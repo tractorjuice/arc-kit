@@ -118,3 +118,18 @@ The arithmetic, again, is in the open.
 - [SaaS valuation multiples 2015-2026 (Aventis Advisors)](https://aventis-advisors.com/saas-valuation-multiples/)
 - [Government tightens consultancy spending to save £1.2bn by 2026 (Cabinet Office)](https://www.gov.uk/government/news/new-controls-across-government-to-curb-consultancy-spend-and-save-over-12-billion-by-2026)
 - [NAO: Government lacks a clear picture on how much it spends on consultants (NAO)](https://www.nao.org.uk/press-releases/government-lacks-a-clear-picture-on-how-much-it-spends-on-consultants/)
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [From Brief to Investment-Ready in Four £25k Weeks](article-viewer.html?a=2026-04-27-bootstrap-25k-week)
+- [From ArcKit to McKinsey-Style Infographics in an Afternoon](article-viewer.html?a=2026-04-27-mckinsey-decks-from-arckit)
+- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead)
+- [Launching ArcKit FDE: Embedded Architects for UK Public Sector](article-viewer.html?a=2026-05-12-arckit-fde-launch)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

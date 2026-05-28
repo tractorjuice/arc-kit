@@ -51,3 +51,18 @@ The decree gave you the deadline. ArcKit gives you the cadence.
 Bonus: this entire artefact set, including the playbook itself, is built using agentic AI. The technology the Cabinet has mandated for service delivery is the technology that produces the governance trail behind it.
 
 #UAE #AgenticAI #ChiefAIOfficer #ArchitectureGovernance #ArcKit
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [The CAIO's First 90 Days: Delivering the UAE Cabinet AI Mandate](article-viewer.html?a=2026-04-30-uae-caio-first-90-days)
+- [How ArcKit v4.10 Accelerates the UAE's Federal Agentic Decree](article-viewer.html?a=2026-04-30-uae-agentic-decree-arckit-v4-10)
+- [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](article-viewer.html?a=2026-04-30-uae-overlay-launch)
+- [ArcKit v4.7: 18 EU and French Regulatory Commands](article-viewer.html?a=2026-04-19-v470-eu-french-regulatory)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

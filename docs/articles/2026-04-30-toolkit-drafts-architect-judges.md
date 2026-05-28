@@ -95,3 +95,18 @@ The ArcKit toolkit moves the architect's time from drafting to judging. The sent
 When that happens, the working day changes, the architecture-to-engineering ratio changes, the cadence of any programme that depends on the function changes, and the economics of architecture work changes with it. When it does not happen, the toolkit is a productivity tweak and the working day is recognisably the same as it always was.
 
 The sentence is short. The choice it asks the architect to make is not.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead)
+- [Launching ArcKit FDE: Embedded Architects for UK Public Sector](article-viewer.html?a=2026-05-12-arckit-fde-launch)
+- [The Leaf Node Problem: Why Your AI Pilot Optimises the Wrong Thing](article-viewer.html?a=2026-05-19-leaf-node-problem)
+- [Your Architecture Documents Are Connected — Now You Can See How](article-viewer.html?a=2026-03-12-document-map-medium)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

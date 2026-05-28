@@ -87,3 +87,18 @@ New to ArcKit entirely? The quickest path is `claude plugin install arckit` insi
 Full release notes are at [github.com/tractorjuice/arc-kit/releases/tag/v4.8.0](https://github.com/tractorjuice/arc-kit/releases/tag/v4.8.0). The Austrian subsection of the README lists each command with a one-line summary. The contributors page at [arckit.org/contributors.html](https://arckit.org/contributors.html) has Tom's card.
 
 Building something in Austria? The toolkit finally knows what you are actually up against. Welcome aboard, Tom.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v4.7: 18 EU and French Regulatory Commands](article-viewer.html?a=2026-04-19-v470-eu-french-regulatory)
+- [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](article-viewer.html?a=2026-04-30-uae-overlay-launch)
+- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
+- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

@@ -76,3 +76,18 @@ Regional Lead, Government & Infrastructure
 ---
 
 *This memo is for the Partner Group only. Please do not forward, summarise, or paraphrase its contents in client-facing materials. The author is aware of the irony.*
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead)
+- [From ArcKit to McKinsey-Style Infographics in an Afternoon](article-viewer.html?a=2026-04-27-mckinsey-decks-from-arckit)
+- [The Toolkit Drafts. The Architect Judges.](article-viewer.html?a=2026-04-30-toolkit-drafts-architect-judges)
+- [Launching ArcKit FDE: Embedded Architects for UK Public Sector](article-viewer.html?a=2026-05-12-arckit-fde-launch)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

@@ -99,3 +99,18 @@ For users on the existing ArcKit Claude Code plugin, the v4.7.1 update arrives t
 The full release notes are at [github.com/tractorjuice/arc-kit/releases/tag/v4.7.1](https://github.com/tractorjuice/arc-kit/releases/tag/v4.7.1). The README's [EU & French Regulatory Compliance section](https://github.com/tractorjuice/arc-kit/blob/main/README.md#eu--french-regulatory-compliance-community) lists every command with a one-line summary. The contributor card for Thomas is on the [contributors page](https://arckit.org/contributors.html).
 
 For domain experts in other jurisdictions: the doors are open, the pattern is established, and the maintainer review path is set up. If you have the regulatory expertise to validate citations and the willingness to keep them current, [open an issue](https://github.com/tractorjuice/arc-kit/issues/new) with the country code you want to claim and the commands you'd add. Eighteen commands have just shown how it works.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [What You Can Now Do in Austria with ArcKit v4.8](article-viewer.html?a=2026-04-20-v480-austrian-overlay)
+- [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](article-viewer.html?a=2026-04-30-uae-overlay-launch)
+- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
+- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

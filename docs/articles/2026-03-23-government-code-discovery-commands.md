@@ -253,3 +253,18 @@ For strategic landscape mapping, run `/arckit:gov-landscape` with a domain descr
 ---
 
 *ArcKit is an open-source Enterprise Architecture Governance and Vendor Procurement Toolkit providing 68 slash commands for AI coding assistants. For more information, visit the [GitHub repository](https://github.com/tractorjuice/arc-kit).*
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [I Have Saved the UK Economy £24 Billion. ArcKit Is the Third Time.](article-viewer.html?a=2026-05-03-how-open-source-saved-uk-economy-12bn)
+- [The Toolkit Drafts. The Architect Judges.](article-viewer.html?a=2026-04-30-toolkit-drafts-architect-judges)
+- [Finding Funding: How ArcKit Automates UK Grant Research](article-viewer.html?a=2026-04-07-v464-grants-command-for-companies)
+- [Launching ArcKit FDE: Embedded Architects for UK Public Sector](article-viewer.html?a=2026-05-12-arckit-fde-launch)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

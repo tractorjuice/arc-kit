@@ -70,4 +70,13 @@ ArcKit v4.3.0 is available now. Update via the Claude Code marketplace, `gemini 
 
 ## Join the Community
 
-ArcKit is open source at [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit). Join the [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) for announcements, case studies, and discussion around enterprise architecture governance. For real-time conversation, help with commands, and sharing what you're building, join the [ArcKit Discord](https://discord.gg/JqgjQSnD).
+ArcKit is open source at [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit). Join the [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) for announcements, case studies, and discussion around enterprise architecture governance. For real-time conversation, help with commands, and sharing what you're building, join the [ArcKit Discord](https://discord.gg/UsfzrZmr).
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit 4.9.0: Wardley Maps Render Natively in Architecture Docs](article-viewer.html?a=2026-04-22-v490-wardley-mapping-support)
+- [The Five Wardley Commands in ArcKit: When to Run Each](article-viewer.html?a=2026-04-22-wardley-commands-walkthrough)
+- [Your Wardley Maps Belong in Git: What Mermaid Support Changes](article-viewer.html?a=2026-05-19-wardley-maps-mermaid-github)
+- [How ArcKit Tidies Wardley Map Labels: A Deterministic Placement Engine](article-viewer.html?a=2026-05-22-tidy-wardley-labels)
+

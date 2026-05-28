@@ -65,3 +65,18 @@ Site: [arckit.org/fde](https://tractorjuice.github.io/arckit-fde/)
 Examples: real ArcKit outputs from [NHS Appointment Booking](https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/), [HMRC Tax Assistant](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/), [Cabinet Office GenAI Platform](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/), [Scottish Courts GenAI Strategy](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/), plus fifteen more on [arckit.org/use-cases](https://arckit.org/use-cases.html).
 
 Enquiry: mark@firstliot.uk
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [The Toolkit Drafts. The Architect Judges.](article-viewer.html?a=2026-04-30-toolkit-drafts-architect-judges)
+- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead)
+- [Internal Memo, Somewhere in a Big 4 Consulting Company](article-viewer.html?a=2026-05-01-consulting-internal-memo)
+- [Three New Commands for UK Public Sector Code Reuse](article-viewer.html?a=2026-03-23-government-code-discovery-commands)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

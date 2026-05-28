@@ -150,4 +150,13 @@ That's what first-class support means. Not a translation. Not a compatibility la
 
 ## Join the Community
 
-ArcKit now has dedicated spaces for architects and developers using the toolkit. The [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) is the place for announcements, case studies, and discussion around enterprise architecture governance across all five supported platforms. If you prefer real-time conversation, the [ArcKit Discord](https://discord.gg/JqgjQSnD) is where you'll find help with commands, share what you're building, and connect with other users working across Claude Code, Gemini CLI, Codex CLI, and OpenCode. Whether you're generating your first requirements document or running multi-platform governance across a programme, come say hello.
+ArcKit now has dedicated spaces for architects and developers using the toolkit. The [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) is the place for announcements, case studies, and discussion around enterprise architecture governance across all five supported platforms. If you prefer real-time conversation, the [ArcKit Discord](https://discord.gg/UsfzrZmr) is where you'll find help with commands, share what you're building, and connect with other users working across Claude Code, Gemini CLI, Codex CLI, and OpenCode. Whether you're generating your first requirements document or running multi-platform governance across a programme, come say hello.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v4.1.1: GitHub Copilot, Vendor Scoring, and Blast Radius](article-viewer.html?a=2026-03-11-v411-copilot-vendor-scoring-impact)
+- [ArcKit v5.0.0: One Toolkit, Seven Plugins, Install Only What You Need](article-viewer.html?a=2026-05-18-arckit-v5-plugin-split)
+- [The Token Budget Behind ArcKit's Plugin Split](article-viewer.html?a=2026-05-20-plugin-split-token-budget)
+- [Your Architecture Documents Are Connected — Now You Can See How](article-viewer.html?a=2026-03-12-document-map-medium)
+

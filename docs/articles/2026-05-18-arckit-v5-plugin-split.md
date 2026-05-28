@@ -78,4 +78,19 @@ New projects: the [Getting Started guide](https://arckit.org/getting-started.htm
 
 Maintainers of jurisdictional overlays: your contribution surface just got smaller and clearer. The seventh plugin (`arckit-au`) is the template for the eighth.
 
-ArcKit v5.0.0 is on [GitHub](https://github.com/tractorjuice/arc-kit/releases/tag/v5.0.0). The full changelog is in the [release notes](https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md). The seven plugins are in the marketplace at `tractorjuice/arc-kit`.  
+ArcKit v5.0.0 is on [GitHub](https://github.com/tractorjuice/arc-kit/releases/tag/v5.0.0). The full changelog is in the [release notes](https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md). The seven plugins are in the marketplace at `tractorjuice/arc-kit`.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [The Token Budget Behind ArcKit's Plugin Split](article-viewer.html?a=2026-05-20-plugin-split-token-budget)
+- [ArcKit v4: First-Class Codex and Gemini Support](article-viewer.html?a=2026-03-08-v4-codex-gemini-support)
+- [ArcKit v4.13.0: The Build Harness — A Full Architecture in One Session](article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation)
+- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

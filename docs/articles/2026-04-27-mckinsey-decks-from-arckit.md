@@ -156,3 +156,18 @@ The deliverable is dead. The visual layer the deliverable hides inside is also n
 - [Pyramid Principle and SCQA: A Consultant's Guide — Deckary](https://deckary.com/blog/pyramid-principle-consulting)
 - [PowerPoint Storytelling: How McKinsey, Bain, and BCG Use SCQA — Analyst Academy](https://www.theanalystacademy.com/powerpoint-storytelling/)
 - [McKinsey Presentation Structure — SlideModel](https://slidemodel.com/mckinsey-presentation-structure/)
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead)
+- [From Brief to Investment-Ready in Four £25k Weeks](article-viewer.html?a=2026-04-27-bootstrap-25k-week)
+- [Pricing the ArcKit Project: What Would an Investor Pay?](article-viewer.html?a=2026-04-28-pricing-arckit-investor)
+- [Internal Memo, Somewhere in a Big 4 Consulting Company](article-viewer.html?a=2026-05-01-consulting-internal-memo)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

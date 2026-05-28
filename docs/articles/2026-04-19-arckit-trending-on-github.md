@@ -63,3 +63,18 @@ If you are an architect, a public-sector technologist, or anyone responsible for
 - **Primary keyword:** enterprise architecture AI tooling
 - **Secondary:** AI coding assistant governance, Claude Code plugin, UK government digital
 - **Meta description (≤160 chars):** ArcKit trended on GitHub this weekend — a slash-command toolkit that turns AI coding assistants into structured Enterprise Architecture generators.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [Product Hunt Launch: ArcKit](article-viewer.html?a=2026-05-06-product-hunt-arckit)
+- [Show HN: ArcKit — Architecture Governance as Slash Commands](article-viewer.html?a=2026-05-06-show-hn-arckit)
+- [ArcKit on Product Hunt — LinkedIn Launch Post](article-viewer.html?a=2026-05-06-linkedin-product-hunt-launch)
+- [The People Behind ArcKit: Open Source Contributors](article-viewer.html?a=2026-02-28-arckit-contributors-medium-post)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

@@ -66,3 +66,18 @@ The firms will not die. Accenture's earnings call will not mention this. But the
 Yes, for a narrower, more honest scope. Advisors who facilitate, judge, and stand behind the work. Partners in delivery, rather than vendors of paperwork.
 
 What we do not need, and should not pay for again, is a £400k engagement to produce a document that a free open-source toolkit, with 1,669 stars and 195 forks six months in, now writes in an afternoon. That era is over. The only remaining question is how long departments, and the firms that sell to them, keep pretending it is not.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [Internal Memo, Somewhere in a Big 4 Consulting Company](article-viewer.html?a=2026-05-01-consulting-internal-memo)
+- [From ArcKit to McKinsey-Style Infographics in an Afternoon](article-viewer.html?a=2026-04-27-mckinsey-decks-from-arckit)
+- [Launching ArcKit FDE: Embedded Architects for UK Public Sector](article-viewer.html?a=2026-05-12-arckit-fde-launch)
+- [The Toolkit Drafts. The Architect Judges.](article-viewer.html?a=2026-04-30-toolkit-drafts-architect-judges)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

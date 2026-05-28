@@ -106,3 +106,18 @@ The third £12 billion is going to happen. I would prefer the savings landed in 
 - [ArcKit — official site](https://arckit.org)
 - Supporting research note: `2026-05-03-research-gcloud-spend-actuals.md` (CCS dashboard figures)
 - Supporting research note: `2026-05-03-research-mark-craddock-books.md` (Mark Craddock published bibliography)
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [Three New Commands for UK Public Sector Code Reuse](article-viewer.html?a=2026-03-23-government-code-discovery-commands)
+- [How ArcKit Is Quietly Destroying a Billion-Pound Consulting Business](article-viewer.html?a=2026-04-20-consulting-deliverable-is-dead)
+- [Launching ArcKit FDE: Embedded Architects for UK Public Sector](article-viewer.html?a=2026-05-12-arckit-fde-launch)
+- [G-Cloud Spend — Actuals from CCS / GCA (Research Note)](article-viewer.html?a=2026-05-03-research-gcloud-spend-actuals)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

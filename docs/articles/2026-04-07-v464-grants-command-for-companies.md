@@ -126,3 +126,18 @@ Or describe a domain directly:
 The command works with or without existing requirements. Project context improves results by enabling precise eligibility matching, but a descriptive argument is enough to get started.
 
 ArcKit v4.6.4 is available now across Claude Code, Gemini CLI, GitHub Copilot, OpenAI Codex CLI, OpenCode CLI, and Paperclip.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v4.6.4: Automated UK Funding Research](article-viewer.html?a=2026-04-07-v464-grants-command-funding-research)
+- [From Brief to Investment-Ready in Four £25k Weeks](article-viewer.html?a=2026-04-27-bootstrap-25k-week)
+- [Pricing the ArcKit Project: What Would an Investor Pay?](article-viewer.html?a=2026-04-28-pricing-arckit-investor)
+- [Three New Commands for UK Public Sector Code Reuse](article-viewer.html?a=2026-03-23-government-code-discovery-commands)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

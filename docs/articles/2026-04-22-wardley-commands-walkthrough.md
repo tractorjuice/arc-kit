@@ -112,3 +112,18 @@ The maps, assessments, and gameplays all version-control as markdown. They diff 
 - Wardley Maps Mermaid companion: https://github.com/tractorjuice/wardley-maps-mermaid
 - Simon Wardley's book: https://medium.com/wardleymaps
 - create.wardleymaps.ai: https://create.wardleymaps.ai
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit 4.9.0: Wardley Maps Render Natively in Architecture Docs](article-viewer.html?a=2026-04-22-v490-wardley-mapping-support)
+- [ArcKit v4.3.0: A Complete Wardley Mapping Suite](article-viewer.html?a=2026-03-16-wardley-suite-strategic-mapping)
+- [Your Wardley Maps Belong in Git: What Mermaid Support Changes](article-viewer.html?a=2026-05-19-wardley-maps-mermaid-github)
+- [How ArcKit Tidies Wardley Map Labels: A Deterministic Placement Engine](article-viewer.html?a=2026-05-22-tidy-wardley-labels)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

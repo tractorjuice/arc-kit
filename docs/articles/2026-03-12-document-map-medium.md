@@ -97,3 +97,18 @@ GitHub: https://github.com/tractorjuice/arc-kit
 ---
 
 *The Document Map was built to answer a simple question: "What connects to what?" Turns out, when you can see the answer, you start asking much better questions about your architecture.*
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [Document Map — LinkedIn Post](article-viewer.html?a=2026-03-12-document-map-linkedin)
+- [ArcKit v4: First-Class Codex and Gemini Support](article-viewer.html?a=2026-03-08-v4-codex-gemini-support)
+- [The Toolkit Drafts. The Architect Judges.](article-viewer.html?a=2026-04-30-toolkit-drafts-architect-judges)
+- [ArcKit v4.13.0: The Build Harness — A Full Architecture in One Session](article-viewer.html?a=2026-05-03-build-harness-parallel-architecture-generation)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

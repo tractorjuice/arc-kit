@@ -95,3 +95,18 @@ You can see it work by running `/arckit:wardley` and watching the `label` offset
 ---
 
 ArcKit is an open-source enterprise architecture governance toolkit for AI coding assistants. The Wardley tidy engine ships with the core plugin. Explore the full command set at [arckit.org](https://arckit.org).
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [Your Wardley Maps Belong in Git: What Mermaid Support Changes](article-viewer.html?a=2026-05-19-wardley-maps-mermaid-github)
+- [ArcKit 4.9.0: Wardley Maps Render Natively in Architecture Docs](article-viewer.html?a=2026-04-22-v490-wardley-mapping-support)
+- [The Five Wardley Commands in ArcKit: When to Run Each](article-viewer.html?a=2026-04-22-wardley-commands-walkthrough)
+- [ArcKit v4.3.0: A Complete Wardley Mapping Suite](article-viewer.html?a=2026-03-16-wardley-suite-strategic-mapping)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

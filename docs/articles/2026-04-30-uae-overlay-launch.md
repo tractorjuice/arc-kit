@@ -84,3 +84,18 @@ The full release notes are at [github.com/tractorjuice/arc-kit/releases/tag/v4.1
 For UAE-resident architects who would like to take the co-maintainer role: the recruiting brief is in the maintenance document. Open an issue tagged `uae-overlay` and `co-maintainer` with a short note on background.
 
 The Cabinet decree gave federal entities twenty-four months. v4.10.1 closes one of the first chapters of that clock: the architecture artefact pipeline that takes a federal AI pathfinder from principles through to procurement is now an end-to-end sequence of twelve commands, anchored, tested, and shipping today as a community-contributed overlay while the recruitment of a UAE domain co-maintainer runs in parallel.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [How ArcKit v4.10 Accelerates the UAE's Federal Agentic Decree](article-viewer.html?a=2026-04-30-uae-agentic-decree-arckit-v4-10)
+- [The CAIO's First 90 Days: Delivering the UAE Cabinet AI Mandate](article-viewer.html?a=2026-04-30-uae-caio-first-90-days)
+- [UAE Agentic Decree: A 90-Day Playbook](article-viewer.html?a=2026-04-30-uae-agentic-decree-90-day-playbook)
+- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

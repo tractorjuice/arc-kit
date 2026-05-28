@@ -19,3 +19,18 @@ Seven reasons to update. One command to do it.
 `/plugin marketplace add tractorjuice/arc-kit`
 
 #EnterpriseArchitecture #ClaudeCode #ArcKit #AIGovernance #ArchitectureAsCode
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v4: First-Class Codex and Gemini Support](article-viewer.html?a=2026-03-08-v4-codex-gemini-support)
+- [ArcKit v4.1.1: GitHub Copilot, Vendor Scoring, and Blast Radius](article-viewer.html?a=2026-03-11-v411-copilot-vendor-scoring-impact)
+- [ArcKit v5.0.0: One Toolkit, Seven Plugins, Install Only What You Need](article-viewer.html?a=2026-05-18-arckit-v5-plugin-split)
+- [The Token Budget Behind ArcKit's Plugin Split](article-viewer.html?a=2026-05-20-plugin-split-token-budget)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

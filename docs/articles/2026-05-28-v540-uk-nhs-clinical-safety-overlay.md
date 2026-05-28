@@ -107,3 +107,18 @@ The full release notes are at [github.com/tractorjuice/arc-kit/releases/tag/v5.4
 For NHS clinical informatics practitioners who would consider sustained contribution to the overlay, the right way in is via issue [#424](https://github.com/tractorjuice/arc-kit/issues/424) with a short note on your background.
 
 Ten marketplace plugins. 143 commands. Eight jurisdictions and two sectors. The sector axis now has two worked examples. It will not have only two for long.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit v5.3: The First Sector Overlay, for UK Payments](article-viewer.html?a=2026-05-27-v530-uk-finance-payments-overlay)
+- [ArcKit v5.1: 10 US Federal Civilian Commands, Community Overlay](article-viewer.html?a=2026-05-24-v510-us-federal-civilian-overlay)
+- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+- [ArcKit v4.7: 18 EU and French Regulatory Commands](article-viewer.html?a=2026-04-19-v470-eu-french-regulatory)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

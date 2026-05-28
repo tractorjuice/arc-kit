@@ -41,3 +41,18 @@ The shift here is small in technical terms and large in operational terms. Maps 
 ## Try it
 
 ArcKit ships the `/arckit:wardley` command and the OWM-to-Mermaid converter. Install the plugin from the marketplace or browse the source at [arckit.org](https://arckit.org).
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [ArcKit 4.9.0: Wardley Maps Render Natively in Architecture Docs](article-viewer.html?a=2026-04-22-v490-wardley-mapping-support)
+- [The Five Wardley Commands in ArcKit: When to Run Each](article-viewer.html?a=2026-04-22-wardley-commands-walkthrough)
+- [How ArcKit Tidies Wardley Map Labels: A Deterministic Placement Engine](article-viewer.html?a=2026-05-22-tidy-wardley-labels)
+- [ArcKit v4.3.0: A Complete Wardley Mapping Suite](article-viewer.html?a=2026-03-16-wardley-suite-strategic-mapping)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

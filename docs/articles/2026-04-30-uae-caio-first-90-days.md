@@ -99,3 +99,18 @@ The artefacts that the four Cabinet instruments oblige you to produce are themse
 That is the bonus. The toolset that helps you deliver the agentic AI mandate is itself an example of the agentic AI mandate. The artefact in front of your minister is, in a real sense, the demonstration. Once the minister sees that the fifty-page strategic outline business case, the fully-traced requirements specification, and the citation-anchored research document were produced in a working week by one architect with an AI assistant, the conversation about whether the two-year deadline is achievable changes in the room.
 
 That conversation has to happen in your first ninety days. Make sure when it does, you have the artefacts to put on the table.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [UAE Agentic Decree: A 90-Day Playbook](article-viewer.html?a=2026-04-30-uae-agentic-decree-90-day-playbook)
+- [How ArcKit v4.10 Accelerates the UAE's Federal Agentic Decree](article-viewer.html?a=2026-04-30-uae-agentic-decree-arckit-v4-10)
+- [ArcKit v4.10: 12 UAE Federal Commands, Community Overlay](article-viewer.html?a=2026-04-30-uae-overlay-launch)
+- [The Leaf Node Problem: Why Your AI Pilot Optimises the Wrong Thing](article-viewer.html?a=2026-05-19-leaf-node-problem)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

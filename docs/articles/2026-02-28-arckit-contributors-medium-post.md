@@ -73,3 +73,18 @@ ArcKit welcomes contributions of all kinds -- code, issues, feature ideas, docum
 Whether you're an enterprise architect using ArcKit daily like Felipe, a developer adding platform support like Magistr and Yehuda, or an engineer building governance features like David -- there's room for your contribution.
 
 File an issue. Submit a PR. Or just tell us how you're using ArcKit. Every contribution shapes what this toolkit becomes.
+
+<!-- arckit:related-articles -->
+## Related Articles
+
+- [Why an EA Toolkit Is Trending on GitHub in 2026](article-viewer.html?a=2026-04-19-arckit-trending-on-github)
+- [Show HN: ArcKit — Architecture Governance as Slash Commands](article-viewer.html?a=2026-05-06-show-hn-arckit)
+- [Product Hunt Launch: ArcKit](article-viewer.html?a=2026-05-06-product-hunt-arckit)
+- [Wanted: /arckit:build Recipes for Your Jurisdiction](article-viewer.html?a=2026-05-03-community-recipes-wanted)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
