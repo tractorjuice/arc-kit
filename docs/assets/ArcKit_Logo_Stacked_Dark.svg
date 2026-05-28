@@ -1,24 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="340" height="335" viewBox="0 0 340 335" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit logo">
+<svg width="340" height="320" viewBox="0 0 340 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit">
 <title>ArcKit</title>
 
-<g fill="none" transform="translate(30, 0)">
-  <path d="M 36.08,65.00 A 120.00,120.00 0 0 1 243.92,65.00" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" />
-  <path d="M 60.33,79.00 A 92.00,92.00 0 0 1 219.67,79.00" stroke="#FFFFFF" stroke-width="6.00" stroke-linecap="round" />
-  <g stroke="#1ED3C6" stroke-width="2.0" stroke-linecap="round" stroke-opacity="0.65">
-    <line x1="59.70" y1="35.82" x2="152.54" y2="5.66" />
-    <line x1="152.54" y1="5.66" x2="229.18" y2="44.70" />
-    <line x1="59.70" y1="35.82" x2="229.18" y2="44.70" />
+<g transform="translate(62, 20) scale(1.8)">
+  <g fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="38,28 18,60 38,92" />
+    <polyline points="82,28 102,60 82,92" />
   </g>
-  <line x1="77.10" y1="55.14" x2="59.70" y2="35.82" stroke="#FFFFFF" stroke-width="6.67" stroke-linecap="round" />
-  <line x1="149.83" y1="31.51" x2="152.54" y2="5.66" stroke="#FFFFFF" stroke-width="6.67" stroke-linecap="round" />
-  <line x1="209.86" y1="62.10" x2="229.18" y2="44.70" stroke="#FFFFFF" stroke-width="6.67" stroke-linecap="round" />
-  <circle cx="59.70" cy="35.82" r="7.50" fill="#1ED3C6" />
-  <circle cx="152.54" cy="5.66" r="7.50" fill="#1ED3C6" />
-  <circle cx="229.18" cy="44.70" r="7.50" fill="#1ED3C6" />
-  <line x1="134.00" y1="33.00" x2="146.00" y2="33.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="4.00" stroke-linecap="round" />
-  <line x1="140.00" y1="27.00" x2="140.00" y2="39.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="4.00" stroke-linecap="round" />
+  <polyline points="46,66 60,48 74,66"
+    fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="46" y1="84" x2="74" y2="84" stroke="#1ED3C6" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="46" cy="84" r="4.5" fill="#1ED3C6"/>
+  <circle cx="74" cy="84" r="4.5" fill="#1ED3C6"/>
+  <circle cx="60" cy="84" r="5" fill="#FFFFFF"/>
 </g>
-<text x="170" y="315" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
-font-size="100" font-weight="600" fill="#FFFFFF" letter-spacing="0.5px" text-anchor="middle">ArcKit</text>
+
+<text x="170" y="300" font-family="Inter, IBM Plex Sans, SF Pro, -apple-system, system-ui, Segoe UI, Roboto, 'Helvetica Neue', Arial, sans-serif"
+font-size="92" font-weight="600" fill="#FFFFFF" letter-spacing="-0.5px" text-anchor="middle">ArcKit</text>
 </svg>

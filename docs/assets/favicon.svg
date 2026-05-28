@@ -2,31 +2,20 @@
 <svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit">
 <title>ArcKit</title>
 
-<!-- Rounded background tile -->
-<rect width="512" height="512" rx="96" fill="#0B1F33" />
+<!-- Navy rounded tile -->
+<rect width="512" height="512" rx="96" fill="#0B1F33"/>
 
-<!-- Centered arc-with-harness mark -->
-<g transform="translate(80, 130)" fill="none">
-  <!-- Outer arc -->
-  <path d="M 16,160 A 168,168 0 0 1 336,160" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round" />
-  <!-- Inner arc -->
-  <path d="M 56,192 A 128,128 0 0 1 296,192" stroke="#FFFFFF" stroke-width="13" stroke-linecap="round" />
-  <!-- Harness triangle connecting the three nodes -->
-  <g stroke="#1ED3C6" stroke-width="3.5" stroke-linecap="round" stroke-opacity="0.65">
-    <line x1="56" y1="92" x2="176" y2="20" />
-    <line x1="176" y1="20" x2="296" y2="100" />
-    <line x1="56" y1="92" x2="296" y2="100" />
+<!-- B2 mark, centred (native 120×120 mark scaled 3.6× and translated to centre at 256,256) -->
+<g transform="translate(40, 40) scale(3.6)">
+  <g fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="38,28 18,60 38,92" />
+    <polyline points="82,28 102,60 82,92" />
   </g>
-  <!-- Stems to nodes -->
-  <line x1="86" y1="134" x2="56" y2="92" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" />
-  <line x1="172" y1="64" x2="176" y2="20" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" />
-  <line x1="266" y1="132" x2="296" y2="100" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" />
-  <!-- Nodes -->
-  <circle cx="56" cy="92" r="16" fill="#1ED3C6" />
-  <circle cx="176" cy="20" r="16" fill="#1ED3C6" />
-  <circle cx="296" cy="100" r="16" fill="#1ED3C6" />
-  <!-- Center cross -->
-  <line x1="150" y1="92" x2="202" y2="92" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="8" stroke-linecap="round" />
-  <line x1="176" y1="66" x2="176" y2="118" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="8" stroke-linecap="round" />
+  <polyline points="46,66 60,48 74,66"
+    fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="46" y1="84" x2="74" y2="84" stroke="#1ED3C6" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="46" cy="84" r="4.5" fill="#1ED3C6"/>
+  <circle cx="74" cy="84" r="4.5" fill="#1ED3C6"/>
+  <circle cx="60" cy="84" r="5" fill="#FFFFFF"/>
 </g>
 </svg>

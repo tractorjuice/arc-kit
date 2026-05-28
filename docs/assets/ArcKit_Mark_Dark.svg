@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg width="165" height="75" viewBox="0 0 165 75" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit mark">
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ArcKit mark">
 <title>ArcKit</title>
 
-<g fill="none">
-  <path d="M 6.79,49.00 A 88.00,88.00 0 0 1 159.21,49.00" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round" />
-  <path d="M 25.84,60.00 A 66.00,66.00 0 0 1 140.16,60.00" stroke="#FFFFFF" stroke-width="5.00" stroke-linecap="round" />
-  <g stroke="#1ED3C6" stroke-width="1.6" stroke-linecap="round" stroke-opacity="0.65">
-    <line x1="24.12" y1="27.60" x2="92.20" y2="5.48" />
-    <line x1="92.20" y1="5.48" x2="148.40" y2="34.12" />
-    <line x1="24.12" y1="27.60" x2="148.40" y2="34.12" />
-  </g>
-  <line x1="37.50" y1="42.47" x2="24.12" y2="27.60" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
-  <line x1="90.11" y1="25.37" x2="92.20" y2="5.48" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
-  <line x1="133.53" y1="47.50" x2="148.40" y2="34.12" stroke="#FFFFFF" stroke-width="5.56" stroke-linecap="round" />
-  <circle cx="24.12" cy="27.60" r="6.25" fill="#1ED3C6" />
-  <circle cx="92.20" cy="5.48" r="6.25" fill="#1ED3C6" />
-  <circle cx="148.40" cy="34.12" r="6.25" fill="#1ED3C6" />
-  <line x1="77.00" y1="27.00" x2="89.00" y2="27.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
-  <line x1="83.00" y1="21.00" x2="83.00" y2="33.00" stroke="#FFFFFF" stroke-opacity="0.35" stroke-width="3.33" stroke-linecap="round" />
+<g fill="none" stroke="#FFFFFF" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="38,28 18,60 38,92" />
+  <polyline points="82,28 102,60 82,92" />
 </g>
+
+<polyline points="46,66 60,48 74,66"
+  fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+
+<line x1="46" y1="84" x2="74" y2="84" stroke="#1ED3C6" stroke-width="5" stroke-linecap="round"/>
+<circle cx="46" cy="84" r="4.5" fill="#1ED3C6"/>
+<circle cx="74" cy="84" r="4.5" fill="#1ED3C6"/>
+<circle cx="60" cy="84" r="5" fill="#FFFFFF"/>
 </svg>

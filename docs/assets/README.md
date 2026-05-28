@@ -43,7 +43,13 @@ This guide helps AI assistants (Claude Code, OpenAI Codex CLI, Gemini CLI) selec
 
 ### Brand motif
 
-All marks now carry a **harness triangle** — a thin teal triangulation between the three arc-cap nodes — reinforcing the "Enterprise Architecture Governance Harness" positioning. The motif is intentionally subtle (1.6–3.5px stroke at 55–65% opacity) so the original arc remains the dominant shape.
+The mark is built from three semantic elements that together depict an AI harness:
+
+1. **Angle brackets `⟨ ⟩`** — the harness frame. Reads as "AI/prompt structure". Pairs naturally with Claude Code, Codex, Gemini.
+2. **Inner caret `^`** — the prompt indicator. The point at which the AI generates.
+3. **Linchpin cursor** — teal terminal anchors flanking a navy centre pin. The cursor is the AI's output baseline; the pin is what holds it in place. This is the harness metaphor made literal.
+
+Colour roles: navy `#0B1F33` for structure (brackets, caret, pin); teal `#1ED3C6` for the AI/active layer (anchor nodes, cursor line).
 
 ### PNG exports
 
