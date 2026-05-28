@@ -26,6 +26,8 @@ ArcKit maintains public test repos on GitHub (pattern: `arckit-test-project-v*`)
 | v46 | sdg | ArcKit SDG Mono-Repo: 17 UN SDGs, 78 UK Government technology projects |
 | v47 | dft-transforming-city-regions | DfT Transforming City Regions funding system |
 | v50 | post-office-horizon | Post Office Horizon |
+| v51 | prs-database | UK PRS Database under Renters' Rights Act 2025 |
+| v52 | uae-caio-playbook | UAE CAIO Playbook for the 24-month agentic AI mandate |
 
 ## Plugin-Based Setup (since 2026-02-07)
 
