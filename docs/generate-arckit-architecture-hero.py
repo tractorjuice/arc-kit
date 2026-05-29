@@ -1,25 +1,28 @@
 """Generate the ArcKit ARCHITECTURE hero image (bottom-up flow).
 
-Reads BOTTOM -> TOP:
+Reads BOTTOM -> TOP. The Enterprise Governance Harness fires hooks across
+the WHOLE session lifecycle (not just around tool calls):
 
-  GOVERNED ARTIFACTS  (projects/)            <- top (outputs)
+  GOVERNED ARTIFACTS  (projects/)                     <- top (outputs)
         ^ generates (governed)
-  THE GOVERNANCE HARNESS  (perimeter)
-        - PostToolUse OBSERVERS  (stamp / graph / telemetry)   [exit, top rail]
-        - ARCKIT CORE ENGINE  (commands / agents / skills)
-            <- OVERLAYS compose in
-            <- MCP knowledge feeds in
-        - PreToolUse GATES  (block bad writes)                 [entry, bottom rail]
+  THE ENTERPRISE GOVERNANCE HARNESS  (perimeter)
+        [after]  PostCompact . Stop                   (top rails)
+        [after]  PostToolUse OBSERVERS
+        ----  ARCKIT CORE ENGINE  (overlays + MCP)  ----
+        [before] PreToolUse GATES                      (bottom rails)
+        [before] Permission & Access
+        [before] UserPromptSubmit
+        [before] SessionStart
         ^ tool calls
-  AI CODING ASSISTANTS  (surfaces)           <- bottom (inputs)
+  AI CODING ASSISTANTS  (surfaces)                    <- bottom (inputs)
 
-1200x630 (OG size). #0d1117 background, faint dot texture, gradient rails.
+1200x700. #0d1117 flat background, gradient rails.
 """
 
 from PIL import Image, ImageDraw, ImageFont
 import os
 
-WIDTH, HEIGHT = 1200, 630
+WIDTH, HEIGHT = 1200, 766
 
 BG = (13, 17, 23)
 PANEL = (22, 27, 34)
@@ -70,6 +73,7 @@ f_core_title = load(BOLD, 16)
 f_stat_v = load(BOLD, 22)
 f_stat_l = load(REG, 11)
 f_chip = load(MONO, 10)
+f_hook = load(MONO, 12)
 f_small = load(REG, 12)
 f_flow = load(MONO_R, 11)
 
@@ -100,7 +104,6 @@ def gradient_rail(y0, y1, alpha):
 
 
 def arrow_up(x, yb, yt, color, label=None):
-    """Arrow pointing UP: tail at yb (lower), head at yt (higher)."""
     draw.line([(x, yb), (x, yt + 9)], fill=color, width=3)
     draw.polygon([(x - 7, yt + 9), (x + 7, yt + 9), (x, yt)], fill=color)
     if label:
@@ -139,35 +142,64 @@ CX = 600
 HX0, HX1 = 64, WIDTH - 64
 
 # ============================================================
-# TOP — GOVERNED ARTIFACTS (outputs)
+# TOP — GOVERNED ARTIFACTS as the TRACEABILITY GRAPH (outputs)
 # ============================================================
-AY0, AY1 = 98, 158
+AY0, AY1 = 96, 224
 rrect((HX0, AY0, HX1, AY1), 12, fill=PANEL, outline=BORDER, width=1)
 draw.text((HX0 + 18, AY0 + 10), "GOVERNED ARTIFACTS", font=f_band, fill=ORANGE_T)
 draw.text((HX0 + 18 + tw(f_band, "GOVERNED ARTIFACTS") + 12, AY0 + 11),
-          "projects/  -  versioned, classified, board-ready",
+          "every document is a linked node in the traceability graph  -  graph-inject + graph-rollups keep it live",
           font=f_stat_l, fill=TEXT_TERTIARY)
-arts = ["Requirements", "Decisions", "Risk Register", "Business Case",
-        "Privacy Assessment", "Diagrams", "Wardley Maps", "Roadmap",
-        "and 60+ more"]
-ax = HX0 + 18
-ay = AY0 + 31
-for a in arts:
-    w = tw(f_small, a) + 22
-    last = a == "and 60+ more"
-    col = GREEN if last else INDIGO
-    colt = GREEN_T if last else INDIGO_T
-    rrect((ax, ay, ax + w, ay + 24), 12, fill=PANEL_2, outline=col, width=1)
-    draw.text((ax + 11, ay + 5), a, font=f_small, fill=colt)
-    ax += w + 9
+
+# graph nodes: (x, y, label, kind)  kind: hub | node | more
+NODES = {
+    "stake": (158, 134, "Stakeholders", "node"),
+    "goals": (158, 200, "Goals", "node"),
+    "req":   (360, 167, "Requirements", "hub"),
+    "dec":   (575, 134, "Decisions", "node"),
+    "risk":  (575, 167, "Risk Register", "node"),
+    "data":  (575, 200, "Data Model", "node"),
+    "diag":  (790, 134, "Diagrams", "node"),
+    "more":  (790, 167, "+60 more", "more"),
+    "ward":  (790, 200, "Wardley Maps", "node"),
+    "bcase": (1005, 134, "Business Case", "node"),
+    "road":  (1005, 167, "Roadmap", "node"),
+    "priv":  (1005, 200, "Privacy", "node"),
+}
+EDGES = [("stake", "req"), ("goals", "req"),
+         ("req", "dec"), ("req", "risk"), ("req", "data"), ("req", "more"),
+         ("dec", "diag"), ("data", "diag"), ("data", "ward"),
+         ("risk", "bcase"), ("req", "bcase"), ("req", "priv"),
+         ("diag", "road"), ("ward", "road"), ("bcase", "road")]
+
+# edges first (behind nodes)
+for a, b in EDGES:
+    x1, y1 = NODES[a][0], NODES[a][1]
+    x2, y2 = NODES[b][0], NODES[b][1]
+    draw.line([(x1, y1), (x2, y2)], fill=(99, 102, 241, 150), width=2)
+
+# nodes on top
+for x, y, label, kind in NODES.values():
+    w = tw(f_small, label) + 22
+    box = (x - w / 2, y - 13, x + w / 2, y + 13)
+    if kind == "hub":
+        rrect(box, 13, fill=NAVY, outline=INDIGO, width=2)
+        colt = INDIGO_T
+    elif kind == "more":
+        rrect(box, 13, fill=PANEL_2, outline=GREEN, width=1)
+        colt = GREEN_T
+    else:
+        rrect(box, 13, fill=PANEL_2, outline=INDIGO, width=1)
+        colt = TEXT_PRIMARY
+    draw.text((x - tw(f_small, label) / 2, y - 8), label, font=f_small, fill=colt)
 
 # arrow UP: harness -> artifacts
-arrow_up(CX, 188, AY1 + 2, GREEN, "generates  (provenance-stamped + traceable)")
+arrow_up(CX, 254, AY1 + 2, GREEN, "generates  (provenance-stamped + traceable)")
 
 # ============================================================
-# MIDDLE — THE GOVERNANCE HARNESS (perimeter)
+# MIDDLE — THE ENTERPRISE GOVERNANCE HARNESS (perimeter)
 # ============================================================
-HY0, HY1 = 190, 488
+HY0, HY1 = 258, 658
 rrect((HX0, HY0, HX1, HY1), 16, fill=(18, 23, 30, 255), outline=ORANGE, width=2)
 for cx, cy in [(HX0, HY0), (HX1, HY0), (HX0, HY1), (HX1, HY1)]:
     draw.ellipse((cx - 5, cy - 5, cx + 5, cy + 5), fill=PANEL_2, outline=ORANGE, width=2)
@@ -175,42 +207,43 @@ tab = "THE ENTERPRISE GOVERNANCE HARNESS"
 tabw = tw(f_band, tab) + 18
 rrect((HX0 + 22, HY0 - 11, HX0 + 22 + tabw, HY0 + 11), 11, fill=NAVY, outline=ORANGE, width=1)
 draw.text((HX0 + 31, HY0 - 5), tab, font=f_band, fill=ORANGE_T)
-cap = "hooks intercept every tool call"
+cap = "hooks fire at every lifecycle stage"
 capx = HX1 - 22 - tw(f_flow, cap)
 draw.rectangle((capx - 8, HY0 - 7, capx + tw(f_flow, cap) + 8, HY0 + 9), fill=BG)
 draw.text((capx, HY0 - 5), cap, font=f_flow, fill=TEXT_TERTIARY)
 
 
-def hook_chip(x, y, label, dot):
-    w = tw(f_chip, label) + 26
-    rrect((x, y, x + w, y + 20), 10, fill=PANEL, outline=BORDER, width=1)
-    draw.ellipse((x + 8, y + 6, x + 16, y + 14), fill=dot)
-    draw.text((x + 20, y + 5), label, font=f_chip, fill=TEXT_SECONDARY)
-    return w + 7
+def hook_row(y, label, label_col, items, dot):
+    """Draw an event-labelled rail of hook pills; wraps if too wide."""
+    lx = HX0 + 22
+    draw.text((lx, y + 6), label, font=f_band, fill=label_col)
+    start = lx + tw(f_band, label) + 14
+    cx = start
+    max_x = HX1 - 22
+    ly = y
+    for it in items:
+        w = tw(f_hook, it) + 30
+        if cx + w > max_x:
+            ly += 30
+            cx = start
+        rrect((cx, ly, cx + w, ly + 24), 12, fill=PANEL, outline=BORDER, width=1)
+        draw.ellipse((cx + 9, ly + 8, cx + 17, ly + 16), fill=dot)
+        draw.text((cx + 22, ly + 5), it, font=f_hook, fill=TEXT_SECONDARY)
+        cx += w + 8
 
 
-# --- PostToolUse OBSERVERS (TOP inner rail = exit toward artifacts) ---
-oy = HY0 + 18
-draw.text((HX0 + 22, oy + 3), "PostToolUse  OBSERVERS  +  Session", font=f_band, fill=GREEN_T)
-hx = HX0 + 22 + tw(f_band, "PostToolUse  OBSERVERS  +  Session") + 14
-for o in ["provenance-stamp", "graph-inject", "telemetry", "update-manifest",
-          "postcompact-rehydrate"]:
-    hx += hook_chip(hx, oy, o, GREEN)
-
-# --- PreToolUse GATES (BOTTOM inner rail = entry from assistants) ---
-gy = HY1 - 38
-draw.text((HX0 + 22, gy + 3), "PreToolUse  GATES", font=f_band, fill=RED_T)
-hx = HX0 + 22 + tw(f_band, "PreToolUse  GATES") + 14
-for g in ["file-protection", "secret-detection", "validate-arc-filename",
-          "score-validator", "validate-wardley-math"]:
-    hx += hook_chip(hx, gy, g, RED)
+# --- TOP rails: AFTER tool / session end (exit toward artifacts) ---
+hook_row(HY0 + 18, "PostCompact  .  Stop", PURPLE_T,
+         ["postcompact-rehydrate", "session-learner"], PURPLE)
+hook_row(HY0 + 52, "PostToolUse  OBSERVERS", GREEN_T,
+         ["provenance-stamp", "update-manifest", "tidy-wardley-labels", "telemetry"], GREEN)
 
 # --- CORE ENGINE (centre) ---
-EX0, EY0, EX1, EY1 = 372, oy + 36, 828, gy - 14
+EX0, EY0, EX1, EY1 = 372, 350, 828, 502
 rrect((EX0, EY0, EX1, EY1), 12, fill=NAVY, outline=INDIGO, width=2)
 ctext((EX0 + EX1) / 2, EY0 + 12, "ARCKIT  CORE  ENGINE", f_core_title, TEXT_PRIMARY)
 stats = [("71", "commands"), ("16", "agents"), ("5", "skills"), ("128", "doc-types")]
-syl = EY0 + 44
+syl = EY0 + 42
 gw = (EX1 - EX0) / len(stats)
 for i, (v, l) in enumerate(stats):
     cxc = EX0 + gw * i + gw / 2
@@ -224,15 +257,15 @@ ctext((EX0 + EX1) / 2, syl + 60,
 # --- OVERLAYS panel (left, composes INTO core) ---
 OX0, OX1 = HX0 + 22, EX0 - 34
 rrect((OX0, EY0, OX1, EY1), 10, fill=PANEL, outline=PURPLE, width=1)
-draw.text((OX0 + 12, EY0 + 10), "OVERLAYS", font=f_band, fill=PURPLE_T)
-draw.text((OX0 + 12, EY0 + 26), "9 sector / jurisdiction", font=f_stat_l, fill=TEXT_TERTIARY)
+draw.text((OX0 + 12, EY0 + 9), "OVERLAYS", font=f_band, fill=PURPLE_T)
+draw.text((OX0 + 12, EY0 + 25), "9 sector / jurisdiction", font=f_stat_l, fill=TEXT_TERTIARY)
 ov = [["UAE", "France", "Canada", "USA", "Australia"],
       ["EU", "Austria", "UK Finance", "UK NHS"]]
 colw = (OX1 - OX0 - 24) / 2
 for c, col in enumerate(ov):
     for r, name in enumerate(col):
         x = OX0 + 12 + c * colw
-        y = EY0 + 48 + r * 19
+        y = EY0 + 46 + r * 18
         draw.ellipse((x, y + 4, x + 6, y + 10), fill=PURPLE)
         draw.text((x + 12, y), name, font=f_small, fill=TEXT_PRIMARY)
 arrow_h(OX1 + 4, EX0 - 2, (EY0 + EY1) / 2, PURPLE)
@@ -241,22 +274,34 @@ draw.text((OX1 + 2, (EY0 + EY1) / 2 - 24), "compose", font=f_flow, fill=TEXT_TER
 # --- MCP panel (right, feeds INTO core) ---
 MX0, MX1 = EX1 + 34, HX1 - 22
 rrect((MX0, EY0, MX1, EY1), 10, fill=PANEL, outline=CYAN, width=1)
-draw.text((MX0 + 12, EY0 + 10), "MCP  KNOWLEDGE", font=f_band, fill=CYAN_T)
-draw.text((MX0 + 12, EY0 + 26), "live external grounding", font=f_stat_l, fill=TEXT_TERTIARY)
+draw.text((MX0 + 12, EY0 + 9), "MCP  KNOWLEDGE", font=f_band, fill=CYAN_T)
+draw.text((MX0 + 12, EY0 + 25), "live external grounding", font=f_stat_l, fill=TEXT_TERTIARY)
 for r, m in enumerate(["aws-knowledge", "microsoft-learn", "google-dev",
                        "datacommons", "govreposcrape"]):
-    y = EY0 + 48 + r * 19
+    y = EY0 + 46 + r * 18
     draw.ellipse((MX0 + 12, y + 4, MX0 + 18, y + 10), fill=CYAN)
     draw.text((MX0 + 24, y), m, font=f_small, fill=TEXT_PRIMARY)
 arrow_h(MX0 - 4, EX1 + 2, (EY0 + EY1) / 2, CYAN)
 draw.text((EX1 + 8, (EY0 + EY1) / 2 - 24), "feeds", font=f_flow, fill=TEXT_TERTIARY)
 
+# --- BOTTOM rails: BEFORE tool / session start (entry from assistants) ---
+hook_row(EY1 + 16, "PreToolUse  GATES", RED_T,
+         ["file-protection", "secret-file-scanner", "validate-arc-filename",
+          "score-validator", "validate-wardley-math"], RED)
+hook_row(EY1 + 50, "Permission & Access", ORANGE_T,
+         ["allow-mcp-tools", "allow-plugin-internals", "inject-agent-context"], ORANGE)
+hook_row(EY1 + 84, "UserPromptSubmit", CYAN_T,
+         ["arckit-context", "secret-detection", "graph-inject", "sync-guides"], CYAN)
+hook_row(EY1 + 118, "SessionStart", CYAN_T,
+         ["arckit-session", "version-check", "v5-migration-banner",
+          "notify-stale-artifacts"], CYAN)
+
 # ============================================================
 # BOTTOM — AI CODING ASSISTANTS (inputs)
 # ============================================================
-arrow_up(CX, 520, HY1 + 2, CYAN, "tool calls  (Write / Edit / Bash ...)")
+arrow_up(CX, 688, HY1 + 2, CYAN, "tool calls  (Write / Edit / Bash ...)")
 
-SY0, SY1 = 524, 570
+SY0, SY1 = 690, 736
 surfaces = ["Claude Code", "Codex", "Gemini", "OpenCode", "Copilot", "CLI"]
 sx0, sx1 = 250, 950
 n = len(surfaces)
