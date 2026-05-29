@@ -68,13 +68,13 @@ Commands exist in multiple formats across the distribution. The plugin source is
 
 **Plugin command frontmatter** supports:
 
-- `description` (required), `effort:` (override session effort: `low`, `medium`, `high`, `max` for Opus 4.6, `xhigh` for Opus 4.7)
+- `description` (required), `effort:` (override session effort: `low`, `medium`, `high`, `max` for Opus 4.6, `xhigh` for Opus 4.7 and Opus 4.8 — note Opus 4.8 defaults to `high`)
 - `keep-coding-instructions: true` (v2.1.94+) — persist instructions across `/compact` for long-running commands
 - `handoffs:` — list of `{command, description?, condition?}` entries; converter renders these as a "Suggested Next Steps" section for non-Claude targets
 
 Effort and `keep-coding-instructions` are stripped by the converter for non-Claude targets.
 
-**Fast mode** (`/fast` toggle) runs the current Opus model with faster output — same model, no smaller-model downgrade. As of Claude Code v2.1.142 the default backing model for `/fast` is **Opus 4.7** (was Opus 4.6 pre-v2.1.142). `/fast` is unrelated to the `effort:` frontmatter — the two compose: a command with `effort: xhigh` still benefits from `/fast` if the user has toggled it.
+**Fast mode** (`/fast` toggle) runs the current Opus model with faster output — same model, no smaller-model downgrade. As of Claude Code v2.1.154 the default backing model for `/fast` is **Opus 4.8** (2x the standard rate for 2.5x the speed); it was Opus 4.7 on v2.1.142–v2.1.153 and Opus 4.6 before that. `/fast` is unrelated to the `effort:` frontmatter — the two compose: a command with `effort: xhigh` still benefits from `/fast` if the user has toggled it.
 
 ### Agent System
 

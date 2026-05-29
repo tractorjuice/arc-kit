@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Minimum Claude Code version bumped to v2.1.156** (from v2.1.144). The new floor pulls in two Opus 4.8-era improvements ArcKit now depends on: the **v2.1.156** fix for Opus 4.8 thinking blocks being modified and causing API errors (relevant to `/arckit:*` commands and the research agents that use extended thinking), and **v2.1.154** which shipped Opus 4.8 GA plus the `defaultEnabled` plugin manifest field (below). Updated in `arckit-claude/hooks/version-check.mjs`, `README.md` (install note, "Why v2.1.156?" callout, requirements line), `CLAUDE.md` (monitors floor note), and `docs/getting-started.html`.
+- **Opus 4.7 → Opus 4.8 documentation refresh** (items 43/44 of #522). `CLAUDE.md` now describes the `effort:` `xhigh` tier as covering Opus 4.7 and 4.8 (4.8 defaults to `high`) and the `/fast` backing model as Opus 4.8 as of v2.1.154 (was 4.7 on v2.1.142–v2.1.153). The `start.md` getting-started guide's token-constrained recommendation updated from "Opus 4.6 or 4.7" to "Opus 4.7 or 4.8" across all distribution copies. (Historical feature-gate references to Opus 4.7 in the README "Why?" callouts and `version-check.mjs` are intentionally left as-is — they record which version first shipped 4.7's `xhigh`/`/context`.)
 
 ### Added
 
