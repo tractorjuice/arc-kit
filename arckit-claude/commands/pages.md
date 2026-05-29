@@ -353,6 +353,8 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | AUNDB | `ARC-*-AUNDB-*.md` | AU Notifiable Data Breach Response Playbook |
 | | AUOT | `ARC-*-AUOT-*.md` | AU OT Security Assessment |
 | | AUSOCI | `ARC-*-AUSOCI-*.md` | AU SOCI CIRMP Governance Pack |
+| | AUAESCSF | `ARC-*-AUAESCSF-*.md` | AU AESCSF Maturity Assessment |
+| | AUENERGY | `ARC-*-AUENERGY-*.md` | AU Energy Compliance Pack |
 | | AUAIA | `ARC-*-AUAIA-*.md` | AU AI Assurance Baseline (DTA AI Policy v2.0) |
 | | AUDISP | `ARC-*-AUDISP-*.md` | AU DISP Member Self-Attestation Pack |
 | **Governance (Community-contributed — Australian Federal / DISP-supplier Overlay)** | | | |
