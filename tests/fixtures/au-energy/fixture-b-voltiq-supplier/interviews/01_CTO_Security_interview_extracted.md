@@ -2,7 +2,7 @@
 
 **Date:** 12 May 2026
 **Interviewee:** Dr Anika Shar: Chief Technology Officer, Voltiq Analytics
-**Interviewer:** Roy Mahase (Independent Technology Advisory)
+**Interviewer:** Synthetic assessment lead
 **Topics:** SOCI applicability, AESCSF supplier alignment, multi-tenant SaaS, data handling, supply chain
 
 > ⚠️ **SYNTHETIC COMPOSITE — TEST FIXTURE.** Fictional interviewee/content. Not a real person or transcript.

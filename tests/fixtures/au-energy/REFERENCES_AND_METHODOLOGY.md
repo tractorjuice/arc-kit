@@ -2,7 +2,7 @@
 
 **Project:** ArcKit `au-energy` recipe validation (energy-sector overlay: AESCSF, SOCI/CIRMP, AER ring-fencing)
 **Fixtures:** A — *Eastland Energy Networks* (composite DNSP, applicable case); B — *Voltiq Analytics* (composite supplier, non-SOCI / negative case)
-**Author:** Roy Mahase (Independent Technology Advisory)
+**Author:** Synthetic fixture authors
 **Created:** May 2026
 
 This document explains **how the synthetic test data was created**, lists **every public source used**, maps **each source to the fixture content it informed** (provenance), and records the **validation performed**. It is intended to make the test data fully citable and auditable.
@@ -28,7 +28,7 @@ In Forrester's method, a composite is *"crafted from the characteristics of four
 3. **Aggregate into one representative entity.** Combine those characteristics into a single coherent organisation — not a copy of any one network, and not an average.
 4. **Seed realistic gaps deliberately.** Insert credible, representative weaknesses (anti-patterns, thin CIRMP chapters, ring-fencing information-flow risks) so the recipe has genuine findings to surface. These are typical of a real mid-transition DNSP, not invented to flatter the tool.
 5. **Label everything synthetic.** Every document carries a synthetic-composite disclaimer; all names, ABNs, figures and findings are illustrative.
-6. **Use no confidential or client data.** Only public sources are used. The composite is **not** based on, and must not be attributed to, any real network, any named individual, or any of the author's past clients.
+6. **Use no confidential or client data.** Only public sources are used. The composite is **not** based on, and must not be attributed to, any real network, any named individual, or any real advisor's past clients.
 
 > **Composite ≠ real.** Eastland Energy Networks and Voltiq Analytics do not exist. Real third-party standards, programs and open-source projects are cited only as the public backdrop an entity of each archetype would operate within.
 
@@ -38,7 +38,7 @@ In Forrester's method, a composite is *"crafted from the characteristics of four
 
 - **Public sources only.** No proprietary, client, employer, or otherwise confidential information was used to construct either fixture.
 - **No real-entity modelling.** The composites are not modelled on any single real DNSP or supplier. Real network names (e.g. those appearing in the AER references below) are cited **only** as public regulatory documents that illustrate sector-wide patterns — never as the subject of the fixture.
-- **No client data.** The author's past clients are explicitly excluded as a basis for the fixtures.
+- **No client data.** Real advisor or client histories are explicitly excluded as a basis for the fixtures.
 - **Synthetic labelling.** Each fixture file carries a prominent "SYNTHETIC COMPOSITE — TEST FIXTURE ONLY" notice.
 
 ---
@@ -170,4 +170,4 @@ All URLs were accessed in May 2026.
 
 ---
 
-*Synthetic test data created by Roy Mahase, Independent Technology Advisory, for ArcKit `au-energy` recipe validation. All sources are public; no confidential or client information was used.*
+*Synthetic test data created for ArcKit `au-energy` recipe validation. All sources are public; no confidential or client information was used.*

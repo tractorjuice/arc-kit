@@ -2,7 +2,7 @@
 ## Supplier Cyber Posture Assessment (AESCSF alignment + SOCI supply-chain): Phase 1
 
 **Prepared:** 11 May 2026
-**Author:** Roy Mahase (Independent Technology Advisory)
+**Author:** Synthetic assessment team
 **Client:** Voltiq Analytics Pty Ltd
 **Sponsor:** Dr Anika Shar: Chief Technology Officer
 **Purpose:** Strategic context for an `au-energy` validation of the **negative / non-SOCI** case — a software & advisory supplier to the energy sector that is **not** a designated critical-asset operator.
@@ -73,4 +73,4 @@ Citeable inputs for an `au-energy` run against Fixture B: this brief, `VOLTIQ_En
 
 ---
 
-*Prepared by Roy Mahase, Independent Technology Advisory — synthetic test fixture for the ArcKit `au-energy` recipe (negative case). Not a real engagement.*
+*Prepared as a synthetic test fixture for the ArcKit `au-energy` recipe (negative case). Not a real engagement.*

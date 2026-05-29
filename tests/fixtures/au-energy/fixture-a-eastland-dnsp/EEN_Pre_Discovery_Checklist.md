@@ -1,7 +1,7 @@
 # Eastland Energy Networks — Pre-Discovery Information Request
 
 **Engagement:** Critical Infrastructure Cyber & Compliance Assessment (Phase 1)
-**Prepared by:** Roy Mahase, Independent Technology Advisory | May 2026 | Confidential
+**Prepared by:** Synthetic assessment team | May 2026 | Confidential
 
 > ⚠️ **SYNTHETIC COMPOSITE — TEST FIXTURE ONLY.** Items below describe the *kinds* of evidence a real DNSP assessment would request; for the fixture, representative answers are captured in the interviews and `raw_data/` stubs. See `../REFERENCES_AND_METHODOLOGY.md`.
 

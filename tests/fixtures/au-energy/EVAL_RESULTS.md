@@ -17,7 +17,7 @@ Observed against expected design:
 - AER ring-fencing hooks are present through Eastland Connect, shared platforms, information-flow risk, shared staff, and branding pressure points.
 - SOCI/CIRMP applicability hooks are present for a critical electricity asset, CIRMP hazards, board attestation, and incident reporting.
 
-Result: Pass for fixture coverage and expected command behaviour.
+Result: Pass for fixture/design coverage; command-output behaviour remains to be validated by end-to-end execution.
 
 ## Fixture B - Voltiq Analytics
 
@@ -29,7 +29,7 @@ Observed against expected design:
 - OT overlay non-applicability is represented unless customer access changes.
 - SaaS, tenant isolation, sensitive-supplier, data handling, and notification flow-down hooks are represented.
 
-Result: Pass for negative applicability and supplier flow-down coverage.
+Result: Pass for fixture/design coverage of negative applicability and supplier flow-down expectations; command-output behaviour remains to be validated by end-to-end execution.
 
 ## Known Limits
 

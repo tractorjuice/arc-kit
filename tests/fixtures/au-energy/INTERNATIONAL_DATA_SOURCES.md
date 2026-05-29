@@ -1,7 +1,7 @@
 # International / Open Data Sources for the Energy Eval
 
 **Purpose:** scout sources *beyond Australia* — especially GitHub and open data — that could enrich the `au-energy` evaluation data, with a focus on **pseudo asset data inventories**.
-**Author:** Roy Mahase (Independent Technology Advisory) | May 2026
+**Author:** Synthetic fixture authors | May 2026
 **Status:** Exploratory shortlist. **AssetOpsBench is now in use** as the schema basis for `fixture-a-eastland-dnsp/raw_data/OT_pseudo_asset_inventory.md` (added 2026-05-21; see [`REFERENCES_AND_METHODOLOGY.md`](./REFERENCES_AND_METHODOLOGY.md) refs 45–47). Other sources remain candidates; they get added to provenance if/when adopted.
 
 ---
@@ -149,4 +149,4 @@ This single artefact would feed AESCSF **ACM/SA/TVM**, the predictive-maintenanc
 - **Contribute back** grid/transformer scenarios to AssetOpsBench's open call (community goodwill + a real artefact for your portfolio).
 - **Park as reference** — keep this doc as the source register and revisit after the AU end-to-end validation run.
 
-*Synthetic-data scouting note by Roy Mahase, Independent Technology Advisory. All listed sources are public; licences to be re-verified before any redistribution.*
+*Synthetic-data scouting note for ArcKit fixture development. All listed sources are public; licences to be re-verified before any redistribution.*

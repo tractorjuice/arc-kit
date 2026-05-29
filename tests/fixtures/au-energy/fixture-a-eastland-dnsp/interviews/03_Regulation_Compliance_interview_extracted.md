@@ -2,7 +2,7 @@
 
 **Date:** 8 May 2026
 **Interviewee:** Fiona Albanese — GM Regulation & Compliance, Eastland Energy Networks
-**Interviewer:** Roy Mahase (Independent Technology Advisory)
+**Interviewer:** Synthetic assessment lead
 **Topics:** SOCI designation & CIRMP, board attestation, AER ring-fencing, Eastland Connect, privacy & customer data
 
 > ⚠️ **SYNTHETIC COMPOSITE — TEST FIXTURE.** Fictional interviewee and content; illustrative of a DNSP regulatory/compliance discovery conversation. Not a real person or transcript.

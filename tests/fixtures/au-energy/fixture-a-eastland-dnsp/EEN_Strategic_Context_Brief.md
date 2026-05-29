@@ -2,7 +2,7 @@
 ## Critical Infrastructure Cyber & Compliance Assessment: Phase 1
 
 **Prepared:** 4 May 2026
-**Author:** Roy Mahase (Independent Technology Advisory)
+**Author:** Synthetic assessment team
 **Client:** Eastland Energy Networks Pty Ltd (trading as "Eastland Power")
 **Sponsor:** Priya Nadella (Chief Information Security Officer)
 **Purpose:** Consolidated strategic context for ArcKit `au-energy` modelling — AESCSF capability assessment, SOCI Act / CIRMP, and AER ring-fencing — composing on top of the `au-federal` baseline (E8, ISM, Privacy/NDB).
@@ -11,7 +11,7 @@
 
 > ## ⚠️ SYNTHETIC COMPOSITE — TEST FIXTURE ONLY
 >
-> **Eastland Energy Networks (EEN) is a fictional composite organisation** created solely to validate the ArcKit `au-energy` recipe (`au-aescsf`, `au-soci-cirmp`) and the AER ring-fencing ADR seeds. Following the **Forrester TEI "composite organisation" method**, EEN's profile is assembled from *publicly available* sources: AER 2026–31 Victorian DNSP regulatory proposals (and the 2024–29 NSW / 2025–30 SA & QLD resets), AER/EMCa expenditure reviews, and AEMO public program materials. **It does not represent, and must not be attributed to, any real distribution network, any named individual, or any of the author's past clients.** All entity names, financials, system names, and findings are illustrative. Real third-party standards, programs, and open-source projects (AESCSF, SOCI Act, CER Data Exchange, CSIP-AUS, etc.) are cited only as the public backdrop a network of this archetype would operate within.
+> **Eastland Energy Networks (EEN) is a fictional composite organisation** created solely to validate the ArcKit `au-energy` recipe (`au-aescsf`, `au-soci-cirmp`) and the AER ring-fencing ADR seeds. Following the **Forrester TEI "composite organisation" method**, EEN's profile is assembled from *publicly available* sources: AER 2026–31 Victorian DNSP regulatory proposals (and the 2024–29 NSW / 2025–30 SA & QLD resets), AER/EMCa expenditure reviews, and AEMO public program materials. **It does not represent, and must not be attributed to, any real distribution network, any named individual, or any real advisor's past clients.** All entity names, financials, system names, and findings are illustrative. Real third-party standards, programs, and open-source projects (AESCSF, SOCI Act, CER Data Exchange, CSIP-AUS, etc.) are cited only as the public backdrop a network of this archetype would operate within.
 
 ---
 
@@ -208,4 +208,4 @@ This Phase 1 covers the **regulated DNSP and its OT estate**, with Eastland Conn
 
 ---
 
-*Prepared by Roy Mahase, Independent Technology Advisory, Melbourne — as a synthetic test fixture for the ArcKit `au-energy` recipe. Not a real engagement.*
+*Prepared as a synthetic test fixture for the ArcKit `au-energy` recipe. Not a real engagement.*

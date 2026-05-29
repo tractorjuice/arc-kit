@@ -1,7 +1,7 @@
 # Voltiq Analytics — Engagement Scope (Supplier Cyber Posture)
 
 **Prepared for:** Dr Anika Shar: CTO, Voltiq Analytics
-**Author:** Roy Mahase | Independent Technology Advisory | May 2026 | Confidential
+**Author:** Synthetic assessment team | May 2026 | Confidential
 
 > ⚠️ **SYNTHETIC COMPOSITE — TEST FIXTURE ONLY.** Fictional supplier; negative/non-SOCI case. See `../REFERENCES_AND_METHODOLOGY.md`.
 

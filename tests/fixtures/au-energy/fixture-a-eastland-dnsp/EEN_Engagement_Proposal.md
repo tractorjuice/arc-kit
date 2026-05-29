@@ -10,9 +10,9 @@ Eastland Energy Networks Pty Ltd (trading as Eastland Power)
 
 Prepared by
 
-**Roy Mahase**
+**Synthetic Assessment Lead**
 
-Independent Technology Advisory
+Independent advisory role
 
 May 2026
 
@@ -87,9 +87,9 @@ Phase 1 is structured across four weeks.
 
 **Investment:** Scoped at senior advisory day-rate; range confirmed at kickoff. *(Illustrative — synthetic fixture.)*
 
-# 5. About Roy Mahase
+# 5. Assessment Team Profile
 
-12 years of enterprise technology strategy from Microsoft as Account Technology Strategist for major Australian infrastructure and energy organisations — cloud transformation, security architecture, AI adoption and commercial advisory across regulated environments, including organisations with Essential Eight obligations and critical-infrastructure compliance requirements. Currently leading data and AI advisory in management consulting for Power & Utilities. This engagement is offered as independent advisory.
+This fixture assumes a senior independent advisory role with experience across regulated technology strategy, cloud transformation, security architecture, and critical-infrastructure compliance. The profile is synthetic and exists only to make the proposal format realistic for ArcKit recipe validation.
 
 # 6. Next Steps
 
@@ -101,6 +101,6 @@ Phase 1 is structured across four weeks.
 ## Confidentiality
 All information shared is strictly confidential. Given the critical-infrastructure context, security configurations, OT details and the life-support customer register will be handled under a mutual NDA and not retained after the engagement concludes.
 
-**Roy Mahase** — Independent Technology Advisory, Melbourne, Victoria
+**Synthetic Assessment Lead** — Independent advisory role
 
 *(Synthetic test-fixture document. Not a real engagement.)*

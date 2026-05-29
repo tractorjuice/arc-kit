@@ -77,6 +77,6 @@ Naming the real stack makes the **AESCSF EDM (External Dependencies)** and **SOC
 - **Sensitive-supplier analysis** — which vendors touch DOE/constraint data or hold standing OT access.
 
 ## 4. Composite note
-Where Roy's market knowledge suggests multiple plausible vendors (e.g., **GE vs Schneider** ADMS; **Itron vs Landis+Gyr** AMI; **Gentrack/Hansen vs SAP IS-U** billing), the catalogue picks a primary and lists the realistic alternative — keeping the fixture credible without asserting any single real network's actual choices.
+Where public market context suggests multiple plausible vendors (e.g., **GE vs Schneider** ADMS; **Itron vs Landis+Gyr** AMI; **Gentrack/Hansen vs SAP IS-U** billing), the catalogue picks a primary and lists the realistic alternative — keeping the fixture credible without asserting any single real network's actual choices.
 
 *Synthetic test-fixture document. Vendor products are real and public; their use here is illustrative only.*

@@ -1,7 +1,7 @@
 # Critical Infrastructure Cyber & Compliance Assessment — Engagement Primer
 
 **Prepared for:** Eastland Energy Networks (leadership, control room, regulation)
-**Author:** Roy Mahase | Independent Technology Advisory | May 2026 | Confidential
+**Author:** Synthetic assessment team | May 2026 | Confidential
 
 > ⚠️ **SYNTHETIC COMPOSITE — TEST FIXTURE ONLY.** Fictional composite DNSP. See `EEN_Strategic_Context_Brief.md` and `../REFERENCES_AND_METHODOLOGY.md`.
 
@@ -39,6 +39,6 @@ EEN is a designated critical electricity asset, an AEMO market participant, and 
 - Read access to: AESCSF prior self-assessment, current CIRMP + last board attestation, ring-fencing statement, OT asset register, E8/ISM artefacts.
 - Collaborative framing: a defensible map for the Board and AER — not an audit of any individual.
 
-**Contact:** Roy Mahase | Independent Technology Advisory | Melbourne
+**Contact:** Synthetic assessment team
 
 *(Synthetic test-fixture document.)*

@@ -2,7 +2,7 @@
 
 **Date:** 6 May 2026
 **Interviewee:** Priya Nadella — Chief Information Security Officer, Eastland Energy Networks
-**Interviewer:** Roy Mahase (Independent Technology Advisory)
+**Interviewer:** Synthetic assessment lead
 **Topics:** AESCSF, cyber & OT security program, SOC/monitoring, SOCI cyber hazard, supply chain
 
 > ⚠️ **SYNTHETIC COMPOSITE — TEST FIXTURE.** Fictional interviewee and content; illustrative of a DNSP CISO discovery conversation. Not a real person or transcript.
