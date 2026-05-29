@@ -1,0 +1,113 @@
+from pathlib import Path
+import re
+
+import yaml
+
+
+REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def read(path: str) -> str:
+    return (REPO_ROOT / path).read_text(encoding="utf-8")
+
+
+def test_au_energy_source_files_exist_and_use_community_origin():
+    expected = {
+        "au-aescsf": ("AUAESCSF", "Australian Energy Sector Cyber Security Framework"),
+        "au-energy-compliance": ("AUENERGY", "AER ring-fencing"),
+    }
+
+    for command, (doc_type, anchor) in expected.items():
+        command_text = read(f"arckit-au/commands/{command}.md")
+        template_text = read(f"arckit-au/templates/{command}-template.md")
+
+        assert "[COMMUNITY]" in command_text
+        assert f"generate-document-id.sh <PROJECT_ID> {doc_type} --filename" in command_text
+        assert anchor in command_text
+        assert "Template Origin**: Community" in template_text
+        assert f"Command**: `/arckit:{command}`" in template_text
+
+
+def test_au_energy_recipe_composes_federal_ot_soci_and_energy_targets():
+    recipe = yaml.safe_load(read("arckit-au/recipes/au-energy.yaml"))
+
+    assert recipe["recipe"] == "au-energy"
+    assert recipe["schema_version"] == 1
+    assert recipe["flagship"] == "AU_ENERGY"
+    assert "AESCSF" in recipe["description"]
+    assert "ring-fencing" in recipe["description"]
+
+    optional_targets = recipe["optional_targets"]
+    assert optional_targets["AU_OT"]["default"] is True
+    assert optional_targets["AU_SOCI"]["default"] is True
+    assert optional_targets["AU_AESCSF"]["default"] is True
+    assert optional_targets["AU_ENERGY"]["default"] is True
+
+    targets = {target["id"]: target for target in recipe["targets"]}
+    assert targets["AU_OT"]["skill"] == "arckit:au-ot-security"
+    assert targets["AU_SOCI"]["skill"] == "arckit:au-soci-cirmp"
+    assert targets["AU_AESCSF"]["skill"] == "arckit:au-aescsf"
+    assert targets["AU_AESCSF"]["output"]["type"] == "AUAESCSF"
+    assert targets["AU_AESCSF"]["deps"] == ["REQ", "STKE", "AU_E8", "AU_ISM", "AU_OT", "AU_SOCI"]
+    assert targets["AU_ENERGY"]["skill"] == "arckit:au-energy-compliance"
+    assert targets["AU_ENERGY"]["output"]["type"] == "AUENERGY"
+    assert targets["AU_ENERGY"]["deps"] == [
+        "REQ",
+        "STKE",
+        "AU_PIA",
+        "AU_NDB",
+        "AU_OT",
+        "AU_SOCI",
+        "AU_AESCSF",
+    ]
+
+    adr_topics = [target["topic"] for target in recipe["targets"] if target["id"].startswith("ADR_")]
+    assert len(adr_topics) == 8
+    assert any("ring-fencing" in topic.lower() for topic in adr_topics)
+    assert any("AEMO" in topic for topic in adr_topics)
+    assert any("CSIP-AUS" in topic for topic in adr_topics)
+
+
+def test_au_energy_doc_types_registered_in_core_and_pages():
+    doc_types = read("arckit-claude/config/doc-types.mjs")
+    pages = read("arckit-claude/commands/pages.md")
+
+    assert re.search(r"'AUAESCSF':\s+\{ name: 'AU AESCSF Maturity Assessment'", doc_types)
+    assert re.search(r"'AUENERGY':\s+\{ name: 'AU Energy Compliance Pack'", doc_types)
+    assert "| | AUAESCSF | `ARC-*-AUAESCSF-*.md` | AU AESCSF Maturity Assessment |" in pages
+    assert "| | AUENERGY | `ARC-*-AUENERGY-*.md` | AU Energy Compliance Pack |" in pages
+
+
+def test_au_energy_fixtures_are_public_synthetic_and_have_expected_shape():
+    fixture_root = REPO_ROOT / "tests/fixtures/au-energy"
+    assert (fixture_root / "README.md").is_file()
+    assert (fixture_root / "REFERENCES_AND_METHODOLOGY.md").is_file()
+    assert (fixture_root / "EVAL_EXPECTATIONS.md").is_file()
+    assert (fixture_root / "EVAL_RESULTS.md").is_file()
+    assert (fixture_root / "fixture-a-eastland-dnsp").is_dir()
+    assert (fixture_root / "fixture-b-voltiq-supplier").is_dir()
+
+    fixture_files = [
+        path
+        for path in fixture_root.rglob("*.md")
+        if path.name not in {
+            "README.md",
+            "REFERENCES_AND_METHODOLOGY.md",
+            "INTERNATIONAL_DATA_SOURCES.md",
+            "EVAL_EXPECTATIONS.md",
+            "EVAL_RESULTS.md",
+        }
+    ]
+    assert fixture_files
+
+    for path in fixture_files:
+        text = path.read_text(encoding="utf-8")
+        assert "SYNTHETIC" in text.upper(), f"{path} missing synthetic disclaimer"
+
+    expectations = read("tests/fixtures/au-energy/EVAL_EXPECTATIONS.md")
+    results = read("tests/fixtures/au-energy/EVAL_RESULTS.md")
+    assert "Eastland Energy Networks" in expectations
+    assert "Voltiq Analytics" in expectations
+    assert "MIL-1" in expectations
+    assert "Not a SOCI-covered entity" in expectations
+    assert "Manual evaluation" in results
