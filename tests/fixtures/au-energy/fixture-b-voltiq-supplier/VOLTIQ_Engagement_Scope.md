@@ -1,7 +1,7 @@
 # Voltiq Analytics — Engagement Scope (Supplier Cyber Posture)
 
 **Prepared for:** Chief Technology Officer (synthetic role), Voltiq Analytics
-**Author:** Synthetic assessment team | May 2026 | Confidential
+**Author:** Synthetic assessment team | May 2026 | Public synthetic evaluation fixture
 
 > ⚠️ **SYNTHETIC COMPOSITE — TEST FIXTURE ONLY.** Fictional supplier; negative/non-SOCI case. See `../REFERENCES_AND_METHODOLOGY.md`.
 

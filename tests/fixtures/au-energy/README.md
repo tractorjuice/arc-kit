@@ -1,6 +1,6 @@
 # `au-energy` Validation Fixtures (Synthetic Test Data)
 
-Synthetic discovery packs to validate the ArcKit **`au-energy`** recipe (`contrib/au-energy.yaml`) end-to-end — closing the merge blocker noted in the recipe YAML: *"validation against an energy-sector / SOCI test fixture is required before merge."*
+Synthetic discovery packs to validate the ArcKit **`au-energy`** recipe (`arckit-au/recipes/au-energy.yaml`) end-to-end — closing the merge blocker noted in the recipe YAML: *"validation against an energy-sector / SOCI test fixture is required before merge."*
 
 > ⚠️ **All data here is SYNTHETIC.** Both organisations are fictional composites built with the Forrester-TEI composite method from public sources. They do not represent any real network, supplier, person, or client. **Method, full reference list, provenance map and validation log:** see [`REFERENCES_AND_METHODOLOGY.md`](./REFERENCES_AND_METHODOLOGY.md).
 
@@ -20,7 +20,7 @@ Synthetic discovery packs to validate the ArcKit **`au-energy`** recipe (`contri
 ## File manifest
 
 ```
-inputs_energy/
+tests/fixtures/au-energy/
 ├── README.md                          ← this file
 ├── REFERENCES_AND_METHODOLOGY.md      ← method, citations, provenance, validation log
 ├── INTERNATIONAL_DATA_SOURCES.md      ← beyond-AU / GitHub sources (AssetOpsBench, SGAM, etc.)
@@ -99,7 +99,7 @@ E8 (ML1/ML2 with OT carve-outs), ISM (IT-aligned, partial OT), Privacy/APP (life
 
 These fixtures are **Track A (clean-slate)** discovery inputs. To validate the recipe:
 
-1. **Stand up a project** for each fixture (e.g. `projects/003-eastland-dnsp/` and `projects/004-voltiq-supplier/`) and point discovery inputs at the relevant `inputs_energy/fixture-*` folder.
+1. **Stand up a project** for each fixture (e.g. `projects/003-eastland-dnsp/` and `projects/004-voltiq-supplier/`) and point discovery inputs at the relevant `tests/fixtures/au-energy/fixture-*` folder.
 2. **Establish the federal baseline first** (the `au-energy` recipe composes on `au-federal`): run `au-e8-posture`, `au-ism-controls`, `au-pia` as needed so the energy commands have their prerequisites.
 3. **Run the energy commands:**
    - Fixture A: `au-aescsf 003` then `au-soci-cirmp 003`.
@@ -109,7 +109,7 @@ These fixtures are **Track A (clean-slate)** discovery inputs. To validate the r
    - **A — SOCI:** applies; four-hazard table with **thin personnel & supply-chain**; untested 12-hr OT pipeline flagged; board-attestation cycle recorded.
    - **B — SOCI:** **"Not a SOCI-covered entity"** statement **plus** flow-down + sensitive-supplier exposure (not a bare "nothing to do").
    - **B — AESCSF:** supplier-scoped; **OT overlay explicitly N/A**; tenant-isolation / data-handling / supply-chain findings.
-5. **Record results** in `REFERENCES_AND_METHODOLOGY.md` §6 (Validation Log) and a delta/scorecard alongside the existing `EVAL_RESULTS_*` files, then update `contrib/au-energy.yaml` `validation_evidence.status`.
+5. **Record results** in `REFERENCES_AND_METHODOLOGY.md` §6 (Validation Log) and a delta/scorecard alongside the existing `EVAL_RESULTS_*` files, then update `arckit-au/recipes/au-energy.yaml` `validation_evidence.status`.
 
 ---
 

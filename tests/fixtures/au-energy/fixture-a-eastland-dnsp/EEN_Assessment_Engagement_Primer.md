@@ -1,7 +1,7 @@
 # Critical Infrastructure Cyber & Compliance Assessment — Engagement Primer
 
 **Prepared for:** Eastland Energy Networks (leadership, control room, regulation)
-**Author:** Synthetic assessment team | May 2026 | Confidential
+**Author:** Synthetic assessment team | May 2026 | Public synthetic evaluation fixture
 
 > ⚠️ **SYNTHETIC COMPOSITE — TEST FIXTURE ONLY.** Fictional composite DNSP. See `EEN_Strategic_Context_Brief.md` and `../REFERENCES_AND_METHODOLOGY.md`.
 

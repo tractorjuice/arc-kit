@@ -11,7 +11,7 @@ This document explains **how the synthetic test data was created**, lists **ever
 
 ## 1. Purpose
 
-The `au-energy` recipe (`contrib/au-energy.yaml`) shipped two community commands — `au-aescsf` and `au-soci-cirmp` — that are mechanically clean but were **not validated end-to-end** because the existing federal test fixture (MBB Group) is an advisory firm, not an energy market participant or SOCI-designated critical-asset operator. The recipe YAML explicitly states that *"validation against an [energy-sector / SOCI] test fixture is required before merge."*
+The `au-energy` recipe (`arckit-au/recipes/au-energy.yaml`) shipped two community commands — `au-aescsf` and `au-soci-cirmp` — that are mechanically clean but were **not validated end-to-end** because the existing federal test fixture (MBB Group) is an advisory firm, not an energy market participant or SOCI-designated critical-asset operator. The recipe YAML explicitly states that *"validation against an [energy-sector / SOCI] test fixture is required before merge."*
 
 These fixtures provide that test data: an energy-sector entity that **triggers** the energy regulatory paths (Fixture A) and a supplier that **deliberately does not** trigger SOCI (Fixture B), so the recipe's applicability logic can be validated in both directions.
 
@@ -166,7 +166,7 @@ All URLs were accessed in May 2026.
 | _Pending_ | **End-to-end recipe run** — `au-aescsf` + `au-soci-cirmp` executed against Fixture A, and SOCI non-applicability confirmed against Fixture B | **Deferred** (per scope: "build the fixture only") — to be run in a follow-up pass and recorded here |
 | _Pending_ | **Reviewer sign-off** — AESCSF-experienced assessor / SOCI compliance reviewer | Deferred until after the end-to-end run |
 
-**Status:** Fixtures built and internally coverage-validated. The end-to-end `au-energy` recipe run is the next step and is **not** yet done — this log should be updated when it is, to complete the merge-readiness evidence for `contrib/au-energy.yaml`.
+**Status:** Fixtures built and internally coverage-validated. The end-to-end `au-energy` recipe run is the next step and is **not** yet done — this log should be updated when it is, to complete the merge-readiness evidence for `arckit-au/recipes/au-energy.yaml`.
 
 ---
 

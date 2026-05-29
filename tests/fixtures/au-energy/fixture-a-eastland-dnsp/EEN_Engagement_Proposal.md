@@ -16,7 +16,7 @@ Independent advisory role
 
 May 2026
 
-**CONFIDENTIAL**
+**SYNTHETIC PUBLIC EVALUATION FIXTURE**
 
 ---
 
@@ -85,7 +85,7 @@ Phase 1 is structured across four weeks.
 | Week 3 | Ring-fencing review; federal-baseline composition; anti-pattern validation | Draft Workstreams C & D |
 | Week 4 | Synthesis, maturity matrices, remediation plan, executive read-out | Final deliverables |
 
-**Investment:** Scoped at senior advisory day-rate; range confirmed at kickoff. *(Illustrative — synthetic fixture.)*
+**Investment:** Out of scope for this public evaluation fixture. Timing and role assumptions are illustrative only.
 
 # 5. Engagement Assumptions
 
@@ -93,13 +93,13 @@ This fixture assumes the assessment is run as a time-boxed discovery and validat
 
 # 6. Next Steps
 
-- Confirm Phase 1 scope and commercial terms.
+- Confirm Phase 1 scope and evaluation assumptions.
 - Schedule kickoff and a **control-centre walkthrough** (primary + DR site).
 - Provide read access to the AESCSF prior self-assessment, the current CIRMP and last board attestation, the ring-fencing compliance statement, the OT asset register, and the E8/ISM artefacts.
 - Provide the pre-discovery information listed in the accompanying checklist.
 
-## Confidentiality
-All information shared is strictly confidential. Given the critical-infrastructure context, security configurations, OT details and the life-support customer register will be handled under a mutual NDA and not retained after the engagement concludes.
+## Public Fixture Handling
+This document is synthetic public test data. It is designed to exercise ArcKit recipe behaviour without using confidential, client, or real network information.
 
 **Synthetic Assessment Lead** — Independent advisory role
 
