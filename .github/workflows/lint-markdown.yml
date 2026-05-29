@@ -63,6 +63,9 @@ jobs:
       - name: Dual-registration test for doc-types
         run: node scripts/tests/test-doc-types-dual-registration.mjs
 
+      - name: Regime-registration test for doc-types
+        run: node scripts/tests/test-regime-registration.mjs
+
       - name: Install npm deps for validator tests
         run: npm ci
 

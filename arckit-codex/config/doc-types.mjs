@@ -191,9 +191,9 @@ export const DOC_TYPES = {
 };
 
 // Derived: regimes in canonical order (officially-maintained first, then community alphabetical)
-// CA + AU added retroactively — both shipped doc-types without REGIMES registration
-// (CA since v4.15.0, AU in v5.0.0). REGIME_LABELS ordering matches.
-export const REGIMES = ['UK', 'MOD', 'AT', 'AU', 'CA', 'EU', 'FR', 'UAE'];
+// CA + AU + US added retroactively — each shipped doc-types without REGIMES registration
+// (CA since v4.15.0, AU in v5.0.0, US in v5.1.0; see #545). REGIME_LABELS ordering matches.
+export const REGIMES = ['UK', 'MOD', 'AT', 'AU', 'CA', 'EU', 'FR', 'UAE', 'US'];
 
 // Human-readable regime labels
 export const REGIME_LABELS = {
@@ -205,6 +205,7 @@ export const REGIME_LABELS = {
   EU:  'EU',
   FR:  'France',
   UAE: 'UAE',
+  US:  'USA Federal',
 };
 
 // Derived: HIGH-severity type codes, grouped per regime (plus 'UNIVERSAL' for
