@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `au-ot-security` for ASD operational technology cyber security guidance in connected OT environments.
 - Added `au-soci-cirmp` for SOCI Act / Critical Infrastructure Risk Management Program support.
 - Added optional default-off `AU_OT` and `AU_SOCI` targets to the `au-federal` recipe for cross-sector critical-infrastructure use. These are general AU capabilities intended to be consumed by the first industry-specific AU menu, `au-energy`.
+- Added `au-aescsf` for Australian Energy Sector Cyber Security Framework maturity assessment.
+- Added `au-energy-compliance` for Australian energy compliance packs covering AESCSF, AER ring-fencing, NER/NGR, AEMO obligations, IT/OT evidence, privacy, NDB, traceability, data flows, data modelling, and ADR decisions.
+- Added the `au-energy` recipe, which composes the AU federal community overlay with optional `AU_OT` and `AU_SOCI` targets before adding energy-sector evidence.
+- Added a public synthetic AU energy fixture corpus for evaluation and regression testing. The corpus is synthetic, including personas.
 
 ## [5.0.0] - 2026-05-18
 
