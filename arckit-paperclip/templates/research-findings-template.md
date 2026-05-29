@@ -477,7 +477,7 @@ Assessment against 13 TCoP points relevant to technology selection:
 | TCoP Point | Status | Notes |
 |-----------|--------|-------|
 | **1. Define user needs** | ✅ Compliant | Research driven by user requirements |
-| **2. Make things accessible** | ✅ Compliant | All vendors assessed for WCAG 2.1 AA |
+| **2. Make things accessible** | ✅ Compliant | All vendors assessed for WCAG 2.2 AA |
 | **3. Be open and use open standards** | ✅ Compliant | Open source options prioritized |
 | **4. Make use of open source** | ✅ Compliant | [X] categories using open source |
 | **5. Use cloud first** | ✅ Compliant | Public cloud (AWS/Azure/GCP) recommended |

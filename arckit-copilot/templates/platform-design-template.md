@@ -1355,7 +1355,7 @@ This platform embodies GaaP principles:
 | Service Standard Point | Platform Consideration |
 |------------------------|------------------------|
 | **Point 2: Solve a whole problem for users** | Platform solves entire procurement lifecycle, not just matching |
-| **Point 5: Make sure everyone can use the service** | WCAG 2.1 AA compliance, mobile-first design |
+| **Point 5: Make sure everyone can use the service** | WCAG 2.2 AA compliance, mobile-first design |
 | **Point 9: Create a secure service** | Cyber Essentials Plus, penetration testing, data encryption |
 | **Point 13: Use common platforms and components** | GOV.UK Pay, Notify, Design System integration |
 

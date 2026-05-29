@@ -333,7 +333,7 @@ Every story must meet these criteria before marking "Done":
 #### Compliance
 
 - [ ] GDPR requirements met (if handling user data)
-- [ ] Accessibility tested (WCAG 2.1 AA)
+- [ ] Accessibility tested (WCAG 2.2 AA)
 - [ ] Audit logging in place (if required)
 
 #### Documentation

@@ -259,7 +259,7 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 
 **Evidence Sources**:
 
-- `ARC-*-REQ-*.md` - WCAG 2.1 AA requirements, accessibility NFRs
+- `ARC-*-REQ-*.md` - WCAG 2.2 AA requirements, accessibility NFRs
 - `ARC-*-SECD-*.md` - Accessibility considerations
 - `reviews/ARC-*-HLDR-*.md` - Accessibility design review
 - `reviews/ARC-*-DLDR-*.md` - Assistive technology compatibility
@@ -269,13 +269,13 @@ For each of the 14 Service Standard points, map evidence from ArcKit artifacts:
 **Alpha**:
 
 - ✅ Accessibility considerations documented
-- ✅ WCAG 2.1 AA compliance planned
+- ✅ WCAG 2.2 AA compliance planned
 - ✅ Testing with assistive technology planned
 - ⚠️ Full accessibility audit not required at alpha
 
 **Beta**:
 
-- ✅ WCAG 2.1 AA audit completed and passed (critical)
+- ✅ WCAG 2.2 AA audit completed and passed (critical)
 - ✅ Testing with screen readers, voice control, magnification
 - ✅ Testing with disabled users
 - ✅ Accessibility statement published
@@ -852,7 +852,7 @@ Example: `projects/001-nhs-appointment/ARC-001-SVCASS-v1.0.md`
 | 2. Solve whole problem | ARC-*-REQ-*.md, wardley-maps/ | 🟢 Complete | None |
 | 3. Joined up experience | reviews/ARC-*-HLDR-*.md, diagrams/ | 🟡 Partial | Channel integration testing |
 | 4. Simple to use | ARC-*-REQ-*.md, reviews/ARC-*-HLDR-*.md | 🟢 Complete | None |
-| 5. Everyone can use | ARC-*-REQ-*.md, ARC-*-SECD-*.md | 🔴 Not Ready | WCAG 2.1 AA testing |
+| 5. Everyone can use | ARC-*-REQ-*.md, ARC-*-SECD-*.md | 🔴 Not Ready | WCAG 2.2 AA testing |
 | 6. Multidisciplinary team | ARC-*-STKE-*.md, ARC-*-PLAN-*.md | 🟢 Complete | None |
 | 7. Agile ways of working | ARC-*-PLAN-*.md | 🟢 Complete | None |
 | 8. Iterate frequently | reviews/ARC-*-HLDR-*.md, reviews/ARC-*-DLDR-*.md | 🟡 Partial | Iteration log |
@@ -1272,7 +1272,7 @@ Create a public document (visible to assessment team) showing:
 - Security or privacy concerns
 
 **Common red points**:
-- Point 5: WCAG 2.1 AA testing not completed (critical for beta)
+- Point 5: WCAG 2.2 AA testing not completed (critical for beta)
 - Point 9: Security testing not done or serious vulnerabilities found
 - Point 10: No performance data being collected
 - Point 14: Service unreliable, frequent downtime

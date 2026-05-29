@@ -453,7 +453,7 @@
 **UX Standards**:
 
 - Consistent with [Design System Name]
-- Accessibility: WCAG 2.1 Level AA compliance
+- Accessibility: WCAG 2.2 Level AA compliance
 - Mobile responsive design
 - Browser support: [Chrome, Firefox, Safari, Edge - last 2 versions]
 
@@ -465,7 +465,7 @@
 
 #### NFR-U-002: Accessibility
 
-**Requirement**: WCAG 2.1 Level AA compliance
+**Requirement**: WCAG 2.2 Level AA compliance
 
 **Accessibility Features**:
 

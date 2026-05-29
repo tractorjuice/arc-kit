@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **`defaultEnabled: false` on all 9 community overlays** (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`). Adopts the Claude Code v2.1.154 plugin manifest field so installing the marketplace surfaces the overlays without auto-enabling all nine. Users now opt in to only the jurisdiction or sector they need; core `arckit` stays default-enabled. Formalises the "install only what you need" model already documented in `CLAUDE.md`. Addresses item 42 of #522.
 
+### Fixed
+
+- **UK accessibility target corrected from WCAG 2.1 AA to WCAG 2.2 AA.** UK public sector bodies are now monitored against WCAG 2.2 AA — GDS has tested against 2.2 since October 2024, and the *Public Sector Bodies (Websites and Mobile Applications) Accessibility (Amendment) (EU Exit) Regulations 2022* (SI 2022/1097) replaced the fixed WCAG version reference with a rolling reference to "the latest published version of WCAG" (currently 2.2). The `/arckit:service-assessment` command (GDS Service Standard Point 5 evidence checks) and several core templates were still hard-coded to "WCAG 2.1 AA", causing generated UK artefacts to cite the superseded standard. Updated: `service-assessment` (5 references), `backlog` command, and the `requirements`, `sow`, `research-findings`, `platform-design`, and `backlog` templates, plus the NHS example on `docs/use-cases.html`. Non-Claude formats regenerated via `scripts/converter.py`.
+  - **Jurisdictional overlays intentionally left unchanged** (verified against current 2026 mandates): France `fr-dinum` correctly maps RGAA 4.1.2 → WCAG **2.1** AA (RGAA 5 / 2.2 expected end-2026, not yet in force); Canada `ca-gc-digital-standards` correctly anchors WCAG **2.1** AA via CAN/ASC-EN 301 549:2024; Australia `au-dss` already targets WCAG **2.2** AA (Digital Experience Policy, 1 Jan 2025).
+
 ## [5.5.0] — 2026-05-28
 
 ### Brand reposition

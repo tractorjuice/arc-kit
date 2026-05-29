@@ -131,7 +131,7 @@ The following are explicitly NOT part of this engagement:
 
 #### 3.2.5 Usability Requirements
 
-- **Accessibility**: [WCAG 2.1 Level AA compliance]
+- **Accessibility**: [WCAG 2.2 Level AA compliance]
 - **Browser Support**: [Chrome, Firefox, Safari, Edge - last 2 versions]
 - **Mobile**: [Responsive design, native apps if required]
 - **Localization**: [Languages and locales to support]
