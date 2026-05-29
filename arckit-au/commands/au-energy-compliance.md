@@ -107,5 +107,6 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
 
 - This command is community-contributed architecture guidance, not legal, regulatory, or compliance certification advice.
 - AER ring-fencing, NER, NGR, AEMO procedures, SOCI obligations, and participant-specific obligations change over time. Record versions, dates checked, and unresolved assumptions.
+- If AEMO site resources are temporarily unavailable, record the access date and use the latest verified local or public copy available to the organisation.
 - Do not collapse regulated and unregulated data flows into a generic system diagram. Produce explicit boundary, interface, data-model, traceability, and ADR handoffs.
 - Use `/arckit:au-aescsf` for energy cyber maturity and `/arckit:au-ot-security` for OT-specific evidence where applicable.
