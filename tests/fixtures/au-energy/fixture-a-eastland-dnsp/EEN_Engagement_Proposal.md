@@ -87,9 +87,9 @@ Phase 1 is structured across four weeks.
 
 **Investment:** Scoped at senior advisory day-rate; range confirmed at kickoff. *(Illustrative — synthetic fixture.)*
 
-# 5. Assessment Team Profile
+# 5. Engagement Assumptions
 
-This fixture assumes a senior independent advisory role with experience across regulated technology strategy, cloud transformation, security architecture, and critical-infrastructure compliance. The profile is synthetic and exists only to make the proposal format realistic for ArcKit recipe validation.
+This fixture assumes the assessment is run as a time-boxed discovery and validation activity using the evidence sources listed above. Role labels, interview groups, and delivery milestones are synthetic placeholders used only to make the proposal format realistic for ArcKit recipe validation.
 
 # 6. Next Steps
 
