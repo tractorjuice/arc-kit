@@ -84,6 +84,7 @@ def test_au_energy_fixtures_are_public_synthetic_and_have_expected_shape():
     assert (fixture_root / "REFERENCES_AND_METHODOLOGY.md").is_file()
     assert (fixture_root / "EVAL_EXPECTATIONS.md").is_file()
     assert (fixture_root / "EVAL_RESULTS.md").is_file()
+    assert (fixture_root / "EVAL_SUMMARY_REPORT.md").is_file()
     assert (fixture_root / "fixture-a-eastland-dnsp").is_dir()
     assert (fixture_root / "fixture-b-voltiq-supplier").is_dir()
 
@@ -111,3 +112,82 @@ def test_au_energy_fixtures_are_public_synthetic_and_have_expected_shape():
     assert "MIL-1" in expectations
     assert "Not a SOCI-covered entity" in expectations
     assert "Manual evaluation" in results
+
+
+def test_au_energy_synthetic_fixtures_exercise_new_skill_prompts():
+    fixture_root = REPO_ROOT / "tests/fixtures/au-energy"
+    eastland_text = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in (fixture_root / "fixture-a-eastland-dnsp").rglob("*.md")
+    )
+    voltiq_text = "\n".join(
+        path.read_text(encoding="utf-8")
+        for path in (fixture_root / "fixture-b-voltiq-supplier").rglob("*.md")
+    )
+
+    aescsf_command = read("arckit-au/commands/au-aescsf.md")
+    energy_command = read("arckit-au/commands/au-energy-compliance.md")
+    summary = read("tests/fixtures/au-energy/EVAL_SUMMARY_REPORT.md")
+    results = read("tests/fixtures/au-energy/EVAL_RESULTS.md")
+
+    for required_section in [
+        "Domain Maturity Assessment",
+        "OT/IT and Grid-Edge Findings",
+        "Architecture Evidence",
+        "IT/OT and Market Data Flows",
+        "Energy Data Model Dependencies",
+        "Federal Baseline Cross-Reference",
+    ]:
+        assert required_section in aescsf_command
+
+    for required_section in [
+        "Energy-Sector Applicability",
+        "AER Ring-Fencing Assessment",
+        "NER / NGR and AEMO Obligation Mapping",
+        "Market and System-Operator Interface Register",
+        "Regulated / Unregulated Data Flows",
+        "Architecture Decision Seeds",
+    ]:
+        assert required_section in energy_command
+
+    eastland_positive_anchors = [
+        "Eastland Energy Networks",
+        "critical electricity asset",
+        "SCADA",
+        "ADMS",
+        "DERMS",
+        "DOE",
+        "CSIP-AUS",
+        "vendor remote access",
+        "MIL-1",
+        "ring-fencing",
+        "AEMO",
+        "NMI",
+        "settlement",
+        "CIRMP",
+    ]
+    for anchor in eastland_positive_anchors:
+        assert anchor in eastland_text, f"Fixture A missing expected anchor: {anchor}"
+
+    voltiq_negative_anchors = [
+        "Voltiq Analytics",
+        "Not a SOCI-covered entity",
+        "flow-down",
+        "supplier",
+        "tenant",
+        "OT overlay",
+        "notification",
+    ]
+    for anchor in voltiq_negative_anchors:
+        assert anchor in voltiq_text, f"Fixture B missing expected anchor: {anchor}"
+
+    for reported_signal in [
+        "Synthetic skill compatibility evaluation",
+        "Fixture A: Pass",
+        "Fixture B: Pass",
+        "au-aescsf",
+        "au-energy-compliance",
+        "deterministic fixture-coverage evaluation",
+    ]:
+        assert reported_signal in summary
+        assert reported_signal in results

@@ -173,10 +173,10 @@ All URLs were accessed in May 2026.
 | 2026-05-21 | **Architecture & data-flow diagrams added** to Fixture A (SGAM/CER-HLD/CSIP-AUS/OpEN method, refs 48–51); landscape diagram validated via Mermaid renderer | Complete — synthetic; public reference architectures used as method only |
 | 2026-05-21 | **Vendor stack + integration middleware (webMethods) + network-segmentation/security systems** added to Fixture A (illustrative real products) | Complete — vendors public/illustrative; composite, not real procurement |
 | 2026-05-21 | **ARENA innovation projects registered** as edge-case + architecture sources (VPP/DERMS/EV/V2G/microgrid, refs 52–56) in INTERNATIONAL_DATA_SOURCES.md | Complete — candidates; no edge-case fixture built yet |
-| *Pending* | **End-to-end recipe run** — `au-aescsf` + `au-soci-cirmp` executed against Fixture A, and SOCI non-applicability confirmed against Fixture B | **Deferred** (per scope: "build the fixture only") — to be run in a follow-up pass and recorded here |
-| *Pending* | **Reviewer sign-off** — AESCSF-experienced assessor / SOCI compliance reviewer | Deferred until after the end-to-end run |
+| 2026-05-29 | **Synthetic skill compatibility evaluation** — `au-aescsf` and `au-energy-compliance` prompts/templates checked against Fixture A and Fixture B evidence anchors | Complete — see `EVAL_RESULTS.md` and `EVAL_SUMMARY_REPORT.md`; live generated artefact quality remains subject to human review |
+| *Pending* | **Reviewer sign-off** — AESCSF-experienced assessor / SOCI compliance reviewer | Deferred until qualified human review of any generated compliance artefacts |
 
-**Status:** Fixtures built and internally coverage-validated. The end-to-end `au-energy` recipe run is the next step and is **not** yet done — this log should be updated when it is, to complete the merge-readiness evidence for `arckit-au/recipes/au-energy.yaml`.
+**Status:** Fixtures built, internally coverage-validated, and tested against the new `au-aescsf` and `au-energy-compliance` skill prompts/templates through deterministic fixture-coverage checks. Human reviewer sign-off remains the next step before relying on generated artefacts for external compliance decisions.
 
 ---
 

@@ -24,6 +24,9 @@ tests/fixtures/au-energy/
 ├── README.md                          ← this file
 ├── REFERENCES_AND_METHODOLOGY.md      ← method, citations, provenance, validation log
 ├── INTERNATIONAL_DATA_SOURCES.md      ← beyond-AU / GitHub sources (AssetOpsBench, SGAM, etc.)
+├── EVAL_EXPECTATIONS.md               ← expected positive/negative skill outcomes
+├── EVAL_RESULTS.md                    ← detailed synthetic skill evaluation results
+├── EVAL_SUMMARY_REPORT.md             ← PR-ready synthetic skill evaluation summary
 ├── fixture-a-eastland-dnsp/
 │   ├── EEN_Strategic_Context_Brief.md      ← centrepiece (org, network, estate, programs, posture)
 │   ├── EEN_Engagement_Proposal.md          ← engagement scope (four regulatory lenses)
@@ -99,7 +102,7 @@ E8 (ML1/ML2 with OT carve-outs), ISM (IT-aligned, partial OT), Privacy/APP (life
 
 ---
 
-## How to run the validation (follow-up pass)
+## How to run the validation
 
 These fixtures are **Track A (clean-slate)** discovery inputs. To validate the recipe:
 
@@ -113,7 +116,7 @@ These fixtures are **Track A (clean-slate)** discovery inputs. To validate the r
    - **A — SOCI:** applies; four-hazard table with **thin personnel & supply-chain**; untested 12-hr OT pipeline flagged; board-attestation cycle recorded.
    - **B — SOCI:** **"Not a SOCI-covered entity"** statement **plus** flow-down + sensitive-supplier exposure (not a bare "nothing to do").
    - **B — AESCSF:** supplier-scoped; **OT overlay explicitly N/A**; tenant-isolation / data-handling / supply-chain findings.
-5. **Record results** in `REFERENCES_AND_METHODOLOGY.md` §6 (Validation Log) and a delta/scorecard alongside the existing `EVAL_RESULTS_*` files, then update `arckit-au/recipes/au-energy.yaml` `validation_evidence.status`.
+5. **Record results** in `REFERENCES_AND_METHODOLOGY.md` §6 (Validation Log) and `EVAL_RESULTS.md`. The current build includes a deterministic synthetic skill compatibility check for the two new energy skills; live generated artefact quality still requires human review.
 
 ---
 
@@ -122,6 +125,7 @@ These fixtures are **Track A (clean-slate)** discovery inputs. To validate the r
 - ✅ Every fixture file carries the **SYNTHETIC COMPOSITE** disclaimer.
 - ✅ No real-network, real-person, or client names used as the fixture subject (real networks appear only as cited public references).
 - ✅ Each AESCSF domain, each SOCI hazard, the applicability split, and each AER ring-fencing trigger has at least one seeded hook (coverage matrix above).
-- ⏳ End-to-end recipe run — **deferred** to the follow-up pass (per the agreed "build the fixture only" scope).
+- ✅ Synthetic skill compatibility evaluation covers `au-aescsf` and `au-energy-compliance` against Fixture A and Fixture B evidence anchors.
+- ⏳ Live LLM artefact quality review remains a human-review step before any external compliance reliance.
 
 See [`REFERENCES_AND_METHODOLOGY.md`](./REFERENCES_AND_METHODOLOGY.md) for the audit trail.
