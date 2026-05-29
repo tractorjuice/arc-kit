@@ -36,6 +36,7 @@
 | Vendor remote access | Brokered (some); **always-on VPN (legacy contracts)** | Yes (EDM domain) |
 
 ## DER / market interfaces
+
 - DER comms: **CSIP-AUS** (IEEE 2030.5 / SEP2); DOE outputs published to inverters.
 - Market data: AEMO **MMS/EMMS via NEMWeb**; analytics teams also use open tooling (OpenNEM-class).
 - Open-source components present in the DER export-control stack (dependency inventory incomplete).

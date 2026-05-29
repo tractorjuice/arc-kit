@@ -35,9 +35,11 @@
 | Reportable incidents (last 24 months) | 1 minor IT phishing event (no asset impact); reported per process |
 
 ## Reporting-clock reconciliation
+
 - SOCI: 12 hours (significant/critical impact), 72 hours (relevant impact) from "becoming aware".
 - NDB scheme: 30-day assessment timeline for eligible data breaches.
 - **Not reconciled into a single playbook** — separate teams, separate clocks.
 
 ## Ownership / control note
+
 - 50/50: Australian super-backed investor + offshore (Singapore-domiciled) fund. Foreign-ownership/control dimension disclosed; relevant to the SOCI register of critical infrastructure assets.

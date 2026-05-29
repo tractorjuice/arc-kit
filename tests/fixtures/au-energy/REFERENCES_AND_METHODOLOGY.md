@@ -48,10 +48,12 @@ In Forrester's method, a composite is *"crafted from the characteristics of four
 All URLs were accessed in May 2026.
 
 ### A. Methodology
+
 1. Forrester — *Total Economic Impact™ (TEI) methodology* — https://www.forrester.com/policies/tei/
 2. Forrester — *Channeling Main Character Energy: Your Guide To The TEI Composite Organization* — https://www.forrester.com/blogs/guide-tei-composite-organization/
 
 ### B. AESCSF (AEMO)
+
 3. AEMO — *Australian Energy Sector Cyber Security Framework (AESCSF)* program — https://aemo.com.au/initiatives/major-programs/cyber-security/australian-energy-sector-cyber-security-framework-aescsf
 4. AEMO — *AESCSF 2025 Overview* — https://www.aemo.com.au/-/media/files/initiatives/cyber-security/aescsf/guidance-materials/aescsf-2025-overview.pdf
 5. AEMO — *AESCSF 2025 Domain Walk-through* — https://www.aemo.com.au/-/media/files/initiatives/cyber-security/aescsf/guidance-materials/aescsf-2025-domain-walk-through.pdf
@@ -59,6 +61,7 @@ All URLs were accessed in May 2026.
 7. AEMO — *AESCSF guidance for low-criticality organisations* (Criticality Assessment Tool context) — https://www.aemo.com.au/-/media/files/initiatives/cyber-security/aescsf/aescsf-guidance-material-for-low-criticality-organisations.pdf
 
 ### C. SOCI Act / CIRMP / CISC
+
 8. *Security of Critical Infrastructure Act 2018* (compilation) — https://www.legislation.gov.au/Details/C2025C00001
 9. Cyber and Infrastructure Security Centre (CISC) — https://www.cisc.gov.au/
 10. CISC — *Guidance for the Critical Infrastructure Risk Management Program* — https://www.cisc.gov.au/resources-subsite/Documents/guidance-for-the-critical-infrastructure-risk-management-program.pdf
@@ -68,6 +71,7 @@ All URLs were accessed in May 2026.
 14. MinterEllison — *SOCI risk management program requirements now in effect* — https://www.minterellison.com/articles/soci-risk-management-program-requirements-now-in-effect
 
 ### D. AER economic regulation, ring-fencing & DNSP regulatory submissions
+
 15. AER — *Ring-fencing Guideline (electricity distribution)* — https://www.aer.gov.au/networks-pipelines/guidelines-schemes-models-reviews/ring-fencing-guideline-electricity-distribution
 16. AER — *Electricity Distribution Service Classification Guideline* (Aug 2022) — https://www.aer.gov.au/system/files/AER%20-%20Service%20classification%20guideline%20-%20August%202022_0.pdf
 17. AER / EMCa — *Review of proposed expenditure on cyber security — AusNet 2026–31* (cyber expenditure, E8 + CIRMP references) — https://www.aer.gov.au/system/files/2025-09/EMCa%20-%20Review%20of%20proposed%20expenditure%20on%20cyber%20security%20-%20AusNet%202026-31%20regulatory%20proposal%20-%20August%202025.pdf
@@ -79,6 +83,7 @@ All URLs were accessed in May 2026.
 23. IEEFA — *Reforming the economic regulation of Australian electricity distribution networks* — https://ieefa.org/resources/reforming-economic-regulation-australian-electricity-distribution-networks
 
 ### E. AEMO market & DER programs (IT/OT-convergent project backdrop)
+
 24. AEMO — *Consumer Energy Resources (CER) Data Exchange* — https://www.aemo.com.au/initiatives/major-programs/nem-reform-program/nem-reform-program-initiatives/consumer-energy-resources-data-exchange
 25. ARENA — *Enabling Data Exchange for Consumer Energy Resources* (AEMO + AusNet co-design; $1.2m grant) — https://arena.gov.au/news/enabling-data-exchange-for-consumer-energy-resources/
 26. AEMO — *Project EDGE* (DER demonstration) — https://www.aemo.com.au/initiatives/major-programs/nem-distributed-energy-resources-der-program/der-demonstrations/project-edge
@@ -91,6 +96,7 @@ All URLs were accessed in May 2026.
 33. AEMC — *Integrated Distribution System Planning (IDSP)* rule change (Evoenergy submission, ERC0410) — https://www.aemc.gov.au/sites/default/files/2025-07/evoenergy_-_submission_-_consultation_paper_-_integrated_distribution_system_planning_idsp_-_erc0410_-_23_july_2025.pdf
 
 ### F. DER standards & open-source / open-data projects (GitHub)
+
 34. CSIP-AUS — *About* (Common Smart Inverter Profile – Australia; on IEEE 2030.5) — https://www.csipaus.org/about
 35. ARENA / DEIP — *ISC CSIP-AUS Comms Client Test Procedures* — https://arena.gov.au/assets/2024/11/Distributed-Energy-Integration-Program-%E2%80%93-ISC-CSIP-AUS-Comms-Client-Test-Procedures.pdf
 36. ARENA — *EVOLVE: implementation and publishing of operating envelopes* — https://arena.gov.au/assets/2021/04/evolve-on-the-implementation-and-publishing-of-operating-envelopes.pdf
@@ -100,12 +106,14 @@ All URLs were accessed in May 2026.
 40. GitHub — *opennem/opennem* (OpenElectricity — Australian energy market data platform) — https://github.com/opennem/opennem
 
 ### G. Federal baseline (composed on, per au-federal)
+
 41. ASD — *Essential Eight Maturity Model* — https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/essential-eight/essential-eight-maturity-model
 42. ASD — *Information Security Manual (ISM)* — https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism
 43. OAIC — *Notifiable Data Breaches scheme* — https://www.oaic.gov.au/privacy/notifiable-data-breaches
 44. OAIC — *Australian Privacy Principles* — https://www.oaic.gov.au/privacy/australian-privacy-principles
 
 ### H. Asset-inventory schema (added 2026-05-21)
+
 45. IBM — *AssetOpsBench* (industrial asset-ops benchmark; schema basis for the pseudo asset inventory) — repo code Apache-2.0; **dataset licence to verify on HF card** — https://github.com/IBM/AssetOpsBench
 46. Patel et al. — *AssetOpsBench: Benchmarking AI Agents for Task Automation in Industrial Asset Operations and Maintenance* (arXiv 2506.03828) — https://arxiv.org/abs/2506.03828
 47. IBM Research — *AssetOpsBench dataset (Hugging Face)* — https://huggingface.co/datasets/ibm-research/AssetOpsBench
@@ -113,6 +121,7 @@ All URLs were accessed in May 2026.
 > **Use note:** AssetOpsBench is used as a **schema/method source only** — its data is not reproduced. `fixture-a-eastland-dnsp/raw_data/OT_pseudo_asset_inventory.md` is our own synthetic inventory generated using their `site→asset→sensors→failure-modes→work-orders` structure, adapted to grid assets.
 
 ### I. Reference architectures / public diagrams (added 2026-05-21)
+
 48. SGAM — *Smart Grid Architecture Model* (CEN-CENELEC-ETSI Smart Grid Coordination Group; 5 layers: Business/Function/Information/Communication/Component) — https://link.springer.com/chapter/10.1007/978-3-319-49229-2_3
 49. AEMO — *CER Data Exchange Industry Co-Design, Attachment A: High-Level Design* (ARENA) — https://arena.gov.au/assets/2025/08/AEMO-%E2%80%93-CER-Data-Exchange-Industry-Co-Design-Attachment-A-High-Level-Design.pdf
 50. AEMO + Energy Networks Australia — *Open Energy Networks: Required Capabilities and Recommended Actions* — https://www.energynetworks.com.au/assets/uploads/open_energy_networks_-_required_capabilities_and_recommended_actions_report_22_july_2019.pdf
@@ -121,6 +130,7 @@ All URLs were accessed in May 2026.
 > **Use note:** the diagrams in `fixture-a-eastland-dnsp/raw_data/Architecture_Diagrams.md` are our own synthetic Mermaid drawings, using these public reference architectures (plus CSIP-AUS ref 34, CER/DOE refs 24/27) as **structural method** — no proprietary DNSP diagram is reproduced.
 
 ### J. ARENA innovation projects — edge cases & sample architectures (added 2026-05-21)
+
 52. ARENA — *Project Symphony* (WA VPP): Final Lessons Learnt / DER Services / Aggregator reports — https://arena.gov.au/knowledge-bank/project-symphony-final-lessons-learnt-report/
 53. ARENA — *Project Converge* (ACT): Shaped Operating Envelopes, Final Knowledge Sharing Report — https://arena.gov.au/knowledge-bank/project-converge-act-distributed-energy-resources-pilot-final-knowledge-sharing-report/
 54. ARENA — *DER Integration and Automation Project* — https://arena.gov.au/projects/der-integration-and-automation-project/
@@ -163,8 +173,8 @@ All URLs were accessed in May 2026.
 | 2026-05-21 | **Architecture & data-flow diagrams added** to Fixture A (SGAM/CER-HLD/CSIP-AUS/OpEN method, refs 48–51); landscape diagram validated via Mermaid renderer | Complete — synthetic; public reference architectures used as method only |
 | 2026-05-21 | **Vendor stack + integration middleware (webMethods) + network-segmentation/security systems** added to Fixture A (illustrative real products) | Complete — vendors public/illustrative; composite, not real procurement |
 | 2026-05-21 | **ARENA innovation projects registered** as edge-case + architecture sources (VPP/DERMS/EV/V2G/microgrid, refs 52–56) in INTERNATIONAL_DATA_SOURCES.md | Complete — candidates; no edge-case fixture built yet |
-| _Pending_ | **End-to-end recipe run** — `au-aescsf` + `au-soci-cirmp` executed against Fixture A, and SOCI non-applicability confirmed against Fixture B | **Deferred** (per scope: "build the fixture only") — to be run in a follow-up pass and recorded here |
-| _Pending_ | **Reviewer sign-off** — AESCSF-experienced assessor / SOCI compliance reviewer | Deferred until after the end-to-end run |
+| *Pending* | **End-to-end recipe run** — `au-aescsf` + `au-soci-cirmp` executed against Fixture A, and SOCI non-applicability confirmed against Fixture B | **Deferred** (per scope: "build the fixture only") — to be run in a follow-up pass and recorded here |
+| *Pending* | **Reviewer sign-off** — AESCSF-experienced assessor / SOCI compliance reviewer | Deferred until after the end-to-end run |
 
 **Status:** Fixtures built and internally coverage-validated. The end-to-end `au-energy` recipe run is the next step and is **not** yet done — this log should be updated when it is, to complete the merge-readiness evidence for `arckit-au/recipes/au-energy.yaml`.
 

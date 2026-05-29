@@ -82,6 +82,7 @@
 - **Health 🔴 act-now:** 3 (TX-ASH-02, DERMS-GW-1, JUMP-OT-01).
 
 ## 6. Cross-links (what this artefact feeds)
+
 - **AESCSF:** ACM (asset/config completeness), TVM (unpatchable assets), SA (sensor/anomaly monitoring), CA (segmentation/egress), EDM (vendor access, OSS deps).
 - **`au-ai-assurance`:** the predictive-maintenance/anomaly models that consume these sensors (bias/drift/data-exposure).
 - **SOCI / CIRMP:** physical & asset-resilience evidence; supply-chain (vendor jump host); material-risk register.

@@ -1,4 +1,5 @@
 # Voltiq Analytics — Strategic Context Brief
+
 ## Supplier Cyber Posture Assessment (AESCSF alignment + SOCI supply-chain): Phase 1
 
 **Prepared:** 11 May 2026
@@ -33,6 +34,7 @@ Voltiq is squarely in the energy sector but is **not** a responsible entity for 
 - It is **not** AEMO-registered as a network/market participant in any critical-asset sense.
 
 → The `au-soci-cirmp` recipe should conclude **"Not a SOCI-covered entity / not a responsible entity for a designated critical asset"** and produce the useful non-applicability statement (valuable for tender responses), **while** noting two real exposures:
+
 1. **Flow-down obligations** — its SOCI-covered customers contractually push SOCI supply-chain and cyber requirements onto Voltiq.
 2. **Sensitive-supplier exposure** — because Voltiq touches DOE/constraint data and feeds outputs that can influence a client's network operations, customers may treat it as a sensitive supplier under SOCI supplier-influence provisions.
 
@@ -69,6 +71,7 @@ Voltiq's customers require AESCSF alignment for suppliers touching their data an
 | SOC 2 | **Type II in progress** | Customers increasingly require it |
 
 ## 6. CITATION SCOPE (Track A)
+
 Citeable inputs for an `au-energy` run against Fixture B: this brief, `VOLTIQ_Engagement_Scope.md`, `interviews/01_CTO_Security_interview_extracted.md`, and `VOLTIQ_Customer_Flowdown_Requirements.md`.
 
 ---

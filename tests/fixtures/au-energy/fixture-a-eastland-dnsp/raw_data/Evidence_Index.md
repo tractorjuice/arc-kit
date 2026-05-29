@@ -3,6 +3,7 @@
 > ⚠️ **SYNTHETIC COMPOSITE — TEST FIXTURE.** Index of the illustrative discovery evidence assembled for the `au-energy` validation. See `../../REFERENCES_AND_METHODOLOGY.md`.
 
 ## Citation scope (Track A — clean slate)
+
 The following constitute the citeable discovery inputs for an `au-energy` Track A run against Fixture A. Anything not listed here is out of citation scope.
 
 | ID | Document | Type | Primary hooks |
@@ -23,4 +24,5 @@ The following constitute the citeable discovery inputs for an `au-energy` Track 
 | EEN-KSVS | `raw_data/Key_Systems_Vendor_Stack.md` | Application/technology portfolio (Track B) | Real vendor stack incl. middleware (webMethods) + network segmentation & security systems; AESCSF EDM/CA/SA; SOCI supply chain |
 
 ## Process note (carried from the federal eval)
+
 Per the federal eval's "Process Improvement Rule", before declaring citation scope complete the recipe should check for evidence items dated after this index and triage them. For Fixture A all evidence is co-dated; no later items exist.

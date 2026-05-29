@@ -143,6 +143,7 @@ flowchart TB
 | Analytics / AI features | Data lake | Daily/continuous | Predictive-maintenance AI, DER forecasting | OT→IT egress (governance concern) |
 
 ## 5. What these feed in the assessment
+
 - **AESCSF CA** (architecture, segmentation, OT→IT egress), **SA** (where monitoring sits), **ACM** (master data flows), **EDM** (vendor access path).
 - **SOCI** cyber-hazard (segmentation), physical (control centre), supply-chain (jump host); dependency mapping for material risk.
 - **AER ring-fencing** — the two dotted leakage paths to Eastland Connect.

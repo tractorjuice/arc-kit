@@ -1,4 +1,5 @@
 # Eastland Energy Networks — Strategic Context Brief
+
 ## Critical Infrastructure Cyber & Compliance Assessment: Phase 1
 
 **Prepared:** 4 May 2026
@@ -18,6 +19,7 @@
 ## 1. COMPANY PROFILE
 
 ### Identity
+
 - **Legal Entity:** Eastland Energy Networks Pty Ltd (ABN illustrative; incorporated Victoria)
 - **Trading Name:** Eastland Power
 - **Sector:** Electricity Distribution Network Service Provider (DNSP) — regulated monopoly
@@ -27,6 +29,7 @@
 - **Geographic footprint:** Eastern/peri-urban Melbourne corridor plus rural east — mixed CBD-fringe, suburban, and long rural feeders
 
 ### Network at a glance (illustrative composite figures)
+
 | Metric | Value |
 |--------|-------|
 | Customer connections | ~770,000 |
@@ -39,11 +42,13 @@
 | 2026–31 proposed total capex | ~$2.1B (≈ +20% on 2021–26, consistent with sector trend) |
 
 ### Ownership & control
+
 - **50/50 consortium:** *Meridian Infrastructure Partners* (Australian superannuation-backed infrastructure investor) and *Hanwell Asset Management* (offshore infrastructure investor, Singapore-domiciled fund).
 - Offshore co-ownership means **FIRB history and SOCI ownership/control considerations** are live — relevant to the SOCI "register of critical infrastructure assets" obligations and any foreign-influence assessment.
 - Board: 8 directors (4 per shareholder) + independent Chair. **Risk & Audit Committee** is the body that approves the annual SOCI CIRMP attestation.
 
 ### Leadership (illustrative)
+
 | Role | Holder | Notes |
 |------|--------|-------|
 | CEO | Synthetic role holder | Ex-transmission, 20+ yrs network operations |
@@ -61,10 +66,12 @@
 EEN sits inside an unusually dense regulatory stack — this is what makes it a meaningful `au-energy` test fixture.
 
 ### 2.1 Economic regulation (AER)
+
 - Revenue-capped DNSP under the **National Electricity Rules**; 2026–31 determination in train.
 - **AER Ring-fencing Guideline (electricity DNSPs)** applies because EEN runs an unregulated arm (**Eastland Connect** — see §4). This drives separation of regulated/unregulated activities, staff-sharing controls, branding separation, and **information-flow controls** (e.g. network data must not advantage the unregulated DER/EV business).
 
 ### 2.2 Market participation (AEMO)
+
 - Registered DNSP in the NEM; interfaces to **MSATS**, **B2B e-Hub**, metering/settlement (post **5-minute & Global Settlement**), and the **DER Register**.
 - Actively onboarding to AEMO's **Consumer Energy Resources (CER) Data Exchange** (AEMO's industry co-designed common digital infrastructure for CER; an independent cost-benefit analysis cited multi-billion-dollar 20-year sector benefits).
 - Building **Dynamic Operating Envelopes (DOE)** capability and DER comms via **CSIP-AUS** (the Australian Common Smart Inverter Profile, built on **IEEE 2030.5 / SEP2**, developed under ARENA's DEIP).
@@ -72,11 +79,13 @@ EEN sits inside an unusually dense regulatory stack — this is what makes it a 
 - Subject to the **Victorian Emergency Backstop Mechanism (VEBM)** — must be able to remotely curtail customer solar (a control action that spans customer device → comms → DERMS → OT).
 
 ### 2.3 Critical infrastructure (SOCI Act 2018)
+
 - EEN operates a **distribution network servicing > 100,000 customers** → a **designated "critical electricity asset"** under the SOCI Act and the **Security of Critical Infrastructure (Critical infrastructure risk management program) Rules (LIN 23/006)**.
 - Consequences: a **Critical Infrastructure Risk Management Program (CIRMP)** covering the four hazard categories (cyber, personnel, physical, supply chain); **annual board-approved CIRMP report** to CISC (Department of Home Affairs); and **mandatory cyber incident reporting** (12 hours for critical impact, 72 hours for relevant impact).
 - The cyber hazard chapter of the CIRMP must adopt a recognised framework — EEN uses **AESCSF** (and maps to E8 ML2 / ISM).
 
 ### 2.4 Energy-sector cyber maturity (AESCSF)
+
 - **AEMO Criticality Assessment Tool (CAT)** result: **High** criticality → target maturity profile pursues **MIL-3** for the most safety/operationally-critical domains, **MIL-2** elsewhere.
 - Last AESCSF self-assessment (FY2024 cycle) is ~18 months old and predates the ADMS/DERMS build — i.e. **stale relative to the current OT estate**.
 
@@ -102,6 +111,7 @@ EEN runs two businesses under one corporate roof:
 - **Eastland Connect (unregulated, contestable):** public **EV charging** network, **behind-the-meter solar & battery** sales/installation, **contestable connection** works, and a small **dark-fibre / OT-telco leasing** business (spare capacity on EEN's private fibre).
 
 **Ring-fencing pressure points (seeded for the assessment):**
+
 - Eastland Connect staff also hold roles in the regulated business; **shared SharePoint and CRM** tenancy with imperfect information barriers.
 - Network data (constraint maps, DOE outputs, connection pipeline) is operationally useful to the EV/solar arm → **AER ring-fencing information-flow risk**.
 - Shared corporate services (HR, finance, parts of IT/identity) need a **documented cost-allocation and access-segregation** position.
@@ -114,6 +124,7 @@ EEN runs two businesses under one corporate roof:
 > EEN is **hybrid**, not pure-cloud: a regulated network necessarily runs real-time OT on-premises and at the grid edge, while corporate IT and analytics are cloud-first. The convergence seam between the two is the central risk theme.
 
 ### 5.1 Operational Technology (OT) — control & grid edge
+
 | System / layer | Current state | Convergence / risk note |
 |----------------|---------------|--------------------------|
 | **SCADA / DMS** | Legacy vendor SCADA (15+ yrs), being replaced under the ADMS program | Real-time control; historically air-gapped, now feeding IT analytics |
@@ -127,6 +138,7 @@ EEN runs two businesses under one corporate roof:
 | **Vendor remote access** | ADMS and protection vendors connect for support | Some **legacy always-on VPNs / jump-host gaps** (anti-pattern + SOCI supply-chain) |
 
 ### 5.2 Information Technology (IT) — corporate & data
+
 - **Microsoft 365 + Azure** tenant (Entra ID); on-prem **Active Directory** still authoritative for some OT-adjacent systems → **fragmented identity**.
 - **SAP S/4HANA** — ERP, finance, asset accounting, regulatory cost allocation.
 - **GIS** (network model / spatial; CIM-based feed to ADMS).
@@ -137,6 +149,7 @@ EEN runs two businesses under one corporate roof:
 - Market data interfaces draw on AEMO's **MMS/EMMS data model** via **NEMWeb**; some teams use open tooling (**OpenNEM/`nemweb`**, NEMOSIS) for analysis.
 
 ### 5.3 Identity, monitoring & people
+
 - **SOC:** hybrid — internal security team + external **MSSP**; SIEM covers IT well, **OT telemetry coverage is partial** (no dedicated OT monitoring platform yet — funded under the uplift program).
 - **IAM:** MFA broadly on IT; **privileged access to OT is weaker** (shared/console accounts, slow joiner-mover-leaver for field/contractor staff).
 - **Workforce:** field crews and contractors have OT access; **vetting/clearance for OT contractors is inconsistent** (personnel-hazard candidate).

@@ -18,6 +18,7 @@ This document captures the security/compliance obligations Voltiq's energy-secto
 | Right to audit | Customer contract | Customer may audit Voltiq's controls |
 
 ## Why this matters to the recipe
+
 A naive run might say "supplier is not SOCI-covered, nothing to do." The correct, useful output is: **not a covered entity, AND here are the flow-down + sensitive-supplier obligations it must satisfy to keep selling to covered entities.** This document gives the recipe the hooks to produce that nuanced result.
 
 *(Synthetic test-fixture document.)*

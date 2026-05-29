@@ -27,13 +27,14 @@ So international sources can be used in **three modes**:
 
 **Use IBM AssetOpsBench as the backbone for a pseudo asset data inventory.** It already *is* synthetic/simulated industrial asset data (no confidentiality issue), it's openly licensed (repo **Apache-2.0**), and its schema is exactly an asset inventory:
 
-```
+```text
 site → asset → sensors → failure modes → failure-mode↔sensor mapping → history (time series) → work orders
 ```
 
 It ships 141 scenarios across **9 asset classes** (Chiller, AHU, Pump, Motor, Bearing, Engine, Rotors, Boilers, Turbine) with four agent tool-sets (IoT: get_sites/get_assets/get_sensors/get_history; FMSR: failure modes + sensor mapping; TSFM: forecasting + anomaly detection; WO: work-order generation). Crucially, its **open "call for scenario contribution" explicitly wants Transformers added** — i.e. grid assets are in-scope and we could even contribute energy scenarios back.
 
 **Fit to our eval:** its asset/sensor/failure-mode structure maps straight onto a DNSP's OT estate (zone-substation transformer → RTU/protection relay → sensors → failure modes → work orders), and feeds:
+
 - AESCSF **ACM** (asset/config mgmt), **SA** (monitoring/anomaly), **TVM** (condition/vuln),
 - the composite's **predictive-maintenance AI** (→ `au-ai-assurance`),
 - SOCI **physical/asset resilience** and material-risk register.
@@ -45,6 +46,7 @@ It ships 141 scenarios across **9 asset classes** (Chiller, AHU, Pump, Motor, Be
 ## 3. Curated source shortlist
 
 ### 3a. Pseudo asset inventories & OT asset-ops (Mode A/B)
+
 | Source | What it gives | Licence | Caveat | Link |
 |--------|---------------|---------|--------|------|
 | **IBM AssetOpsBench** | Synthetic asset/sensor/failure-mode/work-order schema + 141 scenarios; 9 asset classes | Code **Apache-2.0**; dataset = verify on HF card | Process assets > grid assets; we'd adapt/extend with grid classes | https://github.com/IBM/AssetOpsBench · https://huggingface.co/datasets/ibm-research/AssetOpsBench · paper https://arxiv.org/abs/2506.03828 |
@@ -52,6 +54,7 @@ It ships 141 scenarios across **9 asset classes** (Chiller, AHU, Pump, Motor, Be
 | **PyPSA / PyPSA-Eur, pandapower** | Open network models + example grids (Python) | PyPSA MIT; data largely CC-BY; pandapower BSD | European-centric; transmission-leaning | https://github.com/PyPSA/pypsa-eur · https://github.com/e2nIEE/pandapower |
 
 ### 3b. Open power-system / market data (Mode B)
+
 | Source | What it gives | Licence | Caveat | Link |
 |--------|---------------|---------|--------|------|
 | **Open Power System Data (OPSD)** | Cleaned EU power-system datasets | Open; **per-source terms vary** | Check each table's source licence | https://open-power-system-data.org/ · https://github.com/Open-Power-System-Data |
@@ -59,6 +62,7 @@ It ships 141 scenarios across **9 asset classes** (Chiller, AHU, Pump, Motor, Be
 | **openmod transmission datasets** | Index of open grid/network datasets | Varies | Aggregator — check each | https://wiki.openmod-initiative.org/wiki/Transmission_network_datasets |
 
 ### 3c. OT/ICS security frameworks (Mode A/C — map to AESCSF)
+
 | Source | What it gives | Licence | Use | Link |
 |--------|---------------|---------|-----|------|
 | **NIST CSF 2.0** | The framework AESCSF derives from | US Gov / public | Deepen domain assessment; non-AU skeleton | https://www.nist.gov/cyberframework |
@@ -68,6 +72,7 @@ It ships 141 scenarios across **9 asset classes** (Chiller, AHU, Pump, Motor, Be
 | **ISA/IEC 62443** | OT technical control standard | Standards (purchase) | Technical implementation layer | https://www.isa.org/standards-and-publications/isa-standards/isa-iec-62443-series-of-standards |
 
 ### 3d. Non-AU regulatory analogues (Mode C — seed future recipes)
+
 | Source | Analogue to | Licence | Why | Link |
 |--------|-------------|---------|-----|------|
 | **UK NCSC Cyber Assessment Framework (CAF)** | AESCSF (essential services / NIS) | Crown / OGL | Cleanest basis for a UK energy recipe; maps to NIST CSF | https://www.ncsc.gov.uk/collection/cyber-assessment-framework |
@@ -75,12 +80,14 @@ It ships 141 scenarios across **9 asset classes** (Chiller, AHU, Pump, Motor, Be
 | **Ofgem RIIO-ED2 business plans + Digitalisation Strategy & Action Plans** | AER reg submissions | Crown / OGL + company-published | Detailed UK DNO current-state/major-programs; DSO transition | https://www.ofgem.gov.uk/publications/riio-ed2-business-plan-guidance · e.g. UKPN https://ed2.ukpowernetworks.co.uk/ · SP Energy Networks DSO strategy |
 
 ### 3e. Reference-only (do NOT bundle)
+
 | Source | Why useful | Why not bundle |
 |--------|------------|----------------|
 | **iTrust SWaT / WADI** (Singapore) | Real ICS testbed attack datasets | **Request-gated** — signed form; not freely redistributable. Use for inspiration only. |
 | Vendor public ICS threat reports (Dragos, Claroty, Nozomi) | Realistic anti-pattern / TTP texture | Copyrighted — cite, don't copy |
 
 ### 3f. Reference architectures / public diagrams (Mode A — DNSPs & AEMO share these)
+
 DNSPs, AEMO and industry bodies publish reference architectures and high-level designs that are ideal *structural* sources for synthetic diagrams (draw your own; don't lift a proprietary diagram). **Now in use** for `fixture-a-eastland-dnsp/raw_data/Architecture_Diagrams.md`.
 
 | Source | What it gives | Licence | Link |
@@ -94,6 +101,7 @@ DNSPs, AEMO and industry bodies publish reference architectures and high-level d
 > Note: individual DNSPs also publish system/architecture detail in regulatory ICT business cases and (in the UK) Ofgem Digitalisation Strategies — useful as reference, but **draw synthetic diagrams**, never reproduce a specific network's proprietary architecture.
 
 ### 3g. ARENA innovation projects — edge cases & sample architectures (AU open knowledge-sharing)
+
 ARENA-funded DER/VPP projects must publish **knowledge-sharing reports** (public; typically CC BY — verify per report). They provide (a) **new edge-case entity archetypes** and (b) **sample/reference architectures** (VPP orchestration, DER aggregation, DOE/SOE engines, market interfaces). Domestic AU, but open — complements the regulatory grounding.
 
 | Project | Edge case / what it gives | Architecture? | Link |
@@ -144,6 +152,7 @@ This single artefact would feed AESCSF **ACM/SA/TVM**, the predictive-maintenanc
 ---
 
 ## 6. Suggested next steps (pick any)
+
 - **Build the pseudo asset inventory** for Eastland (full version of §5), AssetOpsBench-schema, grid-adapted, clearly synthetic.
 - **Seed a non-AU recipe** — most natural is **UK (NCSC CAF + Ofgem RIIO)** given the framework lineage and rich public filings; a matching composite DNO fixture would follow the same method.
 - **Contribute back** grid/transformer scenarios to AssetOpsBench's open call (community goodwill + a real artefact for your portfolio).

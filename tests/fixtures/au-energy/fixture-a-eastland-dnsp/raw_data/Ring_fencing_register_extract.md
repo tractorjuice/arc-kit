@@ -30,4 +30,5 @@
 | Waivers | None current | — |
 
 ## Cross-link to privacy
+
 Network-collected customer data potentially visible/useful to Eastland Connect = combined **ring-fencing + APP 6 (secondary use)** exposure. See `03_Regulation_Compliance_interview_extracted.md`.

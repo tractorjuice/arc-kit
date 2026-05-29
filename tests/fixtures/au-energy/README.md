@@ -19,7 +19,7 @@ Synthetic discovery packs to validate the ArcKit **`au-energy`** recipe (`arckit
 
 ## File manifest
 
-```
+```text
 tests/fixtures/au-energy/
 ├── README.md                          ← this file
 ├── REFERENCES_AND_METHODOLOGY.md      ← method, citations, provenance, validation log
@@ -55,6 +55,7 @@ tests/fixtures/au-energy/
 ## Coverage matrix — does the fixture exercise the standard?
 
 ### AESCSF (11 domains) — Fixture A
+
 | # | Domain | Seeded hook in fixture | Expected MIL signal |
 |---|--------|------------------------|---------------------|
 | 1 | Asset, Change & Config (ACM) | OT asset register lags ADMS/DERMS additions | MIL-2 |
@@ -72,6 +73,7 @@ tests/fixtures/au-energy/
 | — | **OT overlay** | SCADA/ADMS/DERMS, segmentation, vendor remote access, ICS protocols, CSIP-AUS | Rich |
 
 ### SOCI / CIRMP (4 hazards + applicability)
+
 | Element | Fixture A (applicable) | Fixture B (negative) |
 |---------|------------------------|----------------------|
 | Applicability | Designated critical electricity asset → **applies** | **Not** a covered entity → non-applicability statement |
@@ -83,6 +85,7 @@ tests/fixtures/au-energy/
 | Board attestation | FY2024 lodged & board-approved; FY2025 in progress | N/A |
 
 ### AER ring-fencing — Fixture A
+
 | Trigger | Hook |
 |---------|------|
 | Unregulated arm | Eastland Connect (EV, solar/battery, contestable connections, dark fibre) |
@@ -91,6 +94,7 @@ tests/fixtures/au-energy/
 | Cross-link | Customer data → unregulated arm = ring-fencing **+** APP 6 |
 
 ### Federal baseline (composed on `au-federal`)
+
 E8 (ML1/ML2 with OT carve-outs), ISM (IT-aligned, partial OT), Privacy/APP (life-support register, NMI data), NDB (clock reconciliation gap) — hooks present in both fixtures.
 
 ---
@@ -114,6 +118,7 @@ These fixtures are **Track A (clean-slate)** discovery inputs. To validate the r
 ---
 
 ## Verification performed (this build)
+
 - ✅ Every fixture file carries the **SYNTHETIC COMPOSITE** disclaimer.
 - ✅ No real-network, real-person, or client names used as the fixture subject (real networks appear only as cited public references).
 - ✅ Each AESCSF domain, each SOCI hazard, the applicability split, and each AER ring-fencing trigger has at least one seeded hook (coverage matrix above).

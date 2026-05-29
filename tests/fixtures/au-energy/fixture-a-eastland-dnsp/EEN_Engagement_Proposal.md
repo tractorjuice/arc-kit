@@ -46,32 +46,38 @@ This proposal covers a **Phase 1 Critical Infrastructure Cyber & Compliance Asse
 A structured, evidence-led review across four regulatory lenses, with the IT/OT convergence seam as the connecting theme.
 
 **Workstream A — AESCSF Capability Assessment**
+
 - Confirm the AEMO Criticality Assessment Tool (CAT) banding and target Maturity Indicator Level (MIL) profile.
 - Assess all **11 AESCSF domains** at MIL-1 / MIL-2 / MIL-3 with practice-level evidence.
 - Apply the **OT Security Overlay** (ICS/SCADA inventory, OT segmentation, OT monitoring, vendor remote access, ICS protocol security).
 - Surface **anti-patterns** (shared OT credentials, flat OT-IT networks, unpatched legacy controllers, missing OT monitoring).
 
 **Workstream B — SOCI Act / CIRMP**
+
 - Confirm critical-asset designation and responsible-entity / accountable-officer accountabilities.
 - Assess the CIRMP across the **four hazard categories** (cyber, personnel, physical, supply chain).
 - Test the **12-hour / 72-hour cyber incident reporting** capability (detection → escalation → CISC/ASD notification).
 - Review the **annual board attestation** cycle and evidence retention.
 
 **Workstream C — AER Ring-fencing**
+
 - Map regulated vs Eastland Connect activities, shared staff/systems, branding, and **information-flow controls**.
 - Identify ring-fencing risks and the controls (technical and procedural) needed to evidence separation.
 
 **Workstream D — Federal Baseline Composition**
+
 - Cite and reconcile existing **Essential Eight (E8)**, **ISM**, **Privacy/APP** and **NDB** positions; reconcile the NDB 30-day clock with the SOCI 12/72-hour clocks.
 - Identify where OT scope is carved out of the federal baseline and what that means for the energy obligations.
 
 **Deliverables:**
+
 - AESCSF Capability Assessment (11-domain maturity matrix + OT overlay + anti-patterns + remediation plan).
 - SOCI CIRMP assessment (four-hazard mitigation summary, incident-reporting capability, board-attestation readiness, material-risk register).
 - Ring-fencing findings note (information-flow control gaps + remediation).
 - Consolidated executive read-out: prioritised remediation grouped Quick Wins / Short-Term / Medium-Term.
 
 ## Phase 2 (Optional): Remediation & Uplift Roadmap
+
 If the assessment warrants it, a follow-on phase would sequence the Cyber & OT Security Uplift program against the findings (OT monitoring, segmentation, IAM convergence, supply-chain controls, CIRMP closure) with an investment case mapped to the 2026–31 determination.
 
 # 4. Approach & Investment
@@ -99,6 +105,7 @@ This fixture assumes the assessment is run as a time-boxed discovery and validat
 - Provide the pre-discovery information listed in the accompanying checklist.
 
 ## Public Fixture Handling
+
 This document is synthetic public test data. It is designed to exercise ArcKit recipe behaviour without using confidential, client, or real network information.
 
 **Synthetic Assessment Lead** — Independent advisory role

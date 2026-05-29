@@ -16,6 +16,7 @@ EEN is a designated critical electricity asset, an AEMO market participant, and 
 - **Compose, don't duplicate.** This builds on the existing federal baseline (E8, ISM, Privacy/NDB) rather than re-deriving it.
 
 ## What "Good" Looks Like (North Star)
+
 1. OT/IT Convergence Security
 2. AESCSF Maturity (with OT overlay + anti-patterns)
 3. SOCI / CIRMP Defensibility (board-attestable; tested 12-hr pipeline)
@@ -23,17 +24,20 @@ EEN is a designated critical electricity asset, an AEMO market participant, and 
 5. Critical-Asset Resilience (control-centre + supplier dependency)
 
 ## The Four Regulatory Lenses
+
 - **AESCSF** — 11 domains × MIL-1/2/3 + OT overlay + anti-patterns (`au-aescsf`).
 - **SOCI / CIRMP** — four hazards + 12/72-hr reporting + board attestation (`au-soci-cirmp`).
 - **AER Ring-fencing** — regulated/unregulated separation + information flows.
 - **Federal baseline** — E8 / ISM / Privacy / NDB composition.
 
 ## Timeline (4 weeks)
+
 | Week 1 Discovery | Week 2 AESCSF + SOCI | Week 3 Ring-fencing + Baseline | Week 4 Synthesis |
 |---|---|---|---|
 | Kickoff, interviews, control-centre walkthrough | Domain assessment + OT overlay; CIRMP review | Ring-fencing; federal composition; anti-pattern validation | Maturity matrices, remediation, exec read-out |
 
 ## What We Need
+
 - Interview access: CISO, Head of Network Control/OT, GM Regulation & Compliance, CDIO.
 - Control-centre walkthrough (primary + DR).
 - Read access to: AESCSF prior self-assessment, current CIRMP + last board attestation, ring-fencing statement, OT asset register, E8/ISM artefacts.

@@ -28,4 +28,5 @@
 **Overall MIL (lowest-domain rule): MIL-1.** Headline pinned by TVM, IAM, SA, EDM, WM, CA.
 
 ## Lagging-domain commentary
+
 The strong governance domains (RM, CPM, ISC) mask the operational gaps. The headline MIL-1 is driven by the OT-facing technical domains — exactly the area the ADMS/DERMS programs have since changed, which is why the assessment is now stale and a refresh is the recommended first action.
