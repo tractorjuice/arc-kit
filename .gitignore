@@ -66,6 +66,8 @@ projects/
 # Legacy local directories (no longer generated)
 .codex/
 .opencode/
+.agents/skills/
+.claude/worktrees/
 
 
 # Gemini extension - generated files (static files are checked in)

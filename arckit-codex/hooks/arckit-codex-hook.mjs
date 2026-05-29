@@ -343,8 +343,9 @@ function isUnderPluginRoot(filePath) {
   if (!filePath || typeof filePath !== "string") {
     return false;
   }
-  const absolute = resolve(filePath);
-  return absolute === PLUGIN_ROOT || absolute.startsWith(`${PLUGIN_ROOT}/`);
+  const absolute = resolve(filePath).replaceAll("\\", "/");
+  const root = PLUGIN_ROOT.replaceAll("\\", "/");
+  return absolute === root || absolute.startsWith(`${root}/`);
 }
 
 function isArcKitTempfile(filePath) {
