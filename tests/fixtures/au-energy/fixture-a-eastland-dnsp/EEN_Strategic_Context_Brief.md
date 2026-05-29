@@ -4,7 +4,7 @@
 **Prepared:** 4 May 2026
 **Author:** Synthetic assessment team
 **Client:** Eastland Energy Networks Pty Ltd (trading as "Eastland Power")
-**Sponsor:** Priya Nadella (Chief Information Security Officer)
+**Sponsor:** Chief Information Security Officer (synthetic role)
 **Purpose:** Consolidated strategic context for ArcKit `au-energy` modelling — AESCSF capability assessment, SOCI Act / CIRMP, and AER ring-fencing — composing on top of the `au-federal` baseline (E8, ISM, Privacy/NDB).
 
 ---
@@ -44,15 +44,15 @@
 - Board: 8 directors (4 per shareholder) + independent Chair. **Risk & Audit Committee** is the body that approves the annual SOCI CIRMP attestation.
 
 ### Leadership (illustrative)
-| Role | Name | Notes |
-|------|------|-------|
-| CEO | Daniel Okafor | Ex-transmission, 20+ yrs network operations |
-| Chief Operating Officer (Networks) | Helen Truong | Owns field, control room, asset management |
-| Chief Information Security Officer | Priya Nadella | **Engagement sponsor**; owns cyber across IT + OT |
-| Head of Network Control / OT | Mark Devlin | Control centre, SCADA/ADMS, protection, OT comms |
-| Chief Digital & Information Officer | Sanjay Rao | Corporate IT, data platform, ADMS/DERMS programs |
-| GM Regulation & Compliance | Fiona Albanese | AER determination, ring-fencing, SOCI lodgements |
-| GM Eastland Connect (unregulated) | Tom Reilly | Contestable connections, EV, solar/battery, fibre |
+| Role | Holder | Notes |
+|------|--------|-------|
+| CEO | Synthetic role holder | Ex-transmission, 20+ yrs network operations |
+| Chief Operating Officer (Networks) | Synthetic role holder | Owns field, control room, asset management |
+| Chief Information Security Officer | Synthetic role holder | **Engagement sponsor**; owns cyber across IT + OT |
+| Head of Network Control / OT | Synthetic role holder | Control centre, SCADA/ADMS, protection, OT comms |
+| Chief Digital & Information Officer | Synthetic role holder | Corporate IT, data platform, ADMS/DERMS programs |
+| GM Regulation & Compliance | Synthetic role holder | AER determination, ring-fencing, SOCI lodgements |
+| GM Eastland Connect (unregulated) | Synthetic role holder | Contestable connections, EV, solar/battery, fibre |
 
 ---
 

@@ -1,7 +1,7 @@
 # Discovery Interview — GM Regulation & Compliance (extracted notes)
 
 **Date:** 8 May 2026
-**Interviewee:** Fiona Albanese — GM Regulation & Compliance, Eastland Energy Networks
+**Interviewee:** GM Regulation & Compliance (synthetic role), Eastland Energy Networks
 **Interviewer:** Synthetic assessment lead
 **Topics:** SOCI designation & CIRMP, board attestation, AER ring-fencing, Eastland Connect, privacy & customer data
 

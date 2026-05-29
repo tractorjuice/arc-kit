@@ -4,7 +4,7 @@
 
 Prepared for
 
-**Priya Nadella, Chief Information Security Officer**
+**Chief Information Security Officer (synthetic role)**
 
 Eastland Energy Networks Pty Ltd (trading as Eastland Power)
 

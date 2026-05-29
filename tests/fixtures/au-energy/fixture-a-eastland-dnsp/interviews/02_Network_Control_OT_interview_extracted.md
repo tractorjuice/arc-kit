@@ -1,7 +1,7 @@
 # Discovery Interview — Head of Network Control / OT (extracted notes)
 
 **Date:** 7 May 2026
-**Interviewee:** Mark Devlin — Head of Network Control / OT, Eastland Energy Networks
+**Interviewee:** Head of Network Control / OT (synthetic role), Eastland Energy Networks
 **Interviewer:** Synthetic assessment lead
 **Topics:** SCADA/ADMS/DERMS, OT network & segmentation, control centre, vendor remote access, DER comms, anti-patterns
 

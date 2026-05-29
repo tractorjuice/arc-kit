@@ -39,6 +39,4 @@ EEN is a designated critical electricity asset, an AEMO market participant, and 
 - Read access to: AESCSF prior self-assessment, current CIRMP + last board attestation, ring-fencing statement, OT asset register, E8/ISM artefacts.
 - Collaborative framing: a defensible map for the Board and AER — not an audit of any individual.
 
-**Contact:** Synthetic assessment team
-
 *(Synthetic test-fixture document.)*

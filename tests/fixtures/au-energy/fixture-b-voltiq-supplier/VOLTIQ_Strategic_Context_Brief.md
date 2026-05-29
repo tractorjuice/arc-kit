@@ -4,7 +4,7 @@
 **Prepared:** 11 May 2026
 **Author:** Synthetic assessment team
 **Client:** Voltiq Analytics Pty Ltd
-**Sponsor:** Dr Anika Shar: Chief Technology Officer
+**Sponsor:** Chief Technology Officer (synthetic role)
 **Purpose:** Strategic context for an `au-energy` validation of the **negative / non-SOCI** case — a software & advisory supplier to the energy sector that is **not** a designated critical-asset operator.
 
 ---

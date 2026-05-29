@@ -1,7 +1,7 @@
 # Discovery Interview — CISO (extracted notes)
 
 **Date:** 6 May 2026
-**Interviewee:** Priya Nadella — Chief Information Security Officer, Eastland Energy Networks
+**Interviewee:** Chief Information Security Officer (synthetic role), Eastland Energy Networks
 **Interviewer:** Synthetic assessment lead
 **Topics:** AESCSF, cyber & OT security program, SOC/monitoring, SOCI cyber hazard, supply chain
 
@@ -50,4 +50,4 @@
 - Fix contractor joiner-mover-leaver.
 - Refresh the AESCSF self-assessment against the *current* OT estate.
 
-**Priya's closing line:** "I don't need you to tell me we have gaps — I need a defensible, evidence-backed map of them that I can take to the Board and the AER, and that lines up AESCSF, SOCI and the E8 baseline so we're not telling three different stories."
+**CISO closing line:** "I don't need you to tell me we have gaps — I need a defensible, evidence-backed map of them that I can take to the Board and the AER, and that lines up AESCSF, SOCI and the E8 baseline so we're not telling three different stories."

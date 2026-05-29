@@ -1,7 +1,7 @@
 # Discovery Interview — CTO / Head of Security (extracted notes)
 
 **Date:** 12 May 2026
-**Interviewee:** Dr Anika Shar: Chief Technology Officer, Voltiq Analytics
+**Interviewee:** Chief Technology Officer (synthetic role), Voltiq Analytics
 **Interviewer:** Synthetic assessment lead
 **Topics:** SOCI applicability, AESCSF supplier alignment, multi-tenant SaaS, data handling, supply chain
 
