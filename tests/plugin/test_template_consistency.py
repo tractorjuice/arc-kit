@@ -6,7 +6,7 @@ command body, verifies the template file exists in both:
   - <plugin>/templates/<name>     (plugin-bundled copy — the plugin that owns the command)
   - .arckit/templates/<name>      (CLI-scaffolded copy, merged across all plugins)
 
-v5.0.0+: commands live across 6 plugin source directories (core + 5
+v5.0.0+: commands live across plugin source directories (core + community
 community overlays). Each plugin's commands reference templates in its
 own templates/ dir; the CLI-scaffolded copy is the union.
 """
@@ -80,7 +80,7 @@ def test_template_exists_in_cli_dir(template_ref):
 
 
 def test_plugin_and_cli_templates_are_in_sync():
-    """Every template across all 6 plugin templates/ dirs must also exist in .arckit/templates/."""
+    """Every template across all plugin templates/ dirs must also exist in .arckit/templates/."""
     plugin_files: set[str] = set()
     for plugin in PLUGIN_SOURCES:
         plugin_files.update(

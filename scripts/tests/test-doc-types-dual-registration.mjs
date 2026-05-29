@@ -16,7 +16,7 @@
  */
 
 import { readFile } from 'node:fs/promises';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -25,7 +25,7 @@ const repoRoot = resolve(__dirname, '..', '..');
 const docTypesPath = resolve(repoRoot, 'arckit-claude/config/doc-types.mjs');
 const pagesPath = resolve(repoRoot, 'arckit-claude/commands/pages.md');
 
-const { DOC_TYPES } = await import(docTypesPath);
+const { DOC_TYPES } = await import(pathToFileURL(docTypesPath).href);
 const docTypesCodes = new Set(Object.keys(DOC_TYPES));
 
 const pagesContent = await readFile(pagesPath, 'utf8');

@@ -92,8 +92,9 @@ function isUnderPluginRoot(p) {
   if (!p || typeof p !== 'string') return false;
   // Resolve to absolute, then check prefix. Don't follow symlinks; the
   // plugin's distributed files are real files in a marketplace cache.
-  const abs = resolve(p);
-  return abs === PLUGIN_ROOT || abs.startsWith(PLUGIN_ROOT + '/');
+  const abs = resolve(p).replaceAll('\\', '/');
+  const root = PLUGIN_ROOT.replaceAll('\\', '/');
+  return abs === root || abs.startsWith(root + '/');
 }
 
 function commandTouchesPluginScripts(cmd) {

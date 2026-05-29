@@ -2,9 +2,9 @@
 
 > **Overlay Origin**: Community-contributed | **Domain co-maintainer**: @royster70 | **ArcKit Version**: [VERSION]
 
-The Australian Federal / DISP-supplier Overlay adds 8 community-contributed commands covering the eleven regulatory anchors that apply to Australian Federal entities and Defence-cleared suppliers (DISP Members). It is anchored on ASD Essential Eight + Information Security Manual, the DTA Digital Service Standard, the Privacy Act 1988 + 13 Australian Privacy Principles, the OAIC Notifiable Data Breach scheme, the Defence Industry Security Program (DISP, Levels 1–3), the Protective Security Policy Framework, the November 2025 Commonwealth Procurement Rules overhaul, the DTA AI Assurance Framework + Responsible AI Policy v2.0, the PGPA Act s16 financial-management duties, and IRAP for cloud-service assessment.
+The Australian Federal / DISP-supplier Overlay adds 10 community-contributed commands covering the regulatory anchors that apply to Australian Federal entities, Defence-cleared suppliers (DISP Members), and optional cross-sector critical-infrastructure use cases. It is anchored on ASD Essential Eight + Information Security Manual, ASD operational technology guidance, the Security of Critical Infrastructure Act 2018 / CIRMP, the DTA Digital Service Standard, the Privacy Act 1988 + 13 Australian Privacy Principles, the OAIC Notifiable Data Breach scheme, the Defence Industry Security Program (DISP, Levels 1–3), the Protective Security Policy Framework, the November 2025 Commonwealth Procurement Rules overhaul, the DTA AI Assurance Framework + Responsible AI Policy v2.0, the PGPA Act s16 financial-management duties, and IRAP for cloud-service assessment.
 
-The overlay closes [#424](https://github.com/tractorjuice/arc-kit/issues/424). A sibling sector recipe `au-energy` covering AESCSF, SOCI Act CIRMP, and AER ring-fencing for energy-sector / SOCI-covered critical-asset operators is drafted in [#440](https://github.com/tractorjuice/arc-kit/issues/440) but held until a sector test fixture is in place.
+The overlay closes [#424](https://github.com/tractorjuice/arc-kit/issues/424). A sibling sector recipe `au-energy` covering AESCSF, AER ring-fencing, NER/NGR, and AEMO obligations for energy-sector / SOCI-covered critical-asset operators is drafted in [#440](https://github.com/tractorjuice/arc-kit/issues/440). The general `au-ot-security` and `au-soci-cirmp` commands live here because OT security and SOCI/CIRMP apply beyond energy; `au-energy` will consume them rather than redefining them privately.
 
 ---
 
@@ -17,6 +17,7 @@ Five jobs in one overlay:
 3. **Replace UK GDS Service Standard with DTA Digital Service Standard** as the citizen-service quality gate.
 4. **Make DISP Member self-attestation auditable** — the four DISP security domains (governance, personnel, physical, information & cyber) each get an evidence trail, plus FOCI declaration, supply chain, and annual board attestation.
 5. **Ground AI delivery in DTA AI Assurance Framework v2.0** with explicit AI Accountable Officer designation and Privacy-Act-aligned automated-decision notification.
+6. **Add optional cross-sector critical-infrastructure evidence**, separating ASD OT security and SOCI/CIRMP support so users can apply either or both before a sector overlay such as `au-energy`.
 
 ---
 
@@ -30,6 +31,8 @@ Use the overlay if any of the following apply to the project:
 - The system is in scope of **PSPF** (Protective Security Policy Framework) — applies to all non-corporate Commonwealth entities under PGPA Act.
 - The procurement is run under the **November 2025 Commonwealth Procurement Rules** overhaul (AUD 125k SME-only thresholds, AI transparency clauses, ethical conduct in VfM).
 - The project includes AI/ML/LLM in scope and is subject to the **DTA AI Assurance Framework + Responsible AI Policy v2.0** (effective December 2025) and the **NAIC Essential AI Practices ("AI6")** operational guidance.
+- The project includes connected **operational technology** or cyber-physical systems and needs ASD OT guidance alignment. Enable `AU_OT` in the recipe or run `/arckit.au-ot-security`.
+- The project may involve a **SOCI-regulated critical infrastructure asset** and needs CIRMP governance or evidence. Enable `AU_SOCI` in the recipe or run `/arckit.au-soci-cirmp`.
 
 For non-AU projects the overlay is dormant: existing UK, MOD, EU, French, Austrian, UAE, and Canada overlays are unchanged.
 
@@ -52,7 +55,7 @@ If you are a Defence supplier rather than a Federal entity, set `organisation_na
 
 ---
 
-## The 8 Commands
+## The 10 Commands
 
 ### Security baseline
 
@@ -73,6 +76,16 @@ Generates a Privacy Impact Assessment under Privacy Act 1988 s33D (introduced by
 #### `/arckit.au-ndb-playbook`
 
 Generates an OAIC Notifiable Data Breach scheme operational response playbook (Privacy Act Part IIIC). Documents the 30-day notification timeline, the eligible-data-breach assessment criteria, the OAIC reporting workflow, and the affected-individual notification template. Operational artefact — depends on `au-pia` because it requires the designated Privacy Officer (APP 1) and APP 11 control inventory from the PIA. Handoffs: `au-disp-attestation` (DISP incident reporting cross-refs NDB), `risk`.
+
+### Optional critical infrastructure support
+
+#### `/arckit.au-ot-security`
+
+Generates an ASD operational technology cyber security assessment for connected OT, ICS, SCADA, cyber-physical, building-management, field-device, or industrial-control environments. Covers OT architecture visibility, IT/OT segmentation, secure connectivity, remote/vendor access, monitoring, logging, incident response, safety, availability, recovery constraints, and AI-in-OT considerations where relevant. Handoffs: `au-e8-posture` and `au-ism-controls` for baseline cyber evidence, `au-soci-cirmp` where the OT environment supports a critical infrastructure asset, and `risk` for residual OT exposure.
+
+#### `/arckit.au-soci-cirmp`
+
+Generates a SOCI Act / Critical Infrastructure Risk Management Program governance and evidence pack. Covers critical asset and responsible entity context, SOCI applicability, CIRMP governance, cyber and information security hazards, personnel hazards, supply-chain hazards, physical security and natural hazards, protected-information handling, incident reporting, and annual report readiness. It is deliberately separate from `au-ot-security`: some SOCI assets do not include OT, and some OT environments may not trigger SOCI obligations.
 
 ### Service + AI compliance
 
@@ -100,13 +113,21 @@ Generates a DISP Member self-attestation pack — the apex artefact for Defence-
 
 Recipe: [`au-federal.yaml`](../../arckit-au/recipes/au-federal.yaml)
 
-35 targets across 9 build waves + 2 post-build hooks. The recipe swaps three commands from the `uk-saas` baseline (per maintainer guidance on #424):
+35 default targets across 9 build waves + 2 post-build hooks, with optional default-off `AU_OT` and `AU_SOCI` targets for cross-sector critical-infrastructure use. The recipe swaps three commands from the `uk-saas` baseline (per maintainer guidance on #424):
 
 - `arckit:tcop` → `arckit:au-dss` (DTA DSS replaces UK TCoP)
 - `arckit:secure` → `arckit:au-e8-posture` (E8 ML2 replaces UK Secure-by-Design)
 - `arckit:dpia` → `arckit:au-pia` (Privacy Act 1988 replaces UK GDPR/DPA 2018)
 
 The wave shape mirrors `ca-federal-fitaa` — foundation → research wave + early domain artefacts → mid-domain → late ADRs → flagship → synthesis. `AU_DISP` is the consolidation flagship in W5, depending on `AU_E8`, `AU_ISM`, `AU_PIA`, `AU_NDB`, and `AU_PSPF` having completed in earlier waves.
+
+To add OT and SOCI/CIRMP support to a federal build:
+
+```bash
+/arckit:build <project-name> --recipe au-federal --enable AU_OT --enable AU_SOCI
+```
+
+Use only `--enable AU_OT` for OT environments that are not SOCI-regulated, or only `--enable AU_SOCI` where CIRMP applies without OT.
 
 To run:
 
@@ -135,6 +156,8 @@ If you are migrating an existing UK-classified ArcKit project to the AU overlay:
    - `/arckit.au-pspf` for PSPF outcomes scorecard
    - `/arckit.au-ndb-playbook` for NDB response
    - `/arckit.au-ai-assurance` if AI is in scope
+   - `/arckit.au-ot-security` if connected OT or cyber-physical systems are in scope
+   - `/arckit.au-soci-cirmp` if SOCI/CIRMP obligations are in scope
    - `/arckit.au-disp-attestation` if Defence supply-chain accreditation is in scope
 5. Run `/arckit:traceability` to refresh the cross-reference matrix.
 
@@ -150,6 +173,11 @@ The overlay is currently solo-maintained by [@royster70](https://github.com/roys
 
 - [ASD Essential Eight Maturity Model](https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/essential-eight/essential-eight-maturity-model)
 - [ASD Information Security Manual](https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism)
+- [ASD Operational Technology environments](https://www.cyber.gov.au/business-government/secure-design/operational-technology-environments)
+- [ASD Principles of operational technology cyber security](https://www.cyber.gov.au/resources-business-and-government/maintaining-devices-and-systems/critical-infrastructure/principles-operational-technology-cybersecurity)
+- [ASD Secure connectivity principles for Operational Technology](https://www.cyber.gov.au/business-government/secure-design/operational-technology-environments/secure-connectivity-principles-for-operational-technology)
+- [Security of Critical Infrastructure Act 2018 (SOCI)](https://www.cisc.gov.au/legislation-regulation-and-compliance/soci-act-2018)
+- [CISC Regulatory obligations](https://www.cisc.gov.au/how-we-support-industry/regulatory-obligations)
 - [DTA Digital Service Standard](https://www.dta.gov.au/help-and-advice/digital-service-standard)
 - [Privacy Act 1988 (Cth)](https://www.legislation.gov.au/Details/C2024C00301)
 - [OAIC Notifiable Data Breach scheme](https://www.oaic.gov.au/privacy/notifiable-data-breaches)

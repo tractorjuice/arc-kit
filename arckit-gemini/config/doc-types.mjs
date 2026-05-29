@@ -165,11 +165,14 @@ export const DOC_TYPES = {
   'USPIA':     { name: 'US Privacy Impact Assessment (E-Gov §208)',    category: 'Compliance',   regime: 'US', severity: 'HIGH' },
   'SBOM':      { name: 'US SBOM + Secure-Software Self-Attestation (EO 14028)', category: 'Compliance', regime: 'US' },
   // Australian Federal Overlay (Community-contributed, maintained by @royster70) — ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988 PIA,
-  // OAIC NDB scheme, DISP, PSPF, DTA AI Assurance Framework + Responsible AI Policy v2.0
+  // OAIC NDB scheme, DISP, PSPF, DTA AI Assurance Framework + Responsible AI Policy v2.0,
+  // plus optional cross-sector OT security and SOCI/CIRMP support for critical infrastructure.
   'AUE8':      { name: 'AU Essential Eight Maturity Posture',          category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   'AUISM':     { name: 'AU ISM Statement of Applicability',            category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   'AUPIA':     { name: 'AU Privacy Impact Assessment (Privacy Act 1988)', category: 'Compliance', regime: 'AU', severity: 'HIGH' },
   'AUNDB':     { name: 'AU Notifiable Data Breach Response Playbook',  category: 'Compliance',  regime: 'AU' },
+  'AUOT':      { name: 'AU OT Security Assessment',                    category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
+  'AUSOCI':    { name: 'AU SOCI CIRMP Governance Pack',                category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   'AUDSS':     { name: 'AU DTA Digital Service Standard Conformance',  category: 'Governance',  regime: 'AU', severity: 'HIGH' },
   'AUPSPF':    { name: 'AU Protective Security Policy Framework Scorecard', category: 'Governance', regime: 'AU', severity: 'HIGH' },
   'AUAIA':     { name: 'AU AI Assurance Baseline (DTA AI Policy v2.0)', category: 'Compliance',  regime: 'AU', severity: 'HIGH' },

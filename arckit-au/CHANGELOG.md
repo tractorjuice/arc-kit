@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `au-ot-security` for ASD operational technology cyber security guidance in connected OT environments.
+- Added `au-soci-cirmp` for SOCI Act / Critical Infrastructure Risk Management Program support.
+- Added optional default-off `AU_OT` and `AU_SOCI` targets to the `au-federal` recipe for cross-sector critical-infrastructure use. These are general AU capabilities intended to be consumed by the first industry-specific AU menu, `au-energy`.
+
 ## [5.0.0] - 2026-05-18
 
 ### Added

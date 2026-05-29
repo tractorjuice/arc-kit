@@ -31,9 +31,14 @@
 #     arckit:secure    → arckit:au-e8-posture     (E8 ML2 replaces UK SBD)
 #     arckit:dpia      → arckit:au-pia            (Privacy Act replaces UK GDPR)
 #
+#   Optional cross-sector critical-infrastructure support (general AU baseline,
+#   not energy-specific; future au-energy recipe consumes these by default):
+#     au-ot-security   ASD operational technology cyber security guidance
+#     au-soci-cirmp    SOCI Act / CIRMP governance and evidence pack
+#
 #   Sector overlays out of scope for this recipe (separate au-energy PR #440):
 #     au-aescsf        Australian Energy Sector Cyber Security Framework
-#     au-soci-cirmp    Security of Critical Infrastructure Act CIRMP
+#     au-energy-compliance AER ring-fencing, NER/NGR, AEMO obligations
 #
 #   Cloud research wave (IRAP-aligned; Australia regions)
 #     arckit:research               Federal/DISP procurement landscape
@@ -83,6 +88,12 @@ optional_targets:
     default: true
   DATASCOUT:
     description: Australian federal open-data discovery — data.gov.au, AusTender, OAIC, ACSC publications
+    default: false
+  AU_OT:
+    description: ASD operational technology cyber security guidance for connected OT environments
+    default: false
+  AU_SOCI:
+    description: SOCI Act / Critical Infrastructure Risk Management Program support for Australian critical infrastructure assets
     default: false
   DATA_MODEL:
     description: Data model with entity relationships and Privacy-Act-aligned governance (recommended for systems handling APP-defined personal information)
@@ -211,6 +222,23 @@ targets:
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AUNDB }
     deps: [REQ, AU_PIA]
+
+  # --- Optional critical-infrastructure support (OT + SOCI) --------------
+  # These are reusable across Australian critical-infrastructure sectors and
+  # intentionally default-off for ordinary federal / DISP builds. Sector
+  # recipes such as au-energy can enable them by default and layer
+  # sector-specific obligations on top.
+  - id: AU_OT
+    skill: arckit:au-ot-security
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUOT }
+    deps: [REQ, STKE, AU_E8, AU_ISM]
+
+  - id: AU_SOCI
+    skill: arckit:au-soci-cirmp
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUSOCI }
+    deps: [REQ, STKE, AU_E8, AU_ISM, AU_PIA, AU_NDB]
 
   # --- Service + AI compliance (DSS, PSPF, AI assurance) -----------------
   # DSS is the AU equivalent of UK TCoP (replaces arckit:tcop in the uk-saas

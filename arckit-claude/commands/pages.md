@@ -351,6 +351,8 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | AUISM | `ARC-*-AUISM-*.md` | AU ISM Statement of Applicability |
 | | AUPIA | `ARC-*-AUPIA-*.md` | AU Privacy Impact Assessment (Privacy Act 1988) |
 | | AUNDB | `ARC-*-AUNDB-*.md` | AU Notifiable Data Breach Response Playbook |
+| | AUOT | `ARC-*-AUOT-*.md` | AU OT Security Assessment |
+| | AUSOCI | `ARC-*-AUSOCI-*.md` | AU SOCI CIRMP Governance Pack |
 | | AUAIA | `ARC-*-AUAIA-*.md` | AU AI Assurance Baseline (DTA AI Policy v2.0) |
 | | AUDISP | `ARC-*-AUDISP-*.md` | AU DISP Member Self-Attestation Pack |
 | **Governance (Community-contributed — Australian Federal / DISP-supplier Overlay)** | | | |

@@ -12,7 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 CLAUDE_COMMANDS_DIR = REPO_ROOT / "arckit-claude" / "commands"
 CLAUDE_ONLY_COMMANDS = {"build.md"}
 
-# v5.0.0+: commands live across 6 plugin source directories. Mirror
+# v5.0.0+: commands live across plugin source directories. Mirror
 # scripts/converter.py's PLUGIN_SOURCES list so this test matches the
 # converter's actual output.
 PLUGIN_COMMAND_DIRS = [
