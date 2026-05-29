@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Minimum Claude Code version bumped to v2.1.156** (from v2.1.144). The new floor pulls in two Opus 4.8-era improvements ArcKit now depends on: the **v2.1.156** fix for Opus 4.8 thinking blocks being modified and causing API errors (relevant to `/arckit:*` commands and the research agents that use extended thinking), and **v2.1.154** which shipped Opus 4.8 GA plus the `defaultEnabled` plugin manifest field (below). Updated in `arckit-claude/hooks/version-check.mjs`, `README.md` (install note, "Why v2.1.156?" callout, requirements line), `CLAUDE.md` (monitors floor note), and `docs/getting-started.html`.
+
+### Added
+
+- **`defaultEnabled: false` on all 9 community overlays** (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`). Adopts the Claude Code v2.1.154 plugin manifest field so installing the marketplace surfaces the overlays without auto-enabling all nine. Users now opt in to only the jurisdiction or sector they need; core `arckit` stays default-enabled. Formalises the "install only what you need" model already documented in `CLAUDE.md`. Addresses item 42 of #522.
+
 ## [5.5.0] — 2026-05-28
 
 ### Brand reposition

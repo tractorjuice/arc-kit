@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Minimum Claude Code version bumped to v2.1.156** (from v2.1.144) in `hooks/version-check.mjs`. Floor justifications: the **v2.1.156** Opus 4.8 thinking-block API-error fix (affects `/arckit:*` commands and research agents using extended thinking) and **v2.1.154** Opus 4.8 GA + `defaultEnabled` plugin manifest field. Added matching lines to the version-warning message and header comment.
+
+### Added
+
+- **`defaultEnabled: false` on all 9 community overlays** (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`), adopting the Claude Code v2.1.154 manifest field. Marketplace install surfaces the overlays without auto-enabling all nine; core `arckit` stays default-enabled. Addresses item 42 of #522.
+
+See the root [`CHANGELOG.md`](../CHANGELOG.md) for the cross-repo scope.
+
 ## [5.5.0] - 2026-05-28
 
 ### Brand reposition

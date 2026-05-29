@@ -8,8 +8,9 @@
  *   2. Claude Code minimum — reads `$CLAUDE_CODE_VERSION` (if set) or runs
  *      `claude --version` via spawnSync, and warns when the client is below
  *      MIN_CLAUDE_CODE_VERSION (features like userConfig, hook `if:`, skill
- *      `paths:`, plugin dependency enforcement, and the monitor/session-title
- *      bug fix depend on v2.1.83+/v2.1.121+/v2.1.143+/v2.1.144+). Silent on
+ *      `paths:`, plugin dependency enforcement, `defaultEnabled`, and the
+ *      Opus 4.8 thinking-block fix depend on
+ *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+). Silent on
  *      detection failure.
  *
  * Hook Type: SessionStart
@@ -22,7 +23,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isFile, readText, parseHookInput } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.144';
+const MIN_CLAUDE_CODE_VERSION = '2.1.156';
 
 parseHookInput(); // consume stdin (required by hook protocol)
 
@@ -56,7 +57,9 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Hook \`args: string[]\` exec form — ArcKit hooks now use the exec form to avoid shell-string parsing; older clients only understand the legacy \`command\` string form (needs v2.1.139)\n` +
     `- Plugin dependency enforcement — \`claude plugin disable arckit\` warns when a community overlay depends on it, instead of silently breaking the overlay (needs v2.1.143)\n` +
     `- Session title bug fix — ArcKit's \`stale-artifact-scan\` monitor was being used to name new sessions instead of the user's first prompt (needs v2.1.144)\n` +
-    `- Skill tool headless permission fix — \`/arckit:*\` commands run via \`claude -p\` / CI failed with permission errors on v2.1.141–v2.1.143 (needs v2.1.144)\n\n` +
+    `- Skill tool headless permission fix — \`/arckit:*\` commands run via \`claude -p\` / CI failed with permission errors on v2.1.141–v2.1.143 (needs v2.1.144)\n` +
+    `- Plugin \`defaultEnabled: false\` — ArcKit's 9 community overlays no longer auto-enable on marketplace install; users opt in to only the jurisdiction/sector they need (needs v2.1.154)\n` +
+    `- Opus 4.8 thinking-block API-error fix — modified thinking blocks caused API errors on earlier clients; affects \`/arckit:*\` commands and research agents using extended thinking (needs v2.1.156)\n\n` +
     `Update with: \`claude update\``
   );
   process.stderr.write(`[ArcKit] Claude Code v${clientVersion} is below required v${MIN_CLAUDE_CODE_VERSION}\n`);
