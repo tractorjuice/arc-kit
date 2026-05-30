@@ -37,6 +37,7 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
    - The project's OT security artefact (`ARC-{P}-AUOT-v*`) if available.
    - The project's PIA artefact (`ARC-{P}-AUPIA-v*`) if available.
    - Existing DFD, diagram, data-model, traceability, ADR, and risk artefacts if available.
+   - Existing ServiceNow / CMDB, asset inventory, service catalogue, interface register, data catalogue, vendor access register, obligation register, or evidence register artefacts if available.
    - `.arckit/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -64,6 +65,8 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
 
    - **DER, Metering, Settlement, and Customer Data Implications** - assess DERMS, DOE, CSIP-AUS, meter data, NMI, billing, customer, settlement, and affiliate data handling.
 
+   - **Regulated Asset, Interface, and Data Inventory** - identify source-of-truth registers for regulated services, unregulated services, critical assets, CMDB CIs, AEMO interfaces, APIs, market files, telemetry links, vendor access paths, customer data, metering data, settlements, owners, criticality, and inventory gaps. Cross-reference `/arckit:servicenow`, `/arckit:data-model`, `/arckit:dfd`, `/arckit:diagram`, `/arckit:risk`, and `/arckit:traceability` where available.
+
    - **Architecture Evidence** - require ring-fencing boundary diagrams, regulated/unregulated data-flow maps, AEMO interface maps, SOCI incident escalation, and the energy data model.
 
    - **Regulated / Unregulated Data Flows** - document permitted and prohibited flows, controls, approvals, logging, retention, affiliate access, and evidence owners.
@@ -89,6 +92,7 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
 - If AEMO site resources are temporarily unavailable, record the access date and use the latest verified local or public copy available to the organisation.
 - Do not collapse regulated and unregulated data flows into a generic system diagram. Produce explicit boundary, interface, data-model, traceability, and ADR handoffs.
 - Use `/arckit:au-aescsf` for energy cyber maturity and `/arckit:au-ot-security` for OT-specific evidence where applicable.
+- Inventory-heavy findings should reuse existing ArcKit artefacts: `/arckit:data-model` for data catalogues, `/arckit:servicenow` for CMDB/service inventory, `/arckit:dfd` and `/arckit:diagram` for colour-coded visualisation, `/arckit:risk` for heat/scoring, and `/arckit:graph-report` for register coverage gaps.
 
 ## Suggested Next Steps
 
@@ -101,5 +105,7 @@ After completing this command, consider running:
 - `/arckit:dfd` -- Data-flow diagrams provide regulated/unregulated, market, AEMO, metering, DER, and customer flow evidence.
 - `/arckit:diagram` -- Architecture diagrams provide ring-fencing boundaries, interface maps, and operational context.
 - `/arckit:data-model` -- The energy data model identifies regulated, unregulated, customer, metering, settlement, and operational data dependencies.
+- `/arckit:servicenow` -- CMDB and service inventory evidence maps regulated services, CIs, dependencies, owners, support tiers, and operational criticality.
 - `/arckit:traceability` -- Traceability links obligations to requirements, controls, decisions, evidence, and residual gaps.
 - `/arckit:adr` -- Architecture decisions should be raised for ring-fencing boundaries, AEMO interfaces, DER integration, and data-sharing choices.
+- `/arckit:graph-report` -- Governance graph metrics show register coverage, cross-reference density, and missing compliance evidence links.

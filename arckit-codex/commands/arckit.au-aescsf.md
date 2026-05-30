@@ -36,6 +36,7 @@ The Australian Energy Sector Cyber Security Framework is an energy-sector cyber 
    - The project's OT security artefact (`ARC-{P}-AUOT-v*`) if available.
    - The project's SOCI/CIRMP artefact (`ARC-{P}-AUSOCI-v*`) if available.
    - Existing DFD, diagram, data-model, traceability, and risk artefacts if available.
+   - Existing ServiceNow / CMDB, asset inventory, interface register, vendor access register, evidence register, data catalogue, or control register artefacts if available.
    - `.arckit/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -65,6 +66,8 @@ The Australian Energy Sector Cyber Security Framework is an energy-sector cyber 
 
    - **Energy Data Model Dependencies** - identify dependencies across network assets, DER, meters, NMI / customer records, market settlements, telemetry, outage, switching, and operational data.
 
+   - **Asset, Interface, and Evidence Inventory** - identify source-of-truth registers for OT assets, IT systems, DERMS / DOE platforms, market interfaces, APIs, telemetry links, metering assets, vendor remote-access paths, data catalogues, control evidence, owners, criticality, and inventory gaps. Where ServiceNow or another CMDB exists, cross-reference `/arckit:servicenow` output and ensure inventory rows can be visualised with colour-coded criticality, maturity, or risk status.
+
    - **Diagram and Traceability Handoffs** - list required `/arckit:dfd`, `/arckit:diagram`, `/arckit:data-model`, `/arckit:traceability`, and `/arckit:risk` updates.
 
    - **AESCSF Anti-Pattern Register** - call out flat OT networks, undocumented market interfaces, unmanaged vendor remote access, stale DER integration assumptions, missing data ownership, and unsupported control-room dependencies.
@@ -87,6 +90,7 @@ The Australian Energy Sector Cyber Security Framework is an energy-sector cyber 
 - AEMO AESCSF resources may be intermittently unavailable. Keep AEMO as the authoritative anchor, record access date and availability status, and require re-verification before external reliance.
 - Energy projects often combine enterprise IT, OT, market, DER, metering, settlement, and customer data. Do not assess maturity without architecture evidence for those dependencies.
 - Where the project includes critical infrastructure, cross-reference `/arckit:au-soci-cirmp`; where it includes connected OT, cross-reference `/arckit:au-ot-security`.
+- Inventory-heavy findings should reuse existing ArcKit artefacts: `/arckit:data-model` for data catalogues, `/arckit:servicenow` for CMDB/service inventory, `/arckit:dfd` and `/arckit:diagram` for colour-coded visualisation, `/arckit:risk` for heat/scoring, `/arckit:maturity-model` for maturity criteria, and `/arckit:graph-report` for coverage gaps.
 
 ## Suggested Next Steps
 
@@ -99,5 +103,8 @@ After completing this command, consider running:
 - `/arckit:dfd` -- Data-flow diagrams provide IT/OT, market, DERMS, DOE, CSIP-AUS, and vendor-access evidence.
 - `/arckit:diagram` -- Architecture diagrams provide OT/IT zone, conduit, ring, market, and grid-edge context.
 - `/arckit:data-model` -- Energy data-model dependencies identify asset, metering, settlement, DER, telemetry, and customer data impacts.
+- `/arckit:servicenow` -- CMDB and service inventory evidence maps architecture components, dependencies, owners, and support criticality.
+- `/arckit:maturity-model` -- Maturity scoring can calibrate AESCSF capability levels and evidence thresholds.
 - `/arckit:traceability` -- Traceability links AESCSF findings to requirements, obligations, controls, decisions, and evidence.
 - `/arckit:risk` -- AESCSF maturity gaps and residual exposures should feed the project risk register.
+- `/arckit:graph-report` -- Governance graph metrics show coverage, cross-reference density, and missing evidence links across registers.

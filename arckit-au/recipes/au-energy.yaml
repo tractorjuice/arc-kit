@@ -35,6 +35,9 @@ optional_targets:
   TRACEABILITY:
     description: Requirements traceability matrix across federal, OT, SOCI, AESCSF, and energy compliance evidence
     default: true
+  SERVICE_INVENTORY:
+    description: ServiceNow / CMDB service inventory and dependency evidence for energy assets, interfaces, owners, and support criticality
+    default: false
 
 post_build_hooks:
   - skill: arckit:health
@@ -177,6 +180,12 @@ targets:
     output: { project: "{P}-{NAME}", type: DATA }
     deps: [REQ, AU_PIA, AU_ENERGY]
 
+  - id: SERVICE_INVENTORY
+    skill: arckit:servicenow
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SNOW }
+    deps: [REQ, STKE, DATA_MODEL, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
   - id: TRACEABILITY
     skill: arckit:traceability
     args: "{P}"
@@ -184,4 +193,4 @@ targets:
     deps:
       [REQ, STKE, "ADR_*",
        AU_E8, AU_ISM, AU_PIA, AU_NDB,
-       AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+       AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY, DATA_MODEL, SERVICE_INVENTORY]

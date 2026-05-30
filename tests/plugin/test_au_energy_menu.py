@@ -42,6 +42,7 @@ def test_au_energy_recipe_composes_federal_ot_soci_and_energy_targets():
     assert optional_targets["AU_SOCI"]["default"] is True
     assert optional_targets["AU_AESCSF"]["default"] is True
     assert optional_targets["AU_ENERGY"]["default"] is True
+    assert optional_targets["SERVICE_INVENTORY"]["default"] is False
 
     targets = {target["id"]: target for target in recipe["targets"]}
     assert targets["AU_OT"]["skill"] == "arckit:au-ot-security"
@@ -59,6 +60,17 @@ def test_au_energy_recipe_composes_federal_ot_soci_and_energy_targets():
         "AU_OT",
         "AU_SOCI",
         "AU_AESCSF",
+    ]
+    assert targets["SERVICE_INVENTORY"]["skill"] == "arckit:servicenow"
+    assert targets["SERVICE_INVENTORY"]["output"]["type"] == "SNOW"
+    assert targets["SERVICE_INVENTORY"]["deps"] == [
+        "REQ",
+        "STKE",
+        "DATA_MODEL",
+        "AU_OT",
+        "AU_SOCI",
+        "AU_AESCSF",
+        "AU_ENERGY",
     ]
 
     adr_topics = [target["topic"] for target in recipe["targets"] if target["id"].startswith("ADR_")]
@@ -136,6 +148,7 @@ def test_au_energy_synthetic_fixtures_exercise_new_skill_prompts():
         "Architecture Evidence",
         "IT/OT and Market Data Flows",
         "Energy Data Model Dependencies",
+        "Asset, Interface, and Evidence Inventory",
         "Federal Baseline Cross-Reference",
     ]:
         assert required_section in aescsf_command
@@ -145,10 +158,31 @@ def test_au_energy_synthetic_fixtures_exercise_new_skill_prompts():
         "AER Ring-Fencing Assessment",
         "NER / NGR and AEMO Obligation Mapping",
         "Market and System-Operator Interface Register",
+        "Regulated Asset, Interface, and Data Inventory",
         "Regulated / Unregulated Data Flows",
         "Architecture Decision Seeds",
     ]:
         assert required_section in energy_command
+
+    for command_text in [aescsf_command, energy_command]:
+        for arckit_tool in [
+            "/arckit:servicenow",
+            "/arckit:data-model",
+            "/arckit:dfd",
+            "/arckit:diagram",
+            "/arckit:risk",
+            "/arckit:graph-report",
+        ]:
+            assert arckit_tool in command_text
+
+    aescsf_template = read("arckit-au/templates/au-aescsf-template.md")
+    energy_template = read("arckit-au/templates/au-energy-compliance-template.md")
+    for template_text in [aescsf_template, energy_template]:
+        assert "Register / Inventory" in template_text
+        assert "Source of Truth" in template_text
+        assert "Visualisation / Scoring" in template_text
+        assert "ServiceNow / CMDB" in template_text
+        assert "Graph Report" in template_text
 
     eastland_positive_anchors = [
         "Eastland Energy Networks",

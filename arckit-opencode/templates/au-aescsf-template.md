@@ -90,6 +90,19 @@
 
 ---
 
+## Asset, Interface, and Evidence Inventory
+
+| Register / Inventory | Source of Truth | Items in Scope | Owner | Visualisation / Scoring | Gap |
+|----------------------|-----------------|----------------|-------|-------------------------|-----|
+| OT asset inventory | [CMDB / asset register / AUOT] | [Zones, conduits, devices, control systems] | [Owner] | [Criticality / risk colour coding] | [Gap] |
+| IT / service inventory | [ServiceNow / CMDB / diagram] | [Applications, services, infrastructure CIs] | [Owner] | [Support tier / dependency score] | [Gap] |
+| Market and AEMO interface register | [Interface register / DFD] | [APIs, portals, B2B/B2M, files, telemetry] | [Owner] | [Availability / compliance status] | [Gap] |
+| DER / metering / telemetry inventory | [Data model / asset register] | [DERMS, DOE, CSIP-AUS, meters, telemetry paths] | [Owner] | [Maturity / risk heat] | [Gap] |
+| Vendor remote-access register | [Access register / AUOT / risk] | [Vendors, jump hosts, privileged sessions] | [Owner] | [Residual risk / control status] | [Gap] |
+| Evidence and control register | [Traceability / graph-report / risk] | [Controls, obligations, evidence, tests] | [Owner] | [Coverage / readiness score] | [Gap] |
+
+---
+
 ## Diagram and Traceability Handoffs
 
 | Handoff | Required Update | Owner | Status |
@@ -97,8 +110,10 @@
 | DFD | [IT/OT, market, DER, vendor access flows] | [Owner] | [Status] |
 | Diagram | [Zones, conduits, market interfaces, grid-edge context] | [Owner] | [Status] |
 | Data Model | [Energy data dependencies and ownership] | [Owner] | [Status] |
+| ServiceNow / CMDB | [CIs, service dependencies, owners, support criticality] | [Owner] | [Status] |
 | Traceability | [Requirements, controls, evidence, obligations] | [Owner] | [Status] |
 | Risk | [Maturity gaps and treatment actions] | [Owner] | [Status] |
+| Graph Report | [Coverage, cross-reference density, missing evidence links] | [Owner] | [Status] |
 
 ---
 

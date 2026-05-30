@@ -80,6 +80,19 @@
 
 ---
 
+## Regulated Asset, Interface, and Data Inventory
+
+| Register / Inventory | Source of Truth | Items in Scope | Owner | Visualisation / Scoring | Gap |
+|----------------------|-----------------|----------------|-------|-------------------------|-----|
+| Regulated service inventory | [Service catalogue / CMDB] | [Regulated services, shared services, support tiers] | [Owner] | [Ring-fencing status / criticality colour] | [Gap] |
+| Critical asset inventory | [SOCI register / asset register / AUSOCI] | [Critical electricity, gas, market, or system assets] | [Owner] | [SOCI applicability / residual risk] | [Gap] |
+| AEMO and market interface register | [Interface register / DFD] | [APIs, portals, B2B/B2M, files, telemetry] | [Owner] | [Compliance / availability status] | [Gap] |
+| Regulated / unregulated data register | [Data model / data catalogue] | [Customer, NMI, meter, settlement, affiliate, operational data] | [Owner] | [Permitted use / classification] | [Gap] |
+| Vendor and affiliate access register | [Access register / contracts / AUOT] | [Vendor, affiliate, support, privileged paths] | [Owner] | [Control status / risk heat] | [Gap] |
+| Obligation and evidence register | [Traceability / graph-report] | [NER, NGR, AER, AEMO, SOCI, privacy evidence] | [Owner] | [Coverage / readiness score] | [Gap] |
+
+---
+
 ## Architecture Evidence
 
 | Evidence Required | Status | Artefact / Link | Owner | Gap |
@@ -120,7 +133,9 @@
 | DFD | [Regulated/unregulated, market, AEMO, customer, DER flows] | [Owner] | [Status] |
 | Diagram | [Ring-fencing boundary and AEMO interface maps] | [Owner] | [Status] |
 | Data Model | [Energy data dependencies and permitted usage] | [Owner] | [Status] |
+| ServiceNow / CMDB | [Service CIs, support tiers, dependencies, owners] | [Owner] | [Status] |
 | Traceability | [Obligations, requirements, controls, evidence] | [Owner] | [Status] |
+| Graph Report | [Coverage, cross-reference density, missing evidence links] | [Owner] | [Status] |
 
 ---
 
