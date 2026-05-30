@@ -2,18 +2,18 @@
 
 12 slash commands plus the `au-federal` and `au-energy` build recipes covering Australian Federal Government, DISP-supplier, cross-sector critical infrastructure, and Australian energy-sector compliance:
 
-- `/arckit.au-e8-posture` — ASD Essential Eight ML0–ML3 maturity assessment (8 mitigation strategies)
-- `/arckit.au-pia` — Privacy Act 1988 s33D Privacy Impact Assessment (13 APPs)
-- `/arckit.au-dss` — DTA Digital Service Standard (13 criteria) compliance assessment
-- `/arckit.au-ism-controls` — ASD Information Security Manual Statement of Applicability (17 control domains)
-- `/arckit.au-ndb-playbook` — OAIC Notifiable Data Breach response playbook (Privacy Act 1988 Part IIIC)
-- `/arckit.au-ot-security` — ASD operational technology cyber security assessment for connected OT environments
-- `/arckit.au-soci-cirmp` — SOCI Act / Critical Infrastructure Risk Management Program governance pack
-- `/arckit.au-aescsf` — Australian Energy Sector Cyber Security Framework maturity assessment
-- `/arckit.au-energy-compliance` — Australian energy compliance pack for AESCSF, AER, NER/NGR, AEMO, IT/OT, privacy, NDB, traceability, data flows, and ADR evidence
-- `/arckit.au-pspf` — Protective Security Policy Framework (4 outcomes / 16 core requirements)
-- `/arckit.au-ai-assurance` — DTA AI Assurance Framework + Responsible AI Policy v2.0 baseline
-- `/arckit.au-disp-attestation` — DISP Member self-attestation pack (consolidates E8, ISM, PIA, NDB, PSPF)
+- `/arckit:au-e8-posture` — ASD Essential Eight ML0–ML3 maturity assessment (8 mitigation strategies)
+- `/arckit:au-pia` — Privacy Act 1988 s33D Privacy Impact Assessment (13 APPs)
+- `/arckit:au-dss` — DTA Digital Service Standard (13 criteria) compliance assessment
+- `/arckit:au-ism-controls` — ASD Information Security Manual Statement of Applicability (17 control domains)
+- `/arckit:au-ndb-playbook` — OAIC Notifiable Data Breach response playbook (Privacy Act 1988 Part IIIC)
+- `/arckit:au-ot-security` — ASD operational technology cyber security assessment for connected OT environments
+- `/arckit:au-soci-cirmp` — SOCI Act / Critical Infrastructure Risk Management Program governance pack
+- `/arckit:au-aescsf` — Australian Energy Sector Cyber Security Framework maturity assessment
+- `/arckit:au-energy-compliance` — Australian energy compliance pack for AESCSF, AER, NER/NGR, AEMO, IT/OT, privacy, NDB, traceability, data flows, and ADR evidence
+- `/arckit:au-pspf` — Protective Security Policy Framework (4 outcomes / 16 core requirements)
+- `/arckit:au-ai-assurance` — DTA AI Assurance Framework + Responsible AI Policy v2.0 baseline
+- `/arckit:au-disp-attestation` — DISP Member self-attestation pack (consolidates E8, ISM, PIA, NDB, PSPF)
 
 Recipe: `au-federal` (35 default targets across 9 build waves, plus optional default-off OT and SOCI/CIRMP targets).
 

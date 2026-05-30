@@ -1007,8 +1007,8 @@ Adds the first Australian industry-specific community menu: `au-energy`.
 
 This stacked PR builds on the AU federal OT/SOCI PR and adds:
 
-- `/arckit.au-aescsf` for Australian Energy Sector Cyber Security Framework maturity assessment
-- `/arckit.au-energy-compliance` for AER ring-fencing, NER/NGR, AEMO, and energy-specific SOCI architecture compliance
+- `/arckit:au-aescsf` for Australian Energy Sector Cyber Security Framework maturity assessment
+- `/arckit:au-energy-compliance` for AER ring-fencing, NER/NGR, AEMO, and energy-specific SOCI architecture compliance
 - `au-energy` recipe composing the AU federal baseline, OT security, SOCI/CIRMP, AESCSF, and energy compliance
 - public synthetic AU energy fixtures and evaluation expectations/results
 
