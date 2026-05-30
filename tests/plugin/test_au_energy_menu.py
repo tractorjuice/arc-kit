@@ -97,6 +97,7 @@ def test_au_energy_fixtures_are_public_synthetic_and_have_expected_shape():
     assert (fixture_root / "EVAL_EXPECTATIONS.md").is_file()
     assert (fixture_root / "EVAL_RESULTS.md").is_file()
     assert (fixture_root / "EVAL_SUMMARY_REPORT.md").is_file()
+    assert (fixture_root / "LIVE_GENERATION_REVIEW.md").is_file()
     assert (fixture_root / "fixture-a-eastland-dnsp").is_dir()
     assert (fixture_root / "fixture-b-voltiq-supplier").is_dir()
 
@@ -119,6 +120,7 @@ def test_au_energy_fixtures_are_public_synthetic_and_have_expected_shape():
 
     expectations = read("tests/fixtures/au-energy/EVAL_EXPECTATIONS.md")
     results = read("tests/fixtures/au-energy/EVAL_RESULTS.md")
+    live_review = read("tests/fixtures/au-energy/LIVE_GENERATION_REVIEW.md")
     assert "Eastland Energy Networks" in expectations
     assert "Voltiq Analytics" in expectations
     assert "MIL-1" in expectations
@@ -141,6 +143,7 @@ def test_au_energy_synthetic_fixtures_exercise_new_skill_prompts():
     energy_command = read("arckit-au/commands/au-energy-compliance.md")
     summary = read("tests/fixtures/au-energy/EVAL_SUMMARY_REPORT.md")
     results = read("tests/fixtures/au-energy/EVAL_RESULTS.md")
+    live_review = read("tests/fixtures/au-energy/LIVE_GENERATION_REVIEW.md")
 
     for required_section in [
         "Domain Maturity Assessment",
@@ -225,3 +228,14 @@ def test_au_energy_synthetic_fixtures_exercise_new_skill_prompts():
     ]:
         assert reported_signal in summary
         assert reported_signal in results
+
+    for live_signal in [
+        "Asset, Interface, and Evidence Inventory",
+        "Regulated Asset, Interface, and Data Inventory",
+        "ServiceNow / CMDB",
+        "Visualisation / Scoring",
+        "Fixture A strongly triggered",
+        "Fixture B selectively triggered",
+    ]:
+        assert live_signal in live_review
+        assert live_signal in results or live_signal in summary or "Fixture" not in live_signal

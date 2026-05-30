@@ -27,6 +27,7 @@ tests/fixtures/au-energy/
 ├── EVAL_EXPECTATIONS.md               ← expected positive/negative skill outcomes
 ├── EVAL_RESULTS.md                    ← detailed synthetic skill evaluation results
 ├── EVAL_SUMMARY_REPORT.md             ← PR-ready synthetic skill evaluation summary
+├── LIVE_GENERATION_REVIEW.md          ← live Codex generation review for inventory/register feature usage
 ├── fixture-a-eastland-dnsp/
 │   ├── EEN_Strategic_Context_Brief.md      ← centrepiece (org, network, estate, programs, posture)
 │   ├── EEN_Engagement_Proposal.md          ← engagement scope (four regulatory lenses)
@@ -126,6 +127,7 @@ These fixtures are **Track A (clean-slate)** discovery inputs. To validate the r
 - ✅ No real-network, real-person, or client names used as the fixture subject (real networks appear only as cited public references).
 - ✅ Each AESCSF domain, each SOCI hazard, the applicability split, and each AER ring-fencing trigger has at least one seeded hook (coverage matrix above).
 - ✅ Synthetic skill compatibility evaluation covers `au-aescsf` and `au-energy-compliance` against Fixture A and Fixture B evidence anchors.
+- ✅ Live generation review confirms the inventory/register enrichment is naturally used where fixture evidence supports it, and records partial coverage where the fixtures do not include CMDB or project-graph evidence.
 - ⏳ Live LLM artefact quality review remains a human-review step before any external compliance reliance.
 
 See [`REFERENCES_AND_METHODOLOGY.md`](./REFERENCES_AND_METHODOLOGY.md) for the audit trail.

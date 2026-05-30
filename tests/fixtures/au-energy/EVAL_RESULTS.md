@@ -6,6 +6,7 @@
 - Method: Manual evaluation of command and recipe design against public synthetic fixtures, supported by deterministic fixture-coverage evaluation for the `au-aescsf` and `au-energy-compliance` skill prompts/templates.
 - Automation status: The focused pytest suite verifies fixture hygiene, recipe dependencies, document type registration, generated output presence, and synthetic evidence anchors for both new skills. Full live LLM artefact quality remains subject to human review.
 - Summary report: `tests/fixtures/au-energy/EVAL_SUMMARY_REPORT.md`
+- Live generation review: `tests/fixtures/au-energy/LIVE_GENERATION_REVIEW.md`
 
 ## Synthetic skill compatibility evaluation
 
@@ -27,6 +28,18 @@ The deterministic evaluation checks that:
 - `au-energy-compliance` includes the expected applicability, ring-fencing, NER/NGR/AEMO, market-interface, regulated/unregulated data-flow, architecture-decision, and recommendation sections.
 - Fixture A provides the positive DNSP / critical electricity asset evidence anchors required by those sections.
 - Fixture B provides the negative supplier / non-SOCI-covered-entity evidence anchors required by those sections.
+
+## Live generation review
+
+A practical live Codex generation pass was run on 2026-05-30 to check whether the inventory/register enrichment is used when the synthetic evidence naturally supports it.
+
+Result: Pass with measured partial coverage.
+
+- Fixture A strongly triggered OT asset inventory, interface register, evidence register, visualisation/scoring, risk heat, and maturity scoring features.
+- Fixture B selectively triggered supplier-appropriate inventories: customer flow-down obligations, SaaS/service inventory, client data handling, support access, subprocessors, and open-source dependency gaps.
+- ServiceNow / CMDB and graph-report coverage were partial for both fixtures because the fixture set contains register-like evidence but not a live CMDB export or ArcKit project graph.
+
+See `LIVE_GENERATION_REVIEW.md` for the feature-by-feature observations.
 
 ## Fixture A - Eastland Energy Networks
 
@@ -60,3 +73,4 @@ Result: Fixture B: Pass for synthetic skill compatibility and fixture/design cov
 - Results are fixture/design and deterministic prompt-coverage validation, not legal advice or formal AESCSF assessment.
 - Human assessor review remains required before using generated artefacts for external compliance decisions.
 - Future improvements can add VPP, EV/V2G, gas pipeline, and market participant edge-case fixtures.
+- Future fixture improvements can add synthetic CMDB / service-inventory extracts to exercise the optional `SERVICE_INVENTORY` target more fully.

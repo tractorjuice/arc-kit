@@ -8,6 +8,7 @@
 - Result: Pass
 - Scope: Public synthetic fixtures only. All organisations, people, findings, asset identifiers, ABNs, and figures are fictional composites.
 - Limitation: This is not legal, regulatory, AESCSF certification, or live LLM quality assurance. It verifies that the new skills have enough structured synthetic evidence to exercise their expected reasoning paths.
+- Live review: `LIVE_GENERATION_REVIEW.md` records a practical Codex generation pass for the inventory/register enrichment added to the AU energy commands.
 
 ## Skills Tested
 
@@ -37,3 +38,5 @@ Voltiq Analytics exercises the negative supplier / non-SOCI-covered-entity path:
 ## Summary Finding
 
 The new `au-aescsf` and `au-energy-compliance` skills can be tested with the synthetic data. The fixture set exercises both the positive regulated-energy path and the negative supplier path, and the focused pytest coverage now verifies the key evidence anchors required by the command prompts and templates.
+
+The live generation review confirms that the new inventory/register features are used where the fixture evidence supports them. Fixture A strongly triggers asset, interface, evidence, risk, and maturity inventory views. Fixture B triggers supplier-appropriate service, data, flow-down, subprocessor, and access inventories while correctly avoiding a forced OT asset inventory.
