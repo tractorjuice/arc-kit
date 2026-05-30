@@ -74,3 +74,5 @@ Result: Fixture B: Pass for synthetic skill compatibility and fixture/design cov
 - Human assessor review remains required before using generated artefacts for external compliance decisions.
 - Future improvements can add VPP, EV/V2G, gas pipeline, and market participant edge-case fixtures.
 - Future fixture improvements can add synthetic CMDB / service-inventory extracts to exercise the optional `SERVICE_INVENTORY` target more fully.
+- Future evaluation improvements can add expected visualisation rubrics, small generated excerpt packs, and a repeatable live-generation harness if ArcKit gains a standard plugin-runtime output runner.
+- A future AU federal PR should apply the same inventory/register enrichment pattern to the cross-sector federal menu, reusing this synthetic data where it exercises OT, SOCI/CIRMP, vendor access, service inventory, evidence register, and supplier flow-down behaviour.

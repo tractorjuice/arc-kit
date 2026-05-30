@@ -106,9 +106,24 @@ Negative assertion: a correct Fixture B output should not invent a DNSP-style OT
 
 Keep the inventory/register enrichment in the PR. The live pass shows the feature is used when evidence exists and does not overreach when evidence is absent.
 
+## Future PR Candidates
+
 The most useful future fixture improvement would be to add an optional synthetic service inventory / CMDB extract for both fixtures:
 
 - Fixture A: regulated service CIs, OT/IT dependencies, support criticality, and owner fields.
 - Fixture B: SaaS components, Azure services, subprocessors, customer data stores, support paths, and owner fields.
 
 That would let a future run exercise the default-off `SERVICE_INVENTORY` target more fully without making ServiceNow mandatory for the recipe.
+
+Additional future evaluation improvements:
+
+- Add an expected visualisation rubric for colour-coded criticality, maturity, risk heat, and register-coverage scoring.
+- Add generated sample excerpts for a small number of inventory/register rows, while avoiding full generated artefact bloat.
+- Add a third synthetic fixture for a retailer, VPP, EV charging operator, gas participant, or market participant edge case.
+- Add a repeatable live-generation harness if ArcKit gains a standard plugin-runtime test runner for command outputs.
+
+Related AU federal follow-up:
+
+- Apply the same inventory/register enrichment pattern to the main AU federal menu, especially `au-ot-security` and `au-soci-cirmp`.
+- Reuse this synthetic data where appropriate because Fixture A already includes OT asset inventory, SOCI/CIRMP, vendor access, evidence index, and register-style source material, while Fixture B exercises supplier flow-down and non-applicability behaviour.
+- Keep the federal enhancement general and cross-sector: CMDB/service inventory, asset and interface registers, vendor access registers, evidence/control registers, visual scoring, and traceability/graph-report handoffs should not be energy-only concepts.

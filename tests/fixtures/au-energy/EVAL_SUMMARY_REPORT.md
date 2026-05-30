@@ -40,3 +40,5 @@ Voltiq Analytics exercises the negative supplier / non-SOCI-covered-entity path:
 The new `au-aescsf` and `au-energy-compliance` skills can be tested with the synthetic data. The fixture set exercises both the positive regulated-energy path and the negative supplier path, and the focused pytest coverage now verifies the key evidence anchors required by the command prompts and templates.
 
 The live generation review confirms that the new inventory/register features are used where the fixture evidence supports them. Fixture A strongly triggers asset, interface, evidence, risk, and maturity inventory views. Fixture B triggers supplier-appropriate service, data, flow-down, subprocessor, and access inventories while correctly avoiding a forced OT asset inventory.
+
+Future PR notes are captured in `LIVE_GENERATION_REVIEW.md`: add synthetic CMDB/service-inventory fixture data and richer evaluation rubrics later, and apply the same inventory/register enrichment pattern to the main AU federal menu using this synthetic data where it exercises cross-sector OT, SOCI/CIRMP, vendor access, and supplier flow-down behaviour.
