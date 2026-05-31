@@ -17,9 +17,9 @@ Reference for every Model Context Protocol (MCP) tool exposed by ArcKit, the ser
 | `microsoft-learn` | `https://learn.microsoft.com/api/mcp` | http | none | **yes** | 3 |
 | `google-developer-knowledge` | `https://developerknowledge.googleapis.com/mcp` | http | `GOOGLE_API_KEY` (user_config) | no | 3 |
 | `datacommons-mcp` | `https://api.datacommons.org/mcp` | http | `DATA_COMMONS_API_KEY` (user_config) | no | 2 |
-| `govreposcrape` | `https://govreposcrape-api-1060386346356.us-central1.run.app/mcp` | http | none | no | 1 |
+| `govreposcrape` | `https://govreposcrape-api-1060386346356.us-central1.run.app/mcp` | http | none | no | 9 |
 
-Total: **5 servers, 15 tools**.
+Total: **5 servers, 23 tools**. ArcKit agents currently consume **15** of them — the 8 govreposcrape dependency-intelligence tools (everything except `search_uk_gov_code`) are exposed by the server but not yet wired into any ArcKit agent (see the govreposcrape section).
 
 `alwaysLoad: true` is set on `aws-knowledge` and `microsoft-learn` because the AWS and Azure research commands always reach for them; the others stay deferred to keep cold-start tool budgets lean. See `arckit-claude/.mcp.json`.
 
@@ -93,13 +93,23 @@ Triggered indirectly via `/arckit:datascout` (which dispatches the reader subage
 
 ## govreposcrape
 
-ArcKit-hosted MCP server fronting a semantic search index over 24,500+ UK government open-source repositories on GitHub.
+MCP server fronting a semantic search index over 24,500+ UK government open-source repositories on GitHub, plus a dependency-intelligence layer over the UK-gov SBOM graph. As of the upstream [PR #330](https://github.com/chrisns/govreposcrape/pull/330) (flagged in ArcKit issue #550) the server exposes **9 tools** at the same endpoint with no breaking changes.
 
-| Tool | Purpose |
-|---|---|
-| `mcp__govreposcrape__search_uk_gov_code` | Natural-language semantic search across UK government repos. Returns repo URL, language, owner, snippet |
+| Tool | Purpose | Consumed by ArcKit? |
+|---|---|---|
+| `mcp__govreposcrape__search_uk_gov_code` | Natural-language semantic search across UK government repos. Returns repo URL, language, owner, snippet | **yes** — the only govreposcrape tool currently wired in |
+| `mcp__govreposcrape__search_dependency` | Who depends on a package + ecosystem-aware version ranges (e.g. "who runs express < 2") | not yet |
+| `mcp__govreposcrape__vulnerability_exposure` | CVE blast-radius via live [OSV.dev](https://osv.dev) — scoped to a package, repo, or org | not yet |
+| `mcp__govreposcrape__package_popularity` | Most-depended-on packages + licence rollups | not yet |
+| `mcp__govreposcrape__dependency_landscape` | Per-org tech profile: ecosystems, top packages, frameworks with end-of-life flags ([endoflife.date](https://endoflife.date)), licences | not yet |
+| `mcp__govreposcrape__dependency_compare` | Shared/unique deps + overlap % between two repos | not yet |
+| `mcp__govreposcrape__repo_dependencies` | Full untruncated dependency list for one repo | not yet |
+| `mcp__govreposcrape__sbom_export` | Full deps + per-ecosystem counts + SBOM URL | not yet |
+| `mcp__govreposcrape__dependency_trends` | Package usage across daily snapshots | not yet |
 
-**Consumers** (6):
+> **Allowlist note:** `arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__govreposcrape__` prefix via `startsWith`, so all 9 tools clear the permission hook automatically. However, the gov agents (`arckit-gov-reuse-reader`, `arckit-gov-code-search`, `arckit-gov-landscape`, `arckit-datascout-reader`) declare a `tools:` frontmatter allowlist that currently lists only `search_uk_gov_code` — so the 8 dependency-intelligence tools are not callable from any agent until that frontmatter is extended. The new tools are a natural fit for `arckit-gov-reuse` (`dependency_compare` for quantitative overlap %) and the assurance commands (`vulnerability_exposure` for CVE blast-radius); wiring them in is tracked separately.
+
+**Consumers** (6) — all via `search_uk_gov_code`:
 
 - `arckit-gov-code-search` — general-purpose UK government code search
 - `arckit-gov-reuse` (orchestrator) — declares the tool in its toolchain for context; does not call it directly
