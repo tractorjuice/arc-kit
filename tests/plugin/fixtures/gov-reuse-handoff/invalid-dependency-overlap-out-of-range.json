@@ -1,0 +1,40 @@
+{
+  "capability": "appointment booking system for NHS patients",
+  "candidates": [
+    {
+      "org": "NHSDigital",
+      "repo": "appointment-checker",
+      "repo_url": "https://github.com/NHSDigital/appointment-checker",
+      "fetched_from_url": "https://github.com/NHSDigital/appointment-checker",
+      "fetched_at_iso": "2026-05-07T11:15:00Z",
+      "citation_id": "NHSD-APPT-1",
+      "confidence": "high",
+      "evidence": {
+        "language": "typescript",
+        "framework_hints": ["nextjs"],
+        "licence": "MIT",
+        "last_commit_iso": "2026-04-20",
+        "stars": 42,
+        "forks": 11,
+        "contributors": 8,
+        "has_tests": true,
+        "has_ci": true,
+        "has_docs": false,
+        "has_readme": true,
+        "archived": false,
+        "installation_method": "fork-and-build",
+        "summary_one_liner": "Appointment booking and rescheduling service for NHS digital appointments."
+      }
+    }
+  ],
+  "dependency_comparisons": [
+    {
+      "repo_a": "NHSDigital/appointment-checker",
+      "repo_b": "NHSDigital/appointment-checker-fork",
+      "overlap_pct": 150,
+      "citation_id": "DEPCMP-1"
+    }
+  ],
+  "unfetched_urls": [],
+  "errors": []
+}
