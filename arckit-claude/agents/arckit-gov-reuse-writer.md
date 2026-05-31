@@ -70,6 +70,9 @@ The orchestrator passes you a JSON object in its Agent prompt:
   "traceability": [
     { "requirement_id": "FR-001", "capability": "appointment booking", "best_candidate": "NHSDigital/appointment-checker", "strategy": "Fork", "status": "matched" }
   ],
+  "dependency_comparisons": [
+    { "repo_a": "alphagov/govuk-frontend", "repo_b": "hmrc/hmrc-frontend", "overlap_pct": 51.2, "shared_count": 931, "unique_a_count": 412, "unique_b_count": 268, "citation_id": "DEPCMP-1" }
+  ],
   "citations": [
     { "id": "ALPHAGOV-GOVUK-FE-1", "url": "https://github.com/alphagov/govuk-frontend" }
   ]
@@ -90,7 +93,9 @@ The orchestrator passes you a JSON object in its Agent prompt:
    - **Verdict line per capability:** at the top of each capability section, write `**Verdict: {strategy} — {one-sentence rationale}.**` using the payload's `recommended_strategy` and `score_rationale`.
    - **Sort order:** scored_candidates are pre-ranked. Render in `rank` order (1 first) within each capability.
 
-4. **Append a `## Spawned Knowledge` section** listing the per-Fork/Library tech-notes you will create or update in Step B:
+4. **Render the Dependency Overlap Analysis section.** If the input carries a non-empty `dependency_comparisons` array, populate the template's `## Dependency Overlap Analysis` section: one table row per comparison (`repo_a`, `repo_b`, `overlap_pct`, shared/unique counts, and a "near-duplicate?" flag — `⚠️ Likely fork` when `overlap_pct >= 60`, else `Distinct`). Cite each row's `citation_id`. If the array is empty or absent, write `_No pairwise dependency comparisons were run (fewer than two candidates shared a capability, or SBOM data was unavailable)._` under the heading — do not omit the section.
+
+5. **Append a `## Spawned Knowledge` section** listing the per-Fork/Library tech-notes you will create or update in Step B:
 
    ```markdown
    ## Spawned Knowledge
@@ -101,7 +106,7 @@ The orchestrator passes you a JSON object in its Agent prompt:
    - `tech-notes/{repo-slug}.md` — {Created | Updated}
    ```
 
-5. **Write the GOVR file.** Use the `Write` tool to save to `{project_path}/research/{document_id}.md`.
+6. **Write the GOVR file.** Use the `Write` tool to save to `{project_path}/research/{document_id}.md`.
 
 ### Step B: Spawn one tech-note per Fork or Library candidate
 

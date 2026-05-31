@@ -5,6 +5,15 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **govreposcrape dependency-intelligence tools wired into the gov agents** (#550). Following the upstream expansion of the `govreposcrape` MCP server from 1 tool to 9, two of the new dependency-intelligence tools are now consumed by ArcKit:
+  - **`dependency_compare` → `/arckit:gov-reuse`.** The `arckit-gov-reuse-reader` subagent runs pairwise dependency-overlap between candidate repositories that share a capability and emits the results in a new optional `dependency_comparisons` array on the gov-reuse handoff schema. The orchestrator (`commands/gov-reuse.md`) uses overlap ≥ 60% to collapse near-duplicate / forked candidates — keeping the higher-scored repo as the primary recommendation and avoiding double-counting effort savings — and the writer renders a new **Dependency Overlap Analysis** section in the GOVR artefact. Reader budget capped at 3 `dependency_compare` calls / 5 comparison entries per dispatch.
+  - **`vulnerability_exposure` → `/arckit:gov-landscape`.** The `arckit-gov-landscape` agent now scans the domain's major organisations and dominant packages for known-CVE blast-radius (via the SBOM graph + live OSV.dev) and renders a new **Supply-Chain & Vulnerability Exposure** section (exposure by organisation, exposure by dominant package, end-of-life flags). Flagged as a landscape-level signal, not a per-repo audit — points users to `/arckit:secure` / `/arckit:risk` for adoption decisions.
+  - Both tools added to the respective agents' `tools:` frontmatter allowlists. `docs/MCP-CATALOGUE.md` updated to mark them as consumed (17 of 23 tools now wired). Non-Claude formats regenerated via `scripts/converter.py`.
+
 ## [5.7.0] — 2026-05-29
 
 ### Fixed

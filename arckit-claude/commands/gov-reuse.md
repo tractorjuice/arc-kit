@@ -159,7 +159,7 @@ For each capability:
    rm -f "$TMPFILE"
    ```
 
-4. **If exit 0** — parse the validator's stdout (the normalised payload) and add its `candidates[]` to your in-memory accumulator keyed by capability.
+4. **If exit 0** — parse the validator's stdout (the normalised payload) and add its `candidates[]` to your in-memory accumulator keyed by capability. Also accumulate any `dependency_comparisons[]` entries (pairwise overlap % between candidate repos) — you use these in Step 8 to detect near-duplicate / forked candidates.
 
 5. **If exit non-zero** — parse `errors[]`. Re-dispatch the reader **once** with a follow-up prompt: `"Your previous JSON failed schema validation with these errors: <errors>. Re-emit the JSON correctly."` If the second attempt also fails, log the capability as a gap and continue.
 
@@ -220,6 +220,7 @@ The scoring is a pure function of `(evidence, rubric, project_profile)` — no L
 ### Step 8: Deduplicate, rank, build matrices
 
 - Deduplicate `CandidateRecord`s across capabilities by `org/repo`.
+- **Collapse near-duplicate candidates using dependency overlap.** For each `dependency_comparisons` entry where `overlap_pct >= 60`, treat `repo_a` and `repo_b` as near-duplicates / likely forks of the same codebase. Within a capability, keep the higher-`total_score` repo as the primary recommendation and demote the other to a "see also (X% dependency overlap, likely fork)" note — do **not** count both toward the effort-saved estimate (that would double-count). This is the quantitative consolidation signal the deterministic scorer cannot derive from per-repo evidence alone. Carry the surviving comparison entries forward to the writer so the overlap is visible in the artefact.
 - Within each capability, rank candidates by `total_score` descending.
 - Build the **gap analysis**: capabilities where no candidate scored ≥ 40 across all reader dispatches.
 - Build the **traceability matrix**: one row per requirement, listing the capability it belongs to, the best candidate (if any), the strategy, and a status indicator (✅ matched / ⚠️ Reference only / ❌ build required).
@@ -273,9 +274,22 @@ Build the writer's input. Each entry in `scored_candidates` carries the full `ca
   ],
   "gaps": [...],
   "traceability": [...],
+  "dependency_comparisons": [
+    {
+      "repo_a": "alphagov/govuk-frontend",
+      "repo_b": "hmrc/hmrc-frontend",
+      "overlap_pct": 51.2,
+      "shared_count": 931,
+      "unique_a_count": 412,
+      "unique_b_count": 268,
+      "citation_id": "DEPCMP-1"
+    }
+  ],
   "citations": [...]
 }
 ```
+
+`dependency_comparisons` is optional — omit it if no reader returned overlap data. Include only the surviving entries from Step 8 (those relevant to the ranked candidates).
 
 Dispatch the writer using the `Agent` tool with `subagent_type: "arckit-gov-reuse-writer"` and the input JSON as the prompt. The writer creates the GOVR artefact AND one `tech-notes/{repo-slug}.md` per Fork/Library candidate (Created if new, Updated with merge rules if a tech-note already exists). It returns a one-line summary with file path, word count, and tech-note counts.
 
@@ -317,5 +331,5 @@ Return ONLY a concise summary to the user:
 - **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
 - **Subagents dispatched** — `arckit-gov-reuse-reader` (per capability) · `arckit-gov-reuse-writer` (final render)
 - **External tools** — none directly (delegated to reader)
-- **MCP servers** — none directly (the reader uses `mcp__govreposcrape__search_uk_gov_code`)
+- **MCP servers** — none directly (the reader uses `mcp__govreposcrape__search_uk_gov_code` for discovery and `mcp__govreposcrape__dependency_compare` for pairwise overlap %)
 - **Related commands** — `/arckit:requirements` (input) · `/arckit:research` (downstream build vs buy) · `/arckit:adr` (downstream reuse decisions)

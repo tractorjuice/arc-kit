@@ -130,6 +130,18 @@
 
 ---
 
+## Dependency Overlap Analysis
+
+Pairwise dependency-overlap between candidate repositories (from the govreposcrape SBOM graph via `dependency_compare`). High overlap signals that two candidates are near-duplicates or forks of a common codebase — reuse one, not both, to avoid double-counting effort savings.
+
+| Repo A | Repo B | Shared Deps | Unique to A | Unique to B | Overlap % | Assessment |
+|--------|--------|-------------|-------------|-------------|-----------|------------|
+| [org/repo-a] | [org/repo-b] | [931] | [412] | [268] | [51.2%] | [Distinct / ⚠️ Likely fork] | [CITATION] |
+
+**Notes**: [Where two candidates are near-duplicates (≥ 60% overlap), the higher-scored repo is the primary recommendation and the other is noted as "see also". Omit this section's table if fewer than two candidates shared a capability.]
+
+---
+
 ## Gap Analysis
 
 | Capability | Status | Notes | Recommended Action |

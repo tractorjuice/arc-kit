@@ -2,7 +2,7 @@
 name: arckit-gov-reuse-reader
 subagent: true
 maxTurns: 30
-tools: ["Read", "Glob", "Grep", "WebFetch", "TodoWrite", "mcp__govreposcrape__search_uk_gov_code"]
+tools: ["Read", "Glob", "Grep", "WebFetch", "TodoWrite", "mcp__govreposcrape__search_uk_gov_code", "mcp__govreposcrape__dependency_compare"]
 effort: high
 description: |
   Reader subagent invoked by /arckit:gov-reuse (orchestrator). Searches
@@ -73,22 +73,27 @@ The orchestrator passes you a JSON object in its Agent prompt:
 
 5. **Special handling for `archived`.** Always check for the GitHub "Archived" or "Public archive" badge on the repo's main page. Archived repos are valid evidence but the orchestrator will heavily downweight them.
 
-6. **Record failures honestly.**
+6. **Quantify dependency overlap between candidates (when 2+ repos share a capability).** If your candidate set for this capability contains two or more repos, call `mcp__govreposcrape__dependency_compare` on the most-similar-looking pairs (same language/framework, or names suggesting a fork relationship — e.g. `alphagov/govuk-frontend` vs `hmrc/hmrc-frontend`). Pass the `org/repo` slug for each side. For each comparison, emit one `dependency_comparisons` entry with `repo_a`, `repo_b` (both as `org/repo` slugs), `overlap_pct`, and the `shared_count` / `unique_a_count` / `unique_b_count` if the tool returns them. Set `citation_id` to a token like `DEPCMP-1`. This is **extract-only**: report the overlap numbers, never judge which repo is "better" or whether one is redundant — that is the orchestrator's job. Skip silently if only one candidate exists, or if the tool returns no SBOM data for a repo (record an `errors[]` entry).
+
+7. **Record failures honestly.**
    - If a govreposcrape result's URL was discovered but you could not WebFetch it, add it to `unfetched_urls`.
    - If a fetch returned but you could not extract usable evidence (404, rate-limited, JS-only content), add an `errors[]` entry with the URL and a one-sentence reason.
    - If a repo's licence text was unparseable or the licence wasn't on the allowlist, add `errors[]` recording the literal licence text observed.
+   - If `dependency_compare` returned no SBOM data for one side of a pair, add an `errors[]` entry naming the repo and reason.
 
-7. **Return the final JSON.** Your last message must be the complete JSON object and nothing else. Do not narrate. Do not summarise.
+8. **Return the final JSON.** Your last message must be the complete JSON object and nothing else. Do not narrate. Do not summarise.
 
 ## Hard limits
 
 - `candidates` array: at most 30 entries per call.
-- Per call total: at most **5 govreposcrape calls** + **25 WebFetch invocations** combined. If you've discovered more candidates than you can fetch within budget, add the unfetched URLs to `unfetched_urls`.
+- Per call total: at most **5 `search_uk_gov_code` calls** + **25 WebFetch invocations** combined. If you've discovered more candidates than you can fetch within budget, add the unfetched URLs to `unfetched_urls`.
 - Per candidate: at most 3 WebFetch (repo page, LICENSE, optional README/docs).
+- `dependency_compare`: at most **3 calls** per dispatch, and at most `5` `dependency_comparisons` entries total. Compare only the most-similar pairs — do not enumerate every pairwise combination.
 
 ## What you must never do
 
 - Compute, suggest, or imply a score, ranking, or reuse strategy (Fork/Library/Reference/None).
+- Judge dependency-overlap results — report the numbers from `dependency_compare`, never conclude that one repo "supersedes" or "duplicates" the other.
 - Output any field name not present in the schema.
 - Output any enum value not present in the schema's enum lists.
 - Invent values for fields you could not extract — omit the field instead.
@@ -100,6 +105,6 @@ The orchestrator passes you a JSON object in its Agent prompt:
 ## Toolchain
 
 - **Schema** — `${CLAUDE_PLUGIN_ROOT}/schemas/gov-reuse-handoff.schema.json`
-- **MCP servers** — `govreposcrape` (primary discovery)
+- **MCP servers** — `govreposcrape` — `search_uk_gov_code` (candidate discovery) · `dependency_compare` (pairwise overlap % between candidate repos)
 - **External tools** — `WebFetch` (for GitHub repo pages and LICENSE files)
 - **Invoked by** — `/arckit:gov-reuse` (the orchestrator slash command)

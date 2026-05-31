@@ -177,6 +177,26 @@
 
 ---
 
+## Supply-Chain & Vulnerability Exposure
+
+Known-CVE exposure across the domain, derived from the govreposcrape SBOM graph and live [OSV.dev](https://osv.dev) data via `vulnerability_exposure`. This is a landscape-level signal of estate health, not a per-repo security audit — run `/arckit:secure` or `/arckit:risk` on any repository the project intends to adopt.
+
+### Exposure by Organisation
+
+| Organisation | Repos Scanned | Repos with Known-Vulnerable Deps | Highest-Impact CVE | Affected Repos | Citation |
+|--------------|---------------|----------------------------------|--------------------|----------------|----------|
+| [org] | [N] | [N] | [CVE-XXXX-NNNNN] | [N] | [CITATION] |
+
+### Exposure by Dominant Package
+
+| Package | Ecosystem | Vulnerable Versions | Blast-Radius (repos) | End-of-Life? | Citation |
+|---------|-----------|---------------------|----------------------|--------------|----------|
+| [e.g. log4j-core] | [maven] | [19] | [N repos across domain] | [Yes/No] | [CITATION] |
+
+**Notes**: [Summarise the highest-impact advisories and any end-of-life dependencies in widespread use. If a scope returned no indexed SBOM data, record it as a coverage gap — not as "no vulnerabilities".]
+
+---
+
 ## Collaboration Opportunities
 
 | Opportunity | Organisations | Description | Potential Value |

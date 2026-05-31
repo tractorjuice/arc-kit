@@ -19,7 +19,7 @@ Reference for every Model Context Protocol (MCP) tool exposed by ArcKit, the ser
 | `datacommons-mcp` | `https://api.datacommons.org/mcp` | http | `DATA_COMMONS_API_KEY` (user_config) | no | 2 |
 | `govreposcrape` | `https://govreposcrape-api-1060386346356.us-central1.run.app/mcp` | http | none | no | 9 |
 
-Total: **5 servers, 23 tools**. ArcKit agents currently consume **15** of them — the 8 govreposcrape dependency-intelligence tools (everything except `search_uk_gov_code`) are exposed by the server but not yet wired into any ArcKit agent (see the govreposcrape section).
+Total: **5 servers, 23 tools**. ArcKit agents currently consume **17** of them — `search_uk_gov_code` (discovery), `dependency_compare` (gov-reuse overlap %), and `vulnerability_exposure` (gov-landscape CVE blast-radius) from govreposcrape, plus the 14 tools on the other four servers. The remaining 6 govreposcrape dependency-intelligence tools are exposed by the server but not yet wired into any ArcKit agent (see the govreposcrape section).
 
 `alwaysLoad: true` is set on `aws-knowledge` and `microsoft-learn` because the AWS and Azure research commands always reach for them; the others stay deferred to keep cold-start tool budgets lean. See `arckit-claude/.mcp.json`.
 
@@ -97,19 +97,19 @@ MCP server fronting a semantic search index over 24,500+ UK government open-sour
 
 | Tool | Purpose | Consumed by ArcKit? |
 |---|---|---|
-| `mcp__govreposcrape__search_uk_gov_code` | Natural-language semantic search across UK government repos. Returns repo URL, language, owner, snippet | **yes** — the only govreposcrape tool currently wired in |
+| `mcp__govreposcrape__search_uk_gov_code` | Natural-language semantic search across UK government repos. Returns repo URL, language, owner, snippet | **yes** — candidate/domain discovery |
+| `mcp__govreposcrape__dependency_compare` | Shared/unique deps + overlap % between two repos | **yes** — `arckit-gov-reuse-reader` (near-duplicate / fork detection) |
+| `mcp__govreposcrape__vulnerability_exposure` | CVE blast-radius via live [OSV.dev](https://osv.dev) — scoped to a package, repo, or org | **yes** — `arckit-gov-landscape` (estate supply-chain exposure) |
 | `mcp__govreposcrape__search_dependency` | Who depends on a package + ecosystem-aware version ranges (e.g. "who runs express < 2") | not yet |
-| `mcp__govreposcrape__vulnerability_exposure` | CVE blast-radius via live [OSV.dev](https://osv.dev) — scoped to a package, repo, or org | not yet |
 | `mcp__govreposcrape__package_popularity` | Most-depended-on packages + licence rollups | not yet |
 | `mcp__govreposcrape__dependency_landscape` | Per-org tech profile: ecosystems, top packages, frameworks with end-of-life flags ([endoflife.date](https://endoflife.date)), licences | not yet |
-| `mcp__govreposcrape__dependency_compare` | Shared/unique deps + overlap % between two repos | not yet |
 | `mcp__govreposcrape__repo_dependencies` | Full untruncated dependency list for one repo | not yet |
 | `mcp__govreposcrape__sbom_export` | Full deps + per-ecosystem counts + SBOM URL | not yet |
 | `mcp__govreposcrape__dependency_trends` | Package usage across daily snapshots | not yet |
 
-> **Allowlist note:** `arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__govreposcrape__` prefix via `startsWith`, so all 9 tools clear the permission hook automatically. However, the gov agents (`arckit-gov-reuse-reader`, `arckit-gov-code-search`, `arckit-gov-landscape`, `arckit-datascout-reader`) declare a `tools:` frontmatter allowlist that currently lists only `search_uk_gov_code` — so the 8 dependency-intelligence tools are not callable from any agent until that frontmatter is extended. The new tools are a natural fit for `arckit-gov-reuse` (`dependency_compare` for quantitative overlap %) and the assurance commands (`vulnerability_exposure` for CVE blast-radius); wiring them in is tracked separately.
+> **Allowlist note:** `arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__govreposcrape__` prefix via `startsWith`, so all 9 tools clear the permission hook automatically. The gov agents additionally declare a `tools:` frontmatter allowlist (only listed tools are callable): `arckit-gov-reuse-reader` lists `search_uk_gov_code` + `dependency_compare`; `arckit-gov-landscape` lists `search_uk_gov_code` + `vulnerability_exposure`. The remaining 6 dependency-intelligence tools are not yet referenced by any agent's frontmatter — wiring further ones in (e.g. `dependency_landscape`, `package_popularity` for `gov-landscape`) is tracked separately.
 
-**Consumers** (6) — all via `search_uk_gov_code`:
+**Consumers of `search_uk_gov_code`** (6):
 
 - `arckit-gov-code-search` — general-purpose UK government code search
 - `arckit-gov-reuse` (orchestrator) — declares the tool in its toolchain for context; does not call it directly
@@ -117,6 +117,10 @@ MCP server fronting a semantic search index over 24,500+ UK government open-sour
 - `arckit-gov-landscape` — domain landscape mapping (who built what)
 - `arckit-datascout-reader` — checks for UK gov data implementations alongside other data sources
 - `commands/gov-reuse.md` — declares the tool in its guardrails ("only the reader subagent calls this; orchestrator never sees raw output")
+
+**Consumers of `dependency_compare`** (1): `arckit-gov-reuse-reader` — runs pairwise overlap between candidate repos so the orchestrator can collapse near-duplicate / forked candidates (emitted as `dependency_comparisons` in the handoff schema).
+
+**Consumers of `vulnerability_exposure`** (1): `arckit-gov-landscape` — scans the domain's major orgs and dominant packages for known-CVE blast-radius and end-of-life dependencies.
 
 Triggered by `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landscape`, and indirectly by `/arckit:datascout`.
 
@@ -139,7 +143,9 @@ Reverse lookup, by tool, for the linter to grep against.
 | `mcp__google-developer-knowledge__batch_get_documents` | `arckit-gcp-research` |
 | `mcp__google-developer-knowledge__get_document` | `arckit-gcp-research` |
 | `mcp__google-developer-knowledge__search_documents` | `arckit-gcp-research` |
+| `mcp__govreposcrape__dependency_compare` | `arckit-gov-reuse-reader` |
 | `mcp__govreposcrape__search_uk_gov_code` | `arckit-datascout-reader`, `arckit-gov-code-search`, `arckit-gov-landscape`, `arckit-gov-reuse`, `arckit-gov-reuse-reader`, `gov-reuse` |
+| `mcp__govreposcrape__vulnerability_exposure` | `arckit-gov-landscape` |
 | `mcp__microsoft-learn__microsoft_code_sample_search` | `arckit-azure-research` |
 | `mcp__microsoft-learn__microsoft_docs_fetch` | `arckit-azure-research` |
 | `mcp__microsoft-learn__microsoft_docs_search` | `arckit-azure-research` |

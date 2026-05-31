@@ -21,6 +21,12 @@
       "maxItems": 50,
       "items": { "type": "string", "format": "uri", "maxLength": 512 }
     },
+    "dependency_comparisons": {
+      "type": "array",
+      "maxItems": 20,
+      "description": "Pairwise dependency-overlap results from mcp__govreposcrape__dependency_compare, used by the orchestrator to detect near-duplicate / forked candidates within a capability. Extract-only: no judgement.",
+      "items": { "$ref": "#/$defs/DependencyComparison" }
+    },
     "errors": {
       "type": "array",
       "maxItems": 20,
@@ -36,6 +42,33 @@
     }
   },
   "$defs": {
+    "DependencyComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repo_a", "repo_b", "overlap_pct"],
+      "properties": {
+        "repo_a": {
+          "type": "string",
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9][A-Za-z0-9._-]*$"
+        },
+        "repo_b": {
+          "type": "string",
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9][A-Za-z0-9._-]*$"
+        },
+        "overlap_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "shared_count": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "unique_a_count": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "unique_b_count": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "fetched_at_iso": { "type": "string", "format": "date-time" },
+        "citation_id": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^[A-Z0-9-]+$"
+        }
+      }
+    },
     "CandidateRecord": {
       "type": "object",
       "additionalProperties": false,
