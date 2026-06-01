@@ -1,70 +1,65 @@
-# ArcKit build recipe — UK MOD / Sovereign / Air-Gapped
+# ArcKit build recipe — UK Government SaaS
 #
-# For deployments into customer-controlled environments operating fully
-# disconnected from vendor services — UK Ministry of Defence, intelligence
-# community partners, accredited operators of essential services. Anchored
-# on Principle 21 (Sovereign and Air-Gapped Deployment) in the global
-# principles document.
+# Recipe schema v1. Loaded by the arckit-build skill at runtime.
 #
-# Differences from uk-saas:
-#   - arckit:mod-secure  (MOD Secure by Design / CAAT) replaces arckit:secure
-#   - arckit:jsp-936     (JSP 936 AI assurance) added, gated on ADR-004
-#                        (on-premise AI) being in scope
-#   - arckit:atrs        (Algorithmic Transparency Recording Standard) added
-#                        for the on-prem AI route
-#   - SVCASS dropped     (sovereign deployments are not citizen-facing
-#                        public services — GDS Service Standard does not apply)
-#   - ADR topics rewritten for air-gapped operation (no public cloud,
-#                        no GOV.UK One Login, sealed-media distribution, etc.)
-#   - arckit:pages and arckit:health post-build hooks unchanged
+# Override this file by creating .arckit/recipes/uk-saas.yaml at the project
+# root. The harness checks the project override first, then falls back to this
+# default.
+#
+# Variable substitution applied by the orchestrator before passing args to
+# worker subagents:
+#   {P}     ← project ID, zero-padded (e.g. "001")
+#   {NAME}  ← project slug (e.g. "arckit-saas")
+#   {V}     ← defaults.version
+#   {TOPIC} ← target.topic (multi-instance ADR/DIAG topics)
 
-recipe: uk-mod-sovereign
+recipe: uk-saas
 schema_version: 1
 description: >
-  UK MOD / sovereign / air-gapped — full ArcKit governance suite
-  with MOD Secure by Design (CAAT), JSP 936 AI assurance, and ATRS,
-  scoped to disconnected on-premise deployments. Anchored on
-  Principle 21 (Sovereign and Air-Gapped Deployment).
+  UK Government SaaS — full ArcKit governance suite (PRIN through TRACE
+  with TCoP/SBD/DPIA/SVCASS). Suitable for departmental SaaS launches that
+  need GDS Service Standard, NCSC CAF, and Orange/Green Book coverage.
 
 defaults:
   version: "1.0"
 
+# Optional targets are skipped unless explicitly enabled.
+# - default: true → built unless excluded with --exclude {ID}
+# - default: false (or absent) → built only with --enable {ID}
 optional_targets:
   AIP:
     description: AI Playbook — build only if any FR mentions AI/ML/LLM
-    default: true   # on-prem AI is a primary scenario for sovereign use
-  JSP_936:
-    description: JSP 936 AI assurance — required if AI/ML/LLM in scope
+    default: false
+  SVCASS:
+    description: Service Standard Assessment — public-service-style
     default: true
-  ATRS:
-    description: Algorithmic Transparency Recording Standard — public
-                 algorithm transparency notice for the on-prem AI route
-    default: false   # not all sovereign deployments are public-facing
-                     # enough to warrant ATRS publication
-  # Research wave (default-on, opt-out with --exclude). Org research
-  # writes to projects/000-global/research/ so the org context is shared.
-  # Per-project research is per-project. Note: gov-reuse is omitted from
-  # the sovereign recipe because public gov-code-reuse research isn't
-  # typically applicable to MOD / accredited deployments.
+  # Research wave (default-on, opt-out with --exclude). All research
+  # outputs land in research/ subfolders. ORG_RESEARCH writes to
+  # projects/000-global/research/ so the org context is shared across
+  # every project in the repo. Other research targets are per-project.
   ORG_RESEARCH:
-    description: Target organisation research — strategy, structure, existing systems. Output to projects/000-global/research/.
+    description: Target organisation research — strategy, structure, existing systems. Output to projects/000-global/research/. Run before any project-specific work so subsequent technology research and ADRs inherit the org context.
     default: true
   RESEARCH:
     description: Technology and vendor market research (build vs buy, TCO)
     default: true
   AWS_RESEARCH:
-    description: AWS service availability and architecture patterns
+    description: AWS service availability and architecture patterns (skip with --exclude AWS_RESEARCH if AWS not in scope)
     default: true
   AZURE_RESEARCH:
-    description: Azure service availability and architecture patterns
+    description: Azure service availability and architecture patterns (skip with --exclude AZURE_RESEARCH if Azure not in scope)
     default: true
   GCP_RESEARCH:
-    description: Google Cloud service availability and architecture patterns
+    description: Google Cloud service availability and architecture patterns (skip with --exclude GCP_RESEARCH if GCP not in scope)
+    default: true
+  GOV_REUSE:
+    description: UK government code reuse research via govreposcrape — what's already been built across central / local / NHS
     default: true
   DATASCOUT:
-    description: External data source discovery — only when REQ specifies external data ingestion
+    description: External data source discovery (APIs, datasets, open data portals) — only when REQ specifies external data ingestion
     default: false
 
+# Hooks run after the final target wave, in parallel.
 post_build_hooks:
   - skill: arckit:health
     args: ""
@@ -73,6 +68,22 @@ post_build_hooks:
 
 # ---------------------------------------------------------------------------
 # Targets
+# ---------------------------------------------------------------------------
+# Each target is one ArcKit artefact. The orchestrator topo-sorts by `deps`
+# and dispatches one worker subagent per target per wave.
+#
+# Fields:
+#   id              Unique target identifier (used in deps lists and state.json)
+#   skill           ArcKit skill to invoke (e.g. arckit:requirements)
+#   args            Args passed to the skill, after {P}/{NAME}/{V} substitution
+#   output.project  Project directory: "000-global" or "{P}-{NAME}"
+#   output.type     ArcKit doc-type code passed to generate-document-id.sh
+#   output.subfolder           (optional) subfolder relative to project dir
+#   output.multi_instance      (optional) true → requires --next-num when
+#                              invoking generate-document-id.sh
+#   topic           (optional) Used in commit messages and state.json for
+#                   multi-instance targets where the ID alone isn't descriptive
+#   deps            List of target IDs that must complete first
 # ---------------------------------------------------------------------------
 
 targets:
@@ -105,16 +116,18 @@ targets:
   # --- Research wave (default-on, parallel, before ADRs) ----------------
   # Org research runs first (no deps) and writes to 000-global so every
   # project in the repo inherits the same target-organisation context.
+  # Per-project technology research depends on the org research being
+  # in place plus REQ being known.
   - id: ORG_RESEARCH
     skill: arckit:research
-    topic: "Target organisation strategy, structure, and existing systems (sovereign deployment context)"
-    args: "{NAME} target-organisation strategy structure existing-systems sovereign-context"
+    topic: "Target organisation strategy, structure, and existing systems"
+    args: "{NAME} target-organisation strategy structure existing-systems"
     output: { project: "000-global", type: RSCH, subfolder: research, multi_instance: true }
     deps: []
 
   - id: RESEARCH
     skill: arckit:research
-    topic: "Technology and vendor market research — sovereign deployment options"
+    topic: "Technology and vendor market research (build vs buy, TCO)"
     args: "{P}"
     output: { project: "{P}-{NAME}", type: RSCH, subfolder: research, multi_instance: true }
     deps: [REQ, ORG_RESEARCH]
@@ -123,86 +136,90 @@ targets:
     skill: arckit:aws-research
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AWRS, subfolder: research, multi_instance: true }
-    topic: "AWS service availability + architecture patterns + sovereign / GovCloud options"
+    topic: "AWS service availability + architecture patterns + UK region"
     deps: [REQ, ORG_RESEARCH]
 
   - id: AZURE_RESEARCH
     skill: arckit:azure-research
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AZRS, subfolder: research, multi_instance: true }
-    topic: "Azure service availability + Azure Government / Azure for Sovereignty"
+    topic: "Azure service availability + architecture patterns + UK South / UK West"
     deps: [REQ, ORG_RESEARCH]
 
   - id: GCP_RESEARCH
     skill: arckit:gcp-research
     args: "{P}"
     output: { project: "{P}-{NAME}", type: GCRS, subfolder: research, multi_instance: true }
-    topic: "Google Cloud service availability + sovereign cloud options"
+    topic: "Google Cloud service availability + architecture patterns + europe-west2"
+    deps: [REQ, ORG_RESEARCH]
+
+  - id: GOV_REUSE
+    skill: arckit-uk:uk-gov-reuse
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GOVR, subfolder: research, multi_instance: true }
+    topic: "UK government code reuse search via govreposcrape"
     deps: [REQ, ORG_RESEARCH]
 
   - id: DATASCOUT
     skill: arckit:datascout
     args: "{P}"
     output: { project: "{P}-{NAME}", type: DSCT, subfolder: research, multi_instance: true }
-    topic: "External data source discovery (sovereign-compatible feeds only)"
+    topic: "External data source discovery (APIs, datasets, open data)"
     deps: [REQ, ORG_RESEARCH]
 
-  # --- ADR set: sovereign-specific topics --------------------------------
-  # Rewritten from uk-saas defaults to reflect air-gapped operation.
-  # Topics mirror the ADRs already authored for project 002 so the recipe
-  # can be re-run idempotently against existing artefacts.
+  # --- ADR set (parallel, all share deps) --------------------------------
   - id: ADR-001
     skill: arckit:adr
-    topic: "Air-gapped operation model — disconnected runtime, no outbound egress"
+    topic: "Cloud platform (AWS / Azure / GCP)"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
 
   - id: ADR-002
     skill: arckit:adr
-    topic: "Signed release bundle — Cosign + CycloneDX SBOM + SLSA L3 + offline verification"
+    topic: "Identity & access (GOV.UK One Login vs Entra)"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
 
   - id: ADR-003
     skill: arckit:adr
-    topic: "Cleared-personnel access model for sovereign deployments"
+    topic: "Data residency & sovereignty"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
 
   - id: ADR-004
     skill: arckit:adr
-    topic: "On-premise AI model integration (sovereign mode, no cloud LLM egress)"
+    topic: "AI / LLM provider (if AI feature in scope)"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
 
   - id: ADR-005
     skill: arckit:adr
-    topic: "Customer-controlled telemetry, time source, certificate authority, package mirror"
+    topic: "Logging & observability stack"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
 
   - id: ADR-006
     skill: arckit:adr
-    topic: "JSP 440 / Security Aspects Letter alignment — controls inheritance and accreditation pathway"
+    topic: "Deployment topology (regions, multi-tenancy)"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
 
   - id: ADR-007
     skill: arckit:adr
-    topic: "Distribution model — sealed media default with cross-domain diode option"
+    topic: "Build vs buy (G-Cloud framework)"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
 
   - id: ADR-008
     skill: arckit:adr
-    topic: "Long-term support release line for sovereign deployments"
+    topic: "Open-source licence policy"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
@@ -240,20 +257,19 @@ targets:
     deps: [REQ, STKE, RISK]
 
   - id: TCOP
-    skill: arckit:tcop
+    skill: arckit-uk:uk-tcop
     args: "{P}"
     output: { project: "{P}-{NAME}", type: TCOP }
     deps: [REQ, STKE, RISK, "ADR-*"]
 
-  # MOD Secure by Design replaces standard SBD for sovereign deployments
-  - id: MOD_SBD
-    skill: arckit:mod-secure
+  - id: SBD
+    skill: arckit-uk:uk-secure
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: SECD-MOD }
+    output: { project: "{P}-{NAME}", type: SECD }
     deps: [TCOP, RISK, REQ, "ADR-*"]
 
   - id: DPIA
-    skill: arckit:dpia
+    skill: arckit-uk:uk-dpia
     args: "{P} scope=full-system consultation=surveys"
     output: { project: "{P}-{NAME}", type: DPIA }
     deps: [REQ, STKE, RISK]
@@ -266,19 +282,19 @@ targets:
     output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
     deps: [HLD]
 
-  - id: DIAG-AIRGAP
+  - id: DIAG-SEQ
     skill: arckit:diagram
-    topic: "air-gap-boundary"
+    topic: "sequence"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
-    deps: [HLD, ADR-001]
+    deps: [HLD]
 
   - id: DIAG-DEP
     skill: arckit:diagram
-    topic: "deployment (sealed-media install)"
+    topic: "deployment"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
-    deps: [HLD, ADR-007]
+    deps: [HLD, ADR-006]
 
   # --- Operational + planning -------------------------------------------
   - id: PLAN
@@ -311,32 +327,24 @@ targets:
     output: { project: "{P}-{NAME}", type: OPS }
     deps: [HLD, DEVOPS, RISK]
 
-  # --- Optional AI/ML governance ----------------------------------------
+  # --- Optional ----------------------------------------------------------
   - id: AIP
-    skill: arckit:ai-playbook
-    args: "{P} ai-mode=on-premise"
+    skill: arckit-uk:uk-ai-playbook
+    args: "{P} ai-mode=auto-detect-from-REQ-FRs"
     output: { project: "{P}-{NAME}", type: AIPB }
     deps: [DPIA, RISK, REQ, ADR-004]
 
-  - id: JSP_936
-    skill: arckit:jsp-936
+  - id: SVCASS
+    skill: arckit-uk:uk-service-assessment
     args: "{P}"
-    output: { project: "{P}-{NAME}", type: JSP936 }
-    deps: [AIP, MOD_SBD, RISK, ADR-004]
-
-  - id: ATRS
-    skill: arckit:atrs
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: ATRS }
-    deps: [AIP, DPIA, ADR-004]
+    output: { project: "{P}-{NAME}", type: SVCASS }
+    deps: [TCOP, SBD, DPIA, AIP, REQ, STKE]
 
   # --- Cross-cutting last -----------------------------------------------
-  # Note: SVCASS deliberately omitted — sovereign deployments are not
-  # citizen-facing public services subject to GDS Service Standard.
   - id: TRACE
     skill: arckit:traceability
     args: "{P}"
     output: { project: "{P}-{NAME}", type: TRAC }
     deps:
-      [REQ, STKE, "ADR-*", RISK, HLD, DPIA, MOD_SBD, TCOP,
-       PLAN, ROADMAP, AIP, JSP_936, DEVOPS, FINOPS, OPS]
+      [REQ, STKE, "ADR-*", RISK, HLD, DPIA, SBD, TCOP,
+       PLAN, ROADMAP, AIP, SVCASS, DEVOPS, FINOPS, OPS]

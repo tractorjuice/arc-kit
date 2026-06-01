@@ -127,7 +127,7 @@ targets:
     deps: [REQ, ORG_RESEARCH]
 
   - id: GOV_REUSE
-    skill: arckit:gov-reuse
+    skill: arckit-uk:uk-gov-reuse
     args: "{P}"
     output: { project: "{P}-{NAME}", type: GOVR, subfolder: research }
     deps: [REQ, ORG_RESEARCH]
@@ -231,31 +231,31 @@ targets:
     deps: [REQ, STKE, RISK]
 
   - id: TCOP
-    skill: arckit:tcop
+    skill: arckit-uk:uk-tcop
     args: "{P}"
     output: { project: "{P}-{NAME}", type: TCOP }
     deps: [REQ, STKE, RISK, "ADR-*"]
 
   - id: SBD
-    skill: arckit:secure
+    skill: arckit-uk:uk-secure
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SECD }
     deps: [TCOP, RISK, REQ, "ADR-*"]
 
   - id: DPIA
-    skill: arckit:dpia
+    skill: arckit-uk:uk-dpia
     args: "{P} scope=full-system consultation=surveys"
     output: { project: "{P}-{NAME}", type: DPIA }
     deps: [REQ, STKE, RISK, DATA]
 
   - id: AIP
-    skill: arckit:ai-playbook
+    skill: arckit-uk:uk-ai-playbook
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AIPB }
     deps: [DPIA, RISK, REQ, ADR-004]
 
   - id: ATRS
-    skill: arckit:atrs
+    skill: arckit-uk:uk-atrs
     args: "{P}"
     output: { project: "{P}-{NAME}", type: ATRS }
     deps: [DPIA, RISK, REQ, ADR-004]
@@ -341,7 +341,7 @@ targets:
     deps: [HLD, DEVOPS, RISK, UK_NHS_DCB0160]
 
   - id: SVCASS
-    skill: arckit:service-assessment
+    skill: arckit-uk:uk-service-assessment
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SVCASS }
     deps: [TCOP, SBD, DPIA, UK_NHS_DTAC, REQ, STKE]

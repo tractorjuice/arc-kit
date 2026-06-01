@@ -31,7 +31,7 @@ You are running the ArcKit build harness. Your job is **orchestration only** —
 | `--target NAME` | Build only NAME and its missing dependencies. |
 | `--refresh NAME` | Force-rebuild NAME and everything downstream. |
 | `--no-commit` | Skip the per-wave git commit. |
-| `--recipe NAME` | Recipe name (default `uk-saas`). Resolved against the precedence list below. |
+| `--recipe NAME` | Recipe name (default `baseline`). Resolved against the precedence list below. |
 | `--enable ID` | Enable an optional target (e.g. `--enable AIP`). |
 | `--exclude ID` | Exclude a default-on optional target (e.g. `--exclude SVCASS`). |
 | `--skip-hash-check` | Treat any `complete` target with its output file present as up-to-date; skip SHA-256 staleness detection. Fast resume; risks missing edits to inputs. |
@@ -41,34 +41,36 @@ You are running the ArcKit build harness. Your job is **orchestration only** —
 Recipes are external YAML files. Lookup precedence for `--recipe NAME` (first hit wins):
 
 1. **Project override**: `.arckit/recipes/{NAME}.yaml` — user customizations preserved across plugin updates.
-2. **Core plugin**: `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{NAME}.yaml` — recipes shipped with the `arckit` core plugin (`uk-saas`, `uk-mod-sovereign`).
+2. **Core plugin**: `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/{NAME}.yaml` — recipes shipped with the `arckit` core plugin (`baseline`).
 3. **Sibling community plugins**: `${CLAUDE_PLUGIN_ROOT}/../arckit-*/recipes/{NAME}.yaml` — recipes shipped with installed community plugins (e.g. `arckit-uae/recipes/uae-federal-ai.yaml`, `arckit-ca/recipes/ca-federal-fitaa.yaml`).
 
 Resolution: glob the parent directory of `${CLAUDE_PLUGIN_ROOT}` for `arckit-*/recipes/{NAME}.yaml` and take the first match. The glob works in both layouts — marketplace-installed plugins land as siblings under the same marketplace-source cache directory, and the dev-mode same-repo layout has them as sibling directories in the repo root.
 
-Default recipe is `uk-saas`. To customize, copy the core default to `.arckit/recipes/uk-saas.yaml` and edit there:
+Default recipe is `baseline`. To customize, copy the core default to `.arckit/recipes/baseline.yaml` and edit there:
 
 ```bash
 mkdir -p .arckit/recipes
-cp "${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/uk-saas.yaml" .arckit/recipes/uk-saas.yaml
+cp "${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/baseline.yaml" .arckit/recipes/baseline.yaml
 ```
 
 **Built-in recipes**:
 
 | Recipe | Plugin | Use case |
 |--------|--------|----------|
-| `uk-saas` | `arckit` (core) | UK Government managed multi-tenant SaaS — civilian departments |
-| `uk-mod-sovereign` | `arckit` (core) | UK MOD / sovereign / air-gapped — `mod-secure` + `jsp-936`, no SVCASS, sealed-media distribution |
+| `baseline` | `arckit` (core) | Neutral governance baseline — strategy, architecture, delivery, and assurance with no jurisdiction-specific compliance. Layer a jurisdiction overlay for regional compliance. |
+| `uk-saas` | `arckit-uk` | UK Government managed multi-tenant SaaS — civilian departments (TCoP, SBD, DPIA, Service Standard) |
+| `uk-mod-sovereign` | `arckit-uk-mod` | UK MOD / sovereign / air-gapped — `mod-secure` + `jsp-936`, no SVCASS, sealed-media distribution |
+| `uk-nhs-clinical-safety` | `arckit-uk-nhs` | UK NHS Clinical Safety + UK/EU MDR — NHS DCB0129 (manufacturer) + DCB0160 (deployer) clinical safety case, NHS DTAC v3, SaMD/AIaMD classification |
+| `uk-fs-payments` | `arckit-uk-finance` | UK Financial Services payments — SCA-RTS exemption, EMI/PI safeguarding, Consumer Duty board report, Critical Third Parties dependency assessment |
 | `uae-federal-ai` | `arckit-uae` | UAE Federal AI — full Cabinet agentic AI decree compliance with all 12 UAE community commands, integrated research wave (general AI + AWS / Azure UAE region availability), plus core ArcKit governance |
 | `uae-agentic-transformation` | `arckit-uae` | UAE Federal Agentic AI Transformation — focused 24-month playbook for the 23 April 2026 Cabinet framework's 50%-of-services-by-April-2028 target; ADRs reshaped around agentic architecture (orchestration, human-in-the-loop, observability, kill-switch); PLAN + ROADMAP timeboxed to the 24-month window |
 | `ca-federal-fitaa` | `arckit-ca` | Canadian Federal — FITAA, ITSG-33, GC Digital Standards |
 | `au-federal` | `arckit-au` | Australian Federal / DISP-supplier — ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988, OAIC NDB, PSPF, AI Assurance, DISP attestation (35 targets, 9 waves) |
 | `au-energy` | `arckit-au-energy` (composes `arckit-au` baseline) | Australian Energy Sector — AESCSF maturity, AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS layered on the AU federal baseline (Essential Eight, ISM, OT security, SOCI/CIRMP, Privacy Act/NDB). Optional default-off `SERVICE_INVENTORY` (`servicenow`). 22 targets. First **Australian sector** overlay. |
-| `uk-nhs-clinical-safety` | `arckit` (core, references `arckit-uk-nhs` commands) | UK NHS Clinical Safety + UK/EU MDR — NHS DCB0129 (manufacturer) + DCB0160 (deployer) clinical safety case (Marcus Baw SAFETY.md 3-file spec), NHS DTAC v3, UK MDR 2002 + EU MDR 2017/745 SaMD/AIaMD classification. Composes with UK SaaS baseline (no swaps; adds clinical safety + medical-device regulation on top). 44 targets across 8 waves. First **sector** overlay. |
 
 ### Recipe schema (v1)
 
-See `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/uk-saas.yaml` for an annotated reference. Top-level keys:
+See `${CLAUDE_PLUGIN_ROOT}/skills/arckit-build/recipes/baseline.yaml` for an annotated reference. Top-level keys:
 
 - `recipe` — recipe name (string, must match filename stem)
 - `schema_version` — recipe schema version (currently `1`)
@@ -341,8 +343,8 @@ Otherwise, proceed.
   "state_format_version": "0.4",
   "project_id": "001",
   "project_name": "001-arckit-saas",
-  "recipe": "uk-saas",
-  "recipe_path": ".claude/skills/arckit-build/recipes/uk-saas.yaml",
+  "recipe": "baseline",
+  "recipe_path": ".claude/skills/arckit-build/recipes/baseline.yaml",
   "started_at": "2026-05-03T16:00:00Z",
   "last_wave_completed": 5,
   "current_wave": 6,
@@ -365,7 +367,7 @@ State written by older versions (`state_format_version: "0.3"`) is read-compatib
 
 1. **Parse arguments** from skill input (project, --plan, --resume, --recipe, --enable, --exclude, etc.). If project not specified, ask user.
 2. **Detect project**: resolve `<project>` arg → `projects/{P}-{slug}/`. Confirm directory exists.
-3. **Load recipe**: resolve `--recipe NAME` (default `uk-saas`) against the precedence list. Read the YAML with the Read tool. Validate top-level shape (`recipe`, `schema_version`, `targets`, `defaults.version`). Halt with a clear error if the recipe file is missing or malformed.
+3. **Load recipe**: resolve `--recipe NAME` (default `baseline`) against the precedence list. Read the YAML with the Read tool. Validate top-level shape (`recipe`, `schema_version`, `targets`, `defaults.version`). Halt with a clear error if the recipe file is missing or malformed.
 4. **Resolve enabled targets**: drop `optional_targets` whose `default: false` unless `--enable ID` was passed; drop `optional_targets` named in `--exclude ID`. Apply `{P}/{NAME}/{V}/{TOPIC}` substitution to every `args` and `output.project` field.
 5. **Load state.json** at `projects/{P}-{NAME}/.arckit/state.json`. If absent, scan project dir for existing `ARC-{P}-*-v*.md` files and infer initial state.
 6. **Subagent capability smoke-test** (first wave only, skip on `--resume`): before dispatching the real wave, spawn one throwaway `general-purpose` Agent with this prompt:
@@ -398,7 +400,7 @@ State written by older versions (`state_format_version: "0.3"`) is read-compatib
 
 `/goal` keeps Claude working across turns until a completion condition is met, showing live elapsed / turns / tokens overhead. It composes naturally with this build harness when the user's intent stretches beyond a single recipe pass:
 
-- **"Build until APPROVED"** — `/goal every artefact under projects/001-*/ has Document Control Status: APPROVED and no Next Review Date in the past`, then run `/arckit:build 001 --recipe uk-saas --resume`. The harness rebuilds stale targets; `/goal` keeps re-running it until the post-condition holds.
+- **"Build until APPROVED"** — `/goal every artefact under projects/001-*/ has Document Control Status: APPROVED and no Next Review Date in the past`, then run `/arckit:build 001 --recipe baseline --resume`. The harness rebuilds stale targets; `/goal` keeps re-running it until the post-condition holds.
 - **"Refresh a stale slice"** — `/goal no artefact under projects/001-*/ has been flagged by the stale-artifact-scan monitor`, then `/arckit:build 001 --refresh REQ` (or whichever target the monitor flagged).
 - **"Drive a project to GA"** — wrap the build under a goal that also requires zero open `/arckit:conformance` violations and a green `/arckit:health` scan; `/goal` will sequence `build → conformance → health → refresh-violator → build` until clean.
 
@@ -420,6 +422,6 @@ Caveats:
 ## Future versions
 
 - v0.4 (remaining): orchestrator-side fallback for skills inaccessible to subagents — load `arckit:*` skill prompts in main context once and inline them in worker prompts when the smoke-test returns `NOT_AVAILABLE`. (File-hash change detection shipped in v0.4 — see § "Input-hash change detection".)
-- v0.5: cross-reference + schema validators between waves; recipe inheritance (`extends: uk-saas`); hash external inputs (e.g. `external/policies/*.md`) in addition to dep artefacts.
+- v0.5: cross-reference + schema validators between waves; recipe inheritance (`extends: baseline`); hash external inputs (e.g. `external/policies/*.md`) in addition to dep artefacts.
 - v0.6: CI mode (`--validate-only` for GitHub Actions).
 - v1.0: skills declare I/O in frontmatter; harness reads frontmatter directly; dedicated `arckit:artefact-worker` subagent type; recipe "Expected output path" computed from skill metadata (single source of truth).

@@ -83,7 +83,7 @@ targets:
     deps: [REQ]
 
   - id: DPIA
-    skill: arckit:dpia
+    skill: arckit-uk:uk-dpia
     args: "{P} scope=full-system consultation=surveys"
     output: { project: "{P}-{NAME}", type: DPIA }
     deps: [REQ, STKE, RISK]

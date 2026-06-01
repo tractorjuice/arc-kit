@@ -1,8 +1,8 @@
-# ArcKit build recipe — UK Government SaaS
+# ArcKit build recipe — baseline (neutral, jurisdiction-free)
 #
 # Recipe schema v1. Loaded by the arckit-build skill at runtime.
 #
-# Override this file by creating .arckit/recipes/uk-saas.yaml at the project
+# Override this file by creating .arckit/recipes/baseline.yaml at the project
 # root. The harness checks the project override first, then falls back to this
 # default.
 #
@@ -13,12 +13,13 @@
 #   {V}     ← defaults.version
 #   {TOPIC} ← target.topic (multi-instance ADR/DIAG topics)
 
-recipe: uk-saas
+recipe: baseline
 schema_version: 1
 description: >
-  UK Government SaaS — full ArcKit governance suite (PRIN through TRACE
-  with TCoP/SBD/DPIA/SVCASS). Suitable for departmental SaaS launches that
-  need GDS Service Standard, NCSC CAF, and Orange/Green Book coverage.
+  Neutral ArcKit governance baseline — strategy, architecture, delivery,
+  and assurance artefacts with no jurisdiction-specific compliance. Layer a
+  jurisdiction overlay (arckit-uk, arckit-au, arckit-us, ...) for regional
+  compliance recipes.
 
 defaults:
   version: "1.0"
@@ -27,12 +28,6 @@ defaults:
 # - default: true → built unless excluded with --exclude {ID}
 # - default: false (or absent) → built only with --enable {ID}
 optional_targets:
-  AIP:
-    description: AI Playbook — build only if any FR mentions AI/ML/LLM
-    default: false
-  SVCASS:
-    description: Service Standard Assessment — public-service-style
-    default: true
   # Research wave (default-on, opt-out with --exclude). All research
   # outputs land in research/ subfolders. ORG_RESEARCH writes to
   # projects/000-global/research/ so the org context is shared across
@@ -51,9 +46,6 @@ optional_targets:
     default: true
   GCP_RESEARCH:
     description: Google Cloud service availability and architecture patterns (skip with --exclude GCP_RESEARCH if GCP not in scope)
-    default: true
-  GOV_REUSE:
-    description: UK government code reuse research via govreposcrape — what's already been built across central / local / NHS
     default: true
   DATASCOUT:
     description: External data source discovery (APIs, datasets, open data portals) — only when REQ specifies external data ingestion
@@ -136,28 +128,21 @@ targets:
     skill: arckit:aws-research
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AWRS, subfolder: research, multi_instance: true }
-    topic: "AWS service availability + architecture patterns + UK region"
+    topic: "AWS service availability + architecture patterns"
     deps: [REQ, ORG_RESEARCH]
 
   - id: AZURE_RESEARCH
     skill: arckit:azure-research
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AZRS, subfolder: research, multi_instance: true }
-    topic: "Azure service availability + architecture patterns + UK South / UK West"
+    topic: "Azure service availability + architecture patterns"
     deps: [REQ, ORG_RESEARCH]
 
   - id: GCP_RESEARCH
     skill: arckit:gcp-research
     args: "{P}"
     output: { project: "{P}-{NAME}", type: GCRS, subfolder: research, multi_instance: true }
-    topic: "Google Cloud service availability + architecture patterns + europe-west2"
-    deps: [REQ, ORG_RESEARCH]
-
-  - id: GOV_REUSE
-    skill: arckit:gov-reuse
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: GOVR, subfolder: research, multi_instance: true }
-    topic: "UK government code reuse search via govreposcrape"
+    topic: "Google Cloud service availability + architecture patterns"
     deps: [REQ, ORG_RESEARCH]
 
   - id: DATASCOUT
@@ -170,21 +155,21 @@ targets:
   # --- ADR set (parallel, all share deps) --------------------------------
   - id: ADR-001
     skill: arckit:adr
-    topic: "Cloud platform (AWS / Azure / GCP)"
+    topic: "Cloud platform selection"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
 
   - id: ADR-002
     skill: arckit:adr
-    topic: "Identity & access (GOV.UK One Login vs Entra)"
+    topic: "Identity and access management"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
 
   - id: ADR-003
     skill: arckit:adr
-    topic: "Data residency & sovereignty"
+    topic: "Data residency and sovereignty"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
@@ -198,7 +183,7 @@ targets:
 
   - id: ADR-005
     skill: arckit:adr
-    topic: "Logging & observability stack"
+    topic: "Logging and observability stack"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
@@ -212,7 +197,7 @@ targets:
 
   - id: ADR-007
     skill: arckit:adr
-    topic: "Build vs buy (G-Cloud framework)"
+    topic: "Build vs buy"
     args: "{P} {TOPIC}"
     output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
     deps: [PRIN, REQ]
@@ -254,24 +239,6 @@ targets:
     skill: arckit:sobc
     args: "{P}"
     output: { project: "{P}-{NAME}", type: SOBC }
-    deps: [REQ, STKE, RISK]
-
-  - id: TCOP
-    skill: arckit:tcop
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: TCOP }
-    deps: [REQ, STKE, RISK, "ADR-*"]
-
-  - id: SBD
-    skill: arckit:secure
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: SECD }
-    deps: [TCOP, RISK, REQ, "ADR-*"]
-
-  - id: DPIA
-    skill: arckit:dpia
-    args: "{P} scope=full-system consultation=surveys"
-    output: { project: "{P}-{NAME}", type: DPIA }
     deps: [REQ, STKE, RISK]
 
   # --- Diagrams (multi-instance, pre-allocated topics) ------------------
@@ -327,24 +294,11 @@ targets:
     output: { project: "{P}-{NAME}", type: OPS }
     deps: [HLD, DEVOPS, RISK]
 
-  # --- Optional ----------------------------------------------------------
-  - id: AIP
-    skill: arckit:ai-playbook
-    args: "{P} ai-mode=auto-detect-from-REQ-FRs"
-    output: { project: "{P}-{NAME}", type: AIPB }
-    deps: [DPIA, RISK, REQ, ADR-004]
-
-  - id: SVCASS
-    skill: arckit:service-assessment
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: SVCASS }
-    deps: [TCOP, SBD, DPIA, AIP, REQ, STKE]
-
   # --- Cross-cutting last -----------------------------------------------
   - id: TRACE
     skill: arckit:traceability
     args: "{P}"
     output: { project: "{P}-{NAME}", type: TRAC }
     deps:
-      [REQ, STKE, "ADR-*", RISK, HLD, DPIA, SBD, TCOP,
-       PLAN, ROADMAP, AIP, SVCASS, DEVOPS, FINOPS, OPS]
+      [REQ, STKE, "ADR-*", RISK, HLD,
+       PLAN, ROADMAP, DEVOPS, FINOPS, OPS]

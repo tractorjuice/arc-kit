@@ -54,12 +54,6 @@ defaults:
   version: "1.0"
 
 optional_targets:
-  AIP:
-    description: AI Playbook (UK reference framework; gates map well to UAE Charter principles)
-    default: true
-  ATRS:
-    description: Algorithmic Transparency Recording Standard (recommended for Tier 2 / Tier 3 autonomy)
-    default: true
   ORG_RESEARCH:
     description: Target federal entity research — mandate, structure, existing systems, digital posture. Output to projects/000-global/research/ so shared across every UAE project in the repo. Runs first (no deps).
     default: true
@@ -290,25 +284,7 @@ targets:
     output: { project: "{P}-{NAME}", type: SOBC }
     deps: [REQ, STKE, RISK]
 
-  - id: TCOP
-    skill: arckit:tcop
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: TCOP }
-    deps: [REQ, STKE, RISK, "ADR-*"]
-
-  - id: SBD
-    skill: arckit:secure
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: SBD }
-    deps: [TCOP, RISK, REQ, "ADR-*"]
-
-  - id: DPIA
-    skill: arckit:dpia
-    args: "{P} scope=full-system consultation=surveys"
-    output: { project: "{P}-{NAME}", type: DPIA }
-    deps: [REQ, STKE, RISK, UAE_PDPL]
-
-  # --- AI governance (Charter, autonomy tier, reference frameworks) ----
+  # --- AI governance (Charter, autonomy tier) --------------------------
   - id: UAE_AI_CHARTER
     skill: arckit:uae-ai-charter
     args: "{P}"
@@ -321,24 +297,12 @@ targets:
     output: { project: "{P}-{NAME}", type: AUTI }
     deps: [REQ, RISK, UAE_AI_CHARTER, ADR-004, ADR-007]
 
-  - id: AIP
-    skill: arckit:ai-playbook
-    args: "{P} ai-mode=auto-detect-from-REQ-FRs"
-    output: { project: "{P}-{NAME}", type: AIP }
-    deps: [DPIA, RISK, REQ, ADR-005, UAE_AI_CHARTER]
-
-  - id: ATRS
-    skill: arckit:atrs
-    args: "{P}"
-    output: { project: "{P}-{NAME}", type: ATRS }
-    deps: [AIP, DPIA, ADR-005, UAE_AI_AUTONOMY]
-
   # --- Security baseline ------------------------------------------------
   - id: UAE_IAS
     skill: arckit:uae-ias
     args: "{P}"
     output: { project: "{P}-{NAME}", type: IAS }
-    deps: [REQ, "ADR-*", RISK, SBD]
+    deps: [REQ, "ADR-*", RISK]
 
   # --- Diagrams ---------------------------------------------------------
   - id: DIAG-C4
@@ -414,8 +378,8 @@ targets:
     args: "{P}"
     output: { project: "{P}-{NAME}", type: TRACE }
     deps:
-      [REQ, STKE, "ADR-*", RISK, HLD, DPIA, SBD, TCOP,
-       PLAN, ROADMAP, AIP, ATRS, DEVOPS, FINOPS, OPS,
+      [REQ, STKE, "ADR-*", RISK, HLD,
+       PLAN, ROADMAP, DEVOPS, FINOPS, OPS,
        UAE_PRIORITIES, UAE_CLASSIFICATION, UAE_PDPL, UAE_DATA_SHARING,
        UAE_DIGITAL_RECORDS, UAE_CLOUD_RESIDENCY, UAE_UAEPASS,
        UAE_AI_CHARTER, UAE_AI_AUTONOMY, UAE_IAS,

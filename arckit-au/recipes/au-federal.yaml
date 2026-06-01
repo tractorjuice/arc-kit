@@ -26,10 +26,10 @@
 #     au-ai-assurance               DTA AI Assurance Framework + AI Policy v2.0
 #     au-disp-attestation           DISP Member self-attestation (4 domains)
 #
-#   Command swaps from the uk-saas baseline (per #424):
-#     arckit:tcop      → arckit:au-dss            (DTA DSS replaces UK TCoP)
-#     arckit:secure    → arckit:au-e8-posture     (E8 ML2 replaces UK SBD)
-#     arckit:dpia      → arckit:au-pia            (Privacy Act replaces UK GDPR)
+#   Command swaps from the baseline recipe (per #424):
+#     au-dss           replaces uk-tcop           (DTA DSS replaces UK TCoP)
+#     au-e8-posture    replaces uk-secure         (E8 ML2 replaces UK SBD)
+#     au-pia           replaces uk-dpia           (Privacy Act replaces UK GDPR)
 #
 #   Optional cross-sector critical-infrastructure support (general AU baseline,
 #   not energy-specific; future au-energy recipe consumes these by default):
@@ -69,7 +69,7 @@ defaults:
 # - default: false (or absent) → built only with --enable {ID}
 optional_targets:
   AIP:
-    description: AI Playbook (UK reference framework, useful cross-jurisdiction when AI is in scope; au-ai-assurance is the AU-specific equivalent)
+    description: AU AI assurance supplement — runs au-ai-assurance a second time with cross-jurisdiction focus; only needed when REQ explicitly calls for additional AI ethics coverage beyond the mandatory AU_AI target.
     default: false
   ORG_RESEARCH:
     description: Target federal entity research — strategy, mandate, structure, existing systems. Output to projects/000-global/research/ so the entity context is shared across every Australian Federal project in the repo. Runs first (no deps) ahead of all other research.
@@ -369,11 +369,11 @@ targets:
     output: { project: "{P}-{NAME}", type: SOBC }
     deps: [REQ, STKE, RISK]
 
-  # --- Optional AI reference (UK Playbook cross-jurisdiction reference) --
+  # --- Optional AU AI assurance (cross-jurisdiction supplement) ---------
   - id: AIP
-    skill: arckit:ai-playbook
+    skill: arckit-au:au-ai-assurance
     args: "{P} ai-mode=auto-detect-from-REQ-FRs"
-    output: { project: "{P}-{NAME}", type: AIPB }
+    output: { project: "{P}-{NAME}", type: AUAIA }
     deps: [REQ, AU_AI, AU_PIA, ADR-004]
 
   # --- Synthesis (executive view of all AU-* artefacts) -----------------
