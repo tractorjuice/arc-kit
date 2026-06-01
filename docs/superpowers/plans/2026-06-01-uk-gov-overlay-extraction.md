@@ -177,10 +177,10 @@ Expected: `ok`
     "arckit-uk-mod",
 ```
 
-- [ ] **Step 3: Add both to the overlay list in `scripts/sync-shared-assets.py`.** Locate the array of overlay dir names and append `"arckit-uk"`, `"arckit-uk-mod"`:
+- [ ] **Step 3: No edit needed for `scripts/sync-shared-assets.py`.** It auto-discovers overlays via `REPO_ROOT.glob("arckit-*/.claude-plugin/plugin.json")` (`discover_community_plugins()`, ~line 35), so the two new plugin dirs are picked up automatically. Verify:
 
-Run: `grep -n "arckit-uk-finance\|arckit-au-energy" scripts/sync-shared-assets.py`
-Then add the two entries in the same list.
+Run: `grep -n "glob(\"arckit-\*" scripts/sync-shared-assets.py`
+Expected: confirms the glob; no manual list to edit. (Earlier plan draft wrongly assumed a hardcoded list — corrected after Phase 0 spec review.)
 
 - [ ] **Step 4: Verify marketplace JSON + drift check**
 
