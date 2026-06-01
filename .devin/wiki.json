@@ -2,7 +2,7 @@
   "repo_notes": [
     {
       "author": "ArcKit maintainers",
-      "content": "AUTHORITATIVE OVERVIEW — before generating anything, read the book at https://github.com/tractorjuice/arckit-book (docs/book/ARCKIT-BOOK.md) — the canonical, maintainer-written description of ArcKit. It supersedes any inference drawn from file structure alone. Next, read `CLAUDE.md` (project instructions) and `README.md` (quick start + distribution overview). Prefer paraphrasing from these three files over reconstructing meaning from code."
+      "content": "AUTHORITATIVE OVERVIEW — before generating anything, read `CLAUDE.md` (project instructions) and `README.md` (quick start + distribution overview) — the canonical, maintainer-written description of ArcKit. They supersede any inference drawn from file structure alone. Prefer paraphrasing from these two files over reconstructing meaning from code."
     },
     {
       "author": "ArcKit maintainers",
