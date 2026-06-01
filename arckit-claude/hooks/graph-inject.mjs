@@ -38,6 +38,7 @@ import {
   extractRequirementIds,
 } from './hook-utils.mjs';
 import { scanAllArtifacts } from './graph-utils.mjs';
+import { ukGov } from './regime.mjs';
 import {
   DOC_TYPES,
   HIGH_SEVERITY_TYPES,
@@ -214,20 +215,25 @@ function extractConditions(content) {
   return out;
 }
 
-const EXT_RECOMMEND = [
+const EXT_RECOMMEND_BASE = [
   { patterns: [/api/i, /swagger/i, /openapi/i], commands: '/arckit:requirements, /arckit:data-model, /arckit:diagram' },
   { patterns: [/schema/i, /erd/i, /\.sql$/i], commands: '/arckit:data-model, /arckit:data-mesh-contract' },
-  { patterns: [/security/i, /pentest/i, /vuln/i], commands: '/arckit:secure, /arckit:dpia' },
-  { patterns: [/compliance/i, /audit/i], commands: '/arckit:tcop, /arckit:conformance' },
   { patterns: [/cost/i, /pricing/i, /budget/i], commands: '/arckit:sobc, /arckit:finops' },
   { patterns: [/pipeline/i, /\bci\b/i, /deploy/i], commands: '/arckit:devops' },
   { patterns: [/rfp/i, /itt/i, /tender/i], commands: '/arckit:sow, /arckit:evaluate' },
-  { patterns: [/risk/i, /threat/i], commands: '/arckit:risk, /arckit:secure' },
-  { patterns: [/policy/i, /standard/i], commands: '/arckit:principles, /arckit:tcop' },
+  { patterns: [/risk/i, /threat/i], commands: '/arckit:risk' },
+  { patterns: [/policy/i, /standard/i], commands: '/arckit:principles' },
 ];
+const EXT_RECOMMEND_UK = [
+  { patterns: [/security/i, /pentest/i, /vuln/i], commands: '/arckit-uk:uk-secure, /arckit-uk:uk-dpia' },
+  { patterns: [/compliance/i, /audit/i], commands: '/arckit-uk:uk-tcop, /arckit:conformance' },
+];
+function extRecommend() {
+  return ukGov() ? [...EXT_RECOMMEND_UK, ...EXT_RECOMMEND_BASE] : EXT_RECOMMEND_BASE;
+}
 
 function recommendCommands(filename) {
-  for (const { patterns, commands } of EXT_RECOMMEND) {
+  for (const { patterns, commands } of extRecommend()) {
     if (patterns.some(p => p.test(filename))) return commands;
   }
   return '/arckit:requirements, /arckit:analyze';
@@ -1505,27 +1511,32 @@ function formatTraceability(graph, prompt) {
 
 // ── Main ──────────────────────────────────────────────────────────────────
 
-const data = parseHookInput();
-const prompt = data.prompt || '';
-const recipe = matchRecipe(prompt);
-if (!recipe) process.exit(0);
+const _isMain = process.argv[1] === fileURLToPath(import.meta.url);
+if (_isMain) {
+  const data = parseHookInput();
+  const prompt = data.prompt || '';
+  const recipe = matchRecipe(prompt);
+  if (!recipe) process.exit(0);
 
-const cwd = data.cwd || process.cwd();
-const repoRoot = findRepoRoot(cwd);
-if (!repoRoot) process.exit(0);
+  const cwd = data.cwd || process.cwd();
+  const repoRoot = findRepoRoot(cwd);
+  if (!repoRoot) process.exit(0);
 
-const projectsDir = join(repoRoot, 'projects');
-if (!isDir(projectsDir)) process.exit(0);
+  const projectsDir = join(repoRoot, 'projects');
+  if (!isDir(projectsDir)) process.exit(0);
 
-const opts = typeof recipe.opts === 'function' ? recipe.opts(prompt) : recipe.opts;
-const graph = scanAllArtifacts(projectsDir, opts);
-const additionalContext = recipe.format(graph, prompt, repoRoot);
+  const opts = typeof recipe.opts === 'function' ? recipe.opts(prompt) : recipe.opts;
+  const graph = scanAllArtifacts(projectsDir, opts);
+  const additionalContext = recipe.format(graph, prompt, repoRoot);
 
-if (additionalContext == null) process.exit(0);
+  if (additionalContext == null) process.exit(0);
 
-console.log(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: 'UserPromptSubmit',
-    additionalContext,
-  },
-}));
+  console.log(JSON.stringify({
+    hookSpecificOutput: {
+      hookEventName: 'UserPromptSubmit',
+      additionalContext,
+    },
+  }));
+}
+
+export const recommendForTest = recommendCommands;

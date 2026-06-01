@@ -11,6 +11,7 @@
  */
 
 import { DOC_TYPES } from '../config/doc-types.mjs';
+import { ukGov } from './regime.mjs';
 
 // ── Constants ──────────────────────────────────────────────────────────────
 
@@ -37,9 +38,11 @@ export const ESSENTIAL_TYPES = [
 ];
 
 export const CONTEXTUAL_TYPES = [
-  { type: 'DPIA', command: '/arckit:dpia',       trigger: 'processing personal data' },
-  { type: 'SECD', command: '/arckit:secure',     trigger: 'security-sensitive system' },
-  { type: 'TCOP', command: '/arckit:tcop',       trigger: 'UK Gov Service Standard' },
+  ...(ukGov() ? [
+    { type: 'DPIA', command: '/arckit-uk:uk-dpia',   trigger: 'processing personal data' },
+    { type: 'SECD', command: '/arckit-uk:uk-secure', trigger: 'security-sensitive system' },
+    { type: 'TCOP', command: '/arckit-uk:uk-tcop',   trigger: 'UK Gov Service Standard' },
+  ] : []),
   { type: 'DATA', command: '/arckit:data-model', trigger: 'DR-* requirements present' },
 ];
 

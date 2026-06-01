@@ -1,5 +1,7 @@
 # Defence Project Path
 
+> Requires the `arckit-uk` overlay and the `arckit-uk-mod` overlay (install via `/plugin marketplace add tractorjuice/arckit-uk` and `/plugin marketplace add tractorjuice/arckit-uk-mod`).
+
 ## When This Path Applies
 
 - Ministry of Defence (MOD) projects
@@ -41,7 +43,7 @@
 |---|---------|-----------|-----------|
 | 6 | `/arckit:datascout` | Discover data sources within MOD and cross-government | ARC-{PID}-DSCT-v1.0.md |
 | 7 | `/arckit:data-model` | Data architecture with classification levels | ARC-{PID}-DMOD-v1.0.md |
-| 8 | `/arckit:dpia` | Data Protection Impact Assessment | ARC-{PID}-DPIA-v1.0.md |
+| 8 | `/arckit-uk:uk-dpia` | Data Protection Impact Assessment | ARC-{PID}-DPIA-v1.0.md |
 | 9 | `/arckit:research` | Technology research with defence supplier focus | ARC-{PID}-RES-v1.0.md |
 | 10 | `/arckit:wardley` | Strategic positioning for defence capabilities | ARC-{PID}-WARD-001-v1.0.md |
 | 11 | `/arckit:roadmap` | Multi-year roadmap aligned to defence planning rounds | ARC-{PID}-ROAD-v1.0.md |
@@ -51,7 +53,7 @@
 
 | # | Command | Rationale | Artifacts |
 |---|---------|-----------|-----------|
-| 13 | `/arckit:dos` | Digital Outcomes and Specialists opportunity | ARC-{PID}-DOS-v1.0.md |
+| 13 | `/arckit-uk:uk-dos` | Digital Outcomes and Specialists opportunity | ARC-{PID}-DOS-v1.0.md |
 | 14 | `/arckit:sow` | Statement of work for procurement | ARC-{PID}-SOW-v1.0.md |
 | 15 | `/arckit:evaluate` | Vendor evaluation with security vetting requirements | ARC-{PID}-EVAL-v1.0.md |
 
@@ -81,12 +83,12 @@
 
 | # | Command | Rationale | Artifacts |
 |---|---------|-----------|-----------|
-| 23 | `/arckit:tcop` | Technology Code of Practice assessment | ARC-{PID}-TCOP-v1.0.md |
-| 24 | `/arckit:mod-secure` | MOD Secure by Design (JSP 440, IAMM) | ARC-{PID}-MSEC-v1.0.md |
+| 23 | `/arckit-uk:uk-tcop` | Technology Code of Practice assessment | ARC-{PID}-TCOP-v1.0.md |
+| 24 | `/arckit-uk-mod:uk-mod-secure` | MOD Secure by Design (JSP 440, IAMM) | ARC-{PID}-MSEC-v1.0.md |
 | 25 | `/arckit:principles-compliance` | Principles adherence | ARC-{PID}-PCOMP-v1.0.md |
 | 26 | `/arckit:conformance` | ADR conformance checking | ARC-{PID}-CONF-v1.0.md |
 | 27 | `/arckit:analyze` | Deep governance analysis | ARC-{PID}-ANAL-v1.0.md |
-| 28 | `/arckit:service-assessment` | Service assessment readiness | ARC-{PID}-SA-v1.0.md |
+| 28 | `/arckit-uk:uk-service-assessment` | Service assessment readiness | ARC-{PID}-SA-v1.0.md |
 
 ### Phase 9: Reporting
 
@@ -104,7 +106,7 @@ If the defence project includes AI/ML components, add these commands:
 | # | Command | Where to Insert | Rationale | Artifacts |
 |---|---------|-----------------|-----------|-----------|
 | — | `/arckit:mlops` | Phase 7, after devops | ML model lifecycle, training pipelines | ARC-{PID}-MLOP-v1.0.md |
-| — | `/arckit:jsp-936` | Phase 8, after mod-secure | MOD AI Assurance (JSP 936) | ARC-{PID}-JSP936-v1.0.md |
+| — | `/arckit-uk-mod:uk-mod-jsp-936` | Phase 8, after mod-secure | MOD AI Assurance (JSP 936) | ARC-{PID}-JSP936-v1.0.md |
 
 ### Critical Gates for AI Projects
 
@@ -120,7 +122,7 @@ If the defence project includes AI/ML components, add these commands:
 | `/arckit:strategy` | Executive strategy synthesis needed | After Phase 3 |
 | `/arckit:platform-design` | Defence platform or shared service | Phase 3 |
 | `/arckit:data-mesh-contract` | Federated data products across TLBs | Phase 3 |
-| `/arckit:gcloud-search` | G-Cloud procurement (alternative to DOS) | Phase 4 |
+| `/arckit-uk:uk-gcloud-search` | G-Cloud procurement (alternative to DOS) | Phase 4 |
 | `/arckit:finops` | Cloud cost management | Phase 7 |
 | `/arckit:servicenow` | ServiceNow CMDB integration | Phase 7 |
 | `/arckit:presentation` | Governance board slide deck | Phase 9 |
@@ -133,7 +135,7 @@ For initial security assessment preparation:
 2. `/arckit:stakeholders`
 3. `/arckit:requirements`
 4. `/arckit:risk`
-5. `/arckit:mod-secure`
+5. `/arckit-uk-mod:uk-mod-secure`
 
 ## Duration
 
