@@ -244,6 +244,48 @@
         "healthcare"
       ],
       "category": "productivity"
+    },
+    {
+      "name": "arckit-uk",
+      "source": "./arckit-uk",
+      "description": "UK Government overlay — 13 commands for GDS Service Standard, TCoP, Secure by Design (NCSC CAF), DPIA, AI Playbook/ATRS, G-Cloud/DOS, gov code reuse, and grants. The UK jurisdiction baseline.",
+      "version": "5.8.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "uk-government",
+        "gds",
+        "ncsc",
+        "compliance"
+      ],
+      "category": "productivity"
+    },
+    {
+      "name": "arckit-uk-mod",
+      "source": "./arckit-uk-mod",
+      "description": "UK MOD defence overlay — MOD Secure by Design (JSP 440, CAAT) and JSP 936 dependable-AI assurance. Requires arckit-uk.",
+      "version": "5.8.0",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "uk-government",
+        "mod",
+        "defence",
+        "compliance"
+      ],
+      "category": "productivity"
     }
   ]
 }

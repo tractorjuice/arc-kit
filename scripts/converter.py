@@ -224,6 +224,8 @@ PLUGIN_SOURCES = [
     "arckit-us",
     "arckit-uk-finance",
     "arckit-uk-nhs",
+    "arckit-uk",
+    "arckit-uk-mod",
     "arckit-claude",  # core last
 ]
 

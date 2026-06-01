@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-uk-mod",
+  "version": "5.8.0",
+  "defaultEnabled": false,
+  "description": "UK Ministry of Defence overlay for ArcKit — 2 commands for MOD Secure by Design (JSP 440, IAMM, CAAT continuous assurance) and JSP 936 dependable-AI assurance. Recipe: uk-mod-sovereign. Defence sector overlay on the UK baseline; requires arckit core and arckit-uk.",
+  "author": {
+    "name": "TractorJuice",
+    "url": "https://github.com/tractorjuice"
+  },
+  "homepage": "https://arckit.org",
+  "repository": "https://github.com/tractorjuice/arc-kit",
+  "license": "MIT",
+  "keywords": [
+    "architecture",
+    "governance",
+    "uk-government",
+    "mod",
+    "defence",
+    "jsp-936",
+    "secure-by-design"
+  ],
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=5.8.0"
+    },
+    {
+      "name": "arckit-uk",
+      "version": "=5.8.0"
+    }
+  ]
+}

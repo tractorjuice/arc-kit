@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "govreposcrape": {
+      "type": "http",
+      "url": "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp"
+    }
+  }
+}

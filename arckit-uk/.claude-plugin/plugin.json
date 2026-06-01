@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-uk",
+  "version": "5.8.0",
+  "defaultEnabled": true,
+  "description": "UK Government overlay for ArcKit — 13 commands for GDS Service Standard, Technology Code of Practice, Secure by Design (NCSC CAF), DPIA (UK GDPR), AI Playbook + ATRS, G-Cloud/DOS procurement, government code reuse (govreposcrape), and UK grants. Recipe: uk-saas. The UK jurisdiction baseline; officially maintained. Requires arckit core.",
+  "author": {
+    "name": "TractorJuice",
+    "url": "https://github.com/tractorjuice"
+  },
+  "homepage": "https://arckit.org",
+  "repository": "https://github.com/tractorjuice/arc-kit",
+  "license": "MIT",
+  "keywords": [
+    "architecture",
+    "governance",
+    "uk-government",
+    "gds",
+    "ncsc",
+    "tcop",
+    "compliance"
+  ],
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=5.8.0"
+    }
+  ]
+}
