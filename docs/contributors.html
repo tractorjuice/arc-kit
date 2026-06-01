@@ -396,11 +396,11 @@
                             <span class="app-contributor-card__role app-contributor-card__role--feature">Domain Maintainer (AU)</span>
                         </div>
                     </div>
-                    <p class="govuk-body-s">Authored the Australian Federal / DISP-supplier overlay end-to-end against a real Australian SMB engagement (DISP Level 2 in progress, OFFICIAL:Sensitive). Validated all eight commands across nine evaluation runs producing ~4,093 lines of compliance artefacts with a 25/25 scorecard pass and zero UK-framework leakage. Recipe topology, doc-type registrations (including the corrective inclusion of the CA regime that had been missing since v4.15.0), and converter outputs all verified before submission.</p>
+                    <p class="govuk-body-s">Authored the Australian Federal / DISP-supplier overlay end-to-end against a real Australian SMB engagement (DISP Level 2 in progress, OFFICIAL:Sensitive). Validated all eight original commands across nine evaluation runs producing ~4,093 lines of compliance artefacts with a 25/25 scorecard pass and zero UK-framework leakage. Recipe topology, doc-type registrations (including the corrective inclusion of the CA regime that had been missing since v4.15.0), and converter outputs all verified before submission. Subsequently extended the federal overlay with cross-sector OT security and SOCI/CIRMP commands (#539), then authored ArcKit's first Australian <strong>sector</strong> overlay, <code>arckit-au-energy</code> (#549), layering AESCSF and energy-market compliance on the federal baseline with two public synthetic evaluation fixtures (an applicable DNSP case and a non-SOCI supplier negative case).</p>
                     <ul class="app-contributor-card__highlights">
-                        <li>8 Australian Federal &amp; DISP-supplier commands (ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988 PIA, OAIC NDB, PSPF, AI Assurance, DISP attestation)</li>
-                        <li><code>au-federal</code> build recipe (35 targets, 9 build waves)</li>
-                        <li>Validation scorecard with reproducible mechanical-grep evidence</li>
+                        <li>10 Australian Federal &amp; DISP-supplier commands (ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988 PIA, OAIC NDB, PSPF, AI Assurance, DISP attestation, OT security, SOCI/CIRMP)</li>
+                        <li><code>arckit-au-energy</code> sector overlay — <code>au-aescsf</code> + <code>au-energy-compliance</code> commands and the <code>au-energy</code> recipe (22 targets), composing the <code>arckit-au</code> federal baseline</li>
+                        <li><code>au-federal</code> build recipe (35 targets, 9 build waves) + validation scorecards with reproducible mechanical-grep evidence</li>
                     </ul>
                 </div>
 

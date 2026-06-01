@@ -4,7 +4,9 @@
 
 The Australian Federal / DISP-supplier Overlay adds 10 community-contributed commands covering the regulatory anchors that apply to Australian Federal entities, Defence-cleared suppliers (DISP Members), and optional cross-sector critical-infrastructure use cases. It is anchored on ASD Essential Eight + Information Security Manual, ASD operational technology guidance, the Security of Critical Infrastructure Act 2018 / CIRMP, the DTA Digital Service Standard, the Privacy Act 1988 + 13 Australian Privacy Principles, the OAIC Notifiable Data Breach scheme, the Defence Industry Security Program (DISP, Levels 1–3), the Protective Security Policy Framework, the November 2025 Commonwealth Procurement Rules overhaul, the DTA AI Assurance Framework + Responsible AI Policy v2.0, the PGPA Act s16 financial-management duties, and IRAP for cloud-service assessment.
 
-The overlay closes [#424](https://github.com/tractorjuice/arc-kit/issues/424). A sibling sector recipe `au-energy` covering AESCSF, AER ring-fencing, NER/NGR, and AEMO obligations for energy-sector / SOCI-covered critical-asset operators is drafted in [#440](https://github.com/tractorjuice/arc-kit/issues/440). The general `au-ot-security` and `au-soci-cirmp` commands live here because OT security and SOCI/CIRMP apply beyond energy; `au-energy` will consume them rather than redefining them privately.
+The overlay closes [#424](https://github.com/tractorjuice/arc-kit/issues/424). A sibling sector recipe `au-energy` covering AESCSF, AER ring-fencing, NER/NGR, and AEMO obligations for energy-sector / SOCI-covered critical-asset operators addresses [#440](https://github.com/tractorjuice/arc-kit/issues/440). The general `au-ot-security` and `au-soci-cirmp` commands live here because OT security and SOCI/CIRMP apply beyond energy; `au-energy` consumes them rather than redefining them privately.
+
+> **Follow-up**: after the AU energy PR lands, refresh the main AU community command guidance so `au-e8-posture`, `au-ism-controls`, `au-pia`, `au-ndb-playbook`, `au-ot-security`, and `au-soci-cirmp` explicitly recommend the energy overlay, diagrams, data flows, data modelling, and traceability where relevant.
 
 ---
 
@@ -127,7 +129,7 @@ To add OT and SOCI/CIRMP support to a federal build:
 /arckit:build <project-name> --recipe au-federal --enable AU_OT --enable AU_SOCI
 ```
 
-Use only `--enable AU_OT` for OT environments that are not SOCI-regulated, or only `--enable AU_SOCI` where CIRMP applies without OT.
+Use only `--enable AU_OT` for OT environments that are not SOCI-regulated, or only `--enable AU_SOCI` where CIRMP applies without OT. For Australian energy projects, use the `au-energy` recipe after the AU federal baseline; it can compose both optional targets before adding AESCSF and energy-market obligations.
 
 To run:
 

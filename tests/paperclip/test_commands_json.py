@@ -23,6 +23,7 @@ PLUGIN_COMMAND_DIRS = [
     REPO_ROOT / "arckit-eu" / "commands",
     REPO_ROOT / "arckit-at" / "commands",
     REPO_ROOT / "arckit-au" / "commands",
+    REPO_ROOT / "arckit-au-energy" / "commands",
     REPO_ROOT / "arckit-us" / "commands",
     REPO_ROOT / "arckit-uk-finance" / "commands",
     REPO_ROOT / "arckit-uk-nhs" / "commands",

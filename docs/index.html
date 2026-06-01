@@ -419,7 +419,7 @@
                         "name": "What is ArcKit?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "ArcKit is The Enterprise Architecture Governance Harness: open-source, covering strategy, architecture, delivery, and assurance. It wraps your AI coding assistant with slash commands across an official UK Government baseline plus community-contributed jurisdictional overlays (EU, France, Austria, Canada, UAE, Australia, USA) and sector overlays (UK Finance Payments, UK NHS Clinical Safety) that turn architecture governance from scattered documents into a systematic, template-driven workflow with full traceability from stakeholders through requirements to design and tests."
+                            "text": "ArcKit is The Enterprise Architecture Governance Harness: open-source, covering strategy, architecture, delivery, and assurance. It wraps your AI coding assistant with slash commands across an official UK Government baseline plus community-contributed jurisdictional overlays (EU, France, Austria, Canada, UAE, Australia, USA) and sector overlays (UK Finance Payments, UK NHS Clinical Safety, Australian Energy) that turn architecture governance from scattered documents into a systematic, template-driven workflow with full traceability from stakeholders through requirements to design and tests."
                         }
                     },
                     {
@@ -529,7 +529,7 @@
                     <div class="app-stat-label">Jurisdictions</div>
                 </div>
                 <div class="app-stat-card">
-                    <div class="app-stat-number">2</div>
+                    <div class="app-stat-number">3</div>
                     <div class="app-stat-label">Sectors</div>
                 </div>
                 <div class="app-stat-card">
@@ -661,8 +661,8 @@
                 <a href="commands.html?jurisdiction=australia" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">🇦🇺</div>
                     <div class="app-jurisdiction-card__title">Australian Federal</div>
-                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 8 commands</span>
-                    <p class="app-jurisdiction-card__desc">ASD Essential Eight, Information Security Manual, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC Notifiable Data Breach playbook, Protective Security Policy Framework, DTA AI Assurance, DISP supplier attestation.</p>
+                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 10 commands</span>
+                    <p class="app-jurisdiction-card__desc">ASD Essential Eight, Information Security Manual, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC Notifiable Data Breach playbook, Protective Security Policy Framework, DTA AI Assurance, DISP supplier attestation, OT security, SOCI/CIRMP.</p>
                 </a>
                 <a href="commands.html?jurisdiction=usa" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">🇺🇸</div>
@@ -681,6 +681,12 @@
                     <div class="app-jurisdiction-card__title">UK NHS (sector)</div>
                     <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 4 commands · sector overlay</span>
                     <p class="app-jurisdiction-card__desc">NHS DCB0129 (manufacturer) and DCB0160 (deployer) Clinical Safety Case + Hazard Log (Marcus Baw SAFETY.md spec), NHS DTAC v3, UK MDR 2002 + EU MDR 2017/745 software-as-medical-device (SaMD / AIaMD) classification.</p>
+                </a>
+                <a href="commands.html?jurisdiction=australia" class="app-jurisdiction-card govuk-link--no-visited-state">
+                    <div class="app-jurisdiction-card__flag">⚡</div>
+                    <div class="app-jurisdiction-card__title">Australian Energy (sector)</div>
+                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--community">Community · 2 commands · sector overlay</span>
+                    <p class="app-jurisdiction-card__desc">AESCSF maturity assessment and energy-sector compliance (AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS, SOCI escalation), layered on the Australian Federal baseline. Install: <code>claude plugin install arckit arckit-au arckit-au-energy</code>.</p>
                 </a>
             </div>
             <p class="govuk-body govuk-!-margin-top-4"><a href="commands.html" class="govuk-link">Browse all commands &rarr;</a></p>

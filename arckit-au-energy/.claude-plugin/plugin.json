@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-au-energy",
+  "version": "5.7.0",
+  "defaultEnabled": false,
+  "description": "Australian Energy Sector Overlay for ArcKit — 2 commands for AESCSF maturity assessment and energy-sector compliance (AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS, SOCI escalation). Recipe: au-energy. First Australian sector overlay; composes the arckit-au federal baseline (Essential Eight, ISM, OT security, SOCI/CIRMP, Privacy Act/NDB). Requires arckit core and arckit-au plugins.",
+  "author": {
+    "name": "TractorJuice",
+    "url": "https://github.com/tractorjuice"
+  },
+  "homepage": "https://arckit.org",
+  "repository": "https://github.com/tractorjuice/arc-kit",
+  "license": "MIT",
+  "keywords": [
+    "architecture",
+    "governance",
+    "australia",
+    "energy",
+    "aescsf",
+    "critical-infrastructure",
+    "aer",
+    "aemo",
+    "der",
+    "soci"
+  ],
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=5.7.0"
+    },
+    {
+      "name": "arckit-au",
+      "version": "=5.7.0"
+    }
+  ]
+}

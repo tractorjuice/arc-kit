@@ -173,6 +173,8 @@ export const DOC_TYPES = {
   'AUNDB':     { name: 'AU Notifiable Data Breach Response Playbook',  category: 'Compliance',  regime: 'AU' },
   'AUOT':      { name: 'AU OT Security Assessment',                    category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   'AUSOCI':    { name: 'AU SOCI CIRMP Governance Pack',                category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
+  'AUAESCSF':  { name: 'AU AESCSF Maturity Assessment',                category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
+  'AUENERGY':  { name: 'AU Energy Compliance Pack',                    category: 'Compliance',  regime: 'AU', severity: 'HIGH' },
   'AUDSS':     { name: 'AU DTA Digital Service Standard Conformance',  category: 'Governance',  regime: 'AU', severity: 'HIGH' },
   'AUPSPF':    { name: 'AU Protective Security Policy Framework Scorecard', category: 'Governance', regime: 'AU', severity: 'HIGH' },
   'AUAIA':     { name: 'AU AI Assurance Baseline (DTA AI Policy v2.0)', category: 'Compliance',  regime: 'AU', severity: 'HIGH' },

@@ -1,0 +1,196 @@
+# ArcKit build recipe - Australian energy critical infrastructure
+#
+# Scope: Australian energy sector systems and services that need the federal
+# baseline plus operational technology, SOCI CIRMP, AESCSF, and energy-market
+# compliance coverage.
+
+recipe: au-energy
+schema_version: 1
+flagship: AU_ENERGY
+description: >
+  Australian energy critical-infrastructure compliance suite covering ASD
+  Essential Eight, ASD ISM, Privacy Act PIA, OAIC NDB response, OT security,
+  SOCI CIRMP, AESCSF maturity assessment, and energy-market obligations
+  including AER ring-fencing, AEMO interfaces, DERMS / DOE, and CSIP-AUS.
+
+defaults:
+  version: "1.0"
+
+optional_targets:
+  AU_OT:
+    description: ASD operational technology cyber security guidance for connected energy OT environments
+    default: true
+  AU_SOCI:
+    description: SOCI Act / Critical Infrastructure Risk Management Program support for Australian energy assets
+    default: true
+  AU_AESCSF:
+    description: Australian Energy Sector Cyber Security Framework maturity assessment
+    default: true
+  AU_ENERGY:
+    description: AER ring-fencing, NER/NGR, AEMO, DERMS / DOE, and CSIP-AUS compliance pack
+    default: true
+  DATA_MODEL:
+    description: Data model with entity relationships and Privacy-Act-aligned governance
+    default: true
+  TRACEABILITY:
+    description: Requirements traceability matrix across federal, OT, SOCI, AESCSF, and energy compliance evidence
+    default: true
+  SERVICE_INVENTORY:
+    description: ServiceNow / CMDB service inventory and dependency evidence for energy assets, interfaces, owners, and support criticality
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
+targets:
+
+  # --- Foundation --------------------------------------------------------
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  # --- Federal baseline --------------------------------------------------
+  - id: AU_E8
+    skill: arckit:au-e8-posture
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUE8 }
+    deps: [REQ, STKE]
+
+  - id: AU_ISM
+    skill: arckit:au-ism-controls
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUISM }
+    deps: [REQ, AU_E8]
+
+  - id: AU_PIA
+    skill: arckit:au-pia
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUPIA }
+    deps: [REQ, STKE]
+
+  - id: AU_NDB
+    skill: arckit:au-ndb-playbook
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUNDB }
+    deps: [REQ, AU_PIA]
+
+  # --- Critical infrastructure and energy overlays -----------------------
+  - id: AU_OT
+    skill: arckit:au-ot-security
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUOT }
+    deps: [REQ, STKE, AU_E8, AU_ISM]
+
+  - id: AU_SOCI
+    skill: arckit:au-soci-cirmp
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUSOCI }
+    deps: [REQ, STKE, AU_E8, AU_ISM, AU_PIA, AU_NDB]
+
+  - id: AU_AESCSF
+    skill: arckit:au-aescsf
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUAESCSF }
+    deps: [REQ, STKE, AU_E8, AU_ISM, AU_OT, AU_SOCI]
+
+  - id: AU_ENERGY
+    skill: arckit:au-energy-compliance
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AUENERGY }
+    deps: [REQ, STKE, AU_PIA, AU_NDB, AU_OT, AU_SOCI, AU_AESCSF]
+
+  # --- Energy-sector ADRs ------------------------------------------------
+  - id: ADR_OT_SEGMENTATION
+    skill: arckit:adr
+    topic: "OT segmentation for control systems, corporate IT, telemetry, and remote operations zones"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [REQ, STKE, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
+  - id: ADR_SOCI_DECLARATION
+    skill: arckit:adr
+    topic: "SOCI asset declaration, CIRMP accountability, and board evidence for energy critical infrastructure"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [REQ, STKE, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
+  - id: ADR_AESCSF_TARGET
+    skill: arckit:adr
+    topic: "AESCSF target maturity level, priority domains, and evidence cadence"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [REQ, STKE, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
+  - id: ADR_RING_FENCING
+    skill: arckit:adr
+    topic: "AER ring-fencing controls for shared services, data access, cost allocation, and contestable market separation"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [REQ, STKE, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
+  - id: ADR_AEMO_INTERFACES
+    skill: arckit:adr
+    topic: "AEMO interfaces, market data exchange, dispatch integration, and operational resilience obligations"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [REQ, STKE, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
+  - id: ADR_DERMS_DOE_CSIP
+    skill: arckit:adr
+    topic: "DERMS dynamic operating envelopes and CSIP-AUS interoperability for distributed energy resources"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [REQ, STKE, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
+  - id: ADR_INCIDENT_REPORTING
+    skill: arckit:adr
+    topic: "Energy cyber incident reporting across NDB, SOCI, AEMO, and regulator notification pathways"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [REQ, STKE, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
+  - id: ADR_SUPPLIER_REMOTE_ACCESS
+    skill: arckit:adr
+    topic: "Supplier remote access for OT maintenance, privileged monitoring, jump hosts, and session recording"
+    args: "{P} {TOPIC}"
+    output: { project: "{P}-{NAME}", type: ADR, subfolder: decisions, multi_instance: true }
+    deps: [REQ, STKE, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
+  # --- Cross-cutting outputs --------------------------------------------
+  - id: DATA_MODEL
+    skill: arckit:data-model
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: DATA }
+    deps: [REQ, AU_PIA, AU_ENERGY]
+
+  - id: SERVICE_INVENTORY
+    skill: arckit:servicenow
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SNOW }
+    deps: [REQ, STKE, DATA_MODEL, AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY]
+
+  - id: TRACEABILITY
+    skill: arckit:traceability
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRAC }
+    deps:
+      [REQ, STKE, "ADR_*",
+       AU_E8, AU_ISM, AU_PIA, AU_NDB,
+       AU_OT, AU_SOCI, AU_AESCSF, AU_ENERGY, DATA_MODEL, SERVICE_INVENTORY]

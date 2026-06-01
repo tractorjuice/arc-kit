@@ -220,6 +220,7 @@ PLUGIN_SOURCES = [
     "arckit-eu",
     "arckit-at",
     "arckit-au",
+    "arckit-au-energy",
     "arckit-us",
     "arckit-uk-finance",
     "arckit-uk-nhs",
