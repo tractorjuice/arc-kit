@@ -80,7 +80,7 @@ This command produces an **internal** RAR-equivalent: a self-assessment in the s
 
 ## Handoffs
 
-Surfaced gaps feed the broader `/arckit:service-assessment` evidence pack and remediation timelines drop into `/arckit:roadmap`. Each open gap should be tracked in `/arckit:risk` until closed. Once gaps are remediated, re-run this command to re-baseline before engaging a 3PAO.
+Surfaced gaps feed the broader `/arckit-uk:uk-service-assessment` evidence pack and remediation timelines drop into `/arckit:roadmap`. Each open gap should be tracked in `/arckit:risk` until closed. Once gaps are remediated, re-run this command to re-baseline before engaging a 3PAO.
 
 ## Important Notes
 

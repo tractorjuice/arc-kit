@@ -320,7 +320,7 @@ graph TB
 - Week 25: `/arckit.dld-review` - DLD approval gate
 - Week 29-31: `/arckit.analyze` - Quality analysis
 - Week 32-33: `/arckit.traceability` - Verify design → code → tests
-- If AI: `/arckit.ai-playbook`, `/arckit.atrs` - AI compliance
+- If AI: `/arckit-uk:uk-ai-playbook`, `/arckit-uk:uk-atrs` - AI compliance
 
 ### Live Phase
 

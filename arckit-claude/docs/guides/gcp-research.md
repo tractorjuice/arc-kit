@@ -119,7 +119,7 @@ When UK Government project detected:
 ## Follow-on Actions
 
 - Feed Google Cloud findings into `/arckit.diagram` for GCP architecture diagrams
-- Run `/arckit.secure` to validate against UK Secure by Design
+- Run `/arckit-uk:uk-secure` to validate against UK Secure by Design
 - Run `/arckit.devops` to plan Cloud Build CI/CD pipelines
 - Run `/arckit.finops` to create Google Cloud FinOps cost management strategy
 - Run `/arckit.adr` to document Google Cloud service selection decisions

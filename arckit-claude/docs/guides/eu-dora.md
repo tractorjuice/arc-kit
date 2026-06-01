@@ -61,7 +61,7 @@ Output: `projects/<id>/ARC-<id>-DORA-v1.0.md`
 | Discovery | Entity and ICT dependency mapping | `/arckit.requirements` |
 | Risk | ICT risk assessment | `/arckit.risk` |
 | Assessment | DORA compliance assessment | `/arckit.eu-dora` |
-| Security | Technical controls | `/arckit.secure` |
+| Security | Technical controls | `/arckit-uk:uk-secure` |
 
 ---
 

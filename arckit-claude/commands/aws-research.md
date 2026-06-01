@@ -74,14 +74,14 @@ The agent writes the full research document to file and returns a summary includ
 - Security alignment (Security Hub, Well-Architected)
 - UK Government suitability (G-Cloud, eu-west-2, classification)
 - Estimated monthly cost
-- Next steps (`/arckit:diagram`, `/arckit:secure`, `/arckit:devops`)
+- Next steps (`/arckit:diagram`, `/arckit-uk:uk-secure`, `/arckit:devops`)
 
 ## Integration with Other Commands
 
 - **Input**: Requires requirements document (`ARC-*-REQ-*.md`)
 - **Input**: Uses data model (`ARC-*-DATA-*.md`) for database selection
 - **Output**: Feeds into `/arckit:diagram` (AWS-specific diagrams)
-- **Output**: Feeds into `/arckit:secure` (validates against Secure by Design)
+- **Output**: Feeds into `/arckit-uk:uk-secure` (validates against Secure by Design)
 - **Output**: Feeds into `/arckit:devops` (AWS CodePipeline design)
 - **Output**: Feeds into `/arckit:finops` (AWS cost management strategy)
 

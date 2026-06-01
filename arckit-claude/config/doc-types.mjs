@@ -24,8 +24,9 @@
  *              are both rejected as type/extension mismatches.
  *   regime:    Optional jurisdiction tag — 'UK' | 'MOD' | 'EU' | 'FR' | 'AT' | 'UAE'.
  *              Drives per-regime grouping in /arckit:navigator and
- *              /arckit:graph-report. Universal best-practice types (RISK, SECD,
- *              TRAC, CONF, PRIN-COMP) deliberately omit it.
+ *              /arckit:graph-report. Universal best-practice types (RISK,
+ *              TRAC, CONF, PRIN-COMP) deliberately omit it; SECD is UK-regime
+ *              as of the arckit-uk overlay extraction.
  *   severity:  Optional governance weight — 'HIGH' marks a type that counts
  *              toward the Compliance Readiness scorecard in /arckit:graph-report.
  *              HIGH-severity coverage is computed per-regime so a UAE-only
@@ -70,7 +71,7 @@ export const DOC_TYPES = {
   'GAPS':      { name: 'Gap Analysis',                     category: 'Governance' },
   // Compliance — UK Gov + MOD officially-maintained
   'TCOP':      { name: 'TCoP Assessment',                  category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
-  'SECD':      { name: 'Secure by Design',                 category: 'Compliance',                severity: 'HIGH' },
+  'SECD':      { name: 'Secure by Design',                 category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
   'SECD-MOD':  { name: 'MOD Secure by Design',             category: 'Compliance', regime: 'MOD', severity: 'HIGH' },
   'AIPB':      { name: 'AI Playbook Assessment',           category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
   'ATRS':      { name: 'ATRS Record',                      category: 'Compliance', regime: 'UK',  severity: 'HIGH' },

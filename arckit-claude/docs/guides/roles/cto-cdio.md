@@ -28,7 +28,7 @@ The Chief Technology Officer (CTO) or Chief Digital and Information Officer (CDI
 | `/arckit.analyze` | Review governance quality across the portfolio | [Guide](#docs/guides/analyze.md) |
 | `/arckit.conformance` | Monitor architecture conformance across projects | [Guide](#docs/guides/conformance.md) |
 | `/arckit.story` | Review project narratives for executive reporting | [Guide](#docs/guides/story.md) |
-| `/arckit.tcop` | Review TCoP compliance across the department | [Guide](#docs/guides/tcop.md) |
+| `/arckit-uk:uk-tcop` | Review TCoP compliance across the department | [Guide](#docs/guides/tcop.md) |
 | `/arckit.research` | Review technology research for strategic implications | [Guide](#docs/guides/research.md) |
 
 ## Typical Workflow

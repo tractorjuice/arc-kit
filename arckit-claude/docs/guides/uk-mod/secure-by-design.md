@@ -2,14 +2,14 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.mod-secure` documents MOD-specific Secure by Design requirements, covering JSP 440, JSP 604, HMG SPF, and Defence Cyber Protection Partnership obligations.
+`/arckit-uk-mod:uk-mod-secure` documents MOD-specific Secure by Design requirements, covering JSP 440, JSP 604, HMG SPF, and Defence Cyber Protection Partnership obligations.
 
 ---
 
 ## Command
 
 ```bash
-/arckit.mod-secure Assess MOD Secure by Design for <programme>
+/arckit-uk-mod:uk-mod-secure Assess MOD Secure by Design for <programme>
 ```
 
 Output: `projects/<id>/ARC-<id>-MSBD-v1.0.md`.
@@ -51,4 +51,4 @@ Document residual risks, treatments, and expiry dates to avoid surprises.
 | Main gate / Beta | Update SRMO, protective monitoring, supplier assurance |
 | Live | Quarterly security reviews; re-assess on change/retrain events |
 
-Keep `/arckit.jsp-936` aligned for AI systems and ensure MOD security outputs feed procurement, design reviews, and operations.
+Keep `/arckit-uk-mod:uk-mod-jsp-936` aligned for AI systems and ensure MOD security outputs feed procurement, design reviews, and operations.

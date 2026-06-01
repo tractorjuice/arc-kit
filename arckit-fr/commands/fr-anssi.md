@@ -206,7 +206,7 @@ Next steps:
 1. {If OIV/OSE: Run /arckit.fr-ebios — ANSSI findings feed Workshop 1 baseline}
 2. {If cloud gaps: Run /arckit.fr-secnumcloud for provider qualification assessment}
 3. Run /arckit.fr-pssi to formalise security objectives in a PSSI document
-4. Run /arckit.secure to implement technical remediation measures
+4. Run /arckit-uk:uk-secure to implement technical remediation measures
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 

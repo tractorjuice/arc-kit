@@ -858,7 +858,7 @@ After generating the assessment document, **suggest follow-up commands**:
    - /arckit:analyze - Run comprehensive gap analysis
    - /arckit:hld-review - Review vendor HLD against principles
    - /arckit:dld-review - Review vendor DLD against principles
-   - /arckit:service-assessment - GDS Service Standard assessment (UK Gov)
+   - /arckit-uk:uk-service-assessment - GDS Service Standard assessment (UK Gov)
    ```
 
 3. **Track in Project**:

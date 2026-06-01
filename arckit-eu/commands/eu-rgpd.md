@@ -99,7 +99,7 @@ Based on the data model and requirements, automatically score the EDPB 9 criteri
 
 **DPIA Decision**:
 
-- 2+ criteria: DPIA REQUIRED (Article 35) → recommend running `/arckit.dpia`
+- 2+ criteria: DPIA REQUIRED (Article 35) → recommend running `/arckit-uk:uk-dpia`
 - 1 criterion: DPIA RECOMMENDED
 - 0 criteria: DPIA NOT REQUIRED (but document the screening)
 
@@ -209,7 +209,7 @@ Total Gaps: {N} ({N} high, {N} medium, {N} low)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-{If DPIA required: 1. Run /arckit.dpia — DPIA required (2+ criteria met)}
+{If DPIA required: 1. Run /arckit-uk:uk-dpia — DPIA required (2+ criteria met)}
 {If French deployment: Run /arckit.fr-rgpd — CNIL-specific requirements}
 {If AI: Run /arckit.eu-ai-act — AI and personal data intersection}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

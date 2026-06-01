@@ -2,14 +2,14 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.tcop` assembles evidence for the 13-point Technology Code of Practice, flagging gaps and recommended actions.
+`/arckit-uk:uk-tcop` assembles evidence for the 13-point Technology Code of Practice, flagging gaps and recommended actions.
 
 ---
 
 ## Command
 
 ```bash
-/arckit.tcop Assess Technology Code of Practice compliance for <project>
+/arckit-uk:uk-tcop Assess Technology Code of Practice compliance for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`.
@@ -21,18 +21,18 @@ Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`.
 | Point | Theme | Typical Evidence | Linked Commands |
 |-------|-------|------------------|-----------------|
 | 1 | User needs | Stakeholder analysis, user research notes | `/arckit.stakeholders`, `/arckit.requirements` |
-| 2 | Accessibility & inclusion | NFRs (WCAG), accessibility test results, statement draft | `/arckit.requirements`, `/arckit.service-assessment` |
+| 2 | Accessibility & inclusion | NFRs (WCAG), accessibility test results, statement draft | `/arckit.requirements`, `/arckit-uk:uk-service-assessment` |
 | 3 | Open & open source | Repo links, OSS usage policy, publishing plan | `/arckit.research`, design reviews |
 | 4 | Open standards | API specs, schema definitions, GOV.UK Design System adoption | `/arckit.diagram`, `/arckit.hld-review` |
-| 5 | Cloud first | Deployment diagram, hosting decision log, cost model | `/arckit.diagram`, `/arckit.secure` |
-| 6 | Security | Secure by Design assessment, threat model, cyber assurance | `/arckit.secure`, `/arckit.risk` |
-| 7 | Privacy | DPIA, data model, retention schedule | `/arckit.dpia`, `/arckit.data-model` |
+| 5 | Cloud first | Deployment diagram, hosting decision log, cost model | `/arckit.diagram`, `/arckit-uk:uk-secure` |
+| 6 | Security | Secure by Design assessment, threat model, cyber assurance | `/arckit-uk:uk-secure`, `/arckit.risk` |
+| 7 | Privacy | DPIA, data model, retention schedule | `/arckit-uk:uk-dpia`, `/arckit.data-model` |
 | 8 | Reuse & collaboration | Use of GOV.UK components, shared code, community contributions | `/arckit.research`, `/arckit.story` |
 | 9 | Integrate & adapt | Integration requirements, migration plan, legacy dependencies | `/arckit.requirements`, `/arckit.diagram` |
 | 10 | Use data better | Data strategy, quality metrics, analytics plan | `/arckit.data-model`, `/arckit.story` |
 | 11 | Purchasing strategy | Procurement route, spend control evidence | `/arckit.sow`, `/arckit.evaluate` |
 | 12 | Sustainability | Hosting carbon data, efficiency plan, end-of-life strategy | `/arckit.plan`, service design |
-| 13 | Service Standard | Assessment prep doc, metrics, ops model | `/arckit.service-assessment`, `/arckit.servicenow` |
+| 13 | Service Standard | Assessment prep doc, metrics, ops model | `/arckit-uk:uk-service-assessment`, `/arckit.servicenow` |
 
 ---
 

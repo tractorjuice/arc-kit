@@ -215,7 +215,7 @@ If **IS** or **IS BORDERLINE**: continue.
 | IEC 62304 (software lifecycle) | Yes | [PASS / FAIL / PENDING] | Software safety class A / B / C from hazard analysis: [class] |
 | ISO 13485 (QMS) | [If Class IIa+ or chosen for Class I] | [PASS / FAIL / PENDING] | Signposted only |
 | IEC 62366-1 (usability engineering) | [If safety-critical UI] | [PASS / FAIL / PENDING] | |
-| ISO/IEC 27001 (information security) | Yes | [PASS / FAIL / PENDING] | Cross-reference `/arckit:secure` output |
+| ISO/IEC 27001 (information security) | Yes | [PASS / FAIL / PENDING] | Cross-reference `/arckit-uk:uk-secure` output |
 | ISO/IEC 25010 (software quality) | Recommended | [PASS / FAIL / PENDING] | |
 | ISO/IEC TR 24028 (AI trustworthiness) | [If AIaMD] | [PASS / FAIL / PENDING] | |
 | BS EN 82304-1 (health software) | Recommended | [PASS / FAIL / PENDING] | |

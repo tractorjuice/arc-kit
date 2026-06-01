@@ -73,14 +73,14 @@ The agent writes the full research document to file and returns a summary includ
 - Security alignment (Security Command Center, Architecture Framework)
 - UK Government suitability (G-Cloud, europe-west2, classification)
 - Estimated monthly cost
-- Next steps (`/arckit:diagram`, `/arckit:secure`, `/arckit:devops`)
+- Next steps (`/arckit:diagram`, `/arckit-uk:uk-secure`, `/arckit:devops`)
 
 ## Integration with Other Commands
 
 - **Input**: Requires requirements document (`ARC-*-REQ-*.md`)
 - **Input**: Uses data model (`ARC-*-DATA-*.md`) for database selection
 - **Output**: Feeds into `/arckit:diagram` (Google Cloud-specific diagrams)
-- **Output**: Feeds into `/arckit:secure` (validates against Secure by Design)
+- **Output**: Feeds into `/arckit-uk:uk-secure` (validates against Secure by Design)
 - **Output**: Feeds into `/arckit:devops` (Cloud Build pipeline design)
 - **Output**: Feeds into `/arckit:finops` (Google Cloud cost management strategy)
 

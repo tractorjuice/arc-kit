@@ -496,7 +496,7 @@ Consider running `/arckit:wardley` to update component positions, then re-run ga
 # If UK Government project
 "As a UK Government project, climate patterns affecting procurement (TCoP compliance windows,
 G-Cloud framework evolution, open standards mandates) should be reflected in your procurement
-strategy. Run `/arckit:tcop` to validate compliance positioning."
+strategy. Run `/arckit-uk:uk-tcop` to validate compliance positioning."
 ```
 
 ## Important Notes

@@ -11,10 +11,10 @@ This guide maps the [UK National Data Strategy](https://www.gov.uk/government/pu
 | # | Mission | Description | ArcKit Commands |
 |---|---------|-------------|-----------------|
 | 1 | **Unlocking data value** | Use data to grow the economy, improve efficiency, and drive innovation | `/arckit:data-model`, `/arckit:data-mesh-contract`, `/arckit:backlog` |
-| 2 | **Pro-growth, trusted data regime** | Regulation and standards that enable data use while maintaining trust | `/arckit:dpia`, `/arckit:principles`, `/arckit:tcop` |
+| 2 | **Pro-growth, trusted data regime** | Regulation and standards that enable data use while maintaining trust | `/arckit-uk:uk-dpia`, `/arckit:principles`, `/arckit-uk:uk-tcop` |
 | 3 | **Transforming government use of data** | Better data use for improved public services and decision-making | `/arckit:data-model`, `/arckit:strategy`, `/arckit:plan` |
-| 4 | **Secure, resilient data infrastructure** | Infrastructure that keeps data safe and available | `/arckit:secure`, `/arckit:hld-review`, `/arckit:operationalize` |
-| 5 | **International data flows** | Champion free and trusted data flows across borders | `/arckit:dpia` (cross-border transfer), `/arckit:data-mesh-contract` |
+| 4 | **Secure, resilient data infrastructure** | Infrastructure that keeps data safe and available | `/arckit-uk:uk-secure`, `/arckit:hld-review`, `/arckit:operationalize` |
+| 5 | **International data flows** | Champion free and trusted data flows across borders | `/arckit-uk:uk-dpia` (cross-border transfer), `/arckit:data-mesh-contract` |
 
 ---
 
@@ -25,7 +25,7 @@ This guide maps the [UK National Data Strategy](https://www.gov.uk/government/pu
 | **Data Foundations** | Standards, metadata, interoperability, quality | `/arckit:data-model` (Data Quality Framework, entity catalogue, metadata standards) |
 | **Skills** | Data literacy, analytical capability across the workforce | `/arckit:stakeholders` (data governance roles), `/arckit:operationalize` (training) |
 | **Availability** | Findability, access, sharing, open data | `/arckit:data-mesh-contract` (data product contracts, SLAs), `/arckit:data-model` (CRUD matrix) |
-| **Responsibility** | Ethics, governance, public trust, accountability | `/arckit:dpia` (privacy impact), `/arckit:principles` (data governance principles), `/arckit:risk` |
+| **Responsibility** | Ethics, governance, public trust, accountability | `/arckit-uk:uk-dpia` (privacy impact), `/arckit:principles` (data governance principles), `/arckit:risk` |
 
 ---
 

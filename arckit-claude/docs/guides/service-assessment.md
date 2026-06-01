@@ -2,14 +2,14 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.service-assessment` packages evidence for Discovery→Alpha, Alpha→Beta, and Beta→Live assessments against the 14-point Service Standard.
+`/arckit-uk:uk-service-assessment` packages evidence for Discovery→Alpha, Alpha→Beta, and Beta→Live assessments against the 14-point Service Standard.
 
 ---
 
 ## Command
 
 ```bash
-/arckit.service-assessment PHASE=<alpha|beta|live> DATE=<YYYY-MM-DD optional>
+/arckit-uk:uk-service-assessment PHASE=<alpha|beta|live> DATE=<YYYY-MM-DD optional>
 ```
 
 Output: `projects/<id>/ARC-<id>-SVCASS-v1.0.md`.
@@ -21,10 +21,10 @@ Output: `projects/<id>/ARC-<id>-SVCASS-v1.0.md`.
 | Service Standard Area | ArcKit Sources | Notes |
 |-----------------------|----------------|-------|
 | Understand users & solve the whole problem (Points 1–3) | Stakeholder analysis, requirements, Wardley Maps | Ensure latest research notes attached |
-| Simple, accessible service (Points 4–5) | Requirements (WCAG), `/arckit.secure` outputs, journey maps | Include accessibility testing evidence |
+| Simple, accessible service (Points 4–5) | Requirements (WCAG), `/arckit-uk:uk-secure` outputs, journey maps | Include accessibility testing evidence |
 | Team & delivery approach (Points 6–8) | Project plan, backlog, retrospectives, vendor governance | Highlight multidisciplinary team and agile cadence |
-| Security, privacy, performance (Points 9–10,14) | `/arckit.secure`, `/arckit.dpia`, `/arckit.servicenow`, NFRs | Provide incident response and monitoring plans |
-| Technology & openness (Points 11–13) | `/arckit.research`, `/arckit.tcop`, design reviews, repos | Reference open-source/code-reuse commitments |
+| Security, privacy, performance (Points 9–10,14) | `/arckit-uk:uk-secure`, `/arckit-uk:uk-dpia`, `/arckit.servicenow`, NFRs | Provide incident response and monitoring plans |
+| Technology & openness (Points 11–13) | `/arckit.research`, `/arckit-uk:uk-tcop`, design reviews, repos | Reference open-source/code-reuse commitments |
 
 ---
 

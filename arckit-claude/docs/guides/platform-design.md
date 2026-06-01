@@ -359,7 +359,7 @@ Platform designs often need to procure services via [Digital Marketplace](https:
 - **G-Cloud**: Buy cloud software/support (e.g., CRM platform, analytics tools)
 - **DOS**: Commission custom development (e.g., platform MVP, integration work)
 
-Use `/arckit.gcloud-search` to find relevant services, `/arckit.dos` to generate procurement docs.
+Use `/arckit-uk:uk-gcloud-search` to find relevant services, `/arckit-uk:uk-dos` to generate procurement docs.
 
 ---
 
@@ -554,7 +554,7 @@ graph TD
 
 **Example**: "Platform shares patient data with all providers for better matching."
 
-**Fix**: Platform Design Canvas should include governance rules (consent, data minimization, right to erasure). Use `/arckit.dpia` for GDPR compliance.
+**Fix**: Platform Design Canvas should include governance rules (consent, data minimization, right to erasure). Use `/arckit-uk:uk-dpia` for GDPR compliance.
 
 ---
 
@@ -597,4 +597,4 @@ graph TD
 - `/arckit.data-mesh-contract` - Data product contracts for data platforms
 - `/arckit.diagram` - Platform architecture diagrams (C4 model)
 - `/arckit.backlog` - MVP features → user stories → sprints
-- `/arckit.service-assessment` - GDS Service Standard for platform services
+- `/arckit-uk:uk-service-assessment` - GDS Service Standard for platform services

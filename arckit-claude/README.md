@@ -191,16 +191,16 @@ The plugin includes conversational skills that activate automatically when you a
 - `/arckit:datascout` - External data source discovery
 - `/arckit:evaluate` - Vendor evaluation framework
 - `/arckit:sow` - Statement of Work / RFP
-- `/arckit:gcloud-search` - G-Cloud marketplace search
-- `/arckit:dos` - Digital Outcomes & Specialists
+- `/arckit-uk:uk-gcloud-search` - G-Cloud marketplace search
+- `/arckit-uk:uk-dos` - Digital Outcomes & Specialists
 
 ### UK Government Compliance
 
-- `/arckit:tcop` - Technology Code of Practice review
-- `/arckit:secure` - Secure by Design assessment
-- `/arckit:dpia` - Data Protection Impact Assessment
-- `/arckit:ai-playbook` - AI Playbook compliance
-- `/arckit:service-assessment` - GDS Service Standard
+- `/arckit-uk:uk-tcop` - Technology Code of Practice review
+- `/arckit-uk:uk-secure` - Secure by Design assessment
+- `/arckit-uk:uk-dpia` - Data Protection Impact Assessment
+- `/arckit-uk:uk-ai-playbook` - AI Playbook compliance
+- `/arckit-uk:uk-service-assessment` - GDS Service Standard
 
 ### Operations & Delivery
 
@@ -239,7 +239,7 @@ The plugin includes 5 MCP (Model Context Protocol) servers for cloud and governm
 | Microsoft Learn | No | `/arckit:azure-research` |
 | Google Developer Knowledge | Yes (`GOOGLE_API_KEY`) | `/arckit:gcp-research` |
 | Data Commons | Yes (`DATA_COMMONS_API_KEY`) | Data statistics lookups |
-| govreposcrape | No | `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landscape` |
+| govreposcrape | No | `/arckit-uk:uk-gov-reuse`, `/arckit-uk:uk-gov-code-search`, `/arckit-uk:uk-gov-landscape` |
 
 AWS Knowledge and Microsoft Learn work out of the box with no configuration. The Google and Data Commons servers require API keys — if you don't set them, you'll see errors in the plugin UI, but **all other commands work normally**.
 

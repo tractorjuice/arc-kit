@@ -476,7 +476,7 @@ Return ONLY a concise summary including:
 - Number of gaps identified
 - Data utility highlights (sources with valuable secondary uses)
 - Data model impact (new entities/attributes)
-- Next steps (run `/arckit:data-model`, `/arckit:adr`, `/arckit:dpia`)
+- Next steps (run `/arckit:data-model`, `/arckit:adr`, `/arckit-uk:uk-dpia`)
 
 ## Quality Standards
 
@@ -528,4 +528,4 @@ Return ONLY a concise summary including:
 - **Templates** — `${CLAUDE_PLUGIN_ROOT}/templates/datascout-template.md` (override at `.arckit/templates-custom/datascout-template.md`)
 - **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
 - **External tools** — `WebSearch` · `WebFetch` (no MCP)
-- **Related commands** — `/arckit:requirements` (input) · `/arckit:data-model` (downstream) · `/arckit:dpia` (downstream privacy assessment)
+- **Related commands** — `/arckit:requirements` (input) · `/arckit:data-model` (downstream) · `/arckit-uk:uk-dpia` (downstream privacy assessment)

@@ -50,7 +50,7 @@ Output: `projects/<id>/ARC-<id>-CNIL-v1.0.md`
 |-------|----------------|-----------------|
 | EU baseline | GDPR compliance | `/arckit.eu-rgpd` |
 | French layer | CNIL-specific assessment | `/arckit.fr-rgpd` |
-| High-risk | DPIA for high-risk processing | `/arckit.dpia` |
+| High-risk | DPIA for high-risk processing | `/arckit-uk:uk-dpia` |
 
 ---
 

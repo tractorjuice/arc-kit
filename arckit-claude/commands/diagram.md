@@ -1082,7 +1082,7 @@ Recommend next steps based on diagram type:
 
 # After Deployment diagram
 "Your deployment diagram is ready. Consider:
-- Running `/arckit:tcop` to validate Cloud First compliance
+- Running `/arckit-uk:uk-tcop` to validate Cloud First compliance
 - Reviewing against NFR performance targets
 - Documenting DR/BCP procedures"
 ```
@@ -1167,7 +1167,7 @@ The `/arckit:traceability` command should include diagram references:
 /arckit:diagram dataflow Generate data flow diagram showing UK GDPR PII handling
 
 # 3. Assess TCoP compliance
-/arckit:tcop Assess TCoP compliance with deployment and data flow diagrams
+/arckit-uk:uk-tcop Assess TCoP compliance with deployment and data flow diagrams
 ```
 
 ## Important Notes

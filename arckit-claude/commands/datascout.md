@@ -249,7 +249,7 @@ Return ONLY a concise summary to the user:
 - Requirements coverage percentage
 - Number of gaps identified
 - Rubric used
-- Next steps (`/arckit:data-model`, `/arckit:adr`, `/arckit:dpia`)
+- Next steps (`/arckit:data-model`, `/arckit:adr`, `/arckit-uk:uk-dpia`)
 
 ## Edge Cases
 
@@ -266,7 +266,7 @@ Return ONLY a concise summary to the user:
 - **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
 - **Subagents dispatched** — `arckit-datascout-reader` (per category × source-type) · `arckit-datascout-writer` (final render)
 - **External tools** — none directly (delegated to reader)
-- **Related commands** — `/arckit:requirements` (input) · `/arckit:data-model` (downstream) · `/arckit:dpia` (downstream privacy assessment)
+- **Related commands** — `/arckit:requirements` (input) · `/arckit:data-model` (downstream) · `/arckit-uk:uk-dpia` (downstream privacy assessment)
 
 ## Important Notes
 

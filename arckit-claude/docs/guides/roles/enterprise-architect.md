@@ -43,8 +43,8 @@ Commands you delegate to specialists but review or consume outputs from:
 | `/arckit.adr` | Chair ADR reviews, ensure decisions align with principles | [Guide](#docs/guides/adr.md) |
 | `/arckit.hld-review` | Lead HLD review against principles and requirements | [Guide](#docs/guides/hld-review.md) |
 | `/arckit.dld-review` | Lead DLD review for implementation readiness | [Guide](#docs/guides/dld-review.md) |
-| `/arckit.service-assessment` | Support GDS Service Standard assessment preparation | [Guide](#docs/guides/service-assessment.md) |
-| `/arckit.tcop` | Review TCoP compliance | [Guide](#docs/guides/tcop.md) |
+| `/arckit-uk:uk-service-assessment` | Support GDS Service Standard assessment preparation | [Guide](#docs/guides/service-assessment.md) |
+| `/arckit-uk:uk-tcop` | Review TCoP compliance | [Guide](#docs/guides/tcop.md) |
 | `/arckit.customize` | Tailor templates to organisational standards | [Guide](#docs/guides/customize.md) |
 
 ## Typical Workflow

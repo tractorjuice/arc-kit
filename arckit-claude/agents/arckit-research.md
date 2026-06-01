@@ -395,4 +395,4 @@ Return ONLY a concise summary including:
 - **Templates** — `${CLAUDE_PLUGIN_ROOT}/templates/research-findings-template.md` (override at `.arckit/templates-custom/research-findings-template.md`) · `${CLAUDE_PLUGIN_ROOT}/templates/vendor-profile-template.md`
 - **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` (project resolution) · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh` (document ID allocation)
 - **External tools** — `WebSearch` · `WebFetch` (vendor research, no MCP)
-- **Related commands** — `/arckit:requirements` (input) · `/arckit:evaluate` (downstream) · `/arckit:score` (downstream) · `/arckit:gcloud-search` (G-Cloud cross-check)
+- **Related commands** — `/arckit:requirements` (input) · `/arckit:evaluate` (downstream) · `/arckit:score` (downstream) · `/arckit-uk:uk-gcloud-search` (G-Cloud cross-check)
