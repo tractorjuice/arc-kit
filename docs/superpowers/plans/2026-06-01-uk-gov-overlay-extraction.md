@@ -4,7 +4,7 @@
 
 **Goal:** Extract all UK-specific functionality out of the neutral `arckit` core into two new official overlays (`arckit-uk`, `arckit-uk-mod`), making core jurisdiction-neutral and the overlay model symmetric.
 
-**Architecture:** Move 15 commands (13 → `arckit-uk` with `uk-` prefix, 2 → `arckit-uk-mod` with `uk-mod-` prefix) plus their templates, 8 agents, the govreposcrape MCP, and 4 recipes. Neutralise `risk`/`sobc` in core via the existing `governance_framework` userConfig. Make core's recommendation engine (hooks + workflow skills) regime-aware via sibling-plugin detection. Re-point ~260 cross-references. Ship as v6.0.0.
+**Architecture:** Move 15 commands (13 → `arckit-uk` with `uk-` prefix, 2 → `arckit-uk-mod` with `uk-mod-` prefix) plus their templates, 8 agents, the govreposcrape MCP, and 4 recipes. Neutralise `risk`/`sobc` in core via the existing `governance_framework` userConfig. Make core's recommendation engine (hooks + workflow skills) regime-aware by reading the `governance_framework` userConfig — hooks read it from the `CLAUDE_PLUGIN_OPTION_GOVERNANCE_FRAMEWORK` env var Claude Code exports to hook subprocesses; command bodies read `${user_config.governance_framework}`. Re-point ~260 cross-references. Ship as v6.0.0.
 
 **Tech Stack:** Markdown command/template files, Node ESM hooks (`.mjs`), YAML recipes, Python tooling (`converter.py`, `check_references.py`, `sync-shared-assets.py`), `claude plugin tag` CLI.
 
@@ -40,28 +40,17 @@
 
 ## Phase 0 — Spikes + scaffolding (independently green)
 
-### Task 0.1: Spike — hook regime-gating mechanism
+### Task 0.1: Spike — hook regime-gating mechanism — RESOLVED
 
-**Files:** none (investigation)
+**Finding:** Claude Code exports plugin `userConfig` fields to hook subprocesses as `CLAUDE_PLUGIN_OPTION_<FIELD_UPPERCASED>` env vars. Confirmed: `arckit-claude/hooks/notify-stale-artifacts.mjs:39` reads `process.env.CLAUDE_PLUGIN_OPTION_DESKTOP_NOTIFICATIONS`. So hooks **can** read `governance_framework` directly.
 
-- [ ] **Step 1: Determine how a plugin hook can detect UK context.** `governance_framework` is a plugin `userConfig` field consumed only at command-execution time (model-side). Confirm hooks do **not** receive it by inspecting how existing hooks read config:
+**Decision:** gate UK suggestions in hooks on `process.env.CLAUDE_PLUGIN_OPTION_GOVERNANCE_FRAMEWORK === 'UK Gov'` (matches spec decision 7 — the user's declared regime, not a plugin-presence proxy). Reads at call time; degrades cleanly to off when unset. (Earlier draft assumed hooks could not read userConfig and proposed sibling-plugin detection — superseded.)
 
-Run: `grep -rn "user_config\|userConfig\|process.env" arckit-claude/hooks/*.mjs`
-Expected: no hook reads `governance_framework`. Confirms the gating signal for hooks must be **sibling-plugin presence**, not userConfig.
+- [x] Verified via `grep -rn "CLAUDE_PLUGIN_OPTION" arckit-claude/hooks/*.mjs`.
 
-- [ ] **Step 2: Confirm `CLAUDE_PLUGIN_ROOT` is available to hooks and siblings are reachable.** The `arckit-build` skill already resolves sibling overlays via `${CLAUDE_PLUGIN_ROOT}/../arckit-*/recipes/`.
+### Task 0.2: Spike — `defaultEnabled: true` (release gate) — RUNTIME OK
 
-Run: `grep -n "CLAUDE_PLUGIN_ROOT" arckit-claude/hooks/graph-inject.mjs arckit-claude/skills/arckit-build/SKILL.md`
-Expected: confirms the sibling-dir pattern is established. **Decision recorded in plan:** hooks gate on `existsSync(<plugin-root>/../arckit-uk/commands)`.
-
-### Task 0.2: Spike — `defaultEnabled: true` discoverability (release gate)
-
-**Files:** none (investigation)
-
-- [ ] **Step 1: Verify a default-on overlay surfaces its commands out-of-box.** This underpins the "UK experience unchanged by default" promise. Check the Claude Code changelog / docs for `defaultEnabled` (v2.1.154) behaviour.
-
-Run: `claude --version` then review release notes for v2.1.154+ `defaultEnabled` semantics.
-Expected: confirmation that `defaultEnabled: true` enables (not just installs) the plugin on fresh marketplace add. **If unconfirmed, flag as a release blocker but proceed — the rest of the plan is unaffected.**
+- [x] Local Claude Code is `2.1.159` (≥ v2.1.154, which introduced `defaultEnabled`), so the runtime supports the field. Behavioural confirmation that a fresh marketplace install *auto-enables* `arckit-uk` (not merely installs it) should still be smoke-tested before release, but it does not block the build.
 
 ### Task 0.3: Scaffold `arckit-uk` plugin skeleton
 
@@ -513,19 +502,14 @@ Expected: Green Book references are inside the `UK Gov` branch.
 
 **Files:** Modify `arckit-claude/hooks/graph-inject.mjs`
 
-- [ ] **Step 1: Add the sibling-plugin detector** near the top of the module:
+- [ ] **Step 1: Add the regime gate.** Import the shared helper created in Task 3.4 (`hooks/regime.mjs`):
 
 ```js
-import { existsSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { ukGov } from './regime.mjs';
 
-// UK command suggestions surface only when the arckit-uk overlay sits beside
-// core (sibling plugin dir) — mirrors the arckit-build sibling-recipe lookup.
-// Keeps the neutral core from recommending UK commands to non-UK users.
-function ukOverlayPresent() {
-  const root = process.env.CLAUDE_PLUGIN_ROOT;
-  return !!root && existsSync(join(dirname(root), 'arckit-uk', 'commands'));
-}
+// ukGov() reads process.env.CLAUDE_PLUGIN_OPTION_GOVERNANCE_FRAMEWORK === 'UK Gov'
+// (Claude Code exports plugin userConfig to hook subprocesses; see
+// notify-stale-artifacts.mjs). Reads at call time; off when unset.
 ```
 
 - [ ] **Step 2: Split `EXT_RECOMMEND` into neutral base + UK-gated, replacing the current array:**
@@ -547,9 +531,11 @@ const EXT_RECOMMEND_UK = [
 ];
 
 function extRecommend() {
-  return ukOverlayPresent() ? [...EXT_RECOMMEND_UK, ...EXT_RECOMMEND_BASE] : EXT_RECOMMEND_BASE;
+  return ukGov() ? [...EXT_RECOMMEND_UK, ...EXT_RECOMMEND_BASE] : EXT_RECOMMEND_BASE;
 }
 ```
+
+Note: define `ukGov` in `hooks/regime.mjs` (Task 3.4) and import it here — do Task 3.4 first, or create `regime.mjs` as the opening step of this task.
 
 - [ ] **Step 3: Update `recommendCommands`** to call `extRecommend()`:
 
@@ -566,19 +552,17 @@ function recommendCommands(filename) {
 
 ```js
 import assert from 'node:assert';
-import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
 
-// Without arckit-uk sibling: a pentest file must NOT recommend uk-secure.
-// With it: it must. (Imports the hook's recommend fn via a small export.)
-const base = mkdtempSync(join(tmpdir(), 'gi-'));
-const coreRoot = join(base, 'arckit'); mkdirSync(join(coreRoot, 'hooks'), { recursive: true });
-process.env.CLAUDE_PLUGIN_ROOT = coreRoot;
+// ukGov() reads the env var at call time, so one import + flipping the env
+// between calls exercises both regimes.
 const { recommendForTest } = await import('../../arckit-claude/hooks/graph-inject.mjs');
+
+process.env.CLAUDE_PLUGIN_OPTION_GOVERNANCE_FRAMEWORK = 'Generic';
 assert.ok(!recommendForTest('pentest-report.pdf').includes('uk-secure'), 'neutral: no uk-secure');
-mkdirSync(join(base, 'arckit-uk', 'commands'), { recursive: true });
-assert.ok(recommendForTest('pentest-report.pdf').includes('uk-secure'), 'uk present: uk-secure');
+
+process.env.CLAUDE_PLUGIN_OPTION_GOVERNANCE_FRAMEWORK = 'UK Gov';
+assert.ok(recommendForTest('pentest-report.pdf').includes('uk-secure'), 'UK Gov: uk-secure');
+
 console.log('ok');
 ```
 
@@ -593,21 +577,31 @@ Expected: `ok`
 
 **Files:** Modify `arckit-claude/hooks/graph-rollups.mjs`, `arckit-claude/scripts/bash/create-project.sh`
 
-- [ ] **Step 1: In `graph-rollups.mjs`,** re-point the `CONTEXTUAL_TYPES` DPIA/SECD/TCOP commands to `arckit-uk:uk-*` and gate them on the same `ukOverlayPresent()` helper (copy the helper, or factor it into a shared `hooks/regime.mjs` imported by both). Keep `DATA` neutral.
+- [ ] **Step 0: Create the shared helper `arckit-claude/hooks/regime.mjs`** (imported by both `graph-inject.mjs` and `graph-rollups.mjs`, DRY):
 
 ```js
-import { ukOverlayPresent } from './regime.mjs';
+// arckit-claude/hooks/regime.mjs
+// True when the user's ArcKit governance framework is UK Gov. Claude Code
+// exports plugin userConfig to hook subprocesses as CLAUDE_PLUGIN_OPTION_<FIELD>
+// (see notify-stale-artifacts.mjs). Read at call time; off when unset.
+export function ukGov() {
+  return (process.env.CLAUDE_PLUGIN_OPTION_GOVERNANCE_FRAMEWORK || '') === 'UK Gov';
+}
+```
+
+- [ ] **Step 1: In `graph-rollups.mjs`,** re-point the `CONTEXTUAL_TYPES` DPIA/SECD/TCOP commands to `arckit-uk:uk-*` and gate them on `ukGov()`. Keep `DATA` neutral. The hook subprocess has the env var set at spawn, so evaluating at module load is correct:
+
+```js
+import { ukGov } from './regime.mjs';
 export const CONTEXTUAL_TYPES = [
-  ...(ukOverlayPresent() ? [
-    { type: 'DPIA', command: '/arckit-uk:uk-dpia',  trigger: 'processing personal data' },
+  ...(ukGov() ? [
+    { type: 'DPIA', command: '/arckit-uk:uk-dpia',   trigger: 'processing personal data' },
     { type: 'SECD', command: '/arckit-uk:uk-secure', trigger: 'security-sensitive system' },
-    { type: 'TCOP', command: '/arckit-uk:uk-tcop',  trigger: 'UK Gov Service Standard' },
+    { type: 'TCOP', command: '/arckit-uk:uk-tcop',   trigger: 'UK Gov Service Standard' },
   ] : []),
   { type: 'DATA', command: '/arckit:data-model', trigger: 'DR-* requirements present' },
 ];
 ```
-
-Create `arckit-claude/hooks/regime.mjs` exporting `ukOverlayPresent` and import it from `graph-inject.mjs` too (DRY).
 
 - [ ] **Step 2: In `create-project.sh`,** make the welcome text's UK command list conditional, or drop the UK command names from the generic welcome text (lines ~175, ~249–251). Simplest neutral fix: remove `/arckit.secure`, `/arckit.tcop`, `/arckit.ai-playbook` from the generic welcome and keep neutral commands.
 
@@ -881,5 +875,5 @@ Expected: `0`
 ## Self-review
 
 - **Spec coverage:** decisions 1–7 → Phases 1–5 (extraction, defence split, uk- prefix, default-on, UAE/AU decouple in 2.5, uk-saas+baseline in 2.1–2.2, regime-aware in 3.3–3.5). Blast radius Tier 1 → 2.5/2.x; Tier 2 → 4.x; NHS/Finance → 5.1. Registration checklist → 0.5/5.x. Migration → 5.2. Acceptance criteria → 5.4/6.2.
-- **Mechanism risks surfaced as spikes:** hook gating (0.1) resolved to sibling-plugin detection; `defaultEnabled` (0.2) flagged as release gate, non-blocking for the build.
+- **Mechanism risks surfaced as spikes:** hook gating (0.1) resolved to reading the `CLAUDE_PLUGIN_OPTION_GOVERNANCE_FRAMEWORK` env var (hooks can read userConfig after all); `defaultEnabled` (0.2) confirmed runtime-supported (CC 2.1.159), behavioural smoke-test flagged as a non-blocking release gate.
 - **No silent caps:** the stale-ref grep (4.2.3 / 5.4.4) is the completeness guard — any missed reference fails it loudly.
