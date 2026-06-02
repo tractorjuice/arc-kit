@@ -64,7 +64,7 @@ Output: `projects/<id>/ARC-<id>-AIACT-v1.0.md`
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
 | Discovery | Define AI system and use case | `/arckit.requirements` |
-| Risk | Data and AI risk assessment | `/arckit.risk`, `/arckit.dpia` |
+| Risk | Data and AI risk assessment | `/arckit.risk`, `/arckit-uk:uk-dpia` |
 | Assessment | AI Act compliance assessment | `/arckit.eu-ai-act` |
 | CRA | If product with digital elements | `/arckit.eu-cra` |
 

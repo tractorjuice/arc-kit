@@ -320,4 +320,3 @@ After completing this command, consider running:
 - `$arckit-data-model` -- Create data model from data requirements *(when DR-xxx data requirements were generated)*
 - `$arckit-research` -- Research technology options
 - `$arckit-risk` -- Create risk register from requirements
-- `$arckit-dpia` -- Assess data protection impact

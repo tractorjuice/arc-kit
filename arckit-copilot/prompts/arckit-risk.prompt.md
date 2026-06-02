@@ -1,12 +1,19 @@
 ---
-description: 'Create comprehensive risk register following HM Treasury Orange Book principles'
+description: 'Create a comprehensive risk register (ISO 31000 by default; HM Treasury Orange Book when governance_framework is UK Gov)'
 agent: 'agent'
 tools: ['readFile', 'editFiles', 'runCommand', 'codebase', 'search']
 ---
 
-You are helping an enterprise architect create a comprehensive risk register following the UK Government Orange Book (2023) risk management framework.
+You are helping an enterprise architect create a comprehensive risk register.
 
-## About Orange Book Risk Management
+## Risk framework selection
+
+Read `${user_config.governance_framework}` (defaults to `Generic`).
+
+- **`UK Gov`** → follow the HM Treasury Orange Book (2023) structure in this command (5x5 matrix, the four Ts, Orange Book risk-appetite and governance roles).
+- **`Generic`** → produce an ISO 31000-aligned register with the SAME columns, but frame the methodology as ISO 31000 (risk identification → analysis → evaluation → treatment). Do NOT reference HM Treasury, the Orange Book, or UK-government governance roles.
+
+## When governance_framework is UK Gov: About Orange Book Risk Management
 
 The **Orange Book** is HM Treasury's guidance on risk management in government. The 2023 update provides:
 
@@ -26,13 +33,13 @@ ${input:topic:Enter project name or topic}
 
 > **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
-This command creates a **comprehensive risk register** following HM Treasury Orange Book principles and integrates with ArcKit's stakeholder-driven workflow.
+This command creates a **comprehensive risk register** following the selected risk framework (see **Risk framework selection** above — ISO 31000 by default, HM Treasury Orange Book under UK Gov) and integrates with ArcKit's stakeholder-driven workflow.
 
 **When to use this:**
 
 - **After**: `/arckit:stakeholders` (MANDATORY - every risk needs an owner)
 - **Before**: `/arckit:sobc` (SOBC Management Case Part E uses risk register)
-- **Purpose**: Identify, assess, and manage project risks using Orange Book methodology
+- **Purpose**: Identify, assess, and manage project risks using the selected methodology (ISO 31000, or HM Treasury Orange Book under UK Gov)
 
 1. **Read existing artifacts** from the project context:
 
@@ -74,9 +81,9 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
    - Extract stakeholder drivers (drivers under threat = strategic risks)
    - Note: EVERY risk MUST have a risk owner from stakeholder analysis
 
-6. **Identify risks across Orange Book categories**:
+6. **Identify risks across the standard risk categories** (these categories align to the HM Treasury Orange Book framework under UK Gov, and to general ISO 31000 risk taxonomy otherwise):
 
-   Use these risk categories aligned to Orange Book framework:
+   Use these risk categories:
 
    **STRATEGIC Risks**:
    - Risks to strategic objectives and organizational goals
@@ -413,7 +420,7 @@ Provide:
 
 1. **Location**: `projects/NNN-project-name/ARC-{PROJECT_ID}-RISK-v1.0.md`
 2. **Summary**:
-   - "Created comprehensive risk register following HM Treasury Orange Book"
+   - "Created comprehensive risk register following {ISO 31000 | HM Treasury Orange Book} per governance_framework"
    - "Identified [X] risks across 6 categories"
    - "Risk profile: [X] Critical, [Y] High, [Z] Medium, [W] Low"
    - "Overall residual risk score: [X]/500 ([Y]% reduction from inherent)"
@@ -432,7 +439,7 @@ Provide:
    - "Implement priority actions from Action Plan"
    - "Schedule monthly risk review meeting"
 
-## Orange Book Compliance Checklist
+## When governance_framework is UK Gov: Orange Book Compliance Checklist
 
 Ensure the risk register demonstrates Orange Book compliance:
 
@@ -465,7 +472,7 @@ Ensure the risk register demonstrates Orange Book compliance:
 - TECHNOLOGY: Vendor lock-in limits future options (High)
 - REPUTATIONAL: Vendor security breach affects reputation (High)
 
-## UK Government Specific Risks
+## When governance_framework is UK Gov: UK Government Specific Risks
 
 For UK Government/public sector projects, include:
 
@@ -523,7 +530,7 @@ Use the template at `.arckit/templates/risk-register-template.md` as the structu
 - Industry/sector specific risks
 - UK Government risks (if applicable)
 
-Generate a comprehensive, Orange Book-compliant risk register that enables informed decision-making and effective risk management.
+Generate a comprehensive risk register, compliant with the selected framework (ISO 31000 by default, HM Treasury Orange Book under UK Gov), that enables informed decision-making and effective risk management.
 
 ## Important Notes
 
@@ -535,4 +542,3 @@ After completing this command, consider running:
 
 - `/arckit-sobc` -- Feed risk register into SOBC Management Case
 - `/arckit-requirements` -- Create risk-driven requirements
-- `/arckit-secure` -- Validate security controls against risks

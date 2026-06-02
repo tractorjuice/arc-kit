@@ -132,7 +132,7 @@ The Technology Code of Practice requires UK Government projects to:
 | **Output** | `/arckit.data-model` | New entities/attributes from discovered sources |
 | **Output** | `/arckit.research` | Data source costs inform vendor TCO |
 | **Output** | `/arckit.adr` | Data source selection recorded as decisions |
-| **Output** | `/arckit.dpia` | Third-party sources assessed for privacy |
+| **Output** | `/arckit-uk:uk-dpia` | Third-party sources assessed for privacy |
 | **Output** | `/arckit.diagram` | Data flow diagrams show external integration |
 | **Output** | `/arckit.traceability` | DR-xxx → data source mapping |
 
@@ -142,7 +142,7 @@ The Technology Code of Practice requires UK Government projects to:
 
 - Update data model with external data entities (`/arckit.data-model`)
 - Create ADRs for significant data source decisions (`/arckit.adr`)
-- Conduct DPIA for sources with personal data (`/arckit.dpia`)
+- Conduct DPIA for sources with personal data (`/arckit-uk:uk-dpia`)
 - Feed data source costs into research TCO analysis (`/arckit.research`)
 - Build data flow diagrams showing external integration (`/arckit.diagram`)
 - Add data source risks to risk register (`/arckit.risk`)

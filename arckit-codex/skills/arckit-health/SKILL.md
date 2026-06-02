@@ -237,13 +237,13 @@ The `STALE-DRAFT` and `REVIEW-OVERDUE` rules are intentionally a superset of wha
 |---------|---------------------|
 | `*api*`, `*swagger*`, `*openapi*` | `$arckit-requirements`, `$arckit-data-model`, `$arckit-diagram` |
 | `*schema*`, `*erd*`, `*.sql` | `$arckit-data-model`, `$arckit-data-mesh-contract` |
-| `*security*`, `*pentest*`, `*vuln*` | `$arckit-secure`, `$arckit-dpia` |
-| `*compliance*`, `*audit*` | `$arckit-tcop`, `$arckit-conformance` |
+| `*security*`, `*pentest*`, `*vuln*` | `$arckit-risk` (and `/arckit-uk:uk-secure`, `/arckit-uk:uk-dpia` for UK Gov projects) |
+| `*compliance*`, `*audit*` | `$arckit-conformance` (and `/arckit-uk:uk-tcop` for UK Gov projects) |
 | `*cost*`, `*pricing*`, `*budget*` | `$arckit-sobc`, `$arckit-finops` |
 | `*pipeline*`, `*ci*`, `*deploy*` | `$arckit-devops` |
 | `*rfp*`, `*itt*`, `*tender*` | `$arckit-sow`, `$arckit-evaluate` |
-| `*risk*`, `*threat*` | `$arckit-risk`, `$arckit-secure` |
-| `*policy*`, `*standard*` | `$arckit-principles`, `$arckit-tcop` |
+| `*risk*`, `*threat*` | `$arckit-risk` |
+| `*policy*`, `*standard*` | `$arckit-principles` |
 | (default) | `$arckit-requirements`, `$arckit-analyze` |
 
 **Rationale**: External files (PoC results, API specs, compliance reports, vendor documents) are placed in `external/` to inform architecture decisions. If these files are newer than all existing artifacts, the architecture may not yet reflect their content — creating a governance gap.

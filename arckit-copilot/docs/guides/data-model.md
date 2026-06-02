@@ -46,7 +46,7 @@ Output: `projects/<id>/ARC-<id>-DATA-v1.0.md`
 - **Security** – ensure encryption/segmentation controls align with risk appetite.
 - **Subject rights** – validate mechanism for access/erasure/export.
 
-Use the output to enrich `/arckit.dpia` (automatic when run afterwards).
+Use the output to enrich `/arckit-uk:uk-dpia` (automatic when run afterwards).
 
 ---
 
@@ -60,7 +60,7 @@ Use the output to enrich `/arckit.dpia` (automatic when run afterwards).
 
 ## Related Commands
 
-- `/arckit.dpia` - Generate Data Protection Impact Assessment (auto-references data model)
+- `/arckit-uk:uk-dpia` - Generate Data Protection Impact Assessment (auto-references data model)
 - `/arckit.data-mesh-contract` - Create federated data product contracts from entities (mesh architecture)
 - `/arckit.traceability` - Link entities to requirements and test cases
 

@@ -12,7 +12,7 @@ This guide maps the [Government Functional Standard GovS 007: Security](https://
 GovS 007: Security (functional standard — 9 principles)
   └── Cyber Security Standard (July 2025 — mandatory CAF profiles, GovAssure, SbD)
         └── NCSC Cyber Assessment Framework (operational — 14 principles, 4 objectives)
-              └── /arckit.secure assessment (evidence & tracking)
+              └── /arckit-uk:uk-secure assessment (evidence & tracking)
 ```
 
 ---
@@ -21,15 +21,15 @@ GovS 007: Security (functional standard — 9 principles)
 
 | # | GovS 007 Principle | Description | ArcKit Command / Artefact |
 |---|---------------------|-------------|---------------------------|
-| 1 | Governance aligned to organisational purpose | Security governance structures support organisational objectives | `/arckit:secure` (CAF A1), `/arckit:stakeholders` (SSRO/DSO roles) |
-| 2 | Risk-based approach | Protective security decisions based on assessed risk | `/arckit:risk` (risk register), `/arckit:secure` (CAF A2) |
-| 3 | Security integrated into all activities | Security considered throughout delivery, not bolted on | `/arckit:secure` (Secure Development S4), `/arckit:tcop` (Point 6) |
-| 4 | Holistic security planning | Physical, personnel, cyber, technical, and industry security planned together | `/arckit:secure` (full CAF S1–S8), `/arckit:plan` |
-| 5 | Security culture embedded | Staff aware of security responsibilities and behaviours | `/arckit:secure` (CAF B6 Staff Awareness) |
-| 6 | Accountability at all levels | Named individuals accountable for security outcomes | `/arckit:stakeholders` (SSRO, DSO, SIRO roles), `/arckit:secure` sign-off |
-| 7 | Proportionate security measures | Controls matched to data classification and risk level | `/arckit:secure` (Executive Summary classification → controls) |
-| 8 | Continuous improvement | Security posture regularly reviewed and improved | `/arckit:secure` (CAF D2), `/arckit:operationalize` |
-| 9 | Legal and regulatory compliance | Compliance with UK GDPR, Data Protection Act, sector regulations | `/arckit:dpia`, `/arckit:secure` (S3 UK GDPR) |
+| 1 | Governance aligned to organisational purpose | Security governance structures support organisational objectives | `/arckit-uk:uk-secure` (CAF A1), `/arckit:stakeholders` (SSRO/DSO roles) |
+| 2 | Risk-based approach | Protective security decisions based on assessed risk | `/arckit:risk` (risk register), `/arckit-uk:uk-secure` (CAF A2) |
+| 3 | Security integrated into all activities | Security considered throughout delivery, not bolted on | `/arckit-uk:uk-secure` (Secure Development S4), `/arckit-uk:uk-tcop` (Point 6) |
+| 4 | Holistic security planning | Physical, personnel, cyber, technical, and industry security planned together | `/arckit-uk:uk-secure` (full CAF S1–S8), `/arckit:plan` |
+| 5 | Security culture embedded | Staff aware of security responsibilities and behaviours | `/arckit-uk:uk-secure` (CAF B6 Staff Awareness) |
+| 6 | Accountability at all levels | Named individuals accountable for security outcomes | `/arckit:stakeholders` (SSRO, DSO, SIRO roles), `/arckit-uk:uk-secure` sign-off |
+| 7 | Proportionate security measures | Controls matched to data classification and risk level | `/arckit-uk:uk-secure` (Executive Summary classification → controls) |
+| 8 | Continuous improvement | Security posture regularly reviewed and improved | `/arckit-uk:uk-secure` (CAF D2), `/arckit:operationalize` |
+| 9 | Legal and regulatory compliance | Compliance with UK GDPR, Data Protection Act, sector regulations | `/arckit-uk:uk-dpia`, `/arckit-uk:uk-secure` (S3 UK GDPR) |
 
 ---
 
@@ -40,9 +40,9 @@ GovS 007 defines a four-phase security lifecycle. The table below maps each phas
 | Lifecycle Phase | Activities | ArcKit Commands |
 |-----------------|-----------|-----------------|
 | **Strategy & Planning** | Define security strategy, risk appetite, asset classification, roles | `/arckit:principles`, `/arckit:risk`, `/arckit:stakeholders` |
-| **Prevention & Detection** | Implement controls, monitor threats, manage vulnerabilities | `/arckit:secure` (CAF B1–B6, C1–C2), `/arckit:diagram` |
+| **Prevention & Detection** | Implement controls, monitor threats, manage vulnerabilities | `/arckit-uk:uk-secure` (CAF B1–B6, C1–C2), `/arckit:diagram` |
 | **Incident Response** | Detect, respond, report, recover from security incidents | `/arckit:operationalize` (incident management runbooks) |
-| **Learning & Improvement** | Post-incident reviews, metrics, continuous improvement | `/arckit:secure` (CAF D2), `/arckit:risk` (updated risk register) |
+| **Learning & Improvement** | Post-incident reviews, metrics, continuous improvement | `/arckit-uk:uk-secure` (CAF D2), `/arckit:risk` (updated risk register) |
 
 ---
 
@@ -50,13 +50,13 @@ GovS 007 defines a four-phase security lifecycle. The table below maps each phas
 
 | Discipline | Scope | Primary ArcKit Artefact |
 |------------|-------|-------------------------|
-| **Cyber Security** | Network, systems, data protection | `/arckit:secure` (CAF assessment) |
-| **Physical Security** | Premises, facilities, physical access | `/arckit:mod-secure` (JSP 440), or noted in `/arckit:secure` |
-| **Personnel Security** | Vetting, insider threat, staff clearances | `/arckit:mod-secure` (personnel vetting), `/arckit:stakeholders` |
-| **Technical Security** | Counter-eavesdropping, emanations | Specialist — flag in `/arckit:secure` if applicable |
-| **Industry Security** | Contractor/supplier security obligations | `/arckit:secure` (CAF A4 Supply Chain, S7 Third-Party Risk) |
+| **Cyber Security** | Network, systems, data protection | `/arckit-uk:uk-secure` (CAF assessment) |
+| **Physical Security** | Premises, facilities, physical access | `/arckit-uk-mod:uk-mod-secure` (JSP 440), or noted in `/arckit-uk:uk-secure` |
+| **Personnel Security** | Vetting, insider threat, staff clearances | `/arckit-uk-mod:uk-mod-secure` (personnel vetting), `/arckit:stakeholders` |
+| **Technical Security** | Counter-eavesdropping, emanations | Specialist — flag in `/arckit-uk:uk-secure` if applicable |
+| **Industry Security** | Contractor/supplier security obligations | `/arckit-uk:uk-secure` (CAF A4 Supply Chain, S7 Third-Party Risk) |
 
-**Supporting practices**: Risk Management (`/arckit:risk`), Information Management (`/arckit:dpia`), Critical Assets (CAF A3), Capability (CAF B6), Culture (CAF B6).
+**Supporting practices**: Risk Management (`/arckit:risk`), Information Management (`/arckit-uk:uk-dpia`), Critical Assets (CAF A3), Capability (CAF B6), Culture (CAF B6).
 
 ---
 
@@ -64,10 +64,10 @@ GovS 007 defines a four-phase security lifecycle. The table below maps each phas
 
 | Role | GovS 007 Responsibility | ArcKit Appearance |
 |------|------------------------|-------------------|
-| **Accounting Officer** | Overall accountability for organisational security | `/arckit:secure` sign-off |
-| **Senior Security Risk Owner (SSRO)** | Board-level protective security risk ownership | `/arckit:stakeholders`, `/arckit:secure` sign-off |
-| **Departmental Security Officer (DSO)** | Day-to-day security coordination and policy delivery | `/arckit:stakeholders`, `/arckit:secure` sign-off |
-| **Senior Information Risk Owner (SIRO)** | Information and cyber security risk ownership | `/arckit:stakeholders`, `/arckit:secure` sign-off |
+| **Accounting Officer** | Overall accountability for organisational security | `/arckit-uk:uk-secure` sign-off |
+| **Senior Security Risk Owner (SSRO)** | Board-level protective security risk ownership | `/arckit:stakeholders`, `/arckit-uk:uk-secure` sign-off |
+| **Departmental Security Officer (DSO)** | Day-to-day security coordination and policy delivery | `/arckit:stakeholders`, `/arckit-uk:uk-secure` sign-off |
+| **Senior Information Risk Owner (SIRO)** | Information and cyber security risk ownership | `/arckit:stakeholders`, `/arckit-uk:uk-secure` sign-off |
 
 ---
 

@@ -172,7 +172,7 @@ Place organization-wide governance documents here. These are read by commands ac
 - MOD/Defence security policies (JSP 440, CAAT)
 
 ## How It Works
-Commands like /arckit.principles, /arckit.risk, /arckit.secure, and /arckit.sobc
+Commands like /arckit.principles, /arckit.risk, /arckit.sobc, and /arckit.requirements
 automatically scan this directory for organizational context.
 POLEOF
     fi
@@ -246,9 +246,8 @@ Use ArcKit commands to generate project artifacts in the recommended order:
 12. \`/arckit.traceability\` - Generate requirements traceability matrix
 
 ### Compliance (as needed)
-- \`/arckit.secure\` - UK Government Secure by Design review
-- \`/arckit.tcop\` - Technology Code of Practice assessment
-- \`/arckit.ai-playbook\` - AI Playbook compliance (for AI systems)
+- \`/arckit.conformance\` - Architecture conformance assessment
+- \`/arckit.principles-compliance\` - Principles adherence check
 
 ## Project Structure
 

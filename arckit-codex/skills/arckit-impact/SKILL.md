@@ -60,18 +60,29 @@ $ARGUMENTS
    - **LOW severity:** 1 (review recommended)
 
    ### Recommended Actions
-   1. Re-run `$arckit-secure` to update Secure by Design assessment
-   2. Re-run `$arckit-dpia` to update Data Protection Impact Assessment
+   1. Re-run `/arckit-uk:uk-secure` to update Secure by Design assessment (UK Gov projects)
+   2. Re-run `/arckit-uk:uk-dpia` to update Data Protection Impact Assessment (UK Gov projects)
    3. Review ADR-002 decision rationale against updated requirement
    ```
 
 5. **Recommend specific `$arckit-` commands** for HIGH severity impacts:
-   - SECD impacted → `$arckit-secure`
-   - DPIA impacted → `$arckit-dpia`
-   - TCOP impacted → `$arckit-tcop`
+   - SECD impacted → `$arckit-risk` (and `/arckit-uk:uk-secure` for UK Gov projects)
+   - DPIA impacted → `/arckit-uk:uk-dpia` (requires arckit-uk overlay)
+   - TCOP impacted → `/arckit-uk:uk-tcop` (requires arckit-uk overlay)
    - HLDR impacted → `$arckit-hld-review`
    - RISK impacted → `$arckit-risk`
    - TRAC impacted → `$arckit-traceability`
+
+   **For UK Government projects (governance_framework = UK Gov)**, also consider:
+   - SECD → `/arckit-uk:uk-secure`
+   - DPIA → `/arckit-uk:uk-dpia`
+   - TCOP → `/arckit-uk:uk-tcop`
+   - ATRS impacted → `/arckit-uk:uk-atrs`
+   - AIPB impacted → `/arckit-uk:uk-ai-playbook`
+   - SVCASS impacted → `/arckit-uk:uk-service-assessment`
+
+   **For MOD projects**, also consider:
+   - SECD-MOD → `/arckit-uk-mod:uk-mod-secure`
 
 6. **If no impacts found**, report that the document has no downstream dependencies. Note this may indicate a traceability gap — suggest running `$arckit-traceability` to check coverage.
 

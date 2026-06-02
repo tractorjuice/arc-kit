@@ -65,6 +65,6 @@ Output: `projects/<id>/ARC-<id>-RISK-v1.0.md` plus heatmap images.
 ## Linkages
 
 - Optimism bias adjustments in `/arckit.sobc`.
-- Compliance actions in `/arckit.secure`, `/arckit.dpia`, `/arckit.ai-playbook`.
+- Compliance actions in `/arckit-uk:uk-secure`, `/arckit-uk:uk-dpia`, `/arckit-uk:uk-ai-playbook`.
 - Project plan contingencies via `/arckit.plan`.
 - Continuous monitoring in `/arckit.analyze` and `/arckit.story`.

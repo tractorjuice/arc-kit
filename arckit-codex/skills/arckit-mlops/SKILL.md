@@ -33,7 +33,7 @@ Run this command after:
 
 1. Requirements (`$arckit-requirements`) - to understand ML use cases
 2. Data model (`$arckit-data-model`) - to understand training data
-3. AI Playbook assessment (`$arckit-ai-playbook`) - for governance context (UK Gov)
+3. AI Playbook assessment (`/arckit-uk:uk-ai-playbook`) - for governance context (UK Gov)
 
 ## User Input
 

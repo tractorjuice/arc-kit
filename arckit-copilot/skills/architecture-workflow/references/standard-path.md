@@ -83,7 +83,7 @@ These can be added at the appropriate phase if needed:
 | `/arckit:strategy` | Executive strategy synthesis needed | After Phase 3 |
 | `/arckit:platform-design` | Multi-sided platform or marketplace | Phase 3 |
 | `/arckit:datascout` | External data sources needed | Phase 3, before data-model |
-| `/arckit:dpia` | Personal data is processed | Phase 3, after data-model |
+| `/arckit-uk:uk-dpia` (requires arckit-uk) | Personal data is processed | Phase 3, after data-model |
 | `/arckit:finops` | Cloud cost management needed | Phase 7 |
 | `/arckit:servicenow` | ServiceNow CMDB integration | Phase 7 |
 | `/arckit:presentation` | Governance board slide deck | Phase 8 |

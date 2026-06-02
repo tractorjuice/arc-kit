@@ -215,7 +215,7 @@ Critical path items:
 Next steps:
 1. {If NIS2 overlap: Run $arckit-eu-nis2}
 2. {If AI component: Run $arckit-eu-ai-act}
-3. Run $arckit-secure for Annex I security controls
+3. Run /arckit-uk:uk-secure for Annex I security controls
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 

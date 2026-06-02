@@ -571,7 +571,7 @@ Focus on high-signal findings. Limit to 50 findings total; aggregate remainder i
 
 **Missing MOD SbD Assessment**:
 
-- Project for MOD but no SbD assessment (MANDATORY to run `/arckit:mod-secure`)
+- Project for MOD but no SbD assessment (MANDATORY to run `/arckit-uk-mod:uk-mod-secure`)
 
 #### K. Consistency Across Artifacts
 
@@ -1205,7 +1205,7 @@ Generate a comprehensive Markdown report and save it to `projects/{project-dir}/
 1. **If CRITICAL issues exist**: ❌ **DO NOT PROCEED** with implementation/procurement until resolved.
    - Run: `/arckit:requirements` to fix requirements issues
    - Run: `/arckit:hld-review` to address design gaps
-   - Run: `/arckit:ai-playbook` (if AI system) to complete mandatory assessments
+   - Run: `/arckit-uk:uk-ai-playbook` (if UK Gov AI system) to complete mandatory assessments
 
 2. **If only HIGH/MEDIUM issues**: ⚠️ **MAY PROCEED** with caution, but address issues in parallel.
    - Document exceptions for HIGH issues
@@ -1230,14 +1230,15 @@ Based on findings, consider running:
 - `/arckit:hld-review` - Re-review HLD after addressing issues
 - `/arckit:dld-review` - Re-review DLD after addressing issues
 
-**UK Government Compliance**:
-- `/arckit:tcop` - Complete TCoP assessment for UK Gov projects
-- `/arckit:ai-playbook` - Complete AI Playbook assessment for AI systems
-- `/arckit:atrs` - Generate ATRS record for algorithmic tools
-- `/arckit:secure` - UK Government Secure by Design review
+**For UK Government projects (governance_framework = UK Gov)**:
+- `/arckit-uk:uk-tcop` - Complete TCoP assessment for UK Gov projects
+- `/arckit-uk:uk-ai-playbook` - Complete AI Playbook assessment for AI systems
+- `/arckit-uk:uk-atrs` - Generate ATRS record for algorithmic tools
+- `/arckit-uk:uk-secure` - UK Government Secure by Design review
+- `/arckit-uk:uk-service-assessment` - GDS Service Assessment readiness
 
-**MOD Compliance**:
-- `/arckit:mod-secure` - MOD Secure by Design assessment with CAAT (MANDATORY for MOD projects)
+**For MOD projects (governance_framework = UK Gov, MOD)**:
+- `/arckit-uk-mod:uk-mod-secure` - MOD Secure by Design assessment with CAAT (MANDATORY for MOD projects)
 
 **Vendor Procurement**:
 - `/arckit:sow` - Generate statement of work for RFP
@@ -1591,16 +1592,17 @@ After analysis, you may need:
 - `/arckit:hld-review` - Re-review high-level design
 - `/arckit:dld-review` - Re-review detailed design
 
-**UK Government Compliance**:
+**For UK Government projects (governance_framework = UK Gov)**:
 
-- `/arckit:tcop` - Complete TCoP assessment
-- `/arckit:ai-playbook` - Complete AI Playbook assessment
-- `/arckit:atrs` - Generate ATRS record
-- `/arckit:secure` - UK Government Secure by Design review
+- `/arckit-uk:uk-tcop` - Complete TCoP assessment
+- `/arckit-uk:uk-ai-playbook` - Complete AI Playbook assessment
+- `/arckit-uk:uk-atrs` - Generate ATRS record
+- `/arckit-uk:uk-secure` - UK Government Secure by Design review
+- `/arckit-uk:uk-service-assessment` - GDS Service Assessment readiness
 
-**MOD Compliance**:
+**For MOD projects (governance_framework = UK Gov, MOD)**:
 
-- `/arckit:mod-secure` - MOD Secure by Design assessment with CAAT
+- `/arckit-uk-mod:uk-mod-secure` - MOD Secure by Design assessment with CAAT
 
 **Traceability**:
 

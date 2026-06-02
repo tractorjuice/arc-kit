@@ -108,7 +108,7 @@ Read all documents from Step 0. Identify:
    - ANS security framework requirements
    - Mon Espace Santé integration (if patient-facing)
    - CNIL référentiel santé applicability
-   - DPIA mandatory flag: health data = special category → run `$arckit-dpia`
+   - DPIA mandatory flag: health data = special category → run `/arckit-uk:uk-dpia`
    - If no health data: include section header with "N/A — no health data (données de santé) identified"
 
 6. **Section 4: DPO Registration with CNIL**
@@ -197,7 +197,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-CNIL-v{VERSION}.md
 
 Next steps:
 1. {If health data: Run $arckit-fr-secnumcloud for HDS-compliant hosting}
-2. {If DPIA required: Run $arckit-dpia}
+2. {If DPIA required: Run /arckit-uk:uk-dpia}
 3. {If procurement: Run $arckit-fr-marche-public for DPA clauses}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

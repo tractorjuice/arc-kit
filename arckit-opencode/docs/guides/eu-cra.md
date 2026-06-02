@@ -64,7 +64,7 @@ No known exploitable vulnerabilities at placement · Secure-by-default configura
 | Discovery | Product description and market | `/arckit.requirements` |
 | Risk | Security and vulnerability risks | `/arckit.risk` |
 | Assessment | CRA compliance assessment | `/arckit.eu-cra` |
-| Security controls | Implement Annex I requirements | `/arckit.secure` |
+| Security controls | Implement Annex I requirements | `/arckit-uk:uk-secure` |
 | NIS2 | If used by essential entities | `/arckit.eu-nis2` |
 
 ---

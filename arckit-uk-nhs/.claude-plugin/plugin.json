@@ -29,6 +29,10 @@
     {
       "name": "arckit",
       "version": "=5.8.0"
+    },
+    {
+      "name": "arckit-uk",
+      "version": "=5.8.0"
     }
   ]
 }

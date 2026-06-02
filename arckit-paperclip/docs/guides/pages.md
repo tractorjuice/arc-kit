@@ -106,7 +106,7 @@ Site available at: `https://{owner}.github.io/{repo}/`
 |-------|----------------|-----------------|
 | Discovery | Document requirements and stakeholders | `/arckit.requirements`, `/arckit.stakeholders` |
 | Design | Create architecture artifacts | `/arckit.hld-review`, `/arckit.diagram` |
-| Compliance | Assess against standards | `/arckit.tcop`, `/arckit.secure` |
+| Compliance | Assess against standards | `/arckit-uk:uk-tcop`, `/arckit-uk:uk-secure` |
 | Publish | Generate documentation site | `/arckit.pages` |
 
 ---

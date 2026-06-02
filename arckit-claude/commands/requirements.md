@@ -11,8 +11,6 @@ handoffs:
     description: Research technology options
   - command: risk
     description: Create risk register from requirements
-  - command: dpia
-    description: Assess data protection impact
 ---
 
 You are helping an enterprise architect define comprehensive requirements for a project that will be used for vendor RFPs and architecture reviews.

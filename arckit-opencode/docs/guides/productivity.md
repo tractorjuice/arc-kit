@@ -25,9 +25,9 @@ Create sealed, read-only documents for compliance evidence and formal sign-off.
 
 | ArcKit Command | Why PDF |
 |----------------|---------|
-| `/arckit:secure` | Security assessment locked for audit trail |
-| `/arckit:dpia` | Data Protection Impact Assessment for the DPO |
-| `/arckit:tcop` | Technology Code of Practice compliance record |
+| `/arckit-uk:uk-secure` | Security assessment locked for audit trail |
+| `/arckit-uk:uk-dpia` | Data Protection Impact Assessment for the DPO |
+| `/arckit-uk:uk-tcop` | Technology Code of Practice compliance record |
 | `/arckit:risk` | Risk register snapshot for governance review |
 | `/arckit:principles-compliance` | Principles compliance evidence for architecture board |
 
@@ -159,9 +159,9 @@ These scenarios show how ArcKit commands chain with document skills to produce c
 
 | Step | Action |
 |------|--------|
-| 1 | `/arckit:secure` — run security assessment |
-| 2 | `/arckit:tcop` — assess Technology Code of Practice compliance |
-| 3 | `/arckit:dpia` — complete Data Protection Impact Assessment |
+| 1 | `/arckit-uk:uk-secure` — run security assessment |
+| 2 | `/arckit-uk:uk-tcop` — assess Technology Code of Practice compliance |
+| 3 | `/arckit-uk:uk-dpia` — complete Data Protection Impact Assessment |
 | 4 | `/pdf` — bundle all three into a sealed compliance PDF pack |
 
 ### 5. Sprint Planning Handoff

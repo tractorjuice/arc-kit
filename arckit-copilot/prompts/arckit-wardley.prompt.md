@@ -549,10 +549,10 @@ Recommend next steps based on map insights:
 "Your map identifies several build vs buy decisions. Consider running `/arckit:evaluate` to compare vendor options."
 
 # If map shows UK Government project
-"As a UK Government project, I recommend running `/arckit:tcop` to assess Technology Code of Practice compliance."
+"As a UK Government project, I recommend running `/arckit-uk:uk-tcop` to assess Technology Code of Practice compliance."
 
 # If map shows AI components with HIGH-RISK
-"Your map includes HIGH-RISK AI components. I recommend running `/arckit:ai-playbook` and `/arckit:atrs`."
+"Your map includes HIGH-RISK AI components. I recommend running `/arckit-uk:uk-ai-playbook` and `/arckit-uk:uk-atrs`."
 ```
 
 ### Integrate with Design Review
@@ -736,9 +736,9 @@ annotation 1,[0.48, 0.45] "Build custom - competitive advantage"
 **Next Steps**:
 
 1. Run `/arckit:sow` to create RFP for G-Cloud procurement (AWS, GPT-4, Auth0)
-2. Run `/arckit:ai-playbook` to complete AI Playbook assessment
-3. Run `/arckit:atrs` to generate ATRS record
-4. Run `/arckit:tcop` to validate TCoP compliance (Cloud First, Open Standards, Reuse)
+2. Run `/arckit-uk:uk-ai-playbook` to complete AI Playbook assessment
+3. Run `/arckit-uk:uk-atrs` to generate ATRS record
+4. Run `/arckit-uk:uk-tcop` to validate TCoP compliance (Cloud First, Open Standards, Reuse)
 
 ## Important Notes
 
@@ -860,8 +860,8 @@ After creating the map, provide a summary to the user:
 
 🔗 Recommended Commands:
 - /arckit:sow - Generate RFP for vendor procurement
-- /arckit:tcop - Assess Technology Code of Practice compliance
-- /arckit:ai-playbook - Assess AI Playbook compliance (if AI components)
+- /arckit-uk:uk-tcop - Assess Technology Code of Practice compliance
+- /arckit-uk:uk-ai-playbook - Assess AI Playbook compliance (if AI components)
 ```
 
 ---

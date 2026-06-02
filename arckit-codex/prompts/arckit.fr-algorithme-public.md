@@ -121,7 +121,7 @@ For each algorithm, document:
 
 - **GDPR / CNIL**: If the algorithm processes personal data, document the GDPR intersection. Recommend running `/arckit.fr-rgpd` for CNIL-specific assessment.
 - **EU AI Act**: If the algorithm uses ML/AI techniques, assess the AI Act high-risk category (Annex III includes access to essential public services, education, employment). Recommend `/arckit.eu-ai-act`.
-- **DPIA**: If the algorithm systematically profiles citizens or processes sensitive data at scale, a DPIA (AIPD) is likely required. Flag for `/arckit.dpia`.
+- **DPIA**: If the algorithm systematically profiles citizens or processes sensitive data at scale, a DPIA (AIPD) is likely required. Flag for `/arckit-uk:uk-dpia`.
 
 ### Step 5: Generate Algorithm Transparency Document
 
@@ -183,7 +183,7 @@ Next steps:
 1. Publish notice on algorithmes.data.gouv.fr
 2. {If personal data: Run /arckit.fr-rgpd for CNIL assessment}
 3. {If ML/AI: Run /arckit.eu-ai-act for AI Act risk classification}
-4. {If profiling or sensitive data at scale: Run /arckit.dpia}
+4. {If profiling or sensitive data at scale: Run /arckit-uk:uk-dpia}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 

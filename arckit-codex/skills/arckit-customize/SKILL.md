@@ -52,16 +52,16 @@ Display as a table:
 | `datascout` | `$arckit-datascout` | External data source discovery |
 | `devops` | `$arckit-devops` | DevOps strategy and CI/CD |
 | `dld-review` | `$arckit-dld-review` | Detailed design review |
-| `dos-requirements` | `$arckit-dos` | Digital Outcomes & Specialists |
-| `dpia` | `$arckit-dpia` | Data Protection Impact Assessment |
+| `dos-requirements` | `/arckit-uk:uk-dos` | Digital Outcomes & Specialists |
+| `dpia` | `/arckit-uk:uk-dpia` | Data Protection Impact Assessment |
 | `evaluation-criteria` | `$arckit-evaluate` | Vendor evaluation framework |
 | `finops` | `$arckit-finops` | FinOps cloud cost management |
-| `gcloud-clarify` | `$arckit-gcloud-clarify` | G-Cloud clarification questions |
-| `gcloud-requirements` | `$arckit-gcloud-search` | G-Cloud service requirements |
+| `gcloud-clarify` | `/arckit-uk:uk-gcloud-clarify` | G-Cloud clarification questions |
+| `gcloud-requirements` | `/arckit-uk:uk-gcloud-search` | G-Cloud service requirements |
 | `hld-review` | `$arckit-hld-review` | High-level design review |
-| `jsp-936` | `$arckit-jsp-936` | MOD AI assurance (JSP 936) |
+| `jsp-936` | `/arckit-uk-mod:uk-mod-jsp-936` | MOD AI assurance (JSP 936) |
 | `mlops` | `$arckit-mlops` | MLOps strategy |
-| `mod-secure-by-design` | `$arckit-mod-secure` | MOD Secure by Design |
+| `mod-secure-by-design` | `/arckit-uk-mod:uk-mod-secure` | MOD Secure by Design |
 | `operationalize` | `$arckit-operationalize` | Operational readiness pack |
 | `platform-design` | `$arckit-platform-design` | Platform Design Toolkit |
 | `principles-compliance-assessment` | `$arckit-principles-compliance` | Principles compliance scorecard |
@@ -70,18 +70,18 @@ Display as a table:
 | `research-findings` | `$arckit-research` | Technology research findings |
 | `risk-register` | `$arckit-risk` | Risk register (Orange Book) |
 | `roadmap` | `$arckit-roadmap` | Architecture roadmap |
-| `service-assessment-prep` | `$arckit-service-assessment` | GDS Service Standard prep |
+| `service-assessment-prep` | `/arckit-uk:uk-service-assessment` | GDS Service Standard prep |
 | `servicenow-design` | `$arckit-servicenow` | ServiceNow service design |
 | `sobc` | `$arckit-sobc` | Strategic Outline Business Case |
 | `sow` | `$arckit-sow` | Statement of Work / RFP |
 | `stakeholder-drivers` | `$arckit-stakeholders` | Stakeholder analysis |
 | `story` | `$arckit-story` | Project story with timeline |
-| `tcop-review` | `$arckit-tcop` | Technology Code of Practice |
+| `tcop-review` | `/arckit-uk:uk-tcop` | Technology Code of Practice |
 | `traceability-matrix` | `$arckit-traceability` | Requirements traceability |
-| `uk-gov-ai-playbook` | `$arckit-ai-playbook` | AI Playbook compliance |
-| `uk-gov-atrs` | `$arckit-atrs` | Algorithmic Transparency Record |
-| `uk-gov-tcop` | `$arckit-tcop` | TCoP review template |
-| `ukgov-secure-by-design` | `$arckit-secure` | UK Gov Secure by Design |
+| `uk-gov-ai-playbook` | `/arckit-uk:uk-ai-playbook` | AI Playbook compliance |
+| `uk-gov-atrs` | `/arckit-uk:uk-atrs` | Algorithmic Transparency Record |
+| `uk-gov-tcop` | `/arckit-uk:uk-tcop` | TCoP review template |
+| `ukgov-secure-by-design` | `/arckit-uk:uk-secure` | UK Gov Secure by Design |
 | `vendor-scoring` | `$arckit-evaluate` | Vendor scoring matrix |
 | `wardley-map` | `$arckit-wardley` | Wardley Map documentation |
 | `pages` | `$arckit-pages` | GitHub Pages site (HTML/CSS/JS) |

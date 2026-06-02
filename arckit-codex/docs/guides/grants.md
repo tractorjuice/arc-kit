@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.grants` researches UK government grants, charitable funding, and accelerator programmes for the project, with eligibility scoring per programme. Runs as a research-heavy agent that produces a per-grant briefing plus reusable tech-notes.
+`/arckit-uk:uk-grants` researches UK government grants, charitable funding, and accelerator programmes for the project, with eligibility scoring per programme. Runs as a research-heavy agent that produces a per-grant briefing plus reusable tech-notes.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.grants <project ID or domain>
+/arckit-uk:uk-grants <project ID or domain>
 ```
 
 Outputs:
@@ -65,7 +65,7 @@ Typical programmes researched:
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
 | Discovery | Project scope and outcomes | `/arckit.requirements` |
-| Funding research | Programme scan + eligibility scoring | `/arckit.grants` |
+| Funding research | Programme scan + eligibility scoring | `/arckit-uk:uk-grants` |
 | Business case | Folding funding into Economic Case | `/arckit.sobc` |
 | Plan | Align project plan to grant milestones | `/arckit.plan` |
 | Risk | Grant-specific risks (rejection, compliance, reporting) | `/arckit.risk` |

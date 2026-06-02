@@ -15,7 +15,7 @@ $ARGUMENTS
 
 ## Context
 
-DTAC was introduced by NHSX (now part of NHS England's Transformation Directorate) and is the de facto national NHS procurement-assurance baseline for digital products. It is consumed by NHS Trust procurement teams, ICS digital teams, NHS Supply Chain framework buyers, and is referenced by NHS England innovation pathways. DTAC overlaps but does not replace MHRA medical-device regulation (`$arckit-uk-mdr-classification`) or the GDS Service Standard (`$arckit-service-assessment`).
+DTAC was introduced by NHSX (now part of NHS England's Transformation Directorate) and is the de facto national NHS procurement-assurance baseline for digital products. It is consumed by NHS Trust procurement teams, ICS digital teams, NHS Supply Chain framework buyers, and is referenced by NHS England innovation pathways. DTAC overlaps but does not replace MHRA medical-device regulation (`$arckit-uk-mdr-classification`) or the GDS Service Standard (`/arckit-uk:uk-service-assessment`).
 
 **Authoritative anchors**:
 
@@ -32,11 +32,11 @@ DTAC was introduced by NHSX (now part of NHS England's Transformation Directorat
 | Section | Title | Approximate criteria | ArcKit cross-references |
 |---|---|---|---|
 | 1 | Clinical Safety | DCB0129 (manufacturer) + DCB0160 (deployer) compliance | `$arckit-uk-nhs-dcb0129`, `$arckit-uk-nhs-dcb0160` |
-| 2 | Data Protection | UK GDPR, DPA 2018, DSPT, DPIA | `$arckit-dpia` |
-| 3 | Technical Assurance | Security, cloud, software lifecycle, business continuity | `$arckit-secure`, `$arckit-hld`, `$arckit-dld` |
+| 2 | Data Protection | UK GDPR, DPA 2018, DSPT, DPIA | `/arckit-uk:uk-dpia` |
+| 3 | Technical Assurance | Security, cloud, software lifecycle, business continuity | `/arckit-uk:uk-secure`, `$arckit-hld`, `$arckit-dld` |
 | 4 | Interoperability | FHIR UK Core, SNOMED CT, NHS Number, NHS APIs (PDS, e-RS, GP Connect) | `$arckit-data-model`, `$arckit-adr` |
-| 5 | Usability and Accessibility | NHS Service Standard, WCAG 2.2 AA | `$arckit-service-assessment` |
-| AI annex | AI / ML components | Model governance, ATRS, training-data provenance, fairness, drift monitoring | `$arckit-atrs` |
+| 5 | Usability and Accessibility | NHS Service Standard, WCAG 2.2 AA | `/arckit-uk:uk-service-assessment` |
+| AI annex | AI / ML components | Model governance, ATRS, training-data provenance, fairness, drift monitoring | `/arckit-uk:uk-atrs` |
 
 ## Process
 
@@ -85,7 +85,7 @@ DTAC was introduced by NHSX (now part of NHS England's Transformation Directorat
      - Penetration test status
      - Business continuity / disaster recovery (RTO, RPO targets)
      - Vulnerability management policy and SLA
-     - Cross-reference `$arckit-secure` output
+     - Cross-reference `/arckit-uk:uk-secure` output
 
    - **Section 4 — Interoperability**:
      - Standards adopted: FHIR UK Core (version), SNOMED CT, dm+d (if prescribing), HL7 v2 (if legacy)
@@ -106,7 +106,7 @@ DTAC was introduced by NHSX (now part of NHS England's Transformation Directorat
      - State whether the product uses AI / ML — if no, state explicitly and skip the rest
      - Model class (rule-based, statistical, deep learning, foundation model, agentic)
      - Training-data provenance and consent basis
-     - ATRS record published (cross-reference `$arckit-atrs` output)
+     - ATRS record published (cross-reference `/arckit-uk:uk-atrs` output)
      - Fairness assessment — protected characteristics evaluated, performance parity
      - Model drift monitoring approach
      - Human-in-the-loop / human-on-the-loop design

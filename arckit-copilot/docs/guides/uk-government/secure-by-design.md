@@ -2,14 +2,14 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.secure` captures NCSC Secure by Design, Cyber Essentials, and GDPR evidence for civilian (non-MOD) services.
+`/arckit-uk:uk-secure` captures NCSC Secure by Design, Cyber Essentials, and GDPR evidence for civilian (non-MOD) services.
 
 ---
 
 ## Command
 
 ```bash
-/arckit.secure Assess UK Government Secure by Design for <service>
+/arckit-uk:uk-secure Assess UK Government Secure by Design for <service>
 ```
 
 Output: `projects/<id>/ARC-<id>-SECU-v1.0.md`.
@@ -34,9 +34,9 @@ Output: `projects/<id>/ARC-<id>-SECU-v1.0.md`.
 
 | Control Set | Covered By |
 |-------------|------------|
-| NCSC Cloud Security Principles (1–14) | Hosting decision log, architecture diagrams, `/arckit.secure` output sections |
+| NCSC Cloud Security Principles (1–14) | Hosting decision log, architecture diagrams, `/arckit-uk:uk-secure` output sections |
 | Cyber Essentials (Firewalls, Configuration, Access, Malware, Patching) | Infrastructure-as-Code, operations procedures |
-| GDPR Privacy by Design | `/arckit.dpia`, data retention, subject rights, encryption |
+| GDPR Privacy by Design | `/arckit-uk:uk-dpia`, data retention, subject rights, encryption |
 
 ---
 

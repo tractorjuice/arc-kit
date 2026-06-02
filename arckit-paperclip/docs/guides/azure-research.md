@@ -107,7 +107,7 @@ When UK Government project detected:
 ## Follow-on Actions
 
 - Feed Azure findings into `/arckit.diagram` for Azure architecture diagrams
-- Run `/arckit.secure` to validate against UK Secure by Design
+- Run `/arckit-uk:uk-secure` to validate against UK Secure by Design
 - Run `/arckit.devops` to plan Azure DevOps CI/CD pipelines
 - Run `/arckit.finops` to create Azure FinOps cost management strategy
 - Run `/arckit.adr` to document Azure service selection decisions

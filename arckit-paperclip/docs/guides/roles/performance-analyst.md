@@ -26,7 +26,7 @@ The Performance Analyst measures service performance and identifies improvement 
 | `/arckit.principles` | Understand the principles being assessed against | [Guide](#docs/guides/principles.md) |
 | `/arckit.principles-compliance` | Review principles compliance scores | [Guide](#docs/guides/principles-compliance.md) |
 | `/arckit.story` | Contribute metrics and findings to the project narrative | [Guide](#docs/guides/story.md) |
-| `/arckit.service-assessment` | Provide performance data for service assessments | [Guide](#docs/guides/service-assessment.md) |
+| `/arckit-uk:uk-service-assessment` | Provide performance data for service assessments | [Guide](#docs/guides/service-assessment.md) |
 
 ## Typical Workflow
 

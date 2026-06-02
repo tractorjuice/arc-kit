@@ -15,7 +15,7 @@ The Data Architect designs data structures, governance, and flows. You own ArcKi
 |---------|---------|-------|
 | `/arckit.data-model` | Create comprehensive data model with entity relationships, GDPR compliance, and governance | [Guide](#docs/guides/data-model.md) |
 | `/arckit.data-mesh-contract` | Define federated data product contracts with SLAs and interoperability guarantees | [Guide](#docs/guides/data-mesh-contract.md) |
-| `/arckit.dpia` | Generate Data Protection Impact Assessment for UK GDPR Article 35 | [Guide](#docs/guides/dpia.md) |
+| `/arckit-uk:uk-dpia` | Generate Data Protection Impact Assessment for UK GDPR Article 35 | [Guide](#docs/guides/dpia.md) |
 | `/arckit.datascout` | Discover external data sources — APIs, datasets, open data portals | [Guide](#docs/guides/datascout.md) |
 
 ## Secondary Commands
@@ -41,7 +41,7 @@ requirements (DR-xxx) → datascout → data-model → data-mesh-contract → dp
 2. **Discover data sources**: Run `/arckit.datascout` to find external APIs, datasets, and open data portals
 3. **Design data model**: Run `/arckit.data-model` — entities, relationships, GDPR classification, retention policies
 4. **Define data contracts**: Run `/arckit.data-mesh-contract` for federated governance (if using data mesh)
-5. **Assess privacy impact**: Run `/arckit.dpia` for any processing involving personal data
+5. **Assess privacy impact**: Run `/arckit-uk:uk-dpia` for any processing involving personal data
 6. **Verify traceability**: Review `/arckit.traceability` output to confirm all DR-xxx requirements are covered
 
 ## Key Artifacts You Own

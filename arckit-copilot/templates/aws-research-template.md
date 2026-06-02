@@ -568,7 +568,7 @@ For SECRET data classification:
 ### Integration with Other ArcKit Commands
 
 - Run `/arckit.diagram` to create detailed AWS architecture diagrams
-- Run `/arckit.secure` to validate against UK Secure by Design
+- Run `/arckit-uk:uk-secure` to validate against UK Secure by Design
 - Run `/arckit.devops` to plan AWS CodePipeline/GitHub Actions
 - Run `/arckit.finops` to create AWS cost management strategy
 

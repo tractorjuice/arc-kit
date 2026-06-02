@@ -88,7 +88,7 @@ Output: `projects/<id>/ARC-<id>-MLOPS-v1.0.md`
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
 | Discovery | Identify ML use cases, data sources | `/arckit.requirements`, `/arckit.data-model` |
-| Governance | Assess AI risks and compliance | `/arckit.ai-playbook`, `/arckit.atrs`, `/arckit.dpia` |
+| Governance | Assess AI risks and compliance | `/arckit-uk:uk-ai-playbook`, `/arckit-uk:uk-atrs`, `/arckit-uk:uk-dpia` |
 | Strategy | Create MLOps strategy | `/arckit.mlops` |
 | Implementation | Build pipelines, deploy models | `/arckit.backlog`, `/arckit.devops` |
 | Operations | Monitor, retrain, govern | `/arckit.operationalize` |

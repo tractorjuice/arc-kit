@@ -280,7 +280,7 @@ DTAC **v3** (current as at 2026-05). Verify against <https://transform.england.n
 | Training-data consent basis | [PASS / FAIL] | |
 | Training-data clinical representativeness assessed | [PASS / FAIL] | |
 | Model card published | [PASS / FAIL] | [URL] |
-| ATRS record published (cross-reference `/arckit:atrs`) | [PASS / FAIL / PENDING] | [`ARC-{PID}-ATRS-*.md`] |
+| ATRS record published (cross-reference `/arckit-uk:uk-atrs`) | [PASS / FAIL / PENDING] | [`ARC-{PID}-ATRS-*.md`] |
 
 ### A.3 Fairness and bias
 

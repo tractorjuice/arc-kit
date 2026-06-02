@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.ai-playbook` assesses UK Government AI Playbook compliance for responsible AI deployment in public sector projects.
+`/arckit-uk:uk-ai-playbook` assesses UK Government AI Playbook compliance for responsible AI deployment in public sector projects.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.ai-playbook Assess AI Playbook compliance for <project>
+/arckit-uk:uk-ai-playbook Assess AI Playbook compliance for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-AIPB-v1.0.md`
@@ -65,9 +65,9 @@ Output: `projects/<id>/ARC-<id>-AIPB-v1.0.md`
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
 | Discovery | Define AI use cases and requirements | `/arckit.requirements`, `/arckit.stakeholders` |
-| Data | Design data model and assess data quality | `/arckit.data-model`, `/arckit.dpia` |
-| Governance | Assess AI Playbook compliance | `/arckit.ai-playbook` |
-| Transparency | Create algorithmic transparency record | `/arckit.atrs` |
+| Data | Design data model and assess data quality | `/arckit.data-model`, `/arckit-uk:uk-dpia` |
+| Governance | Assess AI Playbook compliance | `/arckit-uk:uk-ai-playbook` |
+| Transparency | Create algorithmic transparency record | `/arckit-uk:uk-atrs` |
 | Operations | Plan ongoing monitoring and governance | `/arckit.mlops`, `/arckit.operationalize` |
 
 ---

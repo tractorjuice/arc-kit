@@ -205,7 +205,7 @@ Incident Reporting: {Ready / Gap — 24h/72h capability needed}
 Next steps:
 1. {If OIV/OSE (France): Run /arckit.fr-secnumcloud}
 2. {If financial sector: Run /arckit.eu-dora for DORA overlap}
-3. Run /arckit.secure to implement Article 21 controls
+3. Run /arckit-uk:uk-secure to implement Article 21 controls
 4. Run /arckit.risk to register NIS2 gaps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

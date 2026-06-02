@@ -91,7 +91,7 @@ The Digital Transformation Agency (DTA) Digital Service Standard sets the mandat
 - Criterion 7 (Protect users' privacy) should cross-reference the Privacy Impact Assessment (`/arckit:au-pia`) if one exists.
 - Criterion 9 (Make it accessible) requires WCAG 2.2 Level AA as the minimum standard for Australian Government services.
 - The Standard is assessed at Alpha, Beta, and Live phases — the depth of evidence expected increases at each gate.
-- This assessment is analogous to the UK GDS Service Standard assessment (`/arckit:service-assessment`) but uses Australian criteria and governance structures.
+- This assessment is analogous to the UK GDS Service Standard assessment (`/arckit-uk:uk-service-assessment`) but uses Australian criteria and governance structures.
 
 ## Suggested Next Steps
 

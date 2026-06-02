@@ -78,7 +78,7 @@ Output:
 | Framework | Create evaluation criteria | `/arckit.evaluate` (create) |
 | Scoring | Score each vendor proposal | `/arckit.evaluate` (score) |
 | Comparison | Compare and recommend | `/arckit.evaluate` (compare) |
-| Procurement | Award contract, negotiate terms | `/arckit.gcloud-clarify` |
+| Procurement | Award contract, negotiate terms | `/arckit-uk:uk-gcloud-clarify` |
 
 ---
 

@@ -29,7 +29,7 @@ The Product Manager defines what to build and why. You own the planning, require
 | `/arckit.traceability` | Verify all requirements are covered in the backlog | [Guide](#docs/guides/traceability.md) |
 | `/arckit.health` | Check for orphaned requirements or stale artifacts | [Guide](#docs/guides/artifact-health.md) |
 | `/arckit.presentation` | Present product vision and progress to stakeholders | [Guide](#docs/guides/presentation.md) |
-| `/arckit.service-assessment` | Prepare for GDS Service Standard assessment (if UK Gov) | [Guide](#docs/guides/service-assessment.md) |
+| `/arckit-uk:uk-service-assessment` | Prepare for GDS Service Standard assessment (if UK Gov) | [Guide](#docs/guides/service-assessment.md) |
 
 ## Typical Workflow
 

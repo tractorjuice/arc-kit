@@ -19,7 +19,7 @@ Select the appropriate diagram type and read the corresponding reference file:
 
 | Type | Reference | ArcKit Commands Using It |
 | ---- | --------- | ------------------------ |
-| Flowchart | [flowchart.md](references/flowchart.md) | `$arckit-diagram`, `$arckit-dfd`, `$arckit-roadmap`, `$arckit-plan`, `$arckit-backlog`, `$arckit-strategy`, `$arckit-story`, `$arckit-jsp-936` |
+| Flowchart | [flowchart.md](references/flowchart.md) | `$arckit-diagram`, `$arckit-dfd`, `$arckit-roadmap`, `$arckit-plan`, `$arckit-backlog`, `$arckit-strategy`, `$arckit-story`, `/arckit-uk-mod:uk-mod-jsp-936` |
 | Sequence Diagram | [sequenceDiagram.md](references/sequenceDiagram.md) | `$arckit-diagram` |
 | Class Diagram | [classDiagram.md](references/classDiagram.md) | — |
 | State Diagram | [stateDiagram.md](references/stateDiagram.md) | — |

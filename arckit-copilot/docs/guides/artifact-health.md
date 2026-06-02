@@ -125,7 +125,7 @@ Architecture governance artifacts have a shelf life. Research data goes stale, d
 3. Re-run the recommended commands, pointing them to the new external content
 4. After updating artifacts, the external files will no longer be flagged (their mtime will be older than the newly generated artifacts)
 
-**Example scenario**: A penetration test report (`pentest-report-q1.pdf`) is added to `external/` after the security assessment was written. The existing `ARC-001-SECD-v1.0.md` does not account for the findings in the new report. The STALE-EXT finding flags this gap and recommends re-running `/arckit:secure` and `/arckit:dpia` to incorporate the pentest results.
+**Example scenario**: A penetration test report (`pentest-report-q1.pdf`) is added to `external/` after the security assessment was written. The existing `ARC-001-SECD-v1.0.md` does not account for the findings in the new report. The STALE-EXT finding flags this gap and recommends re-running `/arckit-uk:uk-secure` and `/arckit-uk:uk-dpia` to incorporate the pentest results.
 
 ---
 

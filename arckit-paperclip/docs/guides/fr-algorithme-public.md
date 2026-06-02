@@ -58,7 +58,7 @@ Excluded: decisions with mandatory human review at every step.
 |-------|----------------|-----------------|
 | Discovery | Algorithm scope and decision impact | `/arckit.requirements` |
 | Data | Data model and personal data | `/arckit.data-model` |
-| GDPR | Art. 22 compliance | `/arckit.eu-rgpd`, `/arckit.dpia` |
+| GDPR | Art. 22 compliance | `/arckit.eu-rgpd`, `/arckit-uk:uk-dpia` |
 | Notice | Algorithm transparency notice | `/arckit.fr-algorithme-public` |
 | AI Act | If ML system | `/arckit.eu-ai-act` |
 

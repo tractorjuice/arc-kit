@@ -486,7 +486,7 @@ After writing the file, show the user a concise summary (do NOT show the full do
 
 - `$arckit-traceability` - Link this contract to requirements and consumers
 - `$arckit-analyze` - Score contract completeness and governance quality
-- `$arckit-dpia` - Generate Data Protection Impact Assessment (if PII present)
+- `/arckit-uk:uk-dpia` - Generate Data Protection Impact Assessment (if PII present)
 
 ---
 
@@ -518,7 +518,7 @@ Based on what artifacts exist, recommend next steps:
 
 UK GDPR Article 35 may require a Data Protection Impact Assessment (DPIA).
 
-Consider running: $arckit-dpia Generate DPIA for {project_name}
+Consider running: /arckit-uk:uk-dpia Generate DPIA for {project_name}
 ```
 
 **If this is a UK Government project**:
@@ -530,8 +530,8 @@ Consider running: $arckit-dpia Generate DPIA for {project_name}
    - Data Quality Framework: 5 dimensions covered ✅
 
 Consider running:
-   - $arckit-tcop - Technology Code of Practice assessment
-   - $arckit-service-assessment - GDS Service Standard (if digital service)
+   - /arckit-uk:uk-tcop - Technology Code of Practice assessment
+   - /arckit-uk:uk-service-assessment - GDS Service Standard (if digital service)
 ```
 
 ## Important Notes

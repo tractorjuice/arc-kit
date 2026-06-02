@@ -21,7 +21,7 @@ Add or promote these commands in the base path's Design and Analysis phase:
 |---------|-----------|-------------|
 | `$arckit-datascout` | Discover external data sources: APIs, datasets, open data portals, commercial providers | Before data-model |
 | `$arckit-data-model` | Comprehensive data architecture with entity relationships, schemas, governance | After datascout (promote to mandatory if not already) |
-| `$arckit-dpia` | Data Protection Impact Assessment — mandatory if processing personal data | After data-model |
+| `/arckit-uk:uk-dpia` (requires arckit-uk) | Data Protection Impact Assessment — mandatory if processing personal data | After data-model |
 | `$arckit-data-mesh-contract` | Federated data product contracts for mesh architectures | After data-model |
 | `$arckit-platform-design` | Multi-sided platform strategy using Platform Design Toolkit (PDT) | After requirements, before data-model |
 
@@ -62,7 +62,7 @@ When data is the primary focus, reorder the Design and Analysis phase:
 2. `$arckit-platform-design` — design the platform ecosystem
 3. `$arckit-data-model` — model the data architecture
 4. `$arckit-data-mesh-contract` — define data product contracts
-5. `$arckit-dpia` — assess data protection impact
+5. `/arckit-uk:uk-dpia` — assess data protection impact (requires arckit-uk overlay)
 6. `$arckit-research` — research technology options for the data platform
 7. Cloud research (`aws-research`, `azure-research`, or `gcp-research`)
 8. `$arckit-wardley` — map data component evolution

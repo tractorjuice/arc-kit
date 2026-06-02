@@ -104,7 +104,7 @@ Read all documents from Step 0. Identify:
    - Elektronische Gesundheitsakte (ELGA-G) interoperability requirements
    - GTelG 2012 telematics interop for data exchange between health providers
    - Art. 9(2) GDPR legal basis selection — in AT typically §§7–8 DSG + ELGA-G
-   - DPIA mandatory flag: special category data + large scale → run `/arckit.dpia`
+   - DPIA mandatory flag: special category data + large scale → run `/arckit-uk:uk-dpia`
    - Opt-out vs opt-in for ELGA participation — controller's integration obligations
    - If no health data: include section header with "N/A — no health data identified"
 
@@ -195,7 +195,7 @@ projects/{project_id}/ARC-{PROJECT_ID}-ATDSG-v{VERSION}.md
 {List 🔴 High priority gaps}
 
 Next steps:
-1. {If DPIA required: Run /arckit.dpia}
+1. {If DPIA required: Run /arckit-uk:uk-dpia}
 2. {If employee monitoring: draft Betriebsvereinbarung §96a ArbVG}
 3. {If no eu-rgpd baseline: Run /arckit.eu-rgpd first}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

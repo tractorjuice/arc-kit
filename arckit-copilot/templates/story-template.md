@@ -121,10 +121,10 @@ flowchart TD
     ServiceNow["arckit.servicenow<br/>[DATE]<br/>ServiceNow Design"] --> Compliance
 
     Compliance{Compliance<br/>Requirements?}
-    Compliance -->|UK Gov| TCoP["arckit.tcop<br/>[DATE]<br/>TCoP Review"]
-    Compliance -->|All Projects| Secure["arckit.secure<br/>[DATE]<br/>Secure by Design"]
-    Compliance -->|MOD| ModSecure["arckit.mod-secure<br/>[DATE]<br/>MOD Security"]
-    Compliance -->|AI System| AIPlaybook["arckit.ai-playbook<br/>[DATE]<br/>AI Playbook"]
+    Compliance -->|UK Gov| TCoP["arckit-uk:uk-tcop<br/>[DATE]<br/>TCoP Review"]
+    Compliance -->|All Projects| Secure["arckit-uk:uk-secure<br/>[DATE]<br/>Secure by Design"]
+    Compliance -->|MOD| ModSecure["arckit-uk-mod:uk-mod-secure<br/>[DATE]<br/>MOD Security"]
+    Compliance -->|AI System| AIPlaybook["arckit-uk:uk-ai-playbook<br/>[DATE]<br/>AI Playbook"]
 
     TCoP --> Trace
     Secure --> Trace
@@ -166,11 +166,11 @@ flowchart TD
 | 13 | [DATE] | [DAYS] | Design Review | `/arckit.dld-review` | vendors/[VENDOR]/reviews/ARC-*-DLDR-*.md | Detailed design assessment |
 | 14 | [DATE] | [DAYS] | Delivery | `/arckit.backlog` | ARC-*-BKLG-*.md | [N] user stories across [M] sprints |
 | 15 | [DATE] | [DAYS] | Operations | `/arckit.servicenow` | ARC-*-SNOW-*.md | CMDB, SLAs, incident management |
-| 16 | [DATE] | [DAYS] | Compliance | `/arckit.tcop` | ARC-*-TCOP-*.md | Technology Code of Practice (13 points) |
-| 17 | [DATE] | [DAYS] | Compliance | `/arckit.service-assessment` | ARC-*-SVCASS-*.md | GDS Service Standard (14 points) |
-| 18 | [DATE] | [DAYS] | Security | `/arckit.secure` | ARC-*-SECD-*.md | NCSC CAF, Cyber Essentials, UK GDPR |
-| 19 | [DATE] | [DAYS] | AI Compliance | `/arckit.ai-playbook` | ARC-*-AIPB-*.md | Responsible AI deployment |
-| 20 | [DATE] | [DAYS] | Transparency | `/arckit.atrs` | ARC-*-ATRS-*.md | Algorithmic Transparency Recording |
+| 16 | [DATE] | [DAYS] | Compliance | `/arckit-uk:uk-tcop` | ARC-*-TCOP-*.md | Technology Code of Practice (13 points) |
+| 17 | [DATE] | [DAYS] | Compliance | `/arckit-uk:uk-service-assessment` | ARC-*-SVCASS-*.md | GDS Service Standard (14 points) |
+| 18 | [DATE] | [DAYS] | Security | `/arckit-uk:uk-secure` | ARC-*-SECD-*.md | NCSC CAF, Cyber Essentials, UK GDPR |
+| 19 | [DATE] | [DAYS] | AI Compliance | `/arckit-uk:uk-ai-playbook` | ARC-*-AIPB-*.md | Responsible AI deployment |
+| 20 | [DATE] | [DAYS] | Transparency | `/arckit-uk:uk-atrs` | ARC-*-ATRS-*.md | Algorithmic Transparency Recording |
 | 21 | [DATE] | [DAYS] | Traceability | `/arckit.traceability` | ARC-*-TRAC-*.md | End-to-end requirement traceability |
 | 22 | [DATE] | [DAYS] | Governance | `/arckit.analyze` | ARC-*-ANAL-*.md | Governance quality assessment |
 
@@ -697,11 +697,11 @@ Complete list of all artifacts generated during this project:
 | 14 | DLD Review | `projects/{project_id}/vendors/[vendor]/reviews/ARC-*-DLDR-*.md` | [DATE] | `/arckit.dld-review` | ✅ |
 | 15 | Product Backlog | `projects/{project_id}/ARC-*-BKLG-*.md` | [DATE] | `/arckit.backlog` | ✅ |
 | 16 | ServiceNow Design | `projects/{project_id}/ARC-*-SNOW-*.md` | [DATE] | `/arckit.servicenow` | ✅ |
-| 17 | TCoP Review | `projects/{project_id}/ARC-*-TCOP-*.md` | [DATE] | `/arckit.tcop` | ✅ |
-| 18 | Service Assessment | `projects/{project_id}/ARC-*-SVCASS-*.md` | [DATE] | `/arckit.service-assessment` | ✅ |
-| 19 | Secure by Design | `projects/{project_id}/ARC-*-SECD-*.md` | [DATE] | `/arckit.secure` | ✅ |
-| 20 | AI Playbook | `projects/{project_id}/ARC-*-AIPB-*.md` | [DATE] | `/arckit.ai-playbook` | ✅ |
-| 21 | ATRS Record | `projects/{project_id}/ARC-*-ATRS-*.md` | [DATE] | `/arckit.atrs` | ✅ |
+| 17 | TCoP Review | `projects/{project_id}/ARC-*-TCOP-*.md` | [DATE] | `/arckit-uk:uk-tcop` | ✅ |
+| 18 | Service Assessment | `projects/{project_id}/ARC-*-SVCASS-*.md` | [DATE] | `/arckit-uk:uk-service-assessment` | ✅ |
+| 19 | Secure by Design | `projects/{project_id}/ARC-*-SECD-*.md` | [DATE] | `/arckit-uk:uk-secure` | ✅ |
+| 20 | AI Playbook | `projects/{project_id}/ARC-*-AIPB-*.md` | [DATE] | `/arckit-uk:uk-ai-playbook` | ✅ |
+| 21 | ATRS Record | `projects/{project_id}/ARC-*-ATRS-*.md` | [DATE] | `/arckit-uk:uk-atrs` | ✅ |
 | 22 | Traceability Matrix | `projects/{project_id}/ARC-*-TRAC-*.md` | [DATE] | `/arckit.traceability` | ✅ |
 | 23 | Analysis Report | `projects/{project_id}/ARC-*-ANAL-*.md` | [DATE] | `/arckit.analyze` | ✅ |
 
@@ -727,11 +727,11 @@ Complete chronological log of all project activities extracted from git history:
 [DATE] [TIME] - /arckit.dld-review - DLD Review: [VERDICT] with [N] findings
 [DATE] [TIME] - /arckit.backlog - Product Backlog: [N] stories across [M] sprints
 [DATE] [TIME] - /arckit.servicenow - ServiceNow Design: [N] CIs, [M] SLAs defined
-[DATE] [TIME] - /arckit.tcop - TCoP Review: [N]/13 points satisfied
-[DATE] [TIME] - /arckit.service-assessment - Service Assessment: [N]/14 points satisfied, [READY/NOT READY]
-[DATE] [TIME] - /arckit.secure - Secure by Design: NCSC CAF [N]/14 principles, Cyber Essentials [LEVEL]
-[DATE] [TIME] - /arckit.ai-playbook - AI Playbook: [N] ethical principles assessed
-[DATE] [TIME] - /arckit.atrs - ATRS Record: Transparency record published
+[DATE] [TIME] - /arckit-uk:uk-tcop - TCoP Review: [N]/13 points satisfied
+[DATE] [TIME] - /arckit-uk:uk-service-assessment - Service Assessment: [N]/14 points satisfied, [READY/NOT READY]
+[DATE] [TIME] - /arckit-uk:uk-secure - Secure by Design: NCSC CAF [N]/14 principles, Cyber Essentials [LEVEL]
+[DATE] [TIME] - /arckit-uk:uk-ai-playbook - AI Playbook: [N] ethical principles assessed
+[DATE] [TIME] - /arckit-uk:uk-atrs - ATRS Record: Transparency record published
 [DATE] [TIME] - /arckit.traceability - Traceability Matrix: [PERCENTAGE]% coverage achieved
 [DATE] [TIME] - /arckit.analyze - Quality Analysis: [N] artifacts analyzed, [FINDINGS]
 ```
@@ -820,11 +820,11 @@ ArcKit commands used in this project:
 | `/arckit.dld-review` | Review vendor Detailed Design | After HLD approval |
 | `/arckit.backlog` | Convert requirements to user stories | After design review |
 | `/arckit.servicenow` | Design CMDB, SLAs, incident management | With delivery planning |
-| `/arckit.tcop` | Technology Code of Practice (UK Gov) | Before go-live |
-| `/arckit.service-assessment` | GDS Service Standard (UK Gov) | Before Alpha/Beta/Live assessment |
-| `/arckit.secure` | Secure by Design (NCSC CAF, Cyber Essentials) | Throughout project |
-| `/arckit.ai-playbook` | AI Playbook assessment (UK Gov AI systems) | For AI/ML projects |
-| `/arckit.atrs` | Algorithmic Transparency Recording Standard | For algorithmic tools |
+| `/arckit-uk:uk-tcop` | Technology Code of Practice (UK Gov) | Before go-live |
+| `/arckit-uk:uk-service-assessment` | GDS Service Standard (UK Gov) | Before Alpha/Beta/Live assessment |
+| `/arckit-uk:uk-secure` | Secure by Design (NCSC CAF, Cyber Essentials) | Throughout project |
+| `/arckit-uk:uk-ai-playbook` | AI Playbook assessment (UK Gov AI systems) | For AI/ML projects |
+| `/arckit-uk:uk-atrs` | Algorithmic Transparency Recording Standard | For algorithmic tools |
 | `/arckit.traceability` | End-to-end traceability matrix | After all artifacts created |
 | `/arckit.analyze` | Governance quality analysis | Final governance validation |
 

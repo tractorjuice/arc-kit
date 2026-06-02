@@ -34,22 +34,26 @@ Which compliance commands to add depends on the base path:
 
 #### UK Government Base Path
 
+Requires the `arckit-uk` overlay.
+
 | Command | Rationale | Insert After |
 |---------|-----------|-------------|
-| `/arckit:ai-playbook` | UK Government AI Playbook compliance (10 principles) | After `/arckit:tcop` |
-| `/arckit:atrs` | Algorithmic Transparency Recording Standard (mandatory for public-facing algorithmic systems) | After `/arckit:ai-playbook` |
+| `/arckit-uk:uk-ai-playbook` | UK Government AI Playbook compliance (10 principles) | After `/arckit-uk:uk-tcop` |
+| `/arckit-uk:uk-atrs` | Algorithmic Transparency Recording Standard (mandatory for public-facing algorithmic systems) | After `/arckit-uk:uk-ai-playbook` |
 
 #### Defence Base Path
 
+Requires the `arckit-uk-mod` overlay.
+
 | Command | Rationale | Insert After |
 |---------|-----------|-------------|
-| `/arckit:jsp-936` | MOD AI Assurance (JSP 936) — risk classification and approval pathway | After `/arckit:mod-secure` |
+| `/arckit-uk-mod:uk-mod-jsp-936` | MOD AI Assurance (JSP 936) — risk classification and approval pathway | After `/arckit-uk-mod:uk-mod-secure` |
 
 #### Standard Base Path
 
 | Command | Rationale | Insert After |
 |---------|-----------|-------------|
-| `/arckit:ai-playbook` | AI Playbook principles are good practice even outside UK Government | Optional, after quality checks |
+| `/arckit-uk:uk-ai-playbook` (requires arckit-uk) | AI Playbook principles are good practice even outside UK Government | Optional, after quality checks |
 
 ## Critical Gates
 

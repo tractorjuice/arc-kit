@@ -14,7 +14,7 @@ The Network Architect designs network infrastructure, connectivity, and security
 | Command | Purpose | Guide |
 |---------|---------|-------|
 | `/arckit.diagram` | Create network topology, data flow, and security boundary diagrams | [Guide](#docs/guides/diagram.md) |
-| `/arckit.secure` | Contribute network security controls to Secure by Design assessment | [Guide](#docs/guides/secure.md) |
+| `/arckit-uk:uk-secure` | Contribute network security controls to Secure by Design assessment | [Guide](#docs/guides/secure.md) |
 | `/arckit.hld-review` | Review HLD for network architecture patterns and connectivity | [Guide](#docs/guides/hld-review.md) |
 
 ## Secondary Commands
@@ -41,7 +41,7 @@ requirements (NFR-NET) → cloud-research → adr → diagram → secure → hld
 2. **Research networking services**: Run cloud-specific research for networking options
 3. **Record decisions**: Run `/arckit.adr` for network technology choices
 4. **Create diagrams**: Run `/arckit.diagram` with focus on network topology and data flows
-5. **Assess security**: Review `/arckit.secure` for network security controls (firewalls, segmentation, encryption in transit)
+5. **Assess security**: Review `/arckit-uk:uk-secure` for network security controls (firewalls, segmentation, encryption in transit)
 6. **Review HLD**: Participate in `/arckit.hld-review` for network architecture validation
 
 ## Key Artifacts You Contribute To

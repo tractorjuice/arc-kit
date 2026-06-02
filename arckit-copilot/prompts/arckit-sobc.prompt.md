@@ -1,14 +1,21 @@
 ---
-description: 'Create Strategic Outline Business Case (SOBC) using UK Government Green Book 5-case model'
+description: 'Create a Strategic Outline Business Case (SOBC) using the 5-case model (HM Treasury Green Book when governance_framework is UK Gov; generic 5-case structure otherwise)'
 agent: 'agent'
 tools: ['readFile', 'editFiles', 'runCommand', 'codebase', 'search']
 ---
 
 You are helping an enterprise architect create a Strategic Outline Business Case (SOBC) to justify investment in a technology project.
 
+## Business case framework selection
+
+Read `${user_config.governance_framework}` (defaults to `Generic`).
+
+- **`UK Gov`** → produce a full HM Treasury Green Book 5-case SOBC (Strategic / Economic / Commercial / Financial / Management) using Green Book discount rates (3.5% standard), optimism bias adjustments, social cost-benefit framing, and HM Treasury terminology throughout.
+- **`Generic`** → produce the same 5-case STRUCTURE (Strategic / Economic / Commercial / Financial / Management) but with neutral commercial language. Do NOT reference the Green Book, HM Treasury, Spending Reviews, NAO, or UK-government governance roles.
+
 ## About SOBC
 
-A **Strategic Outline Business Case (SOBC)** is the first stage in the UK Government business case lifecycle:
+A **Strategic Outline Business Case (SOBC)** is the first stage in a structured investment justification lifecycle:
 
 - **SOBC**: Strategic Outline (this command) - High-level case for change, done BEFORE detailed requirements
 - **OBC**: Outline Business Case - After some design work, with refined costs
@@ -26,7 +33,7 @@ ${input:topic:Enter project name or topic}
 
 > **Note**: Before generating, scan `projects/` for existing project directories. For each project, list all `ARC-*.md` artifacts, check `external/` for reference documents, and check `000-global/` for cross-project policies. If no external docs exist but they would improve output, ask the user.
 
-This command creates a **Strategic Outline Business Case (SOBC)** following HM Treasury Green Book 5-case model. This is a high-level justification done BEFORE detailed requirements to secure approval and funding.
+This command creates a **Strategic Outline Business Case (SOBC)** following the 5-case model (HM Treasury Green Book under UK Gov; generic 5-case otherwise — see **Business case framework selection** above). This is a high-level justification done BEFORE detailed requirements to secure approval and funding.
 
 **When to use this:**
 
@@ -58,20 +65,19 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 2. **Understand the request**: The user may be:
    - Creating initial SOBC (most common)
    - Updating existing SOBC with new information
-   - Creating UK Government Green Book 5-case model (automatic for UK projects)
+   - Producing a full HM Treasury Green Book 5-case model (when governance_framework is UK Gov)
    - Evaluating multiple strategic options
 
 3. **Read external documents and policies**:
    - Read any **external documents** listed in the project context (`external/` files) — extract budget allocations, cost forecasts, financial constraints, existing spend data, benefit projections
-   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract spending thresholds, approval gates, Green Book discount rates, procurement rules
+   - Read any **global policies** listed in the project context (`000-global/policies/`) — extract spending thresholds, approval gates, discount rates (Green Book rates under UK Gov), procurement rules
    - Read any **enterprise standards** in `projects/000-global/external/` — extract enterprise investment frameworks, strategic business plans, cross-project portfolio investment context
    - If no external docs exist but they would improve the business case, ask: "Do you have any budget documents, financial forecasts, or market research? I can read PDFs directly. Place them in `projects/{project-dir}/external/` and re-run, or skip."
    - **Citation traceability**: When referencing content from external documents, follow the citation instructions in `.arckit/references/citation-instructions.md`. Place inline citation markers (e.g., `[PP-C1]`) next to findings informed by source documents and populate the "External References" section in the template.
 
-4. **Determine project context**:
-   - If user mentions "UK Government", "public sector", "department", "ministry" → Use full Green Book format
-   - Otherwise → Use Green Book structure but adapt language for private sector
-   - Check stakeholder analysis for government-specific stakeholders (Minister, Permanent Secretary, Treasury, NAO)
+4. **Apply framework from `governance_framework`** (already read in the framework selection block above):
+   - **`UK Gov`**: Use full HM Treasury Green Book format, Green Book terminology, public value framing, and UK-government stakeholder roles (Minister, Permanent Secretary, Treasury, NAO).
+   - **`Generic`**: Use the same 5-case structure with neutral commercial language. Adapt examples to the organisation type inferred from stakeholder analysis. Do NOT use Green Book / HM Treasury references.
 
 5. **Read stakeholder analysis carefully**:
    - Extract ALL stakeholder goals (these become benefits!)
@@ -91,7 +97,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
    **Question 1** — header: `Options`, multiSelect: false
    > "How many strategic options should be evaluated in the Economic Case?"
-   - **4 options (Recommended)**: Do Nothing + Minimal + Balanced + Comprehensive — standard Green Book options appraisal
+   - **4 options (Recommended)**: Do Nothing + Minimal + Balanced + Comprehensive — standard options appraisal (Green Book options appraisal under UK Gov)
    - **3 options**: Do Nothing + two alternatives — suitable for straightforward investment decisions
    - **5 options**: Do Nothing + four alternatives — for complex programmes with multiple viable approaches
 
@@ -112,7 +118,7 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
 
    > **Tip**: Users can customize templates with `/arckit:customize sobc`
 
-   **Five Cases (HM Treasury Green Book Model)**:
+   **The Five-Case Model** (the HM Treasury Green Book provides this model and its terminology under UK Gov; under Generic, use the same five cases with neutral commercial framing):
 
    **A. Strategic Case**:
    - **Problem Statement**: What's broken? (from stakeholder pain points)
@@ -324,7 +330,7 @@ Provide:
 - Financial Case: Non-negotiable spend, insurance cost reduction
 - Management Case: Deadline-driven, stakeholder compliance team owns
 
-## UK Government Specific Guidance
+## When governance_framework is UK Gov: UK Government Specific Guidance
 
 **Key HM Treasury references**: The Green Book provides the 5-case model, the [Magenta Book](https://www.gov.uk/government/publications/the-magenta-book) provides evaluation design guidance (theory of change, proportionality, impact evaluation), and the [Sourcing Playbook](https://www.gov.uk/government/publications/the-sourcing-and-consultancy-playbooks) covers should-cost modelling and market assessment. See `docs/guides/codes-of-practice.md` for the full Rainbow of Books mapping.
 
@@ -463,7 +469,7 @@ After writing the file, show ONLY a concise summary:
 - Management Case: Delivery capability (10-15 pages)
 - Appendices: Stakeholder analysis, risk register, assumptions
 
-**Total Length**: [X] pages (ready for senior leadership and Treasury approval)
+**Total Length**: [X] pages (ready for senior leadership approval; Treasury approval under UK Gov)
 
 ### Next Steps
 

@@ -484,7 +484,7 @@ existing open communities to join."
 
 # If UK Government project
 "As a UK Government project, ecosystem and market plays should be validated against TCoP Point 3
-(Open Source), Point 8 (Share/Reuse), and G-Cloud procurement constraints. Run `/arckit:tcop`."
+(Open Source), Point 8 (Share/Reuse), and G-Cloud procurement constraints. Run `/arckit-uk:uk-tcop`."
 ```
 
 ## Important Notes

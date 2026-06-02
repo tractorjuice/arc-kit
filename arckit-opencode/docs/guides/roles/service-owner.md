@@ -15,7 +15,7 @@ The Service Owner is accountable for the quality and performance of a live servi
 |---------|---------|-------|
 | `/arckit.servicenow` | Design ServiceNow service management — CMDB, SLAs, incident, change, problem | [Guide](#docs/guides/servicenow.md) |
 | `/arckit.operationalize` | Create operational readiness pack — support model, runbooks, DR/BCP, handover | [Guide](#docs/guides/operationalize.md) |
-| `/arckit.service-assessment` | Prepare for GDS Service Standard assessment (14 points) | [Guide](#docs/guides/service-assessment.md) |
+| `/arckit-uk:uk-service-assessment` | Prepare for GDS Service Standard assessment (14 points) | [Guide](#docs/guides/service-assessment.md) |
 
 ## Secondary Commands
 
@@ -41,7 +41,7 @@ requirements → servicenow → operationalize → service-assessment → story
 1. **Understand requirements**: Review NFR requirements for availability, performance, and support SLAs
 2. **Design service management**: Run `/arckit.servicenow` for CMDB, SLAs, incident workflows, change control
 3. **Prepare operations**: Run `/arckit.operationalize` for runbooks, DR/BCP, on-call rotas, and handover docs
-4. **Assess readiness**: Run `/arckit.service-assessment` to evidence compliance against GDS Service Standard
+4. **Assess readiness**: Run `/arckit-uk:uk-service-assessment` to evidence compliance against GDS Service Standard
 5. **Report**: Run `/arckit.story` to document the service journey for governance
 
 ## Key Artifacts You Own

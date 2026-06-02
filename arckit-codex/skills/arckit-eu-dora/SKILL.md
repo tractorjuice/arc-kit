@@ -191,7 +191,7 @@ Total Gaps: {N} ({N} high priority)
 Next steps:
 1. {If OSE designation: Run $arckit-eu-nis2 for NIS2 overlap}
 2. Run $arckit-risk to register DORA gaps
-3. Run $arckit-secure for ICT security controls
+3. Run /arckit-uk:uk-secure for ICT security controls
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 

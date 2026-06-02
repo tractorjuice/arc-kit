@@ -28,7 +28,7 @@ Section 208 of the E-Government Act of 2002 requires federal agencies to conduct
 
 The PIA must align with the **Privacy Act of 1974** (5 U.S.C. §552a). If the system meets the Privacy Act definition of a System of Records — records about individuals retrieved by a personal identifier — the agency must publish (or update) a **System of Records Notice (SORN)** in the Federal Register before the system goes operational. PII handling must conform to the Privacy Act's Fair Information Practice Principles, NIST SP 800-122 protections, and any sector-specific overlays (HIPAA, FERPA, IRS Publication 1075 for Federal Tax Information, CJIS for criminal-justice information).
 
-This US PIA is distinct from the Canadian PIA (`$arckit-ca-pia`), Australian PIA (`$arckit-au-pia`), and UK DPIA (`$arckit-dpia`) — do not confuse the statutory bases, terminology, or oversight bodies. The PIA is signed off by the agency's **Senior Agency Official for Privacy (SAOP)** and published (with appropriate redactions) on the agency's privacy page per M-03-22 §II.B.4.
+This US PIA is distinct from the Canadian PIA (`$arckit-ca-pia`), Australian PIA (`$arckit-au-pia`), and UK DPIA (`/arckit-uk:uk-dpia`) — do not confuse the statutory bases, terminology, or oversight bodies. The PIA is signed off by the agency's **Senior Agency Official for Privacy (SAOP)** and published (with appropriate redactions) on the agency's privacy page per M-03-22 §II.B.4.
 
 **Authoritative anchors**:
 
@@ -82,7 +82,7 @@ Identity-proofing PII flows reconcile with `$arckit-us-icam`. AI systems process
 
 ## Important Notes
 
-- **This is the US PIA, not the Canadian PIA, UK DPIA, or Australian PIA** — different statutory bases, different oversight bodies (SAOP, not OPC / ICO / OAIC), different terminology (SORN, not PIB / ROPA). Do not blend frameworks; the `$arckit-ca-pia`, `$arckit-au-pia`, and `$arckit-dpia` commands exist precisely because the regimes differ.
+- **This is the US PIA, not the Canadian PIA, UK DPIA, or Australian PIA** — different statutory bases, different oversight bodies (SAOP, not OPC / ICO / OAIC), different terminology (SORN, not PIB / ROPA). Do not blend frameworks; the `$arckit-ca-pia`, `$arckit-au-pia`, and `/arckit-uk:uk-dpia` commands exist precisely because the regimes differ.
 - **SORN publication is a hard prerequisite** — if a SORN is required, the SORN must be published in the Federal Register and the comment period closed (typically 30 days) before the System of Records is operational. Do not treat this as a parallel task to launch.
 - **SAOP sign-off is non-delegable for high-risk systems** — agency policy may permit privacy-officer sign-off for low-risk PIAs, but high-risk systems require the SAOP. Confirm the agency's delegation policy before assuming any officer can sign.
 - **PIAs are not one-shot** — re-trigger on substantial modifications: new PII elements, new uses, new disclosure recipients, change of processor / contractor, change of cloud region or hosting model, or any change that materially alters the privacy risk posture.

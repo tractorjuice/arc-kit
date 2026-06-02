@@ -216,7 +216,7 @@ Incident Reporting: {Ready / Gap — 24h/72h capability}
 Next steps:
 1. {If no eu-nis2 baseline: run /arckit.eu-nis2 first}
 2. {If personal data in security monitoring: run /arckit.at-dsgvo}
-3. Run /arckit.secure to implement Art. 21 controls
+3. Run /arckit-uk:uk-secure to implement Art. 21 controls
 4. Run /arckit.risk to register NISG gaps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

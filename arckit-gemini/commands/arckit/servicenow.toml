@@ -38,7 +38,7 @@ Use `/arckit:servicenow` after completing:
 1. Requirements (`/arckit:requirements`)
 2. Architecture diagrams (`/arckit:diagram`) - especially C4 diagrams
 3. High-Level Design (HLD) or Detailed Design (DLD) - if available
-4. Technology Code of Practice assessment (`/arckit:tcop`) - for UK Gov projects
+4. Technology Code of Practice assessment (`/arckit-uk:uk-tcop`) - for UK Gov projects
 
 This command should be run **before** implementation begins, so that operational processes are designed in parallel with development.
 

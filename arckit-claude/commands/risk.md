@@ -7,8 +7,6 @@ handoffs:
     description: Feed risk register into SOBC Management Case
   - command: requirements
     description: Create risk-driven requirements
-  - command: secure
-    description: Validate security controls against risks
 ---
 
 You are helping an enterprise architect create a comprehensive risk register.

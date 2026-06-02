@@ -410,7 +410,7 @@ Return ONLY a concise summary including:
 - Number of gaps identified
 - Data utility highlights (sources with valuable secondary uses)
 - Data model impact (new entities/attributes)
-- Next steps (run `$arckit-data-model`, `$arckit-adr`, `$arckit-dpia`)
+- Next steps (run `$arckit-data-model`, `$arckit-adr`, `/arckit-uk:uk-dpia`)
 
 ## Quality Standards
 
@@ -462,7 +462,7 @@ Return ONLY a concise summary including:
 - **Templates** — `.arckit/templates/datascout-template.md` (override at `.arckit/templates-custom/datascout-template.md`)
 - **Helpers** — `.arckit/scripts/bash/create-project.sh` · `.arckit/scripts/bash/generate-document-id.sh`
 - **External tools** — `WebSearch` · `WebFetch` (no MCP)
-- **Related commands** — `$arckit-requirements` (input) · `$arckit-data-model` (downstream) · `$arckit-dpia` (downstream privacy assessment)
+- **Related commands** — `$arckit-requirements` (input) · `$arckit-data-model` (downstream) · `/arckit-uk:uk-dpia` (downstream privacy assessment)
 
 ## User Request
 
@@ -477,6 +477,5 @@ After completing this command, consider running:
 - `$arckit-data-model` -- Add discovered sources to data model
 - `$arckit-research` -- Research data source pricing and vendors
 - `$arckit-adr` -- Record data source selection decisions
-- `$arckit-dpia` -- Assess third-party data sources with personal data
 - `$arckit-diagram` -- Create data flow diagrams
 - `$arckit-traceability` -- Map DR-xxx requirements to discovered sources

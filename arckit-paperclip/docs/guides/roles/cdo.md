@@ -14,7 +14,7 @@ The Chief Data Officer sets data strategy and governance policy. You use ArcKit'
 | Command | Purpose | Guide |
 |---------|---------|-------|
 | `/arckit.data-model` | Review and approve data models for governance compliance | [Guide](#docs/guides/data-model.md) |
-| `/arckit.dpia` | Oversee Data Protection Impact Assessments for regulatory compliance | [Guide](#docs/guides/dpia.md) |
+| `/arckit-uk:uk-dpia` | Oversee Data Protection Impact Assessments for regulatory compliance | [Guide](#docs/guides/dpia.md) |
 | `/arckit.datascout` | Discover and catalogue external data sources across the organisation | [Guide](#docs/guides/datascout.md) |
 | `/arckit.data-mesh-contract` | Define data governance standards for federated data products | [Guide](#docs/guides/data-mesh-contract.md) |
 
@@ -27,7 +27,7 @@ The Chief Data Officer sets data strategy and governance policy. You use ArcKit'
 | `/arckit.strategy` | Contribute data strategy to Architecture Strategy | [Guide](#docs/guides/strategy.md) |
 | `/arckit.analyze` | Review governance quality for data completeness | [Guide](#docs/guides/analyze.md) |
 | `/arckit.platform-design` | Oversee data platform strategy for data marketplaces | [Guide](#docs/guides/platform-design.md) |
-| `/arckit.atrs` | Review algorithmic transparency records for data ethics | [Guide](#docs/guides/atrs.md) |
+| `/arckit-uk:uk-atrs` | Review algorithmic transparency records for data ethics | [Guide](#docs/guides/atrs.md) |
 
 ## Typical Workflow
 
@@ -42,7 +42,7 @@ principles → requirements (DR-xxx) → datascout → data-model → data-mesh-
 3. **Catalogue data sources**: Run `/arckit.datascout` to map available data across the organisation
 4. **Approve data models**: Review `/arckit.data-model` outputs for governance compliance
 5. **Define contracts**: Run `/arckit.data-mesh-contract` for federated data governance standards
-6. **Oversee privacy**: Review `/arckit.dpia` for regulatory compliance
+6. **Oversee privacy**: Review `/arckit-uk:uk-dpia` for regulatory compliance
 
 ## Key Artifacts You Oversee
 

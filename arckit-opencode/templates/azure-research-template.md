@@ -522,7 +522,7 @@ For SECRET data classification:
 ### Integration with Other ArcKit Commands
 
 - Run `/arckit.diagram` to create detailed Azure architecture diagrams
-- Run `/arckit.secure` to validate against UK Secure by Design
+- Run `/arckit-uk:uk-secure` to validate against UK Secure by Design
 - Run `/arckit.devops` to plan Azure DevOps/GitHub Actions pipelines
 - Run `/arckit.finops` to create Azure cost management strategy
 

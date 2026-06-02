@@ -109,7 +109,7 @@ When UK Government project detected:
 ## Follow-on Actions
 
 - Feed AWS findings into `/arckit.diagram` for AWS architecture diagrams
-- Run `/arckit.secure` to validate against UK Secure by Design
+- Run `/arckit-uk:uk-secure` to validate against UK Secure by Design
 - Run `/arckit.devops` to plan AWS CodePipeline CI/CD
 - Run `/arckit.finops` to create AWS FinOps cost management strategy
 - Run `/arckit.adr` to document AWS service selection decisions

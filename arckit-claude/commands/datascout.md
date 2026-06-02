@@ -11,8 +11,6 @@ handoffs:
     description: Research data source pricing and vendors
   - command: adr
     description: Record data source selection decisions
-  - command: dpia
-    description: Assess third-party data sources with personal data
   - command: diagram
     description: Create data flow diagrams
   - command: traceability

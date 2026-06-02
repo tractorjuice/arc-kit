@@ -20,9 +20,9 @@ This guide maps HM Treasury and Cabinet Office codes of practice to ArcKit comma
 
 | Playbook | Publisher | Purpose | ArcKit Coverage |
 |----------|-----------|---------|-----------------|
-| **Sourcing Playbook** | Cabinet Office | Procurement strategy, market assessment, should-cost modelling | `/arckit:dos`, `/arckit:sow`, `/arckit:evaluate` |
+| **Sourcing Playbook** | Cabinet Office | Procurement strategy, market assessment, should-cost modelling | `/arckit-uk:uk-dos`, `/arckit:sow`, `/arckit:evaluate` |
 | **Consultancy Playbook** | Cabinet Office | When to use consultants, knowledge transfer, value for money | `/arckit:sow`, `/arckit:research` |
-| **DDaT Playbook** | Cabinet Office | Digital procurement policy reforms, open standards, interoperability | `/arckit:dos`, `/arckit:tcop` |
+| **DDaT Playbook** | Cabinet Office | Digital procurement policy reforms, open standards, interoperability | `/arckit-uk:uk-dos`, `/arckit-uk:uk-tcop` |
 
 ---
 
@@ -36,7 +36,7 @@ The [Magenta Book](https://www.gov.uk/government/publications/the-magenta-book) 
 |---------|-------------|-----------------|
 | **Theory of Change** | Logic model linking inputs → activities → outputs → outcomes → impact | `/arckit:sobc` (Strategic Case, benefits chain) |
 | **Proportionality** | Match evaluation effort to spend, risk, and novelty | `/arckit:sobc` (Management Case) |
-| **Process evaluation** | Assess how a programme is being implemented | `/arckit:service-assessment` |
+| **Process evaluation** | Assess how a programme is being implemented | `/arckit-uk:uk-service-assessment` |
 | **Impact evaluation** | Assess whether the programme caused observed outcomes | `/arckit:sobc` (benefits realisation) |
 | **Value-for-money evaluation** | Assess efficiency and cost-effectiveness | `/arckit:finops`, `/arckit:sobc` (Economic Case) |
 
@@ -115,19 +115,19 @@ The [Sourcing and Consultancy Playbooks](https://www.gov.uk/government/publicati
 |--------|-------------|-----------------|
 | **Market assessment** | Understand the supplier landscape and capability | `/arckit:research` (market research) |
 | **Should-cost modelling** | Estimate realistic costs before procurement | `/arckit:sobc` (Financial Case) |
-| **Outcome-based specs** | Define what, not how — focus on outcomes | `/arckit:dos` (outcome description), `/arckit:sow` |
+| **Outcome-based specs** | Define what, not how — focus on outcomes | `/arckit-uk:uk-dos` (outcome description), `/arckit:sow` |
 | **Social value** | Minimum 10% weighting in evaluation | `/arckit:evaluate` (evaluation criteria) |
-| **SME access** | Ensure opportunities are accessible to SMEs | `/arckit:dos` (lot structure) |
+| **SME access** | Ensure opportunities are accessible to SMEs | `/arckit-uk:uk-dos` (lot structure) |
 | **KPIs and contract management** | Define measurable performance indicators | `/arckit:sow` (SLA and acceptance criteria) |
 
 ### DDaT Playbook Policy Reforms
 
 | Reform | Description | ArcKit Artefact |
 |--------|-------------|-----------------|
-| **Open standards** | Use open data and interface standards | `/arckit:principles`, `/arckit:tcop` |
+| **Open standards** | Use open data and interface standards | `/arckit:principles`, `/arckit-uk:uk-tcop` |
 | **Interoperability** | Avoid lock-in, ensure portability | `/arckit:hld-review` |
-| **Modular contracting** | Break large programmes into smaller contracts | `/arckit:dos` (lot structure) |
-| **User-centred** | Procurement driven by user needs | `/arckit:requirements`, `/arckit:service-assessment` |
+| **Modular contracting** | Break large programmes into smaller contracts | `/arckit-uk:uk-dos` (lot structure) |
+| **User-centred** | Procurement driven by user needs | `/arckit:requirements`, `/arckit-uk:uk-service-assessment` |
 
 ---
 
@@ -136,7 +136,7 @@ The [Sourcing and Consultancy Playbooks](https://www.gov.uk/government/publicati
 | Phase | Applicable Books | Key ArcKit Commands |
 |-------|-----------------|---------------------|
 | **Strategy & Discovery** | Green Book, Magenta Book (evaluation questions), Sourcing Playbook (market assessment) | `/arckit:sobc`, `/arckit:research`, `/arckit:stakeholders` |
-| **Alpha** | AQuA Book (analytical design), Rose Book (asset identification), DDaT Playbook | `/arckit:analyze`, `/arckit:principles`, `/arckit:dos` |
+| **Alpha** | AQuA Book (analytical design), Rose Book (asset identification), DDaT Playbook | `/arckit:analyze`, `/arckit:principles`, `/arckit-uk:uk-dos` |
 | **Beta** | Magenta Book (baseline data), AQuA Book (QA review), Sourcing Playbook (procurement) | `/arckit:evaluate`, `/arckit:sow`, `/arckit:data-model` |
 | **Live** | Magenta Book (impact evaluation), Orange Book (ongoing risk), Commercial Playbooks (contract management) | `/arckit:finops`, `/arckit:risk`, `/arckit:operationalize` |
 | **Post-implementation** | Green Book (benefits review), Magenta Book (VfM evaluation), Rose Book (exploitation) | `/arckit:sobc` (benefits realisation), `/arckit:strategy` |

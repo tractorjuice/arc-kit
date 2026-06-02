@@ -29,7 +29,7 @@ The Delivery Manager ensures the project is delivered on time and to quality sta
 | `/arckit.story` | Generate project narrative for governance reporting | [Guide](#docs/guides/story.md) |
 | `/arckit.operationalize` | Review operational readiness for go-live | [Guide](#docs/guides/operationalize.md) |
 | `/arckit.analyze` | Review governance quality for delivery assurance | [Guide](#docs/guides/analyze.md) |
-| `/arckit.service-assessment` | Prepare evidence for GDS Service Standard gates | [Guide](#docs/guides/service-assessment.md) |
+| `/arckit-uk:uk-service-assessment` | Prepare evidence for GDS Service Standard gates | [Guide](#docs/guides/service-assessment.md) |
 
 ## Typical Workflow
 

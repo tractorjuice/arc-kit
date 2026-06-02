@@ -251,7 +251,7 @@ Return ONLY a concise summary including:
 - UK Government suitability (G-Cloud, UK region, classification)
 - Estimated monthly cost
 - What's in the document
-- Next steps (`$arckit-diagram`, `$arckit-secure`, `$arckit-devops`)
+- Next steps (`$arckit-diagram`, `/arckit-uk:uk-secure`, `$arckit-devops`)
 
 ## Quality Standards
 

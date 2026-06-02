@@ -244,7 +244,7 @@ Workshop 5 — Risk Treatment:
 Next steps:
 1. Submit EBIOS study to Autorité d'Homologation for review
 2. {If cloud: Run /arckit.fr-secnumcloud for hosting provider assessment}
-3. Run /arckit.secure to implement Workshop 5 technical measures
+3. Run /arckit-uk:uk-secure to implement Workshop 5 technical measures
 4. Run /arckit.risk to import residual risks into project risk register
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```

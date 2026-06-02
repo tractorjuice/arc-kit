@@ -113,7 +113,7 @@ Output: `projects/<id>/ARC-<id>-WARD-001-v1.0.md` (uses multi-instance numbering
 | Discovery | Identify user needs and components | `/arckit.requirements`, `/arckit.stakeholders` |
 | Mapping | Create Wardley Map | `/arckit.wardley` |
 | Analysis | Identify strategic plays | Review workshop |
-| Sourcing | Research market options | `/arckit.research`, `/arckit.gcloud-search` |
+| Sourcing | Research market options | `/arckit.research`, `/arckit-uk:uk-gcloud-search` |
 | Decision | Build vs buy recommendations | `/arckit.sow`, `/arckit.evaluate` |
 
 ---

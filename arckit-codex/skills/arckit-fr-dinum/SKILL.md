@@ -190,7 +190,7 @@ Total critical gaps: {N}
 Next steps:
 1. {If personal data: Run $arckit-fr-rgpd for CNIL compliance}
 2. {If cloud: Run $arckit-fr-secnumcloud for cloud doctrine alignment}
-3. {If RGS gaps: Run $arckit-secure for security controls}
+3. {If RGS gaps: Run /arckit-uk:uk-secure for security controls}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 

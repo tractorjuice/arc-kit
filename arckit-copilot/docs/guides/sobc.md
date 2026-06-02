@@ -89,7 +89,7 @@ Output: `projects/<id>/ARC-<id>-SOBC-v1.0.md`
 | Risk | Identify and assess risks | `/arckit.risk` |
 | Business Case | Create SOBC | `/arckit.sobc` |
 | Architecture | High-level design | `/arckit.diagram`, `/arckit.hld-review` |
-| Procurement | Market engagement | `/arckit.sow`, `/arckit.gcloud-search` |
+| Procurement | Market engagement | `/arckit.sow`, `/arckit-uk:uk-gcloud-search` |
 
 ---
 

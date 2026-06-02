@@ -458,7 +458,7 @@ This document presents data source discovery findings for the **[PROJECT_NAME]**
 
 5. **Update data model** with external data entities (`/arckit.data-model`)
 6. **Create ADRs** for significant data source decisions (`/arckit.adr`)
-7. **DPIA review** for sources containing personal data (`/arckit.dpia`)
+7. **DPIA review** for sources containing personal data (`/arckit-uk:uk-dpia`)
 
 ### Gap Resolution (4-8 weeks)
 
