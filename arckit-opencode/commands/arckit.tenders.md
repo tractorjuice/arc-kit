@@ -19,7 +19,7 @@ UK Tenders MCP, validate its output against the JSON Schema, compute a small
 set of deterministic derived fields, then dispatch the
 **`arckit-tenders-writer`** subagent to render the final artefact.
 
-Claude Code plugin subagents cannot themselves dispatch further subagents,
+Plugin subagents cannot themselves dispatch further subagents,
 so this orchestration logic lives in the slash command (which runs in the
 main thread) rather than in an `arckit-tenders` agent file. Reader and
 writer agents are dispatched normally.

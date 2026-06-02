@@ -27,7 +27,7 @@ market benchmarks and incumbency, this command frames it as **rival
 suppliers** — who you compete against, their awarded-value share, and a
 head-to-head against a focal supplier.
 
-Claude Code plugin subagents cannot themselves dispatch further subagents,
+Plugin subagents cannot themselves dispatch further subagents,
 so this orchestration logic lives in the slash command (which runs in the
 main thread) rather than in an `arckit-competitors` agent file. Reader and
 writer agents are dispatched normally.
