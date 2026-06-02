@@ -39,6 +39,8 @@ export const DOC_TYPES = {
   'STKE':      { name: 'Stakeholder Analysis',             category: 'Discovery' },
   'RSCH':      { name: 'Research Findings',                category: 'Discovery' },
   'DSCT':      { name: 'Data Source Discovery',            category: 'Discovery' },
+  'TNDR':      { name: 'Procurement Market Intelligence',  category: 'Discovery', regime: 'UK' },
+  'CMPT':      { name: 'Competitor Landscape',             category: 'Discovery', regime: 'UK' },
   // Planning
   'SOBC':      { name: 'Strategic Outline Business Case',  category: 'Planning' },
   'PLAN':      { name: 'Project Plan',                     category: 'Planning' },
@@ -232,7 +234,7 @@ export const HIGH_SEVERITY_TYPES = Object.values(HIGH_SEVERITY_BY_REGIME).flat()
 // Multi-instance types that require sequence numbers (e.g. ADR-001, RSCH-002)
 export const MULTI_INSTANCE_TYPES = new Set([
   'ADR', 'DIAG', 'DFD', 'WARD', 'DMC',
-  'RSCH', 'AWRS', 'AZRS', 'GCRS', 'DSCT',
+  'RSCH', 'AWRS', 'AZRS', 'GCRS', 'DSCT', 'TNDR', 'CMPT',
   'WGAM', 'WCLM', 'WVCH',
   'GOVR', 'GCSR', 'GLND', 'GRNT',
 ]);
@@ -255,6 +257,8 @@ export const SUBDIR_MAP = {
   'AZRS': 'research',
   'GCRS': 'research',
   'DSCT': 'research',
+  'TNDR': 'research',
+  'CMPT': 'research',
   'GOVR': 'research',
   'GCSR': 'research',
   'GLND': 'research',
