@@ -145,9 +145,9 @@ UK Tenders MCP server fronting ~677,000 UK contracting processes across five nat
 
 > **Allowlist note:** `arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__uk-tenders__` prefix via `startsWith`, so all 11 tools clear the permission hook automatically. However, `arckit-tenders-reader` additionally declares a `tools:` frontmatter allowlist containing only the 7 read-only tools above (rows 1–7). `query_sql` is documented here for completeness — it exposes free-form SQL against the procurement dataset and is explicitly excluded from the allowlist because free-form SQL against an untrusted endpoint is a prompt-injection surface. It must **never** be added to any agent's `tools:` allowlist.
 
-**Consumer** (1): `arckit-tenders-reader`.
+**Consumers** (2): `arckit-tenders-reader`, shared by both `/arckit:tenders` and `/arckit:competitors`.
 
-Triggered by `/arckit:tenders`. The reader subagent calls `get_status`, then dispatches by query focus (`buyer`, `capability`, or `supplier`) using the appropriate subset of the 7 allowlisted tools, and returns a schema-validated JSON handoff to the orchestrator tier.
+Triggered by `/arckit:tenders` and `/arckit:competitors`. The reader subagent calls `get_status`, then dispatches by query focus (`buyer`, `capability`, or `supplier`) using the appropriate subset of the 7 allowlisted tools, and returns a schema-validated JSON handoff to the respective orchestrator tier. The tenders orchestrator renders market-wide benchmarks and incumbency (`TNDR` artefact); the competitors orchestrator renders rival-supplier landscape and head-to-head market share (`CMPT` artefact).
 
 ---
 
@@ -188,7 +188,7 @@ Reverse lookup, by tool, for the linter to grep against.
 
 Every MCP response is **untrusted input** under the reader/orchestrator/writer pattern (#442 item 1):
 
-- For commands with the three-tier split (`/arckit:datascout`, `/arckit:gov-reuse`, `/arckit:tenders`), only the reader subagent calls MCP tools. The reader returns schema-validated, length-capped JSON via `validate-handoff.mjs`. The orchestrator and writer never see raw MCP output.
+- For commands with the three-tier split (`/arckit:datascout`, `/arckit:gov-reuse`, `/arckit:tenders`, `/arckit:competitors`), only the reader subagent calls MCP tools. The reader returns schema-validated, length-capped JSON via `validate-handoff.mjs`. The orchestrator and writer never see raw MCP output.
 - For single-tier research agents (`arckit-aws-research`, `arckit-azure-research`, `arckit-gcp-research`, `arckit-gov-code-search`, `arckit-gov-landscape`), the agent's `## Guardrails` section names MCP responses as untrusted bytes and requires citation traceability for any figure pulled from them. Extending the reader/writer split to these agents is the next slice of #442 item 1.
 - Tool allowlist (#442 item 18, shipped in #445): every research agent now declares MCP tools explicitly in its `tools:` frontmatter. No agent inherits MCP tools by default.
 

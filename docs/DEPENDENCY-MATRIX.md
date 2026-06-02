@@ -188,6 +188,11 @@ Most procurement commands require ARC-*-REQ-*.md:
   - Note: Procurement market intelligence from the UK Tenders MCP — award-value benchmarks, top suppliers, incumbency/concentration across ~677k UK contracting processes
   - Requires the bundled `uk-tenders` MCP server (keyless, deferred, best-effort availability)
   - Outputs TNDR artefact; feeds into sobc (Economic Case benchmarks), risk (concentration risk), research (build-vs-buy market context)
+  - Agent-delegating command (reader/orchestrator/writer three-tier split); shares `arckit-tenders-reader` with `/arckit:competitors`
+- **competitors** → Depends on: requirements (O), tenders (O), research (O)
+  - Note: Competitor landscape from the UK Tenders MCP — rival suppliers, awarded-value market share, head-to-head comparison, concentration analysis
+  - Requires the bundled `uk-tenders` MCP server (keyless, deferred, best-effort availability); shares `arckit-tenders-reader` with `/arckit:tenders`
+  - Outputs CMPT artefact; feeds into risk (supplier-concentration/single-supplier-dependency), sobc (market-context benchmark), research (award-evidence grounding), score (Company Experience evidence)
   - Agent-delegating command (reader/orchestrator/writer three-tier split)
 
 ### Tier 8: Design Reviews (Depends on Design Documents + Requirements)
@@ -389,11 +394,22 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 - **ArcKit Version**: 1.6.0
 - **Matrix Date**: 2026-06-02
-- **Commands Documented**: 85
+- **Commands Documented**: 86
 - **Matrix Rows**: 58 (existing) + 18 EU/FR commands in separate section below (see Changelog 2026-04-19)
 - **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.impact`, `/arckit.navigator`, `/arckit.graph-report`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-06-02 - Competitor Landscape command + Assurance wiring (#556)
+
+- **Added**: `/arckit.competitors` command (86th ArcKit command) for competitor landscape analysis from the UK Tenders MCP
+- **Updated**: Tier 7 Procurement to include competitors command alongside tenders
+- **Dependencies**: requirements (O), tenders (O), research (O) — all optional; command can run standalone with only a supplier name, capability keyword, or CPV scope
+- **Consumed by**: risk (O — supplier-concentration/single-supplier-dependency risk), sobc (O — market-context benchmark), research (O — award-evidence grounding), score (O — Company Experience evidence)
+- **Doc-type produced**: `CMPT` (Competitor Landscape, regime UK) — previously pre-registered; now live
+- **Updated**: Commands Documented count from 85 to 86
+- **Assurance wiring**: `risk` now accepts TNDR/CMPT as optional inputs for supplier-concentration risk; `sobc` accepts TNDR/CMPT for Economic Case market-context; `research` accepts TNDR/CMPT for award-evidence grounding; `score` accepts CMPT for Company Experience evidence — all regime-gated handoffs (UK Gov `governance_framework`)
+- **Note**: Agent-delegating command (reader/orchestrator/writer three-tier split). Shares `arckit-tenders-reader` with `/arckit:tenders` — same MCP reader, different orchestrator/writer lens (supplier-rivalry vs. market-wide). Fits alongside tenders in the optional-input pattern.
 
 ### 2026-06-02 - Procurement Market Intelligence command (#556)
 
@@ -401,7 +417,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Updated**: Tier 7 Procurement to include tenders command
 - **Dependencies**: requirements (O), sobc (O), research (O) — all optional; command can run standalone with only a keyword or CPV scope
 - **Consumed by**: sobc (O — Economic Case benchmarks), risk (O — concentration risk), research (O — build-vs-buy market context)
-- **Doc-type produced**: `TNDR` (Procurement Market Intelligence); `CMPT` (Competitor Landscape) also registered for the planned `/arckit.competitors` follow-on
+- **Doc-type produced**: `TNDR` (Procurement Market Intelligence, regime UK)
 - **Updated**: Commands Documented count from 84 to 85
 - **Note**: Agent-delegating command (reader/orchestrator/writer three-tier split). Requires bundled `uk-tenders` MCP server (keyless, deferred, best-effort). Not added to the main DSM table because it produces no artifact currently consumed as a MANDATORY input by any other command — fits alongside datascout in the optional-input pattern.
 

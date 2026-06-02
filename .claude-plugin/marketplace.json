@@ -12,7 +12,7 @@
     {
       "name": "arckit",
       "source": "./arckit-claude",
-      "description": "72 slash commands across strategy, architecture, delivery, and assurance — including UK Government compliance",
+      "description": "73 slash commands across strategy, architecture, delivery, and assurance — including UK Government compliance",
       "version": "5.8.0",
       "author": {
         "name": "TractorJuice"
