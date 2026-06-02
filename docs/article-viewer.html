@@ -302,6 +302,19 @@
                     document.title = articleTitle + ' - ArcKit';
                     document.getElementById('hero-title').textContent = articleTitle;
 
+                    // Per-article SEO: rewrite the canonical + Open Graph tags so each
+                    // ?a=<slug> URL is uniquely indexable instead of collapsing to the
+                    // bare article-viewer.html shell.
+                    var articleUrl = 'https://arckit.org/article-viewer.html?a=' + slug;
+                    var setMeta = function(sel, attr, val) {
+                        var el = document.querySelector(sel);
+                        if (el && val) el.setAttribute(attr, val);
+                    };
+                    setMeta('link[rel="canonical"]', 'href', articleUrl);
+                    setMeta('meta[property="og:url"]', 'content', articleUrl);
+                    setMeta('meta[property="og:title"]', 'content', articleTitle);
+                    setMeta('meta[name="twitter:title"]', 'content', articleTitle);
+
                     var firstPara = md.split(/\n\n+/).find(function(chunk){
                         return chunk && !chunk.startsWith('#') && !chunk.startsWith('!') && !chunk.startsWith('---');
                     });
@@ -309,6 +322,8 @@
                         var clean = firstPara.replace(/\*\*|__|`/g, '').replace(/\s+/g,' ').trim();
                         if (clean.length > 220) clean = clean.slice(0, 217) + '…';
                         document.getElementById('hero-desc').textContent = clean;
+                        setMeta('meta[property="og:description"]', 'content', clean);
+                        setMeta('meta[name="twitter:description"]', 'content', clean);
                     }
 
                     var dateMatch = slug.match(/^(\d{4})-(\d{2})-(\d{2})-/);

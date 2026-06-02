@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" class="govuk-template">
-<script>
+<head>
+    <meta charset="UTF-8">
+    <script>
     // Prevent flash-of-wrong-theme by applying theme before paint
     (function() {
         var stored = localStorage.getItem('arckit-theme');
@@ -10,9 +12,7 @@
             document.documentElement.setAttribute('data-theme', 'dark');
         }
     })();
-</script>
-<head>
-    <meta charset="UTF-8">
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="Architecture governance documentation for {{REPO}} — requirements, architecture decisions, designs, risk register, and compliance artefacts generated with ArcKit.">
     <meta name="author" content="{{REPO_OWNER}}">
@@ -20,10 +20,14 @@
     <meta property="og:description" content="Requirements, ADRs, designs, risk register, and compliance artefacts for {{REPO}}, generated with ArcKit.">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="{{REPO}}">
+    <meta property="og:url" content="{{SITE_URL}}">
+    <meta property="og:image" content="https://arckit.org/og-image.png">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="{{REPO}} — Architecture Documentation">
     <meta name="twitter:description" content="Requirements, ADRs, designs, risk register, and compliance artefacts for {{REPO}}, generated with ArcKit.">
+    <meta name="twitter:image" content="https://arckit.org/og-image.png">
     <title>{{REPO}} — Architecture Documentation</title>
+    <link rel="canonical" href="{{SITE_URL}}">
 
     <script type="application/ld+json">
     {

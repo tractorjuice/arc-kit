@@ -610,6 +610,13 @@ Next Steps:
 - The dashboard displays KPI cards, category charts, coverage bars, and governance checklist computed from manifest.json
 - Users can navigate to any document via sidebar, search, or dashboard project table
 
+### SEO and canonical URL
+
+- The generated `docs/index.html` is search-engine ready: a unique `<title>`, meta description, Open Graph / Twitter cards, a Schema.org `@graph` (Organization / SoftwareSourceCode / WebSite), and a `<link rel="canonical">`.
+- The `sync-guides` hook resolves the canonical and `og:url` to your **published** site URL on a best-effort basis: a `docs/CNAME` (custom domain on GitHub Pages) takes precedence, otherwise the default project Pages URL `https://<owner>.github.io/<repo>/`. Deploying elsewhere (Netlify, Vercel) without a `CNAME`? Update the `canonical` and `og:url` in the generated HTML to match your real URL.
+- Per Google's AI-search guidance no `llms.txt` or AI-specific files are required for indexing — the `docs/llms.txt` this command writes is harmless to Google and only aids non-Google agents.
+- Governance sites can hold sensitive material: enabling GitHub Pages makes them public and indexable. If you do not want the site indexed, add `<meta name="robots" content="noindex">` via a `.arckit/templates-custom/pages-template.html` override.
+
 ---
 
 **Remember**: The `sync-guides` hook handles ALL I/O before this command runs — guide sync, title extraction, repo info, template processing, project scanning, and manifest generation. The command MUST output the Step 5 summary using ONLY the stats from the hook's hook context. Do NOT call any tools — no Read, no Glob, no Write, no Bash. The hook's stats are the single source of truth.

@@ -381,6 +381,29 @@
                         document.title = titleMatch[1] + ' - ArcKit';
                     }
 
+                    // Per-guide SEO: self-referential canonical + Open Graph so each
+                    // ?guide=<slug> URL is uniquely indexable instead of collapsing to
+                    // the bare guide-viewer.html shell.
+                    var guideTitle = titleMatch ? titleMatch[1] : 'Guide';
+                    var guideUrl = 'https://arckit.org/guide-viewer.html?guide=' + guide;
+                    var setMeta = function(sel, attr, val) {
+                        var el = document.querySelector(sel);
+                        if (el && val) el.setAttribute(attr, val);
+                    };
+                    setMeta('link[rel="canonical"]', 'href', guideUrl);
+                    setMeta('meta[property="og:url"]', 'content', guideUrl);
+                    setMeta('meta[property="og:title"]', 'content', guideTitle);
+                    setMeta('meta[name="twitter:title"]', 'content', guideTitle);
+                    var gPara = md.split(/\n\n+/).find(function(chunk){
+                        return chunk && !chunk.startsWith('#') && !chunk.startsWith('!') && !chunk.startsWith('---') && !chunk.startsWith('>') && !chunk.startsWith('|');
+                    });
+                    if (gPara) {
+                        var gClean = gPara.replace(/\*\*|__|`/g, '').replace(/\s+/g,' ').trim();
+                        if (gClean.length > 220) gClean = gClean.slice(0, 217) + '…';
+                        setMeta('meta[property="og:description"]', 'content', gClean);
+                        setMeta('meta[name="twitter:description"]', 'content', gClean);
+                    }
+
                     var rawHtml = marked.parse(md);
                     var safeHtml = DOMPurify.sanitize(rawHtml);
                     var contentEl = document.getElementById('content');

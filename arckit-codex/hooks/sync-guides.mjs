@@ -71,7 +71,7 @@ function extractFirstHeading(filePath) {
 }
 
 function parseRepoInfo(repoRoot) {
-  const info = { repo: basename(repoRoot), owner: '', repoUrl: '', contentBaseUrl: '' };
+  const info = { repo: basename(repoRoot), owner: '', repoUrl: '', contentBaseUrl: '', siteUrl: '' };
   const gitConfig = readText(join(repoRoot, '.git', 'config'));
   if (!gitConfig) return info;
 
@@ -86,6 +86,18 @@ function parseRepoInfo(repoRoot) {
     info.repo = m[2];
     info.repoUrl = `https://github.com/${m[1]}/${m[2]}`;
     info.contentBaseUrl = `https://raw.githubusercontent.com/${m[1]}/${m[2]}/main`;
+    // Best-effort published site URL for canonical / og:url. A docs/CNAME
+    // (custom domain on GitHub Pages) wins; otherwise fall back to the default
+    // project Pages URL. Users deploying elsewhere (Netlify/Vercel) can override
+    // the canonical in the generated HTML.
+    const cname = (readText(join(repoRoot, 'docs', 'CNAME')) || '').trim();
+    if (cname) {
+      info.siteUrl = `https://${cname}/`;
+    } else {
+      info.siteUrl = info.repo.toLowerCase() === `${info.owner.toLowerCase()}.github.io`
+        ? `https://${info.owner}.github.io/`
+        : `https://${info.owner}.github.io/${info.repo}/`;
+    }
   }
   return info;
 }
@@ -949,6 +961,7 @@ if (templatePath) {
   html = html.replace(/\{\{REPO\}\}/g, escapeHtml(repoInfo.repo));
   html = html.replace(/\{\{REPO_URL\}\}/g, escapeHtml(repoInfo.repoUrl));
   html = html.replace(/\{\{CONTENT_BASE_URL\}\}/g, escapeHtml(repoInfo.contentBaseUrl));
+  html = html.replace(/\{\{SITE_URL\}\}/g, escapeHtml(repoInfo.siteUrl));
   html = html.replace(/\{\{VERSION\}\}/g, escapeHtml(version));
 
   const docsDir = join(repoRoot, 'docs');
