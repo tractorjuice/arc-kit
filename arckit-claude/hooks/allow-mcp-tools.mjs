@@ -21,6 +21,7 @@ const ALLOWED_PREFIXES = [
   'mcp__google-developer-knowledge__',
   'mcp__datacommons-mcp__',
   'mcp__govreposcrape__',
+  'mcp__uk-tenders__',
 ];
 
 let raw = '';
