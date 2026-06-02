@@ -4,7 +4,7 @@
   "title": "tenders reader → orchestrator handoff payload (v1)",
   "type": "object",
   "additionalProperties": false,
-  "required": ["query", "data_current_as_of", "sources", "suppliers", "caveats", "errors"],
+  "required": ["query", "sources", "suppliers", "caveats", "errors"],
   "properties": {
     "query": {
       "type": "object",

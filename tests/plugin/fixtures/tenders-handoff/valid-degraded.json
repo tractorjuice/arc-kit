@@ -1,0 +1,10 @@
+{
+  "query": { "focus": "buyer", "buyer": "HMRC" },
+  "sources": [],
+  "suppliers": [
+    { "name": "Acme Digital Ltd", "awarded_value_total_gbp": 4200000, "award_count": 3, "share_pct": 100, "buyers": ["HMRC"], "sample_notices": [ { "notice_url": "https://www.find-tender.service.gov.uk/Notice/012345-2023" } ] }
+  ],
+  "degraded_sources": ["contracts_finder", "fts", "pcs", "sell2wales", "etendersni"],
+  "caveats": ["Awarded value is not actual spend; figures are for market context and benchmarking, not the costed Economic Case.", "Source freshness unavailable: get_status did not return; figures may be stale."],
+  "errors": [ { "tool": "get_status", "reason": "endpoint timeout" } ]
+}
