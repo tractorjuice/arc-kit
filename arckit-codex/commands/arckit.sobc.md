@@ -52,6 +52,10 @@ This command creates a **Strategic Outline Business Case (SOBC)** following HM T
      - Extract: Detailed requirements for more accurate cost estimates
    - **PLAN** (Project Plan) in `projects/{project}/`
      - Extract: Timeline, phasing for Commercial Case delivery schedule
+   - **TNDR** (Procurement Market Intelligence) at `projects/{project}/research/ARC-{P}-TNDR-*.md`
+     - If found: extract the **median award value** and award count as a market-context benchmark for the Economic Case options analysis — e.g. to sanity-check an option's Rough Order of Magnitude cost against what comparable work has been awarded for in the market
+     - **Critical:** awarded value is NOT actual spend and must NOT be used as the costed figure; cite it as market context and market view only, with that caveat stated explicitly whenever the figure appears
+     - If no TNDR artefact exists, skip silently
 
 2. **Understand the request**: The user may be:
    - Creating initial SOBC (most common)
@@ -493,3 +497,4 @@ After completing this command, consider running:
 
 - `/arckit:requirements` -- Define detailed requirements after SOBC approval
 - `/arckit:roadmap` -- Create strategic roadmap from SOBC investment plan
+- `/arckit:tenders` -- Anchor the Economic Case market view with real UK award-value benchmarks *(when UK government procurement context)*

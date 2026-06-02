@@ -33,6 +33,17 @@
 - DOS listed: {yes/no/unknown}
 - UK data centres: {yes/no/details}
 
+## Government Award History
+
+> Sourced from UK procurement notices (UK Tenders MCP, re-published under OGL v3.0) when a `/arckit.tenders` or `/arckit.competitors` run has supplied award data. **Awarded value is not actual spend** — use as market-context and experience evidence, not as a cost figure. `{unknown}` until tender evidence is available.
+
+- Total awarded value (UK gov contracts): {£value / unknown}
+- Award count: {N / unknown}
+- Date range: {earliest–latest / unknown}
+- Top buyers: {comma-separated list / unknown}
+- Incumbency: {note any buyer where this vendor holds a dominant share of awarded value / unknown}
+- Sample awards: one bullet per award — {title — buyer, £value, award date (notice URL)}; `{none on record}` if absent
+
 ## Strengths
 
 {Bulleted strengths}

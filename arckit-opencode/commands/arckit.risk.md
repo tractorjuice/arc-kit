@@ -112,6 +112,8 @@ This command creates a **comprehensive risk register** following HM Treasury Ora
    - Integration challenges, scalability limitations
    - Example: "Legacy integration fails during peak load"
 
+   **Supplier-concentration risk (if procurement evidence exists):** If a `TNDR` (Procurement Market Intelligence) or `CMPT` (Competitor Landscape) artefact exists at `projects/{P}/research/ARC-{P}-{TNDR,CMPT}-*.md`, read its Concentration section. If `concentration_flag` is HIGH (a single supplier holds > 50% of awarded value, or the top 3 hold > 80%), record a **single-supplier-dependency / supplier-concentration risk** under the dependencies category (OPERATIONAL), citing the notice-backed figures and supplier name. Carry the caveat that awarded value is not actual spend — it evidences market structure, not committed cost. If no such artefact exists, skip silently.
+
 7. **For EACH risk identified, create comprehensive risk profile**:
 
    **Read the template** (with user override support):
@@ -534,3 +536,4 @@ After completing this command, consider running:
 - `/arckit:sobc` -- Feed risk register into SOBC Management Case
 - `/arckit:requirements` -- Create risk-driven requirements
 - `/arckit:secure` -- Validate security controls against risks
+- `/arckit:tenders` -- Ground supplier-concentration risk in real UK procurement award data *(when UK government procurement context)*

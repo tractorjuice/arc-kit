@@ -118,6 +118,20 @@ Scan requirements for keywords that indicate technology needs. Examples of commo
 
 Use WebSearch to discover the current market landscape for each category rather than assuming fixed vendor options. Only research categories where actual requirements exist. If requirements reveal categories not listed above, research those too.
 
+### Step 4b: Read Procurement Award Evidence (if present)
+
+**Procurement award evidence (if present):** Before conducting web research, check whether a `TNDR` (Procurement Market Intelligence) or `CMPT` (Competitor Landscape) artefact exists at `projects/{P}/research/ARC-{P}-{TNDR,CMPT}-*.md`. Use Glob to find matching files.
+
+If found, read the artefact(s) and extract:
+
+- **Award values**: Notice-backed contract award amounts and durations — these are authoritative and preferred over scraped or estimated figures.
+- **Incumbency**: Current supplier(s) holding contracts in this space.
+- **Supplier market-share**: Competitive landscape data derived from real award notices.
+
+Feed these into the build-vs-buy analysis in Step 6 to ground the "buy" market structure and contract-value estimates. Carry the caveat throughout the document that **awarded value is not actual spend** — award values represent ceiling/commitment, not realised expenditure (market context, not committed cost).
+
+If no `TNDR`/`CMPT` artefacts are present, skip this step silently and proceed — the market is researched via web as usual.
+
 ### Step 5: Conduct Web Research for Each Category
 
 **Use WebSearch and WebFetch extensively.** Do NOT rely on general knowledge alone.
@@ -362,7 +376,7 @@ Return ONLY a concise summary including:
 - **Templates** — `.arckit/templates/research-findings-template.md` (override at `.arckit/templates-custom/research-findings-template.md`) · `.arckit/templates/vendor-profile-template.md`
 - **Helpers** — `.arckit/scripts/bash/create-project.sh` (project resolution) · `.arckit/scripts/bash/generate-document-id.sh` (document ID allocation)
 - **External tools** — `WebSearch` · `WebFetch` (vendor research, no MCP)
-- **Related commands** — `/arckit:requirements` (input) · `/arckit:evaluate` (downstream) · `/arckit:score` (downstream) · `/arckit:gcloud-search` (G-Cloud cross-check)
+- **Related commands** — `/arckit:requirements` (input) · `/arckit:tenders` (upstream procurement award evidence — run before research) · `/arckit:competitors` (upstream competitor landscape — run before research) · `/arckit:evaluate` (downstream) · `/arckit:score` (downstream) · `/arckit:gcloud-search` (G-Cloud cross-check)
 
 ## User Request
 
@@ -378,3 +392,4 @@ After completing this command, consider running:
 - `/arckit:sobc` -- Feed TCO data into Economic Case
 - `/arckit:sow` -- Create RFP from vendor requirements
 - `/arckit:hld-review` -- Validate technology choices against HLD
+- `/arckit:tenders` -- Ground the buy-market and contract values in real UK award data *(when UK government procurement context)*

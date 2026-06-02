@@ -30,6 +30,14 @@ Score a specific vendor against the project's evaluation criteria.
    - If the directory doesn't exist, create it
    - Read any `.md` or `.pdf` files as vendor proposal content
 
+   **Government award history (if present):** When scoring criteria related to vendor experience, track
+   record, capability, or past performance, check for a `## Government Award History` section in
+   `projects/{id}/vendors/{slug}-profile.md` (or a `CMPT` Competitor Landscape artefact in `research/`).
+   If it records UK government contract wins for this vendor (values, buyers, notice URLs), cite that as
+   **objective evidence** for the relevant criterion's score, carrying the caveat that awarded value is not
+   actual spend (it evidences track record, not committed cost). Run `/arckit:competitors --supplier
+   '<vendor>'` to generate it if absent.
+
 3. **Read existing scores** from `projects/{id}/vendors/scores.json` (if exists)
 
 4. **Score each criterion** using the 0-3 rubric:
@@ -156,3 +164,4 @@ After completing this command, consider running:
 
 - `/arckit:evaluate` -- Create or update evaluation framework before scoring *(when No EVAL artifact exists for the project)*
 - `/arckit:sow` -- Generate Statement of Work for selected vendor *(when Vendor selection complete, ready for procurement)*
+- `/arckit:competitors` -- Generate the vendor's UK award-history evidence for scoring *(when UK government procurement context)*
