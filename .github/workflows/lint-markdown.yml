@@ -14,6 +14,8 @@ on:
       - "arckit-claude/skills/arckit-build/recipes/**"
       - "arckit-claude/config/doc-types.mjs"
       - "arckit-claude/.claude-plugin/plugin.json"
+      - "arckit-claude/schemas/tenders-handoff.schema.json"
+      - "tests/plugin/test_validate_tenders_handoff.mjs"
   pull_request:
     paths:
       - "**/*.md"
@@ -26,6 +28,8 @@ on:
       - "arckit-claude/skills/arckit-build/recipes/**"
       - "arckit-claude/config/doc-types.mjs"
       - "arckit-claude/.claude-plugin/plugin.json"
+      - "arckit-claude/schemas/tenders-handoff.schema.json"
+      - "tests/plugin/test_validate_tenders_handoff.mjs"
 
 jobs:
   lint:
@@ -77,6 +81,9 @@ jobs:
 
       - name: Handoff schema validator tests (gov-reuse)
         run: node tests/plugin/test_validate_gov_reuse_handoff.mjs
+
+      - name: Handoff schema validator tests (tenders)
+        run: node tests/plugin/test_validate_tenders_handoff.mjs
 
       - name: Wardley label-tidy hook tests
         run: node --test tests/plugin/tidy-wardley-labels.test.mjs tests/plugin/wardley-tidy.test.mjs tests/plugin/owm-tidy.test.mjs

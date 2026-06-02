@@ -1,0 +1,30 @@
+{
+  "query": { "focus": "buyer", "buyer": "HMRC", "cpv": "72000000", "keywords": ["case management"] },
+  "data_current_as_of": "2026-06-02T01:44:00Z",
+  "sources": [
+    { "source": "contracts_finder", "health": "green", "coverage_to": "2026-06-01T21:07:39Z", "releases_total": 546697 },
+    { "source": "fts", "health": "green", "coverage_to": "2026-06-01T22:30:29Z", "releases_total": 110044 }
+  ],
+  "suppliers": [
+    {
+      "name": "Acme Digital Ltd",
+      "awarded_value_total_gbp": 4200000,
+      "award_count": 3,
+      "share_pct": 38.5,
+      "buyers": ["HMRC", "DWP"],
+      "sample_notices": [
+        { "title": "Case management platform", "buyer": "HMRC", "value_gbp": 2100000, "award_date": "2023-04-01", "notice_url": "https://www.find-tender.service.gov.uk/Notice/012345-2023", "cpv": "72000000" }
+      ]
+    }
+  ],
+  "buyers": [
+    { "name": "HMRC", "awarded_value_total_gbp": 10900000, "award_count": 8, "top_suppliers": ["Acme Digital Ltd", "Globex Systems"] }
+  ],
+  "aggregates": { "median_award_value_gbp": 850000, "total_awarded_value_gbp": 10900000, "top1_share_pct": 38.5, "top3_share_pct": 71.2, "hhi": 2210.5 },
+  "time_series": [
+    { "period": "2023", "awarded_value_gbp": 5400000, "award_count": 4 },
+    { "period": "2024", "awarded_value_gbp": 5500000, "award_count": 4 }
+  ],
+  "caveats": ["Awarded value is not actual spend; figures are for market context and benchmarking, not the costed Economic Case."],
+  "errors": []
+}

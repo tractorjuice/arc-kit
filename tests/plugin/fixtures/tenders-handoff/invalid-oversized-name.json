@@ -1,0 +1,22 @@
+{
+  "query": {
+    "focus": "supplier",
+    "supplier": "x"
+  },
+  "data_current_as_of": "2026-06-02T01:44:00Z",
+  "sources": [
+    {
+      "source": "contracts_finder",
+      "health": "green"
+    }
+  ],
+  "suppliers": [
+    {
+      "name": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+    }
+  ],
+  "caveats": [
+    "Awarded value is not actual spend."
+  ],
+  "errors": []
+}
