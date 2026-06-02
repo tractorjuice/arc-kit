@@ -29,7 +29,7 @@ The data unlocks three jobs ArcKit cannot do today:
 3. **Three-tier topology** (orchestrator → reader → writer) per command, mirroring `datascout` / `gov-reuse` / `grants`. Reader is shared; orchestrators and writers are per-command.
 4. **Sequencing:** ship `/arckit:tenders` first (fastest path to value); `/arckit:competitors` is a fast-follow PR reusing the already-built reader + handoff schema. This spec covers both.
 5. **Target the current version (`main` / v5.x) now**, designed for a mechanical lift into the `arckit-uk` overlay during the v6.0.0 release (section 12).
-6. **Micro-decisions:** MCP server key `uk-tenders` (tools `mcp__uk-tenders__*`); doc-types `TNDR` = "Procurement Market Intelligence" and `CMPT` = "Competitor Landscape", both `category: Discovery`, `regime: UK`; register `CMPT` in the tenders PR (registry settled once); single-instance per project for v1.
+6. **Micro-decisions:** MCP server key `uk-tenders` (tools `mcp__uk-tenders__*`); doc-types `TNDR` = "Procurement Market Intelligence" and `CMPT` = "Competitor Landscape", both `category: Discovery`, `regime: UK`; register `CMPT` in the tenders PR (registry settled once); multi-instance (`ARC-{P}-TNDR-{NNN}-v{V}.md`) like all sibling evidence artefacts (RSCH/DSCT/GOVR/GRNT), supporting multiple markets per project.
 
 ## 3. Scope
 
@@ -166,7 +166,7 @@ Add to `arckit-claude/config/doc-types.mjs` (and the 5 format mirrors via conver
 'CMPT': { name: 'Competitor Landscape',            category: 'Discovery', regime: 'UK' },
 ```
 
-Both MUST also be added to `arckit-claude/commands/pages.md` (the dual-registration CI test fails otherwise). `regime: 'UK'` is correct from day one and pre-positions the v6 grouping. Single-instance (not added to `generate-document-id.sh` `MULTI_INSTANCE_TYPES`).
+Both MUST also be added to `arckit-claude/commands/pages.md` (the dual-registration CI test fails otherwise). `regime: 'UK'` is correct from day one and pre-positions the v6 grouping. Multi-instance: `TNDR`/`CMPT` are added to `MULTI_INSTANCE_TYPES` + `SUBDIR_MAP` (`'research'`) in `doc-types.mjs` and to the multi-instance / research-subdir lists in `generate-document-id.sh`, so artefacts are sequenced `ARC-{P}-TNDR-{NNN}-v{V}.md` under `research/` (matching DSCT).
 
 ## 10. Caveats + attribution
 

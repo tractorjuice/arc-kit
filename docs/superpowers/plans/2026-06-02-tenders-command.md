@@ -10,6 +10,8 @@
 
 **Refinement vs spec §4:** The spec listed an `agents/arckit-tenders.md` orchestrator agent. The canonical pattern (see `commands/datascout.md` lines 38-42) puts orchestration in the **command**, not an agent. This plan creates **no** `arckit-tenders.md` agent. (The spec is corrected to match.)
 
+**Correction (post-T3 review):** TNDR/CMPT are **multi-instance** (the spec first said single-instance on a false analogy — RSCH/DSCT are in fact multi-instance). They are registered in `MULTI_INSTANCE_TYPES` + `SUBDIR_MAP` (`'research'`) in `config/doc-types.mjs` and in the multi-instance / research-subdir lists in `scripts/bash/generate-document-id.sh`. Document IDs are sequenced `ARC-{P}-TNDR-{NNN}-v{V}.md` under `research/`. Tasks 4 / 6 / 7 therefore use the datascout multi-instance pattern (`generate-document-id.sh --next-num <research-dir>`), not a flat `ARC-{P}-TNDR-v{V}`.
+
 **Branch:** `feat/556-tenders-command` (already created off `origin/main`). Commit after every task.
 
 ---
