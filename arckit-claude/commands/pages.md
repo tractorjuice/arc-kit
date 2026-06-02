@@ -262,6 +262,8 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | AZRS | `ARC-*-AZRS-*.md` | Azure Research |
 | | GCRS | `ARC-*-GCRS-*.md` | GCP Research |
 | | DSCT | `ARC-*-DSCT-*.md` | Data Source Discovery |
+| | TNDR | `ARC-*-TNDR-*.md` | Procurement Market Intelligence |
+| | CMPT | `ARC-*-CMPT-*.md` | Competitor Landscape |
 | | GOVR | `ARC-*-GOVR-*.md` | Government Reuse Assessment |
 | | GCSR | `ARC-*-GCSR-*.md` | Government Code Search Report |
 | | GLND | `ARC-*-GLND-*.md` | Government Landscape Analysis |
