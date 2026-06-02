@@ -2,6 +2,8 @@
 
 This matrix shows which commands depend on outputs from other commands.
 
+> **v6.0.0 note:** The 15 UK Government commands were extracted into two officially-maintained overlays. The `uk-*` commands shown below (`uk-tcop`, `uk-secure`, `uk-dpia`, `uk-ai-playbook`, `uk-atrs`, `uk-service-assessment`, `uk-dos`, `uk-gcloud-search`, `uk-gcloud-clarify`, `uk-gov-reuse`, `uk-gov-code-search`, `uk-gov-landscape`, `uk-grants`) ship in the `arckit-uk` overlay (invoked as `/arckit-uk:uk-*`); `uk-mod-secure` and `uk-mod-jsp-936` ship in `arckit-uk-mod` (invoked as `/arckit-uk-mod:uk-mod-*`). All other commands remain in core `arckit`. The dependency relationships are unchanged by the move. See [`MIGRATION-v6.md`](MIGRATION-v6.md).
+
 **Legend:**
 
 - **M** = MANDATORY dependency (command will fail without it)
@@ -19,7 +21,7 @@ This matrix shows which commands depend on outputs from other commands.
 
 ## Dependency Structure Matrix
 
-| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | data-mesh-contract | platform-design | dpia | research | azure-research | aws-research | gcp-research | datascout | dfd | wardley | roadmap | strategy | framework | glossary | adr | sow | dos | gcloud-search | gcloud-clarify | evaluate | hld-review | dld-review | backlog | trello | diagram | servicenow | devops | mlops | finops | operationalize | traceability | analyze | principles-compliance | conformance | maturity-model | service-assessment | tcop | ai-playbook | atrs | secure | mod-secure | jsp-936 | story | pages | presentation | gov-reuse | gov-code-search | gov-landscape | grants |
+| PRODUCES → | plan | principles | stakeholders | risk | sobc | requirements | data-model | data-mesh-contract | platform-design | uk-dpia | research | azure-research | aws-research | gcp-research | datascout | dfd | wardley | roadmap | strategy | framework | glossary | adr | sow | uk-dos | uk-gcloud-search | uk-gcloud-clarify | evaluate | hld-review | dld-review | backlog | trello | diagram | servicenow | devops | mlops | finops | operationalize | traceability | analyze | principles-compliance | conformance | maturity-model | uk-service-assessment | uk-tcop | uk-ai-playbook | uk-atrs | uk-secure | uk-mod-secure | uk-mod-jsp-936 | story | pages | presentation | uk-gov-reuse | uk-gov-code-search | uk-gov-landscape | uk-grants |
 |------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|------|
 | **plan** | - | R | R | R | O | O |  |  |  |  |  |  | O | | | | | R |  |  |  |  |  | O | O |  |  | R |  |  |  |  |  |  |  |  |  |  | R |  |  |  | M | O |  |  |  |  |  | R | R | R | |  |    |
 | **principles** |  | - | M | R | R | R | R |  | M | R |  |  |  | | R | O | R | M | M | M |  | M |  | M | R |  |  | M | M |  |  |  |  | M |  | R |  |  | R | M | M | R |  | M |  |  | M | M |  |  | R | R | |  | R   |
@@ -30,15 +32,15 @@ This matrix shows which commands depend on outputs from other commands.
 | **data-model** |  |  |  |  |  |  | - | M | O | M | R | R |  | R | O | R | O |  |  | R | R |  | O |  |  |  |  |  |  |  |  | R | R |  | R |  |  | R | R | R |  |  | R |  | R |  |  |  |  |  | R | R | |  |    |
 | **data-mesh-contract** |  |  |  |  |  |  |  | - |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | |  |    |
 | **platform-design** |  |  |  |  |  |  | O | R | - | O | O |  | R | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  |  | R | O | |  |    |
-| **dpia** |  |  |  |  |  |  |  |  |  | - |  |  |  | | | | | O |  |  |  |  | R |  |  |  | O |  |  |  |  | O |  |  |  |  |  | O | R | R |  |  | R |  | R | R | R | R |  | R | R | R | |  |    |
+| **uk-dpia** |  |  |  |  |  |  |  |  |  | - |  |  |  | | | | | O |  |  |  |  | R |  |  |  | O |  |  |  |  | O |  |  |  |  |  | O | R | R |  |  | R |  | R | R | R | R |  | R | R | R | |  |    |
 | **research** |  |  |  |  |  |  |  |  |  |  | - |  | R | | | | |  |  | R |  |  | R |  | R | O | R |  |  |  |  |  |  | R | R |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  | R | R | |  |    |
 | **azure-research** |  |  |  |  |  |  |  |  |  |  |  | - |  | | | | R |  |  |  |  | R |  |  |  |  |  |  |  | R |  | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  | R | |  |    |
 | **aws-research** |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  | R |  |  |  |  | R |  |  |  |  |  |  |  | R |  | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  | R | |  |    |
 | **gcp-research** |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  | R |  |  |  |  | R |  |  |  |  |  |  |  | R |  | R |  | R | R | R |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  | R | |  |    |
 | **datascout** | | | | | | | R | | | O | R | | | | - | | | |  |  |  | R | | | | | | | | |  | O | | | | | | R | | |  |  | | | | | | | | | R | O | |  |    |
-| **gov-reuse** |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |    |
-| **gov-code-search** |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | - |    |
-| **gov-landscape** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | -   |
+| **uk-gov-reuse** |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |    |
+| **uk-gov-code-search** |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | - |    |
+| **uk-gov-landscape** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | -   |
 | **dfd** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O |  |  |  |  |  |  |  |  |  |  | R | R | O | |  |    |
 | **wardley** |  |  |  |  |  |  |  |  | R |  | O |  |  | | | | - | R | R |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  | R | R | |  |    |
 | **roadmap** |  |  |  |  |  |  |  |  | O |  |  |  | O | | | | | - | R |  |  |  |  |  |  |  |  | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R | R | |  |    |
@@ -47,9 +49,9 @@ This matrix shows which commands depend on outputs from other commands.
 | **glossary** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R | O | |  |    |
 | **adr** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | M |  |  |  |  |  |  |  |  |  | R | R | |  |    |
 | **sow** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  | - |  | O |  | R |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  |  |  | R | O | |  |    |
-| **dos** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  | - |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | |  |    |
-| **gcloud-search** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  | - | M |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | |  |    |
-| **gcloud-clarify** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | |  |    |
+| **uk-dos** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  | - |  |  | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | |  |    |
+| **uk-gcloud-search** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  | - | M |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | |  |    |
+| **uk-gcloud-clarify** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O | |  |    |
 | **evaluate** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  |  |  |  |  |  |  |  |  | R | O | |  |    |
 | **hld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | |  |  | R |  |  |  |  |  |  |  | - | M | M |  |  |  |  |  |  |  |  | M |  | R | R |  |  |  |  |  |  |  |  | R | R | R | |  |    |
 | **dld-review** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | |  |  | O |  |  |  |  |  |  |  |  | - | R |  |  |  |  |  |  |  |  | M |  | R | R |  |  |  |  |  |  |  |  | R | R | R | |  |    |
@@ -66,19 +68,19 @@ This matrix shows which commands depend on outputs from other commands.
 | **principles-compliance** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - | R |  | R |  |  |  |  |  |  |  | R | O | |  |    |
 | **conformance** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  | - |  | O |  |  |  |  |  |  | R | R | O | |  |    |
 | **maturity-model** |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  |  |  |  |  |  |  | R | R | O | |  |    |
-| **service-assessment** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O |  |  | - |  |  |  |  |  |  | R | R | O | |  |    |
-| **tcop** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |  |  | R | - |  |  |  |  |  |  | R | O | |  |    |
-| **ai-playbook** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  | O |  |  |  | R |  | - | R |  |  | R |  | R | O | |  |    |
-| **atrs** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  | - |  |  | R |  | R | O | |  |    |
-| **secure** |  |  |  |  |  |  |  |  |  | R |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R |  |  | R |  | O | O | - | R | O | R | R | O | |  |    |
-| **mod-secure** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R |  |  | O |  |  |  |  | - | R |  | R | O | |  |    |
-| **jsp-936** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  | O |  |  |  |  |  | - |  | R | O | |  |    |
+| **uk-service-assessment** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | O |  |  | - |  |  |  |  |  |  | R | R | O | |  |    |
+| **uk-tcop** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R |  |  | R | - |  |  |  |  |  |  | R | O | |  |    |
+| **uk-ai-playbook** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R |  |  |  | O |  |  |  | R |  | - | R |  |  | R |  | R | O | |  |    |
+| **uk-atrs** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  | - |  |  | R |  | R | O | |  |    |
+| **uk-secure** |  |  |  |  |  |  |  |  |  | R |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R |  |  | R |  | O | O | - | R | O | R | R | O | |  |    |
+| **uk-mod-secure** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O | R |  |  | O |  |  |  |  | - | R |  | R | O | |  |    |
+| **uk-mod-jsp-936** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  | O |  |  |  |  |  | - |  | R | O | |  |    |
 | **story** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | R | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | O |  |  |  | O |  |  |  |  |  |  | - | R | O | |  |    |
 | **pages** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | R | |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | - |  | |  |    |
 | **presentation** | | | | | | | | | | | | | | | | O | | | |  |  | | | | | | | | | | | | | | | | | | | |  |  | | | | | | | | | | - | |  |    |
 | **HLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  | M | O |  |  |  | R |  |  |  |  | R | O |  | R |  | R |  |  |  |  |  |  |  | R | R | |  |    |
 | **DLD (external)** |  |  |  |  |  |  |  |  |  |  |  |  |  | | | | |  |  |  |  |  |  |  |  |  |  |  | M | M |  |  |  |  |  |  |  | R |  |  | R |  | R |  |  |  |  |  |  |  | R | R | |  |  |  |
-| **grants** | O |  |  | O | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R | O |  |  |  | - |
+| **uk-grants** | O |  |  | O | O |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  | R | R | O |  |  |  | - |
 
 ## Command Groups by Dependency Level
 
@@ -132,7 +134,7 @@ These commands can run first:
 Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 
 - **data-model** → Depends on: requirements (M), principles (R), stakeholders (R), sobc (O)
-- **dpia** → Depends on: data-model (M), requirements (M), principles (R), stakeholders (R), risk (R)
+- **uk-dpia** → Depends on: data-model (M), requirements (M), principles (R), stakeholders (R), risk (R)
 - **research** → Depends on: requirements (M), stakeholders (R), data-model (R), platform-design (R)
   - Note: Also spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` for reusable knowledge (use `--no-spawn` to skip)
 - **azure-research** → Depends on: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
@@ -144,8 +146,8 @@ Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 - **datascout** → Depends on: requirements (M), data-model (O), stakeholders (R), principles (R)
   - Note: Discovers external data sources (APIs, datasets, open data portals) to fulfil project data requirements
   - Bidirectional with data-model: data-model is optional input, datascout recommends data-model updates as output
-- **grants** → Depends on: requirements (M), stakeholders (R), sobc (O)
-  - Note: Researches UK government grants, charitable funding, and accelerator programmes with eligibility scoring
+- **uk-grants** → Depends on: requirements (M), stakeholders (R), sobc (O)
+  - Note: Researches UK government uk-grants, charitable funding, and accelerator programmes with eligibility scoring
   - Outputs GRNT funding opportunity register; feeds into sobc (economic case), plan (timeline), and risk (funding risk)
 - **dfd** → Depends on: requirements (O), data-model (R), principles (O), diagram (O)
   - Note: Can generate DFDs from user description alone; richer output when requirements and data-model exist
@@ -153,7 +155,7 @@ Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 - **wardley.value-chain** → Depends on: requirements (M), stakeholders (R)
   - Note: Decomposes user needs into value chains for Wardley Mapping; produces WVCH artifacts
   - Multi-instance document type (ARC-*-WVCH-{NUM}-v*.md), stored in wardley-maps/ subdirectory
-- **wardley** → Depends on: requirements (R), principles (R), research (O), data-model (O), tcop (O), ai-playbook (O)
+- **wardley** → Depends on: requirements (R), principles (R), research (O), data-model (O), uk-tcop (O), uk-ai-playbook (O)
   - Note: Can create initial map from user description alone; enhanced with requirements, principles, research
 - **wardley.doctrine** → Depends on: principles (M), wardley (R), stakeholders (R)
   - Note: Assesses organizational doctrine maturity across 4 phases and 40+ principles; produces WDOC artifact
@@ -176,11 +178,11 @@ Most commands in this tier require or strongly recommend ARC-*-REQ-*.md:
 Most procurement commands require ARC-*-REQ-*.md:
 
 - **sow** → Depends on: requirements (M), research (R)
-- **dos** → Depends on: requirements (M), stakeholders (M), sobc (R), research (R)
-- **gcloud-search** → Depends on: requirements (R), Digital Marketplace access (External)
+- **uk-dos** → Depends on: requirements (M), stakeholders (M), sobc (R), research (R)
+- **uk-gcloud-search** → Depends on: requirements (R), Digital Marketplace access (External)
   - Note: Requirements recommended for search context but not mandatory
-- **gcloud-clarify** → Depends on: requirements (M), gcloud-search (M)
-- **evaluate** → Depends on: requirements (M), sow (M), principles (R), research (R), gcloud-clarify (R)
+- **uk-gcloud-clarify** → Depends on: requirements (M), uk-gcloud-search (M)
+- **evaluate** → Depends on: requirements (M), sow (M), principles (R), research (R), uk-gcloud-clarify (R)
 - **score** → Depends on: evaluate (M), requirements (M)
   - Note: Structured vendor scoring with JSON storage, comparison, and audit trail
   - Integrates with evaluate criteria; scores stored in `projects/{id}/vendors/scores.json`
@@ -204,7 +206,7 @@ Most procurement commands require ARC-*-REQ-*.md:
 
 - **servicenow** → Depends on: requirements (M), diagram (M), principles (R), HLD/DLD (R)
 - **devops** → Depends on: requirements (M), principles (M), diagram (R), research (R)
-- **mlops** → Depends on: requirements (M), data-model (R), ai-playbook (R), research (R) [for AI projects]
+- **mlops** → Depends on: requirements (M), data-model (R), uk-ai-playbook (R), research (R) [for AI projects]
 - **finops** → Depends on: requirements (M), devops (R), diagram (R), principles (R)
 - **operationalize** → Depends on: requirements (M), diagram (M), HLD/DLD (R), principles (R), risk (R)
 - **traceability** → Depends on: requirements (M), HLD (R), DLD (R), data-model (R)
@@ -219,7 +221,7 @@ Most procurement commands require ARC-*-REQ-*.md:
 
 These assess compliance across the project:
 
-- **principles-compliance** → Depends on: principles (M), requirements (R), stakeholders (R), risk (R), data-model (R), platform-design (R), HLD (R), DLD (R), hld-review (R), dld-review (R), traceability (R), dpia (R), tcop (R), secure (R), mod-secure (R)
+- **principles-compliance** → Depends on: principles (M), requirements (R), stakeholders (R), risk (R), data-model (R), platform-design (R), HLD (R), DLD (R), hld-review (R), dld-review (R), traceability (R), uk-dpia (R), uk-tcop (R), uk-secure (R), uk-mod-secure (R)
   - Note: All dependencies except principles are RECOMMENDED - better assessment with more artifacts
 - **conformance** → Depends on: principles (M), adr (M), requirements (R), hld-review (R), dld-review (R), principles-compliance (R), traceability (R), HLD (R), DLD (R), risk (O), devops (O)
   - Note: Checks decided-vs-designed conformance — ADR decision implementation, cross-decision consistency, architecture drift, technical debt
@@ -227,14 +229,14 @@ These assess compliance across the project:
 - **maturity-model** → Depends on: principles (R)
   - Note: Generates capability maturity model with current-state assessment, target-state definition, and improvement roadmap
   - Can run once principles exist; feeds into roadmap and strategy for improvement planning
-- **service-assessment** → Depends on: requirements (M), plan (R), data-model (R), platform-design (O), principles (R), stakeholders (R), risk (R), analyze (R), hld-review (R), dld-review (R), diagram (R), traceability (R), wardley (R), tcop (O), ai-playbook (O), atrs (O), secure (O), mod-secure (O), jsp-936 (O), principles-compliance (O), conformance (O)
-  - Note: Compliance artifacts are optional - service-assessment identifies them as gaps if missing
-- **tcop** → Depends on: requirements (M), principles (R), diagram (R)
-- **ai-playbook** → Depends on: requirements (O) [if AI system]
-- **atrs** → Depends on: requirements (M), principles (R), data-model (R) [for AI/algorithmic systems]
-- **secure** → Depends on: requirements (M), principles (M), risk (R)
-- **mod-secure** → Depends on: requirements (M), principles (M), risk (R)
-- **jsp-936** → Depends on: requirements (M), principles (M), mod-secure (R), risk (R) [for MOD AI systems]
+- **uk-service-assessment** → Depends on: requirements (M), plan (R), data-model (R), platform-design (O), principles (R), stakeholders (R), risk (R), analyze (R), hld-review (R), dld-review (R), diagram (R), traceability (R), wardley (R), uk-tcop (O), uk-ai-playbook (O), uk-atrs (O), uk-secure (O), uk-mod-secure (O), uk-mod-jsp-936 (O), principles-compliance (O), conformance (O)
+  - Note: Compliance artifacts are optional - uk-service-assessment identifies them as gaps if missing
+- **uk-tcop** → Depends on: requirements (M), principles (R), diagram (R)
+- **uk-ai-playbook** → Depends on: requirements (O) [if AI system]
+- **uk-atrs** → Depends on: requirements (M), principles (R), data-model (R) [for AI/algorithmic systems]
+- **uk-secure** → Depends on: requirements (M), principles (M), risk (R)
+- **uk-mod-secure** → Depends on: requirements (M), principles (M), risk (R)
+- **uk-mod-jsp-936** → Depends on: requirements (M), principles (M), uk-mod-secure (R), risk (R) [for MOD AI systems]
 
 ### Tier 14: Project Story & Reporting (Depends on All Artifacts)
 
@@ -255,7 +257,7 @@ Publishing command that generates documentation site:
 
 - **pages** → Depends on: All document-producing artifacts (R)
   - Note: pages indexes and displays all project documents - more documents = better site
-  - Recommended dependencies: principles, stakeholders, risk, sobc, requirements, data-model, dpia, research, wardley, roadmap, adr, sow, evaluate, hld-review, dld-review, backlog, diagram, servicenow, traceability, analyze, principles-compliance, service-assessment, tcop, ai-playbook, atrs, secure, mod-secure, jsp-936, story, presentation, HLD, DLD
+  - Recommended dependencies: principles, stakeholders, risk, sobc, requirements, data-model, uk-dpia, research, wardley, roadmap, adr, sow, evaluate, hld-review, dld-review, backlog, diagram, servicenow, traceability, analyze, principles-compliance, uk-service-assessment, uk-tcop, uk-ai-playbook, uk-atrs, uk-secure, uk-mod-secure, uk-mod-jsp-936, story, presentation, HLD, DLD
   - Generates GitHub Pages site with Mermaid diagram support
   - Best run when project has substantial documentation to publish
 
@@ -285,48 +287,48 @@ traceability → principles-compliance → conformance → analyze → story
 
 ```text
 plan → principles → stakeholders → risk → sobc → requirements → datascout → data-model → research →
-wardley → gcloud-search → gcloud-clarify → evaluate → hld-review → dld-review →
+wardley → uk-gcloud-search → uk-gcloud-clarify → evaluate → hld-review → dld-review →
 backlog → servicenow → devops → operationalize → traceability →
-tcop → secure → principles-compliance → conformance → analyze → service-assessment → story
+uk-tcop → uk-secure → principles-compliance → conformance → analyze → uk-service-assessment → story
 ```
 
 ### UK Government Platform Strategy Path
 
 ```text
 plan → principles → stakeholders → risk → sobc → requirements → platform-design → datascout → data-model → research →
-wardley → gcloud-search → evaluate → hld-review → dld-review → backlog → servicenow →
-devops → operationalize → traceability → tcop → secure → principles-compliance →
-conformance → analyze → service-assessment → story
+wardley → uk-gcloud-search → evaluate → hld-review → dld-review → backlog → servicenow →
+devops → operationalize → traceability → uk-tcop → uk-secure → principles-compliance →
+conformance → analyze → uk-service-assessment → story
 ```
 
 ### UK Government AI Project Path
 
 ```text
 plan → principles → stakeholders → risk → sobc → requirements → datascout → data-model → research →
-wardley → gcloud-search → evaluate → hld-review → dld-review → backlog → servicenow →
-devops → mlops → operationalize → traceability → tcop → ai-playbook → atrs → secure →
-principles-compliance → conformance → analyze → service-assessment → story
+wardley → uk-gcloud-search → evaluate → hld-review → dld-review → backlog → servicenow →
+devops → mlops → operationalize → traceability → uk-tcop → uk-ai-playbook → uk-atrs → uk-secure →
+principles-compliance → conformance → analyze → uk-service-assessment → story
 ```
 
 ### MOD Defence Project Path
 
 ```text
 plan → principles → stakeholders → risk → sobc → requirements → datascout → data-model → research →
-wardley → dos → evaluate → hld-review → dld-review → backlog → servicenow →
-devops → operationalize → traceability → tcop → mod-secure → principles-compliance →
-conformance → analyze → service-assessment → story
+wardley → uk-dos → evaluate → hld-review → dld-review → backlog → servicenow →
+devops → operationalize → traceability → uk-tcop → uk-mod-secure → principles-compliance →
+conformance → analyze → uk-service-assessment → story
 ```
 
 ### MOD Defence AI Project Path
 
 ```text
 plan → principles → stakeholders → risk → sobc → requirements → datascout → data-model → research →
-wardley → dos → evaluate → hld-review → dld-review → backlog → servicenow →
-devops → mlops → operationalize → traceability → tcop → mod-secure → jsp-936 →
-principles-compliance → conformance → analyze → service-assessment → story
+wardley → uk-dos → evaluate → hld-review → dld-review → backlog → servicenow →
+devops → mlops → operationalize → traceability → uk-tcop → uk-mod-secure → uk-mod-jsp-936 →
+principles-compliance → conformance → analyze → uk-service-assessment → story
 ```
 
-**Note**: analyze and service-assessment can also run earlier in the workflow to identify gaps in missing artifacts (all their dependencies are optional). The story command can be run at any project milestone to create a narrative snapshot, but is most comprehensive when run after all artifacts are complete. The paths above show the complete workflow with story as the final reporting step.
+**Note**: analyze and uk-service-assessment can also run earlier in the workflow to identify gaps in missing artifacts (all their dependencies are optional). The story command can be run at any project milestone to create a narrative snapshot, but is most comprehensive when run after all artifacts are complete. The paths above show the complete workflow with story as the final reporting step.
 
 **Platform Design**: The platform-design command is used when designing multi-sided platforms (Government as a Platform, marketplaces, data platforms) and should be inserted after requirements definition but before detailed design. See "UK Government Platform Strategy Path" above.
 
@@ -338,24 +340,24 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 **ARC-*-REQ-*.md** - consumed by 37 commands:
 
-- data-model (M), data-mesh-contract (M), platform-design (M), dpia (M), research (M), azure-research (M), aws-research (M), gcp-research (M), datascout (M), wardley (M), roadmap (M), adr (M), sow (M), dos (M), gcloud-search (R), gcloud-clarify (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), servicenow (M), devops (M), mlops (M), finops (M), operationalize (M), traceability (R), analyze (R), principles-compliance (M), service-assessment (M), tcop (M), ai-playbook (M), atrs (M), secure (M), mod-secure (M), jsp-936 (M), story (R), pages (R)
+- data-model (M), data-mesh-contract (M), platform-design (M), uk-dpia (M), research (M), azure-research (M), aws-research (M), gcp-research (M), datascout (M), wardley (M), roadmap (M), adr (M), sow (M), uk-dos (M), uk-gcloud-search (R), uk-gcloud-clarify (M), evaluate (M), hld-review (M), dld-review (M), backlog (M), servicenow (M), devops (M), mlops (M), finops (M), operationalize (M), traceability (R), analyze (R), principles-compliance (M), uk-service-assessment (M), uk-tcop (M), uk-ai-playbook (M), uk-atrs (M), uk-secure (M), uk-mod-secure (M), uk-mod-jsp-936 (M), story (R), pages (R)
 
 **ARC-000-PRIN-v*.md** - consumed by 21 commands:
 
-- stakeholders (M), risk (R), sobc (R), requirements (R), platform-design (M), dpia (R), wardley (M), roadmap (M), strategy (M), sow (M), dos (R), evaluate (M), hld-review (M), servicenow (R), mlops (R), traceability (R), analyze (M), service-assessment (M), atrs (M), secure (M), story (R)
+- stakeholders (M), risk (R), sobc (R), requirements (R), platform-design (M), uk-dpia (R), wardley (M), roadmap (M), strategy (M), sow (M), uk-dos (R), evaluate (M), hld-review (M), servicenow (R), mlops (R), traceability (R), analyze (M), uk-service-assessment (M), uk-atrs (M), uk-secure (M), story (R)
 
 **ARC-*-STKE-*.md** - consumed by 23 commands:
 
-- risk (M), sobc (M), requirements (M), data-model (R), data-mesh-contract (O), platform-design (R), dpia (R), research (O), azure-research (R), aws-research (M), gcp-research (R), datascout (R), wardley (O), roadmap (O), strategy (M), adr (R), hld-review (R), operationalize (R), traceability (R), analyze (R), principles-compliance (R), mod-secure (R), jsp-936 (R)
+- risk (M), sobc (M), requirements (M), data-model (R), data-mesh-contract (O), platform-design (R), uk-dpia (R), research (O), azure-research (R), aws-research (M), gcp-research (R), datascout (R), wardley (O), roadmap (O), strategy (M), adr (R), hld-review (R), operationalize (R), traceability (R), analyze (R), principles-compliance (R), uk-mod-secure (R), uk-mod-jsp-936 (R)
 
 **HLD** (external document) - consumed by 7 commands:
 
-- dld-review (M), backlog (M), diagram (R), servicenow (R), traceability (M), hld-review (validates it), service-assessment (M)
+- dld-review (M), backlog (M), diagram (R), servicenow (R), traceability (M), hld-review (validates it), uk-service-assessment (M)
   - Note: analyze reads HLD directly if available (O), not via hld-review
 
 **ARC-*-PLAT-*.md** - consumed by 6 commands:
 
-- research (R), wardley (R), diagram (R), analyze (M), principles-compliance (R), service-assessment (R)
+- research (R), wardley (R), diagram (R), analyze (M), principles-compliance (R), uk-service-assessment (R)
 
 ### Commands That Produce Critical Artifacts (High Fan-Out)
 
@@ -374,8 +376,8 @@ principles-compliance → conformance → analyze → service-assessment → sto
 2. **ARC-000-PRIN-v*.md is the governance foundation** - All design reviews check against principles
 3. **Strategic order matters** - stakeholders → risk → sobc → requirements ensures business justification before technical work
 4. **Platform strategy bridges business and technical** - platform-design sits between requirements (business needs) and design (technical architecture), useful for ecosystem-based platforms
-5. **Quality gates can run iteratively** - analyze and service-assessment have optional dependencies, allowing them to run early (identifying gaps) or late (validating completeness)
-6. **Compliance assessments feed quality gates** - tcop, ai-playbook, atrs, secure, mod-secure, jsp-936 outputs are optionally consumed by analyze and service-assessment
+5. **Quality gates can run iteratively** - analyze and uk-service-assessment have optional dependencies, allowing them to run early (identifying gaps) or late (validating completeness)
+6. **Compliance assessments feed quality gates** - uk-tcop, uk-ai-playbook, uk-atrs, uk-secure, uk-mod-secure, uk-mod-jsp-936 outputs are optionally consumed by analyze and uk-service-assessment
 7. **External artifacts** - HLD and DLD are created outside ArcKit but validated by hld-review/dld-review commands
 
 ---
@@ -415,7 +417,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Fixed**: diagram row — changed requirements from (M) to (O) (command can generate diagrams from user description alone)
 - **Fixed**: traceability row — changed HLD/DLD from (M) to (R) (hook pre-processing reduces direct file read dependency)
 - **Updated**: glossary tier text — added optional dependencies (principles, sobc, research, adr, strategy, risk)
-- **Updated**: wardley tier text — added optional dependencies (research, data-model, tcop, ai-playbook)
+- **Updated**: wardley tier text — added optional dependencies (research, data-model, uk-tcop, uk-ai-playbook)
 - **Updated**: ARC-*-REQ-*.md consumption count from 38 to 36 (dfd and diagram changed from M to O)
 - **Note**: Audit performed by comparing matrix entries against actual command file implementations
 
@@ -490,7 +492,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Added**: conformance row and column to dependency matrix
 - **Updated**: Tier 13 Compliance Assessment to include conformance command
 - **Dependencies**: principles (M), adr (M), requirements (R), hld-review (R), dld-review (R), principles-compliance (R), traceability (R), HLD (R), DLD (R), risk (O), devops (O)
-- **Consumed by**: analyze (O), service-assessment (O), story (R), pages (R), presentation (O)
+- **Consumed by**: analyze (O), uk-service-assessment (O), story (R), pages (R), presentation (O)
 - **Doc ID**: `ARC-{PID}-CONF-v{VERSION}`
 - **Note**: Bridges `/arckit.health` (quick metadata scan) and `/arckit.analyze` (deep governance) with 12 conformance checks covering ADR implementation, cross-decision consistency, architecture drift, technical debt, and custom constraint rules
 
@@ -555,7 +557,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Added**: datascout row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include datascout command
 - **Dependencies**: requirements (M), data-model (O), stakeholders (R), principles (R)
-- **Consumed by**: data-model (R), research (R), adr (R), dpia (O), diagram (O), traceability (R), pages (R)
+- **Consumed by**: data-model (R), research (R), adr (R), uk-dpia (O), diagram (O), traceability (R), pages (R)
 - **Note**: Bidirectional with data-model; prioritises UK Government open data sources (TCoP Point 10)
 
 ### 2026-01-29 - Added AWS Research Command
@@ -573,7 +575,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Added**: azure-research row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include azure-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
-- **Consumed by**: diagram (R), devops (R), finops (R), adr (R), secure (O), pages (R)
+- **Consumed by**: diagram (R), devops (R), finops (R), adr (R), uk-secure (O), pages (R)
 - **Note**: Requires Microsoft Learn MCP server for authoritative Azure documentation
 
 ### 2026-01-28 - Added Missing Operations Commands to Matrix
@@ -612,7 +614,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Updated**: All 6 critical paths to include new commands in operations phase
 - **Dependencies**:
   - devops: requirements (M), diagram (R), research (R), principles (R)
-  - mlops: requirements (M), data-model (R), ai-playbook (R), research (R)
+  - mlops: requirements (M), data-model (R), uk-ai-playbook (R), research (R)
   - operationalize: requirements (M), servicenow (R), diagram (R), risk (R)
 
 ### 2025-01-06 - Added Platform Design Command
@@ -622,9 +624,9 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Added**: New critical path: "UK Government Platform Strategy Path" showing where platform-design fits
 - **Added**: Tier 5 "Strategic Planning (Platform Strategy)" for platform-design placement
 - **Updated**: Tier 6 commands to optionally consume platform-design (research R, wardley R, diagram R)
-- **Updated**: analyze to consume platform-design (O), principles-compliance (R), service-assessment (O)
+- **Updated**: analyze to consume platform-design (O), principles-compliance (R), uk-service-assessment (O)
 - **Dependencies**: principles (M), stakeholders (R), requirements (R), wardley (R), risk (O), sobc (O), data-model (O)
-- **Consumed by**: research (R), wardley (R), diagram (R), analyze (M), principles-compliance (R), service-assessment (R)
+- **Consumed by**: research (R), wardley (R), diagram (R), analyze (M), principles-compliance (R), uk-service-assessment (R)
 - **Use case**: Designing Government as a Platform (GaaP) services, data marketplaces, multi-sided platforms
 
 ### 2025-11-04 - Added Principles Compliance Command
@@ -633,27 +635,27 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Added**: principles-compliance row and column to dependency matrix
 - **Updated**: All critical paths to include principles-compliance assessment
 - **Updated**: Tier 13 description to include principles-compliance command
-- **Updated**: service-assessment to optionally consume principles-compliance output (O)
-- **Dependencies**: principles (M), requirements (R), stakeholders (R), risk (R), data-model (R), HLD (R), DLD (R), hld-review (R), dld-review (R), traceability (R), dpia (R), tcop (R), secure (R), mod-secure (R)
+- **Updated**: uk-service-assessment to optionally consume principles-compliance output (O)
+- **Dependencies**: principles (M), requirements (R), stakeholders (R), risk (R), data-model (R), HLD (R), DLD (R), hld-review (R), dld-review (R), traceability (R), uk-dpia (R), uk-tcop (R), uk-secure (R), uk-mod-secure (R)
 
 ### 2025-11-02 - Critical Fixes + Optional Dependencies
 
 - **Added**: analyze row showing optional dependencies on all artifacts
-- **Fixed**: service-assessment compliance dependencies changed from M to O (tcop, ai-playbook, atrs, secure, mod-secure, jsp-936)
-- **Fixed**: analyze compliance dependencies changed from M to O (tcop, ai-playbook, atrs, mod-secure)
+- **Fixed**: uk-service-assessment compliance dependencies changed from M to O (uk-tcop, uk-ai-playbook, uk-atrs, uk-secure, uk-mod-secure, uk-mod-jsp-936)
+- **Fixed**: analyze compliance dependencies changed from M to O (uk-tcop, uk-ai-playbook, uk-atrs, uk-mod-secure)
 - **Updated**: Critical paths reordered to show compliance commands before quality gates
 - **Updated**: Tier 12 and Tier 13 descriptions to reflect optional dependencies and iterative execution
 - **Added**: 23 optional dependencies to complete matrix:
   - plan: principles, stakeholders, risk, sobc, requirements (5)
-  - diagram: principles, DLD, tcop, ai-playbook, atrs (5)
-  - wardley: principles, tcop, ai-playbook, atrs (4)
-  - tcop: diagram, wardley (2)
-  - ai-playbook: diagram, wardley, atrs (3)
-  - atrs: diagram, wardley (2)
-  - secure: diagram (1)
-  - mod-secure: diagram (1)
-  - jsp-936: data-model, diagram (2)
-  - sow: dos, hld-review (2)
+  - diagram: principles, DLD, uk-tcop, uk-ai-playbook, uk-atrs (5)
+  - wardley: principles, uk-tcop, uk-ai-playbook, uk-atrs (4)
+  - uk-tcop: diagram, wardley (2)
+  - uk-ai-playbook: diagram, wardley, uk-atrs (3)
+  - uk-atrs: diagram, wardley (2)
+  - uk-secure: diagram (1)
+  - uk-mod-secure: diagram (1)
+  - uk-mod-jsp-936: data-model, diagram (2)
+  - sow: uk-dos, hld-review (2)
   - DLD: diagram (1)
 - **Updated Templates**:
   - architecture-diagram-template.md: Added ATRS to Linked Artifacts
@@ -665,11 +667,11 @@ Added 18 new commands covering EU regulations and French public sector governanc
 
 **New EU commands**:
 
-- `/arckit.eu-rgpd` — GDPR / French CNIL compliance. Depends on: requirements (M), data-model (R), dpia (O). Produces ARC-*-RGPD-*.md
+- `/arckit.eu-rgpd` — GDPR / French CNIL compliance. Depends on: requirements (M), data-model (R), uk-dpia (O). Produces ARC-*-RGPD-*.md
 - `/arckit.eu-ai-act` — EU AI Act (Reg 2024/1689) compliance. Depends on: requirements (M), risk (R), data-model (R). Produces ARC-*-AIACT-*.md
-- `/arckit.eu-nis2` — NIS2 Directive compliance + French OIV/OSE. Depends on: requirements (M), risk (M), secure (R). Produces ARC-*-NIS2-*.md
-- `/arckit.eu-dora` — DORA (Reg 2022/2554) compliance for financial entities. Depends on: requirements (M), risk (M), secure (R). Produces ARC-*-DORA-*.md
-- `/arckit.eu-cra` — Cyber Resilience Act (Reg 2024/2847) compliance. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-CRA-*.md
+- `/arckit.eu-nis2` — NIS2 Directive compliance + French OIV/OSE. Depends on: requirements (M), risk (M), uk-secure (R). Produces ARC-*-NIS2-*.md
+- `/arckit.eu-dora` — DORA (Reg 2022/2554) compliance for financial entities. Depends on: requirements (M), risk (M), uk-secure (R). Produces ARC-*-DORA-*.md
+- `/arckit.eu-cra` — Cyber Resilience Act (Reg 2024/2847) compliance. Depends on: requirements (M), risk (R), uk-secure (R). Produces ARC-*-CRA-*.md
 - `/arckit.eu-dsa` — Digital Services Act (Reg 2022/2065) compliance. Depends on: requirements (M), risk (R). Produces ARC-*-DSA-*.md
 - `/arckit.eu-data-act` — EU Data Act (Reg 2023/2854) compliance. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-DATAACT-*.md
 
@@ -712,7 +714,7 @@ requirements → risk → data-model →
 eu-rgpd → eu-nis2 → eu-cra → eu-data-act → eu-dsa → eu-ai-act
 ```
 
-- **Updated**: Commands Documented count from 64 to 82 (86 total; 4 utility commands not in matrix: customize, template-builder, health, search, impact, init, start, score, fr-code-reuse, gov-reuse, gov-code-search, gov-landscape are in matrix)
+- **Updated**: Commands Documented count from 64 to 82 (86 total; 4 utility commands not in matrix: customize, template-builder, health, search, impact, init, start, score, fr-code-reuse, uk-gov-reuse, uk-gov-code-search, uk-gov-landscape are in matrix)
 - **Updated**: Matrix version date to 2026-04-19
 
 ### 2026-04-30 - UAE Federal Overlay Commands (Official Baseline)
@@ -723,7 +725,7 @@ Added 12 official-baseline commands covering UAE federal regulatory and digital-
 
 - `/arckit.uae-classification` — UAE Smart Data Classification Register. Depends on: requirements (R), data-model (R). Produces ARC-*-CLAS-*.md
 - `/arckit.uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-PDPL-*.md
-- `/arckit.uae-ias` — UAE Cybersecurity Council IAS v2 Statement of Applicability. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-IAS-*.md
+- `/arckit.uae-ias` — UAE Cybersecurity Council IAS v2 Statement of Applicability. Depends on: requirements (M), risk (R), uk-secure (R). Produces ARC-*-IAS-*.md
 - `/arckit.uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment. Depends on: uae-classification (M), requirements (R). Produces ARC-*-CLDR-*.md
 - `/arckit.uae-uaepass` — UAE Pass integration design (OIDC/OAuth, claim mapping, profiles, e-signature). Depends on: requirements (M), integration (R). Produces ARC-*-UPASS-*.md
 - `/arckit.uae-zero-bureaucracy` — Service Catalogue review under Code for Government Services. Depends on: requirements (M), user-stories (R), journeys (R). Produces ARC-*-ZBUR-*.md
@@ -805,10 +807,10 @@ principles → requirements → ca-pia → ca-atip → ca-aia (if ADM) → ca-oc
 | `ca-soia` | `adr` | Compartment design, MOU choices with CSIS / RCMP, and tier-promotion thresholds warrant ADRs |
 | `ca-cloud-residency` | `adr` | Sovereign cloud option choices and CLOUD-Act risk acceptance warrant ADRs |
 | `ca-cloud-residency` | `ca-itsg-33` | Cloud control-profile selection (PBMM-Cloud, Secret-High) grounded in ITSG-33 categorisation |
-| `ca-gc-digital-standards` | `service-assessment` | GC Digital Standards conformance feeds the broader service-assessment evidence base |
+| `ca-gc-digital-standards` | `uk-service-assessment` | GC Digital Standards conformance feeds the broader uk-service-assessment evidence base |
 | `ca-gc-digital-standards` | `roadmap` | Identified gaps and remediation actions become roadmap milestones |
 | `ca-ola` | `ca-gc-digital-standards` | OLA service equivalence is a baseline expectation under the GC Digital Standards scorecard |
-| `ca-ola` | `service-assessment` | OLA review feeds the service-assessment evidence base for bilingualism and active offer |
+| `ca-ola` | `uk-service-assessment` | OLA review feeds the uk-service-assessment evidence base for bilingualism and active offer |
 | `ca-pspc` | `evaluate` | PSPC route selection feeds the vendor evaluation framework's scoring rubric |
 | `ca-pspc` | `sobc` | Procurement strategy feeds the SOBC's procurement and commercial pillars |
 | `ca-ocap` | `data-model` | OCAP-mapped classifications and access controls feed the data-model stewardship and access policies |
@@ -844,12 +846,12 @@ Wave 5 (authorization): us-sbom-eo-14028 → us-fedramp-ssp → us-fedramp-readi
 | `us-fisma-categorization` | `risk` | Categorization rationale and any ambiguous information-type mappings feed the project risk register |
 | `us-nist-800-53` | `us-fedramp-ssp` | The tailored control set and implementation statements drop directly into the FedRAMP SSP control-implementation tables |
 | `us-nist-800-53` | `us-zero-trust` | Control selections (especially AC, IA, SC families) feed the CISA Zero Trust Maturity Model scoring |
-| `us-nist-800-53` | `us-sbom-eo-14028` | Supply-chain controls (SR family) cross-reference the EO 14028 secure-software attestation and SBOM register |
+| `us-nist-800-53` | `us-sbom-eo-14028` | Supply-chain controls (SR family) cross-reference the EO 14028 uk-secure-software attestation and SBOM register |
 | `us-nist-800-53` | `adr` | Significant tailoring decisions (compensating controls, control inheritance boundaries, parameter values) warrant ADRs |
 | `us-fedramp-ssp` | `us-fedramp-readiness` | The SSP is the primary input to the 3PAO Readiness Assessment Report; gaps surfaced during SSP authoring populate the RAR gap register |
 | `us-fedramp-ssp` | `us-zero-trust` | SSP control implementations seed the CISA Zero Trust Maturity scoring (Identity, Devices, Networks, Apps & Workloads, Data pillars) |
 | `us-fedramp-ssp` | `us-icam` | The Types of Users section and IA-family control implementations connect to the ICAM architecture |
-| `us-fedramp-readiness` | `service-assessment` | The readiness gap register feeds the broader service-assessment evidence pack |
+| `us-fedramp-readiness` | `uk-service-assessment` | The readiness gap register feeds the broader uk-service-assessment evidence pack |
 | `us-fedramp-readiness` | `roadmap` | Remediation actions for FedRAMP gaps drop into the architecture roadmap timeline |
 | `us-fedramp-readiness` | `risk` | Open gaps and POA&M items become entries in the project risk register |
 | `us-zero-trust` | `us-icam` | Identity-pillar gaps drive the ICAM architecture (IAL/AAL/FAL determination, PIV / login.gov integration) |

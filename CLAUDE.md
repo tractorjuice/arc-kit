@@ -9,7 +9,7 @@ ArcKit is **The Enterprise Architecture Governance Harness** — providing slash
 **Six distribution formats** exist side-by-side in this repo:
 
 1. **CLI package** (`src/arckit_cli/`) — Python CLI installed via `pip`/`uv`, runs `arckit init` to scaffold projects for Codex CLI or OpenCode CLI
-2. **Claude Code plugins** (`arckit-claude/`, `arckit-uae/`, `arckit-fr/`, `arckit-ca/`, `arckit-eu/`, `arckit-at/`, `arckit-au/`, `arckit-us/`, `arckit-uk-finance/`) — installed via marketplace (`/plugin marketplace add tractorjuice/arc-kit`). Core `arckit` ships 71 commands + all hooks/MCP/doc-types config. Eight community overlays ship commands and recipes — seven jurisdictional overlays (UAE, France, Canada, EU, Austria, Australia, USA federal civilian) plus one sector-specific overlay (UK Finance Payments). Install only what you need; community plugins require the `arckit` core plugin.
+2. **Claude Code plugins** (`arckit-claude/`, `arckit-uk/`, `arckit-uk-mod/`, `arckit-uae/`, `arckit-fr/`, `arckit-ca/`, `arckit-eu/`, `arckit-at/`, `arckit-au/`, `arckit-au-energy/`, `arckit-us/`, `arckit-uk-finance/`, `arckit-uk-nhs/`) — installed via marketplace (`/plugin marketplace add tractorjuice/arc-kit`). **13 plugins total.** Core `arckit` is now jurisdiction-neutral and ships 56 commands + all hooks/MCP/doc-types config. Two **officially-maintained** UK overlays — `arckit-uk` (13 commands, `uk-` prefix, default-on) and `arckit-uk-mod` (2 commands `uk-mod-secure`/`uk-mod-jsp-936`, default-off, depends on `arckit-uk`) — carry the UK Government baseline. The **71-command official baseline** now spans 3 official plugins: `arckit` (56) + `arckit-uk` (13) + `arckit-uk-mod` (2). Ten community overlays ship commands and recipes — seven jurisdictional overlays (UAE, France, Canada, EU, Austria, Australia, USA federal civilian) plus three sector-specific overlays (UK Finance Payments, UK NHS Clinical Safety, Australian Energy). Install only what you need; all overlays require the `arckit` core plugin (`arckit-uk-mod`, `arckit-uk-finance`, `arckit-uk-nhs` additionally require `arckit-uk`; `arckit-au-energy` additionally requires `arckit-au`). See [`docs/MIGRATION-v6.md`](docs/MIGRATION-v6.md) for the v6.0.0 UK command-namespace migration.
 3. **Gemini CLI extension** (`arckit-gemini/`) — published as `tractorjuice/arckit-gemini`, installed via `gemini extensions install`
 4. **OpenCode CLI extension** (`arckit-opencode/`) — scaffolded via `arckit init --ai opencode`
 5. **Codex CLI extension** (`arckit-codex/`) — published as `tractorjuice/arckit-codex`
@@ -80,6 +80,8 @@ Effort and `keep-coding-instructions` are stripped by the converter for non-Clau
 
 Some commands delegate to **autonomous agents** (`arckit-claude/agents/arckit-{name}.md`) that run as subprocesses via the Task tool. Agents are used for commands that perform extensive web research (>10 WebSearch/WebFetch/MCP calls) to keep that context isolated from the main conversation.
 
+Core `arckit` agents (`arckit-claude/agents/`):
+
 | Agent | Command | Purpose |
 |-------|---------|---------|
 | `arckit-research` | `/arckit.research` | Market research, vendor evaluation, build vs buy, TCO |
@@ -88,12 +90,17 @@ Some commands delegate to **autonomous agents** (`arckit-claude/agents/arckit-{n
 | `arckit-azure-research` | `/arckit.azure-research` | Azure via Microsoft Learn MCP |
 | `arckit-gcp-research` | `/arckit.gcp-research` | GCP via Google Developer Knowledge MCP |
 | `arckit-framework` | `/arckit.framework` | Transform artifacts into a structured framework |
-| `arckit-gov-reuse` | `/arckit.gov-reuse` | Government code reuse via govreposcrape |
-| `arckit-gov-code-search` | `/arckit.gov-code-search` | Government code semantic search |
-| `arckit-gov-landscape` | `/arckit.gov-landscape` | Government code landscape analysis |
-| `arckit-grants` | `/arckit.grants` | UK government grants and funding research |
 
-**Reader/writer subagents** (6 internal, not user-invocable): `datascout`, `grants`, and `gov-reuse` follow the three-tier orchestrator pattern (`arckit-claude/agents/READER-PATTERN.md`). Each ships a `arckit-{name}-reader.md` (web/MCP evidence gathering, returns JSON) and `arckit-{name}-writer.md` (renders validated payload into artefact, no network tools). Dispatched only by the corresponding orchestrator agent. **Total: 16 agents** (10 single-tier + 6 reader/writer subagents).
+The four gov-/grants agents moved to the **`arckit-uk` overlay** (`arckit-uk/agents/`) in v6.0.0, renamed with the `arckit-uk-` prefix, alongside the govreposcrape MCP server they depend on:
+
+| Agent | Command | Purpose |
+|-------|---------|---------|
+| `arckit-uk-gov-reuse` | `/arckit-uk:uk-gov-reuse` | Government code reuse via govreposcrape |
+| `arckit-uk-gov-code-search` | `/arckit-uk:uk-gov-code-search` | Government code semantic search |
+| `arckit-uk-gov-landscape` | `/arckit-uk:uk-gov-landscape` | Government code landscape analysis |
+| `arckit-uk-grants` | `/arckit-uk:uk-grants` | UK government grants and funding research |
+
+**Reader/writer subagents** (6 internal, not user-invocable) follow the three-tier orchestrator pattern (`arckit-claude/agents/READER-PATTERN.md`). Each ships a `{name}-reader.md` (web/MCP evidence gathering, returns JSON) and `{name}-writer.md` (renders validated payload into artefact, no network tools). `datascout` reader/writer stay in **core**; the `gov-reuse` and `grants` reader/writer families moved to **`arckit-uk`** with their orchestrators (renamed `arckit-uk-*`). Dispatched only by the corresponding orchestrator agent. **Total: 16 agents** — 8 in core (6 single-tier + datascout reader/writer) and 8 in `arckit-uk` (4 gov-/grants orchestrators + gov-reuse/grants reader/writer).
 
 **Agent frontmatter**: valid fields are `name` (required), `description` (required), `model`, `effort`, `maxTurns`, `tools`, `disallowedTools`, `initialPrompt`. `tools` is an allowlist (only the listed tools are available); `disallowedTools` is a denylist applied first, then the allowlist is resolved against what remains. Heavy-research agents in this plugin use `tools` (allowlist) for prompt-injection hardening — see `arckit-claude/agents/arckit-research.md` for the canonical shape, including MCP tool naming (`mcp__<server>__<tool>`). Fields like `color` and `permissionMode` remain invalid in plugin context. Claude-only fields (`effort`, `initialPrompt`, `maxTurns`, `disallowedTools`, `tools`) are stripped by the converter.
 
@@ -235,12 +242,12 @@ ArcKit maintains public test repos on GitHub (pattern: `arckit-test-project-v*`)
 
 ## Key Patterns
 
-- **Agent Delegation**: Heavy-research commands (research, datascout, *-research, gov-*, grants) delegate to agents in `arckit-claude/agents/` via the Task tool. The slash command is a thin wrapper.
+- **Agent Delegation**: Heavy-research commands delegate to agents via the Task tool; the slash command is a thin wrapper. Core agents (`research`, `datascout`, `*-research`, `framework`) live in `arckit-claude/agents/`; the UK gov-/grants agents (`uk-gov-reuse`, `uk-gov-code-search`, `uk-gov-landscape`, `uk-grants`) live in `arckit-uk/agents/`.
 - **Token Limit Handling**: Commands MUST use Write tool for large documents to avoid the 32K output token limit.
 - **Template-Driven Generation**: Never generate freeform documents — always use templates from `.arckit/templates/`.
 - **Traceability Chain**: Stakeholders → Goals → Requirements (BR/FR/NFR/INT/DR) → Data Model → Components → User Stories.
 - **Citation Traceability**: When commands read external documents (`external/`, `policies/`, `vendors/`, MCP queries, web fetches), they add inline citation markers (`[DOC_ID-CN]`) and an "External References" section. See `arckit-claude/references/citation-instructions.md`.
 - **Requirement ID Prefixes** (numeric suffix is 1–3 digits; both `BR-1` and `BR-001` are valid):
   - `BR-xxx` Business, `FR-xxx` Functional, `NFR-xxx` Non-Functional (NFR-P/NFR-SEC/etc.), `INT-xxx` Integration, `DR-xxx` Data
-- **UK Government Context**: Many commands target UK public sector (GDS Service Standard, TCoP, NCSC CAF, Orange/Green Book, G-Cloud/DOS procurement). See README.md for full compliance coverage.
+- **UK Government Context**: UK public sector commands (GDS Service Standard, TCoP, NCSC CAF, G-Cloud/DOS procurement) live in the `arckit-uk` overlay (default-on) under the `uk-` prefix (`/arckit-uk:uk-tcop`, etc.); defence commands live in `arckit-uk-mod`. Core `arckit` is jurisdiction-neutral. HM Treasury Orange/Green Book commands (`risk`, `sobc`) stay in core and are framework-aware via the `governance_framework` user-config. See README.md and `docs/MIGRATION-v6.md` for full coverage.
 - **Wardley Map Format**: OnlineWardleyMaps syntax for visualization at <https://create.wardleymaps.ai>.

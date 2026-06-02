@@ -59,20 +59,23 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. The marketplace ships **8 plugins** — install only the jurisdictions you need:
+Then install from the Discover tab. The marketplace ships **13 plugins** — install only the jurisdictions you need:
 
 ```bash
-# Core (71 commands — UK Government civilian + generic enterprise)
+# Core (56 commands — jurisdiction-neutral enterprise baseline)
 claude plugin install arckit
 
-# UK + UAE federal
-claude plugin install arckit arckit-uae
+# Core + UK Government overlay (default-on; restores full UK experience)
+claude plugin install arckit arckit-uk
 
-# Everything (139 commands across UK + UAE + FR + CA + EU + AT + AU + US + UK-NHS)
-claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs}
+# UK + UAE federal
+claude plugin install arckit arckit-uk arckit-uae
+
+# Everything (147 commands across all 13 plugins)
+claude plugin install arckit arckit-uk arckit-uk-mod arckit-au arckit-{uae,fr,ca,eu,at,au-energy,us,uk-finance,uk-nhs}
 ```
 
-All 11 plugins come from the same `tractorjuice/arc-kit` marketplace. The 10 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`.
+All 13 plugins come from the same `tractorjuice/arc-kit` marketplace. The two official UK overlays (`arckit-uk`, `arckit-uk-mod`) and the 10 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) all require the `arckit` core plugin. `arckit-uk-mod`, `arckit-uk-finance`, and `arckit-uk-nhs` additionally require `arckit-uk`. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction) — install with `claude plugin install arckit arckit-au arckit-au-energy`.
 
 > **Tip: lighter marketplace clone.** The command above clones the full arc-kit monorepo (~100 MB) because it hosts five other AI-assistant distributions, 147 vendored Wardley maps, and research docs you don't need. To fetch just the plugin's directories, add the marketplace via the CLI with `--sparse`:
 >
@@ -80,9 +83,9 @@ All 11 plugins come from the same `tractorjuice/arc-kit` marketplace. The 10 com
 > claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude
 > ```
 >
-> This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 71 official commands (plus 68 community-contributed), 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
+> This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 71 official commands (plus 76 community-contributed), 10 autonomous research agents, 5 automation hooks (session init, project context injection, filename enforcement, output validation, impact scan), bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.156?** Claude Code v2.1.156 fixed an Opus 4.8 bug where modified thinking blocks caused API errors — relevant to `/arckit:*` commands and the research agents that lean on extended thinking, so it is the floor for adopting Opus 4.8 cleanly. v2.1.154 shipped Opus 4.8 (now defaulting to high effort, owning `/effort xhigh`) and `defaultEnabled: false` for plugins — ArcKit's 10 community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) now set this so installing the marketplace surfaces them without auto-enabling all ten; users opt in to only the jurisdiction or sector they need, while core `arckit` stays default-enabled. v2.1.144 fixed a bug where new sessions were titled from plugin monitor output instead of the user's first prompt — ArcKit's `stale-artifact-scan` monitor was the canonical hit, producing sessions named "Detect ArcKit artifacts with overdue reviews…" instead of the user's actual question. Same release fixed the Skill tool failing with permission errors in headless mode (regression in v2.1.141) which affected `/arckit:*` runs via `claude -p` / CI. v2.1.143 added plugin dependency enforcement so `claude plugin disable arckit` now surfaces a copy-pasteable disable-chain hint when a community overlay (`arckit-au`, `arckit-uae`, etc.) depends on it, instead of silently breaking the overlay. v2.1.139 added the hook `args: string[]` exec form — ArcKit's 16 registered hooks now use this form so the harness execs `node <path>` directly instead of parsing a shell-quoted command string. This eliminates a whole class of quoting / metacharacter bugs in the `${CLAUDE_PLUGIN_ROOT}`-substituted paths. The same release also fixed subagents not discovering project / user / plugin skills (affects ArcKit's 16 agents) and made `/mcp` reconnect pick up `.mcp.json` edits without a restart. Builds on v2.1.136 (fix: env vars from SessionStart hooks going stale — relevant to the `inject-arckit-context` pattern; fix: MCP servers from `.mcp.json` disappearing after `/clear`), v2.1.133 (subagent skill discovery fix, hooks receive `effort.level`), and v2.1.129 (plugin manifest's `monitors`/`themes` moved under a top-level `experimental` block — ArcKit's `stale-artifact-scan` background monitor which warns when `projects/` artefacts are past their `Next Review Date` or stuck in `DRAFT` for 14+ days is declared via that key and will not load on older clients; `ENABLE_PROMPT_CACHING_1H` regression fix). Carries forward the v2.1.121 unlocks: MCP `alwaysLoad` eager-loads AWS Knowledge and Microsoft Learn tools at session start (skips a discovery round-trip on `/arckit:aws-research` and `/arckit:azure-research`), and PostToolUse `hookSpecificOutput.updatedToolOutput` so provenance-stamp and manifest hooks surface their effects to the model in-band; the v2.1.118–119 release-flow unlocks: `claude plugin tag --dry-run` validates plugin/marketplace version agreement, and the session-telemetry hook records `duration_ms` on every tool call; the v2.1.117 unlocks: Opus 4.7 `/context` correctly sized to 1M instead of 200K (long research sessions no longer autocompact early) and agent frontmatter `mcpServers` loading for `--agent` sessions; the v2.1.111+ unlocks: Opus 4.7 `xhigh` effort tier, Auto mode without `--enable-auto-mode`, read-only bash glob patterns without permission prompts; and the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
+> **Why v2.1.156?** Claude Code v2.1.156 fixed an Opus 4.8 bug where modified thinking blocks caused API errors — relevant to `/arckit:*` commands and the research agents that lean on extended thinking, so it is the floor for adopting Opus 4.8 cleanly. v2.1.154 shipped Opus 4.8 (now defaulting to high effort, owning `/effort xhigh`) and `defaultEnabled: false` for plugins — ArcKit's 10 community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) now set this so installing the marketplace surfaces them without auto-enabling all ten; users opt in to only the jurisdiction or sector they need, while core `arckit` and the `arckit-uk` overlay stay default-enabled. v2.1.144 fixed a bug where new sessions were titled from plugin monitor output instead of the user's first prompt — ArcKit's `stale-artifact-scan` monitor was the canonical hit, producing sessions named "Detect ArcKit artifacts with overdue reviews…" instead of the user's actual question. Same release fixed the Skill tool failing with permission errors in headless mode (regression in v2.1.141) which affected `/arckit:*` runs via `claude -p` / CI. v2.1.143 added plugin dependency enforcement so `claude plugin disable arckit` now surfaces a copy-pasteable disable-chain hint when a community overlay (`arckit-au`, `arckit-uae`, etc.) depends on it, instead of silently breaking the overlay. v2.1.139 added the hook `args: string[]` exec form — ArcKit's 16 registered hooks now use this form so the harness execs `node <path>` directly instead of parsing a shell-quoted command string. This eliminates a whole class of quoting / metacharacter bugs in the `${CLAUDE_PLUGIN_ROOT}`-substituted paths. The same release also fixed subagents not discovering project / user / plugin skills (affects ArcKit's 16 agents) and made `/mcp` reconnect pick up `.mcp.json` edits without a restart. Builds on v2.1.136 (fix: env vars from SessionStart hooks going stale — relevant to the `inject-arckit-context` pattern; fix: MCP servers from `.mcp.json` disappearing after `/clear`), v2.1.133 (subagent skill discovery fix, hooks receive `effort.level`), and v2.1.129 (plugin manifest's `monitors`/`themes` moved under a top-level `experimental` block — ArcKit's `stale-artifact-scan` background monitor which warns when `projects/` artefacts are past their `Next Review Date` or stuck in `DRAFT` for 14+ days is declared via that key and will not load on older clients; `ENABLE_PROMPT_CACHING_1H` regression fix). Carries forward the v2.1.121 unlocks: MCP `alwaysLoad` eager-loads AWS Knowledge and Microsoft Learn tools at session start (skips a discovery round-trip on `/arckit:aws-research` and `/arckit:azure-research`), and PostToolUse `hookSpecificOutput.updatedToolOutput` so provenance-stamp and manifest hooks surface their effects to the model in-band; the v2.1.118–119 release-flow unlocks: `claude plugin tag --dry-run` validates plugin/marketplace version agreement, and the session-telemetry hook records `duration_ms` on every tool call; the v2.1.117 unlocks: Opus 4.7 `/context` correctly sized to 1M instead of 200K (long research sessions no longer autocompact early) and agent frontmatter `mcpServers` loading for `--agent` sessions; the v2.1.111+ unlocks: Opus 4.7 `xhigh` effort tier, Auto mode without `--enable-auto-mode`, read-only bash glob patterns without permission prompts; and the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
 
 **Gemini CLI** — install the ArcKit extension:
 
@@ -90,7 +93,7 @@ All 11 plugins come from the same `tractorjuice/arc-kit` marketplace. The 10 com
 gemini extensions install https://github.com/tractorjuice/arckit-gemini
 ```
 
-Zero-config: all 71 official commands (plus 58 community-contributed overlays), templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
+Zero-config: all 71 official commands (plus 76 community-contributed overlays), templates, scripts, and bundled MCP servers (AWS Knowledge, Microsoft Learn). Updates via `gemini extensions update arckit`.
 
 **GitHub Copilot** (VS Code) — install the ArcKit CLI and scaffold prompt files:
 
@@ -237,7 +240,7 @@ Public demonstration repositories showcase complete ArcKit deliverables:
 
 Token cost of installing the `arckit` core plugin in a Claude Code session, captured from `claude plugin details arckit` on v2.1.143+:
 
-- **Always-on per session: ~10,042 tokens** — added to every session's system context, covering the 71 command-skills + 5 utility skills (`architecture-workflow`, `arckit-build`, `mermaid-syntax`, `plantuml-syntax`, `wardley-mapping`) + 16 agent descriptors. Hooks (9 events) and MCP servers (5) are harness-resolved at runtime and not counted.
+- **Always-on per session: ~10,042 tokens** — added to every session's system context, covering the 56 core command-skills plus 15 UK command-skills (from `arckit-uk`/`arckit-uk-mod`) + 5 utility skills (`architecture-workflow`, `arckit-build`, `mermaid-syntax`, `plantuml-syntax`, `wardley-mapping`) + 16 agent descriptors. Hooks (9 events) and MCP servers (5) are harness-resolved at runtime and not counted.
 - **On-invoke: ~250 to ~60K tokens per command** — paid only when a specific skill or agent fires. Most commands are in the 5–10K range.
 
 ### On-invoke cost by command
@@ -247,15 +250,15 @@ Costs are estimates from the Claude Code tokenizer and may differ from actual us
 | Tier | Range | Commands |
 |------|-------|----------|
 | Lightweight | <2K | `start`, `init`, `build`, `search`, `impact`, `navigator`, `graph-report`, `framework`, `gov-landscape`, `aws-research`, `azure-research`, `gcp-research` |
-| Standard | 2–7K | `customize`, `score`, `principles`, `mermaid-syntax`, `plantuml-syntax`, `architecture-workflow`, `datascout`, `evaluate`, `hld-review`, `mlops`, `devops`, `finops`, `research`, `tcop`, `wardley-mapping`, `template-builder`, `glossary`, `dld-review`, `traceability`, `stakeholders`, `presentation`, `dfd`, `operationalize`, `requirements`, `maturity-model`, `data-model`, `gov-reuse`, `strategy`, `presentation`, `atrs`, `gov-code-search`, `READER-PATTERN` |
-| Heavy | 7–15K | `wardley.value-chain`, `gcloud-clarify`, `ai-playbook`, `sow`, `sobc`, `risk`, `secure`, `dpia`, `dos`, `mod-secure`, `plan`, `conformance`, `roadmap`, `health`, `wardley.doctrine`, `wardley.gameplay`, `pages`, `servicenow`, `gcloud-search`, `principles-compliance`, `story`, `wardley`, `wardley.climate`, `data-mesh-contract`, `platform-design`, `adr`, `arckit-build`, `grants` |
-| Research-heavy | 15–25K | `service-assessment`, `analyze`, `backlog`, `diagram` |
-| Specialist | >25K | `jsp-936` (~60K — MOD JSP 936 AI assurance, defence-only) |
+| Standard | 2–7K | `customize`, `score`, `principles`, `mermaid-syntax`, `plantuml-syntax`, `architecture-workflow`, `datascout`, `evaluate`, `hld-review`, `mlops`, `devops`, `finops`, `research`, `uk-tcop`, `wardley-mapping`, `template-builder`, `glossary`, `dld-review`, `traceability`, `stakeholders`, `presentation`, `dfd`, `operationalize`, `requirements`, `maturity-model`, `data-model`, `uk-gov-reuse`, `strategy`, `presentation`, `uk-atrs`, `uk-gov-code-search`, `READER-PATTERN` |
+| Heavy | 7–15K | `wardley.value-chain`, `uk-gcloud-clarify`, `uk-ai-playbook`, `sow`, `sobc`, `risk`, `uk-secure`, `uk-dpia`, `uk-dos`, `uk-mod-secure`, `plan`, `conformance`, `roadmap`, `health`, `wardley.doctrine`, `wardley.gameplay`, `pages`, `servicenow`, `uk-gcloud-search`, `principles-compliance`, `story`, `wardley`, `wardley.climate`, `data-mesh-contract`, `platform-design`, `adr`, `arckit-build`, `uk-grants` |
+| Research-heavy | 15–25K | `uk-service-assessment`, `analyze`, `backlog`, `diagram` |
+| Specialist | >25K | `uk-mod-jsp-936` (~60K — MOD JSP 936 AI assurance, defence-only) |
 
 ### Trimming the footprint
 
 - The five utility skills already use `paths:` globs to scope their always-on cost to relevant projects (`mermaid-syntax` only loads under `*.mmd`, `wardley-mapping` under WARD artefacts, etc.). The 71 command-skills are listed but not described in detail in the always-on context — the full prompt only loads on invocation.
-- Community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) are independent plugins — install only the jurisdictions / sectors you need. Each adds its own always-on baseline. `arckit-uk-finance`, `arckit-uk-nhs`, and `arckit-au-energy` are **sector** overlays (`arckit-au-energy` layers the energy sector on the `arckit-au` jurisdiction baseline); the rest are jurisdiction-based.
+- Community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) are independent plugins — install only the jurisdictions / sectors you need. Each adds its own always-on baseline. The official `arckit-uk` overlay (default-on) and `arckit-uk-mod` (default-off) are jurisdiction-based. `arckit-uk-finance`, `arckit-uk-nhs`, and `arckit-au-energy` are **sector** overlays (`arckit-au-energy` layers the energy sector on the `arckit-au` jurisdiction baseline; `arckit-uk-finance` and `arckit-uk-nhs` layer sectors on the UK baseline); the rest are jurisdiction-based.
 - Heavy commands (`jsp-936`, `analyze`, `diagram`, `backlog`) are on-invoke only; the always-on cost is unaffected by which heavy commands exist.
 
 To measure your own session footprint, run `/context all` (Claude Code v2.1.139+) for per-skill token estimates against your active model.
@@ -286,17 +289,30 @@ ArcKit provides:
 
 ---
 
-## UK Government Compliance
+## UK Government Overlay (`arckit-uk` + `arckit-uk-mod`)
 
-ArcKit includes dedicated commands for UK public sector delivery:
+The `arckit-uk` official overlay (default-on) ships 13 commands covering the UK public sector delivery stack. Install: `claude plugin install arckit arckit-uk` (or just `arckit` — `arckit-uk` is default-enabled).
 
-- `/arckit.tcop` — Assess all 13 Technology Code of Practice points across delivery phases.
-- `/arckit.ai-playbook` — Produce responsible AI assessments aligned to the UK Government AI Playbook and ATRS.
-- `/arckit.secure` — Generate Secure by Design artefacts covering NCSC CAF, Cyber Essentials, and UK GDPR controls.
-- `/arckit.mod-secure` — Map MOD Secure by Design requirements (JSP 440, IAMM, clearance pathways).
-- `/arckit.jsp-936` — Deliver JSP 936 AI assurance packs for defence AI systems.
+- `/arckit-uk:uk-tcop` — Assess all 13 Technology Code of Practice points across delivery phases.
+- `/arckit-uk:uk-ai-playbook` — Produce responsible AI assessments aligned to the UK Government AI Playbook and ATRS.
+- `/arckit-uk:uk-secure` — Generate Secure by Design artefacts covering NCSC CAF, Cyber Essentials, and UK GDPR controls.
+- `/arckit-uk:uk-dpia` — Generate DPIA for UK GDPR Article 35 compliance.
+- `/arckit-uk:uk-atrs` — Generate Algorithmic Transparency Recording Standard records.
+- `/arckit-uk:uk-service-assessment` — Prepare for GDS Service Standard assessments.
+- `/arckit-uk:uk-dos` — Generate Digital Outcomes and Specialists procurement documentation.
+- `/arckit-uk:uk-gcloud-search` — G-Cloud service search with live Digital Marketplace search.
+- `/arckit-uk:uk-gcloud-clarify` — G-Cloud service validation and gap analysis.
+- `/arckit-uk:uk-gov-reuse` — Discover reusable UK government code before building from scratch.
+- `/arckit-uk:uk-gov-code-search` — Search 24,500+ UK government repositories using natural language.
+- `/arckit-uk:uk-gov-landscape` — Map the UK government code landscape for a domain.
+- `/arckit-uk:uk-grants` — Research UK government grants and funding with eligibility scoring.
 
-See the demo repositories for end-to-end examples, especially `arckit-test-project-v7-nhs-appointment` (civilian services) and `arckit-test-project-v9-cabinet-office-genai` (AI governance).
+The `arckit-uk-mod` official overlay (default-off) ships 2 defence commands. Install: `claude plugin install arckit arckit-uk arckit-uk-mod`.
+
+- `/arckit-uk-mod:uk-mod-secure` — Map MOD Secure by Design requirements (JSP 440, IAMM, clearance pathways).
+- `/arckit-uk-mod:uk-mod-jsp-936` — Deliver JSP 936 AI assurance packs for defence AI systems.
+
+See [docs/MIGRATION-v6.md](docs/MIGRATION-v6.md) for the v5→v6 command mapping. See the demo repositories for end-to-end examples, especially `arckit-test-project-v7-nhs-appointment` (civilian services) and `arckit-test-project-v9-cabinet-office-genai` (AI governance).
 
 ---
 
@@ -306,33 +322,33 @@ See the demo repositories for end-to-end examples, especially `arckit-test-proje
 
 **EU regulations** (member-state-neutral baselines, applicable across EU/EEA):
 
-- `/arckit.eu-rgpd` — GDPR (EU 2016/679) compliance assessment — legal basis, data subject rights, transfers, DPIA screening, breach notification
-- `/arckit.eu-nis2` — NIS2 Directive — operators of essential / important entities, Article 21 measures, incident reporting timelines
-- `/arckit.eu-ai-act` — EU AI Act (Regulation 2024/1689) — risk classification (prohibited / high-risk / GPAI), conformity routes
-- `/arckit.eu-dora` — Digital Operational Resilience Act (EU 2022/2554) — financial sector ICT risk, TLPT, third-party register
-- `/arckit.eu-cra` — Cyber Resilience Act (Regulation 2024/2847) — products with digital elements, SBOM, VDP, CE marking
-- `/arckit.eu-dsa` — Digital Services Act (Regulation 2022/2065) — intermediaries, platforms, VLOPs, ARCOM
-- `/arckit.eu-data-act` — Data Act (Regulation 2023/2854) — connected products, B2B FRAND, cloud switching, Article 27
+- `/arckit-eu:eu-rgpd` — GDPR (EU 2016/679) compliance assessment — legal basis, data subject rights, transfers, DPIA screening, breach notification
+- `/arckit-eu:eu-nis2` — NIS2 Directive — operators of essential / important entities, Article 21 measures, incident reporting timelines
+- `/arckit-eu:eu-ai-act` — EU AI Act (Regulation 2024/1689) — risk classification (prohibited / high-risk / GPAI), conformity routes
+- `/arckit-eu:eu-dora` — Digital Operational Resilience Act (EU 2022/2554) — financial sector ICT risk, TLPT, third-party register
+- `/arckit-eu:eu-cra` — Cyber Resilience Act (Regulation 2024/2847) — products with digital elements, SBOM, VDP, CE marking
+- `/arckit-eu:eu-dsa` — Digital Services Act (Regulation 2022/2065) — intermediaries, platforms, VLOPs, ARCOM
+- `/arckit-eu:eu-data-act` — Data Act (Regulation 2023/2854) — connected products, B2B FRAND, cloud switching, Article 27
 
 **French government** (apply on top of the EU baseline for French deployments):
 
-- `/arckit.fr-secnumcloud` — SecNumCloud 3.2 qualification (sovereign cloud, OIV/OSE, extraterritorial risk)
-- `/arckit.fr-dinum` — DINUM standards: RGI, RGAA, RGESN, RGS, doctrine cloud de l'État, FranceConnect, DSFR
-- `/arckit.fr-marche-public` — French public procurement (code de la commande publique, UGAP, sovereignty clauses)
-- `/arckit.fr-rgpd` — CNIL-specific GDPR layer (cookies Délibération 2020-091, HDS, age 15, DPO registration)
-- `/arckit.fr-ebios` — EBIOS Risk Manager — 5-workshop study (VM/ER/SR/CO/SS/SO/MS IDs, MITRE ATT&CK, homologation)
-- `/arckit.fr-anssi` — ANSSI Guide d'hygiène informatique (42 measures) + cloud security recommendations
-- `/arckit.fr-anssi-carto` — ANSSI SI cartography across business / application / system / network levels
-- `/arckit.fr-dr` — Diffusion Restreinte handling under II 901 / SGDSN / ANSSI
-- `/arckit.fr-algorithme-public` — Public algorithm transparency notice (Article L311-3-1 CRPA, Loi République Numérique)
-- `/arckit.fr-pssi` — Information System Security Policy (PSSI) per ANSSI / RGS
-- `/arckit.fr-code-reuse` — Public code reuse assessment (code.gouv.fr, SILL, EUPL) — build-vs-reuse decision matrix
+- `/arckit-fr:fr-secnumcloud` — SecNumCloud 3.2 qualification (sovereign cloud, OIV/OSE, extraterritorial risk)
+- `/arckit-fr:fr-dinum` — DINUM standards: RGI, RGAA, RGESN, RGS, doctrine cloud de l'État, FranceConnect, DSFR
+- `/arckit-fr:fr-marche-public` — French public procurement (code de la commande publique, UGAP, sovereignty clauses)
+- `/arckit-fr:fr-rgpd` — CNIL-specific GDPR layer (cookies Délibération 2020-091, HDS, age 15, DPO registration)
+- `/arckit-fr:fr-ebios` — EBIOS Risk Manager — 5-workshop study (VM/ER/SR/CO/SS/SO/MS IDs, MITRE ATT&CK, homologation)
+- `/arckit-fr:fr-anssi` — ANSSI Guide d'hygiène informatique (42 measures) + cloud security recommendations
+- `/arckit-fr:fr-anssi-carto` — ANSSI SI cartography across business / application / system / network levels
+- `/arckit-fr:fr-dr` — Diffusion Restreinte handling under II 901 / SGDSN / ANSSI
+- `/arckit-fr:fr-algorithme-public` — Public algorithm transparency notice (Article L311-3-1 CRPA, Loi République Numérique)
+- `/arckit-fr:fr-pssi` — Information System Security Policy (PSSI) per ANSSI / RGS
+- `/arckit-fr:fr-code-reuse` — Public code reuse assessment (code.gouv.fr, SILL, EUPL) — build-vs-reuse decision matrix
 
 **Austrian government** (apply on top of the EU baseline for Austrian deployments — seed contribution pending a domain maintainer):
 
-- `/arckit.at-dsgvo` — Austrian DSG layer on GDPR (§§12–13 image processing, ELGA/GTelG health, §96a ArbVG employee monitoring, age 14 consent, DSB enforcement)
-- `/arckit.at-nisg` — Austrian NISG 2024 (NIS2 transposition) — Essential/Important designation, GovCERT reporting, KSÖ, AT sectoral authorities
-- `/arckit.at-bvergg` — Bundesvergabegesetz 2018 procurement — Oberschwellen/Unterschwellen, ANKÖ publication, Bestbieterprinzip, BVwG review
+- `/arckit-at:at-dsgvo` — Austrian DSG layer on GDPR (§§12–13 image processing, ELGA/GTelG health, §96a ArbVG employee monitoring, age 14 consent, DSB enforcement)
+- `/arckit-at:at-nisg` — Austrian NISG 2024 (NIS2 transposition) — Essential/Important designation, GovCERT reporting, KSÖ, AT sectoral authorities
+- `/arckit-at:at-bvergg` — Bundesvergabegesetz 2018 procurement — Oberschwellen/Unterschwellen, ANKÖ publication, Bestbieterprinzip, BVwG review
 
 These layer cleanly on the existing baseline — `fr-rgpd` / `at-dsgvo` extend `eu-rgpd`, `fr-pssi` / `at-nisg` reference `eu-nis2`, and `fr-secnumcloud` integrates with `arckit.research` and `arckit.evaluate` for procurement workflows. Austrian commands carry extra `[NEEDS VERIFICATION]` markers reflecting their seed status — a future domain maintainer is expected to tighten the citations.
 
@@ -344,18 +360,18 @@ Federal Canadian regulatory baseline as a `[COMMUNITY]` overlay — covering FIT
 
 | Command | Type code | Purpose |
 |---|---|---|
-| `/arckit:ca-fitaa` | `FITAA` | Foreign Influence Transparency and Accountability Act compliance assessment |
-| `/arckit:ca-pia` | `PIA` | Privacy Impact Assessment per Privacy Act + TBS Directive on PIA |
-| `/arckit:ca-atip` | `ATIP` | Access to Information / Privacy Act reconciliation and severance design |
-| `/arckit:ca-aia` | `AIA` | Algorithmic Impact Assessment per TBS Directive on Automated Decision-Making (Levels I–IV) |
-| `/arckit:ca-charter` | `CHRT` | Charter rights design review (s.2 / s.7 / s.8 / s.15) with Oakes proportionality |
-| `/arckit:ca-itsg-33` | `ITSG` | ITSG-33 Statement of Applicability + Standard on Security Categorization |
-| `/arckit:ca-soia` | `SOIA` | Security of Information Act handling plan for SECRET / TOP SECRET systems |
-| `/arckit:ca-cloud-residency` | `CACR` | GC Cloud sovereign residency assessment with CLOUD-Act analysis |
-| `/arckit:ca-gc-digital-standards` | `DIGSTD` | Government of Canada Digital Standards conformance scorecard |
-| `/arckit:ca-ola` | `OLA` | Official Languages Act review (Parts IV / V / VI) |
-| `/arckit:ca-pspc` | `PROC` | Federal procurement strategy (PSPC Supply Manual + PSAB 5%) |
-| `/arckit:ca-ocap` | `OCAP` | First Nations OCAP® sovereignty assessment with FNIGC pre-engagement gate |
+| `/arckit-ca:ca-fitaa` | `FITAA` | Foreign Influence Transparency and Accountability Act compliance assessment |
+| `/arckit-ca:ca-pia` | `PIA` | Privacy Impact Assessment per Privacy Act + TBS Directive on PIA |
+| `/arckit-ca:ca-atip` | `ATIP` | Access to Information / Privacy Act reconciliation and severance design |
+| `/arckit-ca:ca-aia` | `AIA` | Algorithmic Impact Assessment per TBS Directive on Automated Decision-Making (Levels I–IV) |
+| `/arckit-ca:ca-charter` | `CHRT` | Charter rights design review (s.2 / s.7 / s.8 / s.15) with Oakes proportionality |
+| `/arckit-ca:ca-itsg-33` | `ITSG` | ITSG-33 Statement of Applicability + Standard on Security Categorization |
+| `/arckit-ca:ca-soia` | `SOIA` | Security of Information Act handling plan for SECRET / TOP SECRET systems |
+| `/arckit-ca:ca-cloud-residency` | `CACR` | GC Cloud sovereign residency assessment with CLOUD-Act analysis |
+| `/arckit-ca:ca-gc-digital-standards` | `DIGSTD` | Government of Canada Digital Standards conformance scorecard |
+| `/arckit-ca:ca-ola` | `OLA` | Official Languages Act review (Parts IV / V / VI) |
+| `/arckit-ca:ca-pspc` | `PROC` | Federal procurement strategy (PSPC Supply Manual + PSAB 5%) |
+| `/arckit-ca:ca-ocap` | `OCAP` | First Nations OCAP® sovereignty assessment with FNIGC pre-engagement gate |
 
 > **Help wanted**: looking for a Canadian federal enterprise architect to co-maintain this overlay. Open an issue or DM @tractorjuice.
 
@@ -363,36 +379,36 @@ Federal Canadian regulatory baseline as a `[COMMUNITY]` overlay — covering FIT
 
 ## UAE Federal Overlay (Community-contributed)
 
-> ⚠️ **Community-contributed overlay.** The 12 commands below cover UAE federal regulatory and digital-government instruments and ship as a **community-contributed overlay** (not part of the officially-maintained baseline of 68). They are anchored on the UAE Cabinet decree of 23 April 2026 mandating that 50% of federal services run on agentic AI by April 2028, and on the federal data, identity, AI governance, and procurement frameworks the decree references. The overlay is currently solo-maintained by @tractorjuice; a UAE domain co-maintainer is being recruited before the overlay can be re-evaluated for official-baseline promotion. Six citations are flagged `[NEEDS VERIFICATION]` pending Executive Regulations and authority confirmations — see [`docs/guides/uae-overlay-maintenance.md`](docs/guides/uae-overlay-maintenance.md). Output should be reviewed by qualified UAE federal compliance counsel before reliance.
+> ⚠️ **Community-contributed overlay.** The 12 commands below cover UAE federal regulatory and digital-government instruments and ship as a **community-contributed overlay** (not part of the officially-maintained baseline of 71). They are anchored on the UAE Cabinet decree of 23 April 2026 mandating that 50% of federal services run on agentic AI by April 2028, and on the federal data, identity, AI governance, and procurement frameworks the decree references. The overlay is currently solo-maintained by @tractorjuice; a UAE domain co-maintainer is being recruited before the overlay can be re-evaluated for official-baseline promotion. Six citations are flagged `[NEEDS VERIFICATION]` pending Executive Regulations and authority confirmations — see [`docs/guides/uae-overlay-maintenance.md`](docs/guides/uae-overlay-maintenance.md). Output should be reviewed by qualified UAE federal compliance counsel before reliance.
 
 Set `governance_framework: UAE Federal` and `classification_scheme: UAE Smart Data` in plugin userConfig to switch the Document Control header into UAE Smart Data classification rendering across every artefact.
 
 **Federal data and security**:
 
-- `/arckit.uae-classification` — UAE Smart Data Classification Register (Open / Shared / Confidential / Secret / Top Secret) with handling rules and declassification schedule
-- `/arckit.uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment — DPIA, lawful-basis register, data-subject-rights procedure, cross-border transfer log
-- `/arckit.uae-ias` — UAE Cybersecurity Council Information Assurance Standard v2 — Statement of Applicability against 188 controls (60 management M1–M6, 128 technical T1–T9), priority-tiered P1–P4
-- `/arckit.uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment — per-classification residency, approved CSPs (Core42 / G42, Microsoft UAE North/Central, TDRA FedNet, e& Sovereign Launchpad on AWS), shared-responsibility matrix, exit/portability plan
+- `/arckit-uae:uae-classification` — UAE Smart Data Classification Register (Open / Shared / Confidential / Secret / Top Secret) with handling rules and declassification schedule
+- `/arckit-uae:uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment — DPIA, lawful-basis register, data-subject-rights procedure, cross-border transfer log
+- `/arckit-uae:uae-ias` — UAE Cybersecurity Council Information Assurance Standard v2 — Statement of Applicability against 188 controls (60 management M1–M6, 128 technical T1–T9), priority-tiered P1–P4
+- `/arckit-uae:uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment — per-classification residency, approved CSPs (Core42 / G42, Microsoft UAE North/Central, TDRA FedNet, e& Sovereign Launchpad on AWS), shared-responsibility matrix, exit/portability plan
 
 **Federal identity**:
 
-- `/arckit.uae-uaepass` — UAE Pass integration design (OIDC/OAuth flow, claim mapping, Basic vs Verified profile selection, Service Provider onboarding, e-signature audit trail)
+- `/arckit-uae:uae-uaepass` — UAE Pass integration design (OIDC/OAuth flow, claim mapping, Basic vs Verified profile selection, Service Provider onboarding, e-signature audit trail)
 
 **Cabinet instruments**:
 
-- `/arckit.uae-zero-bureaucracy` — Service Catalogue review under the UAE Code for Government Services and Zero Bureaucracy programme
-- `/arckit.uae-digital-records` — Digital Records Plan under the UAE Government Services Digital Records Policy (source-of-truth register per service, retention schedule, official-source designation)
-- `/arckit.uae-data-sharing` — Data Sharing Agreement under the UAE Government Services Data Sharing Policy ("collect once, use securely") with PDPL lawful basis per share
-- `/arckit.uae-priorities-alignment` — National Priorities Alignment Statement under the UAE Federal Government Guide — reuse-vs-build, capability-reuse register (UAE Pass, FedNet), strategy alignment to NIS 2031 / AI 2031 / We the UAE 2031
+- `/arckit-uae:uae-zero-bureaucracy` — Service Catalogue review under the UAE Code for Government Services and Zero Bureaucracy programme
+- `/arckit-uae:uae-digital-records` — Digital Records Plan under the UAE Government Services Digital Records Policy (source-of-truth register per service, retention schedule, official-source designation)
+- `/arckit-uae:uae-data-sharing` — Data Sharing Agreement under the UAE Government Services Data Sharing Policy ("collect once, use securely") with PDPL lawful basis per share
+- `/arckit-uae:uae-priorities-alignment` — National Priorities Alignment Statement under the UAE Federal Government Guide — reuse-vs-build, capability-reuse register (UAE Pass, FedNet), strategy alignment to NIS 2031 / AI 2031 / We the UAE 2031
 
 **AI governance**:
 
-- `/arckit.uae-ai-charter` — UAE Charter for the Development and Use of AI compliance assessment (12 principles)
-- `/arckit.uae-ai-autonomy-tier` — Three-tier AI autonomy posture (Tier 1 internal-productivity, Tier 2 investor-facing-with-approval, Tier 3 regulated/financial) with per-tier guard-rails, approval gates, audit obligations, tier-promotion criteria
+- `/arckit-uae:uae-ai-charter` — UAE Charter for the Development and Use of AI compliance assessment (12 principles)
+- `/arckit-uae:uae-ai-autonomy-tier` — Three-tier AI autonomy posture (Tier 1 internal-productivity, Tier 2 investor-facing-with-approval, Tier 3 regulated/financial) with per-tier guard-rails, approval gates, audit obligations, tier-promotion criteria
 
 **Procurement**:
 
-- `/arckit.uae-procurement` — Federal procurement strategy under Federal Decree-Law No. 11 of 2023 — ITT/RFP packs against MoF Digital Procurement Platform templates, In-Country Value (ICV) plan, evaluation report structure, contract register
+- `/arckit-uae:uae-procurement` — Federal procurement strategy under Federal Decree-Law No. 11 of 2023 — ITT/RFP packs against MoF Digital Procurement Platform templates, In-Country Value (ICV) plan, evaluation report structure, contract register
 
 The commands chain together in a canonical order from `principles → uae-classification → uae-pdpl → uae-ias → uae-cloud-residency → uae-uaepass → uae-zero-bureaucracy → uae-digital-records → uae-data-sharing → uae-ai-charter → uae-ai-autonomy-tier → uae-priorities-alignment → uae-procurement → sobc → wardley → framework`. Full guide: [`docs/guides/uae-overlay.md`](docs/guides/uae-overlay.md).
 
@@ -404,15 +420,15 @@ The commands chain together in a canonical order from `principles → uae-classi
 
 **Clinical safety (DCB0129 + DCB0160)**:
 
-- `/arckit.uk-nhs-dcb0129` — NHS DCB0129 manufacturer Clinical Safety Case + Hazard Log. Produces a 3-file set in `projects/{NNN}/clinical-safety/`: `SAFETY.md` (front-door anchor), `SAFETY-CASE.md` (GSN-inspired safety argument), `HAZARD-LOG.md` (YAML-frontmatter hazard array + rendered Markdown table; 6 starter hazards covering wrong-patient, stale data, audit, authorisation, alert delivery, write integrity)
-- `/arckit.uk-nhs-dcb0160` — NHS DCB0160 deployer Clinical Safety Case + Deployment Hazard Log. Produces a 3-file deployer-side set in `projects/{NNN}/clinical-safety/deployment/`; 10 starter deployment hazards covering training, workflow integration, BC, parallel running, migration, local configuration, terminology, RBAC, incident reporting
+- `/arckit-uk-nhs:uk-nhs-dcb0129` — NHS DCB0129 manufacturer Clinical Safety Case + Hazard Log. Produces a 3-file set in `projects/{NNN}/clinical-safety/`: `SAFETY.md` (front-door anchor), `SAFETY-CASE.md` (GSN-inspired safety argument), `HAZARD-LOG.md` (YAML-frontmatter hazard array + rendered Markdown table; 6 starter hazards covering wrong-patient, stale data, audit, authorisation, alert delivery, write integrity)
+- `/arckit-uk-nhs:uk-nhs-dcb0160` — NHS DCB0160 deployer Clinical Safety Case + Deployment Hazard Log. Produces a 3-file deployer-side set in `projects/{NNN}/clinical-safety/deployment/`; 10 starter deployment hazards covering training, workflow integration, BC, parallel running, migration, local configuration, terminology, RBAC, incident reporting
 
 **Procurement and regulation**:
 
-- `/arckit.uk-nhs-dtac` — NHS Digital Technology Assessment Criteria v3 — 5 sections (Clinical Safety, Data Protection, Technical Assurance, Interoperability, Usability + Accessibility) plus AI annex. Cross-references DCB0129/0160, DPIA, ATRS, Secure by Design
-- `/arckit.uk-mdr-classification` — UK MDR 2002 (as amended) + EU MDR 2017/745 software-as-medical-device (SaMD) and AI-as-medical-device (AIaMD) classification. UKCA / UKNI / CE marking pathway, Windsor Framework NI handling, conformity-assessment route, MHRA SaMD/AIaMD Programme alignment, ISO 14971 / IEC 62304 / ISO 13485 standards mapping, post-market obligations
+- `/arckit-uk-nhs:uk-nhs-dtac` — NHS Digital Technology Assessment Criteria v3 — 5 sections (Clinical Safety, Data Protection, Technical Assurance, Interoperability, Usability + Accessibility) plus AI annex. Cross-references DCB0129/0160, DPIA, ATRS, Secure by Design
+- `/arckit-uk-nhs:uk-mdr-classification` — UK MDR 2002 (as amended) + EU MDR 2017/745 software-as-medical-device (SaMD) and AI-as-medical-device (AIaMD) classification. UKCA / UKNI / CE marking pathway, Windsor Framework NI handling, conformity-assessment route, MHRA SaMD/AIaMD Programme alignment, ISO 14971 / IEC 62304 / ISO 13485 standards mapping, post-market obligations
 
-The commands compose with — not replace — the UK government baseline (`tcop`, `secure`, `dpia`, `atrs`, `risk`, `service-assessment`). Recipe: `uk-nhs-clinical-safety` (44 targets across the clinical-safety waves). Proposed domain co-maintainer: Dr Marcus Baw ([@pacharanero](https://github.com/pacharanero)) — clinical informatician at RCPCH, openEHR, NHS England.
+The commands compose with — not replace — the UK government baseline (`uk-tcop`, `uk-secure`, `uk-dpia`, `uk-atrs`, `risk`, `uk-service-assessment`). Recipe: `uk-nhs-clinical-safety` (44 targets across the clinical-safety waves). Proposed domain co-maintainer: Dr Marcus Baw ([@pacharanero](https://github.com/pacharanero)) — clinical informatician at RCPCH, openEHR, NHS England.
 
 The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — they follow Marcus's SAFETY.md spec convention so they remain readable by clinicians, MHRA reviewers, and procurement teams who do not use ArcKit. Other artefacts cross-reference them by relative path. Full design log: [`docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md`](docs/superpowers/specs/2026-05-19-uk-nhs-overlay-design.md).
 
@@ -420,7 +436,7 @@ The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — the
 
 ## USA Federal Civilian Overlay (10 commands)
 
-> ⚠️ **Community-contributed overlay.** The 10 commands below cover US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship as the **arckit-us** community-contributed overlay (not part of the officially-maintained baseline of 71). **EO 14110 was revoked January 2025**; the live AI mandates are **OMB M-24-10 + M-25-21**. **FedRAMP completed the Rev 5 transition in 2024**. The overlay is currently solo-maintained by @tractorjuice; a US federal-civilian domain co-maintainer is being recruited (CISO / SAOP / FedRAMP PMO / CAIO backgrounds welcome) before the overlay can be re-evaluated for official-baseline promotion. Output should be reviewed by qualified US federal counsel before reliance.
+> ⚠️ **Community-contributed overlay.** The 10 commands below cover US federal civilian compliance instruments (FedRAMP authorization, FISMA / NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Government Act §208 PIA, EO 14028 SBOM self-attestation). They ship as the **arckit-us** community-contributed overlay (not part of the officially-maintained baseline). **EO 14110 was revoked January 2025**; the live AI mandates are **OMB M-24-10 + M-25-21**. **FedRAMP completed the Rev 5 transition in 2024**. The overlay is currently solo-maintained by @tractorjuice; a US federal-civilian domain co-maintainer is being recruited (CISO / SAOP / FedRAMP PMO / CAIO backgrounds welcome) before the overlay can be re-evaluated for official-baseline promotion. Output should be reviewed by qualified US federal counsel before reliance.
 
 **In scope (v1)**: federal civilian agencies and the vendors that sell to them.
 
@@ -428,16 +444,16 @@ The DCB0129/0160 outputs deliberately do **not** carry the `ARC-` prefix — the
 
 | Command | Anchor | Doc-type |
 |---------|--------|----------|
-| `/arckit:us-fisma-categorization` | FIPS Publication 199 + NIST SP 800-60 Vol 2 Rev 1 | `FIPS199` |
-| `/arckit:us-nist-800-53` | NIST SP 800-53 Rev 5 + SP 800-53B + FedRAMP Rev 5 baselines | `NIST` |
-| `/arckit:us-fedramp-ssp` | FedRAMP SSP Template Rev 5 + NIST SP 800-37 Rev 2 | `FRSSP` |
-| `/arckit:us-fedramp-readiness` | FedRAMP 3PAO Readiness Assessment Report template | `FRRR` |
-| `/arckit:us-zero-trust` | CISA Zero Trust Maturity Model v2.0 + OMB M-22-09 + NIST SP 800-207 | `ZTA` |
-| `/arckit:us-icam` | OMB M-19-17 + NIST SP 800-63-3 (A/B/C) + FIPS 201-3 + login.gov | `ICAM` |
-| `/arckit:us-ai-rmf` | NIST AI RMF 1.0 + NIST AI 600-1 (Generative AI Profile) | `AIRMF` |
-| `/arckit:us-ai-impact` | OMB M-24-10 + OMB M-25-21 | `AIIA` |
-| `/arckit:us-privacy-pia` | E-Government Act §208 + OMB M-03-22 + Privacy Act §552a + NIST SP 800-122 | `USPIA` |
-| `/arckit:us-sbom-eo-14028` | EO 14028 + OMB M-22-18 + OMB M-23-16 + CISA Self-Attestation Form + NTIA Minimum Elements | `SBOM` |
+| `/arckit-us:us-fisma-categorization` | FIPS Publication 199 + NIST SP 800-60 Vol 2 Rev 1 | `FIPS199` |
+| `/arckit-us:us-nist-800-53` | NIST SP 800-53 Rev 5 + SP 800-53B + FedRAMP Rev 5 baselines | `NIST` |
+| `/arckit-us:us-fedramp-ssp` | FedRAMP SSP Template Rev 5 + NIST SP 800-37 Rev 2 | `FRSSP` |
+| `/arckit-us:us-fedramp-readiness` | FedRAMP 3PAO Readiness Assessment Report template | `FRRR` |
+| `/arckit-us:us-zero-trust` | CISA Zero Trust Maturity Model v2.0 + OMB M-22-09 + NIST SP 800-207 | `ZTA` |
+| `/arckit-us:us-icam` | OMB M-19-17 + NIST SP 800-63-3 (A/B/C) + FIPS 201-3 + login.gov | `ICAM` |
+| `/arckit-us:us-ai-rmf` | NIST AI RMF 1.0 + NIST AI 600-1 (Generative AI Profile) | `AIRMF` |
+| `/arckit-us:us-ai-impact` | OMB M-24-10 + OMB M-25-21 | `AIIA` |
+| `/arckit-us:us-privacy-pia` | E-Government Act §208 + OMB M-03-22 + Privacy Act §552a + NIST SP 800-122 | `USPIA` |
+| `/arckit-us:us-sbom-eo-14028` | EO 14028 + OMB M-22-18 + OMB M-23-16 + CISA Self-Attestation Form + NTIA Minimum Elements | `SBOM` |
 
 Recipe: `us-federal` (5 waves — baseline → controls → posture → ai → authorization).
 
@@ -451,14 +467,14 @@ Install: `claude plugin install arckit arckit-us`. See [`docs/guides/us-federal-
 
 **Payments architecture and compliance**:
 
-- `/arckit:uk-nhs-dcb0129` — TBD
-- `/arckit:uk-nhs-dcb0160` — TBD
-- `/arckit:uk-nhs-dtac` — TBD
-- `/arckit:uk-mdr-classification` — TBD
+- `/arckit-uk-finance:uk-fs-sca-rts` — PSD2 SCA-RTS exemption design (Articles 10, 10A, 11, 13-18 PSRs 2017)
+- `/arckit-uk-finance:uk-fs-safeguarding` — EMI / PI safeguarding assessment (EMR 2011, PSRs 2017, FCA PS24/9) — CRITICAL severity
+- `/arckit-uk-finance:uk-fs-consumer-duty` — FCA Consumer Duty board report (PS22/9)
+- `/arckit-uk-finance:uk-fs-ctp-dependency` — Critical Third Parties dependency assessment (PS24/16)
 
 Recipe: `uk-fs-payments` (multi-wave payment system modernization).
 
-Install: `claude plugin install arckit arckit-uk-finance`. Help wanted: recruiting a UK financial services domain co-maintainer (CISO / Compliance / Head of Architecture background welcome) to transition to official-baseline status.
+Install: `claude plugin install arckit arckit-uk arckit-uk-finance`. Help wanted: recruiting a UK financial services domain co-maintainer (CISO / Compliance / Head of Architecture background welcome) to transition to official-baseline status.
 
 ---
 
@@ -581,7 +597,7 @@ Create data model based on Data Requirements (DR-xxx):
 
 ### Phase 5.7: Data Protection Impact Assessment
 
-**`/arckit.dpia`** → Generate [DPIA](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/) for UK GDPR Article 35 compliance
+**`/arckit-uk:uk-dpia`** → Generate [DPIA](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/) for UK GDPR Article 35 compliance
 
 **MANDATORY for high-risk processing** - assess privacy risks before technology selection:
 
@@ -631,7 +647,7 @@ Research available solutions to meet requirements with build vs buy analysis:
 
 ### Phase 6.5: Grants & Funding Research
 
-**`/arckit.grants`** → Research UK government grants, charitable funding, and accelerator programmes
+**`/arckit-uk:uk-grants`** → Research UK government grants, charitable funding, and accelerator programmes
 
 Identify and evaluate funding opportunities with eligibility scoring:
 
@@ -737,7 +753,7 @@ Create RFP-ready documents with:
 - Evaluation criteria
 - Contract terms
 
-**`/arckit.dos`** → Digital Outcomes and Specialists (DOS) procurement 🇬🇧
+**`/arckit-uk:uk-dos`** → Digital Outcomes and Specialists (DOS) procurement 🇬🇧
 
 For UK public sector organizations needing custom development:
 
@@ -748,7 +764,7 @@ For UK public sector organizations needing custom development:
 - Evaluation framework (40% Technical, 30% Team, 20% Quality, 10% Value)
 - Audit-ready documentation for Digital Marketplace
 
-**`/arckit.gcloud-search`** → G-Cloud service search with live marketplace search 🇬🇧
+**`/arckit-uk:uk-gcloud-search`** → G-Cloud service search with live marketplace search 🇬🇧
 
 For UK public sector organizations needing off-the-shelf cloud services:
 
@@ -759,7 +775,7 @@ For UK public sector organizations needing off-the-shelf cloud services:
 - Shortlist top 3-5 matching services
 - Links to Digital Marketplace guidance (gov.uk)
 
-**`/arckit.gcloud-clarify`** → G-Cloud service validation and gap analysis 🇬🇧
+**`/arckit-uk:uk-gcloud-clarify`** → G-Cloud service validation and gap analysis 🇬🇧
 
 Validate G-Cloud services and generate supplier clarification questions:
 
@@ -884,7 +900,7 @@ Periodically assess governance quality across all artifacts:
 
 For UK Government and public sector projects:
 
-**`/arckit.service-assessment`** → [GDS Service Standard](https://www.gov.uk/service-manual/service-assessments) assessment preparation
+**`/arckit-uk:uk-service-assessment`** → [GDS Service Standard](https://www.gov.uk/service-manual/service-assessments) assessment preparation
 
 Prepare for mandatory GDS Service Standard assessments:
 
@@ -897,7 +913,7 @@ Prepare for mandatory GDS Service Standard assessments:
 
 Run at end of Discovery (for alpha prep), mid-Beta (for beta prep), or before Live to ensure readiness.
 
-**`/arckit.tcop`** → [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) assessment
+**`/arckit-uk:uk-tcop`** → [Technology Code of Practice](https://www.gov.uk/guidance/the-technology-code-of-practice) assessment
 
 Assess compliance with all 13 TCoP points:
 
@@ -915,7 +931,7 @@ Assess compliance with all 13 TCoP points:
 - Point 12: Meet the Digital Spend Controls
 - Point 13: Define your responsible AI use
 
-**`/arckit.secure`** → UK Government Secure by Design assessment
+**`/arckit-uk:uk-secure`** → UK Government Secure by Design assessment
 
 Security compliance assessment:
 
@@ -926,7 +942,7 @@ Security compliance assessment:
 - Security architecture review
 - Threat modeling
 
-**`/arckit.ai-playbook`** → [UK Government AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government) compliance (for AI systems)
+**`/arckit-uk:uk-ai-playbook`** → [UK Government AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government) compliance (for AI systems)
 
 Responsible AI assessment:
 
@@ -937,7 +953,7 @@ Responsible AI assessment:
 - Human oversight mechanisms
 - Impact assessment
 
-**`/arckit.atrs`** → [Algorithmic Transparency Recording Standard](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub)
+**`/arckit-uk:uk-atrs`** → [Algorithmic Transparency Recording Standard](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub)
 
 Generate ATRS record for algorithmic decision-making:
 
@@ -949,7 +965,7 @@ Generate ATRS record for algorithmic decision-making:
 
 **For MOD Projects**:
 
-**`/arckit.mod-secure`** → MOD Secure by Design assessment
+**`/arckit-uk-mod:uk-mod-secure`** → MOD Secure by Design assessment
 
 MOD-specific security compliance:
 
@@ -960,7 +976,7 @@ MOD-specific security compliance:
 - Security Operating Procedures (SyOPs)
 - Supplier attestation requirements
 
-**`/arckit.jsp-936`** → [MOD JSP 936](https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive) AI Assurance Documentation
+**`/arckit-uk-mod:uk-jsp-936`** → [MOD JSP 936](https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive) AI Assurance Documentation
 
 For defence projects using AI/ML systems:
 
@@ -978,7 +994,7 @@ ArcKit includes commands for EU regulatory compliance and French public sector g
 
 #### EU Regulations
 
-**`/arckit.eu-rgpd`** → GDPR compliance assessment (Regulation 2016/679)
+**`/arckit-eu:eu-rgpd`** → GDPR compliance assessment (Regulation 2016/679)
 
 Assess personal data processing obligations:
 
@@ -986,9 +1002,9 @@ Assess personal data processing obligations:
 - Data subject rights implementation (access, erasure, portability, objection)
 - CNIL registration and DPO obligations (France)
 - Cross-border transfer safeguards (SCCs, BCRs, adequacy decisions)
-- Integration with DPIA (`/arckit.dpia`) for high-risk processing
+- Integration with DPIA (`/arckit-uk:uk-dpia`) for high-risk processing
 
-**`/arckit.eu-ai-act`** → EU AI Act compliance (Regulation 2024/1689)
+**`/arckit-eu:eu-ai-act`** → EU AI Act compliance (Regulation 2024/1689)
 
 Assess AI system obligations under the EU's risk-based AI framework:
 
@@ -998,7 +1014,7 @@ Assess AI system obligations under the EU's risk-based AI framework:
 - Human oversight, transparency, and fundamental rights impact assessment
 - Prohibited practices (social scoring, real-time biometric surveillance)
 
-**`/arckit.eu-nis2`** → NIS2 Directive compliance (Directive 2022/2555)
+**`/arckit-eu:eu-nis2`** → NIS2 Directive compliance (Directive 2022/2555)
 
 Assess cybersecurity obligations for essential and important entities:
 
@@ -1008,7 +1024,7 @@ Assess cybersecurity obligations for essential and important entities:
 - Supply chain security and vulnerability disclosure
 - ANSSI notification timeline (24h → 72h → 30-day final report)
 
-**`/arckit.eu-dora`** → DORA compliance (Regulation 2022/2554) for financial entities
+**`/arckit-eu:eu-dora`** → DORA compliance (Regulation 2022/2554) for financial entities
 
 Digital Operational Resilience Act obligations for banks, insurers, and investment firms:
 
@@ -1018,7 +1034,7 @@ Digital Operational Resilience Act obligations for banks, insurers, and investme
 - Third-party ICT provider management and critical provider designation
 - Contractual requirements for ICT service agreements
 
-**`/arckit.eu-cra`** → Cyber Resilience Act compliance (Regulation 2024/2847)
+**`/arckit-eu:eu-cra`** → Cyber Resilience Act compliance (Regulation 2024/2847)
 
 Mandatory cybersecurity requirements for products with digital elements (hardware + software):
 
@@ -1029,7 +1045,7 @@ Mandatory cybersecurity requirements for products with digital elements (hardwar
 - Conformity assessment route (internal control vs notified body)
 - Full application deadline: 11 December 2027
 
-**`/arckit.eu-dsa`** → EU Digital Services Act compliance (Regulation 2022/2065)
+**`/arckit-eu:eu-dsa`** → EU Digital Services Act compliance (Regulation 2022/2065)
 
 Tiered obligations for online intermediary services:
 
@@ -1039,7 +1055,7 @@ Tiered obligations for online intermediary services:
 - ARCOM as French Digital Services Coordinator (DSC)
 - Systemic risk assessment and independent audit for VLOPs
 
-**`/arckit.eu-data-act`** → EU Data Act compliance (Regulation 2023/2854)
+**`/arckit-eu:eu-data-act`** → EU Data Act compliance (Regulation 2023/2854)
 
 Data sharing obligations for connected products and cloud providers:
 
@@ -1051,7 +1067,7 @@ Data sharing obligations for connected products and cloud providers:
 
 #### French Public Sector Governance
 
-**`/arckit.fr-rgpd`** → French GDPR compliance with CNIL-specific requirements
+**`/arckit-fr:fr-rgpd`** → French GDPR compliance with CNIL-specific requirements
 
 Extends EU GDPR with French context:
 
@@ -1059,7 +1075,7 @@ Extends EU GDPR with French context:
 - French DPO registration and CNIL prior consultation obligations
 - Biometric data processing under French law (CNIL authorisation required)
 
-**`/arckit.fr-ebios`** → EBIOS Risk Manager methodology (ANSSI 2018)
+**`/arckit-fr:fr-ebios`** → EBIOS Risk Manager methodology (ANSSI 2018)
 
 French standard risk analysis for IS homologation:
 
@@ -1068,7 +1084,7 @@ French standard risk analysis for IS homologation:
 - Attack path modelling and feared events
 - Integration with PSSI and SecNumCloud qualification
 
-**`/arckit.fr-anssi`** → ANSSI 42 Cybersecurity Hygiene Measures assessment
+**`/arckit-fr:fr-anssi`** → ANSSI 42 Cybersecurity Hygiene Measures assessment
 
 Assess compliance with ANSSI's foundational hygiene guide:
 
@@ -1077,7 +1093,7 @@ Assess compliance with ANSSI's foundational hygiene guide:
 - Gap analysis with prioritised remediation (P1–P3)
 - Integration with EBIOS and PSSI
 
-**`/arckit.fr-anssi-carto`** → ANSSI SI Cartography (4-level IS mapping)
+**`/arckit-fr:fr-anssi-carto`** → ANSSI SI Cartography (4-level IS mapping)
 
 Generate structured IS cartography following ANSSI's 4-level methodology:
 
@@ -1087,7 +1103,7 @@ Generate structured IS cartography following ANSSI's 4-level methodology:
 - Level 4: Network topology, firewall rules, interconnections
 - Attack surface summary and sensitive flow identification
 
-**`/arckit.fr-secnumcloud`** → SecNumCloud qualification assessment
+**`/arckit-fr:fr-secnumcloud`** → SecNumCloud qualification assessment
 
 Assess cloud provider and customer obligations under ANSSI's SecNumCloud referential:
 
@@ -1096,7 +1112,7 @@ Assess cloud provider and customer obligations under ANSSI's SecNumCloud referen
 - SecNumCloud-compatible architecture requirements
 - Procurement clauses for public-cloud contracts
 
-**`/arckit.fr-dinum`** → DINUM digital doctrine assessment
+**`/arckit-fr:fr-dinum`** → DINUM digital doctrine assessment
 
 Assess compliance with French digital government doctrine:
 
@@ -1105,7 +1121,7 @@ Assess compliance with French digital government doctrine:
 - Doctrine cloud (cloud native, cloud first, SecNumCloud for sensitive data)
 - SILL (Socle Interministériel de Logiciels Libres) — recommended open source stack
 
-**`/arckit.fr-marche-public`** → French public procurement (Code de la Commande Publique)
+**`/arckit-fr:fr-marche-public`** → French public procurement (Code de la Commande Publique)
 
 Generate procurement documentation compliant with French public contract law:
 
@@ -1114,7 +1130,7 @@ Generate procurement documentation compliant with French public contract law:
 - ANSSI-qualified provider requirements (PASSI, PRIS, PDIS)
 - Achat public durable obligations (environmental and social clauses)
 
-**`/arckit.fr-pssi`** → PSSI (Politique de Sécurité des Systèmes d'Information)
+**`/arckit-fr:fr-pssi`** → PSSI (Politique de Sécurité des Systèmes d'Information)
 
 Generate IS security policy for French public sector entities:
 
@@ -1123,7 +1139,7 @@ Generate IS security policy for French public sector entities:
 - RSSI, DPO, DSI, and FSSI roles
 - Review cycle and integration with EBIOS and homologation
 
-**`/arckit.fr-dr`** → Diffusion Restreinte (DR) handling compliance
+**`/arckit-fr:fr-dr`** → Diffusion Restreinte (DR) handling compliance
 
 Assess document and IS handling requirements under the DR administrative classification:
 
@@ -1132,7 +1148,7 @@ Assess document and IS handling requirements under the DR administrative classif
 - IS homologation for DR-processing systems
 - Scope explicitly bounded: DR only — IGI 1300 (Confidentiel Défense and above) is out of scope
 
-**`/arckit.fr-algorithme-public`** → French Public Algorithm Transparency Notice
+**`/arckit-fr:fr-algorithme-public`** → French Public Algorithm Transparency Notice
 
 Generate mandatory transparency notice under CRPA Art. L311-3-1:
 
@@ -1143,7 +1159,7 @@ Generate mandatory transparency notice under CRPA Art. L311-3-1:
 - EU AI Act flagging for ML-based systems
 - More legally binding than the UK ATRS equivalent
 
-**`/arckit.fr-code-reuse`** → French Public Code Reuse Assessment (Circulaire 2021-1524)
+**`/arckit-fr:fr-code-reuse`** → French Public Code Reuse Assessment (Circulaire 2021-1524)
 
 Assess code reuse obligations before building or procuring:
 
@@ -1222,7 +1238,7 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 | Feature | Claude Code | Gemini CLI | Copilot | Codex / OpenCode |
 |---------|:-----------:|:----------:|:-------:|:----------------:|
-| 71 cross-AI slash commands (plus 64 community-contributed) | ✅ | ✅ | ✅ | ✅ |
+| 71 cross-AI slash commands (plus 76 community-contributed) | ✅ | ✅ | ✅ | ✅ |
 | `/arckit:build` parallel build harness (Claude-only — depends on parallel `Agent` dispatch) | ✅ | — | — | — |
 | Templates & scripts | ✅ | ✅ | ✅ | ✅ |
 | Bundled MCP servers (AWS, Azure, GCP, DataCommons, govreposcrape) | ✅ | ✅ (3 servers) | — | Manual setup |
@@ -1241,7 +1257,7 @@ Claude Code is the **primary development platform** for ArcKit and provides capa
 
 **Hooks** provide automated governance: filenames are auto-corrected to ArcKit conventions, project context is injected into every prompt so commands know what artifacts exist, MCP tools are auto-approved, and generated outputs like Wardley Maps are validated for mathematical consistency before being finalized.
 
-Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 71 official commands (plus 58 community-contributed overlays) as prompt files and 10 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
+Gemini CLI provides a strong experience with all commands and MCP servers but lacks agent delegation and hooks. GitHub Copilot provides all 71 official commands (plus 76 community-contributed overlays) as prompt files and 10 custom agents but lacks hooks and MCP servers. Codex CLI and OpenCode CLI provide core command functionality but require manual setup and `arckit init` scaffolding.
 
 ### Why Commands, Not Skills
 
@@ -1433,7 +1449,8 @@ All 67 ArcKit commands with maturity status and example outputs from public test
 | `/arckit.requirements` | Create comprehensive business and technical requirements | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-REQ-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-REQ-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-REQ-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-REQ-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/ARC-003-REQ-v1.0.md) [v3/004](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/004-conference-facilities-modernization/ARC-004-REQ-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/ARC-005-REQ-v1.0.md) [v3/006](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/006-large-format-printer/ARC-006-REQ-v1.0.md) [v3/007](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/007-vpn-service-windows11-autopilot/ARC-007-REQ-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-REQ-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-REQ-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-REQ-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/ARC-001-REQ-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/ARC-001-REQ-v1.0.md) [v7](https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/#projects/001-nhs-appointment-booking/ARC-001-REQ-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-REQ-v1.0.md) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/001-doctors-appointment/ARC-001-REQ-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-REQ-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-REQ-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/ARC-001-REQ-v1.0.md) | 🟢 Live |
 | `/arckit.data-model` | Create comprehensive data model with entity relationships, GDPR compliance, and data governance | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-DATA-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-DATA-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-DATA-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-DATA-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/ARC-001-DATA-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/ARC-001-DATA-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-DATA-v1.0.md) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/001-doctors-appointment/ARC-001-DATA-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-DATA-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-DATA-v1.0.md) | 🟢 Live |
 | `/arckit.data-mesh-contract` | Create federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees | — | 🟠 Alpha |
-| `/arckit.dpia` | Generate [Data Protection Impact Assessment (DPIA)](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/) for UK GDPR Article 35 compliance | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-DPIA-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-DPIA-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-DPIA-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-DPIA-v1.0.md) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/001-doctors-appointment/ARC-001-DPIA-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-DPIA-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-DPIA-v1.0.md) | 🔵 Beta |
+
+> UK DPIA moved to the `arckit-uk` overlay as `/arckit-uk:uk-dpia` — see the [UK Government](#uk-government-arckit-uk-overlay--officially-maintained-default-on) section.
 
 ### Research & Strategy
 
@@ -1441,7 +1458,6 @@ All 67 ArcKit commands with maturity status and example outputs from public test
 |---------|-------------|----------|--------|
 | `/arckit.platform-design` | Create platform strategy using Platform Design Toolkit (8 canvases for multi-sided ecosystems) | [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-GAAP-v1.0.md) [v10](https://tractorjuice.github.io/arckit-test-project-v10-training-marketplace/#projects/001-ai-training-marketplace/ARC-001-PLAT-v1.0.md) | 🟣 Experimental |
 | `/arckit.research` | Research technology, services, and products to meet requirements with build vs buy analysis | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-RSCH-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-RSCH-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/research/ARC-001-RSCH-001-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-RSCH-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-RSCH-v1.0.md) | 🔵 Beta |
-| `/arckit.grants` | Research UK government grants, charitable funding, and accelerator programmes with eligibility scoring | — | 🟣 Experimental |
 | `/arckit.wardley` | Create strategic Wardley Maps for architecture decisions and build vs buy analysis | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/wardley-maps/ARC-001-WARD-001-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/wardley-maps/ARC-001-WARD-001-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/wardley-maps/ARC-001-WARD-001-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/wardley-maps/ARC-001-WARD-001-v1.0.md) | 🟣 Experimental |
 | `/arckit.wardley.value-chain` | Decompose user needs into value chains for Wardley Mapping | — | 🟣 Experimental |
 | `/arckit.wardley.doctrine` | Assess organizational doctrine maturity (4 phases, 40+ principles) | — | 🟣 Experimental |
@@ -1472,24 +1488,17 @@ These commands use [Model Context Protocol (MCP)](https://modelcontextprotocol.i
 
 ### Government Code Discovery
 
-These commands use the [govreposcrape MCP](https://github.com/MHCLG/govreposcrape-mcp) server to search 24,500+ UK government repositories. The Claude Code plugin bundles the MCP server automatically. No API key required.
-
-| Command | Description | Examples | Status |
-|---------|-------------|----------|--------|
-| `/arckit.gov-code-search` | Search 24,500+ UK government repositories using natural language | — | 🟣 Experimental |
-| `/arckit.gov-landscape` | Map the UK government code landscape for a domain | — | 🟣 Experimental |
-| `/arckit.gov-reuse` | Discover reusable UK government code before building from scratch | — | 🟣 Experimental |
+These commands ship in the `arckit-uk` overlay and use the [govreposcrape MCP](https://github.com/MHCLG/govreposcrape-mcp) server to search 24,500+ UK government repositories. The govreposcrape MCP server is bundled with the `arckit-uk` overlay. No API key required. See the [UK Government](#uk-government-arckit-uk-overlay--officially-maintained-default-on) section for `/arckit-uk:uk-gov-code-search`, `/arckit-uk:uk-gov-landscape`, and `/arckit-uk:uk-gov-reuse`.
 
 ### Procurement
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
 | `/arckit.sow` | Generate Statement of Work (SOW) / RFP document for vendor procurement | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-SOW-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-SOW-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-SOW-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-SOW-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/ARC-003-SOW-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-SOW-v1.0.md) | 🟢 Live |
-| `/arckit.dos` | Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace | — | 🟣 Experimental |
-| `/arckit.gcloud-search` | Find G-Cloud services on UK Digital Marketplace with live search and comparison | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-GCLD-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-GCLD-v1.0.md) | 🟣 Experimental |
-| `/arckit.gcloud-clarify` | Analyze G-Cloud service gaps and generate supplier clarification questions | — | 🟣 Experimental |
 | `/arckit.evaluate` | Create vendor evaluation framework and score vendor proposals | [v1](https://tractorjuice.github.io/arckit-test-project-v1-m365/#projects/001-exchange-online-migration/ARC-001-EVAL-v1.0.md) [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-EVAL-v1.0.md) [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-EVAL-v1.0.md) [v3/002](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/002-application-packaging-rationalisation/ARC-002-EVAL-v1.0.md) [v3/003](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/003-peripherals-update-upgrade/ARC-003-EVAL-v1.0.md) [v3/005](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/005-cloud-pki/ARC-005-EVAL-v1.0.md) [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-EVAL-v1.0.md) | 🟢 Live |
 | `/arckit.score` | Score vendor proposals with structured storage, side-by-side comparison, sensitivity analysis, and audit trail | — | 🔵 Beta |
+
+> UK-specific procurement (`/arckit-uk:uk-dos`, `/arckit-uk:uk-gcloud-search`, `/arckit-uk:uk-gcloud-clarify`) moved to the `arckit-uk` overlay — see the [UK Government](#uk-government-arckit-uk-overlay--officially-maintained-default-on) section.
 
 ### Design & Architecture
 
@@ -1530,22 +1539,30 @@ These commands use the [govreposcrape MCP](https://github.com/MHCLG/govreposcrap
 | `/arckit.maturity-model` | Generate capability maturity model with current-state assessment, target-state definition, and improvement roadmap | — | 🔵 Beta |
 | `/arckit.template-builder` | Create new document templates through interactive interview — generates community-origin templates, guides, and optional shareable bundles | — | 🟠 Alpha |
 
-### UK Government
+### UK Government (`arckit-uk` overlay — officially maintained, default-on)
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
-| `/arckit.service-assessment` | Prepare for [GDS Service Standard](https://www.gov.uk/service-manual/service-assessments) assessment - analyze evidence against 14 points, identify gaps, generate readiness report | [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/001-doctors-appointment/ARC-001-SASS-v1.0.md) | 🔵 Beta |
-| `/arckit.tcop` | Generate a [Technology Code of Practice (TCoP)](https://www.gov.uk/guidance/the-technology-code-of-practice) review document for a UK Government technology project | [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-TCOP-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-TCOP-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-TCOP-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/ARC-001-TCOP-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-TCOP-v1.0.md) | 🔵 Beta |
-| `/arckit.secure` | Generate a Secure by Design assessment for UK Government projects (civilian departments) | [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-SECD-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-SECD-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/ARC-001-SECD-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-SECD-v1.0.md) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/001-doctors-appointment/ARC-001-SECD-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-SECD-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-SECD-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/ARC-001-SECD-v1.0.md) | 🔵 Beta |
-| `/arckit.ai-playbook` | Assess [UK Government AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government) compliance for responsible AI deployment | [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-AIPB-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-AIPB-v1.0.md) | 🟠 Alpha |
-| `/arckit.atrs` | Generate [Algorithmic Transparency Recording Standard (ATRS)](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub) record for AI/algorithmic tools | [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-ATRS-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-ATRS-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-ATRS-v1.0.md) | 🟠 Alpha |
+| `/arckit-uk:uk-service-assessment` | Prepare for [GDS Service Standard](https://www.gov.uk/service-manual/service-assessments) assessment - analyze evidence against 14 points, identify gaps, generate readiness report | [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/001-doctors-appointment/ARC-001-SASS-v1.0.md) | 🔵 Beta |
+| `/arckit-uk:uk-tcop` | Generate a [Technology Code of Practice (TCoP)](https://www.gov.uk/guidance/the-technology-code-of-practice) review document for a UK Government technology project | [v6](https://tractorjuice.github.io/arckit-test-project-v6-patent-system/#projects/001-patent-management-system-for-the-intellectual-property-office/ARC-001-TCOP-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-TCOP-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-TCOP-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/ARC-001-TCOP-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-TCOP-v1.0.md) | 🔵 Beta |
+| `/arckit-uk:uk-secure` | Generate a Secure by Design assessment for UK Government projects (civilian departments) | [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-SECD-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-SECD-v1.0.md) [v11](https://tractorjuice.github.io/arckit-test-project-v11-national-highways-data/#projects/001-national-highways-data-architecture-modernization/ARC-001-SECD-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-SECD-v1.0.md) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/001-doctors-appointment/ARC-001-SECD-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-SECD-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-SECD-v1.0.md) [v19](https://tractorjuice.github.io/arckit-test-project-v19-gov-api-aggregator/#projects/001-uk-government-api-aggregator/ARC-001-SECD-v1.0.md) | 🔵 Beta |
+| `/arckit-uk:uk-dpia` | Generate [Data Protection Impact Assessment (DPIA)](https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/accountability-and-governance/data-protection-impact-assessments-dpias/) for UK GDPR Article 35 compliance | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-DPIA-v1.0.md) [v8](https://tractorjuice.github.io/arckit-test-project-v8-ons-data-platform/#projects/001-ons-data-platform-modernisation/ARC-001-DPIA-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-DPIA-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-DPIA-v1.0.md) [v16](https://tractorjuice.github.io/arckit-test-project-v16-doctors-appointment/#projects/001-doctors-appointment/ARC-001-DPIA-v1.0.md) [v17](https://tractorjuice.github.io/arckit-test-project-v17-fuel-prices/#projects/001-uk-fuel-price-transparency-service/ARC-001-DPIA-v1.0.md) [v18](https://tractorjuice.github.io/arckit-test-project-v18-smart-meter/#projects/001-smart-meter-app/ARC-001-DPIA-v1.0.md) | 🔵 Beta |
+| `/arckit-uk:uk-ai-playbook` | Assess [UK Government AI Playbook](https://www.gov.uk/government/publications/ai-playbook-for-the-uk-government) compliance for responsible AI deployment | [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-AIPB-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-AIPB-v1.0.md) | 🟠 Alpha |
+| `/arckit-uk:uk-atrs` | Generate [Algorithmic Transparency Recording Standard (ATRS)](https://www.gov.uk/government/collections/algorithmic-transparency-recording-standard-hub) record for AI/algorithmic tools | [v2](https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/#projects/001-hmrc-chatbot/ARC-001-ATRS-v1.0.md) [v9](https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/#projects/001-cabinet-office-genai/ARC-001-ATRS-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-ATRS-v1.0.md) | 🟠 Alpha |
+| `/arckit-uk:uk-dos` | Generate Digital Outcomes and Specialists (DOS) procurement documentation for UK Digital Marketplace | — | 🟣 Experimental |
+| `/arckit-uk:uk-gcloud-search` | Find G-Cloud services on UK Digital Marketplace with live search and comparison | [v3](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-GCLD-v1.0.md) [v14](https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/#projects/001-scts-genai-programme/ARC-001-GCLD-v1.0.md) | 🟣 Experimental |
+| `/arckit-uk:uk-gcloud-clarify` | Analyze G-Cloud service gaps and generate supplier clarification questions | — | 🟣 Experimental |
+| `/arckit-uk:uk-gov-code-search` | Search 24,500+ UK government repositories using natural language | — | 🟣 Experimental |
+| `/arckit-uk:uk-gov-landscape` | Map the UK government code landscape for a domain | — | 🟣 Experimental |
+| `/arckit-uk:uk-gov-reuse` | Discover reusable UK government code before building from scratch | — | 🟣 Experimental |
+| `/arckit-uk:uk-grants` | Research UK government grants, charitable funding, and accelerator programmes with eligibility scoring | — | 🟣 Experimental |
 
-### UK MOD
+### UK MOD (`arckit-uk-mod` overlay — officially maintained, default-off)
 
 | Command | Description | Examples | Status |
 |---------|-------------|----------|--------|
-| `/arckit.mod-secure` | Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-SECD-MOD-v1.0.md) [v3/006](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/006-large-format-printer/ARC-006-SECD-MOD-v1.0.md) | 🟣 Experimental |
-| `/arckit.jsp-936` | Generate [MOD JSP 936](https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive) AI assurance documentation for defence AI/ML systems | — | 🟣 Experimental |
+| `/arckit-uk-mod:uk-mod-secure` | Generate a MOD Secure by Design assessment for UK Ministry of Defence projects using CAAT and continuous assurance | [v3/001](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/001-windows-11-migration-intune/ARC-001-SECD-MOD-v1.0.md) [v3/006](https://tractorjuice.github.io/arckit-test-project-v3-windows11/#projects/006-large-format-printer/ARC-006-SECD-MOD-v1.0.md) | 🟣 Experimental |
+| `/arckit-uk-mod:uk-mod-jsp-936` | Generate [MOD JSP 936](https://www.gov.uk/government/publications/jsp-936-dependable-artificial-intelligence-ai-in-defence-part-1-directive) AI assurance documentation for defence AI/ML systems | — | 🟣 Experimental |
 
 ### Documentation & Publishing
 
@@ -1742,7 +1759,7 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 **Which commands are affected?**
 
 - 🔴 HIGH RISK: `/arckit.sobc`, `/arckit.requirements`, `/arckit.data-model`, `/arckit.sow`
-- 🟢 MITIGATED (agent): `/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research`, `/arckit.gcp-research`, `/arckit.gov-reuse`, `/arckit.gov-code-search`, `/arckit.gov-landscape`, `/arckit.grants` — run as autonomous agents in separate context windows
+- 🟢 MITIGATED (agent): `/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research`, `/arckit.gcp-research`, `/arckit-uk:uk-gov-reuse`, `/arckit-uk:uk-gov-code-search`, `/arckit-uk:uk-gov-landscape`, `/arckit-uk:uk-grants` — run as autonomous agents in separate context windows
 - 🟡 MEDIUM RISK: `/arckit.risk`, `/arckit.evaluate`, `/arckit.principles`
 
 **See full guide**: [docs/TOKEN-LIMITS.md](docs/TOKEN-LIMITS.md)

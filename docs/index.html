@@ -613,20 +613,26 @@
         <!-- 4a. Jurisdictions covered -->
         <div class="govuk-width-container govuk-!-margin-top-9" id="jurisdictions">
             <h2 class="govuk-heading-l">Jurisdictions covered</h2>
-            <p class="govuk-body">ArcKit ships a UK Government baseline alongside seven community-contributed jurisdictional overlays. Use the <a href="commands.html" class="govuk-link">command reference</a> to filter by jurisdiction or tier — every overlay command is badged <code>[COMMUNITY]</code> and excluded from the official-tier count.</p>
+            <p class="govuk-body">ArcKit ships a jurisdiction-neutral core alongside two officially-maintained UK overlays (<code>arckit-uk</code>, <code>arckit-uk-mod</code>) and seven community-contributed jurisdictional overlays. Use the <a href="commands.html" class="govuk-link">command reference</a> to filter by jurisdiction or tier — every community overlay command is badged <code>[COMMUNITY]</code> and excluded from the official-tier count.</p>
 
             <div class="app-jurisdiction-grid">
                 <a href="commands.html?jurisdiction=uk" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">🇬🇧</div>
                     <div class="app-jurisdiction-card__title">UK Government</div>
-                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--core">Core · 17 commands</span>
-                    <p class="app-jurisdiction-card__desc">GDS Service Standard, Technology Code of Practice, Secure by Design, MOD JSP 936, HM Treasury Green &amp; Orange Books, G-Cloud and DOS procurement, AI Playbook, ATRS.</p>
+                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--core">Official · 13 commands (arckit-uk, default-on)</span>
+                    <p class="app-jurisdiction-card__desc">GDS Service Standard, Technology Code of Practice, Secure by Design, G-Cloud and DOS procurement, AI Playbook, ATRS, DPIA, government code discovery, grants. Ships in the <code>arckit-uk</code> overlay (default-on). Install: <code>claude plugin install arckit arckit-uk</code>.</p>
+                </a>
+                <a href="commands.html?jurisdiction=uk-mod" class="app-jurisdiction-card govuk-link--no-visited-state">
+                    <div class="app-jurisdiction-card__flag">🛡️</div>
+                    <div class="app-jurisdiction-card__title">UK MOD (defence)</div>
+                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--core">Official · 2 commands (arckit-uk-mod, default-off)</span>
+                    <p class="app-jurisdiction-card__desc">MOD Secure by Design (JSP 440, IAMM, clearance pathways) and MOD JSP 936 AI assurance. Ships in the <code>arckit-uk-mod</code> overlay (default-off, requires <code>arckit-uk</code>). Install: <code>claude plugin install arckit arckit-uk arckit-uk-mod</code>.</p>
                 </a>
                 <a href="commands.html?jurisdiction=generic" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">🌐</div>
                     <div class="app-jurisdiction-card__title">Generic / Cross-jurisdiction</div>
-                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--core">Core · 54 commands</span>
-                    <p class="app-jurisdiction-card__desc">Jurisdiction-agnostic foundations: requirements, ADRs, Wardley Mapping, DevOps / MLOps / FinOps, traceability, conformance, vendor evaluation.</p>
+                    <span class="app-jurisdiction-card__badge app-jurisdiction-card__badge--core">Core · 56 commands</span>
+                    <p class="app-jurisdiction-card__desc">Jurisdiction-neutral foundations: requirements, ADRs, Wardley Mapping, DevOps / MLOps / FinOps, traceability, conformance, vendor evaluation, plus HM Treasury Green &amp; Orange Books (framework-aware <code>risk</code> / <code>sobc</code>).</p>
                 </a>
                 <a href="commands.html?jurisdiction=eu" class="app-jurisdiction-card govuk-link--no-visited-state">
                     <div class="app-jurisdiction-card__flag">🇪🇺</div>

@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0] - 2026-06-02
+
+### Changed
+
+- **BREAKING — UK Government overlay extraction.** The 15 UK Government commands previously in core `arckit` moved into two new **officially-maintained** overlays, taking the marketplace from 11 to **13 plugins**. Core `arckit` is now **jurisdiction-neutral (56 commands)**; the 71-command official baseline now spans 3 official plugins: `arckit` (56) + `arckit-uk` (13) + `arckit-uk-mod` (2). Total commands unchanged at **147**.
+  - **`arckit-uk`** (13 commands, `uk-` prefix, `defaultEnabled: true`): `uk-tcop`, `uk-secure`, `uk-dpia`, `uk-ai-playbook`, `uk-atrs`, `uk-service-assessment`, `uk-dos`, `uk-gcloud-search`, `uk-gcloud-clarify`, `uk-gov-reuse`, `uk-gov-code-search`, `uk-gov-landscape`, `uk-grants`. Default-on, so the out-of-box UK experience is preserved — only the command namespace changed.
+  - **`arckit-uk-mod`** (2 commands, `defaultEnabled: false`, depends on `arckit-uk`): `uk-mod-secure`, `uk-mod-jsp-936`.
+  - **8 agents moved** to `arckit-uk` (renamed `arckit-uk-*`): the 4 gov-/grants orchestrators plus the `gov-reuse` and `grants` reader/writer subagent families. `datascout` reader/writer stays in core.
+  - **govreposcrape MCP server** moved to `arckit-uk`.
+- **`risk` and `sobc` neutralised** — stay in core, now **framework-aware** via the `governance_framework` user-config (UK Gov / Generic).
+- **Recommendation engine regime-aware** — navigator / next-step logic adapts to installed jurisdiction overlays instead of assuming UK.
+- **UAE / AU recipes decoupled** from the UK baseline; **NHS / Finance overlays re-parented** onto `arckit-uk` (now depend on `arckit-uk` in addition to core).
+- **Recipes relocated** to their owning overlays; **`baseline`** is the new neutral default recipe.
+
+### Migration
+
+- See [`docs/MIGRATION-v6.md`](../docs/MIGRATION-v6.md) for the full v5→v6 command mapping and dependency changes.
+
+See the root [`CHANGELOG.md`](../CHANGELOG.md#600--2026-06-02) for the cross-repo scope.
+
 ## [5.8.0] - 2026-06-01
 
 ### Added

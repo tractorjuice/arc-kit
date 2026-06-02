@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0] — 2026-06-02
+
+### Changed
+
+- **BREAKING — UK Government overlay extraction.** The 15 UK Government-specific commands that previously shipped in the core `arckit` plugin have been extracted into two new **officially-maintained** overlays, taking the marketplace from 11 to **13 plugins**. Core `arckit` is now **jurisdiction-neutral (56 commands)**. The 71-command official baseline now spans 3 official plugins: `arckit` (56) + `arckit-uk` (13) + `arckit-uk-mod` (2). Total commands unchanged at **147** (just redistributed).
+  - **`arckit-uk`** (13 commands, `uk-` prefix, `defaultEnabled: true`) carries the UK civilian baseline: `uk-tcop`, `uk-secure`, `uk-dpia`, `uk-ai-playbook`, `uk-atrs`, `uk-service-assessment`, `uk-dos`, `uk-gcloud-search`, `uk-gcloud-clarify`, `uk-gov-reuse`, `uk-gov-code-search`, `uk-gov-landscape`, `uk-grants`. Because it is default-on, the out-of-box UK experience is preserved — only the command namespace changed.
+  - **`arckit-uk-mod`** (2 commands, `defaultEnabled: false`, depends on `arckit-uk`): `uk-mod-secure`, `uk-mod-jsp-936`.
+  - **8 agents moved** to `arckit-uk` (renamed `arckit-uk-*`): the 4 gov-/grants orchestrators plus the `gov-reuse` and `grants` reader/writer subagent families. The `datascout` reader/writer family stays in core.
+  - **govreposcrape MCP server** moved to `arckit-uk` (the UK gov code-discovery commands are its only consumers).
+- **`risk` and `sobc` neutralised** — both stay in core and are now **framework-aware** via the `governance_framework` user-config field (UK Gov / Generic), rather than hard-coding UK Government framing.
+- **Recommendation engine is now regime-aware** — the navigator / next-step recommendation logic adapts to the installed jurisdiction overlays instead of assuming UK.
+- **UAE and AU recipes decoupled** from the UK baseline so they compose against the neutral core.
+- **NHS and Finance sector overlays re-parented** onto `arckit-uk` — `arckit-uk-nhs` and `arckit-uk-finance` now depend on `arckit-uk` (in addition to `arckit` core), since they compose with the UK baseline commands.
+- **Recipes relocated** alongside their owning overlays; **`baseline`** is the new neutral default recipe for the jurisdiction-neutral core.
+
+### Migration
+
+- See [`docs/MIGRATION-v6.md`](docs/MIGRATION-v6.md) for the full v5→v6 command mapping (old `/arckit:<name>` → new `/arckit-uk:uk-<name>` / `/arckit-uk-mod:uk-mod-<name>`) and the re-parenting / dependency changes.
+
 ## [5.8.0] — 2026-06-01
 
 ### Added
