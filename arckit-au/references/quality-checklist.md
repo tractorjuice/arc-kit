@@ -75,6 +75,14 @@ All artifacts must pass these 10 checks:
 - API endpoint details documented where applicable (URL, auth, rate limits)
 - Licensing and cost information included per source
 
+### TNDR -- Procurement Market Intelligence
+
+- Mandatory caveat line present verbatim: `Awarded value is not actual spend; figures are for market context and benchmarking, not the costed Economic Case.`
+- Every supplier entry and benchmark figure carries a `notice_url` citation (e.g., `[TNDR-C1]`) traceable to the Document Register
+- `Data current as of <ISO datetime>` is stamped (or the freshness-unavailable note is present when the status endpoint was unreachable at fetch time)
+- Concentration flag (`HIGH` / `MEDIUM` / `LOW`) matches the top-1 / top-3 rule: `HIGH` if top-1 share > 50% or top-3 share > 80%; `MEDIUM` if top-3 share > 60%; otherwise `LOW`
+- OGL v3.0 attribution line present: `Contains public sector information licensed under the Open Government Licence v3.0.`
+
 ### AWRS -- AWS Research
 
 - Service comparison table with feature/pricing columns
