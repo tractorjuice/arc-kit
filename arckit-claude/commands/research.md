@@ -13,6 +13,9 @@ handoffs:
     description: Create RFP from vendor requirements
   - command: hld-review
     description: Validate technology choices against HLD
+  - command: tenders
+    description: Ground the buy-market and contract values in real UK award data
+    condition: UK government procurement context
 ---
 
 # Technology and Service Research
