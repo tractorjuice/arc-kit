@@ -67,7 +67,7 @@ $arckit-init
 $arckit-principles
 ```
 
-> **Claude Code users — the word "workflow" can trigger dynamic workflows.** From Claude Code v2.1.157, typing the word *workflow* in a free-text prompt may trigger the built-in dynamic-workflows feature, which fans work out across many agents. That is unrelated to the ArcKit command sequences this guide also calls "workflows". The trigger fires only on free-text prompts — invoking a slash command (`/arckit.start`) or the `architecture-workflow` skill is never affected. If a workflow request appears when you did not want it, press `alt+w` or backspace immediately after the keyword to dismiss it. To turn the keyword trigger off for the session, run `/config` and disable **Workflow keyword trigger**. Other platforms (Codex, Gemini, OpenCode, Copilot) have no equivalent trigger.
+> **Claude Code users — ArcKit "workflows" are unrelated to Claude Code's dynamic-workflows feature.** Throughout this guide, "workflow" means an ArcKit command sequence. Claude Code's built-in dynamic workflows (which fan work out across many agents) are a separate feature; as of Claude Code v2.1.160 their free-text trigger keyword is `ultracode` — the word *workflow* no longer starts one — so the term is safe to type here. ArcKit ships no `ultracode` content, and running a slash command (`/arckit.start`) or the `architecture-workflow` skill never starts a dynamic workflow. Other platforms (Codex, Gemini, OpenCode, Copilot) have no equivalent feature.
 
 ---
 
