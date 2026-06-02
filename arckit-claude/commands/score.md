@@ -10,6 +10,9 @@ handoffs:
   - command: sow
     description: Generate Statement of Work for selected vendor
     condition: "Vendor selection complete, ready for procurement"
+  - command: competitors
+    description: Generate the vendor's UK award-history evidence for scoring
+    condition: "UK government procurement context"
 ---
 
 # Vendor Scoring
@@ -39,6 +42,14 @@ Score a specific vendor against the project's evaluation criteria.
 2. **Read vendor proposal** from `projects/{id}/vendors/{vendor-name}/`:
    - If the directory doesn't exist, create it
    - Read any `.md` or `.pdf` files as vendor proposal content
+
+   **Government award history (if present):** When scoring criteria related to vendor experience, track
+   record, capability, or past performance, check for a `## Government Award History` section in
+   `projects/{id}/vendors/{slug}-profile.md` (or a `CMPT` Competitor Landscape artefact in `research/`).
+   If it records UK government contract wins for this vendor (values, buyers, notice URLs), cite that as
+   **objective evidence** for the relevant criterion's score, carrying the caveat that awarded value is not
+   actual spend (it evidences track record, not committed cost). Run `/arckit:competitors --supplier
+   '<vendor>'` to generate it if absent.
 
 3. **Read existing scores** from `projects/{id}/vendors/scores.json` (if exists)
 
