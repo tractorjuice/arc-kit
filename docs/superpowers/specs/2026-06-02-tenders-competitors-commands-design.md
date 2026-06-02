@@ -70,7 +70,7 @@ Three-tier, shared reader:
 ```
 
 - **Reader** (shared): only component with MCP tools. No web tools (the MCP returns the official notice URL on every record, so there is nothing to fetch). Returns one schema-validated JSON handoff.
-- **Orchestrator** (per command): dispatches the reader with a `focus`, validates the handoff, computes deterministic derived metrics (top-N share, concentration flag), selects what the artefact needs. Never sees raw MCP bytes.
+- **Orchestrator** (per command): dispatches the reader with a `focus`, validates the handoff, computes deterministic derived metrics (top-N share, concentration flag), selects what the artefact needs. Never sees raw MCP bytes. The orchestrator IS the command file (`commands/tenders.md` / `commands/competitors.md`) running in the main thread — there is no separate orchestrator agent, because Claude Code subagents cannot dispatch further subagents (same pattern as `commands/datascout.md`).
 - **Writer** (per command): renders the template from the validated, orchestrator-prepared payload. No network/MCP/Agent tools.
 
 ### File inventory (core `arckit-claude/`, on `main`)
@@ -81,8 +81,8 @@ Three-tier, shared reader:
 | `hooks/allow-mcp-tools.mjs` (Claude-only hook) | ✚ `mcp__uk-tenders__` prefix | reuse |
 | `schemas/tenders-handoff.schema.json` | ✚ shared (both lenses) | reuse |
 | `agents/arckit-tenders-reader.md` | ✚ shared | reuse |
-| `agents/arckit-tenders.md` + `arckit-tenders-writer.md` | ✚ | — |
-| `agents/arckit-competitors.md` + `arckit-competitors-writer.md` | — | ✚ |
+| `agents/arckit-tenders-writer.md` | ✚ | — |
+| `agents/arckit-competitors-writer.md` | — | ✚ |
 | `commands/tenders.md` / `commands/competitors.md` | ✚ tenders | ✚ competitors |
 | `templates/tenders-template.md` (+ `.arckit/templates/` mirror) | ✚ | — |
 | `templates/competitors-template.md` (+ `.arckit/templates/` mirror) | — | ✚ |
