@@ -48,11 +48,11 @@ Data current as of [DATA_CURRENT_AS_OF]; source feeds: [SOURCE_HEALTH]
 
 | Rank | Supplier | Awarded value (£) | Awards | Share % | Key buyers |
 |------|----------|-------------------|--------|---------|------------|
-| 1 | [SUPPLIER_1] | [VALUE_1] | [AWARDS_1] | [SHARE_1] | [BUYERS_1] |
-| 2 | [SUPPLIER_2] | [VALUE_2] | [AWARDS_2] | [SHARE_2] | [BUYERS_2] |
-| 3 | [SUPPLIER_3] | [VALUE_3] | [AWARDS_3] | [SHARE_3] | [BUYERS_3] |
-| 4 | [SUPPLIER_4] | [VALUE_4] | [AWARDS_4] | [SHARE_4] | [BUYERS_4] |
-| 5 | [SUPPLIER_5] | [VALUE_5] | [AWARDS_5] | [SHARE_5] | [BUYERS_5] |
+| 1 | [SUPPLIER_1] | [SUP_VALUE_1] | [SUP_AWARDS_1] | [SHARE_1] | [BUYERS_1] |
+| 2 | [SUPPLIER_2] | [SUP_VALUE_2] | [SUP_AWARDS_2] | [SHARE_2] | [BUYERS_2] |
+| 3 | [SUPPLIER_3] | [SUP_VALUE_3] | [SUP_AWARDS_3] | [SHARE_3] | [BUYERS_3] |
+| 4 | [SUPPLIER_4] | [SUP_VALUE_4] | [SUP_AWARDS_4] | [SHARE_4] | [BUYERS_4] |
+| 5 | [SUPPLIER_5] | [SUP_VALUE_5] | [SUP_AWARDS_5] | [SHARE_5] | [BUYERS_5] |
 
 ---
 
@@ -78,17 +78,17 @@ Rule: HIGH if top-1 > 50% or top-3 > 80%.
 
 | Period | Awarded value (£) | Awards |
 |--------|-------------------|--------|
-| [PERIOD_1] | [AWARDED_VALUE_1] | [AWARDS_1] |
-| [PERIOD_2] | [AWARDED_VALUE_2] | [AWARDS_2] |
-| [PERIOD_3] | [AWARDED_VALUE_3] | [AWARDS_3] |
+| [PERIOD_1] | [AWARDED_VALUE_1] | [TREND_AWARDS_1] |
+| [PERIOD_2] | [AWARDED_VALUE_2] | [TREND_AWARDS_2] |
+| [PERIOD_3] | [AWARDED_VALUE_3] | [TREND_AWARDS_3] |
 
 ---
 
 ## Representative Notices
 
-- [TITLE_1] — [BUYER_1], £[VALUE_1], [AWARD_DATE_1] ([NOTICE_URL_1])
-- [TITLE_2] — [BUYER_2], £[VALUE_2], [AWARD_DATE_2] ([NOTICE_URL_2])
-- [TITLE_3] — [BUYER_3], £[VALUE_3], [AWARD_DATE_3] ([NOTICE_URL_3])
+- [TITLE_1] — [BUYER_1], £[NOTICE_VALUE_1], [AWARD_DATE_1] ([NOTICE_URL_1])
+- [TITLE_2] — [BUYER_2], £[NOTICE_VALUE_2], [AWARD_DATE_2] ([NOTICE_URL_2])
+- [TITLE_3] — [BUYER_3], £[NOTICE_VALUE_3], [AWARD_DATE_3] ([NOTICE_URL_3])
 
 ---
 
@@ -102,8 +102,8 @@ Rule: HIGH if top-1 > 50% or top-3 > 80%.
 
 | Citation ID | Notice URL | Description |
 |-------------|------------|-------------|
-| [CITATION_ID_1] | [NOTICE_URL_1] | [DESCRIPTION_1] |
-| [CITATION_ID_2] | [NOTICE_URL_2] | [DESCRIPTION_2] |
+| [CITATION_ID_1] | [REF_URL_1] | [DESCRIPTION_1] |
+| [CITATION_ID_2] | [REF_URL_2] | [DESCRIPTION_2] |
 
 Contains public sector information licensed under the Open Government Licence v3.0.
 

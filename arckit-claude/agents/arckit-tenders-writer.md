@@ -145,7 +145,7 @@ The orchestrator passes you a JSON object in its Agent prompt:
   "source_health": "fts (green), contracts_finder (amber)",
   "citations": [
     {
-      "citation_id": "FTS-N-001",
+      "citation_id": "TNDR-1",
       "notice_url": "https://www.find-tender.service.gov.uk/Notice/001",
       "description": "Cloud hosting framework call-off — HMRC, £2.1 m"
     }
@@ -203,10 +203,10 @@ Process below.
 
    **Top Suppliers by Awarded Value** — emit one row per `suppliers[]`
    entry (already ranked by the orchestrator); `Rank` is the 1-based row
-   index. Per row: `[SUPPLIER_n]` ← `name`; `[VALUE_n]` ←
-   `awarded_value_total_gbp`; `[AWARDS_n]` ← `award_count`; `[SHARE_n]` ←
-   `share_pct`; `[BUYERS_n]` ← `buyers[]` comma-joined. Drop unused
-   template rows.
+   index. Per row: `[SUPPLIER_n]` ← `name`; `[SUP_VALUE_n]` ←
+   `awarded_value_total_gbp`; `[SUP_AWARDS_n]` ← `award_count`;
+   `[SHARE_n]` ← `share_pct`; `[BUYERS_n]` ← `buyers[]` comma-joined.
+   Drop unused template rows.
 
    **Incumbency**
    - `[INCUMBENCY_NARRATIVE]` ← `incumbency_narrative`
@@ -217,16 +217,17 @@ Process below.
    - `[CONCENTRATION_FLAG]` ← `concentration_flag`
 
    **Award Trend** — emit one row per `time_series[]` entry: `[PERIOD_n]`
-   ← `period`; `[AWARDED_VALUE_n]` ← `awarded_value_gbp`; `[AWARDS_n]` ←
-   `award_count`. Drop unused template rows.
+   ← `period`; `[AWARDED_VALUE_n]` ← `awarded_value_gbp`;
+   `[TREND_AWARDS_n]` ← `award_count`. Drop unused template rows.
 
    **Representative Notices** — flatten `suppliers[].sample_notices[]`
    into bullets, one per notice: `[TITLE_n]` ← `title`; `[BUYER_n]` ←
-   `buyer`; `[VALUE_n]` ← `value_gbp`; `[AWARD_DATE_n]` ← `award_date`;
-   `[NOTICE_URL_n]` ← `notice_url`. Drop unused template bullets.
+   `buyer`; `[NOTICE_VALUE_n]` ← `value_gbp`; `[AWARD_DATE_n]` ←
+   `award_date`; `[NOTICE_URL_n]` ← `notice_url`. Drop unused template
+   bullets.
 
    **External References** — emit one row per `citations[]` entry:
-   `[CITATION_ID_n]` ← `citation_id`; `[NOTICE_URL_n]` ← `notice_url`;
+   `[CITATION_ID_n]` ← `citation_id`; `[REF_URL_n]` ← `notice_url`;
    `[DESCRIPTION_n]` ← `description`. Keep the Open Government Licence
    line beneath the table.
 

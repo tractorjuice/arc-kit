@@ -235,6 +235,15 @@ From the validated payload:
   HMRC"`). Each `notice_url` comes straight from the notice. Deduplicate by
   `notice_url`.
 
+- **Surface reader failures into the artefact.** If the validated payload's
+  `errors[]` is non-empty **or** `degraded_sources[]` is non-empty, the run
+  saw only partial data — say so in the rendered artefact rather than
+  letting it look complete. Append a `key_findings` bullet (and/or a
+  `caveats` entry) that names which MCP tools failed (from `errors[].tool`)
+  and which source feeds were degraded (from `degraded_sources[]`), e.g.
+  `"Partial data: get_status failed and the contracts_finder feed is
+  degraded — figures may be incomplete."`
+
 These are pure functions of the payload — no LLM judgment. If you find
 yourself reasoning about whether a supplier is "good", you have made a
 mistake; recompute from the numbers.
@@ -347,7 +356,7 @@ Return ONLY a concise summary to the user:
 
 - **Template** — `${CLAUDE_PLUGIN_ROOT}/templates/tenders-template.md` (read by writer)
 - **Schema** — `${CLAUDE_PLUGIN_ROOT}/schemas/tenders-handoff.schema.json`
-- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/create-project.sh` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
+- **Helpers** — `${CLAUDE_PLUGIN_ROOT}/scripts/validate-handoff.mjs` · `${CLAUDE_PLUGIN_ROOT}/scripts/bash/generate-document-id.sh`
 - **Subagents dispatched** — `arckit-tenders-reader` (fetch + extract) · `arckit-tenders-writer` (final render)
 - **External tools** — none directly (delegated to reader)
 - **Related commands** — `/arckit:sobc` (downstream Economic Case) · `/arckit:risk` (downstream concentration risk) · `/arckit:research` (build-vs-buy context)
