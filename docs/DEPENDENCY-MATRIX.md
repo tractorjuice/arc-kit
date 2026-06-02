@@ -184,6 +184,11 @@ Most procurement commands require ARC-*-REQ-*.md:
 - **score** → Depends on: evaluate (M), requirements (M)
   - Note: Structured vendor scoring with JSON storage, comparison, and audit trail
   - Integrates with evaluate criteria; scores stored in `projects/{id}/vendors/scores.json`
+- **tenders** → Depends on: requirements (O), sobc (O), research (O)
+  - Note: Procurement market intelligence from the UK Tenders MCP — award-value benchmarks, top suppliers, incumbency/concentration across ~677k UK contracting processes
+  - Requires the bundled `uk-tenders` MCP server (keyless, deferred, best-effort availability)
+  - Outputs TNDR artefact; feeds into sobc (Economic Case benchmarks), risk (concentration risk), research (build-vs-buy market context)
+  - Agent-delegating command (reader/orchestrator/writer three-tier split)
 
 ### Tier 8: Design Reviews (Depends on Design Documents + Requirements)
 
@@ -383,12 +388,22 @@ principles-compliance → conformance → analyze → service-assessment → sto
 ## Version
 
 - **ArcKit Version**: 1.6.0
-- **Matrix Date**: 2026-04-19
-- **Commands Documented**: 84
+- **Matrix Date**: 2026-06-02
+- **Commands Documented**: 85
 - **Matrix Rows**: 58 (existing) + 18 EU/FR commands in separate section below (see Changelog 2026-04-19)
 - **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.impact`, `/arckit.navigator`, `/arckit.graph-report`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
+
+### 2026-06-02 - Procurement Market Intelligence command (#556)
+
+- **Added**: `/arckit.tenders` command (85th ArcKit command) for procurement market intelligence from the UK Tenders MCP
+- **Updated**: Tier 7 Procurement to include tenders command
+- **Dependencies**: requirements (O), sobc (O), research (O) — all optional; command can run standalone with only a keyword or CPV scope
+- **Consumed by**: sobc (O — Economic Case benchmarks), risk (O — concentration risk), research (O — build-vs-buy market context)
+- **Doc-type produced**: `TNDR` (Procurement Market Intelligence); `CMPT` (Competitor Landscape) also registered for the planned `/arckit.competitors` follow-on
+- **Updated**: Commands Documented count from 84 to 85
+- **Note**: Agent-delegating command (reader/orchestrator/writer three-tier split). Requires bundled `uk-tenders` MCP server (keyless, deferred, best-effort). Not added to the main DSM table because it produces no artifact currently consumed as a MANDATORY input by any other command — fits alongside datascout in the optional-input pattern.
 
 ### 2026-04-28 - Graph-aware diagnostic commands (#359)
 

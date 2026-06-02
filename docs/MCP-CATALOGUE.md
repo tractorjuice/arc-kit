@@ -18,8 +18,9 @@ Reference for every Model Context Protocol (MCP) tool exposed by ArcKit, the ser
 | `google-developer-knowledge` | `https://developerknowledge.googleapis.com/mcp` | http | `GOOGLE_API_KEY` (user_config) | no | 3 |
 | `datacommons-mcp` | `https://api.datacommons.org/mcp` | http | `DATA_COMMONS_API_KEY` (user_config) | no | 2 |
 | `govreposcrape` | `https://govreposcrape-api-1060386346356.us-central1.run.app/mcp` | http | none | no | 9 |
+| `uk-tenders` | `https://tenders.run.cns.me/mcp` | http | none | no | 11 |
 
-Total: **5 servers, 23 tools**. ArcKit agents currently consume **17** of them — `search_uk_gov_code` (discovery), `dependency_compare` (gov-reuse overlap %), and `vulnerability_exposure` (gov-landscape CVE blast-radius) from govreposcrape, plus the 14 tools on the other four servers. The remaining 6 govreposcrape dependency-intelligence tools are exposed by the server but not yet wired into any ArcKit agent (see the govreposcrape section).
+Total: **6 servers, 34 tools**. ArcKit agents currently consume **24** of them — 7 `uk-tenders` tools via `arckit-tenders-reader`, `search_uk_gov_code` (discovery), `dependency_compare` (gov-reuse overlap %), and `vulnerability_exposure` (gov-landscape CVE blast-radius) from govreposcrape, plus the 14 tools on the other four servers. The remaining 6 govreposcrape dependency-intelligence tools and 4 `uk-tenders` tools (including `query_sql`) are exposed by their servers but not yet wired into any ArcKit agent (see the individual sections below).
 
 `alwaysLoad: true` is set on `aws-knowledge` and `microsoft-learn` because the AWS and Azure research commands always reach for them; the others stay deferred to keep cold-start tool budgets lean. See `arckit-claude/.mcp.json`.
 
@@ -126,6 +127,30 @@ Triggered by `/arckit:gov-reuse`, `/arckit:gov-code-search`, `/arckit:gov-landsc
 
 ---
 
+## uk-tenders
+
+UK Tenders MCP server fronting ~677,000 UK contracting processes across five national portals (Find a Tender Service, Contracts Finder, Public Contracts Scotland, Sell2Wales, eTendersNI). Data is re-published verbatim under the Open Government Licence v3.0. No API key required. Availability: best-effort single Cloud Run instance, nightly refresh, no formal SLA — a dead endpoint degrades gracefully (the reader returns partial data; the artefact renders degraded-source notes instead of failing).
+
+| Tool | Purpose | Consumed by ArcKit? |
+|---|---|---|
+| `mcp__uk-tenders__search_tenders` | Full-text search across tender notices by keyword, CPV, buyer, or supplier | **yes** — `arckit-tenders-reader` (initial evidence gathering) |
+| `mcp__uk-tenders__top_suppliers` | Ranked supplier list by awarded value, scoped by buyer / CPV / keyword | **yes** — `arckit-tenders-reader` (incumbency + concentration) |
+| `mcp__uk-tenders__awarded_value_by_buyer` | Awarded value breakdown scoped to a named buyer | **yes** — `arckit-tenders-reader` (buyer-focus queries) |
+| `mcp__uk-tenders__aggregate_tenders` | Summary statistics (median, total, award count) over a filtered set | **yes** — `arckit-tenders-reader` (market-size benchmarks) |
+| `mcp__uk-tenders__awards_over_time` | Awarded value and award count per period (financial year / calendar year) | **yes** — `arckit-tenders-reader` (trend time series) |
+| `mcp__uk-tenders__get_tender` | Fetch a single tender notice by ID to confirm its `notice_url` | **yes** — `arckit-tenders-reader` (notice-URL confirmation only) |
+| `mcp__uk-tenders__get_status` | Feed health check — reports timestamp, coverage, and per-portal health | **yes** — `arckit-tenders-reader` (data-freshness section) |
+| `mcp__uk-tenders__query_sql` | Free-form SQL against the underlying contracting dataset | **no** — documented-only; never allowlisted (see note below) |
+| *(3 additional server tools)* | Not yet documented in ArcKit | not yet |
+
+> **Allowlist note:** `arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__uk-tenders__` prefix via `startsWith`, so all 11 tools clear the permission hook automatically. However, `arckit-tenders-reader` additionally declares a `tools:` frontmatter allowlist containing only the 7 read-only tools above (rows 1–7). `query_sql` is documented here for completeness — it exposes free-form SQL against the procurement dataset and is explicitly excluded from the allowlist because free-form SQL against an untrusted endpoint is a prompt-injection surface. It must **never** be added to any agent's `tools:` allowlist.
+
+**Consumer** (1): `arckit-tenders-reader`.
+
+Triggered by `/arckit:tenders`. The reader subagent calls `get_status`, then dispatches by query focus (`buyer`, `capability`, or `supplier`) using the appropriate subset of the 7 allowlisted tools, and returns a schema-validated JSON handoff to the orchestrator tier.
+
+---
+
 ## Tool → command cross-reference
 
 Reverse lookup, by tool, for the linter to grep against.
@@ -149,6 +174,13 @@ Reverse lookup, by tool, for the linter to grep against.
 | `mcp__microsoft-learn__microsoft_code_sample_search` | `arckit-azure-research` |
 | `mcp__microsoft-learn__microsoft_docs_fetch` | `arckit-azure-research` |
 | `mcp__microsoft-learn__microsoft_docs_search` | `arckit-azure-research` |
+| `mcp__uk-tenders__aggregate_tenders` | `arckit-tenders-reader` |
+| `mcp__uk-tenders__awarded_value_by_buyer` | `arckit-tenders-reader` |
+| `mcp__uk-tenders__awards_over_time` | `arckit-tenders-reader` |
+| `mcp__uk-tenders__get_status` | `arckit-tenders-reader` |
+| `mcp__uk-tenders__get_tender` | `arckit-tenders-reader` |
+| `mcp__uk-tenders__search_tenders` | `arckit-tenders-reader` |
+| `mcp__uk-tenders__top_suppliers` | `arckit-tenders-reader` |
 
 ---
 
@@ -156,7 +188,7 @@ Reverse lookup, by tool, for the linter to grep against.
 
 Every MCP response is **untrusted input** under the reader/orchestrator/writer pattern (#442 item 1):
 
-- For commands with the three-tier split (`/arckit:datascout`, `/arckit:gov-reuse`), only the reader subagent calls MCP tools. The reader returns schema-validated, length-capped JSON via `validate-handoff.mjs`. The orchestrator and writer never see raw MCP output.
+- For commands with the three-tier split (`/arckit:datascout`, `/arckit:gov-reuse`, `/arckit:tenders`), only the reader subagent calls MCP tools. The reader returns schema-validated, length-capped JSON via `validate-handoff.mjs`. The orchestrator and writer never see raw MCP output.
 - For single-tier research agents (`arckit-aws-research`, `arckit-azure-research`, `arckit-gcp-research`, `arckit-gov-code-search`, `arckit-gov-landscape`), the agent's `## Guardrails` section names MCP responses as untrusted bytes and requires citation traceability for any figure pulled from them. Extending the reader/writer split to these agents is the next slice of #442 item 1.
 - Tool allowlist (#442 item 18, shipped in #445): every research agent now declares MCP tools explicitly in its `tools:` frontmatter. No agent inherits MCP tools by default.
 

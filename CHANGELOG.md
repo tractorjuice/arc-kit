@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`/arckit:tenders` — Procurement Market Intelligence** (#556). Award-value benchmarks, top suppliers, incumbency and concentration from ~677,000 UK contracting processes (Find a Tender Service, Contracts Finder, Public Contracts Scotland, Sell2Wales, eTendersNI). Three-tier reader/orchestrator/writer subagent split; reader allowlists 7 read-only tools; `query_sql` never allowlisted (prompt-injection surface). Outputs `TNDR` artefact; feeds into `sobc` (Economic Case benchmarks), `risk` (concentration risk), `research` (build-vs-buy context). `/arckit:competitors` is a planned fast-follow that will share the same MCP and reader.
+- **`uk-tenders` bundled MCP server** (#556). Keyless `http` MCP at `https://tenders.run.cns.me/mcp`, deferred (no `alwaysLoad`). 11 tools; 7 allowlisted by `arckit-tenders-reader`; `query_sql` documented-only and never allowlisted. Nightly refresh, best-effort single Cloud Run, no formal SLA — degrades gracefully. Data re-published under OGL v3.0.
+- **`TNDR` + `CMPT` doc-types** (#556). `TNDR` (Procurement Market Intelligence, regime UK) and `CMPT` (Competitor Landscape, regime UK) registered in `config/doc-types.mjs` and `commands/pages.md`. `CMPT` is pre-registered for the planned `/arckit:competitors` follow-on.
+
 ## [5.8.0] — 2026-06-01
 
 ### Added

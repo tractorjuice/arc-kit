@@ -236,6 +236,16 @@ Reviewers check that the new code doesn't collide with existing codes — `scrip
 
 If the new code is the **first** of its regime, also register the regime in the `REGIMES` array and `REGIME_LABELS` object at the bottom of `doc-types.mjs`. Order convention: officially-maintained first, then community alphabetical.
 
+## Adding a bundled MCP server
+
+When a new command requires an MCP server that does not already ship with ArcKit, follow this checklist:
+
+1. **`.mcp.json` entry** — add the server under `arckit-claude/.mcp.json`. Omit `alwaysLoad` unless the server is needed on every session start (keep cold-start tool budgets lean; deferred is the default).
+2. **`allow-mcp-tools.mjs` prefix** — add the `mcp__<server-name>__` prefix to the `ALLOWED_PREFIXES` array in `arckit-claude/hooks/allow-mcp-tools.mjs` and update the JSDoc comment's server list.
+3. **Reader `tools:` allowlist** — in the reader agent's YAML frontmatter, list only the read-only tools the reader needs. Never include free-form query tools (e.g. SQL endpoints) in the allowlist — they are an uncontrolled prompt-injection surface.
+4. **`docs/MCP-CATALOGUE.md` rows** — add a row to the "Servers at a glance" table, a `## <server-name>` section (tool table with "Consumed by ArcKit?" column, allowlist note, consumer list), rows in the "Tool → command cross-reference" table, and update the totals line.
+5. **Run `python scripts/converter.py`** — regenerate the Codex / OpenCode / Gemini / Copilot extension formats so the new MCP config propagates to all non-Claude targets.
+
 ## Command Naming Conventions
 
 - Use lowercase with hyphens: `/arckit.data-model`
