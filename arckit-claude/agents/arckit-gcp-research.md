@@ -10,9 +10,9 @@ tools:
   - TodoWrite
   - WebSearch
   - WebFetch
-  - mcp__google-developer-knowledge__search_documents
-  - mcp__google-developer-knowledge__get_document
-  - mcp__google-developer-knowledge__batch_get_documents
+  - mcp__plugin_arckit_google-developer-knowledge__search_documents
+  - mcp__plugin_arckit_google-developer-knowledge__get_document
+  - mcp__plugin_arckit_google-developer-knowledge__batch_get_documents
 effort: high
 description: |
   Use this agent when the user needs Google Cloud-specific technology research using the Google Developer Knowledge MCP server to match project requirements to Google Cloud services, architecture patterns, Architecture Framework guidance, and Security Command Center controls. Examples:

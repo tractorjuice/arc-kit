@@ -9,7 +9,7 @@ tools:
   - Bash
   - TodoWrite
   - WebFetch
-  - mcp__govreposcrape__search_uk_gov_code
+  - mcp__plugin_arckit_govreposcrape__search_uk_gov_code
 effort: high
 description: |
   Use this agent when the user wants to search UK government repositories using natural language queries. This agent provides general-purpose semantic search across 24,500+ government repos via govreposcrape. Examples:

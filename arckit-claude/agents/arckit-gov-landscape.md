@@ -9,8 +9,8 @@ tools:
   - Bash
   - TodoWrite
   - WebFetch
-  - mcp__govreposcrape__search_uk_gov_code
-  - mcp__govreposcrape__vulnerability_exposure
+  - mcp__plugin_arckit_govreposcrape__search_uk_gov_code
+  - mcp__plugin_arckit_govreposcrape__vulnerability_exposure
 effort: max
 description: |
   Use this agent when the user wants to understand what UK government has built in a domain — mapping organisations, technology patterns, standards, and maturity levels. Examples:

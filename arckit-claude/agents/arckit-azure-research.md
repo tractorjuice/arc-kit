@@ -10,9 +10,9 @@ tools:
   - TodoWrite
   - WebSearch
   - WebFetch
-  - mcp__microsoft-learn__microsoft_docs_search
-  - mcp__microsoft-learn__microsoft_docs_fetch
-  - mcp__microsoft-learn__microsoft_code_sample_search
+  - mcp__plugin_arckit_microsoft-learn__microsoft_docs_search
+  - mcp__plugin_arckit_microsoft-learn__microsoft_docs_fetch
+  - mcp__plugin_arckit_microsoft-learn__microsoft_code_sample_search
 effort: high
 description: |
   Use this agent when the user needs Azure-specific technology research using the Microsoft Learn MCP server to match project requirements to Azure services, architecture patterns, Well-Architected guidance, and Security Benchmark controls. Examples:

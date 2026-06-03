@@ -10,12 +10,12 @@ tools:
   - TodoWrite
   - WebSearch
   - WebFetch
-  - mcp__aws-knowledge__aws___search_documentation
-  - mcp__aws-knowledge__aws___read_documentation
-  - mcp__aws-knowledge__aws___recommend
-  - mcp__aws-knowledge__aws___get_regional_availability
-  - mcp__aws-knowledge__aws___list_regions
-  - mcp__aws-knowledge__aws___retrieve_skill
+  - mcp__plugin_arckit_aws-knowledge__aws___search_documentation
+  - mcp__plugin_arckit_aws-knowledge__aws___read_documentation
+  - mcp__plugin_arckit_aws-knowledge__aws___recommend
+  - mcp__plugin_arckit_aws-knowledge__aws___get_regional_availability
+  - mcp__plugin_arckit_aws-knowledge__aws___list_regions
+  - mcp__plugin_arckit_aws-knowledge__aws___retrieve_skill
 effort: high
 description: |
   Use this agent when the user needs AWS-specific technology research using the AWS Knowledge MCP server to match project requirements to AWS services, architecture patterns, Well-Architected guidance, and Security Hub controls. Examples:
