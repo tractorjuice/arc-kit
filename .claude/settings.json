@@ -43,7 +43,9 @@
       "WebFetch(domain:plotly.com)",
       "WebFetch(domain:www.npmjs.com)",
       "Bash(gh search:*)",
-      "mcp__govreposcrape__search_uk_gov_code"
+      "mcp__govreposcrape__search_uk_gov_code",
+      "Write(//workspaces/arc-kit/projects/**)",
+      "Edit(//workspaces/arc-kit/projects/**)"
     ]
   },
   "statusLine": {
