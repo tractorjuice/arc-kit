@@ -2,7 +2,7 @@
 name: arckit-tenders-reader
 subagent: true
 maxTurns: 25
-tools: ["Read", "Glob", "Grep", "TodoWrite", "mcp__uk-tenders__search_tenders", "mcp__uk-tenders__top_suppliers", "mcp__uk-tenders__awarded_value_by_buyer", "mcp__uk-tenders__aggregate_tenders", "mcp__uk-tenders__awards_over_time", "mcp__uk-tenders__get_tender", "mcp__uk-tenders__get_status"]
+tools: ["Read", "Glob", "Grep", "TodoWrite", "mcp__plugin_arckit_uk-tenders__search_tenders", "mcp__plugin_arckit_uk-tenders__top_suppliers", "mcp__plugin_arckit_uk-tenders__awarded_value_by_buyer", "mcp__plugin_arckit_uk-tenders__aggregate_tenders", "mcp__plugin_arckit_uk-tenders__awards_over_time", "mcp__plugin_arckit_uk-tenders__get_tender", "mcp__plugin_arckit_uk-tenders__get_status"]
 effort: high
 description: |
   Reader subagent invoked by the /arckit:tenders and /arckit:competitors
