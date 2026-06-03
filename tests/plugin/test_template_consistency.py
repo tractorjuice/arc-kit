@@ -29,6 +29,7 @@ PLUGIN_SOURCES = [
     "arckit-us",
     "arckit-uk-finance",
     "arckit-uk-nhs",
+    "arckit-uk-teal",
 ]
 CLI_TEMPLATES_DIR = os.path.join(REPO_ROOT, ".arckit", "templates")
 

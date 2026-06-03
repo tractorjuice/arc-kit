@@ -195,6 +195,14 @@ export const DOC_TYPES = {
   // (clinical-safety/SAFETY-CASE.md) rather than document ID.
   'NHSDTAC':   { name: 'NHS Digital Technology Assessment Criteria (DTAC v3)', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
   'NHSMDR':    { name: 'UK MDR + EU MDR SaMD/AIaMD Classification',       category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  // UK Government Teal Book Project Delivery Overlay (arckit-uk-teal) — community-contributed,
+  // EXPERIMENTAL. Aligned to The Teal Book (NISTA / Government Project Delivery) + GovS 002
+  // Project Delivery Functional Standard. Teal Book V1 is in a trial period to 31 Dec 2026 —
+  // outputs are not assurance/commercial advice and must be agreed with the SRO and the
+  // organisation's Project Delivery / assurance function before reliance.
+  'TEALCIAF':  { name: 'GovS 002 CIAF Capability Self-Assessment',       category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  'TEALDMA':   { name: 'Teal Book Delivery Management Approach',         category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  'TEALIAAP':  { name: 'Integrated Assurance and Approval Plan (IAAP)',  category: 'Compliance', regime: 'UK', severity: 'HIGH' },
 };
 
 // Derived: regimes in canonical order (officially-maintained first, then community alphabetical)

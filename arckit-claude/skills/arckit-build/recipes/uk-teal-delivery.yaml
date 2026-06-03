@@ -1,0 +1,158 @@
+# ArcKit build recipe — UK Government Teal Book Project Delivery
+#
+# Scope: UK central-government portfolios, programmes and projects adopting
+# The Teal Book (NISTA / Government Project Delivery) and the GovS 002 Project
+# Delivery Functional Standard. The Teal Book is the "how" companion to the
+# "what" of GovS 002 and is used alongside HM Treasury's Green Book.
+#
+# Composes with the UK Government baseline — the Teal Book layers delivery
+# governance on top of artefacts ArcKit core already produces: the Green Book
+# business case (SOBC), the GDS delivery plan (PLAN), the Orange Book risk
+# register (RISK), and the strategic roadmap (ROADMAP). The overlay adds the
+# three Teal-specific artefacts core lacks: the GovS 002 CIAF capability
+# self-assessment, the Delivery Management Approach (tailoring, Part B / Ch. 9),
+# and the Integrated Assurance and Approval Plan (IAAP).
+#
+# Teal Book V1 is in a trial period to 31 December 2026 — verify guidance
+# against https://projectdelivery.gov.uk/teal-book/home/ before reliance.
+
+recipe: uk-teal-delivery
+schema_version: 1
+flagship: TEALDMA
+description: >
+  UK Government Teal Book project-delivery governance overlay — composes with
+  the UK Government baseline (Green Book SOBC, GDS plan, Orange Book risk,
+  roadmap) and adds the GovS 002 Continuous Improvement Assessment Framework
+  (CIAF) capability self-assessment, the Teal Book Delivery Management Approach
+  (tailoring & embedding, Part B / Chapter 9), and an Integrated Assurance and
+  Approval Plan (IAAP) with IPA/NISTA gateway-review readiness. Suitable for
+  central-government portfolios, programmes and projects.
+
+defaults:
+  version: "1.0"
+
+# Optional targets. default: true = built unless excluded with --exclude.
+# default: false = built only with --enable.
+optional_targets:
+  TEALCIAF:
+    description: GovS 002 CIAF organisational/programme capability self-assessment — build if assessing delivery capability (often run once at portfolio/PMO level rather than per project)
+    default: true
+  ROADMAP:
+    description: Strategic roadmap from the delivery plan
+    default: true
+  GLOSSARY:
+    description: Project glossary
+    default: true
+  ORG_RESEARCH:
+    description: Sponsoring department / delivery-body research. Output to projects/000-global/research/.
+    default: false
+  RESEARCH:
+    description: Technology and delivery-option market research (build vs buy, TCO)
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
+targets:
+
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: GLOSSARY
+    skill: arckit:glossary
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GLOSS }
+    deps: [PRIN]
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  - id: ORG_RESEARCH
+    skill: arckit:research
+    args: "{P} target=organisation"
+    output: { project: "000-global", type: RSCH, subfolder: research }
+    deps: []
+
+  - id: RESEARCH
+    skill: arckit:research
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RSCH, subfolder: research }
+    deps: [REQ]
+
+  # GovS 002 CIAF capability self-assessment — organisational capability to
+  # deliver; written to assurance/. Depends only on principles so it can run
+  # early (or standalone at PMO level).
+  - id: TEALCIAF
+    skill: arckit:uk-teal-ciaf
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TEALCIAF, subfolder: assurance }
+    deps: [PRIN]
+
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, PRIN]
+
+  - id: SOBC
+    skill: arckit:sobc
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SOBC }
+    deps: [REQ, STKE, RISK]
+
+  # Delivery Management Approach — tailors the Teal Book practices to the
+  # initiative (Part B / Ch. 9), mapped to GovS 002. Comes after the business
+  # case so the approval points and five-case structure are known.
+  - id: TEALDMA
+    skill: arckit:uk-teal-tailoring
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TEALDMA }
+    deps: [SOBC, RISK, REQ, STKE]
+
+  - id: PLAN
+    skill: arckit:plan
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: PLAN }
+    deps: [TEALDMA, SOBC, RISK]
+
+  - id: ROADMAP
+    skill: arckit:roadmap
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ROAD }
+    deps: [PLAN]
+
+  # Integrated Assurance and Approval Plan — maps business-case approval points
+  # to a proportionate, joined-up assurance schedule (IPA/NISTA gateway
+  # readiness). Written to assurance/.
+  - id: TEALIAAP
+    skill: arckit:uk-teal-assurance
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TEALIAAP, subfolder: assurance }
+    deps: [SOBC, RISK, TEALDMA, PLAN]
+
+  - id: TRACE
+    skill: arckit:traceability
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRAC }
+    deps:
+      - REQ
+      - RISK
+      - SOBC
+      - TEALDMA
+      - PLAN
+      - TEALIAAP
