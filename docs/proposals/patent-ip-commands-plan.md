@@ -23,11 +23,48 @@ the same shape of question for IP.
 
 ### Decisions locked in
 
+- **Packaging:** ship as a **separate `arckit-patents` plugin** (a new overlay in the
+  marketplace), not as part of core `arckit`. Install only if you need IP intelligence.
 - **Backend:** ArcKit-hosted MCP gateway (mirrors `uk-tenders` / `govreposcrape`), wrapping
   free structured patent APIs **plus the UPC / European Patent Register opt-out data**.
 - **Framing:** three **separate** commands, each with its own artefact type — not one
   command with a `--mode` flag.
 - **Posture:** recommend-don't-decide; every artefact carries a non-legal-advice caveat.
+
+## 1a. Packaging — a self-contained overlay plugin (architectural note)
+
+This is the **first overlay that needs its own agents, schemas, and MCP server**. Every
+existing overlay (`arckit-uae`, `arckit-uk-finance`, `arckit-au-energy`, …) is *minimal* —
+it ships only `commands/`, `recipes/`, `references/`, `templates/`, and reaches into core
+`arckit-claude` (via `${CLAUDE_PLUGIN_ROOT}` and the `dependencies` pin) for scripts,
+rendering partials, agents, schemas, and MCP servers. **Today, agents / schemas / MCP live
+only in core.** The three-tier reader/writer pattern needs all three, so "separate plugin"
+forces a choice:
+
+| Option | What ships where | Pros | Cons |
+|---|---|---|---|
+| **A. Self-contained (recommended)** | `arckit-patents` ships its own `commands/`, `agents/`, `schemas/`, `templates/`, `recipes/`, and **its own `.mcp.json`** with the `arckit-patents` MCP server | Truly independent; core stays lean; nobody who skips it pays for a niche IP MCP server; clean uninstall | First overlay to carry agents/schemas/MCP → **converter must be taught to discover them outside core**; sets a new precedent |
+| **B. Hybrid** | Commands + templates in `arckit-patents` overlay; agents + schemas + MCP added to core `arckit-claude/` | Zero convention change; follows existing overlay pattern exactly | Defeats the point of a separate plugin — core gains a niche IP MCP + 4 agents everyone carries; not a clean uninstall |
+
+**Recommendation: Option A.** The whole reason to separate the plugin is to keep core lean
+and make IP intelligence opt-in; Hybrid would re-bloat core. Option A's only real cost is a
+one-time **converter change** (teach `scripts/converter.py` to discover `agents/` + `schemas/`
+from this plugin, not just `arckit-claude`) — a worthwhile, reusable improvement that unlocks
+self-contained overlays generally.
+
+The plugin declares a hard dependency on core for shared **scripts** (`create-project.sh`,
+`generate-document-id.sh`, `validate-handoff.mjs`) and rendering/citation partials, exactly
+as other overlays do:
+
+```json
+{
+  "name": "arckit-patents",
+  "version": "<tracks plugin version>",
+  "defaultEnabled": false,
+  "description": "Patent / IP intelligence overlay for ArcKit — 3 commands: prior-art landscape, freedom-to-operate (UPC-aware), and patentability/novelty. Ships the arckit-patents MCP gateway (EPO OPS / European Patent Register incl. UPC opt-out, PatentsView, Lens). Requires arckit core plugin. EXPERIMENTAL — community-maintained.",
+  "dependencies": [{ "name": "arckit", "version": "=<core version>" }]
+}
+```
 
 ## 2. The three commands
 
@@ -40,12 +77,17 @@ the same shape of question for IP.
 Separate commands sharing one backend and one reader keeps them DRY without collapsing
 genuinely different artefacts, rubrics, audiences, and handoffs into one.
 
-## 3. Shared infrastructure (built once)
+## 3. Shared infrastructure (built once, inside the `arckit-patents` plugin)
+
+> Under **Option A**, all of the following ship in the new `arckit-patents/` plugin
+> directory — `agents/`, `schemas/`, `templates/`, and its own `.mcp.json` — not in core
+> `arckit-claude/`. Shared *scripts* and rendering/citation *partials* are still consumed
+> from core via the dependency pin.
 
 ### 3.1 MCP gateway — `arckit-patents` server
 
 A thin hosted gateway (same shape as `tenders.run.cns.me` / `govreposcrape` run.app
-services), registered in `arckit-claude/.mcp.json`. **Recommendation: fork an existing
+services), registered in the plugin's own **`arckit-patents/.mcp.json`**. **Recommendation: fork an existing
 OSS server** ([`JIBSN/epo-ops-mcp-server`](https://github.com/JIBSN/epo-ops-mcp-server) or
 PyPI [`patent-mcp-server`](https://pypi.org/project/patent-mcp-server/)) rather than build
 from scratch.
@@ -253,43 +295,68 @@ signs off. Citation discipline enforced — every figure traces
 ## 7. Build order (phased)
 
 1. **Phase 0 — MCP gateway** (critical path, infra): fork OSS server; wire EPO OPS /
-   European Patent Register (incl. UPC opt-out), PatentsView, Lens; deploy; register in
-   `.mcp.json`; verify `get_status`. *Everything else blocks on this.*
-2. **Phase 1 — shared core:** schema + reader + `validate-handoff` wiring; smoke-test
-   reader → JSON.
-3. **Phase 2 — `/arckit.patents`** (landscape) end-to-end. Closest to tenders → lowest
+   European Patent Register (incl. UPC opt-out), PatentsView, Lens; deploy. *Everything
+   else blocks on this.*
+2. **Phase 0.5 — scaffold plugin + teach the converter** (Option A enabler): create the
+   `arckit-patents/` plugin dir + `.claude-plugin/plugin.json` (dep-pinned to core) +
+   `.mcp.json`; add `arckit-patents` to `PLUGIN_SOURCES`; **extend `scripts/converter.py`
+   to discover `agents/` + `schemas/` from a non-core plugin** (today it reads them only
+   from `arckit-claude`). One-time, reusable.
+3. **Phase 1 — shared core (in plugin):** schema + reader + `validate-handoff` wiring
+   (validator consumed from core); smoke-test reader → JSON.
+4. **Phase 2 — `/arckit.patents`** (landscape) end-to-end. Closest to tenders → lowest
    risk, ships first.
-4. **Phase 3 — `/arckit.fto`** — adds `legal_status` / `patent_family` reliance, UPC
+5. **Phase 3 — `/arckit.fto`** — adds `legal_status` / `patent_family` reliance, UPC
    opt-out fields, reworked rubric, UPC-exposure template section, risk handoff.
-5. **Phase 4 — `/arckit.patentability`** — the advisory diverger.
-6. **Phase 5 — converter + docs + version bump + CHANGELOG**, then PR.
+6. **Phase 4 — `/arckit.patentability`** — the advisory diverger.
+7. **Phase 5 — converter run + docs + version bump + CHANGELOG**, then PR.
 
-## 8. New-file inventory (~22 files)
+## 8. New-file inventory (~22 files, mostly under `arckit-patents/`)
 
 ```text
-arckit-claude/commands/{patents,fto,patentability}.md             (3)
-arckit-claude/agents/arckit-patents-reader.md                     (1, shared)
-arckit-claude/agents/arckit-{patents,fto,patentability}-writer.md (3)
-arckit-claude/schemas/patents-handoff.schema.json                 (1, shared)
-arckit-claude/schemas/scoring-rubrics/
-   patents-landscape-{generic,uk-gov}.yaml                        (2)
-   fto-{generic,uk-gov}.yaml                                      (2)
-   patentability.yaml                                             (1)
-arckit-claude/templates/{patents,fto,patentability}-template.md   (3) + .arckit copies (3)
-docs/guides/{patents,fto,patentability}.md                        (3) + arckit-claude/guides copies (3)
+arckit-patents/.claude-plugin/plugin.json                          (1)
+arckit-patents/.mcp.json                                           (1)
+arckit-patents/commands/{patents,fto,patentability}.md             (3)
+arckit-patents/agents/arckit-patents-reader.md                     (1, shared)
+arckit-patents/agents/arckit-{patents,fto,patentability}-writer.md (3)
+arckit-patents/schemas/patents-handoff.schema.json                 (1, shared)
+arckit-patents/schemas/scoring-rubrics/
+   patents-landscape-{generic,uk-gov}.yaml                         (2)
+   fto-{generic,uk-gov}.yaml                                       (2)
+   patentability.yaml                                              (1)
+arckit-patents/templates/{patents,fto,patentability}-template.md   (3) + .arckit copies (3)
+arckit-patents/recipes/patents.yaml                                (1)
+arckit-patents/{README.md,CHANGELOG.md,VERSION}                    (3)
+docs/guides/{patents,fto,patentability}.md                         (3)
 ```
 
-Plus edits to `.mcp.json`, the core `doc-types` config (`PATS`, `FTO`, `PNOV`), README,
-`docs/index.html`, `docs/DEPENDENCY-MATRIX.md`, CHANGELOG, command-count references
-(73 → 76), and the converter-generated Codex / OpenCode / Gemini / Copilot outputs.
+**Edits to existing files (adding the plugin to the marketplace + tooling):**
+
+- `.claude-plugin/marketplace.json` — new `arckit-patents` entry
+- `scripts/converter.py` — add to `PLUGIN_SOURCES`; **+ discover agents/schemas outside core** (Phase 0.5)
+- `CLAUDE.md` — overlay count (8 → 9 community overlays) + plugin list + the
+  "overlays are minimal / core-only for agents+MCP" statement (now has an exception)
+- `README.md` — plugin count (8 → 9 install options; 11 → 12 total) + dependency note
+- `docs/index.html` — meta description + overlay badges
+- `docs/DEPENDENCY-MATRIX.md`, CHANGELOG
+- The plugin owns its own doc-types (`PATS`, `FTO`, `PNOV`) — confirm whether doc-types
+  config must be core-registered or can be plugin-local (open question 4 below)
+
+> **Note:** core command count stays **73** — the three new commands live in the overlay,
+> so this does *not* bump the core total.
 
 ## 9. Open questions before Phase 0
 
-1. **MCP hosting** — is there a deploy slot (run.app / run.cns.me) for the patents gateway,
-   and free EPO OPS OAuth credentials? This is the only hard blocker.
-2. **One shared reader vs three** — planned as **one** (DRY). Could split FTO's
+1. **Packaging confirm** — proceed with **Option A (self-contained plugin)**? It needs the
+   one-time converter change in Phase 0.5. Fallback is Option B (hybrid; agents+MCP in core).
+2. **MCP hosting** — is there a deploy slot (run.app / run.cns.me) for the patents gateway,
+   and free EPO OPS OAuth credentials? Hard blocker for Phase 0.
+3. **One shared reader vs three** — planned as **one** (DRY). Could split FTO's
    legal-status/UPC path into its own reader if hard isolation is wanted.
-3. **Patentability input** — auto-pull invention text from requirements / ADRs, or require
+4. **Doc-types registration** — can `PATS`/`FTO`/`PNOV` be declared plugin-local, or must
+   they be registered in the core `doc-types` config? (Affects whether Option A is fully
+   self-contained or still needs a one-line core edit.)
+5. **Patentability input** — auto-pull invention text from requirements / ADRs, or require
    the user to pass a description? (Default: auto-pull with override.)
 
 ---
