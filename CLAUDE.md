@@ -109,7 +109,7 @@ Skills live in `arckit-claude/skills/{name}/SKILL.md`. Frontmatter: `name`, `des
 | `mermaid-syntax` | reference | Mermaid syntax for `/arckit:diagram` outputs |
 | `plantuml-syntax` | reference | PlantUML / C4 syntax |
 | `wardley-mapping` | reference | Wardley Map syntax + gameplay/doctrine/climatic patterns |
-| `arckit-build` | orchestration | Bulk-build harness — parallel artefact generation, YAML-recipe-driven, resumable. Claude-only (parallel `Agent` dispatch). See `arckit-claude/skills/arckit-build/`. |
+| `arckit-build` | orchestration | Bulk-build harness — parallel artefact generation, YAML-recipe-driven, resumable. Claude-only (parallel `Agent` dispatch) and **manual-invocation only** (`disable-model-invocation: true`) so a bulk build that commits code is never auto-triggered — run `/arckit:arckit-build`. See `arckit-claude/skills/arckit-build/`. |
 
 **Skills are grown, not built.** The highest-signal content in a skill is its **Gotchas** section (`## Common Gotchas` / `## Common Syntax Gotchas`). When Claude is led into a repeatable mistake while a skill is active — a syntax footgun, a positioning error, a step done in the wrong order — capture it as a gotcha in that skill rather than only fixing it in the current chat. Keep the body concise (it stays in context across turns and costs recurring tokens), push detailed reference material into the skill's `references/` folder (progressive disclosure), and lead `description` with the key use case. See [the Claude Code skills guide](https://code.claude.com/docs/en/skills).
 

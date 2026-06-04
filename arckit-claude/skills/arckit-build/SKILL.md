@@ -1,10 +1,7 @@
 ---
 name: arckit-build
-description: "This skill should be used when the user wants to bulk-build ArcKit artefacts in parallel rather than running individual /arckit:* commands one at a time. Load whenever the task sounds like 'kick off a build', 'build everything', 'generate all artefacts', 'run all the commands', 'rebuild this project from scratch', 'resume the build', 'pick up where we left off', 'refresh the artefacts', 'run the recipe', 'build the whole project end-to-end', or 'parallel build', or mentions `--plan`, `--resume`, `--target`, `--refresh`, `--recipe`, or `.arckit/state.json`. The skill orchestrates parallel /arckit:* generation using subagent isolation: reads project state, computes the artefact dependency DAG, dispatches one subagent per target per wave (each subagent invokes a /arckit:* skill in its own context), validates outputs, commits the wave, and persists progress to .arckit/state.json for resumability."
-paths:
-  - "projects/**/.arckit/state.json"
-  - "projects/**/ARC-*-*.md"
-  - ".arckit/recipes/*.yaml"
+description: "This skill should be used when the user wants to bulk-build ArcKit artefacts in parallel rather than running individual /arckit:* commands one at a time. Invoke manually with /arckit:arckit-build when the task sounds like 'kick off a build', 'build everything', 'generate all artefacts', 'run all the commands', 'rebuild this project from scratch', 'resume the build', 'pick up where we left off', 'refresh the artefacts', 'run the recipe', 'build the whole project end-to-end', or 'parallel build', or mentions `--plan`, `--resume`, `--target`, `--refresh`, `--recipe`, or `.arckit/state.json`. The skill orchestrates parallel /arckit:* generation using subagent isolation: reads project state, computes the artefact dependency DAG, dispatches one subagent per target per wave (each subagent invokes a /arckit:* skill in its own context), validates outputs, commits the wave, and persists progress to .arckit/state.json for resumability."
+disable-model-invocation: true
 ---
 
 # ArcKit Build Harness (v0.4)
