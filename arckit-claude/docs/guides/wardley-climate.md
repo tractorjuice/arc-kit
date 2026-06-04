@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.wardley.climate` assesses 32 climatic patterns affecting mapped components.
+`/arckit:wardley.climate` assesses 32 climatic patterns affecting mapped components.
 
 ---
 
@@ -25,7 +25,7 @@ Run this command **after** creating a Wardley Map to understand the external for
 ## Command
 
 ```bash
-/arckit.wardley.climate Assess climate for <initiative>
+/arckit:wardley.climate Assess climate for <initiative>
 ```
 
 Output: `projects/<id>/wardley-maps/ARC-<id>-WCLM-<NNN>-v1.0.md` (uses multi-instance numbering)
@@ -95,10 +95,10 @@ Not all climate effects are equally predictable:
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Mapping | Create Wardley Map | `/arckit.wardley` |
-| Climate | Assess external forces | `/arckit.wardley.climate` |
-| Gameplay | Identify strategic plays | `/arckit.wardley.gameplay` |
-| Strategy | Synthesise into strategy | `/arckit.strategy`, `/arckit.roadmap` |
+| Mapping | Create Wardley Map | `/arckit:wardley` |
+| Climate | Assess external forces | `/arckit:wardley.climate` |
+| Gameplay | Identify strategic plays | `/arckit:wardley.gameplay` |
+| Strategy | Synthesise into strategy | `/arckit:strategy`, `/arckit:roadmap` |
 
 ---
 
@@ -119,4 +119,4 @@ Not all climate effects are equally predictable:
 2. **Look for war signals** -- Components approaching commodity transition are the highest-risk, highest-opportunity areas.
 3. **Challenge inertia** -- Organizational inertia is often the hardest to overcome. Name it explicitly.
 4. **Update with the map** -- Climate assessment is tied to a specific map version. When the map changes, re-assess.
-5. **Use research data** -- Market research (`/arckit.research`) provides evidence for pattern detection. Do not assess climate in a vacuum.
+5. **Use research data** -- Market research (`/arckit:research`) provides evidence for pattern detection. Do not assess climate in a vacuum.

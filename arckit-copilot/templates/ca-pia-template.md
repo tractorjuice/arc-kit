@@ -1,6 +1,6 @@
 # Canada Privacy Impact Assessment
 
-> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.ca-pia`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:ca-pia`
 
 ## Document Control
 
@@ -13,7 +13,7 @@
 
 | Version | Date | Author | Changes | Approved By | Approval Date |
 |---------|------|--------|---------|-------------|---------------|
-| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit.ca-pia` | [PENDING] | [PENDING] |
+| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit:ca-pia` | [PENDING] | [PENDING] |
 
 ## Executive Summary
 

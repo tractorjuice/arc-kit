@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.mod-secure` generates a Ministry of Defence Secure by Design assessment using CAAT and continuous assurance methodology.
+`/arckit:mod-secure` generates a Ministry of Defence Secure by Design assessment using CAAT and continuous assurance methodology.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.mod-secure Create MOD Secure by Design assessment for <system>
+/arckit:mod-secure Create MOD Secure by Design assessment for <system>
 ```
 
 Output: `projects/<id>/ARC-<id>-SECD-MOD-v1.0.md`
@@ -82,11 +82,11 @@ Output: `projects/<id>/ARC-<id>-SECD-MOD-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define requirements and classification | `/arckit.requirements`, `/arckit.data-model` |
-| Risk | Identify security risks and threats | `/arckit.risk` |
-| Assessment | Create MOD SbD assessment | `/arckit.mod-secure` |
+| Discovery | Define requirements and classification | `/arckit:requirements`, `/arckit:data-model` |
+| Risk | Identify security risks and threats | `/arckit:risk` |
+| Assessment | Create MOD SbD assessment | `/arckit:mod-secure` |
 | Accreditation | Progress through accreditation stages | Manual |
-| Operations | Continuous assurance monitoring | `/arckit.operationalize` |
+| Operations | Continuous assurance monitoring | `/arckit:operationalize` |
 
 ---
 

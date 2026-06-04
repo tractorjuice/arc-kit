@@ -115,7 +115,7 @@ def main():
         else:
             log_warning("No projects directory found")
             print()
-            print("Run: /arckit.init to initialize an ArcKit repository")
+            print("Run: /arckit:init to initialize an ArcKit repository")
         sys.exit(0)
 
     # Get sorted project directories
@@ -130,7 +130,7 @@ def main():
         else:
             print("No projects found")
             print()
-            print("Run: /arckit.create to create a new project")
+            print("Run: /arckit:create to create a new project")
         sys.exit(0)
 
     # JSON output mode

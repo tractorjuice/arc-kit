@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-ebios` conducts an EBIOS Risk Manager analysis following the ANSSI 2018 methodology — the French standard for IS risk analysis and homologation. Required for OIV, OSE, and public sector IS homologation.
+`/arckit:fr-ebios` conducts an EBIOS Risk Manager analysis following the ANSSI 2018 methodology — the French standard for IS risk analysis and homologation. Required for OIV, OSE, and public sector IS homologation.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.fr-ebios Conduct EBIOS RM study for <IS scope and homologation context>
+/arckit:fr-ebios Conduct EBIOS RM study for <IS scope and homologation context>
 ```
 
 Output: `projects/<id>/ARC-<id>-EBIOS-v1.0.md`
@@ -55,12 +55,12 @@ Output: `projects/<id>/ARC-<id>-EBIOS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Foundation | Requirements and risk register | `/arckit.requirements`, `/arckit.risk` |
-| EBIOS study | 5-workshop analysis | `/arckit.fr-ebios` |
-| ANSSI measures | Hygiene baseline | `/arckit.fr-anssi` |
-| Cartography | IS mapping | `/arckit.fr-anssi-carto` |
-| PSSI | Security policy | `/arckit.fr-pssi` |
-| SecNumCloud | Cloud qualification | `/arckit.fr-secnumcloud` |
+| Foundation | Requirements and risk register | `/arckit:requirements`, `/arckit:risk` |
+| EBIOS study | 5-workshop analysis | `/arckit:fr-ebios` |
+| ANSSI measures | Hygiene baseline | `/arckit:fr-anssi` |
+| Cartography | IS mapping | `/arckit:fr-anssi-carto` |
+| PSSI | Security policy | `/arckit:fr-pssi` |
+| SecNumCloud | Cloud qualification | `/arckit:fr-secnumcloud` |
 
 ---
 

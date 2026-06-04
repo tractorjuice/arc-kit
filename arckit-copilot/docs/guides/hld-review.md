@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.hld-review` reviews a High-Level Design (HLD) against architecture principles, requirements, and governance standards.
+`/arckit:hld-review` reviews a High-Level Design (HLD) against architecture principles, requirements, and governance standards.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.hld-review Review HLD for <project/service>
+/arckit:hld-review Review HLD for <project/service>
 ```
 
 Output: `projects/<id>/reviews/ARC-<id>-HLDR-v1.0.md`
@@ -71,10 +71,10 @@ Output: `projects/<id>/reviews/ARC-<id>-HLDR-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Foundation | Define principles and requirements | `/arckit.principles`, `/arckit.requirements` |
-| Risk | Identify and assess risks | `/arckit.risk` |
-| Design | Create HLD | Manual or `/arckit.diagram` |
-| Review | Review HLD against standards | `/arckit.hld-review` |
+| Foundation | Define principles and requirements | `/arckit:principles`, `/arckit:requirements` |
+| Risk | Identify and assess risks | `/arckit:risk` |
+| Design | Create HLD | Manual or `/arckit:diagram` |
+| Review | Review HLD against standards | `/arckit:hld-review` |
 | Approval | Address findings, get sign-off | Manual |
 
 ---

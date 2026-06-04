@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.risk` builds an HM Treasury Orange Book–aligned risk register with scoring, treatment, and monitoring.
+`/arckit:risk` builds an HM Treasury Orange Book–aligned risk register with scoring, treatment, and monitoring.
 
 ---
 
@@ -14,14 +14,14 @@
 | Principles & requirements | Identify compliance and delivery risks |
 | Business case / plan | Supplies cost, schedule, and dependency data |
 
-Run after stakeholder analysis and before `/arckit.sobc` so the business case incorporates risk-adjusted actions.
+Run after stakeholder analysis and before `/arckit:sobc` so the business case incorporates risk-adjusted actions.
 
 ---
 
 ## Command
 
 ```bash
-/arckit.risk Create risk register for <project>
+/arckit:risk Create risk register for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-RISK-v1.0.md` plus heatmap images.
@@ -44,7 +44,7 @@ Output: `projects/<id>/ARC-<id>-RISK-v1.0.md` plus heatmap images.
 ## Workflow
 
 ```text
-1. Run /arckit.risk
+1. Run /arckit:risk
 2. Review top 10 risks with delivery team
 3. Assign actions (treat/transfer) and update backlog
 4. Escalate risks breaching appetite to governance board
@@ -64,7 +64,7 @@ Output: `projects/<id>/ARC-<id>-RISK-v1.0.md` plus heatmap images.
 
 ## Linkages
 
-- Optimism bias adjustments in `/arckit.sobc`.
-- Compliance actions in `/arckit.secure`, `/arckit.dpia`, `/arckit.ai-playbook`.
-- Project plan contingencies via `/arckit.plan`.
-- Continuous monitoring in `/arckit.analyze` and `/arckit.story`.
+- Optimism bias adjustments in `/arckit:sobc`.
+- Compliance actions in `/arckit:secure`, `/arckit:dpia`, `/arckit:ai-playbook`.
+- Project plan contingencies via `/arckit:plan`.
+- Continuous monitoring in `/arckit:analyze` and `/arckit:story`.

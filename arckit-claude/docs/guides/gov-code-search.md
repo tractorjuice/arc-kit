@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: 4.4.0
 
-`/arckit.gov-code-search` provides general-purpose natural language search across 24,500+ UK government open-source repositories, returning matching repositories, patterns, and implementation approaches without requiring an active project.
+`/arckit:gov-code-search` provides general-purpose natural language search across 24,500+ UK government open-source repositories, returning matching repositories, patterns, and implementation approaches without requiring an active project.
 
 > **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent performs multiple govreposcrape searches, uses WebFetch to inspect top results on GitHub, and synthesises findings into a structured report, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
 
@@ -42,7 +42,7 @@ Add domain qualifiers (NHS, HMRC, MoD, GDS) in the prompt to narrow results to s
 ## Command
 
 ```bash
-/arckit.gov-code-search <query>
+/arckit:gov-code-search <query>
 ```
 
 Outputs: `projects/<id>/research/ARC-<id>-GOVS-v1.0.md` (if a project exists), or to a timestamped file in the current directory.
@@ -93,15 +93,15 @@ The agent issues multiple query variations against the govreposcrape semantic se
 
 ## Follow-on Actions
 
-- Run `/arckit.gov-reuse` to perform a full scored reuse assessment for a specific project
-- Run `/arckit.research` to broaden the search to commercial and open-source options
-- Run `/arckit.adr` to document technology or pattern decisions informed by findings
+- Run `/arckit:gov-reuse` to perform a full scored reuse assessment for a specific project
+- Run `/arckit:research` to broaden the search to commercial and open-source options
+- Run `/arckit:adr` to document technology or pattern decisions informed by findings
 
 ---
 
-## Comparison with /arckit.gov-reuse and /arckit.gov-landscape
+## Comparison with /arckit:gov-reuse and /arckit:gov-landscape
 
-| Feature | `/arckit.gov-code-search` | `/arckit.gov-reuse` | `/arckit.gov-landscape` |
+| Feature | `/arckit:gov-code-search` | `/arckit:gov-reuse` | `/arckit:gov-landscape` |
 |---------|--------------------------|--------------------|-----------------------|
 | Purpose | Search and discover | Assess and score for reuse | Map an entire domain |
 | Project required | No | Yes (requirements MANDATORY) | No (recommended) |
@@ -109,7 +109,7 @@ The agent issues multiple query variations against the govreposcrape semantic se
 | Scoring | None (relevance only) | 5-criteria scored assessment | Maturity scoring per org |
 | When to use | Exploratory research | Before building a capability | Understanding a whole domain |
 
-**Workflow**: Use `/arckit.gov-code-search` for quick discovery, `/arckit.gov-reuse` for project-specific reuse decisions, and `/arckit.gov-landscape` for domain-level situational awareness.
+**Workflow**: Use `/arckit:gov-code-search` for quick discovery, `/arckit:gov-reuse` for project-specific reuse decisions, and `/arckit:gov-landscape` for domain-level situational awareness.
 
 ---
 

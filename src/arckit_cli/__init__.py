@@ -294,12 +294,12 @@ This directory is for your customized ArcKit templates.
 
 ## Getting Started
 
-Use the `/arckit.customize` command to copy templates for editing:
+Use the `/arckit:customize` command to copy templates for editing:
 
 ```
-/arckit.customize requirements      # Copy requirements template
-/arckit.customize all               # Copy all templates
-/arckit.customize list              # See available templates
+/arckit:customize requirements      # Copy requirements template
+/arckit:customize all               # Copy all templates
+/arckit:customize list              # See available templates
 ```
 
 ## Why This Pattern?
@@ -976,9 +976,9 @@ export OPENCODE_HOME="$PWD/.opencode"
         )
         next_steps.append(f"3. Start OpenCode: [cyan]opencode[/cyan]")
         next_steps.append(
-            "4. Establish architecture principles: [cyan]/arckit.principles[/cyan]"
+            "4. Establish architecture principles: [cyan]/arckit:principles[/cyan]"
         )
-        next_steps.append("5. Create your first project: [cyan]/arckit.requirements[/cyan]"
+        next_steps.append("5. Create your first project: [cyan]/arckit:requirements[/cyan]"
         )
     elif ai_assistant == "copilot":
         next_steps.append("2. Open in VS Code: [cyan]code .[/cyan]")

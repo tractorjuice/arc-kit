@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-Use `/arckit.analyze` as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then prints gap-focused actions.
+Use `/arckit:analyze` as a recurring quality health check. The command inspects coverage, risks, traceability, compliance, and architecture drift, then prints gap-focused actions.
 
 ---
 
@@ -22,7 +22,7 @@ Use `/arckit.analyze` as a recurring quality health check. The command inspects 
 ## Prep Checklist
 
 - Latest requirements, risk register, diagrams, and design reviews committed.
-- Traceability matrix refreshed (`/arckit.traceability`).
+- Traceability matrix refreshed (`/arckit:traceability`).
 - Recent compliance artefacts (TCoP, AI Playbook, DPIA) generated if applicable.
 
 ---
@@ -42,7 +42,7 @@ Use `/arckit.analyze` as a recurring quality health check. The command inspects 
 ## Recommended Actions Flow
 
 ```text
-1. Run /arckit.analyze
+1. Run /arckit:analyze
 2. Copy actionable gaps into the backlog (tag with QA/Compliance)
 3. Re-run after fixes to confirm issues closed
 4. Store report with meeting minutes or assurance evidence
@@ -54,4 +54,4 @@ Use `/arckit.analyze` as a recurring quality health check. The command inspects 
 
 - Automate weekly via CI to post summaries in team chat.
 - Track history (store reports in `/reports/analysis/`) to show continuous improvement.
-- Pair with `/arckit.story` for end-of-phase retrospectives.
+- Pair with `/arckit:story` for end-of-phase retrospectives.

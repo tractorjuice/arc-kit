@@ -1,6 +1,6 @@
 # Canada FITAA Compliance Assessment
 
-> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.ca-fitaa`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:ca-fitaa`
 
 ## Document Control
 
@@ -13,7 +13,7 @@
 
 | Version | Date | Author | Changes | Approved By | Approval Date |
 |---------|------|--------|---------|-------------|---------------|
-| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit.ca-fitaa` | [PENDING] | [PENDING] |
+| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit:ca-fitaa` | [PENDING] | [PENDING] |
 
 ## Executive Summary
 

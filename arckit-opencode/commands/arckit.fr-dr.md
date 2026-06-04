@@ -192,10 +192,10 @@ DR registry maintained:    {Yes / No}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-1. {If IS not homologated for DR: Run /arckit.fr-ebios for homologation study}
-2. {If cloud storage of DR: Run /arckit.fr-secnumcloud for provider qualification}
-3. Run /arckit.fr-anssi to assess IS security baseline against ANSSI 42 measures
-4. Run /arckit.fr-pssi to incorporate DR handling rules into formal security policy
+1. {If IS not homologated for DR: Run /arckit:fr-ebios for homologation study}
+2. {If cloud storage of DR: Run /arckit:fr-secnumcloud for provider qualification}
+3. Run /arckit:fr-anssi to assess IS security baseline against ANSSI 42 measures
+4. Run /arckit:fr-pssi to incorporate DR handling rules into formal security policy
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -237,11 +237,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.fr-dr Assess DR handling for a French ministry internal audit IS — produces internal reports, security assessments, and audit findings that should carry DR, 150 users across 3 sites
+/arckit:fr-dr Assess DR handling for a French ministry internal audit IS — produces internal reports, security assessments, and audit findings that should carry DR, 150 users across 3 sites
 
-/arckit.fr-dr DR compliance for 001 — interministerial coordination platform handling sensitive policy documents, cloud-hosted on OVHcloud, integration with RIE
+/arckit:fr-dr DR compliance for 001 — interministerial coordination platform handling sensitive policy documents, cloud-hosted on OVHcloud, integration with RIE
 
-/arckit.fr-dr DR assessment for a préfecture IS processing sensitive administrative correspondence and security incident reports
+/arckit:fr-dr DR assessment for a préfecture IS processing sensitive administrative correspondence and security incident reports
 ```
 
 ## Suggested Next Steps

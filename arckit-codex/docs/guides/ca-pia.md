@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-pia` generates a Canada federal Privacy Impact Assessment (PIA) under the Privacy Act (R.S.C., 1985, c. P-21) and the TBS Directive on Privacy Impact Assessment. It scopes the programme, establishes lawful authority for collection, builds a per-element personal information inventory, runs an Oakes-derived necessity and proportionality analysis, registers privacy risks with mitigations, captures Privacy Act §7/§8 disclosure rationale, and surfaces the OPC notification decision.
+`/arckit:ca-pia` generates a Canada federal Privacy Impact Assessment (PIA) under the Privacy Act (R.S.C., 1985, c. P-21) and the TBS Directive on Privacy Impact Assessment. It scopes the programme, establishes lawful authority for collection, builds a per-element personal information inventory, runs an Oakes-derived necessity and proportionality analysis, registers privacy risks with mitigations, captures Privacy Act §7/§8 disclosure rationale, and surfaces the OPC notification decision.
 
 A federal PIA is mandatory for any new programme or substantial modification involving personal information, and the TBS Directive requires notification of the Office of the Privacy Commissioner at least 30 days before launch. The artefact this command produces is therefore not optional — treat it as a delivery gate, not a sign-off formality. Where lawful authority is unclear, mark it `<TBC>` and resolve before launch: collection without statutory authority is not lawful under §4 of the Privacy Act.
 
@@ -22,7 +22,7 @@ A federal PIA is mandatory for any new programme or substantial modification inv
 ## Command
 
 ```bash
-/arckit.ca-pia <project ID or service description>
+/arckit:ca-pia <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-PIA-v1.0.md`

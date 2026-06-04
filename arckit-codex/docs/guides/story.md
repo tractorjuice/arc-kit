@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.story` produces a narrative history of your project—ideal for gate packs, retrospectives, and knowledge transfer.
+`/arckit:story` produces a narrative history of your project—ideal for gate packs, retrospectives, and knowledge transfer.
 
 ---
 
@@ -17,7 +17,7 @@
 ## Command
 
 ```bash
-/arckit.story Generate project story for <project>
+/arckit:story Generate project story for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-STORY-v1.0.md`

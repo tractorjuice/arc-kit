@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-irn` structures an **IRN (Indice de Résilience Numérique)** self-assessment following the aDRI framework — 8 resilience pillars × 5 organisational layers, with a scoring scaffold and handoff to the official aDRI methodology.
+`/arckit:fr-irn` structures an **IRN (Indice de Résilience Numérique)** self-assessment following the aDRI framework — 8 resilience pillars × 5 organisational layers, with a scoring scaffold and handoff to the official aDRI methodology.
 
 > **Why reference instead of reproduce**: The IRN scoring criteria are published under CC BY-NC-ND 4.0 (non-commercial, no derivatives), which is incompatible with ArcKit's MIT licence (commercial use permitted). Additionally, the IRN is a living standard that evolves at [gitlab.com/digitalresilienceinitiative/adri-irn](https://gitlab.com/digitalresilienceinitiative/adri-irn) — embedding a snapshot would diverge from the official methodology. ArcKit structures and documents your assessment; the aDRI repository provides the scoring criteria.
 
@@ -25,7 +25,7 @@
 ## Command
 
 ```bash
-/arckit.fr-irn IRN self-assessment for <project or organisation description>
+/arckit:fr-irn IRN self-assessment for <project or organisation description>
 ```
 
 Output: `projects/<id>/ARC-<id>-IRN-v1.0.md`
@@ -59,7 +59,7 @@ Output: `projects/<id>/ARC-<id>-IRN-v1.0.md`
 
 ## What ArcKit Does vs What the Official aDRI Grid Does
 
-| ArcKit (`/arckit.fr-irn`) | Official aDRI Grid |
+| ArcKit (`/arckit:fr-irn`) | Official aDRI Grid |
 |--------------------------|-------------------|
 | Creates the document structure | Provides R/NR criteria per pillar |
 | Pre-populates context from existing project artifacts | Defines scoring weights and thresholds |
@@ -72,11 +72,11 @@ Output: `projects/<id>/ARC-<id>-IRN-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Requirements and architecture principles | `/arckit.requirements`, `/arckit.principles` |
-| Security | Cybersecurity posture (feeds RES-7) | `/arckit.fr-anssi`, `/arckit.fr-ebios` |
-| Cloud | Cloud sovereignty (feeds RES-6) | `/arckit.fr-secnumcloud` |
-| Compliance | Regulatory compliance (feeds RES-2) | `/arckit.eu-rgpd`, `/arckit.eu-nis2` |
-| IRN | Self-assessment scaffold | `/arckit.fr-irn` |
+| Discovery | Requirements and architecture principles | `/arckit:requirements`, `/arckit:principles` |
+| Security | Cybersecurity posture (feeds RES-7) | `/arckit:fr-anssi`, `/arckit:fr-ebios` |
+| Cloud | Cloud sovereignty (feeds RES-6) | `/arckit:fr-secnumcloud` |
+| Compliance | Regulatory compliance (feeds RES-2) | `/arckit:eu-rgpd`, `/arckit:eu-nis2` |
+| IRN | Self-assessment scaffold | `/arckit:fr-irn` |
 | Scoring | Apply official aDRI grid | (External — aDRI GitLab) |
 
 ---

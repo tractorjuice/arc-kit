@@ -2,9 +2,9 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.competitors` discovers competitor landscape intelligence — rival suppliers, awarded-value market share, head-to-head comparison, and concentration — from live UK procurement notices via the UK Tenders MCP.
+`/arckit:competitors` discovers competitor landscape intelligence — rival suppliers, awarded-value market share, head-to-head comparison, and concentration — from live UK procurement notices via the UK Tenders MCP.
 
-> **Agent Architecture**: This command uses a three-tier reader/writer subagent split. The **`arckit-tenders-reader`** subagent fetches evidence from the UK Tenders MCP (shared with `/arckit.tenders`, keeping that I/O isolated from your main context window). The orchestrator tier (the slash command) validates the reader's JSON payload against the `tenders-handoff.schema.json` schema and computes deterministic derived fields, including the supplier-rivalry head-to-head. The **`arckit-competitors-writer`** subagent then renders the final artefact. The slash command launches and coordinates both agents.
+> **Agent Architecture**: This command uses a three-tier reader/writer subagent split. The **`arckit-tenders-reader`** subagent fetches evidence from the UK Tenders MCP (shared with `/arckit:tenders`, keeping that I/O isolated from your main context window). The orchestrator tier (the slash command) validates the reader's JSON payload against the `tenders-handoff.schema.json` schema and computes deterministic derived fields, including the supplier-rivalry head-to-head. The **`arckit-competitors-writer`** subagent then renders the final artefact. The slash command launches and coordinates both agents.
 
 ---
 
@@ -27,9 +27,9 @@ Competitor landscape intelligence is the systematic analysis of real awarded-con
 
 - **Before a vendor evaluation** — understand who has already won similar work and at what scale
 - **Before scoping a competition** — know the realistic supplier pool and whether concentration is a risk
-- **When building a Company Experience scorecard** — rival award history provides comparative context for `/arckit.score`
+- **When building a Company Experience scorecard** — rival award history provides comparative context for `/arckit:score`
 - **When assessing a sole-source or incumbent renewal** — evidence the broader competitive landscape
-- **As part of a build-vs-buy analysis** — quantify the commercial supply depth alongside `/arckit.research`
+- **As part of a build-vs-buy analysis** — quantify the commercial supply depth alongside `/arckit:research`
 
 ---
 
@@ -50,13 +50,13 @@ The command accepts three input forms, which can be combined:
 
 | Input | Flag / Form | Example |
 |-------|-------------|---------|
-| Supplier focus (focal supplier) | `--supplier 'Name'` | `/arckit.competitors --supplier 'Acme Cloud Ltd'` |
-| Capability (free text) | bare arguments | `/arckit.competitors cloud hosting` |
-| CPV code | `--cpv NNNNNNNN` | `/arckit.competitors --cpv 72200000` |
+| Supplier focus (focal supplier) | `--supplier 'Name'` | `/arckit:competitors --supplier 'Acme Cloud Ltd'` |
+| Capability (free text) | bare arguments | `/arckit:competitors cloud hosting` |
+| CPV code | `--cpv NNNNNNNN` | `/arckit:competitors --cpv 72200000` |
 
 Use `--supplier 'Name'` to run a **supplier-focus** query: the named supplier becomes the focal point and the command produces a head-to-head comparison against each rival. Without `--supplier`, the command runs in **capability-focus** mode: it returns the full competitive set ranked by awarded-value share, with no focal supplier or head-to-head.
 
-You can combine flags: `/arckit.competitors cloud hosting --cpv 72200000 --supplier 'Acme Cloud Ltd'`.
+You can combine flags: `/arckit:competitors cloud hosting --cpv 72200000 --supplier 'Acme Cloud Ltd'`.
 
 **CPV code format:** eight digits, optionally followed by a division suffix (`NNNNNNNN-N`). Common codes:
 
@@ -75,18 +75,18 @@ You can combine flags: `/arckit.competitors cloud hosting --cpv 72200000 --suppl
 
 | Scenario | Prompt | Focus |
 |---------|--------|-------|
-| Capability landscape | `/arckit.competitors digital identity verification` | Rival suppliers ranked by awarded-value share |
-| Supplier head-to-head | `/arckit.competitors --supplier 'Acme Cloud Ltd'` | Focal supplier vs each rival |
-| Scoped supplier analysis | `/arckit.competitors --cpv 72600000 --supplier 'Acme Cloud Ltd'` | Focal supplier vs rivals in a specific CPV |
-| Market concentration check | `/arckit.competitors cloud hosting --cpv 72200000` | Concentration flag and supply-base depth |
-| Vendor evaluation context | `/arckit.competitors managed security operations` | Who is winning, at what value, for which buyers |
+| Capability landscape | `/arckit:competitors digital identity verification` | Rival suppliers ranked by awarded-value share |
+| Supplier head-to-head | `/arckit:competitors --supplier 'Acme Cloud Ltd'` | Focal supplier vs each rival |
+| Scoped supplier analysis | `/arckit:competitors --cpv 72600000 --supplier 'Acme Cloud Ltd'` | Focal supplier vs rivals in a specific CPV |
+| Market concentration check | `/arckit:competitors cloud hosting --cpv 72200000` | Concentration flag and supply-base depth |
+| Vendor evaluation context | `/arckit:competitors managed security operations` | Who is winning, at what value, for which buyers |
 
 ---
 
 ## Command
 
 ```bash
-/arckit.competitors [project-number-or-name] <--supplier 'Name' | capability | --cpv NNNNNNNN>
+/arckit:competitors [project-number-or-name] <--supplier 'Name' | capability | --cpv NNNNNNNN>
 ```
 
 Outputs: `projects/<id>/research/ARC-<id>-CMPT-<NNN>-v1.0.md`
@@ -118,13 +118,13 @@ A completed CMPT artefact contains:
 | `MEDIUM` | Top-3 supplier share > 60% (and HIGH conditions not met) |
 | `LOW` | All other cases |
 
-A `HIGH` concentration flag should be registered as a supplier-dependency risk in the project Risk Register (`/arckit.risk`).
+A `HIGH` concentration flag should be registered as a supplier-dependency risk in the project Risk Register (`/arckit:risk`).
 
 ---
 
 ## Vendor Profile Enrichment
 
-When a project already has a vendor profile (`vendors/{slug}-profile.md`) for a rival supplier, the `arckit-competitors-writer` subagent enriches that profile's **Government Award History** section with the award data from the competitive set. This means running `/arckit.competitors` before `/arckit.score` gives the score command richer comparative evidence to work with.
+When a project already has a vendor profile (`vendors/{slug}-profile.md`) for a rival supplier, the `arckit-competitors-writer` subagent enriches that profile's **Government Award History** section with the award data from the competitive set. This means running `/arckit:competitors` before `/arckit:score` gives the score command richer comparative evidence to work with.
 
 The writer performs a bounded section-merge — it updates only the `## Government Award History` section of pre-existing profiles. It does **not** create new profile files.
 
@@ -134,7 +134,7 @@ The writer performs a bounded section-merge — it updates only the `## Governme
 
 | Property | Detail |
 |----------|--------|
-| **MCP server** | `uk-tenders` (keyless, deferred load, shared with `/arckit.tenders`) |
+| **MCP server** | `uk-tenders` (keyless, deferred load, shared with `/arckit:tenders`) |
 | **Coverage** | ~677,000 UK contracting processes across five national portals |
 | **Portals covered** | Find a Tender Service (FTS), Contracts Finder, Public Contracts Scotland, Sell2Wales, eTendersNI |
 | **Refresh cadence** | Nightly |
@@ -170,19 +170,19 @@ The reader returns evidence across five procurement portals, ranked internally b
 
 | Direction | Command | Integration |
 |-----------|---------|-------------|
-| **Input** | `/arckit.requirements` | CPV codes and capability keywords derived from DR/FR/INT |
-| **Input** | `/arckit.tenders` | TNDR artefact narrows the capability scope and provides market benchmarks |
-| **Output** | `/arckit.research` | Feed the competitive set into build-vs-buy analysis and TCO comparison |
-| **Output** | `/arckit.score` | Rival award history used as comparative Company Experience evidence |
-| **Output** | `/arckit.risk` | Concentration / single-supplier-dependency risk |
-| **Output** | `/arckit.adr` | Competitive landscape and route-to-market decisions recorded as ADRs |
+| **Input** | `/arckit:requirements` | CPV codes and capability keywords derived from DR/FR/INT |
+| **Input** | `/arckit:tenders` | TNDR artefact narrows the capability scope and provides market benchmarks |
+| **Output** | `/arckit:research` | Feed the competitive set into build-vs-buy analysis and TCO comparison |
+| **Output** | `/arckit:score` | Rival award history used as comparative Company Experience evidence |
+| **Output** | `/arckit:risk` | Concentration / single-supplier-dependency risk |
+| **Output** | `/arckit:adr` | Competitive landscape and route-to-market decisions recorded as ADRs |
 
 ---
 
 ## Follow-on Actions
 
-- Feed the competitive set into build-vs-buy analysis (`/arckit.research`)
-- Use rival award history as Company Experience evidence in a vendor scorecard (`/arckit.score`)
-- Register supplier-concentration or single-supplier-dependency risks (`/arckit.risk`)
-- Record route-to-market decisions as ADRs (`/arckit.adr`)
+- Feed the competitive set into build-vs-buy analysis (`/arckit:research`)
+- Use rival award history as Company Experience evidence in a vendor scorecard (`/arckit:score`)
+- Register supplier-concentration or single-supplier-dependency risks (`/arckit:risk`)
+- Record route-to-market decisions as ADRs (`/arckit:adr`)
 - Escalate `HIGH` concentration findings to commercial lead before procurement scoping

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-dinum` assesses compliance with French digital administration standards: RGI (interoperability), RGAA (accessibility), RGESN (eco-design), RGS (security), and the DINUM doctrine cloud de l'État. Applicable to French public services.
+`/arckit:fr-dinum` assesses compliance with French digital administration standards: RGI (interoperability), RGAA (accessibility), RGESN (eco-design), RGS (security), and the DINUM doctrine cloud de l'État. Applicable to French public services.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.fr-dinum Assess DINUM digital doctrine compliance for <service description>
+/arckit:fr-dinum Assess DINUM digital doctrine compliance for <service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-DINUM-v1.0.md`
@@ -36,7 +36,7 @@ Output: `projects/<id>/ARC-<id>-DINUM-v1.0.md`
 | RGS v2 | General security baseline for information systems |
 | Doctrine Cloud | Data classification, cloud strategy, SecNumCloud triggers |
 | SILL | Recommended open source software stack |
-| Code Reuse | Circulaire 2021 obligations (see `/arckit.fr-code-reuse`) |
+| Code Reuse | Circulaire 2021 obligations (see `/arckit:fr-code-reuse`) |
 | Gap Analysis | Priority gaps with regulatory reference |
 
 ---
@@ -57,10 +57,10 @@ Output: `projects/<id>/ARC-<id>-DINUM-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Digital service scope | `/arckit.requirements` |
-| Assessment | DINUM standards compliance | `/arckit.fr-dinum` |
-| Cloud | SecNumCloud if sensitive data | `/arckit.fr-secnumcloud` |
-| Code reuse | Public code obligation | `/arckit.fr-code-reuse` |
+| Discovery | Digital service scope | `/arckit:requirements` |
+| Assessment | DINUM standards compliance | `/arckit:fr-dinum` |
+| Cloud | SecNumCloud if sensitive data | `/arckit:fr-secnumcloud` |
+| Code reuse | Public code obligation | `/arckit:fr-code-reuse` |
 
 ---
 
@@ -72,7 +72,7 @@ Output: `projects/<id>/ARC-<id>-DINUM-v1.0.md`
 - RGS: security level determined (RGS */** /***); homologation if required.
 - Doctrine cloud: data classification performed; SecNumCloud triggered if sensitive.
 - SILL: recommended open source stack consulted before procurement.
-- Code reuse: Circulaire 2021 obligations assessed (see `/arckit.fr-code-reuse`).
+- Code reuse: Circulaire 2021 obligations assessed (see `/arckit:fr-code-reuse`).
 
 ---
 

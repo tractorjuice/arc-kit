@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-anssi` assesses compliance with the ANSSI Guide d'hygiène informatique (42 measures across 7 themes) and ANSSI cloud security recommendations. Applicable to all French organisations, public or private.
+`/arckit:fr-anssi` assesses compliance with the ANSSI Guide d'hygiène informatique (42 measures across 7 themes) and ANSSI cloud security recommendations. Applicable to all French organisations, public or private.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.fr-anssi Assess ANSSI hygiene measures for <IS scope or project>
+/arckit:fr-anssi Assess ANSSI hygiene measures for <IS scope or project>
 ```
 
 Output: `projects/<id>/ARC-<id>-ANSSI-v1.0.md`
@@ -52,12 +52,12 @@ Each theme covers 5–8 measures assessed as: ✅ Compliant · ⚠️ Partial ·
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | IS scope and security baseline | `/arckit.requirements` |
-| Risk | Security risks | `/arckit.risk` |
-| Assessment | ANSSI 42 measures | `/arckit.fr-anssi` |
-| Cartography | IS mapping | `/arckit.fr-anssi-carto` |
-| Risk analysis | EBIOS RM study | `/arckit.fr-ebios` |
-| Policy | Security policy (PSSI) | `/arckit.fr-pssi` |
+| Discovery | IS scope and security baseline | `/arckit:requirements` |
+| Risk | Security risks | `/arckit:risk` |
+| Assessment | ANSSI 42 measures | `/arckit:fr-anssi` |
+| Cartography | IS mapping | `/arckit:fr-anssi-carto` |
+| Risk analysis | EBIOS RM study | `/arckit:fr-ebios` |
+| Policy | Security policy (PSSI) | `/arckit:fr-pssi` |
 
 ---
 

@@ -77,7 +77,7 @@ if [[ ! -d "$PROJECTS_DIR" ]]; then
     else
         log_warning "No projects directory found"
         echo ""
-        echo "Run: /arckit.init to initialize an ArcKit repository"
+        echo "Run: /arckit:init to initialize an ArcKit repository"
     fi
     exit 0
 fi
@@ -91,7 +91,7 @@ if [[ $PROJECT_COUNT -eq 0 ]]; then
     else
         echo "No projects found"
         echo ""
-        echo "Run: /arckit.create to create a new project"
+        echo "Run: /arckit:create to create a new project"
     fi
     exit 0
 fi

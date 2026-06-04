@@ -200,7 +200,7 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
   "vendors_dir": "/workspaces/arc-kit/projects/001-payment-gateway/vendors",
   "traceability_file": "/workspaces/arc-kit/projects/001-payment-gateway/traceability-matrix.md",
   "next_steps": [
-    "/arckit.stakeholders - Analyze stakeholder drivers and goals"
+    "/arckit:stakeholders - Analyze stakeholder drivers and goals"
   ]
 }
 ```
@@ -208,14 +208,14 @@ ArcKit provides a set of bash scripts to support enterprise architecture governa
 **Smart Next Steps**:
 The script automatically determines the next steps based on what artifacts exist:
 
-1. /arckit.stakeholders (if stakeholder-drivers.md missing)
-2. /arckit.risk (if risk-register.md missing)
-3. /arckit.sobc (if sobc.md missing)
-4. /arckit.requirements (if requirements.md missing)
-5. /arckit.data-model (if data-model.md missing)
-6. /arckit.research or /arckit.wardley (if wardley-maps/ missing)
-7. /arckit.sow (if sow.md missing)
-8. /arckit.evaluate (if all above complete)
+1. /arckit:stakeholders (if stakeholder-drivers.md missing)
+2. /arckit:risk (if risk-register.md missing)
+3. /arckit:sobc (if sobc.md missing)
+4. /arckit:requirements (if requirements.md missing)
+5. /arckit:data-model (if data-model.md missing)
+6. /arckit:research or /arckit:wardley (if wardley-maps/ missing)
+7. /arckit:sow (if sow.md missing)
+8. /arckit:evaluate (if all above complete)
 
 ### 4. generate-document-id.sh
 
@@ -623,7 +623,7 @@ print(f"Total projects: {projects['project_count']}")
 # Ensure you're in an ArcKit project
 cd /path/to/your/arc-kit-project
 
-# Or run /arckit.init to initialize
+# Or run /arckit:init to initialize
 ```
 
 ### "Prerequisites not met" Error
@@ -633,7 +633,7 @@ cd /path/to/your/arc-kit-project
 **Solution**:
 
 ```bash
-# Run /arckit.principles first
+# Run /arckit:principles first
 # Or use --force flag (not recommended)
 ./scripts/bash/create-project.sh --name "My Project" --force
 ```

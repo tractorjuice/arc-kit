@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.gcloud-clarify` analyzes G-Cloud service gaps and generates supplier clarification questions for procurement.
+`/arckit:gcloud-clarify` analyzes G-Cloud service gaps and generates supplier clarification questions for procurement.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.gcloud-clarify Generate clarification questions for <service>
+/arckit:gcloud-clarify Generate clarification questions for <service>
 ```
 
 Output: `projects/<id>/ARC-<id>-GCLC-v1.0.md`
@@ -67,11 +67,11 @@ Output: `projects/<id>/ARC-<id>-GCLC-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Requirements | Define what's needed | `/arckit.requirements` |
-| Search | Find candidate services | `/arckit.gcloud-search` |
-| Analysis | Generate clarification questions | `/arckit.gcloud-clarify` |
+| Requirements | Define what's needed | `/arckit:requirements` |
+| Search | Find candidate services | `/arckit:gcloud-search` |
+| Analysis | Generate clarification questions | `/arckit:gcloud-clarify` |
 | Clarification | Send questions to suppliers | Manual via Digital Marketplace |
-| Evaluation | Score services with answers | `/arckit.evaluate` |
+| Evaluation | Score services with answers | `/arckit:evaluate` |
 
 ---
 

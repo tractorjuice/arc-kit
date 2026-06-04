@@ -554,7 +554,7 @@ Useful for planning — "what will be stale by June?"
 ### Example 5: Continuous Monitoring with `/loop`
 
 ```bash
-/loop 30m /arckit.health SEVERITY=HIGH
+/loop 30m /arckit:health SEVERITY=HIGH
 ```
 
 Runs the health check every 30 minutes during your session, surfacing HIGH severity findings as they appear. Useful during long architecture sessions where multiple artifacts are being created or updated. Requires Claude Code v2.1.97+.

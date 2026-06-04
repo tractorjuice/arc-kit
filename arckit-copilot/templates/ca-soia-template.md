@@ -1,6 +1,6 @@
 # Canada Security of Information Act Handling Plan
 
-> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.ca-soia`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:ca-soia`
 
 ## Document Control
 
@@ -14,7 +14,7 @@
 
 | Version | Date | Author | Changes | Approved By | Approval Date |
 |---------|------|--------|---------|-------------|---------------|
-| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit.ca-soia` | [PENDING] | [PENDING] |
+| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit:ca-soia` | [PENDING] | [PENDING] |
 
 ## Executive Summary
 

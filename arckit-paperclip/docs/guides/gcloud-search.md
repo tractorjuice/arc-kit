@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.gcloud-search` finds G-Cloud services on the UK Digital Marketplace with live search and comparison capabilities.
+`/arckit:gcloud-search` finds G-Cloud services on the UK Digital Marketplace with live search and comparison capabilities.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.gcloud-search Find G-Cloud services for <requirement>
+/arckit:gcloud-search Find G-Cloud services for <requirement>
 ```
 
 Output: `projects/<id>/ARC-<id>-GCLD-v1.0.md`
@@ -65,11 +65,11 @@ Output: `projects/<id>/ARC-<id>-GCLD-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Requirements | Define what's needed | `/arckit.requirements` |
-| Search | Find matching services | `/arckit.gcloud-search` |
+| Requirements | Define what's needed | `/arckit:requirements` |
+| Search | Find matching services | `/arckit:gcloud-search` |
 | Shortlist | Compare and select candidates | Manual review |
-| Clarify | Ask suppliers questions | `/arckit.gcloud-clarify` |
-| Evaluate | Score and select | `/arckit.evaluate` |
+| Clarify | Ask suppliers questions | `/arckit:gcloud-clarify` |
+| Evaluate | Score and select | `/arckit:evaluate` |
 
 ---
 

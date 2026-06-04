@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.glossary` consolidates terms, acronyms, and definitions from all project artifacts into a single authoritative reference document.
+`/arckit:glossary` consolidates terms, acronyms, and definitions from all project artifacts into a single authoritative reference document.
 
 ---
 
@@ -14,7 +14,7 @@ Architecture projects accumulate terminology across dozens of artifacts: require
 - **Onboarding friction** -- new team members spend weeks decoding project-specific language
 - **Inconsistent language** -- artifacts use different terms for the same concept
 
-The `/arckit.glossary` command **extracts and consolidates** all terminology from existing artifacts into a structured glossary that:
+The `/arckit:glossary` command **extracts and consolidates** all terminology from existing artifacts into a structured glossary that:
 
 - Provides a shared vocabulary for the entire project team
 - Reduces miscommunication between business and technical stakeholders
@@ -45,7 +45,7 @@ The `/arckit.glossary` command **extracts and consolidates** all terminology fro
 ## Command
 
 ```bash
-/arckit.glossary Generate glossary for <project-name>
+/arckit:glossary Generate glossary for <project-name>
 ```
 
 Outputs: `projects/<id>/ARC-<id>-GLOS-v1.0.md`
@@ -83,7 +83,7 @@ The glossary command sits at a consolidation point in the ArcKit workflow -- it 
                            │
                            ▼
                 ┌─────────────────────┐
-                │  /arckit.glossary   │
+                │  /arckit:glossary   │
                 └──────────┬──────────┘
                            │
               ┌────────────┼────────────┐
@@ -103,26 +103,26 @@ The glossary command sits at a consolidation point in the ArcKit workflow -- it 
 
 ```bash
 # Ensure at least one artifact exists
-/arckit.requirements Create requirements for Smart Meter App
+/arckit:requirements Create requirements for Smart Meter App
 
 # Generate glossary from available artifacts
-/arckit.glossary Generate glossary for Smart Meter App
+/arckit:glossary Generate glossary for Smart Meter App
 ```
 
 ### Comprehensive (Many artifacts available)
 
 ```bash
 # Create multiple artifacts first
-/arckit.requirements Create requirements for Fuel Price Service
-/arckit.data-model Create data model for Fuel Price Service
-/arckit.stakeholders Analyze stakeholders for Fuel Price Service
-/arckit.principles Create principles for Fuel Price Service
-/arckit.sobc Create business case for Fuel Price Service
-/arckit.research Research technology options for Fuel Price Service
-/arckit.adr Record decision on API gateway for Fuel Price Service
+/arckit:requirements Create requirements for Fuel Price Service
+/arckit:data-model Create data model for Fuel Price Service
+/arckit:stakeholders Analyze stakeholders for Fuel Price Service
+/arckit:principles Create principles for Fuel Price Service
+/arckit:sobc Create business case for Fuel Price Service
+/arckit:research Research technology options for Fuel Price Service
+/arckit:adr Record decision on API gateway for Fuel Price Service
 
 # Generate comprehensive glossary
-/arckit.glossary Generate glossary for Fuel Price Service
+/arckit:glossary Generate glossary for Fuel Price Service
 ```
 
 ---
@@ -133,7 +133,7 @@ The glossary command sits at a consolidation point in the ArcKit workflow -- it 
 
 - **Update as new artifacts are created**: When you add new artifacts (ADRs, risk registers, research reports), re-run the glossary command to capture new terminology. A new version (v2.0) will be created.
 
-- **Use "all projects" scope for cross-project glossaries**: Run `/arckit.glossary Generate glossary for all projects` to create a consolidated glossary across all project directories, saved in `projects/000-global/`.
+- **Use "all projects" scope for cross-project glossaries**: Run `/arckit:glossary Generate glossary for all projects` to create a consolidated glossary across all project directories, saved in `projects/000-global/`.
 
 - **Review with domain experts**: The glossary infers definitions from artifact context. Have domain experts validate definitions, especially for business-specific terms that may have organisation-specific meanings.
 
@@ -147,8 +147,8 @@ After creating the glossary, typical next steps include:
 
 | Command | Purpose |
 |---------|---------|
-| `/arckit.data-model` | Review data model using validated entity/attribute names from glossary |
-| `/arckit.framework` | Create assessment framework with consistent terminology |
+| `/arckit:data-model` | Review data model using validated entity/attribute names from glossary |
+| `/arckit:framework` | Create assessment framework with consistent terminology |
 
 ---
 

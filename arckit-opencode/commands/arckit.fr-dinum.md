@@ -187,9 +187,9 @@ Total critical gaps: {N}
 {List of 🔴 High priority gaps with owners}
 
 Next steps:
-1. {If personal data: Run /arckit.fr-rgpd for CNIL compliance}
-2. {If cloud: Run /arckit.fr-secnumcloud for cloud doctrine alignment}
-3. {If RGS gaps: Run /arckit.secure for security controls}
+1. {If personal data: Run /arckit:fr-rgpd for CNIL compliance}
+2. {If cloud: Run /arckit:fr-secnumcloud for cloud doctrine alignment}
+3. {If RGS gaps: Run /arckit:secure for security controls}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -233,11 +233,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.fr-dinum Assess DINUM standards compliance for a citizen-facing tax declaration portal operated by a French ministry, handling personal and financial data, targeting full RGAA compliance and SecNumCloud hosting, with FranceConnect integration
+/arckit:fr-dinum Assess DINUM standards compliance for a citizen-facing tax declaration portal operated by a French ministry, handling personal and financial data, targeting full RGAA compliance and SecNumCloud hosting, with FranceConnect integration
 
-/arckit.fr-dinum DINUM compliance for 001 — regional government digital service, 300 agents, partial cloud migration to OVHcloud
+/arckit:fr-dinum DINUM compliance for 001 — regional government digital service, 300 agents, partial cloud migration to OVHcloud
 
-/arckit.fr-dinum Assess digital standards for a French local authority (mairie) citizen portal, under 250 agents, RGAA recommended not mandatory
+/arckit:fr-dinum Assess digital standards for a French local authority (mairie) citizen portal, under 250 agents, RGAA recommended not mandatory
 ```
 
 ## Suggested Next Steps

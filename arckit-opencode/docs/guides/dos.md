@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.dos` generates Digital Outcomes and Specialists (DOS) procurement documentation for the UK Digital Marketplace.
+`/arckit:dos` generates Digital Outcomes and Specialists (DOS) procurement documentation for the UK Digital Marketplace.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.dos Create DOS procurement for <requirement>
+/arckit:dos Create DOS procurement for <requirement>
 ```
 
 Output: `projects/<id>/ARC-<id>-DOS-v1.0.md`
@@ -69,10 +69,10 @@ Output: `projects/<id>/ARC-<id>-DOS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define requirements and outcomes | `/arckit.requirements`, `/arckit.stakeholders` |
-| Preparation | Create DOS documentation | `/arckit.dos` |
+| Discovery | Define requirements and outcomes | `/arckit:requirements`, `/arckit:stakeholders` |
+| Preparation | Create DOS documentation | `/arckit:dos` |
 | Publication | Publish on Digital Marketplace | Manual |
-| Evaluation | Score supplier proposals | `/arckit.evaluate` |
+| Evaluation | Score supplier proposals | `/arckit:evaluate` |
 | Award | Contract negotiation | Manual |
 
 ---

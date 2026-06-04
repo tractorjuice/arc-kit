@@ -38,13 +38,13 @@ arckit init my-project --ai opencode
 ArcKit commands are available in OpenCode with `/arckit.<command>`:
 
 ```text
-/arckit.plan
-/arckit.principles
-/arckit.requirements
-/arckit.risk
-/arckit.sow
-/arckit.evaluate
-/arckit.health
+/arckit:plan
+/arckit:principles
+/arckit:requirements
+/arckit:risk
+/arckit:sow
+/arckit:evaluate
+/arckit:health
 ```
 
 ## Updating

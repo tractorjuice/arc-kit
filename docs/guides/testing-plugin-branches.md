@@ -51,7 +51,7 @@ claude --plugin-dir /path/to/arc-kit/arckit-claude
 ## Verifying the correct branch loaded
 
 1. Bump the VERSION file on your branch to a recognisable value (e.g. `4.6.3-rc.1`)
-2. Run `/arckit.health` — the version in the output confirms which branch loaded
+2. Run `/arckit:health` — the version in the output confirms which branch loaded
 3. Check the plugin list: `/plugin` shows the installed version
 
 ## Switching back to production

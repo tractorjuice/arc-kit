@@ -13,23 +13,23 @@ The CISO sets security strategy and risk appetite for the organisation. You use 
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.secure` | Review Secure by Design assessments across projects | [Guide](#docs/guides/secure.md) |
-| `/arckit.mod-secure` | Review MOD Secure by Design assessments (if MOD) | [Guide](#docs/guides/mod-secure.md) |
-| `/arckit.dpia` | Oversee DPIAs for data protection compliance | [Guide](#docs/guides/dpia.md) |
-| `/arckit.risk` | Set risk appetite and review risk registers | [Guide](#docs/guides/risk.md) |
-| `/arckit.conformance` | Monitor security conformance across the portfolio | [Guide](#docs/guides/conformance.md) |
+| `/arckit:secure` | Review Secure by Design assessments across projects | [Guide](#docs/guides/secure.md) |
+| `/arckit:mod-secure` | Review MOD Secure by Design assessments (if MOD) | [Guide](#docs/guides/mod-secure.md) |
+| `/arckit:dpia` | Oversee DPIAs for data protection compliance | [Guide](#docs/guides/dpia.md) |
+| `/arckit:risk` | Set risk appetite and review risk registers | [Guide](#docs/guides/risk.md) |
+| `/arckit:conformance` | Monitor security conformance across the portfolio | [Guide](#docs/guides/conformance.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.principles` | Define security principles (Zero Trust, defence in depth) | [Guide](#docs/guides/principles.md) |
-| `/arckit.requirements` | Review NFR-SEC security requirements standards | [Guide](#docs/guides/requirements.md) |
-| `/arckit.tcop` | Review TCoP compliance for security-related points | [Guide](#docs/guides/tcop.md) |
-| `/arckit.analyze` | Review governance quality for security gaps | [Guide](#docs/guides/analyze.md) |
-| `/arckit.health` | Monitor for stale security artifacts | [Guide](#docs/guides/artifact-health.md) |
-| `/arckit.ai-playbook` | Review AI safety and security controls | [Guide](#docs/guides/ai-playbook.md) |
-| `/arckit.jsp-936` | Review MOD AI assurance (if applicable) | [Guide](#docs/guides/jsp-936.md) |
+| `/arckit:principles` | Define security principles (Zero Trust, defence in depth) | [Guide](#docs/guides/principles.md) |
+| `/arckit:requirements` | Review NFR-SEC security requirements standards | [Guide](#docs/guides/requirements.md) |
+| `/arckit:tcop` | Review TCoP compliance for security-related points | [Guide](#docs/guides/tcop.md) |
+| `/arckit:analyze` | Review governance quality for security gaps | [Guide](#docs/guides/analyze.md) |
+| `/arckit:health` | Monitor for stale security artifacts | [Guide](#docs/guides/artifact-health.md) |
+| `/arckit:ai-playbook` | Review AI safety and security controls | [Guide](#docs/guides/ai-playbook.md) |
+| `/arckit:jsp-936` | Review MOD AI assurance (if applicable) | [Guide](#docs/guides/jsp-936.md) |
 
 ## Typical Workflow
 
@@ -39,11 +39,11 @@ principles (security) → risk → secure / mod-secure → conformance → analy
 
 ### Step-by-step
 
-1. **Define security principles**: Set organisational security principles in `/arckit.principles`
-2. **Set risk appetite**: Review `/arckit.risk` registers across projects
-3. **Review assessments**: Review `/arckit.secure` or `/arckit.mod-secure` outputs
-4. **Check conformance**: Run `/arckit.conformance` to verify security decisions are implemented
-5. **Monitor quality**: Review `/arckit.analyze` for security governance gaps
+1. **Define security principles**: Set organisational security principles in `/arckit:principles`
+2. **Set risk appetite**: Review `/arckit:risk` registers across projects
+3. **Review assessments**: Review `/arckit:secure` or `/arckit:mod-secure` outputs
+4. **Check conformance**: Run `/arckit:conformance` to verify security decisions are implemented
+5. **Monitor quality**: Review `/arckit:analyze` for security governance gaps
 
 ## Key Artifacts You Oversee
 

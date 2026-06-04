@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.platform-design` designs multi-sided platforms using Platform Design Toolkit (PDT) methodology with 8 canvases for ecosystem analysis.
+`/arckit:platform-design` designs multi-sided platforms using Platform Design Toolkit (PDT) methodology with 8 canvases for ecosystem analysis.
 
 ---
 
@@ -65,17 +65,17 @@ The **Platform Design Toolkit (PDT)** is an open-source methodology from [Bounda
 
 1. **Single-sided product**: Traditional SaaS/software for one user type
 2. **Linear workflow**: Sequential process without network dynamics
-3. **Internal system**: No external ecosystem (use `/arckit.diagram` instead)
-4. **Simple integration**: Just connecting two systems (use `/arckit.requirements`)
+3. **Internal system**: No external ecosystem (use `/arckit:diagram` instead)
+4. **Simple integration**: Just connecting two systems (use `/arckit:requirements`)
 
 ### Decision Tree
 
 ```text
 Is there a supply side AND demand side?
-├─ No → Use /arckit.requirements + /arckit.diagram
+├─ No → Use /arckit:requirements + /arckit:diagram
 └─ Yes → Does value increase with more participants?
-    ├─ No → Traditional marketplace (use /arckit.requirements)
-    └─ Yes → Use /arckit.platform-design ✅
+    ├─ No → Traditional marketplace (use /arckit:requirements)
+    └─ Yes → Use /arckit:platform-design ✅
 ```
 
 ---
@@ -234,36 +234,36 @@ Is there a supply side AND demand side?
 
 ### Required
 
-1. **Architecture Principles** (`/arckit.principles`)
+1. **Architecture Principles** (`/arckit:principles`)
    - Platform governance principles will reference these
    - Example: "Open Standards" principle → platform uses open APIs
 
 ### Recommended (enables auto-population)
 
-2. **Stakeholder Analysis** (`/arckit.stakeholders`)
+2. **Stakeholder Analysis** (`/arckit:stakeholders`)
    - Stakeholders → Entity portraits
    - Drivers → Performance pressures
    - Goals → Entity goals
 
-3. **Requirements** (`/arckit.requirements`)
+3. **Requirements** (`/arckit:requirements`)
    - Functional requirements → Platform capabilities
    - Data requirements → Data flows in transactions
    - Integration requirements → Supporting entities
 
-4. **Wardley Maps** (`/arckit.wardley`)
+4. **Wardley Maps** (`/arckit:wardley`)
    - Component evolution → Build vs. buy decisions
    - Example: "Payment processing" at Commodity (0.9) → Use Stripe/GOV.UK Pay, don't build
 
 ### Workflow Order
 
 ```text
-1. /arckit.principles      → Governance foundation
-2. /arckit.stakeholders    → Entity portraits
-3. /arckit.requirements    → Platform capabilities
-4. /arckit.wardley         → Build vs. buy strategy
-5. /arckit.platform-design → Synthesize platform strategy ✅
-6. /arckit.diagram         → Architecture diagrams
-7. /arckit.backlog         → Implementation roadmap
+1. /arckit:principles      → Governance foundation
+2. /arckit:stakeholders    → Entity portraits
+3. /arckit:requirements    → Platform capabilities
+4. /arckit:wardley         → Build vs. buy strategy
+5. /arckit:platform-design → Synthesize platform strategy ✅
+6. /arckit:diagram         → Architecture diagrams
+7. /arckit:backlog         → Implementation roadmap
 ```
 
 ---
@@ -273,7 +273,7 @@ Is there a supply side AND demand side?
 ### Basic Usage
 
 ```text
-/arckit.platform-design Design NHS appointment booking platform
+/arckit:platform-design Design NHS appointment booking platform
 ```
 
 **Output**: Creates `projects/<id>/ARC-<id>-PLAT-v1.0.md` with all 8 canvases
@@ -283,7 +283,7 @@ Is there a supply side AND demand side?
 ### Advanced Usage
 
 ```text
-/arckit.platform-design Design Digital Marketplace for training services connecting:
+/arckit:platform-design Design Digital Marketplace for training services connecting:
 - Supply: Training providers, independent trainers, content creators
 - Demand: Public sector organizations, L&D departments, individual learners
 - Supporting: Accreditation bodies (e.g., CPD Standards Office), payment gateway, LMS integrations
@@ -359,7 +359,7 @@ Platform designs often need to procure services via [Digital Marketplace](https:
 - **G-Cloud**: Buy cloud software/support (e.g., CRM platform, analytics tools)
 - **DOS**: Commission custom development (e.g., platform MVP, integration work)
 
-Use `/arckit.gcloud-search` to find relevant services, `/arckit.dos` to generate procurement docs.
+Use `/arckit:gcloud-search` to find relevant services, `/arckit:dos` to generate procurement docs.
 
 ---
 
@@ -400,27 +400,27 @@ graph TD
 
 ```text
 # Phase 1: Foundation
-/arckit.principles       # Define governance principles
-/arckit.stakeholders     # Analyze ecosystem entities
+/arckit:principles       # Define governance principles
+/arckit:stakeholders     # Analyze ecosystem entities
 
 # Phase 2: Strategy
-/arckit.platform-design  # Design platform strategy (8 canvases)
-/arckit.wardley          # Map component evolution (build vs buy)
+/arckit:platform-design  # Design platform strategy (8 canvases)
+/arckit:wardley          # Map component evolution (build vs buy)
 
 # Phase 3: Requirements
-/arckit.requirements     # Define technical requirements
-/arckit.data-model       # Design data architecture
-/arckit.diagram          # Create C4/deployment diagrams
+/arckit:requirements     # Define technical requirements
+/arckit:data-model       # Design data architecture
+/arckit:diagram          # Create C4/deployment diagrams
 
 # Phase 4: Procurement (if buying)
-/arckit.research         # Research platform vendors
-/arckit.sow              # Create RFP
-/arckit.evaluate         # Score proposals
+/arckit:research         # Research platform vendors
+/arckit:sow              # Create RFP
+/arckit:evaluate         # Score proposals
 
 # Phase 5: Delivery (if building)
-/arckit.backlog          # Create sprint plan
-/arckit.hld-review       # Review high-level design
-/arckit.dld-review       # Review detailed design
+/arckit:backlog          # Create sprint plan
+/arckit:hld-review       # Review high-level design
+/arckit:dld-review       # Review detailed design
 ```
 
 ---
@@ -480,7 +480,7 @@ graph TD
 - No network effects (value doesn't increase with more users)
 - Linear workflow (search → view profile)
 
-**Correct Approach**: Use `/arckit.requirements` for functional requirements, `/arckit.diagram` for architecture.
+**Correct Approach**: Use `/arckit:requirements` for functional requirements, `/arckit:diagram` for architecture.
 
 ---
 
@@ -502,7 +502,7 @@ graph TD
 - **Learning Engine**: Data quality scoring (completeness, timeliness), usage patterns → recommendations, schema evolution
 - **MVP**: 5 councils, 20 datasets (planning, transport, environment), 10 consumers, validate 50% faster data access vs. FOI requests
 
-**Synergy**: Use `/arckit.data-mesh-contract` after platform-design to define data product contracts (SLAs, schemas, governance).
+**Synergy**: Use `/arckit:data-mesh-contract` after platform-design to define data product contracts (SLAs, schemas, governance).
 
 ---
 
@@ -514,7 +514,7 @@ graph TD
 
 **Example**: "HR platform for managing employees" → This is HR software (product), not a platform (no multi-sided market).
 
-**Fix**: If there's no supply + demand + transactions, use `/arckit.requirements` instead.
+**Fix**: If there's no supply + demand + transactions, use `/arckit:requirements` instead.
 
 ---
 
@@ -554,7 +554,7 @@ graph TD
 
 **Example**: "Platform shares patient data with all providers for better matching."
 
-**Fix**: Platform Design Canvas should include governance rules (consent, data minimization, right to erasure). Use `/arckit.dpia` for GDPR compliance.
+**Fix**: Platform Design Canvas should include governance rules (consent, data minimization, right to erasure). Use `/arckit:dpia` for GDPR compliance.
 
 ---
 
@@ -592,9 +592,9 @@ graph TD
 
 ### Related ArcKit Commands
 
-- `/arckit.stakeholders` - Entity analysis (feeds into Entity Portraits)
-- `/arckit.wardley` - Component evolution (feeds into build vs. buy)
-- `/arckit.data-mesh-contract` - Data product contracts for data platforms
-- `/arckit.diagram` - Platform architecture diagrams (C4 model)
-- `/arckit.backlog` - MVP features → user stories → sprints
-- `/arckit.service-assessment` - GDS Service Standard for platform services
+- `/arckit:stakeholders` - Entity analysis (feeds into Entity Portraits)
+- `/arckit:wardley` - Component evolution (feeds into build vs. buy)
+- `/arckit:data-mesh-contract` - Data product contracts for data platforms
+- `/arckit:diagram` - Platform architecture diagrams (C4 model)
+- `/arckit:backlog` - MVP features → user stories → sprints
+- `/arckit:service-assessment` - GDS Service Standard for platform services

@@ -91,7 +91,7 @@ A real command card from the codebase (requirements):
 
 ```html
 <tr data-status="live" data-category="requirements">
-    <td><code>/arckit.requirements</code></td>
+    <td><code>/arckit:requirements</code></td>
     <td class="description">Create comprehensive business and technical requirements</td>
     <td>Requirements & Data</td>
     <td class="examples">

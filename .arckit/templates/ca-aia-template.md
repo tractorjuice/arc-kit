@@ -1,6 +1,6 @@
 # Canada Algorithmic Impact Assessment
 
-> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.ca-aia`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:ca-aia`
 
 ## Document Control
 
@@ -13,7 +13,7 @@
 
 | Version | Date | Author | Changes | Approved By | Approval Date |
 |---------|------|--------|---------|-------------|---------------|
-| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit.ca-aia` | [PENDING] | [PENDING] |
+| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit:ca-aia` | [PENDING] | [PENDING] |
 
 ## Executive Summary
 

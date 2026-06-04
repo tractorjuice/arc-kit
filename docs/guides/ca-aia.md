@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-aia` generates a Canada Algorithmic Impact Assessment under the TBS *Directive on Automated Decision-Making*. It scores the system against the six-dimension questionnaire (Project, System, Algorithm, Decision, Impact, Data), computes the Impact Level (I, II, III, or IV), and applies the Directive's mandated mitigations for that Level — peer review tier, bilingual transparency notice, human-in-the-loop design, quality assurance plan, and a recourse mechanism for affected individuals.
+`/arckit:ca-aia` generates a Canada Algorithmic Impact Assessment under the TBS *Directive on Automated Decision-Making*. It scores the system against the six-dimension questionnaire (Project, System, Algorithm, Decision, Impact, Data), computes the Impact Level (I, II, III, or IV), and applies the Directive's mandated mitigations for that Level — peer review tier, bilingual transparency notice, human-in-the-loop design, quality assurance plan, and a recourse mechanism for affected individuals.
 
 The AIA is mandatory for any federal automated decision-making system that produces administrative decisions about individuals or businesses. The computed Level gates the system: Level III/IV systems require external peer review and pre-launch publication 30 days ahead of go-live, and the AIA itself is published on the Open Government portal by default. AIDA (Bill C-27) was stalled in Parliament, so the TBS Directive remains the federal public-sector floor for algorithmic accountability.
 
@@ -22,7 +22,7 @@ The AIA is mandatory for any federal automated decision-making system that produ
 ## Command
 
 ```bash
-/arckit.ca-aia <project ID or service description>
+/arckit:ca-aia <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AIA-v1.0.md`

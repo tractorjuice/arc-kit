@@ -290,7 +290,7 @@ ${CLAUDE_PLUGIN_ROOT}/scripts/bash/migrate-filenames.sh projects/001-payment-gat
 
 1. **Review backups**: Check `.backup/` directories for original files
 2. **Update references**: Search for old filenames in documentation
-3. **Run pages command**: Regenerate documentation site with `/arckit.pages`
+3. **Run pages command**: Regenerate documentation site with `/arckit:pages`
 4. **Commit changes**: Add migrated files to version control
 
 ---
@@ -320,7 +320,7 @@ Check that the filename matches a known mapping. The script only migrates recogn
 - [ ] Verified backup directory was created
 - [ ] Checked all expected files were migrated
 - [ ] Updated cross-references in documentation
-- [ ] Regenerated GitHub Pages with `/arckit.pages`
+- [ ] Regenerated GitHub Pages with `/arckit:pages`
 - [ ] Committed changes to version control
 
 ---

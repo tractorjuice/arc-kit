@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-cloud-residency` generates a sovereign cloud residency assessment for a Canadian federal information system. The artefact reconciles the system-level Protected categorisation with the *Government of Canada Cloud Adoption Strategy* and the TBS *Direction on the Secure Use of Commercial Cloud Services*, then produces a sovereign-options matrix across AWS Canada, Azure Canada, and Google Cloud Canada. It records the foreign-government access exposure (US CLOUD Act, FISA-702 / EO-12333 reach for US-incorporated CSPs), captures the SSC cloud-brokering inheritance picture, and documents the exit and portability plan with a published dry-run cadence.
+`/arckit:ca-cloud-residency` generates a sovereign cloud residency assessment for a Canadian federal information system. The artefact reconciles the system-level Protected categorisation with the *Government of Canada Cloud Adoption Strategy* and the TBS *Direction on the Secure Use of Commercial Cloud Services*, then produces a sovereign-options matrix across AWS Canada, Azure Canada, and Google Cloud Canada. It records the foreign-government access exposure (US CLOUD Act, FISA-702 / EO-12333 reach for US-incorporated CSPs), captures the SSC cloud-brokering inheritance picture, and documents the exit and portability plan with a published dry-run cadence.
 
 The Protected B threshold is the load-bearing line in this artefact. At Protected B and above the *Direction on the Secure Use of Commercial Cloud Services* tightens the residency envelope, and the choice of region, sub-processor inventory, encryption-key custody, and identity trust root all become assurance-relevant. The assessment is rationale-driven: every sovereign-option choice and every CLOUD-Act risk acceptance must be named, justified, and approved — sovereignty is a posture, not a checkbox.
 
@@ -23,7 +23,7 @@ This command does not replace the formal cloud authorisation packages (CSP-level
 ## Command
 
 ```bash
-/arckit.ca-cloud-residency <project ID or service description>
+/arckit:ca-cloud-residency <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-CACR-v1.0.md`

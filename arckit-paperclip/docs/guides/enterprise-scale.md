@@ -168,7 +168,7 @@ enterprise_architecture:
     - ARC-000-FRAM-SEC-v1.0.md
 ```
 
-A CI job (in the EA repo) opens PRs downstream whenever the manifest falls behind. Combine with `/arckit.principles-compliance` to prove conformance on every downstream PR.
+A CI job (in the EA repo) opens PRs downstream whenever the manifest falls behind. Combine with `/arckit:principles-compliance` to prove conformance on every downstream PR.
 
 ---
 
@@ -198,11 +198,11 @@ A natural pipeline:
 ```text
 ArcKit                                 Spec Kit
 ───────                                ────────
-/arckit.requirements   ──(FR/NFR)──▶  /spec-kit specify
-/arckit.data-model     ──(DR)─────▶  /spec-kit plan
-/arckit.adr            ──(constr.)─▶  /spec-kit tasks
+/arckit:requirements   ──(FR/NFR)──▶  /spec-kit specify
+/arckit:data-model     ──(DR)─────▶  /spec-kit plan
+/arckit:adr            ──(constr.)─▶  /spec-kit tasks
                                       /spec-kit implement
-/arckit.conformance   ◀─(evidence)── (built artifacts)
+/arckit:conformance   ◀─(evidence)── (built artifacts)
 ```
 
 Keep requirement IDs (`FR-xxx`, `NFR-xxx`, `DR-xxx`) in the Spec Kit spec frontmatter so traceability survives the handoff.

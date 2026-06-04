@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-dr` assesses Diffusion Restreinte (DR) document and IS handling compliance under II 901/SGDSN/ANSSI. **Scope is explicitly bounded to DR — IGI 1300 (Confidentiel Défense and above) is out of scope for ArcKit.**
+`/arckit:fr-dr` assesses Diffusion Restreinte (DR) document and IS handling compliance under II 901/SGDSN/ANSSI. **Scope is explicitly bounded to DR — IGI 1300 (Confidentiel Défense and above) is out of scope for ArcKit.**
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.fr-dr Assess DR handling compliance for <IS scope and document types>
+/arckit:fr-dr Assess DR handling compliance for <IS scope and document types>
 ```
 
 Output: `projects/<id>/ARC-<id>-DR-v1.0.md`
@@ -60,11 +60,11 @@ Output: `projects/<id>/ARC-<id>-DR-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Foundation | IS security baseline | `/arckit.fr-anssi` |
-| Cartography | IS map for DR scope | `/arckit.fr-anssi-carto` |
-| DR assessment | DR handling compliance | `/arckit.fr-dr` |
-| PSSI | DR section in security policy | `/arckit.fr-pssi` |
-| Cloud | SecNumCloud if DR stored in cloud | `/arckit.fr-secnumcloud` |
+| Foundation | IS security baseline | `/arckit:fr-anssi` |
+| Cartography | IS map for DR scope | `/arckit:fr-anssi-carto` |
+| DR assessment | DR handling compliance | `/arckit:fr-dr` |
+| PSSI | DR section in security policy | `/arckit:fr-pssi` |
+| Cloud | SecNumCloud if DR stored in cloud | `/arckit:fr-secnumcloud` |
 
 ---
 

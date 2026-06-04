@@ -1,6 +1,6 @@
 # Canada Sovereign Cloud Residency Assessment
 
-> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit.ca-cloud-residency`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:ca-cloud-residency`
 
 ## Document Control
 
@@ -13,7 +13,7 @@
 
 | Version | Date | Author | Changes | Approved By | Approval Date |
 |---------|------|--------|---------|-------------|---------------|
-| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit.ca-cloud-residency` | [PENDING] | [PENDING] |
+| [VERSION] | [YYYY-MM-DD] | ArcKit AI | Initial creation from `/arckit:ca-cloud-residency` | [PENDING] | [PENDING] |
 
 ## Executive Summary
 

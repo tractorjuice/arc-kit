@@ -2,14 +2,14 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.atrs` produces the public transparency record required for UK Government algorithmic tools that influence decisions about people.
+`/arckit:atrs` produces the public transparency record required for UK Government algorithmic tools that influence decisions about people.
 
 ---
 
 ## Command
 
 ```bash
-/arckit.atrs Create Algorithmic Transparency Record for <AI system>
+/arckit:atrs Create Algorithmic Transparency Record for <AI system>
 ```
 
 Output: `projects/<id>/ARC-<id>-ATRS-v1.0.md`.
@@ -21,10 +21,10 @@ Output: `projects/<id>/ARC-<id>-ATRS-v1.0.md`.
 | Section | Content | Source Artefacts |
 |---------|---------|------------------|
 | Organisation & contacts | Department, senior responsible officer, contact email | Governance plan, project charter |
-| Description & purpose | What the algorithm does, why it exists, benefits | `/arckit.story`, `/arckit.sobc` |
-| Decision impact | Human oversight, automation level, appeal routes | `/arckit.jsp-936`, service runbooks |
-| Data used | Sources, categories, retention, lawful basis | `/arckit.data-model`, `/arckit.dpia` |
-| Risk & mitigation | Bias, fairness, security, transparency measures | `/arckit.ai-playbook`, `/arckit.secure`, risk register |
+| Description & purpose | What the algorithm does, why it exists, benefits | `/arckit:story`, `/arckit:sobc` |
+| Decision impact | Human oversight, automation level, appeal routes | `/arckit:jsp-936`, service runbooks |
+| Data used | Sources, categories, retention, lawful basis | `/arckit:data-model`, `/arckit:dpia` |
+| Risk & mitigation | Bias, fairness, security, transparency measures | `/arckit:ai-playbook`, `/arckit:secure`, risk register |
 | Publication & review | URL, review cadence, change log | Project plan, communications plan |
 
 ---
@@ -41,4 +41,4 @@ Output: `projects/<id>/ARC-<id>-ATRS-v1.0.md`.
 
 ## Alignment
 
-Pair the ATRS record with `/arckit.ai-playbook` and `/arckit.jsp-936` outputs to ensure consistency across ethical, assurance, and transparency artefacts.
+Pair the ATRS record with `/arckit:ai-playbook` and `/arckit:jsp-936` outputs to ensure consistency across ethical, assurance, and transparency artefacts.

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.wardley.doctrine` assesses organizational doctrine maturity across 4 phases and 40+ principles.
+`/arckit:wardley.doctrine` assesses organizational doctrine maturity across 4 phases and 40+ principles.
 
 ---
 
@@ -30,7 +30,7 @@ Run this command to assess organizational maturity, identify capability gaps, an
 ## Command
 
 ```bash
-/arckit.wardley.doctrine Assess doctrine maturity for <organisation>
+/arckit:wardley.doctrine Assess doctrine maturity for <organisation>
 ```
 
 Output: `projects/<id>/wardley-maps/ARC-<id>-WDOC-v1.0.md` (single instance per project)
@@ -93,10 +93,10 @@ Doctrine assessments support periodic re-assessment. When re-running the command
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Foundation | Establish architecture principles | `/arckit.principles` |
-| Assessment | Score doctrine maturity | `/arckit.wardley.doctrine` |
-| Mapping | Create Wardley Maps with doctrine context | `/arckit.wardley` |
-| Strategy | Synthesise into strategy | `/arckit.strategy` |
+| Foundation | Establish architecture principles | `/arckit:principles` |
+| Assessment | Score doctrine maturity | `/arckit:wardley.doctrine` |
+| Mapping | Create Wardley Maps with doctrine context | `/arckit:wardley` |
+| Strategy | Synthesise into strategy | `/arckit:strategy` |
 
 ---
 

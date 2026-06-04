@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.diagram` converts architecture artefacts into Mermaid or PlantUML C4 diagrams for visual architecture documentation.
+`/arckit:diagram` converts architecture artefacts into Mermaid or PlantUML C4 diagrams for visual architecture documentation.
 
 ---
 
@@ -10,14 +10,14 @@
 
 | Command | Diagram | Use When | Output Highlights |
 |---------|---------|----------|-------------------|
-| `/arckit.diagram context` | C4 Level 1 | Discovery / stakeholder briefings | Users, external systems, boundaries |
-| `/arckit.diagram container` | C4 Level 2 | HLD reviews | Services, databases, queues, technology stack |
-| `/arckit.diagram component` | C4 Level 3 | DLD & developer handover | Internal modules, repos, adapters |
-| `/arckit.diagram deployment` | Infrastructure | Cloud First evidence, cost modelling | Regions, VPCs, subnets, HA/DR |
-| `/arckit.diagram sequence` | Interaction | API design, integration workshops | Request/response steps, actors |
-| `/arckit.diagram dataflow` | Data privacy | GDPR/DPIA, audit | PII flows, encryption, retention |
+| `/arckit:diagram context` | C4 Level 1 | Discovery / stakeholder briefings | Users, external systems, boundaries |
+| `/arckit:diagram container` | C4 Level 2 | HLD reviews | Services, databases, queues, technology stack |
+| `/arckit:diagram component` | C4 Level 3 | DLD & developer handover | Internal modules, repos, adapters |
+| `/arckit:diagram deployment` | Infrastructure | Cloud First evidence, cost modelling | Regions, VPCs, subnets, HA/DR |
+| `/arckit:diagram sequence` | Interaction | API design, integration workshops | Request/response steps, actors |
+| `/arckit:diagram dataflow` | Data privacy | GDPR/DPIA, audit | PII flows, encryption, retention |
 
-Run without a suffix to auto-detect (`/arckit.diagram Describe architecture...`).
+Run without a suffix to auto-detect (`/arckit:diagram Describe architecture...`).
 
 ---
 
@@ -32,7 +32,7 @@ For C4 diagram types (Context, Container, Component), you can choose between two
 | **Renders in** | GitHub, VS Code, mermaid.live, ArcKit Pages | PlantUML Server, VS Code (extension), CLI |
 | **GitHub rendering** | Automatic | Not supported |
 
-Specify the format in arguments: `/arckit.diagram context plantuml` or select when prompted.
+Specify the format in arguments: `/arckit:diagram context plantuml` or select when prompted.
 
 Deployment and Data Flow diagrams use Mermaid only. Sequence diagrams support both Mermaid and PlantUML.
 
@@ -114,5 +114,5 @@ Paste into [https://www.plantuml.com/plantuml/uml/](https://www.plantuml.com/pla
 
 - Re-run diagrams whenever the design review highlights changes to avoid drift.
 - Embed diagrams in HLD/DLD outputs and service assessments for consistent visuals.
-- Pair `/arckit.diagram` with `/arckit.servicenow` so operations inherit the same component hierarchy.
+- Pair `/arckit:diagram` with `/arckit:servicenow` so operations inherit the same component hierarchy.
 - Use PlantUML C4 for complex diagrams (more than 12 elements) where Mermaid's auto-layout produces too many edge crossings — directional hints give precise control over element placement.

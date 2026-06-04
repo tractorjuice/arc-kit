@@ -7,7 +7,7 @@ body:
     attributes:
       label: Command
       description: Which ArcKit command triggered the bug?
-      placeholder: "/arckit.requirements"
+      placeholder: "/arckit:requirements"
     validations:
       required: true
 
@@ -25,7 +25,7 @@ body:
       label: Steps to reproduce
       description: Numbered steps to reproduce the issue.
       placeholder: |
-        1. Run `/arckit.requirements My Project`
+        1. Run `/arckit:requirements My Project`
         2. Wait for output
         3. See error...
     validations:

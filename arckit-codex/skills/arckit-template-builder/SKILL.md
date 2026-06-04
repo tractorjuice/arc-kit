@@ -254,7 +254,7 @@ If the user passed `--share` in their arguments, create the bundle directory:
 - `.arckit/community/{name}/README.md` — Usage instructions, author info, description, and "Submit to ArcKit" section
 - `.arckit/community/{name}/{name}-template.md` — Copy of the template
 - `.arckit/community/{name}/{name}.md` — Copy of the usage guide
-- `.arckit/community/{name}/arckit-community-{name}/SKILL.md` — Copy of the skill (if generated)
+- `.arckit/community/{name}$arckit-community-{name}.md` — Copy of the skill (if generated)
 
 **README.md for the bundle**:
 

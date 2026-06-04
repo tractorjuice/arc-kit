@@ -1,6 +1,6 @@
 # Project Plan: [PROJECT_NAME]
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit.plan`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit:plan`
 
 ## Document Control
 
@@ -11,7 +11,7 @@
 
 | Version | Date | Author | Changes | Approved By | Approval Date |
 |---------|------|--------|---------|-------------|---------------|
-| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.plan` command | PENDING | PENDING |
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit:plan` command | PENDING | PENDING |
 
 ---
 
@@ -146,12 +146,12 @@ graph TB
 
 | Week | Activity | ArcKit Command | Deliverable |
 |------|----------|----------------|-------------|
-| 1-2 | Stakeholder Analysis | `/arckit.stakeholders` | Stakeholder map, drivers, goals |
+| 1-2 | Stakeholder Analysis | `/arckit:stakeholders` | Stakeholder map, drivers, goals |
 | 3-4 | User Research | Manual | User needs, pain points |
-| 5-6 | Business Requirements | `/arckit.requirements` | BRs with acceptance criteria |
-| 7 | Architecture Principles | `/arckit.principles` | 10-15 principles |
-| 8 | Initial Business Case | `/arckit.sobc` | Cost/benefit analysis |
-| 8 | Initial Risk Register | `/arckit.risk` | Top 10 risks |
+| 5-6 | Business Requirements | `/arckit:requirements` | BRs with acceptance criteria |
+| 7 | Architecture Principles | `/arckit:principles` | 10-15 principles |
+| 8 | Initial Business Case | `/arckit:sobc` | Cost/benefit analysis |
+| 8 | Initial Risk Register | `/arckit:risk` | Top 10 risks |
 
 ### Gate: Discovery Assessment (Week [X])
 
@@ -183,14 +183,14 @@ graph TB
 
 | Week | Activity | ArcKit Command | Deliverable |
 |------|----------|----------------|-------------|
-| [X+1]-[X+3] | Detailed Requirements | `/arckit.requirements` | FR, NFR, INT, DR |
-| [X+3]-[X+5] | Data Model | `/arckit.data-model` | Entity relationships |
-| [X+4]-[X+8] | Architecture Design | `/arckit.diagram` | HLD with C4 diagrams |
-| [X+3]-[X+5] | Generate SOW/RFP | `/arckit.sow` | Vendor procurement docs |
-| [X+5]-[X+8] | Vendor Evaluation | `/arckit.evaluate` | Scoring matrix |
+| [X+1]-[X+3] | Detailed Requirements | `/arckit:requirements` | FR, NFR, INT, DR |
+| [X+3]-[X+5] | Data Model | `/arckit:data-model` | Entity relationships |
+| [X+4]-[X+8] | Architecture Design | `/arckit:diagram` | HLD with C4 diagrams |
+| [X+3]-[X+5] | Generate SOW/RFP | `/arckit:sow` | Vendor procurement docs |
+| [X+5]-[X+8] | Vendor Evaluation | `/arckit:evaluate` | Scoring matrix |
 | [X+8] | Security Threat Model | Manual | STRIDE analysis |
-| [X+9] | HLD Review | `/arckit.hld-review` | HLD approval |
-| [X+10] | Updated Business Case | `/arckit.sobc` | Revised costs |
+| [X+9] | HLD Review | `/arckit:hld-review` | HLD approval |
+| [X+10] | Updated Business Case | `/arckit:sobc` | Revised costs |
 
 ### Gate: HLD Review (Week [Y-2])
 
@@ -234,7 +234,7 @@ graph TB
 | Week | Activity | ArcKit Command | Deliverable |
 |------|----------|----------------|-------------|
 | [Y+1]-[Y+4] | Detailed Design (DLD) | Manual | DLD document |
-| [Y+5] | DLD Review | `/arckit.dld-review` | DLD approval |
+| [Y+5] | DLD Review | `/arckit:dld-review` | DLD approval |
 | [Y+6]-[Y+8] | Sprint 1 - Core Services | Manual | Working software |
 | [Y+9]-[Y+11] | Sprint 2 - Integrations | Manual | Integrated system |
 | [Y+12]-[Y+14] | Sprint 3 - UI & Reporting | Manual | User interface |
@@ -242,8 +242,8 @@ graph TB
 | [Y+18]-[Y+19] | Security Testing | Manual | SAST/DAST results |
 | [Y+20]-[Y+21] | Performance Testing | Manual | Load test results |
 | [Y+22]-[Y+23] | UAT | Manual | User sign-off |
-| [Y+24] | Operational Readiness | `/arckit.operationalize` | Runbooks, DR plan |
-| [Y+24] | Quality Analysis | `/arckit.analyze` | Final quality check |
+| [Y+24] | Operational Readiness | `/arckit:operationalize` | Runbooks, DR plan |
+| [Y+24] | Quality Analysis | `/arckit:analyze` | Final quality check |
 
 ### Gate: DLD Review (Week [Y+5])
 
@@ -289,9 +289,9 @@ graph TB
 |------|----------|----------------|-------------|
 | [Z+1] | Production Deployment | Manual | Live system |
 | [Z+2]-[Z+5] | Hypercare | Manual | Issue resolution |
-| [Z+6]+ | Benefits Tracking | `/arckit.sobc` | Benefits realization |
-| Quarterly | Quality Reviews | `/arckit.analyze` | Ongoing compliance |
-| Quarterly | Risk Updates | `/arckit.risk` | Updated risk register |
+| [Z+6]+ | Benefits Tracking | `/arckit:sobc` | Benefits realization |
+| Quarterly | Quality Reviews | `/arckit:analyze` | Ongoing compliance |
+| Quarterly | Risk Updates | `/arckit:risk` | Updated risk register |
 
 ---
 
@@ -299,34 +299,34 @@ graph TB
 
 ### Discovery Phase
 
-- Week 1-2: `/arckit.stakeholders` - Stakeholder analysis
-- Week 5-6: `/arckit.requirements` - Business Requirements (BRs)
-- Week 7: `/arckit.principles` - Architecture principles
-- Week 8: `/arckit.sobc` - Initial business case
-- Week 8: `/arckit.risk` - Initial risk register
+- Week 1-2: `/arckit:stakeholders` - Stakeholder analysis
+- Week 5-6: `/arckit:requirements` - Business Requirements (BRs)
+- Week 7: `/arckit:principles` - Architecture principles
+- Week 8: `/arckit:sobc` - Initial business case
+- Week 8: `/arckit:risk` - Initial risk register
 
 ### Alpha Phase
 
-- Week 9-11: `/arckit.requirements` - Detailed requirements (FR, NFR, INT, DR)
-- Week 10-12: `/arckit.data-model` - Data model
-- Week 12-15: `/arckit.diagram` - Architecture diagrams (C4)
-- Week 11-12: `/arckit.sow` - Generate SOW/RFP (if vendor needed)
-- Week 13-15: `/arckit.evaluate` - Vendor evaluation (if applicable)
-- Week 18: `/arckit.hld-review` - HLD approval gate
-- Week 19: `/arckit.sobc` - Updated business case
+- Week 9-11: `/arckit:requirements` - Detailed requirements (FR, NFR, INT, DR)
+- Week 10-12: `/arckit:data-model` - Data model
+- Week 12-15: `/arckit:diagram` - Architecture diagrams (C4)
+- Week 11-12: `/arckit:sow` - Generate SOW/RFP (if vendor needed)
+- Week 13-15: `/arckit:evaluate` - Vendor evaluation (if applicable)
+- Week 18: `/arckit:hld-review` - HLD approval gate
+- Week 19: `/arckit:sobc` - Updated business case
 
 ### Beta Phase
 
-- Week 25: `/arckit.dld-review` - DLD approval gate
-- Week 29-31: `/arckit.analyze` - Quality analysis
-- Week 32-33: `/arckit.traceability` - Verify design → code → tests
-- If AI: `/arckit.ai-playbook`, `/arckit.atrs` - AI compliance
+- Week 25: `/arckit:dld-review` - DLD approval gate
+- Week 29-31: `/arckit:analyze` - Quality analysis
+- Week 32-33: `/arckit:traceability` - Verify design → code → tests
+- If AI: `/arckit:ai-playbook`, `/arckit:atrs` - AI compliance
 
 ### Live Phase
 
-- Quarterly: `/arckit.analyze` - Periodic quality reviews
-- Quarterly: `/arckit.risk` - Update operational risks
-- Annually: `/arckit.sobc` - Track benefits realization
+- Quarterly: `/arckit:analyze` - Periodic quality reviews
+- Quarterly: `/arckit:risk` - Update operational risks
+- Annually: `/arckit:sobc` - Track benefits realization
 
 ---
 
@@ -414,7 +414,7 @@ graph TB
 
 ---
 
-**Generated by**: ArcKit `/arckit.plan` command
+**Generated by**: ArcKit `/arckit:plan` command
 **Generated on**: [DATE]
 **ArcKit Version**: [VERSION]
 **Project**: [PROJECT_NAME]

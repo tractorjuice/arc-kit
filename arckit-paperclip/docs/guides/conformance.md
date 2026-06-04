@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.conformance` checks whether the decided architecture (ADRs, principles) matches the designed architecture (HLD, DLD). It bridges `/arckit.health` (quick metadata scan) and `/arckit.analyze` (deep governance analysis) by focusing on decided-vs-designed conformance, architecture drift, and technical debt.
+`/arckit:conformance` checks whether the decided architecture (ADRs, principles) matches the designed architecture (HLD, DLD). It bridges `/arckit:health` (quick metadata scan) and `/arckit:analyze` (deep governance analysis) by focusing on decided-vs-designed conformance, architecture drift, and technical debt.
 
 ---
 
@@ -33,7 +33,7 @@
 ## Command
 
 ```bash
-/arckit.conformance <project description>
+/arckit:conformance <project description>
 ```
 
 Output saved as `projects/<id>/ARC-<id>-CONF-v1.0.md`.
@@ -122,16 +122,16 @@ Keywords determine severity:
 ## Relationship to Other Commands
 
 ```text
-/arckit.health          Quick metadata scan (stale files, missing links)
+/arckit:health          Quick metadata scan (stale files, missing links)
          ↓
-/arckit.conformance     Systematic decided-vs-designed check (this command)
+/arckit:conformance     Systematic decided-vs-designed check (this command)
          ↓
-/arckit.analyze         Deep governance across all dimensions
+/arckit:analyze         Deep governance across all dimensions
 ```
 
-- **/arckit.principles-compliance** provides RAG scoring with remediation plans; **conformance** does binary pass/fail constraint checking
-- **/arckit.traceability** maps requirements to design; **conformance** maps decisions to design
-- **/arckit.health** checks file freshness and metadata; **conformance** checks architectural integrity
+- **/arckit:principles-compliance** provides RAG scoring with remediation plans; **conformance** does binary pass/fail constraint checking
+- **/arckit:traceability** maps requirements to design; **conformance** maps decisions to design
+- **/arckit:health** checks file freshness and metadata; **conformance** checks architectural integrity
 
 ---
 

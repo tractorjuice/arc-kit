@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.uae-zero-bureaucracy` generates a Service Catalogue Review under the UAE Code for Government Services and the Zero Bureaucracy programme. Captures service-catalogue mapping, bureaucracy-elimination baseline, and customer-experience KPIs.
+`/arckit:uae-zero-bureaucracy` generates a Service Catalogue Review under the UAE Code for Government Services and the Zero Bureaucracy programme. Captures service-catalogue mapping, bureaucracy-elimination baseline, and customer-experience KPIs.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.uae-zero-bureaucracy <project ID or service name>
+/arckit:uae-zero-bureaucracy <project ID or service name>
 ```
 
 Output: `projects/<id>/ARC-<id>-ZBUR-v1.0.md`
@@ -55,10 +55,10 @@ Output: `projects/<id>/ARC-<id>-ZBUR-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Service catalogue, user journeys | `/arckit.requirements`, `/arckit.story` |
-| Zero Bureaucracy | Catalogue review and baseline | `/arckit.uae-zero-bureaucracy` |
-| Alignment | National-priorities statement | `/arckit.uae-priorities-alignment` |
-| Records | Source-of-truth designations | `/arckit.uae-digital-records` |
+| Discovery | Service catalogue, user journeys | `/arckit:requirements`, `/arckit:story` |
+| Zero Bureaucracy | Catalogue review and baseline | `/arckit:uae-zero-bureaucracy` |
+| Alignment | National-priorities statement | `/arckit:uae-priorities-alignment` |
+| Records | Source-of-truth designations | `/arckit:uae-digital-records` |
 
 ---
 
@@ -68,7 +68,7 @@ Output: `projects/<id>/ARC-<id>-ZBUR-v1.0.md`
 - Baseline (steps, documents, time) captured for "before" and "after".
 - KPIs have measurable targets (no qualitative-only goals).
 - Each Code clause has an explicit compliance statement (compliant / partial / non-compliant + plan).
-- Bureaucracy-elimination outcomes feed `/arckit.uae-priorities-alignment`.
+- Bureaucracy-elimination outcomes feed `/arckit:uae-priorities-alignment`.
 
 ---
 

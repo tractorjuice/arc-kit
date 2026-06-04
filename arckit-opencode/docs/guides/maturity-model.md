@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.maturity-model` generates a domain-specific capability maturity model with 5 maturity levels, assessment criteria per dimension, and a self-assessment questionnaire for baseline and progress measurement.
+`/arckit:maturity-model` generates a domain-specific capability maturity model with 5 maturity levels, assessment criteria per dimension, and a self-assessment questionnaire for baseline and progress measurement.
 
 ---
 
@@ -15,7 +15,7 @@ Organisations often lack a structured way to understand where they are today and
 - **Stakeholder alignment** -- a shared language for discussing current state vs target state with leadership, delivery teams, and governance bodies
 - **Investment prioritisation** -- directing effort and funding toward the capability dimensions with the greatest gap between current and target maturity
 
-The `/arckit.maturity-model` command **analyses project artifacts and domain context** to produce a tailored maturity model that:
+The `/arckit:maturity-model` command **analyses project artifacts and domain context** to produce a tailored maturity model that:
 
 - Defines 4-6 capability dimensions relevant to the specific project domain
 - Provides 5 maturity levels per dimension with measurable evidence criteria
@@ -43,7 +43,7 @@ The `/arckit.maturity-model` command **analyses project artifacts and domain con
 ## Command
 
 ```bash
-/arckit.maturity-model Create maturity model for <project-name>
+/arckit:maturity-model Create maturity model for <project-name>
 ```
 
 Outputs: `projects/<id>/ARC-<id>-MMOD-v1.0.md`
@@ -77,7 +77,7 @@ The maturity model sits after foundational artifacts and before execution planni
                            │
                            ▼
               ┌────────────────────────┐
-              │ /arckit.maturity-model │
+              │ /arckit:maturity-model │
               └────────────┬───────────┘
                            │
               ┌────────────┼────────────┐
@@ -97,24 +97,24 @@ The maturity model sits after foundational artifacts and before execution planni
 
 ```bash
 # Ensure principles exist
-/arckit.principles Create principles for Data Platform
+/arckit:principles Create principles for Data Platform
 
 # Generate maturity model
-/arckit.maturity-model Create maturity model for Data Platform
+/arckit:maturity-model Create maturity model for Data Platform
 ```
 
 ### Comprehensive (With strategy and requirements)
 
 ```bash
 # Create foundational artifacts first
-/arckit.principles Create principles for Cloud Migration
-/arckit.strategy Create strategy for Cloud Migration
-/arckit.requirements Create requirements for Cloud Migration
-/arckit.stakeholders Analyze stakeholders for Cloud Migration
-/arckit.risk Create risk register for Cloud Migration
+/arckit:principles Create principles for Cloud Migration
+/arckit:strategy Create strategy for Cloud Migration
+/arckit:requirements Create requirements for Cloud Migration
+/arckit:stakeholders Analyze stakeholders for Cloud Migration
+/arckit:risk Create risk register for Cloud Migration
 
 # Generate maturity model with full context
-/arckit.maturity-model Create maturity model for Cloud Migration
+/arckit:maturity-model Create maturity model for Cloud Migration
 ```
 
 ---
@@ -147,8 +147,8 @@ After creating the maturity model, typical next steps include:
 
 | Command | Purpose |
 |---------|---------|
-| `/arckit.roadmap` | Create a phased roadmap based on maturity progression targets |
-| `/arckit.strategy` | Incorporate maturity targets into the architecture strategy |
+| `/arckit:roadmap` | Create a phased roadmap based on maturity progression targets |
+| `/arckit:strategy` | Incorporate maturity targets into the architecture strategy |
 
 ---
 

@@ -161,7 +161,7 @@ Types:
 Examples:
 
 ```text
-feat(commands): add /arckit.security-review command
+feat(commands): add /arckit:security-review command
 
 docs(guides): improve wardley mapping examples
 
@@ -195,7 +195,7 @@ Before submitting:
 
    ```bash
    # Claude Code (requires ArcKit plugin: /plugin marketplace add tractorjuice/arc-kit)
-   /arckit.your-command Test description
+   /arckit:your-command Test description
 
    # Gemini CLI
    gemini
@@ -211,7 +211,7 @@ Before submitting:
 3. **Check integration**:
    - Run related commands before and after
    - Verify traceability matrix includes new artifacts
-   - Test `/arckit.analyze` detects relevant gaps
+   - Test `/arckit:analyze` detects relevant gaps
 
 ## UK Government Standards Compliance
 
@@ -248,11 +248,11 @@ When a new command requires an MCP server that does not already ship with ArcKit
 
 ## Command Naming Conventions
 
-- Use lowercase with hyphens: `/arckit.data-model`
+- Use lowercase with hyphens: `/arckit:data-model`
 - Be descriptive but concise
-- Use verbs for actions: `/arckit.analyze`, `/arckit.review`
-- Use nouns for artifacts: `/arckit.requirements`, `/arckit.runbook`
-- Group related commands: `/arckit.hld-review`, `/arckit.lld-review`
+- Use verbs for actions: `/arckit:analyze`, `/arckit:review`
+- Use nouns for artifacts: `/arckit:requirements`, `/arckit:runbook`
+- Group related commands: `/arckit:hld-review`, `/arckit:lld-review`
 
 ## Questions?
 

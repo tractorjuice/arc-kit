@@ -2,13 +2,13 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.wardley.gameplay` analyzes strategic plays from 60+ gameplay patterns.
+`/arckit:wardley.gameplay` analyzes strategic plays from 60+ gameplay patterns.
 
 ---
 
 ## When to Use
 
-Run this command **after** creating a Wardley Map to identify strategic plays available to your organization. Gameplay analysis examines your map and recommends actions based on component positions, movements, and the competitive landscape. Best combined with climate assessment (`/arckit.wardley.climate`) for a complete strategic picture.
+Run this command **after** creating a Wardley Map to identify strategic plays available to your organization. Gameplay analysis examines your map and recommends actions based on component positions, movements, and the competitive landscape. Best combined with climate assessment (`/arckit:wardley.climate`) for a complete strategic picture.
 
 ---
 
@@ -25,7 +25,7 @@ Run this command **after** creating a Wardley Map to identify strategic plays av
 ## Command
 
 ```bash
-/arckit.wardley.gameplay Analyze gameplay for <initiative>
+/arckit:wardley.gameplay Analyze gameplay for <initiative>
 ```
 
 Output: `projects/<id>/wardley-maps/ARC-<id>-WGAM-<NNN>-v1.0.md` (uses multi-instance numbering)
@@ -95,10 +95,10 @@ The matrix maps each play to the evolution stages where it is most effective:
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Mapping | Create Wardley Map | `/arckit.wardley` |
-| Climate | Assess external forces | `/arckit.wardley.climate` |
-| Gameplay | Identify strategic plays | `/arckit.wardley.gameplay` |
-| Strategy | Synthesise into strategy | `/arckit.strategy`, `/arckit.roadmap` |
+| Mapping | Create Wardley Map | `/arckit:wardley` |
+| Climate | Assess external forces | `/arckit:wardley.climate` |
+| Gameplay | Identify strategic plays | `/arckit:wardley.gameplay` |
+| Strategy | Synthesise into strategy | `/arckit:strategy`, `/arckit:roadmap` |
 
 ---
 

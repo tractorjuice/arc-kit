@@ -43,7 +43,7 @@ UAE Government Services Data Sharing Policy ("collect once, use securely") — C
 ## Important notes
 
 - The "collect once, use securely" principle prohibits re-collecting data the federal entity already holds — flag any share that duplicates existing datasets across parties.
-- Every share involving personal data MUST cite a PDPL lawful basis. Where `/arckit.uae-pdpl` has not yet been run, recommend it as a follow-up before sign-off.
+- Every share involving personal data MUST cite a PDPL lawful basis. Where `/arckit:uae-pdpl` has not yet been run, recommend it as a follow-up before sign-off.
 - Sharing across parties does NOT change classification — Confidential data remains Confidential at the consumer end. Cross-reference the CLAS register for the correct level.
 
 ## Suggested Next Steps

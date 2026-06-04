@@ -6,22 +6,22 @@ ArcKit streamlines procurement through three commands:
 
 | Need | Command | Output |
 |------|---------|--------|
-| Statement of Work / RFP | `/arckit.sow` | `ARC-<id>-SOW-v1.0.md` with scope, requirements, deliverables, timeline, terms |
-| Evaluation Framework | `/arckit.evaluate` | `ARC-<id>-EVAL-v1.0.md` plus scoring spreadsheet |
-| Proposal Scoring | `/arckit.evaluate Score <vendor>` | `vendors/<vendor>/ARC-<id>-EVAL-<vendor>-v1.0.md` and comparison matrix |
+| Statement of Work / RFP | `/arckit:sow` | `ARC-<id>-SOW-v1.0.md` with scope, requirements, deliverables, timeline, terms |
+| Evaluation Framework | `/arckit:evaluate` | `ARC-<id>-EVAL-v1.0.md` plus scoring spreadsheet |
+| Proposal Scoring | `/arckit:evaluate Score <vendor>` | `vendors/<vendor>/ARC-<id>-EVAL-<vendor>-v1.0.md` and comparison matrix |
 
 ---
 
 ## Decision Flow
 
 ```text
-Requirements ready? → run /arckit.sow
+Requirements ready? → run /arckit:sow
 ↓
-Agree evaluation criteria with stakeholders → /arckit.evaluate
+Agree evaluation criteria with stakeholders → /arckit:evaluate
 ↓
-Receive proposals → /arckit.evaluate Score <vendor>
+Receive proposals → /arckit:evaluate Score <vendor>
 ↓
-/arckit.evaluate Compare vendors → board decision
+/arckit:evaluate Compare vendors → board decision
 ```
 
 ---

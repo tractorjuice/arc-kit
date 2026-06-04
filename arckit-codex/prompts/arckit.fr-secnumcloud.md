@@ -176,8 +176,8 @@ HDS Required: {Yes / No}
 Risks identified: {N} ({N} high, {N} medium)
 
 Next steps:
-1. {If OIV/OSE: Run /arckit.eu-nis2 for NIS2 obligation mapping}
-2. Run /arckit.fr-marche-public for procurement documentation
+1. {If OIV/OSE: Run /arckit:eu-nis2 for NIS2 obligation mapping}
+2. Run /arckit:fr-marche-public for procurement documentation
 3. {If health data: verify HDS certification of shortlisted providers}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -219,11 +219,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.fr-secnumcloud Assess SecNumCloud compliance for a health data platform at a French regional hospital group (CHR), handling données de santé, potential OSE designation
+/arckit:fr-secnumcloud Assess SecNumCloud compliance for a health data platform at a French regional hospital group (CHR), handling données de santé, potential OSE designation
 
-/arckit.fr-secnumcloud Cloud hosting assessment for 001, ministry platform handling personal and financial data, no OIV designation
+/arckit:fr-secnumcloud Cloud hosting assessment for 001, ministry platform handling personal and financial data, no OIV designation
 
-/arckit.fr-secnumcloud Evaluate sovereign cloud options for a French local authority (collectivité territoriale) digital services platform, mixed-sensitivity data
+/arckit:fr-secnumcloud Evaluate sovereign cloud options for a French local authority (collectivité territoriale) digital services platform, mixed-sensitivity data
 ```
 
 ## Suggested Next Steps

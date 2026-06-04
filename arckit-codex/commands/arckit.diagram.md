@@ -67,9 +67,9 @@ Read existing artifacts from the project context to understand what to diagram:
 
 **Skip rules** (only skip questions the user already answered in their arguments):
 
-- User specified type only (e.g., `/arckit.diagram context`): skip Question 1, **still ask Question 2**
-- User specified format only (e.g., `/arckit.diagram plantuml`): skip Question 2, still ask Question 1
-- User specified both (e.g., `/arckit.diagram context plantuml`): skip both questions
+- User specified type only (e.g., `/arckit:diagram context`): skip Question 1, **still ask Question 2**
+- User specified format only (e.g., `/arckit:diagram plantuml`): skip Question 2, still ask Question 1
+- User specified both (e.g., `/arckit:diagram context plantuml`): skip both questions
 - If neither is specified, ask both questions together in one call
 
 If the user selects Deployment for Question 1, ignore the Question 2 answer — Deployment is Mermaid-only.

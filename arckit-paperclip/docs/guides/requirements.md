@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.requirements` produces a single living document covering business, functional, non-functional, integration, and data requirements.
+`/arckit:requirements` produces a single living document covering business, functional, non-functional, integration, and data requirements.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.requirements Create requirements for <project>
+/arckit:requirements Create requirements for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-REQ-v1.0.md`.
@@ -55,7 +55,7 @@ For public sector projects, MoSCoW priorities are automatically assigned.
 ## After Generation
 
 1. Workshop with stakeholders to confirm priorities and resolve conflicts.
-2. Feed requirements into `/arckit.sow`, `/arckit.diagram`, `/arckit.backlog`.
-3. For data mesh architectures, DR-xxx requirements inform `/arckit.data-mesh-contract` SLAs and quality rules.
+2. Feed requirements into `/arckit:sow`, `/arckit:diagram`, `/arckit:backlog`.
+3. For data mesh architectures, DR-xxx requirements inform `/arckit:data-mesh-contract` SLAs and quality rules.
 4. Re-run the command whenever scope changes; commit deltas for audit.
-5. Pair with `/arckit.traceability` to ensure design, tests, and operational artefacts stay aligned.
+5. Pair with `/arckit:traceability` to ensure design, tests, and operational artefacts stay aligned.

@@ -123,8 +123,8 @@ Make sure you upgraded the CLI first (Step 1), then re-ran init (Step 2). The in
 
 ### Custom templates lost
 
-Custom templates in `.arckit/templates-custom/` are preserved across upgrades. Only default templates in `.arckit/templates/` are refreshed. If you edited files in `.arckit/templates/` directly (instead of `.arckit/templates-custom/`), those edits will be overwritten. Use `/arckit.customize` to set up the override workflow:
+Custom templates in `.arckit/templates-custom/` are preserved across upgrades. Only default templates in `.arckit/templates/` are refreshed. If you edited files in `.arckit/templates/` directly (instead of `.arckit/templates-custom/`), those edits will be overwritten. Use `/arckit:customize` to set up the override workflow:
 
 ```bash
-/arckit.customize requirements   # Copy template for safe customization
+/arckit:customize requirements   # Copy template for safe customization
 ```

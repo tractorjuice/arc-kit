@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.research` investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.
+`/arckit:research` investigates market, SaaS, open-source, and government marketplace options to support build vs buy decisions.
 
 > **Agent Architecture**: This command delegates to the `arckit-research` autonomous agent. The agent runs as a subprocess with its own context window, performing dozens of WebSearch and WebFetch calls for vendor pricing, reviews, and compliance data without polluting your main conversation. The slash command launches the agent and relays its summary back to you.
 
@@ -25,7 +25,7 @@ Add constraints (budget, data residency, clearance) in the prompt for tailored r
 ## Command
 
 ```bash
-/arckit.research Research <topic> for <project>
+/arckit:research Research <topic> for <project>
 ```
 
 Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
@@ -36,7 +36,7 @@ Outputs: `projects/<id>/ARC-<id>-RSCH-v1.0.md` plus optional CSV of suppliers.
 
 ## Long runs: Remote Control + push notifications
 
-`/arckit.research` frequently exceeds 10 minutes once the agent starts pulling vendor pricing pages, G-Cloud listings, and product reviews. To avoid babysitting the terminal, pair it with [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control):
+`/arckit:research` frequently exceeds 10 minutes once the agent starts pulling vendor pricing pages, G-Cloud listings, and product reviews. To avoid babysitting the terminal, pair it with [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control):
 
 ```bash
 claude remote-control
@@ -59,7 +59,7 @@ Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a 
 
 ## Follow-on Actions
 
-- Feed supplier data into `/arckit.sow` and `/arckit.evaluate`.
+- Feed supplier data into `/arckit:sow` and `/arckit:evaluate`.
 - Update Wardley Maps with evolution stage insights.
-- Add identified risks to `/arckit.risk` and mitigations to project backlog.
+- Add identified risks to `/arckit:risk` and mitigations to project backlog.
 - Cite findings in business case and design reviews.

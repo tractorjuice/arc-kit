@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.uae-ai-autonomy-tier` generates a three-tier AI Autonomy Posture for a UAE federal entity AI deployment. Tier 1 covers internal productivity, Tier 2 covers investor / external-facing with approval, and Tier 3 covers regulated / financial deployments. Captures per-tier guard-rails, approval gates, audit obligations, and tier-promotion criteria.
+`/arckit:uae-ai-autonomy-tier` generates a three-tier AI Autonomy Posture for a UAE federal entity AI deployment. Tier 1 covers internal productivity, Tier 2 covers investor / external-facing with approval, and Tier 3 covers regulated / financial deployments. Captures per-tier guard-rails, approval gates, audit obligations, and tier-promotion criteria.
 
 > This artefact is internal ArcKit synthesis on the federal three-tier model — no single public regulatory anchor exists. The underlying obligations come from the UAE AI Charter and PDPL.
 
@@ -22,7 +22,7 @@
 ## Command
 
 ```bash
-/arckit.uae-ai-autonomy-tier <project ID or AI system description>
+/arckit:uae-ai-autonomy-tier <project ID or AI system description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AUTI-v1.0.md`
@@ -56,10 +56,10 @@ Output: `projects/<id>/ARC-<id>-AUTI-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Charter | 12-principle assessment | `/arckit.uae-ai-charter` |
-| Tier posture | Per-tier guard-rails + promotion criteria | `/arckit.uae-ai-autonomy-tier` |
-| Decisions | Tier-promotion is architecturally significant | `/arckit.adr` |
-| Risk | Per-tier residual risks | `/arckit.risk` |
+| Charter | 12-principle assessment | `/arckit:uae-ai-charter` |
+| Tier posture | Per-tier guard-rails + promotion criteria | `/arckit:uae-ai-autonomy-tier` |
+| Decisions | Tier-promotion is architecturally significant | `/arckit:adr` |
+| Risk | Per-tier residual risks | `/arckit:risk` |
 
 ---
 
@@ -78,7 +78,7 @@ Output: `projects/<id>/ARC-<id>-AUTI-v1.0.md`
 ## Key Notes
 
 - **Central Bank AI guidance** `[NEEDS VERIFICATION]`: The exact citation for UAE Central Bank AI guidance for Tier 3 regulated/financial workloads, and the boundary with Securities and Commodities Authority (SCA) guidance for capital-markets entities, is not yet pinned down — confirm sector-regulator obligations before publication. See `uae-overlay-maintenance.md` gap #5.
-- **No single regulatory anchor**: The three-tier model is an ArcKit synthesis. Run alongside `/arckit.uae-ai-charter` for the regulatory grounding.
+- **No single regulatory anchor**: The three-tier model is an ArcKit synthesis. Run alongside `/arckit:uae-ai-charter` for the regulatory grounding.
 - **Cabinet 50% mandate**: Federal entities pursuing the 23 April 2026 agentic-AI mandate should keep tier-promotion criteria pre-published — the regulator may request them.
-- **Run after charter**: Charter posture is an input — run `/arckit.uae-ai-charter` first.
+- **Run after charter**: Charter posture is an input — run `/arckit:uae-ai-charter` first.
 - **Community-contributed**: Output should be reviewed by qualified AI ethics / federal compliance counsel before reliance.

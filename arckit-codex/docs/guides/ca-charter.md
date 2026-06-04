@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-charter` generates a Canada Charter Rights Design Review for a federal system that materially engages Charter-protected interests. It identifies which sections of the Canadian Charter of Rights and Freedoms are engaged (default for FITAA-class apps: s.2(b), s.2(d), s.7, s.8, s.15), runs the *Oakes* four-step proportionality test against each engaged right, registers risks and mitigations with residual posture, and captures the DOJ counsel sign-off block.
+`/arckit:ca-charter` generates a Canada Charter Rights Design Review for a federal system that materially engages Charter-protected interests. It identifies which sections of the Canadian Charter of Rights and Freedoms are engaged (default for FITAA-class apps: s.2(b), s.2(d), s.7, s.8, s.15), runs the *Oakes* four-step proportionality test against each engaged right, registers risks and mitigations with residual posture, and captures the DOJ counsel sign-off block.
 
 Charter review is mandatory for any federal system that limits a Charter-protected interest. *R v Oakes* structures the analysis: any limit must be prescribed by law and demonstrably justified through (1) a pressing and substantial objective, (2) a rational connection between the means and the objective, (3) minimal impairment of the right, and (4) proportional effects. The artefact this command produces is a design-stage instrument — DOJ counsel sign-off remains a delivery gate, not a sign-off formality.
 
@@ -22,7 +22,7 @@ Charter review is mandatory for any federal system that limits a Charter-protect
 ## Command
 
 ```bash
-/arckit.ca-charter <project ID or service description>
+/arckit:ca-charter <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-CHRT-v1.0.md`
@@ -51,7 +51,7 @@ Output: `projects/<id>/ARC-<id>-CHRT-v1.0.md`
 ## When to run
 
 - A federal system introduces or modifies a registration scheme, surveillance capability, or automated decision-making process that touches Charter-protected interests.
-- A FITAA-class app is being designed — Charter §2 expression and association analysis is unconditional after `/arckit.ca-fitaa`.
+- A FITAA-class app is being designed — Charter §2 expression and association analysis is unconditional after `/arckit:ca-fitaa`.
 - A programme will collect, retain, or disclose personal information in a way that engages s.8 reasonable expectation of privacy — typically after the PIA has scoped the personal-information inventory.
 - Pre-launch — before service-design sign-off and before any external-facing release of the system or its register.
 - On material change — to data, decision boundary, disclosure regime, or operating environment that re-opens any of the engaged rights.
@@ -70,7 +70,7 @@ Output: `projects/<id>/ARC-<id>-CHRT-v1.0.md`
 
 ## Handoffs
 
-- **`ca-fitaa`** — Charter §2 expression and association analysis is a mandatory companion to FITAA; the FITAA artefact references this review and the public-vs-protected severance design feeds the s.2 mitigation register. If `/arckit.ca-fitaa` has been run, `/arckit.ca-charter` is not optional.
+- **`ca-fitaa`** — Charter §2 expression and association analysis is a mandatory companion to FITAA; the FITAA artefact references this review and the public-vs-protected severance design feeds the s.2 mitigation register. If `/arckit:ca-fitaa` has been run, `/arckit:ca-charter` is not optional.
 - **`ca-pia`** — §8 search-and-seizure analysis is grounded in the personal-information categories captured in the Privacy Impact Assessment. The PIA inventory drives the reasonable-expectation-of-privacy analysis; do not duplicate, link.
 - **`risk`** — Residual Charter risks per right feed the operational risk register with appropriate severity. Carry the Mitigation Register entries forward with the same risk identifiers so the residual posture is traceable.
 

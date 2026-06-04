@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.uae-procurement` generates a federal procurement strategy under UAE Federal Decree-Law No. 11 of 2023 on Procurements in the Federal Government. Produces ITT / RFP packs aligned with the Ministry of Finance Digital Procurement Platform (DPP) templates, an In-Country Value (ICV) plan, the evaluation report structure, and the contract register.
+`/arckit:uae-procurement` generates a federal procurement strategy under UAE Federal Decree-Law No. 11 of 2023 on Procurements in the Federal Government. Produces ITT / RFP packs aligned with the Ministry of Finance Digital Procurement Platform (DPP) templates, an In-Country Value (ICV) plan, the evaluation report structure, and the contract register.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.uae-procurement <project ID or procurement scope>
+/arckit:uae-procurement <project ID or procurement scope>
 ```
 
 Output: `projects/<id>/ARC-<id>-FPRO-v1.0.md`
@@ -44,10 +44,10 @@ Output: `projects/<id>/ARC-<id>-FPRO-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Strategic case | Business case and budget | `/arckit.sobc` |
-| Procurement | Strategy + ITT / RFP pack + ICV | `/arckit.uae-procurement` |
-| Market | Vendor research and shortlist | `/arckit.research` |
-| Evaluation | Formal supplier evaluation | `/arckit.evaluate` |
+| Strategic case | Business case and budget | `/arckit:sobc` |
+| Procurement | Strategy + ITT / RFP pack + ICV | `/arckit:uae-procurement` |
+| Market | Vendor research and shortlist | `/arckit:research` |
+| Evaluation | Formal supplier evaluation | `/arckit:evaluate` |
 
 ---
 
@@ -67,5 +67,5 @@ Output: `projects/<id>/ARC-<id>-FPRO-v1.0.md`
 
 - **DPP alignment**: All federal procurements above threshold are run through the MoF Digital Procurement Platform — the ITT / RFP pack must conform to DPP templates.
 - **ICV is mandatory**: In-Country Value scoring is non-optional for many federal procurements — define the target before going to market.
-- **Evaluation parity**: Use `/arckit.evaluate` to drive the formal supplier evaluation against the methodology defined here.
+- **Evaluation parity**: Use `/arckit:evaluate` to drive the formal supplier evaluation against the methodology defined here.
 - **Community-contributed**: Output should be reviewed by qualified federal procurement counsel before reliance.

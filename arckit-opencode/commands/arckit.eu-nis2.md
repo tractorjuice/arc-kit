@@ -201,10 +201,10 @@ Incident Reporting: {Ready / Gap — 24h/72h capability needed}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-1. {If OIV/OSE (France): Run /arckit.fr-secnumcloud}
-2. {If financial sector: Run /arckit.eu-dora for DORA overlap}
-3. Run /arckit.secure to implement Article 21 controls
-4. Run /arckit.risk to register NIS2 gaps
+1. {If OIV/OSE (France): Run /arckit:fr-secnumcloud}
+2. {If financial sector: Run /arckit:eu-dora for DORA overlap}
+3. Run /arckit:secure to implement Article 21 controls
+4. Run /arckit:risk to register NIS2 gaps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -247,11 +247,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.eu-nis2 Assess NIS2 obligations for a French regional energy distribution operator (DSO), Essential Entity under Annex I Energy sector, existing OIV designation, planning cloud migration to SecNumCloud-qualified provider
+/arckit:eu-nis2 Assess NIS2 obligations for a French regional energy distribution operator (DSO), Essential Entity under Annex I Energy sector, existing OIV designation, planning cloud migration to SecNumCloud-qualified provider
 
-/arckit.eu-nis2 NIS2 scoping for 001 — Dutch healthcare provider with 300 employees, operating across NL and BE, considering Essential Entity classification under health sector
+/arckit:eu-nis2 NIS2 scoping for 001 — Dutch healthcare provider with 300 employees, operating across NL and BE, considering Essential Entity classification under health sector
 
-/arckit.eu-nis2 NIS2 assessment for a managed service provider (MSP) operating across 6 EU member states, ICT service management Annex I
+/arckit:eu-nis2 NIS2 assessment for a managed service provider (MSP) operating across 6 EU member states, ICT service management Annex I
 ```
 
 ## Suggested Next Steps

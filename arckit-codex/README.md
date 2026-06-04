@@ -268,7 +268,7 @@ Five Model Context Protocol servers are configured in `config.toml` to provide c
 
 | Feature | Claude Code (Plugin) | Codex CLI (Extension) |
 |---------|---------------------|-----------------------|
-| **Command format** | `/arckit.principles` | `$arckit-principles` |
+| **Command format** | `/arckit:principles` | `$arckit-principles` |
 | **Command location** | `arckit-claude/commands/` | `arckit-codex/skills/arckit-*/` |
 | **Skills** | Supported (plugin skills/) | Supported (`.agents/skills/`, auto-discovered) |
 | **Agents** | Supported (Task tool) | Experimental (multi-agent flag) |

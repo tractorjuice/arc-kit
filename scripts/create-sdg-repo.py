@@ -405,11 +405,11 @@ Each SDG workspace is a self-contained ArcKit workspace under `sdg-{{NN}}-{{slug
 This repo uses the ArcKit plugin via the Claude Code marketplace. Commands are available as `/arckit.{{command}}` slash commands.
 
 Key commands for getting started:
-- `/arckit.stakeholders` -- Analyze stakeholder drivers and goals
-- `/arckit.requirements` -- Define comprehensive requirements
-- `/arckit.risk` -- Create risk register
-- `/arckit.sobc` -- Create Strategic Outline Business Case
-- `/arckit.research` -- Research technology options
+- `/arckit:stakeholders` -- Analyze stakeholder drivers and goals
+- `/arckit:requirements` -- Define comprehensive requirements
+- `/arckit:risk` -- Create risk register
+- `/arckit:sobc` -- Create Strategic Outline Business Case
+- `/arckit:research` -- Research technology options
 
 ## MCP Servers
 
@@ -460,13 +460,13 @@ This repository contains **{total_projects} UK Government technology projects** 
 
 ```bash
 # Stakeholder analysis for a project
-/arckit.stakeholders Universal Credit Modernisation
+/arckit:stakeholders Universal Credit Modernisation
 
 # Requirements specification
-/arckit.requirements Universal Credit Modernisation
+/arckit:requirements Universal Credit Modernisation
 
 # Risk register
-/arckit.risk Universal Credit Modernisation
+/arckit:risk Universal Credit Modernisation
 ```
 
 ## Repository Structure
@@ -569,27 +569,27 @@ Created: {TODAY}
 Use ArcKit commands to generate project artifacts in the recommended order:
 
 ### Discovery Phase
-1. `/arckit.stakeholders` - Analyze stakeholder drivers and goals
-2. `/arckit.risk` - Create risk register
-3. `/arckit.sobc` - Create Strategic Outline Business Case
+1. `/arckit:stakeholders` - Analyze stakeholder drivers and goals
+2. `/arckit:risk` - Create risk register
+3. `/arckit:sobc` - Create Strategic Outline Business Case
 
 ### Alpha Phase
-4. `/arckit.requirements` - Define comprehensive requirements
-5. `/arckit.data-model` - Design data model and GDPR compliance
-6. `/arckit.wardley` - Create Wardley maps for strategic planning
-7. `/arckit.research` - Research technology options (if needed)
-8. `/arckit.sow` - Generate Statement of Work for vendor procurement (if needed)
-9. `/arckit.evaluate` - Create vendor evaluation framework (if needed)
+4. `/arckit:requirements` - Define comprehensive requirements
+5. `/arckit:data-model` - Design data model and GDPR compliance
+6. `/arckit:wardley` - Create Wardley maps for strategic planning
+7. `/arckit:research` - Research technology options (if needed)
+8. `/arckit:sow` - Generate Statement of Work for vendor procurement (if needed)
+9. `/arckit:evaluate` - Create vendor evaluation framework (if needed)
 
 ### Beta Phase
-10. `/arckit.hld-review` - Review High-Level Design
-11. `/arckit.dld-review` - Review Detailed Design
-12. `/arckit.traceability` - Generate requirements traceability matrix
+10. `/arckit:hld-review` - Review High-Level Design
+11. `/arckit:dld-review` - Review Detailed Design
+12. `/arckit:traceability` - Generate requirements traceability matrix
 
 ### Compliance (as needed)
-- `/arckit.secure` - UK Government Secure by Design review
-- `/arckit.tcop` - Technology Code of Practice assessment
-- `/arckit.ai-playbook` - AI Playbook compliance (for AI systems)
+- `/arckit:secure` - UK Government Secure by Design review
+- `/arckit:tcop` - Technology Code of Practice assessment
+- `/arckit:ai-playbook` - AI Playbook compliance (for AI systems)
 
 ## Project Structure
 
@@ -600,29 +600,29 @@ Documents use standardized naming: `ARC-{{PROJECT_ID}}-{{TYPE}}-v{{VERSION}}.md`
 ├── README.md (this file)
 │
 ├── # Core Documents
-├── ARC-{project_number}-STKE-v1.0.md     # Stakeholder drivers (/arckit.stakeholders)
-├── ARC-{project_number}-RISK-v1.0.md     # Risk register (/arckit.risk)
-├── ARC-{project_number}-SOBC-v1.0.md     # Business case (/arckit.sobc)
-├── ARC-{project_number}-REQ-v1.0.md      # Requirements (/arckit.requirements)
-├── ARC-{project_number}-DATA-v1.0.md     # Data model (/arckit.data-model)
-├── ARC-{project_number}-RSCH-v1.0.md     # Research findings (/arckit.research)
-├── ARC-{project_number}-TRAC-v1.0.md     # Traceability matrix (/arckit.traceability)
+├── ARC-{project_number}-STKE-v1.0.md     # Stakeholder drivers (/arckit:stakeholders)
+├── ARC-{project_number}-RISK-v1.0.md     # Risk register (/arckit:risk)
+├── ARC-{project_number}-SOBC-v1.0.md     # Business case (/arckit:sobc)
+├── ARC-{project_number}-REQ-v1.0.md      # Requirements (/arckit:requirements)
+├── ARC-{project_number}-DATA-v1.0.md     # Data model (/arckit:data-model)
+├── ARC-{project_number}-RSCH-v1.0.md     # Research findings (/arckit:research)
+├── ARC-{project_number}-TRAC-v1.0.md     # Traceability matrix (/arckit:traceability)
 │
 ├── # Procurement
-├── ARC-{project_number}-SOW-v1.0.md      # Statement of Work (/arckit.sow)
-├── ARC-{project_number}-EVAL-v1.0.md     # Evaluation criteria (/arckit.evaluate)
+├── ARC-{project_number}-SOW-v1.0.md      # Statement of Work (/arckit:sow)
+├── ARC-{project_number}-EVAL-v1.0.md     # Evaluation criteria (/arckit:evaluate)
 │
 ├── # Multi-instance Documents (subdirectories)
 ├── decisions/
-│   ├── ARC-{project_number}-ADR-001-v1.0.md  # Architecture decisions (/arckit.adr)
+│   ├── ARC-{project_number}-ADR-001-v1.0.md  # Architecture decisions (/arckit:adr)
 │   └── ARC-{project_number}-ADR-002-v1.0.md
 ├── diagrams/
-│   └── ARC-{project_number}-DIAG-001-v1.0.md # Diagrams (/arckit.diagram)
+│   └── ARC-{project_number}-DIAG-001-v1.0.md # Diagrams (/arckit:diagram)
 ├── wardley-maps/
-│   └── ARC-{project_number}-WARD-001-v1.0.md # Wardley maps (/arckit.wardley)
+│   └── ARC-{project_number}-WARD-001-v1.0.md # Wardley maps (/arckit:wardley)
 ├── reviews/
-│   ├── ARC-{project_number}-HLD-v1.0.md      # HLD review (/arckit.hld-review)
-│   └── ARC-{project_number}-DLD-v1.0.md      # DLD review (/arckit.dld-review)
+│   ├── ARC-{project_number}-HLD-v1.0.md      # HLD review (/arckit:hld-review)
+│   └── ARC-{project_number}-DLD-v1.0.md      # DLD review (/arckit:dld-review)
 │
 ├── external/                            # External documents (PDFs, specs, reports)
 └── vendors/                             # Vendor proposals
@@ -711,7 +711,7 @@ Navigate to a project directory and use ArcKit commands:
 
 ```bash
 cd projects/{fmt_project_num(1)}-{sdg['projects'][0][1]}/
-/arckit.stakeholders {sdg['projects'][0][0]}
+/arckit:stakeholders {sdg['projects'][0][0]}
 ```
 
 ## Workspace Structure

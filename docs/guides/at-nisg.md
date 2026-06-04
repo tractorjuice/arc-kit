@@ -2,9 +2,9 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.at-nisg` assesses Austrian NISG obligations (BGBl. I Nr. 94/2025) — the Austrian transposition of NIS2. Covers Essential / Important entity classification, BKA (GovCERT) and BMI (SPOC) reporting, KSÖ coordination, and Austrian sectoral rules.
+`/arckit:at-nisg` assesses Austrian NISG obligations (BGBl. I Nr. 94/2025) — the Austrian transposition of NIS2. Covers Essential / Important entity classification, BKA (GovCERT) and BMI (SPOC) reporting, KSÖ coordination, and Austrian sectoral rules.
 
-> **Run after** `/arckit.eu-nis2` — this command supplements the EU NIS2 baseline with Austrian transposition specifics.
+> **Run after** `/arckit:eu-nis2` — this command supplements the EU NIS2 baseline with Austrian transposition specifics.
 
 ---
 
@@ -22,7 +22,7 @@
 ## Command
 
 ```bash
-/arckit.at-nisg <project ID or organisation>
+/arckit:at-nisg <project ID or organisation>
 ```
 
 Output: `projects/<id>/ARC-<id>-ATNISG-v1.0.md`
@@ -66,11 +66,11 @@ Output: `projects/<id>/ARC-<id>-ATNISG-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| EU baseline | NIS2 compliance | `/arckit.eu-nis2` |
-| Austrian layer | NISG-specific assessment | `/arckit.at-nisg` |
-| Risk | Surface gaps to risk register | `/arckit.risk` |
-| Controls | Implement Article 21 measures | `/arckit.secure` |
-| Procurement | Supply-chain clauses | `/arckit.at-bvergg` |
+| EU baseline | NIS2 compliance | `/arckit:eu-nis2` |
+| Austrian layer | NISG-specific assessment | `/arckit:at-nisg` |
+| Risk | Surface gaps to risk register | `/arckit:risk` |
+| Controls | Implement Article 21 measures | `/arckit:secure` |
+| Procurement | Supply-chain clauses | `/arckit:at-bvergg` |
 
 ---
 
@@ -81,7 +81,7 @@ Output: `projects/<id>/ARC-<id>-ATNISG-v1.0.md`
 - All 10 Article 21 measures assessed (no skipped rows).
 - BKA / GovCERT reporting pathway has named owner and incident-class triggers.
 - BMI SPOC registration status and contact maintenance documented.
-- Supply-chain clauses fed to procurement (`/arckit.at-bvergg`).
+- Supply-chain clauses fed to procurement (`/arckit:at-bvergg`).
 - Gaps surfaced to project risk register.
 
 ---
@@ -90,5 +90,5 @@ Output: `projects/<id>/ARC-<id>-ATNISG-v1.0.md`
 
 - **Recent legislation**: NISG idF BGBl. I Nr. 94/2025 is recent and evolving — items marked `[NEEDS VERIFICATION]` must be confirmed against the current text and implementing ordinances before external use.
 - **Sectoral overlay**: Some sectors (energy, transport, finance, health) have additional Austrian rules above NIS2 — confirm sectoral scope.
-- **Run order**: Supplements `/arckit.eu-nis2`. Do not run in isolation.
+- **Run order**: Supplements `/arckit:eu-nis2`. Do not run in isolation.
 - **Community-contributed**: Output should be reviewed by qualified CISO / BMI-liaison / Rechtsabteilung before reliance.

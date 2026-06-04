@@ -21,7 +21,7 @@ $ARGUMENTS
 **MANDATORY** (warn if missing):
 
 - **REQ** (Requirements) — Extract: system description, functional architecture, integration points (INT-xxx), security requirements (NFR-SEC-xxx), classification level, OIV/OSE designation
-  - If missing: STOP — EBIOS Risk Manager requires a clear system description and architecture. Run `/arckit.requirements` first.
+  - If missing: STOP — EBIOS Risk Manager requires a clear system description and architecture. Run `/arckit:requirements` first.
 
 **RECOMMENDED** (read if available, note if missing):
 
@@ -243,9 +243,9 @@ Workshop 5 — Risk Treatment:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
 1. Submit EBIOS study to Autorité d'Homologation for review
-2. {If cloud: Run /arckit.fr-secnumcloud for hosting provider assessment}
-3. Run /arckit.secure to implement Workshop 5 technical measures
-4. Run /arckit.risk to import residual risks into project risk register
+2. {If cloud: Run /arckit:fr-secnumcloud for hosting provider assessment}
+3. Run /arckit:secure to implement Workshop 5 technical measures
+4. Run /arckit:risk to import residual risks into project risk register
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -288,11 +288,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.fr-ebios Conduct EBIOS Risk Manager study for a French ministry citizen portal handling personal and financial data, RGS *** target level, requiring homologation before go-live, cloud hosted on SecNumCloud provider
+/arckit:fr-ebios Conduct EBIOS Risk Manager study for a French ministry citizen portal handling personal and financial data, RGS *** target level, requiring homologation before go-live, cloud hosted on SecNumCloud provider
 
-/arckit.fr-ebios EBIOS study for 001 — French regional hospital information system (SIH), OIV designation (secteur santé), données de santé, connexion avec Mon Espace Santé
+/arckit:fr-ebios EBIOS study for 001 — French regional hospital information system (SIH), OIV designation (secteur santé), données de santé, connexion avec Mon Espace Santé
 
-/arckit.fr-ebios EBIOS Risk Manager for a critical national infrastructure operator (OIV énergie), SIIV system, connection to SCADA/OT network, IGI 1300 classified components
+/arckit:fr-ebios EBIOS Risk Manager for a critical national infrastructure operator (OIV énergie), SIIV system, connection to SCADA/OT network, IGI 1300 classified components
 ```
 
 ## Suggested Next Steps

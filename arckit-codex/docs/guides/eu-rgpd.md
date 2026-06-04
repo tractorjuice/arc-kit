@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.eu-rgpd` generates a GDPR (Regulation EU 2016/679) compliance assessment. It is member-state-neutral and covers all EEA supervisory authorities, cross-border transfers, breach notification, and DPO obligations.
+`/arckit:eu-rgpd` generates a GDPR (Regulation EU 2016/679) compliance assessment. It is member-state-neutral and covers all EEA supervisory authorities, cross-border transfers, breach notification, and DPO obligations.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.eu-rgpd Assess GDPR compliance for <project or data processing activity>
+/arckit:eu-rgpd Assess GDPR compliance for <project or data processing activity>
 ```
 
 Output: `projects/<id>/ARC-<id>-RGPD-v1.0.md`
@@ -49,10 +49,10 @@ Output: `projects/<id>/ARC-<id>-RGPD-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Data model and requirements | `/arckit.requirements`, `/arckit.data-model` |
-| Risk | DPIA for high-risk processing | `/arckit.dpia` |
-| Assessment | GDPR compliance assessment | `/arckit.eu-rgpd` |
-| French layer | CNIL-specific requirements | `/arckit.fr-rgpd` |
+| Discovery | Data model and requirements | `/arckit:requirements`, `/arckit:data-model` |
+| Risk | DPIA for high-risk processing | `/arckit:dpia` |
+| Assessment | GDPR compliance assessment | `/arckit:eu-rgpd` |
+| French layer | CNIL-specific requirements | `/arckit:fr-rgpd` |
 
 ---
 
@@ -65,12 +65,12 @@ Output: `projects/<id>/ARC-<id>-RGPD-v1.0.md`
 - 72-hour breach notification capability assessed.
 - Processor agreements (Article 28) in place for all processors.
 - Retention periods defined and enforced.
-- DPIA conducted for high-risk processing (run `/arckit.dpia` first).
+- DPIA conducted for high-risk processing (run `/arckit:dpia` first).
 
 ---
 
 ## Key Notes
 
-- **French layer**: Run `/arckit.fr-rgpd` for CNIL-specific obligations (health data, cookies, age 15 for minors).
-- **DPIA**: For high-risk processing, a DPIA under Article 35 is mandatory — run `/arckit.dpia` before this command.
-- **Scope**: This command covers EU GDPR. UK GDPR (post-Brexit) is covered by `/arckit.dpia` with UK ICO context.
+- **French layer**: Run `/arckit:fr-rgpd` for CNIL-specific obligations (health data, cookies, age 15 for minors).
+- **DPIA**: For high-risk processing, a DPIA under Article 35 is mandatory — run `/arckit:dpia` before this command.
+- **Scope**: This command covers EU GDPR. UK GDPR (post-Brexit) is covered by `/arckit:dpia` with UK ICO context.

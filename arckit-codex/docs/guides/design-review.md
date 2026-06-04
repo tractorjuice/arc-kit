@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-Run `/arckit.hld-review` and `/arckit.dld-review` to apply structured quality gates before delivery teams start building.
+Run `/arckit:hld-review` and `/arckit:dld-review` to apply structured quality gates before delivery teams start building.
 
 ---
 
@@ -28,8 +28,8 @@ Run `/arckit.hld-review` and `/arckit.dld-review` to apply structured quality ga
 ## Command Usage
 
 ```bash
-/arckit.hld-review Review <vendor> high-level design for <project>
-/arckit.dld-review Review <vendor> detailed design for <project>
+/arckit:hld-review Review <vendor> high-level design for <project>
+/arckit:dld-review Review <vendor> detailed design for <project>
 ```
 
 Outputs (`reviews/ARC-<id>-HLDR-v1.0.md`, `reviews/ARC-<id>-DLDR-v1.0.md`) capture compliance results, gaps, and actions.

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.secure` generates a UK Government Secure by Design assessment for civilian department projects using NCSC CAF principles.
+`/arckit:secure` generates a UK Government Secure by Design assessment for civilian department projects using NCSC CAF principles.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.secure Create Secure by Design assessment for <system>
+/arckit:secure Create Secure by Design assessment for <system>
 ```
 
 Output: `projects/<id>/ARC-<id>-SECD-v1.0.md`
@@ -89,11 +89,11 @@ Output: `projects/<id>/ARC-<id>-SECD-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define requirements and data model | `/arckit.requirements`, `/arckit.data-model` |
-| Risk | Identify security risks | `/arckit.risk` |
-| Assessment | Create Secure by Design assessment | `/arckit.secure` |
-| Design | Implement security architecture | `/arckit.diagram`, `/arckit.hld-review` |
-| Operations | Operational security readiness | `/arckit.operationalize` |
+| Discovery | Define requirements and data model | `/arckit:requirements`, `/arckit:data-model` |
+| Risk | Identify security risks | `/arckit:risk` |
+| Assessment | Create Secure by Design assessment | `/arckit:secure` |
+| Design | Implement security architecture | `/arckit:diagram`, `/arckit:hld-review` |
+| Operations | Operational security readiness | `/arckit:operationalize` |
 
 ---
 
@@ -134,7 +134,7 @@ The [UK Government Cyber Security Standard](https://www.gov.uk/government/public
 - **Exception management** (clauses 4.3/4.4) — formal register for any non-compliance, with risk assessment and improvement plans
 - **Cyber Action Plan alignment** — departmental participation in the £210m cross-government investment across four pillars (Skills, Tooling, Resilience, Collaboration)
 
-The `/arckit.secure` assessment includes dedicated sections (9.1–9.4) for tracking GovAssure status, SbD confidence ratings, CSS exceptions, and Cyber Action Plan alignment alongside the existing CAF assessment.
+The `/arckit:secure` assessment includes dedicated sections (9.1–9.4) for tracking GovAssure status, SbD confidence ratings, CSS exceptions, and Cyber Action Plan alignment alongside the existing CAF assessment.
 
 ---
 
@@ -142,9 +142,9 @@ The `/arckit.secure` assessment includes dedicated sections (9.1–9.4) for trac
 
 [GovS 007: Security](https://www.gov.uk/government/publications/government-functional-standard-govs-007-security) is the parent functional standard for all protective security across central government. It defines nine principles, a security lifecycle, and protective security disciplines (physical, personnel, cyber, technical, industry).
 
-The `/arckit.secure` assessment maps GovS 007's nine principles to the CAF assessment evidence and related ArcKit artefacts (Section 10), demonstrating how operational security controls satisfy the higher-level governance requirements. Key security roles mandated by GovS 007 (SSRO, DSO, SIRO) are captured in both the security roles table and the approval sign-off section.
+The `/arckit:secure` assessment maps GovS 007's nine principles to the CAF assessment evidence and related ArcKit artefacts (Section 10), demonstrating how operational security controls satisfy the higher-level governance requirements. Key security roles mandated by GovS 007 (SSRO, DSO, SIRO) are captured in both the security roles table and the approval sign-off section.
 
-**Hierarchy**: GovS 007 → Cyber Security Standard → NCSC CAF → `/arckit.secure` assessment
+**Hierarchy**: GovS 007 → Cyber Security Standard → NCSC CAF → `/arckit:secure` assessment
 
 | GovS 007 Principle | Evidenced By |
 |---------------------|-------------|
@@ -162,13 +162,13 @@ The `/arckit.secure` assessment maps GovS 007's nine principles to the CAF asses
 
 ## NCSC Vulnerability Monitoring Service (VMS)
 
-The [VMS](https://www.ncsc.gov.uk/information/vulnerability-monitoring-service) is an NCSC service that scans internet-facing systems across 6,000+ public sector bodies, with benchmarks of **8-day domain-specific** and **32-day general** vulnerability fix times. Departments achieving 84% faster fix times through VMS enrollment. The `/arckit.secure` assessment tracks VMS enrollment, coverage, and remediation performance against these benchmarks in Sections 1 (CAF C2) and 6.1 (VMS Integration).
+The [VMS](https://www.ncsc.gov.uk/information/vulnerability-monitoring-service) is an NCSC service that scans internet-facing systems across 6,000+ public sector bodies, with benchmarks of **8-day domain-specific** and **32-day general** vulnerability fix times. Departments achieving 84% faster fix times through VMS enrollment. The `/arckit:secure` assessment tracks VMS enrollment, coverage, and remediation performance against these benchmarks in Sections 1 (CAF C2) and 6.1 (VMS Integration).
 
 ---
 
 ## Government Cyber Security Profession & Cyber Action Plan
 
-The [Government Cyber Security Profession](https://www.gov.uk/government/publications/government-cyber-security-profession) establishes a career framework with Certified Cyber Professional (CCP) certification, DDaT role alignment, and the Government Cyber Academy. The [£210m Cyber Action Plan](https://www.gov.uk/government/publications/government-cyber-action-plan) (February 2026) invests across four pillars: Skills & Workforce, Tooling & Infrastructure, Resilience & Response, and Collaboration & Sharing. The `/arckit.secure` assessment tracks profession participation (Section 11) and Cyber Action Plan alignment (Section 9.4).
+The [Government Cyber Security Profession](https://www.gov.uk/government/publications/government-cyber-security-profession) establishes a career framework with Certified Cyber Professional (CCP) certification, DDaT role alignment, and the Government Cyber Academy. The [£210m Cyber Action Plan](https://www.gov.uk/government/publications/government-cyber-action-plan) (February 2026) invests across four pillars: Skills & Workforce, Tooling & Infrastructure, Resilience & Response, and Collaboration & Sharing. The `/arckit:secure` assessment tracks profession participation (Section 11) and Cyber Action Plan alignment (Section 9.4).
 
 ---
 

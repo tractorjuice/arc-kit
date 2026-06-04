@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-Generate a sprint-ready backlog from existing ArcKit artefacts with `/arckit.backlog`. The command converts requirements into groomed stories, groups them into sprints, and exports markdown, CSV, and JSON for tooling.
+Generate a sprint-ready backlog from existing ArcKit artefacts with `/arckit:backlog`. The command converts requirements into groomed stories, groups them into sprints, and exports markdown, CSV, and JSON for tooling.
 
 ---
 
@@ -21,9 +21,9 @@ Generate a sprint-ready backlog from existing ArcKit artefacts with `/arckit.bac
 ## Command Patterns
 
 ```bash
-/arckit.backlog                      # default: 8 sprints, 20 pts each
-/arckit.backlog VELOCITY=25 SPRINTS=12 FORMAT=all
-/arckit.backlog PRIORITY=risk        # other options: value, moscow, multi
+/arckit:backlog                      # default: 8 sprints, 20 pts each
+/arckit:backlog VELOCITY=25 SPRINTS=12 FORMAT=all
+/arckit:backlog PRIORITY=risk        # other options: value, moscow, multi
 ```
 
 Outputs land in `projects/<id>/ARC-<id>-BKLG-v1.0.*`.
@@ -48,11 +48,11 @@ Outputs land in `projects/<id>/ARC-<id>-BKLG-v1.0.*`.
 - Acceptance criteria reflect regulatory constraints (WCAG, GDPR, security).
 - Risks flagged as HIGH appear in Sprint 1–2 for mitigation.
 - Each sprint finishes a vertical slice (discovery, build, test).
-- Service management work (e.g., `/arckit.servicenow`) placed before go-live.
+- Service management work (e.g., `/arckit:servicenow`) placed before go-live.
 
 ---
 
 ## Useful References
 
 - GOV.UK Service Manual on [Agile delivery](https://www.gov.uk/service-manual/agile-delivery) (estimation guidance).
-- `/arckit.traceability` to spot requirements without coverage before backlog generation.
+- `/arckit:traceability` to spot requirements without coverage before backlog generation.

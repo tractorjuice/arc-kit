@@ -2,9 +2,9 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.at-dsgvo` generates an **Austrian Data Protection Assessment** — the Austria-specific GDPR layer applied by the Datenschutzbehörde (DSB) under the Datenschutzgesetz (DSG 2018, BGBl. I Nr. 165/1999 as amended). Covers DSB enforcement patterns, §§ 12–13 DSG special provisions, image processing under § 12 DSG, and Austrian DPIA blacklist criteria.
+`/arckit:at-dsgvo` generates an **Austrian Data Protection Assessment** — the Austria-specific GDPR layer applied by the Datenschutzbehörde (DSB) under the Datenschutzgesetz (DSG 2018, BGBl. I Nr. 165/1999 as amended). Covers DSB enforcement patterns, §§ 12–13 DSG special provisions, image processing under § 12 DSG, and Austrian DPIA blacklist criteria.
 
-> **Run after** `/arckit.eu-rgpd` — this command supplements the EU GDPR baseline.
+> **Run after** `/arckit:eu-rgpd` — this command supplements the EU GDPR baseline.
 
 ---
 
@@ -21,7 +21,7 @@
 ## Command
 
 ```bash
-/arckit.at-dsgvo <project ID or processing description>
+/arckit:at-dsgvo <project ID or processing description>
 ```
 
 Output: `projects/<id>/ARC-<id>-ATDSG-v1.0.md`
@@ -48,10 +48,10 @@ Output: `projects/<id>/ARC-<id>-ATDSG-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| EU baseline | GDPR compliance | `/arckit.eu-rgpd` |
-| Austrian layer | DSB-specific assessment | `/arckit.at-dsgvo` |
-| High-risk | Full DPIA if blacklist criteria triggered | `/arckit.dpia` |
-| Critical entity | NISG obligations where applicable | `/arckit.at-nisg` |
+| EU baseline | GDPR compliance | `/arckit:eu-rgpd` |
+| Austrian layer | DSB-specific assessment | `/arckit:at-dsgvo` |
+| High-risk | Full DPIA if blacklist criteria triggered | `/arckit:dpia` |
+| Critical entity | NISG obligations where applicable | `/arckit:at-nisg` |
 
 ---
 
@@ -71,5 +71,5 @@ Output: `projects/<id>/ARC-<id>-ATDSG-v1.0.md`
 
 - **§ 12 DSG is stricter than GDPR**: Image processing rules in Austria are more restrictive than Article 6 GDPR — workplace and public-space CCTV needs explicit § 12 DSG analysis.
 - **DSB Blacklist**: Austria has published a national DPIA blacklist on top of the GDPR Article 35(4) list — this is checked separately.
-- **Run order**: This command supplements `/arckit.eu-rgpd`. Do not run in isolation.
+- **Run order**: This command supplements `/arckit:eu-rgpd`. Do not run in isolation.
 - **Community-contributed**: Output should be reviewed by qualified DSB-Beauftragter / DPO / Rechtsabteilung before reliance.

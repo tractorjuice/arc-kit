@@ -357,7 +357,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Matrix Date**: 2026-02-25
 - **Commands Documented**: 60
 - **Matrix Rows**: 54 (52 document-generating commands + 2 external documents)
-- **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.impact`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
+- **Note**: `/arckit:customize`, `/arckit:template-builder`, `/arckit:health`, `/arckit:search`, `/arckit:impact`, `/arckit:init`, and `/arckit:start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
 
@@ -377,14 +377,14 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-03-09 - Added Impact Analysis Command
 
-- **Added**: `/arckit.impact` command (60th ArcKit command) for blast radius analysis and reverse dependency tracing
+- **Added**: `/arckit:impact` command (60th ArcKit command) for blast radius analysis and reverse dependency tracing
 - **Not in matrix**: Diagnostic command with console-only output — no dependencies and no outputs consumed by other commands
 - **Updated**: Commands Documented count from 59 to 60
 - **Note**: Uses UserPromptSubmit pre-processing hook (`impact-scan.mjs`) to build a dependency graph with doc-to-doc edges for reverse traversal
 
 ### 2026-03-08 - Added Vendor Scoring Command
 
-- **Added**: `/arckit.score` command (59th ArcKit command) for structured vendor scoring with JSON storage, comparison, and audit trail
+- **Added**: `/arckit:score` command (59th ArcKit command) for structured vendor scoring with JSON storage, comparison, and audit trail
 - **Added**: score row and column to dependency matrix
 - **Updated**: Tier 7 Procurement to include score command
 - **Dependencies**: evaluate (M), requirements (M)
@@ -394,37 +394,37 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-03-08 - Added Project Search Command
 
-- **Added**: `/arckit.search` command (58th ArcKit command) for keyword, type, and requirement ID search across all project artifacts
+- **Added**: `/arckit:search` command (58th ArcKit command) for keyword, type, and requirement ID search across all project artifacts
 - **Not in matrix**: Diagnostic/query command with console-only output — no dependencies and no outputs consumed by other commands
 - **Updated**: Commands Documented count from 57 to 58
 - **Note**: Uses UserPromptSubmit pre-processing hook (`search-scan.mjs`) to index artifacts before search
 
 ### 2026-03-08 - Added DFD Command to Matrix
 
-- **Added**: `/arckit.dfd` row and column to dependency matrix
+- **Added**: `/arckit:dfd` row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include dfd command
 - **Dependencies**: requirements (M), data-model (R), principles (O), diagram (O)
 - **Consumed by**: traceability (O), analyze (O), story (R), pages (R), presentation (O)
 - **Note**: Multi-instance document type (ARC-*-DFD-{NUM}-v*.md); generates Yourdon-DeMarco Data Flow Diagrams
 - **Updated**: Matrix Rows from 53 to 54
-- **Added**: `/arckit.init` to utility command exclusion note
+- **Added**: `/arckit:init` to utility command exclusion note
 
 ### 2026-03-06 - Added Framework, Glossary, and Maturity Model Commands
 
-- **Added**: `/arckit.framework` command (55th ArcKit command) for transforming architecture artifacts into a structured, reusable framework
+- **Added**: `/arckit:framework` command (55th ArcKit command) for transforming architecture artifacts into a structured, reusable framework
 - **Added**: framework row and column to dependency matrix
 - **Updated**: Tier 5 Strategic Planning to include framework command
 - **Dependencies**: principles (M), requirements (M), stakeholders (R), strategy (R), data-model (R), research (R)
 - **Consumed by**: glossary (R), maturity-model (R), story (R), pages (R), presentation (O)
 - **Note**: Agent-delegating command using arckit-framework agent for synthesis
 
-- **Added**: `/arckit.glossary` command (56th ArcKit command) for generating comprehensive project glossary
+- **Added**: `/arckit:glossary` command (56th ArcKit command) for generating comprehensive project glossary
 - **Added**: glossary row and column to dependency matrix
 - **Updated**: Tier 5 Strategic Planning to include glossary command
 - **Dependencies**: requirements (R), data-model (R)
 - **Consumed by**: story (R), pages (R), presentation (O)
 
-- **Added**: `/arckit.maturity-model` command (57th ArcKit command) for generating capability maturity model
+- **Added**: `/arckit:maturity-model` command (57th ArcKit command) for generating capability maturity model
 - **Added**: maturity-model row and column to dependency matrix
 - **Updated**: Tier 13 Compliance Assessment to include maturity-model command
 - **Dependencies**: principles (R)
@@ -435,36 +435,36 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-03-02 - Added Template Builder Command
 
-- **Added**: `/arckit.template-builder` command (54th ArcKit command) for creating new document templates through interactive interview
+- **Added**: `/arckit:template-builder` command (54th ArcKit command) for creating new document templates through interactive interview
 - **Not in matrix**: Utility command that generates community-origin templates, guides, and optional shareable bundles — no dependencies and no outputs consumed by other commands
 - **Updated**: Commands Documented count from 53 to 54
 - **Note**: Introduces three-tier origin model (Official/Custom/Community) for templates and guides
 
 ### 2026-02-25 - Added Architecture Conformance Assessment Command
 
-- **Added**: `/arckit.conformance` command (52nd ArcKit command) for systematic decided-vs-designed conformance checking
+- **Added**: `/arckit:conformance` command (52nd ArcKit command) for systematic decided-vs-designed conformance checking
 - **Added**: conformance row and column to dependency matrix
 - **Updated**: Tier 13 Compliance Assessment to include conformance command
 - **Dependencies**: principles (M), adr (M), requirements (R), hld-review (R), dld-review (R), principles-compliance (R), traceability (R), HLD (R), DLD (R), risk (O), devops (O)
 - **Consumed by**: analyze (O), service-assessment (O), story (R), pages (R), presentation (O)
 - **Doc ID**: `ARC-{PID}-CONF-v{VERSION}`
-- **Note**: Bridges `/arckit.health` (quick metadata scan) and `/arckit.analyze` (deep governance) with 12 conformance checks covering ADR implementation, cross-decision consistency, architecture drift, technical debt, and custom constraint rules
+- **Note**: Bridges `/arckit:health` (quick metadata scan) and `/arckit:analyze` (deep governance) with 12 conformance checks covering ADR implementation, cross-decision consistency, architecture drift, technical debt, and custom constraint rules
 
 ### 2026-02-20 - Added Health Check Command
 
-- **Added**: `/arckit.health` command (51st ArcKit command) for scanning projects for stale research, forgotten ADRs, unresolved conditions, orphaned requirements, missing traceability, and version drift
+- **Added**: `/arckit:health` command (51st ArcKit command) for scanning projects for stale research, forgotten ADRs, unresolved conditions, orphaned requirements, missing traceability, and version drift
 - **Not in matrix**: Diagnostic command with console-only output — no dependencies and no outputs consumed by other commands
 - **Updated**: Commands Documented count from 50 to 51
 
 ### 2026-02-20 - Research Knowledge Compounding
 
-- **Updated**: `/arckit.research` now spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` from research findings
+- **Updated**: `/arckit:research` now spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` from research findings
 - **Note**: New output files are standalone knowledge — not consumed by other commands via the dependency matrix
 - **Flag**: `--no-spawn` skips knowledge compounding
 
 ### 2026-02-19 - Added Presentation Command
 
-- **Added**: `/arckit.presentation` command (50th ArcKit command) for generating MARP-format slide decks from project artifacts
+- **Added**: `/arckit:presentation` command (50th ArcKit command) for generating MARP-format slide decks from project artifacts
 - **Added**: presentation row and column to dependency matrix
 - **Updated**: Tier 14 to include presentation alongside story
 - **Dependencies**: All artifacts (R) — reads whatever is available, minimum 3 recommended
@@ -473,7 +473,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-02-09 - Added GCP Research Command
 
-- **Added**: `/arckit.gcp-research` command (47th ArcKit command) for Google Cloud-specific technology research using Google Developer Knowledge MCP server
+- **Added**: `/arckit:gcp-research` command (47th ArcKit command) for Google Cloud-specific technology research using Google Developer Knowledge MCP server
 - **Added**: gcp-research row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include gcp-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
@@ -482,13 +482,13 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-02-05 - Added Template Customization Command
 
-- **Added**: `/arckit.customize` command (46th ArcKit command) for copying templates to `.arckit/templates-custom/`
+- **Added**: `/arckit:customize` command (46th ArcKit command) for copying templates to `.arckit/templates-custom/`
 - **Not in matrix**: Utility command with no dependencies and no outputs consumed by other commands
 - **Purpose**: Enables template customization that persists across `arckit init` updates
 
 ### 2026-02-05 - Added Architecture Strategy Command
 
-- **Added**: `/arckit.strategy` command (45th ArcKit command) for synthesising strategic artifacts into executive-level Architecture Strategy document
+- **Added**: `/arckit:strategy` command (45th ArcKit command) for synthesising strategic artifacts into executive-level Architecture Strategy document
 - **Added**: strategy row and column to dependency matrix
 - **Updated**: Tier 5 Strategic Planning to include strategy command
 - **Dependencies**: principles (M), stakeholders (M), wardley (R), roadmap (R), sobc (R), risk (O)
@@ -498,7 +498,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-02-04 - Added Trello Export Command
 
-- **Added**: `/arckit.trello` command (44th ArcKit command) for exporting product backlog to Trello boards
+- **Added**: `/arckit:trello` command (44th ArcKit command) for exporting product backlog to Trello boards
 - **Added**: trello row and column to dependency matrix
 - **Added**: Tier 10 Backlog Export for trello command
 - **Dependencies**: backlog (M) — reads `ARC-*-BKLG-*.json`
@@ -507,7 +507,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-02-01 - Added Data Source Discovery Command
 
-- **Added**: `/arckit.datascout` command (43rd ArcKit command) for discovering external data sources (APIs, datasets, open data portals, commercial providers)
+- **Added**: `/arckit:datascout` command (43rd ArcKit command) for discovering external data sources (APIs, datasets, open data portals, commercial providers)
 - **Added**: datascout row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include datascout command
 - **Dependencies**: requirements (M), data-model (O), stakeholders (R), principles (R)
@@ -516,7 +516,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-01-29 - Added AWS Research Command
 
-- **Added**: `/arckit.aws-research` command (42nd ArcKit command) for AWS-specific technology research using AWS Knowledge MCP server
+- **Added**: `/arckit:aws-research` command (42nd ArcKit command) for AWS-specific technology research using AWS Knowledge MCP server
 - **Added**: aws-research row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include aws-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
@@ -525,7 +525,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-01-29 - Added Azure Research Command
 
-- **Added**: `/arckit.azure-research` command (41st ArcKit command) for Azure-specific technology research using Microsoft Learn MCP server
+- **Added**: `/arckit:azure-research` command (41st ArcKit command) for Azure-specific technology research using Microsoft Learn MCP server
 - **Added**: azure-research row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include azure-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
@@ -549,21 +549,21 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-01-22 - Added Pages Command
 
-- **Added**: `/arckit.pages` command (40th ArcKit command) for GitHub Pages documentation site generation with Mermaid diagram support
+- **Added**: `/arckit:pages` command (40th ArcKit command) for GitHub Pages documentation site generation with Mermaid diagram support
 - **Category**: Documentation & Publishing
 - **Dependencies**: None (utility command)
 
 ### 2026-01-21 - Added FinOps Command
 
-- **Added**: `/arckit.finops` command (39th ArcKit command) for FinOps strategy with cloud cost management, optimization, governance, and forecasting
+- **Added**: `/arckit:finops` command (39th ArcKit command) for FinOps strategy with cloud cost management, optimization, governance, and forecasting
 - **Updated**: Tier 11 Operations to include finops command
 - **Dependencies**: requirements (M), devops (R), diagram (R), principles (R)
 
 ### 2026-01-09 - Added DevOps, MLOps, and Operationalize Commands
 
-- **Added**: `/arckit.devops` command (34th ArcKit command) for DevOps strategy with CI/CD pipelines, IaC, container orchestration
-- **Added**: `/arckit.mlops` command (35th ArcKit command) for MLOps strategy with model lifecycle, training pipelines, serving, monitoring
-- **Added**: `/arckit.operationalize` command (36th ArcKit command) for operational readiness with SRE practices, runbooks, DR/BCP
+- **Added**: `/arckit:devops` command (34th ArcKit command) for DevOps strategy with CI/CD pipelines, IaC, container orchestration
+- **Added**: `/arckit:mlops` command (35th ArcKit command) for MLOps strategy with model lifecycle, training pipelines, serving, monitoring
+- **Added**: `/arckit:operationalize` command (36th ArcKit command) for operational readiness with SRE practices, runbooks, DR/BCP
 - **Updated**: Tier 11 Operations to include devops, mlops (AI projects), operationalize commands
 - **Updated**: All 6 critical paths to include new commands in operations phase
 - **Dependencies**:
@@ -573,7 +573,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2025-01-06 - Added Platform Design Command
 
-- **Added**: `/arckit.platform-design` command (33rd ArcKit command) for multi-sided platform strategy design using Platform Design Toolkit (PDT) methodology
+- **Added**: `/arckit:platform-design` command (33rd ArcKit command) for multi-sided platform strategy design using Platform Design Toolkit (PDT) methodology
 - **Added**: platform-design row and column to dependency matrix
 - **Added**: New critical path: "UK Government Platform Strategy Path" showing where platform-design fits
 - **Added**: Tier 5 "Strategic Planning (Platform Strategy)" for platform-design placement
@@ -585,7 +585,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2025-11-04 - Added Principles Compliance Command
 
-- **Added**: `/arckit.principles-compliance` command for measuring architecture principles adherence
+- **Added**: `/arckit:principles-compliance` command for measuring architecture principles adherence
 - **Added**: principles-compliance row and column to dependency matrix
 - **Updated**: All critical paths to include principles-compliance assessment
 - **Updated**: Tier 13 description to include principles-compliance command

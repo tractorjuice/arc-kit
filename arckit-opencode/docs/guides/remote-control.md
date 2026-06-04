@@ -32,23 +32,23 @@ Architecture governance is inherently collaborative and multi-context. You draft
 
 #### 1. Kick Off Research, Monitor from Mobile
 
-ArcKit's research agents (`/arckit.research`, `/arckit.datascout`, `/arckit.aws-research`, `/arckit.azure-research`, `/arckit.gcp-research`) perform dozens of web searches and produce detailed market analysis, vendor evaluations, and cloud service comparisons. These can take several minutes.
+ArcKit's research agents (`/arckit:research`, `/arckit:datascout`, `/arckit:aws-research`, `/arckit:azure-research`, `/arckit:gcp-research`) perform dozens of web searches and produce detailed market analysis, vendor evaluations, and cloud service comparisons. These can take several minutes.
 
 With Remote Control, you can start a research task at your desk:
 
 ```text
-/arckit.research Evaluate low-code platforms for citizen development
+/arckit:research Evaluate low-code platforms for citizen development
 ```
 
 Then step away. Open the Claude app on your phone to check progress, review the output when it's ready, and request follow-up analysis — all from the same session.
 
 #### 2. Architecture Review Meetings
 
-During a design review or architecture board meeting, you can present ArcKit outputs on a shared screen (via browser at `claude.ai/code`) while controlling the session from your phone or laptop. Need to regenerate a diagram with different scope? Run `/arckit.diagram` from your phone while the audience watches the output appear on the big screen.
+During a design review or architecture board meeting, you can present ArcKit outputs on a shared screen (via browser at `claude.ai/code`) while controlling the session from your phone or laptop. Need to regenerate a diagram with different scope? Run `/arckit:diagram` from your phone while the audience watches the output appear on the big screen.
 
 #### 3. Stakeholder Walkthroughs
 
-Walking a stakeholder through a business case (`/arckit.sobc`) or risk register (`/arckit.risk`)? Open the session on their screen via the browser URL, then drive the conversation from your own device. They see the artifacts in real-time without needing their own Claude Code setup.
+Walking a stakeholder through a business case (`/arckit:sobc`) or risk register (`/arckit:risk`)? Open the session on their screen via the browser URL, then drive the conversation from your own device. They see the artifacts in real-time without needing their own Claude Code setup.
 
 #### 4. Multi-Site and Field Work
 
@@ -56,7 +56,7 @@ Visiting a data centre, attending a vendor briefing, or working from a client si
 
 #### 5. End-of-Day Handoff to Yourself
 
-Start a complex requirements specification (`/arckit.requirements`) before leaving the office. Continue reviewing and refining it from your tablet at home. The session, conversation history, and all generated files persist seamlessly.
+Start a complex requirements specification (`/arckit:requirements`) before leaving the office. Continue reviewing and refining it from your tablet at home. The session, conversation history, and all generated files persist seamlessly.
 
 ---
 
@@ -136,11 +136,11 @@ Your ArcKit project files, architecture artifacts, and MCP server connections re
 
 Here's a practical workflow combining ArcKit and Remote Control for a typical architecture engagement:
 
-1. **Morning at your desk** — Start a new ArcKit project, run `/arckit.principles` and `/arckit.stakeholders` from your terminal
-2. **Commute** — Open the Claude app, review the generated artifacts, run `/arckit.requirements` from your phone
-3. **Client meeting** — Share the session URL on a conference room screen, run `/arckit.diagram` and `/arckit.wardley` to present visual artifacts live
+1. **Morning at your desk** — Start a new ArcKit project, run `/arckit:principles` and `/arckit:stakeholders` from your terminal
+2. **Commute** — Open the Claude app, review the generated artifacts, run `/arckit:requirements` from your phone
+3. **Client meeting** — Share the session URL on a conference room screen, run `/arckit:diagram` and `/arckit:wardley` to present visual artifacts live
 4. **Afternoon** — Back at your desk, continue in the terminal to run research agents and vendor evaluation
-5. **Evening review** — From your tablet, review outputs and run `/arckit.adr` to capture key decisions before they go cold
+5. **Evening review** — From your tablet, review outputs and run `/arckit:adr` to capture key decisions before they go cold
 
 ---
 

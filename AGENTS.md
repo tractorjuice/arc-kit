@@ -15,7 +15,7 @@ ArcKit is a multi-target architecture governance toolkit. The canonical plugin l
 
 ## Coding Style & Naming Conventions
 
-Use existing patterns before adding new abstractions. Python code uses standard 4-space indentation. JavaScript hook and validator files are ESM `.mjs` modules. Command and skill names use lowercase hyphenated forms: Claude commands use `/arckit.command`, Gemini uses `/arckit:command`, Codex skills use `$arckit-command`. ArcKit artifact filenames must follow `ARC-NNN-TYPE-vN.N.md`; multi-instance artifacts include a sequence, for example `ARC-001-ADR-001-v1.0.md`.
+Use existing patterns before adding new abstractions. Python code uses standard 4-space indentation. JavaScript hook and validator files are ESM `.mjs` modules. Command and skill names use lowercase hyphenated forms. Slash commands use the colon namespace `/arckit:command` (Claude, Gemini, OpenCode); Codex skills use `$arckit-command`; Copilot uses `/arckit-command`. ArcKit artifact filenames must follow `ARC-NNN-TYPE-vN.N.md`; multi-instance artifacts include a sequence, for example `ARC-001-ADR-001-v1.0.md`.
 
 ## Testing Guidelines
 

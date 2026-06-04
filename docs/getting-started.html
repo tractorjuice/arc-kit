@@ -419,14 +419,14 @@ claude</code></pre></div>
                 <div class="app-step">
                     <span class="app-step__number">4</span>
                     <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
-                    <div class="app-code-block">/arckit.start</div>
+                    <div class="app-code-block">/arckit:start</div>
                     <p class="govuk-body govuk-!-margin-top-3">Shows project status, connected tools, command decision tree, and recommended next steps.</p>
                 </div>
 
                 <div class="app-step">
                     <span class="app-step__number">5</span>
                     <h2 class="govuk-heading-m app-step__title">Initialize Project Structure</h2>
-                    <div class="app-code-block">/arckit.init</div>
+                    <div class="app-code-block">/arckit:init</div>
                     <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
                 </div>
             </div>
@@ -556,14 +556,14 @@ opencode</code></pre></div>
                 <div class="app-step">
                     <span class="app-step__number">4</span>
                     <h2 class="govuk-heading-m app-step__title">Get Oriented</h2>
-                    <div class="app-code-block">/arckit.start</div>
+                    <div class="app-code-block">/arckit:start</div>
                     <p class="govuk-body govuk-!-margin-top-3">Shows project status, connected tools, command decision tree, and recommended next steps.</p>
                 </div>
 
                 <div class="app-step">
                     <span class="app-step__number">5</span>
                     <h2 class="govuk-heading-m app-step__title">Initialize Project Structure</h2>
-                    <div class="app-code-block">/arckit.init</div>
+                    <div class="app-code-block">/arckit:init</div>
                     <p class="govuk-body govuk-!-margin-top-3">Creates the <code>projects/</code> directory structure for architecture artifacts.</p>
                 </div>
             </div>
@@ -622,17 +622,17 @@ arckit init my-project --ai copilot</code></pre></div>
                 <div class="govuk-notification-banner__content">
                     <h3 class="govuk-notification-banner__heading">Vibe Start &mdash; the 3-prompt super prompt</h3>
                     <p class="govuk-body">Skip the decision tree. Three prompts take you from empty repo to a fully-populated project. ArcKit chains commands via the <code>handoffs:</code> metadata in each command's frontmatter.</p>
-                    <div class="app-install-note">Use your platform syntax: Claude Code/OpenCode use <code>/arckit.command</code>, Gemini CLI uses <code>/arckit:command</code>, Codex CLI uses <code>$arckit-command</code>, and GitHub Copilot uses <code>/arckit-command</code>.</div>
+                    <div class="app-install-note">Use your platform syntax: Claude Code/OpenCode use <code>/arckit:command</code>, Gemini CLI uses <code>/arckit:command</code>, Codex CLI uses <code>$arckit-command</code>, and GitHub Copilot uses <code>/arckit-command</code>.</div>
                     <p class="govuk-body govuk-!-margin-top-3"><strong>Claude Code / OpenCode example:</strong></p>
-                    <div class="app-code-block govuk-!-margin-top-3">/arckit.init  This is a project for {one-line description of what you're building}.</div>
-                    <div class="app-code-block govuk-!-margin-top-2">/arckit.principles</div>
+                    <div class="app-code-block govuk-!-margin-top-3">/arckit:init  This is a project for {one-line description of what you're building}.</div>
+                    <div class="app-code-block govuk-!-margin-top-2">/arckit:principles</div>
                     <p class="govuk-body govuk-!-margin-top-3"><strong>Codex CLI example:</strong></p>
                     <div class="app-code-block govuk-!-margin-top-2">$arckit-init  This is a project for {one-line description of what you're building}.</div>
                     <div class="app-code-block govuk-!-margin-top-2">$arckit-principles</div>
                     <div class="app-code-block govuk-!-margin-top-2">Now create all the artifacts. Take your time. Do not stop until complete.</div>
                     <p class="govuk-body govuk-!-margin-top-3"><strong>When to use it:</strong> greenfield projects, demos, proofs of concept, vibe-coding sessions where you want a complete first-pass set of artifacts to react to.</p>
-                    <p class="govuk-body"><strong>When not to use it:</strong> heavily regulated work (Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off; existing projects with artifacts already on disk (run <code>/arckit.navigator</code> first); token-constrained sessions.</p>
-                    <p class="govuk-body govuk-!-margin-bottom-0"><strong>If the run stalls:</strong> resume with <em>"Continue from where you stopped. Do not stop until complete."</em> Then run your platform's health command (<code>/arckit.health</code>, <code>/arckit:health</code>, <code>$arckit-health</code>, or <code>/arckit-health</code>) to spot anything skipped. Full guide: <a href="guide-viewer.html?guide=start" class="govuk-link">Getting Started with ArcKit</a>.</p>
+                    <p class="govuk-body"><strong>When not to use it:</strong> heavily regulated work (Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off; existing projects with artifacts already on disk (run <code>/arckit:navigator</code> first); token-constrained sessions.</p>
+                    <p class="govuk-body govuk-!-margin-bottom-0"><strong>If the run stalls:</strong> resume with <em>"Continue from where you stopped. Do not stop until complete."</em> Then run your platform's health command (<code>/arckit:health</code>, <code>/arckit:health</code>, <code>$arckit-health</code>, or <code>/arckit-health</code>) to spot anything skipped. Full guide: <a href="guide-viewer.html?guide=start" class="govuk-link">Getting Started with ArcKit</a>.</p>
                 </div>
             </div>
 
@@ -642,17 +642,17 @@ arckit init my-project --ai copilot</code></pre></div>
                     <h2 class="govuk-notification-banner__title" id="gds-harness-title">Faster path (Claude Code only)</h2>
                 </div>
                 <div class="govuk-notification-banner__content">
-                    <h3 class="govuk-notification-banner__heading">The GDS Harness &mdash; <code>/arckit.build</code></h3>
+                    <h3 class="govuk-notification-banner__heading">The GDS Harness &mdash; <code>/arckit:build</code></h3>
                     <p class="govuk-body">New in v4.13.0. Run one command and the whole architecture builds itself: requirements, stakeholder analysis, ADRs, risk register, business case, designs, Secure-by-Design assessment, DPIA, diagrams, traceability matrix, plus the post-build health check. Reads a YAML recipe, dispatches subagents in parallel waves, commits each wave atomically.</p>
-                    <div class="app-code-block">/arckit.build 001 --plan</div>
-                    <div class="app-code-block govuk-!-margin-top-2">/arckit.build 001</div>
-                    <div class="app-code-block govuk-!-margin-top-2">/arckit.build 002 --recipe uk-mod-sovereign</div>
-                    <div class="app-code-block govuk-!-margin-top-2">/arckit.build 003 --recipe uae-federal-ai</div>
-                    <div class="app-code-block govuk-!-margin-top-2">/arckit.build 004 --recipe ca-federal-fitaa</div>
+                    <div class="app-code-block">/arckit:build 001 --plan</div>
+                    <div class="app-code-block govuk-!-margin-top-2">/arckit:build 001</div>
+                    <div class="app-code-block govuk-!-margin-top-2">/arckit:build 002 --recipe uk-mod-sovereign</div>
+                    <div class="app-code-block govuk-!-margin-top-2">/arckit:build 003 --recipe uae-federal-ai</div>
+                    <div class="app-code-block govuk-!-margin-top-2">/arckit:build 004 --recipe ca-federal-fitaa</div>
                     <p class="govuk-body govuk-!-margin-top-3"><strong>Four built-in recipes:</strong> <code>uk-saas</code> (38 targets, UK civilian SaaS), <code>uk-mod-sovereign</code> (38 targets, MOD / air-gapped with JSP 936 and MOD Secure by Design), <code>uae-federal-ai</code> (48 targets, UAE Cabinet agentic AI decree compliance with all 12 UAE community commands), and <code>ca-federal-fitaa</code> (Canada Federal FITAA-class compliance suite — all 12 ca-* commands plus core architecture governance).</p>
                     <p class="govuk-body"><strong>Every recipe ships a research wave by default.</strong> An upstream <code>ORG_RESEARCH</code> target researches the target organisation once per repo (output to <code>projects/000-global/research/</code>), then per-project technology research runs in parallel (general market, AWS, Azure, GCP, plus <code>GOV_REUSE</code> for UK projects). Skip what you don't need with <code>--exclude AZURE_RESEARCH</code> etc.</p>
                     <p class="govuk-body"><strong>Customize:</strong> copy a recipe to <code>.arckit/recipes/{name}.yaml</code> and edit. The harness reads project overrides first, falling back to the plugin defaults &mdash; your customisations survive plugin updates.</p>
-                    <p class="govuk-body"><strong>Resumable:</strong> state persists to <code>projects/{P}/.arckit/state.json</code>. If a wave fails, fix the underlying issue and run <code>/arckit.build 001 --resume</code> to pick up exactly where it stopped.</p>
+                    <p class="govuk-body"><strong>Resumable:</strong> state persists to <code>projects/{P}/.arckit/state.json</code>. If a wave fails, fix the underlying issue and run <code>/arckit:build 001 --resume</code> to pick up exactly where it stopped.</p>
                     <p class="govuk-body"><strong>Codex note:</strong> this command is not generated for Codex. The build harness depends on Claude Code's parallel agent dispatch and plugin hook behaviour, so there is no supported <code>$arckit-build</code> skill.</p>
                     <p class="govuk-body govuk-!-margin-bottom-0"><strong>When to use it:</strong> end-to-end governance builds where you want a full template-driven artefact set committed in atomic, reviewable waves. Full guide: <a href="guide-viewer.html?guide=build" class="govuk-link">Build Harness Guide</a>.</p>
                 </div>
@@ -662,22 +662,22 @@ arckit init my-project --ai copilot</code></pre></div>
             <div class="app-step">
                 <span class="app-step__number">6</span>
                 <h2 class="govuk-heading-m app-step__title">Follow GDS Phases</h2>
-                <div class="app-install-note">Commands shown use Claude Code / OpenCode syntax (<code>/arckit.command</code>). For Gemini CLI use <code>/arckit:command</code>. For Codex CLI use <code>$arckit-command</code>. For GitHub Copilot use <code>/arckit-command</code>.</div>
+                <div class="app-install-note">Commands shown use Claude Code / OpenCode syntax (<code>/arckit:command</code>). For Gemini CLI use <code>/arckit:command</code>. For Codex CLI use <code>$arckit-command</code>. For GitHub Copilot use <code>/arckit-command</code>.</div>
 
                 <h3 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Discovery</h3>
-                <div class="app-code-block">/arckit.stakeholders Analyze stakeholders for appointment system</div>
-                <div class="app-code-block govuk-!-margin-top-2">/arckit.risk Create risk register</div>
-                <div class="app-code-block govuk-!-margin-top-2">/arckit.sobc Generate Strategic Outline Business Case</div>
+                <div class="app-code-block">/arckit:stakeholders Analyze stakeholders for appointment system</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit:risk Create risk register</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit:sobc Generate Strategic Outline Business Case</div>
 
                 <h3 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Alpha</h3>
-                <div class="app-code-block">/arckit.requirements Define requirements</div>
-                <div class="app-code-block govuk-!-margin-top-2">/arckit.principles Establish architecture principles</div>
-                <div class="app-code-block govuk-!-margin-top-2">/arckit.wardley Create Wardley Map for build vs buy decisions</div>
+                <div class="app-code-block">/arckit:requirements Define requirements</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit:principles Establish architecture principles</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit:wardley Create Wardley Map for build vs buy decisions</div>
 
                 <h3 class="govuk-heading-s govuk-!-margin-top-4 app-phase-heading">Beta</h3>
-                <div class="app-code-block">/arckit.hld-review Review High-Level Design</div>
-                <div class="app-code-block govuk-!-margin-top-2">/arckit.diagram Create C4 architecture diagrams</div>
-                <div class="app-code-block govuk-!-margin-top-2">/arckit.analyze Comprehensive gap analysis</div>
+                <div class="app-code-block">/arckit:hld-review Review High-Level Design</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit:diagram Create C4 architecture diagrams</div>
+                <div class="app-code-block govuk-!-margin-top-2">/arckit:analyze Comprehensive gap analysis</div>
             </div>
 
             <div class="govuk-warning-text govuk-!-margin-top-4">

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.traceability` produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.
+`/arckit:traceability` produces a forward/backward traceability matrix linking requirements to design, implementation, tests, and operational artefacts.
 
 ---
 
@@ -22,7 +22,7 @@ Run after design reviews or at least once per sprint to maintain coverage.
 ## Command
 
 ```bash
-/arckit.traceability Generate traceability matrix for <project>
+/arckit:traceability Generate traceability matrix for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-TRAC-v1.0.md` (traceability matrix with coverage metrics and gap analysis)
@@ -36,7 +36,7 @@ Output: `projects/<id>/ARC-<id>-TRAC-v1.0.md` (traceability matrix with coverage
 | Requirement | Design | Implementation | Tests | Ops |
 |-------------|--------|----------------|-------|-----|
 | FR-012 Payment approvals | PaymentService (HLD), Approval Workflow (DLD) | `services/payment.py` | `tests/payment/test_approvals.py` | Runbook section 3 |
-| NFR-S-004 Encryption at rest | Security architecture | Terraform KMS module | `tests/security/test_kms_rotation.py` | `/arckit.secure` evidence |
+| NFR-S-004 Encryption at rest | Security architecture | Terraform KMS module | `tests/security/test_kms_rotation.py` | `/arckit:secure` evidence |
 
 Gaps appear when any column lacks references.
 
@@ -47,7 +47,7 @@ Gaps appear when any column lacks references.
 - Missing tests? Create stories and flag as release blocker if “MUST” requirement.
 - Design mismatch? Update HLD/DLD or retire redundant components.
 - Orphan artefacts? Remove or link to new requirements to avoid scope creep.
-- Compliance evidence absent? Run relevant commands (`/arckit.secure`, `/arckit.dpia`, `/arckit.ai-playbook`).
+- Compliance evidence absent? Run relevant commands (`/arckit:secure`, `/arckit:dpia`, `/arckit:ai-playbook`).
 
 ---
 

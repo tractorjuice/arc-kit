@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.health` scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console without creating a file.
+`/arckit:health` scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console without creating a file.
 
 ---
 
@@ -18,12 +18,12 @@ Architecture governance produces dozens of artifacts over weeks and months. With
 - **Version drift** -- multiple artifact versions where the latest has gone stale
 - **Unincorporated external files** -- new external documents not yet reflected in architecture artifacts
 
-The `/arckit.health` command **performs a diagnostic scan** that:
+The `/arckit:health` command **performs a diagnostic scan** that:
 
 - Applies seven detection rules across all projects and artifacts
 - Assigns severity levels (HIGH, MEDIUM, LOW) to each finding
 - Provides specific remediation actions for every issue
-- Writes `docs/health.json` for dashboard integration with `/arckit.pages`
+- Writes `docs/health.json` for dashboard integration with `/arckit:pages`
 - Runs as a lightweight, repeatable check suitable for daily or weekly use
 
 ---
@@ -41,7 +41,7 @@ The `/arckit.health` command **performs a diagnostic scan** that:
 ## Command
 
 ```bash
-/arckit.health
+/arckit:health
 ```
 
 ### Arguments
@@ -54,13 +54,13 @@ The `/arckit.health` command **performs a diagnostic scan** that:
 
 ```bash
 # Scan a specific project
-/arckit.health PROJECT=001-payment-gateway
+/arckit:health PROJECT=001-payment-gateway
 
 # Show only high-severity issues
-/arckit.health SEVERITY=HIGH
+/arckit:health SEVERITY=HIGH
 
 # Check what will be stale by a future date
-/arckit.health SINCE=2026-06-01
+/arckit:health SINCE=2026-06-01
 ```
 
 Outputs: Console only (no file created). Also writes `docs/health.json` for dashboard integration.
@@ -93,7 +93,7 @@ The health check is a utility command that sits alongside the main workflow, pro
                      │
                      ▼
           ┌─────────────────────┐
-          │   /arckit.health    │  (run periodically)
+          │   /arckit:health    │  (run periodically)
           └──────────┬──────────┘
                      │
         ┌────────────┼────────────────┐
@@ -105,7 +105,7 @@ The health check is a utility command that sits alongside the main workflow, pro
  └────────────┘ └──────────┘  └──────────────┘
 ```
 
-**Best Practice**: Run the health check regularly -- before governance gates, after completing a batch of artifacts, or on a schedule using `/loop 30m /arckit.health SEVERITY=HIGH`.
+**Best Practice**: Run the health check regularly -- before governance gates, after completing a batch of artifacts, or on a schedule using `/loop 30m /arckit:health SEVERITY=HIGH`.
 
 ---
 
@@ -114,33 +114,33 @@ The health check is a utility command that sits alongside the main workflow, pro
 ### Scan All Projects
 
 ```bash
-/arckit.health
+/arckit:health
 ```
 
 ### Scan a Specific Project
 
 ```bash
-/arckit.health PROJECT=001-payment-gateway
+/arckit:health PROJECT=001-payment-gateway
 ```
 
 ### High-Severity Issues Only
 
 ```bash
-/arckit.health SEVERITY=HIGH
+/arckit:health SEVERITY=HIGH
 ```
 
 ### Future Staleness Check
 
 ```bash
 # What will be stale by June?
-/arckit.health SINCE=2026-06-01
+/arckit:health SINCE=2026-06-01
 ```
 
 ### Continuous Monitoring
 
 ```bash
 # Run every 30 minutes during architecture sessions
-/loop 30m /arckit.health SEVERITY=HIGH
+/loop 30m /arckit:health SEVERITY=HIGH
 ```
 
 ---
@@ -151,13 +151,13 @@ The health check is a utility command that sits alongside the main workflow, pro
 
 - **Use SEVERITY filtering for triage**: Start with `SEVERITY=HIGH` to address critical issues first, then work down to MEDIUM and LOW findings.
 
-- **Combine with /arckit.pages**: The health check writes `docs/health.json` automatically. Run `/arckit.pages` afterwards to see health data on your governance dashboard.
+- **Combine with /arckit:pages**: The health check writes `docs/health.json` automatically. Run `/arckit:pages` afterwards to see health data on your governance dashboard.
 
 - **Not all findings require action**: ORPHAN-REQ and MISSING-TRACE findings are flagged for awareness. The architect decides whether ADR coverage or traceability links are needed for each case.
 
 - **Use SINCE for planning**: The `SINCE` parameter lets you preview what will become stale by a future date, useful for scheduling research refreshes or review meetings.
 
-- **This is diagnostic, not analytical**: For deeper governance analysis that produces a formal report, use `/arckit.analyze` instead. The health check is lightweight and repeatable; the analyze command is comprehensive and artifact-producing.
+- **This is diagnostic, not analytical**: For deeper governance analysis that produces a formal report, use `/arckit:analyze` instead. The health check is lightweight and repeatable; the analyze command is comprehensive and artifact-producing.
 
 ---
 
@@ -167,11 +167,11 @@ After reviewing health check findings, typical next steps include:
 
 | Command | Purpose |
 |---------|---------|
-| `/arckit.analyze` | Perform deeper governance analysis producing a formal report |
-| `/arckit.conformance` | Systematic conformance checking against standards |
-| `/arckit.research` | Refresh stale research documents flagged by STALE-RSCH |
-| `/arckit.adr` | Create or review ADRs for forgotten decisions or orphaned requirements |
-| `/arckit.traceability` | Fix missing traceability links between ADRs and requirements |
+| `/arckit:analyze` | Perform deeper governance analysis producing a formal report |
+| `/arckit:conformance` | Systematic conformance checking against standards |
+| `/arckit:research` | Refresh stale research documents flagged by STALE-RSCH |
+| `/arckit:adr` | Create or review ADRs for forgotten decisions or orphaned requirements |
+| `/arckit:traceability` | Fix missing traceability links between ADRs and requirements |
 
 ---
 
@@ -207,7 +207,7 @@ PROJECT: 001-payment-gateway
 
   [HIGH] STALE-RSCH: research/ARC-001-RSCH-001-v1.0.md
     Last modified: 2025-06-15 (266 days ago)
-    Action: Re-run /arckit.research to refresh pricing and vendor data
+    Action: Re-run /arckit:research to refresh pricing and vendor data
 
   [HIGH] FORGOTTEN-ADR: decisions/ARC-001-ADR-003-v1.0.md
     Status: Proposed since 2025-12-01 (97 days without review)
@@ -226,9 +226,9 @@ PROJECT: 002-data-platform
 RECOMMENDED ACTIONS (prioritised)
 ----------------------------------
 1. [HIGH] Address 1 stale research document
-   Run: /arckit.research for affected projects
+   Run: /arckit:research for affected projects
 2. [HIGH] Review 1 forgotten ADR
    Schedule architecture review meeting
 3. [MEDIUM] Check 3 orphaned requirement sets
-   Run: /arckit.adr for requirements needing decisions
+   Run: /arckit:adr for requirements needing decisions
 ```

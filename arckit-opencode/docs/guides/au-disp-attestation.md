@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.au-disp-attestation` generates a Defence Industry Security Program (DISP) Member self-attestation pack. It consolidates the evidence base across the 4 DISP security domains (Governance, Personnel Security, Physical Security, Information &amp; Cyber), captures the Foreign Ownership Control & Influence (FOCI) declaration, surfaces the supply-chain security posture, and structures the annual board attestation that DISP membership requires.
+`/arckit:au-disp-attestation` generates a Defence Industry Security Program (DISP) Member self-attestation pack. It consolidates the evidence base across the 4 DISP security domains (Governance, Personnel Security, Physical Security, Information &amp; Cyber), captures the Foreign Ownership Control & Influence (FOCI) declaration, surfaces the supply-chain security posture, and structures the annual board attestation that DISP membership requires.
 
 DISP is the Department of Defence's supplier-side security accreditation. Level 2 (the most common operational ceiling for non-classified Defence work) requires demonstrable evidence across all four domains and depends on E8 ML2 as the cyber baseline. This pack is the consolidation artefact that the other AU commands feed into — run it last.
 
@@ -14,12 +14,12 @@ This is the consolidation artefact. It draws from every other AU command's outpu
 
 | Artefact | Purpose |
 |----------|---------|
-| `/arckit.au-e8-posture` (`ARC-<id>-AUE8-v1.0.md`) | E8 ML2+ baseline for the cyber domain |
-| `/arckit.au-ism-controls` (`ARC-<id>-AUISM-v1.0.md`) | ISM SoA underpinning Information & Cyber |
-| `/arckit.au-pia` (`ARC-<id>-AUPIA-v1.0.md`) | Personal information handling for Information & Cyber |
-| `/arckit.au-ndb-playbook` (`ARC-<id>-AUNDB-v1.0.md`) | Breach response capability |
-| `/arckit.au-pspf` (`ARC-<id>-AUPSPF-v1.0.md`) | PSPF maturity for Governance, Personnel, Physical, Information |
-| `/arckit.au-ai-assurance` (`ARC-<id>-AUAIA-v1.0.md`) | AI assurance for Defence-facing AI systems |
+| `/arckit:au-e8-posture` (`ARC-<id>-AUE8-v1.0.md`) | E8 ML2+ baseline for the cyber domain |
+| `/arckit:au-ism-controls` (`ARC-<id>-AUISM-v1.0.md`) | ISM SoA underpinning Information & Cyber |
+| `/arckit:au-pia` (`ARC-<id>-AUPIA-v1.0.md`) | Personal information handling for Information & Cyber |
+| `/arckit:au-ndb-playbook` (`ARC-<id>-AUNDB-v1.0.md`) | Breach response capability |
+| `/arckit:au-pspf` (`ARC-<id>-AUPSPF-v1.0.md`) | PSPF maturity for Governance, Personnel, Physical, Information |
+| `/arckit:au-ai-assurance` (`ARC-<id>-AUAIA-v1.0.md`) | AI assurance for Defence-facing AI systems |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, security advisor, FOCI signatory |
 | Risk register (`ARC-<id>-RISK-v1.0.md`) | Supplier-side risks |
 
@@ -28,7 +28,7 @@ This is the consolidation artefact. It draws from every other AU command's outpu
 ## Command
 
 ```bash
-/arckit.au-disp-attestation <project ID or service description>
+/arckit:au-disp-attestation <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AUDISP-v1.0.md`

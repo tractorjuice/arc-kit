@@ -2,18 +2,18 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-Use `/arckit.sobc` to produce HM Treasury Green Book Strategic Outline Business Cases. The command pulls from stakeholders, risks, and principles to assemble the five-case model with traceability back to ArcKit artefacts.
+Use `/arckit:sobc` to produce HM Treasury Green Book Strategic Outline Business Cases. The command pulls from stakeholders, risks, and principles to assemble the five-case model with traceability back to ArcKit artefacts.
 
 ---
 
 ## Flow at a Glance
 
 ```text
-1. /arckit.principles
-2. /arckit.stakeholders
-3. /arckit.risk
-4. /arckit.sobc   ← generates SOBC (`projects/<id>/ARC-<id>-SOBC-v1.0.md`)
-5. /arckit.requirements (only if SOBC approved)
+1. /arckit:principles
+2. /arckit:stakeholders
+3. /arckit:risk
+4. /arckit:sobc   ← generates SOBC (`projects/<id>/ARC-<id>-SOBC-v1.0.md`)
+5. /arckit:requirements (only if SOBC approved)
 ```
 
 *Do not skip steps 2–3: stakeholder drivers feed benefits; risks drive optimism bias and management case.*
@@ -36,10 +36,10 @@ Use `/arckit.sobc` to produce HM Treasury Green Book Strategic Outline Business 
 
 ```bash
 # minimal
-/arckit.sobc Create SOBC for NHS appointment booking modernisation
+/arckit:sobc Create SOBC for NHS appointment booking modernisation
 
 # emphasise public sector controls
-/arckit.sobc Create SOBC for HMRC cloud migration referencing TCoP and spend controls
+/arckit:sobc Create SOBC for HMRC cloud migration referencing TCoP and spend controls
 ```
 
 Outputs are markdown-first (`projects/<id>/ARC-<id>-SOBC-v1.0.md`). Use Docs → Export to produce PDF if needed.
@@ -61,8 +61,8 @@ Outputs are markdown-first (`projects/<id>/ARC-<id>-SOBC-v1.0.md`). Use Docs →
 
 | If outcome is… | Next step |
 |----------------|-----------|
-| Approved | Proceed to `/arckit.requirements`, update project plan, and start procurement preparation. |
-| Conditional | Address actions (often risk mitigations or cost refinements) then re-run `/arckit.sobc`. |
+| Approved | Proceed to `/arckit:requirements`, update project plan, and start procurement preparation. |
+| Conditional | Address actions (often risk mitigations or cost refinements) then re-run `/arckit:sobc`. |
 | Rejected | Revisit stakeholder goals, problem statement, or option appraisal; consider discovery reset. |
 
 Store the final SOBC alongside board minutes and upload to approval tooling as evidence.

@@ -4,7 +4,7 @@ description: "[COMMUNITY] Assess Austrian NISG obligations (BGBl. I Nr. 94/2025)
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified CISO / BMI-liaison / Rechtsabteilung before reliance. Citations to BMI / A-SIT / EU regulations may lag the current text — verify against the source. Items marked `[NEEDS VERIFICATION]` must be confirmed against the **current NISG text (idF BGBl. I Nr. 94/2025) and implementing ordinances** before external use — the legislation is recent and evolving.
 
-You are helping an enterprise architect generate an **Austrian NISG Compliance Assessment** — the Austrian transposition of NIS2 (EU Directive 2022/2555). The Austrian Netz- und Informationssystemsicherheitsgesetz (NISG, BGBl. I Nr. 111/2018 idF BGBl. I Nr. 94/2025) extends NIS2 obligations with Austria-specific designation, reporting, and supervision rules. Run this after `/arckit.eu-nis2` to add Austrian obligations that go beyond the EU baseline.
+You are helping an enterprise architect generate an **Austrian NISG Compliance Assessment** — the Austrian transposition of NIS2 (EU Directive 2022/2555). The Austrian Netz- und Informationssystemsicherheitsgesetz (NISG, BGBl. I Nr. 111/2018 idF BGBl. I Nr. 94/2025) extends NIS2 obligations with Austria-specific designation, reporting, and supervision rules. Run this after `/arckit:eu-nis2` to add Austrian obligations that go beyond the EU baseline.
 
 ## User Input
 
@@ -26,7 +26,7 @@ $ARGUMENTS
 **RECOMMENDED** (read if available, note if missing):
 
 - **NIS2** (EU NIS2 Assessment) — Extract: Annex I / Annex II classification, size threshold results, Article 21 ten-measure status, incident reporting baseline
-  - If missing: warn that `/arckit.at-nisg` should be run after `/arckit.eu-nis2` for best results
+  - If missing: warn that `/arckit:at-nisg` should be run after `/arckit:eu-nis2` for best results
 - **RISK** (Risk Register) — Extract: existing security risks, supply chain risks, third-party risks, business continuity risks
 - **SECD** (Secure by Design) — Extract: existing security controls, maturity assessments, security architecture decisions
 - **PRIN** (Architecture Principles, 000-global) — Extract: security baseline, incident response principles, supply chain policy
@@ -214,21 +214,21 @@ Incident Reporting: {Ready / Gap — 24h/72h capability}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-1. {If no eu-nis2 baseline: run /arckit.eu-nis2 first}
-2. {If personal data in security monitoring: run /arckit.at-dsgvo}
-3. Run /arckit.secure to implement Art. 21 controls
-4. Run /arckit.risk to register NISG gaps
+1. {If no eu-nis2 baseline: run /arckit:eu-nis2 first}
+2. {If personal data in security monitoring: run /arckit:at-dsgvo}
+3. Run /arckit:secure to implement Art. 21 controls
+4. Run /arckit:risk to register NISG gaps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ## Important Notes
 
-- **Run after eu-nis2**: This command adds the Austrian layer. For best results, run `/arckit.eu-nis2` first.
+- **Run after eu-nis2**: This command adds the Austrian layer. For best results, run `/arckit:eu-nis2` first.
 - **NISG amendment is recent**: The NIS2 transposition (BGBl. I Nr. 94/2025) is recent. Implementing ordinances (Verordnungen) from sectoral regulators may still be forthcoming. An AT cyber practitioner must confirm before external reliance.
 - **Management body liability**: NIS2 Art. 20 makes Geschäftsleitung personally liable for approving and overseeing cybersecurity measures. Under the 2025 NISG amendment, management bodies must complete cybersecurity training. Penalties for entities: Essential ≥ €10M / 2% turnover, Important ≥ €7M / 1.4% turnover (NIS2 Art. 34 floor).
 - **24-hour reporting capability**: The 24-hour early warning window is tight. Flag if no 24/7 incident detection and reporting capability exists.
 - **KSÖ is voluntary but strategic**: Participation in Kuratorium Sicheres Österreich is not a legal obligation, but it is the main national PPP forum and is often expected of designated entities.
-- **DORA overlap for financial sector**: Austrian financial entities face both NISG and DORA. Use `/arckit.eu-dora` to map the overlap; DORA generally takes precedence for ICT resilience obligations.
+- **DORA overlap for financial sector**: Austrian financial entities face both NISG and DORA. Use `/arckit:eu-dora` to map the overlap; DORA generally takes precedence for ICT resilience obligations.
 - **Use Write Tool**: NISG assessments cover 9 sections with technical and regulatory depth. Always use the Write tool.
 
 ## Success Criteria
@@ -248,11 +248,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.at-nisg Assess NISG obligations for a Styrian regional energy distributor (Stromnetzbetreiber) with BwD designation under NISG 2018, 400 employees, operating a SCADA migration project
+/arckit:at-nisg Assess NISG obligations for a Styrian regional energy distributor (Stromnetzbetreiber) with BwD designation under NISG 2018, 400 employees, operating a SCADA migration project
 
-/arckit.at-nisg NISG scoping for 001 — Austrian MSP serving healthcare and finance customers, 180 employees, HQ in Vienna with a secondary site in Linz
+/arckit:at-nisg NISG scoping for 001 — Austrian MSP serving healthcare and finance customers, 180 employees, HQ in Vienna with a secondary site in Linz
 
-/arckit.at-nisg Austrian NIS2 transposition assessment for a federal ministry IT service provider, public administration sector, including GovCERT reporting readiness
+/arckit:at-nisg Austrian NIS2 transposition assessment for a federal ministry IT service provider, public administration sector, including GovCERT reporting readiness
 ```
 
 ## Suggested Next Steps

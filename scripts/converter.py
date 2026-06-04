@@ -1116,11 +1116,11 @@ def rewrite_codex_skills(skills_dir):
                     "arckit-community-security-assessment/SKILL.md",
                 )
                 content = content.replace(
-                    "/arckit.community.{name}",
+                    "/arckit:community.{name}",
                     "$arckit-community-{name}",
                 )
                 content = content.replace(
-                    "/arckit.community.security-assessment",
+                    "/arckit:community.security-assessment",
                     "$arckit-community-security-assessment",
                 )
                 content = content.replace(

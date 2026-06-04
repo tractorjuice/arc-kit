@@ -522,7 +522,7 @@ validation:
   strategic_question_answered:  # Does the map help answer a specific decision?
 ```
 
-> **Mermaid equivalent**: When generating value chain maps, the `wardley-beta` Mermaid block uses the same coordinates but omits sourcing decorators (build/buy analysis happens in the subsequent `/arckit.wardley` step). See the value chain template for the Mermaid placeholder format.
+> **Mermaid equivalent**: When generating value chain maps, the `wardley-beta` Mermaid block uses the same coordinates but omits sourcing decorators (build/buy analysis happens in the subsequent `/arckit:wardley` step). See the value chain template for the Mermaid placeholder format.
 
 ---
 

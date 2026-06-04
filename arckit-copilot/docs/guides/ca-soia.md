@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-soia` generates a Canada *Security of Information Act* (SOIA) handling plan for a federal information system that processes Special Operational Information (SOI) or other classified material. The artefact captures the SOI inventory under the s.8 statutory definition, the marking and handling matrix, the transmission-channel matrix, the compartment and need-to-know register, destruction and sanitisation routes, the CSIS Act §16 / §19 coordination map, the RCMP National Security Programme liaison points, the breach-response runbook, and the personnel-reliability envelope.
+`/arckit:ca-soia` generates a Canada *Security of Information Act* (SOIA) handling plan for a federal information system that processes Special Operational Information (SOI) or other classified material. The artefact captures the SOI inventory under the s.8 statutory definition, the marking and handling matrix, the transmission-channel matrix, the compartment and need-to-know register, destruction and sanitisation routes, the CSIS Act §16 / §19 coordination map, the RCMP National Security Programme liaison points, the breach-response runbook, and the personnel-reliability envelope.
 
 SOIA handling sits on top of the ITSG-33 security baseline. The ITSG-33 Statement of Applicability fixes the categorisation, the control profile, and the cryptographic envelope; the SOIA plan layers the statutory handling rules — compartmentation, the Third-Party Rule for foreign-shared product, and the breach-response timing that distinguishes SOI from material that is merely classified. Run `ca-itsg-33` first; the SOIA artefact reads its categorisation as a prerequisite. Note that the SOIA plan itself will frequently warrant a SECRET or higher classification — store, mark, and handle the artefact accordingly.
 
@@ -22,7 +22,7 @@ SOIA handling sits on top of the ITSG-33 security baseline. The ITSG-33 Statemen
 ## Command
 
 ```bash
-/arckit.ca-soia <project ID or service description>
+/arckit:ca-soia <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-SOIA-v1.0.md`
@@ -84,4 +84,4 @@ The *Security of Information Act* itself is comparatively stable, but the surrou
 
 ---
 
-The artefact produced by `/arckit.ca-soia` is itself often classified. Apply the same marking, storage, and handling rules to the plan as to the SOI it describes — store in a TBS-approved system, mark per the classification line in the Document Control header, and treat its distribution as a compartment access decision under the same need-to-know rules captured inside it.
+The artefact produced by `/arckit:ca-soia` is itself often classified. Apply the same marking, storage, and handling rules to the plan as to the SOI it describes — store in a TBS-approved system, mark per the classification line in the Document Control header, and treat its distribution as a compartment access decision under the same need-to-know rules captured inside it.

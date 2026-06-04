@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.framework` transforms existing project artifacts into a structured, phased framework with an overview document and executive guide, organising scattered architecture outputs into a coherent, actionable structure.
+`/arckit:framework` transforms existing project artifacts into a structured, phased framework with an overview document and executive guide, organising scattered architecture outputs into a coherent, actionable structure.
 
 ---
 
@@ -15,7 +15,7 @@ As architecture projects progress, they accumulate a wealth of artifacts -- requ
 - **Executive inaccessibility** -- senior leaders lack a concise summary of what the project recommends and why
 - **Completeness gaps** -- it is hard to verify that all requirements and principles are addressed
 
-The `/arckit.framework` command **synthesises and organises** all existing artifacts into a phased framework that:
+The `/arckit:framework` command **synthesises and organises** all existing artifacts into a phased framework that:
 
 - Organises scattered documents into a coherent, navigable structure
 - Creates an executive-friendly overview for senior stakeholder briefings
@@ -44,7 +44,7 @@ The `/arckit.framework` command **synthesises and organises** all existing artif
 ## Command
 
 ```bash
-/arckit.framework Create framework for <project-name>
+/arckit:framework Create framework for <project-name>
 ```
 
 Outputs:
@@ -98,7 +98,7 @@ The framework command sits LATE in the ArcKit workflow -- it requires many artif
      │   │  │    ┌─────┘  │   ┌─────┘
      ▼   ▼  ▼    ▼        ▼   ▼
 ┌──────────────────────────────────────┐
-│         /arckit.framework            │
+│         /arckit:framework            │
 └──────────────────┬───────────────────┘
                    │
           ┌────────┼────────┐
@@ -114,7 +114,7 @@ The framework command sits LATE in the ArcKit workflow -- it requires many artif
 
 ## Key Differentiators
 
-| Aspect | `/arckit.framework` | `/arckit.strategy` | `/arckit.presentation` |
+| Aspect | `/arckit:framework` | `/arckit:strategy` | `/arckit:presentation` |
 |--------|---------------------|--------------------|-----------------------|
 | **Purpose** | Organises artifacts into a phased implementation structure | Creates an executive strategic narrative and roadmap | Generates a slide deck for a specific audience |
 | **Audience** | All stakeholders (technical, business, executive) | CTO, Strategy Board, senior leadership | Specific target audience (varies) |
@@ -130,40 +130,40 @@ The framework command sits LATE in the ArcKit workflow -- it requires many artif
 
 ```bash
 # Create the mandatory artifacts
-/arckit.principles Create principles for Training Marketplace
-/arckit.requirements Create requirements for Training Marketplace
+/arckit:principles Create principles for Training Marketplace
+/arckit:requirements Create requirements for Training Marketplace
 
 # Add recommended context
-/arckit.stakeholders Analyze stakeholders for Training Marketplace
-/arckit.strategy Create strategy for Training Marketplace
-/arckit.data-model Create data model for Training Marketplace
+/arckit:stakeholders Analyze stakeholders for Training Marketplace
+/arckit:strategy Create strategy for Training Marketplace
+/arckit:data-model Create data model for Training Marketplace
 
 # Generate framework from available artifacts
-/arckit.framework Create framework for Training Marketplace
+/arckit:framework Create framework for Training Marketplace
 ```
 
 ### Comprehensive (15+ artifacts)
 
 ```bash
 # Build a rich set of artifacts first
-/arckit.principles Create principles for NHS Appointment Booking
-/arckit.requirements Create requirements for NHS Appointment Booking
-/arckit.stakeholders Analyze stakeholders for NHS Appointment Booking
-/arckit.strategy Create strategy for NHS Appointment Booking
-/arckit.data-model Create data model for NHS Appointment Booking
-/arckit.research Research technology options for NHS Appointment Booking
-/arckit.sobc Create business case for NHS Appointment Booking
-/arckit.risk Create risk register for NHS Appointment Booking
-/arckit.adr Record decision on API gateway for NHS Appointment Booking
-/arckit.adr Record decision on authentication approach for NHS Appointment Booking
-/arckit.diagram Create integration architecture diagram for NHS Appointment Booking
-/arckit.wardley Create wardley map for NHS Appointment Booking
-/arckit.codes-of-practice Assess codes of practice for NHS Appointment Booking
-/arckit.conformance Create conformance assessment for NHS Appointment Booking
-/arckit.devops Create DevOps strategy for NHS Appointment Booking
+/arckit:principles Create principles for NHS Appointment Booking
+/arckit:requirements Create requirements for NHS Appointment Booking
+/arckit:stakeholders Analyze stakeholders for NHS Appointment Booking
+/arckit:strategy Create strategy for NHS Appointment Booking
+/arckit:data-model Create data model for NHS Appointment Booking
+/arckit:research Research technology options for NHS Appointment Booking
+/arckit:sobc Create business case for NHS Appointment Booking
+/arckit:risk Create risk register for NHS Appointment Booking
+/arckit:adr Record decision on API gateway for NHS Appointment Booking
+/arckit:adr Record decision on authentication approach for NHS Appointment Booking
+/arckit:diagram Create integration architecture diagram for NHS Appointment Booking
+/arckit:wardley Create wardley map for NHS Appointment Booking
+/arckit:codes-of-practice Assess codes of practice for NHS Appointment Booking
+/arckit:conformance Create conformance assessment for NHS Appointment Booking
+/arckit:devops Create DevOps strategy for NHS Appointment Booking
 
 # Generate comprehensive framework
-/arckit.framework Create framework for NHS Appointment Booking
+/arckit:framework Create framework for NHS Appointment Booking
 ```
 
 ---
@@ -178,7 +178,7 @@ The framework command sits LATE in the ArcKit workflow -- it requires many artif
 
 - **Use the Executive Guide for stakeholder briefings**: The Executive Guide is specifically designed for senior stakeholders who need a concise overview without technical detail. Use it as a briefing document, board paper appendix, or steering committee handout.
 
-- **Pair with maturity model**: After creating the framework, use `/arckit.maturity-model` to define how to measure progress through framework phases and track adoption maturity.
+- **Pair with maturity model**: After creating the framework, use `/arckit:maturity-model` to define how to measure progress through framework phases and track adoption maturity.
 
 ---
 
@@ -188,8 +188,8 @@ After creating the framework, typical next steps include:
 
 | Command | Purpose |
 |---------|---------|
-| `/arckit.glossary` | Generate glossary of framework terminology for consistent language |
-| `/arckit.maturity-model` | Create maturity model to measure progress through framework phases |
+| `/arckit:glossary` | Generate glossary of framework terminology for consistent language |
+| `/arckit:maturity-model` | Create maturity model to measure progress through framework phases |
 
 ---
 

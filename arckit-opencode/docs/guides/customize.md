@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.customize` copies templates to `.arckit/templates-custom/` for customization, preserving changes across updates.
+`/arckit:customize` copies templates to `.arckit/templates-custom/` for customization, preserving changes across updates.
 
 ---
 
@@ -10,16 +10,16 @@
 
 ```bash
 # Copy a specific template
-/arckit.customize requirements
+/arckit:customize requirements
 
 # Copy all templates
-/arckit.customize all
+/arckit:customize all
 
 # List available templates
-/arckit.customize list
+/arckit:customize list
 
 # Show template info
-/arckit.customize info requirements
+/arckit:customize info requirements
 ```
 
 ---
@@ -49,9 +49,9 @@ Commands automatically check for custom templates first, falling back to default
 
 ## Workflow
 
-1. **Copy template**: `/arckit.customize requirements`
+1. **Copy template**: `/arckit:customize requirements`
 2. **Edit**: Modify `.arckit/templates-custom/requirements-template.md`
-3. **Use**: Run `/arckit.requirements` — automatically uses your custom template
+3. **Use**: Run `/arckit:requirements` — automatically uses your custom template
 4. **Update ArcKit**: Run `arckit init` — your customizations preserved
 
 ---
@@ -97,12 +97,12 @@ rm .arckit/templates-custom/requirements-template.md
 
 | Template | Command |
 |----------|---------|
-| `requirements-template.md` | `/arckit.requirements` |
-| `stakeholder-drivers-template.md` | `/arckit.stakeholders` |
-| `risk-register-template.md` | `/arckit.risk` |
-| `sobc-template.md` | `/arckit.sobc` |
-| `architecture-principles-template.md` | `/arckit.principles` |
-| `data-model-template.md` | `/arckit.data-model` |
-| `sow-template.md` | `/arckit.sow` |
-| `pages-template.html` | `/arckit.pages` |
-| ... | (run `/arckit.customize list` for full list) |
+| `requirements-template.md` | `/arckit:requirements` |
+| `stakeholder-drivers-template.md` | `/arckit:stakeholders` |
+| `risk-register-template.md` | `/arckit:risk` |
+| `sobc-template.md` | `/arckit:sobc` |
+| `architecture-principles-template.md` | `/arckit:principles` |
+| `data-model-template.md` | `/arckit:data-model` |
+| `sow-template.md` | `/arckit:sow` |
+| `pages-template.html` | `/arckit:pages` |
+| ... | (run `/arckit:customize list` for full list) |

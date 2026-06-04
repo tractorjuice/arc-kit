@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-Use `/arckit.sow`, `/arckit.evaluate`, and `/arckit.research` to prepare compliant procurements via the UK Government Digital Marketplace (G-Cloud, DOS, Crown Hosting).
+Use `/arckit:sow`, `/arckit:evaluate`, and `/arckit:research` to prepare compliant procurements via the UK Government Digital Marketplace (G-Cloud, DOS, Crown Hosting).
 
 ---
 
@@ -29,11 +29,11 @@ Use `/arckit.sow`, `/arckit.evaluate`, and `/arckit.research` to prepare complia
 
 | Step | Command | Purpose |
 |------|---------|---------|
-| Supplier landscape | `/arckit.research Research G-Cloud services for <capability>` | Build shortlist, identify price points |
-| SOW / Outcome spec | `/arckit.sow Generate SOW for <route>` | Structure scope, deliverables, timelines, evaluation |
-| Evaluation design | `/arckit.evaluate Create evaluation framework for <procurement>` | Weight criteria (technical, delivery, compliance, price, social value) |
-| Proposal scoring | `/arckit.evaluate Score <supplier>` | Consistent scoring, evidence, comments |
-| Comparison | `/arckit.evaluate Compare vendors for <procurement>` | Final justification and recommendation |
+| Supplier landscape | `/arckit:research Research G-Cloud services for <capability>` | Build shortlist, identify price points |
+| SOW / Outcome spec | `/arckit:sow Generate SOW for <route>` | Structure scope, deliverables, timelines, evaluation |
+| Evaluation design | `/arckit:evaluate Create evaluation framework for <procurement>` | Weight criteria (technical, delivery, compliance, price, social value) |
+| Proposal scoring | `/arckit:evaluate Score <supplier>` | Consistent scoring, evidence, comments |
+| Comparison | `/arckit:evaluate Compare vendors for <procurement>` | Final justification and recommendation |
 
 Store outputs under `projects/<id>/vendors/` for audit.
 

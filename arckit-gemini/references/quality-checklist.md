@@ -376,7 +376,7 @@ All artifacts must pass these 10 checks:
 - International transfers assessed with Schrems II requirements (TIA, SCCs 2021)
 - Processor inventory with Article 28 DPA compliance checked
 - 72-hour breach notification process assessed
-- French deployment flagged for `/arckit.fr-rgpd` follow-up
+- French deployment flagged for `/arckit:fr-rgpd` follow-up
 
 ### AIACT -- EU AI Act Assessment
 

@@ -213,10 +213,10 @@ Roles defined:       AA / RSSI / {FSSI /} DPO / DSI
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-1. Run /arckit.fr-ebios — provides threat context and risk baseline for PSSI Section 2
-2. Run /arckit.fr-anssi — assess compliance against the PSSI security baseline
-3. Run /arckit.fr-anssi-carto — produce SI cartography to populate PSSI scope
-4. {If DR data: Run /arckit.fr-dr — incorporate DR handling rules}
+1. Run /arckit:fr-ebios — provides threat context and risk baseline for PSSI Section 2
+2. Run /arckit:fr-anssi — assess compliance against the PSSI security baseline
+3. Run /arckit:fr-anssi-carto — produce SI cartography to populate PSSI scope
+4. {If DR data: Run /arckit:fr-dr — incorporate DR handling rules}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -261,11 +261,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.fr-pssi Generate PSSI for the French Ministry of Culture IS — 2,000 users across 5 sites, OIV designation (secteur culture), RGS ** target level, mix of cloud and on-premise
+/arckit:fr-pssi Generate PSSI for the French Ministry of Culture IS — 2,000 users across 5 sites, OIV designation (secteur culture), RGS ** target level, mix of cloud and on-premise
 
-/arckit.fr-pssi PSSI for 001 — French regional health agency (ARS), OSE designation under NIS2, handling patient data and public health surveillance, CNIL DPO already appointed
+/arckit:fr-pssi PSSI for 001 — French regional health agency (ARS), OSE designation under NIS2, handling patient data and public health surveillance, CNIL DPO already appointed
 
-/arckit.fr-pssi PSSI for a private OIV operator in the energy sector — gas transmission network, SCADA-adjacent IS, ANSSI sectoral arrêté énergie applies
+/arckit:fr-pssi PSSI for a private OIV operator in the energy sector — gas transmission network, SCADA-adjacent IS, ANSSI sectoral arrêté énergie applies
 ```
 
 ## Suggested Next Steps

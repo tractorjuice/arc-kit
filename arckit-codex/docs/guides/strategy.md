@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.strategy` synthesises multiple strategic artifacts into a single executive-level Architecture Strategy document.
+`/arckit:strategy` synthesises multiple strategic artifacts into a single executive-level Architecture Strategy document.
 
 ---
 
@@ -10,7 +10,7 @@
 
 Most enterprise architecture initiatives produce multiple strategic artifacts: principles, stakeholder analysis, Wardley maps, roadmaps, and business cases. Executives and senior stakeholders shouldn't need to read 5 separate documents to understand the strategy.
 
-The `/arckit.strategy` command **synthesises** these artifacts into a coherent narrative that:
+The `/arckit:strategy` command **synthesises** these artifacts into a coherent narrative that:
 
 - Articulates the strategic vision
 - Links stakeholder drivers to strategic themes
@@ -38,7 +38,7 @@ The `/arckit.strategy` command **synthesises** these artifacts into a coherent n
 ## Command
 
 ```bash
-/arckit.strategy Create architecture strategy for <initiative-name>
+/arckit:strategy Create architecture strategy for <initiative-name>
 ```
 
 Outputs: `projects/<id>/ARC-<id>-STRAT-v1.0.md`
@@ -75,7 +75,7 @@ The strategy command sits at a synthesis point in the ArcKit workflow:
                            └──────┬──────┘
                                   │
 ┌──────────────┐    ┌─────────────▼──────────────┐    ┌────────────────┐
-│ Stakeholders │───▶│       /arckit.strategy      │◀───│  Wardley Maps  │
+│ Stakeholders │───▶│       /arckit:strategy      │◀───│  Wardley Maps  │
 └──────────────┘    └─────────────┬──────────────┘    └────────────────┘
                                   │
          ┌────────────────────────┼────────────────────────┐
@@ -96,33 +96,33 @@ The strategy command sits at a synthesis point in the ArcKit workflow:
 
 ```bash
 # Ensure prerequisites exist
-/arckit.principles Create principles for NHS Appointment Booking
-/arckit.stakeholders Analyze stakeholders for NHS Appointment Booking
+/arckit:principles Create principles for NHS Appointment Booking
+/arckit:stakeholders Analyze stakeholders for NHS Appointment Booking
 
 # Create strategy
-/arckit.strategy Create architecture strategy for NHS Appointment Booking
+/arckit:strategy Create architecture strategy for NHS Appointment Booking
 ```
 
 ### Comprehensive (All strategic artifacts)
 
 ```bash
 # Create all strategic inputs
-/arckit.principles Create principles for Digital Courts
-/arckit.stakeholders Analyze stakeholders for Digital Courts
-/arckit.risk Create risk register for Digital Courts
-/arckit.sobc Create business case for Digital Courts
-/arckit.wardley Create Wardley map for Digital Courts
-/arckit.roadmap Create roadmap for Digital Courts
+/arckit:principles Create principles for Digital Courts
+/arckit:stakeholders Analyze stakeholders for Digital Courts
+/arckit:risk Create risk register for Digital Courts
+/arckit:sobc Create business case for Digital Courts
+/arckit:wardley Create Wardley map for Digital Courts
+/arckit:roadmap Create roadmap for Digital Courts
 
 # Synthesise into strategy
-/arckit.strategy Create architecture strategy for Digital Courts
+/arckit:strategy Create architecture strategy for Digital Courts
 ```
 
 ---
 
 ## Key Differentiators
 
-| Aspect | /arckit.roadmap | /arckit.strategy |
+| Aspect | /arckit:roadmap | /arckit:strategy |
 |--------|-----------------|------------------|
 | **Focus** | Timeline and delivery | Executive narrative |
 | **Audience** | Programme managers, delivery teams | CTO, Strategy Board, executives |
@@ -154,11 +154,11 @@ After creating the strategy, typical next steps include:
 
 | Command | Purpose |
 |---------|---------|
-| `/arckit.requirements` | Capture detailed requirements (BR/FR/NFR) |
-| `/arckit.roadmap` | Expand timeline with detailed phases and milestones |
-| `/arckit.plan` | Create detailed project plan for Phase 1 |
-| `/arckit.diagram` | Visualise target architecture |
-| `/arckit.backlog` | Convert requirements to user stories |
+| `/arckit:requirements` | Capture detailed requirements (BR/FR/NFR) |
+| `/arckit:roadmap` | Expand timeline with detailed phases and milestones |
+| `/arckit:plan` | Create detailed project plan for Phase 1 |
+| `/arckit:diagram` | Visualise target architecture |
+| `/arckit:backlog` | Convert requirements to user stories |
 
 ---
 

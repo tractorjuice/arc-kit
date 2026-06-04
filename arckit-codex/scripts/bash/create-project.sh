@@ -74,7 +74,7 @@ if [[ "$FORCE_CREATE" != "true" ]]; then
         log_error "Expected: projects/000-global/ARC-000-PRIN-v*.md"
         log_error ""
         log_error "Before creating a project, you must define architecture principles"
-        log_error "Run: /arckit.principles"
+        log_error "Run: /arckit:principles"
         log_error ""
         log_error "Or use --force to skip this check (not recommended)"
         exit 1
@@ -172,7 +172,7 @@ Place organization-wide governance documents here. These are read by commands ac
 - MOD/Defence security policies (JSP 440, CAAT)
 
 ## How It Works
-Commands like /arckit.principles, /arckit.risk, /arckit.secure, and /arckit.sobc
+Commands like /arckit:principles, /arckit:risk, /arckit:secure, and /arckit:sobc
 automatically scan this directory for organizational context.
 POLEOF
     fi
@@ -228,27 +228,27 @@ Created: $(date +"%Y-%m-%d")
 Use ArcKit commands to generate project artifacts in the recommended order:
 
 ### Discovery Phase
-1. \`/arckit.stakeholders\` - Analyze stakeholder drivers and goals
-2. \`/arckit.risk\` - Create risk register
-3. \`/arckit.sobc\` - Create Strategic Outline Business Case
+1. \`/arckit:stakeholders\` - Analyze stakeholder drivers and goals
+2. \`/arckit:risk\` - Create risk register
+3. \`/arckit:sobc\` - Create Strategic Outline Business Case
 
 ### Alpha Phase
-4. \`/arckit.requirements\` - Define comprehensive requirements
-5. \`/arckit.data-model\` - Design data model and GDPR compliance
-6. \`/arckit.wardley\` - Create Wardley maps for strategic planning
-7. \`/arckit.research\` - Research technology options (if needed)
-8. \`/arckit.sow\` - Generate Statement of Work for vendor procurement (if needed)
-9. \`/arckit.evaluate\` - Create vendor evaluation framework (if needed)
+4. \`/arckit:requirements\` - Define comprehensive requirements
+5. \`/arckit:data-model\` - Design data model and GDPR compliance
+6. \`/arckit:wardley\` - Create Wardley maps for strategic planning
+7. \`/arckit:research\` - Research technology options (if needed)
+8. \`/arckit:sow\` - Generate Statement of Work for vendor procurement (if needed)
+9. \`/arckit:evaluate\` - Create vendor evaluation framework (if needed)
 
 ### Beta Phase
-10. \`/arckit.hld-review\` - Review High-Level Design
-11. \`/arckit.dld-review\` - Review Detailed Design
-12. \`/arckit.traceability\` - Generate requirements traceability matrix
+10. \`/arckit:hld-review\` - Review High-Level Design
+11. \`/arckit:dld-review\` - Review Detailed Design
+12. \`/arckit:traceability\` - Generate requirements traceability matrix
 
 ### Compliance (as needed)
-- \`/arckit.secure\` - UK Government Secure by Design review
-- \`/arckit.tcop\` - Technology Code of Practice assessment
-- \`/arckit.ai-playbook\` - AI Playbook compliance (for AI systems)
+- \`/arckit:secure\` - UK Government Secure by Design review
+- \`/arckit:tcop\` - Technology Code of Practice assessment
+- \`/arckit:ai-playbook\` - AI Playbook compliance (for AI systems)
 
 ## Project Structure
 
@@ -259,29 +259,29 @@ $PROJECT_DIR_NAME/
 ├── README.md (this file)
 │
 ├── # Core Documents
-├── ARC-$PROJECT_NUMBER-STKE-v1.0.md     # Stakeholder drivers (/arckit.stakeholders)
-├── ARC-$PROJECT_NUMBER-RISK-v1.0.md     # Risk register (/arckit.risk)
-├── ARC-$PROJECT_NUMBER-SOBC-v1.0.md     # Business case (/arckit.sobc)
-├── ARC-$PROJECT_NUMBER-REQ-v1.0.md      # Requirements (/arckit.requirements)
-├── ARC-$PROJECT_NUMBER-DATA-v1.0.md     # Data model (/arckit.data-model)
-├── ARC-$PROJECT_NUMBER-RSCH-v1.0.md     # Research findings (/arckit.research)
-├── ARC-$PROJECT_NUMBER-TRAC-v1.0.md     # Traceability matrix (/arckit.traceability)
+├── ARC-$PROJECT_NUMBER-STKE-v1.0.md     # Stakeholder drivers (/arckit:stakeholders)
+├── ARC-$PROJECT_NUMBER-RISK-v1.0.md     # Risk register (/arckit:risk)
+├── ARC-$PROJECT_NUMBER-SOBC-v1.0.md     # Business case (/arckit:sobc)
+├── ARC-$PROJECT_NUMBER-REQ-v1.0.md      # Requirements (/arckit:requirements)
+├── ARC-$PROJECT_NUMBER-DATA-v1.0.md     # Data model (/arckit:data-model)
+├── ARC-$PROJECT_NUMBER-RSCH-v1.0.md     # Research findings (/arckit:research)
+├── ARC-$PROJECT_NUMBER-TRAC-v1.0.md     # Traceability matrix (/arckit:traceability)
 │
 ├── # Procurement
-├── ARC-$PROJECT_NUMBER-SOW-v1.0.md      # Statement of Work (/arckit.sow)
-├── ARC-$PROJECT_NUMBER-EVAL-v1.0.md     # Evaluation criteria (/arckit.evaluate)
+├── ARC-$PROJECT_NUMBER-SOW-v1.0.md      # Statement of Work (/arckit:sow)
+├── ARC-$PROJECT_NUMBER-EVAL-v1.0.md     # Evaluation criteria (/arckit:evaluate)
 │
 ├── # Multi-instance Documents (subdirectories)
 ├── decisions/
-│   ├── ARC-$PROJECT_NUMBER-ADR-001-v1.0.md  # Architecture decisions (/arckit.adr)
+│   ├── ARC-$PROJECT_NUMBER-ADR-001-v1.0.md  # Architecture decisions (/arckit:adr)
 │   └── ARC-$PROJECT_NUMBER-ADR-002-v1.0.md
 ├── diagrams/
-│   └── ARC-$PROJECT_NUMBER-DIAG-001-v1.0.md # Diagrams (/arckit.diagram)
+│   └── ARC-$PROJECT_NUMBER-DIAG-001-v1.0.md # Diagrams (/arckit:diagram)
 ├── wardley-maps/
-│   └── ARC-$PROJECT_NUMBER-WARD-001-v1.0.md # Wardley maps (/arckit.wardley)
+│   └── ARC-$PROJECT_NUMBER-WARD-001-v1.0.md # Wardley maps (/arckit:wardley)
 ├── reviews/
-│   ├── ARC-$PROJECT_NUMBER-HLD-v1.0.md      # HLD review (/arckit.hld-review)
-│   └── ARC-$PROJECT_NUMBER-DLD-v1.0.md      # DLD review (/arckit.dld-review)
+│   ├── ARC-$PROJECT_NUMBER-HLD-v1.0.md      # HLD review (/arckit:hld-review)
+│   └── ARC-$PROJECT_NUMBER-DLD-v1.0.md      # DLD review (/arckit:dld-review)
 │
 ├── external/                            # External documents (PDFs, specs, reports)
 └── vendors/                             # Vendor proposals
@@ -350,22 +350,22 @@ has_doc() {
 
 # Check if stakeholder analysis exists in project (old or new naming)
 if ! has_doc "STKE" && [[ ! -f "$PROJECT_DIR/stakeholder-drivers.md" ]]; then
-    NEXT_STEPS+=("/arckit.stakeholders - Analyze stakeholder drivers and goals")
+    NEXT_STEPS+=("/arckit:stakeholders - Analyze stakeholder drivers and goals")
 elif ! has_doc "RISK" && [[ ! -f "$PROJECT_DIR/risk-register.md" ]]; then
-    NEXT_STEPS+=("/arckit.risk - Create risk register")
+    NEXT_STEPS+=("/arckit:risk - Create risk register")
 elif ! has_doc "SOBC" && [[ ! -f "$PROJECT_DIR/sobc.md" ]]; then
-    NEXT_STEPS+=("/arckit.sobc - Create Strategic Outline Business Case")
+    NEXT_STEPS+=("/arckit:sobc - Create Strategic Outline Business Case")
 elif ! has_doc "REQ" && [[ ! -f "$PROJECT_DIR/requirements.md" ]]; then
-    NEXT_STEPS+=("/arckit.requirements - Define business and technical requirements")
+    NEXT_STEPS+=("/arckit:requirements - Define business and technical requirements")
 elif ! has_doc "DATA" && [[ ! -f "$PROJECT_DIR/data-model.md" ]]; then
-    NEXT_STEPS+=("/arckit.data-model - Design data model")
+    NEXT_STEPS+=("/arckit:data-model - Design data model")
 elif [[ ! -d "$PROJECT_DIR/wardley-maps" ]] || [[ -z $(ls -A "$PROJECT_DIR/wardley-maps" 2>/dev/null) ]]; then
-    NEXT_STEPS+=("/arckit.research - Research technology options")
-    NEXT_STEPS+=("/arckit.wardley - Create Wardley maps")
+    NEXT_STEPS+=("/arckit:research - Research technology options")
+    NEXT_STEPS+=("/arckit:wardley - Create Wardley maps")
 elif ! has_doc "SOW" && [[ ! -f "$PROJECT_DIR/sow.md" ]]; then
-    NEXT_STEPS+=("/arckit.sow - Generate Statement of Work for RFP")
+    NEXT_STEPS+=("/arckit:sow - Generate Statement of Work for RFP")
 else
-    NEXT_STEPS+=("/arckit.evaluate - Create vendor evaluation framework")
+    NEXT_STEPS+=("/arckit:evaluate - Create vendor evaluation framework")
 fi
 
 # Output JSON if requested

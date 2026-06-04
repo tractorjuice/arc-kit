@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.devops` creates a comprehensive DevOps strategy covering CI/CD pipelines, Infrastructure as Code, container orchestration, and developer experience.
+`/arckit:devops` creates a comprehensive DevOps strategy covering CI/CD pipelines, Infrastructure as Code, container orchestration, and developer experience.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.devops Create DevOps strategy for <initiative>
+/arckit:devops Create DevOps strategy for <initiative>
 ```
 
 Output: `projects/<id>/ARC-<id>-DEVOPS-v1.0.md`
@@ -66,11 +66,11 @@ Output: `projects/<id>/ARC-<id>-DEVOPS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Understand requirements, technology constraints | `/arckit.requirements`, `/arckit.principles` |
-| Design | Define architecture, select tooling | `/arckit.diagram`, `/arckit.research` |
-| Strategy | Create DevOps strategy document | `/arckit.devops` |
-| Implementation | Set up pipelines, IaC, containers | `/arckit.backlog` |
-| Operations | Monitor, optimize, iterate | `/arckit.operationalize`, `/arckit.finops` |
+| Discovery | Understand requirements, technology constraints | `/arckit:requirements`, `/arckit:principles` |
+| Design | Define architecture, select tooling | `/arckit:diagram`, `/arckit:research` |
+| Strategy | Create DevOps strategy document | `/arckit:devops` |
+| Implementation | Set up pipelines, IaC, containers | `/arckit:backlog` |
+| Operations | Monitor, optimize, iterate | `/arckit:operationalize`, `/arckit:finops` |
 
 ---
 

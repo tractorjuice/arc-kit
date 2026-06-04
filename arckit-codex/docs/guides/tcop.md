@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.tcop` generates a Technology Code of Practice (TCoP) review document for UK Government technology projects.
+`/arckit:tcop` generates a Technology Code of Practice (TCoP) review document for UK Government technology projects.
 
 > **Parent standard**: TCoP is the implementation guidance for [GovS 005 — Government Functional Standard for Digital](https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital). A TCoP review satisfies the majority of GovS 005 obligations.
 
@@ -22,7 +22,7 @@
 ## Command
 
 ```bash
-/arckit.tcop Create TCoP review for <project>
+/arckit:tcop Create TCoP review for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`
@@ -79,11 +79,11 @@ Output: `projects/<id>/ARC-<id>-TCOP-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define requirements and users | `/arckit.requirements`, `/arckit.stakeholders` |
-| Architecture | Design solution | `/arckit.diagram`, `/arckit.hld-review` |
-| Compliance | Create TCoP review | `/arckit.tcop` |
+| Discovery | Define requirements and users | `/arckit:requirements`, `/arckit:stakeholders` |
+| Architecture | Design solution | `/arckit:diagram`, `/arckit:hld-review` |
+| Compliance | Create TCoP review | `/arckit:tcop` |
 | Approval | Submit for spend control | Manual |
-| Delivery | Build with TCoP compliance | `/arckit.backlog` |
+| Delivery | Build with TCoP compliance | `/arckit:backlog` |
 
 ---
 

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-rgpd` generates a French CNIL-specific GDPR layer assessment supplementing `/arckit.eu-rgpd`. It covers CNIL délibérations, health data (HDS), cookie rules, age 15 for minors, and CNIL enforcement patterns.
+`/arckit:fr-rgpd` generates a French CNIL-specific GDPR layer assessment supplementing `/arckit:eu-rgpd`. It covers CNIL délibérations, health data (HDS), cookie rules, age 15 for minors, and CNIL enforcement patterns.
 
 ---
 
@@ -19,12 +19,12 @@
 ## Command
 
 ```bash
-/arckit.fr-rgpd Assess CNIL compliance for <project or processing activity>
+/arckit:fr-rgpd Assess CNIL compliance for <project or processing activity>
 ```
 
 Output: `projects/<id>/ARC-<id>-CNIL-v1.0.md`
 
-> **Run after**: `/arckit.eu-rgpd` — this command adds the French layer on top.
+> **Run after**: `/arckit:eu-rgpd` — this command adds the French layer on top.
 
 ---
 
@@ -48,9 +48,9 @@ Output: `projects/<id>/ARC-<id>-CNIL-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| EU baseline | GDPR compliance | `/arckit.eu-rgpd` |
-| French layer | CNIL-specific assessment | `/arckit.fr-rgpd` |
-| High-risk | DPIA for high-risk processing | `/arckit.dpia` |
+| EU baseline | GDPR compliance | `/arckit:eu-rgpd` |
+| French layer | CNIL-specific assessment | `/arckit:fr-rgpd` |
+| High-risk | DPIA for high-risk processing | `/arckit:dpia` |
 
 ---
 
@@ -72,4 +72,4 @@ Output: `projects/<id>/ARC-<id>-CNIL-v1.0.md`
 - **HDS (Hébergeur de Données de Santé)**: Any hosting of personal health data in France requires HDS certification — stricter than GDPR alone.
 - **Age 15**: France chose 15 as the digital consent age (GDPR allows 13–16) — platforms must verify age for minor users.
 - **Biometric data**: CNIL requires authorisation for most biometric processing (workplace access control is a common case).
-- **Scope**: Supplements `/arckit.eu-rgpd`. Do not run in isolation — EU GDPR baseline must be established first.
+- **Scope**: Supplements `/arckit:eu-rgpd`. Do not run in isolation — EU GDPR baseline must be established first.

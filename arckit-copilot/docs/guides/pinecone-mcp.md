@@ -30,7 +30,7 @@ Pinecone's MCP server offers 9 tools for vector database operations:
 
 ArcKit maintains a Pinecone vector database containing Simon Wardley's complete published works on Wardley Mapping — doctrine, case studies, strategic plays, evolution analysis, and climatic patterns.
 
-When the Pinecone MCP is configured, the `/arckit.wardley` command automatically searches this knowledge base to:
+When the Pinecone MCP is configured, the `/arckit:wardley` command automatically searches this knowledge base to:
 
 - **Ground component positioning** in Wardley's analysis of evolution stages
 - **Find relevant case studies** matching the project's domain and strategic situation
@@ -108,7 +108,7 @@ Restart Claude Code after adding the configuration.
 
 | Command | How Pinecone is used |
 |---------|---------------------|
-| `/arckit.wardley` | Searches Wardley book corpus for relevant strategic context, case studies, gameplay patterns, and evolution analysis to ground map creation |
+| `/arckit:wardley` | Searches Wardley book corpus for relevant strategic context, case studies, gameplay patterns, and evolution analysis to ground map creation |
 
 The wardley command detects Pinecone tools automatically and uses them when available. If not configured, it falls back to local reference files — no functionality is lost.
 

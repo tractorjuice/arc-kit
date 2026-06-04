@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.at-bvergg` generates Austrian public procurement documentation aligned with **Bundesvergabegesetz 2018**. Covers Oberschwellen / Unterschwellen determination, ANKÖ publication requirements, BVergGVS secondary rules, and the BVwG review pathway.
+`/arckit:at-bvergg` generates Austrian public procurement documentation aligned with **Bundesvergabegesetz 2018**. Covers Oberschwellen / Unterschwellen determination, ANKÖ publication requirements, BVergGVS secondary rules, and the BVwG review pathway.
 
 ---
 
@@ -21,7 +21,7 @@
 ## Command
 
 ```bash
-/arckit.at-bvergg <project ID or procurement description>
+/arckit:at-bvergg <project ID or procurement description>
 ```
 
 Output: `projects/<id>/ARC-<id>-BVERGG-v1.0.md`
@@ -58,11 +58,11 @@ Output: `projects/<id>/ARC-<id>-BVERGG-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Strategic case | Business case and budget | `/arckit.sobc` |
-| Compliance pre-checks | Personal data + critical-entity status | `/arckit.at-dsgvo`, `/arckit.at-nisg` |
-| Procurement | BVergG strategy + tender pack | `/arckit.at-bvergg` |
-| Evaluation | Score vendor responses | `/arckit.evaluate` |
-| Traceability | Link procurement requirements back | `/arckit.traceability` |
+| Strategic case | Business case and budget | `/arckit:sobc` |
+| Compliance pre-checks | Personal data + critical-entity status | `/arckit:at-dsgvo`, `/arckit:at-nisg` |
+| Procurement | BVergG strategy + tender pack | `/arckit:at-bvergg` |
+| Evaluation | Score vendor responses | `/arckit:evaluate` |
+| Traceability | Link procurement requirements back | `/arckit:traceability` |
 
 ---
 
@@ -82,5 +82,5 @@ Output: `projects/<id>/ARC-<id>-BVERGG-v1.0.md`
 
 - **Threshold drift**: EU procurement thresholds change every two years — items marked `[NEEDS VERIFICATION]` must be confirmed against the latest regulation before external publication.
 - **Defence / utilities / concessions**: BVergGVS imposes additional rules — confirm sectoral scope before relying on the standard BVergG path.
-- **Run after pre-checks**: `/arckit.at-dsgvo` and `/arckit.at-nisg` should run first if either applies — their clauses feed the vendor pack.
+- **Run after pre-checks**: `/arckit:at-dsgvo` and `/arckit:at-nisg` should run first if either applies — their clauses feed the vendor pack.
 - **Community-contributed**: Output should be reviewed by qualified Vergabejurist / Rechtsabteilung before reliance.

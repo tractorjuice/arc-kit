@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.au-ism-controls` generates a Statement of Applicability against the Australian Signals Directorate's Information Security Manual (ISM). It scopes the system, surveys the 17 ISM control domains for in-scope controls, scores each control's implementation posture with evidence, captures the residual risk, and surfaces the IRAP-assessable posture (Information Security Registered Assessors Program — the Australian government's cloud-inheritance and external-assessment programme).
+`/arckit:au-ism-controls` generates a Statement of Applicability against the Australian Signals Directorate's Information Security Manual (ISM). It scopes the system, surveys the 17 ISM control domains for in-scope controls, scores each control's implementation posture with evidence, captures the residual risk, and surfaces the IRAP-assessable posture (Information Security Registered Assessors Program — the Australian government's cloud-inheritance and external-assessment programme).
 
 The ISM is the authoritative control library for Australian Federal entities and DISP suppliers. The SoA is the gate artefact for IRAP assessment, security accreditation, and PSPF Outcome 4 (Information Security).
 
@@ -14,7 +14,7 @@ The ISM is the authoritative control library for Australian Federal entities and
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, hosting model, data flows |
 | Data model (`ARC-<id>-DMOD-v1.0.md`) | Sensitivity categories driving control intensity |
-| `/arckit.au-e8-posture` output (`ARC-<id>-AUE8-v1.0.md`) | Cyber baseline that the ISM SoA cross-references |
+| `/arckit:au-e8-posture` output (`ARC-<id>-AUE8-v1.0.md`) | Cyber baseline that the ISM SoA cross-references |
 | HLD (`ARC-<id>-HLD-v1.0.md`) | Architecture, identity model, key management |
 
 ---
@@ -22,7 +22,7 @@ The ISM is the authoritative control library for Australian Federal entities and
 ## Command
 
 ```bash
-/arckit.au-ism-controls <project ID or service description>
+/arckit:au-ism-controls <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AUISM-v1.0.md`
@@ -75,4 +75,4 @@ Output: `projects/<id>/ARC-<id>-AUISM-v1.0.md`
 
 ## Handoff
 
-Foundational input to `/arckit.au-disp-attestation` (DISP Information & Cyber domain draws heavily from the ISM SoA), `/arckit.au-pspf` (PSPF Outcome 4 cites ISM SoA evidence), and feeds the IRAP assessor scoping package.
+Foundational input to `/arckit:au-disp-attestation` (DISP Information & Cyber domain draws heavily from the ISM SoA), `/arckit:au-pspf` (PSPF Outcome 4 cites ISM SoA evidence), and feeds the IRAP assessor scoping package.

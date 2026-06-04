@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.gcp-research` researches Google Cloud services, architecture patterns, and implementation guidance using the Google Developer Knowledge MCP server for authoritative documentation.
+`/arckit:gcp-research` researches Google Cloud services, architecture patterns, and implementation guidance using the Google Developer Knowledge MCP server for authoritative documentation.
 
 > **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather Google Cloud documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
 
@@ -69,7 +69,7 @@ Add constraints (budget, classification, region) in the prompt for tailored resu
 ## Command
 
 ```bash
-/arckit.gcp-research Research Google Cloud services for <project>
+/arckit:gcp-research Research Google Cloud services for <project>
 ```
 
 Outputs: `projects/<id>/research/ARC-<id>-GCRS-v1.0.md`
@@ -118,17 +118,17 @@ When UK Government project detected:
 
 ## Follow-on Actions
 
-- Feed Google Cloud findings into `/arckit.diagram` for GCP architecture diagrams
-- Run `/arckit.secure` to validate against UK Secure by Design
-- Run `/arckit.devops` to plan Cloud Build CI/CD pipelines
-- Run `/arckit.finops` to create Google Cloud FinOps cost management strategy
-- Run `/arckit.adr` to document Google Cloud service selection decisions
+- Feed Google Cloud findings into `/arckit:diagram` for GCP architecture diagrams
+- Run `/arckit:secure` to validate against UK Secure by Design
+- Run `/arckit:devops` to plan Cloud Build CI/CD pipelines
+- Run `/arckit:finops` to create Google Cloud FinOps cost management strategy
+- Run `/arckit:adr` to document Google Cloud service selection decisions
 
 ---
 
-## Comparison with /arckit.research
+## Comparison with /arckit:research
 
-| Feature | `/arckit.research` | `/arckit.gcp-research` |
+| Feature | `/arckit:research` | `/arckit:gcp-research` |
 |---------|-------------------|------------------------|
 | Scope | Multi-cloud, SaaS, open-source | Google Cloud-specific only |
 | Source | Web search, multiple sources | Google Developer Knowledge MCP (authoritative) |
@@ -139,8 +139,8 @@ When UK Government project detected:
 
 **When to use which**:
 
-- Use `/arckit.research` for cloud-agnostic evaluation or build vs buy
-- Use `/arckit.gcp-research` when Google Cloud is the target platform
+- Use `/arckit:research` for cloud-agnostic evaluation or build vs buy
+- Use `/arckit:gcp-research` when Google Cloud is the target platform
 
 ---
 

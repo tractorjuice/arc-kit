@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: 4.4.0
 
-`/arckit.gov-reuse` searches 24,500+ UK government open-source repositories to discover existing implementations that can be reused, forked, or referenced before building from scratch.
+`/arckit:gov-reuse` searches 24,500+ UK government open-source repositories to discover existing implementations that can be reused, forked, or referenced before building from scratch.
 
 > **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent performs multiple govreposcrape searches per capability and uses WebFetch to assess each candidate's GitHub repository, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
 
@@ -41,7 +41,7 @@ Add constraints (language, framework, license) in the prompt for tailored result
 ## Command
 
 ```bash
-/arckit.gov-reuse <capability or domain>
+/arckit:gov-reuse <capability or domain>
 ```
 
 Outputs: `projects/<id>/research/ARC-<id>-GOVR-v1.0.md`
@@ -86,15 +86,15 @@ The agent uses the govreposcrape semantic search API to query 24,500+ UK governm
 
 ## Follow-on Actions
 
-- Run `/arckit.research` to feed reuse findings into build vs buy analysis
-- Run `/arckit.adr` to document reuse decisions
-- Run `/arckit.requirements` to refine requirements based on discovered capabilities
+- Run `/arckit:research` to feed reuse findings into build vs buy analysis
+- Run `/arckit:adr` to document reuse decisions
+- Run `/arckit:requirements` to refine requirements based on discovered capabilities
 
 ---
 
-## Comparison with /arckit.research
+## Comparison with /arckit:research
 
-| Feature | `/arckit.gov-reuse` | `/arckit.research` |
+| Feature | `/arckit:gov-reuse` | `/arckit:research` |
 |---------|--------------------|--------------------|
 | Scope | UK government repos only | Multi-cloud, SaaS, open-source |
 | Focus | Code reuse and adaptation | Build vs buy, vendor comparison |
@@ -102,7 +102,7 @@ The agent uses the govreposcrape semantic search API to query 24,500+ UK governm
 | Output | Reuse assessment with scoring | Market research with TCO |
 | When to use | Before building, to find existing code | To evaluate commercial options |
 
-**Workflow**: Run `/arckit.gov-reuse` first, then `/arckit.research` to compare reuse candidates against commercial alternatives.
+**Workflow**: Run `/arckit:gov-reuse` first, then `/arckit:research` to compare reuse candidates against commercial alternatives.
 
 ---
 

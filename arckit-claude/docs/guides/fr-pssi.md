@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-pssi` generates an Information System Security Policy (PSSI) for French public sector entities, following ANSSI PSSI guidance and RGS v2 requirements. The PSSI must be approved and signed by the Highest Authority (AA — Autorité d'Approbation).
+`/arckit:fr-pssi` generates an Information System Security Policy (PSSI) for French public sector entities, following ANSSI PSSI guidance and RGS v2 requirements. The PSSI must be approved and signed by the Highest Authority (AA — Autorité d'Approbation).
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.fr-pssi Generate PSSI for <organisation and IS scope>
+/arckit:fr-pssi Generate PSSI for <organisation and IS scope>
 ```
 
 Output: `projects/<id>/ARC-<id>-PSSI-v1.0.md`
@@ -59,10 +59,10 @@ Output: `projects/<id>/ARC-<id>-PSSI-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Foundation | Requirements, risk, cartography | `/arckit.fr-ebios`, `/arckit.fr-anssi-carto` |
-| Baseline | ANSSI 42 measures | `/arckit.fr-anssi` |
-| Policy | Generate PSSI | `/arckit.fr-pssi` |
-| DR | DR handling policy section | `/arckit.fr-dr` |
+| Foundation | Requirements, risk, cartography | `/arckit:fr-ebios`, `/arckit:fr-anssi-carto` |
+| Baseline | ANSSI 42 measures | `/arckit:fr-anssi` |
+| Policy | Generate PSSI | `/arckit:fr-pssi` |
+| DR | DR handling policy section | `/arckit:fr-dr` |
 
 ---
 

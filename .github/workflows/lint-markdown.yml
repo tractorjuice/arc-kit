@@ -70,6 +70,9 @@ jobs:
       - name: Regime-registration test for doc-types
         run: node scripts/tests/test-regime-registration.mjs
 
+      - name: Command-reference notation (colon namespace)
+        run: python3 scripts/standardise-colon.py --check
+
       - name: Install npm deps for validator tests
         run: npm ci
 

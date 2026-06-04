@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.plan` creates a GDS-aligned delivery plan with phases, gates, dependencies, and Mermaid timelines.
+`/arckit:plan` creates a GDS-aligned delivery plan with phases, gates, dependencies, and Mermaid timelines.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.plan Create project plan for <initiative>
+/arckit:plan Create project plan for <initiative>
 ```
 
 Output: `projects/<id>/ARC-<id>-PLAN-v1.0.md` plus Mermaid diagrams.
@@ -42,10 +42,10 @@ Output: `projects/<id>/ARC-<id>-PLAN-v1.0.md` plus Mermaid diagrams.
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Stakeholders, problem framing, initial business case | `/arckit.stakeholders`, `/arckit.principles`, `/arckit.sobc` |
-| Alpha | Detailed requirements, architecture, procurement | `/arckit.requirements`, `/arckit.diagram`, `/arckit.sow`, `/arckit.hld-review` |
-| Beta | Build, test, operational readiness | `/arckit.dld-review`, `/arckit.backlog`, `/arckit.analyze`, `/arckit.servicenow` |
-| Live | Go-live, transition to BAU, continuous improvement | `/arckit.story`, `/arckit.traceability`, `/arckit.analyze` (cadence) |
+| Discovery | Stakeholders, problem framing, initial business case | `/arckit:stakeholders`, `/arckit:principles`, `/arckit:sobc` |
+| Alpha | Detailed requirements, architecture, procurement | `/arckit:requirements`, `/arckit:diagram`, `/arckit:sow`, `/arckit:hld-review` |
+| Beta | Build, test, operational readiness | `/arckit:dld-review`, `/arckit:backlog`, `/arckit:analyze`, `/arckit:servicenow` |
+| Live | Go-live, transition to BAU, continuous improvement | `/arckit:story`, `/arckit:traceability`, `/arckit:analyze` (cadence) |
 
 ---
 
@@ -63,4 +63,4 @@ Output: `projects/<id>/ARC-<id>-PLAN-v1.0.md` plus Mermaid diagrams.
 
 - Refresh monthly and after major decisions; version documents in git.
 - Share Mermaid Gantt to stakeholders via docs or static site.
-- Feed changes into `/arckit.story` to capture project history.
+- Feed changes into `/arckit:story` to capture project history.

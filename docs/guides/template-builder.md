@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.template-builder` creates entirely new document templates tailored to your organization's needs through an interactive interview process.
+`/arckit:template-builder` creates entirely new document templates tailored to your organization's needs through an interactive interview process.
 
 ---
 
@@ -20,9 +20,9 @@
 ## Command
 
 ```text
-/arckit.template-builder security assessment
-/arckit.template-builder vendor scorecard
-/arckit.template-builder migration checklist
+/arckit:template-builder security assessment
+/arckit:template-builder vendor scorecard
+/arckit:template-builder migration checklist
 ```
 
 ---
@@ -64,7 +64,7 @@ Every template and guide in ArcKit carries an origin banner:
 | **Custom** | `Template Origin: Custom` | Modified via `/arckit:customize` |
 | **Community** | `Template Origin: Community` | Created via `/arckit:template-builder` |
 
-Community templates use the `community.` prefix for commands (e.g., `/arckit.community.security-assessment`), making them instantly recognizable in autocomplete.
+Community templates use the `community.` prefix for commands (e.g., `/arckit:community.security-assessment`), making them instantly recognizable in autocomplete.
 
 ---
 
@@ -103,7 +103,7 @@ To submit a community template for official ArcKit inclusion:
 ### Security Assessment Template
 
 ```text
-/arckit.template-builder security assessment
+/arckit:template-builder security assessment
 ```
 
 Creates a template with compliance checklist, risk assessment matrix, and approval workflow sections tailored to your organizational context.
@@ -111,7 +111,7 @@ Creates a template with compliance checklist, risk assessment matrix, and approv
 ### Vendor Scorecard
 
 ```text
-/arckit.template-builder vendor scorecard
+/arckit:template-builder vendor scorecard
 ```
 
 Creates a procurement template with weighted scoring matrix, evaluation criteria, and comparison tables.
@@ -119,7 +119,7 @@ Creates a procurement template with weighted scoring matrix, evaluation criteria
 ### Migration Checklist
 
 ```text
-/arckit.template-builder migration checklist
+/arckit:template-builder migration checklist
 ```
 
 Creates a technical template with phased checklist, rollback procedures, and sign-off gates.

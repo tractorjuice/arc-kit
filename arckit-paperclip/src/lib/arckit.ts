@@ -145,30 +145,30 @@ function hasDirContent(dir: string): boolean {
 
 function computeNextSteps(projectDir: string): string[] {
   if (!hasDoc(projectDir, "STKE") && !fs.existsSync(path.join(projectDir, "stakeholder-drivers.md"))) {
-    return ["/arckit.stakeholders - Analyze stakeholder drivers and goals"];
+    return ["/arckit:stakeholders - Analyze stakeholder drivers and goals"];
   }
   if (!hasDoc(projectDir, "RISK") && !fs.existsSync(path.join(projectDir, "risk-register.md"))) {
-    return ["/arckit.risk - Create risk register"];
+    return ["/arckit:risk - Create risk register"];
   }
   if (!hasDoc(projectDir, "SOBC") && !fs.existsSync(path.join(projectDir, "sobc.md"))) {
-    return ["/arckit.sobc - Create Strategic Outline Business Case"];
+    return ["/arckit:sobc - Create Strategic Outline Business Case"];
   }
   if (!hasDoc(projectDir, "REQ") && !fs.existsSync(path.join(projectDir, "requirements.md"))) {
-    return ["/arckit.requirements - Define business and technical requirements"];
+    return ["/arckit:requirements - Define business and technical requirements"];
   }
   if (!hasDoc(projectDir, "DATA") && !fs.existsSync(path.join(projectDir, "data-model.md"))) {
-    return ["/arckit.data-model - Design data model"];
+    return ["/arckit:data-model - Design data model"];
   }
   if (!hasDirContent(path.join(projectDir, "wardley-maps"))) {
     return [
-      "/arckit.research - Research technology options",
-      "/arckit.wardley - Create Wardley maps",
+      "/arckit:research - Research technology options",
+      "/arckit:wardley - Create Wardley maps",
     ];
   }
   if (!hasDoc(projectDir, "SOW") && !fs.existsSync(path.join(projectDir, "sow.md"))) {
-    return ["/arckit.sow - Generate Statement of Work for RFP"];
+    return ["/arckit:sow - Generate Statement of Work for RFP"];
   }
-  return ["/arckit.evaluate - Create vendor evaluation framework"];
+  return ["/arckit:evaluate - Create vendor evaluation framework"];
 }
 
 export function createProject(name: string, opts?: { repoRoot?: string; force?: boolean }): CreateProjectResult {
@@ -183,7 +183,7 @@ export function createProject(name: string, opts?: { repoRoot?: string; force?: 
         .some((f) => /^ARC-000-PRIN-.*\.md$/.test(f));
     if (!hasPrinciples) {
       throw new Error(
-        "Prerequisites not met: Architecture principles not found. Expected projects/000-global/ARC-000-PRIN-v*.md. Run /arckit.principles first, or pass force=true to skip.",
+        "Prerequisites not met: Architecture principles not found. Expected projects/000-global/ARC-000-PRIN-v*.md. Run /arckit:principles first, or pass force=true to skip.",
       );
     }
   }

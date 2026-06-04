@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-secnumcloud` assesses cloud provider and customer obligations under ANSSI's SecNumCloud 3.2 referential — the French sovereign cloud qualification scheme. Required for OIV SIIV hosting and sensitive public sector data.
+`/arckit:fr-secnumcloud` assesses cloud provider and customer obligations under ANSSI's SecNumCloud 3.2 referential — the French sovereign cloud qualification scheme. Required for OIV SIIV hosting and sensitive public sector data.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.fr-secnumcloud Assess SecNumCloud compliance for <cloud usage and data classification>
+/arckit:fr-secnumcloud Assess SecNumCloud compliance for <cloud usage and data classification>
 ```
 
 Output: `projects/<id>/ARC-<id>-SECNUM-v1.0.md`
@@ -54,10 +54,10 @@ Output: `projects/<id>/ARC-<id>-SECNUM-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Risk | EBIOS RM study to determine risk level | `/arckit.fr-ebios` |
-| Security baseline | ANSSI 42 measures | `/arckit.fr-anssi` |
-| Cloud assessment | SecNumCloud compliance | `/arckit.fr-secnumcloud` |
-| Procurement | Cloud procurement clauses | `/arckit.fr-marche-public` |
+| Risk | EBIOS RM study to determine risk level | `/arckit:fr-ebios` |
+| Security baseline | ANSSI 42 measures | `/arckit:fr-anssi` |
+| Cloud assessment | SecNumCloud compliance | `/arckit:fr-secnumcloud` |
+| Procurement | Cloud procurement clauses | `/arckit:fr-marche-public` |
 
 ---
 
@@ -77,4 +77,4 @@ Output: `projects/<id>/ARC-<id>-SECNUM-v1.0.md`
 
 - **Visa ≠ Qualification**: A provider with a visa is in the process — it does NOT satisfy the legal obligation for OIV SIIV hosting.
 - **More stringent than EUCS**: SecNumCloud 3.2 is stricter than the EU's EUCS high level — important for cross-border comparisons.
-- **DINUM doctrine cloud**: The Doctrine d'utilisation de l'informatique en nuage de l'État (2022) mandates SecNumCloud or equivalent for sensitive data — run `/arckit.fr-dinum` for the full doctrine assessment.
+- **DINUM doctrine cloud**: The Doctrine d'utilisation de l'informatique en nuage de l'État (2022) mandates SecNumCloud or equivalent for sensitive data — run `/arckit:fr-dinum` for the full doctrine assessment.

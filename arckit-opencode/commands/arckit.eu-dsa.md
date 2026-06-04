@@ -181,9 +181,9 @@ Total Gaps: {N} ({N} high, {N} medium)
 {If VLOP: Annual audit: {status}}
 
 Next steps:
-1. {If personal data in recommender/ads: Run /arckit.eu-rgpd}
-2. {If AI-driven moderation or recommendation: Run /arckit.eu-ai-act}
-3. Run /arckit.risk to register DSA gaps
+1. {If personal data in recommender/ads: Run /arckit:eu-rgpd}
+2. {If AI-driven moderation or recommendation: Run /arckit:eu-ai-act}
+3. Run /arckit:risk to register DSA gaps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -193,7 +193,7 @@ Next steps:
 - **VLOP designation is Commission-driven**: The European Commission formally designates VLOPs and VLOSEs. Self-assessment of the 45M threshold triggers notification obligations — the Commission then decides.
 - **Micro/small enterprise exemptions are real**: Platforms with < 50 employees AND < €10M annual turnover are exempted from some platform-specific obligations (Article 21 out-of-court dispute settlement, Article 27 recommender transparency requirements).
 - **ARCOM is proactive**: ARCOM has published detailed DSA compliance guidance for French-established providers. Consult ARCOM guidance alongside this assessment.
-- **Recommender systems and AI Act overlap**: Recommender systems may simultaneously fall under DSA (transparency) and AI Act (high-risk if employment/benefits context). Run `/arckit.eu-ai-act` if AI-driven.
+- **Recommender systems and AI Act overlap**: Recommender systems may simultaneously fall under DSA (transparency) and AI Act (high-risk if employment/benefits context). Run `/arckit:eu-ai-act` if AI-driven.
 - **Use Write Tool**: DSA assessments vary significantly by tier. Always use the Write tool.
 
 ## Key References
@@ -225,11 +225,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.eu-dsa Assess DSA compliance for a French online marketplace (€500M GMV, 8M monthly EU users), hosting third-party seller listings, with recommendation engine and targeted advertising
+/arckit:eu-dsa Assess DSA compliance for a French online marketplace (€500M GMV, 8M monthly EU users), hosting third-party seller listings, with recommendation engine and targeted advertising
 
-/arckit.eu-dsa DSA scoping for 001 — social media platform with 60M monthly EU users, Commission designated VLOP, annual systemic risk assessment required
+/arckit:eu-dsa DSA scoping for 001 — social media platform with 60M monthly EU users, Commission designated VLOP, annual systemic risk assessment required
 
-/arckit.eu-dsa DSA compliance for a SaaS hosting service storing user-generated content for B2B clients, no public dissemination — assess hosting obligations
+/arckit:eu-dsa DSA compliance for a SaaS hosting service storing user-generated content for B2B clients, no public dissemination — assess hosting obligations
 ```
 
 ## Suggested Next Steps

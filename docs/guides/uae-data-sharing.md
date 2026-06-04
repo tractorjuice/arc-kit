@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.uae-data-sharing` generates a Data Sharing Agreement under the UAE Government Services Data Sharing Policy ("collect once, use securely"). Captures the collect-once mapping, federation / API plan, and PDPL lawful basis per share.
+`/arckit:uae-data-sharing` generates a Data Sharing Agreement under the UAE Government Services Data Sharing Policy ("collect once, use securely"). Captures the collect-once mapping, federation / API plan, and PDPL lawful basis per share.
 
 ---
 
@@ -22,7 +22,7 @@
 ## Command
 
 ```bash
-/arckit.uae-data-sharing <project ID or service name>
+/arckit:uae-data-sharing <project ID or service name>
 ```
 
 Output: `projects/<id>/ARC-<id>-DSHR-v1.0.md`
@@ -58,10 +58,10 @@ Output: `projects/<id>/ARC-<id>-DSHR-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Privacy | PDPL baseline + lawful basis | `/arckit.uae-pdpl` |
-| Classification | Per-dataset Smart Data tags | `/arckit.uae-classification` |
-| Sharing | Data Sharing Agreement | `/arckit.uae-data-sharing` |
-| Integration | Federation / API contracts | `/arckit.integration` |
+| Privacy | PDPL baseline + lawful basis | `/arckit:uae-pdpl` |
+| Classification | Per-dataset Smart Data tags | `/arckit:uae-classification` |
+| Sharing | Data Sharing Agreement | `/arckit:uae-data-sharing` |
+| Integration | Federation / API contracts | `/arckit:integration` |
 
 ---
 

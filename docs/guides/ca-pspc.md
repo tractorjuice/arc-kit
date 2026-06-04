@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-pspc` generates a federal Canadian procurement strategy under the Public Services and Procurement Canada (PSPC) *Supply Manual*. It scopes the procurement, applies the *Canadian Free Trade Agreement* (CFTA), CETA, CPTPP, and WTO-AGP threshold matrix, evaluates the Standing Offer / Supply Arrangement / AgileIQ / bespoke RFP / set-aside route landscape, captures the Procurement Strategy for Indigenous Business (PSAB) contribution to the departmental 5% rolling target, builds the security-clearance lead-time picture, sets out the evaluation-framework dimensions, and lays a bid-solicitation schedule consistent with Supply Manual standstill and debriefing rules.
+`/arckit:ca-pspc` generates a federal Canadian procurement strategy under the Public Services and Procurement Canada (PSPC) *Supply Manual*. It scopes the procurement, applies the *Canadian Free Trade Agreement* (CFTA), CETA, CPTPP, and WTO-AGP threshold matrix, evaluates the Standing Offer / Supply Arrangement / AgileIQ / bespoke RFP / set-aside route landscape, captures the Procurement Strategy for Indigenous Business (PSAB) contribution to the departmental 5% rolling target, builds the security-clearance lead-time picture, sets out the evaluation-framework dimensions, and lays a bid-solicitation schedule consistent with Supply Manual standstill and debriefing rules.
 
 PSPC is the federal contracting authority for most goods and services procurements above departmental delegations. Federal procurement operates under a layered set of trade-agreement obligations — CFTA domestically, CETA / CPTPP / WTO-AGP internationally — and a Procurement Strategy for Indigenous Business that targets a 5% rolling departmental contribution to Indigenous-business procurement. Treat this artefact as a delivery gate: the route, the trade-agreement coverage, the PSAB posture, and the clearance-lead-time picture must be set before market engagement, because reversing them after a posting attracts CITT review and rework cost.
 
@@ -22,7 +22,7 @@ PSPC is the federal contracting authority for most goods and services procuremen
 ## Command
 
 ```bash
-/arckit.ca-pspc <project ID or service description>
+/arckit:ca-pspc <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-PROC-v1.0.md`

@@ -19,19 +19,19 @@ Select the appropriate diagram type and read the corresponding reference file:
 
 | Type | Reference | ArcKit Commands Using It |
 | ---- | --------- | ------------------------ |
-| Flowchart | [flowchart.md](references/flowchart.md) | `/arckit.diagram`, `/arckit.dfd`, `/arckit.roadmap`, `/arckit.plan`, `/arckit.backlog`, `/arckit.strategy`, `/arckit.story`, `/arckit.jsp-936` |
-| Sequence Diagram | [sequenceDiagram.md](references/sequenceDiagram.md) | `/arckit.diagram` |
+| Flowchart | [flowchart.md](references/flowchart.md) | `/arckit:diagram`, `/arckit:dfd`, `/arckit:roadmap`, `/arckit:plan`, `/arckit:backlog`, `/arckit:strategy`, `/arckit:story`, `/arckit:jsp-936` |
+| Sequence Diagram | [sequenceDiagram.md](references/sequenceDiagram.md) | `/arckit:diagram` |
 | Class Diagram | [classDiagram.md](references/classDiagram.md) | — |
 | State Diagram | [stateDiagram.md](references/stateDiagram.md) | — |
-| ER Diagram | [entityRelationshipDiagram.md](references/entityRelationshipDiagram.md) | `/arckit.data-model` |
-| Gantt Chart | [gantt.md](references/gantt.md) | `/arckit.roadmap`, `/arckit.plan`, `/arckit.strategy`, `/arckit.story`, `/arckit.presentation` |
-| Pie Chart | [pie.md](references/pie.md) | `/arckit.story`, `/arckit.presentation` |
-| Mindmap | [mindmap.md](references/mindmap.md) | `/arckit.story` |
-| Timeline | [timeline.md](references/timeline.md) | `/arckit.story` |
+| ER Diagram | [entityRelationshipDiagram.md](references/entityRelationshipDiagram.md) | `/arckit:data-model` |
+| Gantt Chart | [gantt.md](references/gantt.md) | `/arckit:roadmap`, `/arckit:plan`, `/arckit:strategy`, `/arckit:story`, `/arckit:presentation` |
+| Pie Chart | [pie.md](references/pie.md) | `/arckit:story`, `/arckit:presentation` |
+| Mindmap | [mindmap.md](references/mindmap.md) | `/arckit:story` |
+| Timeline | [timeline.md](references/timeline.md) | `/arckit:story` |
 | Git Graph | [gitgraph.md](references/gitgraph.md) | — |
-| Quadrant Chart | [quadrantChart.md](references/quadrantChart.md) | `/arckit.presentation` |
+| Quadrant Chart | [quadrantChart.md](references/quadrantChart.md) | `/arckit:presentation` |
 | Requirement Diagram | [requirementDiagram.md](references/requirementDiagram.md) | — |
-| C4 Diagram | [c4.md](references/c4.md) | `/arckit.diagram`, `/arckit.presentation` |
+| C4 Diagram | [c4.md](references/c4.md) | `/arckit:diagram`, `/arckit:presentation` |
 | Sankey Diagram | [sankey.md](references/sankey.md) | — |
 | XY Chart | [xyChart.md](references/xyChart.md) | — |
 | Block Diagram | [block.md](references/block.md) | — |

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.atrs` generates an Algorithmic Transparency Recording Standard (ATRS) record for AI and algorithmic tools used in public services.
+`/arckit:atrs` generates an Algorithmic Transparency Recording Standard (ATRS) record for AI and algorithmic tools used in public services.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.atrs Create ATRS record for <algorithmic tool>
+/arckit:atrs Create ATRS record for <algorithmic tool>
 ```
 
 Output: `projects/<id>/ARC-<id>-ATRS-v1.0.md`
@@ -57,9 +57,9 @@ Output: `projects/<id>/ARC-<id>-ATRS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define algorithmic tool and impact | `/arckit.requirements`, `/arckit.stakeholders` |
-| Assessment | Assess AI compliance and risks | `/arckit.ai-playbook`, `/arckit.dpia` |
-| Transparency | Create ATRS record | `/arckit.atrs` |
+| Discovery | Define algorithmic tool and impact | `/arckit:requirements`, `/arckit:stakeholders` |
+| Assessment | Assess AI compliance and risks | `/arckit:ai-playbook`, `/arckit:dpia` |
+| Transparency | Create ATRS record | `/arckit:atrs` |
 | Publication | Publish record to gov.uk | Manual process |
 | Review | Regular review and updates | Annual cycle |
 

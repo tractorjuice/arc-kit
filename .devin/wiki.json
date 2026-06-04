@@ -18,11 +18,11 @@
     },
     {
       "author": "ArcKit maintainers",
-      "content": "ORANGE BOOK RISK MODEL — `/arckit.risk` implements HM Treasury Orange Book (2023) risk management. The Orange Book defines SIX treatment options, not the popular '4Ts' (Tolerate / Treat / Transfer / Terminate). ArcKit's risk command uses the correct six-option model together with the Three Lines of Defence and cascade analysis. An earlier version described '4Ts'; that was a factual error caught by ArcKit's own autoresearch system and corrected. Do not describe the risk command as using '4Ts' or as having four treatment options."
+      "content": "ORANGE BOOK RISK MODEL — `/arckit:risk` implements HM Treasury Orange Book (2023) risk management. The Orange Book defines SIX treatment options, not the popular '4Ts' (Tolerate / Treat / Transfer / Terminate). ArcKit's risk command uses the correct six-option model together with the Three Lines of Defence and cascade analysis. An earlier version described '4Ts'; that was a factual error caught by ArcKit's own autoresearch system and corrected. Do not describe the risk command as using '4Ts' or as having four treatment options."
     },
     {
       "author": "ArcKit maintainers",
-      "content": "GREEN BOOK BUSINESS CASE — `/arckit.sobc` generates a Strategic Outline Business Case following HM Treasury Green Book (2026) five-case structure: Strategic, Economic, Commercial, Financial, Management. Use the Green Book's own vocabulary: `BAU` (not 'status quo'), `Do Minimum` (not 'baseline'), `Preferred Way Forward` (not 'recommended option'). Do not rename these terms."
+      "content": "GREEN BOOK BUSINESS CASE — `/arckit:sobc` generates a Strategic Outline Business Case following HM Treasury Green Book (2026) five-case structure: Strategic, Economic, Commercial, Financial, Management. Use the Green Book's own vocabulary: `BAU` (not 'status quo'), `Do Minimum` (not 'baseline'), `Preferred Way Forward` (not 'recommended option'). Do not rename these terms."
     },
     {
       "author": "ArcKit maintainers",
@@ -34,7 +34,7 @@
     },
     {
       "author": "ArcKit maintainers",
-      "content": "GOVERNMENT CODE DISCOVERY — for UK Government projects, three commands use the `govreposcrape` MCP server over 24,500+ UK public-sector repositories: `/arckit.gov-code-search`, `/arckit.gov-reuse`, `/arckit.gov-landscape`. These feed into the main research command as a fifth build-vs-buy option ('Reuse existing government code'). Distinct from cloud-vendor research commands (`aws-research`, `azure-research`, `gcp-research`) which use AWS Knowledge MCP, Microsoft Learn MCP, and Google Developer Knowledge MCP."
+      "content": "GOVERNMENT CODE DISCOVERY — for UK Government projects, three commands use the `govreposcrape` MCP server over 24,500+ UK public-sector repositories: `/arckit:gov-code-search`, `/arckit:gov-reuse`, `/arckit:gov-landscape`. These feed into the main research command as a fifth build-vs-buy option ('Reuse existing government code'). Distinct from cloud-vendor research commands (`aws-research`, `azure-research`, `gcp-research`) which use AWS Knowledge MCP, Microsoft Learn MCP, and Google Developer Knowledge MCP."
     },
     {
       "author": "ArcKit maintainers",

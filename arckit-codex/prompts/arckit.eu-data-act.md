@@ -147,7 +147,7 @@ Show role determination before proceeding.
    - Personal data in shared data sets: both Data Act and GDPR apply
    - Data minimisation: Data Act sharing doesn't override GDPR purpose limitation
    - Transfer restrictions: GDPR Chapter V applies to personal data transfers
-   - Recommend running `/arckit.eu-rgpd` if personal data is involved
+   - Recommend running `/arckit:eu-rgpd` if personal data is involved
 
 9. **Section 9: Gap Analysis and Timeline**
    - Role-based gaps with Data Act application dates
@@ -196,9 +196,9 @@ Personal data involved: {Yes — GDPR also applies / No}
 Total Gaps: {N} ({N} high)
 
 Next steps:
-1. {If personal data: Run /arckit.eu-rgpd}
-2. {If procurement: Run /arckit.fr-marche-public for data sharing clauses}
-3. Run /arckit.risk to register Data Act gaps
+1. {If personal data: Run /arckit:eu-rgpd}
+2. {If procurement: Run /arckit:fr-marche-public for data sharing clauses}
+3. Run /arckit:risk to register Data Act gaps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -235,17 +235,17 @@ Next steps:
 - ✅ Public sector exceptional access (Chapter V) assessed or N/A
 - ✅ Cloud switching obligations (Chapter VI) assessed if DAPS or N/A
 - ✅ International transfer restrictions (Article 27) assessed
-- ✅ GDPR intersection documented with recommendation to run `/arckit.eu-rgpd`
+- ✅ GDPR intersection documented with recommendation to run `/arckit:eu-rgpd`
 - ✅ Gap analysis with Data Act application timeline (Sep 2025 / Sep 2027)
 
 ## Example Usage
 
 ```text
-/arckit.eu-data-act Assess Data Act compliance for an industrial IoT platform collecting sensor data from 50,000 connected machines in EU factories, selling analytics as SaaS, B2B sharing with factory operators required
+/arckit:eu-data-act Assess Data Act compliance for an industrial IoT platform collecting sensor data from 50,000 connected machines in EU factories, selling analytics as SaaS, B2B sharing with factory operators required
 
-/arckit.eu-data-act Data Act scoping for 001 — cloud SaaS provider (IaaS switching obligations focus), assess egress charge elimination timeline and switching process requirements
+/arckit:eu-data-act Data Act scoping for 001 — cloud SaaS provider (IaaS switching obligations focus), assess egress charge elimination timeline and switching process requirements
 
-/arckit.eu-data-act Data Act for a smart home appliance manufacturer (France), connected devices collecting usage data, assess user access rights and B2B sharing with maintenance service providers
+/arckit:eu-data-act Data Act for a smart home appliance manufacturer (France), connected devices collecting usage data, assess user access rights and B2B sharing with maintenance service providers
 ```
 
 ## Suggested Next Steps

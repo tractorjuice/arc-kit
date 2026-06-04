@@ -217,7 +217,7 @@ Min. Consultation Period: {X days}
 Next steps:
 1. Review and complete UGAP catalogue references (ugap.fr)
 2. Legal team validation of contract clauses
-3. {If tenders received: Run /arckit.evaluate for scoring}
+3. {If tenders received: Run /arckit:evaluate for scoring}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -261,11 +261,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.fr-marche-public Generate procurement documentation for a digital identity platform for a French ministry, estimated value €2.5M, handling personal data, requires SecNumCloud, RGAA compliance mandatory
+/arckit:fr-marche-public Generate procurement documentation for a digital identity platform for a French ministry, estimated value €2.5M, handling personal data, requires SecNumCloud, RGAA compliance mandatory
 
-/arckit.fr-marche-public Procurement file for 001 — cybersecurity services contract, €800K, MAPA procedure, existing UGAP framework available
+/arckit:fr-marche-public Procurement file for 001 — cybersecurity services contract, €800K, MAPA procedure, existing UGAP framework available
 
-/arckit.fr-marche-public Create procurement file for a French regional health authority digital platform, health data in scope, HDS certification required, estimated €3.5M over 3 years
+/arckit:fr-marche-public Create procurement file for a French regional health authority digital platform, health data in scope, HDS certification required, estimated €3.5M over 3 years
 ```
 
 ## Suggested Next Steps

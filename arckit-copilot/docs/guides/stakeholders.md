@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.stakeholders` analyzes stakeholder drivers, goals, and measurable outcomes to establish project foundation.
+`/arckit:stakeholders` analyzes stakeholder drivers, goals, and measurable outcomes to establish project foundation.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.stakeholders Analyze stakeholders for <project>
+/arckit:stakeholders Analyze stakeholders for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-STKE-v1.0.md`
@@ -80,11 +80,11 @@ Output: `projects/<id>/ARC-<id>-STKE-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Identify and analyze stakeholders | `/arckit.stakeholders` |
-| Requirements | Capture requirements from stakeholders | `/arckit.requirements` |
-| Planning | Plan based on stakeholder needs | `/arckit.sobc`, `/arckit.plan` |
+| Discovery | Identify and analyze stakeholders | `/arckit:stakeholders` |
+| Requirements | Capture requirements from stakeholders | `/arckit:requirements` |
+| Planning | Plan based on stakeholder needs | `/arckit:sobc`, `/arckit:plan` |
 | Execution | Regular stakeholder engagement | Governance meetings |
-| Closure | Validate outcomes with stakeholders | `/arckit.story` |
+| Closure | Validate outcomes with stakeholders | `/arckit:story` |
 
 ---
 

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-marche-public` generates French public procurement documentation aligned with the Code de la commande publique, UGAP framework agreements, DINUM digital standards, and ANSSI-qualified provider requirements.
+`/arckit:fr-marche-public` generates French public procurement documentation aligned with the Code de la commande publique, UGAP framework agreements, DINUM digital standards, and ANSSI-qualified provider requirements.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.fr-marche-public Generate procurement file for <project, estimated value, procedure type>
+/arckit:fr-marche-public Generate procurement file for <project, estimated value, procedure type>
 ```
 
 Output: `projects/<id>/ARC-<id>-MARPUB-v1.0.md`
@@ -67,10 +67,10 @@ Output: `projects/<id>/ARC-<id>-MARPUB-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Requirements and market | `/arckit.requirements`, `/arckit.research` |
-| Assessment | Procurement strategy | `/arckit.fr-marche-public` |
-| Data | GDPR/data sharing clauses | `/arckit.eu-rgpd`, `/arckit.eu-data-act` |
-| Security | SecNumCloud procurement clause | `/arckit.fr-secnumcloud` |
+| Discovery | Requirements and market | `/arckit:requirements`, `/arckit:research` |
+| Assessment | Procurement strategy | `/arckit:fr-marche-public` |
+| Data | GDPR/data sharing clauses | `/arckit:eu-rgpd`, `/arckit:eu-data-act` |
+| Security | SecNumCloud procurement clause | `/arckit:fr-secnumcloud` |
 
 ---
 

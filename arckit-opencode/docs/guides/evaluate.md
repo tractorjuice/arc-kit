@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.evaluate` creates vendor evaluation frameworks and scores vendor proposals against requirements.
+`/arckit:evaluate` creates vendor evaluation frameworks and scores vendor proposals against requirements.
 
 ---
 
@@ -20,9 +20,9 @@
 ## Command
 
 ```bash
-/arckit.evaluate Create evaluation framework for <project>
-/arckit.evaluate Score <vendor-name> proposal for <project>
-/arckit.evaluate Compare all vendors for <project>
+/arckit:evaluate Create evaluation framework for <project>
+/arckit:evaluate Score <vendor-name> proposal for <project>
+/arckit:evaluate Compare all vendors for <project>
 ```
 
 Output:
@@ -74,11 +74,11 @@ Output:
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Preparation | Define requirements and procurement approach | `/arckit.requirements`, `/arckit.sow` |
-| Framework | Create evaluation criteria | `/arckit.evaluate` (create) |
-| Scoring | Score each vendor proposal | `/arckit.evaluate` (score) |
-| Comparison | Compare and recommend | `/arckit.evaluate` (compare) |
-| Procurement | Award contract, negotiate terms | `/arckit.gcloud-clarify` |
+| Preparation | Define requirements and procurement approach | `/arckit:requirements`, `/arckit:sow` |
+| Framework | Create evaluation criteria | `/arckit:evaluate` (create) |
+| Scoring | Score each vendor proposal | `/arckit:evaluate` (score) |
+| Comparison | Compare and recommend | `/arckit:evaluate` (compare) |
+| Procurement | Award contract, negotiate terms | `/arckit:gcloud-clarify` |
 
 ---
 

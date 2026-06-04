@@ -396,13 +396,13 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Matrix Date**: 2026-06-02
 - **Commands Documented**: 86
 - **Matrix Rows**: 58 (existing) + 18 EU/FR commands in separate section below (see Changelog 2026-04-19)
-- **Note**: `/arckit.customize`, `/arckit.template-builder`, `/arckit.health`, `/arckit.search`, `/arckit.impact`, `/arckit.navigator`, `/arckit.graph-report`, `/arckit.init`, and `/arckit.start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
+- **Note**: `/arckit:customize`, `/arckit:template-builder`, `/arckit:health`, `/arckit:search`, `/arckit:impact`, `/arckit:navigator`, `/arckit:graph-report`, `/arckit:init`, and `/arckit:start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
 
 ### 2026-06-02 - Competitor Landscape command + Assurance wiring (#556)
 
-- **Added**: `/arckit.competitors` command (86th ArcKit command) for competitor landscape analysis from the UK Tenders MCP
+- **Added**: `/arckit:competitors` command (86th ArcKit command) for competitor landscape analysis from the UK Tenders MCP
 - **Updated**: Tier 7 Procurement to include competitors command alongside tenders
 - **Dependencies**: requirements (O), tenders (O), research (O) — all optional; command can run standalone with only a supplier name, capability keyword, or CPV scope
 - **Consumed by**: risk (O — supplier-concentration/single-supplier-dependency risk), sobc (O — market-context benchmark), research (O — award-evidence grounding), score (O — Company Experience evidence)
@@ -413,7 +413,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-06-02 - Procurement Market Intelligence command (#556)
 
-- **Added**: `/arckit.tenders` command (85th ArcKit command) for procurement market intelligence from the UK Tenders MCP
+- **Added**: `/arckit:tenders` command (85th ArcKit command) for procurement market intelligence from the UK Tenders MCP
 - **Updated**: Tier 7 Procurement to include tenders command
 - **Dependencies**: requirements (O), sobc (O), research (O) — all optional; command can run standalone with only a keyword or CPV scope
 - **Consumed by**: sobc (O — Economic Case benchmarks), risk (O — concentration risk), research (O — build-vs-buy market context)
@@ -423,8 +423,8 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-04-28 - Graph-aware diagnostic commands (#359)
 
-- **Added**: `/arckit.navigator` — project-level GPS. Read-only diagnostic. No dependencies, no outputs consumed by other commands. Listed in the utility/diagnostic exclusion note above; not added to the matrix proper.
-- **Added**: `/arckit.graph-report` — multi-project governance metrics dashboard. Read-only diagnostic. No dependencies, no outputs consumed by other commands. Listed in the utility/diagnostic exclusion note above; not added to the matrix proper.
+- **Added**: `/arckit:navigator` — project-level GPS. Read-only diagnostic. No dependencies, no outputs consumed by other commands. Listed in the utility/diagnostic exclusion note above; not added to the matrix proper.
+- **Added**: `/arckit:graph-report` — multi-project governance metrics dashboard. Read-only diagnostic. No dependencies, no outputs consumed by other commands. Listed in the utility/diagnostic exclusion note above; not added to the matrix proper.
 - **Updated**: Commands Documented count from 82 to 84.
 - **Note**: Both commands are backed by the consolidated `graph-inject.mjs` hook (#162) which injects pre-computed graph context for read-only commands. They consume *every* artifact in a project, but transitively via the graph — they don't depend on any specific producing command.
 
@@ -452,14 +452,14 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-03-09 - Added Impact Analysis Command
 
-- **Added**: `/arckit.impact` command (60th ArcKit command) for blast radius analysis and reverse dependency tracing
+- **Added**: `/arckit:impact` command (60th ArcKit command) for blast radius analysis and reverse dependency tracing
 - **Not in matrix**: Diagnostic command with console-only output — no dependencies and no outputs consumed by other commands
 - **Updated**: Commands Documented count from 59 to 60
 - **Note**: Uses UserPromptSubmit pre-processing hook (`impact-scan.mjs`) to build a dependency graph with doc-to-doc edges for reverse traversal
 
 ### 2026-03-08 - Added Vendor Scoring Command
 
-- **Added**: `/arckit.score` command (59th ArcKit command) for structured vendor scoring with JSON storage, comparison, and audit trail
+- **Added**: `/arckit:score` command (59th ArcKit command) for structured vendor scoring with JSON storage, comparison, and audit trail
 - **Added**: score row and column to dependency matrix
 - **Updated**: Tier 7 Procurement to include score command
 - **Dependencies**: evaluate (M), requirements (M)
@@ -469,37 +469,37 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-03-08 - Added Project Search Command
 
-- **Added**: `/arckit.search` command (58th ArcKit command) for keyword, type, and requirement ID search across all project artifacts
+- **Added**: `/arckit:search` command (58th ArcKit command) for keyword, type, and requirement ID search across all project artifacts
 - **Not in matrix**: Diagnostic/query command with console-only output — no dependencies and no outputs consumed by other commands
 - **Updated**: Commands Documented count from 57 to 58
 - **Note**: Uses UserPromptSubmit pre-processing hook (`search-scan.mjs`) to index artifacts before search
 
 ### 2026-03-08 - Added DFD Command to Matrix
 
-- **Added**: `/arckit.dfd` row and column to dependency matrix
+- **Added**: `/arckit:dfd` row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include dfd command
 - **Dependencies**: requirements (M), data-model (R), principles (O), diagram (O)
 - **Consumed by**: traceability (O), analyze (O), story (R), pages (R), presentation (O)
 - **Note**: Multi-instance document type (ARC-*-DFD-{NUM}-v*.md); generates Yourdon-DeMarco Data Flow Diagrams
 - **Updated**: Matrix Rows from 53 to 54
-- **Added**: `/arckit.init` to utility command exclusion note
+- **Added**: `/arckit:init` to utility command exclusion note
 
 ### 2026-03-06 - Added Framework, Glossary, and Maturity Model Commands
 
-- **Added**: `/arckit.framework` command (55th ArcKit command) for transforming architecture artifacts into a structured, reusable framework
+- **Added**: `/arckit:framework` command (55th ArcKit command) for transforming architecture artifacts into a structured, reusable framework
 - **Added**: framework row and column to dependency matrix
 - **Updated**: Tier 5 Strategic Planning to include framework command
 - **Dependencies**: principles (M), requirements (M), stakeholders (R), strategy (R), data-model (R), research (R)
 - **Consumed by**: glossary (R), maturity-model (R), story (R), pages (R), presentation (O)
 - **Note**: Agent-delegating command using arckit-framework agent for synthesis
 
-- **Added**: `/arckit.glossary` command (56th ArcKit command) for generating comprehensive project glossary
+- **Added**: `/arckit:glossary` command (56th ArcKit command) for generating comprehensive project glossary
 - **Added**: glossary row and column to dependency matrix
 - **Updated**: Tier 5 Strategic Planning to include glossary command
 - **Dependencies**: requirements (R), data-model (R)
 - **Consumed by**: story (R), pages (R), presentation (O)
 
-- **Added**: `/arckit.maturity-model` command (57th ArcKit command) for generating capability maturity model
+- **Added**: `/arckit:maturity-model` command (57th ArcKit command) for generating capability maturity model
 - **Added**: maturity-model row and column to dependency matrix
 - **Updated**: Tier 13 Compliance Assessment to include maturity-model command
 - **Dependencies**: principles (R)
@@ -510,36 +510,36 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-03-02 - Added Template Builder Command
 
-- **Added**: `/arckit.template-builder` command (54th ArcKit command) for creating new document templates through interactive interview
+- **Added**: `/arckit:template-builder` command (54th ArcKit command) for creating new document templates through interactive interview
 - **Not in matrix**: Utility command that generates community-origin templates, guides, and optional shareable bundles — no dependencies and no outputs consumed by other commands
 - **Updated**: Commands Documented count from 53 to 54
 - **Note**: Introduces three-tier origin model (Official/Custom/Community) for templates and guides
 
 ### 2026-02-25 - Added Architecture Conformance Assessment Command
 
-- **Added**: `/arckit.conformance` command (52nd ArcKit command) for systematic decided-vs-designed conformance checking
+- **Added**: `/arckit:conformance` command (52nd ArcKit command) for systematic decided-vs-designed conformance checking
 - **Added**: conformance row and column to dependency matrix
 - **Updated**: Tier 13 Compliance Assessment to include conformance command
 - **Dependencies**: principles (M), adr (M), requirements (R), hld-review (R), dld-review (R), principles-compliance (R), traceability (R), HLD (R), DLD (R), risk (O), devops (O)
 - **Consumed by**: analyze (O), service-assessment (O), story (R), pages (R), presentation (O)
 - **Doc ID**: `ARC-{PID}-CONF-v{VERSION}`
-- **Note**: Bridges `/arckit.health` (quick metadata scan) and `/arckit.analyze` (deep governance) with 12 conformance checks covering ADR implementation, cross-decision consistency, architecture drift, technical debt, and custom constraint rules
+- **Note**: Bridges `/arckit:health` (quick metadata scan) and `/arckit:analyze` (deep governance) with 12 conformance checks covering ADR implementation, cross-decision consistency, architecture drift, technical debt, and custom constraint rules
 
 ### 2026-02-20 - Added Health Check Command
 
-- **Added**: `/arckit.health` command (51st ArcKit command) for scanning projects for stale research, forgotten ADRs, unresolved conditions, orphaned requirements, missing traceability, and version drift
+- **Added**: `/arckit:health` command (51st ArcKit command) for scanning projects for stale research, forgotten ADRs, unresolved conditions, orphaned requirements, missing traceability, and version drift
 - **Not in matrix**: Diagnostic command with console-only output — no dependencies and no outputs consumed by other commands
 - **Updated**: Commands Documented count from 50 to 51
 
 ### 2026-02-20 - Research Knowledge Compounding
 
-- **Updated**: `/arckit.research` now spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` from research findings
+- **Updated**: `/arckit:research` now spawns `vendors/{slug}-profile.md` and `tech-notes/{slug}.md` from research findings
 - **Note**: New output files are standalone knowledge — not consumed by other commands via the dependency matrix
 - **Flag**: `--no-spawn` skips knowledge compounding
 
 ### 2026-02-19 - Added Presentation Command
 
-- **Added**: `/arckit.presentation` command (50th ArcKit command) for generating MARP-format slide decks from project artifacts
+- **Added**: `/arckit:presentation` command (50th ArcKit command) for generating MARP-format slide decks from project artifacts
 - **Added**: presentation row and column to dependency matrix
 - **Updated**: Tier 14 to include presentation alongside story
 - **Dependencies**: All artifacts (R) — reads whatever is available, minimum 3 recommended
@@ -548,7 +548,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-02-09 - Added GCP Research Command
 
-- **Added**: `/arckit.gcp-research` command (47th ArcKit command) for Google Cloud-specific technology research using Google Developer Knowledge MCP server
+- **Added**: `/arckit:gcp-research` command (47th ArcKit command) for Google Cloud-specific technology research using Google Developer Knowledge MCP server
 - **Added**: gcp-research row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include gcp-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
@@ -557,13 +557,13 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-02-05 - Added Template Customization Command
 
-- **Added**: `/arckit.customize` command (46th ArcKit command) for copying templates to `.arckit/templates-custom/`
+- **Added**: `/arckit:customize` command (46th ArcKit command) for copying templates to `.arckit/templates-custom/`
 - **Not in matrix**: Utility command with no dependencies and no outputs consumed by other commands
 - **Purpose**: Enables template customization that persists across `arckit init` updates
 
 ### 2026-02-05 - Added Architecture Strategy Command
 
-- **Added**: `/arckit.strategy` command (45th ArcKit command) for synthesising strategic artifacts into executive-level Architecture Strategy document
+- **Added**: `/arckit:strategy` command (45th ArcKit command) for synthesising strategic artifacts into executive-level Architecture Strategy document
 - **Added**: strategy row and column to dependency matrix
 - **Updated**: Tier 5 Strategic Planning to include strategy command
 - **Dependencies**: principles (M), stakeholders (M), wardley (R), roadmap (R), sobc (R), risk (O)
@@ -573,7 +573,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-02-04 - Added Trello Export Command
 
-- **Added**: `/arckit.trello` command (44th ArcKit command) for exporting product backlog to Trello boards
+- **Added**: `/arckit:trello` command (44th ArcKit command) for exporting product backlog to Trello boards
 - **Added**: trello row and column to dependency matrix
 - **Added**: Tier 10 Backlog Export for trello command
 - **Dependencies**: backlog (M) — reads `ARC-*-BKLG-*.json`
@@ -582,7 +582,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-02-01 - Added Data Source Discovery Command
 
-- **Added**: `/arckit.datascout` command (43rd ArcKit command) for discovering external data sources (APIs, datasets, open data portals, commercial providers)
+- **Added**: `/arckit:datascout` command (43rd ArcKit command) for discovering external data sources (APIs, datasets, open data portals, commercial providers)
 - **Added**: datascout row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include datascout command
 - **Dependencies**: requirements (M), data-model (O), stakeholders (R), principles (R)
@@ -591,7 +591,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-01-29 - Added AWS Research Command
 
-- **Added**: `/arckit.aws-research` command (42nd ArcKit command) for AWS-specific technology research using AWS Knowledge MCP server
+- **Added**: `/arckit:aws-research` command (42nd ArcKit command) for AWS-specific technology research using AWS Knowledge MCP server
 - **Added**: aws-research row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include aws-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
@@ -600,7 +600,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-01-29 - Added Azure Research Command
 
-- **Added**: `/arckit.azure-research` command (41st ArcKit command) for Azure-specific technology research using Microsoft Learn MCP server
+- **Added**: `/arckit:azure-research` command (41st ArcKit command) for Azure-specific technology research using Microsoft Learn MCP server
 - **Added**: azure-research row and column to dependency matrix
 - **Updated**: Tier 6 Detailed Design to include azure-research command
 - **Dependencies**: requirements (M), data-model (R), stakeholders (R), MCP Server (External)
@@ -624,21 +624,21 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2026-01-22 - Added Pages Command
 
-- **Added**: `/arckit.pages` command (40th ArcKit command) for GitHub Pages documentation site generation with Mermaid diagram support
+- **Added**: `/arckit:pages` command (40th ArcKit command) for GitHub Pages documentation site generation with Mermaid diagram support
 - **Category**: Documentation & Publishing
 - **Dependencies**: None (utility command)
 
 ### 2026-01-21 - Added FinOps Command
 
-- **Added**: `/arckit.finops` command (39th ArcKit command) for FinOps strategy with cloud cost management, optimization, governance, and forecasting
+- **Added**: `/arckit:finops` command (39th ArcKit command) for FinOps strategy with cloud cost management, optimization, governance, and forecasting
 - **Updated**: Tier 11 Operations to include finops command
 - **Dependencies**: requirements (M), devops (R), diagram (R), principles (R)
 
 ### 2026-01-09 - Added DevOps, MLOps, and Operationalize Commands
 
-- **Added**: `/arckit.devops` command (34th ArcKit command) for DevOps strategy with CI/CD pipelines, IaC, container orchestration
-- **Added**: `/arckit.mlops` command (35th ArcKit command) for MLOps strategy with model lifecycle, training pipelines, serving, monitoring
-- **Added**: `/arckit.operationalize` command (36th ArcKit command) for operational readiness with SRE practices, runbooks, DR/BCP
+- **Added**: `/arckit:devops` command (34th ArcKit command) for DevOps strategy with CI/CD pipelines, IaC, container orchestration
+- **Added**: `/arckit:mlops` command (35th ArcKit command) for MLOps strategy with model lifecycle, training pipelines, serving, monitoring
+- **Added**: `/arckit:operationalize` command (36th ArcKit command) for operational readiness with SRE practices, runbooks, DR/BCP
 - **Updated**: Tier 11 Operations to include devops, mlops (AI projects), operationalize commands
 - **Updated**: All 6 critical paths to include new commands in operations phase
 - **Dependencies**:
@@ -648,7 +648,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2025-01-06 - Added Platform Design Command
 
-- **Added**: `/arckit.platform-design` command (33rd ArcKit command) for multi-sided platform strategy design using Platform Design Toolkit (PDT) methodology
+- **Added**: `/arckit:platform-design` command (33rd ArcKit command) for multi-sided platform strategy design using Platform Design Toolkit (PDT) methodology
 - **Added**: platform-design row and column to dependency matrix
 - **Added**: New critical path: "UK Government Platform Strategy Path" showing where platform-design fits
 - **Added**: Tier 5 "Strategic Planning (Platform Strategy)" for platform-design placement
@@ -660,7 +660,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ### 2025-11-04 - Added Principles Compliance Command
 
-- **Added**: `/arckit.principles-compliance` command for measuring architecture principles adherence
+- **Added**: `/arckit:principles-compliance` command for measuring architecture principles adherence
 - **Added**: principles-compliance row and column to dependency matrix
 - **Updated**: All critical paths to include principles-compliance assessment
 - **Updated**: Tier 13 description to include principles-compliance command
@@ -696,27 +696,27 @@ Added 18 new commands covering EU regulations and French public sector governanc
 
 **New EU commands**:
 
-- `/arckit.eu-rgpd` — GDPR / French CNIL compliance. Depends on: requirements (M), data-model (R), dpia (O). Produces ARC-*-RGPD-*.md
-- `/arckit.eu-ai-act` — EU AI Act (Reg 2024/1689) compliance. Depends on: requirements (M), risk (R), data-model (R). Produces ARC-*-AIACT-*.md
-- `/arckit.eu-nis2` — NIS2 Directive compliance + French OIV/OSE. Depends on: requirements (M), risk (M), secure (R). Produces ARC-*-NIS2-*.md
-- `/arckit.eu-dora` — DORA (Reg 2022/2554) compliance for financial entities. Depends on: requirements (M), risk (M), secure (R). Produces ARC-*-DORA-*.md
-- `/arckit.eu-cra` — Cyber Resilience Act (Reg 2024/2847) compliance. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-CRA-*.md
-- `/arckit.eu-dsa` — Digital Services Act (Reg 2022/2065) compliance. Depends on: requirements (M), risk (R). Produces ARC-*-DSA-*.md
-- `/arckit.eu-data-act` — EU Data Act (Reg 2023/2854) compliance. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-DATAACT-*.md
+- `/arckit:eu-rgpd` — GDPR / French CNIL compliance. Depends on: requirements (M), data-model (R), dpia (O). Produces ARC-*-RGPD-*.md
+- `/arckit:eu-ai-act` — EU AI Act (Reg 2024/1689) compliance. Depends on: requirements (M), risk (R), data-model (R). Produces ARC-*-AIACT-*.md
+- `/arckit:eu-nis2` — NIS2 Directive compliance + French OIV/OSE. Depends on: requirements (M), risk (M), secure (R). Produces ARC-*-NIS2-*.md
+- `/arckit:eu-dora` — DORA (Reg 2022/2554) compliance for financial entities. Depends on: requirements (M), risk (M), secure (R). Produces ARC-*-DORA-*.md
+- `/arckit:eu-cra` — Cyber Resilience Act (Reg 2024/2847) compliance. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-CRA-*.md
+- `/arckit:eu-dsa` — Digital Services Act (Reg 2022/2065) compliance. Depends on: requirements (M), risk (R). Produces ARC-*-DSA-*.md
+- `/arckit:eu-data-act` — EU Data Act (Reg 2023/2854) compliance. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-DATAACT-*.md
 
 **New French commands**:
 
-- `/arckit.fr-rgpd` — French GDPR with CNIL specifics. Depends on: requirements (M), data-model (R), eu-rgpd (O). Produces ARC-*-RGPD-*.md (FR variant)
-- `/arckit.fr-ebios` — EBIOS Risk Manager (5 workshops). Depends on: requirements (M), risk (M), data-model (R). Produces ARC-*-EBIOS-*.md
-- `/arckit.fr-anssi` — ANSSI 42 Cybersecurity Hygiene Measures. Depends on: requirements (M), risk (R). Produces ARC-*-ANSSI-*.md
-- `/arckit.fr-anssi-carto` — ANSSI IS Cartography (4 levels). Depends on: requirements (M), data-model (R), diagram (O). Produces ARC-*-CARTO-*.md
-- `/arckit.fr-secnumcloud` — SecNumCloud qualification assessment. Depends on: requirements (M), fr-ebios (R), fr-anssi (R). Produces ARC-*-SECNUM-*.md
-- `/arckit.fr-dinum` — DINUM digital doctrine (RGI, RGAA, cloud doctrine, SILL). Depends on: requirements (M), principles (R). Produces ARC-*-DINUM-*.md
-- `/arckit.fr-marche-public` — French public procurement (Code de la Commande Publique). Depends on: requirements (M), stakeholders (R). Produces ARC-*-MARCHE-*.md
-- `/arckit.fr-pssi` — PSSI (IS Security Policy for French public sector). Depends on: requirements (M), fr-ebios (R), fr-anssi (R), fr-anssi-carto (R). Produces ARC-*-PSSI-*.md
-- `/arckit.fr-dr` — Diffusion Restreinte document and IS handling. Depends on: requirements (M), fr-anssi (R). Produces ARC-*-DR-*.md
-- `/arckit.fr-algorithme-public` — French Public Algorithm Transparency Notice. Depends on: requirements (M), data-model (R). Produces ARC-*-ALGO-*.md
-- `/arckit.fr-code-reuse` — French Public Code Reuse Assessment. Depends on: requirements (M), research (R). Produces ARC-*-REUSE-*.md
+- `/arckit:fr-rgpd` — French GDPR with CNIL specifics. Depends on: requirements (M), data-model (R), eu-rgpd (O). Produces ARC-*-RGPD-*.md (FR variant)
+- `/arckit:fr-ebios` — EBIOS Risk Manager (5 workshops). Depends on: requirements (M), risk (M), data-model (R). Produces ARC-*-EBIOS-*.md
+- `/arckit:fr-anssi` — ANSSI 42 Cybersecurity Hygiene Measures. Depends on: requirements (M), risk (R). Produces ARC-*-ANSSI-*.md
+- `/arckit:fr-anssi-carto` — ANSSI IS Cartography (4 levels). Depends on: requirements (M), data-model (R), diagram (O). Produces ARC-*-CARTO-*.md
+- `/arckit:fr-secnumcloud` — SecNumCloud qualification assessment. Depends on: requirements (M), fr-ebios (R), fr-anssi (R). Produces ARC-*-SECNUM-*.md
+- `/arckit:fr-dinum` — DINUM digital doctrine (RGI, RGAA, cloud doctrine, SILL). Depends on: requirements (M), principles (R). Produces ARC-*-DINUM-*.md
+- `/arckit:fr-marche-public` — French public procurement (Code de la Commande Publique). Depends on: requirements (M), stakeholders (R). Produces ARC-*-MARCHE-*.md
+- `/arckit:fr-pssi` — PSSI (IS Security Policy for French public sector). Depends on: requirements (M), fr-ebios (R), fr-anssi (R), fr-anssi-carto (R). Produces ARC-*-PSSI-*.md
+- `/arckit:fr-dr` — Diffusion Restreinte document and IS handling. Depends on: requirements (M), fr-anssi (R). Produces ARC-*-DR-*.md
+- `/arckit:fr-algorithme-public` — French Public Algorithm Transparency Notice. Depends on: requirements (M), data-model (R). Produces ARC-*-ALGO-*.md
+- `/arckit:fr-code-reuse` — French Public Code Reuse Assessment. Depends on: requirements (M), research (R). Produces ARC-*-REUSE-*.md
 
 **Key inter-dependencies among EU/FR commands**:
 
@@ -752,18 +752,18 @@ Added 12 official-baseline commands covering UAE federal regulatory and digital-
 
 **New UAE commands** (anchored on the UAE Cabinet decree of 23 April 2026 and the federal data, identity, AI, and procurement frameworks):
 
-- `/arckit.uae-classification` — UAE Smart Data Classification Register. Depends on: requirements (R), data-model (R). Produces ARC-*-CLAS-*.md
-- `/arckit.uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-PDPL-*.md
-- `/arckit.uae-ias` — UAE Cybersecurity Council IAS v2 Statement of Applicability. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-IAS-*.md
-- `/arckit.uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment. Depends on: uae-classification (M), requirements (R). Produces ARC-*-CLDR-*.md
-- `/arckit.uae-uaepass` — UAE Pass integration design (OIDC/OAuth, claim mapping, profiles, e-signature). Depends on: requirements (M), integration (R). Produces ARC-*-UPASS-*.md
-- `/arckit.uae-zero-bureaucracy` — Service Catalogue review under Code for Government Services. Depends on: requirements (M), user-stories (R), journeys (R). Produces ARC-*-ZBUR-*.md
-- `/arckit.uae-digital-records` — Digital Records Plan (source-of-truth register, retention, official-source). Depends on: requirements (M), data-model (R), uae-classification (R). Produces ARC-*-DREC-*.md
-- `/arckit.uae-data-sharing` — Data Sharing Agreement under Data Sharing Policy. Depends on: requirements (M), uae-classification (R), uae-pdpl (R). Produces ARC-*-DSHR-*.md
-- `/arckit.uae-priorities-alignment` — National Priorities Alignment Statement. Depends on: requirements (M), sobc (R), prior UAE artefacts (O). Produces ARC-*-NPRA-*.md
-- `/arckit.uae-ai-charter` — UAE Charter for AI compliance assessment (12 principles). Depends on: requirements (M), risk (R), data-model (R). Produces ARC-*-AICH-*.md
-- `/arckit.uae-ai-autonomy-tier` — Three-tier AI autonomy posture. Depends on: requirements (M), uae-ai-charter (R), risk (R). Produces ARC-*-AUTI-*.md
-- `/arckit.uae-procurement` — Federal procurement strategy under Decree-Law No. 11 of 2023. Depends on: requirements (M), sobc (R), risk (R). Produces ARC-*-FPRO-*.md
+- `/arckit:uae-classification` — UAE Smart Data Classification Register. Depends on: requirements (R), data-model (R). Produces ARC-*-CLAS-*.md
+- `/arckit:uae-pdpl` — Federal Decree-Law No. 45 of 2021 (PDPL) compliance assessment. Depends on: requirements (M), data-model (R), risk (R). Produces ARC-*-PDPL-*.md
+- `/arckit:uae-ias` — UAE Cybersecurity Council IAS v2 Statement of Applicability. Depends on: requirements (M), risk (R), secure (R). Produces ARC-*-IAS-*.md
+- `/arckit:uae-cloud-residency` — National Cloud Security Policy v2 sovereign cloud assessment. Depends on: uae-classification (M), requirements (R). Produces ARC-*-CLDR-*.md
+- `/arckit:uae-uaepass` — UAE Pass integration design (OIDC/OAuth, claim mapping, profiles, e-signature). Depends on: requirements (M), integration (R). Produces ARC-*-UPASS-*.md
+- `/arckit:uae-zero-bureaucracy` — Service Catalogue review under Code for Government Services. Depends on: requirements (M), user-stories (R), journeys (R). Produces ARC-*-ZBUR-*.md
+- `/arckit:uae-digital-records` — Digital Records Plan (source-of-truth register, retention, official-source). Depends on: requirements (M), data-model (R), uae-classification (R). Produces ARC-*-DREC-*.md
+- `/arckit:uae-data-sharing` — Data Sharing Agreement under Data Sharing Policy. Depends on: requirements (M), uae-classification (R), uae-pdpl (R). Produces ARC-*-DSHR-*.md
+- `/arckit:uae-priorities-alignment` — National Priorities Alignment Statement. Depends on: requirements (M), sobc (R), prior UAE artefacts (O). Produces ARC-*-NPRA-*.md
+- `/arckit:uae-ai-charter` — UAE Charter for AI compliance assessment (12 principles). Depends on: requirements (M), risk (R), data-model (R). Produces ARC-*-AICH-*.md
+- `/arckit:uae-ai-autonomy-tier` — Three-tier AI autonomy posture. Depends on: requirements (M), uae-ai-charter (R), risk (R). Produces ARC-*-AUTI-*.md
+- `/arckit:uae-procurement` — Federal procurement strategy under Decree-Law No. 11 of 2023. Depends on: requirements (M), sobc (R), risk (R). Produces ARC-*-FPRO-*.md
 
 **Key inter-dependencies among UAE commands**:
 

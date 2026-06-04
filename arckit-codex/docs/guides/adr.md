@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.adr` produces MADR v4.0-compatible architecture decision records backed by governance metadata and UK Government escalation requirements.
+`/arckit:adr` produces MADR v4.0-compatible architecture decision records backed by governance metadata and UK Government escalation requirements.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.adr Document architectural decision for <topic>, compare options A/B/C
+/arckit:adr Document architectural decision for <topic>, compare options A/B/C
 ```
 
 Output: `projects/<id>/decisions/ARC-<id>-ADR-001-v1.0.md` (uses multi-instance numbering) plus optional summary table appended to `decisions/index.md`.
@@ -45,10 +45,10 @@ Output: `projects/<id>/decisions/ARC-<id>-ADR-001-v1.0.md` (uses multi-instance 
 
 ## Usage Pattern
 
-1. Run `/arckit.adr` immediately after new insights from `/arckit.research`, `/arckit.hld-review`, or vendor clarifications.
-2. Attach document IDs from `/arckit.traceability` so requirements coverage stays auditable.
+1. Run `/arckit:adr` immediately after new insights from `/arckit:research`, `/arckit:hld-review`, or vendor clarifications.
+2. Attach document IDs from `/arckit:traceability` so requirements coverage stays auditable.
 3. Version ADRs in git; never overwrite history—open new ADRs when reversing prior choices.
-4. Feed summaries into `/arckit.story` so programme leadership tracks pivotal decisions.
+4. Feed summaries into `/arckit:story` so programme leadership tracks pivotal decisions.
 
 ---
 
@@ -57,4 +57,4 @@ Output: `projects/<id>/decisions/ARC-<id>-ADR-001-v1.0.md` (uses multi-instance 
 - Decision ties directly to stakeholder drivers or requirements IDs.
 - Risks and mitigations reference the risk register entry numbers.
 - Compliance impacts call out required evidence (TCoP point, Secure by Design activity, ATRS field).
-- Follow-on actions list named owners and due dates; backlog items reference `/arckit.backlog`.
+- Follow-on actions list named owners and due dates; backlog items reference `/arckit:backlog`.

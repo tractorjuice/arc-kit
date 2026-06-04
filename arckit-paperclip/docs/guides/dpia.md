@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.dpia` delivers a GDPR-compliant DPIA whenever processing could present high risk to individuals.
+`/arckit:dpia` delivers a GDPR-compliant DPIA whenever processing could present high risk to individuals.
 
 ---
 
@@ -37,7 +37,7 @@ ArcKit screens these automatically; use the list to confirm completeness.
 ## Command
 
 ```bash
-/arckit.dpia Generate DPIA for <project>
+/arckit:dpia Generate DPIA for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-DPIA-v1.0.md`
@@ -50,7 +50,7 @@ Output: `projects/<id>/ARC-<id>-DPIA-v1.0.md`
 
 ```text
 1. Confirm prerequisites (data model + stakeholders + risks)
-2. Run /arckit.dpia
+2. Run /arckit:dpia
 3. Review:
    - Screening result and justification
    - Risk table and residual scores
@@ -75,6 +75,6 @@ Output: `projects/<id>/ARC-<id>-DPIA-v1.0.md`
 
 ## Linkages
 
-- Feed mitigation actions into `/arckit.risk` and `/arckit.servicenow`.
-- Reference DPIA outcomes in `/arckit.ai-playbook` and `/arckit.secure`.
+- Feed mitigation actions into `/arckit:risk` and `/arckit:servicenow`.
+- Reference DPIA outcomes in `/arckit:ai-playbook` and `/arckit:secure`.
 - Store signed versions with review cadence (minimum annual refresh or when processing changes).

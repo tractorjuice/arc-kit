@@ -188,9 +188,9 @@ Simplified Regime: {Eligible / Not eligible}
 Total Gaps: {N} ({N} high priority)
 
 Next steps:
-1. {If OSE designation: Run /arckit.eu-nis2 for NIS2 overlap}
-2. Run /arckit.risk to register DORA gaps
-3. Run /arckit.secure for ICT security controls
+1. {If OSE designation: Run /arckit:eu-nis2 for NIS2 overlap}
+2. Run /arckit:risk to register DORA gaps
+3. Run /arckit:secure for ICT security controls
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -236,11 +236,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.eu-dora Assess DORA compliance for a French payment institution (€200M revenue, 300 staff) migrating core payment processing to a cloud-native architecture using AWS and a French SecNumCloud-qualified secondary provider, ACPR-supervised
+/arckit:eu-dora Assess DORA compliance for a French payment institution (€200M revenue, 300 staff) migrating core payment processing to a cloud-native architecture using AWS and a French SecNumCloud-qualified secondary provider, ACPR-supervised
 
-/arckit.eu-dora DORA scoping for 001 — French insurance company (€1.5B premiums) with no formal ICT risk framework, ACPR-supervised, using SAP RISE (cloud) as core system
+/arckit:eu-dora DORA scoping for 001 — French insurance company (€1.5B premiums) with no formal ICT risk framework, ACPR-supervised, using SAP RISE (cloud) as core system
 
-/arckit.eu-dora DORA for a Belgian CCP with operations in FR and NL, AMF/FSMA co-supervised, considering a new critical cloud dependency on a single provider
+/arckit:eu-dora DORA for a Belgian CCP with operations in FR and NL, AMF/FSMA co-supervised, considering a new critical cloud dependency on a single provider
 ```
 
 ## Suggested Next Steps

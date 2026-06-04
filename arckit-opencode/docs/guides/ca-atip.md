@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-atip` generates a Canada federal ATIP (Access to Information / Privacy Act) Reconciliation under the Access to Information Act (R.S.C., 1985, c. A-1) and the Privacy Act (R.S.C., 1985, c. P-21). It produces an information holdings inventory categorised Public / Protected / Classified, an exemption mapping per holding under the ATI Act (§13, §14, §15, §16 and §16.1–§16.6, §19, §21, §23, §24), a Privacy Act §4–§8 use and disclosure register with §8(2)(a)–(m) routine-use letters individually analysed, a severance design with field-level rules and an audit log schema, the §7 30-day request workflow with §9 extension and §27 consultation handling, and the annual report mapping for OIC, OPC and TBS InfoSource.
+`/arckit:ca-atip` generates a Canada federal ATIP (Access to Information / Privacy Act) Reconciliation under the Access to Information Act (R.S.C., 1985, c. A-1) and the Privacy Act (R.S.C., 1985, c. P-21). It produces an information holdings inventory categorised Public / Protected / Classified, an exemption mapping per holding under the ATI Act (§13, §14, §15, §16 and §16.1–§16.6, §19, §21, §23, §24), a Privacy Act §4–§8 use and disclosure register with §8(2)(a)–(m) routine-use letters individually analysed, a severance design with field-level rules and an audit log schema, the §7 30-day request workflow with §9 extension and §27 consultation handling, and the annual report mapping for OIC, OPC and TBS InfoSource.
 
 ATIP reconciliation sits between the Privacy Impact Assessment and the data model. The PIA establishes lawful authority and the personal-information inventory; the data model carries the field-level structure and classification flags. ATIP reconciles the two against the disclosure regime — proving that every disclosure has a Privacy Act §8 basis, every redaction has an ATI Act exemption head, and every hybrid public/protected view has explicit severance rules with a per-field audit trail. Public/protected hybrid systems (e.g. registers carrying both a transparency view and an investigative back-end) are the most common pattern and the most common defect: if you cannot answer "what is suppressed in the public view, under which exemption, and how is the redaction logged?", you are not ATIP-ready.
 
@@ -22,7 +22,7 @@ ATIP reconciliation sits between the Privacy Impact Assessment and the data mode
 ## Command
 
 ```bash
-/arckit.ca-atip <project ID or service description>
+/arckit:ca-atip <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-ATIP-v1.0.md`

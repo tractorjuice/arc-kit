@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.grants` researches UK government grants, charitable funding, and accelerator programmes for the project, with eligibility scoring per programme. Runs as a research-heavy agent that produces a per-grant briefing plus reusable tech-notes.
+`/arckit:grants` researches UK government grants, charitable funding, and accelerator programmes for the project, with eligibility scoring per programme. Runs as a research-heavy agent that produces a per-grant briefing plus reusable tech-notes.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.grants <project ID or domain>
+/arckit:grants <project ID or domain>
 ```
 
 Outputs:
@@ -31,7 +31,7 @@ Outputs:
 
 ## Long runs: Remote Control + push notifications
 
-`/arckit.grants` frequently exceeds 10 minutes as the agent crawls UKRI, Innovate UK, NIHR, charitable foundations, and accelerator programmes for live deadlines and eligibility criteria. To avoid babysitting the terminal, pair it with [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control):
+`/arckit:grants` frequently exceeds 10 minutes as the agent crawls UKRI, Innovate UK, NIHR, charitable foundations, and accelerator programmes for live deadlines and eligibility criteria. To avoid babysitting the terminal, pair it with [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control):
 
 ```bash
 claude remote-control
@@ -78,11 +78,11 @@ Typical programmes researched:
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Project scope and outcomes | `/arckit.requirements` |
-| Funding research | Programme scan + eligibility scoring | `/arckit.grants` |
-| Business case | Folding funding into Economic Case | `/arckit.sobc` |
-| Plan | Align project plan to grant milestones | `/arckit.plan` |
-| Risk | Grant-specific risks (rejection, compliance, reporting) | `/arckit.risk` |
+| Discovery | Project scope and outcomes | `/arckit:requirements` |
+| Funding research | Programme scan + eligibility scoring | `/arckit:grants` |
+| Business case | Folding funding into Economic Case | `/arckit:sobc` |
+| Plan | Align project plan to grant milestones | `/arckit:plan` |
+| Risk | Grant-specific risks (rejection, compliance, reporting) | `/arckit:risk` |
 
 ---
 
@@ -102,5 +102,5 @@ Typical programmes researched:
 
 - **Agent command**: Heavy WebSearch / WebFetch — runs as the `arckit-grants` autonomous agent in Claude Code; the slash command is a thin wrapper.
 - **Tech notes**: Programmes worth detailed study spawn a reusable tech-note that future projects can read without re-running the research.
-- **Plan alignment**: Grants impose milestone and reporting cadences that must be reflected in the project plan — do not skip the `/arckit.plan` handoff.
+- **Plan alignment**: Grants impose milestone and reporting cadences that must be reflected in the project plan — do not skip the `/arckit:plan` handoff.
 - **Multi-instance numbering**: `GRNT-001`, `GRNT-002`, etc. — one document per programme, generated automatically.

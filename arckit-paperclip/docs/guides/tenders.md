@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.tenders` discovers procurement market intelligence — award-value benchmarks, top suppliers, incumbency patterns, and concentration — from live UK procurement notices via the UK Tenders MCP.
+`/arckit:tenders` discovers procurement market intelligence — award-value benchmarks, top suppliers, incumbency patterns, and concentration — from live UK procurement notices via the UK Tenders MCP.
 
 > **Agent Architecture**: This command uses a three-tier reader/writer subagent split. The **`arckit-tenders-reader`** subagent fetches evidence from the UK Tenders MCP (keeping that I/O isolated from your main context window). The orchestrator tier (the slash command) validates the reader's JSON payload against the `tenders-handoff.schema.json` schema and computes deterministic derived fields. The **`arckit-tenders-writer`** subagent then renders the final artefact. The slash command launches and coordinates both agents.
 
@@ -50,12 +50,12 @@ The command accepts four input forms, which can be combined:
 
 | Input | Flag / Form | Example |
 |-------|-------------|---------|
-| Capability (free text) | bare arguments | `/arckit.tenders cloud hosting` |
-| CPV code | `--cpv NNNNNNNN` | `/arckit.tenders --cpv 72200000` |
-| Buyer organisation | `--buyer 'Name'` | `/arckit.tenders --buyer 'HMRC'` |
-| Supplier name | `--supplier 'Name'` | `/arckit.tenders --supplier 'Acme Cloud Ltd'` |
+| Capability (free text) | bare arguments | `/arckit:tenders cloud hosting` |
+| CPV code | `--cpv NNNNNNNN` | `/arckit:tenders --cpv 72200000` |
+| Buyer organisation | `--buyer 'Name'` | `/arckit:tenders --buyer 'HMRC'` |
+| Supplier name | `--supplier 'Name'` | `/arckit:tenders --supplier 'Acme Cloud Ltd'` |
 
-You can combine flags: `/arckit.tenders cloud hosting --cpv 72200000 --buyer 'DVLA'`.
+You can combine flags: `/arckit:tenders cloud hosting --cpv 72200000 --buyer 'DVLA'`.
 
 **CPV code format:** eight digits, optionally followed by a division suffix (`NNNNNNNN-N`). Common codes:
 
@@ -74,18 +74,18 @@ You can combine flags: `/arckit.tenders cloud hosting --cpv 72200000 --buyer 'DV
 
 | Scenario | Prompt | Focus |
 |---------|--------|-------|
-| Capability benchmark | `/arckit.tenders digital identity verification` | Median award value, top suppliers |
-| CPV-scoped benchmark | `/arckit.tenders --cpv 72600000 --buyer 'HMRC'` | Awards by this buyer in this CPV |
-| Incumbent research | `/arckit.tenders --supplier 'Acme Cloud Ltd'` | All awards to this supplier |
-| Build-vs-buy evidence | `/arckit.tenders --buyer 'DVLA' --cpv 72200000` | Prior buyer activity |
-| Sole-source justification | `/arckit.tenders specialist radar maintenance` | Supply-base depth evidence |
+| Capability benchmark | `/arckit:tenders digital identity verification` | Median award value, top suppliers |
+| CPV-scoped benchmark | `/arckit:tenders --cpv 72600000 --buyer 'HMRC'` | Awards by this buyer in this CPV |
+| Incumbent research | `/arckit:tenders --supplier 'Acme Cloud Ltd'` | All awards to this supplier |
+| Build-vs-buy evidence | `/arckit:tenders --buyer 'DVLA' --cpv 72200000` | Prior buyer activity |
+| Sole-source justification | `/arckit:tenders specialist radar maintenance` | Supply-base depth evidence |
 
 ---
 
 ## Command
 
 ```bash
-/arckit.tenders [project-number-or-name] <capability | --cpv NNNNNNNN | --buyer 'Name' | --supplier 'Name'>
+/arckit:tenders [project-number-or-name] <capability | --cpv NNNNNNNN | --buyer 'Name' | --supplier 'Name'>
 ```
 
 Outputs: `projects/<id>/research/ARC-<id>-TNDR-<NNN>-v1.0.md`
@@ -117,7 +117,7 @@ A completed TNDR artefact contains:
 | `MEDIUM` | Top-3 supplier share > 60% (and HIGH conditions not met) |
 | `LOW` | All other cases |
 
-A `HIGH` concentration flag should be registered as a supplier-dependency risk in the project Risk Register (`/arckit.risk`).
+A `HIGH` concentration flag should be registered as a supplier-dependency risk in the project Risk Register (`/arckit:risk`).
 
 ---
 
@@ -161,19 +161,19 @@ The reader returns evidence across five procurement portals, ranked internally b
 
 | Direction | Command | Integration |
 |-----------|---------|-------------|
-| **Input** | `/arckit.requirements` | CPV codes and capability keywords derived from DR/FR/INT |
-| **Input** | `/arckit.principles` | Commissioning buyer identified from ARC-000-PRIN |
-| **Output** | `/arckit.sobc` | Median award value anchors the Economic Case cost range |
-| **Output** | `/arckit.risk` | Concentration / single-supplier-dependency risk |
-| **Output** | `/arckit.research` | Build-vs-buy market context; TCO comparison |
-| **Output** | `/arckit.adr` | Data source, make-vs-buy, or route-to-market recorded as decisions |
+| **Input** | `/arckit:requirements` | CPV codes and capability keywords derived from DR/FR/INT |
+| **Input** | `/arckit:principles` | Commissioning buyer identified from ARC-000-PRIN |
+| **Output** | `/arckit:sobc` | Median award value anchors the Economic Case cost range |
+| **Output** | `/arckit:risk` | Concentration / single-supplier-dependency risk |
+| **Output** | `/arckit:research` | Build-vs-buy market context; TCO comparison |
+| **Output** | `/arckit:adr` | Data source, make-vs-buy, or route-to-market recorded as decisions |
 
 ---
 
 ## Follow-on Actions
 
-- Anchor the Economic Case with real median award values (`/arckit.sobc`)
-- Register supplier-concentration or single-supplier-dependency risks (`/arckit.risk`)
-- Use market depth evidence in build-vs-buy analysis (`/arckit.research`)
-- Record route-to-market decisions as ADRs (`/arckit.adr`)
+- Anchor the Economic Case with real median award values (`/arckit:sobc`)
+- Register supplier-concentration or single-supplier-dependency risks (`/arckit:risk`)
+- Use market depth evidence in build-vs-buy analysis (`/arckit:research`)
+- Record route-to-market decisions as ADRs (`/arckit:adr`)
 - Escalate `HIGH` concentration findings to commercial lead before procurement scoping

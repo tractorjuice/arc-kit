@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.wardley` creates strategic Wardley Maps for architecture decisions and build vs buy analysis.
+`/arckit:wardley` creates strategic Wardley Maps for architecture decisions and build vs buy analysis.
 
 ---
 
@@ -12,11 +12,11 @@ ArcKit provides a full suite of Wardley Mapping commands that work together as a
 
 | Command | Purpose | Output |
 |---------|---------|--------|
-| `/arckit.wardley.value-chain` | Decompose user needs into value chains | WVCH |
-| `/arckit.wardley` | Create positioned Wardley Maps | WARD |
-| `/arckit.wardley.doctrine` | Assess organizational doctrine maturity | WDOC |
-| `/arckit.wardley.climate` | Assess 32 climatic patterns | WCLM |
-| `/arckit.wardley.gameplay` | Analyze 60+ strategic gameplay patterns | WGAM |
+| `/arckit:wardley.value-chain` | Decompose user needs into value chains | WVCH |
+| `/arckit:wardley` | Create positioned Wardley Maps | WARD |
+| `/arckit:wardley.doctrine` | Assess organizational doctrine maturity | WDOC |
+| `/arckit:wardley.climate` | Assess 32 climatic patterns | WCLM |
+| `/arckit:wardley.gameplay` | Analyze 60+ strategic gameplay patterns | WGAM |
 
 **Recommended workflow order:**
 
@@ -43,7 +43,7 @@ ArcKit provides a full suite of Wardley Mapping commands that work together as a
 ## Command
 
 ```bash
-/arckit.wardley Create Wardley Map for <initiative>
+/arckit:wardley Create Wardley Map for <initiative>
 ```
 
 Output: `projects/<id>/ARC-<id>-WARD-001-v1.0.md` (uses multi-instance numbering)
@@ -110,11 +110,11 @@ Output: `projects/<id>/ARC-<id>-WARD-001-v1.0.md` (uses multi-instance numbering
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Identify user needs and components | `/arckit.requirements`, `/arckit.stakeholders` |
-| Mapping | Create Wardley Map | `/arckit.wardley` |
+| Discovery | Identify user needs and components | `/arckit:requirements`, `/arckit:stakeholders` |
+| Mapping | Create Wardley Map | `/arckit:wardley` |
 | Analysis | Identify strategic plays | Review workshop |
-| Sourcing | Research market options | `/arckit.research`, `/arckit.gcloud-search` |
-| Decision | Build vs buy recommendations | `/arckit.sow`, `/arckit.evaluate` |
+| Sourcing | Research market options | `/arckit:research`, `/arckit:gcloud-search` |
+| Decision | Build vs buy recommendations | `/arckit:sow`, `/arckit:evaluate` |
 
 ---
 

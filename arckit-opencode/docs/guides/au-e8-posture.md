@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.au-e8-posture` generates an ASD Essential Eight maturity posture against the Australian Signals Directorate's Essential Eight Maturity Model. It scores each of the eight mitigation strategies (application control, patch applications, configure Microsoft Office macro settings, user application hardening, restrict administrative privileges, patch operating systems, multi-factor authentication, regular backups) against maturity levels ML0–ML3, captures the evidence base, identifies the maturity uplift path, and surfaces the DISP-aligned target (ML2 baseline for DISP Level 2 supplier accreditation).
+`/arckit:au-e8-posture` generates an ASD Essential Eight maturity posture against the Australian Signals Directorate's Essential Eight Maturity Model. It scores each of the eight mitigation strategies (application control, patch applications, configure Microsoft Office macro settings, user application hardening, restrict administrative privileges, patch operating systems, multi-factor authentication, regular backups) against maturity levels ML0–ML3, captures the evidence base, identifies the maturity uplift path, and surfaces the DISP-aligned target (ML2 baseline for DISP Level 2 supplier accreditation).
 
 The Essential Eight is the ASD's prioritised baseline for mitigating cyber security incidents and is the cyber baseline that DISP, federal entities, and most Commonwealth procurements measure against. The artefact this command produces is therefore a foundational input to almost every other Australian Federal security or assurance artefact — run it early.
 
@@ -21,7 +21,7 @@ The Essential Eight is the ASD's prioritised baseline for mitigating cyber secur
 ## Command
 
 ```bash
-/arckit.au-e8-posture <project ID or service description>
+/arckit:au-e8-posture <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AUE8-v1.0.md`
@@ -46,7 +46,7 @@ Output: `projects/<id>/ARC-<id>-AUE8-v1.0.md`
 ## Regulatory Anchors
 
 - **ASD Essential Eight Maturity Model** — eight mitigation strategies, maturity levels ML0–ML3 (the authoritative source for scoring rubric)
-- **ASD Information Security Manual (ISM)** — control-level detail referenced by E8 strategies (cross-reference via `/arckit.au-ism-controls`)
+- **ASD Information Security Manual (ISM)** — control-level detail referenced by E8 strategies (cross-reference via `/arckit:au-ism-controls`)
 - **Defence Industry Security Program (DISP) Levels 1–3** — ML2 mandated for DISP Level 2 supplier accreditation
 - **Commonwealth Procurement Rules (November 2025 overhaul)** — cyber maturity questions in standard supplier responses
 
@@ -70,4 +70,4 @@ Output: `projects/<id>/ARC-<id>-AUE8-v1.0.md`
 
 ## Handoff
 
-Foundational input to `/arckit.au-disp-attestation` (DISP Member self-attestation pack consolidates E8 evidence), `/arckit.au-pspf` (PSPF cross-references E8 baselines), and `/arckit.au-ism-controls` (ISM Statement of Applicability draws from the same control evidence).
+Foundational input to `/arckit:au-disp-attestation` (DISP Member self-attestation pack consolidates E8 evidence), `/arckit:au-pspf` (PSPF cross-references E8 baselines), and `/arckit:au-ism-controls` (ISM Statement of Applicability draws from the same control evidence).

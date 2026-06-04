@@ -8,7 +8,7 @@ Command syntax depends on your AI platform:
 
 | Platform | Start | Init | Principles |
 | --- | --- | --- | --- |
-| Claude Code / OpenCode | `/arckit.start` | `/arckit.init` | `/arckit.principles` |
+| Claude Code / OpenCode | `/arckit:start` | `/arckit:init` | `/arckit:principles` |
 | Gemini CLI | `/arckit:start` | `/arckit:init` | `/arckit:principles` |
 | Codex CLI | `$arckit-start` | `$arckit-init` | `$arckit-principles` |
 | GitHub Copilot | `/arckit-start` | `/arckit-init` | `/arckit-principles` |
@@ -54,9 +54,9 @@ For Gemini CLI, OpenCode CLI, and GitHub Copilot, use the platform-specific inst
 
 ```bash
 # Claude Code / OpenCode: get oriented, initialize, then create principles
-/arckit.start
-/arckit.init
-/arckit.principles
+/arckit:start
+/arckit:init
+/arckit:principles
 ```
 
 For Codex CLI, the same workflow is:
@@ -74,9 +74,9 @@ $arckit-principles
 If you want to skip the decision tree and let ArcKit do the heavy lifting, this is the fastest possible path from empty repo to a fully-populated project. Three prompts, no manual orchestration:
 
 ```text
-1. /arckit.init  This is a project for {one-line description of what you're building}.
+1. /arckit:init  This is a project for {one-line description of what you're building}.
 
-2. /arckit.principles
+2. /arckit:principles
 
 3. Now create all the artifacts. Take your time. Do not stop until complete.
 ```
@@ -96,29 +96,29 @@ If you want to skip the decision tree and let ArcKit do the heavy lifting, this 
 ### When Not To Use It
 
 - **Heavily regulated work** (UK Gov Secure by Design, MOD, EU AI Act) where each artifact needs reviewer sign-off before the next is generated.
-- **Existing projects** with artifacts already on disk — run `/arckit.navigator` first to see what is missing rather than regenerating.
+- **Existing projects** with artifacts already on disk — run `/arckit:navigator` first to see what is missing rather than regenerating.
 - **Token-constrained sessions** — the full chain can run dozens of commands. Use Opus 4.7 or 4.8 with the `max` or `xhigh` effort levels.
 
 ### Tips For Vibe Start
 
-- Add constraints to prompt 1: `/arckit.init This is a project for X. Target users are Y. Budget is Z.`
-- Use prompt 3 verbatim — the phrase "do not stop until complete" reliably suppresses early stopping. Followed by `/arckit.health` to spot anything skipped.
+- Add constraints to prompt 1: `/arckit:init This is a project for X. Target users are Y. Budget is Z.`
+- Use prompt 3 verbatim — the phrase "do not stop until complete" reliably suppresses early stopping. Followed by `/arckit:health` to spot anything skipped.
 - If the run stalls, resume with: `Continue from where you stopped. Do not stop until complete.`
 
 ---
 
-## `/arckit.start` — Get Oriented
+## `/arckit:start` — Get Oriented
 
 **Inputs**: None required. Optionally provide a focus area.
 
 ```bash
 # Full onboarding experience
-/arckit.start
+/arckit:start
 
 # Jump to a specific workflow area
-/arckit.start new project
-/arckit.start procurement
-/arckit.start governance review
+/arckit:start new project
+/arckit:start procurement
+/arckit:start governance review
 ```
 
 Output: Console only (no file created). This is a navigation aid, not a governance artifact.
@@ -182,13 +182,13 @@ How can I help today?
 
 ---
 
-## `/arckit.init` — Create Project Structure
+## `/arckit:init` — Create Project Structure
 
 **Inputs**: None required.
 
 ```bash
 # Initialize project structure
-/arckit.init
+/arckit:init
 ```
 
 Output: Creates `projects/` directory structure. No governance artifact is generated.
@@ -242,7 +242,7 @@ Each command automatically creates numbered project directories (001-\*, 002-\*)
 
 ## Workflow Paths
 
-`/arckit.start` connects to all five standard ArcKit workflows:
+`/arckit:start` connects to all five standard ArcKit workflows:
 
 | Workflow | Entry Point | Key Commands |
 |----------|-------------|--------------|
@@ -258,17 +258,17 @@ See [WORKFLOW-DIAGRAMS.md](../WORKFLOW-DIAGRAMS.md) for visual workflow diagrams
 
 ## Tips
 
-- **Run `/arckit.start` at the beginning of any session** — it gives you a quick snapshot of where things stand and what to do next.
-- **Run `/arckit.init` once per repository** — it creates the project structure. Safe to re-run if the structure already exists.
-- **Use a focus argument** like `/arckit.start procurement` to skip directly to that section of the decision tree.
-- **Principles next** — after init, run `/arckit.principles` as most commands depend on architecture principles.
-- **Pairs well with `/arckit.health`** — start gives you navigation, health gives you artifact-level diagnostics.
+- **Run `/arckit:start` at the beginning of any session** — it gives you a quick snapshot of where things stand and what to do next.
+- **Run `/arckit:init` once per repository** — it creates the project structure. Safe to re-run if the structure already exists.
+- **Use a focus argument** like `/arckit:start procurement` to skip directly to that section of the decision tree.
+- **Principles next** — after init, run `/arckit:principles` as most commands depend on architecture principles.
+- **Pairs well with `/arckit:health`** — start gives you navigation, health gives you artifact-level diagnostics.
 
 ---
 
 ## Related Commands
 
-- `/arckit.principles` — Create architecture principles (run after init)
-- `/arckit.plan` — Create project plan with timeline and phases
-- `/arckit.health` — Detailed artifact health scan
-- `/arckit.customize` — Customize document templates
+- `/arckit:principles` — Create architecture principles (run after init)
+- `/arckit:plan` — Create project plan with timeline and phases
+- `/arckit:health` — Detailed artifact health scan
+- `/arckit:customize` — Customize document templates

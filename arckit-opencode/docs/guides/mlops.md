@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.mlops` creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.
+`/arckit:mlops` creates a machine learning operations strategy covering model lifecycle, training pipelines, serving, monitoring, and governance.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.mlops Create MLOps strategy for <initiative>
+/arckit:mlops Create MLOps strategy for <initiative>
 ```
 
 Output: `projects/<id>/ARC-<id>-MLOPS-v1.0.md`
@@ -87,11 +87,11 @@ Output: `projects/<id>/ARC-<id>-MLOPS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Identify ML use cases, data sources | `/arckit.requirements`, `/arckit.data-model` |
-| Governance | Assess AI risks and compliance | `/arckit.ai-playbook`, `/arckit.atrs`, `/arckit.dpia` |
-| Strategy | Create MLOps strategy | `/arckit.mlops` |
-| Implementation | Build pipelines, deploy models | `/arckit.backlog`, `/arckit.devops` |
-| Operations | Monitor, retrain, govern | `/arckit.operationalize` |
+| Discovery | Identify ML use cases, data sources | `/arckit:requirements`, `/arckit:data-model` |
+| Governance | Assess AI risks and compliance | `/arckit:ai-playbook`, `/arckit:atrs`, `/arckit:dpia` |
+| Strategy | Create MLOps strategy | `/arckit:mlops` |
+| Implementation | Build pipelines, deploy models | `/arckit:backlog`, `/arckit:devops` |
+| Operations | Monitor, retrain, govern | `/arckit:operationalize` |
 
 ---
 

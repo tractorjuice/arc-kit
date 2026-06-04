@@ -77,7 +77,7 @@ if [[ $stale_count -eq 0 ]]; then
 fi
 
 if [[ $stale_count -ge $max_report ]]; then
-  echo "[ArcKit monitor] (reporting first $max_report; run /arckit.health for the full list)"
+  echo "[ArcKit monitor] (reporting first $max_report; run /arckit:health for the full list)"
 else
-  echo "[ArcKit monitor] Found $stale_count stale artifact(s). Run /arckit.health for details."
+  echo "[ArcKit monitor] Found $stale_count stale artifact(s). Run /arckit:health for details."
 fi

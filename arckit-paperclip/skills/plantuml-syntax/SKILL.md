@@ -17,8 +17,8 @@ Select the appropriate diagram type and read the corresponding reference file:
 
 | Type | Reference | ArcKit Commands Using It |
 | ---- | --------- | ------------------------ |
-| C4-PlantUML | [c4-plantuml.md](references/c4-plantuml.md) | `/arckit.diagram` (C4 Context, Container, Component) |
-| Sequence Diagram | [sequence-diagrams.md](references/sequence-diagrams.md) | `/arckit.diagram` (Sequence mode) |
+| C4-PlantUML | [c4-plantuml.md](references/c4-plantuml.md) | `/arckit:diagram` (C4 Context, Container, Component) |
+| Sequence Diagram | [sequence-diagrams.md](references/sequence-diagrams.md) | `/arckit:diagram` (Sequence mode) |
 | Class Diagram | [class-diagrams.md](references/class-diagrams.md) | — |
 | Activity Diagram | [activity-diagrams.md](references/activity-diagrams.md) | — |
 | State Diagram | [state-diagrams.md](references/state-diagrams.md) | — |

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.au-pspf` generates a scorecard against the Australian Government Protective Security Policy Framework (PSPF). It captures alignment with the 4 PSPF outcomes (security governance, information security, personnel security, physical security), evaluates against the 16 core requirements, surfaces the maturity posture per requirement, and captures the action plan for areas below target maturity.
+`/arckit:au-pspf` generates a scorecard against the Australian Government Protective Security Policy Framework (PSPF). It captures alignment with the 4 PSPF outcomes (security governance, information security, personnel security, physical security), evaluates against the 16 core requirements, surfaces the maturity posture per requirement, and captures the action plan for areas below target maturity.
 
 The PSPF is the umbrella protective-security policy for Australian federal entities. The scorecard is read by accountable authorities (PGPA Act 2013 s16 duties) and by sectoral regulators (Defence, intelligence agencies, critical infrastructure operators). For DISP suppliers it underpins the security domains the DISP attestation pack consolidates.
 
@@ -14,8 +14,8 @@ The PSPF is the umbrella protective-security policy for Australian federal entit
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | Service description, hosting model, personnel requirements |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, security advisor, vetting officer |
-| `/arckit.au-ism-controls` output (`ARC-<id>-AUISM-v1.0.md`) | Information security evidence for Outcome 4 |
-| `/arckit.au-e8-posture` output (`ARC-<id>-AUE8-v1.0.md`) | Cyber baseline for Outcome 4 |
+| `/arckit:au-ism-controls` output (`ARC-<id>-AUISM-v1.0.md`) | Information security evidence for Outcome 4 |
+| `/arckit:au-e8-posture` output (`ARC-<id>-AUE8-v1.0.md`) | Cyber baseline for Outcome 4 |
 | HLD (`ARC-<id>-HLD-v1.0.md`) | Physical environment, personnel scope, information flows |
 
 ---
@@ -23,7 +23,7 @@ The PSPF is the umbrella protective-security policy for Australian federal entit
 ## Command
 
 ```bash
-/arckit.au-pspf <project ID or service description>
+/arckit:au-pspf <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AUPSPF-v1.0.md`
@@ -78,4 +78,4 @@ Output: `projects/<id>/ARC-<id>-AUPSPF-v1.0.md`
 
 ## Handoff
 
-Foundational input to `/arckit.au-disp-attestation` (DISP physical security, personnel security, and information protection domains draw directly from the PSPF scorecard). Cross-references back to `/arckit.au-ism-controls`, `/arckit.au-e8-posture`, and `/arckit.au-pia` (information protection evidence).
+Foundational input to `/arckit:au-disp-attestation` (DISP physical security, personnel security, and information protection domains draw directly from the PSPF scorecard). Cross-references back to `/arckit:au-ism-controls`, `/arckit:au-e8-posture`, and `/arckit:au-pia` (information protection evidence).

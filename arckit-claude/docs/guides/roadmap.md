@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.roadmap` creates a multi-year architecture roadmap that links current-state constraints to future-state capabilities, governance milestones, and funding cycles.
+`/arckit:roadmap` creates a multi-year architecture roadmap that links current-state constraints to future-state capabilities, governance milestones, and funding cycles.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.roadmap Create roadmap for <initiative> covering FY24/25–FY27/28
+/arckit:roadmap Create roadmap for <initiative> covering FY24/25–FY27/28
 ```
 
 Outputs: `projects/<id>/ARC-<id>-ROAD-v1.0.md` plus optional Mermaid timeline snippets.
@@ -54,5 +54,5 @@ Outputs: `projects/<id>/ARC-<id>-ROAD-v1.0.md` plus optional Mermaid timeline sn
 
 - Keep the roadmap time-boxed (usually 3–4 years) and avoid promising detailed sprint plans.
 - Use Wardley mapping outputs to justify when capabilities move from experimentation to standardisation.
-- Align every milestone to stakeholder goals, then feed those IDs into `/arckit.traceability` and `/arckit.story`.
+- Align every milestone to stakeholder goals, then feed those IDs into `/arckit:traceability` and `/arckit:story`.
 - Refresh the document quarterly and note deltas in the change log for audit traceability.

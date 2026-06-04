@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.uae-cloud-residency` assesses sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, names approved CSP options, and captures the shared-responsibility matrix and exit / portability plan.
+`/arckit:uae-cloud-residency` assesses sovereign cloud residency under the UAE National Cloud Security Policy v2. Validates per-classification residency, names approved CSP options, and captures the shared-responsibility matrix and exit / portability plan.
 
 ---
 
@@ -14,14 +14,14 @@
 | Architecture (`ARC-<id>-ARCH-v1.0.md`) | Workload topology and components |
 | IAS Statement of Applicability (`ARC-<id>-IAS-v*.md`) | T-family technical controls constrain CSP choice |
 
-> **Run after**: `/arckit.uae-classification` — the command halts if the classification register is missing.
+> **Run after**: `/arckit:uae-classification` — the command halts if the classification register is missing.
 
 ---
 
 ## Command
 
 ```bash
-/arckit.uae-cloud-residency <project ID or service name>
+/arckit:uae-cloud-residency <project ID or service name>
 ```
 
 Output: `projects/<id>/ARC-<id>-CRES-v1.0.md`
@@ -58,10 +58,10 @@ Output: `projects/<id>/ARC-<id>-CRES-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Classification | Smart Data ladder per dataset | `/arckit.uae-classification` |
-| Residency | CSP / region selection + SR matrix | `/arckit.uae-cloud-residency` |
-| Decisions | Capture CSP and region as ADRs | `/arckit.adr` |
-| Security | Reconcile T-family gaps | `/arckit.uae-ias`, `/arckit.risk` |
+| Classification | Smart Data ladder per dataset | `/arckit:uae-classification` |
+| Residency | CSP / region selection + SR matrix | `/arckit:uae-cloud-residency` |
+| Decisions | Capture CSP and region as ADRs | `/arckit:adr` |
+| Security | Reconcile T-family gaps | `/arckit:uae-ias`, `/arckit:risk` |
 
 ---
 
@@ -78,7 +78,7 @@ Output: `projects/<id>/ARC-<id>-CRES-v1.0.md`
 
 ## Key Notes
 
-- **Hard prerequisite**: This command halts without `ARC-<id>-CLAS-v*.md`. Run `/arckit.uae-classification` first.
+- **Hard prerequisite**: This command halts without `ARC-<id>-CLAS-v*.md`. Run `/arckit:uae-classification` first.
 - **CII workloads**: Tighter residency rules apply — confirm with the Cybersecurity Council.
-- **Decision capture**: CSP and region selection are architecturally significant — produce ADRs via `/arckit.adr`.
+- **Decision capture**: CSP and region selection are architecturally significant — produce ADRs via `/arckit:adr`.
 - **Community-contributed**: Output should be reviewed by qualified federal compliance counsel before reliance.

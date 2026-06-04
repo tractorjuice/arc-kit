@@ -128,7 +128,7 @@ Use correct English ordinals: 1st, 2nd, 3rd, 4th, 5th, ..., 21st, 22nd, 23rd, 24
 - **Matrix Date**: YYYY-MM-DD
 - **Commands Documented**: {N}
 - **Matrix Rows**: {N} ({N-2} document-generating commands + 2 external documents)
-- **Note**: `/arckit.customize` is a utility command not in the matrix -- it has no dependencies and produces no outputs consumed by other commands
+- **Note**: `/arckit:customize` is a utility command not in the matrix -- it has no dependencies and produces no outputs consumed by other commands
 ```
 
 Update:

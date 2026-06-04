@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **AU Federal visual-evidence enrichment** (derived from #569). The `arckit-au` Federal commands and templates compose with the existing architecture/evidence commands (`/arckit:diagram`, `/arckit:dfd`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, `/arckit:maturity-model`) through embedded enrichment handoffs and an "ArcKit Architecture Evidence Map" section. A standard **Visual Evidence Decision Rule** across all ten Federal templates: generate companion visuals only when the evidence has enough structure for real nodes and relationships; generate a draft visual with `Pending Input` labels when evidence is partial but structurally useful; otherwise record a **Visual Evidence Gap**. Guidance stays cross-sector (SOCI/OT not made energy-specific). The `au-federal` recipe gains default visual/evidence targets and a `graph-report` post-build hook, with synthetic eval fixtures for complete / partial / sparse scenarios.
 - **`MMOD` (Maturity Model Assessment) doc-type registered.** `/arckit:maturity-model` has always emitted `ARC-*-MMOD-*` IDs, but `MMOD` was never in `config/doc-types.mjs` or the `/arckit:pages` allow-list, so maturity artefacts were not graph-tracked. Registered as a regime-neutral `Governance` type (severity `HIGH`).
 
+### Changed
+
+- **All command cross-references standardised on the colon namespace `/arckit:<command>`** (~5,600 references across ~600 files), matching the official Claude Code plugin invocation syntax and replacing the previous mixed dot-form (`/arckit.<command>`) in templates, guides, scripts and several overlays. Wardley sub-commands keep the dot before the sub-command (`/arckit:wardley.gameplay`); Codex (`$arckit-<command>`) and Copilot (`/arckit-<command>`) forms are unchanged. `CLAUDE.md`, `AGENTS.md` and `CONTRIBUTING.md` corrected. A CI guard (`scripts/standardise-colon.py --check`) prevents regressions.
+
 ## [5.9.2] — 2026-06-03
 
 ### Fixed

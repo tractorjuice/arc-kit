@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.fr-algorithme-public` generates a mandatory transparency notice for French public administration algorithmic decisions under CRPA Article L311-3-1 (Loi République Numérique 2016). More legally binding than the UK ATRS equivalent.
+`/arckit:fr-algorithme-public` generates a mandatory transparency notice for French public administration algorithmic decisions under CRPA Article L311-3-1 (Loi République Numérique 2016). More legally binding than the UK ATRS equivalent.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.fr-algorithme-public Generate transparency notice for <algorithm and decision type>
+/arckit:fr-algorithme-public Generate transparency notice for <algorithm and decision type>
 ```
 
 Output: `projects/<id>/ARC-<id>-ALGO-v1.0.md`
@@ -56,11 +56,11 @@ Excluded: decisions with mandatory human review at every step.
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Algorithm scope and decision impact | `/arckit.requirements` |
-| Data | Data model and personal data | `/arckit.data-model` |
-| GDPR | Art. 22 compliance | `/arckit.eu-rgpd`, `/arckit.dpia` |
-| Notice | Algorithm transparency notice | `/arckit.fr-algorithme-public` |
-| AI Act | If ML system | `/arckit.eu-ai-act` |
+| Discovery | Algorithm scope and decision impact | `/arckit:requirements` |
+| Data | Data model and personal data | `/arckit:data-model` |
+| GDPR | Art. 22 compliance | `/arckit:eu-rgpd`, `/arckit:dpia` |
+| Notice | Algorithm transparency notice | `/arckit:fr-algorithme-public` |
+| AI Act | If ML system | `/arckit:eu-ai-act` |
 
 ---
 

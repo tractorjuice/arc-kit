@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.servicenow` creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.
+`/arckit:servicenow` creates a comprehensive ServiceNow service design covering CMDB, SLAs, incident management, change control, and ITSM integration.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.servicenow Create ServiceNow service design for <service>
+/arckit:servicenow Create ServiceNow service design for <service>
 ```
 
 Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
@@ -98,11 +98,11 @@ Output: `projects/<id>/ARC-<id>-SNOW-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define service and requirements | `/arckit.requirements`, `/arckit.stakeholders` |
-| Architecture | Design components and dependencies | `/arckit.diagram`, `/arckit.hld-review` |
-| Operations | Create operational readiness | `/arckit.operationalize` |
-| ITSM Design | Create ServiceNow design | `/arckit.servicenow` |
-| Implementation | Configure ServiceNow, populate CMDB | `/arckit.backlog` |
+| Discovery | Define service and requirements | `/arckit:requirements`, `/arckit:stakeholders` |
+| Architecture | Design components and dependencies | `/arckit:diagram`, `/arckit:hld-review` |
+| Operations | Create operational readiness | `/arckit:operationalize` |
+| ITSM Design | Create ServiceNow design | `/arckit:servicenow` |
+| Implementation | Configure ServiceNow, populate CMDB | `/arckit:backlog` |
 
 ---
 

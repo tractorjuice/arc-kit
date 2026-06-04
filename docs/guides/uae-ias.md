@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.uae-ias` generates a UAE IAS Statement of Applicability against the 188 controls — 60 management controls (M1–M6) plus 128 technical controls (T1–T9) — priority-tiered P1 to P4. Anchored on the UAE Cybersecurity Council Information Assurance Standard v2.
+`/arckit:uae-ias` generates a UAE IAS Statement of Applicability against the 188 controls — 60 management controls (M1–M6) plus 128 technical controls (T1–T9) — priority-tiered P1 to P4. Anchored on the UAE Cybersecurity Council Information Assurance Standard v2.
 
 Targeted at federal entities and Critical Information Infrastructure (CII) operators.
 
@@ -22,7 +22,7 @@ Targeted at federal entities and Critical Information Infrastructure (CII) opera
 ## Command
 
 ```bash
-/arckit.uae-ias <project ID or system description>
+/arckit:uae-ias <project ID or system description>
 ```
 
 Output: `projects/<id>/ARC-<id>-IAS-v1.0.md`
@@ -67,10 +67,10 @@ Output: `projects/<id>/ARC-<id>-IAS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Architecture | System scope and security NFRs | `/arckit.requirements`, `/arckit.platform-design` |
-| IAS | Statement of Applicability + Risk Treatment Plan | `/arckit.uae-ias` |
-| Residency | T-family controls into CSP / region choice | `/arckit.uae-cloud-residency` |
-| Risk | Surface IAS gaps to project risk register | `/arckit.risk` |
+| Architecture | System scope and security NFRs | `/arckit:requirements`, `/arckit:platform-design` |
+| IAS | Statement of Applicability + Risk Treatment Plan | `/arckit:uae-ias` |
+| Residency | T-family controls into CSP / region choice | `/arckit:uae-cloud-residency` |
+| Risk | Surface IAS gaps to project risk register | `/arckit:risk` |
 
 ---
 
@@ -81,7 +81,7 @@ Output: `projects/<id>/ARC-<id>-IAS-v1.0.md`
 - Priority tier (P1–P4) assigned per control.
 - Gaps have a treatment option (mitigate / transfer / accept / avoid) with named owner.
 - CII registration status is explicit (registered / pending / not designated).
-- T-family gaps that constrain residency choice flagged for `/arckit.uae-cloud-residency`.
+- T-family gaps that constrain residency choice flagged for `/arckit:uae-cloud-residency`.
 
 ---
 

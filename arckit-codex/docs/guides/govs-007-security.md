@@ -12,7 +12,7 @@ This guide maps the [Government Functional Standard GovS 007: Security](https://
 GovS 007: Security (functional standard — 9 principles)
   └── Cyber Security Standard (July 2025 — mandatory CAF profiles, GovAssure, SbD)
         └── NCSC Cyber Assessment Framework (operational — 14 principles, 4 objectives)
-              └── /arckit.secure assessment (evidence & tracking)
+              └── /arckit:secure assessment (evidence & tracking)
 ```
 
 ---

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.au-dss` generates a conformance assessment against the Digital Transformation Agency's Digital Service Standard (13 criteria). It scopes the service in delivery-phase terms (Discovery / Alpha / Beta / Live), evaluates each of the 13 criteria with evidence and gaps, captures the cross-jurisdictional procurement implications under the Commonwealth Procurement Rules (November 2025 overhaul), and surfaces the readiness posture for DTA assessment.
+`/arckit:au-dss` generates a conformance assessment against the Digital Transformation Agency's Digital Service Standard (13 criteria). It scopes the service in delivery-phase terms (Discovery / Alpha / Beta / Live), evaluates each of the 13 criteria with evidence and gaps, captures the cross-jurisdictional procurement implications under the Commonwealth Procurement Rules (November 2025 overhaul), and surfaces the readiness posture for DTA assessment.
 
 The DTA DSS is the Australian counterpart to the UK GDS Service Standard. The conformance assessment is the gate that Australian Federal services use to demonstrate user-centred, accessible, and accountable design before launch.
 
@@ -22,7 +22,7 @@ The DTA DSS is the Australian counterpart to the UK GDS Service Standard. The co
 ## Command
 
 ```bash
-/arckit.au-dss <project ID or service description>
+/arckit:au-dss <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AUDSS-v1.0.md`
@@ -73,4 +73,4 @@ Output: `projects/<id>/ARC-<id>-AUDSS-v1.0.md`
 
 ## Handoff
 
-Feeds the assurance package alongside `/arckit.au-pia` (Privacy Act compliance) and `/arckit.au-e8-posture` (cyber baseline). Pre-Live and Live phase artefacts cross-reference DSS conformance evidence in `/arckit.au-disp-attestation` for supplier-side accreditation.
+Feeds the assurance package alongside `/arckit:au-pia` (Privacy Act compliance) and `/arckit:au-e8-posture` (cyber baseline). Pre-Live and Live phase artefacts cross-reference DSS conformance evidence in `/arckit:au-disp-attestation` for supplier-side accreditation.

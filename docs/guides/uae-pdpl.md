@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.uae-pdpl` generates a UAE Personal Data Protection Law compliance assessment under Federal Decree-Law No. 45 of 2021. Covers DPIA, lawful-basis register, data-subject-rights procedure, cross-border transfer log, and breach notification playbook. Anchored on the UAE Data Office statutory framework.
+`/arckit:uae-pdpl` generates a UAE Personal Data Protection Law compliance assessment under Federal Decree-Law No. 45 of 2021. Covers DPIA, lawful-basis register, data-subject-rights procedure, cross-border transfer log, and breach notification playbook. Anchored on the UAE Data Office statutory framework.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.uae-pdpl <project ID or service description>
+/arckit:uae-pdpl <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-PDPL-v1.0.md`
@@ -45,11 +45,11 @@ Output: `projects/<id>/ARC-<id>-PDPL-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Inventory | Personal-data flows, lawful basis | `/arckit.requirements`, `/arckit.data-model` |
-| Classification | Smart Data sensitivity tags | `/arckit.uae-classification` |
-| PDPL | Compliance assessment + DPIA | `/arckit.uae-pdpl` |
-| Sharing | Per-share lawful-basis mapping | `/arckit.uae-data-sharing` |
-| Risk | Surface DPIA gaps to risk register | `/arckit.risk` |
+| Inventory | Personal-data flows, lawful basis | `/arckit:requirements`, `/arckit:data-model` |
+| Classification | Smart Data sensitivity tags | `/arckit:uae-classification` |
+| PDPL | Compliance assessment + DPIA | `/arckit:uae-pdpl` |
+| Sharing | Per-share lawful-basis mapping | `/arckit:uae-data-sharing` |
+| Risk | Surface DPIA gaps to risk register | `/arckit:risk` |
 
 ---
 
@@ -69,5 +69,5 @@ Output: `projects/<id>/ARC-<id>-PDPL-v1.0.md`
 
 - **Executive Regulation**: PDPL Executive Regulation is flagged as `[NEEDS VERIFICATION]` in the overlay maintenance log — confirm current status before publication.
 - **Cross-border**: Default position is sovereign UAE residency for Confidential and above; transfers require explicit derogation.
-- **Run order**: Best executed after `/arckit.uae-classification` so PDPL-relevant datasets are already tagged.
+- **Run order**: Best executed after `/arckit:uae-classification` so PDPL-relevant datasets are already tagged.
 - **Community-contributed**: Output should be reviewed by qualified DPO / federal compliance counsel before reliance.

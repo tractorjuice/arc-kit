@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.au-ai-assurance` generates an AI assurance baseline against the Digital Transformation Agency's AI Assurance Framework and the Responsible AI Policy v2.0 (effective December 2025). It captures the AI system's risk classification, runs the assurance assessment against the Framework's principles, surfaces the Privacy Act AI-decision notification posture (Tranche 1 reforms, December 2024), captures ISO 42001 readiness, and surfaces the human-oversight and accountability model.
+`/arckit:au-ai-assurance` generates an AI assurance baseline against the Digital Transformation Agency's AI Assurance Framework and the Responsible AI Policy v2.0 (effective December 2025). It captures the AI system's risk classification, runs the assurance assessment against the Framework's principles, surfaces the Privacy Act AI-decision notification posture (Tranche 1 reforms, December 2024), captures ISO 42001 readiness, and surfaces the human-oversight and accountability model.
 
 The AI Assurance Framework is the operational expression of Australia's responsible-AI commitments for Federal entities. For DISP suppliers offering AI-enabled services to Defence, this is the gate artefact alongside the ISM SoA. The Tranche 1 Privacy Act reforms add a discrete obligation around automated decision-making notifications that the assurance baseline must address.
 
@@ -13,7 +13,7 @@ The AI Assurance Framework is the operational expression of Australia's responsi
 | Artefact | Purpose |
 |----------|---------|
 | Requirements (`ARC-<id>-REQ-v1.0.md`) | AI system description, intended use, user populations |
-| `/arckit.au-pia` output (`ARC-<id>-AUPIA-v1.0.md`) | Automated decision-making notification posture |
+| `/arckit:au-pia` output (`ARC-<id>-AUPIA-v1.0.md`) | Automated decision-making notification posture |
 | Data model (`ARC-<id>-DMOD-v1.0.md`) | Training, validation, and inference data flows |
 | Risk register (`ARC-<id>-RISK-v1.0.md`) | AI-specific risks (bias, drift, hallucination, misuse) |
 | HLD (`ARC-<id>-HLD-v1.0.md`) | Model architecture, hosting, monitoring posture |
@@ -23,7 +23,7 @@ The AI Assurance Framework is the operational expression of Australia's responsi
 ## Command
 
 ```bash
-/arckit.au-ai-assurance <project ID or service description>
+/arckit:au-ai-assurance <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AUAIA-v1.0.md`
@@ -81,4 +81,4 @@ Output: `projects/<id>/ARC-<id>-AUAIA-v1.0.md`
 
 ## Handoff
 
-Cross-references `/arckit.au-pia` (automated decision-making notification), `/arckit.au-ism-controls` (technical controls for model serving), and feeds `/arckit.au-disp-attestation` (DISP supplier AI assurance evidence for Defence-facing systems).
+Cross-references `/arckit:au-pia` (automated decision-making notification), `/arckit:au-ism-controls` (technical controls for model serving), and feeds `/arckit:au-disp-attestation` (DISP supplier AI assurance evidence for Defence-facing systems).

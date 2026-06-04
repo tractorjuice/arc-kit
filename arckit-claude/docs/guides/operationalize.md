@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.operationalize` creates an operational readiness pack covering support model, runbooks, DR/BCP, on-call, and handover documentation.
+`/arckit:operationalize` creates an operational readiness pack covering support model, runbooks, DR/BCP, on-call, and handover documentation.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.operationalize Create operational readiness pack for <service>
+/arckit:operationalize Create operational readiness pack for <service>
 ```
 
 Output: `projects/<id>/ARC-<id>-OPS-v1.0.md`
@@ -95,11 +95,11 @@ Each runbook must include:
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define requirements and architecture | `/arckit.requirements`, `/arckit.diagram` |
-| Design | Create HLD/DLD, identify risks | `/arckit.hld-review`, `/arckit.risk` |
-| Build | Implement, test, document | `/arckit.backlog`, `/arckit.devops` |
-| Readiness | Create operational pack | `/arckit.operationalize` |
-| Go-Live | Handover, train, transition | `/arckit.servicenow` |
+| Discovery | Define requirements and architecture | `/arckit:requirements`, `/arckit:diagram` |
+| Design | Create HLD/DLD, identify risks | `/arckit:hld-review`, `/arckit:risk` |
+| Build | Implement, test, document | `/arckit:backlog`, `/arckit:devops` |
+| Readiness | Create operational pack | `/arckit:operationalize` |
+| Go-Live | Handover, train, transition | `/arckit:servicenow` |
 
 ---
 

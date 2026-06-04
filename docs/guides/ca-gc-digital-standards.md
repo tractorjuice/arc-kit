@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-gc-digital-standards` generates a Government of Canada Digital Standards conformance scorecard for a federal digital service. It assesses the service against the 10 Digital Standards individually, surfaces evidence and gaps per standard, captures remediation actions with owners and target dates, and produces a per-standard maturity roadmap. Cross-cutting themes — accessibility, open data and code, ethical AI, user research practice — are scored once across the standards they touch.
+`/arckit:ca-gc-digital-standards` generates a Government of Canada Digital Standards conformance scorecard for a federal digital service. It assesses the service against the 10 Digital Standards individually, surfaces evidence and gaps per standard, captures remediation actions with owners and target dates, and produces a per-standard maturity roadmap. Cross-cutting themes — accessibility, open data and code, ethical AI, user research practice — are scored once across the standards they touch.
 
 The Digital Standards are not aspirational principles. They sit under the TBS *Policy on Service and Digital* and the *Directive on Service and Digital*; ADMs are accountable for adherence and TBS audits conformance through the digital reporting cycle. Standard 6 is reinforced by the *Accessible Canada Act* and the *Accessible Canada Regulations*, which set the statutory floor regardless of how the digital scorecard reads. Treat this artefact as a delivery and governance gate — not a self-assessment exercise.
 
@@ -23,7 +23,7 @@ The Digital Standards are not aspirational principles. They sit under the TBS *P
 ## Command
 
 ```bash
-/arckit.ca-gc-digital-standards <project ID or service description>
+/arckit:ca-gc-digital-standards <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-DIGSTD-v1.0.md`

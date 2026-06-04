@@ -53,7 +53,7 @@ def main():
             log_error("Expected: projects/000-global/ARC-000-PRIN-v*.md")
             log_error("")
             log_error("Before creating a project, you must define architecture principles")
-            log_error("Run: /arckit.principles")
+            log_error("Run: /arckit:principles")
             log_error("")
             log_error("Or use --force to skip this check (not recommended)")
             sys.exit(1)
@@ -150,7 +150,7 @@ Place organization-wide governance documents here. These are read by commands ac
 - MOD/Defence security policies (JSP 440, CAAT)
 
 ## How It Works
-Commands like /arckit.principles, /arckit.risk, /arckit.secure, and /arckit.sobc
+Commands like /arckit:principles, /arckit:risk, /arckit:secure, and /arckit:sobc
 automatically scan this directory for organizational context.
 """)
 
@@ -205,27 +205,27 @@ Created: {today}
 Use ArcKit commands to generate project artifacts in the recommended order:
 
 ### Discovery Phase
-1. `/arckit.stakeholders` - Analyze stakeholder drivers and goals
-2. `/arckit.risk` - Create risk register
-3. `/arckit.sobc` - Create Strategic Outline Business Case
+1. `/arckit:stakeholders` - Analyze stakeholder drivers and goals
+2. `/arckit:risk` - Create risk register
+3. `/arckit:sobc` - Create Strategic Outline Business Case
 
 ### Alpha Phase
-4. `/arckit.requirements` - Define comprehensive requirements
-5. `/arckit.data-model` - Design data model and GDPR compliance
-6. `/arckit.wardley` - Create Wardley maps for strategic planning
-7. `/arckit.research` - Research technology options (if needed)
-8. `/arckit.sow` - Generate Statement of Work for vendor procurement (if needed)
-9. `/arckit.evaluate` - Create vendor evaluation framework (if needed)
+4. `/arckit:requirements` - Define comprehensive requirements
+5. `/arckit:data-model` - Design data model and GDPR compliance
+6. `/arckit:wardley` - Create Wardley maps for strategic planning
+7. `/arckit:research` - Research technology options (if needed)
+8. `/arckit:sow` - Generate Statement of Work for vendor procurement (if needed)
+9. `/arckit:evaluate` - Create vendor evaluation framework (if needed)
 
 ### Beta Phase
-10. `/arckit.hld-review` - Review High-Level Design
-11. `/arckit.dld-review` - Review Detailed Design
-12. `/arckit.traceability` - Generate requirements traceability matrix
+10. `/arckit:hld-review` - Review High-Level Design
+11. `/arckit:dld-review` - Review Detailed Design
+12. `/arckit:traceability` - Generate requirements traceability matrix
 
 ### Compliance (as needed)
-- `/arckit.secure` - UK Government Secure by Design review
-- `/arckit.tcop` - Technology Code of Practice assessment
-- `/arckit.ai-playbook` - AI Playbook compliance (for AI systems)
+- `/arckit:secure` - UK Government Secure by Design review
+- `/arckit:tcop` - Technology Code of Practice assessment
+- `/arckit:ai-playbook` - AI Playbook compliance (for AI systems)
 
 ## Project Structure
 
@@ -236,29 +236,29 @@ Documents use standardized naming: `ARC-{{PROJECT_ID}}-{{TYPE}}-v{{VERSION}}.md`
 \u251c\u2500\u2500 README.md (this file)
 \u2502
 \u251c\u2500\u2500 # Core Documents
-\u251c\u2500\u2500 ARC-{project_number}-STKE-v1.0.md     # Stakeholder drivers (/arckit.stakeholders)
-\u251c\u2500\u2500 ARC-{project_number}-RISK-v1.0.md     # Risk register (/arckit.risk)
-\u251c\u2500\u2500 ARC-{project_number}-SOBC-v1.0.md     # Business case (/arckit.sobc)
-\u251c\u2500\u2500 ARC-{project_number}-REQ-v1.0.md      # Requirements (/arckit.requirements)
-\u251c\u2500\u2500 ARC-{project_number}-DATA-v1.0.md     # Data model (/arckit.data-model)
-\u251c\u2500\u2500 ARC-{project_number}-RSCH-v1.0.md     # Research findings (/arckit.research)
-\u251c\u2500\u2500 ARC-{project_number}-TRAC-v1.0.md     # Traceability matrix (/arckit.traceability)
+\u251c\u2500\u2500 ARC-{project_number}-STKE-v1.0.md     # Stakeholder drivers (/arckit:stakeholders)
+\u251c\u2500\u2500 ARC-{project_number}-RISK-v1.0.md     # Risk register (/arckit:risk)
+\u251c\u2500\u2500 ARC-{project_number}-SOBC-v1.0.md     # Business case (/arckit:sobc)
+\u251c\u2500\u2500 ARC-{project_number}-REQ-v1.0.md      # Requirements (/arckit:requirements)
+\u251c\u2500\u2500 ARC-{project_number}-DATA-v1.0.md     # Data model (/arckit:data-model)
+\u251c\u2500\u2500 ARC-{project_number}-RSCH-v1.0.md     # Research findings (/arckit:research)
+\u251c\u2500\u2500 ARC-{project_number}-TRAC-v1.0.md     # Traceability matrix (/arckit:traceability)
 \u2502
 \u251c\u2500\u2500 # Procurement
-\u251c\u2500\u2500 ARC-{project_number}-SOW-v1.0.md      # Statement of Work (/arckit.sow)
-\u251c\u2500\u2500 ARC-{project_number}-EVAL-v1.0.md     # Evaluation criteria (/arckit.evaluate)
+\u251c\u2500\u2500 ARC-{project_number}-SOW-v1.0.md      # Statement of Work (/arckit:sow)
+\u251c\u2500\u2500 ARC-{project_number}-EVAL-v1.0.md     # Evaluation criteria (/arckit:evaluate)
 \u2502
 \u251c\u2500\u2500 # Multi-instance Documents (subdirectories)
 \u251c\u2500\u2500 decisions/
-\u2502   \u251c\u2500\u2500 ARC-{project_number}-ADR-001-v1.0.md  # Architecture decisions (/arckit.adr)
+\u2502   \u251c\u2500\u2500 ARC-{project_number}-ADR-001-v1.0.md  # Architecture decisions (/arckit:adr)
 \u2502   \u2514\u2500\u2500 ARC-{project_number}-ADR-002-v1.0.md
 \u251c\u2500\u2500 diagrams/
-\u2502   \u2514\u2500\u2500 ARC-{project_number}-DIAG-001-v1.0.md # Diagrams (/arckit.diagram)
+\u2502   \u2514\u2500\u2500 ARC-{project_number}-DIAG-001-v1.0.md # Diagrams (/arckit:diagram)
 \u251c\u2500\u2500 wardley-maps/
-\u2502   \u2514\u2500\u2500 ARC-{project_number}-WARD-001-v1.0.md # Wardley maps (/arckit.wardley)
+\u2502   \u2514\u2500\u2500 ARC-{project_number}-WARD-001-v1.0.md # Wardley maps (/arckit:wardley)
 \u251c\u2500\u2500 reviews/
-\u2502   \u251c\u2500\u2500 ARC-{project_number}-HLD-v1.0.md      # HLD review (/arckit.hld-review)
-\u2502   \u2514\u2500\u2500 ARC-{project_number}-DLD-v1.0.md      # DLD review (/arckit.dld-review)
+\u2502   \u251c\u2500\u2500 ARC-{project_number}-HLD-v1.0.md      # HLD review (/arckit:hld-review)
+\u2502   \u2514\u2500\u2500 ARC-{project_number}-DLD-v1.0.md      # DLD review (/arckit:dld-review)
 \u2502
 \u251c\u2500\u2500 external/                            # External documents (PDFs, specs, reports)
 \u2514\u2500\u2500 vendors/                             # Vendor proposals
@@ -314,23 +314,23 @@ Track your progress through the workflow:
     # Determine next steps
     next_steps = []
     if not has_doc(project_dir, project_number, "STKE"):
-        next_steps.append("/arckit.stakeholders - Analyze stakeholder drivers and goals")
+        next_steps.append("/arckit:stakeholders - Analyze stakeholder drivers and goals")
     elif not has_doc(project_dir, project_number, "RISK"):
-        next_steps.append("/arckit.risk - Create risk register")
+        next_steps.append("/arckit:risk - Create risk register")
     elif not has_doc(project_dir, project_number, "SOBC"):
-        next_steps.append("/arckit.sobc - Create Strategic Outline Business Case")
+        next_steps.append("/arckit:sobc - Create Strategic Outline Business Case")
     elif not has_doc(project_dir, project_number, "REQ"):
-        next_steps.append("/arckit.requirements - Define business and technical requirements")
+        next_steps.append("/arckit:requirements - Define business and technical requirements")
     elif not has_doc(project_dir, project_number, "DATA"):
-        next_steps.append("/arckit.data-model - Design data model")
+        next_steps.append("/arckit:data-model - Design data model")
     elif not os.path.isdir(os.path.join(project_dir, "wardley-maps")) or \
          not any(Path(os.path.join(project_dir, "wardley-maps")).iterdir()):
-        next_steps.append("/arckit.research - Research technology options")
-        next_steps.append("/arckit.wardley - Create Wardley maps")
+        next_steps.append("/arckit:research - Research technology options")
+        next_steps.append("/arckit:wardley - Create Wardley maps")
     elif not has_doc(project_dir, project_number, "SOW"):
-        next_steps.append("/arckit.sow - Generate Statement of Work for RFP")
+        next_steps.append("/arckit:sow - Generate Statement of Work for RFP")
     else:
-        next_steps.append("/arckit.evaluate - Create vendor evaluation framework")
+        next_steps.append("/arckit:evaluate - Create vendor evaluation framework")
 
     # Output
     if args.output_json:

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.azure-research` researches Azure services, architecture patterns, and implementation guidance using the Microsoft Learn MCP server for authoritative documentation.
+`/arckit:azure-research` researches Azure services, architecture patterns, and implementation guidance using the Microsoft Learn MCP server for authoritative documentation.
 
 > **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather Azure documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
 
@@ -57,7 +57,7 @@ Add constraints (budget, classification, region) in the prompt for tailored resu
 ## Command
 
 ```bash
-/arckit.azure-research Research Azure services for <project>
+/arckit:azure-research Research Azure services for <project>
 ```
 
 Outputs: `projects/<id>/research/ARC-<id>-AZRS-v1.0.md`
@@ -106,17 +106,17 @@ When UK Government project detected:
 
 ## Follow-on Actions
 
-- Feed Azure findings into `/arckit.diagram` for Azure architecture diagrams
-- Run `/arckit.secure` to validate against UK Secure by Design
-- Run `/arckit.devops` to plan Azure DevOps CI/CD pipelines
-- Run `/arckit.finops` to create Azure FinOps cost management strategy
-- Run `/arckit.adr` to document Azure service selection decisions
+- Feed Azure findings into `/arckit:diagram` for Azure architecture diagrams
+- Run `/arckit:secure` to validate against UK Secure by Design
+- Run `/arckit:devops` to plan Azure DevOps CI/CD pipelines
+- Run `/arckit:finops` to create Azure FinOps cost management strategy
+- Run `/arckit:adr` to document Azure service selection decisions
 
 ---
 
-## Comparison with /arckit.research
+## Comparison with /arckit:research
 
-| Feature | `/arckit.research` | `/arckit.azure-research` |
+| Feature | `/arckit:research` | `/arckit:azure-research` |
 |---------|-------------------|-------------------------|
 | Scope | Multi-cloud, SaaS, open-source | Azure-specific only |
 | Source | Web search, multiple sources | Microsoft Learn MCP (authoritative) |
@@ -127,8 +127,8 @@ When UK Government project detected:
 
 **When to use which**:
 
-- Use `/arckit.research` for cloud-agnostic evaluation or build vs buy
-- Use `/arckit.azure-research` when Azure is the target platform
+- Use `/arckit:research` for cloud-agnostic evaluation or build vs buy
+- Use `/arckit:azure-research` when Azure is the target platform
 
 ---
 

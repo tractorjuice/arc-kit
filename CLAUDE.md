@@ -60,10 +60,10 @@ Commands exist in multiple formats across the distribution. The plugin source is
 
 | AI | Format | Location |
 |----|--------|----------|
-| Claude Code | `/arckit.requirements` (plugin) | `arckit-claude/commands/requirements.md` |
+| Claude Code | `/arckit:requirements` (plugin) | `arckit-claude/commands/requirements.md` |
 | Codex CLI | `$arckit-requirements` (skill) | `.agents/skills/arckit-requirements/SKILL.md` |
 | Gemini CLI | `/arckit:requirements` (extension) | `arckit-gemini/commands/arckit/requirements.toml` |
-| OpenCode CLI | `/arckit.requirements` | `.opencode/commands/arckit.requirements.md` |
+| OpenCode CLI | `/arckit:requirements` | `.opencode/commands/arckit.requirements.md` |
 | Copilot | `/arckit-requirements` (prompt) | `arckit-copilot/prompts/arckit-requirements.prompt.md` |
 
 **Plugin command frontmatter** supports:
@@ -82,16 +82,16 @@ Some commands delegate to **autonomous agents** (`arckit-claude/agents/arckit-{n
 
 | Agent | Command | Purpose |
 |-------|---------|---------|
-| `arckit-research` | `/arckit.research` | Market research, vendor evaluation, build vs buy, TCO |
-| `arckit-datascout` | `/arckit.datascout` | Data source discovery, API catalogue search |
-| `arckit-aws-research` | `/arckit.aws-research` | AWS via AWS Knowledge MCP |
-| `arckit-azure-research` | `/arckit.azure-research` | Azure via Microsoft Learn MCP |
-| `arckit-gcp-research` | `/arckit.gcp-research` | GCP via Google Developer Knowledge MCP |
-| `arckit-framework` | `/arckit.framework` | Transform artifacts into a structured framework |
-| `arckit-gov-reuse` | `/arckit.gov-reuse` | Government code reuse via govreposcrape |
-| `arckit-gov-code-search` | `/arckit.gov-code-search` | Government code semantic search |
-| `arckit-gov-landscape` | `/arckit.gov-landscape` | Government code landscape analysis |
-| `arckit-grants` | `/arckit.grants` | UK government grants and funding research |
+| `arckit-research` | `/arckit:research` | Market research, vendor evaluation, build vs buy, TCO |
+| `arckit-datascout` | `/arckit:datascout` | Data source discovery, API catalogue search |
+| `arckit-aws-research` | `/arckit:aws-research` | AWS via AWS Knowledge MCP |
+| `arckit-azure-research` | `/arckit:azure-research` | Azure via Microsoft Learn MCP |
+| `arckit-gcp-research` | `/arckit:gcp-research` | GCP via Google Developer Knowledge MCP |
+| `arckit-framework` | `/arckit:framework` | Transform artifacts into a structured framework |
+| `arckit-gov-reuse` | `/arckit:gov-reuse` | Government code reuse via govreposcrape |
+| `arckit-gov-code-search` | `/arckit:gov-code-search` | Government code semantic search |
+| `arckit-gov-landscape` | `/arckit:gov-landscape` | Government code landscape analysis |
+| `arckit-grants` | `/arckit:grants` | UK government grants and funding research |
 
 **Reader/writer subagents** (6 internal, not user-invocable): `datascout`, `grants`, and `gov-reuse` follow the three-tier orchestrator pattern (`arckit-claude/agents/READER-PATTERN.md`). Each ships a `arckit-{name}-reader.md` (web/MCP evidence gathering, returns JSON) and `arckit-{name}-writer.md` (renders validated payload into artefact, no network tools). Dispatched only by the corresponding orchestrator agent. **Total: 16 agents** (10 single-tier + 6 reader/writer subagents).
 
@@ -143,7 +143,7 @@ Monitors are Claude-only — not propagated to non-Claude extensions.
 
 ### Monitor Tool & Remote Control (user-facing)
 
-The built-in `Monitor` tool (v2.1.98+) tails stdout from a background Bash process and delivers each line to Claude as an in-session notification. Useful for long `/arckit.research` or autoresearch runs (redirect to a log file, then `Monitor` the tail).
+The built-in `Monitor` tool (v2.1.98+) tails stdout from a background Bash process and delivers each line to Claude as an in-session notification. Useful for long `/arckit:research` or autoresearch runs (redirect to a log file, then `Monitor` the tail).
 
 [Claude Code Remote Control](https://code.claude.com/docs/en/remote-control) (v2.1.110+) lets users drive a local session from claude.ai/code or the mobile app. Combined with `/config → Push when Claude decides`, the phone gets a notification when long-running work finishes. Fits research-heavy commands and overnight autoresearch loops. Pro/Max plans only; Claude Code only.
 
@@ -201,7 +201,7 @@ project/
 
 Commands check `templates-custom/` first, fall back to `templates/`. Plugin commands reference templates via `${CLAUDE_PLUGIN_ROOT}/templates/`. When adding/modifying templates, update both `arckit-claude/templates/` and `.arckit/templates/`.
 
-`/arckit.customize list` lists templates; `/arckit.customize <name>` copies one for editing.
+`/arckit:customize list` lists templates; `/arckit:customize <name>` copies one for editing.
 
 ### Document Control Standard
 

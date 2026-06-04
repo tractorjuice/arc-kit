@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.dld-review` reviews a Detailed-Level Design (DLD) for implementation readiness, technical accuracy, and alignment with HLD.
+`/arckit:dld-review` reviews a Detailed-Level Design (DLD) for implementation readiness, technical accuracy, and alignment with HLD.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.dld-review Review DLD for <component/service>
+/arckit:dld-review Review DLD for <component/service>
 ```
 
 Output: `projects/<id>/reviews/ARC-<id>-DLDR-v1.0.md`
@@ -71,11 +71,11 @@ Output: `projects/<id>/reviews/ARC-<id>-DLDR-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| HLD Approval | Get HLD reviewed and approved | `/arckit.hld-review` |
+| HLD Approval | Get HLD reviewed and approved | `/arckit:hld-review` |
 | DLD Creation | Write detailed design | Manual |
-| DLD Review | Review DLD for readiness | `/arckit.dld-review` |
+| DLD Review | Review DLD for readiness | `/arckit:dld-review` |
 | Approval | Address findings, get sign-off | Manual |
-| Implementation | Build from approved DLD | `/arckit.backlog` |
+| Implementation | Build from approved DLD | `/arckit:backlog` |
 
 ---
 

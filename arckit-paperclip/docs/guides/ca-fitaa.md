@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-fitaa` generates a Canada Foreign Influence Transparency and Accountability Act (FITAA) compliance assessment under Bill C-70 (2024). It scopes registrable activity, designs the public-vs-protected arrangement register, lays out the registration workflow and severance rules, captures the Commissioner liaison protocol, and surfaces a Charter §2 risk register.
+`/arckit:ca-fitaa` generates a Canada Foreign Influence Transparency and Accountability Act (FITAA) compliance assessment under Bill C-70 (2024). It scopes registrable activity, designs the public-vs-protected arrangement register, lays out the registration workflow and severance rules, captures the Commissioner liaison protocol, and surfaces a Charter §2 risk register.
 
 The Office of the Commissioner of Foreign Influence Transparency is newly stood up. Regulations are still being made through 2025–2026, so this command treats unsettled section numbers and offence references as `<TBC at draft time>` placeholders that the reviewer must reconcile against the consolidated Justice Laws Website text before relying on the output.
 
@@ -22,7 +22,7 @@ The Office of the Commissioner of Foreign Influence Transparency is newly stood 
 ## Command
 
 ```bash
-/arckit.ca-fitaa <project ID or service description>
+/arckit:ca-fitaa <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-FITAA-v1.0.md`

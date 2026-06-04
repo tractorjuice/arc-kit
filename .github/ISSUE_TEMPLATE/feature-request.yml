@@ -7,7 +7,7 @@ body:
     attributes:
       label: Summary
       description: One-line summary of the feature.
-      placeholder: "Add /arckit.security-review command"
+      placeholder: "Add /arckit:security-review command"
     validations:
       required: true
 

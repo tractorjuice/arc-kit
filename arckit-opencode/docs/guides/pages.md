@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.pages` generates a GitHub Pages documentation site that displays all project documents with Mermaid diagram support.
+`/arckit:pages` generates a GitHub Pages documentation site that displays all project documents with Mermaid diagram support.
 
 ---
 
@@ -19,7 +19,7 @@
 ## Command
 
 ```bash
-/arckit.pages Generate documentation site for this repository
+/arckit:pages Generate documentation site for this repository
 ```
 
 Output:
@@ -104,10 +104,10 @@ Site available at: `https://{owner}.github.io/{repo}/`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Document requirements and stakeholders | `/arckit.requirements`, `/arckit.stakeholders` |
-| Design | Create architecture artifacts | `/arckit.hld-review`, `/arckit.diagram` |
-| Compliance | Assess against standards | `/arckit.tcop`, `/arckit.secure` |
-| Publish | Generate documentation site | `/arckit.pages` |
+| Discovery | Document requirements and stakeholders | `/arckit:requirements`, `/arckit:stakeholders` |
+| Design | Create architecture artifacts | `/arckit:hld-review`, `/arckit:diagram` |
+| Compliance | Assess against standards | `/arckit:tcop`, `/arckit:secure` |
+| Publish | Generate documentation site | `/arckit:pages` |
 
 ---
 

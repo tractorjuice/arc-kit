@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: 4.4.0
 
-`/arckit.gov-landscape` maps what UK government has built in a domain — organisations active in the space, common technology patterns, adopted standards, maturity levels, and collaboration opportunities — giving architects a broad situational picture before making design decisions.
+`/arckit:gov-landscape` maps what UK government has built in a domain — organisations active in the space, common technology patterns, adopted standards, maturity levels, and collaboration opportunities — giving architects a broad situational picture before making design decisions.
 
 > **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent issues 8-12 govreposcrape queries across the domain, uses WebFetch to inspect representative repositories at depth, and synthesises findings into a structured landscape report, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
 
@@ -41,7 +41,7 @@ Add a time qualifier ("in the last 2 years") or a department name to scope the l
 ## Command
 
 ```bash
-/arckit.gov-landscape <domain>
+/arckit:gov-landscape <domain>
 ```
 
 Outputs: `projects/<id>/research/ARC-<id>-GLND-v1.0.md`
@@ -88,15 +88,15 @@ Each active organisation in the domain is rated on three dimensions:
 
 ## Follow-on Actions
 
-- Run `/arckit.gov-reuse` to perform a scored reuse assessment for specific capabilities identified in the landscape
-- Run `/arckit.framework` to transform landscape findings into architectural principles and patterns
-- Run `/arckit.wardley` to map domain components onto a Wardley Map for evolution analysis
+- Run `/arckit:gov-reuse` to perform a scored reuse assessment for specific capabilities identified in the landscape
+- Run `/arckit:framework` to transform landscape findings into architectural principles and patterns
+- Run `/arckit:wardley` to map domain components onto a Wardley Map for evolution analysis
 
 ---
 
-## Comparison with /arckit.gov-reuse and /arckit.gov-code-search
+## Comparison with /arckit:gov-reuse and /arckit:gov-code-search
 
-| Feature | `/arckit.gov-landscape` | `/arckit.gov-reuse` | `/arckit.gov-code-search` |
+| Feature | `/arckit:gov-landscape` | `/arckit:gov-reuse` | `/arckit:gov-code-search` |
 |---------|------------------------|--------------------|--------------------------|
 | Purpose | Map an entire domain | Assess candidates for a project | Discover repos matching a query |
 | Scope | Domain-wide (8-12 queries) | Capability-specific (3-5 queries) | Query-specific (3-5 queries) |
@@ -104,7 +104,7 @@ Each active organisation in the domain is rated on three dimensions:
 | Project required | No (recommended) | Yes (requirements MANDATORY) | No |
 | When to use | Early-stage situational awareness | Before building a capability | Exploratory or ad-hoc search |
 
-**Workflow**: Use `/arckit.gov-landscape` to understand the domain, `/arckit.gov-code-search` for targeted queries, and `/arckit.gov-reuse` for project-specific reuse decisions.
+**Workflow**: Use `/arckit:gov-landscape` to understand the domain, `/arckit:gov-code-search` for targeted queries, and `/arckit:gov-reuse` for project-specific reuse decisions.
 
 ---
 

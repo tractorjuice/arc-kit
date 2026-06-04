@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.au-pia` generates an Australian Privacy Impact Assessment under the Privacy Act 1988 (Cth) and the 13 Australian Privacy Principles. It captures the entity's APP entity status, scopes the personal information lifecycle, runs an APP-by-APP applicability and compliance analysis, registers privacy risks with mitigations, captures cross-border disclosure flows under APP 8, and surfaces the OAIC notification posture under the Notifiable Data Breaches scheme (Privacy Act Part IIIC).
+`/arckit:au-pia` generates an Australian Privacy Impact Assessment under the Privacy Act 1988 (Cth) and the 13 Australian Privacy Principles. It captures the entity's APP entity status, scopes the personal information lifecycle, runs an APP-by-APP applicability and compliance analysis, registers privacy risks with mitigations, captures cross-border disclosure flows under APP 8, and surfaces the OAIC notification posture under the Notifiable Data Breaches scheme (Privacy Act Part IIIC).
 
 The PIA is a recognised due diligence artefact for Australian Federal entities and APP entities generally. The Privacy Act Tranche 1 reforms (December 2024) introduced new accountability, consent, and automated-decision-making obligations — the PIA explicitly addresses where these apply. Mark anything dependent on the Tranche 2 reforms as `<PENDING TRANCHE 2>` and revisit when the reforms enter force.
 
@@ -22,7 +22,7 @@ The PIA is a recognised due diligence artefact for Australian Federal entities a
 ## Command
 
 ```bash
-/arckit.au-pia <project ID or service description>
+/arckit:au-pia <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AUPIA-v1.0.md`
@@ -69,4 +69,4 @@ Output: `projects/<id>/ARC-<id>-AUPIA-v1.0.md`
 
 ## Handoff
 
-Foundational input to `/arckit.au-ndb-playbook` (NDB playbook uses the personal information inventory and breach decision criteria), `/arckit.au-disp-attestation` (DISP information protection domain cites PIA evidence), and `/arckit.au-ai-assurance` (AI Assurance cross-references automated decision-making notification posture).
+Foundational input to `/arckit:au-ndb-playbook` (NDB playbook uses the personal information inventory and breach decision criteria), `/arckit:au-disp-attestation` (DISP information protection domain cites PIA evidence), and `/arckit:au-ai-assurance` (AI Assurance cross-references automated decision-making notification posture).

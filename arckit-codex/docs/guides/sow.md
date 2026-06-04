@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.sow` generates a Statement of Work (SOW) or RFP document for vendor procurement.
+`/arckit:sow` generates a Statement of Work (SOW) or RFP document for vendor procurement.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.sow Create Statement of Work for <project>
+/arckit:sow Create Statement of Work for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-SOW-v1.0.md`
@@ -84,10 +84,10 @@ Output: `projects/<id>/ARC-<id>-SOW-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define requirements | `/arckit.requirements`, `/arckit.stakeholders` |
-| Preparation | Create SOW/RFP | `/arckit.sow` |
+| Discovery | Define requirements | `/arckit:requirements`, `/arckit:stakeholders` |
+| Preparation | Create SOW/RFP | `/arckit:sow` |
 | Procurement | Issue to market | Via G-Cloud, DOS, or direct |
-| Evaluation | Score proposals | `/arckit.evaluate` |
+| Evaluation | Score proposals | `/arckit:evaluate` |
 | Award | Negotiate and contract | Manual |
 
 ---

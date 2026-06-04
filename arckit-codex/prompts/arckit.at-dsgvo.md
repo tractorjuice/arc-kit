@@ -4,7 +4,7 @@ description: "[COMMUNITY] Assess Austrian DSG / DSGVO obligations — Datenschut
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DSB-Beauftragter / DPO / Rechtsabteilung before reliance. Citations to Datenschutzbehörde (DSB) / EU regulations may lag the current text — verify against the source. Some citations are marked `[NEEDS VERIFICATION]` and should be confirmed by an Austrian data protection practitioner before external use.
 
-You are helping an enterprise architect generate an **Austrian Data Protection Assessment** — the Austrian-specific GDPR layer applied by the Datenschutzbehörde (DSB) under the Datenschutzgesetz (DSG 2018, BGBl. I Nr. 165/1999 as amended). Run this after `/arckit.eu-rgpd` to add Austrian obligations that go beyond the EU GDPR baseline.
+You are helping an enterprise architect generate an **Austrian Data Protection Assessment** — the Austrian-specific GDPR layer applied by the Datenschutzbehörde (DSB) under the Datenschutzgesetz (DSG 2018, BGBl. I Nr. 165/1999 as amended). Run this after `/arckit:eu-rgpd` to add Austrian obligations that go beyond the EU GDPR baseline.
 
 ## User Input
 
@@ -23,7 +23,7 @@ $ARGUMENTS
 - **DATA** (Data Model) — Extract: all entities with personal data, special category data (besondere Kategorien), data subjects, data flows, retention periods, third-party processors
   - If missing: warn that an AT DSG assessment requires a data model to identify personal data categories
 - **RGPD** (EU RGPD Assessment) — Extract: legal basis mapping, DPIA screening results, DPO determination, international transfer analysis
-  - If missing: warn that `/arckit.at-dsgvo` should be run after `/arckit.eu-rgpd` for best results. Proceed with available data.
+  - If missing: warn that `/arckit:at-dsgvo` should be run after `/arckit:eu-rgpd` for best results. Proceed with available data.
 
 **RECOMMENDED** (read if available, note if missing):
 
@@ -104,7 +104,7 @@ Read all documents from Step 0. Identify:
    - Elektronische Gesundheitsakte (ELGA-G) interoperability requirements
    - GTelG 2012 telematics interop for data exchange between health providers
    - Art. 9(2) GDPR legal basis selection — in AT typically §§7–8 DSG + ELGA-G
-   - DPIA mandatory flag: special category data + large scale → run `/arckit.dpia`
+   - DPIA mandatory flag: special category data + large scale → run `/arckit:dpia`
    - Opt-out vs opt-in for ELGA participation — controller's integration obligations
    - If no health data: include section header with "N/A — no health data identified"
 
@@ -195,15 +195,15 @@ projects/{project_id}/ARC-{PROJECT_ID}-ATDSG-v{VERSION}.md
 {List 🔴 High priority gaps}
 
 Next steps:
-1. {If DPIA required: Run /arckit.dpia}
+1. {If DPIA required: Run /arckit:dpia}
 2. {If employee monitoring: draft Betriebsvereinbarung §96a ArbVG}
-3. {If no eu-rgpd baseline: Run /arckit.eu-rgpd first}
+3. {If no eu-rgpd baseline: Run /arckit:eu-rgpd first}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ## Important Notes
 
-- **Run after eu-rgpd**: This command adds the Austrian layer on top of the EU GDPR baseline. For best results, run `/arckit.eu-rgpd` first, then this command.
+- **Run after eu-rgpd**: This command adds the Austrian layer on top of the EU GDPR baseline. For best results, run `/arckit:eu-rgpd` first, then this command.
 - **Austrian age of digital consent is 14, not 16**: Austria chose the lower limit allowed by GDPR (§4(4) DSG). Do not apply the GDPR default of 16.
 - **§§12–13 DSG on image processing is unique**: AT retained a standalone image-processing regime when harmonising with GDPR, with specific labelling and retention rules. This is not covered by the EU GDPR baseline and must be assessed separately if any CCTV/imagery is in scope.
 - **ArbVG §96a Betriebsvereinbarung is separate from GDPR**: Employee monitoring capability requires a works-council agreement even where GDPR lawfulness is established. Flag if employee monitoring is possible.
@@ -229,11 +229,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.at-dsgvo Austrian DSG layer for 001 — federal ministry HR system with CCTV at entrances, employee data, and potential monitoring of IT usage
+/arckit:at-dsgvo Austrian DSG layer for 001 — federal ministry HR system with CCTV at entrances, employee data, and potential monitoring of IT usage
 
-/arckit.at-dsgvo Assess AT DSG obligations for a Vienna regional hospital group integrating with ELGA, processing Gesundheitsdaten, planning mobile patient portal
+/arckit:at-dsgvo Assess AT DSG obligations for a Vienna regional hospital group integrating with ELGA, processing Gesundheitsdaten, planning mobile patient portal
 
-/arckit.at-dsgvo AT data protection for a research consortium processing pseudonymised health data for a longitudinal cohort study under §§7–8 DSG
+/arckit:at-dsgvo AT data protection for a research consortium processing pseudonymised health data for a longitudinal cohort study under §§7–8 DSG
 ```
 
 ## Suggested Next Steps

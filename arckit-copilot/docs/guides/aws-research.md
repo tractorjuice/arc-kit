@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.aws-research` researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative documentation.
+`/arckit:aws-research` researches AWS services, architecture patterns, and implementation guidance using the AWS Knowledge MCP server for authoritative documentation.
 
 > **Agent Architecture**: This command runs as an autonomous agent via the Task tool. The agent makes 15-30+ MCP calls to gather AWS documentation in its own context window, keeping the main conversation clean. The slash command is a thin wrapper that delegates to the agent.
 
@@ -57,7 +57,7 @@ Add constraints (budget, classification, region) in the prompt for tailored resu
 ## Command
 
 ```bash
-/arckit.aws-research Research AWS services for <project>
+/arckit:aws-research Research AWS services for <project>
 ```
 
 Outputs: `projects/<id>/research/ARC-<id>-AWRS-v1.0.md`
@@ -108,17 +108,17 @@ When UK Government project detected:
 
 ## Follow-on Actions
 
-- Feed AWS findings into `/arckit.diagram` for AWS architecture diagrams
-- Run `/arckit.secure` to validate against UK Secure by Design
-- Run `/arckit.devops` to plan AWS CodePipeline CI/CD
-- Run `/arckit.finops` to create AWS FinOps cost management strategy
-- Run `/arckit.adr` to document AWS service selection decisions
+- Feed AWS findings into `/arckit:diagram` for AWS architecture diagrams
+- Run `/arckit:secure` to validate against UK Secure by Design
+- Run `/arckit:devops` to plan AWS CodePipeline CI/CD
+- Run `/arckit:finops` to create AWS FinOps cost management strategy
+- Run `/arckit:adr` to document AWS service selection decisions
 
 ---
 
-## Comparison with /arckit.research
+## Comparison with /arckit:research
 
-| Feature | `/arckit.research` | `/arckit.aws-research` |
+| Feature | `/arckit:research` | `/arckit:aws-research` |
 |---------|-------------------|------------------------|
 | Scope | Multi-cloud, SaaS, open-source | AWS-specific only |
 | Source | Web search, multiple sources | AWS Knowledge MCP (authoritative) |
@@ -130,8 +130,8 @@ When UK Government project detected:
 
 **When to use which**:
 
-- Use `/arckit.research` for cloud-agnostic evaluation or build vs buy
-- Use `/arckit.aws-research` when AWS is the target platform
+- Use `/arckit:research` for cloud-agnostic evaluation or build vs buy
+- Use `/arckit:aws-research` when AWS is the target platform
 
 ---
 

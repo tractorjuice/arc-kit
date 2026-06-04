@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.stakeholders` maps stakeholders to drivers, goals, outcomes, and engagement plans—forming the backbone for requirements, risks, and communications.
+`/arckit:stakeholders` maps stakeholders to drivers, goals, outcomes, and engagement plans—forming the backbone for requirements, risks, and communications.
 
 ---
 
@@ -24,7 +24,7 @@ ArcKit produces this structure automatically; use it during workshops to confirm
 ## Command
 
 ```bash
-/arckit.stakeholders Analyse stakeholders for <project>
+/arckit:stakeholders Analyse stakeholders for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-STKE-v1.0.md`
@@ -35,10 +35,10 @@ Output: `projects/<id>/ARC-<id>-STKE-v1.0.md`
 
 | Follow-up | Reason |
 |-----------|--------|
-| `/arckit.requirements` | Each requirement traces back to stakeholder goals |
-| `/arckit.risk` | Stakeholder concerns become risk owners and drivers |
-| `/arckit.sobc` | Benefits and investment rationale align with goals |
-| `/arckit.story` | Story chapters reference stakeholder outcomes |
+| `/arckit:requirements` | Each requirement traces back to stakeholder goals |
+| `/arckit:risk` | Stakeholder concerns become risk owners and drivers |
+| `/arckit:sobc` | Benefits and investment rationale align with goals |
+| `/arckit:story` | Story chapters reference stakeholder outcomes |
 
 ---
 

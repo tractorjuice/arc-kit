@@ -42,7 +42,7 @@ UAE Charter for the Development and Use of Artificial Intelligence. Primary URL:
 
 - The Charter is a *policy* instrument: principles must be translated into auditable controls and evidence. Avoid recording "complies" without an evidence reference.
 - Bias mitigation requires a documented dataset-provenance trail — flag any model with opaque training data.
-- The Human Oversight principle interacts directly with the AI Autonomy Tier Posture (AUTI) — recommend `/arckit.uae-ai-autonomy-tier` as a follow-up where the system has any non-deterministic decision authority.
+- The Human Oversight principle interacts directly with the AI Autonomy Tier Posture (AUTI) — recommend `/arckit:uae-ai-autonomy-tier` as a follow-up where the system has any non-deterministic decision authority.
 
 ## Suggested Next Steps
 

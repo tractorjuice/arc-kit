@@ -144,7 +144,7 @@ For each component, produce a decision with justification:
 - **Reuse as-is**: Component meets requirements without modification; integrate directly
 - **Fork and adapt**: Component partially meets requirements; fork and adapt with a commitment to contribute improvements back
 - **Assemble from SILL components**: No single component meets needs but SILL software can be assembled to cover requirements
-- **Procure**: No suitable public code exists; proceed to procurement via `/arckit.fr-marche-public`
+- **Procure**: No suitable public code exists; proceed to procurement via `/arckit:fr-marche-public`
 - **Build from scratch**: No existing solution; custom development required — document justification as required by Circulaire 2021
 
 #### Step 4g: Contribution-Back Plan
@@ -221,9 +221,9 @@ Code to publish on code.gouv.fr: {Yes — N components / No / Partial}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-1. {If procurement needed: Run /arckit.fr-marche-public for components requiring sourcing}
-2. {If technology selection needed: Run /arckit.research for market alternatives}
-3. Run /arckit.fr-dinum to verify alignment with DINUM open source doctrine
+1. {If procurement needed: Run /arckit:fr-marche-public for components requiring sourcing}
+2. {If technology selection needed: Run /arckit:research for market alternatives}
+3. Run /arckit:fr-dinum to verify alignment with DINUM open source doctrine
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -267,11 +267,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.fr-code-reuse Assess reuse opportunities for a French ministry citizen portal — needs: identity/authentication, document management, notification service, content management, API gateway
+/arckit:fr-code-reuse Assess reuse opportunities for a French ministry citizen portal — needs: identity/authentication, document management, notification service, content management, API gateway
 
-/arckit.fr-code-reuse Code reuse assessment for 001 — DINUM digital services platform, check code.gouv.fr and SILL for dashboard, forms, and data visualisation components
+/arckit:fr-code-reuse Code reuse assessment for 001 — DINUM digital services platform, check code.gouv.fr and SILL for dashboard, forms, and data visualisation components
 
-/arckit.fr-code-reuse Reuse assessment for a French regional council digital services platform — citizen portal, internal workflow engine, GIS mapping, document signing
+/arckit:fr-code-reuse Reuse assessment for a French regional council digital services platform — citizen portal, internal workflow engine, GIS mapping, document signing
 ```
 
 ## Suggested Next Steps

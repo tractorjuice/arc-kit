@@ -105,7 +105,7 @@ How the template reaches each target:
 
 ---
 
-## Worked Example: `/arckit.sla`
+## Worked Example: `/arckit:sla`
 
 Say you want a command that generates a Service Level Agreement skeleton from existing non-functional requirements.
 
@@ -140,7 +140,7 @@ $ARGUMENTS
 2. **Read the project requirements**:
    - Locate `projects/<project-id>/ARC-<id>-REQ-v*.md`
    - Extract all NFR-* entries (availability, latency, throughput, RTO/RPO)
-   - If no requirements file exists, ask the user to run `/arckit.requirements` first
+   - If no requirements file exists, ask the user to run `/arckit:requirements` first
 
 3. **Generate the SLA** using the extracted NFRs:
    - One row per NFR, mapped to an SLA target

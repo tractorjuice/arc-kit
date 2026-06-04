@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.risk` creates a comprehensive risk register following HM Treasury Orange Book principles for project and operational risk management.
+`/arckit:risk` creates a comprehensive risk register following HM Treasury Orange Book principles for project and operational risk management.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.risk Create risk register for <project>
+/arckit:risk Create risk register for <project>
 ```
 
 Output: `projects/<id>/ARC-<id>-RISK-v1.0.md`
@@ -82,8 +82,8 @@ Output: `projects/<id>/ARC-<id>-RISK-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define requirements and stakeholders | `/arckit.requirements`, `/arckit.stakeholders` |
-| Identification | Identify and categorize risks | `/arckit.risk` |
+| Discovery | Define requirements and stakeholders | `/arckit:requirements`, `/arckit:stakeholders` |
+| Identification | Identify and categorize risks | `/arckit:risk` |
 | Assessment | Score and prioritize risks | Review workshop |
 | Treatment | Define mitigations and owners | Update risk register |
 | Monitoring | Regular review and reporting | Governance meetings |

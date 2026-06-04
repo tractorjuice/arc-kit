@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.uae-uaepass` generates a UAE Pass integration design for federal entity service providers. Covers the OIDC / OAuth flow, claim mapping, Basic vs Verified profile selection, the Service Provider onboarding pack, and the e-signature audit-trail design.
+`/arckit:uae-uaepass` generates a UAE Pass integration design for federal entity service providers. Covers the OIDC / OAuth flow, claim mapping, Basic vs Verified profile selection, the Service Provider onboarding pack, and the e-signature audit-trail design.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.uae-uaepass <project ID or service name>
+/arckit:uae-uaepass <project ID or service name>
 ```
 
 Output: `projects/<id>/ARC-<id>-UPASS-v1.0.md`
@@ -57,10 +57,10 @@ Output: `projects/<id>/ARC-<id>-UPASS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Architecture | Identity boundaries and integration surface | `/arckit.platform-design`, `/arckit.integration` |
-| UAE Pass | Integration design + onboarding pack | `/arckit.uae-uaepass` |
-| Decisions | Profile choice and e-signature mechanism as ADRs | `/arckit.adr` |
-| Security | Reconcile with IAS T5 (Access Control) controls | `/arckit.uae-ias` |
+| Architecture | Identity boundaries and integration surface | `/arckit:platform-design`, `/arckit:integration` |
+| UAE Pass | Integration design + onboarding pack | `/arckit:uae-uaepass` |
+| Decisions | Profile choice and e-signature mechanism as ADRs | `/arckit:adr` |
+| Security | Reconcile with IAS T5 (Access Control) controls | `/arckit:uae-ias` |
 
 ---
 

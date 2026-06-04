@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.finops` creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.
+`/arckit:finops` creates a cloud financial management strategy covering cost visibility, optimization, governance, and forecasting.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.finops Create FinOps strategy for <initiative>
+/arckit:finops Create FinOps strategy for <initiative>
 ```
 
 Output: `projects/<id>/ARC-<id>-FINOPS-v1.0.md`
@@ -76,11 +76,11 @@ Output: `projects/<id>/ARC-<id>-FINOPS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Understand cloud estate and spend patterns | `/arckit.requirements`, `/arckit.stakeholders` |
-| Architecture | Design infrastructure and deployment topology | `/arckit.diagram`, `/arckit.devops` |
-| Strategy | Create FinOps strategy | `/arckit.finops` |
-| Implementation | Implement tagging, dashboards, alerts | `/arckit.backlog` |
-| Operations | Ongoing optimization and governance | `/arckit.operationalize` |
+| Discovery | Understand cloud estate and spend patterns | `/arckit:requirements`, `/arckit:stakeholders` |
+| Architecture | Design infrastructure and deployment topology | `/arckit:diagram`, `/arckit:devops` |
+| Strategy | Create FinOps strategy | `/arckit:finops` |
+| Implementation | Implement tagging, dashboards, alerts | `/arckit:backlog` |
+| Operations | Ongoing optimization and governance | `/arckit:operationalize` |
 
 ---
 

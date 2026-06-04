@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.presentation` produces a MARP-format slide deck from existing project artifacts — ideal for governance boards, stakeholder briefings, and gate reviews.
+`/arckit:presentation` produces a MARP-format slide deck from existing project artifacts — ideal for governance boards, stakeholder briefings, and gate reviews.
 
 ---
 
@@ -17,8 +17,8 @@
 ## Command
 
 ```bash
-/arckit.presentation Generate executive presentation for <project>
-/arckit.presentation <project> FOCUS=technical SLIDES=15
+/arckit:presentation Generate executive presentation for <project>
+/arckit:presentation <project> FOCUS=technical SLIDES=15
 ```
 
 Output: `projects/<id>/ARC-<id>-PRES-v1.0.md`

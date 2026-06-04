@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.ca-ocap` generates a First Nations OCAP® (Ownership, Control, Access, Possession) sovereignty assessment for any federal information system that processes Indigenous data. The output is a per-dataset OCAP mapping anchored on the First Nations Information Governance Centre (FNIGC) framework, with separate tracks for Métis data (USAI principles) and Inuit data (ITK *National Inuit Strategy on Research*). It is not a substitute for direct engagement with FNIGC, the affected First Nation(s), Métis Nation governing members, or Inuit organisations.
+`/arckit:ca-ocap` generates a First Nations OCAP® (Ownership, Control, Access, Possession) sovereignty assessment for any federal information system that processes Indigenous data. The output is a per-dataset OCAP mapping anchored on the First Nations Information Governance Centre (FNIGC) framework, with separate tracks for Métis data (USAI principles) and Inuit data (ITK *National Inuit Strategy on Research*). It is not a substitute for direct engagement with FNIGC, the affected First Nation(s), Métis Nation governing members, or Inuit organisations.
 
 The command enforces a structural FNIGC pre-engagement gate. If the architect cannot confirm that an FNIGC pre-engagement is booked or in progress, the artefact remains a planning scaffold only — the per-dataset OCAP register, USAI / ITK considerations, DSA terms, repatriation plan, and co-governance arrangement are deferred until engagement is confirmed. OCAP is a relationship; the artefact records and supports the relationship rather than substituting for it.
 
@@ -22,7 +22,7 @@ The command enforces a structural FNIGC pre-engagement gate. If the architect ca
 ## Command
 
 ```bash
-/arckit.ca-ocap <project ID or service description>
+/arckit:ca-ocap <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-OCAP-v1.0.md`

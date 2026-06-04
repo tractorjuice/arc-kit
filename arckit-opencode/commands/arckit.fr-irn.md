@@ -139,8 +139,8 @@ Next steps:
    https://gitlab.com/digitalresilienceinitiative/adri-irn
 2. Score each pillar × layer cell (R/NR) using the official methodology
 3. Report scores in the generated document and re-run for gap analysis
-{If cloud gaps: 4. Run /arckit.fr-secnumcloud for sovereign hosting assessment}
-{If GDPR gaps: 5. Run /arckit.eu-rgpd for full data compliance assessment}
+{If cloud gaps: 4. Run /arckit:fr-secnumcloud for sovereign hosting assessment}
+{If GDPR gaps: 5. Run /arckit:eu-rgpd for full data compliance assessment}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -169,11 +169,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.fr-irn IRN self-assessment for project 001 — AI-driven HR SaaS platform using AWS eu-west-3 with US-based sub-processors
+/arckit:fr-irn IRN self-assessment for project 001 — AI-driven HR SaaS platform using AWS eu-west-3 with US-based sub-processors
 
-/arckit.fr-irn Assess IRN for a French bank running on Azure with Microsoft 365 across 5,000 employees
+/arckit:fr-irn Assess IRN for a French bank running on Azure with Microsoft 365 across 5,000 employees
 
-/arckit.fr-irn IRN scaffold for a public hospital group — 3 sites, OVHcloud infrastructure, Epic HRIS, strong open-source policy
+/arckit:fr-irn IRN scaffold for a public hospital group — 3 sites, OVHcloud infrastructure, Epic HRIS, strong open-source policy
 ```
 
 ## Suggested Next Steps

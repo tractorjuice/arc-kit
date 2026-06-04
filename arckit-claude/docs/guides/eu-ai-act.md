@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.eu-ai-act` generates an EU AI Act (Regulation 2024/1689) compliance assessment, covering risk classification, conformity requirements, prohibited practices, and GPAI model obligations.
+`/arckit:eu-ai-act` generates an EU AI Act (Regulation 2024/1689) compliance assessment, covering risk classification, conformity requirements, prohibited practices, and GPAI model obligations.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.eu-ai-act Assess AI Act compliance for <AI system description>
+/arckit:eu-ai-act Assess AI Act compliance for <AI system description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AIACT-v1.0.md`
@@ -63,10 +63,10 @@ Output: `projects/<id>/ARC-<id>-AIACT-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define AI system and use case | `/arckit.requirements` |
-| Risk | Data and AI risk assessment | `/arckit.risk`, `/arckit.dpia` |
-| Assessment | AI Act compliance assessment | `/arckit.eu-ai-act` |
-| CRA | If product with digital elements | `/arckit.eu-cra` |
+| Discovery | Define AI system and use case | `/arckit:requirements` |
+| Risk | Data and AI risk assessment | `/arckit:risk`, `/arckit:dpia` |
+| Assessment | AI Act compliance assessment | `/arckit:eu-ai-act` |
+| CRA | If product with digital elements | `/arckit:eu-cra` |
 
 ---
 

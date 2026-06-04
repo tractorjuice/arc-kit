@@ -4,7 +4,7 @@ description: "[COMMUNITY] Generate GDPR (EU 2016/679) compliance assessment for 
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by qualified DPO / RSSI / legal counsel before reliance. Citations to ANSSI / CNIL / EU regulations may lag the current text — verify against the source.
 
-You are helping an enterprise architect generate a **GDPR Compliance Assessment** (EU 2016/679) for any organisation processing personal data of EU/EEA residents. This command takes a member-state-neutral approach to the EU GDPR baseline. For French-specific CNIL obligations, run `/arckit.fr-rgpd` after this assessment.
+You are helping an enterprise architect generate a **GDPR Compliance Assessment** (EU 2016/679) for any organisation processing personal data of EU/EEA residents. This command takes a member-state-neutral approach to the EU GDPR baseline. For French-specific CNIL obligations, run `/arckit:fr-rgpd` after this assessment.
 
 ## User Input
 
@@ -86,7 +86,7 @@ Based on the data model and requirements, automatically score the EDPB 9 criteri
 
 **DPIA Decision**:
 
-- 2+ criteria: DPIA REQUIRED (Article 35) → recommend running `/arckit.dpia`
+- 2+ criteria: DPIA REQUIRED (Article 35) → recommend running `/arckit:dpia`
 - 1 criterion: DPIA RECOMMENDED
 - 0 criteria: DPIA NOT REQUIRED (but document the screening)
 
@@ -151,7 +151,7 @@ Based on the data model and requirements, automatically score the EDPB 9 criteri
 12. **Section 10: National Supervisory Authority Context**
     - Lead DPA determination
     - Member-state table (CNIL, BfDI, AP, APD, AGPD, Garante, DPC, IMY)
-    - Note: for French deployments, run `/arckit.fr-rgpd` for CNIL-specific requirements
+    - Note: for French deployments, run `/arckit:fr-rgpd` for CNIL-specific requirements
 
 13. **Section 11: Gap Analysis and Action Plan**
     - Consolidated gaps from all sections with priority flags
@@ -196,15 +196,15 @@ Total Gaps: {N} ({N} high, {N} medium, {N} low)
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-{If DPIA required: 1. Run /arckit.dpia — DPIA required (2+ criteria met)}
-{If French deployment: Run /arckit.fr-rgpd — CNIL-specific requirements}
-{If AI: Run /arckit.eu-ai-act — AI and personal data intersection}
+{If DPIA required: 1. Run /arckit:dpia — DPIA required (2+ criteria met)}
+{If French deployment: Run /arckit:fr-rgpd — CNIL-specific requirements}
+{If AI: Run /arckit:eu-ai-act — AI and personal data intersection}
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ## Important Notes
 
-- **Member-state neutral**: This command covers EU GDPR only. For French CNIL-specific requirements (cookies, HDS, age of consent 15), run `/arckit.fr-rgpd` after this assessment.
+- **Member-state neutral**: This command covers EU GDPR only. For French CNIL-specific requirements (cookies, HDS, age of consent 15), run `/arckit:fr-rgpd` after this assessment.
 - **Legitimate interests for public authorities**: Article 6(1)(f) legitimate interests CANNOT be used by public authorities for tasks in the exercise of official authority. Flag this explicitly.
 - **Schrems II is ongoing**: Even with the EU-US Data Privacy Framework (DPF), Transfer Impact Assessments remain best practice. DPF is subject to ongoing CJEU challenge.
 - **DPIA is a legal requirement**: When 2+ EDPB criteria are met, the DPIA is mandatory before processing starts. Non-compliance can result in supervisory authority enforcement.
@@ -236,16 +236,16 @@ Next steps:
 - ✅ 72-hour breach notification process assessed
 - ✅ National supervisory authority map populated
 - ✅ Document classified OFFICIAL-SENSITIVE
-- ✅ French deployment flagged for `/arckit.fr-rgpd` follow-up
+- ✅ French deployment flagged for `/arckit:fr-rgpd` follow-up
 
 ## Example Usage
 
 ```text
-/arckit.eu-rgpd Assess GDPR compliance for a French e-commerce platform expanding to Germany and Spain, processing purchase history, behavioural analytics, and email marketing, using AWS eu-west-3 (Paris) with Salesforce Marketing Cloud (US-based processor)
+/arckit:eu-rgpd Assess GDPR compliance for a French e-commerce platform expanding to Germany and Spain, processing purchase history, behavioural analytics, and email marketing, using AWS eu-west-3 (Paris) with Salesforce Marketing Cloud (US-based processor)
 
-/arckit.eu-rgpd GDPR assessment for 001 — SaaS HR platform operating across 5 EU member states, processing employee data, using US-based payroll sub-processor
+/arckit:eu-rgpd GDPR assessment for 001 — SaaS HR platform operating across 5 EU member states, processing employee data, using US-based payroll sub-processor
 
-/arckit.eu-rgpd Assess GDPR for a healthcare research project processing anonymised patient data across FR, DE, NL — assess whether anonymisation is complete
+/arckit:eu-rgpd Assess GDPR for a healthcare research project processing anonymised patient data across FR, DE, NL — assess whether anonymisation is complete
 ```
 
 ## Suggested Next Steps

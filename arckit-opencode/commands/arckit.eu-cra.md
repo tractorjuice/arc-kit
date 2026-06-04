@@ -212,9 +212,9 @@ Critical path items:
 - CE marking: {status}
 
 Next steps:
-1. {If NIS2 overlap: Run /arckit.eu-nis2}
-2. {If AI component: Run /arckit.eu-ai-act}
-3. Run /arckit.secure for Annex I security controls
+1. {If NIS2 overlap: Run /arckit:eu-nis2}
+2. {If AI component: Run /arckit:eu-ai-act}
+3. Run /arckit:secure for Annex I security controls
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -262,11 +262,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.eu-cra Assess CRA compliance for an industrial IoT gateway device placed on EU market, connecting factory floor OT equipment to cloud analytics, firmware updateable, classified as Important (Class I) under Annex III
+/arckit:eu-cra Assess CRA compliance for an industrial IoT gateway device placed on EU market, connecting factory floor OT equipment to cloud analytics, firmware updateable, classified as Important (Class I) under Annex III
 
-/arckit.eu-cra CRA assessment for 001 — password manager software (SaaS), placed on EU market, subscription model, Class I classification expected
+/arckit:eu-cra CRA assessment for 001 — password manager software (SaaS), placed on EU market, subscription model, Class I classification expected
 
-/arckit.eu-cra CRA compliance for an open source network monitoring tool with commercial support contract, assess whether the open source steward exemption applies
+/arckit:eu-cra CRA compliance for an open source network monitoring tool with commercial support contract, assess whether the open source steward exemption applies
 ```
 
 ## Suggested Next Steps

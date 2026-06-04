@@ -5,7 +5,7 @@
  * If you add or rename a type code, update this file FIRST.
  *
  * ⚠️ DUAL REGISTRATION REQUIRED — also update `arckit-claude/commands/pages.md`
- * (the `/arckit.pages` dashboard generator has its own "Only include these
+ * (the `/arckit:pages` dashboard generator has its own "Only include these
  * known artifact types" allow-list inside the prompt). Without an entry
  * there, generated artifacts are silently omitted from the rendered
  * dashboard sidebar even though the manifest hook records them correctly.
@@ -19,7 +19,7 @@
  *   category:  Group used for KPI charts and the "Known artifact types" table.
  *   extension: Optional file extension (default '.md'). Set to '.html' for
  *              types produced as standalone HTML (e.g. AntV Infographic decks,
- *              Reveal.js exports). The /arckit.pages scanner enforces the
+ *              Reveal.js exports). The /arckit:pages scanner enforces the
  *              extension — `ARC-001-DECK-v1.0.md` and `ARC-001-REQ-v1.0.html`
  *              are both rejected as type/extension mismatches.
  *   regime:    Optional jurisdiction tag — 'UK' | 'MOD' | 'EU' | 'FR' | 'AT' | 'UAE'.

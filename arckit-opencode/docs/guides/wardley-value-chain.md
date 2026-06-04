@@ -2,13 +2,13 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.wardley.value-chain` decomposes user needs into value chains for Wardley Mapping.
+`/arckit:wardley.value-chain` decomposes user needs into value chains for Wardley Mapping.
 
 ---
 
 ## When to Use
 
-Run this command **before** creating a Wardley Map when you need to decompose a domain into its constituent components. Value chain decomposition identifies all the capabilities, services, and activities required to meet user needs -- producing the raw material that `/arckit.wardley` then positions on an evolution axis.
+Run this command **before** creating a Wardley Map when you need to decompose a domain into its constituent components. Value chain decomposition identifies all the capabilities, services, and activities required to meet user needs -- producing the raw material that `/arckit:wardley` then positions on an evolution axis.
 
 ---
 
@@ -25,7 +25,7 @@ Run this command **before** creating a Wardley Map when you need to decompose a 
 ## Command
 
 ```bash
-/arckit.wardley.value-chain Decompose value chain for <initiative>
+/arckit:wardley.value-chain Decompose value chain for <initiative>
 ```
 
 Output: `projects/<id>/wardley-maps/ARC-<id>-WVCH-<NNN>-v1.0.md` (uses multi-instance numbering)
@@ -88,10 +88,10 @@ Components sit on a visibility spectrum:
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Requirements | Define user needs and capabilities | `/arckit.requirements` |
-| Decomposition | Break needs into value chains | `/arckit.wardley.value-chain` |
-| Mapping | Position components on evolution axis | `/arckit.wardley` |
-| Analysis | Assess doctrine, climate, gameplay | `/arckit.wardley.doctrine`, `/arckit.wardley.climate`, `/arckit.wardley.gameplay` |
+| Requirements | Define user needs and capabilities | `/arckit:requirements` |
+| Decomposition | Break needs into value chains | `/arckit:wardley.value-chain` |
+| Mapping | Position components on evolution axis | `/arckit:wardley` |
+| Analysis | Assess doctrine, climate, gameplay | `/arckit:wardley.doctrine`, `/arckit:wardley.climate`, `/arckit:wardley.gameplay` |
 
 ---
 
@@ -112,7 +112,7 @@ Components sit on a visibility spectrum:
 2. **Challenge "obvious" components** -- Decompose even well-understood areas; hidden dependencies live there.
 3. **Use stakeholder analysis** -- Stakeholder drivers reveal needs that requirements alone may miss.
 4. **One chain per user need** -- Separate chains keep the analysis focused.
-5. **Feed into Wardley Map** -- The value chain output is the direct input to `/arckit.wardley`.
+5. **Feed into Wardley Map** -- The value chain output is the direct input to `/arckit:wardley`.
 
 ---
 
@@ -120,11 +120,11 @@ Components sit on a visibility spectrum:
 
 **OnlineWardleyMaps** (primary): Copy the `wardley` code block and paste into [https://create.wardleymaps.ai](https://create.wardleymaps.ai) for an interactive editor.
 
-**Mermaid** (secondary): Expand the `<details>` block in your generated artifact to see the Mermaid `wardley-beta` equivalent. It renders in ArcKit generated pages with Mermaid 11.15.0 and in other Mermaid-enabled viewers that support `wardley-beta`. Value chain maps do not include sourcing decorators — those are added by `/arckit.wardley` when creating the full positioned map.
+**Mermaid** (secondary): Expand the `<details>` block in your generated artifact to see the Mermaid `wardley-beta` equivalent. It renders in ArcKit generated pages with Mermaid 11.15.0 and in other Mermaid-enabled viewers that support `wardley-beta`. Value chain maps do not include sourcing decorators — those are added by `/arckit:wardley` when creating the full positioned map.
 
 ---
 
 ## Feeds Into
 
-- `/arckit.wardley` -- Use the decomposed value chain to create a positioned Wardley Map
-- `/arckit.data-model` -- Components often map to data entities
+- `/arckit:wardley` -- Use the decomposed value chain to create a positioned Wardley Map
+- `/arckit:data-model` -- Components often map to data entities

@@ -216,9 +216,9 @@ Total Gaps: {N} ({N} high, {N} medium)
 {Application dates relevant to this classification}
 
 Next steps:
-1. {If personal data: Run /arckit.eu-rgpd for GDPR obligations}
+1. {If personal data: Run /arckit:eu-rgpd for GDPR obligations}
 2. {If high-risk: Initiate conformity assessment process}
-3. Run /arckit.risk to register AI Act gaps
+3. Run /arckit:risk to register AI Act gaps
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -261,11 +261,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.eu-ai-act Assess AI Act compliance for an automated CV screening tool used by a French public employment service (France Travail), processing personal data, making pre-selection recommendations to human recruiters
+/arckit:eu-ai-act Assess AI Act compliance for an automated CV screening tool used by a French public employment service (France Travail), processing personal data, making pre-selection recommendations to human recruiters
 
-/arckit.eu-ai-act AI Act classification for 001 — chatbot for citizen service portal, built on GPT-4, providing information about public benefits eligibility
+/arckit:eu-ai-act AI Act classification for 001 — chatbot for citizen service portal, built on GPT-4, providing information about public benefits eligibility
 
-/arckit.eu-ai-act Assess a real-time emotion detection system to be deployed in a retail environment to monitor customer satisfaction
+/arckit:eu-ai-act Assess a real-time emotion detection system to be deployed in a retail environment to monitor customer satisfaction
 ```
 
 ## Suggested Next Steps

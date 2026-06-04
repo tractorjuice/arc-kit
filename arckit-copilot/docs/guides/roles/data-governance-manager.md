@@ -13,21 +13,21 @@ The Data Governance Manager ensures data is managed according to organisational 
 
 | Command | Purpose | Guide |
 |---------|---------|-------|
-| `/arckit.dpia` | Generate Data Protection Impact Assessment for UK GDPR compliance | [Guide](#docs/guides/dpia.md) |
-| `/arckit.data-model` | Review data models for governance compliance (classification, retention, lineage) | [Guide](#docs/guides/data-model.md) |
-| `/arckit.principles-compliance` | Assess compliance with data governance principles | [Guide](#docs/guides/principles-compliance.md) |
-| `/arckit.data-mesh-contract` | Review and enforce data product contracts and SLAs | [Guide](#docs/guides/data-mesh-contract.md) |
+| `/arckit:dpia` | Generate Data Protection Impact Assessment for UK GDPR compliance | [Guide](#docs/guides/dpia.md) |
+| `/arckit:data-model` | Review data models for governance compliance (classification, retention, lineage) | [Guide](#docs/guides/data-model.md) |
+| `/arckit:principles-compliance` | Assess compliance with data governance principles | [Guide](#docs/guides/principles-compliance.md) |
+| `/arckit:data-mesh-contract` | Review and enforce data product contracts and SLAs | [Guide](#docs/guides/data-mesh-contract.md) |
 
 ## Secondary Commands
 
 | Command | Your Involvement | Guide |
 |---------|-----------------|-------|
-| `/arckit.principles` | Define data governance principles | [Guide](#docs/guides/principles.md) |
-| `/arckit.requirements` | Review data requirements (DR-xxx) for governance standards | [Guide](#docs/guides/requirements.md) |
-| `/arckit.datascout` | Review external data sources for compliance and licensing | [Guide](#docs/guides/datascout.md) |
-| `/arckit.traceability` | Verify data requirements trace through to governance controls | [Guide](#docs/guides/traceability.md) |
-| `/arckit.analyze` | Review governance quality for data governance gaps | [Guide](#docs/guides/analyze.md) |
-| `/arckit.atrs` | Review algorithmic transparency for data ethics compliance | [Guide](#docs/guides/atrs.md) |
+| `/arckit:principles` | Define data governance principles | [Guide](#docs/guides/principles.md) |
+| `/arckit:requirements` | Review data requirements (DR-xxx) for governance standards | [Guide](#docs/guides/requirements.md) |
+| `/arckit:datascout` | Review external data sources for compliance and licensing | [Guide](#docs/guides/datascout.md) |
+| `/arckit:traceability` | Verify data requirements trace through to governance controls | [Guide](#docs/guides/traceability.md) |
+| `/arckit:analyze` | Review governance quality for data governance gaps | [Guide](#docs/guides/analyze.md) |
+| `/arckit:atrs` | Review algorithmic transparency for data ethics compliance | [Guide](#docs/guides/atrs.md) |
 
 ## Typical Workflow
 
@@ -37,12 +37,12 @@ principles → requirements (DR-xxx) → data-model → dpia → data-mesh-contr
 
 ### Step-by-step
 
-1. **Set governance standards**: Define data governance principles in `/arckit.principles`
+1. **Set governance standards**: Define data governance principles in `/arckit:principles`
 2. **Review data requirements**: Ensure DR-xxx requirements include classification, retention, and lineage
-3. **Validate data models**: Review `/arckit.data-model` for GDPR compliance and governance standards
-4. **Assess privacy**: Run `/arckit.dpia` for any personal data processing
-5. **Enforce contracts**: Review `/arckit.data-mesh-contract` for SLA and quality standards
-6. **Measure compliance**: Run `/arckit.principles-compliance` to score adherence to data principles
+3. **Validate data models**: Review `/arckit:data-model` for GDPR compliance and governance standards
+4. **Assess privacy**: Run `/arckit:dpia` for any personal data processing
+5. **Enforce contracts**: Review `/arckit:data-mesh-contract` for SLA and quality standards
+6. **Measure compliance**: Run `/arckit:principles-compliance` to score adherence to data principles
 
 ## Key Artifacts You Review/Approve
 

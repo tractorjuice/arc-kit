@@ -23,7 +23,7 @@ $ARGUMENTS
 **MANDATORY** (warn if missing):
 
 - **REQ** (Requirements) — Extract: system functional description, integration requirements (INT-xxx), deployment environment (cloud/on-premise/hybrid), user population, data flows to external parties
-  - If missing: STOP — cartography requires a minimum understanding of the system. Run `/arckit.requirements` first.
+  - If missing: STOP — cartography requires a minimum understanding of the system. Run `/arckit:requirements` first.
 
 **RECOMMENDED** (read if available, note if missing):
 
@@ -181,9 +181,9 @@ High-priority recommendations:        {N}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-1. Run /arckit.fr-ebios — cartography feeds Workshop 3 ecosystem map directly
-2. Run /arckit.fr-anssi — use network and system findings to prioritise hygiene gaps
-3. Run /arckit.diagram — generate visual diagrams from cartography data
+1. Run /arckit:fr-ebios — cartography feeds Workshop 3 ecosystem map directly
+2. Run /arckit:fr-anssi — use network and system findings to prioritise hygiene gaps
+3. Run /arckit:diagram — generate visual diagrams from cartography data
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
@@ -193,7 +193,7 @@ Next steps:
 - **Four levels are complementary, not alternatives**: The value of ANSSI cartography is the ability to trace from a business asset (Level 1) through the application (Level 2) and infrastructure (Level 3) down to the network exposure (Level 4). Completing only one or two levels produces an incomplete picture.
 - **EBIOS synergy**: If an EBIOS Risk Manager study is planned or exists, the cartography feeds directly into Workshop 3 (ecosystem map) and Workshop 4 (operational scenarios). The VM-xx IDs should be consistent between the two documents.
 - **Living document**: The cartography must be updated when the IS architecture changes significantly. A stale cartography is worse than no cartography — it gives false confidence. Set a review trigger on major architectural change.
-- **Visual diagrams**: This command produces a structured text cartography. Use `/arckit.diagram` to generate visual Mermaid or PlantUML diagrams from the cartography data for presentations and homologation dossiers.
+- **Visual diagrams**: This command produces a structured text cartography. Use `/arckit:diagram` to generate visual Mermaid or PlantUML diagrams from the cartography data for presentations and homologation dossiers.
 
 ## Key References
 
@@ -219,11 +219,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.fr-anssi-carto Produce SI cartography for a French ministry digital services platform — three production data centres, Azure cloud, 50k citizen users, integration with FranceConnect and DGFIP APIs
+/arckit:fr-anssi-carto Produce SI cartography for a French ministry digital services platform — three production data centres, Azure cloud, 50k citizen users, integration with FranceConnect and DGFIP APIs
 
-/arckit.fr-anssi-carto Cartography for 001 — regional hospital IS (SIH), OIV santé designation, connected to Mon Espace Santé, mix of on-premise VMware and SaaS clinical software
+/arckit:fr-anssi-carto Cartography for 001 — regional hospital IS (SIH), OIV santé designation, connected to Mon Espace Santé, mix of on-premise VMware and SaaS clinical software
 
-/arckit.fr-anssi-carto ANSSI cartography for a French energy operator (OIV énergie), separate IT and OT networks, SCADA interconnection, cloud-hosted analytics platform
+/arckit:fr-anssi-carto ANSSI cartography for a French energy operator (OIV énergie), separate IT and OT networks, SCADA interconnection, cloud-hosted analytics platform
 ```
 
 ## Suggested Next Steps

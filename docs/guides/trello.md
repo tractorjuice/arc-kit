@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-Export your ArcKit product backlog to a Trello board with `/arckit.trello`. The command reads the JSON output from `/arckit.backlog FORMAT=json` and creates a fully structured board with sprint lists, labelled cards, and acceptance criteria checklists.
+Export your ArcKit product backlog to a Trello board with `/arckit:trello`. The command reads the JSON output from `/arckit:backlog FORMAT=json` and creates a fully structured board with sprint lists, labelled cards, and acceptance criteria checklists.
 
 ---
 
@@ -10,7 +10,7 @@ Export your ArcKit product backlog to a Trello board with `/arckit.trello`. The 
 
 | Requirement | How to get it |
 |-------------|---------------|
-| Backlog JSON file (`ARC-*-BKLG-*.json`) | Run `/arckit.backlog FORMAT=json` |
+| Backlog JSON file (`ARC-*-BKLG-*.json`) | Run `/arckit:backlog FORMAT=json` |
 | `TRELLO_API_KEY` environment variable | [Trello Power-Ups Admin](https://trello.com/power-ups/admin) — create or select a Power-Up, copy the API key |
 | `TRELLO_TOKEN` environment variable | Visit `https://trello.com/1/authorize?expiration=30days&scope=read,write&response_type=token&key=YOUR_API_KEY` and copy the token |
 
@@ -26,9 +26,9 @@ export TRELLO_TOKEN="your-token-here"
 ## Command Patterns
 
 ```bash
-/arckit.trello                                    # default board name from project
-/arckit.trello BOARD_NAME="Q1 Sprint Board"       # custom board name
-/arckit.trello WORKSPACE_ID="60f1a2b3c4d5e6f7"    # create in specific workspace
+/arckit:trello                                    # default board name from project
+/arckit:trello BOARD_NAME="Q1 Sprint Board"       # custom board name
+/arckit:trello WORKSPACE_ID="60f1a2b3c4d5e6f7"    # create in specific workspace
 ```
 
 ---
@@ -90,9 +90,9 @@ Board: "{Project Name} - Sprint Backlog"
 
 | Stage | Action |
 |-------|--------|
-| 1. Generate backlog | `/arckit.backlog FORMAT=json` (or `FORMAT=all` for markdown + CSV + JSON) |
+| 1. Generate backlog | `/arckit:backlog FORMAT=json` (or `FORMAT=all` for markdown + CSV + JSON) |
 | 2. Set credentials | Export `TRELLO_API_KEY` and `TRELLO_TOKEN` |
-| 3. Run export | `/arckit.trello` |
+| 3. Run export | `/arckit:trello` |
 | 4. Review board | Open the returned Trello URL |
 | 5. Invite team | Add team members to the board in Trello |
 | 6. Start sprints | Drag cards from sprint lists to "In Progress" as work begins |
@@ -122,12 +122,12 @@ Trello allows **100 requests per 10-second window** per API token. The command a
 This command always creates a **new board**. To re-export:
 
 1. Delete or archive the old board in Trello
-2. Re-run `/arckit.trello`
+2. Re-run `/arckit:trello`
 
 Or use a different board name:
 
 ```bash
-/arckit.trello BOARD_NAME="Sprint Board v2"
+/arckit:trello BOARD_NAME="Sprint Board v2"
 ```
 
 ---
@@ -135,5 +135,5 @@ Or use a different board name:
 ## Useful References
 
 - [Trello REST API documentation](https://developer.atlassian.com/cloud/trello/rest/)
-- `/arckit.backlog` to generate the source JSON
-- `/arckit.traceability` to verify requirements coverage before export
+- `/arckit:backlog` to generate the source JSON
+- `/arckit:traceability` to verify requirements coverage before export

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.uae-classification` generates a UAE Smart Data Classification Register, mapping every dataset in scope to one of `Open`, `Shared`, `Confidential`, `Secret`, or `Top Secret` with handling rules and a declassification schedule. Anchored on the UAE Smart Data Framework.
+`/arckit:uae-classification` generates a UAE Smart Data Classification Register, mapping every dataset in scope to one of `Open`, `Shared`, `Confidential`, `Secret`, or `Top Secret` with handling rules and a declassification schedule. Anchored on the UAE Smart Data Framework.
 
 This is the **upstream artefact** for the UAE federal overlay — most other UAE commands consume it.
 
@@ -22,7 +22,7 @@ This is the **upstream artefact** for the UAE federal overlay — most other UAE
 ## Command
 
 ```bash
-/arckit.uae-classification <project ID or service name>
+/arckit:uae-classification <project ID or service name>
 ```
 
 Output: `projects/<id>/ARC-<id>-CLAS-v1.0.md`
@@ -45,11 +45,11 @@ Output: `projects/<id>/ARC-<id>-CLAS-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define service and datasets | `/arckit.requirements`, `/arckit.data-model` |
-| Classification | Map datasets to Smart Data ladder | `/arckit.uae-classification` |
-| Residency | Validate per-classification residency | `/arckit.uae-cloud-residency` |
-| Privacy | Map PDPL lawful basis to classified data | `/arckit.uae-pdpl` |
-| Sharing | Per-share sensitivity controls | `/arckit.uae-data-sharing` |
+| Discovery | Define service and datasets | `/arckit:requirements`, `/arckit:data-model` |
+| Classification | Map datasets to Smart Data ladder | `/arckit:uae-classification` |
+| Residency | Validate per-classification residency | `/arckit:uae-cloud-residency` |
+| Privacy | Map PDPL lawful basis to classified data | `/arckit:uae-pdpl` |
+| Sharing | Per-share sensitivity controls | `/arckit:uae-data-sharing` |
 
 ---
 

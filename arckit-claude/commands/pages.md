@@ -372,9 +372,9 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | NHSDTAC | `ARC-*-NHSDTAC-*.md` | NHS Digital Technology Assessment Criteria (DTAC v3) |
 | | NHSMDR | `ARC-*-NHSMDR-*.md` | UK MDR + EU MDR SaMD/AIaMD Classification |
 
-> **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit.pages` includes the artifact in the dashboard.
+> **Single source of truth**: this table mirrors [`arckit-claude/config/doc-types.mjs`](../config/doc-types.mjs). When adding new commands, register the type code in `doc-types.mjs` first (so the hook resolves category + display name) and then add the row here so `/arckit:pages` includes the artifact in the dashboard.
 
-> **NHS DCB0129 / DCB0160 Marcus Baw files**: `SAFETY.md`, `SAFETY-CASE.md`, `HAZARD-LOG.md` (and the `deployment/` variants) deliberately do NOT carry an `ARC-` prefix or a doc-type code — they follow the Marcus Baw SAFETY.md spec convention. They pass through `validate-arc-filename` untouched and do not appear in the `/arckit.pages` dashboard as discrete ARC artefacts. Other artefacts cross-reference them by relative path.
+> **NHS DCB0129 / DCB0160 Marcus Baw files**: `SAFETY.md`, `SAFETY-CASE.md`, `HAZARD-LOG.md` (and the `deployment/` variants) deliberately do NOT carry an `ARC-` prefix or a doc-type code — they follow the Marcus Baw SAFETY.md spec convention. They pass through `validate-arc-filename` untouched and do not appear in the `/arckit:pages` dashboard as discrete ARC artefacts. Other artefacts cross-reference them by relative path.
 
 ### Reference: Manifest Structure
 

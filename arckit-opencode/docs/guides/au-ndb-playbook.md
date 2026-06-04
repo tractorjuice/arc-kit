@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Community | **ArcKit Version**: [VERSION]
 
-`/arckit.au-ndb-playbook` generates an operational response playbook under the OAIC Notifiable Data Breaches scheme (Privacy Act 1988 Part IIIC). It captures the assessment criteria for an eligible data breach, the 30-day investigation clock, the notification decision logic, the workflow for notifying affected individuals and the OAIC, and the post-incident review obligations including remediation tracking and lessons-learned capture.
+`/arckit:au-ndb-playbook` generates an operational response playbook under the OAIC Notifiable Data Breaches scheme (Privacy Act 1988 Part IIIC). It captures the assessment criteria for an eligible data breach, the 30-day investigation clock, the notification decision logic, the workflow for notifying affected individuals and the OAIC, and the post-incident review obligations including remediation tracking and lessons-learned capture.
 
 The NDB playbook is operational — it is read in the middle of an incident, not at design time. It must be precise about timeframes, roles, and decision criteria. Where the playbook depends on the eligible-data-breach test, the language follows OAIC guidance verbatim.
 
@@ -12,7 +12,7 @@ The NDB playbook is operational — it is read in the middle of an incident, not
 
 | Artefact | Purpose |
 |----------|---------|
-| `/arckit.au-pia` output (`ARC-<id>-AUPIA-v1.0.md`) | Personal information inventory; eligible-data-breach criteria already drafted |
+| `/arckit:au-pia` output (`ARC-<id>-AUPIA-v1.0.md`) | Personal information inventory; eligible-data-breach criteria already drafted |
 | Stakeholders (`ARC-<id>-STKE-v1.0.md`) | Accountable authority, privacy officer, security incident commander |
 | Risk register (`ARC-<id>-RISK-v1.0.md`) | Data-breach risks identified at design time |
 | Runbooks (`ARC-<id>-RBK-v1.0.md`) | Existing incident response procedures the NDB workflow plugs into |
@@ -22,7 +22,7 @@ The NDB playbook is operational — it is read in the middle of an incident, not
 ## Command
 
 ```bash
-/arckit.au-ndb-playbook <project ID or service description>
+/arckit:au-ndb-playbook <project ID or service description>
 ```
 
 Output: `projects/<id>/ARC-<id>-AUNDB-v1.0.md`
@@ -77,4 +77,4 @@ Output: `projects/<id>/ARC-<id>-AUNDB-v1.0.md`
 
 ## Handoff
 
-Tied tightly to `/arckit.au-pia` (PIA establishes the eligible-data-breach criteria) and the operational runbooks (`/arckit.operationalize`). Cited as evidence in `/arckit.au-disp-attestation` (DISP information protection domain) and `/arckit.au-pspf` (PSPF Outcome 4 incident management).
+Tied tightly to `/arckit:au-pia` (PIA establishes the eligible-data-breach criteria) and the operational runbooks (`/arckit:operationalize`). Cited as evidence in `/arckit:au-disp-attestation` (DISP information protection domain) and `/arckit:au-pspf` (PSPF Outcome 4 incident management).

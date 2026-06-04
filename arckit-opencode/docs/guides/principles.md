@@ -2,14 +2,14 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.principles` generates an organisation-wide set of architecture principles. Treat them as the contract for design decisions and compliance reviews.
+`/arckit:principles` generates an organisation-wide set of architecture principles. Treat them as the contract for design decisions and compliance reviews.
 
 ---
 
 ## Quick Start
 
 ```bash
-/arckit.principles Create architecture principles for <organisation>
+/arckit:principles Create architecture principles for <organisation>
 ```
 
 Result: `projects/000-global/ARC-000-PRIN-v1.0.md`
@@ -28,7 +28,7 @@ Use this structure when editing or adding principles:
 | Statement | MUST / SHOULD statement that is testable |
 | Rationale | Why the principle exists (business, regulatory, technical) |
 | Evidence | Artefacts that demonstrate compliance (requirements, reviews, designs) |
-| Validation Gates | Checklist items used during `/arckit.principles-compliance` or design reviews |
+| Validation Gates | Checklist items used during `/arckit:principles-compliance` or design reviews |
 | Exceptions | Process, approver, expiry |
 
 Example snippet:
@@ -52,4 +52,4 @@ Example snippet:
 - Flag deprecated principles but keep history for audit.
 - Link principles to relevant standards (TCoP, Cyber Essentials, ISO, internal policies).
 - Keep counts manageable (10–20 core principles plus domain extensions).
-- Use the same IDs in `/arckit.principles-compliance`, design reviews, and vendor contracts.
+- Use the same IDs in `/arckit:principles-compliance`, design reviews, and vendor contracts.

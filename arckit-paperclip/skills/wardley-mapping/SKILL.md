@@ -138,7 +138,7 @@ The highest-signal failures, collected from real maps. Check these before finali
 - **Treating the Y-axis as importance.** Visibility means *visibility to the user*, not business value or criticality. Power supply is invisible-but-critical → it belongs low on the map, not high.
 - **Floating components with no anchor.** Every value chain must trace upward to the user need. A component nothing depends on (directly or transitively) is either mis-placed or doesn't belong on this map.
 
-### OnlineWardleyMaps (OWM) syntax — for the `/arckit.wardley*` commands
+### OnlineWardleyMaps (OWM) syntax — for the `/arckit:wardley*` commands
 
 These produce OWM text for <https://create.wardleymaps.ai>. The renderer is strict:
 
@@ -296,10 +296,10 @@ This skill handles **conversational** Wardley Mapping — quick questions, evolu
 
 For **formal architecture documents** with document control, project integration, UK Government compliance (TCoP, GDS, AI Playbook), and OnlineWardleyMaps syntax for https://create.wardleymaps.ai, use the ArcKit Wardley suite:
 
-- `/arckit.wardley.value-chain` — Decompose user needs into value chains (WVCH artifact)
-- `/arckit.wardley` — Create strategic Wardley Maps (WARD artifact)
-- `/arckit.wardley.doctrine` — Assess organizational doctrine maturity across 4 phases, 40+ principles (WDOC artifact)
-- `/arckit.wardley.gameplay` — Analyze strategic plays from 60+ gameplay patterns with D&D alignment (WGAM artifact)
-- `/arckit.wardley.climate` — Assess 32 climatic patterns across 6 categories with prediction horizons (WCLM artifact)
+- `/arckit:wardley.value-chain` — Decompose user needs into value chains (WVCH artifact)
+- `/arckit:wardley` — Create strategic Wardley Maps (WARD artifact)
+- `/arckit:wardley.doctrine` — Assess organizational doctrine maturity across 4 phases, 40+ principles (WDOC artifact)
+- `/arckit:wardley.gameplay` — Analyze strategic plays from 60+ gameplay patterns with D&D alignment (WGAM artifact)
+- `/arckit:wardley.climate` — Assess 32 climatic patterns across 6 categories with prediction horizons (WCLM artifact)
 
 These generate versioned artifacts saved to your project directory with full traceability to requirements and architecture principles. Each command works standalone but gets richer when sibling artifacts exist.

@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.data-mesh-contract` creates federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees.
+`/arckit:data-mesh-contract` creates federated data product contracts for mesh architectures with SLAs, governance, and interoperability guarantees.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.data-mesh-contract Create contract for <domain name> data product
+/arckit:data-mesh-contract Create contract for <domain name> data product
 ```
 
 Output: `projects/<id>/ARC-<id>-DMC-001-v1.0.md` (uses multi-instance numbering)
@@ -116,20 +116,20 @@ Contracts align with NDS pillars:
 
 ### Prerequisites (Run These First)
 
-1. `/arckit.principles` – Establish architecture principles including mesh standards
-2. `/arckit.stakeholders` – Identify domain owners and consumers
-3. `/arckit.data-model` – Define entities that become data products
-4. `/arckit.requirements` – Capture DR-xxx data requirements including quality/SLAs
+1. `/arckit:principles` – Establish architecture principles including mesh standards
+2. `/arckit:stakeholders` – Identify domain owners and consumers
+3. `/arckit:data-model` – Define entities that become data products
+4. `/arckit:requirements` – Capture DR-xxx data requirements including quality/SLAs
 
 ### Mesh Contract Generation
 
-5. `/arckit.data-mesh-contract` – Create contract per domain data product
+5. `/arckit:data-mesh-contract` – Create contract per domain data product
 
 ### Follow-Up Commands
 
-6. `/arckit.traceability` – Link contracts to requirements and consumers
-7. `/arckit.analyze` – Score contract completeness and governance quality
-8. `/arckit.dpia` – If contract involves PII (auto-references contract)
+6. `/arckit:traceability` – Link contracts to requirements and consumers
+7. `/arckit:analyze` – Score contract completeness and governance quality
+8. `/arckit:dpia` – If contract involves PII (auto-references contract)
 
 ---
 
@@ -221,11 +221,11 @@ Contracts align with NDS pillars:
 
 ## Related Commands
 
-- `/arckit.data-model` – Define entities before creating contracts
-- `/arckit.requirements` – Capture DR-xxx requirements that drive SLAs
-- `/arckit.traceability` – Link contracts to requirements and consumers
-- `/arckit.analyze` – Score contract completeness
-- `/arckit.dpia` – Privacy impact assessment for PII-containing products
+- `/arckit:data-model` – Define entities before creating contracts
+- `/arckit:requirements` – Capture DR-xxx requirements that drive SLAs
+- `/arckit:traceability` – Link contracts to requirements and consumers
+- `/arckit:analyze` – Score contract completeness
+- `/arckit:dpia` – Privacy impact assessment for PII-containing products
 
 ---
 

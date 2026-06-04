@@ -200,8 +200,8 @@ Minimum Angebotsfrist: {days}
 {List ⚠️ Items requiring Vergabejurist review before publication}
 
 Next steps:
-1. {If personal data: Include DPA from /arckit.at-dsgvo}
-2. {If Essential/Important: Include NISG supply clauses from /arckit.at-nisg}
+1. {If personal data: Include DPA from /arckit:at-dsgvo}
+2. {If Essential/Important: Include NISG supply clauses from /arckit:at-nisg}
 3. Legal review before ANKÖ publication
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -235,11 +235,11 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit.at-bvergg Austrian procurement for 001 — federal digital identity platform, Auftragswert €1.8M, classical sector, Oberschwellenbereich, processes personal data, Essential entity under NISG
+/arckit:at-bvergg Austrian procurement for 001 — federal digital identity platform, Auftragswert €1.8M, classical sector, Oberschwellenbereich, processes personal data, Essential entity under NISG
 
-/arckit.at-bvergg BVergG 2018 procurement pack for a municipal water utility SCADA upgrade — Sektorenauftraggeber, Oberschwellenbereich, €3.2M, Essential entity
+/arckit:at-bvergg BVergG 2018 procurement pack for a municipal water utility SCADA upgrade — Sektorenauftraggeber, Oberschwellenbereich, €3.2M, Essential entity
 
-/arckit.at-bvergg Direct award for a €60K proof-of-concept integration, classical sector, no personal data
+/arckit:at-bvergg Direct award for a €60K proof-of-concept integration, classical sector, no personal data
 ```
 
 ## Suggested Next Steps

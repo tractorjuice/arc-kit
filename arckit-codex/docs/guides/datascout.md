@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.datascout` discovers external data sources — APIs, datasets, open data portals, and commercial providers — that can fulfil a project's data and integration requirements.
+`/arckit:datascout` discovers external data sources — APIs, datasets, open data portals, and commercial providers — that can fulfil a project's data and integration requirements.
 
 > **Agent Architecture**: This command delegates to the `arckit-datascout` autonomous agent. The agent runs as a subprocess with its own context window, searching api.gov.uk, data.gov.uk, department developer hubs, and commercial API providers without polluting your main conversation. The slash command launches the agent and relays its summary back to you.
 
@@ -53,7 +53,7 @@ Add constraints (budget, data residency, freshness) in the prompt for tailored r
 ## Command
 
 ```bash
-/arckit.datascout Discover data sources for <project>
+/arckit:datascout Discover data sources for <project>
 ```
 
 Outputs: `projects/<id>/ARC-<id>-DSCT-v1.0.md`
@@ -127,22 +127,22 @@ The Technology Code of Practice requires UK Government projects to:
 
 | Direction | Command | Integration |
 |-----------|---------|-------------|
-| **Input** | `/arckit.requirements` | Data needs from DR/FR/INT/NFR requirements |
-| **Input** | `/arckit.data-model` | Existing entities needing external data |
-| **Output** | `/arckit.data-model` | New entities/attributes from discovered sources |
-| **Output** | `/arckit.research` | Data source costs inform vendor TCO |
-| **Output** | `/arckit.adr` | Data source selection recorded as decisions |
-| **Output** | `/arckit.dpia` | Third-party sources assessed for privacy |
-| **Output** | `/arckit.diagram` | Data flow diagrams show external integration |
-| **Output** | `/arckit.traceability` | DR-xxx → data source mapping |
+| **Input** | `/arckit:requirements` | Data needs from DR/FR/INT/NFR requirements |
+| **Input** | `/arckit:data-model` | Existing entities needing external data |
+| **Output** | `/arckit:data-model` | New entities/attributes from discovered sources |
+| **Output** | `/arckit:research` | Data source costs inform vendor TCO |
+| **Output** | `/arckit:adr` | Data source selection recorded as decisions |
+| **Output** | `/arckit:dpia` | Third-party sources assessed for privacy |
+| **Output** | `/arckit:diagram` | Data flow diagrams show external integration |
+| **Output** | `/arckit:traceability` | DR-xxx → data source mapping |
 
 ---
 
 ## Follow-on Actions
 
-- Update data model with external data entities (`/arckit.data-model`)
-- Create ADRs for significant data source decisions (`/arckit.adr`)
-- Conduct DPIA for sources with personal data (`/arckit.dpia`)
-- Feed data source costs into research TCO analysis (`/arckit.research`)
-- Build data flow diagrams showing external integration (`/arckit.diagram`)
-- Add data source risks to risk register (`/arckit.risk`)
+- Update data model with external data entities (`/arckit:data-model`)
+- Create ADRs for significant data source decisions (`/arckit:adr`)
+- Conduct DPIA for sources with personal data (`/arckit:dpia`)
+- Feed data source costs into research TCO analysis (`/arckit:research`)
+- Build data flow diagrams showing external integration (`/arckit:diagram`)
+- Add data source risks to risk register (`/arckit:risk`)

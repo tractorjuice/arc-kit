@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit.sobc` creates a Strategic Outline Business Case (SOBC) using the UK Government Green Book 5-case model.
+`/arckit:sobc` creates a Strategic Outline Business Case (SOBC) using the UK Government Green Book 5-case model.
 
 ---
 
@@ -20,7 +20,7 @@
 ## Command
 
 ```bash
-/arckit.sobc Create SOBC for <initiative>
+/arckit:sobc Create SOBC for <initiative>
 ```
 
 Output: `projects/<id>/ARC-<id>-SOBC-v1.0.md`
@@ -85,11 +85,11 @@ Output: `projects/<id>/ARC-<id>-SOBC-v1.0.md`
 
 | Phase | Key Activities | ArcKit Commands |
 |-------|----------------|-----------------|
-| Discovery | Define requirements and stakeholders | `/arckit.requirements`, `/arckit.stakeholders` |
-| Risk | Identify and assess risks | `/arckit.risk` |
-| Business Case | Create SOBC | `/arckit.sobc` |
-| Architecture | High-level design | `/arckit.diagram`, `/arckit.hld-review` |
-| Procurement | Market engagement | `/arckit.sow`, `/arckit.gcloud-search` |
+| Discovery | Define requirements and stakeholders | `/arckit:requirements`, `/arckit:stakeholders` |
+| Risk | Identify and assess risks | `/arckit:risk` |
+| Business Case | Create SOBC | `/arckit:sobc` |
+| Architecture | High-level design | `/arckit:diagram`, `/arckit:hld-review` |
+| Procurement | Market engagement | `/arckit:sow`, `/arckit:gcloud-search` |
 
 ---
 
