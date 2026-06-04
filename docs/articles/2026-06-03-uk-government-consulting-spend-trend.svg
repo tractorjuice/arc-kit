@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0b0c0c"/>
+      <stop offset="100%" style="stop-color:#1a1d2e"/>
+    </linearGradient>
+    <linearGradient id="goldBar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8c15c"/>
+      <stop offset="100%" style="stop-color:#c8932f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="560" fill="url(#bg)"/>
+
+  <!-- Title block -->
+  <text x="60" y="54" fill="#f0f0f0" font-size="27" font-weight="700" letter-spacing="-0.3">The 2023 cuts didn&#8217;t bite until 2025</text>
+  <text x="60" y="84" fill="#9b9ea3" font-size="15">Mgmt + IT + R&amp;D advisory &#183; &#163;100m+ framework ceilings removed &#183; awarded value, &#163;bn per fiscal year</text>
+
+  <!-- Gridlines + y labels (value 0..2.5, baseline y=452, scale 128) -->
+  <g stroke="#262a3a" stroke-width="1">
+    <line x1="108" y1="452" x2="952" y2="452"/>
+    <line x1="108" y1="388" x2="952" y2="388"/>
+    <line x1="108" y1="324" x2="952" y2="324"/>
+    <line x1="108" y1="260" x2="952" y2="260"/>
+    <line x1="108" y1="196" x2="952" y2="196"/>
+    <line x1="108" y1="132" x2="952" y2="132"/>
+  </g>
+  <g fill="#6b7280" font-size="13" text-anchor="end" font-family="'SF Mono','Consolas',monospace">
+    <text x="96" y="457">0.0</text>
+    <text x="96" y="393">0.5</text>
+    <text x="96" y="329">1.0</text>
+    <text x="96" y="265">1.5</text>
+    <text x="96" y="201">2.0</text>
+    <text x="96" y="137">2.5</text>
+  </g>
+
+  <!-- Annotation across the rise -->
+  <text x="412" y="118" fill="#b1b4b6" font-size="14.5">2023 cuts announced &#8212; awards kept climbing through FY24/25</text>
+  <line x1="654" y1="124" x2="654" y2="162" stroke="#8a7a4a" stroke-width="1" stroke-dasharray="3 3"/>
+
+  <!-- Bars (centres at 179,298,416,535,654,772,891; width 70) -->
+  <!-- 19/20 1.03 h132 top320 -->
+  <rect x="144" y="320" width="70" height="132" rx="3" fill="#44505f"/>
+  <text x="179" y="308" text-anchor="middle" fill="#aeb2b7" font-size="17" font-weight="700">1.03</text>
+  <!-- 20/21 1.15 h147 top305 -->
+  <rect x="263" y="305" width="70" height="147" rx="3" fill="#44505f"/>
+  <text x="298" y="293" text-anchor="middle" fill="#aeb2b7" font-size="17" font-weight="700">1.15</text>
+  <!-- 21/22 1.65 h211 top241 -->
+  <rect x="381" y="241" width="70" height="211" rx="3" fill="#4d5666"/>
+  <text x="416" y="229" text-anchor="middle" fill="#c3c6ca" font-size="17" font-weight="700">1.65</text>
+  <!-- 22/23 1.91 h244 top208 -->
+  <rect x="500" y="208" width="70" height="244" rx="3" fill="#4d5666"/>
+  <text x="535" y="196" text-anchor="middle" fill="#c3c6ca" font-size="17" font-weight="700">1.91</text>
+  <!-- 23/24 2.21 h283 top169 (cuts announced) -->
+  <rect x="619" y="169" width="70" height="283" rx="3" fill="#5a6473"/>
+  <text x="654" y="157" text-anchor="middle" fill="#d4d7da" font-size="17" font-weight="700">2.21</text>
+  <!-- 24/25 2.31 h296 top156 PEAK -->
+  <rect x="737" y="156" width="70" height="296" rx="3" fill="url(#goldBar)"/>
+  <text x="772" y="144" text-anchor="middle" fill="#e8c15c" font-size="17.5" font-weight="700">2.31</text>
+  <!-- 25/26 1.73 h221 top231 dip provisional -->
+  <rect x="856" y="231" width="70" height="221" rx="3" fill="url(#goldBar)" fill-opacity="0.42" stroke="#e8c15c" stroke-width="1.25" stroke-dasharray="4 3"/>
+  <text x="891" y="219" text-anchor="middle" fill="#e8c15c" font-size="17.5" font-weight="700">1.73</text>
+
+  <!-- down-arrow + first fall callout on dip -->
+  <path d="M884,184 L898,184 L891,196 Z" fill="#e8c15c"/>
+  <text x="891" y="176" text-anchor="middle" fill="#e8c15c" font-size="12.5" font-weight="700">first fall</text>
+
+  <!-- x labels -->
+  <g fill="#9b9ea3" font-size="14.5" text-anchor="middle" font-family="'SF Mono','Consolas',monospace">
+    <text x="179" y="476">19/20</text>
+    <text x="298" y="476">20/21</text>
+    <text x="416" y="476">21/22</text>
+    <text x="535" y="476">22/23</text>
+    <text x="654" y="476">23/24</text>
+    <text x="772" y="476">24/25</text>
+    <text x="891" y="476">25/26</text>
+  </g>
+  <text x="891" y="494" text-anchor="middle" fill="#6b7280" font-size="11.5" font-style="italic">provisional &#183; still filling in</text>
+
+  <!-- Footer -->
+  <text x="60" y="540" fill="#6b7280" font-size="12.5">Source: ArcKit UK Tenders MCP &#8212; Contracts Finder + Find a Tender (OGL v3.0). Deduplicated, GBP. Awarded value, not actual spend.</text>
+  <text x="952" y="540" text-anchor="end" fill="#8a6a2a" font-size="12.5" font-weight="700">arckit.org</text>
+</svg>

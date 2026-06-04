@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0b0c0c"/>
+      <stop offset="100%" style="stop-color:#1a1d2e"/>
+    </linearGradient>
+    <linearGradient id="goldBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c8932f"/>
+      <stop offset="100%" style="stop-color:#e8c15c"/>
+    </linearGradient>
+    <linearGradient id="steelBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#4a6e85"/>
+      <stop offset="100%" style="stop-color:#5b8aa6"/>
+    </linearGradient>
+  </defs>
+  <rect width="1000" height="560" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="60" y="54" fill="#f0f0f0" font-size="26" font-weight="700" letter-spacing="-0.3">How much does UK government spend on consulting?</text>
+  <text x="60" y="84" fill="#9b9ea3" font-size="15.5">It depends who&#8217;s counting. Annual figures, different definitions and methods &#183; &#163;bn per year.</text>
+
+  <!-- Legend -->
+  <rect x="60" y="100" width="14" height="14" rx="2" fill="url(#goldBar)"/>
+  <text x="80" y="112" fill="#b1b4b6" font-size="13.5">ArcKit UK Tenders MCP (this analysis)</text>
+  <rect x="350" y="100" width="14" height="14" rx="2" fill="url(#steelBar)"/>
+  <text x="370" y="112" fill="#b1b4b6" font-size="13.5">Published benchmarks (NAO &#183; Tussell)</text>
+
+  <!-- vertical gridlines (scale 120px/bn, x0=440) -->
+  <g stroke="#262a3a" stroke-width="1">
+    <line x1="560" y1="126" x2="560" y2="440"/>
+    <line x1="680" y1="126" x2="680" y2="440"/>
+    <line x1="800" y1="126" x2="800" y2="440"/>
+    <line x1="920" y1="126" x2="920" y2="440"/>
+  </g>
+  <line x1="440" y1="126" x2="440" y2="440" stroke="#3a4150" stroke-width="1.5"/>
+  <g fill="#6b7280" font-size="12.5" text-anchor="middle" font-family="'SF Mono','Consolas',monospace">
+    <text x="560" y="458">&#163;1bn</text>
+    <text x="680" y="458">&#163;2bn</text>
+    <text x="800" y="458">&#163;3bn</text>
+    <text x="920" y="458">&#163;4bn</text>
+  </g>
+
+  <!-- Bars -->
+  <!-- bar0 £0.7bn ArcKit narrow -->
+  <rect x="440" y="132" width="84" height="52" rx="3" fill="url(#goldBar)" fill-opacity="0.55"/>
+  <text x="534" y="164" fill="#e8c15c" font-size="19" font-weight="700">&#163;0.7bn</text>
+  <text x="425" y="150" text-anchor="end" fill="#e6e8ea" font-size="14.5" font-weight="600">Tenders data &#8212; mgmt consultancy only</text>
+  <text x="425" y="170" text-anchor="end" fill="#8a8e93" font-size="12.5">frameworks stripped &#183; 2021&#8211;25 run-rate</text>
+
+  <!-- bar1 £1.36bn HMT/NAO -->
+  <rect x="440" y="214" width="163" height="52" rx="3" fill="url(#steelBar)"/>
+  <text x="613" y="246" fill="#a9cbe0" font-size="19" font-weight="700">&#163;1.36bn</text>
+  <text x="425" y="232" text-anchor="end" fill="#e6e8ea" font-size="14.5" font-weight="600">HM Treasury official figure</text>
+  <text x="425" y="252" text-anchor="end" fill="#8a8e93" font-size="12.5">central government, 2022&#8211;23 &#183; via NAO</text>
+
+  <!-- bar2 £1.9bn ArcKit broad -->
+  <rect x="440" y="296" width="228" height="52" rx="3" fill="url(#goldBar)"/>
+  <text x="678" y="328" fill="#e8c15c" font-size="19" font-weight="700">~&#163;1.9bn</text>
+  <text x="425" y="314" text-anchor="end" fill="#e6e8ea" font-size="14.5" font-weight="600">Tenders data &#8212; + IT &amp; R&amp;D advisory</text>
+  <text x="425" y="334" text-anchor="end" fill="#8a8e93" font-size="12.5">deduped &#183; 2021&#8211;25 run-rate</text>
+
+  <!-- bar3 £3.7bn Tussell -->
+  <rect x="440" y="378" width="444" height="52" rx="3" fill="url(#steelBar)"/>
+  <text x="894" y="410" fill="#a9cbe0" font-size="19" font-weight="700">&#163;3.7bn</text>
+  <text x="425" y="396" text-anchor="end" fill="#e6e8ea" font-size="14.5" font-weight="600">Whole public sector, actual spend</text>
+  <text x="425" y="416" text-anchor="end" fill="#8a8e93" font-size="12.5">FY24/25 record &#183; Tussell</text>
+
+  <!-- takeaway -->
+  <text x="60" y="500" fill="#b1b4b6" font-size="14.5">There is no single right number. The NAO&#8217;s core finding is that government itself cannot agree what counts as &#8220;consultancy&#8221;.</text>
+  <text x="60" y="522" fill="#7a8088" font-size="13.5">ArcKit&#8217;s award-notice data brackets the published figures from below; actual spend (frameworks + transparency returns) sits higher.</text>
+
+  <!-- Footer -->
+  <text x="60" y="546" fill="#6b7280" font-size="12.5">Sources: ArcKit UK Tenders MCP (OGL v3.0); National Audit Office (Nov 2025); Tussell. Awarded value is not actual spend.</text>
+  <text x="952" y="546" text-anchor="end" fill="#8a6a2a" font-size="12.5" font-weight="700">arckit.org</text>
+</svg>

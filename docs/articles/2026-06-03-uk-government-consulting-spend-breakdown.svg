@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0b0c0c"/>
+      <stop offset="100%" style="stop-color:#1a1d2e"/>
+    </linearGradient>
+    <linearGradient id="goldBar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#e8c15c"/>
+      <stop offset="100%" style="stop-color:#c8932f"/>
+    </linearGradient>
+    <pattern id="hatch" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="9" height="9" fill="#434e5d"/>
+      <line x1="0" y1="0" x2="0" y2="9" stroke="#363f4c" stroke-width="4"/>
+    </pattern>
+  </defs>
+  <rect width="1000" height="560" fill="url(#bg)"/>
+
+  <!-- Title -->
+  <text x="60" y="54" fill="#f0f0f0" font-size="27" font-weight="700" letter-spacing="-0.3">Most of the headline is framework ceilings, not consultants</text>
+  <text x="60" y="84" fill="#9b9ea3" font-size="15.5">Management-consultancy contracts (CPV 794), gross awarded value 2016&#8211;2026, deduplicated. &#163;bn.</text>
+
+  <!-- bar caption -->
+  <text x="80" y="128" fill="#7a8088" font-size="13" letter-spacing="1" font-weight="600">GROSS AWARDED VALUE OF EVERY &#8220;CONSULTANCY&#8221; NOTICE</text>
+  <text x="920" y="128" text-anchor="end" fill="#f0f0f0" font-size="16" font-weight="700">&#163;18.7bn total</text>
+
+  <!-- Stacked bar: scale 44.92 px/bn, x0=80, width 840 -->
+  <!-- Segment A: frameworks £13.2bn = 593px -->
+  <rect x="80" y="140" width="593" height="88" rx="3" fill="url(#hatch)"/>
+  <!-- Segment B: actual £5.5bn = 247px -->
+  <rect x="673" y="140" width="247" height="88" rx="3" fill="url(#goldBar)"/>
+  <line x1="673" y1="140" x2="673" y2="228" stroke="#0b0c0c" stroke-width="2"/>
+
+  <!-- Segment A labels -->
+  <text x="376" y="180" text-anchor="middle" fill="#f0f0f0" font-size="27" font-weight="700">&#163;13.2bn</text>
+  <text x="376" y="205" text-anchor="middle" fill="#cdd0d4" font-size="13.5">70% &#8212; framework &amp; DPS ceilings, aggregated vehicles, mis-codes</text>
+
+  <!-- Segment B labels -->
+  <text x="796" y="180" text-anchor="middle" fill="#241c06" font-size="25" font-weight="700">&#163;5.5bn</text>
+  <text x="796" y="204" text-anchor="middle" fill="#3a2f0c" font-size="13" font-weight="600">actual sub-&#163;100m awards</text>
+
+  <!-- connector to reality panel -->
+  <line x1="796" y1="232" x2="796" y2="286" stroke="#e8c15c" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <path d="M790,284 L802,284 L796,294 Z" fill="#e8c15c"/>
+
+  <!-- Reality panel -->
+  <rect x="80" y="300" width="840" height="150" rx="12" fill="#14161f" fill-opacity="0.8" stroke="#2a2d3e" stroke-width="1"/>
+  <text x="500" y="332" text-anchor="middle" fill="#9b9ea3" font-size="14.5" letter-spacing="0.6">What survives as real, individually-awarded consulting &#8212; per year</text>
+
+  <line x1="500" y1="352" x2="500" y2="430" stroke="#2a2d3e" stroke-width="1"/>
+
+  <!-- left stat -->
+  <text x="290" y="392" text-anchor="middle" fill="#e8c15c" font-size="36" font-weight="700">~&#163;0.7bn</text>
+  <text x="290" y="418" text-anchor="middle" fill="#9b9ea3" font-size="13.5">management consultancy (CPV 794), 2021&#8211;25</text>
+  <!-- right stat -->
+  <text x="710" y="392" text-anchor="middle" fill="#e8c15c" font-size="36" font-weight="700">~&#163;1.9bn</text>
+  <text x="710" y="418" text-anchor="middle" fill="#9b9ea3" font-size="13.5">with IT &amp; R&amp;D advisory added (deduped)</text>
+
+  <!-- takeaway -->
+  <text x="500" y="492" text-anchor="middle" fill="#b1b4b6" font-size="14.5">A raw sum of award notices overstates real consulting roughly threefold: frameworks publish a multi-year, multi-supplier ceiling as one figure.</text>
+
+  <!-- Footer -->
+  <text x="60" y="540" fill="#6b7280" font-size="12.5">Source: ArcKit UK Tenders MCP &#8212; Contracts Finder + Find a Tender (OGL v3.0). Deduplicated, GBP. Awarded value, not actual spend.</text>
+  <text x="952" y="540" text-anchor="end" fill="#8a6a2a" font-size="12.5" font-weight="700">arckit.org</text>
+</svg>
