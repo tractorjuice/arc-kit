@@ -357,6 +357,7 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | AUSOCI | `ARC-*-AUSOCI-*.md` | AU SOCI CIRMP Governance Pack |
 | | AUAESCSF | `ARC-*-AUAESCSF-*.md` | AU AESCSF Maturity Assessment |
 | | AUENERGY | `ARC-*-AUENERGY-*.md` | AU Energy Compliance Pack |
+| | MMOD | `ARC-*-MMOD-*.md` | Maturity Model Assessment |
 | | AUAIA | `ARC-*-AUAIA-*.md` | AU AI Assurance Baseline (DTA AI Policy v2.0) |
 | | AUDISP | `ARC-*-AUDISP-*.md` | AU DISP Member Self-Attestation Pack |
 | **Governance (Community-contributed — Australian Federal / DISP-supplier Overlay)** | | | |

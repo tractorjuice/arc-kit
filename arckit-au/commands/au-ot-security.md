@@ -3,14 +3,28 @@ description: "[COMMUNITY] Generate an ASD operational technology cyber security 
 argument-hint: "<project ID or system, e.g. '001', 'Water SCADA Platform'>"
 effort: high
 handoffs:
+  - command: diagram
+    description: Architecture diagrams provide the authoritative context, container, deployment, and trust-boundary views for the OT environment.
+  - command: dfd
+    description: DFDs make OT data flows, protocols, stores, and cross-boundary transfers explicit for cyber and safety review.
+  - command: data-model
+    description: Data model evidence identifies OT telemetry, event, asset, and personal-information entities that need classification and retention controls.
   - command: au-e8-posture
     description: Essential Eight provides the enterprise cyber baseline; OT controls should document where E8 does not directly fit OT constraints.
   - command: au-ism-controls
     description: ISM is the broader ASD control set covering IT and OT systems; this assessment maps OT-specific evidence back to ISM domains.
   - command: au-soci-cirmp
     description: OT security evidence may support SOCI CIRMP cyber and information security hazard treatment for critical infrastructure assets.
+  - command: servicenow
+    description: ServiceNow/CMDB design should consume OT component, ownership, dependency, support, and incident-routing evidence.
   - command: risk
     description: OT exposure, safety, availability, and remote-access gaps should feed the project risk register.
+  - command: traceability
+    description: OT findings should trace back to requirements, diagrams, DFD flows, data entities, controls, risks, and operational runbooks.
+  - command: maturity-model
+    description: Use OT security findings to assess capability maturity across architecture visibility, connectivity, monitoring, suppliers, and recovery.
+  - command: graph-report
+    description: Graph reporting should show AUOT coverage alongside AU compliance, architecture, risk, traceability, and operations artefacts.
 ---
 
 > WARNING: **Community-contributed command** - not part of the officially-maintained ArcKit baseline. Output should be reviewed by a qualified OT cyber security specialist, CISO, safety owner, or IRAP Assessor before reliance. ASD and partner OT guidance is periodically updated - verify the guidance version and publication date before external use.
@@ -43,9 +57,15 @@ ASD operational technology guidance is reusable beyond any one industry sector. 
    - `projects/000-global/ARC-000-PRIN-*.md` if present.
    - The project's REQ artefact - extract OT, availability, safety, remote access, supplier access, resilience, and regulatory requirements.
    - The project's STKE artefact - identify operational owner, safety owner, control-system owner, CISO, managed-service providers, and suppliers.
+   - The project's DIAG artefacts (`ARC-{P}-DIAG-*`) - extract context, container, deployment, trust-boundary, and network-zone evidence.
+   - The project's DFD artefacts (`ARC-{P}-DFD-*`) - extract OT data flows, protocols, stores, ingress/egress paths, and cross-boundary transfers.
+   - The project's DATA artefact (`ARC-{P}-DATA-v*`) - extract OT asset, telemetry, event, configuration, maintenance, and personal-information entities.
    - The project's E8 posture artefact (`ARC-{P}-AUE8-v*`) if available.
    - The project's ISM applicability artefact (`ARC-{P}-AUISM-v*`) if available.
+   - The project's ServiceNow artefact (`ARC-{P}-SNOW-v*`) if available - extract CMDB CIs, ownership, support groups, SLAs, and incident/change workflows.
    - The project's RISK artefact if available.
+   - The project's TRAC artefact if available.
+   - The project's maturity-model artefact if available.
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -67,6 +87,8 @@ ASD operational technology guidance is reusable beyond any one industry sector. 
 
    - **Definitive OT Architecture View** - record whether the organisation has an authoritative view of OT assets, data flows, trust boundaries, dependencies, owners, and connectivity paths.
 
+   - **ArcKit Architecture Evidence Map** - cross-reference `/arckit:diagram`, `/arckit:dfd`, and `/arckit:data-model` artefacts to each OT zone, data flow, asset class, and control boundary. Call out missing diagrams, missing DFD levels, stale data entities, or unowned dependencies as evidence gaps.
+
    - **IT/OT Segmentation and Trust Boundaries** - document zones, conduits, boundary controls, admin pathways, jump hosts, protocol gateways, DMZs, and monitoring points.
 
    - **Secure Connectivity and Remote Access** - assess business case, exposure, inbound connectivity, brokered access, just-in-time access, privileged access workstations, vendor access, obsolete device compensating controls, and logging.
@@ -81,6 +103,8 @@ ASD operational technology guidance is reusable beyond any one industry sector. 
 
    - **ISM and E8 Cross-Reference** - show where OT findings reuse or qualify existing AUE8 and AUISM evidence.
 
+   - **Operations, CMDB, and Traceability Integration** - map OT components to `/arckit:servicenow` CMDB CIs and support workflows; map findings to `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, and `/arckit:maturity-model` outputs.
+
    - **Recommendations** - prioritised actions grouped by Immediate, 30-90 days, 90-180 days, and strategic uplift. Each action must identify owner, evidence artefact, and residual risk.
 
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. ASD OT guidance documents and the verification date MUST appear in the Document Register.
@@ -93,6 +117,8 @@ ASD operational technology guidance is reusable beyond any one industry sector. 
 
 - Essential Eight was not designed specifically for OT environments. Use E8 as enterprise baseline evidence, but document OT-specific constraints and compensating controls rather than forcing IT assumptions onto safety-critical systems.
 - ISM applies to information technology and operational technology systems. Cross-reference AUISM for control evidence wherever possible.
+- Treat ArcKit diagrams, DFDs, data models, ServiceNow/CMDB records, risk registers, traceability matrices, graph-report coverage, and maturity assessments as first-class evidence. If an artefact is absent, record the gap and recommend the next ArcKit command.
 - OT safety and availability may override normal enterprise IT patching and change windows. Record compensating controls and residual risk explicitly.
 - Direct internet exposure, unmanaged vendor remote access, undocumented radio links, flat OT networks, and obsolete boundary devices are high-risk patterns that must be called out.
 - SOCI/CIRMP applicability is handled by `/arckit:au-soci-cirmp`; this command supplies OT cyber evidence that may feed that artefact.
+- Keep this artefact cross-sector. Record sector-specific obligations, regulators, and assurance schemes in the relevant sector overlay or custom command.

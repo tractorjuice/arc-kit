@@ -66,6 +66,21 @@
 
 ---
 
+## ArcKit Architecture Evidence Map
+
+| Evidence Area | ArcKit Artefact | How It Supports OT Assessment | Gap / Follow-up |
+|---------------|-----------------|-------------------------------|-----------------|
+| Architecture diagrams | `/arckit:diagram` / ARC-*-DIAG-* | Context, container, deployment, network zone, and trust-boundary evidence | [Gap / follow-up] |
+| Data flow diagrams | `/arckit:dfd` / ARC-*-DFD-* | OT data flows, protocols, stores, ingress/egress, and cross-boundary transfers | [Gap / follow-up] |
+| Data model | `/arckit:data-model` / ARC-*-DATA-* | OT telemetry, event, asset, configuration, maintenance, and personal-information entities | [Gap / follow-up] |
+| ServiceNow / CMDB | `/arckit:servicenow` / ARC-*-SNOW-* | CMDB CIs, ownership, support groups, SLAs, incident routing, and change controls | [Gap / follow-up] |
+| Risk register | `/arckit:risk` / ARC-*-RISK-* | Residual OT cyber, safety, availability, and supplier-access risks | [Gap / follow-up] |
+| Traceability matrix | `/arckit:traceability` / ARC-*-TRAC-* | Mapping from requirements to diagrams, flows, controls, risks, and recommendations | [Gap / follow-up] |
+| Graph report | `/arckit:graph-report` | Coverage view across AU compliance, architecture, risk, traceability, and operations artefacts | [Gap / follow-up] |
+| Maturity model | `/arckit:maturity-model` | Maturity view across architecture visibility, connectivity, monitoring, suppliers, and recovery | [Gap / follow-up] |
+
+---
+
 ## IT/OT Segmentation and Trust Boundaries
 
 [Describe zones, conduits, DMZs, jump hosts, PAWs, protocol gateways, firewall policy, monitoring points, and any direct or temporary exceptions.]
@@ -138,6 +153,17 @@
 
 ---
 
+## Operations, CMDB, and Traceability Integration
+
+| Integration Point | Source Artefact | Target Artefact / Register | Evidence to Maintain |
+|-------------------|-----------------|----------------------------|----------------------|
+| OT component ownership | ARC-*-DIAG-* / ARC-*-SNOW-* | CMDB CI owner and support group | [Owner / support group / SLA] |
+| OT flow and dependency | ARC-*-DFD-* / ARC-*-DATA-* | CMDB relationship and traceability row | [Flow / data entity / dependency] |
+| OT finding | ARC-*-AUOT-* | Risk register and maturity-model assessment | [Risk ID / maturity domain] |
+| OT control gap | ARC-*-AUISM-* / ARC-*-AUE8-* | Traceability matrix and graph-report coverage | [Control / requirement / evidence status] |
+
+---
+
 ## Recommendations
 
 | Priority | Action | Owner | Due Date | Evidence Update | Residual Risk |
@@ -146,6 +172,8 @@
 | 30-90 days | [Action] | [Owner] | [Date] | [Artefact / control] | [Risk] |
 | 90-180 days | [Action] | [Owner] | [Date] | [Artefact / control] | [Risk] |
 | Strategic | [Action] | [Owner] | [Date] | [Artefact / control] | [Risk] |
+
+Note any sector-specific obligations separately in the relevant sector overlay or custom command.
 
 ---
 
@@ -160,6 +188,12 @@
 | OT-5 | Principles for the secure integration of Artificial Intelligence in Operational Technology | [Date verified / N/A] | AI-in-OT governance and safeguards |
 | AUISM | ASD Information Security Manual | [Edition / date verified] | Control evidence cross-reference |
 | AUE8 | ASD Essential Eight | [Version / date verified] | Enterprise cyber baseline |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 

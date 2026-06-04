@@ -336,6 +336,18 @@
 
 ## External References
 
+## ArcKit Evidence Integration
+
+| Evidence Area | ArcKit Artefact | How It Supports PSPF Assessment | Gap / Follow-up |
+|---------------|-----------------|---------------------------------|-----------------|
+| Security boundaries | `/arckit:diagram` / ARC-*-DIAG-* | Deployment, facility, physical/logical boundary, and working-off-site evidence | [Gap / follow-up] |
+| Information classification | `/arckit:data-model` / ARC-*-DATA-* | Classification, sensitivity, retention, information ownership, and handling requirements | [Gap / follow-up] |
+| Supporting services | `/arckit:servicenow` / ARC-*-SNOW-* | ServiceNow/CMDB ownership, support groups, supporting services, incident/change workflows | [Gap / follow-up] |
+| PSPF risks | `/arckit:risk` / ARC-*-RISK-* | Core-requirement gaps, annual self-assessment findings, and treatment ownership | [Gap / follow-up] |
+| Core-requirement traceability | `/arckit:traceability` / ARC-*-TRAC-* | PSPF requirements mapped to policies, controls, owners, evidence, and actions | [Gap / follow-up] |
+| Coverage view | `/arckit:graph-report` | AUPSPF coverage across AU compliance, risk, traceability, and operations artefacts | [Gap / follow-up] |
+| Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | Security governance maturity baseline and uplift roadmap | [Gap / follow-up] |
+
 ### Document Register
 
 | Doc ID | Filename | Type | Source | Description |
@@ -352,6 +364,12 @@
 |----------|-----|-------------------|
 | PSPF | https://www.protectivesecurity.gov.au/ | [YYYY-MM-DD] |
 | ASD ISM | https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism | [YYYY-MM-DD] |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 

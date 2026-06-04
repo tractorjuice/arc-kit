@@ -35,6 +35,9 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
    - The project's PIA (`ARC-{P}-AUPIA-v*`) — APP 11 cross-reference
    - The project's PSPF assessment (`ARC-{P}-AUPSPF-v*`) — physical / personnel / information security evidence
    - The project's RISK artefact — for SecRisk register integration
+   - The project's ServiceNow artefact (`ARC-{P}-SNOW-v*`) if available — CMDB CIs, service owners, support groups, incident queues, and change controls
+   - The project's TRAC artefact if available — claim-to-evidence mapping
+   - The project's maturity-model artefact if available — security capability uplift baseline
    - `.arckit/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -83,6 +86,8 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
 
    - **Annual Self-Audit Plan** — DISP requires annual self-audit; describe scope, methodology, evidence retention.
 
+   - **ArcKit Evidence Integration** — map `/arckit:servicenow` CMDB evidence, `/arckit:risk` residual risks, `/arckit:traceability` claim-to-evidence links, `/arckit:graph-report` coverage, and `/arckit:maturity-model` uplift domains to DISP attestation claims.
+
    - **Attestation Statement** — formal CSO + Director sign-off statement attesting to the accuracy of the pack, with signature blocks, date, and re-attestation cadence.
 
 7. Populate the External References section per `.arckit/references/citation-instructions.md`. The DISP Membership Pack (with edition) MUST appear in the Document Register.
@@ -99,6 +104,7 @@ The Defence Industry Security Program (DISP) is the security accreditation frame
 - Cloud-only systems that inherit Physical Security from an IRAP-assessed cloud provider should explicitly cite the cloud provider's IRAP scope statement, not generic marketing.
 - The pack should integrate with the project's risk register — material residual risks should appear both in the risk register and in the DISP pack's gap descriptions.
 - For DISP renewal cycles, the artefact should produce a redline-friendly format so year-on-year changes are easy to track.
+- Use embedded ArcKit artefacts as evidence: ServiceNow/CMDB for operational ownership, risk for residual gaps, traceability for claim provenance, graph-report for coverage, and maturity-model for annual uplift planning.
 
 ## Suggested Next Steps
 
@@ -108,3 +114,8 @@ After completing this command, consider running:
 - `/arckit:au-ism-controls` -- ISM applicability statement is a primary input — controls beyond E8 mandated by DISP level.
 - `/arckit:au-pia` -- Privacy Act + APP 11 alignment cited in attestation pack.
 - `/arckit:au-ndb-playbook` -- Notifiable Data Breach response is the operational complement to DISP incident reporting.
+- `/arckit:servicenow` -- ServiceNow/CMDB evidence supports service ownership, support groups, incident queues, change controls, and supplier access.
+- `/arckit:risk` -- DISP residual risks must remain aligned with the project risk register.
+- `/arckit:traceability` -- DISP claims should trace to source AU artefacts, controls, policies, owners, and evidence records.
+- `/arckit:maturity-model` -- DISP gaps can seed a security governance, personnel, physical, and cyber maturity uplift model.
+- `/arckit:graph-report` -- Graph reporting should show AUDISP coverage across AU compliance, risk, traceability, and operations artefacts.

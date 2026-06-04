@@ -350,6 +350,16 @@ graph LR
 
 ## External References
 
+## ArcKit Evidence Integration
+
+| Evidence Area | ArcKit Artefact | How It Supports PIA | Gap / Follow-up |
+|---------------|-----------------|---------------------|-----------------|
+| Information flows | `/arckit:dfd` / ARC-*-DFD-* | Collection, use, disclosure, cross-border transfer, retention, and disposal flows | [Gap / follow-up] |
+| Personal-information inventory | `/arckit:data-model` / ARC-*-DATA-* | APP-relevant entities, sensitive information, identifiers, owners, retention, and access controls | [Gap / follow-up] |
+| Privacy risks | `/arckit:risk` / ARC-*-RISK-* | Privacy harms, mitigation ownership, residual risks, and acceptance decisions | [Gap / follow-up] |
+| APP traceability | `/arckit:traceability` / ARC-*-TRAC-* | APP obligations mapped to requirements, data entities, controls, and risks | [Gap / follow-up] |
+| Coverage view | `/arckit:graph-report` | AUPIA coverage across data-model, risk, traceability, and AU compliance artefacts | [Gap / follow-up] |
+
 ### Document Register
 
 | Doc ID | Filename | Type | Source Location | Description |
@@ -368,6 +378,12 @@ graph LR
 | Filename | Source Location | Reason |
 |----------|-----------------|--------|
 | — | — | — |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 

@@ -195,6 +195,7 @@ export const DOC_TYPES = {
   // (clinical-safety/SAFETY-CASE.md) rather than document ID.
   'NHSDTAC':   { name: 'NHS Digital Technology Assessment Criteria (DTAC v3)', category: 'Compliance', regime: 'UK', severity: 'HIGH' },
   'NHSMDR':    { name: 'UK MDR + EU MDR SaMD/AIaMD Classification',       category: 'Compliance', regime: 'UK', severity: 'HIGH' },
+  'MMOD':      { name: 'Maturity Model Assessment',       category: 'Governance', severity: 'HIGH' },
 };
 
 // Derived: regimes in canonical order (officially-maintained first, then community alphabetical)

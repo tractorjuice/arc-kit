@@ -39,6 +39,11 @@ PSPF is structured around **four security outcomes** with **16 core requirements
    - The project's ISM applicability (`ARC-{P}-AUISM-v*`) — primary input
    - The project's PIA (`ARC-{P}-AUPIA-v*`)
    - The project's RISK artefact
+   - The project's DIAG artefacts (`ARC-{P}-DIAG-*`) — deployment, facility, boundary, and working-off-site evidence
+   - The project's DATA artefact (`ARC-{P}-DATA-v*`) — classification, sensitivity, retention, and information-owner evidence
+   - The project's ServiceNow artefact (`ARC-{P}-SNOW-v*`) if available — CMDB ownership, support groups, supporting services, incident/change workflows
+   - The project's TRAC artefact if available — core-requirement evidence mappings
+   - The project's maturity-model artefact if available — security governance capability baseline
    - `.arckit/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -91,6 +96,8 @@ PSPF is structured around **four security outcomes** with **16 core requirements
 
    - **Compliance Summary** — 16-row table covering all four outcomes; overall PSPF maturity statement.
 
+   - **ArcKit Evidence Integration** — map `/arckit:diagram`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, and `/arckit:maturity-model` outputs to PSPF outcomes, CMDB ownership, supporting services, annual self-assessment evidence, and remediation tracking.
+
    - **Recommendations** — prioritised remediations by Quick Wins / Short-Term / Medium-Term, each tagged to specific Core Requirement.
 
 7. Populate the External References section per `.arckit/references/citation-instructions.md`. PSPF (with edition) MUST appear in the Document Register.
@@ -107,12 +114,20 @@ PSPF is structured around **four security outcomes** with **16 core requirements
 - For Outcome 3 Personnel Security, the AGSVA (Australian Government Security Vetting Agency) is the primary clearance authority. Cleared personnel records reference clearance levels (Baseline / NV1 / NV2 / PV) not individual identities.
 - For pure-cloud systems and contractors with no physical facilities, Outcome 4 Physical Security largely inherits from cloud provider IRAP attestations + host-organisation facilities. Document the inheritance explicitly.
 - For contractors handling Defence-related work, the PSPF assessment dovetails with DISP attestation — cite the DISP pack where it exists rather than re-evidencing.
+- Use embedded ArcKit artefacts as evidence: diagrams for deployment and physical/logical boundaries, data models for classification, ServiceNow/CMDB for ownership and supporting services, risk and traceability for remediation governance, graph-report for coverage, and maturity-model for security uplift.
 
 ## Suggested Next Steps
 
 After completing this command, consider running:
 
+- `/arckit:diagram` -- Architecture and deployment diagrams support PSPF information, physical, facility, and working-off-site evidence.
+- `/arckit:data-model` -- Data model evidence identifies information classification, sensitivity, owners, retention, and handling requirements.
 - `/arckit:au-ism-controls` -- ISM is the technical-controls instantiation of PSPF Information Security outcome — primary input to PSPF Outcome 2.
 - `/arckit:au-e8-posture` -- E8 supports PSPF Information Security outcome.
 - `/arckit:au-pia` -- APP 11 + PSPF Personnel Security overlap; PIA cross-reference.
 - `/arckit:au-disp-attestation` -- DISP attestation pack draws on PSPF compliance evidence.
+- `/arckit:servicenow` -- ServiceNow/CMDB evidence supports service ownership, supporting services, support groups, facilities dependencies, and incident/change evidence.
+- `/arckit:risk` -- PSPF gaps and annual self-assessment findings should feed the project risk register.
+- `/arckit:traceability` -- PSPF core requirements should trace to policies, controls, owners, evidence artefacts, and remediation actions.
+- `/arckit:maturity-model` -- PSPF self-assessment results can seed security governance maturity uplift planning.
+- `/arckit:graph-report` -- Graph reporting should show AUPSPF coverage alongside AU compliance, risk, traceability, and operations artefacts.

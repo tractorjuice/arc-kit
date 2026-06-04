@@ -32,12 +32,18 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
    - `projects/000-global/ARC-000-PRIN-*.md` if present.
    - The project's REQ artefact - extract service criticality, asset class, sector, data, cyber, personnel, supply-chain, physical, and continuity obligations.
    - The project's STKE artefact - identify responsible entity, accountable officer, board/council/governing body, regulator, operational owner, cyber owner, suppliers, and asset operators.
+   - The project's DIAG artefacts (`ARC-{P}-DIAG-*`) - extract deployment zones, critical components, interfaces, third parties, trust boundaries, and support dependencies.
+   - The project's DFD artefacts (`ARC-{P}-DFD-*`) - extract protected information flows, operational data flows, external entities, data stores, and reporting pathways.
+   - The project's DATA artefact (`ARC-{P}-DATA-v*`) - extract protected information, personal information, critical operational data, entity owners, retention, and classification.
    - The project's E8 posture artefact (`ARC-{P}-AUE8-v*`) if available.
    - The project's ISM applicability artefact (`ARC-{P}-AUISM-v*`) if available.
    - The project's PIA artefact (`ARC-{P}-AUPIA-v*`) if available.
    - The project's NDB playbook (`ARC-{P}-AUNDB-v*`) if available.
    - The project's OT security artefact (`ARC-{P}-AUOT-v*`) if available and the asset includes OT.
+   - The project's ServiceNow artefact (`ARC-{P}-SNOW-v*`) if available - extract CMDB CIs, service dependencies, support groups, SLAs, incident queues, and change controls.
    - The project's RISK artefact if available.
+   - The project's TRAC artefact if available.
+   - The project's maturity-model artefact if available.
    - `.arckit/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -57,6 +63,8 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
 
    - **SOCI Applicability Assessment** - assess sector, asset class, thresholds, responsible entity obligations, register obligations, incident reporting, government assistance implications, and any uncertainty requiring legal confirmation.
 
+   - **ArcKit Architecture and Data Evidence Map** - cross-reference `/arckit:diagram`, `/arckit:dfd`, and `/arckit:data-model` artefacts to asset scope, protected-information handling, operational dependencies, and hazard evidence. Call out missing or stale evidence explicitly.
+
    - **CIRMP Governance Model** - document accountable owner, board/council/governing body oversight, annual report owner, risk committee, review cadence, and evidence repository.
 
    - **CIRMP Hazard Domain Assessment** - assess cyber and information security, personnel, supply chain, physical security, and natural hazards. Include material risk, relevant impact, current controls, evidence, gaps, and risk owner.
@@ -68,6 +76,8 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
    - **Incident Reporting and Notification Pathways** - document cyber incident escalation, responsible reporting roles, 12-hour / 72-hour pathways where applicable, regulator contact points, and record-keeping.
 
    - **Annual Report and Attestation Readiness** - assess whether the entity can produce the annual CIRMP report within required timeframes, with board/council/governing body approval.
+
+   - **Operations, CMDB, and Traceability Integration** - map critical components and support processes to `/arckit:servicenow` CMDB CIs; map obligations and material risks to `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, and `/arckit:maturity-model` outputs.
 
    - **Cross-Sector vs Sector-Specific Obligations** - record general SOCI obligations here and explicitly defer sector-specific requirements such as AESCSF, AER ring-fencing, NER/NGR, or AEMO obligations to sector recipes.
 
@@ -81,8 +91,9 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
 
 ## Important Notes
 
-- This command provides general SOCI/CIRMP support. Do not include energy-specific AESCSF, AER, NER/NGR, or AEMO obligations here except as future sector overlay references.
+- This command provides general SOCI/CIRMP support. Do not include AESCSF, AER, NER/NGR, AEMO, or other sector-specialised obligations here except as future sector overlay references.
 - SOCI protected information is legally sensitive and is different from PSPF PROTECTED classification. Flag protected-information handling requirements explicitly.
+- Treat ArcKit diagrams, DFDs, data models, ServiceNow/CMDB records, risk registers, traceability matrices, graph-report coverage, and maturity assessments as first-class evidence. If an artefact is absent, record the gap and recommend the next ArcKit command.
 - CIRMP obligations and rules are subject to amendments and may vary by asset class. Record the legislation and guidance version checked.
 - The annual report is a governance obligation, not only a cyber artefact. Board/council/governing body approval readiness must be assessed.
 - Where the asset includes OT, cross-reference `/arckit:au-ot-security`; where it does not, mark OT evidence as not applicable rather than forcing it into scope.
@@ -91,9 +102,16 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
 
 After completing this command, consider running:
 
+- `/arckit:diagram` -- Architecture diagrams identify critical components, boundaries, deployment zones, third parties, and operational dependencies that inform asset scope.
+- `/arckit:dfd` -- DFDs identify data stores, cross-boundary flows, protected-information handling, and incident-reporting evidence paths.
+- `/arckit:data-model` -- Data model evidence identifies protected information, personal information, critical operational data, retention rules, and data owners.
 - `/arckit:au-e8-posture` -- Essential Eight posture supports cyber and information security hazard evidence.
 - `/arckit:au-ism-controls` -- ISM applicability provides broader technical control evidence for SOCI cyber hazards.
 - `/arckit:au-ot-security` -- OT security findings support CIRMP cyber hazard treatment where the critical asset includes connected OT.
 - `/arckit:au-pia` -- Privacy impact findings support information security and protected-information handling.
 - `/arckit:au-ndb-playbook` -- NDB incident response evidence supports notification and escalation pathways where personal information is involved.
+- `/arckit:servicenow` -- ServiceNow/CMDB evidence supports critical component ownership, dependency, incident, change, and service-continuity controls.
 - `/arckit:risk` -- CIRMP material risks and residual risks should feed the project risk register.
+- `/arckit:traceability` -- CIRMP obligations and material risks should trace to requirements, evidence artefacts, owners, controls, and reporting actions.
+- `/arckit:maturity-model` -- Use CIRMP findings to assess governance and operational maturity across cyber, personnel, supply chain, physical, and natural hazards.
+- `/arckit:graph-report` -- Graph reporting should show AUSOCI coverage alongside AU compliance, architecture, risk, traceability, and operations artefacts.

@@ -37,7 +37,10 @@ Australian Government agencies covered by the Privacy Act 1988 must conduct PIAs
    - `projects/000-global/ARC-000-PRIN-*.md` (architecture principles, if present)
    - The project's REQ artefact — extract data requirements (DR-*), NFR-SEC requirements, integration requirements (INT-*)
    - The project's DATA artefact — extract entity model, PII fields, data flows
+   - The project's DFD artefacts (`ARC-{P}-DFD-*`) — collection, use, disclosure, transfer, retention, and disposal flows
    - The project's STKE artefact — extract data subjects, stakeholder privacy expectations
+   - The project's RISK artefact if available — existing privacy, security, and compliance risks
+   - The project's TRAC artefact if available — requirement-to-APP-to-control mappings
    - `.arckit/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -87,6 +90,8 @@ Australian Government agencies covered by the Privacy Act 1988 must conduct PIAs
 
    - **Recommendations** — prioritised list of privacy-enhancing measures.
 
+   - **ArcKit Evidence Integration** — map `/arckit:dfd`, `/arckit:data-model`, `/arckit:risk`, `/arckit:traceability`, and `/arckit:graph-report` outputs to APP assessments, personal-information flows, privacy risks, mitigation ownership, and coverage gaps.
+
 7. Populate the External References section per `.arckit/references/citation-instructions.md`. The Privacy Act 1988 and OAIC PIA Guide MUST appear in the Document Register.
 
 8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
@@ -100,11 +105,16 @@ Australian Government agencies covered by the Privacy Act 1988 must conduct PIAs
 - APP 11 (Security) should cross-reference the E8 posture assessment if one exists — the E8 maturity level directly indicates the strength of the "reasonable steps" taken to protect personal information.
 - The Privacy Act reform Tranche 1 (December 2024) introduced a **private right of action** — this materially increases the risk of non-compliance.
 - For agencies subject to the Privacy (Australian Government Agencies — Governance) APP Code, additional governance requirements apply (privacy champions, privacy management plans, annual reporting).
+- Use embedded ArcKit artefacts as evidence: DFDs for information flows, data models for APP-relevant entities and retention, risk for privacy harms, traceability for APP-control lineage, and graph-report for coverage.
 
 ## Suggested Next Steps
 
 After completing this command, consider running:
 
+- `/arckit:dfd` -- DFDs identify personal-information collection, use, disclosure, cross-border transfer, and retention flows.
+- `/arckit:data-model` -- Data model evidence identifies APP-relevant entities, sensitive information, identifiers, owners, retention, and access controls.
 - `/arckit:au-dss` -- PIA findings feed DSS Criterion 7 (Protect users' privacy).
 - `/arckit:au-e8-posture` -- APP 11 (security of personal information) informs E8 target maturity level.
 - `/arckit:risk` -- Privacy risks surface in the project risk register.
+- `/arckit:traceability` -- APP obligations and privacy mitigations should trace to requirements, data entities, risks, and controls.
+- `/arckit:graph-report` -- Graph reporting should show AUPIA coverage alongside data-model, risk, traceability, and AU compliance artefacts.

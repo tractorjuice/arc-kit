@@ -335,6 +335,15 @@
 
 > This section provides traceability from generated content back to source documents.
 
+## ArcKit Evidence Integration
+
+| Evidence Area | ArcKit Artefact | How It Supports E8 Posture | Gap / Follow-up |
+|---------------|-----------------|----------------------------|-----------------|
+| Security risks | `/arckit:risk` / ARC-*-RISK-* | E8 gaps, treatment owners, residual risks, and acceptance decisions | [Gap / follow-up] |
+| Control traceability | `/arckit:traceability` / ARC-*-TRAC-* | E8 strategies mapped to requirements, ISM controls, DISP claims, and risk treatments | [Gap / follow-up] |
+| Coverage view | `/arckit:graph-report` | AUE8 coverage and AU compliance readiness across project artefacts | [Gap / follow-up] |
+| Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | Cyber mitigation maturity roadmap beyond the current E8 assessment | [Gap / follow-up] |
+
 ### Document Register
 
 | Doc ID | Filename | Type | Source Location | Description |
@@ -352,6 +361,12 @@
 | Filename | Source Location | Reason |
 |----------|-----------------|--------|
 | — | — | — |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 

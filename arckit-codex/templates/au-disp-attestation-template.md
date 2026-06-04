@@ -244,6 +244,14 @@ I/we attest that the information in this pack is accurate to the best of my/our 
 
 ### Upstream ArcKit Evidence
 
+| Evidence Area | ArcKit Artefact | How It Supports DISP Attestation | Gap / Follow-up |
+|---------------|-----------------|----------------------------------|-----------------|
+| Operational ownership | `/arckit:servicenow` / ARC-*-SNOW-* | ServiceNow/CMDB CIs, support groups, incident queues, change controls, supplier access | [Gap / follow-up] |
+| Residual risks | `/arckit:risk` / ARC-*-RISK-* | DISP gaps, risk acceptance, treatment ownership, renewal risks | [Gap / follow-up] |
+| Claim provenance | `/arckit:traceability` / ARC-*-TRAC-* | DISP claims mapped to AU artefacts, policies, controls, owners, and evidence records | [Gap / follow-up] |
+| Coverage view | `/arckit:graph-report` | AUDISP coverage across AU compliance, risk, traceability, and operations artefacts | [Gap / follow-up] |
+| Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | Governance, personnel, physical, cyber, and supplier maturity roadmap | [Gap / follow-up] |
+
 | Artefact | Doc-ID | Cross-Reference |
 |----------|--------|-----------------|
 | ASD Essential Eight Posture | `ARC-{P}-AUE8-v*` | E8 maturity evidence per Strategy in section 6 |
@@ -273,6 +281,12 @@ I/we attest that the information in this pack is accurate to the best of my/our 
 | DISP | https://www.defence.gov.au/business-industry/programs/defence-industry-security-program | [YYYY-MM-DD] |
 | ASD ISM | https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism | [YYYY-MM-DD] |
 | ASD E8 | https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/essential-eight/essential-eight-maturity-model | [YYYY-MM-DD] |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 

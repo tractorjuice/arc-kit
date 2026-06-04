@@ -413,6 +413,19 @@ ISM controls are organised into 17 domains. Applicability depends on the system'
 
 ## External References
 
+## ArcKit Evidence Integration
+
+| Evidence Area | ArcKit Artefact | How It Supports ISM Applicability | Gap / Follow-up |
+|---------------|-----------------|-----------------------------------|-----------------|
+| Architecture boundaries | `/arckit:diagram` / ARC-*-DIAG-* | System boundaries, gateways, hosting, zones, inherited controls | [Gap / follow-up] |
+| Data transfer evidence | `/arckit:dfd` / ARC-*-DFD-* | Data-transfer, gateway, integration, and cross-domain flow controls | [Gap / follow-up] |
+| Classification evidence | `/arckit:data-model` / ARC-*-DATA-* | Classification, retention, owner, and information-handling control applicability | [Gap / follow-up] |
+| Operational ownership | `/arckit:servicenow` / ARC-*-SNOW-* | ServiceNow/CMDB CIs, support groups, incident queues, change controls, dependencies | [Gap / follow-up] |
+| Control risks | `/arckit:risk` / ARC-*-RISK-* | Residual ISM control gaps and treatment ownership | [Gap / follow-up] |
+| Control traceability | `/arckit:traceability` / ARC-*-TRAC-* | ISM controls mapped to requirements, evidence, risks, PSPF, and DISP claims | [Gap / follow-up] |
+| Coverage view | `/arckit:graph-report` | AUISM coverage across AU compliance, architecture, risk, and operations artefacts | [Gap / follow-up] |
+| Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | ISM control maturity baseline and uplift roadmap | [Gap / follow-up] |
+
 ### Document Register
 
 | Doc ID | Filename | Type | Source | Description |
@@ -433,6 +446,12 @@ ISM controls are organised into 17 domains. Applicability depends on the system'
 | ASD Information Security Manual | https://www.cyber.gov.au/resources-business-and-government/essential-cyber-security/ism | [YYYY-MM-DD] |
 | Protective Security Policy Framework | https://www.protectivesecurity.gov.au/ | [YYYY-MM-DD] |
 | IRAP | https://www.cyber.gov.au/about-us/programs-and-services/irap | [YYYY-MM-DD] |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 

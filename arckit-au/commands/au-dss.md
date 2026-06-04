@@ -3,12 +3,26 @@ description: "[COMMUNITY] Generate a DTA Digital Service Standard compliance ass
 argument-hint: "<project ID or service, e.g. '001', 'MyGov Portal Redesign'>"
 effort: high
 handoffs:
+  - command: diagram
+    description: Architecture diagrams support DSS evidence for service boundaries, channels, dependencies, security zones, and user journeys.
+  - command: dfd
+    description: DFDs support privacy, integration, non-digital channel, and service measurement evidence.
+  - command: data-model
+    description: Data model evidence supports privacy, analytics, reporting, retention, and data-quality criteria.
   - command: au-e8-posture
     description: DSS Criterion 5 (Make it secure) feeds into the E8 maturity posture assessment.
   - command: au-pia
     description: DSS Criterion 7 (Protect users' privacy) feeds into the Privacy Impact Assessment.
+  - command: servicenow
+    description: ServiceNow design supports Live-phase service ownership, support, incident, change, and SLA evidence.
   - command: risk
     description: DSS gaps surface as delivery and compliance risks for the risk register.
+  - command: traceability
+    description: DSS criteria and remediation actions should trace to requirements, evidence, owners, and risks.
+  - command: maturity-model
+    description: DSS findings can seed a service capability maturity model across discovery, delivery, operations, and measurement.
+  - command: graph-report
+    description: Graph reporting should show AUDSS coverage alongside architecture, privacy, security, risk, and traceability artefacts.
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a qualified DTA assessor or digital delivery lead before reliance. The DTA Digital Service Standard was refreshed in July 2025 — verify criteria against the current published version.
@@ -43,6 +57,10 @@ The Digital Transformation Agency (DTA) Digital Service Standard sets the mandat
    - `projects/000-global/ARC-000-PRIN-*.md` (architecture principles, if present)
    - The project's REQ artefact — extract user-facing requirements, accessibility requirements, technology choices
    - The project's STKE artefact — extract user research, stakeholder engagement evidence
+   - The project's DIAG artefacts (`ARC-{P}-DIAG-*`) — service context, channel, integration, and deployment views
+   - The project's DFD artefacts (`ARC-{P}-DFD-*`) — user data, channel, reporting, and integration flows
+   - The project's DATA artefact (`ARC-{P}-DATA-v*`) — personal data, analytics, performance, and reporting entities
+   - The project's ServiceNow artefact (`ARC-{P}-SNOW-v*`) if available — service ownership, SLAs, support groups, incident and change workflows
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -85,6 +103,8 @@ The Digital Transformation Agency (DTA) Digital Service Standard sets the mandat
 
    - **Assessment Readiness** — for services approaching Alpha/Beta/Live assessment, identify the top 3 risks to passing and recommended mitigations.
 
+   - **ArcKit Evidence Integration** — map `/arckit:diagram`, `/arckit:dfd`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, and `/arckit:maturity-model` outputs to DSS criteria, evidence gaps, delivery risks, Live operations, and service maturity.
+
    - **Recommendations** — prioritised list of actions to improve compliance posture, grouped by criterion priority.
 
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The DTA Digital Service Standard MUST appear in the Document Register.
@@ -101,3 +121,4 @@ The Digital Transformation Agency (DTA) Digital Service Standard sets the mandat
 - Criterion 9 (Make it accessible) requires WCAG 2.2 Level AA as the minimum standard for Australian Government services.
 - The Standard is assessed at Alpha, Beta, and Live phases — the depth of evidence expected increases at each gate.
 - This assessment is analogous to the UK GDS Service Standard assessment (`/arckit:service-assessment`) but uses Australian criteria and governance structures.
+- Use embedded ArcKit artefacts as evidence: diagrams for service boundaries, DFDs for flows, data models for privacy and analytics, ServiceNow for Live operations, risk and traceability for remediation governance, graph-report for coverage, and maturity-model for uplift.

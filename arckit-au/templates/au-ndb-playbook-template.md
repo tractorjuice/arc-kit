@@ -245,6 +245,17 @@ Conducted within 90 days of incident closure.
 
 ## 13. External References
 
+### ArcKit Evidence Integration
+
+| Evidence Area | ArcKit Artefact | How It Supports NDB Response | Gap / Follow-up |
+|---------------|-----------------|------------------------------|-----------------|
+| Breach data flows | `/arckit:dfd` / ARC-*-DFD-* | Personal-information flows, external entities, stores, disclosure paths, and notification channels | [Gap / follow-up] |
+| Affected data scope | `/arckit:data-model` / ARC-*-DATA-* | Personal-information entities, sensitive attributes, retention, owners, and affected cohorts | [Gap / follow-up] |
+| Incident workflow | `/arckit:servicenow` / ARC-*-SNOW-* | Incident queues, escalation groups, problem/change workflows, and evidence capture | [Gap / follow-up] |
+| Breach risks | `/arckit:risk` / ARC-*-RISK-* | NDB risks, remediation, residual harm, and control treatment ownership | [Gap / follow-up] |
+| Notification traceability | `/arckit:traceability` / ARC-*-TRAC-* | Eligibility tests, decisions, notifications, controls, and lessons learned mapped to evidence | [Gap / follow-up] |
+| Coverage view | `/arckit:graph-report` | AUNDB coverage across privacy, security, risk, and traceability artefacts | [Gap / follow-up] |
+
 ### Document Register
 
 | Doc ID | Filename | Type | Source | Description |
@@ -261,6 +272,12 @@ Conducted within 90 days of incident closure.
 |----------|-----|-------------------|
 | Privacy Act 1988 (Cth) | https://www.legislation.gov.au/Details/C2024C00301 | [YYYY-MM-DD] |
 | OAIC NDB Scheme | https://www.oaic.gov.au/privacy/notifiable-data-breaches | [YYYY-MM-DD] |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 

@@ -3,14 +3,28 @@ description: "[COMMUNITY] Generate an ASD Information Security Manual (ISM) cont
 argument-hint: "<project ID or system, e.g. '001', 'MyGov Portal'>"
 effort: high
 handoffs:
+  - command: diagram
+    description: Architecture diagrams identify system boundaries, gateways, zones, hosting, and inherited controls for ISM scoping.
+  - command: dfd
+    description: DFDs identify data-transfer, gateway, integration, and monitoring controls across trust boundaries.
+  - command: data-model
+    description: Data model evidence drives classification, retention, data-transfer, and information-handling control applicability.
   - command: au-disp-attestation
     description: ISM applicability is a primary input to the DISP Member self-attestation pack.
   - command: au-pspf
     description: ISM is the technical-controls instantiation of PSPF Information Security outcome — feeds the PSPF assessment.
   - command: au-e8-posture
     description: E8 is a mitigation subset of ISM. The ISM applicability statement extends beyond E8 to cover personnel security, physical security, and information governance controls.
+  - command: servicenow
+    description: ServiceNow/CMDB evidence supports ICT asset ownership, support groups, change controls, incident queues, and inherited service dependencies.
   - command: risk
     description: ISM control gaps surface as security risks for the project risk register.
+  - command: traceability
+    description: ISM controls should trace to requirements, evidence artefacts, risks, PSPF, and DISP claims.
+  - command: maturity-model
+    description: ISM domain findings can seed a security control maturity uplift model.
+  - command: graph-report
+    description: Graph reporting should show AUISM coverage across AU compliance, architecture, risk, and operations artefacts.
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a qualified IRAP Assessor or CISO before reliance. ISM is updated quarterly — verify control identifiers against the current edition before any external use.
@@ -46,6 +60,11 @@ The Australian Signals Directorate (ASD) Information Security Manual (ISM) is th
    - The project's RISK artefact — extract existing security risks
    - The project's E8 posture artefact (`ARC-{P}-AUE8-v*`) if available — provides E8 sub-control evidence
    - The project's DATA artefact — for classification-driven control scoping
+   - The project's DIAG artefacts (`ARC-{P}-DIAG-*`) — boundaries, gateways, deployment, zones, inherited controls
+   - The project's DFD artefacts (`ARC-{P}-DFD-*`) — data transfers, integrations, gateways, cross-domain flows
+   - The project's ServiceNow artefact (`ARC-{P}-SNOW-v*`) if available — CMDB CIs, support groups, incident/change workflows
+   - The project's TRAC artefact if available — requirement-to-control evidence mapping
+   - The project's maturity-model artefact if available — control maturity baseline
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -96,6 +115,8 @@ The Australian Signals Directorate (ASD) Information Security Manual (ISM) is th
 
    - **IRAP Assessment Position** — if the system holds or pursues IRAP assessment, note the IRAP scope, assessment date, residual risks accepted, and re-assessment cadence. For systems integrating with IRAP-assessed cloud services, note the inherited control posture.
 
+   - **ArcKit Evidence Integration** — map `/arckit:diagram`, `/arckit:dfd`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, and `/arckit:maturity-model` evidence to ISM domain applicability, CMDB ownership, control gaps, risk treatments, and assurance coverage.
+
    - **Recommendations** — prioritised remediation actions grouped by Quick Wins ( < 30 days), Short-Term (30–90 days), Medium-Term (90–180 days). Each recommendation references the specific ISM control ID(s).
 
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The ASD ISM (with edition / publication date) MUST appear in the Document Register.
@@ -113,3 +134,4 @@ The Australian Signals Directorate (ASD) Information Security Manual (ISM) is th
 - For DISP members or systems supporting Defence work, scope the Personnel Security and Physical Security domains carefully — these are commonly under-assessed in cloud-only environments.
 - The Cyber Security Incidents domain should reference the project's NDB playbook (`/arckit:au-ndb-playbook`) for personal-information breach scenarios.
 - The Outsourced Services domain must include MSP-held admin role boundaries, contractual security-control flow-down, and supply-chain attestation review.
+- Use embedded ArcKit artefacts as evidence: diagrams and DFDs for boundaries and data transfer, data models for classification, ServiceNow/CMDB for ownership and operations, risk and traceability for controls, graph-report for coverage, and maturity-model for uplift.

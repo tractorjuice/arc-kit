@@ -3,12 +3,22 @@ description: "[COMMUNITY] Generate a Notifiable Data Breach (NDB) scheme respons
 argument-hint: "<project ID or system, e.g. '001'>"
 effort: medium
 handoffs:
+  - command: dfd
+    description: DFDs identify personal-information flows, breach blast radius, notification channels, and third-party disclosure paths.
+  - command: data-model
+    description: Data model evidence identifies personal-information entities, sensitive attributes, retention, and affected data subjects.
   - command: au-pia
     description: NDB playbook is the operational complement to AUPIA APP 11 mitigation; APP 11 references NDB.
   - command: au-disp-attestation
     description: DISP attestation pack cites NDB capability evidence.
+  - command: servicenow
+    description: ServiceNow incident, problem, change, and knowledge workflows operationalise NDB response ownership and evidence capture.
   - command: risk
     description: NDB-relevant risks tagged into the project risk register.
+  - command: traceability
+    description: NDB triggers, roles, decisions, notifications, and lessons learned should trace to evidence and controls.
+  - command: graph-report
+    description: Graph reporting should show AUNDB coverage alongside privacy, security, risk, and traceability artefacts.
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a Privacy Officer and legal counsel before adoption. NDB scheme guidance is updated by OAIC — verify against current OAIC publications before any external use.
@@ -47,6 +57,10 @@ A working NDB playbook is operational — it must be executable under time press
    - The project's E8 posture (`ARC-{P}-AUE8-v*`) — security baseline
    - The project's ISM applicability (`ARC-{P}-AUISM-v*`) — Domain 2 (Cyber Security Incidents)
    - The project's RISK artefact
+   - The project's DFD artefacts (`ARC-{P}-DFD-*`) — personal-information flows, disclosure paths, external entities, stores
+   - The project's DATA artefact (`ARC-{P}-DATA-v*`) — affected personal-information entities, sensitivity, retention, data owners
+   - The project's ServiceNow artefact (`ARC-{P}-SNOW-v*`) if available — incident queues, escalation groups, change/problem workflows, knowledge articles
+   - The project's TRAC artefact if available — notification decision and evidence mappings
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -96,6 +110,8 @@ A working NDB playbook is operational — it must be executable under time press
 
    - **Tabletop Exercise Plan** — annual tabletop scenario, evidence retention, lessons-learned cycle.
 
+   - **ArcKit Evidence Integration** — map `/arckit:dfd`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:risk`, `/arckit:traceability`, and `/arckit:graph-report` outputs to breach scope, incident workflow, decision evidence, risk treatment, and coverage gaps.
+
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. Privacy Act 1988 + OAIC NDB scheme guidance MUST appear in the Document Register.
 
 8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
@@ -111,3 +127,4 @@ A working NDB playbook is operational — it must be executable under time press
 - For SOCI-covered entities, the NDB 30-day clock runs in parallel with SOCI 12hr / 72hr cyber incident reporting. The playbook should explicitly coordinate both timelines so the 12hr SOCI report doesn't pre-commit positions before the NDB assessment is complete.
 - Pre-written holding statements and notification templates dramatically reduce time-to-notify under pressure. Recipes producing this artefact should include template language wherever possible.
 - The playbook is operational. It should be **tested** at least annually via tabletop exercise; the recipe should output an exercise scenario template as part of the deliverable.
+- Use embedded ArcKit artefacts as evidence: DFDs and data models for breach scope, ServiceNow for incident workflow and evidence capture, risk for remediation, traceability for notification decisions, and graph-report for coverage.

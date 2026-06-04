@@ -32,13 +32,9 @@
 #     arckit:dpia      → arckit:au-pia            (Privacy Act replaces UK GDPR)
 #
 #   Optional cross-sector critical-infrastructure support (general AU baseline,
-#   not energy-specific; future au-energy recipe consumes these by default):
+#   not tied to one sector; sector recipes can consume these by default):
 #     au-ot-security   ASD operational technology cyber security guidance
-#     au-soci-cirmp    SOCI Act / CIRMP governance and evidence pack
-#
-#   Sector overlays out of scope for this recipe (separate au-energy PR #440):
-#     au-aescsf        Australian Energy Sector Cyber Security Framework
-#     au-energy-compliance AER ring-fencing, NER/NGR, AEMO obligations
+#     au-soci-cirmp    Security of Critical Infrastructure Act CIRMP
 #
 #   Cloud research wave (IRAP-aligned; Australia regions)
 #     arckit:research               Federal/DISP procurement landscape
@@ -89,21 +85,35 @@ optional_targets:
   DATASCOUT:
     description: Australian federal open-data discovery — data.gov.au, AusTender, OAIC, ACSC publications
     default: false
+  DIAG:
+    description: Architecture diagrams — context, container, deployment, trust boundaries, and integration views for AU compliance evidence
+    default: true
+  DFD:
+    description: Data flow diagrams — flows, stores, external entities, protocols, and cross-boundary transfers for privacy, OT, and SOCI evidence
+    default: true
+  DATA_MODEL:
+    description: Data model with entity relationships and Privacy-Act-aligned governance (recommended for systems handling APP-defined personal information)
+    default: true
+  SNOW:
+    description: ServiceNow / CMDB design — CIs, support groups, SLAs, incident routing, and change workflows mapped from architecture evidence
+    default: true
+  TRACEABILITY:
+    description: Requirements traceability matrix (recommended for DISP-supplier governance audit and PSPF reporting)
+    default: true
+  MATURITY:
+    description: Capability maturity model — uplift roadmap across AU governance, cyber, data, OT, SOCI, and operations capabilities
+    default: true
   AU_OT:
     description: ASD operational technology cyber security guidance for connected OT environments
     default: false
   AU_SOCI:
     description: SOCI Act / Critical Infrastructure Risk Management Program support for Australian critical infrastructure assets
     default: false
-  DATA_MODEL:
-    description: Data model with entity relationships and Privacy-Act-aligned governance (recommended for systems handling APP-defined personal information)
-    default: true
-  TRACEABILITY:
-    description: Requirements traceability matrix (recommended for DISP-supplier governance audit and PSPF reporting)
-    default: true
 
 post_build_hooks:
   - skill: arckit:health
+    args: ""
+  - skill: arckit:graph-report
     args: ""
   - skill: arckit:pages
     args: ""
@@ -226,19 +236,19 @@ targets:
   # --- Optional critical-infrastructure support (OT + SOCI) --------------
   # These are reusable across Australian critical-infrastructure sectors and
   # intentionally default-off for ordinary federal / DISP builds. Sector
-  # recipes such as au-energy can enable them by default and layer
-  # sector-specific obligations on top.
+  # recipes can enable them by default and layer sector-specific obligations
+  # on top.
   - id: AU_OT
     skill: arckit:au-ot-security
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AUOT }
-    deps: [REQ, STKE, AU_E8, AU_ISM]
+    deps: [REQ, STKE, AU_E8, AU_ISM, DIAG, DFD, DATA_MODEL]
 
   - id: AU_SOCI
     skill: arckit:au-soci-cirmp
     args: "{P}"
     output: { project: "{P}-{NAME}", type: AUSOCI }
-    deps: [REQ, STKE, AU_E8, AU_ISM, AU_PIA, AU_NDB]
+    deps: [REQ, STKE, AU_E8, AU_ISM, AU_PIA, AU_NDB, AU_OT, RISK, TRACEABILITY, SNOW]
 
   # --- Service + AI compliance (DSS, PSPF, AI assurance) -----------------
   # DSS is the AU equivalent of UK TCoP (replaces arckit:tcop in the uk-saas
@@ -338,17 +348,35 @@ targets:
     output: { project: "{P}-{NAME}", type: DATA }
     deps: [REQ, AU_PIA]
 
+  - id: DIAG
+    skill: arckit:diagram
+    args: "{P} context container deployment trust-boundaries"
+    output: { project: "{P}-{NAME}", type: DIAG, subfolder: diagrams, multi_instance: true }
+    deps: [REQ, STKE, "ADR-*", PRIN]
+
+  - id: DFD
+    skill: arckit:dfd
+    args: "{P} all-levels"
+    output: { project: "{P}-{NAME}", type: DFD, subfolder: diagrams, multi_instance: true }
+    deps: [REQ, DATA_MODEL, DIAG]
+
   - id: HLD
     skill: arckit:hld-review
     args: "{P}"
     output: { project: "{P}-{NAME}", type: HLDR }
-    deps: [REQ, "ADR-*", PRIN]
+    deps: [REQ, "ADR-*", PRIN, DIAG]
 
   - id: RISK
     skill: arckit:risk
     args: "{P}"
     output: { project: "{P}-{NAME}", type: RISK }
-    deps: [REQ, STKE, "ADR-*", PRIN, AU_E8, AU_PIA]
+    deps: [REQ, STKE, "ADR-*", PRIN, AU_E8, AU_ISM, AU_PIA, DATA_MODEL, DIAG, DFD]
+
+  - id: SNOW
+    skill: arckit:servicenow
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SNOW }
+    deps: [REQ, DIAG, DFD, DATA_MODEL, HLD, RISK]
 
   # --- Strategic outputs --------------------------------------------------
   - id: STRATEGY
@@ -394,4 +422,11 @@ targets:
     deps:
       [REQ, STKE, "ADR-*", RISK, HLD,
        AU_E8, AU_ISM, AU_PIA, AU_NDB,
-       AU_DSS, AU_PSPF, AU_AI, AU_DISP]
+       AU_DSS, AU_PSPF, AU_AI, AU_DISP,
+       DATA_MODEL, DIAG, DFD, SNOW]
+
+  - id: MATURITY
+    skill: arckit:maturity-model
+    args: "{P} AU Federal critical-service governance maturity"
+    output: { project: "{P}-{NAME}", type: MMOD }
+    deps: [PRIN, REQ, STKE, RISK, DATA_MODEL, TRACEABILITY, SNOW]

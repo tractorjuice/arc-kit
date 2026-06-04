@@ -193,6 +193,17 @@ National AI Centre (NAIC) operational practices for safe and responsible AI adop
 
 ## 12. External References
 
+### ArcKit Evidence Integration
+
+| Evidence Area | ArcKit Artefact | How It Supports AI Assurance | Gap / Follow-up |
+|---------------|-----------------|------------------------------|-----------------|
+| AI data and prompt flows | `/arckit:dfd` / ARC-*-DFD-* | Training, inference, prompt, output, disclosure, and feedback flows | [Gap / follow-up] |
+| AI data inventory | `/arckit:data-model` / ARC-*-DATA-* | Training, inference, prompt, output, personal, sensitive, and derived data entities | [Gap / follow-up] |
+| AI risks | `/arckit:risk` / ARC-*-RISK-* | Bias, drift, prompt injection, model extraction, privacy, and sovereignty risks | [Gap / follow-up] |
+| Obligation traceability | `/arckit:traceability` / ARC-*-TRAC-* | DTA policy, AI6, ethics, Privacy Act, and control mappings | [Gap / follow-up] |
+| Coverage view | `/arckit:graph-report` | AU assurance coverage across privacy, data, risk, and traceability artefacts | [Gap / follow-up] |
+| Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | AI governance and model lifecycle maturity baseline and roadmap | [Gap / follow-up] |
+
 ### Document Register
 
 | Doc ID | Filename | Type | Source | Description |
@@ -216,6 +227,12 @@ National AI Centre (NAIC) operational practices for safe and responsible AI adop
 | AU Essential AI Practices (AI6) — Foundations | https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-foundations | [YYYY-MM-DD] |
 | AU Essential AI Practices — Implementation Guidance | https://www.ai.gov.au/staying-safe-and-responsible/essential-ai-practices/guidance-ai-adoption-implementation-guidance | [YYYY-MM-DD] |
 | Privacy Act 1988 | https://www.legislation.gov.au/Details/C2024C00301 | [YYYY-MM-DD] |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 

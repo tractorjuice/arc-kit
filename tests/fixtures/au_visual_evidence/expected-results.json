@@ -1,0 +1,55 @@
+{
+  "eval_name": "au_visual_evidence_decision_rule",
+  "source": "Distilled synthetic excerpts from the au-energy validation pack",
+  "cases": [
+    {
+      "fixture": "complete-eastland-visual-evidence.md",
+      "evidence_state": "complete",
+      "expected_decision": "generate_companion_visuals",
+      "expected_labels": [],
+      "required_terms": [
+        "enough structure",
+        "/arckit:diagram",
+        "/arckit:dfd",
+        "/arckit:data-model"
+      ],
+      "must_not_include": [
+        "Visual Evidence Gap"
+      ]
+    },
+    {
+      "fixture": "partial-voltiq-visual-evidence.md",
+      "evidence_state": "partial",
+      "expected_decision": "generate_draft_visual",
+      "expected_labels": [
+        "Pending Input"
+      ],
+      "required_terms": [
+        "incomplete but structurally useful",
+        "draft context diagram",
+        "Pending Input"
+      ],
+      "must_not_include": [
+        "Do not create a diagram"
+      ]
+    },
+    {
+      "fixture": "sparse-soci-flowdown-visual-evidence.md",
+      "evidence_state": "sparse",
+      "expected_decision": "record_visual_evidence_gap",
+      "expected_labels": [
+        "Visual Evidence Gap"
+      ],
+      "required_terms": [
+        "does not contain enough structure",
+        "Do not create a diagram",
+        "Visual Evidence Gap",
+        "minimum inputs needed"
+      ],
+      "must_not_include": [
+        "/arckit:diagram",
+        "/arckit:dfd"
+      ]
+    }
+  ]
+}

@@ -37,8 +37,11 @@ Australia's AI assurance landscape combines several frameworks that together gov
 1. Read prerequisites:
    - Project's PIA artefact (`ARC-{P}-AUPIA-v*`) — APP 6 + APP 11 cross-reference
    - Project's DATA artefact — for training/inference data classification
+   - Project's DFD artefacts (`ARC-{P}-DFD-*`) — for AI data, prompt, inference, output, and feedback flows
    - Project's REQ artefact — extract AI-specific requirements
    - Project's RISK artefact — existing AI risks
+   - Project's TRAC artefact — existing requirement-to-control-to-risk mappings
+   - Project's maturity-model artefact if available — AI governance capability baseline
    - `.arckit/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -98,6 +101,8 @@ Australia's AI assurance landscape combines several frameworks that together gov
 
    - **Vendor / Foundation-Model Disclosure** — for systems built on third-party foundation models, document: vendor name, model version, vendor's AI policy compliance, training-data provenance disclosure (if available), data-residency for inference, IP / copyright position.
 
+   - **ArcKit Evidence Integration** — map `/arckit:dfd`, `/arckit:data-model`, `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, and `/arckit:maturity-model` evidence to AI policy accountabilities, model controls, privacy obligations, lifecycle controls, and assurance gaps.
+
    - **Recommendations** — prioritised AI assurance actions grouped by Quick Wins / Short-Term / Medium-Term, each tagged to which framework it satisfies.
 
 7. Populate the External References section per `.arckit/references/citation-instructions.md`. DTA AI Policy v2.0, AU AI Ethics Principles, AU Essential AI Practices (AI6) — Foundations + Implementation Guidance, ISO 42001 (Australian Standard), and Privacy Act 1988 MUST appear in the Document Register.
@@ -114,12 +119,18 @@ Australia's AI assurance landscape combines several frameworks that together gov
 - Bias / fairness assessment is methodology-dependent. Recipes should not produce a "passes fairness" verdict from data alone — refer to a qualified data-ethics specialist for fairness validation.
 - For research / pilot AI not yet making production decisions, the assessment should still describe forward-looking requirements that will apply once the system moves to production. This avoids "we'll add it later" technical debt.
 - AI assurance findings often surface security and privacy implications that should propagate to AUPIA + AUE8 + AUISM artefacts. Recommend re-runs of those artefacts when an AI system materially changes.
+- Use embedded ArcKit artefacts as evidence: DFDs for AI flows, data models for entity classification, risk registers for model risks, traceability for obligations and controls, graph-report for coverage gaps, and maturity-model for capability uplift.
 
 ## Suggested Next Steps
 
 After completing this command, consider running:
 
+- `/arckit:dfd` -- DFDs show AI input, prompt, training, inference, output, disclosure, and feedback flows for assurance review.
+- `/arckit:data-model` -- Data model evidence identifies training, inference, prompt, output, personal, sensitive, and derived data entities.
 - `/arckit:au-pia` -- AI fairness + automated decision-making findings feed APP 6 + APP 11 in the PIA.
 - `/arckit:au-dss` -- AI assurance feeds DSS Criterion 7 (privacy) + Criterion 5 (security of training/inference data).
 - `/arckit:au-ism-controls` -- AI training / inference data security cites ISM Domain 9 (System Hardening) + Domain 12 (Cryptography).
 - `/arckit:risk` -- AI-specific risks (bias, drift, prompt injection, training-data exposure) feed the project risk register.
+- `/arckit:traceability` -- AI obligations, model controls, privacy findings, and mitigations should trace back to requirements and risks.
+- `/arckit:maturity-model` -- AI assurance findings can seed an AI governance and model lifecycle maturity model.
+- `/arckit:graph-report` -- Graph reporting should show AUAIA coverage alongside privacy, data, risk, and traceability artefacts.

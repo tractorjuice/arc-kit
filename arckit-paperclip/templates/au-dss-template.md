@@ -256,6 +256,19 @@
 
 ## External References
 
+## ArcKit Evidence Integration
+
+| Evidence Area | ArcKit Artefact | How It Supports DSS Assessment | Gap / Follow-up |
+|---------------|-----------------|--------------------------------|-----------------|
+| Service architecture | `/arckit:diagram` / ARC-*-DIAG-* | Service boundaries, channels, dependencies, security zones, and user journeys | [Gap / follow-up] |
+| Service data flows | `/arckit:dfd` / ARC-*-DFD-* | Privacy, integration, non-digital channel, analytics, and reporting flows | [Gap / follow-up] |
+| Data governance | `/arckit:data-model` / ARC-*-DATA-* | Personal data, analytics, reporting, retention, and data-quality evidence | [Gap / follow-up] |
+| Live operations | `/arckit:servicenow` / ARC-*-SNOW-* | Service ownership, support groups, SLAs, incident routing, and change workflows | [Gap / follow-up] |
+| Delivery and compliance risks | `/arckit:risk` / ARC-*-RISK-* | Assessment gaps, launch risks, and remediation ownership | [Gap / follow-up] |
+| Criteria traceability | `/arckit:traceability` / ARC-*-TRAC-* | DSS criteria mapped to requirements, evidence, owners, and remediation actions | [Gap / follow-up] |
+| Coverage view | `/arckit:graph-report` | AUDSS coverage across architecture, privacy, security, risk, and traceability artefacts | [Gap / follow-up] |
+| Capability uplift | `/arckit:maturity-model` / ARC-*-MMOD-* | Service maturity across discovery, delivery, operations, and measurement | [Gap / follow-up] |
+
 ### Document Register
 
 | Doc ID | Filename | Type | Source Location | Description |
@@ -273,6 +286,12 @@
 | Filename | Source Location | Reason |
 |----------|-----------------|--------|
 | — | — | — |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 

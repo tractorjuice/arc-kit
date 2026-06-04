@@ -7,6 +7,12 @@ handoffs:
     description: E8 posture feeds the ISM control applicability statement — target ML drives which ISM controls are mandatory.
   - command: risk
     description: E8 gaps surface as security risks for the project risk register.
+  - command: traceability
+    description: E8 strategy gaps and remediation actions should trace to requirements, risks, ISM controls, and DISP claims.
+  - command: maturity-model
+    description: E8 maturity evidence can seed broader cyber capability maturity uplift planning.
+  - command: graph-report
+    description: Graph reporting should show AUE8 coverage and HIGH-severity AU compliance readiness.
 ---
 
 > ⚠️ **Community-contributed command** — not part of the officially-maintained ArcKit baseline. Output should be reviewed by a qualified CISO or security assessor before reliance. Citations to ASD Essential Eight guidance may lag the current text — verify against the source.
@@ -40,6 +46,8 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
    - `projects/000-global/ARC-000-PRIN-*.md` (architecture principles, if present)
    - The project's REQ artefact — extract NFR-SEC requirements, data classification, compliance obligations
    - The project's RISK artefact — extract existing security risks and mitigations
+   - The project's TRAC artefact if available — security requirement to control and risk mappings
+   - The project's maturity-model artefact if available — cyber capability uplift baseline
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
 2. Read the template:
@@ -82,6 +90,8 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
 
    - **Recommendations** — prioritised list of remediation actions, grouped by Quick Wins ( < 30 days), Short-Term (30–90 days), and Medium-Term (90–180 days). Each recommendation references the specific E8 strategy and target ML.
 
+   - **ArcKit Evidence Integration** — map `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report`, and `/arckit:maturity-model` outputs to E8 strategy gaps, control evidence, DISP implications, and uplift planning.
+
 7. Populate the External References section per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. The ASD Essential Eight Maturity Model MUST appear in the Document Register with its primary URL and verification date.
 
 8. Write the artefact via the Write tool to `projects/<project-id>/<filename>`.
@@ -94,4 +104,5 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
 - Each maturity level has specific sub-controls defined by ASD. Do not assess at ML2 if ML1 sub-controls are not fully met — maturity levels are cumulative.
 - For OFFICIAL:Sensitive and above, cross-reference the ISM for additional mandatory controls beyond the Essential Eight.
 - The Essential Eight is a **mitigation** framework, not a comprehensive security standard. Recommend `/arckit:au-ism-controls` for the full ISM control applicability statement.
-- For energy-sector projects, recommend `/arckit:au-aescsf` as the AESCSF capability domains build on and extend the E8 baseline.
+- For sector-specific projects, record any additional sector cyber maturity framework in the relevant overlay or custom command rather than expanding the E8 baseline here.
+- Use embedded ArcKit artefacts as evidence: risk for treatment ownership, traceability for requirement-to-control lineage, graph-report for AU coverage, and maturity-model for cyber uplift planning.

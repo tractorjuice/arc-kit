@@ -55,6 +55,21 @@
 
 ---
 
+## ArcKit Architecture and Data Evidence Map
+
+| Evidence Area | ArcKit Artefact | How It Supports CIRMP | Gap / Follow-up |
+|---------------|-----------------|-----------------------|-----------------|
+| Architecture diagrams | `/arckit:diagram` / ARC-*-DIAG-* | Critical components, boundaries, deployment zones, third parties, and operational dependencies | [Gap / follow-up] |
+| Data flow diagrams | `/arckit:dfd` / ARC-*-DFD-* | Protected information flows, operational data flows, external entities, stores, and reporting pathways | [Gap / follow-up] |
+| Data model | `/arckit:data-model` / ARC-*-DATA-* | Protected information, personal information, critical data, classification, retention, and owners | [Gap / follow-up] |
+| ServiceNow / CMDB | `/arckit:servicenow` / ARC-*-SNOW-* | CMDB CIs, service dependencies, support groups, SLAs, incident queues, and change controls | [Gap / follow-up] |
+| Risk register | `/arckit:risk` / ARC-*-RISK-* | Material risks, residual risks, treatments, and risk owners | [Gap / follow-up] |
+| Traceability matrix | `/arckit:traceability` / ARC-*-TRAC-* | Mapping from SOCI obligations to requirements, evidence, owners, controls, and actions | [Gap / follow-up] |
+| Graph report | `/arckit:graph-report` | Coverage view across AU compliance, architecture, risk, traceability, and operations artefacts | [Gap / follow-up] |
+| Maturity model | `/arckit:maturity-model` | Maturity view across cyber, personnel, supply chain, physical, natural hazard, and governance domains | [Gap / follow-up] |
+
+---
+
 ## CIRMP Governance Model
 
 | Governance Element | Current Position | Evidence | Owner | Gap |
@@ -128,6 +143,17 @@
 
 ---
 
+## Operations, CMDB, and Traceability Integration
+
+| Integration Point | Source Artefact | Target Artefact / Register | Evidence to Maintain |
+|-------------------|-----------------|----------------------------|----------------------|
+| Critical component ownership | ARC-*-DIAG-* / ARC-*-SNOW-* | CMDB CI owner, support group, SLA, and incident queue | [Owner / support / SLA] |
+| Protected-information flow | ARC-*-DFD-* / ARC-*-DATA-* | Traceability matrix and protected-information register | [Flow / entity / classification] |
+| CIRMP material risk | ARC-*-AUSOCI-* | Risk register and maturity-model assessment | [Risk ID / maturity domain] |
+| Annual report evidence | ARC-*-AUSOCI-* / ARC-*-TRAC-* | Graph-report coverage and board/governing-body evidence pack | [Evidence status / approver] |
+
+---
+
 ## Cross-Sector vs Sector-Specific Obligations
 
 This artefact covers general SOCI/CIRMP obligations. Record sector-specific overlays separately.
@@ -164,6 +190,12 @@ This artefact covers general SOCI/CIRMP obligations. Record sector-specific over
 | SOCI-5 | Protected information under the SOCI Act | [Date verified] | Protected-information handling |
 | AUE8 | ASD Essential Eight | [Version / date verified] | Cyber baseline evidence |
 | AUISM | ASD Information Security Manual | [Edition / date verified] | Control evidence cross-reference |
+
+---
+
+## Visual Evidence Decision Rule
+
+Generate companion visual artefacts only when the available evidence includes enough structure to identify real nodes and relationships. If evidence is incomplete but structurally useful, create a clearly marked draft visual with `Pending Input` labels. If structural evidence is insufficient, do not create a diagram; record a Visual Evidence Gap and list the minimum inputs needed.
 
 ---
 
