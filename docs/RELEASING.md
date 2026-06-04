@@ -2,6 +2,8 @@
 
 This document covers version management, the release flow, and the helper scripts that automate it. For day-to-day development guidance, see `CLAUDE.md`.
 
+> **Driving a release with Claude Code?** Run `/release X.Y.Z` — the `.claude/skills/release/` skill turns the flow below into a guided, gotcha-aware checklist. It is manual-invocation only (`disable-model-invocation: true`) so a release is never triggered automatically. This document remains the source of truth; the skill defers to it.
+
 ## Version Files
 
 ArcKit ships in seven formats, each with its own version file. They are all bumped in lockstep by `scripts/bump-version.sh`.
