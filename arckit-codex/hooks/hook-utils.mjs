@@ -40,12 +40,17 @@ export function mtimeMs(p) {
 export function findRepoRoot(cwd) {
   let current = resolve(cwd);
   while (true) {
-    if (isDir(join(current, 'projects'))) return current;
+    if (isArcKitProjectsDir(join(current, 'projects'))) return current;
     const parent = resolve(current, '..');
     if (parent === current) break;
     current = parent;
   }
   return null;
+}
+
+function isArcKitProjectsDir(projectsDir) {
+  if (!isDir(projectsDir)) return false;
+  return listDir(projectsDir).some((entry) => /^\d{3}(?:-|$)/.test(entry));
 }
 
 // ── Doc Type Extraction ──

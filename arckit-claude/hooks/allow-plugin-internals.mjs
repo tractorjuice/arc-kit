@@ -108,7 +108,7 @@ function commandTouchesPluginScripts(cmd) {
   // and ${CLAUDE_PLUGIN_ROOT} is a sentinel string the LLM only emits
   // when the prompt instructed it to use plugin-internal helpers.
   const PREFIXES = [
-    SCRIPTS_DIR + '/',
+    SCRIPTS_DIR.replaceAll('\\', '/') + '/',
     '${CLAUDE_PLUGIN_ROOT}/scripts/',
   ];
   let anyPrefixHit = false;

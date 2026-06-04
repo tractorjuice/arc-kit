@@ -90,3 +90,6 @@ jobs:
 
       - name: OWM-to-Mermaid converter tests
         run: node --test tests/plugin/owm-to-mermaid.test.mjs
+
+      - name: Hook-utils findRepoRoot tests
+        run: node --test tests/plugin/test_hook_utils.mjs
