@@ -128,6 +128,34 @@ When the user asks for numeric precision, scoring, or data-driven positioning, a
 
 Present results as a table alongside the qualitative analysis — the numbers should confirm or challenge the intuitive positioning, not replace it.
 
+## Common Gotchas
+
+The highest-signal failures, collected from real maps. Check these before finalizing.
+
+### Positioning mistakes
+
+- **Positioning by age, not market maturity.** A 20-year-old internal system is not Commodity if the capability it provides is still bespoke across the market. Use *ubiquity + certainty*, never "how long we've had it." (See Step 3 and [references/evolution-stages.md](references/evolution-stages.md).)
+- **Confusing internal unfamiliarity with Genesis.** "New to us" ≠ "new to the world." If multiple vendors sell it, it is Product/Commodity even if your team has never used it. This is the single most common error.
+- **Treating the Y-axis as importance.** Visibility means *visibility to the user*, not business value or criticality. Power supply is invisible-but-critical → it belongs low on the map, not high.
+- **Floating components with no anchor.** Every value chain must trace upward to the user need. A component nothing depends on (directly or transitively) is either mis-placed or doesn't belong on this map.
+
+### OnlineWardleyMaps (OWM) syntax — for the `/arckit.wardley*` commands
+
+These produce OWM text for <https://create.wardleymaps.ai>. The renderer is strict:
+
+- **Coordinates are `[visibility, evolution]`, both 0–1, in that order** — `component Foo [0.9, 0.2]`. Authors routinely swap the pair or use 0–100; either silently mis-renders. Visibility first (Y), evolution second (X).
+- **Declare a component before linking it.** `A->B` referencing an undeclared `B` drops the link. Declare all `component` lines first, dependency lines after.
+- **`evolve` needs only the target X, and the component must already exist:** `evolve Foo 0.7`. Don't restate visibility; don't `evolve` a name you never declared.
+- **Names with spaces work in declarations but must match *exactly* in links** — `component Data Pipeline [..]` then `Kettle->Data Pipeline`, not `->DataPipeline`. Trailing whitespace breaks the match.
+- **Stage-boundary x-values:** Genesis `0.0–0.25`, Custom `0.25–0.50`, Product `0.50–0.75`, Commodity `0.75–1.0`. Keep positions inside the intended band so the visual reads correctly.
+- **One statement per line.** OWM is line-based; no semicolons, no inline comments after a statement.
+
+### Process mistakes
+
+- **Skipping the AskUserQuestion triage.** Inventing the user need, scope, or positioning instead of asking produces a confident-but-wrong map. When positioning is ambiguous for a key component, ask (Step 3) rather than guess.
+- **Listing only technology.** A value chain includes people, practices, and data — not just systems. Maps that are all boxes-of-software miss the inertia and doctrine insights that make the exercise worthwhile.
+- **Recommendations with no rationale.** Every strategic move must tie back to a position or movement on the map ("commoditize X because it sits Product-right with three vendors"), not generic advice.
+
 ## Analysis Checklist
 
 Apply this checklist to every completed map:
