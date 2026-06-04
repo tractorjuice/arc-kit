@@ -115,13 +115,19 @@ Generates a DISP Member self-attestation pack — the apex artefact for Defence-
 
 Recipe: [`au-federal.yaml`](../../arckit-au/recipes/au-federal.yaml)
 
-35 default targets across 9 build waves + 2 post-build hooks, with optional default-off `AU_OT` and `AU_SOCI` targets for cross-sector critical-infrastructure use. The recipe swaps three commands from the `uk-saas` baseline (per maintainer guidance on #424):
+37 default targets across the build waves + 3 post-build hooks (`arckit:health`, `arckit:graph-report`, `arckit:pages`), with optional default-off `AIP`, `DATASCOUT`, `AU_OT` and `AU_SOCI` targets for cross-sector critical-infrastructure and procurement use. The recipe swaps three commands from the `uk-saas` baseline (per maintainer guidance on #424):
 
 - `arckit:tcop` → `arckit:au-dss` (DTA DSS replaces UK TCoP)
 - `arckit:secure` → `arckit:au-e8-posture` (E8 ML2 replaces UK Secure-by-Design)
 - `arckit:dpia` → `arckit:au-pia` (Privacy Act 1988 replaces UK GDPR/DPA 2018)
 
 The wave shape mirrors `ca-federal-fitaa` — foundation → research wave + early domain artefacts → mid-domain → late ADRs → flagship → synthesis. `AU_DISP` is the consolidation flagship in W5, depending on `AU_E8`, `AU_ISM`, `AU_PIA`, `AU_NDB`, and `AU_PSPF` having completed in earlier waves.
+
+### Visual and evidence targets
+
+The recipe enables architecture and evidence artefacts by default so compliance findings can cite real structure rather than narrative: `DIAG` (diagrams), `DFD` (data flow diagrams), `DATA_MODEL`, `SNOW` (ServiceNow / CMDB), `TRACEABILITY`, and `MATURITY` (a `MMOD` capability maturity model). The optional `AU_OT` and `AU_SOCI` targets consume these as inputs, and the `arckit:graph-report` post-build hook surfaces coverage across the AU compliance, architecture, risk, traceability, and operations artefacts.
+
+All AU Federal commands and templates apply a **Visual Evidence Decision Rule**: companion visuals are generated only when the evidence has enough structure to identify real nodes and relationships; when evidence is partial but structurally useful, a clearly marked draft visual is produced with `Pending Input` labels; otherwise the artefact records a *Visual Evidence Gap* listing the minimum inputs needed, instead of inventing a diagram from insufficient data.
 
 To add OT and SOCI/CIRMP support to a federal build:
 

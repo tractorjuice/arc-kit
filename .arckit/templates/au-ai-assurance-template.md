@@ -77,7 +77,7 @@ National AI Centre (NAIC) operational practices for safe and responsible AI adop
 | # | Practice | Status | Evidence | Gap | Action |
 |---|----------|--------|----------|-----|--------|
 | 1 | Decide who is accountable | [✅/⚠️/❌/N/A] | [Cite accountable AI officer designation; cross-ref DTA Responsible AI Policy section 2] | [Gap] | [Action] |
-| 2 | Understand impacts and plan accordingly | [✅/⚠️/❌/N/A] | [Cite impact assessment / PIA / DPIA where relevant] | [Gap] | [Action] |
+| 2 | Understand impacts and plan accordingly | [✅/⚠️/❌/N/A] | [Cite impact assessment / PIA where relevant] | [Gap] | [Action] |
 | 3 | Measure and manage risks | [✅/⚠️/❌/N/A] | [Cite RISK register entries; AI-specific risk methodology] | [Gap] | [Action] |
 | 4 | Share essential information | [✅/⚠️/❌/N/A] | [Cite transparency artefacts; AI use disclosure; user-facing notices] | [Gap] | [Action] |
 | 5 | Test and monitor | [✅/⚠️/❌/N/A] | [Cite testing methodology; monitoring dashboards; drift detection] | [Gap] | [Action] |

@@ -5,6 +5,13 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **AU Federal visual-evidence enrichment** (derived from #569). The `arckit-au` Federal commands and templates now compose with ArcKit's existing architecture and evidence tooling — `/arckit:diagram`, `/arckit:dfd`, `/arckit:data-model`, `/arckit:servicenow`, `/arckit:risk`, `/arckit:traceability`, `/arckit:graph-report` and `/arckit:maturity-model` — via embedded enrichment handoffs and an "ArcKit Architecture Evidence Map" section in each command. A standard **Visual Evidence Decision Rule** is applied across all ten Federal templates: generate companion visuals only when the evidence has enough structure for real nodes and relationships; generate a clearly marked draft visual with `Pending Input` labels when evidence is partial but structurally useful; otherwise record a **Visual Evidence Gap** and list the minimum inputs needed. The guidance stays cross-sector (SOCI/OT is not made energy-specific). The `au-federal` recipe gains default visual/evidence targets (DIAG, DFD, ServiceNow, maturity, traceability) and a `graph-report` post-build hook, plus synthetic eval fixtures for the complete / partial / sparse evidence scenarios.
+- **`MMOD` (Maturity Model Assessment) doc-type registered.** The core `/arckit:maturity-model` command has always emitted `ARC-*-MMOD-*` document IDs, but `MMOD` was never registered in `config/doc-types.mjs` or the `/arckit:pages` allow-list, so maturity artefacts were not recognised by graph-inject or the documentation site. Registered as a regime-neutral `Governance` type (severity `HIGH`, matching sibling governance types such as `RISK` and `TRAC`).
+
 ## [5.9.2] — 2026-06-03
 
 ### Fixed
