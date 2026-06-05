@@ -70,9 +70,10 @@ Commands exist in multiple formats across the distribution. The plugin source is
 
 - `description` (required), `effort:` (override session effort: `low`, `medium`, `high`, `max` for Opus 4.6, `xhigh` for Opus 4.7 and Opus 4.8 — note Opus 4.8 defaults to `high`)
 - `keep-coding-instructions: true` (v2.1.94+) — persist instructions across `/compact` for long-running commands
+- `disallowed-tools:` (v2.1.152+) — remove tools from the model while the command/skill is active; available but **not yet used** in ArcKit (candidate hardening for read-only commands like `/arckit:search`, `/arckit:navigator`, `/arckit:health`)
 - `handoffs:` — list of `{command, description?, condition?}` entries; converter renders these as a "Suggested Next Steps" section for non-Claude targets
 
-Effort and `keep-coding-instructions` are stripped by the converter for non-Claude targets.
+Effort, `keep-coding-instructions`, and `disallowed-tools` are stripped by the converter for non-Claude targets.
 
 **Fast mode** (`/fast` toggle) runs the current Opus model with faster output — same model, no smaller-model downgrade. As of Claude Code v2.1.154 the default backing model for `/fast` is **Opus 4.8** (2x the standard rate for 2.5x the speed); it was Opus 4.7 on v2.1.142–v2.1.153 and Opus 4.6 before that. `/fast` is unrelated to the `effort:` frontmatter — the two compose: a command with `effort: xhigh` still benefits from `/fast` if the user has toggled it.
 
@@ -101,7 +102,7 @@ Agents are Claude Code only — Codex/OpenCode/Gemini equivalents inline the ful
 
 ### Plugin Skills
 
-Skills live in `arckit-claude/skills/{name}/SKILL.md`. Frontmatter: `name`, `description` (≤1,536 chars), optional `paths:` glob list (v2.1.84+) for auto-activation. The converter strips `paths:` for non-Claude targets.
+Skills live in `arckit-claude/skills/{name}/SKILL.md`. Frontmatter: `name`, `description` (≤1,536 chars), optional `paths:` glob list (v2.1.84+) for auto-activation, optional `disallowed-tools:` (v2.1.152+) to remove tools while the skill is active. The converter strips `paths:` and `disallowed-tools:` for non-Claude targets. During plugin development, `/reload-skills` (v2.1.152+) re-scans skill directories without restarting the session.
 
 | Skill | Type | Purpose |
 |-------|------|---------|
@@ -130,6 +131,8 @@ Substitution uses `${user_config.KEY}`. Sensitive values are never substituted i
 ### Plugin Hooks
 
 Hook handlers live in `arckit-claude/hooks/` and are registered in `arckit-claude/hooks/hooks.json`. All entries use the **exec form** (`command: "node"` + `args: ["${CLAUDE_PLUGIN_ROOT}/hooks/<name>.mjs"]`, v2.1.139+) so the harness execs the binary directly instead of parsing a shell-quoted command line. PostToolUse entries set `continueOnBlock: true` (v2.1.139+) so the observational `update-manifest`, `provenance-stamp`, and `telemetry` hooks can never derail the user's turn — block semantics are reserved for the genuine gates (`file-protection`, `secret-detection`, `validate-arc-filename`). The `PostCompact` event re-injects project context after `/compact` or auto-compaction (`postcompact-rehydrate.mjs`) so the dynamic filesystem-derived state (`projects/`, ARC artefacts, external policies) isn't lost in the summary — companion to `keep-coding-instructions: true` which preserves static command bodies. Individual hook entries also support an `if:` field (v2.1.85+) using permission rule syntax (e.g. `"Write(/projects/**)"`) to narrow triggering and avoid unnecessary Node spawns.
+
+Platform hook capabilities available but **not yet used** by ArcKit (flagged for future adoption, tracked on #522): `SessionStart` hooks can return `hookSpecificOutput.sessionTitle` to name the session and `reloadSkills: true` to re-scan skill directories (v2.1.152+); `Stop`/`SubagentStop` hooks can return `hookSpecificOutput.additionalContext` to feed the model an end-of-turn nudge without erroring (v2.1.163+ — candidate for `session-learner.mjs`); and the `MessageDisplay` event (v2.1.152+) can transform or hide assistant text as it is displayed (speculative classification-aware redaction for OFFICIAL-SENSITIVE work).
 
 Notable hooks: provenance stamping, manifest auto-update, session telemetry, secret detection, requirement-graph injection. **For full details on each hook, see [`arckit-claude/hooks/README.md`](arckit-claude/hooks/README.md).**
 

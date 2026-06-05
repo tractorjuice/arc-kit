@@ -49,6 +49,8 @@ claude
 
 The value is milliseconds. Recommended for: corporate networks with TLS-inspecting proxies, VPN-tunnelled connections, and large-scope research prompts that trigger many `microsoft_docs_fetch` / `aws___read_documentation` / `get_document` calls in sequence. On a healthy direct connection the default is fine — only set this when you see timeout failures.
 
+> **Don't set a sub-second timeout.** As of Claude Code v2.1.162, a per-server `timeout` below `1000` ms is ignored (it falls back to `MCP_TOOL_TIMEOUT` or the default) rather than being floored to a 1-second watchdog that aborted every call. ArcKit ships no sub-1000 ms timeouts, so this is reassurance only — but if you hand-edit a server's `timeout`, keep it ≥ `1000`.
+
 ### Step 1: Add the marketplace
 
 In Claude Code, run:
@@ -83,6 +85,8 @@ After restart, open the plugin manager (`/plugin`) and navigate to **Installed**
 - **Hooks**: SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest
 
 > **Tip**: You may see 2 MCP errors about missing API keys for Google and Data Commons. These are harmless — see [Servers Requiring API Keys](#servers-requiring-api-keys) below.
+
+> **Confirm what's enabled from the CLI** (Claude Code v2.1.163+): `/plugin list --enabled` lists the active plugins. Handy because the community overlays (`arckit-uae`, `arckit-fr`, `arckit-au`, …) ship `defaultEnabled: false` — if an overlay's `/arckit:*` commands aren't showing up, it's almost always because it wasn't enabled. Use `/plugin list --disabled` to see what's installed but off.
 
 ### Auto-enabling for team repos
 
@@ -188,6 +192,8 @@ export DATA_COMMONS_API_KEY="your-api-key-here"
 ```
 
 3. Restart Claude Code
+
+> **Your keys stay hidden in `claude mcp` output.** Both keyed servers carry their key in an HTTP header (`X-Goog-Api-Key`, `X-API-Key`) via `${GOOGLE_API_KEY}` / `${DATA_COMMONS_API_KEY}`. As of Claude Code v2.1.161, `claude mcp list` / `get` / `add` no longer expand `${VAR}` references and redact credential headers and URL secrets — so inspecting your MCP config (or screen-sharing it) won't leak the keys. Relevant for OFFICIAL-SENSITIVE / regulated deployments. The other four bundled servers are keyless, so there's nothing to redact.
 
 ---
 

@@ -128,6 +128,27 @@ SKIP_PATTERNS = [
 ]
 ```
 
+## Restricting web access for research agents
+
+ArcKit's web-research agents (`research`, `datascout`, `aws-research`, `azure-research`, `gcp-research`, `gov-*`, `grants`) use `WebFetch`. For a regulated or OFFICIAL-SENSITIVE deployment you may want to confine that traffic to an approved set of domains. As of Claude Code v2.1.162, explicit `WebFetch(domain:...)` permission rules **take precedence over the built-in preapproved-host auto-allow** (previously the preapproved hosts leaked through), so a deny/allow policy now actually holds.
+
+Add rules to `.claude/settings.json` (or org managed settings for fleet-wide enforcement — see [Fleet & Version Governance](enterprise-scale.md#fleet--version-governance-managed-settings)):
+
+```json
+{
+  "permissions": {
+    "deny": ["WebFetch"],
+    "allow": [
+      "WebFetch(domain:*.gov.uk)",
+      "WebFetch(domain:*.service.gov.uk)",
+      "WebFetch(domain:docs.aws.amazon.com)"
+    ]
+  }
+}
+```
+
+This is a Claude Code permission policy, not an ArcKit hook — ArcKit ships no domain restrictions by default, leaving the choice to the deployment.
+
 ## Testing
 
 You can test each hook by piping JSON to stdin. All hooks handle empty input gracefully.

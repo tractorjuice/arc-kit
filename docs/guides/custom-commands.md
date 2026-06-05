@@ -81,6 +81,8 @@ Always include a `## User Input` section with a fenced `text` block containing `
 
 Do not hand-write target-specific placeholders — use `$ARGUMENTS` and let the converter do the work.
 
+> **Need a literal `$` before a digit?** Claude Code treats `$1`, `$2`, … as positional argument placeholders in command/skill bodies. To write a literal dollar-then-digit (e.g. a price like `$5`, or a regex like `$1`), escape it as `\$` (Claude Code v2.1.163+) — `\$5`, `\$1`. ArcKit commands rarely need this since they use `$ARGUMENTS`, but it matters if you write a worked example containing currency or shell positional vars.
+
 > The Copilot placeholder currently hard-codes the `topic:` label regardless of what the command expects as input. If you need a command-specific label, it requires changes to `scripts/converter.py` — the converter is the right place to thread that customisation through.
 
 ### Reading Templates with User Overrides
