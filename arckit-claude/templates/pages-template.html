@@ -3087,6 +3087,13 @@
                         const total = t.mcp.reduce((sum, m) => sum + (m.count || 0), 0);
                         parts.push(`${total} MCP`);
                     }
+                    if (Array.isArray(t.byAgent)) {
+                        const topAgent = t.byAgent.find(a => a.agent !== 'main');
+                        if (topAgent) {
+                            const calls = (topAgent.toolCalls || 0) + (topAgent.mcpCalls || 0);
+                            parts.push(`top agent: ${topAgent.agent} (${calls})`);
+                        }
+                    }
                     const summary = parts.length > 0 ? parts.join(' · ') : 'no telemetry';
                     const failureMark = s.isFailure ? ' <span style="color:#d4351c">⚠</span>' : '';
                     const effortChip = (typeof s.effort === 'string' && s.effort)

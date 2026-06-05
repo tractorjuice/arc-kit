@@ -61,6 +61,15 @@ const tool = data.tool_name || '';
 // vs `max` for the same tool.
 const effortLevel = (data.effort && typeof data.effort === 'object' ? data.effort.level : null) || process.env.CLAUDE_EFFORT || null;
 
+// Subagent context (Claude Code v2.1.145+): present only when the hook fires
+// inside a subagent call. `agent_type` is the subagent name (e.g.
+// "arckit-research"); `agent_id` is the unique instance. Attached to
+// latency/MCP records so session-learner can attribute tool activity by agent.
+// (Hook input exposes agent_id/agent_type but NOT parent_agent_id, so the
+// dispatch tree cannot be reconstructed — only per-agent attribution.)
+const agentType = data.agent_type || null;
+const agentId = data.agent_id || null;
+
 let record = null;
 const ts = new Date().toISOString();
 
@@ -95,6 +104,11 @@ if (event === 'TaskCreated' || tool === 'TaskCreate') {
 
 if (record) {
   if (effortLevel) record.effort = effortLevel;
+  // Attribute latency/MCP activity to the subagent it ran inside (if any).
+  if (record.kind === 'hook_duration' || record.kind === 'mcp_call') {
+    if (agentType) record.agent_type = agentType;
+    if (agentId) record.agent_id = agentId;
+  }
   const memoryDir = join(cwd, '.arckit', 'memory');
   try {
     mkdirSync(memoryDir, { recursive: true });

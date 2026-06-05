@@ -99,3 +99,6 @@ jobs:
 
       - name: Session-nudge rule-engine tests
         run: node --test tests/plugin/session-nudge.test.mjs
+
+      - name: Telemetry rollup tests
+        run: node --test tests/plugin/telemetry-rollup.test.mjs
