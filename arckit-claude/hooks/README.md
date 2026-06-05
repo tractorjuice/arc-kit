@@ -77,6 +77,23 @@ When `docs/` exists (i.e. the project has run `/arckit:pages`), `session-learner
 
 > **Note on `type: "mcp_tool"` (v2.1.118)**: This Claude Code feature lets a hook *invoke* an MCP tool as its action (alternative to `type: "command"` / `type: "prompt"`). It does **not** filter hooks to fire only on MCP tool calls. ArcKit logs `govreposcrape` calls via the existing tool-name matcher pattern (`mcp__govreposcrape__.*`); no `type: "mcp_tool"` registration is needed for telemetry.
 
+## End-of-Turn Nudge (`session-learner.mjs` + `session-nudge.mjs`, v2.1.163+)
+
+On a normal `Stop`, after writing the session summary, `session-learner.mjs` emits at most one gentle next-step nudge via `hookSpecificOutput.additionalContext` when this session's commits left a curated traceability-chain gap. It reacts to what the just-finished turn did — distinct from the SessionStart `stale-artifact-scan` monitor (standing gaps) and `/arckit:navigator` / `/arckit:health` (full scans).
+
+The rule set (priority order; first match across touched projects wins, lowest project number as tiebreaker):
+
+| Touched this session | …but project has no | Nudge |
+|----------------------|---------------------|-------|
+| `REQ` Requirements | `TRAC` Traceability Matrix | `/arckit:traceability` |
+| `STKE` Stakeholders | `REQ` Requirements | `/arckit:requirements` |
+| `REQ` Requirements | `DATA` Data Model | `/arckit:data-model` |
+| `ADR` Decision Record | `DIAG` Diagram | `/arckit:diagram` |
+
+Trigger codes come from this session's git-changed files; the complement is checked by recursively scanning the project's `projects/NNN-*` directory. The decision logic lives in the pure, side-effect-free `session-nudge.mjs` (`selectNudge`), unit-tested in `tests/plugin/session-nudge.test.mjs`.
+
+**Version gate.** `hookSpecificOutput.additionalContext` from a `Stop` hook is only safe on Claude Code **v2.1.163+** (older clients treat it as a hook error). ArcKit's floor is v2.1.156, so `version-check.mjs` writes the detected client version to `.arckit/memory/.cc-version` at SessionStart and `session-learner.mjs` reads it; below 2.1.163 (or if absent/unparseable) the nudge stays silent — today's behaviour. The nudge is also suppressed on `StopFailure` and when the `ARCKIT_NO_NUDGE` environment variable is set. All nudge logic runs after the session-summary writes and is wrapped so it can never break them.
+
 ## Project Context Re-Injection (`postcompact-rehydrate.mjs`)
 
 PostCompact hook (Claude Code v2.1.76+) that re-injects the same project context the `UserPromptSubmit` hook produces — project inventory, ARC-* artifact listings (top-level + subdirectories), vendor profiles, external documents, global policies. Fires once per `/compact` or auto-compaction.
@@ -112,7 +129,8 @@ See `hooks.json` for the full registration. Current handler files in this direct
   - **Pipeline range** — `pipeline NAME [v1, v2]` endpoints in `[0.00, 1.00]` and `v1 < v2`
   - **OWM style whitelist** — `style` must be one of `wardley`, `colour`, `plain`, `handwritten`, `dark`
   - **Mermaid `wardley-beta` bare-digit tokens** — Wardley-template-specific check; general Mermaid validation belongs to issue #435 (sibling validator)
-- `version-check.mjs` — warn on Claude Code version drift
+- `version-check.mjs` — warn on Claude Code / plugin version drift; also persists the detected client version to `.arckit/memory/.cc-version` so the Stop-hook nudge can version-gate (see "End-of-Turn Nudge" above)
+- `session-nudge.mjs` — pure rule engine (`selectNudge`) for the end-of-turn nudge; no side effects, imported by `session-learner.mjs`
 - `notify-stale-artifacts.mjs` — opt-in SessionStart desktop notification when `detect-stale-artifacts.sh` reports overdue artefacts. Gated on the `desktop_notifications` userConfig field equalling `"true"`, read from the `CLAUDE_PLUGIN_OPTION_DESKTOP_NOTIFICATIONS` env var that Claude Code exports to plugin subprocesses. The env-var path degrades cleanly to `undefined` when the field is unset; the earlier `${user_config.desktop_notifications}` argv substitution raised `plugin option "desktop_notifications" isnt set` on fresh installs and aborted the hook before it could run. Emits a `terminalSequence` (Claude Code v2.1.141+) stacking OSC 9 (iTerm2 / Windows Terminal / WezTerm / ConEmu) and OSC 777 (urxvt / Ghostty / Warp) notification escapes — terminals silently ignore unsupported codes per the documented allowlist. Complements the existing `stale-artifact-scan` background monitor; the monitor still streams per-line in-session notifications.
 
 ## Vendored Wardley tidy engine

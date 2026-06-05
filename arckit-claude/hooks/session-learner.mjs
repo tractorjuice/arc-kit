@@ -17,11 +17,12 @@
  * Output (stdout): empty (notification hook, no output required)
  */
 
-import { writeFileSync, mkdirSync, unlinkSync } from 'node:fs';
+import { writeFileSync, mkdirSync, unlinkSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { isDir, isFile, readText, parseHookInput } from './hook-utils.mjs';
+import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 import { DOC_TYPES } from '../config/doc-types.mjs';
+import { selectNudge } from './session-nudge.mjs';
 
 const data = parseHookInput();
 const cwd = data.cwd || '.';
@@ -90,6 +91,9 @@ const files = [...new Set(changedFiles.split('\n').filter(Boolean))];
 // projectArtifacts: Map<projectNum, Map<category, Set<typeName>>>
 const projectArtifacts = new Map();
 const allCategories = new Set();
+// Doc-type codes touched this session, keyed by project number — feeds the
+// end-of-turn nudge (selectNudge) at the bottom of this file.
+const projectCodes = new Map();
 
 for (const f of files) {
   // Extract project number from ARC filename (e.g., ARC-001-REQ-v1.0.md → 001)
@@ -104,6 +108,9 @@ for (const f of files) {
       if (!projMap.has(info.category)) projMap.set(info.category, new Set());
       projMap.get(info.category).add(info.name);
       allCategories.add(info.category);
+
+      if (!projectCodes.has(projNum)) projectCodes.set(projNum, new Set());
+      projectCodes.get(projNum).add(code);
     }
   }
 }
@@ -270,9 +277,91 @@ if (isDir(docsDir)) {
 // Write timestamp for next session boundary
 writeFileSync(lastSessionFile, now.toISOString());
 
+// ── End-of-turn nudge (Claude Code v2.1.163+) ────────────────────────────
+// A reactive next-step suggestion when this session left a traceability-chain
+// gap (e.g. created requirements but no traceability matrix). Emitted as
+// hookSpecificOutput.additionalContext, which Stop hooks may return without
+// being labelled a hook error only on v2.1.163+ — so we gate on the version
+// persisted by version-check.mjs at SessionStart and stay silent otherwise.
+// Wrapped so it can never affect the session-summary writes above.
+try {
+  const nudge = buildNudge();
+  if (nudge) {
+    console.log(JSON.stringify({
+      hookSpecificOutput: { hookEventName: 'Stop', additionalContext: nudge.message },
+    }));
+  }
+} catch {
+  // Nudge is best-effort — never let it break the session.
+}
+
 process.exit(0);
 
 // ── Helpers ────────────────────────────────────────────────────────────
+
+/**
+ * Decide whether to emit an end-of-turn nudge. Returns the selectNudge result
+ * or null. Guards: not a failure turn, opt-out env var unset, client confirmed
+ * >= 2.1.163, and at least one artefact touched this session.
+ */
+function buildNudge() {
+  if (isFailure) return null;
+  if (process.env.ARCKIT_NO_NUDGE) return null;
+  if (projectCodes.size === 0) return null;
+
+  // Version gate: read the client version persisted by version-check.mjs.
+  const ccFile = join(memoryDir, '.cc-version');
+  const cc = isFile(ccFile) ? parseVersion(readText(ccFile)) : null;
+  if (!cc || compareVersions(cc, '2.1.163') < 0) return null;
+
+  const diskCodesByProject = new Map();
+  for (const projNum of projectCodes.keys()) {
+    diskCodesByProject.set(projNum, scanProjectDiskCodes(cwd, projNum));
+  }
+  return selectNudge({ projectCodes, diskCodesByProject });
+}
+
+/**
+ * Collect the doc-type codes present on disk for a project, by recursively
+ * scanning its `projects/NNN-*` directory. Uses the same filename test as the
+ * git-based detection above. Returns a Set of codes (empty on any failure).
+ */
+function scanProjectDiskCodes(baseCwd, projNum) {
+  const found = new Set();
+  const projectsDir = join(baseCwd, 'projects');
+  let projectDir = null;
+  try {
+    for (const entry of readdirSync(projectsDir)) {
+      if (entry === projNum || entry.startsWith(`${projNum}-`)) {
+        projectDir = join(projectsDir, entry);
+        break;
+      }
+    }
+  } catch {
+    return found;
+  }
+  if (!projectDir) return found;
+
+  const walk = (dir) => {
+    let entries;
+    try {
+      entries = readdirSync(dir, { withFileTypes: true });
+    } catch {
+      return;
+    }
+    for (const e of entries) {
+      if (e.isDirectory()) {
+        walk(join(dir, e.name));
+      } else {
+        for (const code of Object.keys(DOC_TYPES)) {
+          if (e.name.includes(`-${code}-`) || e.name.includes(`-${code}.`)) found.add(code);
+        }
+      }
+    }
+  };
+  walk(projectDir);
+  return found;
+}
 
 /**
  * Roll up telemetry events from telemetry.mjs into a single line for

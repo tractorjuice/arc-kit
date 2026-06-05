@@ -18,7 +18,7 @@ import { join } from 'node:path';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { findRepoRoot } from '../../arckit-claude/hooks/hook-utils.mjs';
+import { findRepoRoot, parseVersion, compareVersions } from '../../arckit-claude/hooks/hook-utils.mjs';
 
 function makeRoot() {
   return mkdtempSync(join(tmpdir(), 'arckit-hookutils-'));
@@ -98,4 +98,31 @@ test('returns null when there is no projects/ directory at all', () => {
   } finally {
     rmSync(root, { recursive: true, force: true });
   }
+});
+
+// ── parseVersion ────────────────────────────────────────────────────────
+
+test('parseVersion extracts a semver from version output', () => {
+  assert.equal(parseVersion('2.1.163 (Claude Code)'), '2.1.163');
+  assert.equal(parseVersion('claude 2.1.156'), '2.1.156');
+});
+
+test('parseVersion returns null when no version present', () => {
+  assert.equal(parseVersion('no version here'), null);
+  assert.equal(parseVersion(''), null);
+  assert.equal(parseVersion(null), null);
+});
+
+// ── compareVersions ─────────────────────────────────────────────────────
+
+test('compareVersions orders the 2.1.163 nudge gate correctly', () => {
+  assert.ok(compareVersions('2.1.163', '2.1.163') === 0);
+  assert.ok(compareVersions('2.1.162', '2.1.163') < 0); // below gate
+  assert.ok(compareVersions('2.1.164', '2.1.163') > 0); // above gate
+  assert.ok(compareVersions('2.1.156', '2.1.163') < 0);
+});
+
+test('compareVersions handles ragged version strings', () => {
+  assert.ok(compareVersions('2.2', '2.1.163') > 0);
+  assert.ok(compareVersions('2.1', '2.1.0') === 0);
 });

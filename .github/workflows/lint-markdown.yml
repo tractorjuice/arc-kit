@@ -96,3 +96,6 @@ jobs:
 
       - name: Hook-utils findRepoRoot tests
         run: node --test tests/plugin/test_hook_utils.mjs
+
+      - name: Session-nudge rule-engine tests
+        run: node --test tests/plugin/session-nudge.test.mjs

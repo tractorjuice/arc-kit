@@ -13,19 +13,26 @@
  *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+). Silent on
  *      detection failure.
  *
+ * Side effect: when inside an ArcKit project, persists the detected client
+ * version to `.arckit/memory/.cc-version` so the Stop hook
+ * (session-learner.mjs) can version-gate its end-of-turn nudge (which needs
+ * v2.1.163+) without re-detecting. Best-effort; never created elsewhere.
+ *
  * Hook Type: SessionStart
  * Input (stdin): JSON with session_id, cwd, etc.
  * Output (stdout): JSON with additionalContext (only when a warning fires).
  */
 
 import { spawnSync } from 'node:child_process';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isFile, readText, parseHookInput } from './hook-utils.mjs';
+import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 
 const MIN_CLAUDE_CODE_VERSION = '2.1.156';
 
-parseHookInput(); // consume stdin (required by hook protocol)
+const data = parseHookInput(); // consume stdin (required by hook protocol)
+const cwd = data.cwd || '.';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const pluginRoot = process.env.CLAUDE_PLUGIN_ROOT || resolve(__dirname, '..');
@@ -35,6 +42,21 @@ const localVersion = (isFile(versionFile) && readText(versionFile)?.trim()) || n
 const warnings = [];
 
 const clientVersion = detectClaudeCodeVersion();
+
+// Persist the detected client version so the Stop hook (session-learner.mjs)
+// can gate its end-of-turn nudge on it without re-detecting. Best-effort:
+// only inside an ArcKit project (so we never create .arckit/ elsewhere), and
+// every failure is swallowed — version detection must never break startup.
+if (clientVersion && (isDir(join(cwd, '.arckit')) || isDir(join(cwd, 'projects')))) {
+  try {
+    const memoryDir = join(cwd, '.arckit', 'memory');
+    mkdirSync(memoryDir, { recursive: true });
+    writeFileSync(join(memoryDir, '.cc-version'), clientVersion);
+  } catch {
+    // Non-fatal — the nudge simply stays dormant if we can't persist.
+  }
+}
+
 if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0) {
   warnings.push(
     `## Claude Code Version Warning\n\n` +
@@ -152,24 +174,4 @@ function detectClaudeCodeVersion() {
   } catch {
     return null;
   }
-}
-
-function parseVersion(text) {
-  const match = /(\d+\.\d+\.\d+)/.exec(text || '');
-  return match ? match[1] : null;
-}
-
-/**
- * Compare two semver strings (major.minor.patch).
- * Returns > 0 if a > b, < 0 if a < b, 0 if equal.
- */
-function compareVersions(a, b) {
-  const pa = a.split('.').map(Number);
-  const pb = b.split('.').map(Number);
-  for (let i = 0; i < 3; i++) {
-    const va = pa[i] || 0;
-    const vb = pb[i] || 0;
-    if (va !== vb) return va - vb;
-  }
-  return 0;
 }

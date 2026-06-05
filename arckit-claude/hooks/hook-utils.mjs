@@ -358,3 +358,34 @@ export function parseHookInput() {
   }
   return data;
 }
+
+// ── Version helpers ──
+
+/**
+ * Extract a semver (major.minor.patch) from arbitrary text such as
+ * `claude --version` output or a `CLAUDE_CODE_VERSION` value.
+ *
+ * @param {string|null|undefined} text
+ * @returns {string|null} the matched version, or null when none present
+ */
+export function parseVersion(text) {
+  const match = /(\d+\.\d+\.\d+)/.exec(text || '');
+  return match ? match[1] : null;
+}
+
+/**
+ * Compare two semver strings (major.minor.patch). Missing components count
+ * as 0, so `2.1` equals `2.1.0`.
+ *
+ * @returns {number} > 0 if a > b, < 0 if a < b, 0 if equal
+ */
+export function compareVersions(a, b) {
+  const pa = String(a).split('.').map(Number);
+  const pb = String(b).split('.').map(Number);
+  for (let i = 0; i < 3; i++) {
+    const va = pa[i] || 0;
+    const vb = pb[i] || 0;
+    if (va !== vb) return va - vb;
+  }
+  return 0;
+}
