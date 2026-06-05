@@ -68,7 +68,7 @@ Commands exist in multiple formats across the distribution. The plugin source is
 
 **Plugin command frontmatter** supports:
 
-- `description` (required), `effort:` (override session effort: `low`, `medium`, `high`, `max` for Opus 4.6, `xhigh` for Opus 4.7 and Opus 4.8 — note Opus 4.8 defaults to `high`)
+- `description` (required), `effort:` (override session effort — frontmatter accepts `low`, `medium`, `high`, `xhigh`, `max`. Per-model support: Opus 4.8 and 4.7 support all five (`xhigh` and `max`); Opus 4.6 and Sonnet 4.6 support `low`/`medium`/`high`/`max` but **not** `xhigh`. An unsupported level falls back to the highest supported level at or below it (e.g. `xhigh` → `high` on Opus 4.6). `max` is the deepest tier (above `xhigh`) but the docs caution it can overthink — test before adopting broadly. Default effort is `high` on Opus 4.8/4.6/Sonnet 4.6, `xhigh` on Opus 4.7. ArcKit's heavy commands/agents use `effort: max`, which is valid in frontmatter and runs as `max` on Opus 4.8.)
 - `keep-coding-instructions: true` (v2.1.94+) — persist instructions across `/compact` for long-running commands
 - `disallowed-tools:` (v2.1.152+) — remove tools from the model while the command/skill is active; available but **not yet used** in ArcKit (candidate hardening for read-only commands like `/arckit:search`, `/arckit:navigator`, `/arckit:health`)
 - `handoffs:` — list of `{command, description?, condition?}` entries; converter renders these as a "Suggested Next Steps" section for non-Claude targets
