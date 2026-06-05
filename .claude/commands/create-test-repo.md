@@ -50,6 +50,7 @@ Use the **Write** tool to create each file inside `/tmp/arckit-test-setup/${REPO
 
 ```json
 {
+  "minimumVersion": "2.1.156",
   "extraKnownMarketplaces": {
     "arc-kit": {
       "source": {
@@ -63,6 +64,8 @@ Use the **Write** tool to create each file inside `/tmp/arckit-test-setup/${REPO
   }
 }
 ```
+
+> `minimumVersion` pins the test repo to ArcKit's current Claude Code floor (matches `MIN_CLAUDE_CODE_VERSION` in `arckit-claude/hooks/version-check.mjs`) so background auto-updates can't drop a Codespace below it. Bump this alongside the floor.
 
 ### 4b. `.devcontainer/devcontainer.json`
 

@@ -60,7 +60,11 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Skill tool headless permission fix — \`/arckit:*\` commands run via \`claude -p\` / CI failed with permission errors on v2.1.141–v2.1.143 (needs v2.1.144)\n` +
     `- Plugin \`defaultEnabled: false\` — ArcKit's 9 community overlays no longer auto-enable on marketplace install; users opt in to only the jurisdiction/sector they need (needs v2.1.154)\n` +
     `- Opus 4.8 thinking-block API-error fix — modified thinking blocks caused API errors on earlier clients; affects \`/arckit:*\` commands and research agents using extended thinking (needs v2.1.156)\n\n` +
-    `Update with: \`claude update\``
+    `Update with: \`claude update\`\n\n` +
+    `**Tip — stop drifting back below the floor:** after updating, add ` +
+    `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +
+    `Claude Code then refuses to auto-update or \`claude update\` to anything below ArcKit's floor. ` +
+    `(This is a per-user/project setting — distinct from the org-only \`requiredMinimumVersion\` managed setting that hard-refuses startup fleet-wide.)`
   );
   process.stderr.write(`[ArcKit] Claude Code v${clientVersion} is below required v${MIN_CLAUDE_CODE_VERSION}\n`);
 }

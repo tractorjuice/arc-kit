@@ -1,4 +1,5 @@
 {
+  "minimumVersion": "2.1.156",
   "permissions": {
     "allow": [
       "mcp__aws-knowledge__aws___get_regional_availability",
