@@ -93,9 +93,13 @@ docs/INVESTOR-REPORT-hero.*
 tests/*/output/
 
 # Local experiments — not part of the published toolkit
-tools/wardley-lsp/
 tests/mermaid-wardley/
 .claude/scheduled_tasks.lock
+
+# tools/wardley-lsp/ is a clone of the separate (private) tractorjuice/wardley-lsp
+# repo (the OnlineWardleyMaps Language Server). Same convention as
+# arckit-consulting below: changes belong in that repo, not here.
+tools/wardley-lsp/
 
 # Ignyte scraper - captured session token (never commit)
 docs/auth.txt
