@@ -81,6 +81,10 @@ arckit-gemini/docs/
 docs/articles/
 .tmp*
 
+# Superpowers process artefacts (brainstorming specs + implementation plans).
+# Dev-workflow scratch, not part of the published toolkit; kept locally only.
+docs/superpowers/
+
 # Local investor / pitch drafts (kept off the published toolkit; tracked
 # docs/INVESTOR-REPORT.md is the single shared artefact)
 docs/INVESTOR-DECK.*
