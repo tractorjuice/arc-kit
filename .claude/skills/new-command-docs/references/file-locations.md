@@ -78,9 +78,9 @@ See [html-patterns.md](html-patterns.md) for the full HTML template.
 
 **Search for category comment**: `grep -n "<!-- " docs/index.html | grep -i "{category}"`
 
-## 3. arckit-claude/.claude-plugin/plugin.json
+## 3. plugins/arckit-claude/.claude-plugin/plugin.json
 
-**File**: `arckit-claude/.claude-plugin/plugin.json`
+**File**: `plugins/arckit-claude/.claude-plugin/plugin.json`
 
 ### Count Location (1 place)
 
@@ -88,7 +88,7 @@ See [html-patterns.md](html-patterns.md) for the full HTML template.
 |----------|-------------|
 | Line 4 | `"description": "Enterprise Architecture.*{N} slash commands` |
 
-**Search**: `grep -n "slash commands" arckit-claude/.claude-plugin/plugin.json`
+**Search**: `grep -n "slash commands" plugins/arckit-claude/.claude-plugin/plugin.json`
 
 **Replace pattern**:
 
@@ -116,11 +116,11 @@ OLD: "{N} slash commands for enterprise architecture artifacts"
 NEW: "{N+1} slash commands for enterprise architecture artifacts"
 ```
 
-## 5. arckit-claude/README.md
+## 5. plugins/arckit-claude/README.md
 
-**File**: `arckit-claude/README.md`
+**File**: `plugins/arckit-claude/README.md`
 
-**Search**: `grep -n "[0-9]* commands\|[0-9]* slash" arckit-claude/README.md`
+**Search**: `grep -n "[0-9]* commands\|[0-9]* slash" plugins/arckit-claude/README.md`
 
 Check for count references. This file may or may not have explicit counts. Update any that appear.
 
@@ -238,13 +238,13 @@ Add entry under the current or next version. If no unreleased section exists, cr
 
 **Search**: `grep -n "^## \|^### " CHANGELOG.md | head -10` (find the latest version section)
 
-## 11. arckit-claude/CHANGELOG.md
+## 11. plugins/arckit-claude/CHANGELOG.md
 
-**File**: `arckit-claude/CHANGELOG.md`
+**File**: `plugins/arckit-claude/CHANGELOG.md`
 
 Same format as root CHANGELOG.md but for the plugin.
 
-**Search**: `grep -n "^## \|^### " arckit-claude/CHANGELOG.md | head -10`
+**Search**: `grep -n "^## \|^### " plugins/arckit-claude/CHANGELOG.md | head -10`
 
 ---
 
@@ -254,8 +254,8 @@ Same format as root CHANGELOG.md but for the plugin.
 # Find ALL remaining old count references (replace 49 with old count)
 grep -rn "\b50 commands\b\|50 slash commands\|50 AI-assisted\|50/50\|of 50 " \
   README.md docs/index.html docs/README.md CLAUDE.md \
-  arckit-claude/.claude-plugin/plugin.json \
-  arckit-claude/README.md \
+  plugins/arckit-claude/.claude-plugin/plugin.json \
+  plugins/arckit-claude/README.md \
   .claude-plugin/marketplace.json \
   docs/DEPENDENCY-MATRIX.md
 

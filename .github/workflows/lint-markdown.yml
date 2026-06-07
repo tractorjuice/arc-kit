@@ -10,11 +10,11 @@ on:
       - "scripts/check_references.py"
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
-      - "arckit-*/recipes/**"
-      - "arckit-claude/skills/arckit-build/recipes/**"
-      - "arckit-claude/config/doc-types.mjs"
-      - "arckit-claude/.claude-plugin/plugin.json"
-      - "arckit-claude/schemas/tenders-handoff.schema.json"
+      - "plugins/arckit-*/recipes/**"
+      - "plugins/arckit-claude/skills/arckit-build/recipes/**"
+      - "plugins/arckit-claude/config/doc-types.mjs"
+      - "plugins/arckit-claude/.claude-plugin/plugin.json"
+      - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
       - "tests/plugin/test_validate_tenders_handoff.mjs"
   pull_request:
     paths:
@@ -24,11 +24,11 @@ on:
       - "scripts/check_references.py"
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
-      - "arckit-*/recipes/**"
-      - "arckit-claude/skills/arckit-build/recipes/**"
-      - "arckit-claude/config/doc-types.mjs"
-      - "arckit-claude/.claude-plugin/plugin.json"
-      - "arckit-claude/schemas/tenders-handoff.schema.json"
+      - "plugins/arckit-*/recipes/**"
+      - "plugins/arckit-claude/skills/arckit-build/recipes/**"
+      - "plugins/arckit-claude/config/doc-types.mjs"
+      - "plugins/arckit-claude/.claude-plugin/plugin.json"
+      - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
       - "tests/plugin/test_validate_tenders_handoff.mjs"
 
 jobs:

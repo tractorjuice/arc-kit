@@ -88,7 +88,7 @@ You / CI ──────────────> Anthropic Cloud
 
 ## How It Works
 
-1. **Loads the full agent prompt** from `arckit-claude/agents/arckit-{name}.md` with only `${CLAUDE_PLUGIN_ROOT}` path rewrites
+1. **Loads the full agent prompt** from `plugins/arckit-claude/agents/arckit-{name}.md` with only `${CLAUDE_PLUGIN_ROOT}` path rewrites
 2. **Registers all 5 MCP servers** (AWS Knowledge, Microsoft Learn, Google Dev Knowledge, DataCommons, govreposcrape)
 3. **Mounts GitHub repos** via session resources (ArcKit for templates, project repo for artifacts)
 4. **Streams events** via SSE as the agent works

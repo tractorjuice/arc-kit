@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
 
 const { summariseTelemetry, rollupTelemetry } = await import(
-  resolve('arckit-claude/hooks/telemetry-rollup.mjs')
+  resolve('plugins/arckit-claude/hooks/telemetry-rollup.mjs')
 );
 
 // hook_duration event helper

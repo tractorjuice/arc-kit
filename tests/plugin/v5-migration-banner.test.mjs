@@ -5,7 +5,7 @@ import { mkdtempSync, mkdirSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 
-const HOOK = resolve('arckit-claude/hooks/v5-migration-banner.mjs');
+const HOOK = resolve('plugins/arckit-claude/hooks/v5-migration-banner.mjs');
 
 function runBanner(cwd) {
   const result = spawnSync('node', [HOOK], {

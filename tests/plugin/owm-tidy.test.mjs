@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
 
 const { tidyOwm, tidyOwmToFixpoint } = await import(
-  resolve('arckit-claude/hooks/owm-tidy.mjs')
+  resolve('plugins/arckit-claude/hooks/owm-tidy.mjs')
 );
 
 test('adds label offsets to untuned components', () => {
@@ -75,7 +75,7 @@ test('preserves a trailing newline', () => {
 });
 
 test('only the wardley fenced block of a markdown file is rewritten', async () => {
-  const { tidyMarkdown } = await import(resolve('arckit-claude/hooks/owm-tidy.mjs'));
+  const { tidyMarkdown } = await import(resolve('plugins/arckit-claude/hooks/owm-tidy.mjs'));
   const md = [
     '# Wardley Map',
     '',

@@ -27,7 +27,7 @@ fi
 # Avoids the manual-edit gotcha caught mid-v5.4.0 release where a new plugin
 # (arckit-uk-nhs) shipped without its tag because the array wasn't updated.
 mapfile -t PLUGINS < <(
-  find . -maxdepth 3 -path '*/.claude-plugin/plugin.json' -not -path '*/node_modules/*' \
+  find . -maxdepth 4 -path '*/.claude-plugin/plugin.json' -not -path '*/node_modules/*' \
     | sed -E 's|^\./||; s|/\.claude-plugin/plugin\.json$||' \
     | sort
 )

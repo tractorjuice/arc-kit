@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
 
 const { convert } = await import(
-  resolve('arckit-claude/scripts/owm-to-mermaid.mjs')
+  resolve('plugins/arckit-claude/scripts/owm-to-mermaid.mjs')
 );
 
 test('issue #508 bug 1 — evolve target preserved when quoted name contains an embedded number', () => {

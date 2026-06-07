@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Unit tests for arckit-claude/hooks/hook-utils.mjs :: findRepoRoot
+ * Unit tests for plugins/arckit-claude/hooks/hook-utils.mjs :: findRepoRoot
  *
  * findRepoRoot walks up from `cwd` looking for an ArcKit repo root. A repo root
  * is an ancestor that contains a `projects/` directory holding at least one
@@ -18,7 +18,7 @@ import { join } from 'node:path';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { findRepoRoot, parseVersion, compareVersions } from '../../arckit-claude/hooks/hook-utils.mjs';
+import { findRepoRoot, parseVersion, compareVersions } from '../../plugins/arckit-claude/hooks/hook-utils.mjs';
 
 function makeRoot() {
   return mkdtempSync(join(tmpdir(), 'arckit-hookutils-'));

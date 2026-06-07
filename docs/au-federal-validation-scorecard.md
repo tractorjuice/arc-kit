@@ -104,12 +104,12 @@ grep -rE "\b(ASD|ACSC|OAIC|DTA|PSPF|IRAP|DISP|APP|ISM|Privacy Act 1988)\b" \
 
 # UK leakage in this PR's 8 SKILL.md commands (intentional comparisons in au-dss + au-pia)
 grep -rE "\b(NCSC|ICO|Cyber Essentials|GovS|UK GDPR|GDS|Cabinet Office|DPA 2018|DPIA)\b" \
-  arckit-au/commands/au-*.md | wc -l
+  plugins/arckit-au/commands/au-*.md | wc -l
 # Expected: 2 (intentional cross-references)
 
 # AU framework presence in this PR's 8 SKILL.md commands
 grep -rE "\b(ASD|ACSC|OAIC|DTA|PSPF|IRAP|DISP|APP|ISM|Privacy Act 1988)\b" \
-  arckit-au/commands/au-*.md | wc -l
+  plugins/arckit-au/commands/au-*.md | wc -l
 # Expected: 188
 
 # AU classification presence
@@ -148,7 +148,7 @@ Strongest signal that each command adds value beyond mere consolidation — ever
 Maintainer's verbatim validation snippet from #424:
 
 ```bash
-$ python -c "import yaml; r=yaml.safe_load(open('arckit-au/recipes/au-federal.yaml')); ids = {t['id'] for t in r['targets']}; deps_ok = all(d.rstrip('*') in {i.rstrip('-') for i in ids} or any(i.startswith(d.rstrip('*')) for i in ids) for t in r['targets'] for d in t['deps']); print('ok' if deps_ok else 'FAIL')"
+$ python -c "import yaml; r=yaml.safe_load(open('plugins/arckit-au/recipes/au-federal.yaml')); ids = {t['id'] for t in r['targets']}; deps_ok = all(d.rstrip('*') in {i.rstrip('-') for i in ids} or any(i.startswith(d.rstrip('*')) for i in ids) for t in r['targets'] for d in t['deps']); print('ok' if deps_ok else 'FAIL')"
 ok
 ```
 
@@ -178,7 +178,7 @@ Target breakdown by group:
 
 ### Wave plan — computed locally
 
-Topological sort over `targets[].deps` with glob expansion (`ADR-*` → all `ADR-` prefixed targets), matching the algorithm in `arckit-claude/skills/arckit-build/SKILL.md` § "Wave plan algorithm":
+Topological sort over `targets[].deps` with glob expansion (`ADR-*` → all `ADR-` prefixed targets), matching the algorithm in `plugins/arckit-claude/skills/arckit-build/SKILL.md` § "Wave plan algorithm":
 
 | Wave | Count | Targets |
 |------|-------|---------|
@@ -200,7 +200,7 @@ Topological sort over `targets[].deps` with glob expansion (`ADR-*` → all `ADR
 ```bash
 # In a scratch repo with the ArcKit plugin enabled:
 mkdir -p .arckit/recipes
-cp <upstream-arc-kit>/arckit-au/recipes/au-federal.yaml .arckit/recipes/
+cp <upstream-arc-kit>/plugins/arckit-au/recipes/au-federal.yaml .arckit/recipes/
 
 # Then in a Claude Code session with the ArcKit plugin enabled:
 /arckit:build <project-name> --recipe au-federal --plan
@@ -233,8 +233,8 @@ Layer A's headline claims (9 runs, 25/25, 220 AU references in artefacts, 0 UK l
 | Round-2 item | What changed | Files |
 |--------------|--------------|-------|
 | #2 citation-instructions parity | 4 AU commands gained `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md` reference in their External References step. Brings all 8 AU commands to parity with the canonical `ca-*` pattern. | `au-ai-assurance`, `au-disp-attestation`, `au-ndb-playbook`, `au-pspf` |
-| #3 severity flags | `AUDSS` (DTA Digital Service Standard Conformance) + `AUPSPF` (PSPF Scorecard) bumped to `severity: 'HIGH'`. Both go to senior accountable officers (DTA conformance / CSO), matching the heuristic the other 6 AU codes follow. | `arckit-claude/config/doc-types.mjs` |
-| #4 flagship key | Top-level `flagship: AU_DISP` declared explicitly in recipe YAML — previously documented only in the comment header + README. | `arckit-au/recipes/au-federal.yaml` |
+| #3 severity flags | `AUDSS` (DTA Digital Service Standard Conformance) + `AUPSPF` (PSPF Scorecard) bumped to `severity: 'HIGH'`. Both go to senior accountable officers (DTA conformance / CSO), matching the heuristic the other 6 AU codes follow. | `plugins/arckit-claude/config/doc-types.mjs` |
+| #4 flagship key | Top-level `flagship: AU_DISP` declared explicitly in recipe YAML — previously documented only in the comment header + README. | `plugins/arckit-au/recipes/au-federal.yaml` |
 | DISP template lint propagation | Maintainer's `c18eefab` removed a consecutive blank line in the canonical `au-disp-attestation-template.md`; converter regen propagates the fix to the four extension copies. | `arckit-{codex,opencode,copilot,paperclip}/templates/au-disp-attestation-template.md` |
 | Paperclip surgical regen | `commands.json` updated for 16 entries (4 AU + 12 UAE — the latter propagating the round-1 doc-id fix that the maintainer's surgical merge had inadvertently missed for paperclip) while preserving the 5 v4.16+ Claude-only entries (datascout/gov-reuse/grants/pages/wardley) byte-identical to `c18eefab`. | `arckit-paperclip/src/data/commands.json` |
 | Documentation catch-up | `CHANGELOG.md [Unreleased]` block populated with the round-2 + AI6 entries; `docs/guides/au-federal-overlay.md` describes AI6 in the `au-ai-assurance` section and Reference Anchors. | `CHANGELOG.md`, `docs/guides/au-federal-overlay.md` |
@@ -243,15 +243,15 @@ Layer A's headline claims (9 runs, 25/25, 220 AU references in artefacts, 0 UK l
 
 ```bash
 # Item #2 — all 8 AU commands reference citation-instructions
-grep -lE 'references/citation-instructions\.md' arckit-au/commands/au-*.md | wc -l
+grep -lE 'references/citation-instructions\.md' plugins/arckit-au/commands/au-*.md | wc -l
 # Expected: 8
 
 # Item #3 — AUDSS + AUPSPF carry severity: 'HIGH'
-grep -E "'AU(DSS|PSPF)':.*severity: 'HIGH'" arckit-claude/config/doc-types.mjs | wc -l
+grep -E "'AU(DSS|PSPF)':.*severity: 'HIGH'" plugins/arckit-claude/config/doc-types.mjs | wc -l
 # Expected: 2
 
 # Item #4 — recipe declares flagship: AU_DISP
-grep -c '^flagship: AU_DISP$' arckit-au/recipes/au-federal.yaml
+grep -c '^flagship: AU_DISP$' plugins/arckit-au/recipes/au-federal.yaml
 # Expected: 1
 
 # UAE doc-id signature (round-1 fix propagated to paperclip JSON via surgical regen)
@@ -296,7 +296,7 @@ Run: `pytest tests/plugin/test_au_federal_recipe.py -k round2` — expected 11 p
 ```bash
 # AI6 framework named in au-ai-assurance.md
 grep -cE "AI6|Essential AI Practices|National AI Centre|NAIC" \
-  arckit-au/commands/au-ai-assurance.md
+  plugins/arckit-au/commands/au-ai-assurance.md
 # Expected: >= 4 (Context + Anchors + Process step + External Refs)
 
 # All 6 canonical practice names present
@@ -306,14 +306,14 @@ for p in "Decide who is accountable" \
          "Share essential information" \
          "Test and monitor" \
          "Maintain human control"; do
-  grep -q "$p" arckit-au/commands/au-ai-assurance.md && echo "OK: $p" \
+  grep -q "$p" plugins/arckit-au/commands/au-ai-assurance.md && echo "OK: $p" \
     || echo "MISS: $p"
 done
 # Expected: 6 OK lines
 
 # Canonical URLs in External References (Foundations + Implementation Guidance)
 grep -cE "essential-ai-practices/guidance-ai-adoption-(foundations|implementation-guidance)" \
-  arckit-au/templates/au-ai-assurance-template.md
+  plugins/arckit-au/templates/au-ai-assurance-template.md
 # Expected: >= 2
 
 # Overlay guide describes AI6 (catches doc/source drift)
@@ -321,13 +321,13 @@ grep -cE "AI6|Essential AI Practices" docs/guides/au-federal-overlay.md
 # Expected: >= 3 (au-ai-assurance section + use-case bullets + Reference Anchors)
 
 # Confidentiality boundary — no proprietary cross-walks leaked.
-# Scoped to arckit-claude/ (the actual PR content). docs/ is free to describe
+# Scoped to plugins/arckit-claude/ (the actual PR content). docs/ is free to describe
 # the exclusion in prose — see "Public-domain scope" below for what's omitted.
 # Uses crosswalk-shaped patterns rather than mere co-occurrence to avoid
 # false-positives on legitimate listings (e.g., "DTA Policy, AI6, ISO 42001
 # MUST appear in the Document Register" is a list, not a crosswalk).
 grep -rE "AI6\s*↔|↔\s*AI6|AI6.*crosswalk|crosswalk.*AI6|AI6.*mapped to|mapped to.*AI6|AI6.*coverage analysis" \
-  arckit-claude/ 2>/dev/null | wc -l
+  plugins/arckit-claude/ 2>/dev/null | wc -l
 # Expected: 0
 # Rationale: AI6 ↔ ISO 42001 / NIST AI RMF / Singapore AI Verify crosswalks are
 # the contributor's commercial advisory IP and are explicitly excluded from this PR.
@@ -360,7 +360,7 @@ Explicitly **excluded** (protected as separate commercial advisory IP, not part 
 - AI6 coverage analysis / gap percentages against any of the above
 - Implementation methodology for assessing each practice
 
-The confidentiality-grep above (`grep -rE "AI6\s*↔|crosswalk|mapped to|coverage analysis" arckit-claude/`) mechanically verifies the exclusion against the PR's actual content (canonical commands + templates + config). A reviewer running it without context can confirm no proprietary mapping has been accidentally published. The grep is deliberately scoped to `arckit-claude/` — `docs/` is free to describe what's excluded in prose (such as the bullets above) without tripping the test.
+The confidentiality-grep above (`grep -rE "AI6\s*↔|crosswalk|mapped to|coverage analysis" plugins/arckit-claude/`) mechanically verifies the exclusion against the PR's actual content (canonical commands + templates + config). A reviewer running it without context can confirm no proprietary mapping has been accidentally published. The grep is deliberately scoped to `plugins/arckit-claude/` — `docs/` is free to describe what's excluded in prose (such as the bullets above) without tripping the test.
 
 ### Drift since PR open — Layer A mechanical claims rerun
 
@@ -409,11 +409,11 @@ If reviewers need to see the underlying artefacts to validate the headline numbe
 | Converter outputs match | After commands placed in canonical paths, run `python scripts/converter.py` and inspect generated Codex/OpenCode/Gemini/Copilot/Paperclip variants in their respective folders |
 | 0 UK leakage in artefacts | Mechanical grep — script in this scorecard above |
 | 220 AU references in artefacts | Mechanical grep — script in this scorecard above |
-| 188 AU references in this PR's commands | `grep -rE "\b(ASD\|ACSC\|OAIC\|DTA\|PSPF\|IRAP\|DISP\|APP\|ISM\|Privacy Act 1988)\b" arckit-au/commands/au-*.md \| wc -l` |
+| 188 AU references in this PR's commands | `grep -rE "\b(ASD\|ACSC\|OAIC\|DTA\|PSPF\|IRAP\|DISP\|APP\|ISM\|Privacy Act 1988)\b" plugins/arckit-au/commands/au-*.md \| wc -l` |
 | Cross-reference integrity | Each AU artefact has a Document Register listing every cross-reference; AUDISP §13 has the consolidated 13-item Critical Path showing how all 8 commands' outputs feed into the attestation pack |
 
 ---
 
 **Generated**: 2026-05-06 by @royster70 for tractorjuice/arc-kit#424 PR submission.
 **Layer C addendum**: 2026-05-08 — round-2 review-feedback fixes (#441) + AI6 currency update; existing Layer A and Layer B sections preserved as the original PR-open snapshot.
-**Cross-references**: [`arckit-au/recipes/au-federal.yaml`](../arckit-au/recipes/au-federal.yaml); [`docs/guides/au-federal-overlay.md`](guides/au-federal-overlay.md); underlying artefacts available on request under NDA.
+**Cross-references**: [`plugins/arckit-au/recipes/au-federal.yaml`](../plugins/arckit-au/recipes/au-federal.yaml); [`docs/guides/au-federal-overlay.md`](guides/au-federal-overlay.md); underlying artefacts available on request under NDA.

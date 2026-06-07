@@ -2,8 +2,8 @@
 /**
  * Dual-registration test for ArcKit doc-type codes.
  *
- * Asserts that every code in `arckit-claude/config/doc-types.mjs` also appears
- * in the document-types allow-list table inside `arckit-claude/commands/pages.md`,
+ * Asserts that every code in `plugins/arckit-claude/config/doc-types.mjs` also appears
+ * in the document-types allow-list table inside `plugins/arckit-claude/commands/pages.md`,
  * and vice versa. The two registries must stay in sync; without this test the
  * silent-omission failure mode (PR #317) recurs whenever a new overlay lands.
  *
@@ -22,8 +22,8 @@ import { dirname, resolve } from 'node:path';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
 
-const docTypesPath = resolve(repoRoot, 'arckit-claude/config/doc-types.mjs');
-const pagesPath = resolve(repoRoot, 'arckit-claude/commands/pages.md');
+const docTypesPath = resolve(repoRoot, 'plugins/arckit-claude/config/doc-types.mjs');
+const pagesPath = resolve(repoRoot, 'plugins/arckit-claude/commands/pages.md');
 
 const { DOC_TYPES } = await import(pathToFileURL(docTypesPath).href);
 const docTypesCodes = new Set(Object.keys(DOC_TYPES));

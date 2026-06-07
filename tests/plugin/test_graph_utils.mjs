@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Smoke tests for arckit-claude/hooks/graph-utils.mjs
+ * Smoke tests for plugins/arckit-claude/hooks/graph-utils.mjs
  *
  * Verifies:
  *   1. v1 default output (no opts) is byte-stable — only the v1 keys appear on nodes.
@@ -17,7 +17,7 @@ import assert from 'node:assert/strict';
 
 import {
   scanAllArtifacts,
-} from '../../arckit-claude/hooks/graph-utils.mjs';
+} from '../../plugins/arckit-claude/hooks/graph-utils.mjs';
 
 // ── Fixture builder ────────────────────────────────────────────────────────
 

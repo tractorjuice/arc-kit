@@ -809,7 +809,7 @@ principles → requirements → ca-pia → ca-atip → ca-aia (if ADM) → ca-oc
   → ca-gc-digital-standards → ca-pspc → adr → sobc → risk → framework
 ```
 
-**Handoff matrix** (extracted from `arckit-ca/commands/ca-*.md` frontmatter — these are the suggested next commands after each one runs):
+**Handoff matrix** (extracted from `plugins/arckit-ca/commands/ca-*.md` frontmatter — these are the suggested next commands after each one runs):
 
 | From command | Handoff target | Condition / rationale |
 |---|---|---|
@@ -866,7 +866,7 @@ Wave 5 (authorization): us-sbom-eo-14028 → us-fedramp-ssp → us-fedramp-readi
                       → adr → sobc → risk → framework
 ```
 
-**Handoff matrix** (extracted from `arckit-us/commands/us-*.md` frontmatter):
+**Handoff matrix** (extracted from `plugins/arckit-us/commands/us-*.md` frontmatter):
 
 | From command | Handoff target | Condition / rationale |
 |---|---|---|

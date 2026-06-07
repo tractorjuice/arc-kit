@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
 
-const { selectNudge } = await import(resolve('arckit-claude/hooks/session-nudge.mjs'));
+const { selectNudge } = await import(resolve('plugins/arckit-claude/hooks/session-nudge.mjs'));
 
 // Build a Map<projNum, Set<code>> from a plain object for terse fixtures.
 const codes = (obj) => new Map(Object.entries(obj).map(([k, v]) => [k, new Set(v)]));

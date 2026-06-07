@@ -105,8 +105,8 @@ def test_all_au_domains_reference_relevant_embedded_arckit_capabilities():
     for command, terms in expected.items():
         combined = "\n".join(
             [
-                read(f"arckit-au/commands/{command}.md"),
-                read(f"arckit-au/templates/{command}-template.md"),
+                read(f"plugins/arckit-au/commands/{command}.md"),
+                read(f"plugins/arckit-au/templates/{command}-template.md"),
             ]
         )
         for term in terms:
@@ -137,8 +137,8 @@ def test_all_au_domains_define_visual_evidence_decision_rule():
     for command in commands:
         combined = "\n".join(
             [
-                read(f"arckit-au/commands/{command}.md"),
-                read(f"arckit-au/templates/{command}-template.md"),
+                read(f"plugins/arckit-au/commands/{command}.md"),
+                read(f"plugins/arckit-au/templates/{command}-template.md"),
             ]
         )
         for term in required_terms:

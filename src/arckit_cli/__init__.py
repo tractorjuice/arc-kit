@@ -37,7 +37,7 @@ ssl_context = truststore.SSLContext(ssl.PROTOCOL_TLS_CLIENT)
 client = httpx.Client(verify=ssl_context)
 
 # Agent configuration for ArcKit
-# Note: Claude Code support has moved to the ArcKit plugin (arckit-claude/).
+# Note: Claude Code support has moved to the ArcKit plugin (plugins/arckit-claude/).
 # Gemini CLI support has moved to the ArcKit Gemini extension (arckit-gemini/).
 # The CLI now only supports Codex.
 AGENT_CONFIG = {

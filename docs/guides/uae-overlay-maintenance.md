@@ -114,7 +114,7 @@ The overlay is officially maintained by the ArcKit core maintainer. A UAE-reside
 
 The role:
 
-- Auto-requested for review on PRs touching `arckit-uae/commands/uae-*.md`, `arckit-uae/templates/uae-*-template.md`, `arckit-uae/recipes/uae-*.yaml`, and `.arckit/templates/uae-*-template.md`.
+- Auto-requested for review on PRs touching `plugins/arckit-uae/commands/uae-*.md`, `plugins/arckit-uae/templates/uae-*-template.md`, `plugins/arckit-uae/recipes/uae-*.yaml`, and `.arckit/templates/uae-*-template.md`.
 - Owns the quarterly review for the Citation Register.
 - Confirms or rejects the six not-verified items above.
 - Recommends additions when new federal instruments are gazetted.

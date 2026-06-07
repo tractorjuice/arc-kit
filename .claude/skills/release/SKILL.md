@@ -27,7 +27,7 @@ Confirm all of these before touching version files:
 1. The feature PR is **merged to `main`** — releases are cut from `main`, never from a branch.
 2. Working tree is on `main` and clean: `git checkout main && git pull && git status`.
 3. The version `$ARGUMENTS` is valid semver (`X.Y.Z`) and **greater** than the current
-   plugin version (`cat arckit-claude/VERSION`) and CLI version (`cat VERSION`).
+   plugin version (`cat plugins/arckit-claude/VERSION`) and CLI version (`cat VERSION`).
 4. `GH_TOKEN` is set in the environment (needed by `push-extensions.sh`).
 
 If any precondition fails, stop and surface it. Do not work around it.
@@ -39,7 +39,7 @@ steps. Pause after step 5 (the commit) and after step 8 (validation) to let the 
 
 ```bash
 # 1. Edit CHANGELOGs by hand — both of them:
-#    CHANGELOG.md (CLI) and arckit-claude/CHANGELOG.md (plugin).
+#    CHANGELOG.md (CLI) and plugins/arckit-claude/CHANGELOG.md (plugin).
 #    Preview what shipped since the last tag to seed the entries:
 ./scripts/generate-release-notes.sh
 
@@ -106,7 +106,7 @@ The highest-signal failures — collected from real releases. Read these before 
   **not** match `release.yml`'s `v[0-9]+.[0-9]+.[0-9]+` trigger. We use it solely for its
   validation side effect (cross-checking `plugin.json` vs `marketplace.json`). The real release
   tag is the `git tag -a vX.Y.Z` in step 8.
-- **Two CHANGELOGs, not one.** `CHANGELOG.md` is the CLI changelog; `arckit-claude/CHANGELOG.md`
+- **Two CHANGELOGs, not one.** `CHANGELOG.md` is the CLI changelog; `plugins/arckit-claude/CHANGELOG.md`
   is the plugin changelog. Both need an entry. They are human-authored — `generate-release-notes.sh`
   only *previews* what changed, it does not write them.
 - **CLI and plugin versions are independent but bumped together.** `bump-version.sh` moves both to

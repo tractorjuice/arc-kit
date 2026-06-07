@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * End-to-end test for arckit-claude/hooks/graph-inject.mjs
+ * End-to-end test for plugins/arckit-claude/hooks/graph-inject.mjs
  *
  * Spawns the hook as a subprocess with a fake UserPromptSubmit payload
  * and verifies the additionalContext output for each migrated command.
@@ -18,7 +18,7 @@ import assert from 'node:assert/strict';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
-const HOOK = join(repoRoot, 'arckit-claude', 'hooks', 'graph-inject.mjs');
+const HOOK = join(repoRoot, 'plugins', 'arckit-claude', 'hooks', 'graph-inject.mjs');
 
 // ── Fixture ────────────────────────────────────────────────────────────────
 

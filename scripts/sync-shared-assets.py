@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Sync shared template partials and references from arckit-claude/ (core) into
+"""Sync shared template partials and references from plugins/arckit-claude/ (core) into
 every community plugin tree.
 
 Background: community-overlay commands reference partials and references via
@@ -23,7 +23,7 @@ import sys
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-CORE_PLUGIN = REPO_ROOT / "arckit-claude"
+CORE_PLUGIN = REPO_ROOT / "plugins" / "arckit-claude"
 SHARED_DIRS = ("templates/_partials", "references")
 
 
@@ -32,7 +32,7 @@ def discover_community_plugins() -> list[Path]:
     excluding the core arckit-claude plugin itself."""
     return sorted(
         p.parent.parent
-        for p in REPO_ROOT.glob("arckit-*/.claude-plugin/plugin.json")
+        for p in REPO_ROOT.glob("plugins/arckit-*/.claude-plugin/plugin.json")
         if p.parent.parent.name != "arckit-claude"
     )
 

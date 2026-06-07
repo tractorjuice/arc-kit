@@ -2,7 +2,7 @@
 
 ## Project Structure & Module Organization
 
-ArcKit is a multi-target architecture governance toolkit. The canonical plugin lives in `arckit-claude/`; generated or adapted distributions live in `arckit-codex/`, `arckit-gemini/`, `arckit-opencode/`, `arckit-copilot/`, and `arckit-paperclip/`. Python CLI source is in `src/arckit_cli/`. Shared release and conversion tooling is in `scripts/`. Documentation and site assets are under `docs/`. Tests are grouped by target in `tests/codex/`, `tests/plugin/`, and `tests/paperclip/`.
+ArcKit is a multi-target architecture governance toolkit. The canonical plugin lives in `plugins/arckit-claude/`; generated or adapted distributions live in `arckit-codex/`, `arckit-gemini/`, `arckit-opencode/`, `arckit-copilot/`, and `arckit-paperclip/`. Python CLI source is in `src/arckit_cli/`. Shared release and conversion tooling is in `scripts/`. Documentation and site assets are under `docs/`. Tests are grouped by target in `tests/codex/`, `tests/plugin/`, and `tests/paperclip/`.
 
 ## Build, Test, and Development Commands
 

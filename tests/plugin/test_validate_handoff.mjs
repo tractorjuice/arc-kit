@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Tests for arckit-claude/scripts/validate-handoff.mjs
+ * Tests for plugins/arckit-claude/scripts/validate-handoff.mjs
  *
  * Each fixture in tests/plugin/fixtures/datascout-handoff/ is run through
  * the validator. valid-* fixtures must pass (exit 0, output equals input).
@@ -19,8 +19,8 @@ import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
-const validator = resolve(repoRoot, 'arckit-claude/scripts/validate-handoff.mjs');
-const schema = resolve(repoRoot, 'arckit-claude/schemas/datascout-handoff.schema.json');
+const validator = resolve(repoRoot, 'plugins/arckit-claude/scripts/validate-handoff.mjs');
+const schema = resolve(repoRoot, 'plugins/arckit-claude/schemas/datascout-handoff.schema.json');
 const fixturesDir = resolve(__dirname, 'fixtures/datascout-handoff');
 
 function runValidator(payloadPath) {

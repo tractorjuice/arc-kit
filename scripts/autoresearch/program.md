@@ -10,7 +10,7 @@ Inspired by [karpathy/autoresearch](https://github.com/karpathy/autoresearch). I
 
 To set up a new experiment, work with the user to:
 
-1. **Agree on a target command.** The user tells you which command to optimise (e.g. `requirements`). The file is at `arckit-claude/commands/<command>.md`.
+1. **Agree on a target command.** The user tells you which command to optimise (e.g. `requirements`). The file is at `plugins/arckit-claude/commands/<command>.md`.
 
 2. **Create a worktree.** Run:
 
@@ -27,9 +27,9 @@ To set up a new experiment, work with the user to:
    All subsequent work happens in this worktree. The main checkout stays clean.
 
 3. **Read the in-scope files.** Read these files for full context:
-   - `arckit-claude/commands/<command>.md` — the prompt you will optimise. This is the ONLY file you modify.
+   - `plugins/arckit-claude/commands/<command>.md` — the prompt you will optimise. This is the ONLY file you modify.
    - The template file referenced in the command's instructions (search for `templates/` in the command `.md` to find the actual filename — names don't always match the command name). Read-only.
-   - `arckit-claude/references/quality-checklist.md` — quality criteria. Read-only.
+   - `plugins/arckit-claude/references/quality-checklist.md` — quality criteria. Read-only.
    - Note the current `effort:` and `model:` values in the command's YAML frontmatter — these are tuneable parameters (see section 4).
 
 4. **Check for agent delegation.** If the command contains "Launch the agent" or references the Task tool to delegate to an agent, you MUST follow its "Alternative: Direct Execution" or fallback section instead. Agent wrappers are too thin to optimise meaningfully.
@@ -56,11 +56,11 @@ To set up a new experiment, work with the user to:
 
 Commands are plugin slash commands — you cannot invoke them as `/arckit:<command>` from this context. Instead:
 
-1. Read `arckit-claude/commands/<command>.md`
+1. Read `plugins/arckit-claude/commands/<command>.md`
 2. Follow its instructions directly, as if the user had typed the slash command
 3. Apply these substitutions:
    - Replace `$ARGUMENTS` with `"001"`
-   - Replace all `${CLAUDE_PLUGIN_ROOT}` references with `arckit-claude/`
+   - Replace all `${CLAUDE_PLUGIN_ROOT}` references with `plugins/arckit-claude/`
    - Ignore any references to "ArcKit Project Context hook" — instead, manually scan `scratch/projects/` for existing artifacts
    - Write all generated artifacts to paths under `scratch/projects/` (not `projects/`)
 
@@ -120,7 +120,7 @@ The loop runs until one of three explicit stop conditions fires (see step 12 bel
 2. Identify ONE specific improvement to the prompt
    - Draw ideas from: low-scoring dimensions, structural failures, template gaps, quality checklist criteria, prompt engineering best practices, previous near-misses in results history, or effort/model tuning (see below)
    - **Effort and model tuning**: The `effort:` and `model:` fields in the YAML frontmatter are tuneable parameters, just like the prompt text. Valid effort values: `low`, `medium`, `high`, `max`. Valid model values: `sonnet`, `opus`, `haiku`, `inherit` (inherits user's session model). Consider testing different combinations — a well-written prompt at `high` effort may outperform a mediocre prompt at `max` effort, and `inherit` may be better than a hardcoded model. Treat these as single-variable changes: change effort OR model OR prompt text in one iteration, not multiple at once.
-3. Edit `arckit-claude/commands/<command>.md` with the change
+3. Edit `plugins/arckit-claude/commands/<command>.md` with the change
 4. Git commit with a short description of what changed
 5. Clean the scratch project: delete previously generated artifacts but keep the read-only fixture files (PRIN, STKE, README)
 6. Execute the command instructions against the scratch project (see "How Commands Are Executed" above)
@@ -142,7 +142,7 @@ The loop runs until one of three explicit stop conditions fires (see step 12 bel
 11. If DISCARD: revert the command file to its previous-best content:
 
     ```bash
-    git checkout <previous-best-commit> -- arckit-claude/commands/<command>.md
+    git checkout <previous-best-commit> -- plugins/arckit-claude/commands/<command>.md
     ```
 
     Then commit the revert: `"revert: <description> (no improvement)"`
@@ -209,12 +209,12 @@ j0k1l2m PASS 7.5 high inherit plateau 15 consecutive discards — shifting strat
 
 **What you CAN do:**
 
-- Modify `arckit-claude/commands/<command>.md` — this is the only file you edit. Everything is fair game: instruction wording, section ordering, examples, emphasis, formatting, adding/removing guidance, and the `effort:` / `model:` YAML frontmatter fields.
+- Modify `plugins/arckit-claude/commands/<command>.md` — this is the only file you edit. Everything is fair game: instruction wording, section ordering, examples, emphasis, formatting, adding/removing guidance, and the `effort:` / `model:` YAML frontmatter fields.
 
 **What you CANNOT do:**
 
 - Modify the template file. It defines expected output structure — changing it moves the goalposts.
-- Modify `arckit-claude/references/quality-checklist.md`. The evaluation standard must be stable.
+- Modify `plugins/arckit-claude/references/quality-checklist.md`. The evaluation standard must be stable.
 - Modify the evaluation rubric. It's the fixed metric, like `val_bpb`.
 - Modify the scratch project fixture files (PRIN, STKE, README). Controlled input.
 - Change the test argument (`$ARGUMENTS` = `"001"`). Same input every iteration.

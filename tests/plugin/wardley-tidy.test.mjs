@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
 
 const { tidyMap, tidyToFixpoint } = await import(
-  resolve('arckit-claude/hooks/wardley-tidy.mjs')
+  resolve('plugins/arckit-claude/hooks/wardley-tidy.mjs')
 );
 
 test('adds label offsets to untuned components', () => {

@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Resolve every internal reference in the plugin source against disk.
 
-Walks `arckit-claude/` and checks that:
+Walks `plugins/arckit-claude/` and checks that:
 
   1. Every `${CLAUDE_PLUGIN_ROOT}/<path>` reference in a `.md` file resolves
-     to an existing file or directory inside `arckit-claude/`.
+     to an existing file or directory inside `plugins/arckit-claude/`.
   2. Every `handoffs[].command` entry in command frontmatter names an
-     existing command file under `arckit-claude/commands/`.
+     existing command file under `plugins/arckit-claude/commands/`.
   3. Every `${user_config.KEY}` reference names a key declared in
-     `arckit-claude/.claude-plugin/plugin.json` under `userConfig`.
+     `plugins/arckit-claude/.claude-plugin/plugin.json` under `userConfig`.
 
 Exits non-zero on any broken reference. Run from repo root:
 
@@ -25,7 +25,7 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-PLUGIN = ROOT / "arckit-claude"
+PLUGIN = ROOT / "plugins" / "arckit-claude"
 PLUGIN_JSON = PLUGIN / ".claude-plugin" / "plugin.json"
 
 REF_RE = re.compile(r"\$\{CLAUDE_PLUGIN_ROOT\}/([^\s`\"')}\]<>]+)")

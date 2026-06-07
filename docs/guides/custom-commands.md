@@ -10,11 +10,11 @@ For template customisation (changing the output of an existing command), see [`c
 
 ## How Commands Work
 
-You write **one** source file in `arckit-claude/commands/<n>.md`. The converter at `scripts/converter.py` reads it and produces six target-specific outputs:
+You write **one** source file in `plugins/arckit-claude/commands/<n>.md`. The converter at `scripts/converter.py` reads it and produces six target-specific outputs:
 
 | Target | Output path | Format |
 |-------|-------------|--------|
-| Claude Code (source — edit this) | `arckit-claude/commands/<n>.md` | Markdown with YAML frontmatter |
+| Claude Code (source — edit this) | `plugins/arckit-claude/commands/<n>.md` | Markdown with YAML frontmatter |
 | Codex CLI (command) | `arckit-codex/prompts/arckit.<n>.md` | Markdown |
 | Codex CLI (skill) | `arckit-codex/skills/arckit-<n>/SKILL.md` | Skill format |
 | OpenCode CLI | `arckit-opencode/commands/arckit.<n>.md` | Markdown |
@@ -28,7 +28,7 @@ The first row is the file you edit by hand; the converter generates all others. 
 
 ## The Source File
 
-Create `arckit-claude/commands/<n>.md` with YAML frontmatter and a prompt body.
+Create `plugins/arckit-claude/commands/<n>.md` with YAML frontmatter and a prompt body.
 
 ````markdown
 ---
@@ -98,7 +98,7 @@ Commands should prefer a user-customised template over the bundled default. Use 
 
 The converter rewrites `${CLAUDE_PLUGIN_ROOT}` paths to the correct location for each target (for example, shell commands against `~/.gemini/extensions/arckit/` for Gemini because that directory sits outside Gemini's workspace sandbox).
 
-Put the template file alongside the command: `arckit-claude/templates/<your-template>-template.md`. The filename convention is `<command-name>-template.md`.
+Put the template file alongside the command: `plugins/arckit-claude/templates/<your-template>-template.md`. The filename convention is `<command-name>-template.md`.
 
 How the template reaches each target:
 
@@ -111,7 +111,7 @@ How the template reaches each target:
 
 Say you want a command that generates a Service Level Agreement skeleton from existing non-functional requirements.
 
-**1. Create `arckit-claude/commands/sla.md`:**
+**1. Create `plugins/arckit-claude/commands/sla.md`:**
 
 ````markdown
 ---
@@ -153,7 +153,7 @@ $ARGUMENTS
 4. **Detect version** and write to `projects/<project-id>/ARC-<id>-SLA-v<version>.md`.
 ````
 
-**2. Create `arckit-claude/templates/sla-template.md`** with the document skeleton (document-control header, SLA table, review cadence, and signature block).
+**2. Create `plugins/arckit-claude/templates/sla-template.md`** with the document skeleton (document-control header, SLA table, review cadence, and signature block).
 
 **3. Run the converter:**
 
@@ -163,7 +163,7 @@ python scripts/converter.py
 
 This writes out the six target files with correct placeholders and paths.
 
-**4. Add the user-facing guide** at `arckit-claude/docs/guides/sla.md` following the house style (see `arckit-claude/docs/guides/principles.md` or `arckit-claude/docs/guides/adr.md` for examples). This is the source location; the `sync-guides` hook and converter mirror it to `docs/guides/` and into every extension's `docs/guides/` tree.
+**4. Add the user-facing guide** at `plugins/arckit-claude/docs/guides/sla.md` following the house style (see `plugins/arckit-claude/docs/guides/principles.md` or `plugins/arckit-claude/docs/guides/adr.md` for examples). This is the source location; the `sync-guides` hook and converter mirror it to `docs/guides/` and into every extension's `docs/guides/` tree.
 
 **5. Update `CHANGELOG.md`** under `## [Unreleased]`.
 
@@ -173,13 +173,13 @@ This writes out the six target files with correct placeholders and paths.
 
 | You want to... | Use | Location |
 |-------|-----|----------|
-| Generate a specific artifact on explicit invocation | **Command** | `arckit-claude/commands/` |
-| Share procedural knowledge across multiple commands | **Skill** | `arckit-claude/skills/<skill-name>/` |
-| Run heavy research in an isolated context window | **Agent** | `arckit-claude/agents/arckit-<n>.md` |
-| React to lifecycle events (session start, file write, prompt submit) | **Hook** | `arckit-claude/hooks/` |
-| Override a command's behaviour on non-Claude targets only | **Standalone command** | `arckit-claude/commands-standalone/` |
+| Generate a specific artifact on explicit invocation | **Command** | `plugins/arckit-claude/commands/` |
+| Share procedural knowledge across multiple commands | **Skill** | `plugins/arckit-claude/skills/<skill-name>/` |
+| Run heavy research in an isolated context window | **Agent** | `plugins/arckit-claude/agents/arckit-<n>.md` |
+| React to lifecycle events (session start, file write, prompt submit) | **Hook** | `plugins/arckit-claude/hooks/` |
+| Override a command's behaviour on non-Claude targets only | **Standalone command** | `plugins/arckit-claude/commands-standalone/` |
 
-A command and an agent with matching names are linked automatically: the converter uses the agent's prompt as the command body for non-Claude targets (which lack Claude Code's agent architecture). See `arckit-claude/agents/arckit-research.md` paired with `arckit-claude/commands/research.md` for the canonical example.
+A command and an agent with matching names are linked automatically: the converter uses the agent's prompt as the command body for non-Claude targets (which lack Claude Code's agent architecture). See `plugins/arckit-claude/agents/arckit-research.md` paired with `plugins/arckit-claude/commands/research.md` for the canonical example.
 
 ---
 

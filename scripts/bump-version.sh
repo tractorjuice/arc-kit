@@ -21,7 +21,7 @@ fi
 
 # ── Must run from repo root ─────────────────────────────────────────────────
 
-if [[ ! -f VERSION ]] || [[ ! -d arckit-claude ]]; then
+if [[ ! -f VERSION ]] || [[ ! -d plugins/arckit-claude ]]; then
   echo "Error: Must be run from the arc-kit repo root."
   exit 1
 fi
@@ -37,13 +37,13 @@ echo ""
 # treats it as the umbrella plugin all community overlays depend on.
 
 mapfile -t ALL_PLUGINS < <(
-  find . -maxdepth 3 -path '*/.claude-plugin/plugin.json' -not -path '*/node_modules/*' \
+  find . -maxdepth 4 -path '*/.claude-plugin/plugin.json' -not -path '*/node_modules/*' \
     | sed -E 's|^\./||; s|/\.claude-plugin/plugin\.json$||' \
     | sort
 )
 COMMUNITY_PLUGINS=()
 for p in "${ALL_PLUGINS[@]}"; do
-  [[ "$p" == "arckit-claude" ]] && continue
+  [[ "$p" == "plugins/arckit-claude" ]] && continue
   COMMUNITY_PLUGINS+=("$p")
 done
 
@@ -116,16 +116,16 @@ MONTH_YEAR=$(date +"%B %Y")
 sed -i -E "s/Version [0-9]+\.[0-9]+\.[0-9]+ - [A-Za-z]+ [0-9]{4}/Version $NEW_VERSION - $MONTH_YEAR/" docs/index.html
 update_file "docs/index.html" "version + date → $MONTH_YEAR"
 
-# ── 6. arckit-claude/VERSION ───────────────────────────────────────────────
+# ── 6. plugins/arckit-claude/VERSION ───────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-claude/VERSION
-update_file "arckit-claude/VERSION" "overwrite"
+echo "$NEW_VERSION" > plugins/arckit-claude/VERSION
+update_file "plugins/arckit-claude/VERSION" "overwrite"
 
-# ── 7. arckit-claude/.claude-plugin/plugin.json ────────────────────────────
+# ── 7. plugins/arckit-claude/.claude-plugin/plugin.json ────────────────────
 
-jq --arg v "$NEW_VERSION" '.version = $v' arckit-claude/.claude-plugin/plugin.json > arckit-claude/.claude-plugin/plugin.json.tmp
-mv arckit-claude/.claude-plugin/plugin.json.tmp arckit-claude/.claude-plugin/plugin.json
-update_file "arckit-claude/.claude-plugin/plugin.json" ".version"
+jq --arg v "$NEW_VERSION" '.version = $v' plugins/arckit-claude/.claude-plugin/plugin.json > plugins/arckit-claude/.claude-plugin/plugin.json.tmp
+mv plugins/arckit-claude/.claude-plugin/plugin.json.tmp plugins/arckit-claude/.claude-plugin/plugin.json
+update_file "plugins/arckit-claude/.claude-plugin/plugin.json" ".version"
 
 # ── 8. .claude-plugin/marketplace.json (all 6 plugin entries) ──────────────
 #
@@ -261,10 +261,10 @@ echo ""
 echo "── Reminders ──"
 echo ""
 echo "  CHANGELOG.md              — Add release notes manually"
-echo "  arckit-claude/CHANGELOG.md — Add release notes manually"
+echo "  plugins/arckit-claude/CHANGELOG.md — Add release notes manually"
 echo ""
 echo "  Validate plugin/marketplace agreement (Claude Code v2.1.118+):"
-echo "    claude plugin tag arckit-claude --dry-run"
+echo "    claude plugin tag plugins/arckit-claude --dry-run"
 echo ""
 echo "  Optional dependency cleanup before tagging:"
 echo "    claude plugin prune --dry-run"

@@ -15,8 +15,8 @@ ArcKit ships in seven formats, each with its own version file. They are all bump
 
 **Plugin version** (independent from the CLI):
 
-1. `arckit-claude/VERSION` — source of truth
-2. `arckit-claude/.claude-plugin/plugin.json` — `version` field
+1. `plugins/arckit-claude/VERSION` — source of truth
+2. `plugins/arckit-claude/.claude-plugin/plugin.json` — `version` field
 
 **Extension versions** (track the plugin):
 
@@ -78,7 +78,7 @@ python scripts/converter.py
 git add -A && git commit -m "chore: bump version to X.Y.Z"
 
 # 7. Validate plugin/marketplace version agreement (Claude Code v2.1.118+)
-claude plugin tag arckit-claude --dry-run
+claude plugin tag plugins/arckit-claude --dry-run
 
 # 8. (optional) Prune orphaned plugin dependencies
 claude plugin prune --dry-run
@@ -93,7 +93,7 @@ git push && git push --tags
 
 ### Note on `claude plugin tag`
 
-This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`), which would not trigger `.github/workflows/release.yml` (it matches `v[0-9]+.[0-9]+.[0-9]+`). We use `--dry-run` for its validation behaviour only — it cross-checks `arckit-claude/.claude-plugin/plugin.json` against the marketplace entry in `.claude-plugin/marketplace.json` and exits non-zero on mismatch, catching version drift before the real `git tag -a vX.Y.Z` runs.
+This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`), which would not trigger `.github/workflows/release.yml` (it matches `v[0-9]+.[0-9]+.[0-9]+`). We use `--dry-run` for its validation behaviour only — it cross-checks `plugins/arckit-claude/.claude-plugin/plugin.json` against the marketplace entry in `.claude-plugin/marketplace.json` and exits non-zero on mismatch, catching version drift before the real `git tag -a vX.Y.Z` runs.
 
 ## v5.0.0+ — multi-plugin release flow
 

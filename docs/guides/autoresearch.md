@@ -125,7 +125,7 @@ Scoring uses an adversarial reviewer persona to prevent self-evaluation bias.
 
 **Editable** (the only variable):
 
-- `arckit-claude/commands/<command>.md` -- the prompt being optimised
+- `plugins/arckit-claude/commands/<command>.md` -- the prompt being optimised
 
 **Read-only** (the fixed benchmark):
 

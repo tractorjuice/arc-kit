@@ -133,7 +133,7 @@ To run:
 /arckit:build <project-name> --recipe uk-fs-payments          # full build
 ```
 
-The recipe is defined in `arckit-uk-finance/recipes/uk-fs-payments.yaml`.
+The recipe is defined in `plugins/arckit-uk-finance/recipes/uk-fs-payments.yaml`.
 
 ---
 

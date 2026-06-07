@@ -108,4 +108,4 @@ Co-maintainer recruitment is a precondition for re-evaluating the overlay for of
 
 ## Changelog Reference
 
-Per-release changes are recorded in [`arckit-us/CHANGELOG.md`](../../arckit-us/CHANGELOG.md). Citation-register verifications are also reflected there with the quarterly date and the rows touched.
+Per-release changes are recorded in [`plugins/arckit-us/CHANGELOG.md`](../../plugins/arckit-us/CHANGELOG.md). Citation-register verifications are also reflected there with the quarterly date and the rows touched.

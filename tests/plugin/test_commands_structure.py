@@ -1,5 +1,5 @@
 """
-Structural validation of arckit-claude/commands/*.md source files.
+Structural validation of plugins/arckit-claude/commands/*.md source files.
 
 Checks (all commands):
 - Valid YAML frontmatter (parseable, required fields present)
@@ -24,7 +24,7 @@ import yaml
 import pytest
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-COMMANDS_DIR = os.path.join(REPO_ROOT, "arckit-claude", "commands")
+COMMANDS_DIR = os.path.join(REPO_ROOT, "plugins", "arckit-claude", "commands")
 
 VALID_EFFORT_VALUES = {"low", "medium", "high", "max", "xhigh"}
 REQUIRED_BODY_SECTIONS = [

@@ -6,7 +6,7 @@ on:
     paths:
       - ".agents/plugins/marketplace.json"
       - ".github/workflows/codex-plugin.yml"
-      - "arckit-codex/**"
+      - "plugins/**"
       - "scripts/converter.py"
       - "src/arckit_cli/**"
       - "tests/codex/**"
@@ -15,7 +15,7 @@ on:
     paths:
       - ".agents/plugins/marketplace.json"
       - ".github/workflows/codex-plugin.yml"
-      - "arckit-codex/**"
+      - "plugins/**"
       - "scripts/converter.py"
       - "src/arckit_cli/**"
       - "tests/codex/**"
@@ -38,8 +38,8 @@ jobs:
       - name: Install Python test dependencies
         run: python -m pip install -e . pytest pyyaml
 
-      # The arckit-codex/ extension is generated from arckit-claude (and the
-      # community overlays) by converter.py and is no longer tracked in git
+      # The arckit-codex/ extension is generated from plugins/arckit-claude (and
+      # the community overlays) by converter.py and is no longer tracked in git
       # (see .gitignore "Generated distribution formats"). Regenerate it before
       # the tests so a fresh checkout has the files the suite asserts against.
       - name: Generate extension formats

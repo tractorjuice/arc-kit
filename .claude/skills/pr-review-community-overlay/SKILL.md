@@ -48,18 +48,18 @@ These are the failure modes that recur across overlay PRs. Check each, in order:
 **Verification:**
 
 ```bash
-for f in arckit-claude/templates/<prefix>-*-template.md; do
+for f in plugins/arckit-claude/templates/<prefix>-*-template.md; do
   head -10 "$f" | grep -q "^## Document Control" || echo "MISSING heading: $f"
 done
 ```
 
-**Working precedent:** `arckit-claude/templates/ca-pia-template.md:5-7` and `uae-pdpl-template.md:5-7` both have `## Document Control\n\n<!-- DOC-CONTROL-HEADER -->\n<!-- Resolved at command-execution time per _partials/RENDERING.md. -->`.
+**Working precedent:** `plugins/arckit-claude/templates/ca-pia-template.md:5-7` and `uae-pdpl-template.md:5-7` both have `## Document Control\n\n<!-- DOC-CONTROL-HEADER -->\n<!-- Resolved at command-execution time per _partials/RENDERING.md. -->`.
 
 ### B2 — Commands don't override the UK classification line
 
 **Symptom:** Overlay introduces a non-UK classification scheme (Canadian Protected/A/B/C, AU UNOFFICIAL/PROTECTED, etc.) but commands say only `Resolve the <!-- DOC-CONTROL-HEADER --> marker per RENDERING.md.` — no instruction to substitute the classification line.
 
-**Why it matters:** `arckit-claude/templates/_partials/RENDERING.md` only routes `governance_framework: UAE Federal` or `classification_scheme: UAE Smart Data` to a non-UK partial. Everything else falls back to `document-control-uk.md` which renders `[PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]`. Without an explicit override, the body content (which references the AU/CA/etc. ladder) becomes inconsistent with the header.
+**Why it matters:** `plugins/arckit-claude/templates/_partials/RENDERING.md` only routes `governance_framework: UAE Federal` or `classification_scheme: UAE Smart Data` to a non-UK partial. Everything else falls back to `document-control-uk.md` which renders `[PUBLIC / OFFICIAL / OFFICIAL-SENSITIVE / SECRET]`. Without an explicit override, the body content (which references the AU/CA/etc. ladder) becomes inconsistent with the header.
 
 **Verification:**
 
@@ -68,7 +68,7 @@ grep -L "classification scheme\|UK line in the header" arckit-<prefix>/commands/
 # Files printed = files MISSING the override
 ```
 
-**Working precedent:** `arckit-ca/commands/ca-pia.md:32`:
+**Working precedent:** `plugins/arckit-ca/commands/ca-pia.md:32`:
 > Use the Canadian classification scheme (UNCLASSIFIED / Protected A / Protected B / Protected C / CONFIDENTIAL / SECRET / TOP SECRET) — replace the standard UK line in the header.
 
 **Proper long-term fix (separate PR):** ship a `document-control-<regime>.md` partial, extend RENDERING.md routing, extend `plugin.json` userConfig to accept the regime governance framework value.
@@ -85,7 +85,7 @@ grep -L "classification scheme\|UK line in the header" arckit-<prefix>/commands/
 grep -n "generate-document-id.sh" arckit-<prefix>/commands/<prefix>-*.md | grep -v "<PROJECT_ID>\|{P}"
 ```
 
-**Working precedent:** `arckit-ca/commands/ca-pia.md:32`:
+**Working precedent:** `plugins/arckit-ca/commands/ca-pia.md:32`:
 > `scripts/bash/generate-document-id.sh <PROJECT_ID> PIA --filename`
 
 **Note:** `uae-*` commands share this bug. Worth fixing in the same sweep.
@@ -111,7 +111,7 @@ git status --porcelain | grep -v "memory/"
 
 ### B5 — Regime not registered in `REGIMES` / `REGIME_LABELS`
 
-**Symptom:** New `regime: '<XX>'` declared on each new doc-type entry in `arckit-claude/config/doc-types.mjs`, but the `<XX>` code is missing from the exported `REGIMES` array and/or `REGIME_LABELS` object.
+**Symptom:** New `regime: '<XX>'` declared on each new doc-type entry in `plugins/arckit-claude/config/doc-types.mjs`, but the `<XX>` code is missing from the exported `REGIMES` array and/or `REGIME_LABELS` object.
 
 **Why it matters:** Per-record `regime:` controls which bucket each artefact falls into, but consumers iterating `REGIMES` (dashboards, group headers, navigator UI) silently skip the unregistered jurisdiction. The `HIGH_SEVERITY_BY_REGIME` derivation has a fallback so the local file still works — but downstream consumers don't. Symptom is invisible in unit tests.
 
@@ -120,13 +120,13 @@ git status --porcelain | grep -v "memory/"
 ```bash
 # Confirm the new regime code appears in BOTH the array and the labels object.
 # Anchor on the export blocks (avoids matching every doc-type entry as noise).
-grep -nA 1 "^export const REGIMES" arckit-claude/config/doc-types.mjs
-grep -nA 12 "^export const REGIME_LABELS" arckit-claude/config/doc-types.mjs
+grep -nA 1 "^export const REGIMES" plugins/arckit-claude/config/doc-types.mjs
+grep -nA 12 "^export const REGIME_LABELS" plugins/arckit-claude/config/doc-types.mjs
 # Then cross-check against the regime values declared on new doc-types
-grep -oE "regime: '[A-Z]+'" arckit-claude/config/doc-types.mjs | sort -u
+grep -oE "regime: '[A-Z]+'" plugins/arckit-claude/config/doc-types.mjs | sort -u
 ```
 
-**Working precedent:** PR #441 (au-federal) added both `'AU'` and `'CA'` (the latter a corrective for an earlier omission), e.g. `arckit-claude/config/doc-types.mjs:165-179`. Note the `REGIME_LABELS` ordering convention is officially-maintained-first then community alphabetical.
+**Working precedent:** PR #441 (au-federal) added both `'AU'` and `'CA'` (the latter a corrective for an earlier omission), e.g. `plugins/arckit-claude/config/doc-types.mjs:165-179`. Note the `REGIME_LABELS` ordering convention is officially-maintained-first then community alphabetical.
 
 **Discovered in:** Test review of merged PR #432 (ca-federal-fitaa) where 12 doc-types declared `regime: 'CA'` but the `REGIMES` array shipped without `'CA'`. Bug shipped and was only fixed retroactively in #441.
 
@@ -136,15 +136,15 @@ Beyond the 4 blockers, verify:
 
 | Check | Where | What to verify |
 |---|---|---|
-| Doc-types registered | `arckit-claude/config/doc-types.mjs` | All new type codes present, correct `category` (Compliance/Governance/Procurement), correct `regime`. Regime registered in `REGIMES` + `REGIME_LABELS` (B5). Severity-HIGH check: `grep "severity: 'HIGH'" arckit-claude/config/doc-types.mjs \| grep "regime: '<XX>'"` — assessment-class types (PIA-equivalent, AI-assurance, FITAA-equivalent, ITSG-equivalent) should be HIGH. |
-| Pages allow-list | `arckit-claude/commands/pages.md` (Document Types table) | Every new type code listed under correct section header, mirrors `doc-types.mjs`. |
-| Templates dual-located | `arckit-claude/templates/` AND `.arckit/templates/` | `diff -rq arckit-claude/templates/ .arckit/templates/` shows zero diffs for new templates. |
-| Recipe schema | `arckit-claude/skills/arckit-build/recipes/<recipe>.yaml` | Run author's verbatim Python snippet (deps resolution check). Manually verify wave shape, flagship target's deps. |
-| SKILL.md recipes table | `arckit-claude/skills/arckit-build/SKILL.md` | New recipe row added. |
+| Doc-types registered | `plugins/arckit-claude/config/doc-types.mjs` | All new type codes present, correct `category` (Compliance/Governance/Procurement), correct `regime`. Regime registered in `REGIMES` + `REGIME_LABELS` (B5). Severity-HIGH check: `grep "severity: 'HIGH'" plugins/arckit-claude/config/doc-types.mjs \| grep "regime: '<XX>'"` — assessment-class types (PIA-equivalent, AI-assurance, FITAA-equivalent, ITSG-equivalent) should be HIGH. |
+| Pages allow-list | `plugins/arckit-claude/commands/pages.md` (Document Types table) | Every new type code listed under correct section header, mirrors `doc-types.mjs`. |
+| Templates dual-located | `plugins/arckit-claude/templates/` AND `.arckit/templates/` | `diff -rq plugins/arckit-claude/templates/ .arckit/templates/` shows zero diffs for new templates. |
+| Recipe schema | `plugins/arckit-claude/skills/arckit-build/recipes/<recipe>.yaml` | Run author's verbatim Python snippet (deps resolution check). Manually verify wave shape, flagship target's deps. |
+| SKILL.md recipes table | `plugins/arckit-claude/skills/arckit-build/SKILL.md` | New recipe row added. |
 | README overlay section | `README.md` | New `[COMMUNITY]` section with command table, type codes, recipe link, "help wanted" call. |
-| CHANGELOG entry | `CHANGELOG.md` | Unreleased entry. **Verify command count math:** `ls arckit-claude/commands/*.md \| wc -l` should match the post-PR total. |
+| CHANGELOG entry | `CHANGELOG.md` | Unreleased entry. **Verify command count math:** `ls plugins/arckit-claude/commands/*.md \| wc -l` should match the post-PR total. |
 | Overlay guide | `docs/guides/<recipe>-overlay.md` | Exists. Check that the `governance_framework` / `classification_scheme` userConfig values it tells users to set are actually wired through RENDERING.md (per B2). |
-| Citation traceability | `arckit-claude/references/citation-instructions.md` referenced from each command | Inline `[DOC_ID-CN]` markers required when reading external docs/MCP/web. Often missing — flag as IMPORTANT, not BLOCKER (precedent across all overlays). |
+| Citation traceability | `plugins/arckit-claude/references/citation-instructions.md` referenced from each command | Inline `[DOC_ID-CN]` markers required when reading external docs/MCP/web. Often missing — flag as IMPORTANT, not BLOCKER (precedent across all overlays). |
 
 ## Per-command checklist
 
@@ -156,11 +156,11 @@ For each new `xx-*` command file:
 - [ ] **`generate-document-id.sh`** invoked correctly (B3).
 - [ ] **`<!-- DOC-CONTROL-HEADER -->` resolution** instruction (B2 — should override classification when not UK/UAE).
 - [ ] **Write tool** used to save artefact (32K output token limit otherwise).
-- [ ] **Handoffs:** every `handoffs.command` value resolves to a real file in `arckit-claude/commands/`. Common bug: pluralisation (`risks` vs `risk`); deps on commands shipping in sibling PRs. Validation needs YAML parsing (handoffs are nested under YAML frontmatter — raw grep misses), e.g.:
+- [ ] **Handoffs:** every `handoffs.command` value resolves to a real file in `plugins/arckit-claude/commands/`. Common bug: pluralisation (`risks` vs `risk`); deps on commands shipping in sibling PRs. Validation needs YAML parsing (handoffs are nested under YAML frontmatter — raw grep misses), e.g.:
 
   ```python
   import yaml, glob, pathlib
-  cmds = {pathlib.Path(p).stem for p in glob.glob('arckit-claude/commands/*.md')}
+  cmds = {pathlib.Path(p).stem for p in glob.glob('plugins/arckit-claude/commands/*.md')}
   for f in glob.glob('arckit-<prefix>/commands/<prefix>-*.md'):
       fm = yaml.safe_load(open(f).read().split('---')[1])
       for h in (fm or {}).get('handoffs', []):
@@ -175,7 +175,7 @@ For each new `xx-*` command file:
 For non-UK overlays, grep for unintended UK terminology:
 
 ```bash
-grep -rE '\b(NCSC|ICO|Cyber Essentials|GovS|UK GDPR|GDS|Cabinet Office|DPA 2018|DPIA)\b' arckit-<prefix>/commands/<prefix>-*.md arckit-claude/templates/<prefix>-*.md
+grep -rE '\b(NCSC|ICO|Cyber Essentials|GovS|UK GDPR|GDS|Cabinet Office|DPA 2018|DPIA)\b' arckit-<prefix>/commands/<prefix>-*.md plugins/arckit-claude/templates/<prefix>-*.md
 ```
 
 A small number of intentional comparison references is fine (PR #441 had 2 in `au-dss.md` + `au-pia.md`) — author should call them out in the PR body. Anything else is leakage.
@@ -194,7 +194,7 @@ git fetch origin pull/<N>/head:pr-<N>
 git checkout pr-<N>
 
 # B1: missing Document Control heading
-for f in arckit-claude/templates/*-template.md; do
+for f in plugins/arckit-claude/templates/*-template.md; do
   head -10 "$f" | grep -q "^## Document Control" || echo "B1 missing: $f"
 done | grep -E "<prefix>-"
 
@@ -208,14 +208,14 @@ grep -n "generate-document-id.sh [A-Z]\+ --filename" arckit-<prefix>/commands/<p
 python scripts/converter.py && git status --porcelain | grep -v "memory/"
 
 # B5: regime registration (anchored on export blocks to avoid doc-type noise)
-grep -nA 1 "^export const REGIMES" arckit-claude/config/doc-types.mjs
-grep -nA 12 "^export const REGIME_LABELS" arckit-claude/config/doc-types.mjs
-grep -oE "regime: '[A-Z]+'" arckit-claude/config/doc-types.mjs | sort -u
+grep -nA 1 "^export const REGIMES" plugins/arckit-claude/config/doc-types.mjs
+grep -nA 12 "^export const REGIME_LABELS" plugins/arckit-claude/config/doc-types.mjs
+grep -oE "regime: '[A-Z]+'" plugins/arckit-claude/config/doc-types.mjs | sort -u
 
 # Recipe schema
 python3 -c "
 import yaml
-r = yaml.safe_load(open('arckit-claude/skills/arckit-build/recipes/<recipe>.yaml'))
+r = yaml.safe_load(open('plugins/arckit-claude/skills/arckit-build/recipes/<recipe>.yaml'))
 ids = {t['id'] for t in r['targets']}
 for t in r['targets']:
   for d in t.get('deps', []):
@@ -225,13 +225,13 @@ for t in r['targets']:
 "
 
 # Dual-template parity
-diff -rq arckit-claude/templates/ .arckit/templates/ | grep -E "<prefix>-"
+diff -rq plugins/arckit-claude/templates/ .arckit/templates/ | grep -E "<prefix>-"
 
 # Tests
 pytest tests/plugin/ --tb=line -q 2>&1 | tail -10
 
 # Command count check vs CHANGELOG
-ls arckit-claude/commands/*.md | wc -l
+ls plugins/arckit-claude/commands/*.md | wc -l
 ```
 
 ## Posting the review
@@ -261,6 +261,6 @@ Verify with the URL the command returns.
 | Trusting the PR body's "regenerated converter outputs" claim | Always re-run `python scripts/converter.py` and check `git status` |
 | Trusting headline test count claims | Run `pytest tests/` and verify the numbers |
 | Reviewing only the canonical files, not converter outputs | Diff `main..pr-<N>` for `arckit-codex/`, `arckit-opencode/`, `arckit-gemini/`, `arckit-copilot/`, `arckit-paperclip/` |
-| Missing the dual-template requirement | `diff -rq arckit-claude/templates/ .arckit/templates/` |
-| Missing classification rendering issue (B2) | Read `arckit-claude/templates/_partials/RENDERING.md` to confirm only UAE has non-UK routing |
-| Verifying CHANGELOG count from prose, not file count | `ls arckit-claude/commands/*.md \| wc -l` |
+| Missing the dual-template requirement | `diff -rq plugins/arckit-claude/templates/ .arckit/templates/` |
+| Missing classification rendering issue (B2) | Read `plugins/arckit-claude/templates/_partials/RENDERING.md` to confirm only UAE has non-UK routing |
+| Verifying CHANGELOG count from prose, not file count | `ls plugins/arckit-claude/commands/*.md \| wc -l` |

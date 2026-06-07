@@ -19,8 +19,8 @@ import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
-const validator = resolve(repoRoot, 'arckit-claude/scripts/validate-handoff.mjs');
-const schema = resolve(repoRoot, 'arckit-claude/schemas/tenders-handoff.schema.json');
+const validator = resolve(repoRoot, 'plugins/arckit-claude/scripts/validate-handoff.mjs');
+const schema = resolve(repoRoot, 'plugins/arckit-claude/schemas/tenders-handoff.schema.json');
 const fixturesDir = resolve(__dirname, 'fixtures/tenders-handoff');
 
 function runValidator(payloadPath) {

@@ -1,6 +1,6 @@
 # `au-energy` Validation Fixtures (Synthetic Test Data)
 
-Synthetic discovery packs to validate the ArcKit **`au-energy`** recipe (`arckit-au/recipes/au-energy.yaml`) end-to-end — closing the merge blocker noted in the recipe YAML: *"validation against an energy-sector / SOCI test fixture is required before merge."*
+Synthetic discovery packs to validate the ArcKit **`au-energy`** recipe (`plugins/arckit-au/recipes/au-energy.yaml`) end-to-end — closing the merge blocker noted in the recipe YAML: *"validation against an energy-sector / SOCI test fixture is required before merge."*
 
 > ⚠️ **All data here is SYNTHETIC.** Both organisations are fictional composites built with the Forrester-TEI composite method from public sources. They do not represent any real network, supplier, person, or client. **Method, full reference list, provenance map and validation log:** see [`REFERENCES_AND_METHODOLOGY.md`](./REFERENCES_AND_METHODOLOGY.md).
 

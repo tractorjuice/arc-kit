@@ -26,8 +26,8 @@ errors = []
 recipes_checked = 0
 
 paths = sorted(
-    glob.glob("arckit-*/recipes/*.yaml")
-    + glob.glob("arckit-claude/skills/arckit-build/recipes/*.yaml")
+    glob.glob("plugins/arckit-*/recipes/*.yaml")
+    + glob.glob("plugins/arckit-claude/skills/arckit-build/recipes/*.yaml")
 )
 
 for path in paths:

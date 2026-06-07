@@ -7,7 +7,7 @@ Reference for every Model Context Protocol (MCP) tool exposed by ArcKit, the ser
 - Auditing the prompt-injection surface area (every MCP response is untrusted input)
 - Working out which API keys a given workflow needs
 
-**Source of truth**: tool usage in `arckit-claude/commands/` and `arckit-claude/agents/`. Run `python3 scripts/check_references.py` to verify references; run `grep -rhoE "mcp__[a-z_-]+__[a-z_]+" arckit-claude/commands arckit-claude/agents` to regenerate the consumer list below.
+**Source of truth**: tool usage in `plugins/arckit-claude/commands/` and `plugins/arckit-claude/agents/`. Run `python3 scripts/check_references.py` to verify references; run `grep -rhoE "mcp__[a-z_-]+__[a-z_]+" plugins/arckit-claude/commands plugins/arckit-claude/agents` to regenerate the consumer list below.
 
 ## Servers at a glance
 
@@ -22,7 +22,7 @@ Reference for every Model Context Protocol (MCP) tool exposed by ArcKit, the ser
 
 Total: **6 servers, 34 tools**. ArcKit agents currently consume **24** of them — 7 `uk-tenders` tools via `arckit-tenders-reader`, `search_uk_gov_code` (discovery), `dependency_compare` (gov-reuse overlap %), and `vulnerability_exposure` (gov-landscape CVE blast-radius) from govreposcrape, plus the 14 tools on the other four servers. The remaining 6 govreposcrape dependency-intelligence tools and 4 `uk-tenders` tools (including `query_sql`) are exposed by their servers but not yet wired into any ArcKit agent (see the individual sections below).
 
-`alwaysLoad: true` is set on `aws-knowledge` and `microsoft-learn` because the AWS and Azure research commands always reach for them; the others stay deferred to keep cold-start tool budgets lean. See `arckit-claude/.mcp.json`.
+`alwaysLoad: true` is set on `aws-knowledge` and `microsoft-learn` because the AWS and Azure research commands always reach for them; the others stay deferred to keep cold-start tool budgets lean. See `plugins/arckit-claude/.mcp.json`.
 
 ---
 
@@ -108,7 +108,7 @@ MCP server fronting a semantic search index over 24,500+ UK government open-sour
 | `mcp__govreposcrape__sbom_export` | Full deps + per-ecosystem counts + SBOM URL | not yet |
 | `mcp__govreposcrape__dependency_trends` | Package usage across daily snapshots | not yet |
 
-> **Allowlist note:** `arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__govreposcrape__` prefix via `startsWith`, so all 9 tools clear the permission hook automatically. The gov agents additionally declare a `tools:` frontmatter allowlist (only listed tools are callable): `arckit-gov-reuse-reader` lists `search_uk_gov_code` + `dependency_compare`; `arckit-gov-landscape` lists `search_uk_gov_code` + `vulnerability_exposure`. The remaining 6 dependency-intelligence tools are not yet referenced by any agent's frontmatter — wiring further ones in (e.g. `dependency_landscape`, `package_popularity` for `gov-landscape`) is tracked separately.
+> **Allowlist note:** `plugins/arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__govreposcrape__` prefix via `startsWith`, so all 9 tools clear the permission hook automatically. The gov agents additionally declare a `tools:` frontmatter allowlist (only listed tools are callable): `arckit-gov-reuse-reader` lists `search_uk_gov_code` + `dependency_compare`; `arckit-gov-landscape` lists `search_uk_gov_code` + `vulnerability_exposure`. The remaining 6 dependency-intelligence tools are not yet referenced by any agent's frontmatter — wiring further ones in (e.g. `dependency_landscape`, `package_popularity` for `gov-landscape`) is tracked separately.
 
 **Consumers of `search_uk_gov_code`** (6):
 
@@ -143,7 +143,7 @@ UK Tenders MCP server fronting ~677,000 UK contracting processes across five nat
 | `mcp__uk-tenders__query_sql` | Free-form SQL against the underlying contracting dataset | **no** — documented-only; never allowlisted (see note below) |
 | *(3 additional server tools)* | Not yet documented in ArcKit | not yet |
 
-> **Allowlist note:** `arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__uk-tenders__` prefix via `startsWith`, so all 11 tools clear the permission hook automatically. However, `arckit-tenders-reader` additionally declares a `tools:` frontmatter allowlist containing only the 7 read-only tools above (rows 1–7). `query_sql` is documented here for completeness — it exposes free-form SQL against the procurement dataset and is explicitly excluded from the allowlist because free-form SQL against an untrusted endpoint is a prompt-injection surface. It must **never** be added to any agent's `tools:` allowlist.
+> **Allowlist note:** `plugins/arckit-claude/hooks/allow-mcp-tools.mjs` matches the `mcp__uk-tenders__` prefix via `startsWith`, so all 11 tools clear the permission hook automatically. However, `arckit-tenders-reader` additionally declares a `tools:` frontmatter allowlist containing only the 7 read-only tools above (rows 1–7). `query_sql` is documented here for completeness — it exposes free-form SQL against the procurement dataset and is explicitly excluded from the allowlist because free-form SQL against an untrusted endpoint is a prompt-injection surface. It must **never** be added to any agent's `tools:` allowlist.
 
 **Consumers** (2): `arckit-tenders-reader`, shared by both `/arckit:tenders` and `/arckit:competitors`.
 
@@ -194,7 +194,7 @@ Every MCP response is **untrusted input** under the reader/orchestrator/writer p
 
 ## User-config keys
 
-Two MCP servers need keys. They are declared in `arckit-claude/.claude-plugin/plugin.json` under `userConfig` with `sensitive: true`:
+Two MCP servers need keys. They are declared in `plugins/arckit-claude/.claude-plugin/plugin.json` under `userConfig` with `sensitive: true`:
 
 - `GOOGLE_API_KEY` for `google-developer-knowledge`
 - `DATA_COMMONS_API_KEY` for `datacommons-mcp`

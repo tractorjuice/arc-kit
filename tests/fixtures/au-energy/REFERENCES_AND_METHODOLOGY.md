@@ -11,7 +11,7 @@ This document explains **how the synthetic test data was created**, lists **ever
 
 ## 1. Purpose
 
-The `au-energy` recipe (`arckit-au/recipes/au-energy.yaml`) shipped two community commands — `au-aescsf` and `au-soci-cirmp` — that are mechanically clean but were **not validated end-to-end** because the existing federal test fixture (MBB Group) is an advisory firm, not an energy market participant or SOCI-designated critical-asset operator. The recipe YAML explicitly states that *"validation against an [energy-sector / SOCI] test fixture is required before merge."*
+The `au-energy` recipe (`plugins/arckit-au/recipes/au-energy.yaml`) shipped two community commands — `au-aescsf` and `au-soci-cirmp` — that are mechanically clean but were **not validated end-to-end** because the existing federal test fixture (MBB Group) is an advisory firm, not an energy market participant or SOCI-designated critical-asset operator. The recipe YAML explicitly states that *"validation against an [energy-sector / SOCI] test fixture is required before merge."*
 
 These fixtures provide that test data: an energy-sector entity that **triggers** the energy regulatory paths (Fixture A) and a supplier that **deliberately does not** trigger SOCI (Fixture B), so the recipe's applicability logic can be validated in both directions.
 

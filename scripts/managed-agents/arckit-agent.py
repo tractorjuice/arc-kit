@@ -56,8 +56,8 @@ ARCKIT_REPO = "https://github.com/tractorjuice/arc-kit"
 ARCKIT_MOUNT = "/workspace/arc-kit"
 
 REPO_ROOT = os.path.normpath(os.path.join(os.path.dirname(__file__), "..", ".."))
-AGENTS_DIR = os.path.join(REPO_ROOT, "arckit-claude", "agents")
-MCP_JSON = os.path.join(REPO_ROOT, "arckit-claude", ".mcp.json")
+AGENTS_DIR = os.path.join(REPO_ROOT, "plugins", "arckit-claude", "agents")
+MCP_JSON = os.path.join(REPO_ROOT, "plugins", "arckit-claude", ".mcp.json")
 
 # Map agent names to descriptions for the --list output and API metadata
 AGENT_DESCRIPTIONS = {
@@ -117,7 +117,7 @@ def load_agent_config(name: str) -> dict:
     prompt = re.sub(r"\A---\n.*?^---\n", "", content, count=1, flags=re.DOTALL | re.MULTILINE)
 
     # Rewrite plugin paths to mounted repo paths
-    prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", f"{ARCKIT_MOUNT}/arckit-claude")
+    prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", f"{ARCKIT_MOUNT}/plugins/arckit-claude")
 
     return {
         "name": name,

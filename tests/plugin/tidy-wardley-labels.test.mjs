@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { resolve } from 'node:path';
 
 const { tidyMarkdown, tidyFileContent, tidyBlock } = await import(
-  resolve('arckit-claude/hooks/tidy-wardley-labels.mjs')
+  resolve('plugins/arckit-claude/hooks/tidy-wardley-labels.mjs')
 );
 
 // A stub tidy function — wraps the body so we can see exactly what was tidied

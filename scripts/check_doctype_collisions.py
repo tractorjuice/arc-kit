@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assert that every doc-type code in arckit-claude/config/doc-types.mjs is unique.
+"""Assert that every doc-type code in plugins/arckit-claude/config/doc-types.mjs is unique.
 
 No JS parser dependency — use a regex on the keys of the KNOWN_TYPES object.
 The format is stable:
@@ -9,7 +9,7 @@ import re
 import sys
 from pathlib import Path
 
-src = Path("arckit-claude/config/doc-types.mjs").read_text()
+src = Path("plugins/arckit-claude/config/doc-types.mjs").read_text()
 codes = re.findall(r"^\s*'([A-Z][A-Z0-9_-]*)':\s*\{", src, re.MULTILINE)
 
 if not codes:

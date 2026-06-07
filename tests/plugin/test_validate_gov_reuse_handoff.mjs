@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Tests for the gov-reuse-handoff JSON Schema, exercised through the
- * shared arckit-claude/scripts/validate-handoff.mjs validator.
+ * shared plugins/arckit-claude/scripts/validate-handoff.mjs validator.
  *
  * Each fixture in tests/plugin/fixtures/gov-reuse-handoff/ is run
  * through the validator. valid-* fixtures must pass (exit 0, output
@@ -20,8 +20,8 @@ import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
-const validator = resolve(repoRoot, 'arckit-claude/scripts/validate-handoff.mjs');
-const schema = resolve(repoRoot, 'arckit-claude/schemas/gov-reuse-handoff.schema.json');
+const validator = resolve(repoRoot, 'plugins/arckit-claude/scripts/validate-handoff.mjs');
+const schema = resolve(repoRoot, 'plugins/arckit-claude/schemas/gov-reuse-handoff.schema.json');
 const fixturesDir = resolve(__dirname, 'fixtures/gov-reuse-handoff');
 
 function runValidator(payloadPath) {

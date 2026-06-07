@@ -18,17 +18,17 @@ import pytest
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 PLUGIN_SOURCES = [
-    "arckit-claude",
-    "arckit-uae",
-    "arckit-fr",
-    "arckit-ca",
-    "arckit-eu",
-    "arckit-at",
-    "arckit-au",
-    "arckit-au-energy",
-    "arckit-us",
-    "arckit-uk-finance",
-    "arckit-uk-nhs",
+    "plugins/arckit-claude",
+    "plugins/arckit-uae",
+    "plugins/arckit-fr",
+    "plugins/arckit-ca",
+    "plugins/arckit-eu",
+    "plugins/arckit-at",
+    "plugins/arckit-au",
+    "plugins/arckit-au-energy",
+    "plugins/arckit-us",
+    "plugins/arckit-uk-finance",
+    "plugins/arckit-uk-nhs",
 ]
 CLI_TEMPLATES_DIR = os.path.join(REPO_ROOT, ".arckit", "templates")
 

@@ -18,8 +18,8 @@ def test_au_ot_and_soci_source_files_exist_and_use_community_origin():
     }
 
     for command, (doc_type, anchor) in expected.items():
-        command_text = read(f"arckit-au/commands/{command}.md")
-        template_text = read(f"arckit-au/templates/{command}-template.md")
+        command_text = read(f"plugins/arckit-au/commands/{command}.md")
+        template_text = read(f"plugins/arckit-au/templates/{command}-template.md")
 
         assert "[COMMUNITY]" in command_text
         assert f"generate-document-id.sh <PROJECT_ID> {doc_type} --filename" in command_text
@@ -44,8 +44,8 @@ def test_au_ot_and_soci_leverage_core_arckit_capabilities():
     for command in ("au-ot-security", "au-soci-cirmp"):
         combined = "\n".join(
             [
-                read(f"arckit-au/commands/{command}.md"),
-                read(f"arckit-au/templates/{command}-template.md"),
+                read(f"plugins/arckit-au/commands/{command}.md"),
+                read(f"plugins/arckit-au/templates/{command}-template.md"),
             ]
         )
         for term in capability_terms:
@@ -56,7 +56,7 @@ def test_au_ot_and_soci_leverage_core_arckit_capabilities():
 
 
 def test_au_federal_recipe_exposes_ot_and_soci_as_default_off_optional_targets():
-    recipe = yaml.safe_load(read("arckit-au/recipes/au-federal.yaml"))
+    recipe = yaml.safe_load(read("plugins/arckit-au/recipes/au-federal.yaml"))
     optional_targets = recipe["optional_targets"]
 
     assert optional_targets["AU_OT"]["default"] is False
@@ -85,8 +85,8 @@ def test_au_federal_recipe_exposes_ot_and_soci_as_default_off_optional_targets()
 
 
 def test_au_ot_and_soci_doc_types_registered_in_core_and_pages():
-    doc_types = read("arckit-claude/config/doc-types.mjs")
-    pages = read("arckit-claude/commands/pages.md")
+    doc_types = read("plugins/arckit-claude/config/doc-types.mjs")
+    pages = read("plugins/arckit-claude/commands/pages.md")
 
     assert re.search(r"'AUOT':\s+\{ name: 'AU OT Security Assessment'", doc_types)
     assert re.search(r"'AUSOCI':\s+\{ name: 'AU SOCI CIRMP Governance Pack'", doc_types)

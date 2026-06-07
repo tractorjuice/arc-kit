@@ -116,7 +116,7 @@ Scope is **SaMD only** in v1. Hardware medical devices are out of scope; consult
 
 ## Recipe — `uk-nhs-clinical-safety`
 
-The recipe lives at `arckit-claude/skills/arckit-build/recipes/uk-nhs-clinical-safety.yaml`. It composes with the UK SaaS baseline — no swaps from `uk-saas.yaml`; the NHS overlay adds clinical safety and medical-device regulation on top.
+The recipe lives at `plugins/arckit-claude/skills/arckit-build/recipes/uk-nhs-clinical-safety.yaml`. It composes with the UK SaaS baseline — no swaps from `uk-saas.yaml`; the NHS overlay adds clinical safety and medical-device regulation on top.
 
 44 targets across 8 build waves:
 
@@ -151,7 +151,7 @@ DTAC and MDR classification *do* follow ArcKit naming (`ARC-{NNN}-NHSDTAC-v1.0.m
 
 ## Doc-type codes
 
-Two doc-type codes are registered in `arckit-claude/config/doc-types.mjs`:
+Two doc-type codes are registered in `plugins/arckit-claude/config/doc-types.mjs`:
 
 | Code | Document type | Regime | Category | Severity |
 |---|---|---|---|---|

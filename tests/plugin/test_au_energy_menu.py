@@ -18,8 +18,8 @@ def test_au_energy_source_files_exist_and_use_community_origin():
     }
 
     for command, (doc_type, anchor) in expected.items():
-        command_text = read(f"arckit-au-energy/commands/{command}.md")
-        template_text = read(f"arckit-au-energy/templates/{command}-template.md")
+        command_text = read(f"plugins/arckit-au-energy/commands/{command}.md")
+        template_text = read(f"plugins/arckit-au-energy/templates/{command}-template.md")
 
         assert "[COMMUNITY]" in command_text
         assert f"generate-document-id.sh <PROJECT_ID> {doc_type} --filename" in command_text
@@ -29,7 +29,7 @@ def test_au_energy_source_files_exist_and_use_community_origin():
 
 
 def test_au_energy_recipe_composes_federal_ot_soci_and_energy_targets():
-    recipe = yaml.safe_load(read("arckit-au-energy/recipes/au-energy.yaml"))
+    recipe = yaml.safe_load(read("plugins/arckit-au-energy/recipes/au-energy.yaml"))
 
     assert recipe["recipe"] == "au-energy"
     assert recipe["schema_version"] == 1
@@ -81,8 +81,8 @@ def test_au_energy_recipe_composes_federal_ot_soci_and_energy_targets():
 
 
 def test_au_energy_doc_types_registered_in_core_and_pages():
-    doc_types = read("arckit-claude/config/doc-types.mjs")
-    pages = read("arckit-claude/commands/pages.md")
+    doc_types = read("plugins/arckit-claude/config/doc-types.mjs")
+    pages = read("plugins/arckit-claude/commands/pages.md")
 
     assert re.search(r"'AUAESCSF':\s+\{ name: 'AU AESCSF Maturity Assessment'", doc_types)
     assert re.search(r"'AUENERGY':\s+\{ name: 'AU Energy Compliance Pack'", doc_types)
@@ -139,8 +139,8 @@ def test_au_energy_synthetic_fixtures_exercise_new_skill_prompts():
         for path in (fixture_root / "fixture-b-voltiq-supplier").rglob("*.md")
     )
 
-    aescsf_command = read("arckit-au-energy/commands/au-aescsf.md")
-    energy_command = read("arckit-au-energy/commands/au-energy-compliance.md")
+    aescsf_command = read("plugins/arckit-au-energy/commands/au-aescsf.md")
+    energy_command = read("plugins/arckit-au-energy/commands/au-energy-compliance.md")
     summary = read("tests/fixtures/au-energy/EVAL_SUMMARY_REPORT.md")
     results = read("tests/fixtures/au-energy/EVAL_RESULTS.md")
     live_review = read("tests/fixtures/au-energy/LIVE_GENERATION_REVIEW.md")
@@ -178,8 +178,8 @@ def test_au_energy_synthetic_fixtures_exercise_new_skill_prompts():
         ]:
             assert arckit_tool in command_text
 
-    aescsf_template = read("arckit-au-energy/templates/au-aescsf-template.md")
-    energy_template = read("arckit-au-energy/templates/au-energy-compliance-template.md")
+    aescsf_template = read("plugins/arckit-au-energy/templates/au-aescsf-template.md")
+    energy_template = read("plugins/arckit-au-energy/templates/au-energy-compliance-template.md")
     for template_text in [aescsf_template, energy_template]:
         assert "Register / Inventory" in template_text
         assert "Source of Truth" in template_text

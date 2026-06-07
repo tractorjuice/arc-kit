@@ -214,17 +214,17 @@ CONTEXT_HOOK_REPLACEMENT = (
 # did, core-last means core wins.
 
 PLUGIN_SOURCES = [
-    "arckit-uae",
-    "arckit-fr",
-    "arckit-ca",
-    "arckit-eu",
-    "arckit-at",
-    "arckit-au",
-    "arckit-au-energy",
-    "arckit-us",
-    "arckit-uk-finance",
-    "arckit-uk-nhs",
-    "arckit-claude",  # core last
+    "plugins/arckit-uae",
+    "plugins/arckit-fr",
+    "plugins/arckit-ca",
+    "plugins/arckit-eu",
+    "plugins/arckit-at",
+    "plugins/arckit-au",
+    "plugins/arckit-au-energy",
+    "plugins/arckit-us",
+    "plugins/arckit-uk-finance",
+    "plugins/arckit-uk-nhs",
+    "plugins/arckit-claude",  # core last
 ]
 
 
@@ -431,7 +431,7 @@ def convert(commands_dirs, agents_dir):
 
     Args:
         commands_dirs: List of source command directories to merge
-            (e.g. ["arckit-uae/commands/", ..., "arckit-claude/commands/"]).
+            (e.g. ["plugins/arckit-uae/commands/", ..., "plugins/arckit-claude/commands/"]).
             Multiple sources land in the same monolithic extension output per
             the v5.0.0 plugin split design.
         agents_dir: Single agents directory (agents stay in core).
@@ -641,9 +641,9 @@ def copy_extension_files(plugin_sources):
     only exist in `arckit-claude` and are copied from there.
 
     Args:
-        plugin_sources: List of plugin source dirs (e.g. ["arckit-uae", ...,
-            "arckit-claude"]). The last entry MUST be the core plugin
-            ("arckit-claude") since that's where scripts/guides/etc. live.
+        plugin_sources: List of plugin source dirs (e.g. ["plugins/arckit-uae",
+            ..., "plugins/arckit-claude"]). The last entry MUST be the core plugin
+            ("plugins/arckit-claude") since that's where scripts/guides/etc. live.
     """
     core_plugin_dir = plugin_sources[-1]
 
@@ -1018,7 +1018,7 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
         toml_path = os.path.join(output_dir, toml_name)
 
         toml_content = (
-            f"# Auto-generated from arckit-claude/agents/{filename}\n"
+            f"# Auto-generated from plugins/arckit-claude/agents/{filename}\n"
             f"# Do not edit — edit the source and re-run scripts/converter.py\n"
             f"\n"
             f'name = "{agent_name}"\n'
@@ -1567,8 +1567,8 @@ projects/
 
 if __name__ == "__main__":
     commands_dirs = [os.path.join(src, "commands") for src in PLUGIN_SOURCES]
-    agents_dir = "arckit-claude/agents/"
-    plugin_dir = "arckit-claude"  # for downstream functions that only touch core
+    agents_dir = "plugins/arckit-claude/agents/"
+    plugin_dir = "plugins/arckit-claude"  # for downstream functions that only touch core
 
     print(
         "Converting plugin commands to Codex, OpenCode, Gemini, and Copilot extension formats..."

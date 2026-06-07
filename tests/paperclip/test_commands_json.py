@@ -9,24 +9,24 @@ COMMANDS_JSON_PATH = os.path.join(
     os.path.dirname(__file__), "..", "..", "arckit-paperclip", "src", "data", "commands.json"
 )
 REPO_ROOT = Path(__file__).resolve().parents[2]
-CLAUDE_COMMANDS_DIR = REPO_ROOT / "arckit-claude" / "commands"
+CLAUDE_COMMANDS_DIR = REPO_ROOT / "plugins" / "arckit-claude" / "commands"
 CLAUDE_ONLY_COMMANDS = {"build.md"}
 
 # v5.0.0+: commands live across plugin source directories. Mirror
 # scripts/converter.py's PLUGIN_SOURCES list so this test matches the
 # converter's actual output.
 PLUGIN_COMMAND_DIRS = [
-    REPO_ROOT / "arckit-claude" / "commands",
-    REPO_ROOT / "arckit-uae" / "commands",
-    REPO_ROOT / "arckit-fr" / "commands",
-    REPO_ROOT / "arckit-ca" / "commands",
-    REPO_ROOT / "arckit-eu" / "commands",
-    REPO_ROOT / "arckit-at" / "commands",
-    REPO_ROOT / "arckit-au" / "commands",
-    REPO_ROOT / "arckit-au-energy" / "commands",
-    REPO_ROOT / "arckit-us" / "commands",
-    REPO_ROOT / "arckit-uk-finance" / "commands",
-    REPO_ROOT / "arckit-uk-nhs" / "commands",
+    REPO_ROOT / "plugins" / "arckit-claude" / "commands",
+    REPO_ROOT / "plugins" / "arckit-uae" / "commands",
+    REPO_ROOT / "plugins" / "arckit-fr" / "commands",
+    REPO_ROOT / "plugins" / "arckit-ca" / "commands",
+    REPO_ROOT / "plugins" / "arckit-eu" / "commands",
+    REPO_ROOT / "plugins" / "arckit-at" / "commands",
+    REPO_ROOT / "plugins" / "arckit-au" / "commands",
+    REPO_ROOT / "plugins" / "arckit-au-energy" / "commands",
+    REPO_ROOT / "plugins" / "arckit-us" / "commands",
+    REPO_ROOT / "plugins" / "arckit-uk-finance" / "commands",
+    REPO_ROOT / "plugins" / "arckit-uk-nhs" / "commands",
 ]
 
 

@@ -3,7 +3,7 @@
  * Regime-registration test for ArcKit doc-type regimes.
  *
  * Every `regime:` value declared on an entry in
- * `arckit-claude/config/doc-types.mjs` MUST also be registered in the exported
+ * `plugins/arckit-claude/config/doc-types.mjs` MUST also be registered in the exported
  * `REGIMES` array AND have a label in `REGIME_LABELS`. Consumers that iterate
  * `REGIMES` (e.g. `hooks/graph-inject.mjs`: compliance-presence listing and
  * readiness scorecard) silently skip any jurisdiction whose regime code is
@@ -23,7 +23,7 @@ import { dirname, resolve } from 'node:path';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = resolve(__dirname, '..', '..');
-const docTypesPath = resolve(repoRoot, 'arckit-claude/config/doc-types.mjs');
+const docTypesPath = resolve(repoRoot, 'plugins/arckit-claude/config/doc-types.mjs');
 
 const { DOC_TYPES, REGIMES, REGIME_LABELS } = await import(docTypesPath);
 

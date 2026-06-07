@@ -39,7 +39,7 @@ Scans user prompts for:
 
 ```text
 $ echo '{"userPrompt": "Use this key sk-ant-abc123def456ghi789"}' \
-    | python3 arckit-claude/hooks/secret-detection.py
+    | python3 plugins/arckit-claude/hooks/secret-detection.py
 # Output: {"decision": "block", "reason": "Warning: Potential secrets detected: ..."}
 ```
 
@@ -60,7 +60,7 @@ Blocks writes to:
 
 ```text
 $ echo '{"tool_name": "Write", "tool_input": {"file_path": ".env", "content": "DB_HOST=localhost"}}' \
-    | python3 arckit-claude/hooks/file-protection.py
+    | python3 plugins/arckit-claude/hooks/file-protection.py
 # Output: {"decision": "block", "reason": "Protected: Protected file: .env\nFile: .env\n..."}
 ```
 
@@ -72,7 +72,7 @@ Scans the content of files being written or edited using the same pattern librar
 
 ```text
 $ echo '{"tool_name": "Write", "tool_input": {"file_path": "config.py", "content": "db_host=localhost"}}' \
-    | python3 arckit-claude/hooks/secret-file-scanner.py
+    | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
 # Output: no output (safe content passes through)
 ```
 
@@ -98,10 +98,10 @@ ALLOWED_EXCEPTIONS = [
 
 ```python
 ALLOWED_DIRECTORIES = [
-    "arckit-claude/commands/",
-    "arckit-claude/templates/",
-    "arckit-claude/agents/",
-    "arckit-claude/hooks/",
+    "plugins/arckit-claude/commands/",
+    "plugins/arckit-claude/templates/",
+    "plugins/arckit-claude/agents/",
+    "plugins/arckit-claude/hooks/",
     "docs/",
     ".arckit/templates/",
     "your-project/docs/",  # Add here
@@ -119,8 +119,8 @@ SKIP_PATTERNS = [
     r"secret-file-scanner\.py$",
     r"file-protection\.py$",
     r"\.secrets\.baseline$",
-    r"arckit-claude/commands/.*\.md$",
-    r"arckit-claude/templates/.*\.md$",
+    r"plugins/arckit-claude/commands/.*\.md$",
+    r"plugins/arckit-claude/templates/.*\.md$",
     r"docs/.*\.md$",
     r"CHANGELOG\.md$",
     r"README\.md$",
@@ -157,7 +157,7 @@ You can test each hook by piping JSON to stdin. All hooks handle empty input gra
 
 ```bash
 echo '{"tool_name": "Write", "tool_input": {"file_path": ".env", "content": "VALUE=abc"}}' \
-    | python3 arckit-claude/hooks/file-protection.py
+    | python3 plugins/arckit-claude/hooks/file-protection.py
 ```
 
 Expected: `{"decision": "block", ...}`
@@ -166,7 +166,7 @@ Expected: `{"decision": "block", ...}`
 
 ```bash
 echo '{"userPrompt": "Use this key sk-ant-abc123def456ghi789"}' \
-    | python3 arckit-claude/hooks/secret-detection.py
+    | python3 plugins/arckit-claude/hooks/secret-detection.py
 ```
 
 Expected: `{"decision": "block", ...}`
@@ -175,7 +175,7 @@ Expected: `{"decision": "block", ...}`
 
 ```bash
 echo '{"tool_name": "Write", "tool_input": {"file_path": "test.md", "content": "pwd=hunter2"}}' \
-    | python3 arckit-claude/hooks/secret-file-scanner.py
+    | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
 ```
 
 Expected: `{"decision": "block", ...}`
@@ -183,8 +183,8 @@ Expected: `{"decision": "block", ...}`
 ### Test that allowed files pass through
 
 ```bash
-echo '{"tool_name": "Write", "tool_input": {"file_path": "arckit-claude/commands/research.md", "content": "Use API key format: sk-xxx"}}' \
-    | python3 arckit-claude/hooks/secret-file-scanner.py
+echo '{"tool_name": "Write", "tool_input": {"file_path": "plugins/arckit-claude/commands/research.md", "content": "Use API key format: sk-xxx"}}' \
+    | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
 ```
 
 Expected: no output (exit code 0, file is in a skip pattern)
@@ -192,9 +192,9 @@ Expected: no output (exit code 0, file is in a skip pattern)
 ### Test that empty input does not crash
 
 ```bash
-echo '' | python3 arckit-claude/hooks/file-protection.py
-echo '' | python3 arckit-claude/hooks/secret-detection.py
-echo '' | python3 arckit-claude/hooks/secret-file-scanner.py
+echo '' | python3 plugins/arckit-claude/hooks/file-protection.py
+echo '' | python3 plugins/arckit-claude/hooks/secret-detection.py
+echo '' | python3 plugins/arckit-claude/hooks/secret-file-scanner.py
 ```
 
 Expected: no output or `{}` (exit code 0 for all)
