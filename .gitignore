@@ -188,6 +188,10 @@ docs/auth.txt
 docs/pitch-decks/
 docs/2026-05-20-difc-innovation-licence-setup-guide.pdf
 
+# Partnership/funding proposals - confidential business material, kept off the
+# public repo (same rationale as pitch-decks above).
+docs/proposals/
+
 # LinkedIn data export - contains personal PII (connections, messages, phone)
 docs/*LinkedInDataExport*
 
