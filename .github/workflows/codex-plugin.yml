@@ -36,7 +36,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install Python test dependencies
-        run: python -m pip install -e . pytest
+        run: python -m pip install -e . pytest pyyaml
 
       # The arckit-codex/ extension is generated from arckit-claude (and the
       # community overlays) by converter.py and is no longer tracked in git
