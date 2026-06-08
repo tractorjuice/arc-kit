@@ -232,6 +232,8 @@ ArcKit ships a soft floor: the `version-check.mjs` SessionStart hook *warns* any
 
 Claude Code then **refuses to start** outside the range and directs the user to an approved version. Use `requiredMinimumVersion` to guarantee everyone has the features ArcKit relies on; use `requiredMaximumVersion` as a known-good ceiling so a regulated fleet doesn't auto-adopt a release before you've validated it. These are *managed-settings only* — a plugin or repo cannot set them (by design: a hostile repo must not be able to lock you out of your own tooling).
 
+> **Run v2.1.166+ for reliable enforcement.** On earlier versions a single invalid entry anywhere in the managed-settings file could *silently disable enforcement of the remaining valid policies* — so a typo could switch off the version floor above with no signal. v2.1.166 fixes this (valid policies keep enforcing) and also fixes `allowedMcpServers` / `deniedMcpServers` predicates that use `${VAR}` references not matching.
+
 For an **individual** user or repo that just wants to avoid drifting *below* the floor, the softer, user-scoped `minimumVersion` in `.claude/settings.json` blocks auto-update/`claude update` from going below it (it doesn't refuse startup). ArcKit pins this in its own repos and the below-floor warning recommends it.
 
 ### Allowlist the ArcKit marketplace
