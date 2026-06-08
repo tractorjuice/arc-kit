@@ -10,7 +10,7 @@
     },
     {
       "author": "ArcKit maintainers",
-      "content": "SEVEN DISTRIBUTION FORMATS (not four) — (1) Claude Code plugin `arckit-claude/` (canonical), (2) Gemini CLI extension `arckit-gemini/`, (3) Codex CLI extension `arckit-codex/`, (4) OpenCode CLI extension `arckit-opencode/`, (5) Copilot prompt pack `arckit-copilot/`, (6) Python CLI `src/arckit_cli/` used to scaffold Codex/OpenCode/Copilot projects, (7) TypeScript `paperclip` plugin (72 tools, committed on branch). Older wiki generations listed only four — that is outdated."
+      "content": "SEVEN DISTRIBUTION FORMATS (not four) — (1) Claude Code plugin `arckit-claude/` (canonical), (2) Gemini CLI extension `extensions/arckit-gemini/`, (3) Codex CLI extension `extensions/arckit-codex/`, (4) OpenCode CLI extension `extensions/arckit-opencode/`, (5) Copilot prompt pack `extensions/arckit-copilot/`, (6) Python CLI `src/arckit_cli/` used to scaffold Codex/OpenCode/Copilot projects, (7) TypeScript `paperclip` plugin (72 tools, committed on branch). Older wiki generations listed only four — that is outdated."
     },
     {
       "author": "ArcKit maintainers",

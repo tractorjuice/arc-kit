@@ -237,8 +237,8 @@ The full table of public test repos is in [CLAUDE.md](https://github.com/tractor
 - [Claude Code plugin](https://github.com/tractorjuice/arc-kit/tree/main/arckit-claude): `/plugin marketplace add tractorjuice/arc-kit`.
 - [Gemini CLI extension](https://github.com/tractorjuice/arckit-gemini): `gemini extensions install tractorjuice/arckit-gemini`.
 - [Codex CLI extension](https://github.com/tractorjuice/arckit-codex): Skills, agents, MCP servers for Codex.
-- [OpenCode CLI extension](https://github.com/tractorjuice/arc-kit/tree/main/arckit-opencode): Commands for OpenCode.
-- [GitHub Copilot extension](https://github.com/tractorjuice/arc-kit/tree/main/arckit-copilot): Prompt files and custom agents for VS Code.
+- [OpenCode CLI extension](https://github.com/tractorjuice/arc-kit/tree/main/extensions/arckit-opencode): Commands for OpenCode.
+- [GitHub Copilot extension](https://github.com/tractorjuice/arc-kit/tree/main/extensions/arckit-copilot): Prompt files and custom agents for VS Code.
 - [Python CLI package](https://github.com/tractorjuice/arc-kit/tree/main/src/arckit_cli): `pip install git+https://github.com/tractorjuice/arc-kit.git`.
 - [Changelog](https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md): Release history.
 - [Contributing guide](https://github.com/tractorjuice/arc-kit/blob/main/CONTRIBUTING.md).

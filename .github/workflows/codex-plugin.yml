@@ -38,7 +38,7 @@ jobs:
       - name: Install Python test dependencies
         run: python -m pip install -e . pytest pyyaml
 
-      # The arckit-codex/ extension is generated from plugins/arckit-claude (and
+      # The extensions/arckit-codex/ extension is generated from plugins/arckit-claude (and
       # the community overlays) by converter.py and is no longer tracked in git
       # (see .gitignore "Generated distribution formats"). Regenerate it before
       # the tests so a fresh checkout has the files the suite asserts against.
@@ -46,7 +46,7 @@ jobs:
         run: python scripts/converter.py
 
       - name: Check Codex hook syntax
-        run: node --check arckit-codex/hooks/arckit-codex-hook.mjs
+        run: node --check extensions/arckit-codex/hooks/arckit-codex-hook.mjs
 
       - name: Check CLI syntax
         run: python -m py_compile src/arckit_cli/__init__.py

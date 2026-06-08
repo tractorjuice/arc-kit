@@ -5,6 +5,12 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- **Generated non-Claude extension dirs moved under `extensions/`.** The five converter-output dirs (`arckit-codex`, `arckit-opencode`, `arckit-copilot`, `arckit-gemini`, `arckit-paperclip`) now live under `extensions/` instead of the repo root, decluttering the top level and mirroring the `plugins/` grouping used for Claude Code plugin sources. The dirs remain gitignored generated content (only hand-authored files per extension are tracked); `arckit-claude` is still the single source of truth — run `python scripts/converter.py` after pulling. Build tooling (`scripts/converter.py`, `scripts/bump-version.sh`, `scripts/push-extensions.sh`), packaging (`pyproject.toml` shared-data, CLI data-path resolution — installed wheel layout now `share/arckit/extensions/<ext>`), CI, tests and docs were updated accordingly. Published-extension repos and install commands are unchanged.
+
 ## [5.11.1] — 2026-06-07
 
 Maintenance release — repository restructure and hygiene only. **Plugin content is unchanged**; installation and usage are identical to 5.11.0.

@@ -174,43 +174,43 @@ for plugin_dir in "${COMMUNITY_PLUGINS[@]}"; do
   fi
 done
 
-# ── 9. arckit-gemini/VERSION ───────────────────────────────────────────────
+# ── 9. extensions/arckit-gemini/VERSION ───────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-gemini/VERSION
-update_file "arckit-gemini/VERSION" "overwrite"
+echo "$NEW_VERSION" > extensions/arckit-gemini/VERSION
+update_file "extensions/arckit-gemini/VERSION" "overwrite"
 
-# ── 10. arckit-gemini/gemini-extension.json ────────────────────────────────
+# ── 10. extensions/arckit-gemini/gemini-extension.json ────────────────────────────────
 
-jq --arg v "$NEW_VERSION" '.version = $v' arckit-gemini/gemini-extension.json > arckit-gemini/gemini-extension.json.tmp
-mv arckit-gemini/gemini-extension.json.tmp arckit-gemini/gemini-extension.json
-update_file "arckit-gemini/gemini-extension.json" ".version"
+jq --arg v "$NEW_VERSION" '.version = $v' extensions/arckit-gemini/gemini-extension.json > extensions/arckit-gemini/gemini-extension.json.tmp
+mv extensions/arckit-gemini/gemini-extension.json.tmp extensions/arckit-gemini/gemini-extension.json
+update_file "extensions/arckit-gemini/gemini-extension.json" ".version"
 
-# ── 11. arckit-opencode/VERSION ────────────────────────────────────────────
+# ── 11. extensions/arckit-opencode/VERSION ────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-opencode/VERSION
-update_file "arckit-opencode/VERSION" "overwrite"
+echo "$NEW_VERSION" > extensions/arckit-opencode/VERSION
+update_file "extensions/arckit-opencode/VERSION" "overwrite"
 
-# ── 12. arckit-codex/VERSION ──────────────────────────────────────────────
+# ── 12. extensions/arckit-codex/VERSION ──────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-codex/VERSION
-update_file "arckit-codex/VERSION" "overwrite"
+echo "$NEW_VERSION" > extensions/arckit-codex/VERSION
+update_file "extensions/arckit-codex/VERSION" "overwrite"
 
-# ── 13. arckit-copilot/VERSION ─────────────────────────────────────────────
+# ── 13. extensions/arckit-copilot/VERSION ─────────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-copilot/VERSION
-update_file "arckit-copilot/VERSION" "overwrite"
+echo "$NEW_VERSION" > extensions/arckit-copilot/VERSION
+update_file "extensions/arckit-copilot/VERSION" "overwrite"
 
-# ── 14. arckit-paperclip/VERSION ──────────────────────────────────────────
+# ── 14. extensions/arckit-paperclip/VERSION ──────────────────────────────────────────
 
-echo "$NEW_VERSION" > arckit-paperclip/VERSION
-update_file "arckit-paperclip/VERSION" "overwrite"
+echo "$NEW_VERSION" > extensions/arckit-paperclip/VERSION
+update_file "extensions/arckit-paperclip/VERSION" "overwrite"
 
-# ── 15. arckit-paperclip/package.json ─────────────────────────────────────
+# ── 15. extensions/arckit-paperclip/package.json ─────────────────────────────────────
 
-if [[ -f arckit-paperclip/package.json ]]; then
-  jq --arg v "$NEW_VERSION" '.version = $v' arckit-paperclip/package.json > arckit-paperclip/package.json.tmp
-  mv arckit-paperclip/package.json.tmp arckit-paperclip/package.json
-  update_file "arckit-paperclip/package.json" ".version"
+if [[ -f extensions/arckit-paperclip/package.json ]]; then
+  jq --arg v "$NEW_VERSION" '.version = $v' extensions/arckit-paperclip/package.json > extensions/arckit-paperclip/package.json.tmp
+  mv extensions/arckit-paperclip/package.json.tmp extensions/arckit-paperclip/package.json
+  update_file "extensions/arckit-paperclip/package.json" ".version"
 fi
 
 # ── Summary ─────────────────────────────────────────────────────────────────
@@ -228,7 +228,7 @@ for p in "${ALL_PLUGINS[@]}"; do
   [[ -f "$p/VERSION" ]] && VERSION_FILES+=("$p/VERSION")
 done
 # Extension repos (no plugin.json — added explicitly)
-for ext in arckit-gemini arckit-opencode arckit-codex arckit-copilot arckit-paperclip; do
+for ext in extensions/arckit-gemini extensions/arckit-opencode extensions/arckit-codex extensions/arckit-copilot extensions/arckit-paperclip; do
   [[ -f "$ext/VERSION" ]] && VERSION_FILES+=("$ext/VERSION")
 done
 grep -H "$NEW_VERSION" "${VERSION_FILES[@]}"

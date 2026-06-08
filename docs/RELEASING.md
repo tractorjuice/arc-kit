@@ -20,10 +20,10 @@ ArcKit ships in seven formats, each with its own version file. They are all bump
 
 **Extension versions** (track the plugin):
 
-- `arckit-gemini/VERSION` + `arckit-gemini/gemini-extension.json`
-- `arckit-opencode/VERSION`
-- `arckit-codex/VERSION`
-- `arckit-copilot/VERSION`
+- `extensions/arckit-gemini/VERSION` + `extensions/arckit-gemini/gemini-extension.json`
+- `extensions/arckit-opencode/VERSION`
+- `extensions/arckit-codex/VERSION`
+- `extensions/arckit-copilot/VERSION`
 
 `scripts/bump-version.sh <version>` updates all 15 version-bearing locations (VERSION files, manifests, README badges, docs, plugin.json) in one go.
 

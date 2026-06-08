@@ -260,7 +260,7 @@ Verify with the URL the command returns.
 |---|---|
 | Trusting the PR body's "regenerated converter outputs" claim | Always re-run `python scripts/converter.py` and check `git status` |
 | Trusting headline test count claims | Run `pytest tests/` and verify the numbers |
-| Reviewing only the canonical files, not converter outputs | Diff `main..pr-<N>` for `arckit-codex/`, `arckit-opencode/`, `arckit-gemini/`, `arckit-copilot/`, `arckit-paperclip/` |
+| Reviewing only the canonical files, not converter outputs | Diff `main..pr-<N>` for `extensions/arckit-codex/`, `extensions/arckit-opencode/`, `extensions/arckit-gemini/`, `extensions/arckit-copilot/`, `extensions/arckit-paperclip/` |
 | Missing the dual-template requirement | `diff -rq plugins/arckit-claude/templates/ .arckit/templates/` |
 | Missing classification rendering issue (B2) | Read `plugins/arckit-claude/templates/_partials/RENDERING.md` to confirm only UAE has non-UK routing |
 | Verifying CHANGELOG count from prose, not file count | `ls plugins/arckit-claude/commands/*.md \| wc -l` |

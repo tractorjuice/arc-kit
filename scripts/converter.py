@@ -233,11 +233,11 @@ PLUGIN_SOURCES = [
 AGENT_CONFIG = {
     "codex_extension": {
         "name": "Codex Extension",
-        "output_dir": "arckit-codex/prompts",
+        "output_dir": "extensions/arckit-codex/prompts",
         "filename_pattern": "arckit.{name}.md",
         "format": "markdown",
         "path_prefix": ".arckit",
-        "extension_dir": "arckit-codex",
+        "extension_dir": "extensions/arckit-codex",
         "copy_commands_to_extension": True,
         "copy_agents_to_extension": True,
         "project_template_overrides": True,
@@ -246,7 +246,7 @@ AGENT_CONFIG = {
     },
     "codex_skills": {
         "name": "Codex Skills",
-        "output_dir": "arckit-codex/skills",
+        "output_dir": "extensions/arckit-codex/skills",
         "format": "skill",
         "path_prefix": ".arckit",
         "project_template_overrides": True,
@@ -255,23 +255,23 @@ AGENT_CONFIG = {
     },
     "opencode": {
         "name": "OpenCode CLI",
-        "output_dir": "arckit-opencode/commands",
+        "output_dir": "extensions/arckit-opencode/commands",
         "filename_pattern": "arckit.{name}.md",
         "format": "markdown",
         "path_prefix": ".arckit",
-        "extension_dir": "arckit-opencode",
+        "extension_dir": "extensions/arckit-opencode",
         "copy_agents_to_extension": True,
         "has_context_hook": False,
         "has_sync_guides_hook": False,
     },
     "gemini": {
         "name": "Gemini CLI",
-        "output_dir": "arckit-gemini/commands/arckit",
+        "output_dir": "extensions/arckit-gemini/commands/arckit",
         "filename_pattern": "{name}.toml",
         "format": "toml",
         "path_prefix": "~/.gemini/extensions/arckit",
         "arg_placeholder": "{{args}}",
-        "extension_dir": "arckit-gemini",
+        "extension_dir": "extensions/arckit-gemini",
         "prepend_block": EXTENSION_FILE_ACCESS_BLOCK,
         "rewrite_read_instructions": True,
         "has_context_hook": True,
@@ -279,12 +279,12 @@ AGENT_CONFIG = {
     },
     "copilot": {
         "name": "Copilot",
-        "output_dir": "arckit-copilot/prompts",
+        "output_dir": "extensions/arckit-copilot/prompts",
         "filename_pattern": "arckit-{name}.prompt.md",
         "format": "prompt",
         "path_prefix": ".arckit",
         "arg_placeholder": "${input:topic:Enter project name or topic}",
-        "extension_dir": "arckit-copilot",
+        "extension_dir": "extensions/arckit-copilot",
         "copy_commands_to_extension": False,
         "copy_agents_to_extension": False,
         "has_context_hook": False,
@@ -292,11 +292,11 @@ AGENT_CONFIG = {
     },
     "paperclip": {
         "name": "Paperclip",
-        "output_dir": "arckit-paperclip/src/data",
+        "output_dir": "extensions/arckit-paperclip/src/data",
         "format": "json",
         "path_prefix": "scripts/bash",
         "arg_placeholder": "{topic}",
-        "extension_dir": "arckit-paperclip",
+        "extension_dir": "extensions/arckit-paperclip",
         "copy_commands_to_extension": False,
         "copy_agents_to_extension": False,
         "copy_scripts_to_extension": False,
@@ -1357,7 +1357,7 @@ def generate_gemini_agents(agents_dir, output_dir):
 def generate_gemini_hooks(output_dir):
     """Generate hooks.json for Gemini CLI extension.
 
-    Creates arckit-gemini/hooks/hooks.json which tells Gemini CLI
+    Creates extensions/arckit-gemini/hooks/hooks.json which tells Gemini CLI
     which hook scripts to run for each lifecycle event.
     """
     hooks_dir = os.path.join(output_dir, "hooks")
@@ -1651,45 +1651,45 @@ if __name__ == "__main__":
 
     print()
     print("Generating Codex extension config...")
-    generate_codex_plugin_manifest("arckit-codex")
+    generate_codex_plugin_manifest("extensions/arckit-codex")
     generate_codex_mcp_json(
         os.path.join(plugin_dir, ".mcp.json"),
-        "arckit-codex/.mcp.json",
+        "extensions/arckit-codex/.mcp.json",
     )
     generate_codex_config_toml(
         os.path.join(plugin_dir, ".mcp.json"),
         agents_dir,
-        "arckit-codex/config.toml",
+        "extensions/arckit-codex/config.toml",
     )
     generate_agent_toml_files(
         agents_dir,
-        "arckit-codex/agents",
+        "extensions/arckit-codex/agents",
         path_prefix=".arckit",
     )
 
     print()
     print("Rewriting Codex extension skills for Codex command format...")
-    rewrite_codex_skills("arckit-codex/skills")
+    rewrite_codex_skills("extensions/arckit-codex/skills")
 
     print()
     print("Generating Gemini CLI sub-agents...")
-    generate_gemini_agents(agents_dir, "arckit-gemini/agents")
+    generate_gemini_agents(agents_dir, "extensions/arckit-gemini/agents")
 
     print()
     print("Generating Gemini extension hooks...")
-    generate_gemini_hooks("arckit-gemini")
+    generate_gemini_hooks("extensions/arckit-gemini")
 
     print()
     print("Generating Gemini extension policies...")
-    generate_gemini_policies("arckit-gemini")
+    generate_gemini_policies("extensions/arckit-gemini")
 
     print()
     print("Generating Copilot custom agents...")
-    generate_copilot_agents(agents_dir, "arckit-copilot/agents")
+    generate_copilot_agents(agents_dir, "extensions/arckit-copilot/agents")
 
     print()
     print("Generating Copilot instructions...")
-    generate_copilot_instructions("arckit-copilot/copilot-instructions.md")
+    generate_copilot_instructions("extensions/arckit-copilot/copilot-instructions.md")
 
     print()
     total = sum(counts.values())

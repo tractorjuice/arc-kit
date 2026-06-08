@@ -38,7 +38,7 @@ client = httpx.Client(verify=ssl_context)
 
 # Agent configuration for ArcKit
 # Note: Claude Code support has moved to the ArcKit plugin (plugins/arckit-claude/).
-# Gemini CLI support has moved to the ArcKit Gemini extension (arckit-gemini/).
+# Gemini CLI support has moved to the ArcKit Gemini extension (extensions/arckit-gemini/).
 # The CLI now only supports Codex.
 AGENT_CONFIG = {
     "codex": {
@@ -152,31 +152,31 @@ def get_data_paths():
         return {
             "templates": base_path / ".arckit" / "templates",
             "scripts": base_path / "scripts",
-            "opencode_root": base_path / "arckit-opencode",
-            "opencode_commands": base_path / "arckit-opencode" / "commands",
-            "opencode_agents": base_path / "arckit-opencode" / "agents",
+            "opencode_root": base_path / "extensions" / "arckit-opencode",
+            "opencode_commands": base_path / "extensions" / "arckit-opencode" / "commands",
+            "opencode_agents": base_path / "extensions" / "arckit-opencode" / "agents",
             "docs_guides": base_path / "docs" / "guides",
             "docs_readme": base_path / "docs" / "README.md",
             "dependency_matrix": base_path / "docs" / "DEPENDENCY-MATRIX.md",
             "workflow_diagrams": base_path / "docs" / "WORKFLOW-DIAGRAMS.md",
             "version": base_path / "VERSION",
             "changelog": base_path / "CHANGELOG.md",
-            "codex_references": base_path / "arckit-codex" / "references",
-            "codex_skills": base_path / "arckit-codex" / "skills",
-            "codex_agents": base_path / "arckit-codex" / "agents",
-            "codex_hooks": base_path / "arckit-codex" / "hooks",
-            "codex_schemas": base_path / "arckit-codex" / "schemas",
-            "codex_validator": base_path / "arckit-codex" / "scripts" / "validate-handoff.mjs",
-            "codex_config": base_path / "arckit-codex" / "config.toml",
-            "copilot_prompts": base_path / "arckit-copilot" / "prompts",
-            "copilot_agents": base_path / "arckit-copilot" / "agents",
-            "copilot_instructions": base_path / "arckit-copilot" / "copilot-instructions.md",
+            "codex_references": base_path / "extensions" / "arckit-codex" / "references",
+            "codex_skills": base_path / "extensions" / "arckit-codex" / "skills",
+            "codex_agents": base_path / "extensions" / "arckit-codex" / "agents",
+            "codex_hooks": base_path / "extensions" / "arckit-codex" / "hooks",
+            "codex_schemas": base_path / "extensions" / "arckit-codex" / "schemas",
+            "codex_validator": base_path / "extensions" / "arckit-codex" / "scripts" / "validate-handoff.mjs",
+            "codex_config": base_path / "extensions" / "arckit-codex" / "config.toml",
+            "copilot_prompts": base_path / "extensions" / "arckit-copilot" / "prompts",
+            "copilot_agents": base_path / "extensions" / "arckit-copilot" / "agents",
+            "copilot_instructions": base_path / "extensions" / "arckit-copilot" / "copilot-instructions.md",
         }
 
     # First, check if running from source (development mode)
     # This allows testing local changes without re-installing
     source_root = Path(__file__).parent.parent.parent
-    if (source_root / ".arckit").exists() and (source_root / "arckit-codex").exists():
+    if (source_root / ".arckit").exists() and (source_root / "extensions" / "arckit-codex").exists():
         return build_paths(source_root)
 
     # Then try to find installed package data

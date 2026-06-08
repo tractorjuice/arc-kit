@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 COMMANDS_JSON_PATH = os.path.join(
-    os.path.dirname(__file__), "..", "..", "arckit-paperclip", "src", "data", "commands.json"
+    os.path.dirname(__file__), "..", "..", "extensions", "arckit-paperclip", "src", "data", "commands.json"
 )
 REPO_ROOT = Path(__file__).resolve().parents[2]
 CLAUDE_COMMANDS_DIR = REPO_ROOT / "plugins" / "arckit-claude" / "commands"

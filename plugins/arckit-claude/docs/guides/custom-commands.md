@@ -15,12 +15,12 @@ You write **one** source file in `arckit-claude/commands/<n>.md`. The converter 
 | Target | Output path | Format |
 |-------|-------------|--------|
 | Claude Code (source — edit this) | `arckit-claude/commands/<n>.md` | Markdown with YAML frontmatter |
-| Codex CLI (command) | `arckit-codex/prompts/arckit.<n>.md` | Markdown |
-| Codex CLI (skill) | `arckit-codex/skills/arckit-<n>/SKILL.md` | Skill format |
-| OpenCode CLI | `arckit-opencode/commands/arckit.<n>.md` | Markdown |
-| Gemini CLI | `arckit-gemini/commands/arckit/<n>.toml` | TOML |
-| GitHub Copilot | `arckit-copilot/prompts/arckit-<n>.prompt.md` | Prompt frontmatter |
-| Paperclip | `arckit-paperclip/src/data/commands.json` (entry) | JSON |
+| Codex CLI (command) | `extensions/arckit-codex/prompts/arckit.<n>.md` | Markdown |
+| Codex CLI (skill) | `extensions/arckit-codex/skills/arckit-<n>/SKILL.md` | Skill format |
+| OpenCode CLI | `extensions/arckit-opencode/commands/arckit.<n>.md` | Markdown |
+| Gemini CLI | `extensions/arckit-gemini/commands/arckit/<n>.toml` | TOML |
+| GitHub Copilot | `extensions/arckit-copilot/prompts/arckit-<n>.prompt.md` | Prompt frontmatter |
+| Paperclip | `extensions/arckit-paperclip/src/data/commands.json` (entry) | JSON |
 
 The first row is the file you edit by hand; the converter generates all others. You do not edit the generated files directly. The converter handles argument-placeholder rewriting, path rewriting for the Gemini sandbox, frontmatter stripping for Claude-only fields, and extension-file copying.
 

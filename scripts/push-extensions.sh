@@ -22,11 +22,11 @@ trap 'rm -rf "$WORK_DIR"' EXIT
 # ── Extension config ──────────────────────────────────────────────────────────
 # Format: local_dir:repo_name
 declare -A EXTENSIONS=(
-  [gemini]="arckit-gemini:arckit-gemini"
-  [codex]="arckit-codex:arckit-codex"
-  [opencode]="arckit-opencode:arckit-opencode"
-  [copilot]="arckit-copilot:arckit-copilot"
-  [paperclip]="arckit-paperclip:arckit-paperclip"
+  [gemini]="extensions/arckit-gemini:arckit-gemini"
+  [codex]="extensions/arckit-codex:arckit-codex"
+  [opencode]="extensions/arckit-opencode:arckit-opencode"
+  [copilot]="extensions/arckit-copilot:arckit-copilot"
+  [paperclip]="extensions/arckit-paperclip:arckit-paperclip"
 )
 
 # ── Determine which extensions to push ────────────────────────────────────────

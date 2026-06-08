@@ -263,8 +263,8 @@ Handler: `command` (JSON stdio + exit-code-2 block). Matcher: regex only — no 
 ## 12. ArcKit-specific implications
 
 - Converter strategy is well-aligned: stripping `effort`, `keep-coding-instructions`, `handoffs`, `tools`/`disallowedTools`, `initialPrompt`, and rewriting `${user_config.KEY}` → `${KEY}` matches what Gemini and Codex actually accept.
-- **Opportunity**: Gemini now supports `skills/` and Markdown+YAML subagents — the converter could emit ArcKit's 5 skills and 10 agents to `arckit-gemini/skills/` and `arckit-gemini/agents/` instead of inlining agent prompts.
-- **Opportunity**: package `arckit-codex/` as a real Codex plugin (`.codex-plugin/plugin.json` + `marketplace.json`) for `/plugins install` parity; consider adding `agents/openai.yaml` per skill for branding.
+- **Opportunity**: Gemini now supports `skills/` and Markdown+YAML subagents — the converter could emit ArcKit's 5 skills and 10 agents to `extensions/arckit-gemini/skills/` and `extensions/arckit-gemini/agents/` instead of inlining agent prompts.
+- **Opportunity**: package `extensions/arckit-codex/` as a real Codex plugin (`.codex-plugin/plugin.json` + `marketplace.json`) for `/plugins install` parity; consider adding `agents/openai.yaml` per skill for branding.
 - **Unportable to non-Claude**: `monitors` (stale-artifact-scan), `alwaysLoad`, `if:` hook scoping, typed `userConfig`, output styles, LSP, bin, channels, plugin dependencies — document as known gaps.
 - **Not yet adopted**: agent teams + forked subagents (experimental); `${CLAUDE_PLUGIN_DATA}` for cached deps; `subagentStatusLine`.
 
