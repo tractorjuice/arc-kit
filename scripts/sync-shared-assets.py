@@ -27,13 +27,20 @@ CORE_PLUGIN = REPO_ROOT / "plugins" / "arckit-claude"
 SHARED_DIRS = ("templates/_partials", "references")
 
 
+# Plugins exempt from the shared-asset sync: the core plugin itself (the source
+# of truth), and `arckit-fde` — a Claude-only tooling plugin (white-label FDE
+# site generator) that has no governance commands and references none of the
+# shared partials/references, so it must not carry them.
+SYNC_EXEMPT_PLUGINS = {"arckit-claude", "arckit-fde"}
+
+
 def discover_community_plugins() -> list[Path]:
     """Return every arckit-*/ directory with a Claude Code plugin manifest,
-    excluding the core arckit-claude plugin itself."""
+    excluding the core arckit-claude plugin and any other sync-exempt plugin."""
     return sorted(
         p.parent.parent
         for p in REPO_ROOT.glob("plugins/arckit-*/.claude-plugin/plugin.json")
-        if p.parent.parent.name != "arckit-claude"
+        if p.parent.parent.name not in SYNC_EXEMPT_PLUGINS
     )
 
 
