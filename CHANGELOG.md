@@ -5,6 +5,22 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`arckit-fde` plugin (12th marketplace plugin)** — a lean, Claude Code only ArcKit
+  plugin with one command, `/arckit-fde:create`, that interviews the user and renders a
+  brandable, GitHub-Pages-ready Forward Deploy Engineering consulting website into `docs/`.
+  Clone-and-substitute templates (scalar `{{TOKEN}}`s plus `<!-- BEGIN/END -->` list
+  regions; brand colour via a single `:root` CSS custom property), `uk-public-sector` and
+  `generic` market presets, a saved `fde-site.config.yaml` for repeatable re-renders, and
+  discovery metadata (`llms.txt`, `sitemap.xml`, `robots.txt`, `.nojekyll`). Not wired into
+  the converter (Claude-only), no governance doc-types, no dependencies. Includes a
+  `scripts/tests/test-fde-templates.mjs` consistency guard and a launch article. The
+  officially-maintained command baseline is unchanged; `/arckit-fde:create` is a tooling
+  command.
+
 ## [5.11.2] — 2026-06-08
 
 ### Changed

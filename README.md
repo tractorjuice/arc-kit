@@ -59,7 +59,7 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. The marketplace ships **8 plugins** — install only the jurisdictions you need:
+Then install from the Discover tab. The marketplace ships **12 plugins** — install only the jurisdictions you need:
 
 ```bash
 # Core (73 commands — UK Government civilian + generic enterprise)
@@ -72,7 +72,7 @@ claude plugin install arckit arckit-uae
 claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs}
 ```
 
-All 11 plugins come from the same `tractorjuice/arc-kit` marketplace. The 10 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`.
+All 12 plugins come from the same `tractorjuice/arc-kit` marketplace. The 10 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
 
 > **Tip: lighter marketplace clone.** The command above clones the full arc-kit monorepo (~100 MB) because it hosts five other AI-assistant distributions, 147 vendored Wardley maps, and research docs you don't need. To fetch just the plugin's directories, add the marketplace via the CLI with `--sparse`:
 >

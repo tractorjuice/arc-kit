@@ -1,0 +1,74 @@
+# {{SITE_NAME}}
+
+> {{TAGLINE}}
+
+{{META_DESCRIPTION}}
+
+# BEGIN: powered-by-arckit
+{{SITE_NAME}} is delivered with ArcKit, the enterprise architecture governance harness.
+# END: powered-by-arckit
+
+Canonical website: {{SITE_URL}}
+Repository: {{REPO_URL}}
+Contact: {{CONTACT_EMAIL}}
+
+## Positioning
+
+# BEGIN: powered-by-arckit
+- Real agentic AI in the room. ArcKit, the enterprise architecture governance harness, runs on Claude Code, Codex, Gemini, OpenCode and Copilot. The harness produces structured first drafts; the FDE applies senior judgement and decides what good looks like.
+# END: powered-by-arckit
+- Small teams by design. A typical engagement is one or two FDEs. Agentic AI absorbs the work that used to require analysts, junior consultants and review cycles.
+- Accelerated programmes. The bootstrap sprint compresses three months of governance evidence into one week, moving programmes through gates, procurement and assurance ahead of the dates in the diary.
+
+## Bootstrap sprint ({{PRICE_1_AMOUNT}} intensive or {{PRICE_2_AMOUNT}} spread, fixed price)
+
+The bootstrap sprint produces a fixed four-artefact pack:
+
+- Principles
+- Requirements
+- Risk
+- Stakeholders
+
+{{PRICE_1_AMOUNT}} (intensive) or {{PRICE_2_AMOUNT}} (spread) is the price of the outputs, not a weekly retainer. The intensive cadence is five consecutive working days, board-ready by Friday; the spread cadence is the same five days delivered one day a week across five weeks.
+
+The sprint is designed for senior responsible owners, digital leaders, architecture teams, delivery teams, procurement teams and assurance stakeholders who need clear, defensible evidence before major delivery, supplier or investment decisions.
+
+# BEGIN: policy-frameworks
+Outputs are shaped to support evidence discussions around:
+- {{ITEM_TITLE}}: {{ITEM_BODY}}
+# END: policy-frameworks
+
+## Follow-on embedded engagement
+
+After the bootstrap, {{SITE_NAME}} can stay embedded to keep the architecture position alive as the programme moves. Typical follow-on areas:
+
+- Design and decisions: ADRs, high-level design, traceability, conformance reviews
+- Procurement and vendor: SOW, evaluation frameworks, scoring, G-Cloud and DOS clarifications, build vs buy
+- Assurance and AI: service assessment readiness, Secure by Design, DPIA, ATRS, AI Playbook compliance
+- Team enablement: standing the client team up to run the toolkit and the governance cadence independently
+
+Follow-on engagements are scoped and priced on the work involved, not on time billed.
+
+## Programme benefits
+
+- Board confidence through a shared view of what the programme is trying to protect, prove and deliver
+- Procurement readiness through clearer requirements and constraints before supplier engagement
+- Assurance evidence for architecture review and governance
+- Risk visibility across delivery, security, data, supplier, adoption and ownership concerns
+# BEGIN: policy-frameworks
+- Stronger policy alignment for {{ITEM_TITLE}} evidence needs
+# END: policy-frameworks
+
+## Pages
+
+- [{{SITE_NAME}}]({{SITE_URL}}): Main site covering the forward deploy engineering model, the bootstrap sprint pricing options ({{PRICE_1_AMOUNT}} intensive and {{PRICE_2_AMOUNT}} spread), the follow-on embedded engagement, policy alignment and enquiry route.
+# BEGIN: powered-by-arckit
+- [Sample bootstrap pack]({{SITE_URL}}samples/governance-pack.html): Representative sample outputs for principles, requirements, risk and stakeholders.
+# END: powered-by-arckit
+
+## Keywords
+
+Forward deploy engineering, FDE, embedded architecture, bootstrap, architecture governance, enterprise architecture, digital delivery, assurance, procurement readiness, technology governance, requirements, principles, risk register, stakeholder mapping, agentic AI, AI deployment.
+# BEGIN: powered-by-arckit
+Also: Claude Code, ArcKit harness.
+# END: powered-by-arckit

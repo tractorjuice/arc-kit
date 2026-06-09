@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" role="img" aria-label="Site mark">
+  <rect x="1" y="1" width="28" height="28" rx="7" fill="none" stroke="currentColor" stroke-width="2"/>
+  <path d="M9 21 L15 9 L21 21" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="11.4" y1="16.2" x2="18.6" y2="16.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,75 @@
+market_preset: uk-public-sector
+area_served: United Kingdom
+eyebrow: "Forward Deploy Engineering for UK public sector"
+page_title_suffix: "Bootstrap any UK public sector project in a week"
+meta_description: "Forward Deploy Engineering bootstraps any UK public sector project. Fixed price for principles, requirements, risk and stakeholders, delivered by embedded senior architects using real agentic AI."
+hero_alt: "Architecture governance documents and dashboard in a public sector office"
+footer_tagline: "Forward deploy engineering for UK public sector architecture."
+cta_eyebrow: "Forward deploy engineering"
+cta_headline: "Bootstrap your project this week."
+examples_heading: "Real outputs from UK public sector test programmes."
+service_type: "Forward deploy architecture engineering for UK public sector"
+intro_body: "Forward deploy engineering brings a small number of senior architects into the constraints that public sector programmes actually live inside. Classification rules, legacy estates, supplier contracts, assurance routes, departmental governance, ministerial timelines and AI policy boundaries are not edge cases. They are the operating environment."
+public_kicker: "Built for public accountability"
+public_heading: "Public sector programmes need evidence before acceleration."
+public_lead: "The bootstrap sprint is shaped for the realities of government, health, local authority and regulated public service delivery. Embedded follow-on keeps that evidence current as the programme moves."
+powered_by_arckit: true
+tagline: "Bootstrap any UK public sector project in a week. A small embedded FDE team uses real agentic AI to produce the principles, requirements, risk and stakeholder pack that unlocks the next decision. Fixed price, fixed scope, board-ready by Friday."
+cta_primary: "Start an enquiry"
+pricing:
+  - tag: "Intensive"
+    amount: "£25K"
+    amount_numeric: "25000"
+    currency: "GBP"
+    note: "delivered in one week"
+    body: "Five consecutive days, embedded full time. Embed on Monday, board-ready pack by Friday. Best when the team can clear a week and wants the decision unlocked fast."
+  - tag: "Spread"
+    amount: "£35K"
+    amount_numeric: "35000"
+    currency: "GBP"
+    note: "one day a week for five weeks"
+    body: "The same five days of work, delivered one day per week across five weeks. Best when the team cannot clear a full week but can protect one recurring day, or wants longer to gather evidence between sessions."
+signal_band:
+  - { strong: "Bootstrap in a week", span: "from embed to executive readout" }
+  - { strong: "Small embedded team", span: "senior architects, real agentic AI in the room" }
+  - { strong: "Accelerated programmes", span: "through the gates that usually stall" }
+value_props:
+  - { title: "Fixed price, fixed scope", body: "One price, one defined pack of four documents that unlock decisions: principles, requirements, risk and stakeholders. No open-ended discovery and no per-week retainer." }
+  - { title: "Real agentic AI does the heavy lifting", body: "An agentic AI toolkit automates the structural work so the embedded engineer spends the week on judgement, not on inventing headings." }
+  - { title: "Small team, in the room", body: "One or two senior architects, embedded with your delivery team. No off-site delivery centre, no project management overhead, no status reporting cadence." }
+  - { title: "Senior synthesis is the product", body: "You are buying concentrated architecture judgement deployed inside the programme, not a large team learning the context from scratch." }
+offer_pack:
+  - { title: "Principles", body: "Decision rules that connect policy intent, service outcomes, technology constraints and delivery trade-offs." }
+  - { title: "Requirements", body: "A structured set that separates user, policy, data, security, integration and operational needs." }
+  - { title: "Risk", body: "A board-readable view covering delivery, security, data, supplier, assurance and public trust exposure." }
+  - { title: "Stakeholders", body: "A practical model showing influence, duties, decisions, evidence needs and likely objections." }
+public_sector_benefits:
+  - { title: "Board confidence", body: "Creates a shared view of what the programme is trying to protect, prove and deliver." }
+  - { title: "Procurement readiness", body: "Clarifies requirements and constraints before supplier conversations turn into implied commitments." }
+  - { title: "Assurance evidence", body: "Frames artefacts so they can support architecture review, service assessment and technology governance." }
+  - { title: "Risk visibility", body: "Highlights the risks that usually stay hidden until late delivery: ownership, policy fit, data, security and adoption." }
+follow_on_areas:
+  - { title: "Design and decisions", body: "ADRs, high-level design, traceability matrices and conformance reviews." }
+  - { title: "Procurement and vendor", body: "SOW, evaluation frameworks, scoring, G-Cloud and DOS clarification, build versus buy support." }
+  - { title: "Assurance and AI", body: "Service Standard readiness, Secure by Design, DPIA, ATRS records, AI Playbook compliance." }
+  - { title: "Team enablement", body: "Standing up your team to run the toolkit and the governance cadence after we leave." }
+# policy_frameworks items: strong (kicker), title, url (authority link), body
+policy_frameworks:
+  - { strong: "HM Treasury", title: "Green Book", url: "https://www.gov.uk/government/publications/the-green-book-appraisal-and-evaluation-in-central-government", body: "Connects requirements and principles to options, benefits, costs, risks and business-case evidence." }
+  - { strong: "HM Treasury", title: "Orange Book", url: "https://www.gov.uk/government/publications/orange-book", body: "Frames risk ownership, controls, assurance questions and escalation routes in language boards recognise." }
+  - { strong: "GOV.UK Service Manual", title: "Service Standard", url: "https://www.gov.uk/service-manual/digital-by-default", body: "Surfaces evidence for user needs, security, privacy, open standards, reliability and whole-service thinking." }
+  - { strong: "GDS and CDDO", title: "Technology Code of Practice", url: "https://www.gov.uk/guidance/the-technology-code-of-practice", body: "Maps architecture decisions to technology, data, cloud, security, sustainability and procurement criteria." }
+  - { strong: "Government functional standard", title: "GovS 005 Digital", url: "https://www.gov.uk/government/publications/government-functional-standard-govs-005-digital", body: "Supports accountable management of digital, data and technology across services, products and platforms." }
+# worked_examples items: span (kicker), title, url, body
+worked_examples:
+  - { span: "NHS · citizen service", title: "NHS Appointment Booking", url: "https://tractorjuice.github.io/arckit-test-project-v7-nhs-appointment/", body: "End-to-end architecture pack for an NHS-grade booking service." }
+  - { span: "HMRC · AI in tax", title: "HMRC Tax Assistant", url: "https://tractorjuice.github.io/arckit-test-project-v2-hmrc-chatbot/", body: "Conversational AI architecture with NCSC, Service Standard and TCoP evidence." }
+  - { span: "Cabinet Office · cross-gov GenAI", title: "Cabinet Office GenAI Platform", url: "https://tractorjuice.github.io/arckit-test-project-v9-cabinet-office-genai/", body: "Cross-government GenAI platform shaped around AI Playbook, ATRS, Secure by Design." }
+  - { span: "Scottish Courts · justice, devolved gov", title: "Scottish Courts GenAI Strategy", url: "https://tractorjuice.github.io/arckit-test-project-v14-scottish-courts/", body: "AI strategy with devolved-government policy, data and assurance considerations." }
+# bootstrap_cadence items: day (intensive label), span (spread-cadence label), title (phase), body
+bootstrap_cadence:
+  - { day: "Day 0", span: "Kickoff", title: "Embed", body: "Confirm scope, decision horizon, known constraints and stakeholders. Provision access and share internal context." }
+  - { day: "Days 1-2", span: "Weeks 1-2", title: "Evidence capture", body: "Review existing material, interview decision makers and map obligations." }
+  - { day: "Day 3", span: "Week 3", title: "Synthesis", body: "Draft the principles, requirements, risk and stakeholder artefacts." }
+  - { day: "Day 4", span: "Week 4", title: "Challenge", body: "Run a structured review with sponsors, architecture and delivery leads." }
+  - { day: "Day 5", span: "Week 5", title: "Readout", body: "Hand over the pack, unresolved decisions and recommended next actions or follow-on scope." }

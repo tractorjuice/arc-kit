@@ -1,0 +1,54 @@
+market_preset: generic
+area_served: ""
+eyebrow: "Forward Deploy Engineering"
+page_title_suffix: "Bootstrap your project in a week"
+meta_description: "Forward Deploy Engineering bootstraps your project in a week. Fixed price for the principles, requirements, risk and stakeholder pack that unlocks the next decision, delivered by embedded senior architects using real agentic AI."
+hero_alt: "Architecture and delivery documents on a desk"
+footer_tagline: "Forward deploy engineering for architecture and delivery teams."
+cta_eyebrow: "Forward deploy engineering"
+cta_headline: "Bootstrap your project this week."
+examples_heading: "Real outputs from recent engagements."
+service_type: "Forward deploy architecture engineering"
+intro_body: "Forward deploy engineering brings a small number of senior architects into the constraints your programme actually lives inside. Security models, legacy estates, supplier contracts, assurance routes, governance and delivery timelines are not edge cases. They are the operating environment."
+public_kicker: "Built for accountable delivery"
+public_heading: "Programmes need evidence before acceleration."
+public_lead: "The bootstrap sprint is shaped for the realities of regulated, high-stakes delivery. Embedded follow-on keeps that evidence current as the programme moves."
+powered_by_arckit: true
+tagline: "Bootstrap your project in a week. A small embedded team uses real agentic AI to produce the principles, requirements, risk and stakeholder pack that unlocks the next decision. Fixed price, fixed scope, evidence by Friday."
+cta_primary: "Start an enquiry"
+pricing:
+  - { tag: "Intensive", amount: "£25K", amount_numeric: "25000", currency: "GBP", note: "delivered in one week", body: "Five consecutive days, embedded full time. Embed on Monday, an evidence pack by Friday. Best when the team can clear a week and wants the decision unlocked fast." }
+  - { tag: "Spread", amount: "£35K", amount_numeric: "35000", currency: "GBP", note: "one day a week for five weeks", body: "The same five days of work, delivered one day per week across five weeks. Best when the team cannot clear a full week but can protect one recurring day." }
+signal_band:
+  - { strong: "Bootstrap in a week", span: "from embed to executive readout" }
+  - { strong: "Small embedded team", span: "senior architects, real agentic AI in the room" }
+  - { strong: "Accelerated delivery", span: "through the gates that usually stall" }
+value_props:
+  - { title: "Fixed price, fixed scope", body: "One price, one defined pack of outputs, no open-ended discovery and no per-week retainer." }
+  - { title: "Real agentic AI does the heavy lifting", body: "An agentic AI toolkit produces the structural first drafts so the engagement is spent on judgement, not formatting." }
+  - { title: "Small team, in the room", body: "One or two senior people embedded with your delivery team, not a large off-site bench." }
+  - { title: "Senior synthesis is the product", body: "The output is senior architectural judgement, captured as evidence your decision makers can act on." }
+offer_pack:
+  - { title: "Principles", body: "Decision rules that connect intent, outcomes, technology constraints and delivery trade-offs." }
+  - { title: "Requirements", body: "A structured set that separates user, business, data, security, integration and operational needs." }
+  - { title: "Risk", body: "A board-readable view covering delivery, security, data, supplier and adoption exposure." }
+  - { title: "Stakeholders", body: "A practical model showing influence, decisions, evidence needs and likely objections." }
+public_sector_benefits:
+  - { title: "Board confidence", body: "A shared view of what the programme is trying to protect, prove and deliver." }
+  - { title: "Procurement readiness", body: "Clearer requirements and constraints before supplier engagement." }
+  - { title: "Assurance evidence", body: "A structured evidence base for architecture and governance review." }
+  - { title: "Risk visibility", body: "Exposure across delivery, security, data, supplier and adoption concerns." }
+follow_on_areas:
+  - { title: "Design and decisions", body: "ADRs, high-level design, traceability matrices and conformance reviews." }
+  - { title: "Procurement and vendor", body: "SOW, evaluation frameworks, scoring and build versus buy support." }
+  - { title: "Assurance", body: "Readiness reviews, security by design and data-protection evidence." }
+  - { title: "Team enablement", body: "Standing up your team to run the toolkit and the governance cadence after we leave." }
+policy_frameworks: []
+worked_examples: []
+# bootstrap_cadence items: day (intensive label), span (spread-cadence label), title (phase), body
+bootstrap_cadence:
+  - { day: "Day 0", span: "Kickoff", title: "Embed", body: "Confirm scope, decision horizon, known constraints and stakeholders. Provision access and share internal context." }
+  - { day: "Days 1-2", span: "Weeks 1-2", title: "Evidence capture", body: "Review existing material, interview decision makers and map obligations." }
+  - { day: "Day 3", span: "Week 3", title: "Synthesis", body: "Draft the four artefacts." }
+  - { day: "Day 4", span: "Week 4", title: "Challenge", body: "Run a structured review with sponsors and delivery leads." }
+  - { day: "Day 5", span: "Week 5", title: "Readout", body: "Hand over the pack, unresolved decisions and recommended next actions." }

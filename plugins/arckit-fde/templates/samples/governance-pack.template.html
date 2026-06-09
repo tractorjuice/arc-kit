@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sample First-Sprint Pack | {{SITE_NAME}}</title>
+    <meta
+      name="description"
+      content="Sample {{SITE_NAME}} outputs from the bootstrap sprint: principles, requirements, risk and stakeholders for a representative programme."
+    >
+    <link rel="canonical" href="{{SITE_URL}}samples/governance-pack.html">
+    <meta property="og:title" content="Sample First-Sprint Pack | {{SITE_NAME}}">
+    <meta
+      property="og:description"
+      content="Representative examples of the principles, requirements, risk and stakeholder outputs produced in the first {{SITE_NAME}} sprint."
+    >
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{SITE_URL}}samples/governance-pack.html">
+    <meta property="og:image" content="{{OG_IMAGE_URL}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="../assets/{{LOGO_FILE}}" type="image/svg+xml">
+    <link rel="stylesheet" href="../styles.css">
+  </head>
+  <body class="subpage">
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="brand" href="../index.html" aria-label="{{SITE_NAME}} home">
+        <img src="../assets/{{LOGO_FILE}}" width="44" height="20" alt="">
+        <span>{{SITE_NAME}}</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu" onclick="var n=document.getElementById('primary-nav');var o=n.classList.toggle('nav--open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')">
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+      </button>
+      <nav id="primary-nav" onclick="if(event.target.tagName==='A'){this.classList.remove('nav--open');var b=document.querySelector('.nav-toggle');if(b){b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Open menu')}}">
+        <a href="../index.html#what">What is FDE</a>
+        <a href="../index.html#offer">Bootstrap</a>
+        <a href="../index.html#embed">Embed</a>
+        <a href="../index.html#policy">Policy</a>
+        <a class="nav-cta" href="mailto:{{CONTACT_EMAIL}}?subject=Enquiry">Enquire</a>
+      </nav>
+    </header>
+
+    <main id="main" class="sample-page">
+      <section class="sample-hero">
+        <div class="section-kicker">Representative outputs</div>
+        <h1>Sample bootstrap pack</h1>
+        <p>
+          These examples show the level of structure produced in the first one-week {{SITE_NAME}} sprint. They are fictional samples for a digital licensing service, not client deliverables.
+        </p>
+      </section>
+
+      <section class="sample-output" aria-labelledby="principles-title">
+        <div>
+          <span class="doc-index">01</span>
+          <h2 id="principles-title">Principles</h2>
+        </div>
+        <div class="sample-block">
+          <h3>PR-01: Start with outcomes</h3>
+          <p>
+            Every architecture choice must show the outcome, user need and business objective it supports before solution preferences are locked in.
+          </p>
+          <dl>
+            <div>
+              <dt>Rationale</dt>
+              <dd>Supports business-case appraisal by making the link between objectives, options and expected value explicit.</dd>
+            </div>
+            <div>
+              <dt>Implications</dt>
+              <dd>Design decisions include an outcome note, measurable success indicator and evidence owner.</dd>
+            </div>
+            <div>
+              <dt>Evidence tags</dt>
+              <dd>Business case, requirements traceability, principles register.</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="sample-output" aria-labelledby="requirements-title">
+        <div>
+          <span class="doc-index">02</span>
+          <h2 id="requirements-title">Requirements</h2>
+        </div>
+        <div class="sample-block">
+          <table>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Requirement</th>
+                <th>Evidence</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="ID">REQ-U-01</td>
+                <td data-label="Requirement">The service must support assisted digital routes for users who cannot complete the journey online.</td>
+                <td data-label="Evidence">Accessibility and inclusion evidence.</td>
+              </tr>
+              <tr>
+                <td data-label="ID">REQ-T-04</td>
+                <td data-label="Requirement">The solution must use open standards for data exchange unless an exception is agreed by the technical authority.</td>
+                <td data-label="Evidence">Open standards and interoperability policy.</td>
+              </tr>
+              <tr>
+                <td data-label="ID">REQ-A-02</td>
+                <td data-label="Requirement">Each major delivery option must record cost, benefit, risk and dependency assumptions.</td>
+                <td data-label="Evidence">Business-case evidence.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="sample-output" aria-labelledby="risk-title">
+        <div>
+          <span class="doc-index">03</span>
+          <h2 id="risk-title">Risk</h2>
+        </div>
+        <div class="sample-block">
+          <h3>R-03: Unclear ownership of data sharing</h3>
+          <table>
+            <tbody>
+              <tr>
+                <th scope="row">Cause</th>
+                <td>Multiple parties contribute data but ownership and lawful-basis responsibilities are not yet agreed.</td>
+              </tr>
+              <tr>
+                <th scope="row">Event</th>
+                <td>Data-sharing agreement is delayed or challenged during assurance.</td>
+              </tr>
+              <tr>
+                <th scope="row">Effect</th>
+                <td>Alpha cannot progress to procurement or beta without rework, legal review and revised delivery dates.</td>
+              </tr>
+              <tr>
+                <th scope="row">Treatment</th>
+                <td>Name an accountable information owner, complete DPIA screening and agree evidence required for the next governance gate.</td>
+              </tr>
+              <tr>
+                <th scope="row">Evidence tags</th>
+                <td>Risk register, data-protection and privacy evidence.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="sample-output" aria-labelledby="stakeholders-title">
+        <div>
+          <span class="doc-index">04</span>
+          <h2 id="stakeholders-title">Stakeholders</h2>
+        </div>
+        <div class="sample-block">
+          <table>
+            <thead>
+              <tr>
+                <th>Group</th>
+                <th>Decision need</th>
+                <th>Likely concern</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td data-label="Group">Senior responsible owner</td>
+                <td data-label="Decision need">Confidence that scope, benefits and risks justify the next gate.</td>
+                <td data-label="Likely concern">Unfunded dependencies or unclear accountability.</td>
+              </tr>
+              <tr>
+                <td data-label="Group">Digital and technology authority</td>
+                <td data-label="Decision need">Evidence that architecture choices meet standards and can be operated sustainably.</td>
+                <td data-label="Likely concern">Legacy integration, security controls and supplier lock-in.</td>
+              </tr>
+              <tr>
+                <td data-label="Group">Commercial and procurement</td>
+                <td data-label="Decision need">Requirements and evaluation criteria that support a fair market approach.</td>
+                <td data-label="Likely concern">Over-specified solutions, weak outcome measures or unclear acceptance criteria.</td>
+              </tr>
+              <tr>
+                <td data-label="Group">Service users and operational staff</td>
+                <td data-label="Decision need">A route for user needs, exclusions and service pain points to shape delivery decisions.</td>
+                <td data-label="Likely concern">Digital exclusion, channel shift pressure and operational workarounds.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div>
+          <p class="eyebrow">Forward deploy engineering</p>
+          <h2>Embed an {{SITE_NAME}} in your programme.</h2>
+        </div>
+        <a class="button primary" href="mailto:{{CONTACT_EMAIL}}?subject=Sample%20pack%20enquiry">Enquire about availability</a>
+      </section>
+    </main>
+  </body>
+</html>

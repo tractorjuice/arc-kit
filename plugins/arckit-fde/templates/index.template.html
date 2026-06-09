@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{PAGE_TITLE}}</title>
+    <meta
+      name="description"
+      content="{{META_DESCRIPTION}}"
+    >
+    <meta name="theme-color" content="{{THEME_COLOR}}">
+    <link rel="canonical" href="{{SITE_URL}}">
+    <meta property="og:title" content="{{PAGE_TITLE}}">
+    <meta
+      property="og:description"
+      content="{{META_DESCRIPTION}}"
+    >
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{SITE_URL}}">
+    <meta property="og:image" content="{{OG_IMAGE_URL}}">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" href="assets/{{LOGO_FILE}}" type="image/svg+xml">
+    <link rel="stylesheet" href="styles.css">
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "{{SITE_NAME}}",
+        "alternateName": "{{SITE_NAME}}",
+        "url": "{{SITE_URL}}",
+        "description": "{{META_DESCRIPTION}}",
+        "areaServed": "{{AREA_SERVED}}",
+        "offers": [
+          {
+            "@type": "Offer",
+            "name": "Bootstrap sprint, intensive",
+            "description": "Fixed-price four-artefact governance pack delivered in one intensive week",
+            "price": "{{PRICE_1_NUMERIC}}",
+            "priceCurrency": "{{PRICE_1_CURRENCY}}"
+          },
+          {
+            "@type": "Offer",
+            "name": "Bootstrap sprint, spread",
+            "description": "Fixed-price four-artefact governance pack delivered one day a week across five weeks",
+            "price": "{{PRICE_2_NUMERIC}}",
+            "priceCurrency": "{{PRICE_2_CURRENCY}}"
+          }
+        ],
+        "email": "{{CONTACT_EMAIL}}",
+        "serviceType": "{{SERVICE_TYPE}}"
+      }
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="{{SITE_NAME}} home">
+        <img src="assets/{{LOGO_FILE}}" width="30" height="30" alt="">
+        <span>{{SITE_NAME}}</span>
+      </a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" aria-label="Open menu" onclick="var n=document.getElementById('primary-nav');var o=n.classList.toggle('nav--open');this.setAttribute('aria-expanded',o);this.setAttribute('aria-label',o?'Close menu':'Open menu')">
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span>
+      </button>
+      <nav id="primary-nav" onclick="if(event.target.tagName==='A'){this.classList.remove('nav--open');var b=document.querySelector('.nav-toggle');if(b){b.setAttribute('aria-expanded','false');b.setAttribute('aria-label','Open menu')}}">
+        <a href="#what">What is FDE</a>
+        <a href="#offer">Bootstrap</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#embed">Embed</a>
+        <a href="#policy">Policy</a>
+        <a href="#examples">Examples</a>
+        <a href="#docs">Docs</a>
+        <a class="nav-cta" href="{{BOOKING_URL}}">Enquire</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <img class="hero-media" src="assets/{{HERO_FILE}}" width="1672" height="941" fetchpriority="high" alt="{{HERO_ALT}}">
+        <div class="hero-shade" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow">{{EYEBROW}}</p>
+          <h1 id="hero-title">{{SITE_NAME}}</h1>
+          <p class="hero-copy">
+            {{TAGLINE}}
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="{{BOOKING_URL}}">{{CTA_PRIMARY}}</a>
+            <a class="button secondary" href="#what">How FDE works</a>
+          </div>
+        </div>
+        <aside class="hero-panel" aria-label="Engagement summary">
+          <span class="price">{{PRICE_1_AMOUNT}}</span>
+          <span class="price-note">{{PRICE_1_NOTE}}</span>
+          <span class="price price-alt">{{PRICE_2_AMOUNT}}</span>
+          <span class="price-note">{{PRICE_2_NOTE}}</span>
+          <!-- BEGIN: hero-pack --><span class="panel-line">{{ITEM_TITLE}}</span><!-- END: hero-pack -->
+        </aside>
+      </section>
+
+      <section class="signal-band" aria-label="Forward deploy outcomes">
+        <!-- BEGIN: signal-band --><div>
+          <strong>{{ITEM_STRONG}}</strong>
+          <span>{{ITEM_SPAN}}</span>
+        </div><!-- END: signal-band -->
+      </section>
+
+      <section class="section intro" id="what">
+        <div class="section-kicker">What forward deploy means here</div>
+        <div class="split">
+          <div>
+            <h2>Senior architects deployed inside the programme, not pitched at it.</h2>
+          </div>
+          <div class="intro-copy">
+            <p>
+              {{INTRO_BODY}}
+            </p>
+            <p>
+              {{SITE_NAME}} runs real agentic AI alongside your team to compress the discovery, evidence and traceability work that traditionally needs a large consultancy bench. You get senior judgement applied where the programme is making decisions, not a deliverables backlog produced offsite.<!-- BEGIN: powered-by-arckit --> We use ArcKit, the enterprise architecture governance harness, to do it.<!-- END: powered-by-arckit -->
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="value-section" aria-labelledby="value-title">
+        <div>
+          <div class="section-kicker">Why a fixed-price bootstrap sprint works</div>
+          <h2 id="value-title">The same decision evidence that can take traditional suppliers months to assemble.</h2>
+        </div>
+        <div class="value-grid">
+          <!-- BEGIN: value-props --><article>
+            <span>01</span>
+            <h3>{{ITEM_TITLE}}</h3>
+            <p>{{ITEM_BODY}}</p>
+          </article><!-- END: value-props -->
+        </div>
+      </section>
+
+      <section class="document-grid" id="offer" aria-label="Bootstrap pack">
+        <!-- BEGIN: offer-pack --><article class="doc-card accent-green">
+          <span class="doc-index">01</span>
+          <h3>{{ITEM_TITLE}}</h3>
+          <p>{{ITEM_BODY}}</p>
+        </article><!-- END: offer-pack -->
+      </section>
+
+      <section class="section public-sector" id="public-sector">
+        <div class="section-kicker">{{PUBLIC_KICKER}}</div>
+        <div class="split">
+          <div>
+            <h2>{{PUBLIC_HEADING}}</h2>
+            <p class="lead">
+              {{PUBLIC_LEAD}}
+            </p>
+          </div>
+          <div class="benefit-list">
+            <!-- BEGIN: public-sector-benefits --><div>
+              <h3>{{ITEM_TITLE}}</h3>
+              <p>{{ITEM_BODY}}</p>
+            </div><!-- END: public-sector-benefits -->
+          </div>
+        </div>
+      </section>
+
+      <section class="section intro" id="embed">
+        <div class="section-kicker">After the bootstrap</div>
+        <div class="split">
+          <div>
+            <h2>Embedded delivery that stays with the programme.</h2>
+          </div>
+          <div class="intro-copy">
+            <p>
+              Most programmes use the bootstrap sprint to unlock a single decision: a gate, a procurement, an assurance review, a board paper. The work after that is where forward deploy engineering earns its name.
+            </p>
+            <p>
+              {{SITE_NAME}} can stay embedded after the bootstrap to keep the architecture position alive as evidence changes. Typical follow-on work includes ADRs and high-level design, vendor evaluation, service assessment preparation, AI and data governance, risk register maintenance, and onboarding the client team to operate the toolkit independently when the engagement ends. Follow-on engagements are scoped and priced on the work involved, not on time billed.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="document-grid" aria-label="Forward deploy follow-on areas">
+        <!-- BEGIN: follow-on-areas --><article class="doc-card accent-green">
+          <span class="doc-index">A</span>
+          <h3>{{ITEM_TITLE}}</h3>
+          <p>{{ITEM_BODY}}</p>
+        </article><!-- END: follow-on-areas -->
+      </section>
+
+      <section class="policy-section" id="policy" aria-labelledby="policy-title">
+        <div class="section-kicker">Policy alignment</div>
+        <div class="policy-header">
+          <h2 id="policy-title">Evidence shaped around the assurance routes your teams already use.</h2>
+          <p>
+            {{SITE_NAME}} is not a compliance certificate. It is a structured evidence base, kept current by an embedded architect, that helps teams prepare for scrutiny against the policy, appraisal, risk and digital standards that drive your decisions.
+          </p>
+        </div>
+        <div class="policy-grid">
+          <!-- BEGIN: policy-frameworks --><a href="{{ITEM_URL}}" rel="noopener">
+            <span>{{ITEM_STRONG}}</span>
+            <h3>{{ITEM_TITLE}}</h3>
+            <p>{{ITEM_BODY}}</p>
+          </a><!-- END: policy-frameworks -->
+        </div>
+      </section>
+
+      <section class="samples-section" id="examples" aria-labelledby="examples-title">
+        <div>
+          <div class="section-kicker">Worked examples</div>
+          <h2 id="examples-title">{{EXAMPLES_HEADING}}</h2>
+        </div>
+        <div class="sample-preview">
+          <!-- BEGIN: worked-examples --><article>
+            <span>{{ITEM_SPAN}}</span>
+            <h3>{{ITEM_TITLE}}</h3>
+            <p>{{ITEM_BODY}}</p>
+            <p><a href="{{ITEM_URL}}" rel="noopener">View example outputs &rarr;</a></p>
+          </article><!-- END: worked-examples -->
+        </div>
+        <!-- BEGIN: powered-by-arckit --><a class="button dark" href="https://arckit.org/use-cases.html" rel="noopener">See all 19 example projects on arckit.org</a><!-- END: powered-by-arckit -->
+      </section>
+
+      <!-- BEGIN: powered-by-arckit --><section class="samples-section" id="docs" aria-labelledby="docs-title">
+        <div>
+          <div class="section-kicker">Reference docs</div>
+          <h2 id="docs-title">The four guides behind the bootstrap pack.</h2>
+        </div>
+        <div class="sample-preview">
+          <article>
+            <span>Guide &middot; principles</span>
+            <h3>Architecture principles</h3>
+            <p>How ArcKit captures principles that connect policy intent, service outcomes and delivery constraints.</p>
+            <p><a href="https://arckit.org/guide-viewer.html?guide=principles" rel="noopener">Read the guide &rarr;</a></p>
+          </article>
+          <article>
+            <span>Guide &middot; requirements</span>
+            <h3>Requirements engineering</h3>
+            <p>Structured business, functional, non-functional, integration and data requirements with assurance traceability.</p>
+            <p><a href="https://arckit.org/guide-viewer.html?guide=requirements" rel="noopener">Read the guide &rarr;</a></p>
+          </article>
+          <article>
+            <span>Guide &middot; risk</span>
+            <h3>Risk register</h3>
+            <p>Structured risk capture covering cause, event, effect, owner, controls, treatment and escalation.</p>
+            <p><a href="https://arckit.org/guide-viewer.html?guide=risk" rel="noopener">Read the guide &rarr;</a></p>
+          </article>
+          <article>
+            <span>Guide &middot; stakeholders</span>
+            <h3>Stakeholder analysis</h3>
+            <p>How influence, duties, decisions, evidence needs and likely objections are modelled across the programme.</p>
+            <p><a href="https://arckit.org/guide-viewer.html?guide=stakeholders" rel="noopener">Read the guide &rarr;</a></p>
+          </article>
+        </div>
+      </section><!-- END: powered-by-arckit -->
+
+      <section class="delivery" id="delivery" aria-labelledby="delivery-title">
+        <div class="delivery-header">
+          <div>
+            <div class="section-kicker">The bootstrap week</div>
+            <h2 id="delivery-title">A tight cadence from embed to board-ready outputs.</h2>
+          </div>
+          <p>
+            The bootstrap is designed to produce usable documents, not a discovery backlog. Workshops are short, evidence is captured, decisions are traced into the pack, and the whole pack is delivered by Friday.
+          </p>
+        </div>
+        <p class="timeline-legend">
+          <span class="timeline-key intensive">{{PRICE_1_TAG}}, {{PRICE_1_AMOUNT}}</span>
+          <span class="timeline-key spread">{{PRICE_2_TAG}}, {{PRICE_2_AMOUNT}}</span>
+          The same five days of work, shown against both cadences.
+        </p>
+        <ol class="timeline">
+          <!-- BEGIN: bootstrap-cadence --><li>
+            <span>{{ITEM_DAY}}</span>
+            <span class="timeline-alt">{{ITEM_SPAN}}</span>
+            <strong>{{ITEM_TITLE}}</strong>
+            <p>{{ITEM_BODY}}</p>
+          </li><!-- END: bootstrap-cadence -->
+        </ol>
+      </section>
+
+      <section class="pricing" id="pricing" aria-labelledby="pricing-title">
+        <div class="pricing-header">
+          <div>
+            <div class="section-kicker">Pricing</div>
+            <h2 id="pricing-title">Two ways to run the bootstrap. Choose the cadence that fits your team.</h2>
+          </div>
+          <p>
+            Same fixed scope, same senior FDE and the same four-artefact governance pack either way. The only choice is how the work is spread across your team's diary. The spread cadence carries a small premium for the longer engagement.
+          </p>
+        </div>
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <span class="pricing-tag">{{PRICE_1_TAG}}</span>
+            <span class="price">{{PRICE_1_AMOUNT}}</span>
+            <span class="price-note">{{PRICE_1_NOTE}}</span>
+            <p>{{PRICE_1_BODY}}</p>
+          </article>
+          <article class="pricing-card">
+            <span class="pricing-tag">{{PRICE_2_TAG}}</span>
+            <span class="price">{{PRICE_2_AMOUNT}}</span>
+            <span class="price-note">{{PRICE_2_NOTE}}</span>
+            <p>{{PRICE_2_BODY}}</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="outcomes" aria-label="When to use {{SITE_NAME}}">
+        <div class="outcome-copy">
+          <div class="section-kicker">When it fits</div>
+          <h2>Deploy us before the programme becomes expensive to change.</h2>
+        </div>
+        <div class="outcome-columns">
+          <div>
+            <h3>New service or platform</h3>
+            <p>Establish a governing architecture position before delivery teams split into workstreams.</p>
+          </div>
+          <div>
+            <h3>Procurement or supplier reset</h3>
+            <p>Turn unclear intent into requirements and risks that can shape market engagement.</p>
+          </div>
+          <div>
+            <h3>Assurance concern</h3>
+            <p>Create the missing evidence base when boards, auditors or technical authorities need clarity quickly.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section" aria-labelledby="cta-title">
+        <div>
+          <p class="eyebrow">{{CTA_EYEBROW}}</p>
+          <h2 id="cta-title">{{CTA_HEADLINE}}</h2>
+        </div>
+        <a class="button primary" href="{{BOOKING_URL}}">{{CTA_PRIMARY}}</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-brand">
+        <img src="assets/{{LOGO_FILE}}" width="30" height="30" alt="">
+        <span>{{SITE_NAME}}</span>
+      </div>
+      <p>{{FOOTER_TAGLINE}}</p>
+      <!-- BEGIN: powered-by-arckit --><p class="footer-arckit">Runs on <a href="https://arckit.org">ArcKit</a>, the enterprise architecture governance harness, on Claude Code.</p><!-- END: powered-by-arckit -->
+    </footer>
+  </body>
+</html>
