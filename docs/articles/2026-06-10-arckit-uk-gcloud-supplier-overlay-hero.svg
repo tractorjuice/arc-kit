@@ -65,8 +65,8 @@
   <text x="756" y="305" text-anchor="middle" fill="#e8c15c" font-size="13.5" letter-spacing="1.5" font-weight="700">READY TO SUBMIT</text>
 
   <!-- Buyer/supplier mirror callout -->
-  <rect x="320" y="344" width="560" height="44" rx="9" fill="#15130c" stroke="#c8932f" stroke-width="1" stroke-opacity="0.5"/>
-  <text x="600" y="372" text-anchor="middle" fill="#e8c15c" font-size="17" font-weight="600">ArcKit governs the buyer  ·  now it helps the supplier win the work</text>
+  <rect x="266" y="344" width="668" height="44" rx="9" fill="#15130c" stroke="#c8932f" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="600" y="372" text-anchor="middle" fill="#e8c15c" font-size="16" font-weight="600">ArcKit governs the buyer  ·  now it helps the supplier win the work</text>
 
   <!-- Headline -->
   <text x="600" y="452" text-anchor="middle" fill="#ffffff" font-size="60" font-weight="800" letter-spacing="-0.5">From Blank Repo to Submitted Bid</text>
