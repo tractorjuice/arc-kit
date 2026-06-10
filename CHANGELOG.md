@@ -5,6 +5,24 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **Secret scanner no longer false-positives on code/IaC references to secrets**
+  (#590). The generic key-value rules in `secret-file-scanner.mjs` and
+  `secret-detection.mjs` matched any non-whitespace value, so legitimate
+  assignments that *reference* a secret rather than hardcoding it —
+  `secret = module.sm.secret_ids["x"]` (Terraform), `password = var.db_password`,
+  `api_key = process.env.API_KEY`, Pulumi `config.requireSecret(...)`, Kubernetes
+  `secretKeyRef.name`, CDK `Token.fromAsset(...)` — were blocked. A structural
+  reference guard now exempts values that are an identifier followed by a property
+  access, index, or call, or a `${...}`/`$(...)` interpolation. Literal/unquoted
+  secrets and provider token formats (`sk-`, `ghp_`, `AIza`, PEM, …) are still
+  caught. The two hooks' pattern libraries were realigned to be byte-identical and
+  are now covered by `tests/plugin/scanner-reference-guard.test.mjs`, which also
+  guards against future drift between them.
+
 ## [5.12.0] — 2026-06-09
 
 ### Added

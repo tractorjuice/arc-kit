@@ -12,13 +12,22 @@
 import { parseHookInput } from './hook-utils.mjs';
 
 // Secret patterns - synced with secret-detection.mjs
+// Reference guard: treat a value as a (non-secret) reference — not literal
+// secret material — when it is an identifier followed by a property access
+// (.x), an index ([...]) or a call (...), or a ${...}/$(...) interpolation.
+// Covers Terraform (var./local./module./data.), Pulumi (config.requireSecret),
+// app code (process.env.X, os.environ[...]), k8s (secretKeyRef.name), CDK, etc.
+// Applied only to the generic key-value rules; token-format/PEM/high-entropy
+// rules are left untouched so literal credentials are still caught.
+const REF = String.raw`(?![A-Za-z_$][\w$]*(?:\.[\w$]|\[|\()|\$\{|\$\()`;
+
 const SECRET_PATTERNS = [
-  // Explicit key-value patterns
-  [/\b(password|passwd|pwd)\s*[:=]\s*\S+/gi, 'password'],
-  [/\b(secret|api_?secret)\s*[:=]\s*\S+/gi, 'secret'],
-  [/\b(api_?key|apikey)\s*[:=]\s*\S+/gi, 'API key'],
-  [/\b(token|auth_?token|access_?token)\s*[:=]\s*\S+/gi, 'token'],
-  [/\b(private_?key)\s*[:=]\s*\S+/gi, 'private key'],
+  // Explicit key-value patterns (reference-guarded — literal values only)
+  [new RegExp(String.raw`\b(password|passwd|pwd)\s*[:=]\s*${REF}\S+`, 'gi'), 'password'],
+  [new RegExp(String.raw`\b(secret|api_?secret)\s*[:=]\s*${REF}\S+`, 'gi'), 'secret'],
+  [new RegExp(String.raw`\b(api_?key|apikey)\s*[:=]\s*${REF}\S+`, 'gi'), 'API key'],
+  [new RegExp(String.raw`\b(token|auth_?token|access_?token)\s*[:=]\s*${REF}\S+`, 'gi'), 'token'],
+  [new RegExp(String.raw`\b(private_?key)\s*[:=]\s*${REF}\S+`, 'gi'), 'private key'],
 
   // Common API key formats
   [/sk-[a-zA-Z0-9]{20,}/g, 'OpenAI API key'],
@@ -27,16 +36,16 @@ const SECRET_PATTERNS = [
   [/gho_[a-zA-Z0-9]{36}/g, 'GitHub OAuth token'],
   [/ghs_[a-zA-Z0-9]{36}/g, 'GitHub server token'],
   [/AKIA[0-9A-Z]{16}/g, 'AWS access key ID'],
-  [/aws_secret_access_key\s*[:=]\s*\S+/gi, 'AWS secret key'],
+  [new RegExp(String.raw`aws_secret_access_key\s*[:=]\s*${REF}\S+`, 'gi'), 'AWS secret key'],
 
   // Notion tokens
   [/ntn_[a-zA-Z0-9]{40,}/g, 'Notion integration token'],
   [/secret_[a-zA-Z0-9]{40,}/g, 'potential secret token'],
 
   // Atlassian tokens
-  [/atlassian[-_]?token\s*[:=]\s*\S+/gi, 'Atlassian token'],
-  [/confluence[-_]?token\s*[:=]\s*\S+/gi, 'Confluence token'],
-  [/jira[-_]?token\s*[:=]\s*\S+/gi, 'Jira token'],
+  [new RegExp(String.raw`atlassian[-_]?token\s*[:=]\s*${REF}\S+`, 'gi'), 'Atlassian token'],
+  [new RegExp(String.raw`confluence[-_]?token\s*[:=]\s*${REF}\S+`, 'gi'), 'Confluence token'],
+  [new RegExp(String.raw`jira[-_]?token\s*[:=]\s*${REF}\S+`, 'gi'), 'Jira token'],
   [/ATATT[a-zA-Z0-9]{20,}/g, 'Atlassian API token'],
 
   // Slack tokens

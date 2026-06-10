@@ -5,6 +5,19 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+- **Secret scanner reference guard** (#590) — the generic key-value rules in
+  `secret-file-scanner.mjs` and `secret-detection.mjs` matched any non-whitespace
+  value and so blocked legitimate code/IaC that *references* a secret rather than
+  hardcoding it (`secret = module.sm.secret_ids["x"]`, `password = var.db_password`,
+  `api_key = process.env.API_KEY`, Pulumi/k8s/CDK references). A structural guard now
+  exempts identifier-with-access/call values and `${...}`/`$(...)` interpolations;
+  literal secrets and provider token formats are still caught. Both hooks' pattern
+  libraries are realigned byte-identical and covered by a new regression test.
+
 ## [5.12.0] — 2026-06-09
 
 ### Added
