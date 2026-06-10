@@ -226,6 +226,12 @@ PLUGIN_SOURCES = [
     "plugins/arckit-uk-nhs",
     "plugins/arckit-claude",  # core last
 ]
+# Intentionally EXCLUDED from PLUGIN_SOURCES (Claude Code only, not converted):
+#   - arckit-fde            : standalone site-generator tooling plugin
+#   - arckit-uk-gcloud      : PROPRIETARY overlay — must NOT be copied into the
+#                             MIT-licensed public extension repos (licence leak).
+#                             Ships as a Claude Code marketplace plugin only.
+# (Both still appear in marketplace.json; exclusion here is deliberate, not drift.)
 
 
 # --- Agent configuration: adding a new AI target = adding a dictionary entry ---
