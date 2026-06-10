@@ -26,61 +26,61 @@
   </g>
 
   <!-- Eyebrow -->
-  <text x="600" y="58" text-anchor="middle" fill="#b1b4b6" font-size="17" letter-spacing="2.5" font-weight="600">NEW ARCKIT PLUGIN  ·  UK G-CLOUD SUPPLIER OVERLAY</text>
+  <text x="600" y="58" text-anchor="middle" fill="#b1b4b6" font-size="20" letter-spacing="2.5" font-weight="600">NEW ARCKIT PLUGIN  ·  UK G-CLOUD SUPPLIER OVERLAY</text>
 
   <!-- Motif: a service submission pack checklist (the supplier mirror) -->
   <g filter="url(#panelShadow)">
-    <rect x="350" y="92" width="500" height="232" rx="12" fill="#14161f" fill-opacity="0.72" stroke="#2a2d3e" stroke-width="1"/>
+    <rect x="338" y="90" width="524" height="238" rx="12" fill="#14161f" fill-opacity="0.72" stroke="#2a2d3e" stroke-width="1"/>
   </g>
-  <text x="376" y="124" fill="#9b9ea3" font-size="15" letter-spacing="1.2" font-weight="600">SERVICE SUBMISSION PACK</text>
+  <text x="364" y="124" fill="#9b9ea3" font-size="17" letter-spacing="1.2" font-weight="600">SERVICE SUBMISSION PACK</text>
 
   <!-- checklist rows -->
-  <g font-size="15.5">
+  <g font-size="18">
     <!-- row 1 -->
-    <circle cx="384" cy="150" r="8.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.2"/>
-    <path d="M380 150 l3 3 l5.5 -6" fill="none" stroke="#7fd39c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="404" y="155" fill="#d7d9db" font-weight="600">Supplier Profile</text>
-    <text x="820" y="155" text-anchor="end" fill="#7c8088" font-size="12.5" letter-spacing="1">SUPP</text>
+    <circle cx="374" cy="151" r="9.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.3"/>
+    <path d="M369.5 151 l3.3 3.3 l6 -6.6" fill="none" stroke="#7fd39c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="396" y="157" fill="#d7d9db" font-weight="600">Supplier Profile</text>
+    <text x="832" y="157" text-anchor="end" fill="#7c8088" font-size="14" letter-spacing="1">SUPP</text>
     <!-- row 2 -->
-    <circle cx="384" cy="180" r="8.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.2"/>
-    <path d="M380 180 l3 3 l5.5 -6" fill="none" stroke="#7fd39c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="404" y="185" fill="#d7d9db" font-weight="600">Service Definition Document <tspan fill="#9b9ea3" font-weight="400">(Lot 2)</tspan></text>
-    <text x="820" y="185" text-anchor="end" fill="#7c8088" font-size="12.5" letter-spacing="1">SDD</text>
+    <circle cx="374" cy="183" r="9.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.3"/>
+    <path d="M369.5 183 l3.3 3.3 l6 -6.6" fill="none" stroke="#7fd39c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="396" y="189" fill="#d7d9db" font-weight="600">Service Definition Document <tspan fill="#9b9ea3" font-weight="400">(Lot 2)</tspan></text>
+    <text x="832" y="189" text-anchor="end" fill="#7c8088" font-size="14" letter-spacing="1">SDD</text>
     <!-- row 3 -->
-    <circle cx="384" cy="210" r="8.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.2"/>
-    <path d="M380 210 l3 3 l5.5 -6" fill="none" stroke="#7fd39c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="404" y="215" fill="#d7d9db" font-weight="600">Pricing</text>
-    <text x="820" y="215" text-anchor="end" fill="#7c8088" font-size="12.5" letter-spacing="1">PRIC</text>
+    <circle cx="374" cy="215" r="9.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.3"/>
+    <path d="M369.5 215 l3.3 3.3 l6 -6.6" fill="none" stroke="#7fd39c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="396" y="221" fill="#d7d9db" font-weight="600">Pricing</text>
+    <text x="832" y="221" text-anchor="end" fill="#7c8088" font-size="14" letter-spacing="1">PRIC</text>
     <!-- row 4 -->
-    <circle cx="384" cy="240" r="8.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.2"/>
-    <path d="M380 240 l3 3 l5.5 -6" fill="none" stroke="#7fd39c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    <text x="404" y="245" fill="#d7d9db" font-weight="600">Security Assertions <tspan fill="#9b9ea3" font-weight="400">(NCSC Cloud Principles)</tspan></text>
-    <text x="820" y="245" text-anchor="end" fill="#7c8088" font-size="12.5" letter-spacing="1">SECA</text>
+    <circle cx="374" cy="247" r="9.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.3"/>
+    <path d="M369.5 247 l3.3 3.3 l6 -6.6" fill="none" stroke="#7fd39c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="396" y="253" fill="#d7d9db" font-weight="600">Security Assertions <tspan fill="#9b9ea3" font-weight="400">(NCSC)</tspan></text>
+    <text x="832" y="253" text-anchor="end" fill="#7c8088" font-size="14" letter-spacing="1">SECA</text>
   </g>
 
   <!-- final review row: gold READY -->
-  <line x1="376" y1="266" x2="824" y2="266" stroke="#2a2d3e" stroke-width="1"/>
-  <text x="404" y="296" fill="#e8c15c" font-size="16" font-weight="700">Submission Review</text>
-  <rect x="690" y="281" width="134" height="22" rx="11" fill="#3a2a16" stroke="#e8c15c" stroke-width="0.75" stroke-opacity="0.55"/>
-  <text x="757" y="296" text-anchor="middle" fill="#e8c15c" font-size="12" letter-spacing="1.5" font-weight="700">READY TO SUBMIT</text>
+  <line x1="364" y1="272" x2="836" y2="272" stroke="#2a2d3e" stroke-width="1"/>
+  <text x="396" y="305" fill="#e8c15c" font-size="18.5" font-weight="700">Submission Review</text>
+  <rect x="676" y="288" width="160" height="25" rx="12.5" fill="#3a2a16" stroke="#e8c15c" stroke-width="0.75" stroke-opacity="0.55"/>
+  <text x="756" y="305" text-anchor="middle" fill="#e8c15c" font-size="13.5" letter-spacing="1.5" font-weight="700">READY TO SUBMIT</text>
 
   <!-- Buyer/supplier mirror callout -->
-  <rect x="350" y="338" width="500" height="40" rx="8" fill="#15130c" stroke="#c8932f" stroke-width="1" stroke-opacity="0.5"/>
-  <text x="600" y="363" text-anchor="middle" fill="#e8c15c" font-size="14.5" font-weight="600">ArcKit governs the buyer  ·  now it helps the supplier win the work</text>
+  <rect x="320" y="344" width="560" height="44" rx="9" fill="#15130c" stroke="#c8932f" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="600" y="372" text-anchor="middle" fill="#e8c15c" font-size="17" font-weight="600">ArcKit governs the buyer  ·  now it helps the supplier win the work</text>
 
   <!-- Headline -->
-  <text x="600" y="446" text-anchor="middle" fill="#ffffff" font-size="52" font-weight="800" letter-spacing="-0.5">From Blank Repo to Submitted Bid</text>
+  <text x="600" y="452" text-anchor="middle" fill="#ffffff" font-size="60" font-weight="800" letter-spacing="-0.5">From Blank Repo to Submitted Bid</text>
 
   <!-- Subline -->
-  <text x="600" y="486" text-anchor="middle" fill="#e8c15c" font-size="21" font-weight="600">arckit-uk-gcloud — the supplier-side overlay for the UK Digital Marketplace</text>
+  <text x="600" y="496" text-anchor="middle" fill="#e8c15c" font-size="25" font-weight="600">arckit-uk-gcloud — the supplier-side overlay for the UK Digital Marketplace</text>
 
   <!-- Command line -->
-  <text x="600" y="528" text-anchor="middle" fill="#c5c7ca" font-size="16.5" font-family="'Cascadia Code', 'Consolas', monospace">/arckit:supplier-profile → service-design → sdd → pricing → security → review → submission-pack</text>
+  <text x="600" y="540" text-anchor="middle" fill="#c5c7ca" font-size="18.5" font-family="'Cascadia Code', 'Consolas', monospace">/arckit:supplier-profile → sdd → pricing → security → review → submission-pack</text>
 
   <!-- Capability line -->
-  <text x="600" y="562" text-anchor="middle" fill="#9b9ea3" font-size="15.5">11 commands · Service Definition Documents (Lots 1/2/3) · pricing · NCSC security assertions · competitor benchmark · CCS submission pack</text>
+  <text x="600" y="574" text-anchor="middle" fill="#9b9ea3" font-size="18">11 commands · SDDs for Lots 1/2/3 · pricing · NCSC security · competitor benchmark · CCS pack</text>
 
   <!-- Footer -->
-  <line x1="300" y1="600" x2="900" y2="600" stroke="#2a2d3e" stroke-width="1"/>
-  <text x="600" y="632" text-anchor="middle" fill="#7c8088" font-size="14" letter-spacing="0.8">arckit.org  ·  13th marketplace plugin  ·  requires arckit core  ·  Proprietary  ·  Claude Code only</text>
+  <line x1="290" y1="608" x2="910" y2="608" stroke="#2a2d3e" stroke-width="1"/>
+  <text x="600" y="640" text-anchor="middle" fill="#7c8088" font-size="16" letter-spacing="0.8">arckit.org  ·  13th marketplace plugin  ·  requires arckit core  ·  Proprietary  ·  Claude Code only</text>
 </svg>
