@@ -18,11 +18,12 @@ it drives a **supplier** from a blank repository to a submitted G-Cloud 14 bid o
 the UK Digital Marketplace. This overlay fills a capability ArcKit does not have —
 "ArcKit governs the buyer; this overlay helps the supplier win the work."
 
-This spec covers the **bid-authoring core only**. The data-heavy market/sales
-intelligence layer (`compare`, `sales`, `marketplace-data`, `customer`, `targets`,
-`marketing`, `tenders` + the 3 CSV datasets) is **deferred to a second spec**
-because it overlaps ArcKit's existing `/arckit:tenders` and `/arckit:competitors`
-and needs a reconciliation pass.
+This spec covers the **bid-authoring core** plus a dedicated supplier-side
+competitor command (`/arckit:gcloud-competitors`). The data-heavy market/sales
+intelligence layer (`sales`, `marketplace-data`, `customer`, `targets`,
+`marketing`, `tenders` + the 3 CSV datasets and the `marketplace` MCP) is
+**deferred to a second spec** because it overlaps ArcKit's existing
+`/arckit:tenders` and `/arckit:competitors` and needs a reconciliation pass.
 
 ## 2. Goals & non-goals
 
@@ -58,7 +59,7 @@ artefact model (`services/` vs `projects/`) — convention drift.
 ## 4. Command set
 
 gcloud-kit ships 26 commands. After dropping what ArcKit core already does and
-deferring the market-intel layer, the overlay ships **10 commands**: 9 that emit
+deferring the market-intel layer, the overlay ships **11 commands**: 10 that emit
 a registered doc-type plus 1 packaging action.
 
 | New command | Output | Doc-type | Location |
@@ -71,6 +72,7 @@ a registered doc-type plus 1 packaging action.
 | `/arckit:declaration` | Supplier declaration | `DECL` | `projects/000-global/supplier/` |
 | `/arckit:pricing` | G-Cloud pricing document | `PRIC` | `projects/{NNN}-service/` |
 | `/arckit:security` | NCSC Cloud Security Principles assertions | `SECA` | `projects/{NNN}-service/` |
+| `/arckit:gcloud-competitors` | Supplier-side service benchmark vs Digital Marketplace rivals | `GCMP` | `projects/{NNN}-service/` |
 | `/arckit:review` | Submission completeness report | `GCRV` | `projects/{NNN}-service/` |
 | `/arckit:submission-pack` | Bundle service docs for CCS | _(export action)_ | `projects/{NNN}-service/submission/` |
 
@@ -79,23 +81,53 @@ a registered doc-type plus 1 packaging action.
 `traceability`. gcloud-kit's `plan`/`health`/`story` are close enough to the core
 versions to reuse rather than duplicate.
 
-**Deferred to the market-intel spec:** `compare`, `sales`, `marketplace-data`,
-`customer`, `targets`, `marketing`, `tenders` + the 3 CSV datasets.
+**Deferred to the market-intel spec:** `sales`, `marketplace-data`, `customer`,
+`targets`, `marketing`, `tenders` + the 3 CSV datasets, plus the `marketplace`
+"Marketplace Data Extractor" MCP that powers `gcloud-competitors`' richer
+data path (see §4a).
+
+### 4a. `/arckit:gcloud-competitors` (dedicated supplier-side benchmark)
+
+This is the **supplier-side** competitor command and is deliberately distinct
+from ArcKit core's buyer-side `/arckit:competitors`:
+
+- **`/arckit:competitors` (core, `CMPT`)** — a *market landscape*: rival suppliers,
+  awarded-value market share, concentration, built from the `uk-tenders` MCP.
+- **`/arckit:gcloud-competitors` (overlay, `GCMP`)** — benchmarks *the supplier's
+  own listed service* against rivals on the Digital Marketplace: feature, pricing,
+  certification and support comparison tables, SWOT, a positioning quadrant, and
+  search-keyword/pricing recommendations to improve the listing.
+
+**Data path (no new dependency in this spec):**
+1. **Primary — WebSearch** against
+   `applytosupply.digitalmarketplace.service.gov.uk` + WebFetch on rival service
+   URLs (gcloud-kit `compare` Option B). No MCP required.
+2. **Award-evidence enrichment (optional)** — if core `/arckit:tenders` (`TNDR`)
+   or `/arckit:competitors` (`CMPT`) artefacts exist in the repo, read them to
+   back the benchmark with real award counts/values and cite their notice URLs.
+   Quote figures with their existing citations; carry the **awarded value ≠
+   actual spend** caveat.
+3. **Future enhancement (deferred)** — gcloud-kit `compare` Option A uses a
+   `marketplace` Marketplace Data Extractor MCP (`mcp__marketplace__*`) for
+   structured search/extract/compare. That MCP ships with the market-intel spec;
+   `gcloud-competitors` will prefer it when present and fall back to WebSearch.
 
 ### Command naming note
 The new commands are namespaced `/arckit:*` (the overlay extends the core
 namespace, consistent with how `arckit-uk-finance` ships `/arckit:uk-fs-*`).
-Bid commands carry no prefix because they are unambiguous supplier-side verbs;
-this matches gcloud-kit's bare names and keeps the migration legible. (Open point
-for the writing-plans phase: confirm whether a `gc-`/`gcloud-` prefix is wanted
-for discoverability vs. keeping bare names. Default: bare names.)
+Bid commands carry **no prefix** where the verb is an unambiguous supplier-side
+action (`supplier-profile`, `declaration`, `pricing`, `security`, `review`, …) —
+matching gcloud-kit's bare names. A **`gcloud-` prefix is used only where the bare
+name would collide with or be confused for an existing core command**: hence
+`/arckit:gcloud-competitors` (vs core buyer-side `/arckit:competitors`). This
+mixed convention is intentional: prefix for disambiguation, bare otherwise.
 
 ## 5. Artefact model
 
 - **Service = project.** Each G-Cloud service is its own ArcKit project,
   `projects/{NNN}-service-name/`, holding that service's `ARC-NNN-SVCD`,
-  `ARC-NNN-SDD`, `ARC-NNN-PRIC`, `ARC-NNN-SECA`, `ARC-NNN-GCRV` — all
-  single-instance per project. "Many SDDs" falls out naturally as many projects.
+  `ARC-NNN-SDD`, `ARC-NNN-PRIC`, `ARC-NNN-SECA`, `ARC-NNN-GCMP`, `ARC-NNN-GCRV` —
+  all single-instance per project. "Many SDDs" falls out naturally as many projects.
   Per-service composition with `/arckit:diagram`, `/arckit:dpia`,
   `/arckit:research` works for free.
 - **Supplier-wide docs** live in `projects/000-global/supplier/` as
@@ -111,7 +143,7 @@ for discoverability vs. keeping bare names. Default: bare names.)
 
 ## 6. Doc-type registration
 
-7 new codes, registered in **both** `plugins/arckit-claude/config/doc-types.mjs`
+8 new codes, registered in **both** `plugins/arckit-claude/config/doc-types.mjs`
 **and** `plugins/arckit-claude/commands/pages.md` (dual-registration is
 CI-enforced — omission silently drops artefacts from the dashboard).
 
@@ -123,10 +155,13 @@ CI-enforced — omission silently drops artefacts from the dashboard).
 | `DECL` | Supplier Declaration | Procurement | UK | HIGH |
 | `PRIC` | Pricing Document | Procurement | UK | — |
 | `SECA` | Security Assertions (NCSC Cloud Security Principles) | Procurement | UK | HIGH |
+| `GCMP` | G-Cloud Competitor Benchmark | Procurement | UK | — |
 | `GCRV` | G-Cloud Submission Review | Procurement | UK | — |
 
 - No collision with existing buyer-side codes `GCLD` (G-Cloud Search) / `GCLC`
-  (G-Cloud Clarifications).
+  (G-Cloud Clarifications). `GCMP` (supplier-side service benchmark) is also
+  distinct from `CMPT` (buyer-side market landscape) — different command,
+  different artefact, different data source.
 - `SECA` is deliberately distinct from `SECD` (Secure by Design — a buyer-side
   governance artefact). G-Cloud security assertions are a different, supplier-side
   evidence document.
@@ -135,7 +170,7 @@ CI-enforced — omission silently drops artefacts from the dashboard).
 - `submission-pack` produces an export folder + manifest (like `/arckit:framework`),
   so it gets **no doc-type**.
 - `scripts/bash/generate-document-id.sh` `MULTI_INSTANCE_TYPES` is **not**
-  changed — all 7 new types are single-instance per project.
+  changed — all 8 new types are single-instance per project.
 
 ## 7. Source mapping (provenance trail)
 
@@ -154,6 +189,7 @@ keep the domain content, re-wrap the scaffolding in ArcKit conventions.
 | `declaration.md` | `plugin/commands/declaration.md` | 184 | Write to `000-global/supplier/`; ARC-000-DECL |
 | `pricing.md` | `plugin/commands/pricing.md` | 204 | ARC-ID output; Document Control |
 | `security.md` | `plugin/commands/security.md` | 224 | ARC-ID output; NCSC mapping retained verbatim |
+| `gcloud-competitors.md` | `plugin/commands/compare.md` | 240 | Rename to gcloud-competitors; emit `GCMP`; WebSearch-primary data path; drop `marketplace` MCP path (deferred); read core `TNDR`/`CMPT` for award evidence; ARC-ID output |
 | `review.md` | `plugin/commands/review.md` | 249 | Emit `GCRV` report; reference ARC-IDs |
 | `submission-pack.md` | `plugin/commands/submission-pack.md` | 239 | Bundle from `projects/{NNN}/`; export manifest |
 
@@ -170,10 +206,12 @@ keep the domain content, re-wrap the scaffolding in ArcKit conventions.
 | `pricing-template.md` | `plugin/templates/pricing-template.md` | 217 | as above |
 | `security-template.md` | `plugin/templates/security-template.md` | 361 | as above (NCSC Cloud Security Principles mapping retained) |
 
-`review` and `submission-pack` have **no** gcloud-kit template; the command bodies
-generate their output structure inline. The overlay keeps that pattern (review may
-gain a light `gcloud-review-template.md` during implementation if the inline
-structure proves unwieldy — decided in writing-plans).
+`gcloud-competitors`, `review`, and `submission-pack` have **no** gcloud-kit
+template; the command bodies generate their output structure inline (for
+`gcloud-competitors`, the comparison tables + SWOT + positioning quadrant +
+recommendations sections). The overlay keeps that pattern (any of them may gain a
+light template during implementation if the inline structure proves unwieldy —
+decided in writing-plans).
 
 ### Skills (ported nearly as-is — pure reference)
 
@@ -245,9 +283,9 @@ structure proves unwieldy — decided in writing-plans).
 ## 11. Counts impact
 
 - Plugins: 12 → **13**.
-- Official command baseline: +10 commands in a community overlay (community
+- Official command baseline: +11 commands in a community overlay (community
   command tally, not the official-71 baseline — consistent with other overlays).
-- Doc-types: 131 → **138** (7 new: SUPP, SVCD, SDD, DECL, PRIC, SECA, GCRV).
+- Doc-types: 131 → **139** (8 new: SUPP, SVCD, SDD, DECL, PRIC, SECA, GCMP, GCRV).
 - Skills: +3 overlay skills (gcloud-framework, cloud-security, sfia-skills).
 - MCPs: unchanged (6).
 
