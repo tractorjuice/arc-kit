@@ -1,3 +1,8 @@
+NOTE: The MIT License below applies to the arc-kit repository EXCEPT for the
+directory `plugins/arckit-uk-gcloud/`, which is proprietary and licensed
+separately — see `plugins/arckit-uk-gcloud/LICENSE`. The MIT grant below does
+not extend to that directory or any files within it.
+
 MIT License
 
 Copyright (c) 2025 Mark Craddock
