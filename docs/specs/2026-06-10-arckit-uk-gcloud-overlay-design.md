@@ -213,9 +213,24 @@ structure proves unwieldy — decided in writing-plans).
 ## 10. Packaging & integration
 
 - `plugins/arckit-uk-gcloud/.claude-plugin/plugin.json`: requires `arckit` core,
-  `defaultEnabled: false`.
+  `defaultEnabled: false`, `license: "Proprietary"`.
 - `marketplace.json`: new entry (manual description/keywords; the bump-version
-  drift check refuses to proceed without it).
+  drift check refuses to proceed without it). The entry's `license` field is
+  `"Proprietary"` — this overlay is the **first non-MIT plugin** in the repo
+  (all 12 existing plugins are MIT).
+- **Licensing mechanics (Proprietary plugin inside an MIT repo).** The repo-root
+  `LICENSE` is MIT (Copyright 2025 Mark Craddock); a blanket root MIT grant would
+  otherwise extend to this plugin's files. To make Proprietary actually hold:
+  1. `license: "Proprietary"` in both `plugin.json` and the `marketplace.json`
+     entry (above).
+  2. A per-plugin `plugins/arckit-uk-gcloud/LICENSE` carrying the proprietary
+     terms (per-plugin LICENSE files are already used by `arckit-claude` and
+     `arckit-fde`).
+  3. A **carve-out in the repo-root `LICENSE` and `README`** explicitly excluding
+     `plugins/arckit-uk-gcloud/**` from the MIT grant, so the root MIT is not
+     contradictory and downstream users cannot rely on it for this subtree.
+  Same owner holds copyright across the repo, so this is enforceable — but the
+  carve-out is required to remove the MIT/Proprietary ambiguity, not optional.
 - `scripts/converter.py`: add `arckit-uk-gcloud` to `PLUGIN_SOURCES` → all 5
   non-Claude formats; add to `SYNC_EXEMPT_PLUGINS` only if shared-asset sync
   requires it.
@@ -243,15 +258,23 @@ structure proves unwieldy — decided in writing-plans).
 3. Exact `handoffs:` chains between the new commands (likely:
    supplier-profile → service-design → sdd-lotN → pricing → security → review →
    submission-pack).
-4. Whether the licence carries over (gcloud-kit is Proprietary; ArcKit overlays
-   are part of the ArcKit repo — confirm licensing posture for the ported content).
+4. _(Resolved)_ Licence: the overlay ships **Proprietary** (see §10 Licensing
+   mechanics and §13 risk). The carve-out wording in the repo-root LICENSE/README
+   is the remaining drafting task for implementation.
 
 ## 13. Risks
 
-- **Licensing:** gcloud-kit is marked `Proprietary`. The ported content lands in
-  the ArcKit repo under ArcKit's licence. Same owner (Mark Craddock), so this is
-  a posture decision, not a third-party-IP problem — but it must be made
-  explicitly before merge.
+- **Licensing (decided: Proprietary).** The overlay ships Proprietary, unlike all
+  12 existing MIT plugins. The hazard is the **repo-root MIT grant bleeding onto
+  the plugin's files**: without an explicit carve-out, the root `LICENSE` (MIT,
+  Copyright 2025 Mark Craddock) covers the whole tree and contradicts the
+  plugin's Proprietary claim, letting downstream users rely on MIT terms for this
+  subtree. Mitigation (all in §10): `license: "Proprietary"` in plugin.json +
+  marketplace.json, a per-plugin `LICENSE`, **and** a repo-root LICENSE/README
+  carve-out for `plugins/arckit-uk-gcloud/**`. Same owner holds copyright, so
+  it's enforceable once the carve-out lands. Also confirm the converter-generated
+  non-Claude extension repos inherit/declare the Proprietary licence rather than
+  defaulting to the MIT extension-repo licence.
 - **Template size:** the SDD lot-1/lot-2 templates are ~790 lines; commands must
   use the Write tool (32K output-token limit) — already an ArcKit convention.
 - **Doc-type code creep:** 7 new codes; the dual-registration CI guard mitigates
