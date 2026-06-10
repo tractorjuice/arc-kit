@@ -56,7 +56,7 @@ The following reference sections document the manifest structure and data tables
 | Governance | risk, risk-management, traceability, principles-compliance, analyze, artifact-health, data-quality-framework, knowledge-compounding |
 | Compliance | tcop, secure, mod-secure, dpia, ai-playbook, atrs, jsp-936, service-assessment, govs-007-security, national-data-strategy, codes-of-practice, security-hooks |
 | Operations | devops, mlops, finops, servicenow, operationalize |
-| Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
+| Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement, supplier-profile, service-design, sdd-lot1, sdd-lot2, sdd-lot3, declaration, pricing, security, gcloud-competitors, review |
 | Research | aws-research, azure-research, gcp-research |
 | Reporting | pages, story, presentation, trello |
 | Other | migration, customize, upgrading, pinecone-mcp, start, conformance, productivity, remote-control, mcp-servers |
@@ -254,6 +254,14 @@ Only include these known artifact types. Match by type code pattern `ARC-{PID}-{
 | | DOS | `ARC-*-DOS-*.md` | DOS Requirements |
 | | GCLD | `ARC-*-GCLD-*.md` | G-Cloud Search |
 | | GCLC | `ARC-*-GCLC-*.md` | G-Cloud Clarifications |
+| | SUPP | `ARC-*-SUPP-*.md` | Supplier Profile |
+| | SVCD | `ARC-*-SVCD-*.md` | Service Design |
+| | SDD | `ARC-*-SDD-*.md` | Service Definition Document |
+| | DECL | `ARC-*-DECL-*.md` | Supplier Declaration |
+| | PRIC | `ARC-*-PRIC-*.md` | Pricing Document |
+| | SECA | `ARC-*-SECA-*.md` | Security Assertions |
+| | GCMP | `ARC-*-GCMP-*.md` | G-Cloud Competitor Benchmark |
+| | GCRV | `ARC-*-GCRV-*.md` | G-Cloud Submission Review |
 | | DMC | `ARC-*-DMC-*.md` | Data Mesh Contract |
 | | VEND | `ARC-*-VEND-*.md` | Vendor Evaluation |
 | | | `vendors/*/*.md` | Vendor Documents |

@@ -91,6 +91,15 @@ export const DOC_TYPES = {
   'DOS':       { name: 'DOS Requirements',                 category: 'Procurement' },
   'GCLD':      { name: 'G-Cloud Search',                   category: 'Procurement' },
   'GCLC':      { name: 'G-Cloud Clarifications',           category: 'Procurement' },
+  // G-Cloud supplier bid-authoring (community overlay: arckit-uk-gcloud)
+  'SUPP':      { name: 'Supplier Profile',                 category: 'Procurement', regime: 'UK' },
+  'SVCD':      { name: 'Service Design',                   category: 'Procurement', regime: 'UK' },
+  'SDD':       { name: 'Service Definition Document',      category: 'Procurement', regime: 'UK', severity: 'HIGH' },
+  'DECL':      { name: 'Supplier Declaration',             category: 'Procurement', regime: 'UK', severity: 'HIGH' },
+  'PRIC':      { name: 'Pricing Document',                 category: 'Procurement', regime: 'UK' },
+  'SECA':      { name: 'Security Assertions',              category: 'Procurement', regime: 'UK', severity: 'HIGH' },
+  'GCMP':      { name: 'G-Cloud Competitor Benchmark',     category: 'Procurement', regime: 'UK' },
+  'GCRV':      { name: 'G-Cloud Submission Review',        category: 'Procurement', regime: 'UK' },
   'DMC':       { name: 'Data Mesh Contract',               category: 'Procurement' },
   'VEND':      { name: 'Vendor Evaluation',                category: 'Procurement' },
   // Research
