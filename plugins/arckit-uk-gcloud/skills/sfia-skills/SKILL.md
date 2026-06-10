@@ -101,7 +101,7 @@ When answering SFIA and day rate questions:
 
 ## Related Commands
 
-These gcloud-kit commands use SFIA data:
+These ArcKit commands use SFIA data:
 
 | Command | SFIA Usage |
 |---------|-----------|

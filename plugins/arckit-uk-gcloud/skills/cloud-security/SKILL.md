@@ -87,7 +87,7 @@ When answering security and compliance questions:
 
 ## Related Commands
 
-These gcloud-kit commands generate security-related documents:
+These ArcKit commands generate security-related documents:
 
 | Command | Security Area |
 |---------|--------------|

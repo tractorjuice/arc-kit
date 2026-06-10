@@ -61,7 +61,7 @@ When answering framework questions:
 
 ## Related Commands
 
-These gcloud-kit commands generate documents that answer framework questions:
+These ArcKit commands generate documents that answer framework questions:
 
 | Command | Framework Area |
 |---------|---------------|
