@@ -533,11 +533,27 @@
                         <li>Fix shipped in v4.6.2</li>
                     </ul>
                 </div>
+
+                <div class="app-contributor-card">
+                    <div class="app-contributor-card__header">
+                        <div class="app-contributor-card__avatar">J</div>
+                        <div>
+                            <p class="app-contributor-card__name"><a href="https://github.com/jonathan-moulds-sb">@jonathan-moulds-sb</a> &mdash; Jono Moulds</p>
+                            <span class="app-contributor-card__role app-contributor-card__role--bug">Bug Reporter</span>
+                        </div>
+                    </div>
+                    <p class="govuk-body-s">Reported that the secret-scanner hooks (<code>secret-file-scanner.mjs</code> / <code>secret-detection.mjs</code>) false-positived on code and IaC that <em>references</em> a secret rather than hardcoding it &mdash; e.g. <code>secret &#61; module.sm.secret_ids["x"]</code> (Terraform), <code>password &#61; var.db_password</code>, <code>api_key &#61; process.env.API_KEY</code> &mdash; blocking exactly the secure pattern the hook should encourage (<a href="https://github.com/tractorjuice/arc-kit/issues/590" class="govuk-link">#590</a>, fixed in <a href="https://github.com/tractorjuice/arc-kit/pull/591" class="govuk-link">#591</a>). Provided root-cause analysis, a minimal repro, a proposed reference-guard regex, and a verified before/after test matrix.</p>
+                    <ul class="app-contributor-card__highlights">
+                        <li>Pinpointed the over-broad <code>\S+</code> value match in the generic key-value rules</li>
+                        <li>Repro, proposed fix, and verified test table covering references vs. literals</li>
+                        <li>Motivated a provider-agnostic reference guard plus a cross-hook sync regression test</li>
+                    </ul>
+                </div>
             </div>
 
             <!-- Community Summary -->
             <h2 class="govuk-heading-l govuk-!-margin-top-8">Community Impact</h2>
-            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 8 code contributors, 2 feature requesters, and 3 bug reporters, these 13 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, plugin user-config wiring, accessibility standards alignment, and EU / French / Austrian / Australian regulatory compliance coverage.</p>
+            <p class="govuk-body">ArcKit has grown from a solo project into a community-driven toolkit. With 8 code contributors, 2 feature requesters, and 4 bug reporters, these 14 individuals have collectively shaped ArcKit through merged pull requests, feature ideas that influenced the roadmap, and bug reports that improved reliability. Their contributions span cross-platform compatibility, multi-AI support, business architecture improvements, documentation quality, plugin user-config wiring, secret-scanner accuracy, accessibility standards alignment, and EU / French / Austrian / Australian regulatory compliance coverage.</p>
 
             <!-- Contributing CTA -->
             <div class="govuk-inset-text govuk-!-margin-top-6">
