@@ -1,32 +1,20 @@
-# Supplier Declaration
+# Supplier Declaration: [PROJECT_NAME]
 
-> G-Cloud 14 Framework - Supplier Declaration
-> Based on Crown Commercial Service official question structure
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit:declaration`
 
 ## Document Control
 
-| Field | Value |
-|-------|-------|
-| Document ID | ARC-000-DECL-v1.0 |
-| Document Type | Supplier Declaration |
-| Project | [PROJECT_NAME] |
-| Classification | OFFICIAL |
-| Status | DRAFT |
-| Version | 1.0 |
-| Created Date | [DATE] |
-| Last Modified | [DATE] |
-| Review Cycle | [REVIEW_CYCLE] |
-| Next Review Date | [NEXT_REVIEW_DATE] |
-| Owner | [OWNER] |
-| Reviewed By | [PENDING] |
-| Approved By | [PENDING] |
-| Distribution | [DISTRIBUTION] |
+<!-- DOC-CONTROL-HEADER -->
+<!-- Resolved at command-execution time to _partials/document-control-uk.md or _partials/document-control-uae.md based on plugin userConfig classification_scheme + governance_framework. See _partials/RENDERING.md (when present). -->
 
 ## Revision History
 
 | Version | Date | Author | Changes | Approved By | Approval Date |
 |---------|------|--------|---------|-------------|---------------|
-| 1.0 | [DATE] | ArcKit AI | Initial creation | [PENDING] | [PENDING] |
+| [VERSION] | [DATE] | ArcKit AI | Initial creation from `/arckit.[COMMAND]` command | [PENDING] | [PENDING] |
+
+> G-Cloud 14 Framework - Supplier Declaration
+> Based on Crown Commercial Service official question structure
 
 ---
 
