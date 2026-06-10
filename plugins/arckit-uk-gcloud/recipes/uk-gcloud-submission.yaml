@@ -1,0 +1,98 @@
+# ArcKit build recipe — UK G-Cloud Supplier Submission overlay
+#
+# Recipe schema v1. Loaded by the arckit-build skill at runtime.
+#
+# Override this file by creating .arckit/recipes/uk-gcloud-submission.yaml at
+# the project root. The harness checks the project override first, then the
+# core plugin, then sibling community plugins.
+#
+# Variable substitution applied by the orchestrator before passing args to
+# worker subagents:
+#   {P}     ← project ID, zero-padded (e.g. "001")
+#   {NAME}  ← project slug (e.g. "secure-case-management")
+#   {V}     ← defaults.version
+
+recipe: uk-gcloud-submission
+schema_version: 1
+description: >
+  UK G-Cloud supplier submission overlay — drives a single G-Cloud service
+  from supplier profile to a review-ready CCS submission pack. Composes the
+  supplier-side bid artefacts: supplier profile and declaration (supplier-wide),
+  service design, Service Definition Document (default Lot 2 / Cloud Software),
+  pricing, NCSC Cloud Security Principles assertions, competitor benchmark, and
+  submission review. Default lot is Lot 2 (SaaS) — override the SDD target with
+  arckit:sdd-lot1 (Cloud Hosting) or arckit:sdd-lot3 (Cloud Support) via a
+  project-level .arckit/recipes/uk-gcloud-submission.yaml. PROPRIETARY,
+  EXPERIMENTAL — every output requires review by the supplier's bid/compliance
+  team before submission to Crown Commercial Service.
+
+defaults:
+  version: "1.0"
+
+post_build_hooks:
+  - skill: arckit:submission-pack
+    args: "{P}"
+  - skill: arckit:health
+    args: ""
+
+# ---------------------------------------------------------------------------
+# Targets
+#   id              Unique target identifier (used in deps lists and state.json)
+#   skill           ArcKit skill to invoke (e.g. arckit:sdd-lot2)
+#   args            Args passed to the skill, after {P}/{NAME}/{V} substitution
+#   output.project  Project directory ("000-global" or "{P}-{NAME}")
+#   output.type     ArcKit doc-type code
+#   deps            List of target IDs that must complete first
+# ---------------------------------------------------------------------------
+
+targets:
+
+  # --- Supplier-wide (000-global/supplier) ---------------------------------
+  - id: SUPP
+    skill: arckit:supplier-profile
+    args: ""
+    output: { project: "000-global", type: SUPP, subfolder: supplier }
+    deps: []
+
+  - id: DECL
+    skill: arckit:declaration
+    args: ""
+    output: { project: "000-global", type: DECL, subfolder: supplier }
+    deps: [SUPP]
+
+  # --- Per-service bid artefacts ({P}-{NAME}) ------------------------------
+  - id: SVCD
+    skill: arckit:service-design
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: SVCD }
+    deps: [SUPP]
+
+  - id: SDD
+    skill: arckit:sdd-lot2
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SDD }
+    deps: [SVCD]
+
+  - id: PRIC
+    skill: arckit:pricing
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: PRIC }
+    deps: [SVCD]
+
+  - id: SECA
+    skill: arckit:security
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: SECA }
+    deps: [SVCD]
+
+  - id: GCMP
+    skill: arckit:gcloud-competitors
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GCMP }
+    deps: [SVCD, PRIC]
+
+  - id: GCRV
+    skill: arckit:review
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GCRV }
+    deps: [SDD, PRIC, SECA, DECL]
