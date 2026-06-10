@@ -24,16 +24,18 @@
 
 ### 1.1 Service Name
 <!-- Max 100 characters -->
-```
+```text
 [SERVICE_NAME]
 ```
+
 **Character count:** [X]/100
 
 ### 1.2 Service Description
 <!-- Max 50 words, 500 characters. Summary of what the service is for. -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/50 | **Character count:** [X]/500
 
 ### 1.3 Service Features
@@ -72,9 +74,10 @@
 
 ### 1.5 Service Constraints
 <!-- Max 100 words. Any limitations or constraints on the service. -->
-```
+```text
 [CONSTRAINTS]
 ```
+
 **Word count:** [X]/100
 
 ---
@@ -83,6 +86,7 @@
 <!-- Select up to 20 categories from the official list -->
 
 **Selected Categories:**
+
 - [ ] Accounting and finance
 - [ ] Analytics and business intelligence
 - [ ] Application security
@@ -119,11 +123,13 @@
 | **Billing Interval** | [Hour/Day/Month/Year] |
 
 ### 3.2 Education Pricing
+
 **Education sector discount available:** Yes / No
 
 **Details:** [DESCRIPTION]
 
 ### 3.3 Free Trial or Free Version
+
 **Free trial available:** Yes / No
 **Trial duration:** [X] days
 
@@ -132,6 +138,7 @@
 **Free version link:** [URL]
 
 ### 3.4 Pricing Document
+
 **URL:** [PRICING_DOCUMENT_URL]
 
 ---
@@ -146,34 +153,40 @@
 - [ ] Community cloud
 
 ### 4.2 Service Interface
+
 **Service management interface available:** Yes / No
 
 **Service interface description:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/100 | **Character count:** [X]/1000
 
 **Service interface meets WCAG 2.1 AA accessibility standard:** Yes / No
 
 **Accessibility description:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/100 | **Character count:** [X]/1000
 
 **Service interface testing approach:**
+
 - [ ] It's been tested for compliance
 - [ ] It's been audited for compliance and it didn't pass
 - [ ] It hasn't been tested for compliance
 
 ### 4.3 API
+
 **API Available:** Yes / No
 
 **API Documentation available:** Yes / No
 **API Documentation formats:**
+
 - [ ] HTML
 - [ ] PDF
 - [ ] Open API/Swagger
@@ -183,14 +196,16 @@
 
 **API Usage description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 4.4 Web Interface
+
 **Web Interface Available:** Yes / No
 
 **Supported Browsers:**
+
 - [ ] Chrome (version [X]+)
 - [ ] Firefox (version [X]+)
 - [ ] Safari (version [X]+)
@@ -201,18 +216,20 @@
 
 **Accessibility description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Accessibility testing approach:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 4.5 Mobile Support
+
 **Mobile option:**
+
 - [ ] Mobile responsive website
 - [ ] Native iOS app
 - [ ] Native Android app
@@ -220,18 +237,20 @@
 
 **Differences from desktop version:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 4.6 Customisation
+
 **Customisation available:** Yes / No
 
 **Customisation description:**
 <!-- Max 200 words, 2000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/200 | **Character count:** [X]/2000
 
 ---
@@ -239,9 +258,11 @@
 ## 5. Data
 
 ### 5.1 Data Storage and Processing Locations
+
 **Know where data is stored/processed:** Yes / No
 
 **Locations:**
+
 - [ ] United Kingdom
 - [ ] European Economic Area (EEA)
 - [ ] USA - Privacy Shield certified
@@ -252,31 +273,37 @@
 **Details:** [DESCRIPTION]
 
 ### 5.2 Data Import
+
 **Supported import formats:**
+
 - [ ] CSV
 - [ ] ODF
 - [ ] Other: [SPECIFY]
 
 **Import method:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 5.3 Data Export
+
 **Supported export formats:**
+
 - [ ] CSV
 - [ ] ODF
 - [ ] Other: [SPECIFY]
 
 **Export method:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/100 | **Character count:** [X]/1000
 
 ### 5.4 End of Contract - Data Extraction
+
 **Data extraction provided:** Yes / No
 
 **Format:** [FORMATS]
@@ -285,18 +312,20 @@
 
 **End of contract process:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 5.5 Data Sanitisation
+
 **Data sanitisation approach:**
+
 - [ ] Explicit overwriting of storage before reallocation
 - [ ] Deleted data can't be directly accessed
 
 **Data sanitisation description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -305,19 +334,23 @@
 ## 6. Security
 
 ### 6.1 Security Governance Standards
+
 **Standards complied with:**
+
 - [ ] ISO/IEC 27001
 - [ ] CSA CCM version 3.0
 - [ ] Other: [SPECIFY]
 
 **Security governance approach:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/100 | **Character count:** [X]/1000
 
 ### 6.2 ISO/IEC 27001 Certification
+
 **Current ISO/IEC 27001 certification:** Yes / No
 
 | Field | Value |
@@ -327,9 +360,11 @@
 | Scope exclusions | [EXCLUSIONS] |
 
 ### 6.3 CSA STAR Certification
+
 **CSA STAR certified:** Yes / No
 
 **Level:**
+
 - [ ] Level 1 Self-Assessment
 - [ ] Level 2 Attestation
 - [ ] Level 3 Certification
@@ -339,19 +374,24 @@
 **Expiry date:** [DATE]
 
 ### 6.4 PCI DSS Certification
+
 **PCI DSS certified:** Yes / No
 **Certificate holder:** [NAME]
 **Expiry date:** [DATE]
 
 ### 6.5 Data Centre Security Standards
+
 **Standards:**
+
 - [ ] SSAE-16 / ISAE 3402
 - [ ] ISO 27001
 - [ ] PCI DSS
 - [ ] Other: [SPECIFY]
 
 ### 6.6 Data Protection - Between Networks
+
 **Protection methods:**
+
 - [ ] Private network or public sector network
 - [ ] TLS (version 1.2 or above)
 - [ ] IPsec or TLS VPN gateway
@@ -360,14 +400,18 @@
 - [ ] Other: [SPECIFY]
 
 ### 6.7 Data Protection - Within Network
+
 **Protection methods:**
+
 - [ ] TLS (version 1.2 or above)
 - [ ] IPsec or TLS VPN gateway
 - [ ] Legacy SSL or TLS (under version 1.2)
 - [ ] Other: [SPECIFY]
 
 ### 6.8 Data Protection - At Rest
+
 **Approach:**
+
 - [ ] Physical access control, conforming to CSA CCM v3.0
 - [ ] Physical access control, conforming to SSAE-16 / ISAE 3402
 - [ ] Physical access control, conforming to another standard
@@ -376,7 +420,9 @@
 - [ ] Other: [SPECIFY]
 
 ### 6.9 Penetration Testing
+
 **Frequency:**
+
 - [ ] At least every 6 months
 - [ ] At least once a year
 - [ ] Less than once a year
@@ -384,51 +430,62 @@
 
 **Penetration testing approach:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 6.10 Vulnerability Management
+
 **Vulnerability management type:**
+
 - [ ] Conforms to recognised standard
 - [ ] Supplier-defined
 - [ ] Undisclosed
 
 **Vulnerability management approach:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/100 | **Character count:** [X]/1000
 
 ### 6.11 Protective Monitoring
+
 **Protective monitoring type:**
+
 - [ ] Conforms to recognised standard
 - [ ] Supplier-defined
 - [ ] Undisclosed
 
 **Protective monitoring approach:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/100 | **Character count:** [X]/1000
 
 ### 6.12 Incident Management
+
 **Incident management type:**
+
 - [ ] Conforms to recognised standard
 - [ ] Supplier-defined
 - [ ] Undisclosed
 
 **Incident management approach:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/100 | **Character count:** [X]/1000
 
 ### 6.13 Access Management & Authentication
+
 **Authentication methods:**
+
 - [ ] 2-factor authentication
 - [ ] Public key authentication (including TLS client certificate)
 - [ ] Identity federation with existing provider
@@ -439,18 +496,20 @@
 
 **Authentication description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Access restriction management:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 6.14 Audit Trails
+
 **User access to audit information:**
+
 - [ ] Users have access to real-time audit information
 - [ ] Users have access to audit information through an additional service
 - [ ] Users contact the support team to get audit information
@@ -458,6 +517,7 @@
 - [ ] No audit information available
 
 **Supplier audit access:**
+
 - [ ] Users have access to real-time audit information
 - [ ] Users have access to audit information through an additional service
 - [ ] Users contact the support team to get audit information
@@ -466,11 +526,12 @@
 
 **Audit information description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 6.15 Board-Level Security Responsibility
+
 **Named board member responsible for service security:** Yes / No
 **Name and role:** [NAME], [ROLE]
 
@@ -479,9 +540,11 @@
 ## 7. Operations
 
 ### 7.1 Backup
+
 **Service backs up data:** Yes / No
 
 **Data backed up:**
+
 - [ ] User data
 - [ ] System configuration
 - [ ] Transaction logs
@@ -492,57 +555,63 @@
 
 **Backup controls:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Backup scheduling:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 7.2 Backup Data Centre Location
+
 **Location:** [LOCATION]
 **Distance from primary:** [X] km
 **UK data sovereignty maintained:** Yes / No
 
 ### 7.3 Disaster Recovery
+
 **Recovery Time Objective (RTO):** [X] hours
 **Recovery Point Objective (RPO):** [X] hours
 
 **Recovery process:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 7.4 Approach to Resilience
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 7.5 Guaranteed Availability
+
 **SLA Target:** [X]%
 **Measurement Period:** Monthly / Quarterly
 
 **Outage reporting:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 7.6 Configuration and Change Management
+
 **Configuration and change management type:**
+
 - [ ] Conforms to recognised standard
 - [ ] Supplier-defined controls
 
 **Configuration and change management process:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/100 | **Character count:** [X]/1000
 
 ---
@@ -550,31 +619,35 @@
 ## 8. Scaling
 
 ### 8.1 Scaling Capability
+
 **Service can scale:** Yes / No
 
 **Scaling type:**
+
 - [ ] Automatic
 - [ ] Manual
 - [ ] Both
 
 **Scaling approach:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 8.2 Independence of Resources
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 8.3 Metrics
+
 **Metrics reporting description:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/100 | **Character count:** [X]/1000
 
 ---
@@ -582,9 +655,11 @@
 ## 9. Connectivity
 
 ### 9.1 Public Sector Networks
+
 **Can connect to public sector networks:** Yes / No
 
 **Networks supported:**
+
 - [ ] PSN
 - [ ] Police National Network (PNN)
 - [ ] NHS Network (N3/HSCN)
@@ -599,9 +674,10 @@
 ### 10.1 Support Levels
 <!-- Max 200 words, 2000 characters -->
 <!-- Describe: support levels, cost of different levels, whether you provide TAM/cloud support engineer -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/200 | **Character count:** [X]/2000
 
 ### 10.2 Support Channels
@@ -623,6 +699,7 @@
 | Low (P4) | [X] hours | [X] days |
 
 ### 10.4 Third Party Support Access
+
 **Support available to third parties:** Yes / No
 
 ---
@@ -631,25 +708,27 @@
 
 ### 11.1 Getting Started
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 11.2 Setup and Migration Service
+
 **Setup/migration service available:** Yes / No
 
 **Description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 11.3 Training
+
 **Training available:** Yes / No
 
 **Training description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -658,24 +737,28 @@
 ## 12. Documentation
 
 ### 12.1 Documentation Available
+
 **Documentation provided:** Yes / No
 
 **Documentation formats:**
+
 - [ ] HTML (online)
 - [ ] PDF
 - [ ] Video tutorials
 - [ ] Other: [SPECIFY]
 
 ### 12.2 Documentation Accessibility
+
 **WCAG 2.1 AA compliant:** Yes / No
 
 **Accessibility description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 12.3 Document URLs
+
 | Document | URL |
 |----------|-----|
 | Service Definition Document | [URL] |
@@ -687,13 +770,16 @@
 ## 13. Security Clearances
 
 ### 13.1 Government Security Clearances
+
 **Government security clearances:**
+
 - [ ] DV
 - [ ] SC
 - [ ] BPSS
 - [ ] None
 
 **Staff security clearance checks:**
+
 - [ ] BS7858:2012
 - [ ] Non-BS7858
 - [ ] None
@@ -703,7 +789,9 @@
 ## 14. Reselling
 
 ### 14.1 Reselling Type
+
 **Reselling type:**
+
 - [ ] Not a reseller
 - [ ] Reseller (taking full contract risk)
 - [ ] Broker (introducing buyer to supplier)
@@ -715,13 +803,15 @@
 ## 15. Service Add-On
 
 ### 15.1 Service Add-On
+
 **This service is an add-on to an existing service:** Yes / No
 
 **Add-on details:**
 <!-- Max 50 words, 500 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/50 | **Character count:** [X]/500
 
 ---
@@ -738,13 +828,13 @@
 
 ### 17.1 QA Process
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 17.2 Secure Development
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -754,7 +844,7 @@
 
 ### 18.1 Equipment Disposal Approach
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 

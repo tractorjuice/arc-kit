@@ -22,11 +22,12 @@
 
 ### Principle 1: Data in Transit Protection
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] TLS 1.2+
 - [ ] Certificate management
 - [ ] VPN options
@@ -36,11 +37,12 @@
 
 ### Principle 2: Asset Protection and Resilience
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Physical security controls
 - [ ] Data centre standards (Tier III/IV)
 - [ ] Equipment lifecycle management
@@ -50,11 +52,12 @@
 
 ### Principle 3: Separation Between Users
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Multi-tenancy isolation
 - [ ] Logical separation
 - [ ] Network isolation
@@ -64,11 +67,12 @@
 
 ### Principle 4: Governance Framework
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Security policies documented
 - [ ] Risk management framework
 - [ ] Board-level responsibility
@@ -78,11 +82,12 @@
 
 ### Principle 5: Operational Security
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Vulnerability management
 - [ ] Protective monitoring
 - [ ] Incident response procedures
@@ -92,11 +97,12 @@
 
 ### Principle 6: Personnel Security
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Background checks (BPSS minimum)
 - [ ] Security clearances where required
 - [ ] Security awareness training
@@ -106,11 +112,12 @@
 
 ### Principle 7: Secure Development
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Secure SDLC
 - [ ] Code review process
 - [ ] Security testing in CI/CD
@@ -120,11 +127,12 @@
 
 ### Principle 8: Supply Chain Security
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Subcontractor vetting
 - [ ] Third-party risk assessments
 - [ ] Supplier security requirements
@@ -134,11 +142,12 @@
 
 ### Principle 9: Secure User Management
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Role-based access control (RBAC)
 - [ ] Least privilege principle
 - [ ] User provisioning/deprovisioning
@@ -148,11 +157,12 @@
 
 ### Principle 10: Identity and Authentication
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Multi-factor authentication (MFA)
 - [ ] Single sign-on (SSO)
 - [ ] Password policies
@@ -162,11 +172,12 @@
 
 ### Principle 11: External Interface Protection
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] API security (rate limiting, authentication)
 - [ ] Web application firewall (WAF)
 - [ ] DDoS protection
@@ -176,11 +187,12 @@
 
 ### Principle 12: Secure Service Administration
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] Privileged access management (PAM)
 - [ ] Admin MFA enforced
 - [ ] Admin action audit trails
@@ -190,11 +202,12 @@
 
 ### Principle 13: Audit Information for Users
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] User action logging
 - [ ] Log retention policy
 - [ ] Log export capability
@@ -204,11 +217,12 @@
 
 ### Principle 14: Secure Use of the Service
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Controls implemented:**
+
 - [ ] User security guidance documentation
 - [ ] Secure configuration guides
 - [ ] Shared responsibility model documented
@@ -297,7 +311,7 @@
 
 **Remediation process:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 

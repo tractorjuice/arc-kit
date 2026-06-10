@@ -48,8 +48,8 @@ From the JSON `projects[]` array, each entry has `name`, `number`, and `path`. R
 - If exactly one project matches, use it. If several match, use the **AskUserQuestion** tool to let
   the user pick. If `$ARGUMENTS` is empty, list the candidate projects and ask which one.
 
-**$ARGUMENTS bypass for review scope:** If `$ARGUMENTS` contains `full`, `completeness`,
-`consistency`, or `readiness` (beyond the service name), use that to set the review scope in Step 3
+**$ARGUMENTS bypass for review scope:** If `$ARGUMENTS` contains `full`,`completeness`,
+`consistency`, or`readiness` (beyond the service name), use that to set the review scope in Step 3
 and skip the scope question.
 
 **If no matching project is found**, tell the user the service project does not exist and that they

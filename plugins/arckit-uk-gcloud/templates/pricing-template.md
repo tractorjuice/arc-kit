@@ -44,6 +44,7 @@
 | [Tier 4] | [100+] | £[PRICE] | [Monthly/Annual] |
 
 **User types:**
+
 - Named users: [Yes/No] — £[PRICE]
 - Concurrent users: [Yes/No] — £[PRICE]
 - Admin users: [Yes/No] — £[PRICE]
@@ -142,6 +143,7 @@
 **Eligibility:** [DESCRIPTION]
 
 ### 4.4 Charity / Non-Profit Pricing
+
 **Charity discount available:** Yes / No
 **Discount:** [X]%
 **Eligibility:** [DESCRIPTION]
@@ -151,12 +153,14 @@
 ## 5. Free Options
 
 ### 5.1 Free Trial
+
 **Free trial available:** Yes / No
 **Trial duration:** [X] days
 **Trial limitations:** [DESCRIPTION]
 **Data retained after trial:** Yes / No
 
 ### 5.2 Free Version
+
 **Free version available:** Yes / No
 **Free version limitations:** [DESCRIPTION]
 **Free version link:** [URL]

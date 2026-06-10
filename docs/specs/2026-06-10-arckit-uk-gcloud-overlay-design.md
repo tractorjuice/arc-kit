@@ -28,6 +28,7 @@ intelligence layer (`sales`, `marketplace-data`, `customer`, `targets`,
 ## 2. Goals & non-goals
 
 ### Goals
+
 - Ship the genuinely-new supplier bid-authoring commands as an ArcKit overlay.
 - Reuse ArcKit core for everything core already does (init, customize, diagram,
   dpia, pages, presentation, plan, health, story, research, traceability).
@@ -38,6 +39,7 @@ intelligence layer (`sales`, `marketplace-data`, `customer`, `targets`,
   `defaultEnabled: false`, converted to all 5 non-Claude formats.
 
 ### Non-goals (this spec)
+
 - The market/sales intelligence layer and its CSV datasets (deferred).
 - The bundled `uk-tenders` MCP and tenders reader/writer reconciliation
   (ArcKit already bundles `uk-tenders`; reconciliation lands with the
@@ -74,7 +76,7 @@ a registered doc-type plus 1 packaging action.
 | `/arckit:security` | NCSC Cloud Security Principles assertions | `SECA` | `projects/{NNN}-service/` |
 | `/arckit:gcloud-competitors` | Supplier-side service benchmark vs Digital Marketplace rivals | `GCMP` | `projects/{NNN}-service/` |
 | `/arckit:review` | Submission completeness report | `GCRV` | `projects/{NNN}-service/` |
-| `/arckit:submission-pack` | Bundle service docs for CCS | _(export action)_ | `projects/{NNN}-service/submission/` |
+| `/arckit:submission-pack` | Bundle service docs for CCS | *(export action)* | `projects/{NNN}-service/submission/` |
 
 **Reused from ArcKit core (not ported):** `init`, `customize`, `diagram`,
 `dpia`, `pages`, `presentation`, `plan`, `health`, `story`, `research`,
@@ -99,6 +101,7 @@ from ArcKit core's buyer-side `/arckit:competitors`:
   search-keyword/pricing recommendations to improve the listing.
 
 **Data path (no new dependency in this spec):**
+
 1. **Primary — WebSearch** against
    `applytosupply.digitalmarketplace.service.gov.uk` + WebFetch on rival service
    URLs (gcloud-kit `compare` Option B). No MCP required.
@@ -113,6 +116,7 @@ from ArcKit core's buyer-side `/arckit:competitors`:
    `gcloud-competitors` will prefer it when present and fall back to WebSearch.
 
 ### Command naming note
+
 The new commands are namespaced `/arckit:*` (the overlay extends the core
 namespace, consistent with how `arckit-uk-finance` ships `/arckit:uk-fs-*`).
 Bid commands carry **no prefix** where the verb is an unambiguous supplier-side
@@ -224,6 +228,7 @@ decided in writing-plans).
 ## 8. What is reused intact vs rewritten
 
 **Carried over largely intact (domain content / IP):**
+
 - SDD question sets (~50 mandatory questions, lot-1/2/3 variants)
 - NCSC Cloud Security Principles mappings
 - Supplier declaration content (exclusion grounds, insurance, tax)
@@ -232,6 +237,7 @@ decided in writing-plans).
 - Template section bodies (question prose, structure)
 
 **Rewritten / re-wrapped to ArcKit conventions (scaffolding):**
+
 - Path/project resolution: gcloud-kit `services/{NNN}/` + inline
   `os.environ['CLAUDE_PLUGIN_ROOT']` Python → ArcKit `create-project.sh --json`,
   `generate-document-id.sh`, `${CLAUDE_PLUGIN_ROOT}/templates/`
@@ -296,7 +302,7 @@ decided in writing-plans).
 3. Exact `handoffs:` chains between the new commands (likely:
    supplier-profile → service-design → sdd-lotN → pricing → security → review →
    submission-pack).
-4. _(Resolved)_ Licence: the overlay ships **Proprietary** (see §10 Licensing
+4. *(Resolved)* Licence: the overlay ships **Proprietary** (see §10 Licensing
    mechanics and §13 risk). The carve-out wording in the repo-root LICENSE/README
    is the remaining drafting task for implementation.
 

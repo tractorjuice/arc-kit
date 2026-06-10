@@ -20,6 +20,7 @@
 ## 1. Service Overview
 
 ### 1.1 Service Name
+
 **Proposed Name:** [NAME]
 **Character Count:** [X]/100
 
@@ -40,6 +41,7 @@
 ### 1.4 Target Market
 
 **Primary Buyers:**
+
 - [ ] Central Government
 - [ ] Local Government
 - [ ] NHS
@@ -50,6 +52,7 @@
 - [ ] Other Public Sector
 
 **Buyer Personas:**
+
 1. [Persona 1: Role, needs, pain points]
 2. [Persona 2: Role, needs, pain points]
 
@@ -58,17 +61,21 @@
 ## 2. Value Proposition
 
 ### 2.1 Problem Statement
+
 [What problem does this service solve?]
 
 ### 2.2 Solution
+
 [How does this service solve the problem?]
 
 ### 2.3 Key Differentiators
+
 1. [Differentiator 1]
 2. [Differentiator 2]
 3. [Differentiator 3]
 
 ### 2.4 Competitive Advantages
+
 - **vs. Competitor A:** [Advantage]
 - **vs. Competitor B:** [Advantage]
 - **vs. Build In-House:** [Advantage]
@@ -89,6 +96,7 @@
 | 5 | [FEATURE] | [DESC] | Yes/No |
 
 ### 3.2 Additional Features
+
 | Feature | Included In | Description |
 |---------|-------------|-------------|
 | [FEATURE] | Basic/Standard/Premium | [DESC] |
@@ -109,6 +117,7 @@
 | 5 | [BENEFIT] | [METRIC] |
 
 ### 4.2 ROI/Business Case
+
 [Typical ROI or business case for buyers]
 
 ---
@@ -123,6 +132,7 @@
 - [ ] On-premises option
 
 **Cloud Providers:**
+
 - [ ] AWS (Regions: [LIST])
 - [ ] Azure (Regions: [LIST])
 - [ ] GCP (Regions: [LIST])
@@ -130,7 +140,7 @@
 
 ### 5.2 Architecture Overview
 
-```
+```text
 [Architecture diagram or description]
 ```
 
@@ -146,6 +156,7 @@
 | File Import/Export | Yes/No | [FORMATS] |
 
 ### 5.4 Technology Stack
+
 - **Frontend:** [TECHNOLOGIES]
 - **Backend:** [TECHNOLOGIES]
 - **Database:** [TECHNOLOGIES]
@@ -164,12 +175,14 @@
 | Premium | 24/7 | Email, Phone, Chat | 1 hour | Premium tier |
 
 ### 6.2 Escalation Path
+
 1. L1 Support: [Description]
 2. L2 Support: [Description]
 3. L3 Engineering: [Description]
 4. Management: [Description]
 
 ### 6.3 Onboarding Process
+
 [Description of onboarding process and timeline]
 
 ---

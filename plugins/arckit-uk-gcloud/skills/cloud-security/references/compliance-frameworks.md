@@ -20,6 +20,7 @@
 | **G-Cloud Importance** | High - expected by most public sector buyers |
 
 **Key Requirements:**
+
 - Risk assessment process
 - Statement of Applicability
 - Security controls (Annex A)
@@ -37,6 +38,7 @@
 | Cyber Essentials Plus | 5 controls | Independent technical verification | 12 months |
 
 **The 5 Controls:**
+
 1. **Firewalls** - Boundary protection
 2. **Secure Configuration** - Default passwords, unnecessary software
 3. **User Access Control** - Least privilege, authentication
@@ -145,16 +147,19 @@
 | 5. Monitoring & Maintenance | Drift detection, bias monitoring, user feedback |
 
 **Use Cases to Avoid:**
+
 - Fully automated decisions affecting health, safety, or fundamental rights
 - High-risk applications without human oversight
 - Systems lacking bias and fairness safeguards
 
 **Security Requirements:**
+
 - Comply with "Secure by Design" principles
 - Address AI-specific threats (data poisoning, prompt injection, hallucinations)
 - Implement content filtering and response validation
 
 **Transparency Requirements:**
+
 - Use Algorithmic Transparency Recording Standard (ATRS) when applicable
 - Clearly identify AI-generated content
 - Document algorithmic tool usage in decision-making
@@ -207,6 +212,7 @@
 ### Data Processing Agreement (DPA)
 
 **Required Provisions (Article 28):**
+
 - Processing only on documented instructions
 - Confidentiality obligations
 - Security measures
@@ -268,6 +274,7 @@
 | eDV | Enhanced DV | TOP SECRET | 12+ months |
 
 **G-Cloud Relevance:**
+
 - BPSS minimum for most government work
 - SC required for OFFICIAL-SENSITIVE data
 - DV/eDV for classified systems

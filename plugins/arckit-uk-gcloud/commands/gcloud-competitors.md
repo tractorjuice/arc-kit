@@ -295,7 +295,7 @@ quadrantChart
     Competitor A: [0.8, 0.8]
     Competitor B: [0.4, 0.3]
     Competitor C: [0.7, 0.4]
-```
+```text
 
 ### Competitive Summary
 
@@ -307,35 +307,43 @@ quadrantChart
 | Security | Industry leading | Maintain |
 
 ### Key Differentiators
+
 1. [Unique strength 1]
 2. [Unique strength 2]
 3. [Unique strength 3]
 
 ### Gaps to Address
+
 1. [Gap 1] - Priority: High
 2. [Gap 2] - Priority: Medium
 
 ### Recommended Actions
 
 **Before Submission:**
+
 1. [Action 1]
 2. [Action 2]
 
 **Post-Submission:**
+
 1. [Action 1]
 2. [Action 2]
 
 ---
 
 ## Search Keywords to Include
+
 Based on the competitor analysis, ensure these appear in your service description:
+
 - [Keyword 1]
 - [Keyword 2]
 - [Keyword 3]
 
 ### Next Steps
+
 - Adjust pricing based on this benchmark: `/arckit:pricing`
 - Fold competitive positioning into the submission review: `/arckit:review`
+
 ```
 
 ## Important Notes
@@ -353,5 +361,3 @@ Based on the competitor analysis, ensure these appear in your service descriptio
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space
   after `<` or `>` (e.g. `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from
   interpreting them as HTML tags or emoji.
-</content>
-</invoke>

@@ -33,7 +33,7 @@
 
 ### Registered Address
 
-```
+```text
 [ADDRESS_LINE_1]
 [ADDRESS_LINE_2]
 [CITY]
@@ -148,6 +148,7 @@
 | UK Data Sovereignty | Yes / No |
 
 **Certifications:**
+
 - [ ] ISO 27001
 - [ ] SOC 2
 - [ ] PCI DSS

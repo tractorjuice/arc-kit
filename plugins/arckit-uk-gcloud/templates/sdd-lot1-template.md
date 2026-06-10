@@ -24,16 +24,18 @@
 
 ### 1.1 Service Name
 <!-- Max 100 characters -->
-```
+```text
 [SERVICE_NAME]
 ```
+
 **Character count:** [X]/100
 
 ### 1.2 Service Description
 <!-- Max 50 words, 500 characters. Summary of what the service is for. -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/50 | **Character count:** [X]/500
 
 ### 1.3 Service Features
@@ -71,9 +73,10 @@
 
 ### 1.5 Service Constraints
 <!-- Max 100 words. Any limitations or constraints on the service. -->
-```
+```text
 [CONSTRAINTS]
 ```
+
 **Word count:** [X]/100
 
 ---
@@ -82,6 +85,7 @@
 <!-- Select up to 10 categories from the official Lot 1 list -->
 
 **Selected Categories:**
+
 - [ ] Archiving, backup and disaster recovery
 - [ ] Compute and application hosting
 - [ ] Container service
@@ -121,16 +125,19 @@
 | **Billing Interval** | [Hour/Day/Month/Year] |
 
 ### 3.2 Education Pricing
+
 **Education sector discount available:** Yes / No
 **Details:** [DESCRIPTION]
 
 ### 3.3 Free Trial or Free Version
+
 **Free trial available:** Yes / No
 **Trial duration:** [X] days
 **Free version available:** Yes / No
 **Free version limitations:** [DESCRIPTION]
 
 ### 3.4 Pricing Document
+
 **URL:** [PRICING_DOCUMENT_URL]
 
 ---
@@ -138,9 +145,11 @@
 ## 4. Technical
 
 ### 4.1 Virtualisation
+
 **Uses virtualisation:** Yes / No
 
 **Virtualisation technologies:**
+
 - [ ] VMware
 - [ ] Hyper-V
 - [ ] Citrix XenServer
@@ -150,20 +159,23 @@
 - [ ] Other: [SPECIFY]
 
 **Implemented by:**
+
 - [ ] Supplier
 - [ ] Third party provider: [NAME]
 
 **Virtualisation separation approach:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 4.2 API
+
 **API Available:** Yes / No
 
 **API Documentation available:** Yes / No
 **API Documentation formats:**
+
 - [ ] HTML
 - [ ] PDF
 - [ ] Open API/Swagger
@@ -173,11 +185,12 @@
 
 **API Usage description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Automation tools supported:**
+
 - [ ] Ansible
 - [ ] Chef
 - [ ] Puppet
@@ -187,43 +200,49 @@
 - [ ] Other: [SPECIFY]
 
 ### 4.3 Command Line Interface
+
 **CLI Available:** Yes / No
 
 **Supported Operating Systems:**
+
 - [ ] Linux
 - [ ] Windows
 - [ ] macOS
 
 **CLI Usage description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 4.4 Web Interface
+
 **Web Interface Available:** Yes / No
 
 **Web interface accessibility (WCAG 2.1 AA):** Yes / No
 
 **Accessibility description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 4.5 Service Interface (Management Console)
+
 **Service interface available:** Yes / No
 
 **Interface accessibility (WCAG 2.1 AA):** Yes / No
 
 **Interface description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 4.6 Devices for Service Management
+
 **Service can be managed through:**
+
 - [ ] Dedicated device on a segregated network (e.g. MCN)
 - [ ] Dedicated device on a government network (e.g. PSN)
 - [ ] Dedicated device over multiple services or networks
@@ -235,9 +254,11 @@
 ## 5. Data
 
 ### 5.1 Data Storage and Processing Locations
+
 **Know where data is stored/processed:** Yes / No
 
 **Locations:**
+
 - [ ] United Kingdom
 - [ ] European Economic Area (EEA)
 - [ ] USA - Privacy Shield certified
@@ -248,6 +269,7 @@
 **Details:** [DESCRIPTION]
 
 ### 5.2 End of Contract - Data Extraction
+
 **Data extraction provided:** Yes / No
 **Format:** [FORMATS]
 **Timeframe:** Within [X] days of contract end
@@ -255,14 +277,16 @@
 
 **End of contract process:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 5.3 Data Sanitisation
+
 **Sanitisation process available:** Yes / No
 
 **Sanitisation type (Hosting):**
+
 - [ ] Explicit overwriting of storage before reallocation
 - [ ] Deleted data can't be directly accessed
 - [ ] Hardware containing data is completely destroyed
@@ -272,18 +296,21 @@
 ## 6. Security
 
 ### 6.1 Security Governance Standards
+
 **Standards complied with:**
+
 - [ ] ISO/IEC 27001
 - [ ] CSA CCM version 3.0
 - [ ] Other: [SPECIFY]
 
 **Security governance approach:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 6.2 ISO/IEC 27001 Certification
+
 **Current ISO/IEC 27001 certification:** Yes / No
 
 | Field | Value |
@@ -293,13 +320,16 @@
 | Scope exclusions | [EXCLUSIONS] |
 
 ### 6.3 ISO 28000 Certification (Supply Chain Security)
+
 **ISO 28000 certified:** Yes / No
 **Certificate holder:** [NAME]
 **Expiry date:** [DATE]
 
 ### 6.4 CSA STAR Certification
+
 **CSA STAR certified:** Yes / No
 **Level:**
+
 - [ ] Level 1 Self-Assessment
 - [ ] Level 2 Attestation
 - [ ] Level 3 Certification
@@ -309,12 +339,15 @@
 **Expiry date:** [DATE]
 
 ### 6.5 PCI DSS Certification
+
 **PCI DSS certified:** Yes / No
 **Certificate holder:** [NAME]
 **Expiry date:** [DATE]
 
 ### 6.6 Data Centre Security Standards
+
 **Standards:**
+
 - [ ] SSAE-16 / ISAE 3402
 - [ ] ISO 27001
 - [ ] PCI DSS
@@ -322,7 +355,9 @@
 - [ ] Other: [SPECIFY]
 
 ### 6.7 Data Protection - Between Networks
+
 **Protection methods:**
+
 - [ ] Private network or public sector network
 - [ ] TLS (version 1.2 or above)
 - [ ] IPsec or TLS VPN gateway
@@ -331,14 +366,18 @@
 - [ ] Other: [SPECIFY]
 
 ### 6.8 Data Protection - Within Network
+
 **Protection methods:**
+
 - [ ] TLS (version 1.2 or above)
 - [ ] IPsec or TLS VPN gateway
 - [ ] Legacy SSL or TLS (under version 1.2)
 - [ ] Other: [SPECIFY]
 
 ### 6.9 Data Protection - At Rest
+
 **Protection approach:**
+
 - [ ] Physical access control, conforming to CSA CCM v3.0
 - [ ] Physical access control, conforming to SSAE-16 / ISAE 3402
 - [ ] Physical access control, conforming to another standard
@@ -347,7 +386,9 @@
 - [ ] Other: [SPECIFY]
 
 ### 6.10 Penetration Testing
+
 **Frequency:**
+
 - [ ] At least every 6 months
 - [ ] At least once a year
 - [ ] Less than once a year
@@ -355,50 +396,58 @@
 
 **Penetration testing approach:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 6.11 Vulnerability Management
+
 **Vulnerability management type:**
+
 - [ ] Conforms to a recognised standard, for example CSA CCM v3.0 or SSAE-16 / ISAE 3402
 - [ ] Supplier-defined controls
 - [ ] Undisclosed
 
 **Vulnerability management approach:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 6.12 Protective Monitoring
+
 **Monitoring type:**
+
 - [ ] Conforms to a recognised standard, for example CSA CCM v3.0 or SSAE-16 / ISAE 3402
 - [ ] Supplier-defined controls
 - [ ] Undisclosed
 
 **Protective monitoring approach:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 6.13 Incident Management
+
 **Incident management type:**
+
 - [ ] Conforms to a recognised standard, for example CSA CCM v3.0 or SSAE-16 / ISAE 3402
 - [ ] Supplier-defined controls
 - [ ] Undisclosed
 
 **Incident management approach:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 6.14 Access Management & Authentication
+
 **Authentication required:** Yes / No
 
 **Authentication methods:**
+
 - [ ] 2-factor authentication
 - [ ] Public key authentication (including TLS client certificate)
 - [ ] Identity federation with existing provider
@@ -409,18 +458,20 @@
 
 **Authentication description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Management access authentication:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 6.15 Audit Trails
+
 **Access to buyer action audit information:**
+
 - [ ] Users have access to real-time audit information
 - [ ] Users have access to audit information through an additional service
 - [ ] Users contact the support team to get audit information
@@ -428,6 +479,7 @@
 - [ ] No audit information available
 
 **Access to supplier action audit information:**
+
 - [ ] Users have access to real-time audit information
 - [ ] Users have access to audit information through an additional service
 - [ ] Users contact the support team to get audit information
@@ -435,6 +487,7 @@
 - [ ] No audit information available
 
 **How long buyer audit data is stored:**
+
 - [ ] At least 12 months
 - [ ] 7 to 12 months
 - [ ] 1 to 6 months
@@ -442,6 +495,7 @@
 - [ ] Data is not stored
 
 **How long supplier audit data is stored:**
+
 - [ ] At least 12 months
 - [ ] 7 to 12 months
 - [ ] 1 to 6 months
@@ -449,6 +503,7 @@
 - [ ] Data is not stored
 
 ### 6.16 Board-Level Security Responsibility
+
 **Named board member responsible for service security:** Yes / No
 **Name and role:** [NAME], [ROLE]
 
@@ -457,6 +512,7 @@
 ## 7. Operations
 
 ### 7.1 Backup
+
 **Service backs up data:** Yes / No
 
 **Data backed up:**
@@ -477,57 +533,63 @@
 
 **Backup controls:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Backup scheduling:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 7.2 Backup Data Centre Location
+
 **Backup datacentre setup:**
+
 - [ ] Multiple datacentres with disaster recovery
 - [ ] Multiple datacentres without disaster recovery
 - [ ] Single datacentre with multiple copies
 - [ ] Single datacentre without multiple copies
 
 ### 7.3 Disaster Recovery
+
 **Recovery Time Objective (RTO):** [X] hours
 **Recovery Point Objective (RPO):** [X] hours
 
 **Recovery process:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 7.4 Approach to Resilience
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 7.5 Guaranteed Availability
+
 **SLA Target:** [X]%
 **Measurement Period:** Monthly / Quarterly
 
 **Outage reporting:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 7.6 Configuration and Change Management
+
 **Configuration and change management type:**
+
 - [ ] Conforms to a recognised standard, for example CSA CCM v3.0 or SSAE-16 / ISAE 3402
 - [ ] Supplier-defined controls
 
 **Configuration and change management process:**
 <!-- Max 100 words, 1000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -536,29 +598,33 @@
 ## 8. Scaling
 
 ### 8.1 Scaling Capability
+
 **Service can scale:** Yes / No
 
 **Scaling type:**
+
 - [ ] Automatic (auto-scaling)
 - [ ] Manual
 - [ ] Both
 
 **Scaling approach:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 8.2 Independence of Resources
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 8.3 Usage Monitoring & Metrics
+
 **Metrics available:** Yes / No
 
 **Metrics provided:**
+
 - [ ] CPU
 - [ ] Disk
 - [ ] HTTP request and response status
@@ -569,7 +635,7 @@
 
 **Usage notification approach:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -579,9 +645,10 @@
 
 ### 9.1 Support Levels
 <!-- Max 200 words, 2000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/200 | **Character count:** [X]/2000
 
 ### 9.2 Support Channels
@@ -603,6 +670,7 @@
 | Low (P4) | [X] hours | [X] days |
 
 ### 9.4 Third Party Support Access
+
 **Support available to third parties:** Yes / No
 
 ---
@@ -611,25 +679,27 @@
 
 ### 10.1 Getting Started
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 10.2 Setup and Migration Service
+
 **Setup/migration service available:** Yes / No
 
 **Description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 10.3 Training
+
 **Training available:** Yes / No
 
 **Training description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -638,9 +708,11 @@
 ## 11. Documentation
 
 ### 11.1 Documentation Available
+
 **Documentation provided:** Yes / No
 
 **Documentation formats:**
+
 - [ ] HTML (online)
 - [ ] PDF
 - [ ] Video tutorials
@@ -649,9 +721,11 @@
 - [ ] Other: [SPECIFY]
 
 ### 11.2 Documentation Accessibility
+
 **WCAG 2.1 AA compliant:** Yes / No
 
 ### 11.3 Document URLs
+
 | Document | URL |
 |----------|-----|
 | Service Definition Document | [URL] |
@@ -663,14 +737,18 @@
 ## 12. Security Clearances
 
 ### 12.1 Government Security Clearances
+
 **Government security clearances:**
+
 - [ ] DV (Developed Vetting)
 - [ ] SC (Security Check)
 - [ ] BPSS (Baseline Personnel Security Standard)
 - [ ] None
 
 ### 12.2 Staff Security Clearance Checks
+
 **Staff security clearance checks:**
+
 - [ ] Conforms to BS7858:2012
 - [ ] Non-BS7858 staff vetting
 - [ ] No staff vetting
@@ -680,7 +758,9 @@
 ## 13. Reselling
 
 ### 13.1 Reselling Type
+
 **Reselling type:**
+
 - [ ] Not a reseller
 - [ ] Reseller (taking full contract risk)
 - [ ] Broker (introducing buyer to supplier)
@@ -693,6 +773,7 @@
 ## 14. Service Add-On
 
 ### 14.1 Service Add-On
+
 **Is this an add-on to an existing service?** Yes / No
 
 ### 14.2 System Requirements
@@ -716,11 +797,12 @@
 ## 15. Energy Efficiency
 
 ### 15.1 Energy Efficient Data Centres
+
 **Energy efficient datacentres:** Yes / No
 
 **Energy efficiency description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -741,13 +823,13 @@
 
 ### 17.1 QA Process
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 17.2 Secure Development
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -757,7 +839,7 @@
 
 ### 18.1 Equipment Disposal Approach
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 

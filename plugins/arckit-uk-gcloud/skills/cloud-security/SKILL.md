@@ -14,6 +14,7 @@ Provide instant answers to common questions about security and compliance requir
 ## When to Use
 
 Activate when users ask about:
+
 - Whether they need a specific certification (ISO 27001, Cyber Essentials, SOC 2, etc.)
 - What the NCSC 14 cloud security principles are
 - UK GDPR requirements for cloud services

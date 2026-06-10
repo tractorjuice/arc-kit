@@ -14,6 +14,7 @@ Provide instant answers to common questions about the Digital Marketplace questi
 ## When to Use
 
 Activate when users ask about:
+
 - Character or word limits for specific fields
 - How many features, benefits, or categories are allowed
 - What lots exist and their categories
@@ -44,6 +45,7 @@ Activate when users ask about:
 ## Quick Reference: Declaration
 
 The declaration has ~57 questions across these areas:
+
 - **Mandatory exclusion grounds** (7 questions) — criminal convictions, tax evasion; must answer "No" to pass
 - **Discretionary exclusion grounds** (11 questions) — bankruptcy, misconduct, misrepresentation
 - **Modern slavery** (4 questions) — required for suppliers with turnover above threshold

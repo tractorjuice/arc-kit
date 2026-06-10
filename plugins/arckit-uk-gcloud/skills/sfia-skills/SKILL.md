@@ -14,6 +14,7 @@ Provide instant answers to common questions about SFIA levels, typical day rates
 ## When to Use
 
 Activate when users ask about:
+
 - What SFIA level a specific role maps to
 - Day rate ranges for a given SFIA level or role
 - How to map DDaT (Digital, Data and Technology) roles to SFIA skills
@@ -78,15 +79,19 @@ Activate when users ask about:
 ## Common Lot 3 Service Archetypes
 
 ### Cloud Migration Service
+
 Architect (ARCH 5–6) + Migration Engineer (DLMG 4–5) + DevOps (CFMG 4–5) + Test Engineer (TEST 4) + PM (PRMG 5)
 
 ### Managed Cloud Service
+
 Cloud Ops (ITOP 3–5) + Monitoring (SLMO 3–4) + Problem Manager (PBMG 4–5) + Security (SCTY 4–5) + Service Manager (CSMG 4–5)
 
 ### Cloud Consultancy
+
 Consultant (CNSL 5–6) + Architect (ARCH 5–6) + Strategy (STPL 5–6) + BA (BUAN 4–5) + Change Manager (CHMG 4–5)
 
 ### Cloud Security Service
+
 Security Consultant (SCTY 5–6) + Assessor (INAS 5–6) + Pen Tester (PENT 4–5) + Security Engineer (SCAD 4–5) + BC/DR (BURM 5)
 
 ## Answering Questions

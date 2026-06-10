@@ -24,16 +24,18 @@
 
 ### 1.1 Service Name
 <!-- Max 100 characters -->
-```
+```text
 [SERVICE_NAME]
 ```
+
 **Character count:** [X]/100
 
 ### 1.2 Service Description
 <!-- Max 50 words, 500 characters. Summary of what the service is for. -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/50 | **Character count:** [X]/500
 
 ### 1.3 Service Features
@@ -71,9 +73,10 @@
 
 ### 1.5 Service Constraints
 <!-- Max 100 words. Any limitations or constraints on the service. -->
-```
+```text
 [CONSTRAINTS]
 ```
+
 **Word count:** [X]/100
 
 ---
@@ -82,6 +85,7 @@
 <!-- Select up to 6 categories from the official Lot 3 list -->
 
 **Selected Categories:**
+
 - [ ] Planning
 - [ ] Setup and migration
 - [ ] Quality assurance and performance testing
@@ -96,11 +100,12 @@
 ## 3. Service Details by Category
 
 ### 3.1 Planning Service
+
 **Planning service included:** Yes / No
 
 **Planning service description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -108,11 +113,12 @@
 **Compatible services list:** [LIST]
 
 ### 3.2 Setup and Migration Service
+
 **Setup/migration service included:** Yes / No
 
 **Setup/migration description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -120,20 +126,23 @@
 **Compatible services list:** [LIST]
 
 ### 3.3 Quality Assurance and Performance Testing
+
 **QA/testing service included:** Yes / No
 
 **QA/testing description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 3.4 Security Services
+
 **Security testing included:** Yes / No
 
 **Security testing accredited:** Yes / No
 
 **Accreditations held:**
+
 - [ ] CREST
 - [ ] CHECK
 - [ ] Tiger Scheme
@@ -156,16 +165,17 @@
 
 **Security testing description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 3.5 Training
+
 **Training service included:** Yes / No
 
 **Training description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -173,15 +183,17 @@
 **Compatible services list:** [LIST]
 
 ### 3.6 Ongoing Support
+
 **Ongoing support included:** Yes / No
 
 **Ongoing support description:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Ongoing support services:**
+
 - [ ] Help desk / Service desk
 - [ ] Technical support
 - [ ] Managed services
@@ -205,6 +217,7 @@
 | **Billing Interval** | [Hour/Day/Month/Project] |
 
 ### 4.2 SFIA Rate Card
+
 **SFIA rate card available:** Yes / No
 **SFIA Rate Card URL:** [URL]
 
@@ -219,10 +232,12 @@
 | [ROLE] | [LEVEL] | £[RATE] |
 
 ### 4.4 Education Pricing
+
 **Education sector discount available:** Yes / No
 **Details:** [DESCRIPTION]
 
 ### 4.5 Pricing Document
+
 **URL:** [PRICING_DOCUMENT_URL]
 
 ---
@@ -259,9 +274,10 @@
 
 ### 6.1 Support Levels
 <!-- Max 200 words, 2000 characters -->
-```
+```text
 [DESCRIPTION]
 ```
+
 **Word count:** [X]/200 | **Character count:** [X]/2000
 
 ### 6.2 Support Channels
@@ -288,7 +304,7 @@
 
 ### 7.1 Onboarding Process
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -306,9 +322,11 @@
 ## 8. Documentation
 
 ### 8.1 Documentation Available
+
 **Documentation provided:** Yes / No
 
 **Documentation formats:**
+
 - [ ] HTML (online)
 - [ ] PDF
 - [ ] Project documentation templates
@@ -325,6 +343,7 @@
 | Training | [DELIVERABLES] |
 
 ### 8.3 Document URLs
+
 | Document | URL |
 |----------|-----|
 | Service Definition Document | [URL] |
@@ -339,6 +358,7 @@
 ### 9.1 Government Security Clearances
 <!-- CCS `governmentSecurityClearances` — radio select -->
 **Highest clearance level available:**
+
 - ( ) DV (Developed Vetting)
 - ( ) SC (Security Check)
 - ( ) BPSS (Baseline Personnel Security Standard)
@@ -347,6 +367,7 @@
 ### 9.2 Staff Security Clearance Checks
 <!-- CCS `staffSecurityClearanceChecks` — radio select -->
 **Staff security vetting approach:**
+
 - ( ) Staff are vetted to BS7858:2012
 - ( ) Staff are vetted but not to BS7858:2012
 - ( ) Staff are not vetted
@@ -389,11 +410,12 @@
 
 ### 11.1 QA Process
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 ### 11.2 Methodologies Used
+
 - [ ] Agile/Scrum
 - [ ] PRINCE2
 - [ ] SAFe
@@ -416,9 +438,11 @@
 ## 12. Reselling
 
 ### 12.1 Reselling Other Services
+
 **Reselling other organisations' services:** Yes / No
 
 **Reselling type:**
+
 - [ ] Reseller (act as supplier, take contract risk)
 - [ ] Broker (introduce buyer to supplier)
 - [ ] Neither
@@ -433,17 +457,18 @@
 ## 13. Subcontracting
 
 ### 13.1 Use of Subcontractors
+
 **Will use subcontractors:** Yes / No
 
 **Subcontracting approach:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
 **Subcontractor management:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -452,9 +477,11 @@
 ## 14. Add-On Services
 
 ### 14.1 Service Add-Ons Available
+
 **Add-on services:** Yes / No
 
 **Add-on types:**
+
 - [ ] Extended support hours
 - [ ] Additional consultancy days
 - [ ] Training sessions
@@ -463,7 +490,7 @@
 
 **Add-on details:**
 <!-- Max 200 words -->
-```
+```text
 [DESCRIPTION]
 ```
 
@@ -485,6 +512,7 @@
 ## Appendix B: Case Studies
 
 ### Case Study 1
+
 | Field | Value |
 |-------|-------|
 | Client Sector | [SECTOR] |
@@ -494,6 +522,7 @@
 | Outcome | [OUTCOME] |
 
 ### Case Study 2
+
 | Field | Value |
 |-------|-------|
 | Client Sector | [SECTOR] |
