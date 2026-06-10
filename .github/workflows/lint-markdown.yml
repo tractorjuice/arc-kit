@@ -14,8 +14,9 @@ on:
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
       - "plugins/arckit-claude/.claude-plugin/plugin.json"
+      - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
-      - "tests/plugin/test_validate_tenders_handoff.mjs"
+      - "tests/plugin/**"
   pull_request:
     paths:
       - "**/*.md"
@@ -28,8 +29,9 @@ on:
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
       - "plugins/arckit-claude/.claude-plugin/plugin.json"
+      - "plugins/arckit-claude/hooks/**"
       - "plugins/arckit-claude/schemas/tenders-handoff.schema.json"
-      - "tests/plugin/test_validate_tenders_handoff.mjs"
+      - "tests/plugin/**"
 
 jobs:
   lint:
@@ -91,17 +93,9 @@ jobs:
       - name: Handoff schema validator tests (tenders)
         run: node tests/plugin/test_validate_tenders_handoff.mjs
 
-      - name: Wardley label-tidy hook tests
-        run: node --test tests/plugin/tidy-wardley-labels.test.mjs tests/plugin/wardley-tidy.test.mjs tests/plugin/owm-tidy.test.mjs
-
-      - name: OWM-to-Mermaid converter tests
-        run: node --test tests/plugin/owm-to-mermaid.test.mjs
-
-      - name: Hook-utils findRepoRoot tests
-        run: node --test tests/plugin/test_hook_utils.mjs
-
-      - name: Session-nudge rule-engine tests
-        run: node --test tests/plugin/session-nudge.test.mjs
-
-      - name: Telemetry rollup tests
-        run: node --test tests/plugin/telemetry-rollup.test.mjs
+      - name: Plugin hook test suites
+        # Shell-expand every *.test.mjs so new suites are picked up automatically
+        # (avoids the per-file enumeration drift that left suites unrun). The
+        # test_hook_utils.mjs file uses a test_ prefix, so list it explicitly.
+        shell: bash
+        run: node --test tests/plugin/*.test.mjs tests/plugin/test_hook_utils.mjs
