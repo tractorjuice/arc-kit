@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0b0c0c"/>
+      <stop offset="100%" style="stop-color:#1a1d2e"/>
+    </linearGradient>
+    <linearGradient id="goldBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#c8932f"/>
+      <stop offset="100%" style="stop-color:#e8c15c"/>
+    </linearGradient>
+    <filter id="panelShadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="7"/>
+      <feOffset dx="0" dy="5" result="offsetblur"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.45"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="680" fill="url(#bg)"/>
+
+  <!-- Subtle grid -->
+  <g opacity="0.04" stroke="#f0f0f0" stroke-width="0.5">
+    <g><line x1="40" y1="0" x2="40" y2="680"/><line x1="80" y1="0" x2="80" y2="680"/><line x1="120" y1="0" x2="120" y2="680"/><line x1="160" y1="0" x2="160" y2="680"/><line x1="200" y1="0" x2="200" y2="680"/><line x1="240" y1="0" x2="240" y2="680"/><line x1="280" y1="0" x2="280" y2="680"/><line x1="320" y1="0" x2="320" y2="680"/><line x1="360" y1="0" x2="360" y2="680"/><line x1="400" y1="0" x2="400" y2="680"/><line x1="440" y1="0" x2="440" y2="680"/><line x1="480" y1="0" x2="480" y2="680"/><line x1="520" y1="0" x2="520" y2="680"/><line x1="560" y1="0" x2="560" y2="680"/><line x1="600" y1="0" x2="600" y2="680"/><line x1="640" y1="0" x2="640" y2="680"/><line x1="680" y1="0" x2="680" y2="680"/><line x1="720" y1="0" x2="720" y2="680"/><line x1="760" y1="0" x2="760" y2="680"/><line x1="800" y1="0" x2="800" y2="680"/><line x1="840" y1="0" x2="840" y2="680"/><line x1="880" y1="0" x2="880" y2="680"/><line x1="920" y1="0" x2="920" y2="680"/><line x1="960" y1="0" x2="960" y2="680"/><line x1="1000" y1="0" x2="1000" y2="680"/><line x1="1040" y1="0" x2="1040" y2="680"/><line x1="1080" y1="0" x2="1080" y2="680"/><line x1="1120" y1="0" x2="1120" y2="680"/><line x1="1160" y1="0" x2="1160" y2="680"/></g>
+    <g><line x1="0" y1="40" x2="1200" y2="40"/><line x1="0" y1="80" x2="1200" y2="80"/><line x1="0" y1="120" x2="1200" y2="120"/><line x1="0" y1="160" x2="1200" y2="160"/><line x1="0" y1="200" x2="1200" y2="200"/><line x1="0" y1="240" x2="1200" y2="240"/><line x1="0" y1="280" x2="1200" y2="280"/><line x1="0" y1="320" x2="1200" y2="320"/><line x1="0" y1="360" x2="1200" y2="360"/><line x1="0" y1="400" x2="1200" y2="400"/><line x1="0" y1="440" x2="1200" y2="440"/><line x1="0" y1="480" x2="1200" y2="480"/><line x1="0" y1="520" x2="1200" y2="520"/><line x1="0" y1="560" x2="1200" y2="560"/><line x1="0" y1="600" x2="1200" y2="600"/><line x1="0" y1="640" x2="1200" y2="640"/></g>
+  </g>
+
+  <!-- Eyebrow -->
+  <text x="600" y="58" text-anchor="middle" fill="#b1b4b6" font-size="17" letter-spacing="2.5" font-weight="600">NEW ARCKIT PLUGIN  ·  UK G-CLOUD SUPPLIER OVERLAY</text>
+
+  <!-- Motif: a service submission pack checklist (the supplier mirror) -->
+  <g filter="url(#panelShadow)">
+    <rect x="350" y="92" width="500" height="232" rx="12" fill="#14161f" fill-opacity="0.72" stroke="#2a2d3e" stroke-width="1"/>
+  </g>
+  <text x="376" y="124" fill="#9b9ea3" font-size="15" letter-spacing="1.2" font-weight="600">SERVICE SUBMISSION PACK</text>
+
+  <!-- checklist rows -->
+  <g font-size="15.5">
+    <!-- row 1 -->
+    <circle cx="384" cy="150" r="8.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.2"/>
+    <path d="M380 150 l3 3 l5.5 -6" fill="none" stroke="#7fd39c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="404" y="155" fill="#d7d9db" font-weight="600">Supplier Profile</text>
+    <text x="820" y="155" text-anchor="end" fill="#7c8088" font-size="12.5" letter-spacing="1">SUPP</text>
+    <!-- row 2 -->
+    <circle cx="384" cy="180" r="8.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.2"/>
+    <path d="M380 180 l3 3 l5.5 -6" fill="none" stroke="#7fd39c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="404" y="185" fill="#d7d9db" font-weight="600">Service Definition Document <tspan fill="#9b9ea3" font-weight="400">(Lot 2)</tspan></text>
+    <text x="820" y="185" text-anchor="end" fill="#7c8088" font-size="12.5" letter-spacing="1">SDD</text>
+    <!-- row 3 -->
+    <circle cx="384" cy="210" r="8.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.2"/>
+    <path d="M380 210 l3 3 l5.5 -6" fill="none" stroke="#7fd39c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="404" y="215" fill="#d7d9db" font-weight="600">Pricing</text>
+    <text x="820" y="215" text-anchor="end" fill="#7c8088" font-size="12.5" letter-spacing="1">PRIC</text>
+    <!-- row 4 -->
+    <circle cx="384" cy="240" r="8.5" fill="#1f3326" stroke="#5fb37e" stroke-width="1.2"/>
+    <path d="M380 240 l3 3 l5.5 -6" fill="none" stroke="#7fd39c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    <text x="404" y="245" fill="#d7d9db" font-weight="600">Security Assertions <tspan fill="#9b9ea3" font-weight="400">(NCSC Cloud Principles)</tspan></text>
+    <text x="820" y="245" text-anchor="end" fill="#7c8088" font-size="12.5" letter-spacing="1">SECA</text>
+  </g>
+
+  <!-- final review row: gold READY -->
+  <line x1="376" y1="266" x2="824" y2="266" stroke="#2a2d3e" stroke-width="1"/>
+  <text x="404" y="296" fill="#e8c15c" font-size="16" font-weight="700">Submission Review</text>
+  <rect x="690" y="281" width="134" height="22" rx="11" fill="#3a2a16" stroke="#e8c15c" stroke-width="0.75" stroke-opacity="0.55"/>
+  <text x="757" y="296" text-anchor="middle" fill="#e8c15c" font-size="12" letter-spacing="1.5" font-weight="700">READY TO SUBMIT</text>
+
+  <!-- Buyer/supplier mirror callout -->
+  <rect x="350" y="338" width="500" height="40" rx="8" fill="#15130c" stroke="#c8932f" stroke-width="1" stroke-opacity="0.5"/>
+  <text x="600" y="363" text-anchor="middle" fill="#e8c15c" font-size="14.5" font-weight="600">ArcKit governs the buyer  ·  now it helps the supplier win the work</text>
+
+  <!-- Headline -->
+  <text x="600" y="446" text-anchor="middle" fill="#ffffff" font-size="52" font-weight="800" letter-spacing="-0.5">From Blank Repo to Submitted Bid</text>
+
+  <!-- Subline -->
+  <text x="600" y="486" text-anchor="middle" fill="#e8c15c" font-size="21" font-weight="600">arckit-uk-gcloud — the supplier-side overlay for the UK Digital Marketplace</text>
+
+  <!-- Command line -->
+  <text x="600" y="528" text-anchor="middle" fill="#c5c7ca" font-size="16.5" font-family="'Cascadia Code', 'Consolas', monospace">/arckit:supplier-profile → service-design → sdd → pricing → security → review → submission-pack</text>
+
+  <!-- Capability line -->
+  <text x="600" y="562" text-anchor="middle" fill="#9b9ea3" font-size="15.5">11 commands · Service Definition Documents (Lots 1/2/3) · pricing · NCSC security assertions · competitor benchmark · CCS submission pack</text>
+
+  <!-- Footer -->
+  <line x1="300" y1="600" x2="900" y2="600" stroke="#2a2d3e" stroke-width="1"/>
+  <text x="600" y="632" text-anchor="middle" fill="#7c8088" font-size="14" letter-spacing="0.8">arckit.org  ·  13th marketplace plugin  ·  requires arckit core  ·  Proprietary  ·  Claude Code only</text>
+</svg>
