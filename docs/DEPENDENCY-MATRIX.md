@@ -400,6 +400,28 @@ principles-compliance → conformance → analyze → service-assessment → sto
 
 ## Changelog
 
+### 2026-06-10 - UK G-Cloud Supplier Bid-Authoring Overlay Commands (Community, Proprietary)
+
+Added 11 community-overlay commands shipping in the new 13th marketplace plugin `arckit-uk-gcloud` — a **proprietary (not MIT), Claude Code only** supplier-side overlay for authoring UK G-Cloud (Digital Marketplace) framework bids. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and **requires the `arckit` core plugin**. Unlike every other overlay it is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot). Like the other overlays, these commands are documented here via this changelog rather than as DSM grid rows (the matrix tracks the official baseline). Total community-overlay command count moves to **87** (`arckit-uk-gcloud` adds 11), alongside the official baseline.
+
+**Commands and output doc-types** (all regime UK, category Procurement; SDD / DECL / SECA are HIGH severity):
+
+- `/arckit:supplier-profile` → `SUPP` (Supplier Profile)
+- `/arckit:service-design` → `SVCD` (Service Design)
+- `/arckit:sdd-lot1` → `SDD` (Service Definition Document — Lot 1 Cloud Hosting)
+- `/arckit:sdd-lot2` → `SDD` (Service Definition Document — Lot 2 Cloud Software)
+- `/arckit:sdd-lot3` → `SDD` (Service Definition Document — Lot 3 Cloud Support)
+- `/arckit:declaration` → `DECL` (Supplier Declaration)
+- `/arckit:pricing` → `PRIC` (Pricing Document)
+- `/arckit:security` → `SECA` (Security Assertions)
+- `/arckit:gcloud-competitors` → `GCMP` (G-Cloud Competitor Benchmark)
+- `/arckit:review` → `GCRV` (G-Cloud Submission Review)
+- `/arckit:submission-pack` — assembles the final G-Cloud submission pack from the above artefacts
+
+**Dependencies**: all 11 commands depend on the `arckit` core plugin (templates, helper scripts, doc-id generation, hooks). Within the overlay, `/arckit:review` and `/arckit:submission-pack` consume the upstream SUPP / SVCD / SDD / DECL / PRIC / SECA / GCMP artefacts (R). `/arckit:gcloud-competitors` (GCMP) optionally informs `/arckit:service-design` and pricing positioning (O).
+
+**Skills**: `gcloud-framework`, `cloud-security`, `sfia-skills`. **Recipe**: `uk-gcloud-submission` (end-to-end bid assembly). Ported from the standalone gcloud-kit plugin.
+
 ### 2026-06-02 - Competitor Landscape command + Assurance wiring (#556)
 
 - **Added**: `/arckit:competitors` command (86th ArcKit command) for competitor landscape analysis from the UK Tenders MCP

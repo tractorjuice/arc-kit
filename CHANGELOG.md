@@ -5,6 +5,12 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **arckit-uk-gcloud** (13th marketplace plugin) — Proprietary, Claude-Code-only supplier-side G-Cloud bid-authoring overlay: 11 commands (supplier-profile, service-design, sdd-lot1/2/3, declaration, pricing, security, gcloud-competitors, review, submission-pack), 8 doc-types (SUPP/SVCD/SDD/DECL/PRIC/SECA/GCMP/GCRV), 3 skills (gcloud-framework, cloud-security, sfia-skills), and the uk-gcloud-submission build recipe. Requires arckit core. Ported from the standalone gcloud-kit plugin. Not distributed to the non-Claude extension formats (proprietary).
+
 ## [5.12.1] — 2026-06-10
 
 ### Fixed

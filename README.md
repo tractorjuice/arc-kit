@@ -59,7 +59,7 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. The marketplace ships **12 plugins** — install only the jurisdictions you need:
+Then install from the Discover tab. The marketplace ships **13 plugins** — install only the jurisdictions you need:
 
 ```bash
 # Core (73 commands — UK Government civilian + generic enterprise)
@@ -68,11 +68,11 @@ claude plugin install arckit
 # UK + UAE federal
 claude plugin install arckit arckit-uae
 
-# Everything (139 commands across UK + UAE + FR + CA + EU + AT + AU + US + UK-NHS)
-claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs}
+# Everything (150 commands across UK + UAE + FR + CA + EU + AT + AU + US + UK-NHS + UK-GCloud)
+claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs,uk-gcloud}
 ```
 
-All 12 plugins come from the same `tractorjuice/arc-kit` marketplace. The 10 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
+All 13 plugins come from the same `tractorjuice/arc-kit` marketplace. The 11 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-gcloud`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
 
 > **Tip: lighter marketplace clone.** The command above clones the full arc-kit monorepo (~100 MB) because it hosts five other AI-assistant distributions, 147 vendored Wardley maps, and research docs you don't need. To fetch just the plugin's directories, add the marketplace via the CLI with `--sparse`:
 >
@@ -459,6 +459,30 @@ Install: `claude plugin install arckit arckit-us`. See [`docs/guides/us-federal-
 Recipe: `uk-fs-payments` (multi-wave payment system modernization).
 
 Install: `claude plugin install arckit arckit-uk-finance`. Help wanted: recruiting a UK financial services domain co-maintainer (CISO / Compliance / Head of Architecture background welcome) to transition to official-baseline status.
+
+---
+
+## UK G-Cloud Supplier Bid-Authoring Overlay (11 commands) — Proprietary
+
+> **PROPRIETARY, Claude Code only.** The 11 commands below are a supplier-side overlay for authoring UK G-Cloud (Digital Marketplace) framework bids: supplier profile, service design, the three Service Definition Document lots, the supplier declaration, pricing, security assertions, competitor benchmarking, submission review, and a final submission pack. Unlike every other ArcKit plugin, `arckit-uk-gcloud` ships under a **proprietary licence (not MIT)** and is **not distributed to the non-Claude extension formats** (Codex / Gemini / OpenCode / Copilot) — it runs on Claude Code only. It is the 4th sector-specific overlay (after `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-au-energy`) and requires the `arckit` core plugin.
+
+**G-Cloud bid authoring**:
+
+- `/arckit:supplier-profile` — Supplier profile and company capability statement (SUPP)
+- `/arckit:service-design` — Service design and value proposition (SVCD)
+- `/arckit:sdd-lot1` — Service Definition Document, Lot 1 Cloud Hosting (SDD)
+- `/arckit:sdd-lot2` — Service Definition Document, Lot 2 Cloud Software (SDD)
+- `/arckit:sdd-lot3` — Service Definition Document, Lot 3 Cloud Support (SDD)
+- `/arckit:declaration` — Supplier declaration and framework attestations (DECL)
+- `/arckit:pricing` — Pricing document and SFIA rate card (PRIC)
+- `/arckit:security` — Security assertions and cloud security assessment (SECA)
+- `/arckit:gcloud-competitors` — G-Cloud competitor benchmark (GCMP)
+- `/arckit:review` — G-Cloud submission review and gap analysis (GCRV)
+- `/arckit:submission-pack` — Assemble the final G-Cloud submission pack
+
+Skills: `gcloud-framework`, `cloud-security`, `sfia-skills`. Recipe: `uk-gcloud-submission` (end-to-end bid assembly).
+
+Install: `claude plugin install arckit arckit-uk-gcloud`. Proprietary — see the licence-exception note at the foot of this README. Ported from the standalone gcloud-kit plugin.
 
 ---
 
