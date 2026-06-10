@@ -913,7 +913,7 @@ Run:
 ```bash
 python scripts/standardise-colon.py --check
 ```
-Expected: PASS (no dot-notation command refs). Fix any `/arckit.x` → `/arckit:x` in the new files and re-run.
+Expected: PASS (no dot-notation command refs). Fix any dot-form `/arckit.NAME` to colon-form `/arckit:NAME` in the new files and re-run.
 
 - [ ] **Step 3: If any fix-ups were made, commit them**
 
