@@ -96,7 +96,7 @@ The rule set (priority order; first match across touched projects wins, lowest p
 
 Trigger codes come from this session's git-changed files; the complement is checked by recursively scanning the project's `projects/NNN-*` directory. The decision logic lives in the pure, side-effect-free `session-nudge.mjs` (`selectNudge`), unit-tested in `tests/plugin/session-nudge.test.mjs`.
 
-**Version gate.** `hookSpecificOutput.additionalContext` from a `Stop` hook is only safe on Claude Code **v2.1.163+** (older clients treat it as a hook error). ArcKit's floor is v2.1.156, so `version-check.mjs` writes the detected client version to `.arckit/memory/.cc-version` at SessionStart and `session-learner.mjs` reads it; below 2.1.163 (or if absent/unparseable) the nudge stays silent — today's behaviour. The nudge is also suppressed on `StopFailure` and when the `ARCKIT_NO_NUDGE` environment variable is set. All nudge logic runs after the session-summary writes and is wrapped so it can never break them.
+**Version gate.** `hookSpecificOutput.additionalContext` from a `Stop` hook is only safe on Claude Code **v2.1.163+** (older clients treat it as a hook error). ArcKit's floor is v2.1.172 (above the 2.1.163 nudge gate), but that floor is a *soft* warning a user can run below, so `version-check.mjs` still writes the detected client version to `.arckit/memory/.cc-version` at SessionStart and `session-learner.mjs` reads it; below 2.1.163 (or if absent/unparseable) the nudge stays silent — today's behaviour. The nudge is also suppressed on `StopFailure` and when the `ARCKIT_NO_NUDGE` environment variable is set. All nudge logic runs after the session-summary writes and is wrapped so it can never break them.
 
 ## Project Context Re-Injection (`postcompact-rehydrate.mjs`)
 

@@ -9,8 +9,9 @@
  *      `claude --version` via spawnSync, and warns when the client is below
  *      MIN_CLAUDE_CODE_VERSION (features like userConfig, hook `if:`, skill
  *      `paths:`, plugin dependency enforcement, `defaultEnabled`, and the
- *      Opus 4.8 thinking-block fix depend on
- *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+). Silent on
+ *      Opus 4.8 thinking-block fix, Claude Fable 5 runtime, and the
+ *      WebFetch wildcard-domain fix depend on
+ *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/v2.1.172+). Silent on
  *      detection failure.
  *
  * Side effect: when inside an ArcKit project, persists the detected client
@@ -29,7 +30,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.156';
+const MIN_CLAUDE_CODE_VERSION = '2.1.172';
 
 const data = parseHookInput(); // consume stdin (required by hook protocol)
 const cwd = data.cwd || '.';
@@ -81,7 +82,9 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Session title bug fix — ArcKit's \`stale-artifact-scan\` monitor was being used to name new sessions instead of the user's first prompt (needs v2.1.144)\n` +
     `- Skill tool headless permission fix — \`/arckit:*\` commands run via \`claude -p\` / CI failed with permission errors on v2.1.141–v2.1.143 (needs v2.1.144)\n` +
     `- Plugin \`defaultEnabled: false\` — ArcKit's 9 community overlays no longer auto-enable on marketplace install; users opt in to only the jurisdiction/sector they need (needs v2.1.154)\n` +
-    `- Opus 4.8 thinking-block API-error fix — modified thinking blocks caused API errors on earlier clients; affects \`/arckit:*\` commands and research agents using extended thinking (needs v2.1.156)\n\n` +
+    `- Opus 4.8 thinking-block API-error fix — modified thinking blocks caused API errors on earlier clients; affects \`/arckit:*\` commands and research agents using extended thinking (needs v2.1.156)\n` +
+    `- Claude Fable 5 general availability — ArcKit defaults to the latest model tier and standardises on the Fable 5-era runtime (needs v2.1.170)\n` +
+    `- WebFetch wildcard-domain fix — \`WebFetch(domain:*.gov.uk)\`-style allow rules ArcKit recommends for OFFICIAL-SENSITIVE deployments never matched subdomains on earlier clients (needs v2.1.172)\n\n` +
     `Update with: \`claude update\`\n\n` +
     `**Tip — stop drifting back below the floor:** after updating, add ` +
     `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +
