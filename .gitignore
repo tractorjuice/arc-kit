@@ -48,6 +48,7 @@ htmlcov/
 *.log
 .arckit-debug/
 research/
+data/
 
 # Plugin runtime caches — ephemeral, project-scoped, regenerated each session
 # (see #494 close: these belong in .gitignore, not ${CLAUDE_PLUGIN_DATA})
