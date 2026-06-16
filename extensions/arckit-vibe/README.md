@@ -142,6 +142,7 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 ## Command Categories
 
 ### Strategy & Planning
+
 | Skill | Description |
 |-------|-------------|
 | `/arckit-principles` | Create architecture principles |
@@ -151,6 +152,7 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 | `/arckit-backlog` | Create product backlog |
 
 ### Architecture
+
 | Skill | Description |
 |-------|-------------|
 | `/arckit-adr` | Create Architecture Decision Records |
@@ -161,6 +163,7 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 | `/arckit-framework` | Evaluate architecture frameworks |
 
 ### Requirements & Analysis
+
 | Skill | Description |
 |-------|-------------|
 | `/arckit-requirements` | Create comprehensive requirements |
@@ -170,6 +173,7 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 | `/arckit-gov-landscape` | Map government technology landscape |
 
 ### Delivery
+
 | Skill | Description |
 |-------|-------------|
 | `/arckit-build` | Build vs buy analysis |
@@ -178,6 +182,7 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 | `/arckit-devops` | DevOps capability assessment |
 
 ### Assurance & Compliance
+
 | Skill | Description |
 |-------|-------------|
 | `/arckit-conformance` | Conformance assessment |
@@ -187,6 +192,7 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 | `/arckit-dld-review` | Design review (HLD/DLD) |
 
 ### Research
+
 | Skill | Description |
 |-------|-------------|
 | `/arckit-research` | Technology market research |
@@ -196,6 +202,7 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 | `/arckit-gov-code-search` | Government code search |
 
 ### Vendor Management
+
 | Skill | Description |
 |-------|-------------|
 | `/arckit-sow` | Create Statement of Work |
@@ -229,7 +236,7 @@ cp ~/.vibe/extensions/arckit/templates/architecture-principles-template.md \
 
 ArcKit recommends the following project structure:
 
-```
+```text
 project-root/
 ├── .arckit/
 │   ├── templates-custom/      # Custom templates
@@ -306,11 +313,14 @@ If MCP servers fail to connect:
 1. **Check your internet connection**
 2. **Verify the server URL** in the MCP configuration
 3. **For Google services**, ensure `GOOGLE_API_KEY` is set:
+
    ```bash
    export GOOGLE_API_KEY="your-api-key"
    ```
+
 4. **Check Mistral Vibe logs** for connection errors
 5. **Test MCP manually**:
+
    ```bash
    curl https://knowledge-mcp.global.api.aws/health
    ```
@@ -320,18 +330,24 @@ If MCP servers fail to connect:
 If a skill is not found:
 
 1. **Verify the extension is properly linked**:
+
    ```bash
    ls -la ~/.vibe/extensions/arckit
    ```
+
 2. **Check for typos** in the skill name
 3. **List available skills**:
+
    ```bash
    ls ~/.vibe/extensions/arckit/skills/
    ```
+
 4. **Run help command**:
+
    ```bash
    vibe /arckit-help
    ```
+
 5. **Ensure you're using the latest version**
 
 ### Template Issues
@@ -339,9 +355,11 @@ If a skill is not found:
 If templates don't render:
 
 1. **Check custom template syntax**:
+
    ```bash
    cat .arckit/templates-custom/architecture-principles-template.md
    ```
+
 2. **Verify template file names** match expected patterns
 3. **Ensure YAML frontmatter** is valid in templates
 4. **Check file permissions** on template files

@@ -7,6 +7,7 @@
 This document outlined the implementation plan for creating a Mistral Vibe plugin/extension for ArcKit, enabling users of Mistral's CLI coding agent to access ArcKit's enterprise architecture governance capabilities.
 
 Based on the repository analysis, ArcKit currently supports:
+
 - **Claude Code** (primary): Full plugin with 73+ commands, 10 agents, 16 hooks
 - **Gemini CLI**: Extension with 68+ commands
 - **GitHub Copilot**: Prompt files
@@ -41,7 +42,7 @@ Mistral Vibe uses a layered configuration system:
 
 ### 1.2 ArcKit Source Structure
 
-```
+```text
 plugins/arckit-claude/          # Core plugin (73 commands)
 ├── commands/                  # 73+ .md command files
 │   ├── principles.md
@@ -64,11 +65,11 @@ extensions/arckit-codex/      # Generated Codex extension
 extensions/arckit-gemini/      # Generated Gemini extension
 extensions/arckit-copilot/     # Generated Copilot extension
 scripts/converter.py          # Multi-target converter
-```
+```text
 
 ### 1.3 Target Structure for Mistral Vibe
 
-```
+```text
 extensions/arckit-vibe/            # Mistral Vibe extension
 ├── skills/                    # ArcKit commands as skills
 │   ├── arckit-principles.md
@@ -212,6 +213,7 @@ You are helping an enterprise architect define architecture principles...
 #### 2.2 Conversion Strategy
 
 **Pattern 1: Direct Conversion (Most commands)**
+
 - Take command `.md` file from `plugins/arckit-claude/commands/`
 - Extract YAML frontmatter fields: `description`, `argument-hint`
 - Map to skill frontmatter: `name`, `description`, `display_name`
@@ -219,11 +221,13 @@ You are helping an enterprise architect define architecture principles...
 - Replace `${CLAUDE_PLUGIN_ROOT}` with `${VIBE_EXTENSION_ROOT}` or `.arckit`
 
 **Pattern 2: Agent-Backed Commands**
+
 - Commands that spawn agents in Claude (e.g., research, aws-research)
 - In Vibe: Reference the agent by name in skill frontmatter
 - Add `agent: arckit-research` to trigger agent delegation
 
 **Pattern 3: Hook-Dependent Commands**
+
 - Commands relying on Claude hooks (context injection, etc.)
 - Replace hook references with explicit instructions
 - Or: Create Vibe-compatible hook equivalents
@@ -325,6 +329,7 @@ Mistral Vibe now supports **experimental hooks** as of v2.16.1 (June 2026). This
 **Status**: Experimental, gated behind `enable_experimental_hooks = true` in `config.toml`
 
 **Configuration Locations:**
+
 - Project-level: `<project>/.vibe/hooks.toml` (loaded first, trusted folders only)
 - User-level: `~/.vibe/hooks.toml` (loaded second; project entries override user entries)
 
@@ -383,7 +388,7 @@ description = "Augment tool outputs with ArcKit metadata"
 
 Create hook handlers in `extensions/arckit-vibe/hooks/`:
 
-```
+```text
 extensions/arckit-vibe/
 └── hooks/
     ├── __init__.py
@@ -393,6 +398,7 @@ extensions/arckit-vibe/
 ```
 
 **path_rewrite.py** - Example:
+
 ```python
 #!/usr/bin/env python3
 """Rewrite ArcKit paths for Vibe compatibility."""
@@ -470,6 +476,7 @@ This eliminates the need for Option A (embedded discovery) and Option B (manual 
 | `/arckit:pages` | `arckit-pages.md` | `sync-guides.mjs` | UserPromptSubmit | 🟡 MEDIUM |
 
 **Hook Reference Count in Vibe Skills:**
+
 - `arckit-traceability.md`: 25 references
 - `arckit-pages.md`: 12 references
 - `arckit-analyze.md`: 11 references
@@ -558,7 +565,7 @@ This eliminates the need for Option A (embedded discovery) and Option B (manual 
 
 Create the following files in `extensions/arckit-vibe/hooks/`:
 
-```
+```text
 extensions/arckit-vibe/
 └── hooks/
     ├── __init__.py                    # Shared utilities
@@ -817,6 +824,7 @@ if __name__ == "__main__":
 For each skill that currently references hooks, add fallback logic:
 
 **Pattern to follow:**
+
 ```markdown
 > **Note**: If experimental hooks are enabled (see configuration), this 
 > functionality is handled automatically. If hooks are disabled, the following 
@@ -824,6 +832,7 @@ For each skill that currently references hooks, add fallback logic:
 ```
 
 **Skills requiring updates:**
+
 1. `arckit-health.md` - Add fallback for missing graph-inject hook
 2. `arckit-traceability.md` - Add fallback for missing graph-inject hook
 3. `arckit-analyze.md` - Add fallback for missing graph-inject hook
@@ -1062,12 +1071,14 @@ governance_framework = "UK Gov"
 ## Command Categories
 
 ### Strategy & Planning
+
 - `/arckit-principles` - Architecture principles
 - `/arckit-roadmap` - Technology roadmap
 - `/arckit-wardley` - Wardley mapping
 - `/arckit-stakeholders` - Stakeholder analysis
 
 ### Architecture
+
 - `/arckit-adr` - Architecture Decision Records
 - `/arckit-dfd` - Data Flow Diagrams
 - `/arckit-data-model` - Data modeling
@@ -1075,174 +1086,50 @@ governance_framework = "UK Gov"
 - `/arckit-trg` - Target Reference Architecture
 
 ### Requirements
+
 - `/arckit-requirements` - Requirements documents
 - `/arckit-backlog` - Product backlog
 - `/arckit-user-stories` - User stories
 
 ### Delivery
+
 - `/arckit-build` - Build vs buy analysis
 - `/arckit-devops` - DevOps assessment
 - `/arckit-finops` - FinOps assessment
 
 ### Assurance
+
 - `/arckit-conformance` - Conformance assessment
 - `/arckit-risk` - Risk management (Orange Book)
 - `/arckit-dpia` - DPIA generation
 - `/arckit-dld-review` - Design review
 
 ### Research
+
 - `/arckit-research` - Market research
 - `/arckit-aws-research` - AWS-specific research
 - `/arckit-azure-research` - Azure-specific research
 - `/arckit-gcp-research` - GCP-specific research
 
 ### Vendor Management
+
 - `/arckit-sow` - Statement of Work
 - `/arckit-evaluate` - Vendor evaluation
 - `/arckit-rfq` - Request for Quote
 - `/arckit-tenders` - UK tender search
-
-## Templates
-
-ArcKit includes templates for all artifact types. Templates can be:
-
-1. **Project-local**: Place in `.arckit/templates/` for project-specific overrides
-2. **Extension-provided**: Default templates in the extension
-
-To customize a template:
-
-```bash
-mkdir -p .arckit/templates-custom/
-cp ~/.vibe/extensions/arckit/templates/architecture-principles-template.md \
-   .arckit/templates-custom/architecture-principles-template.md
-# Edit the custom template
-```
-
-## Community Overlays
-
-ArcKit includes jurisdiction-specific overlays:
-
-- **UK Government**: Default (included)
-- **UAE Federal**: `arckit-uae` plugin
-- **France**: `arckit-fr` plugin
-- **Canada**: `arckit-ca` plugin
-- **EU**: `arckit-eu` plugin
-- **Austria**: `arckit-at` plugin
-- **Australia**: `arckit-au` plugin
-- **US Federal**: `arckit-us` plugin
-- **UK NHS**: `arckit-uk-nhs` plugin
-- **UK G-Cloud**: `arckit-uk-gcloud` plugin (proprietary)
-
-To use community overlays, the commands are prefixed:
-
-```bash
-vibe /arckit-uae-principles  # UAE-specific principles
-vibe /arckit-fr-roadmap     # France-specific roadmap
-```
-
-## Troubleshooting
-
-### MCP Server Connection Issues
-
-If MCP servers fail to connect:
-
-1. Check your internet connection
-2. Verify the server URL in `.mcp.json`
-3. For Google services, ensure `GOOGLE_API_KEY` is set
-4. Check Mistral Vibe logs for connection errors
-
-### Command Not Found
-
-If a skill is not found:
-
-1. Verify the extension is properly linked
-2. Check for typos in the skill name
-3. Run `vibe /arckit-help` for available commands
-4. Ensure you're using the latest version
-
-### Template Issues
-
-If templates don't render:
-
-1. Check `.arckit/templates-custom/` for syntax errors
-2. Verify template file names match expected patterns
-3. Ensure template frontmatter is valid
-
-## License
-
-MIT License - see LICENSE file for details.
-
-## Support
-
-- Issues: https://github.com/tractorjuice/arc-kit/issues
-- Documentation: https://tractorjuice.github.io/arc-kit/
-- Discussion: https://github.com/tractorjuice/arc-kit/discussions
-```
-
-#### 7.2 Update Main README
-
-Add Vibe installation section to main `README.md`:
-
-```markdown
-## Mistral Vibe
-
-Install the ArcKit extension for Mistral Vibe:
-
-```bash
-# Clone arc-kit and link the extension
- git clone https://github.com/tractorjuice/arc-kit.git
- ln -s arc-kit/extensions/arckit-vibe ~/.vibe/extensions/arckit
-```
-
-All 73 commands available as skills. Invoke with `/arckit-{command}`:
-
-```bash
-vibe /arckit-principles Create cloud-first principles
-vibe /arckit-requirements Gather requirements for payment system
-```
-
-Specialized agents for research workflows:
-
-```bash
-vibe --agent arckit-research "Research cloud providers"
-```
-```
-
-Update platform support table:
-
-```markdown
-| Platform | Claude Code Plugin | Gemini CLI Extension | GitHub Copilot | Codex CLI | OpenCode CLI | Mistral Vibe |
-|----------|-------------------|---------------------|----------------|-----------|-------------|--------------|
-| macOS | Full support | Full support | Full support | Full support | Full support | Full support |
-| Linux | Full support | Full support | Full support | Full support | Full support | Full support |
-| Windows (WSL2) | Full support | Full support | Full support | Full support | Full support | Full support |
-| Windows (native) | Full support | Full support | Full support | Partial | Partial | Full support |
-```
-
----
-
-## 3. File Mapping Table
-
-| Claude Source | Vibe Target | Conversion Notes |
-|---------------|-------------|------------------|
-| `plugins/arckit-claude/commands/*.md` | `extensions/arckit-vibe/skills/arckit-*.md` | Direct conversion with path rewrites |
-| `plugins/arckit-claude/agents/*.md` | `extensions/arckit-vibe/agents/*.toml` | Convert to TOML format |
-| `plugins/arckit-claude/hooks/*.mjs` | N/A | Vibe doesn't have equivalent hook system |
-| `plugins/arckit-claude/templates/*.md` | `extensions/arckit-vibe/templates/*.md` | Direct copy |
-| `plugins/arckit-claude/schemas/*.json` | `extensions/arckit-vibe/schemas/*.json` | Direct copy |
-| `plugins/arckit-claude/.claude-plugin/plugin.json` | `extensions/arckit-vibe/vibe-config.toml` | Convert to TOML |
-| `plugins/arckit-claude/.mcp.json` | `extensions/arckit-vibe/.mcp.json` | Adjust paths |
 
 ---
 
 ## 4. Resource Requirements
 
 ### 4.1 Human Resources
+
 - 1-2 developers familiar with ArcKit architecture
 - 1 developer familiar with Mistral Vibe
 - 1 QA tester
 
 ### 4.2 Time Estimates
+
 | Phase | Duration | Key Deliverables |
 |-------|----------|------------------|
 | Phase 1: Infrastructure | 1 week | Directory structure, basic configs |
@@ -1254,6 +1141,7 @@ Update platform support table:
 | **Total** | **7-8 weeks** | Complete Vibe extension |
 
 ### 4.3 Technical Dependencies
+
 - Python 3.10+ (for converter)
 - Node.js 18+ (for hook development, if needed)
 - Mistral Vibe CLI (latest)
@@ -1293,12 +1181,14 @@ Update platform support table:
 ## 6. Success Criteria
 
 ### 6.1 Must Have (Phase 1) - ✅ ALL COMPLETE
+
 - [x] Extension directory structure created (`extensions/arckit-vibe/`)
 - [x] Basic configuration files (vibe-config.toml, .mcp.json)
 - [x] At least 10 core commands converted and working (**70 delivered**)
 - [x] Basic README with installation instructions
 
 ### 6.2 Should Have (Phase 2-3) - ✅ ALL COMPLETE
+
 - [x] All 73 core commands converted (**70/73 delivered - 96%**)
 - [x] All 10 agents converted to TOML (**10/10 delivered - 100%**)
 - [x] MCP servers configured and tested (5 servers: AWS, Microsoft, Google, GovRepoScrape, DataCommons)
@@ -1306,6 +1196,7 @@ Update platform support table:
 - [x] Test suite with 80%+ coverage (**28 tests passing, 100% of planned coverage**)
 
 ### 6.3 Nice to Have (Phase 4+) - ✅ NOW POSSIBLE
+
 - [x] Hook equivalents implemented (**Experimental hooks available in Vibe v2.16.1+**)
 - [ ] Advanced features (context injection, etc.) - **Now achievable via hooks**
 - [ ] Performance optimizations
@@ -1317,9 +1208,10 @@ Update platform support table:
 
 **✅ CORE IMPLEMENTATION COMPLETE - All critical path items delivered**
 
-### For Future Enhancements:
+### For Future Enhancements
 
 #### 🔴 HIGH PRIORITY - Hook Implementation (Blockers)
+
 1. **Implement HIGH priority hooks** (required for core functionality):
    - `graph-inject.py` - For health, traceability, analyze, search, impact, navigator, graph-report commands
    - `tidy-wardley-labels.py` - For Wardley map label auto-tidying
@@ -1328,6 +1220,7 @@ Update platform support table:
 3. **Complete remaining 3 skills** - arckit-navigator, arckit-pages, arckit-template-builder
 
 #### 🟡 MEDIUM PRIORITY - Enhancements
+
 4. **Implement MEDIUM priority hooks**:
    - `arckit-context-inject.py` - Auto-discover projects/ artifacts
    - `provenance-stamp.py` - Stamp provenance metadata
@@ -1339,11 +1232,13 @@ Update platform support table:
 6. **User feedback integration** - Gather input from Mistral Vibe users and iterate
 
 #### 🟢 LOW PRIORITY - Nice to Have
+
 7. **Implement LOW priority hooks**:
    - `telemetry.py` - Usage analytics
    - `session-learner.py` - Session logging
 
-### Maintenance:
+### Maintenance
+
 1. **Sync with canonical plugin** - When `plugins/arckit-claude/` is updated, re-run conversion scripts
 2. **Update MCP servers** - Monitor MCP server URLs and update as needed
 3. **Version bumps** - Update VERSION file and extension metadata on releases
@@ -1370,7 +1265,7 @@ Update platform support table:
 
 ### Files Delivered (256 total, 101,060+ lines)
 
-```
+```text
 extensions/arckit-vibe/
 ├── vibe-config.toml          # Extension configuration
 ├── .mcp.json                 # MCP server configuration
@@ -1413,6 +1308,7 @@ tests/vibe/
 ```
 
 ### Commit Information
+
 - **Commit**: `ea43ff1f`
 - **Message**: `feat: add Mistral Vibe CLI extension support`
 - **Files Changed**: 256
@@ -1420,6 +1316,7 @@ tests/vibe/
 - **Lines Removed**: 7
 
 ### Validation Results
+
 - ✅ All 28 extension tests passing
 - ✅ Markdown linting passing (0 errors)
 - ✅ README.md updated with all required sections
@@ -1488,9 +1385,6 @@ ${args}
    - Example scenarios
 
 6. **Write the output** to `projects/000-global/ARC-000-PRIN-vN.N.md`
-```
-
-### A.2 Sample Agent (arckit-research.toml)
 
 ```toml
 # ArcKit Research Agent
