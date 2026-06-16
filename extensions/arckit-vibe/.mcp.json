@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json.schemastore.org/mcp.json",
+  "servers": {
+    "aws-knowledge": {
+      "type": "remote",
+      "url": "https://knowledge-mcp.global.api.aws/sse",
+      "enabled": true,
+      "description": "AWS Knowledge MCP server - Official AWS documentation and service information"
+    },
+    "microsoft-learn": {
+      "type": "remote",
+      "url": "https://learn.microsoft.com/api/mcp/sse",
+      "enabled": true,
+      "description": "Microsoft Learn MCP server - Official Microsoft documentation"
+    },
+    "google-developer-knowledge": {
+      "type": "remote",
+      "url": "https://developerknowledge.googleapis.com/mcp/sse",
+      "headers": {
+        "X-Goog-Api-Key": "${GOOGLE_API_KEY}"
+      },
+      "enabled": false,
+      "description": "Google Developer Knowledge MCP server - Google cloud and developer documentation (requires API key)"
+    },
+    "govreposcrape": {
+      "type": "remote",
+      "url": "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp",
+      "enabled": true,
+      "description": "GovRepoScrape MCP server - UK Government repository and service data"
+    },
+    "datacommons-mcp": {
+      "type": "remote",
+      "url": "https://api.datacommons.org/mcp",
+      "headers": {
+        "X-API-Key": "${DATA_COMMONS_API_KEY}"
+      },
+      "enabled": false,
+      "description": "Data Commons MCP server - Statistical and demographic data (requires API key)"
+    }
+  },
+  "tools": {
+    "aws-knowledge": {
+      "description": "Access AWS service documentation and best practices",
+      "enabled": true
+    },
+    "microsoft-learn": {
+      "description": "Access Microsoft Learn documentation and training",
+      "enabled": true
+    },
+    "google-developer-knowledge": {
+      "description": "Access Google developer documentation",
+      "enabled": false
+    },
+    "govreposcrape": {
+      "description": "Search UK Government repositories and services",
+      "enabled": true
+    },
+    "datacommons-mcp": {
+      "description": "Access statistical and demographic data",
+      "enabled": false
+    }
+  }
+}

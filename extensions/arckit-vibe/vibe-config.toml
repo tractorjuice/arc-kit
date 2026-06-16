@@ -1,0 +1,63 @@
+# ArcKit Mistral Vibe Extension Configuration
+# Version: 5.13.1
+# Generated from ArcKit canonical plugin (plugins/arckit-claude/)
+
+[extension]
+name = "arckit"
+version = "5.13.1"
+description = """
+The Enterprise Architecture Governance Harness - 73+ slash commands across 
+strategy, architecture, delivery, and assurance. Enables enterprise architects 
+to manage architecture principles, requirements, vendor evaluation, risk 
+management, and compliance workflows in Mistral Vibe.
+"""
+author = "TractorJuice"
+repository = "https://github.com/tractorjuice/arc-kit"
+license = "MIT"
+homepage = "https://tractorjuice.github.io/arc-kit/"
+
+[extension.feature_flags]
+# Enable community overlay commands (jurisdiction-specific)
+enable_community_overlays = true
+
+# Enable experimental features
+enable_experimental = false
+
+[extension.mcp]
+# MCP servers bundled with this extension
+# These will be auto-registered when the extension is loaded
+servers = [
+    "aws-knowledge",
+    "microsoft-learn",
+    "google-developer-knowledge",
+    "govreposcrape",
+    "datacommons-mcp"
+]
+
+[extension.agents]
+# Agent configurations to include
+# These are loaded from the agents/ directory
+files = [
+    "arckit-research.toml",
+    "arckit-aws-research.toml",
+    "arckit-azure-research.toml",
+    "arckit-gcp-research.toml",
+    "arckit-datascout.toml",
+    "arckit-gov-code-search.toml",
+    "arckit-gov-landscape.toml",
+    "arckit-gov-reuse.toml",
+    "arckit-grants.toml",
+    "arckit-tenders.toml"
+]
+
+[extension.defaults]
+# Default values for document generation
+organisation_name = ""
+default_classification = "OFFICIAL"
+governance_framework = "Generic"
+classification_scheme = "UK"
+
+# Path configuration
+path_prefix = "${VIBE_EXTENSION_ROOT}"
+templates_dir = ".arckit/templates"
+custom_templates_dir = ".arckit/templates-custom"

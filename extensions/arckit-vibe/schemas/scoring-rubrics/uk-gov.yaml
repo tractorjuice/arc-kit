@@ -1,0 +1,85 @@
+# UK-Gov scoring rubric for datascout
+#
+# Inherits weights from generic.yaml. Overrides scoring to favour:
+#   - OGL licensing (TCoP Point 10)
+#   - G-Cloud / DOS contract vehicles
+#   - GB-hosted sources (data residency)
+#   - NCSC-CAF-aligned certifications
+#
+# Activated by the orchestrator when the project matches UK-Gov patterns
+# ("UK Government", "Ministry of", "Department for", "NHS", "MOD" in
+# the requirements or principles documents).
+
+name: uk-gov
+version: 1
+inherits: generic
+weights:
+  requirements_fit: 25
+  data_quality: 20
+  licence_and_cost: 15
+  api_quality: 15
+  compliance: 15
+  reliability: 10
+
+scoring:
+  licence_and_cost:
+    method: composite
+    components:
+      - field: evidence.licence_type
+        map:
+          OGL-v3: 100
+          OGL-v2: 95
+          CC0-1.0: 95
+          CC-BY-4.0: 85
+          MIT: 80
+          Apache-2.0: 80
+          BSD-3-Clause: 80
+          GPL-3.0: 60
+          AGPL-3.0: 50
+          Freemium: 60
+          Commercial: 40
+          Proprietary: 25
+          Unknown: 20
+      - field: evidence.pricing_model
+        map:
+          open-data: 100
+          free: 95
+          freemium: 70
+          subscription: 45
+          usage-based: 50
+          per-seat: 40
+          enterprise-quote: 25
+
+  compliance:
+    method: certifications_bonus
+    base: 25
+    field: evidence.certifications
+    bonuses:
+      ISO27001: 15
+      SOC2-Type2: 15
+      Cyber-Essentials-Plus: 25
+      OGL-v3: 10
+      OGL-v2: 5
+      G-Cloud-listed: 25
+      DOS-listed: 20
+      GDPR-compliant-asserted: 10
+      NCSC-CAF-aligned-asserted: 25
+    cap: 100
+
+  # data_residency_bonus is an additive adjustment, not a standalone
+  # weighted criterion. The orchestrator must:
+  #   1. Look up evidence.hosted_in_iso_country in the map; absent country = 0.
+  #   2. Add the resulting integer to the per-criterion score named in
+  #      applies_to BEFORE multiplying by that criterion's weight.
+  #   3. Clamp the adjusted per-criterion score to [0, cap].
+  # No new weight is introduced — weights still sum to 100 from the
+  # six-criterion table above.
+  data_residency_bonus:
+    method: residency
+    field: evidence.hosted_in_iso_country
+    map:
+      GB: +10
+      IE: +5
+      US: -5
+    cap: 100
+    applies_to: licence_and_cost

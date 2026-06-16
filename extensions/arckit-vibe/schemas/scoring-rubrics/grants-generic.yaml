@@ -1,0 +1,136 @@
+# Generic scoring rubric for arckit-grants
+#
+# Consumed by the /arckit:grants orchestrator. Computes a weighted
+# eligibility score from the Evidence subtree returned by
+# arckit-grants-reader, combined with a project_profile derived from
+# the project's requirements and stakeholder analysis.
+#
+# The rubric is data, not prompt — scoring is deterministic and not
+# subject to prompt injection from reader-tier inputs.
+#
+# Total possible weighted score: 100.
+# Per-criterion scores are normalised to [0, 100] before weighting.
+
+name: grants-generic
+version: 1
+weights:
+  eligibility_fit: 35
+  funding_size_fit: 20
+  timing_fit: 15
+  complexity_burden: 10
+  historic_traction: 10
+  match_funding_burden: 10
+
+scoring:
+  # eligibility_fit composes three sub-checks: organisation type, sector
+  # overlap, TRL band overlap. The orchestrator computes each sub-score
+  # against the project_profile and weights them within this criterion.
+  eligibility_fit:
+    method: eligibility_composite
+    components:
+      - name: organisation_type
+        field: evidence.eligible_organisation_types
+        against: project_profile.organisation_type
+        any_value: any
+        match_score: 100
+        miss_score: 0
+        weight: 0.4
+      - name: sector_overlap
+        method: jaccard_overlap
+        field: evidence.eligible_sectors
+        against: project_profile.sectors
+        scale: 100
+        weight: 0.4
+      - name: trl_band
+        method: range_contains
+        field_min: evidence.trl_min
+        field_max: evidence.trl_max
+        against: project_profile.trl
+        match_score: 100
+        miss_score: 0
+        weight: 0.2
+    when_missing: 50
+
+  # funding_size_fit: does the award range overlap the project's budget
+  # need? 100 if the project budget falls inside [award_min, award_max];
+  # degrade linearly by the gap percentage.
+  funding_size_fit:
+    method: range_overlap
+    field_min: evidence.award_min_gbp
+    field_max: evidence.award_max_gbp
+    against_min: project_profile.budget_gbp_min
+    against_max: project_profile.budget_gbp_max
+    full_overlap_score: 100
+    partial_overlap_score: 70
+    no_overlap_score: 20
+    when_missing: 50
+
+  # timing_fit: status-driven base, with deadline proximity adjustment.
+  # The orchestrator adds the deadline_adjustment based on days between
+  # deadline_iso and project start.
+  timing_fit:
+    method: status_with_deadline
+    field: evidence.application_status
+    deadline_field: evidence.deadline_iso
+    against: project_profile.start_date_iso
+    map:
+      open: 100
+      opening-soon: 80
+      rolling: 90
+      closed: 0
+      paused: 20
+      unknown: 50
+    deadline_adjustment:
+      # Days until deadline (negative = past). Adjustment added to map
+      # value, then clamped to [0, 100].
+      bands:
+        - { min_days: 0,    max_days: 30,    adjustment: -20 }
+        - { min_days: 31,   max_days: 90,    adjustment: 0 }
+        - { min_days: 91,   max_days: 180,   adjustment: +10 }
+        - { min_days: 181,  max_days: 365,   adjustment: 0 }
+        - { min_days: 366,  max_days: null,  adjustment: -20 }
+    when_missing: 50
+
+  # complexity_burden: lower complexity = higher score (less effort to apply).
+  complexity_burden:
+    method: inverse_map
+    field: evidence.application_complexity
+    map:
+      low: 100
+      medium: 60
+      high: 30
+    when_missing: 50
+
+  # historic_traction: success_rate + historical_grants_count from 360Giving.
+  historic_traction:
+    method: composite
+    components:
+      - name: success_rate
+        field: evidence.success_rate_pct
+        method: linear
+        scale: 1
+        when_missing: 50
+        weight: 0.5
+      - name: historical_volume
+        field: evidence.historical_grants_count
+        method: band
+        bands:
+          - { min: 0,    max: 0,    score: 30 }
+          - { min: 1,    max: 10,   score: 60 }
+          - { min: 11,   max: 100,  score: 80 }
+          - { min: 101,  max: null, score: 100 }
+        when_missing: 50
+        weight: 0.5
+
+  # match_funding_burden: not required = 100; required scales by pct.
+  # 25% match = 70; 50% match = 40; 75%+ match = 20.
+  match_funding_burden:
+    method: match_funding_score
+    field_required: evidence.match_funding_required
+    field_pct: evidence.match_funding_pct
+    not_required_score: 100
+    pct_bands:
+      - { min_pct: 0,   max_pct: 25,  score: 70 }
+      - { min_pct: 26,  max_pct: 50,  score: 40 }
+      - { min_pct: 51,  max_pct: 100, score: 20 }
+    when_missing: 50

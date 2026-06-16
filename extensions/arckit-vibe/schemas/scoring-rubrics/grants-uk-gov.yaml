@@ -1,0 +1,76 @@
+# UK-Gov scoring rubric for arckit-grants
+#
+# Inherits weights and scoring from grants-generic.yaml. Adds bonus
+# adjustments to favour UK government R&D funders (UKRI, Innovate UK,
+# NIHR, DSIT, DASA) and UK-wide geography over commercial accelerators
+# and international programmes.
+#
+# Activated by the orchestrator when the project matches UK-Gov
+# patterns ("UK Government", "Ministry of", "Department for", "NHS",
+# "MOD", "GDS", "TCoP" in the requirements or principles documents).
+
+name: grants-uk-gov
+version: 1
+inherits: grants-generic
+weights:
+  eligibility_fit: 35
+  funding_size_fit: 20
+  timing_fit: 15
+  complexity_burden: 10
+  historic_traction: 10
+  match_funding_burden: 10
+
+scoring:
+  # Inherits all six criteria from grants-generic. No method overrides
+  # — UK-Gov-ness is expressed via the funder_type_bonus and
+  # geography_bonus blocks below, which are additive adjustments
+  # applied to the eligibility_fit per-criterion score.
+
+# funder_type_bonus is an additive adjustment, not a standalone weighted
+# criterion. The orchestrator must:
+#   1. Look up funder_type in the map; absent funder_type = 0.
+#   2. Add the resulting integer to the per-criterion score named in
+#      applies_to BEFORE multiplying by that criterion's weight.
+#   3. Clamp the adjusted per-criterion score to [0, cap].
+funder_type_bonus:
+  method: funder_preference
+  field: funder_type
+  map:
+    ukri-council: +10
+    innovate-uk: +10
+    nihr: +8
+    dsit: +8
+    dasa: +8
+    dstl: +6
+    uk-gov-department: +5
+    devolved-gov: +5
+    charitable-foundation: 0
+    social-impact-investor: 0
+    accelerator: -5
+    corporate-vc: -10
+    eu-programme: -5
+    international: -10
+    other: 0
+  cap: 100
+  applies_to: eligibility_fit
+
+# geography_bonus is an additive adjustment, applied identically.
+# Encourages programmes available across the UK over single-region
+# programmes that may exclude project sites in other nations.
+geography_bonus:
+  method: geography_preference
+  field: evidence.geography
+  map:
+    uk-wide: +5
+    england: 0
+    scotland: 0
+    wales: 0
+    northern-ireland: 0
+    london: 0
+    north-of-england: 0
+    midlands: 0
+    south-of-england: 0
+    multi-region: 0
+    international: -10
+  cap: 100
+  applies_to: eligibility_fit

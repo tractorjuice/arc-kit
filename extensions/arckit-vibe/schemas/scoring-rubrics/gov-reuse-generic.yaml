@@ -1,0 +1,123 @@
+# Generic scoring rubric for arckit-gov-reuse
+#
+# Consumed by the /arckit:gov-reuse orchestrator. Computes a weighted
+# reusability score from the Evidence subtree returned by
+# arckit-gov-reuse-reader, combined with a project_profile derived from
+# the project's requirements (language preferences, framework hints).
+#
+# The rubric is data, not prompt — scoring is deterministic and not
+# subject to prompt injection from reader-tier inputs (untrusted
+# READMEs, repo descriptions, commit messages).
+#
+# Total possible weighted score: 100.
+# Per-criterion scores are normalised to [0, 100] before weighting.
+
+name: gov-reuse-generic
+version: 1
+weights:
+  license_compatibility: 25
+  code_quality: 20
+  documentation: 20
+  tech_stack_alignment: 20
+  activity_maintenance: 15
+
+scoring:
+  # license_compatibility: can we legally reuse it? Permissive >> copyleft.
+  license_compatibility:
+    method: map
+    field: evidence.licence
+    map:
+      OGL-v3: 100
+      OGL-v2: 95
+      MIT: 100
+      Apache-2.0: 100
+      BSD-3-Clause: 95
+      BSD-2-Clause: 95
+      ISC: 95
+      MPL-2.0: 75
+      LGPL-3.0: 60
+      LGPL-2.1: 55
+      GPL-3.0: 45
+      GPL-2.0: 40
+      AGPL-3.0: 25
+      CC-BY-4.0: 80
+      CC0-1.0: 100
+      Unlicense: 90
+      Proprietary: 0
+      Unlicensed: 0
+      Unknown: 20
+    when_missing: 20
+
+  # code_quality: production-readiness signals from has_tests + has_ci +
+  # archived flag. Each True boolean adds to a base score; archived
+  # downgrades.
+  code_quality:
+    method: boolean_composite
+    base: 30
+    components:
+      - field: evidence.has_tests
+        when_true: +35
+        when_false: 0
+      - field: evidence.has_ci
+        when_true: +25
+        when_false: 0
+      - field: evidence.archived
+        when_true: -40
+        when_false: +10
+    cap: 100
+    when_missing: 50
+
+  # documentation: README + comprehensive docs.
+  documentation:
+    method: boolean_composite
+    base: 20
+    components:
+      - field: evidence.has_readme
+        when_true: +30
+        when_false: -20
+      - field: evidence.has_docs
+        when_true: +50
+        when_false: 0
+    cap: 100
+    when_missing: 50
+
+  # tech_stack_alignment: does the candidate's language match the project's
+  # preferred languages? Sub-component within the criterion.
+  tech_stack_alignment:
+    method: tech_alignment_composite
+    components:
+      - name: language_match
+        field: evidence.language
+        against: project_profile.preferred_languages
+        match_score: 100
+        compatible_score: 60
+        miss_score: 20
+        # The orchestrator interprets "compatible" via a small static
+        # table:
+        #   javascript ↔ typescript = compatible
+        #   python ↔ python = match (no other compatibility)
+        #   java ↔ kotlin/scala = compatible
+        weight: 0.6
+      - name: framework_overlap
+        method: jaccard_overlap
+        field: evidence.framework_hints
+        against: project_profile.framework_hints
+        scale: 100
+        weight: 0.4
+        when_missing: 50
+    when_missing: 50
+
+  # activity_maintenance: recency-weighted score from last_commit_iso.
+  # Computed by the orchestrator as days since last commit.
+  activity_maintenance:
+    method: recency_band
+    field: evidence.last_commit_iso
+    archived_field: evidence.archived
+    archived_score: 5
+    bands:
+      - { max_days_ago: 90,    score: 100 }
+      - { max_days_ago: 365,   score: 80 }
+      - { max_days_ago: 730,   score: 50 }
+      - { max_days_ago: 1095,  score: 25 }
+      - { max_days_ago: null,  score: 10 }
+    when_missing: 40

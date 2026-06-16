@@ -1,0 +1,18 @@
+// Override for skill reference files (Mermaid, Wardley, PlantUML)
+// Adapted from third-party documentation — relaxed rules
+{
+  "config": {
+    // Allow heading level increments (reference docs jump levels)
+    "MD001": false,
+    // Allow multiple consecutive blank lines
+    "MD012": false,
+    // Allow no-space-after-hash (reference formatting)
+    "MD018": false,
+    // Allow blanks-around-headings
+    "MD022": false,
+    // Code fence language not required (many plain text examples)
+    "MD040": false,
+    // Allow images without alt text (third-party reference content)
+    "MD045": false
+  }
+}

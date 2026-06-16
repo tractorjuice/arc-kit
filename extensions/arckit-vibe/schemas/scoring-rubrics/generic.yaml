@@ -1,0 +1,114 @@
+# Generic scoring rubric for datascout
+#
+# Consumed by arckit-datascout (orchestrator). Computes a weighted score
+# from the Evidence subtree returned by arckit-datascout-reader. The
+# rubric is data, not prompt — scoring is deterministic and not subject
+# to prompt injection from the reader-tier inputs.
+#
+# Total possible weighted score: 100.
+# Per-criterion scores are normalised to [0, 100] before weighting.
+
+name: generic
+version: 1
+weights:
+  requirements_fit: 25
+  data_quality: 20
+  licence_and_cost: 15
+  api_quality: 15
+  compliance: 15
+  reliability: 10
+
+scoring:
+  # requirements_fit is computed by the orchestrator from the
+  # data_categories_supported overlap with the requirement's data needs;
+  # rubric does not score it directly.
+  requirements_fit:
+    method: jaccard_overlap
+    field: evidence.data_categories_supported
+    against: requirement.data_categories
+    scale: 100
+
+  data_quality:
+    method: composite
+    components:
+      - field: evidence.refresh_cadence
+        map:
+          real-time: 100
+          hourly: 90
+          daily: 80
+          weekly: 60
+          monthly: 40
+          quarterly: 25
+          annual: 15
+          ad-hoc: 30
+          static: 20
+
+  licence_and_cost:
+    method: composite
+    components:
+      - field: evidence.licence_type
+        map:
+          OGL-v3: 100
+          OGL-v2: 90
+          CC0-1.0: 100
+          CC-BY-4.0: 90
+          MIT: 95
+          Apache-2.0: 95
+          BSD-3-Clause: 95
+          GPL-3.0: 70
+          AGPL-3.0: 60
+          Freemium: 70
+          Commercial: 50
+          Proprietary: 40
+          Unknown: 30
+      - field: evidence.pricing_model
+        map:
+          open-data: 100
+          free: 95
+          freemium: 75
+          subscription: 50
+          usage-based: 55
+          per-seat: 45
+          enterprise-quote: 30
+
+  api_quality:
+    method: composite
+    components:
+      - field: evidence.auth_required
+        when_true:
+          field: evidence.auth_method
+          map:
+            api-key: 80
+            oauth2: 90
+            mtls: 95
+            basic: 60
+            ip-allowlist: 50
+            none: 0
+        when_false: 70
+
+  compliance:
+    method: certifications_bonus
+    base: 30
+    field: evidence.certifications
+    bonuses:
+      ISO27001: 20
+      SOC2-Type2: 20
+      Cyber-Essentials-Plus: 15
+      OGL-v3: 5
+      OGL-v2: 5
+      G-Cloud-listed: 10
+      DOS-listed: 10
+      GDPR-compliant-asserted: 10
+      NCSC-CAF-aligned-asserted: 10
+    cap: 100
+
+  reliability:
+    method: rate_limit_score
+    field: evidence.rate_limit_per_minute
+    bands:
+      - { min: 0,    max: 10,     score: 20 }
+      - { min: 11,   max: 60,     score: 40 }
+      - { min: 61,   max: 600,    score: 70 }
+      - { min: 601,  max: 6000,   score: 90 }
+      - { min: 6001, max: null,   score: 100 }
+    when_missing: 50
