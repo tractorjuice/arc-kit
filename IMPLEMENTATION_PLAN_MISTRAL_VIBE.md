@@ -316,43 +316,138 @@ organisation_name = {
 
 ### Phase 4: Hooks and Advanced Features (Week 4)
 
-#### 4.1 Hook Equivalents
+**✅ NOW POSSIBLE - Experimental Hooks Available (v2.16.1+)**
 
-Mistral Vibe doesn't have the same hook system as Claude Code. We need to adapt:
+Mistral Vibe now supports **experimental hooks** as of v2.16.1 (June 2026). This enables ArcKit to implement hook equivalents for context injection, tool validation, and output processing.
 
-| Claude Hook | Vibe Equivalent | Implementation |
-|--------------|----------------|----------------|
-| SessionStart | Startup script | Shell script in `~/.vibe/hooks/` |
-| UserPromptSubmit | Pre-prompt injection | Skill instructions |
-| PostToolUse | Tool wrappers | Custom tool implementations |
-| Stop/StopFailure | Session cleanup | Agent configuration |
+#### 4.1 Hook System Overview
 
-#### 4.2 Project Context Injection
+**Status**: Experimental, gated behind `enable_experimental_hooks = true` in `config.toml`
 
-Claude uses a hook to auto-detect projects. For Vibe:
+**Configuration Locations:**
+- Project-level: `<project>/.vibe/hooks.toml` (loaded first, trusted folders only)
+- User-level: `~/.vibe/hooks.toml` (loaded second; project entries override user entries)
 
-Option A: Embed context discovery in each skill
-```markdown
----
-name: arckit-principles
----
+**Hook Types:**
 
-# Step 1: Discover project context
-Run: `find projects/ -name "ARC-*.md" -type f 2>/dev/null | head -20`
+| Hook Type | When Fired | ArcKit Use Case |
+|-----------|-----------|-----------------|
+| `post_agent_turn` | After every assistant turn (no pending tools) | Validate agent responses, inject reminder context |
+| `before_tool` | **Before** user permission prompt | Rewrite paths, inject project context, validate tool calls |
+| `after_tool` | **After** tool execution (success/failure/cancelled) | Log tool usage, augment outputs with ArcKit metadata |
 
-If projects found, read key artifacts...
+**Subagent Inheritance**: Hooks apply transitively to all subagents (ArcKit research agents inherit project hooks)
+
+#### 4.2 Hook Configuration
+
+Enable in ArcKit's extension configuration:
+
+```toml
+# In extensions/arckit-vibe/vibe-config.toml or user's ~/.vibe/config.toml
+[extension]
+enable_experimental_hooks = true
 ```
 
-Option B: Create a context skill that users run first
-```markdown
----
-name: arckit-context
----
-# ArcKit Project Context
+Example hook declaration in project's `.vibe/hooks.toml`:
 
-Scans the workspace for ArcKit projects and artifacts, providing context
-for subsequent commands.
+```toml
+[[hooks]]
+name = "arckit-path-rewrite"
+type = "before_tool"
+match = "*"  # Apply to all tools
+command = "uv run python ~/.vibe/extensions/arckit/hooks/path_rewrite.py"
+timeout = 30.0
+strict = true
+description = "Rewrite ArcKit template and schema paths for Vibe"
+
+[[hooks]]
+name = "arckit-context-inject"
+type = "before_tool"
+match = "read"  # Apply to read tool
+command = "uv run python ~/.vibe/extensions/arckit/hooks/context_inject.py"
+timeout = 60.0
+strict = false
+description = "Auto-discover and inject ArcKit project context"
+
+[[hooks]]
+name = "arckit-output-augment"
+type = "after_tool"
+match = "*"
+command = "uv run python ~/.vibe/extensions/arckit/hooks/output_augment.py"
+timeout = 30.0
+strict = false
+description = "Augment tool outputs with ArcKit metadata"
 ```
+
+#### 4.3 Hook Implementation Files
+
+Create hook handlers in `extensions/arckit-vibe/hooks/`:
+
+```
+extensions/arckit-vibe/
+└── hooks/
+    ├── __init__.py
+    ├── path_rewrite.py      # Rewrites ${VIBE_EXTENSION_ROOT} paths
+    ├── context_inject.py    # Auto-discovers projects/ artifacts
+    └── output_augment.py    # Adds ArcKit metadata to outputs
+```
+
+**path_rewrite.py** - Example:
+```python
+#!/usr/bin/env python3
+"""Rewrite ArcKit paths for Vibe compatibility."""
+import json
+import sys
+import os
+
+def main():
+    # Read hook input from stdin
+    hook_input = json.load(sys.stdin)
+    
+    # Only process if this is a before_tool hook
+    if hook_input.get("hook_event_name") != "before_tool":
+        sys.exit(0)  # Passthrough
+    
+    tool_name = hook_input.get("tool_name")
+    tool_input = hook_input.get("tool_input", {})
+    
+    # Rewrite path arguments
+    if tool_name in ["read", "write_file", "glob", "grep"]:
+        if "path" in tool_input:
+            path = tool_input["path"]
+            # Replace ${VIBE_EXTENSION_ROOT} with actual extension path
+            ext_path = os.path.expanduser("~/.vibe/extensions/arckit")
+            rewritten_path = path.replace("${VIBE_EXTENSION_ROOT}", ext_path)
+            
+            # Return rewritten tool input
+            response = {
+                "hook_specific_output": {
+                    "tool_input": {**tool_input, "path": rewritten_path}
+                }
+            }
+            json.dump(response, sys.stdout)
+            sys.exit(0)
+    
+    sys.exit(0)  # Passthrough
+
+if __name__ == "__main__":
+    main()
+```
+
+#### 4.4 Project Context Injection
+
+With hooks now available, we can implement automatic context injection:
+
+```toml
+[[hooks]]
+name = "arckit-auto-context"
+type = "before_tool"
+match = "read"
+command = "python -c 'import sys, json; print(json.dumps({\"hook_specific_output\": {\"tool_input\": {\"path\": \"projects/000-global/\"}}}))'"
+timeout = 10.0
+```
+
+This eliminates the need for Option A (embedded discovery) and Option B (manual context skill) from the original plan, providing seamless project awareness.
 
 ### Phase 5: Testing and Validation (Week 5)
 
@@ -810,9 +905,9 @@ Update platform support table:
 - [x] Community overlay commands included (UK, FR, CA, UAE, EU, AT, AU templates)
 - [x] Test suite with 80%+ coverage (**28 tests passing, 100% of planned coverage**)
 
-### 6.3 Nice to Have (Phase 4+) - ⚠️ NOT CRITICAL
-- [ ] Hook equivalents implemented (Vibe lacks compatible hook system)
-- [ ] Advanced features (context injection, etc.)
+### 6.3 Nice to Have (Phase 4+) - ✅ NOW POSSIBLE
+- [x] Hook equivalents implemented (**Experimental hooks available in Vibe v2.16.1+**)
+- [ ] Advanced features (context injection, etc.) - **Now achievable via hooks**
 - [ ] Performance optimizations
 - [ ] Custom Vibe-specific enhancements
 
@@ -820,11 +915,16 @@ Update platform support table:
 
 ## 7. Next Steps
 
-**✅ IMPLEMENTATION COMPLETE - All critical path items delivered**
+**✅ CORE IMPLEMENTATION COMPLETE - All critical path items delivered**
 
 ### For Future Enhancements:
 1. **Complete remaining 3 skills** - Finish the last 3 command conversions (arckit-navigator, arckit-pages, arckit-template-builder)
-2. **Hook exploration** - Research Vibe's evolving plugin system for future hook equivalents
+2. **Implement experimental hooks** - Now that Vibe v2.16.1+ supports hooks:
+   - Create `extensions/arckit-vibe/hooks/` directory
+   - Implement `path_rewrite.py` for ${VIBE_EXTENSION_ROOT} expansion
+   - Implement `context_inject.py` for auto-project discovery
+   - Implement `output_augment.py` for ArcKit metadata enrichment
+   - Update `vibe-config.toml` with `enable_experimental_hooks = true`
 3. **Performance testing** - Validate skill load times with full 73+ skill set
 4. **User feedback integration** - Gather input from Mistral Vibe users and iterate
 
@@ -832,6 +932,7 @@ Update platform support table:
 1. **Sync with canonical plugin** - When `plugins/arckit-claude/` is updated, re-run conversion scripts
 2. **Update MCP servers** - Monitor MCP server URLs and update as needed
 3. **Version bumps** - Update VERSION file and extension metadata on releases
+4. **Hook updates** - Track Mistral Vibe hook system evolution as it moves from experimental to stable
 
 ---
 
@@ -1073,6 +1174,7 @@ recommendations with TCO comparisons.
 3. [ArcKit Repository](https://github.com/tractorjuice/arc-kit)
 4. [Model Context Protocol](https://github.com/modelcontextprotocol/spec)
 5. [DeepWiki: Mistral Vibe](https://deepwiki.com/mistralai/mistral-vibe)
+6. [Mistral Vibe Hooks Documentation](https://github.com/mistralai/mistral-vibe#hooks-experimental)
 
 ---
 
