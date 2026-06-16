@@ -449,6 +449,406 @@ timeout = 10.0
 
 This eliminates the need for Option A (embedded discovery) and Option B (manual context skill) from the original plan, providing seamless project awareness.
 
+#### 4.5 Command-Specific Hook Dependencies
+
+**Critical Finding**: Many ArcKit commands rely on hooks that don't exist in Vibe yet. These must be implemented for full functionality.
+
+**Commands with Hook Dependencies:**
+
+| Command (Claude) | Vibe Skill | Hook Used | Hook Type | Priority |
+|------------------|------------|-----------|-----------|----------|
+| `/arckit:wardley` | `arckit-wardley.md` | `validate-wardley-math.mjs` | Stop | 🔴 HIGH |
+| `/arckit:wardley.value-chain` | `arckit-wardley.value-chain.md` | `validate-wardley-math.mjs` | Stop | 🔴 HIGH |
+| `/arckit:wardley` (all variants) | `arckit-wardley*.md` | `tidy-wardley-labels.mjs` | PostToolUse | 🔴 HIGH |
+| `/arckit:health` | `arckit-health.md` | `graph-inject.mjs` | UserPromptSubmit | 🔴 HIGH |
+| `/arckit:traceability` | `arckit-traceability.md` | `graph-inject.mjs` | UserPromptSubmit | 🔴 HIGH |
+| `/arckit:analyze` | `arckit-analyze.md` | `graph-inject.mjs` | UserPromptSubmit | 🟡 MEDIUM |
+| `/arckit:search` | `arckit-search.md` | `graph-inject.mjs` | UserPromptSubmit | 🟡 MEDIUM |
+| `/arckit:impact` | `arckit-impact.md` | `graph-inject.mjs` | UserPromptSubmit | 🟡 MEDIUM |
+| `/arckit:navigator` | `arckit-navigator.md` | `graph-inject.mjs` | UserPromptSubmit | 🟡 MEDIUM |
+| `/arckit:graph-report` | `arckit-graph-report.md` | `graph-inject.mjs` | UserPromptSubmit | 🟡 MEDIUM |
+| `/arckit:pages` | `arckit-pages.md` | `sync-guides.mjs` | UserPromptSubmit | 🟡 MEDIUM |
+
+**Hook Reference Count in Vibe Skills:**
+- `arckit-traceability.md`: 25 references
+- `arckit-pages.md`: 12 references
+- `arckit-analyze.md`: 11 references
+- `arckit-navigator.md`: 9 references
+- `arckit-graph-report.md`: 8 references
+- `arckit-health.md`: 7 references
+- `arckit-search.md`: 2 references
+- `arckit-impact.md`: 1 reference
+- `arckit-wardley.md`: 2 references
+
+#### 4.6 Hook Implementation Priority
+
+**🔴 HIGH PRIORITY (Blockers - Commands won't work correctly without these)**
+
+1. **`graph-inject.py`** - Replaces `graph-inject.mjs`
+   - Type: `before_tool`
+   - Matcher: `/arckit-(health|traceability|analyze|search|impact|navigator|graph-report)`
+   - Purpose: Builds dependency graph of all ARC-* artifacts before command execution
+   - Impact: Required for 8 commands to function correctly
+
+2. **`tidy-wardley-labels.py`** - Replaces `tidy-wardley-labels.mjs`
+   - Type: `after_tool`
+   - Matcher: `write` to paths containing `wardley-maps/`
+   - Purpose: Auto-tidies Mermaid Wardley map component labels to prevent overlap
+   - Impact: Required for Wardley map visual quality
+
+3. **`validate-wardley-math.py`** - Replaces `validate-wardley-math.mjs`
+   - Type: `after_tool` (or `post_agent_turn` for validation)
+   - Matcher: `write` to paths containing `wardley-maps/`
+   - Purpose: Validates Wardley map mathematical consistency (visibility, evolution, dependencies)
+   - Impact: Ensures Wardley map correctness
+
+**🟡 MEDIUM PRIORITY (Enhancements - Improve functionality)**
+
+4. **`arckit-context-inject.py`** - Replaces `arckit-context.mjs`
+   - Type: `before_tool`
+   - Matcher: `*` (all tools)
+   - Purpose: Auto-discovers projects/ artifacts and injects context
+   - Impact: Reduces manual scanning in all commands
+
+5. **`provenance-stamp.py`** - Replaces `provenance-stamp.mjs`
+   - Type: `after_tool`
+   - Matcher: `write` to `projects/`
+   - Purpose: Stamps provenance metadata (timestamp, agent, command) on artifact writes
+   - Impact: Enables audit trail and traceability
+
+6. **`file-protection.py`** - Replaces `file-protection.mjs`
+   - Type: `before_tool`
+   - Matcher: `write`
+   - Purpose: Blocks writes to sensitive files (.env, credentials, private keys)
+   - Impact: Security protection
+
+7. **`secret-detection.py`** - Replaces `secret-detection.mjs`
+   - Type: `before_tool`
+   - Matcher: `*` (all prompts)
+   - Purpose: Scans user prompts for API keys, tokens, passwords
+   - Impact: Security protection
+
+8. **`update-manifest.py`** - Replaces `update-manifest.mjs`
+   - Type: `after_tool`
+   - Matcher: `write` to `projects/`
+   - Purpose: Updates `docs/manifest.json` with artifact metadata
+   - Impact: Enables dashboard and navigation features
+
+9. **`sync-guides.py`** - Replaces `sync-guides.mjs`
+   - Type: `before_tool`
+   - Matcher: `/arckit:pages`
+   - Purpose: Synchronizes guide documents from templates
+   - Impact: Keeps generated pages in sync with templates
+
+**🟢 LOW PRIORITY (Nice to have)**
+
+10. **`telemetry.py`** - Replaces `telemetry.mjs`
+    - Type: `after_tool`
+    - Matcher: `*`
+    - Purpose: Records tool usage telemetry
+    - Impact: Usage analytics
+
+11. **`session-learner.py`** - Partial replacement for session learning
+    - Type: `post_agent_turn`
+    - Matcher: `*`
+    - Purpose: Logs session for learning/analysis
+    - Impact: Session history and analytics
+
+#### 4.7 Hook Implementation Files
+
+Create the following files in `extensions/arckit-vibe/hooks/`:
+
+```
+extensions/arckit-vibe/
+└── hooks/
+    ├── __init__.py                    # Shared utilities
+    ├── graph-inject.py                 # 🔴 HIGH - Dependency graph builder
+    ├── tidy-wardley-labels.py          # 🔴 HIGH - Wardley label tidier
+    ├── validate-wardley-math.py         # 🔴 HIGH - Wardley validation
+    ├── arckit-context-inject.py       # 🟡 MEDIUM - Context auto-injection
+    ├── provenance-stamp.py             # 🟡 MEDIUM - Provenance stamping
+    ├── file-protection.py              # 🟡 MEDIUM - File write protection
+    ├── secret-detection.py             # 🟡 MEDIUM - Secret scanning
+    ├── update-manifest.py              # 🟡 MEDIUM - Manifest updates
+    ├── sync-guides.py                 # 🟡 MEDIUM - Guide synchronization
+    ├── telemetry.py                   # 🟢 LOW - Usage telemetry
+    └── README.md                      # Hook documentation
+```
+
+#### 4.8 Hook Configuration
+
+Add to `extensions/arckit-vibe/vibe-config.toml`:
+
+```toml
+[extension]
+enable_experimental_hooks = true
+
+[extension.hooks]
+# Path to hook scripts directory
+hooks_dir = "hooks"
+```
+
+Create `extensions/arckit-vibe/.vibe/hooks.toml` for project-level hooks:
+
+```toml
+# ArcKit Hooks Configuration for Mistral Vibe
+# Enable with: enable_experimental_hooks = true in config.toml
+
+# ============================================================================
+# HIGH PRIORITY HOOKS - Required for core functionality
+# ============================================================================
+
+[[hooks]]
+name = "arckit-graph-inject"
+type = "before_tool"
+match = "arckit-health|arckit-traceability|arckit-analyze|arckit-search|arckit-impact|arckit-navigator|arckit-graph-report"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/graph-inject.py"
+timeout = 30.0
+strict = false
+description = "Build dependency graph for ArcKit analysis commands"
+
+[[hooks]]
+name = "arckit-tidy-wardley-labels"
+type = "after_tool"
+match = "write"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/tidy-wardley-labels.py"
+timeout = 10.0
+strict = false
+description = "Auto-tidy Wardley map Mermaid component labels"
+
+[[hooks]]
+name = "arckit-validate-wardley-math"
+type = "after_tool"
+match = "write"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/validate-wardley-math.py"
+timeout = 10.0
+strict = false
+description = "Validate Wardley map mathematical consistency"
+
+# ============================================================================
+# MEDIUM PRIORITY HOOKS - Enhancements
+# ============================================================================
+
+[[hooks]]
+name = "arckit-context-inject"
+type = "before_tool"
+match = "*"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/arckit-context-inject.py"
+timeout = 15.0
+strict = false
+description = "Auto-discover and inject ArcKit project context"
+
+[[hooks]]
+name = "arckit-provenance-stamp"
+type = "after_tool"
+match = "write"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/provenance-stamp.py"
+timeout = 5.0
+strict = false
+description = "Stamp provenance metadata on artifact writes"
+
+[[hooks]]
+name = "arckit-file-protection"
+type = "before_tool"
+match = "write"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/file-protection.py"
+timeout = 5.0
+strict = true
+description = "Block writes to sensitive files"
+
+[[hooks]]
+name = "arckit-secret-detection"
+type = "before_tool"
+match = "*"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/secret-detection.py"
+timeout = 5.0
+strict = false
+description = "Scan prompts for secret patterns"
+
+[[hooks]]
+name = "arckit-update-manifest"
+type = "after_tool"
+match = "write"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/update-manifest.py"
+timeout = 5.0
+strict = false
+description = "Update manifest.json with artifact metadata"
+
+[[hooks]]
+name = "arckit-sync-guides"
+type = "before_tool"
+match = "arckit-pages"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/sync-guides.py"
+timeout = 15.0
+strict = false
+description = "Synchronize guide documents from templates"
+
+# ============================================================================
+# LOW PRIORITY HOOKS - Nice to have
+# ============================================================================
+
+[[hooks]]
+name = "arckit-telemetry"
+type = "after_tool"
+match = "*"
+command = "python ${VIBE_EXTENSION_ROOT}/hooks/telemetry.py"
+timeout = 3.0
+strict = false
+description = "Record tool usage telemetry"
+```
+
+#### 4.9 Example Hook Implementation: graph-inject.py
+
+```python
+#!/usr/bin/env python3
+"""
+ArcKit Graph Inject Hook for Mistral Vibe
+
+Builds a dependency graph of all ARC-* artifacts in the workspace.
+This replaces the Claude Code graph-inject.mjs hook.
+
+Triggered by: before_tool for analysis commands
+Expected input: stdin JSON with hook_event_name, cwd, etc.
+Expected output: stdout JSON with hook_specific_output containing context
+"""
+
+import json
+import sys
+import os
+from pathlib import Path
+from glob import glob
+
+
+def scan_arc_artifacts(cwd: str) -> dict:
+    """Scan for all ARC-* artifacts in the workspace."""
+    projects_dir = Path(cwd) / "projects"
+    artifacts = {}
+    
+    if not projects_dir.exists():
+        return artifacts
+    
+    # Find all ARC-* files
+    for arc_file in Path(projects_dir).rglob("ARC-*.md"):
+        project_id = arc_file.parts[arc_file.parts.index("projects") + 1]
+        doc_type = arc_file.stem.split("-")[1]  # e.g., "REQ" from "ARC-001-REQ-001-v1.0"
+        
+        if project_id not in artifacts:
+            artifacts[project_id] = []
+        
+        artifacts[project_id].append({
+            "path": str(arc_file),
+            "type": doc_type,
+            "filename": arc_file.name
+        })
+    
+    return artifacts
+
+
+def build_dependency_graph(artifacts: dict) -> dict:
+    """Build dependency graph from artifacts."""
+    graph = {"nodes": {}, "edges": []}
+    
+    for project_id, docs in artifacts.items():
+        for doc in docs:
+            doc_id = doc["filename"].replace(".md", "")
+            graph["nodes"][doc_id] = {
+                "type": doc["type"],
+                "path": doc["path"],
+                "project": project_id
+            }
+            
+            # Extract dependencies from document content
+            # (Simplified - full implementation would read file content)
+            
+    return graph
+
+
+def main():
+    """Main hook entry point."""
+    try:
+        # Read hook input from stdin
+        hook_input = json.load(sys.stdin)
+        
+        # Only process before_tool events
+        if hook_input.get("hook_event_name") != "before_tool":
+            sys.exit(0)
+        
+        cwd = hook_input.get("cwd", os.getcwd())
+        tool_name = hook_input.get("tool_name", "")
+        
+        # Only process for specific ArcKit commands
+        arckit_commands = [
+            "arckit-health", "arckit-traceability", "arckit-analyze",
+            "arckit-search", "arckit-impact", "arckit-navigator", "arckit-graph-report"
+        ]
+        
+        if not any(cmd in tool_name for cmd in arckit_commands):
+            sys.exit(0)
+        
+        # Build artifact graph
+        artifacts = scan_arc_artifacts(cwd)
+        graph = build_dependency_graph(artifacts)
+        
+        # Return context for the command
+        response = {
+            "hook_specific_output": {
+                "additional_context": json.dumps({
+                    "arckit_artifacts": artifacts,
+                    "arckit_dependency_graph": graph
+                })
+            }
+        }
+        
+        json.dump(response, sys.stdout)
+        sys.exit(0)
+        
+    except Exception as e:
+        # Log error to stderr (visible in debug console)
+        print(f"Graph inject hook error: {e}", file=sys.stderr)
+        sys.exit(0)  # Non-zero exit would block, so exit 0 with empty output
+
+
+if __name__ == "__main__":
+    main()
+```
+
+#### 4.10 Skill Updates Required
+
+For each skill that currently references hooks, add fallback logic:
+
+**Pattern to follow:**
+```markdown
+> **Note**: If experimental hooks are enabled (see configuration), this 
+> functionality is handled automatically. If hooks are disabled, the following 
+> manual steps apply:
+```
+
+**Skills requiring updates:**
+1. `arckit-health.md` - Add fallback for missing graph-inject hook
+2. `arckit-traceability.md` - Add fallback for missing graph-inject hook
+3. `arckit-analyze.md` - Add fallback for missing graph-inject hook
+4. `arckit-search.md` - Add fallback for missing graph-inject hook
+5. `arckit-impact.md` - Add fallback for missing graph-inject hook
+6. `arckit-navigator.md` - Add fallback for missing graph-inject hook
+7. `arckit-graph-report.md` - Add fallback for missing graph-inject hook
+8. `arckit-pages.md` - Add fallback for missing sync-guides hook
+9. `arckit-wardley.md` - Update hook references to note experimental status
+
+Example update for `arckit-health.md`:
+
+```markdown
+## Process
+
+### Steps 1-3: Pre-processed by Hook (if available)
+
+> **Note**: If experimental hooks are enabled in your Vibe configuration 
+> (`enable_experimental_hooks = true`), the **Health Pre-processor Hook** 
+> (`arckit-graph-inject`) automatically completes Steps 1-3. The hook's context 
+> contains all findings — use them directly and skip to Step 4.
+>
+> If hooks are disabled or not available, proceed with manual scanning below.
+```
+
 ### Phase 5: Testing and Validation (Week 5)
 
 #### 5.1 Test Structure
@@ -918,21 +1318,37 @@ Update platform support table:
 **✅ CORE IMPLEMENTATION COMPLETE - All critical path items delivered**
 
 ### For Future Enhancements:
-1. **Complete remaining 3 skills** - Finish the last 3 command conversions (arckit-navigator, arckit-pages, arckit-template-builder)
-2. **Implement experimental hooks** - Now that Vibe v2.16.1+ supports hooks:
-   - Create `extensions/arckit-vibe/hooks/` directory
-   - Implement `path_rewrite.py` for ${VIBE_EXTENSION_ROOT} expansion
-   - Implement `context_inject.py` for auto-project discovery
-   - Implement `output_augment.py` for ArcKit metadata enrichment
-   - Update `vibe-config.toml` with `enable_experimental_hooks = true`
-3. **Performance testing** - Validate skill load times with full 73+ skill set
-4. **User feedback integration** - Gather input from Mistral Vibe users and iterate
+
+#### 🔴 HIGH PRIORITY - Hook Implementation (Blockers)
+1. **Implement HIGH priority hooks** (required for core functionality):
+   - `graph-inject.py` - For health, traceability, analyze, search, impact, navigator, graph-report commands
+   - `tidy-wardley-labels.py` - For Wardley map label auto-tidying
+   - `validate-wardley-math.py` - For Wardley map validation
+2. **Update 9 skills with hook fallback logic** - See Section 4.10 for details
+3. **Complete remaining 3 skills** - arckit-navigator, arckit-pages, arckit-template-builder
+
+#### 🟡 MEDIUM PRIORITY - Enhancements
+4. **Implement MEDIUM priority hooks**:
+   - `arckit-context-inject.py` - Auto-discover projects/ artifacts
+   - `provenance-stamp.py` - Stamp provenance metadata
+   - `file-protection.py` - Block sensitive file writes
+   - `secret-detection.py` - Scan for secrets in prompts
+   - `update-manifest.py` - Update manifest.json
+   - `sync-guides.py` - Synchronize guides
+5. **Performance testing** - Validate skill load times with full 73+ skill set
+6. **User feedback integration** - Gather input from Mistral Vibe users and iterate
+
+#### 🟢 LOW PRIORITY - Nice to Have
+7. **Implement LOW priority hooks**:
+   - `telemetry.py` - Usage analytics
+   - `session-learner.py` - Session logging
 
 ### Maintenance:
 1. **Sync with canonical plugin** - When `plugins/arckit-claude/` is updated, re-run conversion scripts
 2. **Update MCP servers** - Monitor MCP server URLs and update as needed
 3. **Version bumps** - Update VERSION file and extension metadata on releases
-4. **Hook updates** - Track Mistral Vibe hook system evolution as it moves from experimental to stable
+4. **Hook updates** - Track Mistral Vibe hook system evolution from experimental to stable
+5. **Hook compatibility** - Test all hooks after each Vibe CLI update
 
 ---
 
