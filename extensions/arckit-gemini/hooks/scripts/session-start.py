@@ -18,7 +18,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from hook_utils import (
     parse_hook_input, is_dir, is_file, read_text,
-    list_dir, mtime_ms, output_context,
+    list_dir, list_files_recursive, mtime_ms, output_context,
 )
 
 data = parse_hook_input()
@@ -86,15 +86,12 @@ if is_dir(projects_dir):
 
         # Compare external files against newest artifact
         new_ext_files = []
-        for f in list_dir(external_dir):
-            fp = os.path.join(external_dir, f)
-            if not is_file(fp):
+        for file_info in list_files_recursive(external_dir):
+            if file_info["name"] == "README.md":
                 continue
-            if f == "README.md":
-                continue
-            ext_mtime = mtime_ms(fp)
+            ext_mtime = mtime_ms(file_info["path"])
             if ext_mtime > newest_artifact:
-                new_ext_files.append(f)
+                new_ext_files.append(file_info["relative_path"])
 
         if new_ext_files:
             ext_alerts += (

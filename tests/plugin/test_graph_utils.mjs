@@ -31,6 +31,7 @@ function makeFixture() {
   mkdirSync(join(projectDir, 'reviews'), { recursive: true });
   mkdirSync(join(projectDir, 'vendors', 'acme', 'reviews'), { recursive: true });
   mkdirSync(join(projectDir, 'external'), { recursive: true });
+  mkdirSync(join(projectDir, 'external', '7. RFI'), { recursive: true });
 
   const globalDir = join(projectsDir, '000-global');
   mkdirSync(globalDir, { recursive: true });
@@ -83,6 +84,7 @@ function makeFixture() {
 
   // External file
   writeFileSync(join(projectDir, 'external', 'spec.api.yaml'), 'openapi: 3.0\n');
+  writeFileSync(join(projectDir, 'external', '7. RFI', 'RFI_CAP_CoreBancario_v1.docx'), 'rfi\n');
 
   // Global PRIN
   writeFileSync(
@@ -247,9 +249,13 @@ test('withExternals lists external/ files', () => {
     const g = scanAllArtifacts(projectsDir, { withExternals: true });
     assert.ok(g.externalFiles);
     const ext = g.externalFiles['001-fixture'];
-    assert.equal(ext.length, 1);
-    assert.equal(ext[0].filename, 'spec.api.yaml');
-    assert.ok(typeof ext[0].mtimeMs === 'number');
+    assert.equal(ext.length, 2);
+    const names = ext.map(f => f.filename).sort();
+    assert.deepEqual(names, [
+      '7. RFI/RFI_CAP_CoreBancario_v1.docx',
+      'spec.api.yaml',
+    ]);
+    assert.ok(ext.every(f => typeof f.mtimeMs === 'number'));
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

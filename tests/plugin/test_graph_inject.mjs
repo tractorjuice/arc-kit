@@ -260,6 +260,57 @@ References BR-001.
   }
 });
 
+test('graph-inject /arckit:health reports nested external files in STALE-EXT', () => {
+  const root = mkdtempSync(join(tmpdir(), 'arckit-health-ext-'));
+  const projectDir = join(root, 'projects', '001-fixture');
+  const nestedExternalDir = join(projectDir, 'external', '7. RFI');
+  mkdirSync(nestedExternalDir, { recursive: true });
+
+  const artifactPath = join(projectDir, 'ARC-001-STKE-v1.0.md');
+  const externalPath = join(nestedExternalDir, 'RFI_CAP_CoreBancario_v1.docx');
+
+  writeFileSync(
+    artifactPath,
+    `# STKE - ARC-001-STKE-v1.0
+
+| Field | Value |
+|---|---|
+| **Document ID** | ARC-001-STKE-v1.0 |
+| **Document Type** | STKE |
+| **Status** | APPROVED |
+| **Created Date** | 2026-01-01 |
+| **Last Modified** | 2026-01-01 |
+
+Stakeholder analysis content.
+`
+  );
+  writeFileSync(externalPath, 'RFI content\n');
+
+  const artifactDate = new Date('2026-01-01T00:00:00Z');
+  const externalDate = new Date('2026-01-02T00:00:00Z');
+  utimesSync(artifactPath, artifactDate, artifactDate);
+  utimesSync(externalPath, externalDate, externalDate);
+
+  try {
+    const { code, stdout, stderr } = runHook('/arckit:health 001', root);
+    assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
+    const out = JSON.parse(stdout);
+    const ctx = out.hookSpecificOutput.additionalContext;
+    const nestedPath = '7. RFI/RFI_CAP_CoreBancario_v1.docx';
+
+    assert.ok(ctx.includes('STALE-EXT'), 'should emit a STALE-EXT finding');
+    assert.ok(ctx.includes(nestedPath), 'should include nested external relative path');
+
+    const parsed = JSON.parse(readFileSync(join(root, 'docs', 'health.json'), 'utf8'));
+    assert.equal(parsed.byType['STALE-EXT'], 1);
+    const finding = parsed.projects[0].findings.find(f => f.rule === 'STALE-EXT');
+    assert.ok(finding, 'health JSON should include STALE-EXT finding');
+    assert.ok(finding.message.includes(nestedPath), 'health JSON should include nested external relative path');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});
+
 test('graph-inject /arckit:health flags REVIEW-OVERDUE and respects STALE_DRAFT_DAYS override', () => {
   const root = mkdtempSync(join(tmpdir(), 'arckit-health-rev-'));
   const projectDir = join(root, 'projects', '001-fixture');
