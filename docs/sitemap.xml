@@ -283,6 +283,12 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/article-viewer.html?a=2026-06-17-arckit-vibe-extension</loc>
+        <lastmod>2026-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/guide-viewer.html</loc>
         <lastmod>2026-05-16</lastmod>
         <changefreq>monthly</changefreq>
