@@ -6,9 +6,9 @@
 name = "arckit"
 version = "5.13.1"
 description = """
-The Enterprise Architecture Governance Harness - 73+ slash commands across 
-strategy, architecture, delivery, and assurance. Enables enterprise architects 
-to manage architecture principles, requirements, vendor evaluation, risk 
+The Enterprise Architecture Governance Harness - 73+ slash commands across
+strategy, architecture, delivery, and assurance. Enables enterprise architects
+to manage architecture principles, requirements, vendor evaluation, risk
 management, and compliance workflows in Mistral Vibe.
 """
 author = "TractorJuice"
@@ -17,15 +17,10 @@ license = "MIT"
 homepage = "https://tractorjuice.github.io/arc-kit/"
 
 [extension.feature_flags]
-# Enable community overlay commands (jurisdiction-specific)
 enable_community_overlays = true
-
-# Enable experimental features
 enable_experimental = false
 
 [extension.mcp]
-# MCP servers bundled with this extension
-# These will be auto-registered when the extension is loaded
 servers = [
     "aws-knowledge",
     "microsoft-learn",
@@ -35,38 +30,33 @@ servers = [
 ]
 
 [extension.agents]
-# Agent configurations to include
-# These are loaded from the agents/ directory
 files = [
-    "arckit-research.toml",
     "arckit-aws-research.toml",
     "arckit-azure-research.toml",
-    "arckit-gcp-research.toml",
-    "arckit-datascout.toml",
+    "arckit-competitors-writer.toml",
     "arckit-datascout-reader.toml",
     "arckit-datascout-writer.toml",
+    "arckit-datascout.toml",
     "arckit-framework.toml",
+    "arckit-gcp-research.toml",
     "arckit-gov-code-search.toml",
     "arckit-gov-landscape.toml",
-    "arckit-gov-reuse.toml",
     "arckit-gov-reuse-reader.toml",
     "arckit-gov-reuse-writer.toml",
-    "arckit-grants.toml",
+    "arckit-gov-reuse.toml",
     "arckit-grants-reader.toml",
     "arckit-grants-writer.toml",
+    "arckit-grants.toml",
+    "arckit-research.toml",
     "arckit-tenders-reader.toml",
-    "arckit-tenders-writer.toml",
-    "arckit-competitors-writer.toml"
+    "arckit-tenders-writer.toml"
 ]
 
 [extension.defaults]
-# Default values for document generation
 organisation_name = ""
 default_classification = "OFFICIAL"
 governance_framework = "Generic"
 classification_scheme = "UK"
-
-# Path configuration
 path_prefix = "${VIBE_EXTENSION_ROOT}"
 templates_dir = ".arckit/templates"
 custom_templates_dir = ".arckit/templates-custom"

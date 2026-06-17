@@ -152,6 +152,17 @@ extensions/arckit-paperclip/hooks/
 extensions/arckit-paperclip/src/data/*
 !extensions/arckit-paperclip/src/data/.gitkeep
 
+# -- extensions/arckit-vibe (generated) --
+extensions/arckit-vibe/agents/
+extensions/arckit-vibe/skills/
+extensions/arckit-vibe/templates/
+extensions/arckit-vibe/docs/guides/
+extensions/arckit-vibe/config/
+extensions/arckit-vibe/schemas/
+extensions/arckit-vibe/references/
+extensions/arckit-vibe/scripts/
+extensions/arckit-vibe/hooks/
+
 # Draft articles (not for version control)
 docs/articles/
 .tmp*

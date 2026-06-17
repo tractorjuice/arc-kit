@@ -174,6 +174,17 @@ def codex_skill_invocation(command_name):
     return f"${codex_skill_name(command_name)}"
 
 
+def vibe_skill_name(command_name):
+    """Return the Vibe skill filename/name for an ArcKit command name."""
+    return f"arckit-{command_name.replace('.', '-')}"
+
+
+def titleize_arckit_name(name):
+    """Return a human-readable ArcKit display name."""
+    stem = name.replace("arckit-", "", 1).replace(".", "-")
+    return "ArcKit " + " ".join(part.capitalize() for part in stem.split("-") if part)
+
+
 EXTENSION_FILE_ACCESS_BLOCK = """\
 **IMPORTANT — Gemini Extension File Access**:
 This command runs as a Gemini CLI extension. The extension directory \
@@ -312,16 +323,18 @@ AGENT_CONFIG = {
     "vibe": {
         "name": "Mistral Vibe",
         "output_dir": "extensions/arckit-vibe/skills",
-        "filename_pattern": "arckit.{name}.md",
-        "format": "markdown",
+        "filename_pattern": "{name}.md",
+        "format": "vibe_skill",
         "path_prefix": "${VIBE_EXTENSION_ROOT}",
         "extension_dir": "extensions/arckit-vibe",
         "arg_placeholder": "${args}",
         "copy_commands_to_extension": False,
-        "copy_agents_to_extension": True,
+        "copy_agents_to_extension": False,
+        "copy_core_skills_to_extension": False,
         "copy_scripts_to_extension": True,
         "copy_references_to_extension": True,
         "copy_schemas_to_extension": True,
+        "clean_output_dir": True,
         "has_context_hook": False,
         "has_sync_guides_hook": False,
     },
@@ -388,7 +401,7 @@ def _copilot_tools_for_prompt(prompt):
 
 
 def format_output(description, prompt, fmt):
-    """Format into target format: 'markdown', 'toml', 'prompt', or 'skill'."""
+    """Format into target format: 'markdown', 'toml', 'prompt', 'skill', or 'vibe_skill'."""
     if fmt == "toml":
         prompt_escaped = prompt.replace("\\", "\\\\").replace('"', '\\"')
         prompt_formatted = '"""\n' + prompt_escaped + '\n"""'
@@ -406,6 +419,8 @@ def format_output(description, prompt, fmt):
             f"---\n\n"
             f"{prompt}\n"
         )
+    elif fmt == "vibe_skill":
+        return f"{prompt}\n"
     else:
         escaped = description.replace("\\", "\\\\").replace('"', '\\"')
         return f'---\ndescription: "{escaped}"\n---\n\n{prompt}\n'
@@ -471,6 +486,9 @@ def convert(commands_dirs, agents_dir):
                     skill_dir = os.path.join(config["output_dir"], dirname)
                     if os.path.isdir(skill_dir):
                         shutil.rmtree(skill_dir)
+        elif config.get("clean_output_dir"):
+            shutil.rmtree(config["output_dir"], ignore_errors=True)
+            os.makedirs(config["output_dir"], exist_ok=True)
 
     agent_map = build_agent_map(agents_dir)
     counts = {agent_id: 0 for agent_id in AGENT_CONFIG}
@@ -579,6 +597,8 @@ def convert(commands_dirs, agents_dir):
                 cmd_fmt = "/arckit-{cmd}"
             elif config["format"] == "skill":
                 cmd_fmt = codex_skill_invocation
+            elif config["format"] == "vibe_skill":
+                cmd_fmt = lambda cmd: f"/{vibe_skill_name(cmd)}"
             else:
                 cmd_fmt = "/arckit:{cmd}"
 
@@ -631,6 +651,25 @@ def convert(commands_dirs, agents_dir):
                     f.write(openai_yaml)
 
                 print(f"  {config['name'] + ':':14s}{source_label} -> {skill_dir}/")
+                counts[agent_id] += 1
+            elif config["format"] == "vibe_skill":
+                skill_name = vibe_skill_name(base_name)
+                content_prompt = format_output(description, rewritten, config["format"])
+                escaped_desc = description.replace('"', '\\"')
+                skill_md = (
+                    f"---\n"
+                    f"name: {skill_name}\n"
+                    f"display_name: {titleize_arckit_name(skill_name)}\n"
+                    f"description: \"{escaped_desc}\"\n"
+                    f"tags: [arckit, architecture, governance]\n"
+                    f"---\n\n"
+                    f"{content_prompt}"
+                )
+                out_filename = config["filename_pattern"].format(name=skill_name)
+                out_path = os.path.join(config["output_dir"], out_filename)
+                with open(out_path, "w", encoding="utf-8") as f:
+                    f.write(skill_md)
+                print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
                 counts[agent_id] += 1
             else:
                 content = format_output(description, rewritten, config["format"])
@@ -729,6 +768,8 @@ def copy_extension_files(plugin_sources):
         # Core-only categories
         for src_rel, dst_rel in core_only_copies:
             if not copy_scripts and src_rel.startswith("scripts/"):
+                continue
+            if src_rel == "skills" and not config.get("copy_core_skills_to_extension", True):
                 continue
             src = os.path.join(core_plugin_dir, src_rel)
             dst = os.path.join(ext_dir, dst_rel)
@@ -1055,6 +1096,191 @@ def generate_agent_toml_files(agents_dir, output_dir, path_prefix=".arckit"):
         count += 1
 
     print(f"  Generated {count} agent .toml files in {output_dir}")
+
+
+VIBE_TOOL_MAP = {
+    "Read": "read_file",
+    "Glob": "glob",
+    "Grep": "grep",
+    "Write": "write_file",
+    "Edit": "edit_file",
+    "MultiEdit": "edit_file",
+    "Bash": "bash",
+    "TodoWrite": "todo",
+    "WebSearch": "web_search",
+    "WebFetch": "web_fetch",
+    "AskUserQuestion": "ask_user_question",
+}
+
+
+def vibe_tool_name(tool_name):
+    """Translate Claude Code tool identifiers to Vibe tool identifiers."""
+    if tool_name.startswith("mcp__plugin_arckit_"):
+        return "mcp_" + tool_name.replace("mcp__plugin_arckit_", "", 1)
+    return VIBE_TOOL_MAP.get(tool_name, tool_name)
+
+
+def toml_string(value):
+    """Return a TOML-safe basic string."""
+    return json.dumps(value or "", ensure_ascii=False)
+
+
+def generate_vibe_agent_toml_files(agents_dir, output_dir, version, path_prefix="${VIBE_EXTENSION_ROOT}"):
+    """Generate Mistral Vibe agent .toml files from Claude agent definitions."""
+    if not os.path.isdir(agents_dir):
+        return []
+
+    shutil.rmtree(output_dir, ignore_errors=True)
+    os.makedirs(output_dir, exist_ok=True)
+    generated = []
+
+    for filename in sorted(os.listdir(agents_dir)):
+        if not (filename.startswith("arckit-") and filename.endswith(".md")):
+            continue
+
+        agent_path = os.path.join(agents_dir, filename)
+        with open(agent_path, "r", encoding="utf-8") as f:
+            content = f.read()
+
+        frontmatter, prompt = extract_frontmatter_and_prompt(content)
+        prompt = rewrite_paths(
+            prompt,
+            {
+                "path_prefix": path_prefix,
+                "project_template_overrides": True,
+            },
+        )
+
+        agent_name = frontmatter.get("name", filename.replace(".md", ""))
+        toml_name = f"{agent_name}.toml"
+        toml_path = os.path.join(output_dir, toml_name)
+        description = frontmatter.get("description", "")
+        max_turns = int(frontmatter.get("maxTurns", 30) or 30)
+        effort = frontmatter.get("effort", "high")
+        model = frontmatter.get("model", "mistral-large-2")
+        if model == "inherit":
+            model = "mistral-large-2"
+        tools = [vibe_tool_name(tool) for tool in frontmatter.get("tools", [])]
+
+        lines = [
+            f"# ArcKit {titleize_arckit_name(agent_name)} Agent",
+            f"# Derived from {agent_path}",
+            "# Part of the ArcKit Enterprise Architecture Governance Harness",
+            "",
+            'agent_type = "subagent"',
+            f"display_name = {toml_string(titleize_arckit_name(agent_name))}",
+            "",
+            f"description = {toml_string(description)}",
+            "",
+            'safety = "safe"',
+            f"max_turns = {max_turns}",
+            f"effort = {toml_string(effort)}",
+            "",
+            "# Tool permissions",
+            f"enabled_tools = {json.dumps(tools, ensure_ascii=False)}",
+            "disabled_tools = []",
+            "",
+            "# Model configuration",
+            f"model = {toml_string(model)}",
+            "",
+            "# System prompt",
+            f"system_prompt = {toml_string(prompt)}",
+            "",
+            "[metadata]",
+            f"source = {toml_string(agent_path)}",
+            f"version = {toml_string(version)}",
+            f"tags = {json.dumps(['arckit', agent_name], ensure_ascii=False)}",
+            "",
+        ]
+
+        with open(toml_path, "w", encoding="utf-8") as f:
+            f.write("\n".join(lines))
+        generated.append(toml_name)
+
+    print(f"  Generated {len(generated)} Vibe agent .toml files in {output_dir}")
+    return generated
+
+
+def generate_vibe_config_toml(output_path, version, agent_files):
+    """Generate Mistral Vibe extension config."""
+    lines = [
+        "# ArcKit Mistral Vibe Extension Configuration",
+        f"# Version: {version}",
+        "# Generated from ArcKit canonical plugin (plugins/arckit-claude/)",
+        "",
+        "[extension]",
+        'name = "arckit"',
+        f"version = {toml_string(version)}",
+        'description = """',
+        "The Enterprise Architecture Governance Harness - 73+ slash commands across",
+        "strategy, architecture, delivery, and assurance. Enables enterprise architects",
+        "to manage architecture principles, requirements, vendor evaluation, risk",
+        "management, and compliance workflows in Mistral Vibe.",
+        '"""',
+        'author = "TractorJuice"',
+        'repository = "https://github.com/tractorjuice/arc-kit"',
+        'license = "MIT"',
+        'homepage = "https://tractorjuice.github.io/arc-kit/"',
+        "",
+        "[extension.feature_flags]",
+        "enable_community_overlays = true",
+        "enable_experimental = false",
+        "",
+        "[extension.mcp]",
+        "servers = [",
+        '    "aws-knowledge",',
+        '    "microsoft-learn",',
+        '    "google-developer-knowledge",',
+        '    "govreposcrape",',
+        '    "datacommons-mcp"',
+        "]",
+        "",
+        "[extension.agents]",
+        "files = [",
+    ]
+    for index, filename in enumerate(agent_files):
+        suffix = "," if index < len(agent_files) - 1 else ""
+        lines.append(f"    {toml_string(filename)}{suffix}")
+    lines.extend(
+        [
+            "]",
+            "",
+            "[extension.defaults]",
+            'organisation_name = ""',
+            'default_classification = "OFFICIAL"',
+            'governance_framework = "Generic"',
+            'classification_scheme = "UK"',
+            'path_prefix = "${VIBE_EXTENSION_ROOT}"',
+            'templates_dir = ".arckit/templates"',
+            'custom_templates_dir = ".arckit/templates-custom"',
+            "",
+        ]
+    )
+
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write("\n".join(lines))
+    print(f"  Generated: {output_path}")
+
+
+def copy_vibe_reference_skills(src_skills_dir, dest_skills_dir):
+    """Copy non-command reference skills into the Vibe extension."""
+    if not os.path.isdir(src_skills_dir):
+        return
+
+    os.makedirs(dest_skills_dir, exist_ok=True)
+    count = 0
+    for entry in sorted(os.listdir(src_skills_dir)):
+        src = os.path.join(src_skills_dir, entry)
+        if entry.startswith("arckit-") or not os.path.isdir(src):
+            continue
+        dst = os.path.join(dest_skills_dir, entry)
+        if os.path.isdir(dst):
+            shutil.rmtree(dst)
+        shutil.copytree(src, dst)
+        count += 1
+
+    print(f"  Copied {count} Vibe reference skill dirs to {dest_skills_dir}")
 
 
 def rewrite_codex_skills(skills_dir):
@@ -1712,6 +1938,28 @@ if __name__ == "__main__":
     print()
     print("Generating Copilot instructions...")
     generate_copilot_instructions("extensions/arckit-copilot/copilot-instructions.md")
+
+    print()
+    print("Generating Mistral Vibe extension config...")
+    copy_vibe_reference_skills(
+        os.path.join(plugin_dir, "skills"),
+        "extensions/arckit-vibe/skills",
+    )
+    vibe_version = "0.0.0"
+    vibe_version_path = "extensions/arckit-vibe/VERSION"
+    if os.path.isfile(vibe_version_path):
+        with open(vibe_version_path, "r", encoding="utf-8") as f:
+            vibe_version = f.read().strip() or vibe_version
+    vibe_agent_files = generate_vibe_agent_toml_files(
+        agents_dir,
+        "extensions/arckit-vibe/agents",
+        version=vibe_version,
+    )
+    generate_vibe_config_toml(
+        "extensions/arckit-vibe/vibe-config.toml",
+        vibe_version,
+        vibe_agent_files,
+    )
 
     print()
     total = sum(counts.values())

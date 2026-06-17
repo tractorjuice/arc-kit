@@ -120,13 +120,13 @@ uvx --from git+https://github.com/tractorjuice/arc-kit.git arckit init my-projec
 **Mistral Vibe CLI** — link the ArcKit extension:
 
 ```bash
-# Clone the repository
-git clone https://github.com/tractorjuice/arc-kit.git
-cd arc-kit
+# Clone the standalone extension repository
+git clone https://github.com/tractorjuice/arckit-vibe.git
+cd arckit-vibe
 
 # Create extensions directory and link
 mkdir -p ~/.vibe/extensions/
-ln -s $(pwd)/extensions/arckit-vibe ~/.vibe/extensions/arckit
+ln -s $(pwd) ~/.vibe/extensions/arckit
 ```
 
 Zero-config: 70+ official commands as skills, 10 specialized agents, all templates, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, GovRepoScrape).
@@ -220,7 +220,7 @@ vibe --agent arckit-research "Research cloud providers"
 
 **GitHub Copilot**: Re-run `arckit init --here --ai copilot` to update prompt files, agents, and instructions.
 
-**Mistral Vibe**: Re-run the conversion scripts or pull latest from repo to update the Vibe extension.
+**Mistral Vibe**: Pull the latest standalone extension repo: `cd ~/.vibe/extensions/arckit && git pull`.
 
 **Codex CLI**:
 

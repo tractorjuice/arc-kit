@@ -6,7 +6,7 @@ The Enterprise Architecture Governance Harness for Mistral Vibe CLI.
 > **Version**: 5.13.1
 > **ArcKit Version**: 5.13.1
 >
-> **Note**: This extension is currently in beta. Community overlay commands require separate conversion and are not yet fully integrated. See issue #599 for current status and known limitations.
+> **Note**: This extension is currently in beta. The extension is published from the standalone `tractorjuice/arckit-vibe` repository and regenerated from ArcKit's canonical plugin sources.
 
 ## Overview
 
@@ -17,31 +17,31 @@ ArcKit for Mistral Vibe brings the full power of the Enterprise Architecture Gov
 ### Option 1: Clone and Link (Recommended)
 
 ```bash
-# Clone the arc-kit repository
-git clone https://github.com/tractorjuice/arc-kit.git
-cd arc-kit
+# Clone the standalone extension repository
+git clone https://github.com/tractorjuice/arckit-vibe.git
+cd arckit-vibe
 
 # Create the extensions directory if it doesn't exist
 mkdir -p ~/.vibe/extensions/
 
 # Link the ArcKit Vibe extension
-ln -s $(pwd)/extensions/arckit-vibe ~/.vibe/extensions/arckit
+ln -s $(pwd) ~/.vibe/extensions/arckit
 ```
 
 ### Option 2: Copy Files
 
 ```bash
 # Clone the repository
-git clone https://github.com/tractorjuice/arc-kit.git
+git clone https://github.com/tractorjuice/arckit-vibe.git
 
 # Copy the extension to your Vibe extensions directory
-cp -r arc-kit/extensions/arckit-vibe ~/.vibe/extensions/arckit
+cp -r arckit-vibe ~/.vibe/extensions/arckit
 ```
 
 ### Option 3: Manual Setup
 
 1. Create directory: `mkdir -p ~/.vibe/extensions/arckit`
-2. Copy all files from `arc-kit/extensions/arckit-vibe/*` to `~/.vibe/extensions/arckit/`
+2. Copy all files from the standalone `arckit-vibe` repository to `~/.vibe/extensions/arckit/`
 3. Ensure directory structure is preserved
 
 ## Configuration
