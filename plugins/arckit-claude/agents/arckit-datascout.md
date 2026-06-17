@@ -140,7 +140,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 **Existing Data Catalogues & API Registries**:
 
 - **Look in**: `projects/{project}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv), JSON (.json)
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv), JSON (.json), subtitles/transcripts (.srt, .vtt)
 - **What to extract**: Known data sources, API endpoints, data quality assessments, existing integrations
 - **Examples**: `data-catalogue.csv`, `api-registry.json`, `data-audit.pdf`
 

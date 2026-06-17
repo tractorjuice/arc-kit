@@ -106,7 +106,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 **Market Research Reports & Analyst Briefings**:
 
 - **Look in**: `projects/{project}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), subtitles/transcripts (.srt, .vtt)
 - **What to extract**: Market landscape data, vendor rankings, pricing benchmarks, technology trend analysis
 - **Examples**: `gartner-report.pdf`, `forrester-wave.pdf`, `market-analysis.docx`
 

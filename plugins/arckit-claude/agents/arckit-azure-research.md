@@ -86,7 +86,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 **Existing Azure Assessments & Cost Reports**:
 
 - **Look in**: `projects/{project}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv)
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv), subtitles/transcripts (.srt, .vtt)
 - **What to extract**: Current Azure usage, cost reports, Azure Advisor findings, migration assessments
 - **Examples**: `azure-cost-report.csv`, `azure-advisor-findings.pdf`, `cloud-assessment.docx`
 

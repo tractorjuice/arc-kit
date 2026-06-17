@@ -106,7 +106,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 **Existing Reuse Assessments or Technology Audits**:
 
 - **Look in**: `projects/{project}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md)
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), subtitles/transcripts (.srt, .vtt)
 - **What to extract**: Previous reuse research, technology audits, existing open-source evaluations
 - **Examples**: `technology-audit.pdf`, `open-source-review.docx`, `existing-reuse-assessment.md`
 

@@ -89,7 +89,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 **Existing AWS Assessments & Cost Reports**:
 
 - **Look in**: `projects/{project}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv)
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv), subtitles/transcripts (.srt, .vtt)
 - **What to extract**: Current AWS usage, cost reports, Well-Architected review findings, migration assessments
 - **Examples**: `aws-cost-report.csv`, `well-architected-review.pdf`, `migration-assessment.docx`
 
