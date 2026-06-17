@@ -16,6 +16,8 @@ ${args}
 ```
 
 > **Note**: The ArcKit Impact hook has already built a dependency graph from all project artifacts and provided it as structured JSON in the context. Use that data — do NOT scan directories manually.
+>
+> If the hook data is not present (hook context missing), fall back to manual scanning: use `glob pattern="projects/**/ARC-*.md"` to find all artifacts, then build the dependency graph by parsing cross-references manually.
 
 ## Instructions
 

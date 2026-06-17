@@ -42,7 +42,7 @@ EXPECTED_AGENTS = [
 ]
 
 # Minimum expected skill count (core commands)
-MIN_EXPECTED_SKILL_COUNT = 70  # Core commands converted so far
+MIN_EXPECTED_SKILL_COUNT = 72  # Core commands converted (70 + principles + requirements)
 
 # Expected template count
 EXPECTED_TEMPLATE_COUNT = 66

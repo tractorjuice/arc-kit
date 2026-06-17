@@ -42,6 +42,8 @@ ${args}
   Map* procedure for where this runs. (The Mermaid `wardley-beta` block is always
   tidied automatically by the `tidy-wardley-labels.mjs` hook on write —
   `--tidy-owm` is only about the OWM block.)
+>
+> **Note**: Wardley map validation and label tidying hooks (`validate-wardley-math.mjs`, `tidy-wardley-labels.mjs`) are experimental in Mistral Vibe. If hooks are not enabled, manually validate map coordinates and label placement.
 
 ## Step 1: Read Available Documents
 

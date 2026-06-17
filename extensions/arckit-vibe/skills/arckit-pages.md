@@ -41,6 +41,8 @@ Generate a documentation site for this ArcKit repository.
 7. Generates `docs/llms.txt` (llmstxt.org format) for LLM/agent discovery, unless a hand-curated version exists without the ArcKit generation marker
 
 **CRITICAL: The hook's hook context contains ALL document stats you need. Use ONLY those stats for the Step 5 summary. Do NOT call any tools — no Read, Write, Glob, Grep, or Bash. Do NOT read manifest.json or any other file. The hook has already written docs/index.html, docs/manifest.json, and docs/llms.txt with correct data. Go directly to Step 5 and output the summary using the stats from the hook context.**
+>
+> If the hook data is not present (hook context missing), fall back to manual mode: use `glob pattern="projects/**/ARC-*.md"` to discover artifacts, then manually generate docs/index.html from the template at `${VIBE_EXTENSION_ROOT}/templates/pages-template.html`, build docs/manifest.json, and write docs/llms.txt.
 
 The following reference sections document the manifest structure and data tables used by the hook. They are preserved here for maintenance reference only — the command does not need to process them.
 

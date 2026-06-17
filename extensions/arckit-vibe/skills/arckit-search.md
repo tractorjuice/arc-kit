@@ -16,6 +16,8 @@ ${args}
 ```
 
 > **Note**: The ArcKit Search hook has already indexed all project artifacts and provided them as structured JSON in the context. Use that data — do NOT scan directories manually.
+>
+> If the hook data is not present (hook context missing), fall back to manual scanning: use `glob pattern="projects/**/ARC-*.md"` to find all artifacts, then parse and search them manually.
 
 ## Instructions
 

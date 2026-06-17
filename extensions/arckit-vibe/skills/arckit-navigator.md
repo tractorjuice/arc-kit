@@ -53,7 +53,7 @@ The hook block at the top of your context contains:
 - A prioritised "Recommended Next Steps" list
 - Optional sections for DRAFT / stale / orphan artifacts
 
-If the hook block is missing (unlikely — it always fires for `/arckit:navigator`), inform the user that the navigator hook did not run and stop.
+> If the hook block is missing (unlikely — it always fires for `/arckit:navigator`), fall back to manual scanning: use `glob pattern="projects/**/ARC-*.md"` to discover artifacts, then compute coverage by checking for each essential doc type (REQ, STKE, RISK, SOBC, ADR, HLDR, TRAC, CONF).
 
 ### Step 2: Render the report
 

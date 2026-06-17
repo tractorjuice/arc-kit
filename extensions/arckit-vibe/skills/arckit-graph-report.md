@@ -46,7 +46,7 @@ The hook block at the top of your context contains:
 - A per-project compliance readiness breakdown
 - A density interpretation legend
 
-If the hook block is missing (unlikely — it always fires for `/arckit:graph-report`), inform the user and stop.
+> If the hook block is missing (unlikely — it always fires for `/arckit:graph-report`), fall back to manual scanning: use `glob pattern="projects/**/ARC-*.md"` to discover all artifacts across projects, then compute metrics manually.
 
 ### Step 2: Render the dashboard
 
