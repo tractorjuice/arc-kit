@@ -5,6 +5,16 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [5.13.2] — 2026-06-17
+
+### Fixed
+
+- **Manifest auto-update tolerates legacy entries without `documentId` (#601).**
+  `hooks/update-manifest.mjs` now deduplicates existing manifest entries by
+  `documentId` when present and falls back to the entry path basename when
+  older `docs/manifest.json` rows omit `documentId`, avoiding non-blocking
+  PostToolUse warnings after `/arckit:principles` writes global artifacts.
+
 ## [5.13.1] — 2026-06-11
 
 ### Changed
