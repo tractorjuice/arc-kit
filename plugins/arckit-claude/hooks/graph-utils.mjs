@@ -13,7 +13,7 @@
 
 import { join } from 'node:path';
 import {
-  isDir, isFile, readText, listDir, mtimeMs,
+  isDir, isFile, readText, listDir, listFilesRecursive, mtimeMs,
   extractDocType, extractVersion,
   extractDocControlFields, extractRequirementIds,
   extractRequirementDetails, extractPrinciples, extractRiskEntries,
@@ -284,17 +284,20 @@ function scanVendors(projectDir) {
 }
 
 /**
- * List files in projects/<name>/external/ with mtimes (excluding README.md).
+ * List files in projects/<name>/external/ recursively with mtimes
+ * (excluding README.md files).
  */
 function scanExternals(projectDir) {
   const externalDir = join(projectDir, 'external');
   if (!isDir(externalDir)) return [];
   const out = [];
-  for (const f of listDir(externalDir)) {
-    if (f === 'README.md') continue;
-    const fp = join(externalDir, f);
-    if (!isFile(fp)) continue;
-    out.push({ filename: f, path: fp, mtimeMs: mtimeMs(fp) });
+  for (const file of listFilesRecursive(externalDir)) {
+    if (file.name === 'README.md') continue;
+    out.push({
+      filename: file.relativePath,
+      path: file.path,
+      mtimeMs: mtimeMs(file.path),
+    });
   }
   return out;
 }

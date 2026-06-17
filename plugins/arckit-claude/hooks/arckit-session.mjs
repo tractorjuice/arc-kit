@@ -14,7 +14,7 @@
 import { readdirSync, appendFileSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isDir, isFile, mtimeMs, readText, parseHookInput } from './hook-utils.mjs';
+import { isDir, isFile, listFilesRecursive, mtimeMs, readText, parseHookInput } from './hook-utils.mjs';
 
 const data = parseHookInput();
 
@@ -87,13 +87,11 @@ if (isDir(projectsDir)) {
 
     // Compare external files against newest artifact
     const newExtFiles = [];
-    for (const f of readdirSync(externalDir)) {
-      const fp = join(externalDir, f);
-      if (!isFile(fp)) continue;
-      if (f === 'README.md') continue;
-      const extMtime = mtimeMs(fp);
+    for (const file of listFilesRecursive(externalDir)) {
+      if (file.name === 'README.md') continue;
+      const extMtime = mtimeMs(file.path);
       if (extMtime > newestArtifact) {
-        newExtFiles.push(f);
+        newExtFiles.push(file.relativePath);
       }
     }
 

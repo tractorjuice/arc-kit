@@ -145,6 +145,28 @@ def list_dir(path):
         return []
 
 
+def list_files_recursive(root_dir):
+    """List files below root_dir with stable slash-separated relative paths."""
+    files = []
+
+    def walk(current_dir, parts):
+        for entry in list_dir(current_dir):
+            full_path = os.path.join(current_dir, entry)
+            next_parts = parts + [entry]
+            if is_dir(full_path):
+                walk(full_path, next_parts)
+            elif is_file(full_path):
+                files.append({
+                    "name": entry,
+                    "path": full_path,
+                    "relative_path": "/".join(next_parts),
+                })
+
+    if is_dir(root_dir):
+        walk(root_dir, [])
+    return files
+
+
 def mtime_ms(path):
     """Get file modification time in milliseconds, 0 on failure."""
     try:

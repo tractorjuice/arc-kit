@@ -23,7 +23,7 @@ import { readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
-import { isDir, isFile, mtimeMs, readText, extractDocType } from './hook-utils.mjs';
+import { isDir, isFile, listFilesRecursive, mtimeMs, readText, extractDocType } from './hook-utils.mjs';
 
 function docTypeName(code) {
   return DOC_TYPES[code]?.name || code;
@@ -132,15 +132,13 @@ export function buildProjectContext(repoRoot) {
     const externalDir = join(projectDir, 'external');
     if (isDir(externalDir)) {
       const extList = [];
-      for (const f of readdirSync(externalDir).sort()) {
-        const fp = join(externalDir, f);
-        if (!isFile(fp)) continue;
-        if (f === 'README.md') continue;
-        const extMtime = mtimeMs(fp);
+      for (const file of listFilesRecursive(externalDir)) {
+        if (file.name === 'README.md') continue;
+        const extMtime = mtimeMs(file.path);
         if (extMtime > newestArtifactMtime) {
-          extList.push(`  - \`${f}\` (**NEW** — newer than latest artifact)`);
+          extList.push(`  - \`${file.relativePath}\` (**NEW** — newer than latest artifact)`);
         } else {
-          extList.push(`  - \`${f}\``);
+          extList.push(`  - \`${file.relativePath}\``);
         }
       }
       if (extList.length > 0) {

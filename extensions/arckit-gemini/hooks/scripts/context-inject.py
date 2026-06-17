@@ -20,7 +20,7 @@ import sys
 sys.path.insert(0, os.path.dirname(__file__))
 from hook_utils import (
     parse_hook_input, is_dir, is_file, read_text,
-    list_dir, mtime_ms, find_repo_root, extract_doc_type,
+    list_dir, list_files_recursive, mtime_ms, find_repo_root, extract_doc_type,
     doc_type_name, output_context, SUBDIR_MAP, ARTIFACT_SUBDIRS,
 )
 
@@ -150,17 +150,16 @@ for project_name in project_entries:
     external_dir = os.path.join(project_dir, "external")
     if is_dir(external_dir):
         ext_list = []
-        for f in list_dir(external_dir):
-            fp = os.path.join(external_dir, f)
-            if not is_file(fp):
+        for file_info in list_files_recursive(external_dir):
+            if file_info["name"] == "README.md":
                 continue
-            if f == "README.md":
-                continue
-            ext_mtime = mtime_ms(fp)
+            ext_mtime = mtime_ms(file_info["path"])
             if ext_mtime > newest_artifact_mtime:
-                ext_list.append(f"  - `{f}` (**NEW** -- newer than latest artifact)")
+                ext_list.append(
+                    f"  - `{file_info['relative_path']}` (**NEW** -- newer than latest artifact)"
+                )
             else:
-                ext_list.append(f"  - `{f}`")
+                ext_list.append(f"  - `{file_info['relative_path']}`")
         if ext_list:
             lines.append(f"- **External documents** ({len(ext_list)}) in `external/`:")
             lines.extend(ext_list)

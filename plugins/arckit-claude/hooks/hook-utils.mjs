@@ -31,6 +31,29 @@ export function listDir(p) {
   try { return readdirSync(p).sort(); } catch { return []; }
 }
 
+export function listFilesRecursive(rootDir) {
+  const files = [];
+
+  function walk(dir, parts) {
+    for (const entry of listDir(dir)) {
+      const fullPath = join(dir, entry);
+      const nextParts = [...parts, entry];
+      if (isDir(fullPath)) {
+        walk(fullPath, nextParts);
+      } else if (isFile(fullPath)) {
+        files.push({
+          name: entry,
+          path: fullPath,
+          relativePath: nextParts.join('/'),
+        });
+      }
+    }
+  }
+
+  if (isDir(rootDir)) walk(rootDir, []);
+  return files;
+}
+
 export function mtimeMs(p) {
   try { return statSync(p).mtimeMs; } catch { return 0; }
 }
