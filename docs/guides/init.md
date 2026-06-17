@@ -120,7 +120,7 @@ The init command is the entry point for all ArcKit work -- everything starts her
 
 - **Safe to re-run**: If the `projects/` directory already exists, the command detects this and asks before proceeding. It will not overwrite existing artifacts.
 
-- **Place external documents early**: After init, add any existing architecture documents, regulations, or vendor materials to `projects/000-global/external/`. ArcKit commands will read these to inform artifact generation.
+- **Place external documents early**: After init, add any existing architecture documents, regulations, vendor materials, or meeting/video subtitle exports (`.srt`/`.vtt`) to `projects/000-global/external/`. ArcKit commands will read these to inform artifact generation.
 
 - **This is for the plugin workflow**: If you are using the CLI (`arckit init`), the CLI handles initialization differently by also scaffolding `.codex/`, `.opencode/`, and `.arckit/` directories. The `/arckit:init` slash command is specifically for the Claude Code plugin workflow.
 

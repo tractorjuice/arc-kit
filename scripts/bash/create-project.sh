@@ -128,12 +128,14 @@ Place external reference documents here for ArcKit commands to read as context.
 - Markdown (.md)
 - Images (.png, .jpg) - for diagrams and screenshots
 - CSV (.csv) - for data exports
+- Subtitles/transcripts (.srt, .vtt) - for meetings, talks, and recorded walkthroughs
 - SQL (.sql) - for database schemas
 
 ## What to Put Here
 - RFP/ITT documents
 - Legacy system specifications
 - User research reports
+- Meeting/video transcripts and subtitle exports
 - Previous assessments and audits
 - Database schemas and ERD diagrams
 - Compliance evidence and certificates
@@ -192,6 +194,7 @@ Place organization-wide reference documents here. These are read by commands acr
 - PDF (.pdf), Word (.docx), Markdown (.md)
 - Images (.png, .jpg) - for diagrams and screenshots
 - CSV (.csv) - for data exports
+- Subtitles/transcripts (.srt, .vtt) - for meetings, talks, and recorded walkthroughs
 - SQL (.sql) - for database schemas
 
 ## What to Put Here
@@ -199,6 +202,7 @@ Place organization-wide reference documents here. These are read by commands acr
 - Organization-wide technology standards documents
 - Shared compliance evidence and audit reports
 - Cross-project strategy and transformation documents
+- Cross-project meeting/video transcripts and subtitle exports
 - Industry benchmarks and analyst reports
 
 ## How It Works

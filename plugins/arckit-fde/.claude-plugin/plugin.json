@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-fde",
-  "version": "5.13.1",
+  "version": "5.13.2",
   "defaultEnabled": false,
   "description": "ArcKit FDE Site Generator — one command, /arckit-fde:create, that interviews you and generates a brandable, GitHub-Pages-ready Forward Deploy Engineering consulting website (hero, value props, bootstrap-sprint pack, Day 0-5 cadence, pricing tiers, policy alignment, worked examples, CTA, and discovery metadata). White-label: set your own brand, colour, pricing and contact; choose a UK public sector or generic market preset. Claude Code only; outputs a static site to docs/.",
   "author": {

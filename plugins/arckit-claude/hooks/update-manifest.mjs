@@ -70,7 +70,19 @@ function extractDocId(filename) {
 
 /** Strip version to get base ID for dedup: ARC-001-REQ-v1.0 → ARC-001-REQ */
 function baseId(documentId) {
+  if (typeof documentId !== 'string' || documentId.length === 0) return null;
   return documentId.replace(/-v\d+(\.\d+)?$/, '');
+}
+
+function entryBaseId(entry) {
+  if (!entry || typeof entry !== 'object') return null;
+  if (typeof entry.documentId === 'string' && entry.documentId.length > 0) {
+    return baseId(entry.documentId);
+  }
+  if (typeof entry.path === 'string' && entry.path.length > 0) {
+    return baseId(extractDocId(basename(entry.path)));
+  }
+  return null;
 }
 
 /** Extract first # heading from markdown content */
@@ -153,7 +165,7 @@ if (projectDirName === '000-global') {
   if (!Array.isArray(manifest.global)) manifest.global = [];
 
   // Dedup: remove any existing entry with same base ID
-  manifest.global = manifest.global.filter(e => baseId(e.documentId) !== newBaseId);
+  manifest.global = manifest.global.filter(e => entryBaseId(e) !== newBaseId);
   manifest.global.push(newEntry);
 
   // Update defaultDocument if this is a PRIN doc
@@ -210,7 +222,7 @@ if (targetKey === 'documents') {
 }
 
 // Dedup: remove any existing entry with same base ID
-project[targetKey] = project[targetKey].filter(e => baseId(e.documentId) !== newBaseId);
+project[targetKey] = project[targetKey].filter(e => entryBaseId(e) !== newBaseId);
 project[targetKey].push(newEntry);
 
 // Update timestamp and write

@@ -14,6 +14,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   their relative paths, instead of only checking direct children. Session-start
   warnings and project-context external-document listings use the same recursive
   scan.
+- **External context supports subtitle/transcript files (#600).** Project
+  `external/` guidance, scaffolding, and project context handling now include
+  `.srt` and `.vtt` transcript files alongside PDFs, Word documents, Markdown,
+  images, CSV, and SQL references.
+- **Manifest auto-update tolerates legacy entries without `documentId` (#601).**
+  `hooks/update-manifest.mjs` now deduplicates existing manifest entries by
+  `documentId` when present and falls back to the entry path basename when
+  older `docs/manifest.json` rows omit `documentId`, avoiding non-blocking
+  PostToolUse warnings after `/arckit:principles` writes global artifacts.
 
 ## [5.13.1] — 2026-06-11
 

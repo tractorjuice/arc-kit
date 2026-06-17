@@ -85,6 +85,8 @@ function makeFixture() {
   // External file
   writeFileSync(join(projectDir, 'external', 'spec.api.yaml'), 'openapi: 3.0\n');
   writeFileSync(join(projectDir, 'external', '7. RFI', 'RFI_CAP_CoreBancario_v1.docx'), 'rfi\n');
+  writeFileSync(join(projectDir, 'external', 'meeting-transcript.vtt'), 'WEBVTT\n\n00:00:00.000 --> 00:00:03.000\nArchitecture board discussion.\n');
+  writeFileSync(join(projectDir, 'external', 'walkthrough-subtitles.srt'), '1\n00:00:00,000 --> 00:00:03,000\nLegacy platform walkthrough.\n');
 
   // Global PRIN
   writeFileSync(
@@ -249,11 +251,13 @@ test('withExternals lists external/ files', () => {
     const g = scanAllArtifacts(projectsDir, { withExternals: true });
     assert.ok(g.externalFiles);
     const ext = g.externalFiles['001-fixture'];
-    assert.equal(ext.length, 2);
-    const names = ext.map(f => f.filename).sort();
-    assert.deepEqual(names, [
+    assert.equal(ext.length, 4);
+    const filenames = ext.map(f => f.filename).sort();
+    assert.deepEqual(filenames, [
       '7. RFI/RFI_CAP_CoreBancario_v1.docx',
+      'meeting-transcript.vtt',
       'spec.api.yaml',
+      'walkthrough-subtitles.srt',
     ]);
     assert.ok(ext.every(f => typeof f.mtimeMs === 'number'));
   } finally {

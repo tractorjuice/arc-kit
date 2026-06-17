@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-uk-finance",
-  "version": "5.13.1",
+  "version": "5.13.2",
   "defaultEnabled": false,
   "description": "UK Financial Services Payments Overlay for ArcKit — 4 commands for established UK Payment Service Providers, E-Money Institutions, and Payment Institutions: PSD2 SCA-RTS exemption design, EMI/PI safeguarding assessment, FCA Consumer Duty board report, and Critical Third Parties dependency assessment. Recipe: uk-fs-payments. Requires arckit core plugin. EXPERIMENTAL — community-maintained, no named domain co-maintainer at launch.",
   "author": {
@@ -29,7 +29,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=5.13.1"
+      "version": "=5.13.2"
     }
   ]
 }

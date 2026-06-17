@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-eu",
-  "version": "5.13.1",
+  "version": "5.13.2",
   "defaultEnabled": false,
   "description": "EU Overlay for ArcKit — 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA. Requires arckit core plugin.",
   "author": {
@@ -21,7 +21,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=5.13.1"
+      "version": "=5.13.2"
     }
   ]
 }

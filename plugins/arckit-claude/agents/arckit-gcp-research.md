@@ -86,7 +86,7 @@ Scan for external (non-ArcKit) documents the user may have provided:
 **Existing Google Cloud Assessments & Cost Reports**:
 
 - **Look in**: `projects/{project}/external/`
-- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv)
+- **File types**: PDF (.pdf), Word (.docx), Markdown (.md), CSV (.csv), subtitles/transcripts (.srt, .vtt)
 - **What to extract**: Current Google Cloud usage, billing exports, Active Assist findings, migration assessments
 - **Examples**: `gcp-billing-export.csv`, `active-assist-findings.pdf`, `migration-assessment.docx`
 
