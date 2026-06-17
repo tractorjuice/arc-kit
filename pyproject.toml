@@ -66,3 +66,4 @@ packages = ["src/arckit_cli"]
 "extensions/arckit-codex" = "share/arckit/extensions/arckit-codex"
 "extensions/arckit-opencode" = "share/arckit/extensions/arckit-opencode"
 "extensions/arckit-copilot" = "share/arckit/extensions/arckit-copilot"
+"extensions/arckit-vibe" = "share/arckit/extensions/arckit-vibe"

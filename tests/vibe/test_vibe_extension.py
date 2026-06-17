@@ -25,20 +25,32 @@ EXPECTED_DIRS = {
     "agents": VIBE_ROOT / "agents",
     "templates": VIBE_ROOT / "templates",
     "schemas": VIBE_ROOT / "schemas",
+    "references": VIBE_ROOT / "references",
+    "scripts": VIBE_ROOT / "scripts",
+    "hooks": VIBE_ROOT / "hooks",
 }
 
-# Expected agent files
+# Expected agent files (including reader/writer subagents for multi-tier commands)
 EXPECTED_AGENTS = [
     "arckit-research.toml",
     "arckit-aws-research.toml",
     "arckit-azure-research.toml",
     "arckit-gcp-research.toml",
     "arckit-datascout.toml",
+    "arckit-datascout-reader.toml",
+    "arckit-datascout-writer.toml",
     "arckit-framework.toml",
     "arckit-gov-code-search.toml",
     "arckit-gov-landscape.toml",
     "arckit-gov-reuse.toml",
+    "arckit-gov-reuse-reader.toml",
+    "arckit-gov-reuse-writer.toml",
     "arckit-grants.toml",
+    "arckit-grants-reader.toml",
+    "arckit-grants-writer.toml",
+    "arckit-tenders-reader.toml",
+    "arckit-tenders-writer.toml",
+    "arckit-competitors-writer.toml",
 ]
 
 # Minimum expected skill count (core commands)
@@ -306,6 +318,130 @@ class TestLicense:
         license_path = VIBE_ROOT / "LICENSE"
         content = license_path.read_text()
         assert len(content) > 100, "LICENSE file seems too short"
+
+
+# Import re at module level for version check
+import re
+
+
+class TestConfigConsistency:
+    """Test configuration consistency between vibe-config.toml and actual files."""
+
+    def test_config_agents_match_files(self):
+        """Verify all agents listed in vibe-config.toml actually exist."""
+        config_path = VIBE_ROOT / "vibe-config.toml"
+        with open(config_path, "rb") as f:
+            config = tomllib.load(f)
+        
+        agent_files = config.get("extension", {}).get("agents", {}).get("files", [])
+        agents_dir = VIBE_ROOT / "agents"
+        
+        for agent_file in agent_files:
+            agent_path = agents_dir / agent_file
+            assert agent_path.exists(), f"Config references missing agent: {agent_file}"
+
+    def test_all_agents_listed_in_config(self):
+        """Verify all agent files are listed in vibe-config.toml."""
+        config_path = VIBE_ROOT / "vibe-config.toml"
+        with open(config_path, "rb") as f:
+            config = tomllib.load(f)
+        
+        agent_files = config.get("extension", {}).get("agents", {}).get("files", [])
+        agents_dir = VIBE_ROOT / "agents"
+        actual_agents = {f.name for f in agents_dir.glob("*.toml")}
+        configured_agents = set(agent_files)
+        
+        missing_from_config = actual_agents - configured_agents
+        assert not missing_from_config, f"Agents not listed in config: {missing_from_config}"
+
+
+class TestReferenceValidity:
+    """Test that referenced assets exist."""
+
+    def test_references_directory_exists(self):
+        """Verify references directory exists."""
+        refs_dir = VIBE_ROOT / "references"
+        assert refs_dir.exists(), "References directory not found"
+        assert refs_dir.is_dir(), "References is not a directory"
+
+    def test_citation_instructions_exists(self):
+        """Verify citation-instructions.md exists in references."""
+        citation_path = VIBE_ROOT / "references" / "citation-instructions.md"
+        assert citation_path.exists(), "citation-instructions.md not found in references/"
+
+    def test_scripts_directory_exists(self):
+        """Verify scripts directory exists."""
+        scripts_dir = VIBE_ROOT / "scripts"
+        assert scripts_dir.exists(), "Scripts directory not found"
+        assert scripts_dir.is_dir(), "Scripts is not a directory"
+
+    def test_validate_handoff_exists(self):
+        """Verify validate-handoff.mjs exists in scripts."""
+        validate_path = VIBE_ROOT / "scripts" / "validate-handoff.mjs"
+        assert validate_path.exists(), "validate-handoff.mjs not found in scripts/"
+
+    def test_mermaid_references_exist(self):
+        """Verify mermaid-syntax references exist."""
+        mermaid_refs = VIBE_ROOT / "skills" / "mermaid-syntax" / "references"
+        assert mermaid_refs.exists(), "mermaid-syntax/references directory not found"
+        
+        c4_layout_path = mermaid_refs / "c4-layout-science.md"
+        assert c4_layout_path.exists(), "c4-layout-science.md not found in mermaid-syntax/references/"
+
+    def test_templates_exist(self):
+        """Verify essential templates exist."""
+        templates_dir = VIBE_ROOT / "templates"
+        essential_templates = [
+            "adr-template.md",
+            "service-assessment-prep-template.md", 
+            "gcp-research-template.md",
+            "sow-template.md",
+            "operationalize-template.md",
+            "traceability-matrix-template.md",
+            "gov-reuse-template.md",
+            "tech-note-template.md",
+        ]
+        
+        for template in essential_templates:
+            template_path = templates_dir / template
+            assert template_path.exists(), f"Template {template} not found in templates/"
+
+    def test_schemas_exist(self):
+        """Verify essential schemas exist."""
+        schemas_dir = VIBE_ROOT / "schemas"
+        essential_schemas = [
+            "datascout-handoff.schema.json",
+            "gov-reuse-handoff.schema.json",
+            "grants-handoff.schema.json",
+            "tenders-handoff.schema.json",
+        ]
+        
+        for schema in essential_schemas:
+            schema_path = schemas_dir / schema
+            assert schema_path.exists(), f"Schema {schema} not found in schemas/"
+
+
+class TestSubagentCoverage:
+    """Test that skills dispatching subagents have the required agents."""
+
+    def test_reader_writer_agents_exist(self):
+        """Verify reader/writer agents exist for multi-tier commands."""
+        agents_dir = VIBE_ROOT / "agents"
+        required_agents = [
+            "arckit-datascout-reader.toml",
+            "arckit-datascout-writer.toml",
+            "arckit-gov-reuse-reader.toml", 
+            "arckit-gov-reuse-writer.toml",
+            "arckit-grants-reader.toml",
+            "arckit-grants-writer.toml",
+            "arckit-tenders-reader.toml",
+            "arckit-tenders-writer.toml",
+            "arckit-competitors-writer.toml",
+        ]
+        
+        for agent_file in required_agents:
+            agent_path = agents_dir / agent_file
+            assert agent_path.exists(), f"Required subagent {agent_file} not found"
 
 
 # Import re at module level for version check

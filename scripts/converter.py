@@ -309,6 +309,22 @@ AGENT_CONFIG = {
         "has_context_hook": False,
         "has_sync_guides_hook": False,
     },
+    "vibe": {
+        "name": "Mistral Vibe",
+        "output_dir": "extensions/arckit-vibe/skills",
+        "filename_pattern": "arckit.{name}.md",
+        "format": "markdown",
+        "path_prefix": "${VIBE_EXTENSION_ROOT}",
+        "extension_dir": "extensions/arckit-vibe",
+        "arg_placeholder": "${args}",
+        "copy_commands_to_extension": False,
+        "copy_agents_to_extension": True,
+        "copy_scripts_to_extension": True,
+        "copy_references_to_extension": True,
+        "copy_schemas_to_extension": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
+    },
 }
 
 

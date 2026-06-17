@@ -27,13 +27,14 @@ declare -A EXTENSIONS=(
   [opencode]="extensions/arckit-opencode:arckit-opencode"
   [copilot]="extensions/arckit-copilot:arckit-copilot"
   [paperclip]="extensions/arckit-paperclip:arckit-paperclip"
+  [vibe]="extensions/arckit-vibe:arckit-vibe"
 )
 
 # ── Determine which extensions to push ────────────────────────────────────────
 if [[ $# -gt 0 ]]; then
   TARGETS=("$@")
 else
-  TARGETS=("gemini" "codex" "opencode" "copilot" "paperclip")
+  TARGETS=("gemini" "codex" "opencode" "copilot" "paperclip" "vibe")
 fi
 
 # ── Read version from root VERSION file ───────────────────────────────────────

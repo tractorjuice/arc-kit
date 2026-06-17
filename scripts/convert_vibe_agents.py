@@ -11,18 +11,27 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 CLAUDE_AGENTS = REPO_ROOT / "plugins" / "arckit-claude" / "agents"
 VIBE_AGENTS = REPO_ROOT / "extensions" / "arckit-vibe" / "agents"
 
-# Agents to convert (excluding reader/writer variants)
+# Agents to convert (including reader/writer variants for subagent dispatch)
 AGENTS_TO_CONVERT = [
     "arckit-research.md",
     "arckit-aws-research.md",
     "arckit-azure-research.md",
     "arckit-gcp-research.md",
     "arckit-datascout.md",
+    "arckit-datascout-reader.md",
+    "arckit-datascout-writer.md",
     "arckit-framework.md",
     "arckit-gov-code-search.md",
     "arckit-gov-landscape.md",
     "arckit-gov-reuse.md",
+    "arckit-gov-reuse-reader.md",
+    "arckit-gov-reuse-writer.md",
     "arckit-grants.md",
+    "arckit-grants-reader.md",
+    "arckit-grants-writer.md",
+    "arckit-tenders-reader.md",
+    "arckit-tenders-writer.md",
+    "arckit-competitors-writer.md",
 ]
 
 # Tool mapping

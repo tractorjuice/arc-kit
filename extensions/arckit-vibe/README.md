@@ -2,9 +2,11 @@
 
 The Enterprise Architecture Governance Harness for Mistral Vibe CLI.
 
-> **Status**: Production Ready ✅
+> **Status**: Beta (Community Preview) 🟡
 > **Version**: 5.13.1
 > **ArcKit Version**: 5.13.1
+>
+> **Note**: This extension is currently in beta. Community overlay commands require separate conversion and are not yet fully integrated. See issue #599 for current status and known limitations.
 
 ## Overview
 
@@ -277,12 +279,14 @@ ArcKit includes jurisdiction-specific command overlays:
 To use community overlays:
 
 ```bash
-# UAE-specific principles
-vibe /arckit-uae-principles
+# UAE-specific commands
+vibe /arckit-uae-ai-charter
 
-# France-specific roadmap
-vibe /arckit-fr-roadmap
+# France-specific commands  
+vibe /arckit-fr-secnumcloud
 ```
+
+**Note:** Community overlay commands are available for UK, UAE, France, Canada, EU, Austria, Australia, US Federal, UK NHS, and UK G-Cloud jurisdictions. Run `vibe /arckit-` and use tab completion to see available commands for each overlay.
 
 ## Quality Assurance
 

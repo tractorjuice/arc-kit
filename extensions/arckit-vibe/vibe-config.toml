@@ -43,11 +43,20 @@ files = [
     "arckit-azure-research.toml",
     "arckit-gcp-research.toml",
     "arckit-datascout.toml",
+    "arckit-datascout-reader.toml",
+    "arckit-datascout-writer.toml",
+    "arckit-framework.toml",
     "arckit-gov-code-search.toml",
     "arckit-gov-landscape.toml",
     "arckit-gov-reuse.toml",
+    "arckit-gov-reuse-reader.toml",
+    "arckit-gov-reuse-writer.toml",
     "arckit-grants.toml",
-    "arckit-tenders.toml"
+    "arckit-grants-reader.toml",
+    "arckit-grants-writer.toml",
+    "arckit-tenders-reader.toml",
+    "arckit-tenders-writer.toml",
+    "arckit-competitors-writer.toml"
 ]
 
 [extension.defaults]

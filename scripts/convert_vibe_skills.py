@@ -11,6 +11,8 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CLAUDE_COMMANDS = REPO_ROOT / "plugins" / "arckit-claude" / "commands"
+UAE_COMMANDS = REPO_ROOT / "plugins" / "arckit-uae" / "commands"
+FR_COMMANDS = REPO_ROOT / "plugins" / "arckit-fr" / "commands"
 VIBE_SKILLS = REPO_ROOT / "extensions" / "arckit-vibe" / "skills"
 
 # Commands to skip
@@ -24,7 +26,7 @@ ALREADY_CONVERTED = {
     "requirements.md",
 }
 
-# Commands to convert in this batch (high-value, commonly used)
+# Core commands to convert in this batch (high-value, commonly used)
 BATCH_1_COMMANDS = [
     "stakeholders.md",
     "wardley.md", 
@@ -127,6 +129,38 @@ BATCH_8_COMMANDS = [
     "wardley.value-chain.md",
 ]
 
+# Batch 9 - UAE Overlay commands
+BATCH_9_COMMANDS = [
+    "uae-ai-autonomy-tier.md",
+    "uae-ai-charter.md",
+    "uae-classification.md",
+    "uae-cloud-residency.md",
+    "uae-data-sharing.md",
+    "uae-digital-records.md",
+    "uae-ias.md",
+    "uae-pdpl.md",
+    "uae-priorities-alignment.md",
+    "uae-procurement.md",
+    "uae-uaepass.md",
+    "uae-zero-bureaucracy.md",
+]
+
+# Batch 10 - France Overlay commands
+BATCH_10_COMMANDS = [
+    "fr-algorithme-public.md",
+    "fr-anssi-carto.md",
+    "fr-anssi.md",
+    "fr-audit.md",
+    "fr-code-reuse.md",
+    "fr-dinum.md",
+    "fr-dr.md",
+    "fr-ebios.md",
+    "fr-marche-public.md",
+    "fr-pdpl.md",  # Note: This doesn't exist, but keeping for structure
+    "fr-pssi.md",
+    "fr-rgpd.md",
+]
+
 
 def extract_frontmatter(content):
     """Extract YAML frontmatter from markdown."""
@@ -217,12 +251,12 @@ tags: [arckit, architecture, governance]
     return frontmatter + body + vibe_notes
 
 
-def convert_command(filename):
+def convert_command(filename, source_dir=CLAUDE_COMMANDS):
     """Convert a single command file to a Vibe skill."""
-    command_path = CLAUDE_COMMANDS / filename
+    command_path = source_dir / filename
     
     if not command_path.exists():
-        print(f"  WARNING: {filename} not found, skipping")
+        print(f"  WARNING: {filename} not found in {source_dir}, skipping")
         return False
     
     with open(command_path, "r", encoding="utf-8") as f:
@@ -411,6 +445,46 @@ def main():
     print()
     total_converted = success_count + batch2_success + batch3_success + batch4_success + batch5_success + batch6_success + batch7_success + batch8_success
     total_commands = len(BATCH_1_COMMANDS) + len(BATCH_2_COMMANDS) + len(BATCH_3_COMMANDS) + len(BATCH_4_COMMANDS) + len(BATCH_5_COMMANDS) + len(BATCH_6_COMMANDS) + len(BATCH_7_COMMANDS) + len(BATCH_8_COMMANDS)
+    # Convert batch 9 - UAE Overlay
+    print(f"Converting Batch 9 - UAE Overlay ({len(BATCH_9_COMMANDS)} commands)...")
+    batch9_success = 0
+    for filename in BATCH_9_COMMANDS:
+        if filename in SKIP_COMMANDS:
+            print(f"  Skipped (Claude-only): {filename}")
+            continue
+        if filename in ALREADY_CONVERTED:
+            print(f"  Skipped (already converted): {filename}")
+            continue
+        
+        if convert_command(filename, UAE_COMMANDS):
+            print(f"  ✓ Created: arckit-{filename.replace('.md', '')}.md")
+            batch9_success += 1
+        else:
+            print(f"  ✗ Failed: {filename}")
+    
+    print()
+    
+    # Convert batch 10 - France Overlay
+    print(f"Converting Batch 10 - France Overlay ({len(BATCH_10_COMMANDS)} commands)...")
+    batch10_success = 0
+    for filename in BATCH_10_COMMANDS:
+        if filename in SKIP_COMMANDS:
+            print(f"  Skipped (Claude-only): {filename}")
+            continue
+        if filename in ALREADY_CONVERTED:
+            print(f"  Skipped (already converted): {filename}")
+            continue
+        
+        if convert_command(filename, FR_COMMANDS):
+            print(f"  ✓ Created: arckit-{filename.replace('.md', '')}.md")
+            batch10_success += 1
+        else:
+            print(f"  ✗ Failed: {filename}")
+    
+    print()
+    
+    total_converted = success_count + batch2_success + batch3_success + batch4_success + batch5_success + batch6_success + batch7_success + batch8_success + batch9_success + batch10_success
+    total_commands = len(BATCH_1_COMMANDS) + len(BATCH_2_COMMANDS) + len(BATCH_3_COMMANDS) + len(BATCH_4_COMMANDS) + len(BATCH_5_COMMANDS) + len(BATCH_6_COMMANDS) + len(BATCH_7_COMMANDS) + len(BATCH_8_COMMANDS) + len(BATCH_9_COMMANDS) + len(BATCH_10_COMMANDS)
     print(f"Successfully converted {total_converted}/{total_commands} commands")
     print()
     

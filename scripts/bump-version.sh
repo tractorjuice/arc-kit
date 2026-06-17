@@ -205,7 +205,12 @@ update_file "extensions/arckit-copilot/VERSION" "overwrite"
 echo "$NEW_VERSION" > extensions/arckit-paperclip/VERSION
 update_file "extensions/arckit-paperclip/VERSION" "overwrite"
 
-# ── 15. extensions/arckit-paperclip/package.json ─────────────────────────────────────
+# ── 15. extensions/arckit-vibe/VERSION ────────────────────────────────────────────
+
+echo "$NEW_VERSION" > extensions/arckit-vibe/VERSION
+update_file "extensions/arckit-vibe/VERSION" "overwrite"
+
+# ── 16. extensions/arckit-paperclip/package.json ─────────────────────────────────────
 
 if [[ -f extensions/arckit-paperclip/package.json ]]; then
   jq --arg v "$NEW_VERSION" '.version = $v' extensions/arckit-paperclip/package.json > extensions/arckit-paperclip/package.json.tmp
@@ -228,7 +233,7 @@ for p in "${ALL_PLUGINS[@]}"; do
   [[ -f "$p/VERSION" ]] && VERSION_FILES+=("$p/VERSION")
 done
 # Extension repos (no plugin.json — added explicitly)
-for ext in extensions/arckit-gemini extensions/arckit-opencode extensions/arckit-codex extensions/arckit-copilot extensions/arckit-paperclip; do
+for ext in extensions/arckit-gemini extensions/arckit-opencode extensions/arckit-codex extensions/arckit-copilot extensions/arckit-paperclip extensions/arckit-vibe; do
   [[ -f "$ext/VERSION" ]] && VERSION_FILES+=("$ext/VERSION")
 done
 grep -H "$NEW_VERSION" "${VERSION_FILES[@]}"
