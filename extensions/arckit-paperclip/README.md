@@ -1,14 +1,14 @@
 # ArcKit for Paperclip
 
-Paperclip plugin for ArcKit, an enterprise architecture governance and vendor
-procurement toolkit.
+Paperclip plugin for ArcKit, an enterprise architecture governance,
+interoperability, and vendor procurement toolkit.
 
 This repository is generated from the main ArcKit source repository:
 https://github.com/tractorjuice/arc-kit
 
 ## What Is Included
 
-- 116 ArcKit command tools from `src/data/commands.json`
+- ArcKit command tools from `src/data/commands.json`
 - 5 utility tools for project setup, document IDs, prerequisites, project lists,
   and plugin health checks
 - 109 document templates under `templates/`
@@ -68,7 +68,13 @@ arckit-risk
 arckit-sow
 arckit-evaluate
 arckit-health
+arckit-export-okf
+arckit-import-okf
 ```
+
+## OKF Interoperability
+
+Use `arckit-export-okf` to export ArcKit artifacts as an OKF-compatible Markdown bundle. Use `arckit-import-okf` to import OKF bundles as reviewable ArcKit research notes.
 
 Utility tools include:
 

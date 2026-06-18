@@ -63,8 +63,8 @@ The plugin loads MCP servers and hooks at startup. **A restart is required** aft
 
 After restart, open the plugin manager (`/plugin`) and navigate to **Installed**. You should see:
 
-- **Commands**: 70 slash commands
-- **Agents**: 6 autonomous research agents
+- **Commands**: 75 slash commands
+- **Agents**: Autonomous research and specialist agents
 - **Skills**: 1 (Wardley Mapping)
 - **Hooks**: SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest
 

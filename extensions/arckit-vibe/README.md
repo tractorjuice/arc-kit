@@ -121,6 +121,12 @@ vibe /arckit-data-model Design data model for customer management
 
 # Build vs buy analysis
 vibe /arckit-build Analyze build vs buy for authentication system
+
+# OKF export
+vibe /arckit-export-okf --project 001 --out okf/001
+
+# OKF import
+vibe /arckit-import-okf --bundle okf/001 --project 002
 ```
 
 ### Agents
@@ -202,6 +208,13 @@ vibe --agent arckit-gcp-research "Evaluate BigQuery vs Snowflake for analytics"
 | `/arckit-azure-research` | Azure-specific research |
 | `/arckit-gcp-research` | GCP-specific research |
 | `/arckit-gov-code-search` | Government code search |
+
+### Interoperability
+
+| Skill | Description |
+|-------|-------------|
+| `/arckit-export-okf` | Export ArcKit artifacts as an OKF-compatible Markdown bundle |
+| `/arckit-import-okf` | Import OKF bundles as reviewable research notes |
 
 ### Vendor Management
 

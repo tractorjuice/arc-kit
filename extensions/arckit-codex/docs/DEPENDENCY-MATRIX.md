@@ -357,7 +357,7 @@ principles-compliance → conformance → analyze → service-assessment → sto
 - **Matrix Date**: 2026-02-25
 - **Commands Documented**: 60
 - **Matrix Rows**: 54 (52 document-generating commands + 2 external documents)
-- **Note**: `/arckit:customize`, `/arckit:template-builder`, `/arckit:health`, `/arckit:search`, `/arckit:impact`, `/arckit:init`, and `/arckit:start` are utility/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
+- **Note**: `/arckit:customize`, `/arckit:template-builder`, `/arckit:health`, `/arckit:search`, `/arckit:impact`, `/arckit:navigator`, `/arckit:graph-report`, `/arckit:init`, `/arckit:start`, `/arckit:export-okf`, and `/arckit:import-okf` are utility/interoperability/diagnostic commands not in the matrix — they have no dependencies and produce no outputs consumed by other commands
 
 ## Changelog
 

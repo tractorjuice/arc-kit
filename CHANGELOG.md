@@ -19,6 +19,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `ARCKIT_OKF_FRONTMATTER=1` or `.arckit/config.json` containing
   `{ "okfFrontmatter": true }`. Stamping is off by default and idempotent.
 
+### Changed
+
+- **OKF documentation coverage.** Updated remaining extension READMEs, getting
+  started docs, guide index, remote-control docs, MCP setup docs, and copied
+  dependency matrices so all current documentation surfaces mention the OKF
+  import/export workflow consistently.
+
 ## [5.14.0] — 2026-06-17
 
 ### Added

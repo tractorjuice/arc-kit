@@ -36,7 +36,7 @@ That's it -- no environment variables, no config files. Codex auto-discovers ski
 
 This creates a project with:
 
-- `.agents/skills/` -- 120 skills (116 commands + 4 reference skills, auto-discovered by Codex)
+- `.agents/skills/` -- ArcKit command skills plus 4 reference skills, auto-discovered by Codex
 - `.codex/agents/` -- 10 agent configs (research, datascout, gov reuse, grants, cloud providers, framework)
 - `.codex/hooks/` -- ArcKit lifecycle hooks for context injection, secret checks, file guardrails, and MCP approval policy
 - `.codex/config.toml` -- 5 MCP servers, agent roles, and hook wiring
@@ -81,7 +81,7 @@ cp -r /path/to/arckit-codex/skills/* .agents/skills/
 cp -r /path/to/arckit-codex/skills/* ~/.agents/skills/
 ```
 
-This makes all 116 ArcKit commands available as `$arckit-*` skills plus 4 reference skills.
+This makes ArcKit commands available as `$arckit-*` skills plus 4 reference skills.
 
 **Step 2: MCP Servers and Agents**
 
@@ -134,7 +134,7 @@ MCP servers require no API keys except for Google Developer Knowledge (`GOOGLE_A
 
 ## Skills
 
-All 116 commands are available as skills, invoked with `$arckit-<command>` in Codex CLI. Additionally, 4 reference skills provide domain knowledge.
+ArcKit commands are available as skills, invoked with `$arckit-<command>` in Codex CLI. Additionally, 4 reference skills provide domain knowledge.
 
 ### Reference Skills
 
@@ -231,6 +231,13 @@ $arckit-story                  # Programme story for governance reporting
 $arckit-customize              # Template customization
 ```
 
+#### OKF Interoperability
+
+```bash
+$arckit-export-okf  # Export ArcKit artifacts as an OKF-compatible Markdown bundle
+$arckit-import-okf  # Import OKF bundles as reviewable research notes
+```
+
 ## Agents (Experimental)
 
 Agents run as autonomous sub-processes to handle research-intensive tasks. They require the Codex multi-agent feature flag to be enabled.
@@ -291,18 +298,18 @@ arckit-codex/
 ├── hooks/
 │   ├── hooks.json         # Codex plugin lifecycle configuration
 │   └── arckit-codex-hook.mjs
-├── skills/                # 120 skills (116 commands + 4 reference)
+├── skills/                # ArcKit command skills + 4 reference skills
 │   ├── arckit-requirements/
 │   │   ├── SKILL.md       # Command prompt with frontmatter
 │   │   └── agents/
 │   │       └── openai.yaml  # allow_implicit_invocation: false
 │   ├── arckit-principles/
-│   ├── ...                # 108 more command skills
+│   ├── ...                # More command skills
 │   ├── architecture-workflow/  # Reference skill
 │   ├── mermaid-syntax/         # Reference skill
 │   ├── plantuml-syntax/        # Reference skill
 │   └── wardley-mapping/        # Reference skill
-├── prompts/               # 116 prompts (deprecated, use skills instead)
+├── prompts/               # Command prompts (deprecated, use skills instead)
 ├── agents/                # 10 agent configs + system prompts
 │   ├── arckit-research.md
 │   ├── arckit-research.toml
@@ -317,7 +324,7 @@ arckit-codex/
 
 ## Version
 
-**Current Release: v4.20.0 (116 commands, 4 reference skills)**
+**Current Release: v5.14.0**
 
 ---
 

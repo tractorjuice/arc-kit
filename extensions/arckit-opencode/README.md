@@ -1,14 +1,14 @@
 # ArcKit for OpenCode
 
-OpenCode extension for ArcKit, an enterprise architecture governance and vendor
-procurement toolkit.
+OpenCode extension for ArcKit, an enterprise architecture governance,
+interoperability, and vendor procurement toolkit.
 
 This repository is generated from the main ArcKit source repository:
 https://github.com/tractorjuice/arc-kit
 
 ## What Is Included
 
-- 116 ArcKit commands under `commands/`
+- ArcKit commands under `commands/`
 - 10 research and specialist agents under `agents/`
 - 112 document templates under `templates/`
 - Handoff schemas and scoring rubrics under `schemas/`
@@ -45,7 +45,13 @@ ArcKit commands are available in OpenCode with `/arckit.<command>`:
 /arckit:sow
 /arckit:evaluate
 /arckit:health
+/arckit:export-okf
+/arckit:import-okf
 ```
+
+## OKF Interoperability
+
+Use `/arckit:export-okf` to export ArcKit artifacts as an OKF-compatible Markdown bundle. Use `/arckit:import-okf` to import OKF bundles as reviewable ArcKit research notes.
 
 ## Updating
 

@@ -1,14 +1,14 @@
 # ArcKit for GitHub Copilot
 
 GitHub Copilot prompt and agent bundle for ArcKit — The Enterprise Architecture
-Governance Harness (strategy, architecture, delivery, and assurance).
+Governance Harness (strategy, architecture, delivery, assurance, and interoperability).
 
 This repository is generated from the main ArcKit source repository:
 https://github.com/tractorjuice/arc-kit
 
 ## What Is Included
 
-- 116 reusable Copilot prompts under `prompts/`
+- Reusable ArcKit Copilot prompts under `prompts/`
 - 10 custom agent definitions under `agents/`
 - Project instructions in `copilot-instructions.md`
 - 112 document templates under `templates/`
@@ -48,7 +48,13 @@ arckit-risk
 arckit-sow
 arckit-evaluate
 arckit-health
+arckit-export-okf
+arckit-import-okf
 ```
+
+## OKF Interoperability
+
+Use `arckit-export-okf` to export ArcKit artifacts as an OKF-compatible Markdown bundle. Use `arckit-import-okf` to import OKF bundles as reviewable ArcKit research notes.
 
 ## Updating
 

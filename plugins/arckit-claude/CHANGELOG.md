@@ -18,6 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   frontmatter into native ARC artifacts only when explicitly opted in through
   `ARCKIT_OKF_FRONTMATTER=1` or `.arckit/config.json`.
 
+### Changed
+
+- **OKF documentation coverage.** Updated plugin guide references and copied
+  extension documentation so OKF import/export and opt-in frontmatter behavior
+  are consistently discoverable.
+
 ## [5.14.0] — 2026-06-17
 
 ### Added
