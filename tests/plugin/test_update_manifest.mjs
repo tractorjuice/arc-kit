@@ -121,3 +121,42 @@ test('update-manifest tolerates project manifest entries missing documentId', ()
     rmSync(root, { recursive: true, force: true });
   }
 });
+
+test('update-manifest uses frontmatter title for subdirectory artifacts without headings', () => {
+  const root = mkdtempSync(join(tmpdir(), 'arckit-manifest-frontmatter-title-'));
+  try {
+    const decisionsDir = join(root, 'projects', '001-demo', 'decisions');
+    const docsDir = join(root, 'docs');
+    mkdirSync(decisionsDir, { recursive: true });
+    mkdirSync(docsDir, { recursive: true });
+
+    const artifactPath = join(decisionsDir, 'ARC-001-ADR-001-v1.0.md');
+    writeFileSync(
+      artifactPath,
+      `---
+title: Frontmatter Decision Title
+type: Architecture Decision Record
+---
+
+Decision body without an h1.
+`
+    );
+    writeFileSync(
+      join(docsDir, 'manifest.json'),
+      JSON.stringify({
+        generated: '2026-01-01T00:00:00.000Z',
+        projects: [],
+      })
+    );
+
+    runHook(writePayload(root, artifactPath));
+
+    const manifest = JSON.parse(readFileSync(join(docsDir, 'manifest.json'), 'utf8'));
+    const project = manifest.projects.find(p => p.id === '001-demo');
+    assert.equal(project.decisions.length, 1);
+    assert.equal(project.decisions[0].title, 'Frontmatter Decision Title');
+    assert.equal(project.decisions[0].documentId, 'ARC-001-ADR-001-v1.0');
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+});

@@ -91,6 +91,10 @@ Scans the content being written for embedded secret patterns. Catches cases wher
 
 After a file is written to `projects/`, updates `docs/manifest.json` with the new artifact metadata (document ID, type, version, path, timestamp). This keeps the documentation site's artifact index in sync.
 
+### provenance-stamp (Write | Edit)
+
+After an ArcKit artifact is written or edited, stamps build provenance when the hook can derive build context or command effort. It can also add OKF-compatible frontmatter when explicitly enabled with `ARCKIT_OKF_FRONTMATTER=1` or `.arckit/config.json` containing `{ "okfFrontmatter": true }`.
+
 ## PermissionRequest Hooks
 
 ### allow-mcp-tools

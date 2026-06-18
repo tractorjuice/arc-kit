@@ -29,6 +29,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { join, basename, resolve } from 'node:path';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
 import { isDir, isFile, findRepoRoot, parseHookInput, emitUpdatedToolOutput } from './hook-utils.mjs';
+import { extractFirstHeading, parseFrontmatter } from './okf-frontmatter.mjs';
 
 // ── Static data (derived from central config) ──
 
@@ -85,15 +86,11 @@ function entryBaseId(entry) {
   return null;
 }
 
-/** Extract first # heading from markdown content */
-function extractFirstHeading(content) {
-  if (!content) return null;
-  const lines = content.split('\n', 20);
-  for (const line of lines) {
-    const m = line.match(/^#\s+(.+)/);
-    if (m) return m[1].trim();
-  }
-  return null;
+function extractFrontmatterTitle(content) {
+  const parsed = parseFrontmatter(content || '');
+  if (!parsed.hasFrontmatter || parsed.error) return null;
+  const title = parsed.data.title;
+  return typeof title === 'string' && title.trim() ? title.trim() : null;
 }
 
 // ── Main ──
@@ -150,7 +147,7 @@ const relPath = `projects/${afterProjects}`;
 // Determine title: for multi-instance types in subdirs, use first heading
 let title = meta.title;
 if (subdirName && fileContent) {
-  const heading = extractFirstHeading(fileContent);
+  const heading = extractFirstHeading(fileContent) || extractFrontmatterTitle(fileContent);
   if (heading) title = heading;
 }
 

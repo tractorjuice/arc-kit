@@ -48,6 +48,17 @@ If neither effort nor build context is available (e.g. a non-ArcKit command edit
 
 When a stamp is actually written, the hook emits `hookSpecificOutput.updatedToolOutput` (Claude Code v2.1.121+) so the model sees a one-line summary — effort requested vs. effective, downgrade reason if any, and (on Write) a confirmation that `docs/manifest.json` was auto-updated by `update-manifest.mjs` upstream. On no-op runs (no harness fields, file unchanged) the hook stays silent and the original tool output is preserved.
 
+### Optional OKF frontmatter
+
+`provenance-stamp.mjs` can also merge Open Knowledge Format-compatible frontmatter into native ArcKit artefacts. This is disabled by default; use `/arckit:export-okf` when you only need copied OKF output.
+
+Enable source stamping with either:
+
+- `ARCKIT_OKF_FRONTMATTER=1`
+- `.arckit/config.json` containing `{ "okfFrontmatter": true }`
+
+When enabled, the hook merges `type`, `title`, `description`, `resource`, `tags`, `timestamp`, and `arckit` metadata into `ARC-NNN-*-vN.N.md` files after writes. Existing frontmatter keys are preserved, malformed frontmatter fails closed, and repeated hook runs do not rewrite an unchanged file.
+
 ## Manifest Auto-Update (`update-manifest.mjs`)
 
 Companion PostToolUse hook on `Write` against `projects/**` that incrementally updates `docs/manifest.json` so the documentation site stays current without a full `/arckit:pages` re-run. On a successful update it emits `hookSpecificOutput.updatedToolOutput` with the document ID and target slot (e.g. `ARC-001-REQ-v1.0 → 001-test/documents`). Because `provenance-stamp.mjs` runs after this hook and overwrites its `updatedToolOutput`, the manifest signal is re-surfaced from `provenance-stamp.mjs` whenever a `docs/manifest.json` exists.

@@ -57,9 +57,14 @@
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
-import { join, basename, dirname, resolve } from 'node:path';
+import { join, basename, dirname, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isFile, findRepoRoot, parseHookInput, emitUpdatedToolOutput } from './hook-utils.mjs';
+import {
+  buildOkfFieldsForArcArtifact,
+  mergeOkfFrontmatter,
+  parseFrontmatter,
+} from './okf-frontmatter.mjs';
 
 const PLUGIN_ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 
@@ -248,6 +253,59 @@ function stampFile(filePath, block) {
   }
 }
 
+function isOkfFrontmatterEnabled(repoRoot) {
+  const envValue = String(process.env.ARCKIT_OKF_FRONTMATTER || '').trim().toLowerCase();
+  if (envValue === '1' || envValue === 'true') return true;
+  if (!repoRoot) return false;
+
+  const configPath = join(repoRoot, '.arckit', 'config.json');
+  if (!isFile(configPath)) return false;
+
+  try {
+    const config = JSON.parse(readFileSync(configPath, 'utf8'));
+    return config.okfFrontmatter === true;
+  } catch {
+    return false;
+  }
+}
+
+function toPosix(path) {
+  return path.split(/[\\/]/).join('/');
+}
+
+function stampOkfFrontmatter(filePath, repoRoot) {
+  let content;
+  try {
+    content = readFileSync(filePath, 'utf8');
+  } catch {
+    return false;
+  }
+
+  const parsed = parseFrontmatter(content);
+  const existingTimestamp =
+    parsed.hasFrontmatter && !parsed.error && parsed.data.timestamp
+      ? parsed.data.timestamp
+      : new Date().toISOString();
+  const resource = repoRoot ? toPosix(relative(repoRoot, filePath)) : filePath;
+  const fields = buildOkfFieldsForArcArtifact({
+    filePath,
+    content,
+    resource,
+    timestamp: existingTimestamp,
+  });
+  if (!fields) return false;
+
+  const updated = mergeOkfFrontmatter(content, fields);
+  if (updated === content) return false;
+
+  try {
+    writeFileSync(filePath, updated);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // ── Main ──────────────────────────────────────────────────────────────
 
 const data = parseHookInput();
@@ -291,23 +349,30 @@ const block = buildProvenanceBlock({
 });
 
 const stamped = block !== null && stampFile(filePath, block);
+const okfStamped = isOkfFrontmatterEnabled(repoRoot) && stampOkfFrontmatter(filePath, repoRoot);
 
 // Emit hookSpecificOutput.updatedToolOutput so the model sees what the hook
 // did. Silent when nothing changed so the original tool output is preserved.
-if (stamped) {
+if (stamped || okfStamped) {
   const verb = tool === 'Edit' ? 'edited' : 'written';
   const lines = [`File ${verb}: ${filePath}`];
 
-  // Effort signal — what the model knows it asked for vs what was applied.
-  if (effortRequested && effortEffective) {
-    const effortMsg = effortDowngraded
-      ? `effort: requested=${effortRequested}, effective=${effortEffective} (downgraded — model does not support that level)`
-      : `effort: requested=${effortRequested}, effective=${effortEffective}`;
-    lines.push(`[ArcKit] provenance stamped (${effortMsg})`);
-  } else if (build) {
-    lines.push(`[ArcKit] provenance stamped (build: ${build.recipe || '?'}/${build.target})`);
-  } else {
-    lines.push(`[ArcKit] provenance stamped`);
+  if (stamped) {
+    // Effort signal — what the model knows it asked for vs what was applied.
+    if (effortRequested && effortEffective) {
+      const effortMsg = effortDowngraded
+        ? `effort: requested=${effortRequested}, effective=${effortEffective} (downgraded — model does not support that level)`
+        : `effort: requested=${effortRequested}, effective=${effortEffective}`;
+      lines.push(`[ArcKit] provenance stamped (${effortMsg})`);
+    } else if (build) {
+      lines.push(`[ArcKit] provenance stamped (build: ${build.recipe || '?'}/${build.target})`);
+    } else {
+      lines.push(`[ArcKit] provenance stamped`);
+    }
+  }
+
+  if (okfStamped) {
+    lines.push(`[ArcKit] OKF frontmatter stamped`);
   }
 
   // Re-surface the update-manifest signal on Write — that hook ran first

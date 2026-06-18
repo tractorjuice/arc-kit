@@ -9,7 +9,7 @@
  * hook-utils.mjs module as the hook count grows."
  */
 
-import { readFileSync, statSync, readdirSync } from 'node:fs';
+import { readFileSync, statSync, readdirSync, writeSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { DOC_TYPES } from '../config/doc-types.mjs';
 
@@ -352,7 +352,7 @@ export function emitUpdatedToolOutput(text) {
       updatedToolOutput: text,
     },
   };
-  process.stdout.write(JSON.stringify(payload));
+  writeSync(1, JSON.stringify(payload));
 }
 
 // ── Hook Input ──
