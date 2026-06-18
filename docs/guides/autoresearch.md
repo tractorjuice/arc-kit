@@ -27,6 +27,25 @@ Claude will:
 
 To stop early: interrupt Claude at any time. Otherwise the loop self-terminates on a stop condition (see [Stopping Conditions](#stopping-conditions)). Either way, the worktree has the best prompt.
 
+### Self-Harness enhanced autoresearch
+
+For command, agent, hook, or full harness improvement, use the Self-Harness enhanced program:
+
+```text
+read scripts/autoresearch/program-selfharness.md and optimize the requirements command
+```
+
+The Self-Harness program extends the prompt-only loop with trace collection, verifier-grounded weakness mining, held-in/held-out fixture validation, and modes for improving commands, agents, hooks, or broader harness configuration. It is useful when the failure is not just wording in a command prompt, but the surrounding harness behavior: tool use, runtime setup, hook behavior, verification, or agent instructions.
+
+Common targets:
+
+- `optimize command requirements` - prompt-only command optimization, compatible with the standard loop
+- `optimize command requirements mode:full` - full harness optimization for a command
+- `optimize agent research` - agent definition optimization
+- `optimize hook graph-inject` - hook behavior optimization
+
+See [`scripts/autoresearch/program-selfharness.md`](../../scripts/autoresearch/program-selfharness.md) for the detailed draft workflow.
+
 ### Watching progress without blocking the main session
 
 For long overnight runs, open a second Claude Code session in the worktree directory and ask it to `Monitor` the results log:
@@ -57,6 +76,7 @@ The system adapts autoresearch's ML experiment loop to prompt engineering:
 
 - **autoresearch**: modifies `train.py` to minimise `val_bpb`
 - **ArcKit autoresearch**: modifies a command `.md` file to maximise a quality score
+- **ArcKit Self-Harness**: modifies prompts, agents, hooks, runtime configuration, or verification harnesses, then accepts only changes that generalize across held-in and held-out tasks
 
 ### The Loop
 
@@ -121,7 +141,48 @@ Scoring uses an adversarial reviewer persona to prevent self-evaluation bias.
 
 ---
 
+## Self-Harness Extension
+
+Self-Harness is an enhanced autoresearch mode based on "Self-Harness: Harnesses That Improve Themselves" (Zhang et al., 2026, arXiv:2606.09498v1). The ArcKit draft implementation keeps the original prompt-only workflow intact and adds a broader harness improvement loop for cases where the command prompt is not the only variable.
+
+### What It Adds
+
+- **Multi-dimensional optimization**: can improve command prompts, agent definitions, hook behavior, runtime wiring, and verifier logic depending on the selected mode
+- **Trace collection**: records execution traces under `.arckit/autoresearch-traces/<target>/<mode>/`
+- **Weakness mining**: clusters repeated verifier failures and trace signatures so the next proposal addresses a concrete failure mode
+- **Harness proposals**: uses `harness-proposer.mjs` to generate scoped candidate improvements
+- **Held-in/held-out validation**: requires improvements to hold on the optimization fixtures and not regress on reserved fixtures
+- **Regression validation**: uses `harness-validator.mjs` to reject candidates that overfit or exceed the allowed edit scope
+
+### Execution Modes
+
+| Mode | Typical target | Editable scope |
+|------|----------------|----------------|
+| `prompt` | `command requirements` | One command `.md` file |
+| `full` | `command requirements mode:full` | Command, hooks, templates, runtime, and verification files declared in the run |
+| `agent` | `agent research` | One agent definition |
+| `hook` | `hook graph-inject` | One hook implementation |
+
+Use the standard `program.md` when you want a tight prompt-only optimization. Use `program-selfharness.md` when you need evidence about whether failures come from the prompt, execution harness, supporting tools, or validation layer.
+
+### Acceptance Rule
+
+The Self-Harness loop is intentionally conservative:
+
+1. Score the baseline across held-in and held-out fixtures.
+2. Mine failures from traces and verifier output.
+3. Propose a scoped harness change.
+4. Validate the candidate on held-in fixtures.
+5. Re-run held-out fixtures before accepting.
+6. Keep only changes that improve held-in performance without degrading held-out performance beyond the configured tolerance.
+
+This prevents the loop from optimizing around one fixture while making the command, agent, or hook worse in real use.
+
+---
+
 ## What Gets Modified (and What Doesn't)
+
+For the standard prompt-only loop:
 
 **Editable** (the only variable):
 
@@ -136,6 +197,8 @@ Scoring uses an adversarial reviewer persona to prevent self-evaluation bias.
 - Evaluation rubric
 
 This mirrors autoresearch's design: `prepare.py` is read-only, `train.py` is the only file modified.
+
+For Self-Harness runs, the editable scope depends on the selected mode and is declared at setup time in `program-selfharness.md`. Keep that scope narrow for each run. A full harness run can touch more than one file, but it should still treat fixtures, scoring standards, and held-out tasks as read-only controls.
 
 ---
 
@@ -224,6 +287,7 @@ Not suitable:
 ```text
 scripts/autoresearch/
   program.md              # The instruction file Claude follows
+  program-selfharness.md  # Self-Harness enhanced instruction file
   fixtures/
     000-global/
       ARC-000-PRIN-v1.0.md    # Architecture principles (6 principles)
@@ -233,6 +297,19 @@ scripts/autoresearch/
 ```
 
 The experiment runs in a **git worktree** (`../autoresearch-<command>`), keeping the main checkout clean. The scratch project, results TSV, and all experiment commits live in the worktree. The branch tip (the improved command `.md`) is the deliverable.
+
+Self-Harness runs also use trace and candidate outputs:
+
+```text
+.arckit/autoresearch-traces/
+  <target>/
+    <mode>/
+      iteration-N.json
+
+scripts/autoresearch/runs/
+  <target>/
+    results.tsv
+```
 
 ---
 
