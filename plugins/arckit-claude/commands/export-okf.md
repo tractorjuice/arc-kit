@@ -21,7 +21,7 @@ $ARGUMENTS
 2. Run the export script from the repository root:
 
 ```bash
-node plugins/arckit-claude/scripts/export-okf.mjs $ARGUMENTS
+node ${CLAUDE_PLUGIN_ROOT}/scripts/export-okf.mjs $ARGUMENTS
 ```
 
 3. Read the JSON summary from the script output.

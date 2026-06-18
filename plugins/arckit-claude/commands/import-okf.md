@@ -21,7 +21,7 @@ $ARGUMENTS
 2. Run the importer from the repository root:
 
 ```bash
-node plugins/arckit-claude/scripts/import-okf.mjs $ARGUMENTS
+node ${CLAUDE_PLUGIN_ROOT}/scripts/import-okf.mjs $ARGUMENTS
 ```
 
 3. Read the JSON summary and `.arckit/tmp/okf-import-report.json`.

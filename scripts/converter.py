@@ -312,6 +312,7 @@ AGENT_CONFIG = {
         "output_dir": "extensions/arckit-paperclip/src/data",
         "format": "json",
         "path_prefix": "scripts/bash",
+        "script_path_prefix": "scripts",
         "arg_placeholder": "{topic}",
         "extension_dir": "extensions/arckit-paperclip",
         "copy_commands_to_extension": False,
@@ -351,6 +352,12 @@ def rewrite_paths(prompt, config):
     # project override path must be rewritten before plugin-root expansion.
     if config.get("project_template_overrides"):
         result = result.replace(".arckit/templates/", ".arckit/templates-custom/")
+
+    if config.get("script_path_prefix"):
+        result = result.replace(
+            "${CLAUDE_PLUGIN_ROOT}/scripts/",
+            f"{config['script_path_prefix']}/",
+        )
 
     result = result.replace("${CLAUDE_PLUGIN_ROOT}", config["path_prefix"])
 
@@ -714,9 +721,12 @@ def copy_extension_files(plugin_sources):
         ("scripts/python", "scripts/python"),
         ("scripts/validate-handoff.mjs", "scripts/validate-handoff.mjs"),
         ("scripts/owm-to-mermaid.mjs", "scripts/owm-to-mermaid.mjs"),
+        ("scripts/export-okf.mjs", "scripts/export-okf.mjs"),
+        ("scripts/import-okf.mjs", "scripts/import-okf.mjs"),
         # owm-tidy.mjs is invoked by /arckit:wardley --tidy-owm; ship it and its
         # placement-engine dependency so the flag works on non-Claude CLIs too.
         ("hooks/owm-tidy.mjs", "hooks/owm-tidy.mjs"),
+        ("hooks/okf-frontmatter.mjs", "hooks/okf-frontmatter.mjs"),
         ("hooks/wardley-label-placement.mjs", "hooks/wardley-label-placement.mjs"),
         ("docs/guides", "docs/guides"),
         ("config", "config"),
