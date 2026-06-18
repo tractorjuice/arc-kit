@@ -172,6 +172,8 @@ See the [full index](guides/roles/README.md) for details.
 
 ## 🔧 Technical Reference
 
+- [Export OKF](guides/export-okf.md) - `/arckit:export-okf` - Export ArcKit artifacts as OKF-compatible Markdown
+- [Import OKF](guides/import-okf.md) - `/arckit:import-okf` - Import OKF bundles as reviewable research notes
 - [Token Limits Solutions](TOKEN-LIMITS.md) - Handling large projects with AI token limits
 - Document Control Standard - See [CLAUDE.md](../CLAUDE.md#document-control-standard) for the canonical specification
 

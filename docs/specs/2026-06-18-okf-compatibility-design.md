@@ -248,4 +248,3 @@ Deferred:
   has proven stable?
 - Should `docs/manifest.json` surface OKF metadata fields directly, or should it
   remain ArcKit-only and let `export-okf` produce the OKF view?
-

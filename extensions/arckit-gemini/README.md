@@ -2,7 +2,7 @@
 
 **The Enterprise Architecture Governance Harness for Gemini CLI**
 
-ArcKit provides 70 slash commands across strategy, architecture, delivery, and assurance — including UK Government compliance — all from within Gemini CLI.
+ArcKit provides 75 slash commands across strategy, architecture, delivery, assurance, and interoperability — including UK Government compliance — all from within Gemini CLI.
 
 ## Installation
 
@@ -51,7 +51,7 @@ gemini
 /arckit:gcp-research Evaluate GCP services for data analytics platform
 ```
 
-## All 64 Commands
+## Core Commands
 
 ### Phase 0: Project Planning
 
@@ -149,6 +149,13 @@ gemini
 |---------|-------------|
 | `/arckit:customize` | Template customization manager |
 | `/arckit:template-builder` | Create new document templates via interactive interview |
+
+### Interoperability
+
+| Command | Description |
+|---------|-------------|
+| `/arckit:export-okf` | Export ArcKit artifacts as an OKF-compatible Markdown bundle |
+| `/arckit:import-okf` | Import OKF bundles as reviewable research notes |
 
 ## Agents
 

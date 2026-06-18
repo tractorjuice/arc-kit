@@ -10,7 +10,7 @@ The Enterprise Architecture Governance Harness for Mistral Vibe CLI.
 
 ## Overview
 
-ArcKit for Mistral Vibe brings the full power of the Enterprise Architecture Governance Harness to Mistral's CLI coding agent. This extension provides 73+ commands (skills) across strategy, architecture, delivery, and assurance workflows, plus 10+ specialized agents for complex research and analysis tasks.
+ArcKit for Mistral Vibe brings the full power of the Enterprise Architecture Governance Harness to Mistral's CLI coding agent. This extension provides 75+ commands (skills) across strategy, architecture, delivery, assurance, and interoperability workflows, plus 10+ specialized agents for complex research and analysis tasks.
 
 ## Installation
 

@@ -5,6 +5,20 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Open Knowledge Format interoperability.** Added `/arckit:export-okf` and
+  `/arckit:import-okf` plus shared OKF frontmatter helpers. Export writes copied
+  OKF-compatible Markdown bundles without mutating source ARC files. Import scans
+  OKF Markdown, writes `.arckit/tmp/okf-import-report.json`, and materializes
+  valid non-duplicate entries as `RSCH` review notes by default.
+- **Optional OKF source frontmatter stamping.** `provenance-stamp.mjs` can now
+  merge OKF metadata into native ARC artifacts when explicitly enabled with
+  `ARCKIT_OKF_FRONTMATTER=1` or `.arckit/config.json` containing
+  `{ "okfFrontmatter": true }`. Stamping is off by default and idempotent.
+
 ## [5.14.0] — 2026-06-17
 
 ### Added

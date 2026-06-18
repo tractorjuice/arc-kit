@@ -5,6 +5,19 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Open Knowledge Format interoperability.** Added `/arckit:export-okf` and
+  `/arckit:import-okf` commands, Node import/export scripts, shared OKF
+  frontmatter helpers, and guide docs. Export creates OKF-compatible copies of
+  ArcKit artifacts; import classifies OKF Markdown and materializes safe
+  entries as `RSCH` review notes.
+- **Optional OKF frontmatter stamping.** `provenance-stamp.mjs` can merge OKF
+  frontmatter into native ARC artifacts only when explicitly opted in through
+  `ARCKIT_OKF_FRONTMATTER=1` or `.arckit/config.json`.
+
 ## [5.14.0] — 2026-06-17
 
 ### Added

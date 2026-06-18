@@ -1,6 +1,6 @@
 # ArcKit Plugin for Claude Code
 
-The Enterprise Architecture Governance Harness — a Claude Code plugin providing 70 slash commands across strategy, architecture, delivery, and assurance.
+The Enterprise Architecture Governance Harness — a Claude Code plugin providing 75 slash commands across strategy, architecture, delivery, assurance, and interoperability.
 
 ## Installation
 
@@ -80,13 +80,13 @@ After installing the plugin:
 
 | Component | Count | Description |
 |-----------|-------|-------------|
-| Commands | 67 | Slash commands for architecture artifacts |
+| Commands | 75 | Slash commands for architecture artifacts and OKF interoperability |
 | Skills | 1 | Conversational Wardley Mapping with interactive guidance |
-| Agents | 9 | Autonomous research agents |
-| Templates | 45 | Document templates with UK Government compliance |
-| Scripts | 6 | Helper bash scripts |
+| Agents | 20 | Autonomous research agents and subagent definitions |
+| Templates | 68 | Document templates with UK Government compliance |
+| Scripts | 15 | Helper bash, Python, and Node scripts |
 | Hooks | 17 | Automation hooks across 7 event types |
-| Guides | 52 | Command usage documentation |
+| Guides | 167 | Command and reference documentation |
 
 ## Hooks
 
@@ -100,6 +100,12 @@ Automation hooks run automatically to provide context and enforce standards. See
 | PreToolUse | validate-arc-filename, score-validator, file-protection, secret-file-scanner | Filename enforcement, security, validation |
 | PostToolUse | update-manifest | Keep manifest.json in sync |
 | PermissionRequest | allow-mcp-tools | Auto-allow bundled MCP servers |
+
+## OKF Interoperability
+
+- `/arckit:export-okf` exports ArcKit `ARC-*.md` artifacts as copied Markdown with OKF-compatible frontmatter.
+- `/arckit:import-okf` scans OKF Markdown bundles, writes `.arckit/tmp/okf-import-report.json`, and materializes safe imports as `RSCH` review notes.
+- Source ARC frontmatter stamping is opt-in via `ARCKIT_OKF_FRONTMATTER=1` or `.arckit/config.json` with `{ "okfFrontmatter": true }`.
 
 ## Template Customization
 
