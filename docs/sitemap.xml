@@ -277,6 +277,30 @@
         <priority>0.6</priority>
     </url>
     <url>
+        <loc>https://arckit.org/article-viewer.html?a=2026-06-02-uk-tenders-procurement-intelligence</loc>
+        <lastmod>2026-06-02</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/article-viewer.html?a=2026-06-03-uk-government-consulting-spend</loc>
+        <lastmod>2026-06-03</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/article-viewer.html?a=2026-06-09-arckit-fde-site-generator</loc>
+        <lastmod>2026-06-09</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/article-viewer.html?a=2026-06-10-arckit-uk-gcloud-supplier-overlay</loc>
+        <lastmod>2026-06-10</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
         <loc>https://arckit.org/article-viewer.html?a=2026-06-15-ai-cli-harness-not-ai-app</loc>
         <lastmod>2026-06-15</lastmod>
         <changefreq>monthly</changefreq>
@@ -308,7 +332,7 @@
     </url>
     <url>
         <loc>https://arckit.org/llms.txt</loc>
-        <lastmod>2026-05-16</lastmod>
+        <lastmod>2026-06-19</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.5</priority>
     </url>
