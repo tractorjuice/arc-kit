@@ -70,3 +70,10 @@ Both commands are part of ArcKit and need no API key. Run `/arckit:tenders` on y
 The shift is small to describe and large in practice. Architectural decisions that used to rest on estimates can now rest on the public record, with a citation on every figure and an honest note on what that figure does and does not mean.
 
 Find ArcKit, and the rest of the governance harness, at [arckit.org](https://arckit.org).
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

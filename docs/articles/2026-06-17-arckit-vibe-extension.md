@@ -87,3 +87,10 @@ For architecture teams, that is the point. The assistant may change. The artifac
 - Pull request: [#598 — feat: add Mistral Vibe CLI extension support](https://github.com/tractorjuice/arc-kit/pull/598)
 - Extension repo: [tractorjuice/arckit-vibe](https://github.com/tractorjuice/arckit-vibe)
 - Issue: [#597 — Add support for Mistral Vibe](https://github.com/tractorjuice/arc-kit/issues/597)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

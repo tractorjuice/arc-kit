@@ -148,10 +148,6 @@ ArcKit is open source and available on GitHub. For Claude Code users, it's a mar
 
 That's what first-class support means. Not a translation. Not a compatibility layer. A native experience, built for each platform, from a single source of truth.
 
-## Join the Community
-
-ArcKit now has dedicated spaces for architects and developers using the toolkit. The [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) is the place for announcements, case studies, and discussion around enterprise architecture governance across all five supported platforms. If you prefer real-time conversation, the [ArcKit Discord](https://discord.gg/UsfzrZmr) is where you'll find help with commands, share what you're building, and connect with other users working across Claude Code, Gemini CLI, Codex CLI, and OpenCode. Whether you're generating your first requirements document or running multi-platform governance across a programme, come say hello.
-
 <!-- arckit:related-articles -->
 ## Related Articles
 
@@ -160,3 +156,9 @@ ArcKit now has dedicated spaces for architects and developers using the toolkit.
 - [The Token Budget Behind ArcKit's Plugin Split](article-viewer.html?a=2026-05-20-plugin-split-token-budget)
 - [Your Architecture Documents Are Connected — Now You Can See How](article-viewer.html?a=2026-03-12-document-map-medium)
 
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

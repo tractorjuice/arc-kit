@@ -79,3 +79,10 @@ ArcKit has spent its life making the buyer's governance legible. This overlay ex
 ---
 
 *`arckit-uk-gcloud` is the 13th ArcKit marketplace plugin. It requires the `arckit` core plugin, is proprietary (not covered by the repository's MIT licence), and is available for Claude Code.*
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

@@ -68,10 +68,6 @@ The suite doesn't replace strategic thinking. It makes the structured parts of s
 
 ArcKit v4.3.0 is available now. Update via the Claude Code marketplace, `gemini extensions update arckit`, or pull the latest from GitHub. The four new commands are tagged as Experimental while they accumulate test coverage across ArcKit's 22 test repositories. The reference material, templates, and guides are stable.
 
-## Join the Community
-
-ArcKit is open source at [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit). Join the [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) for announcements, case studies, and discussion around enterprise architecture governance. For real-time conversation, help with commands, and sharing what you're building, join the [ArcKit Discord](https://discord.gg/UsfzrZmr).
-
 <!-- arckit:related-articles -->
 ## Related Articles
 
@@ -80,3 +76,9 @@ ArcKit is open source at [github.com/tractorjuice/arc-kit](https://github.com/tr
 - [Your Wardley Maps Belong in Git: What Mermaid Support Changes](article-viewer.html?a=2026-05-19-wardley-maps-mermaid-github)
 - [How ArcKit Tidies Wardley Map Labels: A Deterministic Placement Engine](article-viewer.html?a=2026-05-22-tidy-wardley-labels)
 
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

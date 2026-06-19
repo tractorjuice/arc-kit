@@ -102,3 +102,10 @@ That is the right kind of self-improvement for a governance tool: explicit, boun
 - Pull request: [#606 -- add Self-Harness autoresearch implementation](https://github.com/tractorjuice/arc-kit/pull/606)
 - Program: [`scripts/autoresearch/program-selfharness.md`](https://github.com/tractorjuice/arc-kit/blob/main/scripts/autoresearch/program-selfharness.md)
 - Guide: [`docs/guides/autoresearch.md`](https://github.com/tractorjuice/arc-kit/blob/main/docs/guides/autoresearch.md)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

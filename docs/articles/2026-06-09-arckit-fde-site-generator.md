@@ -29,3 +29,10 @@ Install it with `/plugin marketplace add tractorjuice/arc-kit` then `/plugin ins
 ## About ArcKit
 
 [ArcKit](https://arckit.org) is the enterprise architecture governance harness for AI coding assistants. It generates strategy, architecture, delivery and assurance artefacts on Claude Code, Codex, Gemini, OpenCode and Copilot, turning architecture governance from scattered documents into a systematic, template-driven process.
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

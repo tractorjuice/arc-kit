@@ -117,3 +117,10 @@ That is the bet behind ArcKit.
 ---
 
 Sources: SemiAnalysis' [original X thread](https://x.com/SemiAnalysis_/status/2064815042374074396), the [subscription-plan data post](https://x.com/SemiAnalysis_/status/2064815044085318040), the [subscription-margin post](https://x.com/SemiAnalysis_/status/2064815045767213400), and the [unrolled thread data](https://api.fxtwitter.com/2/thread/2064815042374074396).
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)

@@ -85,3 +85,10 @@ OKF gives ArcKit a bridge to the wider AI knowledge ecosystem. ArcKit gives OKF 
 - Pull request: [#603 -- add OKF compatibility workflows](https://github.com/tractorjuice/arc-kit/pull/603)
 - Follow-up docs: [#605 -- complete OKF documentation coverage](https://github.com/tractorjuice/arc-kit/pull/605)
 - Issue: [#604 -- OKF compatibility](https://github.com/tractorjuice/arc-kit/issues/604)
+
+<!-- arckit:community-block -->
+## Join the ArcKit Community
+
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
+- **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
