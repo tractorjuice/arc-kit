@@ -8,7 +8,17 @@ Complete documentation for ArcKit — The Enterprise Architecture Governance Har
 
 - [Getting Started](../README.md#getting-started)
 - [Command Reference](../README.md#commands)
+- [Articles](articles.html)
 - [Token Limits Guide](TOKEN-LIMITS.md)
+
+---
+
+## Articles
+
+- [ArcKit and OKF: knowledge interoperability without giving up governance](article-viewer.html?a=2026-06-19-okf-compatibility-workflows)
+- [ArcKit Self-Harness: when the governance harness starts improving itself](article-viewer.html?a=2026-06-19-self-harness-autoresearch)
+
+See the [full articles index](articles.html) for all ArcKit release notes, analysis, and essays.
 
 ---
 
