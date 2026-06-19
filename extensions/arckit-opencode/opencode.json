@@ -1,5 +1,7 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "name": "arckit",
+  "description": "OpenCode extension for ArcKit - The Enterprise Architecture Governance Harness with 116 commands across strategy, architecture, delivery, and assurance",
   "mcp": {
     "aws-knowledge": {
       "type": "remote",
