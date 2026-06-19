@@ -26,7 +26,7 @@
     </url>
     <url>
         <loc>https://arckit.org/articles.html</loc>
-        <lastmod>2026-06-15</lastmod>
+        <lastmod>2026-06-19</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -285,6 +285,18 @@
     <url>
         <loc>https://arckit.org/article-viewer.html?a=2026-06-17-arckit-vibe-extension</loc>
         <lastmod>2026-06-17</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/article-viewer.html?a=2026-06-19-okf-compatibility-workflows</loc>
+        <lastmod>2026-06-19</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+    </url>
+    <url>
+        <loc>https://arckit.org/article-viewer.html?a=2026-06-19-self-harness-autoresearch</loc>
+        <lastmod>2026-06-19</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.6</priority>
     </url>
