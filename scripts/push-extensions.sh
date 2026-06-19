@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-# push-extensions.sh — Push extension directories to their separate GitHub repos.
+# push-extensions.sh — Publish extension directories to their separate GitHub repos.
 # Usage: ./scripts/push-extensions.sh [extension...]
 #
 # Examples:
@@ -9,6 +9,9 @@ set -uo pipefail
 #   ./scripts/push-extensions.sh gemini codex # Push only gemini and codex
 #
 # Requires: GH_TOKEN with repo scope, or gh CLI authenticated with push access.
+# By default this also creates/preserves a vX.Y.Z tag and GitHub Release in
+# each extension repo. Set ARCKIT_SKIP_EXTENSION_RELEASES=1 for a commit-only
+# sync.
 
 REPO_OWNER="tractorjuice"
 
@@ -40,6 +43,8 @@ fi
 # ── Read version from root VERSION file ───────────────────────────────────────
 VERSION=$(cat "$ROOT_DIR/VERSION")
 COMMIT_MSG="chore: sync with arc-kit v${VERSION}"
+TAG="v${VERSION}"
+SKIP_RELEASES="${ARCKIT_SKIP_EXTENSION_RELEASES:-0}"
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 green()  { printf '\033[0;32m%s\033[0m\n' "$1"; }
@@ -55,8 +60,109 @@ check_repo_exists() {
   fi
 }
 
+remote_tag_commit() {
+  local tag="$1"
+  local commit
+
+  # Annotated tags expose the target commit through ^{}; lightweight tags do not.
+  commit=$(git ls-remote --tags origin "refs/tags/${tag}^{}" | awk '{print $1}' | head -1)
+  if [[ -z "$commit" ]]; then
+    commit=$(git ls-remote --tags origin "refs/tags/${tag}" | awk '{print $1}' | head -1)
+  fi
+  printf '%s' "$commit"
+}
+
+ensure_repo_topic() {
+  local repo_name="$1"
+  local wanted_topic="$2"
+  local current_json
+  local next_json
+
+  current_json=$(gh api "repos/${REPO_OWNER}/${repo_name}/topics" \
+    -H 'Accept: application/vnd.github+json' 2>/dev/null) || {
+      yellow "  Could not read topics for ${REPO_OWNER}/${repo_name} — skipping topic check"
+      return 0
+    }
+
+  if jq -e --arg topic "$wanted_topic" '(.names // []) | index($topic)' \
+      <<<"$current_json" >/dev/null; then
+    return 0
+  fi
+
+  next_json=$(jq --arg topic "$wanted_topic" \
+    '.names = (((.names // []) + [$topic]) | unique)' \
+    <<<"$current_json")
+
+  if gh api "repos/${REPO_OWNER}/${repo_name}/topics" \
+      -X PUT \
+      -H 'Accept: application/vnd.github+json' \
+      --input - <<<"$next_json" >/dev/null; then
+    green "  ✓ Added GitHub topic: ${wanted_topic}"
+  else
+    yellow "  Could not update topics for ${REPO_OWNER}/${repo_name}"
+  fi
+}
+
+publish_release_artifacts() {
+  local repo_name="$1"
+  local head_sha
+  local existing_tag_commit
+  local release_notes
+
+  if [[ "$SKIP_RELEASES" == "1" ]]; then
+    yellow "  Extension release publishing disabled by ARCKIT_SKIP_EXTENSION_RELEASES=1"
+    return 0
+  fi
+
+  head_sha=$(git rev-parse HEAD)
+  existing_tag_commit=$(remote_tag_commit "$TAG")
+
+  if [[ -n "$existing_tag_commit" ]]; then
+    if [[ "$existing_tag_commit" != "$head_sha" ]]; then
+      red "  Tag ${TAG} already exists but points at ${existing_tag_commit:0:8}, not ${head_sha:0:8}"
+      return 1
+    fi
+    yellow "  Tag ${TAG} already exists at HEAD"
+  else
+    echo "  Creating tag ${TAG}..."
+    if ! git tag -a "$TAG" -m "${repo_name} ${TAG}"; then
+      red "  Failed to create tag ${TAG} for ${REPO_OWNER}/${repo_name}"
+      return 1
+    fi
+    if ! git push --quiet origin "refs/tags/${TAG}"; then
+      red "  Failed to push tag ${TAG} for ${REPO_OWNER}/${repo_name}"
+      return 1
+    fi
+    green "  ✓ Pushed tag ${TAG}"
+  fi
+
+  if gh release view "$TAG" --repo "${REPO_OWNER}/${repo_name}" &>/dev/null; then
+    yellow "  GitHub Release ${TAG} already exists"
+    return 0
+  fi
+
+  release_notes=$(cat <<EOF
+Synced from tractorjuice/arc-kit ${TAG}.
+
+Main ArcKit release: https://github.com/tractorjuice/arc-kit/releases/tag/${TAG}
+Source commit: ${head_sha}
+EOF
+)
+
+  echo "  Creating GitHub Release ${TAG}..."
+  if gh release create "$TAG" \
+      --repo "${REPO_OWNER}/${repo_name}" \
+      --title "${repo_name} ${TAG}" \
+      --notes "$release_notes" >/dev/null; then
+    green "  ✓ Created GitHub Release ${TAG}"
+  else
+    red "  Failed to create GitHub Release ${TAG} for ${REPO_OWNER}/${repo_name}"
+    return 1
+  fi
+}
+
 # ── Main loop ─────────────────────────────────────────────────────────────────
-PUSHED=0
+PROCESSED=0
 SKIPPED=0
 FAILED=0
 
@@ -116,38 +222,46 @@ for target in "${TARGETS[@]}"; do
   git add -A
   if git diff --cached --quiet; then
     yellow "  No changes — already up to date"
-    ((SKIPPED++))
-    cd "$ROOT_DIR"
-    continue
+  else
+    # Show summary of changes
+    CHANGED=$(git diff --cached --stat | tail -1)
+    echo "  Changes: $CHANGED"
+
+    # Commit and push
+    if ! git commit -m "$COMMIT_MSG" --quiet; then
+      red "  Failed to commit changes for ${REPO_OWNER}/${repo_name}"
+      ((FAILED++))
+      cd "$ROOT_DIR"
+      continue
+    fi
+    if ! git push --quiet; then
+      red "  Failed to push ${REPO_OWNER}/${repo_name}"
+      ((FAILED++))
+      cd "$ROOT_DIR"
+      continue
+    fi
+    green "  ✓ Pushed to ${REPO_OWNER}/${repo_name}"
   fi
 
-  # Show summary of changes
-  CHANGED=$(git diff --cached --stat | tail -1)
-  echo "  Changes: $CHANGED"
+  if [[ "$target" == "gemini" ]]; then
+    ensure_repo_topic "$repo_name" "gemini-cli-extension"
+  fi
 
-  # Commit and push
-  if ! git commit -m "$COMMIT_MSG" --quiet; then
-    red "  Failed to commit changes for ${REPO_OWNER}/${repo_name}"
+  if ! publish_release_artifacts "$repo_name"; then
     ((FAILED++))
     cd "$ROOT_DIR"
     continue
   fi
-  if ! git push --quiet; then
-    red "  Failed to push ${REPO_OWNER}/${repo_name}"
-    ((FAILED++))
-    cd "$ROOT_DIR"
-    continue
-  fi
-  green "  ✓ Pushed to ${REPO_OWNER}/${repo_name}"
-  ((PUSHED++))
+
+  ((PROCESSED++))
   cd "$ROOT_DIR"
 done
 
 # ── Summary ───────────────────────────────────────────────────────────────────
 echo ""
 echo "── Summary ──"
-echo "  Pushed:  $PUSHED"
-echo "  Skipped: $SKIPPED"
-echo "  Failed:  $FAILED"
+echo "  Processed: $PROCESSED"
+echo "  Skipped:   $SKIPPED"
+echo "  Failed:    $FAILED"
 
 [[ $FAILED -eq 0 ]] || exit 1

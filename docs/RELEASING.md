@@ -33,7 +33,7 @@ ArcKit ships in seven formats, each with its own version file. They are all bump
 |--------|---------|
 | `scripts/bump-version.sh <version>` | Updates all version files in one pass |
 | `scripts/generate-release-notes.sh [prev-tag]` | Parses `git log` between tags into Keep a Changelog markdown (Added / Fixed / Changed / Breaking Changes), filters out `chore: bump version` commits, auto-detects previous tag if omitted |
-| `scripts/push-extensions.sh [name...]` | Pushes extension dirs to their separate GitHub repos (`tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.). Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub |
+| `scripts/push-extensions.sh [name...]` | Pushes extension dirs to their separate GitHub repos (`tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.), then creates or preserves each repo's `vX.Y.Z` tag and GitHub Release. Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub. Set `ARCKIT_SKIP_EXTENSION_RELEASES=1` only for a commit-only sync |
 | `.github/workflows/release.yml` | Creates the GitHub Release automatically on `v*` tag push (tag-push triggered, does not commit back to main) |
 
 ## Development Workflow
@@ -87,9 +87,20 @@ claude plugin prune --dry-run
 git tag -a vX.Y.Z -m "vX.Y.Z"
 git push && git push --tags
 
-# 10. Push to extension repos (Gemini, Codex, etc.)
+# 10. Push to extension repos (Gemini, Codex, etc.).
+#     This also publishes each extension repo's vX.Y.Z tag and GitHub Release.
 ./scripts/push-extensions.sh
 ```
+
+After step 10, verify the umbrella GitHub Release and every extension GitHub Release exists:
+
+- `tractorjuice/arc-kit`
+- `tractorjuice/arckit-gemini`
+- `tractorjuice/arckit-codex`
+- `tractorjuice/arckit-opencode`
+- `tractorjuice/arckit-copilot`
+- `tractorjuice/arckit-paperclip`
+- `tractorjuice/arckit-vibe`
 
 ### Note on `claude plugin tag`
 
@@ -114,6 +125,10 @@ After the umbrella tag (step 9), also create native per-plugin tags:
 ```
 
 This creates `arckit--vX.Y.Z`, `arckit-uae--vX.Y.Z`, ..., `arckit-at--vX.Y.Z` for the Claude Code plugin system's bookkeeping. Idempotent — re-running skips tags that already exist.
+
+Extension README files do not carry release numbers. Keep release identity in `VERSION` files,
+manifests, tags, and GitHub Releases so README content cannot drift from marketplace-visible
+artifacts.
 
 ## Adding New Package Data Files
 

@@ -78,12 +78,14 @@ git push && git push --tags
 ./scripts/tag-plugins.sh X.Y.Z
 
 # 10. Push each extension to its standalone GitHub repo
-#     (tractorjuice/arckit-gemini, arckit-codex, …):
+#     (tractorjuice/arckit-gemini, arckit-codex, …). This also creates or
+#     preserves each extension repo's vX.Y.Z tag and GitHub Release:
 ./scripts/push-extensions.sh
 ```
 
 After step 10, confirm the GitHub Release was created (the `release.yml` workflow runs on the
-`vX.Y.Z` tag push) and report the release URL and which extension repos were pushed.
+`vX.Y.Z` tag push). Also confirm every standalone extension repo has a `vX.Y.Z` tag and GitHub
+Release, then report the release URLs and which extension repos were pushed.
 
 ## Common Gotchas
 
@@ -113,7 +115,12 @@ The highest-signal failures — collected from real releases. Read these before 
   the same number by design; don't try to skew them.
 - **`push-extensions.sh` needs `GH_TOKEN`** and skips repos that don't yet exist on GitHub — a
   "skipped" line is not an error for a brand-new extension, but double-check it's not skipping a
-  repo that *should* exist.
+  repo that *should* exist. It now creates/preserves standalone extension `vX.Y.Z` tags and
+  GitHub Releases; use `ARCKIT_SKIP_EXTENSION_RELEASES=1` only when intentionally doing a
+  commit-only sync.
+- **Do not put release numbers in extension READMEs.** Extension release identity lives in
+  `VERSION` files, manifests, Git tags, and GitHub Releases. README-pinned versions drift and
+  are blocked by `tests/plugin/test_release_process.py`.
 - **Order is load-bearing.** bump → convert → commit → validate → tag → tag-plugins → push-extensions.
   Re-running an earlier step after a later one (e.g. editing files after the commit) means the tag
   no longer points at the released tree. If you edit after committing, redo from the commit.

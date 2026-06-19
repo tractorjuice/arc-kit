@@ -3,8 +3,6 @@
 The Enterprise Architecture Governance Harness for Mistral Vibe CLI.
 
 > **Status**: Beta (Community Preview) 🟡
-> **Version**: 5.14.0
-> **ArcKit Version**: 5.14.0
 >
 > **Note**: This extension is currently in beta. The extension is published from the standalone `tractorjuice/arckit-vibe` repository and regenerated from ArcKit's canonical plugin sources.
 
@@ -400,13 +398,6 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **Documentation**: [ArcKit Docs](https://tractorjuice.github.io/arc-kit/)
 - **Discussion**: [GitHub Discussions](https://github.com/tractorjuice/arc-kit/discussions)
 - **ArcKit Repository**: [tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
-
-## Version History
-
-| Version | Date | Changes |
-|---------|------|---------|
-| 5.14.0 | 2026-06-17 | Published as standalone generated extension repository |
-| 5.13.1 | 2026-06-16 | Initial Mistral Vibe extension release |
 
 ## Acknowledgments
 
