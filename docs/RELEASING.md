@@ -74,25 +74,32 @@ git checkout main && git pull
 # 5. Regenerate Codex/OpenCode/Gemini/Copilot formats
 python scripts/converter.py
 
-# 6. Commit the bump (claude plugin tag below requires a clean tree)
+# 6. Validate generated extension outputs
+pytest tests/codex/test_codex_extension.py \
+  tests/gemini tests/opencode tests/copilot \
+  tests/vibe/test_vibe_extension.py \
+  tests/paperclip/test_commands_json.py \
+  tests/plugin/test_release_process.py
+
+# 7. Commit the bump (claude plugin tag below requires a clean tree)
 git add -A && git commit -m "chore: bump version to X.Y.Z"
 
-# 7. Validate plugin/marketplace version agreement (Claude Code v2.1.118+)
+# 8. Validate plugin/marketplace version agreement (Claude Code v2.1.118+)
 claude plugin tag plugins/arckit-claude --dry-run
 
-# 8. (optional) Prune orphaned plugin dependencies
+# 9. (optional) Prune orphaned plugin dependencies
 claude plugin prune --dry-run
 
-# 9. Tag, push — GitHub Release created automatically
+# 10. Tag, push — GitHub Release created automatically
 git tag -a vX.Y.Z -m "vX.Y.Z"
 git push && git push --tags
 
-# 10. Push to extension repos (Gemini, Codex, etc.).
+# 11. Push to extension repos (Gemini, Codex, etc.).
 #     This also publishes each extension repo's vX.Y.Z tag and GitHub Release.
 ./scripts/push-extensions.sh
 ```
 
-After step 10, verify the umbrella GitHub Release and every extension GitHub Release exists:
+After step 11, verify the umbrella GitHub Release and every extension GitHub Release exists:
 
 - `tractorjuice/arc-kit`
 - `tractorjuice/arckit-gemini`
@@ -110,7 +117,7 @@ This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`)
 
 After v5.0.0 the marketplace ships 7 plugins (`arckit` core + 6 community overlays: UAE, FR, CA, EU, AT, AU). All 7 share one version, bumped together.
 
-Step 7 changes — validate every plugin manifest:
+Step 8 changes — validate every plugin manifest:
 
 ```bash
 for p in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au; do
@@ -118,7 +125,7 @@ for p in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit
 done
 ```
 
-After the umbrella tag (step 9), also create native per-plugin tags:
+After the umbrella tag (step 10), also create native per-plugin tags:
 
 ```bash
 ./scripts/tag-plugins.sh X.Y.Z

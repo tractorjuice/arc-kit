@@ -35,7 +35,7 @@ If any precondition fails, stop and surface it. Do not work around it.
 ## Release flow
 
 Run these in order. Each script is idempotent or safe to re-run except the `git tag`/`git push`
-steps. Pause after step 5 (the commit) and after step 8 (validation) to let the user confirm.
+steps. Pause after step 6 (the commit) and after step 8 before tagging to let the user confirm.
 
 ```bash
 # 1. Edit CHANGELOGs by hand — both of them:
@@ -52,38 +52,45 @@ steps. Pause after step 5 (the commit) and after step 8 (validation) to let the 
 #    new version:
 python scripts/converter.py
 
-# 4. Sanity-check the tree (no stray edits, counts/versions consistent):
+# 4. Validate generated extension outputs before committing:
+pytest tests/codex/test_codex_extension.py \
+  tests/gemini tests/opencode tests/copilot \
+  tests/vibe/test_vibe_extension.py \
+  tests/paperclip/test_commands_json.py \
+  tests/plugin/test_release_process.py
+
+# 5. Sanity-check the tree (no stray edits, counts/versions consistent):
 git status && git diff --stat
 
-# 5. Commit the bump — a clean tree is required for `claude plugin tag`:
+# 6. Commit the bump — a clean tree is required for `claude plugin tag`:
 git add -A && git commit -m "chore: bump version to X.Y.Z"
 
-# 6. Validate EVERY plugin manifest against the marketplace entry.
+# 7. Validate EVERY plugin manifest against the marketplace entry.
 #    Discover plugins dynamically — do NOT hardcode the list (it grows):
 for manifest in $(find . -maxdepth 3 -path '*/.claude-plugin/plugin.json' -not -path '*/node_modules/*' | sort); do
   p=$(python3 -c "import json;print(json.load(open('$manifest'))['name'])")
   claude plugin tag "$p" --dry-run || { echo "VERSION DRIFT: $p"; exit 1; }
 done
 
-# 7. (optional) Prune orphaned plugin deps:
+# 8. (optional) Prune orphaned plugin deps:
 claude plugin prune --dry-run
 
-# 8. Tag the umbrella release and push — this triggers
+# 9. Tag the umbrella release and push — this triggers
 #    .github/workflows/release.yml, which creates the GitHub Release:
 git tag -a vX.Y.Z -m "vX.Y.Z"
 git push && git push --tags
 
-# 9. Create native per-plugin tags (arckit--vX.Y.Z, arckit-uae--vX.Y.Z, …).
+# 10. Create native per-plugin tags (arckit--vX.Y.Z, arckit-uae--vX.Y.Z, …).
 #    Auto-discovers plugins; idempotent (skips existing tags):
 ./scripts/tag-plugins.sh X.Y.Z
 
-# 10. Push each extension to its standalone GitHub repo
+# 11. Push each extension to its standalone GitHub repo
 #     (tractorjuice/arckit-gemini, arckit-codex, …). This also creates or
 #     preserves each extension repo's vX.Y.Z tag and GitHub Release:
 ./scripts/push-extensions.sh
 ```
 
-After step 10, confirm the GitHub Release was created (the `release.yml` workflow runs on the
+After step 11, confirm the GitHub Release was created (the `release.yml` workflow runs on the
 `vX.Y.Z` tag push). Also confirm every standalone extension repo has a `vX.Y.Z` tag and GitHub
 Release, then report the release URLs and which extension repos were pushed.
 
@@ -97,12 +104,15 @@ The highest-signal failures — collected from real releases. Read these before 
   Codex/OpenCode/Gemini/Copilot/Paperclip copies are *generated*. Skip `converter.py` and the
   extensions ship the **old** version. The converter must run *after* the bump and *before* the
   commit, so the regenerated files are included.
+- **Skipping extension tests.** Run the step 4 extension suite after `converter.py`. It validates
+  Codex, Gemini, OpenCode, Copilot, Vibe, Paperclip, release inventory, version alignment, and
+  platform-specific command rewrites before anything is tagged.
 - **Hardcoding the plugin list.** The marketplace now ships 11 plugins (core + 10 overlays) and
   keeps growing. The `--dry-run` validation loop in older `RELEASING.md` examples lists only 7 —
-  that silently skips newer plugins. Discover plugins dynamically (step 6) — this is the exact
+  that silently skips newer plugins. Discover plugins dynamically (step 7) — this is the exact
   bug that shipped `arckit-uk-nhs` untagged mid-v5.4.0, which is why `tag-plugins.sh` now
   auto-discovers. Never copy a static plugin array.
-- **`claude plugin tag` needs a clean tree.** Run it *after* the commit (step 5), not before, or
+- **`claude plugin tag` needs a clean tree.** Run it *after* the commit (step 6), not before, or
   it errors on the dirty working tree.
 - **`claude plugin tag` is `--dry-run` only here.** It creates `name--vX.Y.Z` style tags that do
   **not** match `release.yml`'s `v[0-9]+.[0-9]+.[0-9]+` trigger. We use it solely for its
@@ -121,7 +131,7 @@ The highest-signal failures — collected from real releases. Read these before 
 - **Do not put release numbers in extension READMEs.** Extension release identity lives in
   `VERSION` files, manifests, Git tags, and GitHub Releases. README-pinned versions drift and
   are blocked by `tests/plugin/test_release_process.py`.
-- **Order is load-bearing.** bump → convert → commit → validate → tag → tag-plugins → push-extensions.
+- **Order is load-bearing.** bump → convert → extension tests → commit → validate → tag → tag-plugins → push-extensions.
   Re-running an earlier step after a later one (e.g. editing files after the commit) means the tag
   no longer points at the released tree. If you edit after committing, redo from the commit.
 

@@ -35,6 +35,11 @@ def rewrite_user_config_placeholders(value):
     return USER_CONFIG_PLACEHOLDER_RE.sub(r"${\1}", value)
 
 
+def rewrite_copilot_command_invocations(prompt):
+    """Rewrite Claude-style ArcKit slash commands to Copilot prompt names."""
+    return prompt.replace("/arckit:", "/arckit-")
+
+
 def build_agent_map(agents_dir):
     """Build a map from command name to agent file path and content.
 
@@ -344,7 +349,7 @@ AGENT_CONFIG = {
 
 def rewrite_paths(prompt, config):
     """Rewrite ${CLAUDE_PLUGIN_ROOT} paths using agent config."""
-    result = prompt
+    result = rewrite_user_config_placeholders(prompt)
 
     # Claude commands use literal `.arckit/templates/` for project-local
     # overrides and `${CLAUDE_PLUGIN_ROOT}/templates/` for shipped defaults.
@@ -373,6 +378,9 @@ def rewrite_paths(prompt, config):
 
     if config.get("arg_placeholder"):
         result = result.replace("$ARGUMENTS", config["arg_placeholder"])
+
+    if config.get("format") == "prompt":
+        result = rewrite_copilot_command_invocations(result)
 
     return result
 
@@ -415,6 +423,7 @@ def format_output(description, prompt, fmt):
         description_formatted = '"""\n' + description + '\n"""'
         return f"description = {description_formatted}\nprompt = {prompt_formatted}\n"
     elif fmt == "prompt":
+        prompt = rewrite_copilot_command_invocations(prompt)
         escaped = description.replace("'", "''")
         tools = _copilot_tools_for_prompt(prompt)
         tools_yaml = "[" + ", ".join(f"'{t}'" for t in tools) + "]"
@@ -633,6 +642,7 @@ def convert(commands_dirs, agents_dir):
                 )
                 if handoffs_section:
                     content += "\n" + handoffs_section.strip("\n") + "\n"
+                content = rewrite_copilot_command_invocations(content)
 
                 out_filename = config["filename_pattern"].format(name=base_name)
                 out_path = os.path.join(config["output_dir"], out_filename)
@@ -1588,6 +1598,7 @@ def generate_gemini_agents(agents_dir, output_dir):
 
         # Rewrite paths: ${CLAUDE_PLUGIN_ROOT} -> ~/.gemini/extensions/arckit
         prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", gemini_path_prefix)
+        prompt = rewrite_user_config_placeholders(prompt)
 
         # Rewrite Read instructions to shell commands
         prompt = re.sub(
@@ -1762,6 +1773,8 @@ def generate_copilot_agents(agents_dir, output_dir):
 
         prompt = prompt.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
         prompt = prompt.replace(CONTEXT_HOOK_NOTE, CONTEXT_HOOK_REPLACEMENT)
+        prompt = rewrite_user_config_placeholders(prompt)
+        prompt = rewrite_copilot_command_invocations(prompt)
 
         fm_str = yaml.dump(copilot_fm, default_flow_style=False, sort_keys=False).rstrip()
         out_filename = filename.replace(".md", ".agent.md")
