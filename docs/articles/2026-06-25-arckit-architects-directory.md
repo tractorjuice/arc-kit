@@ -123,6 +123,6 @@ The directory, the toolkit, and the community are all growing. And they all shar
 
 ---
 
-*Published: 25 June 2026*  
-*Author: ArcKit Team*  
+*Published: 25 June 2026*
+*Author: ArcKit Team*
 *Tags: #architects #consulting #training #community #governance*

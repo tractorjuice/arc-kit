@@ -1,0 +1,164 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" font-family="'Segoe UI', system-ui, -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0b0c0c"/>
+      <stop offset="100%" style="stop-color:#1a1d2e"/>
+    </linearGradient>
+    <linearGradient id="amberGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d7922a"/>
+      <stop offset="100%" style="stop-color:#f4a261"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0e7a5f"/>
+      <stop offset="100%" style="stop-color:#1ed3c6"/>
+    </linearGradient>
+    <linearGradient id="blueGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1d70b8"/>
+      <stop offset="100%" style="stop-color:#2b8cc4"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="680" fill="url(#bg)"/>
+
+  <!-- Subtle grid pattern -->
+  <g opacity="0.03" stroke="#f0f0f0" stroke-width="0.5">
+    <line x1="40" y1="0" x2="40" y2="680"/><line x1="80" y1="0" x2="80" y2="680"/>
+    <line x1="120" y1="0" x2="120" y2="680"/><line x1="160" y1="0" x2="160" y2="680"/>
+    <line x1="200" y1="0" x2="200" y2="680"/><line x1="240" y1="0" x2="240" y2="680"/>
+    <line x1="280" y1="0" x2="280" y2="680"/><line x1="320" y1="0" x2="320" y2="680"/>
+    <line x1="360" y1="0" x2="360" y2="680"/><line x1="400" y1="0" x2="400" y2="680"/>
+    <line x1="440" y1="0" x2="440" y2="680"/><line x1="480" y1="0" x2="480" y2="680"/>
+    <line x1="520" y1="0" x2="520" y2="680"/><line x1="560" y1="0" x2="560" y2="680"/>
+    <line x1="600" y1="0" x2="600" y2="680"/><line x1="640" y1="0" x2="640" y2="680"/>
+    <line x1="680" y1="0" x2="680" y2="680"/><line x1="720" y1="0" x2="720" y2="680"/>
+    <line x1="760" y1="0" x2="760" y2="680"/><line x1="800" y1="0" x2="800" y2="680"/>
+    <line x1="840" y1="0" x2="840" y2="680"/><line x1="880" y1="0" x2="880" y2="680"/>
+    <line x1="920" y1="0" x2="920" y2="680"/><line x1="960" y1="0" x2="960" y2="680"/>
+    <line x1="1000" y1="0" x2="1000" y2="680"/><line x1="1040" y1="0" x2="1040" y2="680"/>
+    <line x1="1080" y1="0" x2="1080" y2="680"/><line x1="1120" y1="0" x2="1120" y2="680"/>
+    <line x1="1160" y1="0" x2="1160" y2="680"/>
+    <line x1="0" y1="40" x2="1200" y2="40"/><line x1="0" y1="80" x2="1200" y2="80"/>
+    <line x1="0" y1="120" x2="1200" y2="120"/><line x1="0" y1="160" x2="1200" y2="160"/>
+    <line x1="0" y1="200" x2="1200" y2="200"/><line x1="0" y1="240" x2="1200" y2="240"/>
+    <line x1="0" y1="280" x2="1200" y2="280"/><line x1="0" y1="320" x2="1200" y2="320"/>
+    <line x1="0" y1="360" x2="1200" y2="360"/><line x1="0" y1="400" x2="1200" y2="400"/>
+    <line x1="0" y1="440" x2="1200" y2="440"/><line x1="0" y1="480" x2="1200" y2="480"/>
+    <line x1="0" y1="520" x2="1200" y2="520"/><line x1="0" y1="560" x2="1200" y2="560"/>
+    <line x1="0" y1="600" x2="1200" y2="600"/><line x1="0" y1="640" x2="1200" y2="640"/>
+  </g>
+
+  <!-- Title -->
+  <text x="600" y="42" text-anchor="middle" fill="#f0f0f0" font-size="30" font-weight="700" letter-spacing="0.5">ArcKit Architects</text>
+  <text x="600" y="67" text-anchor="middle" fill="#b1b4b6" font-size="13" letter-spacing="1.5">A DIRECTORY OF PROFESSIONALS</text>
+
+  <!-- Main concept box -->
+  <g filter="url(#softGlow)">
+    <rect x="300" y="88" width="600" height="80" rx="12" fill="none" stroke="url(#amberGrad)" stroke-width="2"/>
+  </g>
+  <rect x="300" y="88" width="600" height="80" rx="12" fill="#0b0c0c" stroke="url(#amberGrad)" stroke-width="1.5" opacity="0.95"/>
+  <text x="600" y="116" text-anchor="middle" fill="#f4a261" font-size="11" font-weight="600" letter-spacing="2">ENTERPRISE ARCHITECTURE</text>
+  <text x="600" y="142" text-anchor="middle" fill="#f0f0f0" font-size="20" font-weight="600">Senior Practitioners Using ArcKit</text>
+
+  <!-- Architect profile cards -->
+  <!-- Card width: 270, Gap: 18, Margins: 108 each side -->
+  <!-- Card 1: x=108, Card 2: x=396, Card 3: x=684 -->
+
+  <!-- Architect Card 1 -->
+  <g>
+    <rect x="108" y="200" width="270" height="180" rx="10" fill="#0f1117" stroke="#d7922a" stroke-width="1.5" opacity="0.95"/>
+    <rect x="108" y="200" width="270" height="40" rx="10" fill="url(#amberGrad)" opacity="0.12"/>
+    <circle cx="243" cy="220" r="20" fill="#d7922a"/>
+    <text x="243" y="228" text-anchor="middle" fill="#1a1d2e" font-size="14" font-weight="700">MC</text>
+    <text x="243" y="260" text-anchor="middle" fill="#f0f0f0" font-size="14" font-weight="600">Mark Craddock</text>
+    <text x="243" y="276" text-anchor="middle" fill="#b1b4b6" font-size="10">Lead Architect</text>
+    
+    <g fill="#f0f0f0" font-size="11">
+      <circle cx="138" cy="300" r="2" fill="#d7922a"/>
+      <text x="150" y="304">UK Public Sector</text>
+      <circle cx="138" cy="320" r="2" fill="#d7922a"/>
+      <text x="150" y="324">FDE Specialist</text>
+      <circle cx="138" cy="340" r="2" fill="#d7922a"/>
+      <text x="150" y="344">ArcKit Training</text>
+      <circle cx="138" cy="360" r="2" fill="#d7922a"/>
+      <text x="150" y="364">Bootstrap Sprints</text>
+    </g>
+  </g>
+
+  <!-- Architect Card 2 (Placeholder) -->
+  <g>
+    <rect x="396" y="200" width="270" height="180" rx="10" fill="#0f1117" stroke="#0e7a5f" stroke-width="1.5" opacity="0.95"/>
+    <rect x="396" y="200" width="270" height="40" rx="10" fill="url(#greenGrad)" opacity="0.12"/>
+    <circle cx="531" cy="220" r="20" fill="#0e7a5f"/>
+    <text x="531" y="228" text-anchor="middle" fill="#1a1d2e" font-size="14" font-weight="700">+</text>
+    <text x="531" y="260" text-anchor="middle" fill="#f0f0f0" font-size="14" font-weight="600">Your Profile</text>
+    <text x="531" y="276" text-anchor="middle" fill="#b1b4b6" font-size="10">Join the Directory</text>
+    
+    <g fill="#f0f0f0" font-size="11">
+      <circle cx="432" cy="300" r="2" fill="#0e7a5f"/>
+      <text x="444" y="304">Senior Architect</text>
+      <circle cx="432" cy="320" r="2" fill="#0e7a5f"/>
+      <text x="444" y="324">ArcKit Expert</text>
+      <circle cx="432" cy="340" r="2" fill="#0e7a5f"/>
+      <text x="444" y="344">Consulting</text>
+      <circle cx="432" cy="360" r="2" fill="#0e7a5f"/>
+      <text x="444" y="364">Training</text>
+    </g>
+  </g>
+
+  <!-- Architect Card 3 (Contributors) -->
+  <g>
+    <rect x="684" y="200" width="270" height="180" rx="10" fill="#0f1117" stroke="#1d70b8" stroke-width="1.5" opacity="0.95"/>
+    <rect x="684" y="200" width="270" height="40" rx="10" fill="url(#blueGrad)" opacity="0.12"/>
+    <circle cx="819" cy="220" r="20" fill="#1d70b8"/>
+    <text x="819" y="228" text-anchor="middle" fill="#1a1d2e" font-size="14" font-weight="700">👥</text>
+    <text x="819" y="260" text-anchor="middle" fill="#f0f0f0" font-size="14" font-weight="600">All Contributors</text>
+    <text x="819" y="276" text-anchor="middle" fill="#b1b4b6" font-size="10">arckit.org/contributors</text>
+    
+    <g fill="#f0f0f0" font-size="11">
+      <circle cx="696" cy="300" r="2" fill="#1d70b8"/>
+      <text x="708" y="304">50+ Contributors</text>
+      <circle cx="696" cy="320" r="2" fill="#1d70b8"/>
+      <text x="708" y="324">Code & Ideas</text>
+      <circle cx="696" cy="340" r="2" fill="#1d70b8"/>
+      <text x="708" y="344">Open Source</text>
+      <circle cx="696" cy="360" r="2" fill="#1d70b8"/>
+      <text x="708" y="364">Community</text>
+    </g>
+  </g>
+
+  <!-- Flow lines -->
+  <line x1="243" y1="380" x2="243" y2="420" stroke="#d7922a" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+  <line x1="531" y1="380" x2="531" y2="420" stroke="#0e7a5f" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+  <line x1="819" y1="380" x2="819" y2="420" stroke="#1d70b8" stroke-width="1" stroke-dasharray="4,3" opacity="0.6"/>
+  
+  <!-- Connecting line -->
+  <line x1="108" y1="420" x2="954" y2="420" stroke="#505a5f" stroke-width="1" stroke-dasharray="4,3" opacity="0.4"/>
+  
+  <!-- Central concept -->
+  <g filter="url(#glow)">
+    <rect x="420" y="440" width="360" height="44" rx="22" fill="none" stroke="#f4a261" stroke-width="2"/>
+  </g>
+  <rect x="420" y="440" width="360" height="44" rx="22" fill="#1a1d2e" stroke="#f4a261" stroke-width="1.5"/>
+  <text x="600" y="468" text-anchor="middle" fill="#f4a261" font-size="15" font-weight="600">ArcKit Architects Directory</text>
+
+  <!-- Decorative elements -->
+  <circle cx="120" cy="480" r="3" fill="#d7922a" opacity="0.3"/>
+  <circle cx="200" cy="480" r="3" fill="#d7922a" opacity="0.3"/>
+  <circle cx="1000" cy="480" r="3" fill="#1d70b8" opacity="0.3"/>
+  <circle cx="1080" cy="480" r="3" fill="#1d70b8" opacity="0.3"/>
+</svg>
