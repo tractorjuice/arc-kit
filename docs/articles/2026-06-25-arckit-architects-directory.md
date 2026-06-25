@@ -70,7 +70,7 @@ Listed architects receive:
 
 ### Application Process
 
-To apply, send an email to [mark@firstliot.uk](mailto:mark@firstliot.uk) with the subject **"ArcKit Architect Enquiry"** and include:
+To apply, contact me with the subject **"ArcKit Architect Enquiry"** and include:
 
 1. Your name and organization
 2. Your LinkedIn profile (or other professional presence)
@@ -87,7 +87,7 @@ We'll review your application and, if approved, add you to the directory with a 
 If you're looking for an ArcKit architect to help with your project, you have several options:
 
 1. **Browse the directory** at [https://tractorjuice.github.io/arckit-fde/architects.html](https://tractorjuice.github.io/arckit-fde/architects.html) and contact architects directly
-2. **Request a referral** by emailing [mark@firstliot.uk](mailto:mark@firstliot.uk) with the subject **"ArcKit Architect Referral"** and a brief description of your needs
+2. **Request a referral** by contacting me with the subject **"ArcKit Architect Referral"** and a brief description of your needs
 3. **Start with a bootstrap sprint** — a fixed-price, fixed-scope engagement that produces the four-artefact governance pack (principles, requirements, risk, stakeholders) in one intensive week or across five weeks
 
 Typical follow-on work after a bootstrap includes:
