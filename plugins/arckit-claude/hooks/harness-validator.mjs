@@ -13,7 +13,7 @@
  * This module runs regression tests on held-out tasks to ensure robust improvement.
  */
 
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -29,6 +29,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
  * @param {Array} options.heldInTasks - Held-in task IDs
  * @param {Array} options.heldOutTasks - Held-out task IDs
  * @param {string} options.candidateHarnessPath - Path to candidate harness
+ * @param {Object} options.taskResults - Pre-scored validation results keyed by split/task
  * @param {Object} options.baselineScores - Baseline scores {heldIn: X.X, heldOut: Y.Y}
  * @param {number} options.minDelta - Minimum delta for acceptance (default: 0.3)
  * @returns {Object} Validation result
@@ -40,6 +41,7 @@ export function validateHarness(options) {
     heldInTasks = [],
     heldOutTasks = [],
     candidateHarnessPath,
+    taskResults = {},
     baselineScores = { heldIn: 0, heldOut: 0 },
     minDelta = 0.3,
     iteration
@@ -62,16 +64,31 @@ export function validateHarness(options) {
   // Validate held-in tasks
   const heldInResults = [];
   for (const task of heldInTasks) {
-    const taskResult = executeAndScoreTask(task, candidateHarnessPath, mode, command);
+    const taskResult = executeAndScoreTask(task, {
+      split: 'heldIn',
+      taskResults,
+      candidateHarnessPath,
+      mode,
+      command
+    });
     heldInResults.push(taskResult);
   }
   
   // Validate held-out tasks
   const heldOutResults = [];
   for (const task of heldOutTasks) {
-    const taskResult = executeAndScoreTask(task, candidateHarnessPath, mode, command);
+    const taskResult = executeAndScoreTask(task, {
+      split: 'heldOut',
+      taskResults,
+      candidateHarnessPath,
+      mode,
+      command
+    });
     heldOutResults.push(taskResult);
   }
+
+  const missingScores = [...heldInResults, ...heldOutResults]
+    .filter(r => !Number.isFinite(r.score));
   
   // Calculate average scores
   const heldInScores = heldInResults.map(r => r.score).filter(s => s !== null && s !== undefined);
@@ -87,6 +104,23 @@ export function validateHarness(options) {
   // Calculate deltas
   result.deltas.heldIn = result.candidateScores.heldIn - baselineScores.heldIn;
   result.deltas.heldOut = result.candidateScores.heldOut - baselineScores.heldOut;
+
+  if (heldInTasks.length === 0 || heldOutTasks.length === 0) {
+    result.reason = 'Rejected: held-in and held-out task lists are both required';
+    result.heldInResults = heldInResults;
+    result.heldOutResults = heldOutResults;
+    saveValidationResult(result);
+    return result;
+  }
+
+  if (missingScores.length > 0) {
+    const taskList = missingScores.map(r => `${r.split}:${r.taskId}`).join(', ');
+    result.reason = `Rejected: missing scored validation result for ${taskList}`;
+    result.heldInResults = heldInResults;
+    result.heldOutResults = heldOutResults;
+    saveValidationResult(result);
+    return result;
+  }
   
   // Apply conservative acceptance rule (Zhang et al., 2026, Algorithm 1)
   const deltaInNonNegative = result.deltas.heldIn >= 0;
@@ -122,25 +156,46 @@ export function validateHarness(options) {
 /**
  * Execute a task and score the result
  */
-function executeAndScoreTask(taskId, harnessPath, mode, command) {
-  // This is a placeholder for the actual execution
-  // In practice, this would:
-  // 1. Set up the scratch project with task fixtures
-  // 2. Apply the candidate harness
-  // 3. Execute the command/agent/hook
-  // 4. Run structural checks
-  // 5. Run LLM-as-judge scoring
-  // 6. Return the score
-  
-  // For now, return a mock result
-  // In real implementation, this would call the actual execution pipeline
+function executeAndScoreTask(task, context) {
+  const { split, taskResults, candidateHarnessPath, mode, command } = context;
+  const taskId = typeof task === 'string' ? task : task?.id || task?.taskId;
+  const scoredResult = resolveTaskResult(task, split, taskResults);
+
   return {
-    taskId,
+    taskId: taskId || 'unknown',
+    split,
     executedAt: new Date().toISOString(),
-    structural: 'PASS', // or 'FAIL'
-    score: Math.random() * 3 + 7, // Random score between 7-10
-    tracePath: `.arckit/autoresearch-traces/${command}/${mode}/iteration-${Date.now()}-${taskId}.json`
+    harnessPath: candidateHarnessPath,
+    structural: scoredResult?.structural || scoredResult?.status || 'UNSCORED',
+    score: Number.isFinite(scoredResult?.score) ? scoredResult.score : null,
+    tracePath: scoredResult?.tracePath || `.arckit/autoresearch-traces/${command}/${mode}/${taskId || 'unknown'}.json`,
+    error: scoredResult ? undefined : 'No scored validation result supplied'
   };
+}
+
+function resolveTaskResult(task, split, taskResults) {
+  if (task && typeof task === 'object' && Number.isFinite(task.score)) {
+    return task;
+  }
+
+  if (task && typeof task === 'object' && task.resultPath) {
+    return loadResultFile(task.resultPath);
+  }
+
+  if (typeof task === 'string' && existsSync(task)) {
+    return loadResultFile(task);
+  }
+
+  const taskId = typeof task === 'string' ? task : task?.id || task?.taskId;
+  return taskResults?.[split]?.[taskId] || taskResults?.[taskId] || null;
+}
+
+function loadResultFile(path) {
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch {
+    return null;
+  }
 }
 
 /**
@@ -173,7 +228,6 @@ export function loadValidationResults(command, mode) {
     return [];
   }
   
-  const { readdirSync } = require('node:fs');
   const files = readdirSync(resultsDir).filter(f => f.endsWith('.json'));
   
   return files.map(file => {

@@ -259,14 +259,14 @@ function getOrCreateCluster(command, mode, signature, iteration) {
   if (!cluster) {
     cluster = createNewCluster(signature, iteration);
     clusters.push(cluster);
-    saveClusters(clustersPath, clusters);
   } else {
     // Update existing cluster
     cluster.count++;
     cluster.traces.push(iteration);
-    cluster.frequency = calculateFrequency(clusters);
-    saveClusters(clustersPath, clusters);
   }
+
+  calculateFrequency(clusters);
+  saveClusters(clustersPath, clusters);
   
   return cluster;
 }
@@ -388,10 +388,10 @@ function determineSeverity(signature) {
  */
 function calculateFrequency(clusters) {
   const total = clusters.reduce((sum, c) => sum + c.count, 0);
-  return clusters.map(c => ({
-    ...c,
-    frequency: total > 0 ? c.count / total : 0
-  }));
+  for (const cluster of clusters) {
+    cluster.frequency = total > 0 ? cluster.count / total : 0;
+  }
+  return clusters;
 }
 
 /**

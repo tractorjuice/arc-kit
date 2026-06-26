@@ -435,7 +435,7 @@ function generateToolProposal(proposal, currentContent, mechanism) {
       break;
     default:
       proposal.changes = [{
-        type: 'add',
+        type: 'add_tool',
         tools: ['WebSearch'],
         content: 'Enable WebSearch for external research'
       }];
@@ -699,14 +699,37 @@ function modifyToolConfig(content, change) {
     const config = JSON.parse(content);
     
     switch (change.type) {
+      case 'restrict':
+        config.toolRestrictions = config.toolRestrictions || {};
+        change.tools.forEach(t => {
+          config.toolRestrictions[t] = {
+            action: change.action || 'require_justification',
+            reason: change.content || ''
+          };
+        });
+        break;
       case 'disable':
         if (config.mcpServers) {
-          config.mcpServers = config.mcpServers.filter(s => 
-            !change.tools.includes(s));
+          if (Array.isArray(config.mcpServers)) {
+            config.mcpServers = config.mcpServers.filter(s =>
+              !change.tools.includes(s));
+          } else {
+            change.tools.forEach(t => {
+              delete config.mcpServers[t];
+            });
+          }
         }
+        config.disabledTools = Array.from(new Set([
+          ...(config.disabledTools || []),
+          ...change.tools
+        ]));
         break;
       case 'add_tool':
-        if (config.mcpServers) {
+        config.allowedTools = Array.from(new Set([
+          ...(config.allowedTools || []),
+          ...change.tools
+        ]));
+        if (Array.isArray(config.mcpServers)) {
           change.tools.forEach(t => {
             if (!config.mcpServers.includes(t)) {
               config.mcpServers.push(t);

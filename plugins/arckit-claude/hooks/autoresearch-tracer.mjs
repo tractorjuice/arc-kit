@@ -13,7 +13,8 @@
  * Output: JSON with trace data (stored to file, not returned)
  */
 
-import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { writeFileSync, mkdirSync, existsSync, readdirSync, readFileSync } from 'node:fs';
+import { execSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -56,7 +57,7 @@ export function captureAutoresearchTrace(input) {
     verifier: input.verifier || {},
     metadata: {
       traceId: `iter-${input.iteration || 0}`,
-      worktree: process.env.AUTORESEARCH_WORTREE || process.cwd(),
+      worktree: process.env.AUTORESEARCH_WORKTREE || process.env.AUTORESEARCH_WORTREE || process.cwd(),
       gitCommit: getGitCommit()
     }
   };
@@ -72,8 +73,10 @@ export function captureAutoresearchTrace(input) {
  */
 function getGitCommit() {
   try {
-    const { execSync } = require('node:child_process');
-    return execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim();
+    return execSync('git rev-parse --short HEAD', {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore']
+    }).trim();
   } catch {
     return 'unknown';
   }
@@ -135,12 +138,10 @@ export function loadAllTraces(target, mode) {
     return [];
   }
 
-  const { readdirSync } = require('node:fs');
   const files = readdirSync(tracesDir).filter(f => f.endsWith('.json'));
   
   return files.map(file => {
     try {
-      const { readFileSync } = require('node:fs');
       return JSON.parse(readFileSync(join(tracesDir, file), 'utf8'));
     } catch {
       return null;
@@ -152,17 +153,26 @@ export function loadAllTraces(target, mode) {
  * Main entry point for hook execution
  * Reads from stdin, processes, saves trace
  */
-function main() {
-  let input;
-  try {
-    input = JSON.parse(require('node:fs').readFileSync(0, 'utf8'));
-  } catch {
-    // No input, exit silently
-    return;
+export function processTraceInput(raw) {
+  if (!raw.trim()) {
+    return null;
   }
 
+  const input = JSON.parse(raw);
   const trace = captureAutoresearchTrace(input);
-  console.log(JSON.stringify({ traceSaved: true, traceId: trace.metadata.traceId }));
+  return { traceSaved: true, traceId: trace.metadata.traceId };
+}
+
+function main() {
+  try {
+    const result = processTraceInput(readFileSync(0, 'utf8'));
+    if (result) {
+      console.log(JSON.stringify(result));
+    }
+  } catch (error) {
+    console.error(`Invalid JSON input: ${error.message}`);
+    process.exit(1);
+  }
 }
 
 // Run if executed directly
