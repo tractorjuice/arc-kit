@@ -49,6 +49,7 @@ const ALLOWED_MCP_PREFIXES = [
   "mcp__google-developer-knowledge__",
   "mcp__datacommons-mcp__",
   "mcp__govreposcrape__",
+  "mcp__uk-tenders__",
 ];
 
 const PLUGIN_SCRIPT_ALLOWLIST = new Set([

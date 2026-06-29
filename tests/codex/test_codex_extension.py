@@ -1,6 +1,7 @@
 """Validate the generated Codex extension structure."""
 
 import json
+import os
 from pathlib import Path
 import re
 import subprocess
@@ -40,6 +41,14 @@ CODEX_STANDALONE_MARKETPLACE = CODEX_ROOT / ".agents" / "plugins" / "marketplace
 CODEX_MCP = CODEX_ROOT / ".mcp.json"
 CODEX_HOOKS_JSON = CODEX_ROOT / "hooks" / "hooks.json"
 CODEX_HOOK_RUNNER = CODEX_ROOT / "hooks" / "arckit-codex-hook.mjs"
+HOOK_EVENT_NAMES = [
+    "SessionStart",
+    "UserPromptSubmit",
+    "PreToolUse",
+    "PostToolUse",
+    "PermissionRequest",
+    "Stop",
+]
 
 CLAUDE_ONLY_COMMANDS = {"build.md"}
 REFERENCE_SKILLS = {
@@ -245,39 +254,114 @@ def test_codex_hooks_are_configured_in_manifest_and_standalone_config():
     hooks = json.loads(CODEX_HOOKS_JSON.read_text(encoding="utf-8"))["hooks"]
     config = tomllib.loads(CODEX_CONFIG.read_text(encoding="utf-8"))
 
-    assert set(hooks) == {
-        "SessionStart",
-        "UserPromptSubmit",
-        "PreToolUse",
-        "PostToolUse",
-        "PermissionRequest",
-        "Stop",
-    }
+    assert set(hooks) == set(HOOK_EVENT_NAMES)
     assert CODEX_HOOK_RUNNER.is_file()
     assert config["features"]["hooks"] is True
     assert config["features"]["plugin_hooks"] is True
 
     configured_events = set(config["hooks"])
-    assert {
-        "SessionStart",
-        "UserPromptSubmit",
-        "PreToolUse",
-        "PostToolUse",
-        "PermissionRequest",
-        "Stop",
-    } <= configured_events
+    assert set(HOOK_EVENT_NAMES) <= configured_events
+
+    for event_name in HOOK_EVENT_NAMES:
+        command = config["hooks"][event_name][0]["hooks"][0]["command"]
+        assert "CODEX_PLUGIN_ROOT" in command
+        assert ".codex/plugins/cache/arckit/arckit-codex" in command
+        assert "arckit-codex-hook.mjs" in command
+        assert command.endswith(f" {event_name}")
+
     pre_tool = config["hooks"]["PreToolUse"][0]
     assert "Read" in pre_tool["matcher"]
     assert "apply_patch" in pre_tool["matcher"]
-    assert '$(git rev-parse --show-toplevel)/.codex/hooks/arckit-codex-hook.mjs' in pre_tool["hooks"][0]["command"]
-    assert pre_tool["hooks"][0]["command"].endswith('" PreToolUse')
     post_tool = config["hooks"]["PostToolUse"][0]
     assert "Write" in post_tool["matcher"]
-    assert '$(git rev-parse --show-toplevel)/.codex/hooks/arckit-codex-hook.mjs' in post_tool["hooks"][0]["command"]
-    assert post_tool["hooks"][0]["command"].endswith('" PostToolUse')
-    stop_command = config["hooks"]["Stop"][0]["hooks"][0]["command"]
-    assert '$(git rev-parse --show-toplevel)/.codex/hooks/arckit-codex-hook.mjs' in stop_command
-    assert stop_command.endswith('" Stop')
+
+
+def test_codex_plugin_hook_commands_are_not_workspace_relative():
+    hooks = json.loads(CODEX_HOOKS_JSON.read_text(encoding="utf-8"))["hooks"]
+    for event_entries in hooks.values():
+        for entry in event_entries:
+            for hook in entry["hooks"]:
+                command = hook["command"]
+                assert "./hooks/arckit-codex-hook.mjs" not in command
+                assert "/.codex/hooks/arckit-codex-hook.mjs" not in command
+                assert "CODEX_PLUGIN_ROOT" in command
+                assert ".codex/plugins/cache/arckit/arckit-codex" in command
+                assert "arckit-codex-hook.mjs" in command
+
+
+def hook_payloads(tmp_path):
+    return {
+        "SessionStart": {"hook_event_name": "SessionStart", "cwd": str(tmp_path), "source": "startup"},
+        "UserPromptSubmit": {"hook_event_name": "UserPromptSubmit", "cwd": str(tmp_path), "prompt": "hello"},
+        "PreToolUse": {
+            "hook_event_name": "PreToolUse",
+            "cwd": str(tmp_path),
+            "tool_name": "Bash",
+            "tool_input": {"command": "true"},
+        },
+        "PostToolUse": {
+            "hook_event_name": "PostToolUse",
+            "cwd": str(tmp_path),
+            "tool_name": "Write",
+            "tool_input": {"file_path": str(tmp_path / "notes.md")},
+        },
+        "PermissionRequest": {
+            "hook_event_name": "PermissionRequest",
+            "cwd": str(tmp_path),
+            "tool_name": "mcp__aws-knowledge__search",
+            "tool_input": {},
+        },
+        "Stop": {"hook_event_name": "Stop", "cwd": str(tmp_path)},
+    }
+
+
+def fake_plugin_cache(tmp_path):
+    cache_dir = tmp_path / "home" / ".codex" / "plugins" / "cache" / "arckit" / "arckit-codex"
+    cache_dir.mkdir(parents=True)
+    (cache_dir / "dev").symlink_to(CODEX_ROOT, target_is_directory=True)
+    env = {**os.environ, "HOME": str(tmp_path / "home")}
+    env.pop("CODEX_PLUGIN_ROOT", None)
+    return env
+
+
+def test_codex_plugin_hooks_resolve_runner_from_plugin_cache_without_cwd_assumption(tmp_path):
+    hooks = json.loads(CODEX_HOOKS_JSON.read_text(encoding="utf-8"))["hooks"]
+    env = fake_plugin_cache(tmp_path)
+
+    for event_name, payload in hook_payloads(tmp_path).items():
+        command = hooks[event_name][0]["hooks"][0]["command"]
+        result = subprocess.run(
+            command,
+            input=json.dumps(payload),
+            text=True,
+            shell=True,
+            cwd=tmp_path,
+            env=env,
+            capture_output=True,
+            check=True,
+        )
+
+        assert "MODULE_NOT_FOUND" not in result.stderr
+
+
+def test_codex_standalone_config_hooks_resolve_runner_from_plugin_cache_without_cwd_assumption(tmp_path):
+    config = tomllib.loads(CODEX_CONFIG.read_text(encoding="utf-8"))
+    env = fake_plugin_cache(tmp_path)
+
+    for event_name, payload in hook_payloads(tmp_path).items():
+        command = config["hooks"][event_name][0]["hooks"][0]["command"]
+        result = subprocess.run(
+            command,
+            input=json.dumps(payload),
+            text=True,
+            shell=True,
+            cwd=tmp_path,
+            env=env,
+            capture_output=True,
+            check=True,
+        )
+
+        assert "MODULE_NOT_FOUND" not in result.stderr
 
 
 def test_codex_bundles_claude_graph_and_pages_hook_processors():
@@ -393,18 +477,29 @@ def test_codex_hook_warns_on_score_validation():
 
 
 def test_codex_hook_allows_arckit_mcp_permission_requests():
-    output = run_codex_hook(
-        "PermissionRequest",
-        {
-            "hook_event_name": "PermissionRequest",
-            "cwd": str(REPO_ROOT),
-            "tool_name": "mcp__aws-knowledge__search",
-            "tool_input": {},
-        },
-    )
+    tool_names = [
+        "mcp__aws-knowledge__search",
+        "mcp__microsoft-learn__search",
+        "mcp__plugin_microsoft-docs_microsoft-learn__search",
+        "mcp__google-developer-knowledge__search",
+        "mcp__datacommons-mcp__search",
+        "mcp__govreposcrape__search",
+        "mcp__uk-tenders__search",
+    ]
 
-    assert output["hookSpecificOutput"]["hookEventName"] == "PermissionRequest"
-    assert output["hookSpecificOutput"]["decision"]["behavior"] == "allow"
+    for tool_name in tool_names:
+        output = run_codex_hook(
+            "PermissionRequest",
+            {
+                "hook_event_name": "PermissionRequest",
+                "cwd": str(REPO_ROOT),
+                "tool_name": tool_name,
+                "tool_input": {},
+            },
+        )
+
+        assert output["hookSpecificOutput"]["hookEventName"] == "PermissionRequest"
+        assert output["hookSpecificOutput"]["decision"]["behavior"] == "allow"
 
 
 def test_codex_hook_allows_plugin_internal_reads():

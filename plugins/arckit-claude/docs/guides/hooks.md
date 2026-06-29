@@ -99,7 +99,7 @@ After an ArcKit artifact is written or edited, stamps build provenance when the 
 
 ### allow-mcp-tools
 
-Auto-allows MCP tool calls from ArcKit's bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, DataCommons, govreposcrape) so users don't need to approve each one manually.
+Auto-allows MCP tool calls from ArcKit's bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, DataCommons, govreposcrape, uk-tenders) so users don't need to approve each one manually.
 
 ## Utility Files
 

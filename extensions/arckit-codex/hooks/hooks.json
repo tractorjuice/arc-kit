@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ./hooks/arckit-codex-hook.mjs SessionStart",
+            "command": "HOOK=\"${CODEX_PLUGIN_ROOT:+$CODEX_PLUGIN_ROOT/hooks/arckit-codex-hook.mjs}\"; [ -f \"$HOOK\" ] || HOOK=\"$(ls -td \"$HOME\"/.codex/plugins/cache/arckit/arckit-codex/*/hooks/arckit-codex-hook.mjs 2>/dev/null | head -n 1)\"; node \"$HOOK\" SessionStart",
             "timeout": 10,
             "statusMessage": "Loading ArcKit context"
           }
@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ./hooks/arckit-codex-hook.mjs UserPromptSubmit",
+            "command": "HOOK=\"${CODEX_PLUGIN_ROOT:+$CODEX_PLUGIN_ROOT/hooks/arckit-codex-hook.mjs}\"; [ -f \"$HOOK\" ] || HOOK=\"$(ls -td \"$HOME\"/.codex/plugins/cache/arckit/arckit-codex/*/hooks/arckit-codex-hook.mjs 2>/dev/null | head -n 1)\"; node \"$HOOK\" UserPromptSubmit",
             "timeout": 10,
             "statusMessage": "Checking ArcKit prompt"
           }
@@ -31,7 +31,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ./hooks/arckit-codex-hook.mjs PreToolUse",
+            "command": "HOOK=\"${CODEX_PLUGIN_ROOT:+$CODEX_PLUGIN_ROOT/hooks/arckit-codex-hook.mjs}\"; [ -f \"$HOOK\" ] || HOOK=\"$(ls -td \"$HOME\"/.codex/plugins/cache/arckit/arckit-codex/*/hooks/arckit-codex-hook.mjs 2>/dev/null | head -n 1)\"; node \"$HOOK\" PreToolUse",
             "timeout": 10,
             "statusMessage": "Checking ArcKit file policy"
           }
@@ -44,7 +44,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ./hooks/arckit-codex-hook.mjs PostToolUse",
+            "command": "HOOK=\"${CODEX_PLUGIN_ROOT:+$CODEX_PLUGIN_ROOT/hooks/arckit-codex-hook.mjs}\"; [ -f \"$HOOK\" ] || HOOK=\"$(ls -td \"$HOME\"/.codex/plugins/cache/arckit/arckit-codex/*/hooks/arckit-codex-hook.mjs 2>/dev/null | head -n 1)\"; node \"$HOOK\" PostToolUse",
             "timeout": 10,
             "statusMessage": "Updating ArcKit metadata"
           }
@@ -57,7 +57,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ./hooks/arckit-codex-hook.mjs PermissionRequest",
+            "command": "HOOK=\"${CODEX_PLUGIN_ROOT:+$CODEX_PLUGIN_ROOT/hooks/arckit-codex-hook.mjs}\"; [ -f \"$HOOK\" ] || HOOK=\"$(ls -td \"$HOME\"/.codex/plugins/cache/arckit/arckit-codex/*/hooks/arckit-codex-hook.mjs 2>/dev/null | head -n 1)\"; node \"$HOOK\" PermissionRequest",
             "timeout": 10,
             "statusMessage": "Checking ArcKit MCP policy"
           }
@@ -69,7 +69,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "node ./hooks/arckit-codex-hook.mjs Stop",
+            "command": "HOOK=\"${CODEX_PLUGIN_ROOT:+$CODEX_PLUGIN_ROOT/hooks/arckit-codex-hook.mjs}\"; [ -f \"$HOOK\" ] || HOOK=\"$(ls -td \"$HOME\"/.codex/plugins/cache/arckit/arckit-codex/*/hooks/arckit-codex-hook.mjs 2>/dev/null | head -n 1)\"; node \"$HOOK\" Stop",
             "timeout": 10,
             "statusMessage": "Recording ArcKit session"
           }
