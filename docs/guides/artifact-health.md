@@ -8,7 +8,7 @@ The `/arckit:health` command scans your projects for governance artifacts that n
 
 Architecture governance artifacts have a shelf life. Research data goes stale, decisions get forgotten, review conditions go unresolved, and traceability links break as projects evolve. The health command performs a quick, non-destructive scan to surface these issues before they become problems.
 
-**Key principle**: The health check is a diagnostic tool, not a governance artifact. It outputs to the console and does not create files. Run it frequently — before governance gates, at the start of a sprint, or as part of your regular project hygiene.
+**Key principle**: The health check is a diagnostic tool, not a governance artifact. It outputs to the console and writes only `docs/health.json` for dashboard integration; it does not create project governance artifacts. Run it frequently — before governance gates, at the start of a sprint, or as part of your regular project hygiene.
 
 ---
 

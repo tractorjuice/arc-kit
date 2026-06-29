@@ -2,7 +2,7 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-`/arckit:health` scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console without creating a file.
+`/arckit:health` scans all ArcKit projects for stale research, forgotten ADRs, unresolved review conditions, orphaned artifacts, missing traceability, and version drift -- reporting findings to the console and writing `docs/health.json` for dashboard integration.
 
 ---
 
@@ -63,7 +63,7 @@ The `/arckit:health` command **performs a diagnostic scan** that:
 /arckit:health SINCE=2026-06-01
 ```
 
-Outputs: Console only (no file created). Also writes `docs/health.json` for dashboard integration.
+Outputs: Console report plus `docs/health.json` for dashboard integration. No project governance artifacts are created.
 
 ---
 
