@@ -1,0 +1,34 @@
+{
+  "name": "arckit-claude",
+  "owner": {
+    "name": "TractorJuice",
+    "email": "tractorjuice@users.noreply.github.com"
+  },
+  "metadata": {
+    "description": "The Enterprise Architecture Governance Harness for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "arckit",
+      "source": ".",
+      "description": "ArcKit core for Claude Code: architecture governance, procurement, research, delivery, and assurance workflows",
+      "version": "5.15.2",
+      "author": {
+        "name": "TractorJuice"
+      },
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "enterprise",
+        "procurement",
+        "vendor-evaluation",
+        "claude-code"
+      ],
+      "category": "productivity"
+    }
+  ]
+}

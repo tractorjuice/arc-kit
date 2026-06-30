@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 set -uo pipefail
 
-# push-extensions.sh — Publish extension directories to their separate GitHub repos.
-# Usage: ./scripts/push-extensions.sh [extension...]
+# push-extensions.sh — Publish ArcKit distributions to separate GitHub repos.
+# Usage: ./scripts/push-extensions.sh [distribution...]
 #
 # Examples:
-#   ./scripts/push-extensions.sh              # Push all extensions
-#   ./scripts/push-extensions.sh gemini codex # Push only gemini and codex
+#   ./scripts/push-extensions.sh              # Push all standalone distributions
+#   ./scripts/push-extensions.sh claude codex # Push only Claude and Codex
 #
 # Requires: GH_TOKEN with repo scope, or gh CLI authenticated with push access.
 # By default this also creates/preserves a vX.Y.Z tag and GitHub Release in
-# each extension repo. Set ARCKIT_SKIP_EXTENSION_RELEASES=1 for a commit-only
+# each standalone repo. Set ARCKIT_SKIP_EXTENSION_RELEASES=1 for a commit-only
 # sync.
 
 REPO_OWNER="tractorjuice"
@@ -22,9 +22,10 @@ ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
 WORK_DIR=$(mktemp -d)
 trap 'rm -rf "$WORK_DIR"' EXIT
 
-# ── Extension config ──────────────────────────────────────────────────────────
+# ── Standalone repo config ────────────────────────────────────────────────────
 # Format: local_dir:repo_name
 declare -A EXTENSIONS=(
+  [claude]="plugins/arckit-claude:arckit-claude"
   [gemini]="extensions/arckit-gemini:arckit-gemini"
   [codex]="extensions/arckit-codex:arckit-codex"
   [opencode]="extensions/arckit-opencode:arckit-opencode"
@@ -33,11 +34,11 @@ declare -A EXTENSIONS=(
   [vibe]="extensions/arckit-vibe:arckit-vibe"
 )
 
-# ── Determine which extensions to push ────────────────────────────────────────
+# ── Determine which distributions to push ─────────────────────────────────────
 if [[ $# -gt 0 ]]; then
   TARGETS=("$@")
 else
-  TARGETS=("gemini" "codex" "opencode" "copilot" "paperclip" "vibe")
+  TARGETS=("claude" "gemini" "codex" "opencode" "copilot" "paperclip" "vibe")
 fi
 
 # ── Read version from root VERSION file ───────────────────────────────────────
@@ -110,7 +111,7 @@ publish_release_artifacts() {
   local release_notes
 
   if [[ "$SKIP_RELEASES" == "1" ]]; then
-    yellow "  Extension release publishing disabled by ARCKIT_SKIP_EXTENSION_RELEASES=1"
+    yellow "  Standalone repo release publishing disabled by ARCKIT_SKIP_EXTENSION_RELEASES=1"
     return 0
   fi
 
@@ -168,7 +169,7 @@ FAILED=0
 
 for target in "${TARGETS[@]}"; do
   if [[ ! ${EXTENSIONS[$target]+_} ]]; then
-    red "  Unknown extension: $target"
+    red "  Unknown distribution: $target"
     echo "  Valid: ${!EXTENSIONS[*]}"
     ((FAILED++))
     continue

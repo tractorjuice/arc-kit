@@ -7,7 +7,7 @@
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
   },
-  "repository": "https://github.com/tractorjuice/arc-kit",
+  "repository": "https://github.com/tractorjuice/arckit-claude",
   "license": "MIT",
   "mcpServers": "./.mcp.json",
   "experimental": {

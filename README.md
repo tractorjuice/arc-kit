@@ -56,25 +56,35 @@ claude install latest
 Then in Claude Code:
 
 ```text
-/plugin marketplace add tractorjuice/arc-kit
+/plugin marketplace add tractorjuice/arckit-claude
 ```
 
-Then install from the Discover tab. The marketplace ships **13 plugins** — install only the jurisdictions you need:
+Then install from the Discover tab, or via CLI:
 
 ```bash
 # Core (75 commands — UK Government civilian + generic enterprise)
-claude plugin install arckit
+claude plugin install arckit@arckit-claude
+```
 
-# UK + UAE federal
+Use the umbrella ArcKit marketplace when you want the core plugin plus regional, sector, or tooling overlays:
+
+```text
+/plugin marketplace add tractorjuice/arc-kit
+```
+
+Then install only the overlays you need:
+
+```bash
+# Core + UAE federal
 claude plugin install arckit arckit-uae
 
-# Everything (150 commands across UK + UAE + FR + CA + EU + AT + AU + US + UK-NHS + UK-GCloud)
+# Broad overlay set (UK + UAE + FR + CA + EU + AT + AU + US + UK-NHS + UK-GCloud)
 claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs,uk-gcloud}
 ```
 
-All 13 plugins come from the same `tractorjuice/arc-kit` marketplace. The 11 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-gcloud`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
+The standalone `tractorjuice/arckit-claude` marketplace hosts the core plugin. The `tractorjuice/arc-kit` marketplace hosts the core plugin plus overlays. The 11 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-gcloud`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
 
-> **Tip: lighter marketplace clone.** The command above clones the full arc-kit monorepo (~100 MB) because it hosts five other AI-assistant distributions, 147 vendored Wardley maps, and research docs you don't need. To fetch just the plugin's directories, add the marketplace via the CLI with `--sparse`:
+> **Tip: lighter overlay marketplace clone.** The standalone `tractorjuice/arckit-claude` repo is the lightweight core install path. If you use the umbrella marketplace for overlays but want to skip the other AI-assistant distributions in the monorepo, add it via the CLI with `--sparse`:
 >
 > ```bash
 > claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude
@@ -1832,8 +1842,8 @@ If you see: `API Error: Claude's response exceeded the 32000 output token maximu
 # For Codex, check if skills directory exists
 ls .agents/skills/arckit-principles/SKILL.md
 
-# For Claude Code, install the ArcKit plugin:
-# /plugin marketplace add tractorjuice/arc-kit
+# For Claude Code, install the ArcKit core plugin:
+# /plugin marketplace add tractorjuice/arckit-claude
 
 # For Gemini CLI, install the ArcKit extension:
 # gemini extensions install https://github.com/tractorjuice/arckit-gemini

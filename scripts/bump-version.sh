@@ -127,16 +127,25 @@ jq --arg v "$NEW_VERSION" '.version = $v' plugins/arckit-claude/.claude-plugin/p
 mv plugins/arckit-claude/.claude-plugin/plugin.json.tmp plugins/arckit-claude/.claude-plugin/plugin.json
 update_file "plugins/arckit-claude/.claude-plugin/plugin.json" ".version"
 
-# ── 8. .claude-plugin/marketplace.json (all 6 plugin entries) ──────────────
+# ── 8. plugins/arckit-claude/.claude-plugin/marketplace.json ───────────────
 #
-# All 6 plugins (arckit core + 5 community: uae, fr, ca, eu, at) share one
-# version per the v5.0.0 split design. metadata.version stays at 1.0.0.
+# Standalone Claude distribution repo metadata. The plugin source is "." once
+# plugins/arckit-claude/ is mirrored to tractorjuice/arckit-claude.
+
+jq --arg v "$NEW_VERSION" '.plugins |= map(.version = $v)' plugins/arckit-claude/.claude-plugin/marketplace.json > plugins/arckit-claude/.claude-plugin/marketplace.json.tmp
+mv plugins/arckit-claude/.claude-plugin/marketplace.json.tmp plugins/arckit-claude/.claude-plugin/marketplace.json
+update_file "plugins/arckit-claude/.claude-plugin/marketplace.json" "all .plugins[].version (metadata.version unchanged)"
+
+# ── 9. .claude-plugin/marketplace.json (all Claude plugin entries) ─────────
+#
+# All Claude plugins share one version per the v5.0.0 split design.
+# metadata.version stays at 1.0.0.
 
 jq --arg v "$NEW_VERSION" '.plugins |= map(.version = $v)' .claude-plugin/marketplace.json > .claude-plugin/marketplace.json.tmp
 mv .claude-plugin/marketplace.json.tmp .claude-plugin/marketplace.json
 update_file ".claude-plugin/marketplace.json" "all .plugins[].version (metadata.version unchanged)"
 
-# ── 8a–8f. Community plugin manifests + VERSION files ─────────────────────
+# ── 9a–9f. Community plugin manifests + VERSION files ─────────────────────
 #
 # Each community plugin pins its `arckit` dependency to the current core
 # version with an exact (`=`) semver constraint. bump-version.sh keeps
@@ -249,6 +258,10 @@ echo ""
 echo "marketplace.json:"
 echo "  metadata.version:   $(jq -r '.metadata.version' .claude-plugin/marketplace.json)  (should be 1.0.0)"
 jq -r '.plugins[] | "  \(.name): \(.version)"' .claude-plugin/marketplace.json | sed 's/^/  /'
+echo ""
+echo "standalone Claude marketplace.json:"
+echo "  metadata.version:   $(jq -r '.metadata.version' plugins/arckit-claude/.claude-plugin/marketplace.json)  (should be 1.0.0)"
+jq -r '.plugins[] | "  \(.name): \(.version)"' plugins/arckit-claude/.claude-plugin/marketplace.json | sed 's/^/  /'
 echo ""
 
 # Lint check

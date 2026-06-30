@@ -6,7 +6,7 @@ This document covers version management, the release flow, and the helper script
 
 ## Version Files
 
-ArcKit ships in seven formats, each with its own version file. They are all bumped in lockstep by `scripts/bump-version.sh`.
+ArcKit ships in multiple formats, each with its own version file. They are all bumped in lockstep by `scripts/bump-version.sh`.
 
 **CLI version** (independent from the plugin):
 
@@ -25,7 +25,7 @@ ArcKit ships in seven formats, each with its own version file. They are all bump
 - `extensions/arckit-codex/VERSION`
 - `extensions/arckit-copilot/VERSION`
 
-`scripts/bump-version.sh <version>` updates all 15 version-bearing locations (VERSION files, manifests, README badges, docs, plugin.json) in one go.
+`scripts/bump-version.sh <version>` updates all version-bearing locations (VERSION files, manifests, README badges, docs, plugin.json, and standalone marketplace metadata) in one go.
 
 ## Release Helpers
 
@@ -33,7 +33,7 @@ ArcKit ships in seven formats, each with its own version file. They are all bump
 |--------|---------|
 | `scripts/bump-version.sh <version>` | Updates all version files in one pass |
 | `scripts/generate-release-notes.sh [prev-tag]` | Parses `git log` between tags into Keep a Changelog markdown (Added / Fixed / Changed / Breaking Changes), filters out `chore: bump version` commits, auto-detects previous tag if omitted |
-| `scripts/push-extensions.sh [name...]` | Pushes extension dirs to their separate GitHub repos (`tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.), then creates or preserves each repo's `vX.Y.Z` tag and GitHub Release. Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub. Set `ARCKIT_SKIP_EXTENSION_RELEASES=1` only for a commit-only sync |
+| `scripts/push-extensions.sh [name...]` | Pushes standalone distribution dirs to their separate GitHub repos (`tractorjuice/arckit-claude`, `tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.), then creates or preserves each repo's `vX.Y.Z` tag and GitHub Release. Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub. Set `ARCKIT_SKIP_EXTENSION_RELEASES=1` only for a commit-only sync |
 | `.github/workflows/release.yml` | Creates the GitHub Release automatically on `v*` tag push (tag-push triggered, does not commit back to main) |
 
 ## Development Workflow
@@ -94,14 +94,18 @@ claude plugin prune --dry-run
 git tag -a vX.Y.Z -m "vX.Y.Z"
 git push && git push --tags
 
-# 11. Push to extension repos (Gemini, Codex, etc.).
-#     This also publishes each extension repo's vX.Y.Z tag and GitHub Release.
+# 11. Push to standalone repos (Claude, Gemini, Codex, etc.).
+#     This also publishes each standalone repo's vX.Y.Z tag and GitHub Release.
 ./scripts/push-extensions.sh
 ```
 
-After step 11, verify the umbrella GitHub Release and every extension GitHub Release exists:
+Use `./scripts/push-extensions.sh claude` when you intentionally need to publish only the
+standalone Claude mirror.
+
+After step 11, verify the umbrella GitHub Release and every standalone GitHub Release exists:
 
 - `tractorjuice/arc-kit`
+- `tractorjuice/arckit-claude`
 - `tractorjuice/arckit-gemini`
 - `tractorjuice/arckit-codex`
 - `tractorjuice/arckit-opencode`

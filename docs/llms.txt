@@ -272,9 +272,9 @@ The full table of public test repos is in [CLAUDE.md](https://github.com/tractor
 
 ## Source code and distributions
 
-- [Main repository](https://github.com/tractorjuice/arc-kit): Monorepo containing all six distributions.
+- [Main repository](https://github.com/tractorjuice/arc-kit): Monorepo containing ArcKit source, generated distributions, and release tooling.
 - [CLAUDE.md (project guide)](https://github.com/tractorjuice/arc-kit/blob/main/CLAUDE.md): Architecture overview and conventions for contributors.
-- [Claude Code plugin](https://github.com/tractorjuice/arc-kit/tree/main/arckit-claude): `/plugin marketplace add tractorjuice/arc-kit`.
+- [Claude Code plugin](https://github.com/tractorjuice/arckit-claude): `/plugin marketplace add tractorjuice/arckit-claude`.
 - [Gemini CLI extension](https://github.com/tractorjuice/arckit-gemini): `gemini extensions install tractorjuice/arckit-gemini`.
 - [Codex CLI extension](https://github.com/tractorjuice/arckit-codex): Skills, agents, MCP servers for Codex.
 - [OpenCode CLI extension](https://github.com/tractorjuice/arc-kit/tree/main/extensions/arckit-opencode): Commands for OpenCode.
