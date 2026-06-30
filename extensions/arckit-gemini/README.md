@@ -262,7 +262,7 @@ The extension is recommended for all Gemini CLI users as it provides automatic u
 ## Links
 
 - **Main ArcKit repo**: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
-- **Claude Code plugin**: Install via `/plugin marketplace add tractorjuice/arc-kit`
+- **Claude Code plugins**: Install via `/plugin marketplace add tractorjuice/arckit-claude`
 - **Issues**: [github.com/tractorjuice/arc-kit/issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Gemini CLI**: [github.com/google-gemini/gemini-cli](https://github.com/google-gemini/gemini-cli)
 

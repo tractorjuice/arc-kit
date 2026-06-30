@@ -7,8 +7,8 @@ GitHub-Pages-ready static site into `docs/`.
 ## Install
 
 ```bash
-claude plugin marketplace add tractorjuice/arc-kit
-claude plugin install arckit-fde
+claude plugin marketplace add tractorjuice/arckit-claude
+claude plugin install arckit-fde@arckit-claude
 ```
 
 `arckit-fde` is independent of the ArcKit governance core: no dependency on the

@@ -6,7 +6,7 @@ This document covers version management, the release flow, and the helper script
 
 ## Version Files
 
-ArcKit ships in seven formats, each with its own version file. They are all bumped in lockstep by `scripts/bump-version.sh`.
+ArcKit ships in multiple formats, each with its own version file. They are all bumped in lockstep by `scripts/bump-version.sh`.
 
 **CLI version** (independent from the plugin):
 
@@ -25,7 +25,7 @@ ArcKit ships in seven formats, each with its own version file. They are all bump
 - `extensions/arckit-codex/VERSION`
 - `extensions/arckit-copilot/VERSION`
 
-`scripts/bump-version.sh <version>` updates all 15 version-bearing locations (VERSION files, manifests, README badges, docs, plugin.json) in one go.
+`scripts/bump-version.sh <version>` updates all version-bearing locations (VERSION files, manifests, README badges, docs, plugin.json, and standalone marketplace metadata) in one go.
 
 ## Release Helpers
 
@@ -33,7 +33,7 @@ ArcKit ships in seven formats, each with its own version file. They are all bump
 |--------|---------|
 | `scripts/bump-version.sh <version>` | Updates all version files in one pass |
 | `scripts/generate-release-notes.sh [prev-tag]` | Parses `git log` between tags into Keep a Changelog markdown (Added / Fixed / Changed / Breaking Changes), filters out `chore: bump version` commits, auto-detects previous tag if omitted |
-| `scripts/push-extensions.sh [name...]` | Pushes extension dirs to their separate GitHub repos (`tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.), then creates or preserves each repo's `vX.Y.Z` tag and GitHub Release. Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub. Set `ARCKIT_SKIP_EXTENSION_RELEASES=1` only for a commit-only sync |
+| `scripts/push-extensions.sh [name...]` | Pushes standalone distribution dirs to their separate GitHub repos (`tractorjuice/arckit-claude`, `tractorjuice/arckit-gemini`, `tractorjuice/arckit-codex`, etc.), then creates or preserves each repo's `vX.Y.Z` tag and GitHub Release. The `claude` target publishes the full Claude Code marketplace repo: core plugin at the root, with overlays under structured `plugin/...` paths. Uses `GH_TOKEN`. Skips repos that don't yet exist on GitHub. Set `ARCKIT_SKIP_EXTENSION_RELEASES=1` only for a commit-only sync |
 | `.github/workflows/release.yml` | Creates the GitHub Release automatically on `v*` tag push (tag-push triggered, does not commit back to main) |
 
 ## Development Workflow
@@ -94,14 +94,20 @@ claude plugin prune --dry-run
 git tag -a vX.Y.Z -m "vX.Y.Z"
 git push && git push --tags
 
-# 11. Push to extension repos (Gemini, Codex, etc.).
-#     This also publishes each extension repo's vX.Y.Z tag and GitHub Release.
+# 11. Push to standalone repos (Claude, Gemini, Codex, etc.).
+#     This also publishes each standalone repo's vX.Y.Z tag and GitHub Release.
 ./scripts/push-extensions.sh
 ```
 
-After step 11, verify the umbrella GitHub Release and every extension GitHub Release exists:
+Use `./scripts/push-extensions.sh claude` when you intentionally need to publish only the
+standalone Claude Code marketplace repo. That repo keeps the `arckit` core plugin at the
+repository root and copies overlay plugins into structured paths such as `plugin/uk/finance`
+and `plugin/uk/gcloud`.
+
+After step 11, verify the umbrella GitHub Release and every standalone GitHub Release exists:
 
 - `tractorjuice/arc-kit`
+- `tractorjuice/arckit-claude`
 - `tractorjuice/arckit-gemini`
 - `tractorjuice/arckit-codex`
 - `tractorjuice/arckit-opencode`
@@ -113,15 +119,16 @@ After step 11, verify the umbrella GitHub Release and every extension GitHub Rel
 
 This command creates `{plugin-name}--vX.Y.Z` style tags (e.g. `arckit--v4.14.0`), which would not trigger `.github/workflows/release.yml` (it matches `v[0-9]+.[0-9]+.[0-9]+`). We use `--dry-run` for its validation behaviour only — it cross-checks `plugins/arckit-claude/.claude-plugin/plugin.json` against the marketplace entry in `.claude-plugin/marketplace.json` and exits non-zero on mismatch, catching version drift before the real `git tag -a vX.Y.Z` runs.
 
-## v5.0.0+ — multi-plugin release flow
+## v6.0.0+ — single Claude marketplace repo
 
-After v5.0.0 the marketplace ships 7 plugins (`arckit` core + 6 community overlays: UAE, FR, CA, EU, AT, AU). All 7 share one version, bumped together.
+From v6.0.0 the standalone `tractorjuice/arckit-claude` repo is the preferred Claude Code marketplace. It ships 15 plugins in one repo: the `arckit` core plugin at the root plus regional, sector, method, agent-architecture, tooling, and supplier overlays under structured `plugin/...` paths. All Claude plugins share one version, bumped together. The `arckit-uk-gcloud` overlay is public for installation and inspection but remains proprietary, so the standalone repo license carries an explicit exception for `plugin/uk/gcloud/`.
 
 Step 8 changes — validate every plugin manifest:
 
 ```bash
-for p in arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au; do
-  claude plugin tag "$p" --dry-run || exit 1
+for manifest in $(find plugins -maxdepth 3 -path '*/.claude-plugin/plugin.json' | sort); do
+  p=$(python3 -c "import json;print(json.load(open('$manifest'))['name'])")
+  claude plugin tag "$p" --dry-run || { echo "VERSION DRIFT: $p"; exit 1; }
 done
 ```
 
@@ -131,7 +138,9 @@ After the umbrella tag (step 10), also create native per-plugin tags:
 ./scripts/tag-plugins.sh X.Y.Z
 ```
 
-This creates `arckit--vX.Y.Z`, `arckit-uae--vX.Y.Z`, ..., `arckit-at--vX.Y.Z` for the Claude Code plugin system's bookkeeping. Idempotent — re-running skips tags that already exist.
+This creates native Claude Code plugin tags such as `arckit--vX.Y.Z`,
+`arckit-uae--vX.Y.Z`, and `arckit-uk-finance--vX.Y.Z` for every discovered
+Claude plugin manifest. Idempotent — re-running skips tags that already exist.
 
 Extension README files do not carry release numbers. Keep release identity in `VERSION` files,
 manifests, tags, and GitHub Releases so README content cannot drift from marketplace-visible

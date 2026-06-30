@@ -1,6 +1,6 @@
 {
   "name": "@tractorjuice/arckit-paperclip",
-  "version": "5.15.2",
+  "version": "6.0.0",
   "description": "ArcKit Paperclip plugin — The Enterprise Architecture Governance Harness, 116 commands across strategy, architecture, delivery, and assurance",
   "type": "module",
   "main": "dist/worker.js",

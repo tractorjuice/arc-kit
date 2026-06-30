@@ -23,7 +23,7 @@ claude --version
 In Claude Code, run:
 
 ```text
-/plugin marketplace add tractorjuice/arc-kit
+/plugin marketplace add tractorjuice/arckit-claude
 ```
 
 ### Step 2: Install the plugin
@@ -35,13 +35,27 @@ In Claude Code, run:
 Go to the **Discover** tab, find **arckit**, and install it. Or via CLI:
 
 ```bash
-claude plugin install arckit@arc-kit
+claude plugin install arckit@arckit-claude
 ```
+
+### Installing with ArcKit overlay plugins
+
+The same marketplace hosts the core plugin plus regional, sector, and tooling overlays.
+Install only the plugins you need:
+
+```bash
+claude plugin install arckit arckit-uae
+claude plugin install arckit arckit-au arckit-au-energy
+claude plugin install arckit arckit-uk-finance
+```
+
+The `arckit-uk-gcloud` overlay is public for installation and inspection, but remains
+proprietary and is not MIT licensed.
 
 ### Alternative: Load for a single session
 
 ```bash
-claude --plugin-dir /path/to/arc-kit/arckit-claude
+claude --plugin-dir /path/to/arckit-claude
 ```
 
 ## Prerequisites
@@ -287,9 +301,9 @@ This plugin is for Claude Code. For other AI assistants:
 
 ## Links
 
-- [Repository](https://github.com/tractorjuice/arc-kit)
+- [Repository](https://github.com/tractorjuice/arckit-claude)
 - [Documentation](https://tractorjuice.github.io/arc-kit)
-- [Changelog](https://github.com/tractorjuice/arc-kit/blob/main/CHANGELOG.md)
+- [Changelog](https://github.com/tractorjuice/arckit-claude/blob/main/CHANGELOG.md)
 
 ## License
 

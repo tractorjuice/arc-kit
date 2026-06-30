@@ -1,6 +1,6 @@
 [project]
 name = "arckit-cli"
-version = "5.15.2"
+version = "6.0.0"
 description = "ArcKit CLI - The Enterprise Architecture Governance Harness"
 requires-python = ">=3.11"
 dependencies = [

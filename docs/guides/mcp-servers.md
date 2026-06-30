@@ -56,7 +56,7 @@ The value is milliseconds. Recommended for: corporate networks with TLS-inspecti
 In Claude Code, run:
 
 ```text
-/plugin marketplace add tractorjuice/arc-kit
+/plugin marketplace add tractorjuice/arckit-claude
 ```
 
 ### Step 2: Install the plugin
@@ -68,7 +68,7 @@ In Claude Code, run:
 Go to the **Discover** tab, find **arckit**, and install it. Or via CLI:
 
 ```bash
-claude plugin install arckit@arc-kit
+claude plugin install arckit@arckit-claude
 ```
 
 ### Step 3: Restart Claude Code
@@ -95,15 +95,15 @@ To have the plugin auto-enable for anyone who opens your repo, add `.claude/sett
 ```json
 {
   "extraKnownMarketplaces": {
-    "arc-kit": {
+    "arckit-claude": {
       "source": {
         "source": "github",
-        "repo": "tractorjuice/arc-kit"
+        "repo": "tractorjuice/arckit-claude"
       }
     }
   },
   "enabledPlugins": {
-    "arckit@arc-kit": true
+    "arckit@arckit-claude": true
   }
 }
 ```
