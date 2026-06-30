@@ -1,0 +1,35 @@
+schema: "1.0"
+name: "agent-architecture"
+description: "AI Agent Architecture lifecycle — inventory through maturity"
+version: "1.0.0"
+defaults:
+  project_id: "001"
+  version: "1.0"
+targets:
+  - id: agent-inventory
+    skill: "agent-inventory"
+    description: "Catalog existing agents"
+  - id: agent-design
+    skill: "agent-design"
+    description: "Agent architecture specification"
+    depends: ["agent-inventory"]
+  - id: agent-integration
+    skill: "agent-integration"
+    description: "Multi-agent orchestration"
+    depends: ["agent-design"]
+  - id: agent-governance
+    skill: "agent-governance"
+    description: "Guardrails and oversight"
+    depends: ["agent-inventory", "agent-design"]
+  - id: agent-security
+    skill: "agent-security"
+    description: "Security and sandboxing"
+    depends: ["agent-design"]
+  - id: agent-maturity
+    skill: "agent-maturity"
+    description: "Program maturity assessment"
+    depends: ["agent-inventory", "agent-design", "agent-governance", "agent-security"]
+    optional: true
+postbuild:
+  - "arckit:health"
+  - "arckit:pages"

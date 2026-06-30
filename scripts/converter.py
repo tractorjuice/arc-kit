@@ -240,6 +240,8 @@ PLUGIN_SOURCES = [
     "plugins/arckit-us",
     "plugins/arckit-uk-finance",
     "plugins/arckit-uk-nhs",
+    "plugins/arckit-togaf-adm",
+    "plugins/arckit-agent-architecture",
     "plugins/arckit-claude",  # core last
 ]
 # Intentionally EXCLUDED from PLUGIN_SOURCES (Claude Code only, not converted):

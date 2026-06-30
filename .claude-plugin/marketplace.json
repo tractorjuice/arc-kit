@@ -295,6 +295,22 @@
         "bid"
       ],
       "category": "productivity"
+    },
+    {
+      "name": "arckit-togaf-adm",
+      "path": "plugins/arckit-togaf-adm",
+      "version": "1.0.0",
+      "description": "TOGAF ADM — Enterprise Architecture Development Method. 9 commands covering all ADM phases (Preliminary through H) plus Architecture Repository. [COMMUNITY]",
+      "community": true,
+      "dependencies": ["arckit"]
+    },
+    {
+      "name": "arckit-agent-architecture",
+      "path": "plugins/arckit-agent-architecture",
+      "version": "1.0.0",
+      "description": "AI Agent Architecture — Governance, design, and security for autonomous AI agent programs. 6 commands. [COMMUNITY]",
+      "community": true,
+      "dependencies": ["arckit"]
     }
   ]
 }

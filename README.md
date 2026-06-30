@@ -59,7 +59,7 @@ Then in Claude Code:
 /plugin marketplace add tractorjuice/arc-kit
 ```
 
-Then install from the Discover tab. The marketplace ships **13 plugins** — install only the jurisdictions you need:
+Then install from the Discover tab. The marketplace ships **15 plugins** — install only the jurisdictions you need:
 
 ```bash
 # Core (75 commands — UK Government civilian + generic enterprise)
@@ -72,7 +72,7 @@ claude plugin install arckit arckit-uae
 claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs,uk-gcloud}
 ```
 
-All 13 plugins come from the same `tractorjuice/arc-kit` marketplace. The 11 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-gcloud`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
+All 15 plugins come from the same `tractorjuice/arc-kit` marketplace. The 13 community plugins (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-uk-gcloud`, `arckit-togaf-adm`, `arckit-agent-architecture`) require the `arckit` core plugin. `arckit-au-energy` (sector) additionally requires `arckit-au` (jurisdiction), which it composes — install with `claude plugin install arckit arckit-au arckit-au-energy`. `arckit-uk-gcloud` is a **proprietary, Claude Code only** supplier-side G-Cloud bid-authoring overlay — it is not distributed to the non-Claude extension formats. One **tooling plugin** — `arckit-fde` — is a lean, Claude Code only plugin with one command, `/arckit-fde:create`, that generates a brandable (white-label) Forward Deploy Engineering consulting website into `docs/` (GitHub Pages ready), with UK Public Sector and Generic market presets; no dependencies, not converted to non-Claude formats, no governance doc-types.
 
 > **Tip: lighter marketplace clone.** The command above clones the full arc-kit monorepo (~100 MB) because it hosts five other AI-assistant distributions, 147 vendored Wardley maps, and research docs you don't need. To fetch just the plugin's directories, add the marketplace via the CLI with `--sparse`:
 >
@@ -82,7 +82,7 @@ All 13 plugins come from the same `tractorjuice/arc-kit` marketplace. The 11 com
 >
 > This uses `git sparse-checkout` to limit the clone to `.claude-plugin/` (the marketplace catalog) and `plugins/arckit-claude/` (the plugin itself). Works with Claude Code's documented marketplace sparse flag. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all 75 official commands, 10 autonomous research agents, automation hooks, bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape, uk-tenders), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.172?** v2.1.172 fixed wildcard-domain `WebFetch` permission rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients — that is exactly the shape ArcKit recommends for confining research-agent traffic in OFFICIAL-SENSITIVE deployments (see the security-hooks guide), so the floor makes that guidance actually hold. It also includes the **Claude Fable 5** runtime (GA in v2.1.170), and ArcKit defaults to the latest model tier. It carries forward the v2.1.156 fix for an Opus 4.8 bug where modified thinking blocks caused API errors — relevant to `/arckit:*` commands and the research agents that lean on extended thinking, the floor for adopting Opus 4.8 cleanly. v2.1.154 shipped Opus 4.8 (now defaulting to high effort, owning `/effort xhigh`) and `defaultEnabled: false` for plugins — ArcKit's 10 community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`) now set this so installing the marketplace surfaces them without auto-enabling all ten; users opt in to only the jurisdiction or sector they need, while core `arckit` stays default-enabled. v2.1.144 fixed a bug where new sessions were titled from plugin monitor output instead of the user's first prompt — ArcKit's `stale-artifact-scan` monitor was the canonical hit, producing sessions named "Detect ArcKit artifacts with overdue reviews…" instead of the user's actual question. Same release fixed the Skill tool failing with permission errors in headless mode (regression in v2.1.141) which affected `/arckit:*` runs via `claude -p` / CI. v2.1.143 added plugin dependency enforcement so `claude plugin disable arckit` now surfaces a copy-pasteable disable-chain hint when a community overlay (`arckit-au`, `arckit-uae`, etc.) depends on it, instead of silently breaking the overlay. v2.1.139 added the hook `args: string[]` exec form — ArcKit's 16 registered hooks now use this form so the harness execs `node <path>` directly instead of parsing a shell-quoted command string. This eliminates a whole class of quoting / metacharacter bugs in the `${CLAUDE_PLUGIN_ROOT}`-substituted paths. The same release also fixed subagents not discovering project / user / plugin skills (affects ArcKit's 16 agents) and made `/mcp` reconnect pick up `.mcp.json` edits without a restart. Builds on v2.1.136 (fix: env vars from SessionStart hooks going stale — relevant to the `inject-arckit-context` pattern; fix: MCP servers from `.mcp.json` disappearing after `/clear`), v2.1.133 (subagent skill discovery fix, hooks receive `effort.level`), and v2.1.129 (plugin manifest's `monitors`/`themes` moved under a top-level `experimental` block — ArcKit's `stale-artifact-scan` background monitor which warns when `projects/` artefacts are past their `Next Review Date` or stuck in `DRAFT` for 14+ days is declared via that key and will not load on older clients; `ENABLE_PROMPT_CACHING_1H` regression fix). Carries forward the v2.1.121 unlocks: MCP `alwaysLoad` eager-loads AWS Knowledge and Microsoft Learn tools at session start (skips a discovery round-trip on `/arckit:aws-research` and `/arckit:azure-research`), and PostToolUse `hookSpecificOutput.updatedToolOutput` so provenance-stamp and manifest hooks surface their effects to the model in-band; the v2.1.118–119 release-flow unlocks: `claude plugin tag --dry-run` validates plugin/marketplace version agreement, and the session-telemetry hook records `duration_ms` on every tool call; the v2.1.117 unlocks: Opus 4.7 `/context` correctly sized to 1M instead of 200K (long research sessions no longer autocompact early) and agent frontmatter `mcpServers` loading for `--agent` sessions; the v2.1.111+ unlocks: Opus 4.7 `xhigh` effort tier, Auto mode without `--enable-auto-mode`, read-only bash glob patterns without permission prompts; and the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
+> **Why v2.1.172?** v2.1.172 fixed wildcard-domain `WebFetch` permission rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients — that is exactly the shape ArcKit recommends for confining research-agent traffic in OFFICIAL-SENSITIVE deployments (see the security-hooks guide), so the floor makes that guidance actually hold. It also includes the **Claude Fable 5** runtime (GA in v2.1.170), and ArcKit defaults to the latest model tier. It carries forward the v2.1.156 fix for an Opus 4.8 bug where modified thinking blocks caused API errors — relevant to `/arckit:*` commands and the research agents that lean on extended thinking, the floor for adopting Opus 4.8 cleanly. v2.1.154 shipped Opus 4.8 (now defaulting to high effort, owning `/effort xhigh`) and `defaultEnabled: false` for plugins — ArcKit's 12 community overlays (`arckit-uae`, `arckit-fr`, `arckit-ca`, `arckit-eu`, `arckit-at`, `arckit-au`, `arckit-au-energy`, `arckit-us`, `arckit-uk-finance`, `arckit-uk-nhs`, `arckit-togaf-adm`, `arckit-agent-architecture`) now set this so installing the marketplace surfaces them without auto-enabling all twelve; users opt in to only the jurisdiction or sector they need, while core `arckit` stays default-enabled. v2.1.144 fixed a bug where new sessions were titled from plugin monitor output instead of the user's first prompt — ArcKit's `stale-artifact-scan` monitor was the canonical hit, producing sessions named "Detect ArcKit artifacts with overdue reviews…" instead of the user's actual question. Same release fixed the Skill tool failing with permission errors in headless mode (regression in v2.1.141) which affected `/arckit:*` runs via `claude -p` / CI. v2.1.143 added plugin dependency enforcement so `claude plugin disable arckit` now surfaces a copy-pasteable disable-chain hint when a community overlay (`arckit-au`, `arckit-uae`, etc.) depends on it, instead of silently breaking the overlay. v2.1.139 added the hook `args: string[]` exec form — ArcKit's 16 registered hooks now use this form so the harness execs `node <path>` directly instead of parsing a shell-quoted command string. This eliminates a whole class of quoting / metacharacter bugs in the `${CLAUDE_PLUGIN_ROOT}`-substituted paths. The same release also fixed subagents not discovering project / user / plugin skills (affects ArcKit's 16 agents) and made `/mcp` reconnect pick up `.mcp.json` edits without a restart. Builds on v2.1.136 (fix: env vars from SessionStart hooks going stale — relevant to the `inject-arckit-context` pattern; fix: MCP servers from `.mcp.json` disappearing after `/clear`), v2.1.133 (subagent skill discovery fix, hooks receive `effort.level`), and v2.1.129 (plugin manifest's `monitors`/`themes` moved under a top-level `experimental` block — ArcKit's `stale-artifact-scan` background monitor which warns when `projects/` artefacts are past their `Next Review Date` or stuck in `DRAFT` for 14+ days is declared via that key and will not load on older clients; `ENABLE_PROMPT_CACHING_1H` regression fix). Carries forward the v2.1.121 unlocks: MCP `alwaysLoad` eager-loads AWS Knowledge and Microsoft Learn tools at session start (skips a discovery round-trip on `/arckit:aws-research` and `/arckit:azure-research`), and PostToolUse `hookSpecificOutput.updatedToolOutput` so provenance-stamp and manifest hooks surface their effects to the model in-band; the v2.1.118–119 release-flow unlocks: `claude plugin tag --dry-run` validates plugin/marketplace version agreement, and the session-telemetry hook records `duration_ms` on every tool call; the v2.1.117 unlocks: Opus 4.7 `/context` correctly sized to 1M instead of 200K (long research sessions no longer autocompact early) and agent frontmatter `mcpServers` loading for `--agent` sessions; the v2.1.111+ unlocks: Opus 4.7 `xhigh` effort tier, Auto mode without `--enable-auto-mode`, read-only bash glob patterns without permission prompts; and the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
 
 **Gemini CLI** — install the ArcKit extension:
 
@@ -520,6 +520,52 @@ Install: `claude plugin install arckit arckit-uk-finance`. Help wanted: recruiti
 Skills: `gcloud-framework`, `cloud-security`, `sfia-skills`. Recipe: `uk-gcloud-submission` (end-to-end bid assembly).
 
 Install: `claude plugin install arckit arckit-uk-gcloud`. Proprietary — see the licence-exception note at the foot of this README. Ported from the standalone gcloud-kit plugin.
+
+---
+
+## TOGAF ADM Overlay (`arckit-togaf-adm`) [COMMUNITY]
+
+Enterprise Architecture Development Method — 9 commands covering the full ADM cycle.
+
+| Command | Doc Type | Phase | Description |
+|---------|----------|-------|-------------|
+| `/arckit:adm-preliminary` | ADMP | Preliminary | Architecture vision, scope, drivers, constraints |
+| `/arckit:business-capability-map` | BPCM | Phase A | Business capability hierarchy, value streams, maturity |
+| `/arckit:application-inventory` | APP | Phase C | Application catalog with strategic fit scoring |
+| `/arckit:application-rationalization` | APPR | Phase C | Keep/merge/replace/retire decisions |
+| `/arckit:gap-analysis` | GAPA | Phase E | Capability gap matrix, workstream mapping |
+| `/arckit:transition-architecture` | TRANS | Phase F | Work packages, migration waves, acceptance criteria |
+| `/arckit:architecture-board` | BORD | Phase G | Board charter, compliance scorecard, governance |
+| `/arckit:architecture-change` | ACHG | Phase H | Change requests, ADM cycle re-entry |
+| `/arckit:architecture-repository` | REPO | Repository | Patterns, standards, reference architectures |
+
+**Install:** `claude plugin install arckit arckit-togaf-adm`
+**Recipe:** `togaf-adm-full` — full ADM cycle via build recipe
+
+---
+
+## AI Agent Architecture Overlay (`arckit-agent-architecture`) [COMMUNITY]
+
+Governance, design, and security for autonomous AI agent programs — 6 commands.
+
+| Command | Doc Type | Description |
+|---------|----------|-------------|
+| `/arckit:agent-inventory` | AAGI | Agent catalog with capabilities, security classification |
+| `/arckit:agent-design` | AAGR | Agent architecture spec — patterns, tools, memory, orchestration |
+| `/arckit:agent-governance` | AAOV | Oversight models, approval workflows, audit, compliance |
+| `/arckit:agent-integration` | AAIN | Multi-agent orchestration, contracts, shared state |
+| `/arckit:agent-security` | AASE | Sandboxing, permissions, injection defences, output validation |
+| `/arckit:agent-maturity` | AAMT | 5×5 maturity model for agent programs |
+
+**Install:** `claude plugin install arckit arckit-agent-architecture`
+**Recipe:** `agent-architecture` — full agent architecture lifecycle via build recipe
+
+### Combined Recipe: `togaf-agent-full`
+
+For organisations adopting both enterprise architecture and AI agent governance:
+```
+claude agent recipes/togaf-agent-full.yaml
+```
 
 ---
 

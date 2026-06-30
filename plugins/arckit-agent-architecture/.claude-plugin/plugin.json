@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-agent-architecture",
+  "version": "1.0.0",
+  "description": "AI Agent Architecture — Governance, design, and security for autonomous AI agent programs. 6 commands covering agent inventory, design, governance, integration, security, and maturity.",
+  "author": {
+    "name": "ArcKit Contributors",
+    "url": "https://github.com/tractorjuice/arc-kit"
+  },
+  "repository": "https://github.com/tractorjuice/arc-kit",
+  "license": "MIT",
+  "defaultEnabled": false,
+  "userConfig": {
+    "default_classification": {
+      "type": "string",
+      "default": "PUBLIC",
+      "description": "Default document classification (e.g. PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE)"
+    }
+  },
+  "requires": [
+    { "name": "arckit", "version": ">=5.15.0" }
+  ]
+}

@@ -1,0 +1,78 @@
+schema: "1.0"
+name: "togaf-agent-full"
+description: "Full enterprise + AI agent architecture — TOGAF ADM + Agent Architecture composition"
+version: "1.0.0"
+defaults:
+  project_id: "001"
+  version: "1.0"
+targets:
+  - id: foundation
+    skill: "strategy"
+    description: "Generate strategy and principles"
+  - id: adm-preliminary
+    skill: "adm-preliminary"
+    description: "Architecture Vision"
+    depends: ["foundation"]
+  - id: business-capability-map
+    skill: "business-capability-map"
+    description: "Business Architecture"
+    depends: ["adm-preliminary"]
+  - id: application-inventory
+    skill: "application-inventory"
+    description: "Application portfolio"
+    depends: ["adm-preliminary", "business-capability-map"]
+  - id: agent-inventory
+    skill: "agent-inventory"
+    description: "Agent inventory"
+    depends: ["adm-preliminary", "application-inventory"]
+  - id: agent-design
+    skill: "agent-design"
+    description: "Agent architecture"
+    depends: ["agent-inventory"]
+  - id: application-rationalization
+    skill: "application-rationalization"
+    description: "Portfolio decisions"
+    depends: ["application-inventory", "business-capability-map"]
+  - id: gap-analysis
+    skill: "gap-analysis"
+    description: "Gap analysis"
+    depends: ["business-capability-map", "application-inventory", "application-rationalization", "agent-inventory"]
+  - id: transition-architecture
+    skill: "transition-architecture"
+    description: "Migration planning"
+    depends: ["gap-analysis"]
+  - id: architecture-board
+    skill: "architecture-board"
+    description: "Governance"
+    depends: ["adm-preliminary"]
+  - id: agent-governance
+    skill: "agent-governance"
+    description: "Agent governance"
+    depends: ["agent-inventory", "agent-design", "architecture-board"]
+  - id: agent-security
+    skill: "agent-security"
+    description: "Agent security"
+    depends: ["agent-design"]
+  - id: agent-integration
+    skill: "agent-integration"
+    description: "Multi-agent integration"
+    depends: ["agent-design"]
+  - id: architecture-repository
+    skill: "architecture-repository"
+    description: "Repository"
+    depends: ["foundation"]
+    optional: true
+  - id: architecture-change
+    skill: "architecture-change"
+    description: "Change management"
+    depends: ["architecture-board"]
+    optional: true
+  - id: agent-maturity
+    skill: "agent-maturity"
+    description: "Maturity assessment"
+    depends: ["agent-inventory", "agent-design", "agent-governance", "agent-security"]
+    optional: true
+postbuild:
+  - "arckit:health"
+  - "arckit:traceability"
+  - "arckit:pages"
