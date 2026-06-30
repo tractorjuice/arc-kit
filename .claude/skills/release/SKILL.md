@@ -86,7 +86,9 @@ git push && git push --tags
 
 # 11. Push each distribution to its standalone GitHub repo
 #     (tractorjuice/arckit-claude, arckit-gemini, arckit-codex, …).
-#     This also creates or preserves each repo's vX.Y.Z tag and GitHub Release:
+#     The claude target publishes the full Claude marketplace repo: core at
+#     the repo root, overlays under plugin/... paths. This also creates or
+#     preserves each repo's vX.Y.Z tag and GitHub Release:
 ./scripts/push-extensions.sh
 ```
 
@@ -107,11 +109,11 @@ The highest-signal failures — collected from real releases. Read these before 
 - **Skipping extension tests.** Run the step 4 extension suite after `converter.py`. It validates
   Codex, Gemini, OpenCode, Copilot, Vibe, Paperclip, release inventory, version alignment, and
   platform-specific command rewrites before anything is tagged.
-- **Hardcoding the plugin list.** The marketplace now ships 11 plugins (core + 10 overlays) and
-  keeps growing. The `--dry-run` validation loop in older `RELEASING.md` examples lists only 7 —
-  that silently skips newer plugins. Discover plugins dynamically (step 7) — this is the exact
-  bug that shipped `arckit-uk-nhs` untagged mid-v5.4.0, which is why `tag-plugins.sh` now
-  auto-discovers. Never copy a static plugin array.
+- **Hardcoding the plugin list.** The Claude marketplace now ships 13 plugins (core plus
+  regional, sector, tooling, and supplier overlays) and keeps growing. Older examples listed
+  only 7, silently skipping newer plugins. Discover plugins dynamically (step 7) -- this is the
+  exact bug that shipped `arckit-uk-nhs` untagged mid-v5.4.0, which is why `tag-plugins.sh`
+  now auto-discovers. Never copy a static plugin array.
 - **`claude plugin tag` needs a clean tree.** Run it *after* the commit (step 6), not before, or
   it errors on the dirty working tree.
 - **`claude plugin tag` is `--dry-run` only here.** It creates `name--vX.Y.Z` style tags that do
@@ -125,9 +127,10 @@ The highest-signal failures — collected from real releases. Read these before 
   the same number by design; don't try to skew them.
 - **`push-extensions.sh` needs `GH_TOKEN`** and skips repos that don't yet exist on GitHub — a
   "skipped" line is not an error for a brand-new extension, but double-check it's not skipping a
-  repo that *should* exist. It now creates/preserves standalone repo `vX.Y.Z` tags and
-  GitHub Releases; use `ARCKIT_SKIP_EXTENSION_RELEASES=1` only when intentionally doing a
-  commit-only sync.
+  repo that *should* exist. The `claude` target writes the full `arckit-claude` marketplace repo,
+  including the public-but-proprietary `plugin/uk/gcloud/` overlay and its license exception. It
+  now creates/preserves standalone repo `vX.Y.Z` tags and GitHub Releases; use
+  `ARCKIT_SKIP_EXTENSION_RELEASES=1` only when intentionally doing a commit-only sync.
 - **Do not put release numbers in extension READMEs.** Extension release identity lives in
   `VERSION` files, manifests, Git tags, and GitHub Releases. README-pinned versions drift and
   are blocked by `tests/plugin/test_release_process.py`.

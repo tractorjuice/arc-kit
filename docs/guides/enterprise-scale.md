@@ -238,7 +238,7 @@ For an **individual** user or repo that just wants to avoid drifting *below* the
 
 ### Allowlist the ArcKit marketplace
 
-`pluginSuggestionMarketplaces` lets admins allowlist org marketplaces whose plugins may surface in context-aware tips. Allowlisting `tractorjuice/arc-kit` means Claude Code can suggest ArcKit when a user opens a directory with a `projects/` tree or `ARC-*` artefacts — useful for driving adoption across many teams without a manual rollout. Pair with `strictKnownMarketplaces` / `blockedMarketplaces` if you want to *restrict* installs to only the marketplaces you've vetted.
+`pluginSuggestionMarketplaces` lets admins allowlist org marketplaces whose plugins may surface in context-aware tips. Allowlisting `tractorjuice/arckit-claude` means Claude Code can suggest ArcKit when a user opens a directory with a `projects/` tree or `ARC-*` artefacts — useful for driving adoption across many teams without a manual rollout. Pair with `strictKnownMarketplaces` / `blockedMarketplaces` if you want to *restrict* installs to only the marketplaces you've vetted.
 
 ### Slice usage/cost metrics by project
 

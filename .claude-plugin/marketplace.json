@@ -13,7 +13,7 @@
       "name": "arckit",
       "source": "./plugins/arckit-claude",
       "description": "73 slash commands across strategy, architecture, delivery, and assurance — including UK Government compliance",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
@@ -34,12 +34,12 @@
       "name": "arckit-uae",
       "source": "./plugins/arckit-uae",
       "description": "UAE Federal Overlay — 12 commands for PDPL, IAS, AI Charter, autonomy, sovereign cloud, UAE Pass",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -53,12 +53,12 @@
       "name": "arckit-fr",
       "source": "./plugins/arckit-fr",
       "description": "French Public Sector Overlay — 12 commands for DINUM, ANSSI, RGPD/CNIL, EBIOS, PSSI, SecNumCloud",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -73,12 +73,12 @@
       "name": "arckit-ca",
       "source": "./plugins/arckit-ca",
       "description": "Canadian Federal Overlay — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -93,12 +93,12 @@
       "name": "arckit-eu",
       "source": "./plugins/arckit-eu",
       "description": "EU Overlay — 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -113,12 +113,12 @@
       "name": "arckit-at",
       "source": "./plugins/arckit-at",
       "description": "Austrian Overlay — 3 commands for DSG/DSGVO, NISG, and Bundesvergabegesetz public procurement",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -132,12 +132,12 @@
       "name": "arckit-au",
       "source": "./plugins/arckit-au",
       "description": "Australian Federal Overlay — 10 commands for ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988, OAIC NDB, PSPF, AI Assurance, DISP attestation, OT security, and SOCI/CIRMP",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -152,12 +152,12 @@
       "name": "arckit-au-energy",
       "source": "./plugins/arckit-au-energy",
       "description": "Australian Energy Sector Overlay — 2 commands for AESCSF maturity assessment and energy-sector compliance (AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS, SOCI escalation). Recipe: au-energy. First Australian sector overlay; composes the arckit-au federal baseline. Requires arckit and arckit-au.",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -175,12 +175,12 @@
       "name": "arckit-us",
       "source": "./plugins/arckit-us",
       "description": "USA Federal Civilian Overlay — 10 commands for FedRAMP, FISMA/NIST 800-53, CISA Zero Trust, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10/M-25-21 AI assurance, E-Gov §208 PIA, EO 14028 SBOM",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -196,12 +196,12 @@
       "name": "arckit-uk-finance",
       "source": "./plugins/arckit-uk-finance",
       "description": "UK Financial Services Payments Overlay — 4 commands for established UK PSPs / EMIs / PIs: PSD2 SCA-RTS exemption design, EMI/PI safeguarding, FCA Consumer Duty board report, Critical Third Parties dependency assessment. Recipe: uk-fs-payments. First sector-specific overlay.",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -224,12 +224,12 @@
       "name": "arckit-uk-nhs",
       "source": "./plugins/arckit-uk-nhs",
       "description": "UK NHS Clinical Safety Overlay — 4 commands for NHS DCB0129 (manufacturer), DCB0160 (deployer), DTAC v3, and UK/EU MDR SaMD/AIaMD classification. Adopts Marcus Baw SAFETY.md spec. Second sector-specific overlay.",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "architecture",
@@ -249,12 +249,12 @@
       "name": "arckit-fde",
       "source": "./plugins/arckit-fde",
       "description": "ArcKit FDE Site Generator — /arckit-fde:create interviews you and renders a brandable, GitHub-Pages-ready Forward Deploy Engineering consulting website to docs/. White-label brand, colour, pricing and contact; UK public sector or generic market preset. Claude Code only.",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "MIT",
       "keywords": [
         "arckit",
@@ -273,12 +273,12 @@
       "name": "arckit-uk-gcloud",
       "source": "./plugins/arckit-uk-gcloud",
       "description": "UK G-Cloud Supplier Bid-Authoring Overlay — 11 supplier-side commands driving a G-Cloud 14 Digital Marketplace submission end to end: supplier profile, service design, Service Definition Documents (Lots 1/2/3), supplier declaration, pricing, NCSC Cloud Security Principles assertions, competitor benchmark, submission review, and CCS submission packaging. Recipe: uk-gcloud-submission. Requires arckit core. Proprietary, experimental.",
-      "version": "5.15.2",
+      "version": "6.0.0",
       "author": {
         "name": "TractorJuice"
       },
-      "homepage": "https://github.com/tractorjuice/arc-kit",
-      "repository": "https://github.com/tractorjuice/arc-kit",
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
       "license": "Proprietary",
       "keywords": [
         "architecture",

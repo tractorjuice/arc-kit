@@ -278,15 +278,15 @@ def create_claude_settings() -> None:
     """Create .claude/settings.json."""
     settings = {
         "extraKnownMarketplaces": {
-            "arc-kit": {
+            "arckit-claude": {
                 "source": {
                     "source": "github",
-                    "repo": "tractorjuice/arc-kit",
+                    "repo": "tractorjuice/arckit-claude",
                 }
             }
         },
         "enabledPlugins": {
-            "arckit@arc-kit": True,
+            "arckit@arckit-claude": True,
         },
     }
     write(REPO_DIR / ".claude" / "settings.json", json.dumps(settings, indent=2) + "\n")

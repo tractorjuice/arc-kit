@@ -31,7 +31,7 @@
  */
 
 import { writeFileSync, mkdirSync } from 'node:fs';
-import { dirname, join } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
   isDir, readText, findRepoRoot, parseHookInput,
@@ -1503,29 +1503,41 @@ function formatTraceability(graph, prompt) {
   return lines.join('\n');
 }
 
+export function runGraphInject(data) {
+  const prompt = data.prompt || '';
+  const recipe = matchRecipe(prompt);
+  if (!recipe) return null;
+
+  const cwd = data.cwd || process.cwd();
+  const repoRoot = findRepoRoot(cwd);
+  if (!repoRoot) return null;
+
+  const projectsDir = join(repoRoot, 'projects');
+  if (!isDir(projectsDir)) return null;
+
+  const opts = typeof recipe.opts === 'function' ? recipe.opts(prompt) : recipe.opts;
+  const graph = scanAllArtifacts(projectsDir, opts);
+  const additionalContext = recipe.format(graph, prompt, repoRoot);
+
+  if (additionalContext == null) return null;
+
+  return {
+    hookSpecificOutput: {
+      hookEventName: 'UserPromptSubmit',
+      additionalContext,
+    },
+  };
+}
+
 // ── Main ──────────────────────────────────────────────────────────────────
 
-const data = parseHookInput();
-const prompt = data.prompt || '';
-const recipe = matchRecipe(prompt);
-if (!recipe) process.exit(0);
+function isMainModule() {
+  return process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url);
+}
 
-const cwd = data.cwd || process.cwd();
-const repoRoot = findRepoRoot(cwd);
-if (!repoRoot) process.exit(0);
-
-const projectsDir = join(repoRoot, 'projects');
-if (!isDir(projectsDir)) process.exit(0);
-
-const opts = typeof recipe.opts === 'function' ? recipe.opts(prompt) : recipe.opts;
-const graph = scanAllArtifacts(projectsDir, opts);
-const additionalContext = recipe.format(graph, prompt, repoRoot);
-
-if (additionalContext == null) process.exit(0);
-
-console.log(JSON.stringify({
-  hookSpecificOutput: {
-    hookEventName: 'UserPromptSubmit',
-    additionalContext,
-  },
-}));
+if (isMainModule()) {
+  const output = runGraphInject(parseHookInput());
+  if (output != null) {
+    console.log(JSON.stringify(output));
+  }
+}

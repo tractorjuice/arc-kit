@@ -40,13 +40,17 @@ claude plugin install arckit@arckit-claude
 
 ### Installing with ArcKit overlay plugins
 
-The umbrella ArcKit marketplace still hosts the core plugin plus regional and sector overlays.
-Use it when you want `arckit` together with plugins such as `arckit-uae`, `arckit-fr`, or
-`arckit-au`:
+The same marketplace hosts the core plugin plus regional, sector, and tooling overlays.
+Install only the plugins you need:
 
-```text
-/plugin marketplace add tractorjuice/arc-kit
+```bash
+claude plugin install arckit arckit-uae
+claude plugin install arckit arckit-au arckit-au-energy
+claude plugin install arckit arckit-uk-finance
 ```
+
+The `arckit-uk-gcloud` overlay is public for installation and inspection, but remains
+proprietary and is not MIT licensed.
 
 ### Alternative: Load for a single session
 

@@ -402,24 +402,13 @@
                     <p class="govuk-body govuk-!-margin-top-3">Install the core Claude Code plugin from Discover, or via CLI:</p>
                     <div class="app-code-block"><pre><code># Core (UK Government civilian + generic enterprise)
 claude plugin install arckit@arckit-claude</code></pre></div>
-                    <p class="govuk-body govuk-!-margin-top-3">For regional, sector, and tooling overlays, add the umbrella ArcKit marketplace and install only the plugins you need:</p>
-                    <div class="app-code-block">/plugin marketplace add tractorjuice/arc-kit</div>
-                    <div class="app-code-block govuk-!-margin-top-3"><pre><code># Core + UAE overlay
+                    <p class="govuk-body govuk-!-margin-top-3">The same marketplace also contains regional, sector, and tooling overlays. Install only the plugins you need:</p>
+                    <div class="app-code-block"><pre><code># Core + UAE overlay
 claude plugin install arckit arckit-uae
 
 # Broad overlay set
 claude plugin install arckit arckit-{uae,fr,ca,eu,at,au,us,uk-nhs,uk-gcloud}</code></pre></div>
-                    <p class="govuk-body govuk-!-margin-top-3">The community overlay plugins auto-install the <code>arckit</code> core plugin as a declared dependency. Updates are automatic via the marketplace.</p>
-                    <p class="govuk-body govuk-!-margin-top-2"><strong>Lighter overlay clone:</strong> the standalone <code>tractorjuice/arckit-claude</code> repo is the lightweight core path. To use the umbrella marketplace while skipping the other AI-assistant distributions in the monorepo, add it with sparse-checkout. Each plugin directory you want to install is listed explicitly:</p>
-                    <div class="app-code-block"><pre><code># Core only
-claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude
-
-# Core + UAE overlay
-claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin arckit-claude arckit-uae
-
-# Core + common overlays
-claude plugin marketplace add tractorjuice/arc-kit --sparse .claude-plugin \
-  arckit-claude arckit-uae arckit-fr arckit-ca arckit-eu arckit-at arckit-au arckit-us</code></pre></div>
+                    <p class="govuk-body govuk-!-margin-top-3">The community overlay plugins auto-install the <code>arckit</code> core plugin as a declared dependency. The <code>arckit-uk-gcloud</code> overlay is public for installation and inspection, but remains proprietary and is not MIT licensed. Updates are automatic via the marketplace.</p>
                 </div>
 
                 <div class="app-step">

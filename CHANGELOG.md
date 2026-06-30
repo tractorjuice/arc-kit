@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.0.0] — 2026-06-30
+
+### Added
+
+- **Single Claude Code marketplace repo.** Added release tooling and metadata
+  so `tractorjuice/arckit-claude` publishes the core plugin plus regional,
+  sector, tooling, and supplier overlays from one structured repo.
+
+### Changed
+
+- **Claude marketplace install path.** Updated user-facing documentation,
+  test-repo templates, and release guidance to prefer
+  `tractorjuice/arckit-claude` for Claude Code installs.
+
 ## [5.15.2] — 2026-06-30
 
 ### Fixed

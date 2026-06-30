@@ -34,6 +34,26 @@ declare -A EXTENSIONS=(
   [vibe]="extensions/arckit-vibe:arckit-vibe"
 )
 
+# Claude Code plugins are published together to the arckit-claude marketplace
+# repo. The core plugin stays at the repo root for compatibility with the
+# original standalone mirror. Overlays live under structured plugin paths.
+CLAUDE_PLUGIN_REPO="arckit-claude"
+CLAUDE_PLUGIN_CORE_DIR="plugins/arckit-claude"
+CLAUDE_PLUGIN_LAYOUT=(
+  "plugins/arckit-uae:plugin/uae"
+  "plugins/arckit-fr:plugin/fr"
+  "plugins/arckit-ca:plugin/ca"
+  "plugins/arckit-eu:plugin/eu"
+  "plugins/arckit-at:plugin/at"
+  "plugins/arckit-au:plugin/au"
+  "plugins/arckit-au-energy:plugin/au/energy"
+  "plugins/arckit-us:plugin/us"
+  "plugins/arckit-uk-finance:plugin/uk/finance"
+  "plugins/arckit-uk-nhs:plugin/uk/nhs"
+  "plugins/arckit-fde:plugin/fde"
+  "plugins/arckit-uk-gcloud:plugin/uk/gcloud"
+)
+
 # ── Determine which distributions to push ─────────────────────────────────────
 if [[ $# -gt 0 ]]; then
   TARGETS=("$@")
@@ -162,6 +182,130 @@ EOF
   fi
 }
 
+copy_distribution_files() {
+  local source_path="$1"
+  local destination_path="$2"
+
+  mkdir -p "$destination_path"
+  tar -C "$source_path" \
+    --exclude='./node_modules' \
+    --exclude='./.npm' \
+    --exclude='./.pnpm-store' \
+    --exclude='./.yarn/cache' \
+    -cf - . | tar -C "$destination_path" -xf -
+}
+
+write_claude_standalone_license() {
+  local license_path="$1"
+
+  cat > "$license_path" <<'EOF'
+NOTE: The MIT License below applies to the arckit-claude repository EXCEPT for
+the directory `plugin/uk/gcloud/`, which is proprietary and licensed
+separately — see `plugin/uk/gcloud/LICENSE`. The MIT grant below does not
+extend to that directory or any files within it.
+
+MIT License
+
+Copyright (c) 2025 Mark Craddock
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+EOF
+}
+
+publish_claude_plugins_repo() {
+  local repo_name="$CLAUDE_PLUGIN_REPO"
+  local clone_path="$WORK_DIR/$repo_name"
+  local clone_url="https://x-access-token:${AUTH_TOKEN}@github.com/${REPO_OWNER}/${repo_name}.git"
+  local source_path
+  local repo_subdir
+  local changed
+
+  echo ""
+  echo "── claude (${repo_name}) ──"
+
+  if [[ ! -d "$ROOT_DIR/$CLAUDE_PLUGIN_CORE_DIR" ]]; then
+    red "  Source directory not found: $CLAUDE_PLUGIN_CORE_DIR/"
+    return 1
+  fi
+
+  for entry in "${CLAUDE_PLUGIN_LAYOUT[@]}"; do
+    IFS=':' read -r source_path repo_subdir <<< "$entry"
+    if [[ ! -d "$ROOT_DIR/$source_path" ]]; then
+      red "  Source directory not found: $source_path/"
+      return 1
+    fi
+  done
+
+  if ! check_repo_exists "$repo_name"; then
+    yellow "  Repo ${REPO_OWNER}/${repo_name} not found on GitHub — skipping"
+    yellow "  Create it with: gh repo create ${REPO_OWNER}/${repo_name} --public"
+    return 2
+  fi
+
+  echo "  Cloning ${REPO_OWNER}/${repo_name}..."
+  if ! git clone --depth 1 --quiet "$clone_url" "$clone_path" 2>/dev/null; then
+    red "  Failed to clone ${REPO_OWNER}/${repo_name}"
+    return 1
+  fi
+
+  find "$clone_path" -mindepth 1 -maxdepth 1 ! -name '.git' -exec rm -rf {} +
+
+  echo "  Syncing core plugin from $CLAUDE_PLUGIN_CORE_DIR/..."
+  copy_distribution_files "$ROOT_DIR/$CLAUDE_PLUGIN_CORE_DIR" "$clone_path"
+  write_claude_standalone_license "$clone_path/LICENSE"
+
+  for entry in "${CLAUDE_PLUGIN_LAYOUT[@]}"; do
+    IFS=':' read -r source_path repo_subdir <<< "$entry"
+    echo "  Syncing $source_path/ -> $repo_subdir/..."
+    copy_distribution_files "$ROOT_DIR/$source_path" "$clone_path/$repo_subdir"
+  done
+
+  cd "$clone_path"
+  git add -A
+  if git diff --cached --quiet; then
+    yellow "  No changes — already up to date"
+  else
+    changed=$(git diff --cached --stat | tail -1)
+    echo "  Changes: $changed"
+
+    if ! git commit -m "$COMMIT_MSG" --quiet; then
+      red "  Failed to commit changes for ${REPO_OWNER}/${repo_name}"
+      cd "$ROOT_DIR"
+      return 1
+    fi
+    if ! git push --quiet; then
+      red "  Failed to push ${REPO_OWNER}/${repo_name}"
+      cd "$ROOT_DIR"
+      return 1
+    fi
+    green "  ✓ Pushed to ${REPO_OWNER}/${repo_name}"
+  fi
+
+  if ! publish_release_artifacts "$repo_name"; then
+    cd "$ROOT_DIR"
+    return 1
+  fi
+
+  cd "$ROOT_DIR"
+  return 0
+}
+
 # ── Main loop ─────────────────────────────────────────────────────────────────
 PROCESSED=0
 SKIPPED=0
@@ -177,6 +321,21 @@ for target in "${TARGETS[@]}"; do
 
   IFS=':' read -r local_dir repo_name <<< "${EXTENSIONS[$target]}"
   source_path="$ROOT_DIR/$local_dir"
+
+  if [[ "$target" == "claude" ]]; then
+    if publish_claude_plugins_repo; then
+      ((PROCESSED++))
+    else
+      status=$?
+      if [[ $status -eq 2 ]]; then
+        ((SKIPPED++))
+      else
+        ((FAILED++))
+      fi
+    fi
+    cd "$ROOT_DIR"
+    continue
+  fi
 
   echo ""
   echo "── $target ($repo_name) ──"
@@ -211,12 +370,7 @@ for target in "${TARGETS[@]}"; do
 
   # Copy extension files, excluding local dependency/install artefacts.
   echo "  Syncing files from $local_dir/..."
-  tar -C "$source_path" \
-    --exclude='./node_modules' \
-    --exclude='./.npm' \
-    --exclude='./.pnpm-store' \
-    --exclude='./.yarn/cache' \
-    -cf - . | tar -C "$clone_path" -xf -
+  copy_distribution_files "$source_path" "$clone_path"
 
   # Check for changes
   cd "$clone_path"

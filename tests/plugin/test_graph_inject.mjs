@@ -2,23 +2,18 @@
 /**
  * End-to-end test for plugins/arckit-claude/hooks/graph-inject.mjs
  *
- * Spawns the hook as a subprocess with a fake UserPromptSubmit payload
- * and verifies the additionalContext output for each migrated command.
+ * Calls the hook implementation with a fake UserPromptSubmit payload and
+ * verifies the additionalContext output for each migrated command.
  *
  * Run with:  node tests/plugin/test_graph_inject.mjs
  */
 
 import { mkdtempSync, mkdirSync, writeFileSync, readFileSync, existsSync, rmSync, utimesSync } from 'node:fs';
 import { tmpdir } from 'node:os';
-import { join, dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { spawnSync } from 'node:child_process';
+import { join } from 'node:path';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const repoRoot = resolve(__dirname, '..', '..');
-const HOOK = join(repoRoot, 'plugins', 'arckit-claude', 'hooks', 'graph-inject.mjs');
+import { runGraphInject } from '../../plugins/arckit-claude/hooks/graph-inject.mjs';
 
 // ── Fixture ────────────────────────────────────────────────────────────────
 
@@ -55,19 +50,20 @@ Body text for ${id} mentions BR-001.
 // ── Helpers ────────────────────────────────────────────────────────────────
 
 function runHook(prompt, cwd) {
-  const result = spawnSync('node', [HOOK], {
-    input: JSON.stringify({ prompt, cwd }),
-    encoding: 'utf8',
-  });
-  return { code: result.status, stdout: result.stdout, stderr: result.stderr };
+  const output = runGraphInject({ prompt, cwd });
+  return {
+    code: 0,
+    stdout: output == null ? '' : JSON.stringify(output),
+    stderr: '',
+  };
 }
 
 // ── Tests ──────────────────────────────────────────────────────────────────
 
-test('graph-inject responds to /arckit:search', () => {
+test('graph-inject responds to /arckit:search', async () => {
   const { root, projectsDir } = makeFixture();
   try {
-    const { code, stdout, stderr } = runHook('/arckit:search BR-001', projectsDir);
+    const { code, stdout, stderr } = await runHook('/arckit:search BR-001', projectsDir);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     assert.ok(stdout.length > 0, 'expected stdout output');
 
@@ -84,11 +80,11 @@ test('graph-inject responds to /arckit:search', () => {
   }
 });
 
-test('graph-inject also accepts the expanded body marker', () => {
+test('graph-inject also accepts the expanded body marker', async () => {
   const { root, projectsDir } = makeFixture();
   try {
     const expandedBody = 'description: Search across all project artifacts and surface ranked matches';
-    const { code, stdout } = runHook(expandedBody, projectsDir);
+    const { code, stdout } = await runHook(expandedBody, projectsDir);
     assert.equal(code, 0);
     assert.ok(stdout.length > 0);
     const out = JSON.parse(stdout);
@@ -98,10 +94,10 @@ test('graph-inject also accepts the expanded body marker', () => {
   }
 });
 
-test('graph-inject is silent for non-matching prompts', () => {
+test('graph-inject is silent for non-matching prompts', async () => {
   const { root, projectsDir } = makeFixture();
   try {
-    const { code, stdout } = runHook('/arckit:requirements something else', projectsDir);
+    const { code, stdout } = await runHook('/arckit:requirements something else', projectsDir);
     assert.equal(code, 0);
     assert.equal(stdout, '', 'should produce no output for unmatched commands');
   } finally {
@@ -109,10 +105,10 @@ test('graph-inject is silent for non-matching prompts', () => {
   }
 });
 
-test('graph-inject responds to /arckit:impact', () => {
+test('graph-inject responds to /arckit:impact', async () => {
   const { root, projectsDir } = makeFixture();
   try {
-    const { code, stdout, stderr } = runHook('/arckit:impact ARC-001-REQ', projectsDir);
+    const { code, stdout, stderr } = await runHook('/arckit:impact ARC-001-REQ', projectsDir);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     const out = JSON.parse(stdout);
     const ctx = out.hookSpecificOutput.additionalContext;
@@ -139,10 +135,10 @@ test('graph-inject responds to /arckit:impact', () => {
   }
 });
 
-test('graph-inject responds to /arckit:traceability', () => {
+test('graph-inject responds to /arckit:traceability', async () => {
   const { root, projectsDir } = makeFixture();
   try {
-    const { code, stdout, stderr } = runHook('/arckit:traceability 001', projectsDir);
+    const { code, stdout, stderr } = await runHook('/arckit:traceability 001', projectsDir);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     assert.ok(stdout.length > 0, 'expected stdout output');
     const out = JSON.parse(stdout);
@@ -159,7 +155,7 @@ test('graph-inject responds to /arckit:traceability', () => {
   }
 });
 
-test('graph-inject traceability is silent on ambiguous project', () => {
+test('graph-inject traceability is silent on ambiguous project', async () => {
   // Two projects, no project arg → exit silently.
   const { root, projectsDir } = makeFixture();
   try {
@@ -168,7 +164,7 @@ test('graph-inject traceability is silent on ambiguous project', () => {
       join(projectsDir, '002-other', 'ARC-002-REQ-v1.0.md'),
       `# REQ — ARC-002-REQ-v1.0\n\n| Field | Value |\n|---|---|\n| **Document ID** | ARC-002-REQ-v1.0 |\n\n### BR-001: Other project\n`
     );
-    const { code, stdout } = runHook('/arckit:traceability', projectsDir);
+    const { code, stdout } = await runHook('/arckit:traceability', projectsDir);
     assert.equal(code, 0);
     assert.equal(stdout, '', 'should exit silently when project is ambiguous');
   } finally {
@@ -176,13 +172,13 @@ test('graph-inject traceability is silent on ambiguous project', () => {
   }
 });
 
-test('graph-inject traceability is silent when no requirements exist', () => {
+test('graph-inject traceability is silent when no requirements exist', async () => {
   // Make a fixture without REQ docs.
   const root = mkdtempSync(join(tmpdir(), 'arckit-no-req-'));
   const projectsDir = join(root, 'projects');
   mkdirSync(join(projectsDir, '001-empty', 'decisions'), { recursive: true });
   try {
-    const { code, stdout } = runHook('/arckit:traceability 001', projectsDir);
+    const { code, stdout } = await runHook('/arckit:traceability 001', projectsDir);
     assert.equal(code, 0);
     assert.equal(stdout, '', 'should exit silently when no REQs found');
   } finally {
@@ -190,7 +186,7 @@ test('graph-inject traceability is silent when no requirements exist', () => {
   }
 });
 
-test('graph-inject responds to /arckit:health and writes docs/health.json', () => {
+test('graph-inject responds to /arckit:health and writes docs/health.json', async () => {
   // Build a fixture that triggers FORGOTTEN-ADR (Proposed > 30 days old)
   const root = mkdtempSync(join(tmpdir(), 'arckit-health-'));
   const projectsDir = join(root, 'projects');
@@ -236,7 +232,7 @@ References BR-001.
   );
 
   try {
-    const { code, stdout, stderr } = runHook('/arckit:health 001', root);
+    const { code, stdout, stderr } = await runHook('/arckit:health 001', root);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     const out = JSON.parse(stdout);
     const ctx = out.hookSpecificOutput.additionalContext;
@@ -260,7 +256,7 @@ References BR-001.
   }
 });
 
-test('graph-inject /arckit:health reports nested external files in STALE-EXT', () => {
+test('graph-inject /arckit:health reports nested external files in STALE-EXT', async () => {
   const root = mkdtempSync(join(tmpdir(), 'arckit-health-ext-'));
   const projectDir = join(root, 'projects', '001-fixture');
   const nestedExternalDir = join(projectDir, 'external', '7. RFI');
@@ -292,7 +288,7 @@ Stakeholder analysis content.
   utimesSync(externalPath, externalDate, externalDate);
 
   try {
-    const { code, stdout, stderr } = runHook('/arckit:health 001', root);
+    const { code, stdout, stderr } = await runHook('/arckit:health 001', root);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     const out = JSON.parse(stdout);
     const ctx = out.hookSpecificOutput.additionalContext;
@@ -311,7 +307,7 @@ Stakeholder analysis content.
   }
 });
 
-test('graph-inject /arckit:health flags REVIEW-OVERDUE and respects STALE_DRAFT_DAYS override', () => {
+test('graph-inject /arckit:health flags REVIEW-OVERDUE and respects STALE_DRAFT_DAYS override', async () => {
   const root = mkdtempSync(join(tmpdir(), 'arckit-health-rev-'));
   const projectDir = join(root, 'projects', '001-fixture');
   mkdirSync(projectDir, { recursive: true });
@@ -375,7 +371,7 @@ Risk register content.
 
   try {
     // Default threshold: STALE-DRAFT should NOT fire (20 days < 30), but REVIEW-OVERDUE should.
-    let res = runHook('/arckit:health 001', root);
+    let res = await runHook('/arckit:health 001', root);
     assert.equal(res.code, 0, `exit 0, stderr: ${res.stderr}`);
     let parsed = JSON.parse(readFileSync(join(root, 'docs', 'health.json'), 'utf8'));
     assert.ok(parsed.byType['REVIEW-OVERDUE'] >= 1, 'APPROVED artifact with past Next Review Date should flag REVIEW-OVERDUE');
@@ -389,7 +385,7 @@ Risk register content.
     assert.equal(overdueOnSuperseded, undefined, 'SUPERSEDED artifacts must be skipped by REVIEW-OVERDUE');
 
     // Override threshold to 10 → STALE-DRAFT should now fire
-    res = runHook('/arckit:health 001 STALE_DRAFT_DAYS=10', root);
+    res = await runHook('/arckit:health 001 STALE_DRAFT_DAYS=10', root);
     assert.equal(res.code, 0, `exit 0, stderr: ${res.stderr}`);
     parsed = JSON.parse(readFileSync(join(root, 'docs', 'health.json'), 'utf8'));
     assert.ok(parsed.byType['STALE-DRAFT'] >= 1, 'STALE_DRAFT_DAYS=10 should flag the 20-day-old DRAFT');
@@ -398,7 +394,7 @@ Risk register content.
   }
 });
 
-test('graph-inject responds to /arckit:analyze', () => {
+test('graph-inject responds to /arckit:analyze', async () => {
   // Build a richer fixture that has everything analyze cares about:
   // global PRIN, vendor with reviews, RISK doc, REQ.
   const root = mkdtempSync(join(tmpdir(), 'arckit-analyze-'));
@@ -452,7 +448,7 @@ test('graph-inject responds to /arckit:analyze', () => {
   );
 
   try {
-    const { code, stdout, stderr } = runHook('/arckit:analyze 001', projectsDir);
+    const { code, stdout, stderr } = await runHook('/arckit:analyze 001', projectsDir);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     const out = JSON.parse(stdout);
     const ctx = out.hookSpecificOutput.additionalContext;
@@ -474,7 +470,7 @@ test('graph-inject responds to /arckit:analyze', () => {
   }
 });
 
-test('graph-inject analyze is silent on ambiguous project', () => {
+test('graph-inject analyze is silent on ambiguous project', async () => {
   const { root, projectsDir } = makeFixture();
   try {
     mkdirSync(join(projectsDir, '002-second'), { recursive: true });
@@ -482,7 +478,7 @@ test('graph-inject analyze is silent on ambiguous project', () => {
       join(projectsDir, '002-second', 'ARC-002-REQ-v1.0.md'),
       `# REQ\n\n| Field | Value |\n|---|---|\n| **Document ID** | ARC-002-REQ-v1.0 |\n`
     );
-    const { code, stdout } = runHook('/arckit:analyze', projectsDir);
+    const { code, stdout } = await runHook('/arckit:analyze', projectsDir);
     assert.equal(code, 0);
     assert.equal(stdout, '', 'should exit silently when ambiguous');
   } finally {
@@ -490,10 +486,10 @@ test('graph-inject analyze is silent on ambiguous project', () => {
   }
 });
 
-test('graph-inject responds to /arckit:navigator', () => {
+test('graph-inject responds to /arckit:navigator', async () => {
   const { root, projectsDir } = makeFixture();
   try {
-    const { code, stdout, stderr } = runHook('/arckit:navigator 001', projectsDir);
+    const { code, stdout, stderr } = await runHook('/arckit:navigator 001', projectsDir);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     const out = JSON.parse(stdout);
     const ctx = out.hookSpecificOutput.additionalContext;
@@ -512,7 +508,7 @@ test('graph-inject responds to /arckit:navigator', () => {
   }
 });
 
-test('graph-inject navigator is silent on ambiguous project', () => {
+test('graph-inject navigator is silent on ambiguous project', async () => {
   const { root, projectsDir } = makeFixture();
   try {
     mkdirSync(join(projectsDir, '002-other'), { recursive: true });
@@ -520,7 +516,7 @@ test('graph-inject navigator is silent on ambiguous project', () => {
       join(projectsDir, '002-other', 'ARC-002-REQ-v1.0.md'),
       `# REQ\n\n| Field | Value |\n|---|---|\n| **Document ID** | ARC-002-REQ-v1.0 |\n`
     );
-    const { code, stdout } = runHook('/arckit:navigator', projectsDir);
+    const { code, stdout } = await runHook('/arckit:navigator', projectsDir);
     assert.equal(code, 0);
     assert.equal(stdout, '', 'should exit silently when ambiguous');
   } finally {
@@ -528,7 +524,7 @@ test('graph-inject navigator is silent on ambiguous project', () => {
   }
 });
 
-test('graph-inject responds to /arckit:graph-report', () => {
+test('graph-inject responds to /arckit:graph-report', async () => {
   const { root, projectsDir } = makeFixture();
   try {
     // Add a second project so the comparison table has 2 rows
@@ -542,7 +538,7 @@ test('graph-inject responds to /arckit:graph-report', () => {
       `# RISK\n\n| Field | Value |\n|---|---|\n| **Document ID** | ARC-002-RISK-v1.0 |\n`
     );
 
-    const { code, stdout, stderr } = runHook('/arckit:graph-report', projectsDir);
+    const { code, stdout, stderr } = await runHook('/arckit:graph-report', projectsDir);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     const out = JSON.parse(stdout);
     const ctx = out.hookSpecificOutput.additionalContext;
@@ -565,7 +561,7 @@ test('graph-inject responds to /arckit:graph-report', () => {
   }
 });
 
-test('graph-inject scores community regimes in /arckit:graph-report', () => {
+test('graph-inject scores community regimes in /arckit:graph-report', async () => {
   // Regression for the v4.11.0 community-awareness gap: a project with only
   // UAE/EU/FR/AT compliance artifacts should not show 0% Universal readiness
   // and MUST surface a per-regime row (UAE, EU, FR, Austria) in the readiness
@@ -583,7 +579,7 @@ test('graph-inject scores community regimes in /arckit:graph-report', () => {
     // Austrian DSG (HIGH severity, regime=AT)
     writeFileSync(join(projectsDir, '001-fixture', 'ARC-001-ATDSG-v1.0.md'), docCtl('ARC-001-ATDSG-v1.0', 'ATDSG'));
 
-    const { code, stdout, stderr } = runHook('/arckit:graph-report', projectsDir);
+    const { code, stdout, stderr } = await runHook('/arckit:graph-report', projectsDir);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     const out = JSON.parse(stdout);
     const ctx = out.hookSpecificOutput.additionalContext;
@@ -609,7 +605,7 @@ test('graph-inject scores community regimes in /arckit:graph-report', () => {
   }
 });
 
-test('graph-inject analyze surfaces all regimes in Compliance Artifact Presence', () => {
+test('graph-inject analyze surfaces all regimes in Compliance Artifact Presence', async () => {
   // Regression for the v4.11.0 community-awareness gap: the analyze pre-processor
   // previously listed only "UK Gov (TCOP/AIPB/ATRS)" and "MOD (SECD-MOD)". It
   // must now show one row per regime (UK, MOD, EU, FR, AT, UAE), populated for
@@ -621,7 +617,7 @@ test('graph-inject analyze surfaces all regimes in Compliance Artifact Presence'
     writeFileSync(join(projectsDir, '001-fixture', 'ARC-001-PDPL-v1.0.md'), docCtl('ARC-001-PDPL-v1.0'));
     writeFileSync(join(projectsDir, '001-fixture', 'ARC-001-RGPD-v1.0.md'), docCtl('ARC-001-RGPD-v1.0'));
 
-    const { code, stdout, stderr } = runHook('/arckit:analyze 001-fixture', projectsDir);
+    const { code, stdout, stderr } = await runHook('/arckit:analyze 001-fixture', projectsDir);
     assert.equal(code, 0, `exit 0, stderr: ${stderr}`);
     const out = JSON.parse(stdout);
     const ctx = out.hookSpecificOutput.additionalContext;
@@ -639,10 +635,10 @@ test('graph-inject analyze surfaces all regimes in Compliance Artifact Presence'
   }
 });
 
-test('graph-inject is silent when projects/ dir does not exist', () => {
+test('graph-inject is silent when projects/ dir does not exist', async () => {
   const root = mkdtempSync(join(tmpdir(), 'arckit-empty-'));
   try {
-    const { code, stdout } = runHook('/arckit:search foo', root);
+    const { code, stdout } = await runHook('/arckit:search foo', root);
     assert.equal(code, 0);
     assert.equal(stdout, '');
   } finally {

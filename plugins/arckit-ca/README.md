@@ -20,8 +20,8 @@ Recipes: `ca-federal-fitaa`.
 ## Requires arckit core plugin
 
 ```bash
-claude plugin install arckit@arc-kit
-claude plugin install arckit-ca@arc-kit
+claude plugin install arckit@arckit-claude
+claude plugin install arckit-ca@arckit-claude
 ```
 
 On Claude Code v2.1.143+, `claude plugin disable arckit` will refuse with a copy-pasteable disable-chain hint while `arckit-ca` is enabled — earlier versions silently broke this overlay. Without `arckit` (core), recipes won't resolve their foundation commands (`arckit:principles`, `arckit:requirements`, etc.) and `validate-arc-filename` won't recognise CA doc-type codes.

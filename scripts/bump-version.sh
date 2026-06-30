@@ -129,8 +129,9 @@ update_file "plugins/arckit-claude/.claude-plugin/plugin.json" ".version"
 
 # ── 8. plugins/arckit-claude/.claude-plugin/marketplace.json ───────────────
 #
-# Standalone Claude distribution repo metadata. The plugin source is "." once
-# plugins/arckit-claude/ is mirrored to tractorjuice/arckit-claude.
+# Standalone Claude marketplace metadata. The core plugin source is "." once
+# plugins/arckit-claude/ is mirrored to tractorjuice/arckit-claude; overlay
+# sources live under structured plugin/... paths in that standalone repo.
 
 jq --arg v "$NEW_VERSION" '.plugins |= map(.version = $v)' plugins/arckit-claude/.claude-plugin/marketplace.json > plugins/arckit-claude/.claude-plugin/marketplace.json.tmp
 mv plugins/arckit-claude/.claude-plugin/marketplace.json.tmp plugins/arckit-claude/.claude-plugin/marketplace.json
@@ -138,7 +139,8 @@ update_file "plugins/arckit-claude/.claude-plugin/marketplace.json" "all .plugin
 
 # ── 9. .claude-plugin/marketplace.json (all Claude plugin entries) ─────────
 #
-# All Claude plugins share one version per the v5.0.0 split design.
+# All Claude plugins share one version; v6.0.0 publishes them together from
+# the standalone tractorjuice/arckit-claude marketplace repo.
 # metadata.version stays at 1.0.0.
 
 jq --arg v "$NEW_VERSION" '.plugins |= map(.version = $v)' .claude-plugin/marketplace.json > .claude-plugin/marketplace.json.tmp

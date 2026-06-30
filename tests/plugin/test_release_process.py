@@ -19,6 +19,21 @@ EXPECTED_STANDALONE_REPOS = {
     "paperclip": ("extensions/arckit-paperclip", "arckit-paperclip"),
     "vibe": ("extensions/arckit-vibe", "arckit-vibe"),
 }
+EXPECTED_CLAUDE_MARKETPLACE_SOURCES = {
+    "arckit": (".", "plugins/arckit-claude", "MIT"),
+    "arckit-uae": ("./plugin/uae", "plugins/arckit-uae", "MIT"),
+    "arckit-fr": ("./plugin/fr", "plugins/arckit-fr", "MIT"),
+    "arckit-ca": ("./plugin/ca", "plugins/arckit-ca", "MIT"),
+    "arckit-eu": ("./plugin/eu", "plugins/arckit-eu", "MIT"),
+    "arckit-at": ("./plugin/at", "plugins/arckit-at", "MIT"),
+    "arckit-au": ("./plugin/au", "plugins/arckit-au", "MIT"),
+    "arckit-au-energy": ("./plugin/au/energy", "plugins/arckit-au-energy", "MIT"),
+    "arckit-us": ("./plugin/us", "plugins/arckit-us", "MIT"),
+    "arckit-uk-finance": ("./plugin/uk/finance", "plugins/arckit-uk-finance", "MIT"),
+    "arckit-uk-nhs": ("./plugin/uk/nhs", "plugins/arckit-uk-nhs", "MIT"),
+    "arckit-fde": ("./plugin/fde", "plugins/arckit-fde", "MIT"),
+    "arckit-uk-gcloud": ("./plugin/uk/gcloud", "plugins/arckit-uk-gcloud", "Proprietary"),
+}
 
 PINNED_README_VERSION_PATTERNS = [
     re.compile(r"Current Release:\s*v?\d+\.\d+\.\d+"),
@@ -81,29 +96,51 @@ def test_standalone_version_files_match_root_version():
 
 def test_claude_standalone_marketplace_matches_plugin_version():
     plugin_version = (standalone_path("claude") / "VERSION").read_text(encoding="utf-8").strip()
-    plugin_manifest = json.loads(
-        (standalone_path("claude") / ".claude-plugin" / "plugin.json").read_text(
-            encoding="utf-8"
-        )
-    )
     marketplace = json.loads(
         (standalone_path("claude") / ".claude-plugin" / "marketplace.json").read_text(
             encoding="utf-8"
         )
     )
 
-    assert plugin_manifest["name"] == "arckit"
-    assert plugin_manifest["version"] == plugin_version
-    assert plugin_manifest["repository"] == "https://github.com/tractorjuice/arckit-claude"
     assert marketplace["name"] == "arckit-claude"
     assert marketplace["metadata"]["version"] == "1.0.0"
-    assert len(marketplace["plugins"]) == 1
+    assert len(marketplace["plugins"]) == len(EXPECTED_CLAUDE_MARKETPLACE_SOURCES)
 
-    plugin = marketplace["plugins"][0]
-    assert plugin["name"] == "arckit"
-    assert plugin["source"] == "."
-    assert plugin["version"] == plugin_version
-    assert plugin["repository"] == "https://github.com/tractorjuice/arckit-claude"
+    plugins = {plugin["name"]: plugin for plugin in marketplace["plugins"]}
+    assert set(plugins) == set(EXPECTED_CLAUDE_MARKETPLACE_SOURCES)
+
+    for name, (source, local_dir, license_name) in EXPECTED_CLAUDE_MARKETPLACE_SOURCES.items():
+        plugin = plugins[name]
+        manifest = json.loads(
+            (REPO_ROOT / local_dir / ".claude-plugin" / "plugin.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        assert plugin["source"] == source
+        assert plugin["version"] == plugin_version
+        assert plugin["repository"] == "https://github.com/tractorjuice/arckit-claude"
+        assert plugin["homepage"] == "https://github.com/tractorjuice/arckit-claude"
+        assert plugin["license"] == license_name
+        assert manifest["name"] == name
+        assert manifest["version"] == plugin_version
+        assert manifest["repository"] == "https://github.com/tractorjuice/arckit-claude"
+
+
+def test_push_extensions_structures_claude_plugins_in_one_repo():
+    script = PUSH_EXTENSIONS.read_text(encoding="utf-8")
+
+    assert 'CLAUDE_PLUGIN_REPO="arckit-claude"' in script
+    assert 'CLAUDE_PLUGIN_CORE_DIR="plugins/arckit-claude"' in script
+
+    for name, (source, local_dir, _license_name) in EXPECTED_CLAUDE_MARKETPLACE_SOURCES.items():
+        if name == "arckit":
+            continue
+        repo_subdir = source.removeprefix("./")
+        assert f'"{local_dir}:{repo_subdir}"' in script
+
+    assert "plugin/uk/gcloud/" in script
+    assert "proprietary and licensed" in script
 
 
 def test_push_extensions_publishes_tags_and_github_releases():
