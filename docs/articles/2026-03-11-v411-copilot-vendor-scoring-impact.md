@@ -90,7 +90,7 @@ For **Codex**, **Gemini**, and **OpenCode** users: the extensions are updated th
 
 The SDG mono-repo creation script is in development on a feature branch, expanding ArcKit's project scaffolding capabilities. The handoff system introduced in v4.0.0 continues to grow as each new command declares its logical next steps, gradually building a workflow graph that guides architects through governance processes rather than leaving them to guess which command to run next.
 
-ArcKit is open source at [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit). Join the conversation in the [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) or the [ArcKit Discord](https://discord.gg/UsfzrZmr).
+ArcKit is open source at [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit). Join the conversation in the [ArcKit LinkedIn Group](https://www.linkedin.com/groups/17641034/) or the [ArcKit Discord](https://discord.gg/HsA4Y3hQ4).
 
 <!-- arckit:related-articles -->
 ## Related Articles
@@ -103,6 +103,6 @@ ArcKit is open source at [github.com/tractorjuice/arc-kit](https://github.com/tr
 <!-- arckit:community-block -->
 ## Join the ArcKit Community
 
-- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/UsfzrZmr](https://discord.gg/UsfzrZmr)
+- **Discord** — real-time conversation, help with commands, and what people are building: [discord.gg/HsA4Y3hQ4](https://discord.gg/HsA4Y3hQ4)
 - **LinkedIn Group** — announcements, case studies, and longer-form discussion: [linkedin.com/groups/17641034](https://www.linkedin.com/groups/17641034/)
 - **GitHub** — code, issues, and contributions: [github.com/tractorjuice/arc-kit](https://github.com/tractorjuice/arc-kit)
