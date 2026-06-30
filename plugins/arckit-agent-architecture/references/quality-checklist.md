@@ -32,7 +32,7 @@ All artifacts must pass these 10 checks:
 - Risk tolerance thresholds defined for autonomous agent operations
 - Traceability: governance decisions linked to AAGR requirements and AASE security assessments
 
-### AAGR -- Agent Architecture Governance Requirements
+### AAGR -- Agent Architecture Specification
 
 - Each requirement has a unique ID with `AAG-` prefix
 - Requirements categorised: capability, safety, compliance, interoperability, observability
@@ -42,7 +42,7 @@ All artifacts must pass these 10 checks:
 - Conflict resolution noted for competing requirements
 - Traceability: requirements reference AAGI governance objectives and AAOV operational views
 
-### AAOV -- Agent Architecture Operational View
+### AAOV -- Agent Governance Framework
 
 - Agent inventory with roles, capabilities, and deployment context
 - Agent lifecycle stages documented: design, development, deployment, operation, retirement
@@ -62,7 +62,7 @@ All artifacts must pass these 10 checks:
 - Performance characteristics: latency, throughput, fault tolerance
 - Traceability: integration patterns reference AAOV agent roles and AASE security controls
 
-### AASE -- Agent Architecture Security Evaluation
+### AASE -- Agent Security Architecture
 
 - Threat model per agent covering confidentiality, integrity, availability, and autonomy
 - Attack surface analysis including prompt injection, tool abuse, data leakage

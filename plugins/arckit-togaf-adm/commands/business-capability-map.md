@@ -60,7 +60,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/capability-map-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/capability-map-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/capability-map-template.md` (default)
 
@@ -69,6 +69,7 @@ Identify the target project from the hook context. If the user specifies a proje
 ### 3. Clarify Capability Depth with User
 
 **AskUserQuestion**: "What level of capability detail do you need?"
+
 - Options: `Level 1` (Domains only) | `Level 2` (Domains + Sub-capabilities) | `Level 3` (Full hierarchy)
 - Default: `Level 3`
 

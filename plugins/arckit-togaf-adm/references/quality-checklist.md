@@ -40,24 +40,24 @@ All artifacts must pass these 10 checks:
 - Mermaid flowchart or swimlane diagram present for key processes
 - Process-to-capability mapping table included
 - RACI assignment for critical process steps
-- Traceability: processes linked to strategic objectives and architecture principles (APP)
+- Traceability: processes linked to strategic objectives and architecture principles (PRIN)
 
-### APP -- Architecture Principles
+### APP -- Application Inventory
 
-- Each principle has a unique ID, name, and statement
-- Rationale section present for each principle
-- Implications for business, data, application, and technology architectures documented
-- Scope of application defined (enterprise-wide, domain-specific, or project-specific)
-- Principles categorised: business, data, application, technology
-- No contradictions between principles; conflicts explicitly noted and resolved
-- Priority or ranking assigned where principles compete
-- Traceability: principles reference strategic drivers from PRELIMINARY phase
+- Each application has a unique ID, name, owner, lifecycle status, and hosting model
+- Application-to-capability mapping is present
+- Strategic fit, technical health, business criticality, and cost dimensions are assessed
+- Integration and dependency information is included
+- Technology stack, data stores, and operational ownership are documented
+- Traceability: applications reference BPCM capabilities and ADMP scope
 
-### APPR -- Architecture Principles Register
+### APPR -- Application Rationalisation
 
-- All principles from APP catalogued with status (Adopted, Proposed, Deprecated, Superseded)
-- Version history maintained per principle
-- Cross-reference to governing documents and policies
+- Keep/merge/replace/retire decisions are recorded for every in-scope application
+- Each decision includes rationale, risk, dependency, owner, timeline, and target platform where relevant
+- Portfolio-level benefit and cost assumptions are documented
+- Implementation sequencing is defined
+- Traceability: rationalisation decisions reference APP application IDs and BPCM capabilities
 - Exception register: any deviations formally recorded with justification and approval
 - Applicability matrix: principles mapped to architecture domains (B/D/A/T)
 - Stakeholder ownership assigned per principle

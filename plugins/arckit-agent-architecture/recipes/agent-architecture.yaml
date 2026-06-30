@@ -1,35 +1,87 @@
-schema: "1.0"
-name: "agent-architecture"
-description: "AI Agent Architecture lifecycle — inventory through maturity"
-version: "1.0.0"
+recipe: agent-architecture
+schema_version: 1
+description: >
+  AI Agent Architecture lifecycle: foundation artefacts, agent inventory,
+  architecture specification, integration, governance, security, and optional
+  maturity assessment.
+
 defaults:
-  project_id: "001"
   version: "1.0"
+
+optional_targets:
+  AAMT:
+    description: Agent programme maturity assessment and improvement roadmap
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
 targets:
-  - id: agent-inventory
-    skill: "agent-inventory"
-    description: "Catalog existing agents"
-  - id: agent-design
-    skill: "agent-design"
-    description: "Agent architecture specification"
-    depends: ["agent-inventory"]
-  - id: agent-integration
-    skill: "agent-integration"
-    description: "Multi-agent orchestration"
-    depends: ["agent-design"]
-  - id: agent-governance
-    skill: "agent-governance"
-    description: "Guardrails and oversight"
-    depends: ["agent-inventory", "agent-design"]
-  - id: agent-security
-    skill: "agent-security"
-    description: "Security and sandboxing"
-    depends: ["agent-design"]
-  - id: agent-maturity
-    skill: "agent-maturity"
-    description: "Program maturity assessment"
-    depends: ["agent-inventory", "agent-design", "agent-governance", "agent-security"]
-    optional: true
-postbuild:
-  - "arckit:health"
-  - "arckit:pages"
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME} AI agent programme"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME} AI agent programme"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  - id: RISK
+    skill: arckit:risk
+    args: "{P} AI agent programme"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, PRIN]
+
+  - id: AIPB
+    skill: arckit:ai-playbook
+    args: "{P} AI agent programme"
+    output: { project: "{P}-{NAME}", type: AIPB }
+    deps: [REQ, STKE, PRIN]
+
+  - id: AAGI
+    skill: arckit:agent-inventory
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAGI }
+    deps: [REQ, STKE, PRIN]
+
+  - id: AAGR
+    skill: arckit:agent-design
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAGR }
+    deps: [AAGI, REQ, STKE, PRIN]
+
+  - id: AAIN
+    skill: arckit:agent-integration
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAIN }
+    deps: [AAGR]
+
+  - id: AAOV
+    skill: arckit:agent-governance
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAOV }
+    deps: [AAGI, AAGR, PRIN]
+
+  - id: AASE
+    skill: arckit:agent-security
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AASE }
+    deps: [AAGR, RISK, AIPB]
+
+  - id: AAMT
+    skill: arckit:agent-maturity
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAMT }
+    deps: [AAGI, AAGR, AAOV, AASE]

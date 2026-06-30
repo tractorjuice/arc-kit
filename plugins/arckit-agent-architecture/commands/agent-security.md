@@ -22,6 +22,7 @@ $ARGUMENTS
 ### 1. Identify the context
 
 The user should specify:
+
 - Project name/number or agent ID
 - Scope of security assessment (single agent, multi-agent system, or full program)
 - Applicable security frameworks (if known)
@@ -29,12 +30,14 @@ The user should specify:
 ### 2. Read existing artifacts from the project context
 
 **MANDATORY** (warn if missing):
+
 - **AAGI** (Agent Inventory) — Extract: Agent list, capabilities, risk levels
   - If missing: warn user to run `/arckit:agent-inventory` first
 - **AAGR** (Agent Design) — Extract: Design patterns, tool contracts, integration points
   - If missing: warn user to run `/arckit:agent-design` first
 
 **RECOMMENDED** (read if available, note if missing):
+
 - **SEC** or **SBD** (Secure by Design) — Extract: Existing security controls, threat models, security standards
   - If missing: warn user to run `/arckit:secure` or `/arckit:mod-secure` first
 - **RISK** (Risk Register) — Extract: AI-specific risks, tool security risks, data handling risks
@@ -42,6 +45,7 @@ The user should specify:
 - **PRIN** (Architecture Principles) — Extract: Security principles, technology constraints
 
 **OPTIONAL** (read if available, skip silently if missing):
+
 - **AAOV** (Agent Governance) — Extract: Oversight tiers, compliance requirements
 - **DPIA** (Data Protection Impact Assessment) — Extract: Personal data processing, lawful basis
 - **AIPB** (AI Playbook) — Extract: AI ethics, model governance, bias considerations
@@ -50,7 +54,7 @@ The user should specify:
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/agent-security-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/agent-security-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/agent-security-template.md` (default)
 
@@ -68,6 +72,7 @@ The user should specify:
 #### A. Threat Model (Mermaid mindmap with ≥12 threat categories)
 
 Map threats across four attack surface dimensions:
+
 - **Input layer**: Prompt injection, data poisoning, context overflow, adversarial inputs, model probing, supply chain attacks
 - **Execution layer**: Tool abuse, privilege escalation, sandboxing escape, resource exhaustion, tool chain manipulation, cross-agent injection
 - **Output layer**: Data exfiltration, PII leakage, hallucination, prompt template extraction, instruction leakage, model weights extraction
@@ -76,6 +81,7 @@ Map threats across four attack surface dimensions:
 #### B. Sandboxing Architecture
 
 Define isolation boundaries:
+
 - **Agent process isolation**: Container/sandbox boundaries, OS-level enforcement
 - **Tool execution isolation**: Separate processes, permission boundaries
 - **Memory isolation**: Scoped access, RBAC, cross-session boundaries
@@ -85,6 +91,7 @@ Define isolation boundaries:
 #### C. Tool Permission Matrix (≥5 tools)
 
 For each tool in the agent design:
+
 - **Tool ID and name** from AAGR tool contracts
 - **Permission level**: Read / Write / Execute
 - **Access scope**: Full / Limited / None
@@ -94,6 +101,7 @@ For each tool in the agent design:
 #### D. Data Handling Policy
 
 Define handling per data classification:
+
 - **PII**: Encryption at rest, masking in prompts, retention limits
 - **Sensitive**: Encrypted storage, scoped access, audit logging
 - **Public**: Standard handling, unrestricted access
@@ -111,6 +119,7 @@ Define handling per data classification:
 #### F. Output Validation Pipeline (Mermaid flowchart)
 
 Design pipeline stages:
+
 - **Schema validation**: Format and structure checks
 - **Content filtering**: Safety and policy enforcement
 - **PII scanning**: Automated detection and redaction
@@ -120,6 +129,7 @@ Design pipeline stages:
 #### G. Secret Management
 
 Define secret lifecycle:
+
 - **API keys**: Vault storage, scoped access, 90-day rotation
 - **Model credentials**: Secrets manager, scoped access, 90-day rotation
 - **Database credentials**: Vault storage, scoped access, 30-day rotation
@@ -128,6 +138,7 @@ Define secret lifecycle:
 #### H. Incident Response
 
 Define severity-based response:
+
 - **Critical** (<15 min): SRE owner — isolate, investigate, patch
 - **High** (<1h): Security owner — contain, assess, remediate
 - **Medium** (<24h): Team owner — patch, monitor
@@ -136,6 +147,7 @@ Define severity-based response:
 ### 6. Risk Assessment
 
 Identify security risks:
+
 - **HIGH**: No sandboxing, unrestricted tool access, missing input sanitization, no output validation, unencrypted secrets
 - **MEDIUM**: Partial isolation, limited injection defences, weak secret rotation, incomplete audit logging
 - **LOW**: Documentation gaps, missing monitoring alerts, incomplete compliance mapping
@@ -231,6 +243,7 @@ Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklis
 ### 9. Quality Checks
 
 Verify the security architecture meets minimum standards:
+
 - **Threat model**: ≥12 threat categories across 4 attack surface dimensions (Input, Execution, Output, Infrastructure)
 - **Sandboxing architecture**: At least 3 components with isolation levels and enforcement mechanisms
 - **Tool permission matrix**: ≥5 tools with permissions, access levels, and risk ratings

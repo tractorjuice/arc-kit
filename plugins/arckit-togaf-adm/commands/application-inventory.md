@@ -56,7 +56,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/application-inventory-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/application-inventory-template.md` exists in the project root
 - **If found**: Read the user's customised template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/application-inventory-template.md` (default)
 
@@ -67,6 +67,7 @@ Identify the target project from the hook context. If the user specifies a proje
 Before generating the inventory, ask the user about the scope of this assessment:
 
 **AskUserQuestion**: "What is the scope of this application inventory?"
+
 - Options: `All applications` | `Business Unit` | `Specific Project`
 - Default: `All applications`
 
@@ -115,10 +116,12 @@ For each application, determine and document:
 #### Strategic Fit Matrix
 
 Generate a Mermaid quadrant chart plotting applications on:
+
 - **X-axis**: Technical Debt (Low → High)
 - **Y-axis**: Business Value (Low → High)
 
 Quadrants:
+
 1. **Keep & Invest** (Low Debt, High Value) — Strategic apps
 2. **Modernize** (High Debt, High Value) — Critical apps needing refactoring
 3. **Retire** (High Debt, Low Value) — Replace candidates
@@ -127,12 +130,14 @@ Quadrants:
 #### Technology Landscape Heatmap
 
 Generate a Mermaid pie chart showing technology distribution across the portfolio:
+
 - **Cloud-Native**: Containers, serverless, managed services
 - **Containerised**: Docker/Kubernetes deployments
 - **Virtualised**: VM-based deployments
 - **Physical**: Bare metal / on-premise hardware
 
 Also include a technology diversity analysis:
+
 - **Runtime diversity**: Number of unique runtimes/languages (target: reduce)
 - **Platform diversity**: Number of unique hosting platforms (target: standardise)
 - **Vendor lock-in risk**: Assessed per application
@@ -140,6 +145,7 @@ Also include a technology diversity analysis:
 #### Application Dependencies
 
 Generate a Mermaid flowchart showing:
+
 - Inter-application dependencies (upstream/downstream)
 - Shared services and common platforms
 - External / third-party dependencies
@@ -148,6 +154,7 @@ Generate a Mermaid flowchart showing:
 #### Application-to-Capability Mapping
 
 Map each application to the business capabilities it supports:
+
 - Full coverage: Application is the primary system for the capability
 - Partial coverage: Application handles some aspects; other systems also contribute
 - Overlap: Multiple applications cover the same capability (rationalisation candidate)
@@ -156,6 +163,7 @@ Map each application to the business capabilities it supports:
 #### Application Lifecycle
 
 For each application, document:
+
 - **Age**: Time since initial deployment
 - **EOL Date**: Known end-of-life date for platform/runtime/framework
 - **Next Major Version**: Planned upgrade schedule
@@ -164,6 +172,7 @@ For each application, document:
 #### Risk Register
 
 Identify application-level risks:
+
 - **Technical**: Unsupported technology, security vulnerabilities, scalability limits
 - **Operational**: Single point of failure, lack of skilled staff, poor documentation
 - **Compliance**: Data residency, audit requirements, certification expiry

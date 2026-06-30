@@ -21,12 +21,12 @@ $ARGUMENTS
 
 > **Note**: The ArcKit Project Context hook has already detected all projects, artifacts, external documents, and global policies. Use that context below — no need to scan directories manually.
 
-### MANDATORY (warn if missing):
+### MANDATORY (warn if missing)
 
 - **APP** (Application Portfolio) — Extract: Application inventory, current state, capabilities served, technology stack, lifecycle status, business criticality, cost data, vendor dependencies
   - If missing: STOP and ask user to run `/arckit:app-inventory` (or equivalent APP command) first. Rationalisation requires an existing application inventory.
 
-### RECOMMENDED (read if available, note if missing):
+### RECOMMENDED (read if available, note if missing)
 
 - **BPCM** (Business Capability Model) — Extract: Capability map, capability-to-application mapping, criticality ratings, future state capabilities
   - If missing: warn user but proceed. Capability alignment strengthens rationale.

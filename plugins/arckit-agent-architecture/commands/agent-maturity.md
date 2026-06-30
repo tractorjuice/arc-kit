@@ -25,7 +25,7 @@ $ARGUMENTS
 
 **RECOMMENDED** (read if available, note if missing):
 
-- **AAGI** (Agent Architecture Guide, recommended) — Extract: agent inventory, design patterns, capability baseline, current architecture state
+- **AAGI** (Agent Inventory, recommended) — Extract: agent inventory, capability baseline, ownership, lifecycle state, current architecture state
   - If missing: Note that the guide is unavailable; maturity assessment will rely on available evidence
 - **AAGR** (Agent Architecture Specification, recommended) — Extract: architecture decisions, tool contracts, guardrails, orchestration design, current implementation state
   - If missing: Note that design specifications are unavailable
@@ -62,7 +62,7 @@ $ARGUMENTS
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/agent-maturity-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/agent-maturity-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/agent-maturity-template.md` (default)
 
@@ -85,31 +85,37 @@ Evaluate the agent program across **five dimensions** at **five maturity levels*
 For each dimension, determine the current maturity level based on available evidence:
 
 **A. Design Maturity**
+
 - Evidence sources: AAGR, design documentation, architecture decision records
 - Indicators: Reusable patterns, design standards, tool contract completeness
 - Key questions: Are designs documented and reviewed? Are patterns reusable?
 
 **B. Governance Maturity**
+
 - Evidence sources: AAOV, governance policies, compliance evidence
 - Indicators: Oversight model completeness, audit coverage, compliance status
 - Key questions: Is there an oversight model? Are decisions auditable?
 
 **C. Security Maturity**
+
 - Evidence sources: AASC, risk register, security controls, guardrail configurations
 - Indicators: Threat model coverage, guardrail comprehensiveness, security testing
 - Key questions: Are security controls proactive? Is there automated security testing?
 
 **D. Integration Maturity**
+
 - Evidence sources: AAIT, API documentation, integration test results
 - Indicators: Standardised APIs, interoperability, integration automation
 - Key questions: Are integrations standardised? Is there end-to-end testing?
 
 **E. Operations Maturity**
+
 - Evidence sources: monitoring KPIs, incident response plans, SLA data
 - Indicators: Monitoring coverage, incident response readiness, operational metrics
 - Key questions: Are operations measured? Is there predictive monitoring?
 
 For each dimension, record:
+
 - **Current level**: L1 through L5
 - **Evidence**: Concrete examples or artefacts supporting the rating
 - **Gaps**: What is missing to reach the next level
@@ -130,6 +136,7 @@ For each dimension, determine a realistic target maturity level:
 - **Gap**: Number of levels to progress
 
 Target levels should be ambitious but achievable. Consider:
+
 - Regulatory requirements (may mandate minimum levels)
 - Investment commitments and resource availability
 - Risk appetite (higher risk = more maturity needed)
@@ -143,6 +150,7 @@ For each gap identified (current → target), define improvement initiatives:
 | [Name] | [Dimension] | [Current L] | [Target L] | [Q1/Q2/etc] | [£X / FTE] |
 
 **Minimum 3 initiatives** must be defined. Each initiative should include:
+
 - **Name**: Clear, actionable initiative name
 - **Dimension**: Which maturity dimension it addresses
 - **Scope**: What activities are involved
@@ -159,6 +167,7 @@ Compare the agent program against industry benchmarks:
 - **Regulatory expectations**: Minimum maturity required for compliance
 
 For each benchmark:
+
 - **Metric**: What is being measured
 - **Industry average**: Typical maturity level in the sector
 - **Our position**: Current maturity level
@@ -354,5 +363,5 @@ Before completing the document, populate ALL document control fields in the head
 - **Traceability is critical** — link back to AAGI, AAGR, and governance artefacts
 - **The heatmap visualises priorities** — use quadrant positioning to show where to focus investment
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 5% gap`, `> 95% coverage`) to prevent markdown renderers from interpreting them as HTML tags or emoji
-- **Template customization**: Users can override the template by placing their own `agent-maturity-template.md` in `.arckit/templates/`
+- **Template customization**: Users can override the template by placing their own `agent-maturity-template.md` in `.arckit/templates-custom/`
 - **Versioning**: Always check for existing versions before creating a new file — increment appropriately

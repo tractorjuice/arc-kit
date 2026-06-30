@@ -71,7 +71,7 @@ This command operates at **global scope** by default. The repository synthesises
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/architecture-repository-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/architecture-repository-template.md` exists in the project root
 - **If found**: Read the user's customised template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/architecture-repository-template.md` (default)
 
@@ -82,27 +82,32 @@ This command operates at **global scope** by default. The repository synthesises
 Read PRIN and scan all available project artefacts. Classify each artefact's content into repository categories:
 
 #### From PRIN → Standards Register
+
 - Extract all technology standards, compliance requirements, and decision frameworks
 - Each principle clause that defines a "must" or "shall" becomes a standard entry
 - Group by domain: Security, Architecture, Data, Application, Technology, Governance
 
 #### From ADR → Patterns Library + Reference Architectures
+
 - Each ADR with a generalisable solution becomes a pattern entry
 - Extract: problem context, solution approach, consequences, applicability conditions
 - ADR decisions that establish reusable architectural approaches become reference architectures
 - Group patterns by domain and reuse frequency
 
 #### From DIAG → Reference Architectures
+
 - Diagrams that represent reusable architectural patterns (not project-specific)
 - Include: system integration patterns, security architectures, data flow templates, cloud reference models
 - Each reference architecture links back to the original diagram source
 
 #### From STORY + ANALYZE → Lessons Learned
+
 - Story outcomes that reveal process improvements become lessons
 - Analysis findings that identify technical pitfalls or successes become lessons
 - Categorise: Technical (architecture, technology, performance), Process (delivery, governance, planning), People (skills, collaboration, communication)
 
 #### From all artefacts → Reusable Building Blocks
+
 - Components, APIs, services, patterns that have been proven in production
 - Assess maturity: Prototype (used once), Proven (used in 2+ projects), Standard (enterprise-adopted)
 - Link to source artefacts for provenance
@@ -121,6 +126,7 @@ Extract and catalogue all standards from PRIN and ADR artefacts:
 **Minimum quality requirement**: ≥5 standards with complete entries
 
 Standards categories to extract:
+
 - **Security**: Information security standards, access control, encryption, compliance (e.g., NCSC CAF, ISO 27001 mappings)
 - **Architecture**: Design patterns, integration standards, service boundaries, API governance
 - **Data**: Data modelling standards, data quality, retention, classification
@@ -128,6 +134,7 @@ Standards categories to extract:
 - **Governance**: Decision-making processes, change control, compliance reporting
 
 For each standard:
+
 - `Standard ID`: `STD-NNN` format
 - `Name`: Descriptive standard name
 - `Domain`: Primary domain (Security/Architecture/Data/Technology/Governance)
@@ -140,6 +147,7 @@ For each standard:
 Catalogue reusable architectural patterns from ADR artefacts:
 
 **Pattern structure** (for each pattern):
+
 - **Context**: When and why to apply this pattern
 - **Problem**: The problem statement this pattern addresses
 - **Solution**: Detailed solution description with architectural considerations
@@ -150,6 +158,7 @@ Catalogue reusable architectural patterns from ADR artefacts:
 **Minimum quality requirement**: ≥3 patterns with full description
 
 Pattern grouping:
+
 - Group patterns by domain (Security, Integration, Data, Platform, etc.)
 - Cross-reference related patterns
 - Indicate maturity level and production validation
@@ -164,6 +173,7 @@ Catalogue reference architectures from DIAG artefacts:
 **Minimum quality requirement**: ≥2 reference architectures
 
 Reference architecture types:
+
 - **Integration architectures**: API gateways, service mesh, event-driven patterns
 - **Security architectures**: Zero trust, defence in depth, secure access
 - **Data architectures**: Data lakes, data fabric, stream processing
@@ -171,6 +181,7 @@ Reference architecture types:
 - **Application architectures**: Microservices, monolith-to-service migration
 
 Each reference architecture includes:
+
 - `Reference ID`: `REF-NNN` format
 - `Diagram`: Link to the source DIAG artefact
 - `Last Used`: Most recent project where this architecture was applied
@@ -185,11 +196,13 @@ Catalogue lessons from STORY and ANALYZE artefacts:
 **Minimum quality requirement**: ≥3 lessons learned
 
 Lesson categories:
+
 - **Technical**: Architecture decisions, technology choices, performance learnings
 - **Process**: Delivery approaches, governance effectiveness, planning accuracy
 - **People**: Team composition, skills gaps, collaboration patterns
 
 Each lesson includes:
+
 - `Lesson ID`: `LL-NNN` format
 - `Project`: Source project identifier
 - `Impact`: High/Medium/Low — how significant was this lesson's impact
@@ -205,12 +218,14 @@ Catalogue proven components and solutions:
 **Minimum quality requirement**: ≥3 building blocks
 
 Building block types:
+
 - **Component**: Self-contained software components, services, libraries
 - **Pattern**: Reusable architectural patterns with implementation guidance
 - **API**: Standardised interfaces and contracts
 - **Template**: Configuration templates, deployment templates, architecture templates
 
 Maturity levels:
+
 - **Prototype**: Used in a single project, limited validation
 - **Proven**: Used successfully in 2+ projects, production-tested
 - **Standard**: Enterprise-adopted, part of approved technology stack

@@ -28,7 +28,7 @@ $ARGUMENTS
 
 **RECOMMENDED** (read if available, note if missing):
 
-- **APP** (Architecture Principles) — Extract: Guiding principles, compliance requirements, technology standards, design constraints
+- **PRIN** (Architecture Principles) — Extract: Guiding principles, compliance requirements, technology standards, design constraints
   - If missing: note in assumptions that principle alignment could not be validated
 - **STRAT** (Architecture Strategy) — Extract: Strategic vision, target state description, strategic themes, investment priorities
   - If missing: note in assumptions that strategic alignment could not be validated
@@ -59,7 +59,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/gap-analysis-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/gap-analysis-template.md` exists in the project root
 - **If found**: Read the user's customised template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/gap-analysis-template.md` (default)
 
@@ -70,10 +70,12 @@ Identify the target project from the hook context. If the user specifies a proje
 Before generating the analysis, ask the user how to weight gap severity scoring:
 
 **AskUserQuestion**: "How should gap severity be weighted?"
+
 - Options: `Balanced` | `Strategic-risk` | `Operational`
 - Default: `Balanced`
 
 **Weighting profiles**:
+
 - **Balanced**: Equal weight to strategic impact and operational cost of the gap
 - **Strategic-risk**: Heavier weighting on strategic impact — gaps that threaten business outcomes are prioritised regardless of effort
 - **Operational**: Heavier weighting on effort/cost — gaps that can be closed quickly with high business value are prioritised
@@ -84,7 +86,7 @@ Read all available documents identified in the Prerequisites section. Build a me
 
 - **Current state capabilities** (from BPCM): Maturity levels, coverage, capability gaps
 - **Target state** (from STRAT/ADMP): Desired maturity levels, new capabilities, retired capabilities
-- **Principles** (from APP/PRIN): Constraints on how gaps can be addressed
+- **Principles** (from PRIN): Constraints on how gaps can be addressed
 - **Risks** (from RISK if available): Existing risk exposure from capability gaps
 - **Stakeholder priorities** (from STKE if available): Which capability areas matter most
 
@@ -160,7 +162,7 @@ Map each gap to associated risks:
 
 - Link each capability gap back to BPCM source
 - Link workstreams to strategic themes (from STRAT)
-- Link gaps to principles (from APP/PRIN) if principle compliance is affected
+- Link gaps to principles (from PRIN) if principle compliance is affected
 - Cross-reference to stakeholder drivers (from STKE)
 
 ### 7. UK Government Specifics
@@ -189,6 +191,7 @@ If this is a Ministry of Defence project, include:
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **GAPA** per-type checks pass. Fix any failures before proceeding.
 
 **GAPA-specific quality requirements**:
+
 - Capability gap matrix contains at least 5 capabilities
 - Severity scoring is present for every gap
 - Gap heatmap Mermaid diagram is present
@@ -278,7 +281,7 @@ After writing the file, show a concise summary (NOT the full document):
 
 7. **Integration with Other Commands**:
    - Gap Analysis feeds into: `/arckit:transition-architecture` (Phase F — Migration Planning), `/arckit:architecture-board` (governance review)
-   - Gap Analysis is informed by: `/arckit:business-capability-map` (BPCM), `/arckit:strategy` (STRAT), `/arckit:principles` (APP/PRIN)
+   - Gap Analysis is informed by: `/arckit:business-capability-map` (BPCM), `/arckit:strategy` (STRAT), `/arckit:principles` (PRIN)
 
 8. **Version Management**: If a gap analysis already exists (`ARC-*-GAPA-v*.md`), create a new version (v2.0) rather than overwriting. Gap analyses should be versioned to track re-assessment across ADM cycles.
 

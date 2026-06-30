@@ -23,8 +23,8 @@ $ARGUMENTS
 
 ### Prerequisites
 
-- **ADMP** (Architecture Design and Migration Plan, recommended — inherits from TOGAF if available)
-- **APP** (Architecture Principles, recommended — in `projects/000-global/`)
+- **ADMP** (ADM Preliminary / Architecture Vision, recommended — inherits from TOGAF if available)
+- **APP** (Application Inventory, recommended)
 - **PRIN** (Principles, recommended — from 000-global)
 
 1. **Determine inventory scope**:
@@ -38,17 +38,17 @@ $ARGUMENTS
    **RECOMMENDED** (read if available, note if missing):
    - **PRIN** (Architecture Principles, in `000-global`)
      - Extract: AI governance standards, agent policy requirements, risk tolerance thresholds
-   - **ADMP** (Architecture Design and Migration Plan)
+   - **ADMP** (ADM Preliminary / Architecture Vision)
      - Extract: Agent programme scope, migration phases, existing agent references
-   - **APP** (Architecture Principles)
-     - Extract: Agent design patterns, integration standards, security baselines
+   - **APP** (Application Inventory)
+     - Extract: Application context, hosting platforms, integrations, lifecycle and ownership details
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - **AAGR** (Agent Governance Requirements)
-     - Extract: Agent capability requirements, safety requirements, compliance mandates
-   - **AAOV** (Agent Operational View)
-     - Extract: Existing agent inventory, deployment context, lifecycle stages
-   - **AASE** (Agent Security Evaluation)
+   - **AAGR** (Agent Architecture Specification)
+     - Extract: Agent capability requirements, safety requirements, architecture patterns
+   - **AAOV** (Agent Governance Framework)
+     - Extract: Oversight model, approval workflow, audit requirements
+   - **AASE** (Agent Security Architecture)
      - Extract: Threat models, security controls, isolation requirements
    - **AAIN** (Agent Integration Patterns)
      - Extract: Agent-to-agent communication patterns, orchestration models
@@ -68,7 +68,7 @@ $ARGUMENTS
 
 4. **Read the template** (with user override support):
 
-   - **First**, check if `.arckit/templates/agent-inventory-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/agent-inventory-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/agent-inventory-template.md` (default)
 

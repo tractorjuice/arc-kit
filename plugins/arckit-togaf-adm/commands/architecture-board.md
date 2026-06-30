@@ -41,7 +41,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 - **ADMP** (ADM Cycle Plan) — Extract: ADM phase scope, governance model, stakeholder engagement plan, phase sequencing
   - If missing: note in assumptions that ADM governance alignment could not be validated
-- **APP** (Architecture Principles) — Extract: Domain-specific principles, compliance gates, exception criteria
+- **PRIN** (Architecture Principles) — Extract: Domain-specific principles, compliance gates, exception criteria
   - If missing: note in assumptions that domain-level principle alignment could not be validated
 - **BPCM** (Business Capability Map) — Extract: Capability maturity, ownership, governance needs
   - If missing: note in assumptions that capability governance could not be assessed
@@ -52,7 +52,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/architecture-board-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/architecture-board-template.md` exists in the project root
 - **If found**: Read the user's customised template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/architecture-board-template.md` (default)
 
@@ -118,6 +118,7 @@ Build a compliance scorecard with at least 3 domains. Recommended domains:
 | Business Alignment | BSM | Business strategy alignment |
 
 For each domain:
+
 - **Current state**: Maturity level (1–5)
 - **Target state**: Desired maturity level (1–5)
 - **Gap**: Qualitative description of the gap
@@ -147,6 +148,7 @@ Provide a template for ongoing decision recording with columns: Date, Decision I
 #### 8. Traceability
 
 Cross-reference to related documents:
+
 - Architecture Principles (`ARC-000-PRIN-v[N].md`) — board enforces principles
 - ADM Plan (`ARC-{P}-ADMP-v[N].md`) — board governs Phase G
 - Gap Analysis (`ARC-{P}-GAPA-v[N].md`) — board prioritises gap closure

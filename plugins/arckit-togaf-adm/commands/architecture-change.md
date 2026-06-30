@@ -29,7 +29,7 @@ $ARGUMENTS
   - If missing: note that capability impact assessment will be limited
 - **ADMP** (ADM Preliminary) — Extract: Architecture framework, principles, governance structure
   - If missing: note that framework alignment could not be validated
-- **APP** (Architecture Principles) — Extract: Principle compliance implications of the change
+- **PRIN** (Architecture Principles) — Extract: Principle compliance implications of the change
   - If missing: note that principle compliance could not be validated
 - **TRANS** (Transition Architecture) — Extract: Current transition plans that may be affected
   - If missing: note that transition plan impact could not be assessed
@@ -67,7 +67,7 @@ Change requests are **multi-instance** documents (like ADRs). Find the next avai
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/architecture-change-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/architecture-change-template.md` exists in the project root
 - **If found**: Read the user's customised template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/architecture-change-template.md` (default)
 
@@ -156,21 +156,25 @@ Provide a clear statement of why this change is needed. Include:
 Assess impact across **at least four categories**:
 
 **3.1 Capability Impact**
+
 - Which business capabilities are affected?
 - Classification: Enhanced / Modified / New / Retired
 - Maturity level changes (reference BPCM)
 
 **3.2 Application Impact**
+
 - Which applications are affected?
 - Classification: Enhanced / Modified / Replaced / Retired
 - Integration impact on connected applications
 
 **3.3 Technology Impact**
+
 - Which technology components are affected?
 - Classification: Enhanced / Modified / Replaced / Retired
 - Infrastructure and platform implications
 
 **3.4 Governance Impact**
+
 - Which governance areas are affected?
 - Compliance, standards, principles alignment
 - Policy and procedure changes required
@@ -235,6 +239,7 @@ Create traceability links:
 Before writing the file, read `${CLAUDE_PLUGIN_ROOT}/references/quality-checklist.md` and verify all **Common Checks** plus the **ACHG** per-type checks pass. Fix any failures before proceeding.
 
 **ACHG-specific quality requirements**:
+
 - Change type is explicitly defined (Evolutionary/Transformational/Corrective)
 - Impact assessment covers at least 4 categories (capability, application, technology, governance)
 - ADM re-entry mapping is present for all phases
@@ -363,7 +368,8 @@ After writing the file, show a concise summary (NOT the full document):
 9. **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 months`, `> £100,000`) to prevent markdown renderers from interpreting them as HTML tags or emoji.
 
 10. **UK Government Context**: For UK Government projects, align change management with:
-   - **GDS Service Standard**: Change governance and user impact assessment
-   - **NCSC CAF**: Security control updates for technology changes
-   - **Technology Code of Practice**: Reuse-first principle for technology changes
-   - **Cross-Government Services**: Impact on shared services (GOV.UK Pay, Notify, Design System)
+
+- **GDS Service Standard**: Change governance and user impact assessment
+- **NCSC CAF**: Security control updates for technology changes
+- **Technology Code of Practice**: Reuse-first principle for technology changes
+- **Cross-Government Services**: Impact on shared services (GOV.UK Pay, Notify, Design System)

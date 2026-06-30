@@ -1,78 +1,155 @@
-schema: "1.0"
-name: "togaf-agent-full"
-description: "Full enterprise + AI agent architecture — TOGAF ADM + Agent Architecture composition"
-version: "1.0.0"
+recipe: togaf-agent-full
+schema_version: 1
+description: >
+  Combined enterprise and AI agent architecture lifecycle: TOGAF ADM foundation
+  and delivery artefacts composed with agent inventory, design, governance,
+  security, integration, and optional maturity / repository outputs.
+
 defaults:
-  project_id: "001"
   version: "1.0"
+
+optional_targets:
+  ACHG:
+    description: Architecture change request for scoped post-baseline changes
+    default: false
+  REPO:
+    description: Architecture repository synthesis from completed artefacts
+    default: false
+  AAMT:
+    description: Agent programme maturity assessment and improvement roadmap
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:traceability
+    args: ""
+  - skill: arckit:pages
+    args: ""
+
 targets:
-  - id: foundation
-    skill: "strategy"
-    description: "Generate strategy and principles"
-  - id: adm-preliminary
-    skill: "adm-preliminary"
-    description: "Architecture Vision"
-    depends: ["foundation"]
-  - id: business-capability-map
-    skill: "business-capability-map"
-    description: "Business Architecture"
-    depends: ["adm-preliminary"]
-  - id: application-inventory
-    skill: "application-inventory"
-    description: "Application portfolio"
-    depends: ["adm-preliminary", "business-capability-map"]
-  - id: agent-inventory
-    skill: "agent-inventory"
-    description: "Agent inventory"
-    depends: ["adm-preliminary", "application-inventory"]
-  - id: agent-design
-    skill: "agent-design"
-    description: "Agent architecture"
-    depends: ["agent-inventory"]
-  - id: application-rationalization
-    skill: "application-rationalization"
-    description: "Portfolio decisions"
-    depends: ["application-inventory", "business-capability-map"]
-  - id: gap-analysis
-    skill: "gap-analysis"
-    description: "Gap analysis"
-    depends: ["business-capability-map", "application-inventory", "application-rationalization", "agent-inventory"]
-  - id: transition-architecture
-    skill: "transition-architecture"
-    description: "Migration planning"
-    depends: ["gap-analysis"]
-  - id: architecture-board
-    skill: "architecture-board"
-    description: "Governance"
-    depends: ["adm-preliminary"]
-  - id: agent-governance
-    skill: "agent-governance"
-    description: "Agent governance"
-    depends: ["agent-inventory", "agent-design", "architecture-board"]
-  - id: agent-security
-    skill: "agent-security"
-    description: "Agent security"
-    depends: ["agent-design"]
-  - id: agent-integration
-    skill: "agent-integration"
-    description: "Multi-agent integration"
-    depends: ["agent-design"]
-  - id: architecture-repository
-    skill: "architecture-repository"
-    description: "Repository"
-    depends: ["foundation"]
-    optional: true
-  - id: architecture-change
-    skill: "architecture-change"
-    description: "Change management"
-    depends: ["architecture-board"]
-    optional: true
-  - id: agent-maturity
-    skill: "agent-maturity"
-    description: "Maturity assessment"
-    depends: ["agent-inventory", "agent-design", "agent-governance", "agent-security"]
-    optional: true
-postbuild:
-  - "arckit:health"
-  - "arckit:traceability"
-  - "arckit:pages"
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  - id: RISK
+    skill: arckit:risk
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: RISK }
+    deps: [REQ, STKE, PRIN]
+
+  - id: AIPB
+    skill: arckit:ai-playbook
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AIPB }
+    deps: [REQ, STKE, PRIN]
+
+  - id: STRATEGY
+    skill: arckit:strategy
+    args: ""
+    output: { project: "000-global", type: STRAT }
+    deps: [PRIN, STKE]
+
+  - id: ADMP
+    skill: arckit:adm-preliminary
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ADMP }
+    deps: [PRIN, STKE, STRATEGY]
+
+  - id: BPCM
+    skill: arckit:business-capability-map
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: BPCM }
+    deps: [ADMP, REQ, STKE, PRIN]
+
+  - id: APP
+    skill: arckit:application-inventory
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: APP }
+    deps: [ADMP, BPCM]
+
+  - id: AAGI
+    skill: arckit:agent-inventory
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAGI }
+    deps: [ADMP, APP, REQ, STKE, PRIN]
+
+  - id: AAGR
+    skill: arckit:agent-design
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAGR }
+    deps: [AAGI, REQ, STKE, PRIN]
+
+  - id: APPR
+    skill: arckit:application-rationalization
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: APPR }
+    deps: [APP, BPCM]
+
+  - id: GAPA
+    skill: arckit:gap-analysis
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GAPA }
+    deps: [BPCM, APP, APPR, AAGI, STRATEGY]
+
+  - id: TRANS
+    skill: arckit:transition-architecture
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRANS }
+    deps: [GAPA]
+
+  - id: BORD
+    skill: arckit:architecture-board
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: BORD }
+    deps: [PRIN, ADMP]
+
+  - id: AAOV
+    skill: arckit:agent-governance
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAOV }
+    deps: [AAGI, AAGR, BORD]
+
+  - id: AASE
+    skill: arckit:agent-security
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AASE }
+    deps: [AAGR, RISK, AIPB]
+
+  - id: AAIN
+    skill: arckit:agent-integration
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAIN }
+    deps: [AAGR]
+
+  - id: ACHG
+    skill: arckit:architecture-change
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ACHG }
+    deps: [BORD, TRANS]
+
+  - id: REPO
+    skill: arckit:architecture-repository
+    args: "000"
+    output: { project: "000-global", type: REPO }
+    deps: [PRIN, STRATEGY, ADMP, BPCM, APP, APPR, GAPA, TRANS, BORD, AAGI, AAGR]
+
+  - id: AAMT
+    skill: arckit:agent-maturity
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: AAMT }
+    deps: [AAGI, AAGR, AAOV, AASE]

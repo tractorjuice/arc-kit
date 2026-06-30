@@ -1,52 +1,103 @@
-schema: "1.0"
-name: "togaf-adm-full"
-description: "Full TOGAF ADM cycle — Preliminary through Phase H + Repository"
-version: "1.0.0"
+recipe: togaf-adm-full
+schema_version: 1
+description: >
+  Full TOGAF ADM cycle: foundation artefacts, ADM Preliminary / Architecture
+  Vision, capability mapping, application inventory and rationalisation, gap
+  analysis, transition architecture, governance, optional change management,
+  and optional architecture repository synthesis.
+
 defaults:
-  project_id: "001"
   version: "1.0"
+
+optional_targets:
+  ACHG:
+    description: Architecture change request for scoped post-baseline changes
+    default: false
+  REPO:
+    description: Architecture repository synthesis from completed ADM artefacts
+    default: false
+
+post_build_hooks:
+  - skill: arckit:health
+    args: ""
+  - skill: arckit:traceability
+    args: ""
+
 targets:
-  - id: foundation
-    skill: "strategy"
-    description: "Generate strategy and principles as ADM foundation"
-  - id: adm-preliminary
-    skill: "adm-preliminary"
-    description: "Architecture Vision — ADM Preliminary"
-    depends: ["foundation"]
-  - id: business-capability-map
-    skill: "business-capability-map"
-    description: "Phase A — Business Architecture"
-    depends: ["adm-preliminary"]
-  - id: application-inventory
-    skill: "application-inventory"
-    description: "Phase C — Application portfolio"
-    depends: ["adm-preliminary", "business-capability-map"]
-  - id: application-rationalization
-    skill: "application-rationalization"
-    description: "Phase C — Portfolio decisions"
-    depends: ["application-inventory", "business-capability-map"]
-  - id: gap-analysis
-    skill: "gap-analysis"
-    description: "Phase E — Gap analysis"
-    depends: ["business-capability-map", "application-inventory", "application-rationalization"]
-  - id: transition-architecture
-    skill: "transition-architecture"
-    description: "Phase F — Migration planning"
-    depends: ["gap-analysis"]
-  - id: architecture-board
-    skill: "architecture-board"
-    description: "Phase G — Governance"
-    depends: ["adm-preliminary"]
-  - id: architecture-change
-    skill: "architecture-change"
-    description: "Phase H — Change management"
-    depends: ["architecture-board"]
-    optional: true
-  - id: architecture-repository
-    skill: "architecture-repository"
-    description: "Repository — Cross-project synthesis"
-    depends: ["foundation"]
-    optional: true
-postbuild:
-  - "arckit:health"
-  - "arckit:traceability"
+  - id: PRIN
+    skill: arckit:principles
+    args: ""
+    output: { project: "000-global", type: PRIN }
+    deps: []
+
+  - id: REQ
+    skill: arckit:requirements
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: REQ }
+    deps: [PRIN]
+
+  - id: STKE
+    skill: arckit:stakeholders
+    args: "{NAME}"
+    output: { project: "{P}-{NAME}", type: STKE }
+    deps: [PRIN]
+
+  - id: STRATEGY
+    skill: arckit:strategy
+    args: ""
+    output: { project: "000-global", type: STRAT }
+    deps: [PRIN, STKE]
+
+  - id: ADMP
+    skill: arckit:adm-preliminary
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ADMP }
+    deps: [PRIN, STKE, STRATEGY]
+
+  - id: BPCM
+    skill: arckit:business-capability-map
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: BPCM }
+    deps: [ADMP, REQ, STKE, PRIN]
+
+  - id: APP
+    skill: arckit:application-inventory
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: APP }
+    deps: [ADMP, BPCM]
+
+  - id: APPR
+    skill: arckit:application-rationalization
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: APPR }
+    deps: [APP, BPCM]
+
+  - id: GAPA
+    skill: arckit:gap-analysis
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: GAPA }
+    deps: [BPCM, APP, APPR, STRATEGY]
+
+  - id: TRANS
+    skill: arckit:transition-architecture
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: TRANS }
+    deps: [GAPA]
+
+  - id: BORD
+    skill: arckit:architecture-board
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: BORD }
+    deps: [PRIN, ADMP]
+
+  - id: ACHG
+    skill: arckit:architecture-change
+    args: "{P}"
+    output: { project: "{P}-{NAME}", type: ACHG }
+    deps: [BORD, TRANS]
+
+  - id: REPO
+    skill: arckit:architecture-repository
+    args: "000"
+    output: { project: "000-global", type: REPO }
+    deps: [PRIN, STRATEGY, ADMP, BPCM, APP, APPR, GAPA, TRANS, BORD]

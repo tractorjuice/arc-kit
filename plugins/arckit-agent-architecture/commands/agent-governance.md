@@ -39,7 +39,7 @@ $ARGUMENTS
      - If missing: note that board context is limited
 
    **Read the template** (with user override support):
-   - **First**, check if `.arckit/templates/agent-governance-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/agent-governance-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/agent-governance-template.md` (default)
 

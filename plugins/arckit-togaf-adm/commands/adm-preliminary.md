@@ -55,7 +55,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/adm-preliminary-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/adm-preliminary-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/adm-preliminary-template.md` (default)
 
@@ -66,6 +66,7 @@ Identify the target project from the hook context. If the user specifies a proje
 Before generating the document, ask the user about the scope of this ADM engagement:
 
 **AskUserQuestion**: "What is the scope of this ADM engagement?"
+
 - Options: `Enterprise-wide` | `Business Unit` | `Project-specific`
 - Default: `Business Unit`
 

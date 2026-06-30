@@ -25,8 +25,8 @@ $ARGUMENTS
 
 **MANDATORY** (warn if missing):
 
-- **AAGI** (Agent Architecture Guide, recommended) — Extract: agent design patterns, architectural guidelines, multi-agent orchestration principles
-  - If missing: warn user to create `/arckit:agent-guide` first
+- **AAGI** (Agent Inventory, recommended) — Extract: agent catalogue, current capabilities, lifecycle status, and operational context
+  - If missing: warn user to run `/arckit:agent-inventory` first
 - **REQ** (Requirements, recommended) — Extract: FR/NFR for agent capabilities, tool requirements, memory requirements, guardrail requirements
   - If missing: warn user to run `/arckit:requirements` first
 
@@ -41,7 +41,7 @@ $ARGUMENTS
 
 - **HLDR** (High-Level Design Review) — Extract: existing system architecture the agent will integrate with
 - **SECD** (Secure by Design) — Extract: security controls applicable to agent systems
-- **AAGI** (Agent Architecture Guide) — Extract: enterprise agent patterns, orchestration standards
+- **AAGI** (Agent Inventory) — Extract: existing agents, capability baseline, ownership, and operational status
 
 ### 2. Identify the target project
 
@@ -84,7 +84,7 @@ Before generating the agent design, use the **AskUserQuestion** tool to gather k
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/agent-design-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/agent-design-template.md` exists in the project root
 - **If found**: Read the user's customized template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/agent-design-template.md` (default)
 
@@ -109,6 +109,7 @@ Before generating the agent design, use the **AskUserQuestion** tool to gather k
 **Tool inventory** (minimum 3 tools):
 
 Extract from REQ artifacts or define new:
+
 - **Tool ID**: Unique identifier (e.g., "T-001")
 - **Tool name**: Descriptive name
 - **Tool type**: MCP / REST / Function / Database
@@ -403,5 +404,5 @@ The footer should be populated with:
 - **Minimum requirements**: At least 3 tool contracts, 2 guardrails, all memory layers documented
 - **Mermaid diagrams**: Must use valid syntax — C4Component for architecture, flowchart for orchestration
 - **Markdown escaping**: When writing less-than or greater-than comparisons, always include a space after `<` or `>` (e.g., `< 3 seconds`, `> 99.9% uptime`) to prevent markdown renderers from interpreting them as HTML tags or emoji
-- **Template customization**: Users can override the template by placing their own `agent-design-template.md` in `.arckit/templates/`
+- **Template customization**: Users can override the template by placing their own `agent-design-template.md` in `.arckit/templates-custom/`
 - **Versioning**: Always check for existing versions before creating a new file — increment appropriately

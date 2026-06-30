@@ -23,9 +23,9 @@ $ARGUMENTS
 
 ### Prerequisites
 
-- **AAGR** (Agent Governance Requirements, mandatory — at least one agent design)
-- **AAGI** (AI Agent Inventory, recommended)
-- **AAOV** (Agent Operational View, recommended)
+- **AAGR** (Agent Architecture Specification, mandatory — at least one agent design)
+- **AAGI** (Agent Inventory, recommended)
+- **AAOV** (Agent Governance Framework, recommended)
 
 1. **Determine integration scope**:
 
@@ -36,23 +36,21 @@ $ARGUMENTS
 2. **Read existing artifacts from the project context:**
 
    **MANDATORY** (must be present to proceed):
-   - **AAGR** (Agent Governance Requirements)
+   - **AAGR** (Agent Architecture Specification)
      - Extract: Agent definitions, capability profiles, interface requirements
 
    **RECOMMENDED** (read if available, note if missing):
-   - **AAGI** (AI Agent Inventory)
+   - **AAGI** (Agent Inventory)
      - Extract: Agent register, capabilities, deployment status
-   - **AAOV** (Agent Operational View)
-     - Extract: Operational context, deployment topology, existing integration points
-   - **AAOV** (Agent Operational View)
-     - Extract: Operational context, runtime environment details
+   - **AAOV** (Agent Governance Framework)
+     - Extract: oversight model, approval workflow, audit requirements, and governance constraints
 
    **OPTIONAL** (read if available, skip silently if missing):
-   - **AASE** (Agent Security Evaluation)
+   - **AASE** (Agent Security Architecture)
      - Extract: Security controls, isolation requirements, threat models
    - **PRIN** (Principles)
      - Extract: Integration standards, interoperability requirements
-   - **ADMP** (Architecture Design and Migration Plan)
+   - **ADMP** (ADM Preliminary / Architecture Vision)
      - Extract: Integration architecture references, migration phases
 
 3. **Identify the target project**:
@@ -68,7 +66,7 @@ $ARGUMENTS
 
 4. **Read the template** (with user override support):
 
-   - **First**, check if `.arckit/templates/agent-integration-template.md` exists in the project root
+   - **First**, check if `.arckit/templates-custom/agent-integration-template.md` exists in the project root
    - **If found**: Read the user's customized template (user override takes precedence)
    - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/agent-integration-template.md` (default)
 

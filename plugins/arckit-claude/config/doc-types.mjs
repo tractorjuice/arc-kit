@@ -61,6 +61,23 @@ export const DOC_TYPES = {
   'DFD':       { name: 'Data Flow Diagram',                category: 'Architecture' },
   'ADR':       { name: 'Architecture Decision Records',    category: 'Architecture' },
   'PLAT':      { name: 'Platform Design',                  category: 'Architecture' },
+  // TOGAF ADM overlay (community)
+  'ADMP':      { name: 'ADM Preliminary / Architecture Vision', category: 'Architecture' },
+  'BPCM':      { name: 'Business Capability Map',          category: 'Architecture' },
+  'APP':       { name: 'Application Inventory',            category: 'Architecture' },
+  'APPR':      { name: 'Application Rationalisation',      category: 'Architecture' },
+  'GAPA':      { name: 'TOGAF Gap Analysis',               category: 'Governance' },
+  'TRANS':     { name: 'Transition Architecture',          category: 'Planning' },
+  'BORD':      { name: 'Architecture Board Charter',       category: 'Governance' },
+  'ACHG':      { name: 'Architecture Change Request',      category: 'Governance' },
+  'REPO':      { name: 'Architecture Repository',          category: 'Architecture' },
+  // AI Agent Architecture overlay (community)
+  'AAGI':      { name: 'Agent Inventory',                  category: 'Architecture' },
+  'AAGR':      { name: 'Agent Architecture Specification', category: 'Architecture' },
+  'AAOV':      { name: 'Agent Governance Framework',       category: 'Governance' },
+  'AAIN':      { name: 'Agent Integration Architecture',   category: 'Architecture' },
+  'AASE':      { name: 'Agent Security Architecture',      category: 'Governance', severity: 'HIGH' },
+  'AAMT':      { name: 'Agent Maturity Assessment',        category: 'Governance' },
   // Governance — universal best-practice (no regime tag, HIGH-severity)
   'RISK':      { name: 'Risk Register',                    category: 'Governance', severity: 'HIGH' },
   'TRAC':      { name: 'Traceability Matrix',              category: 'Governance', severity: 'HIGH' },

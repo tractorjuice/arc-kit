@@ -59,7 +59,7 @@ Identify the target project from the hook context. If the user specifies a proje
 
 **Read the template** (with user override support):
 
-- **First**, check if `.arckit/templates/transition-architecture-template.md` exists in the project root
+- **First**, check if `.arckit/templates-custom/transition-architecture-template.md` exists in the project root
 - **If found**: Read the user's customised template (user override takes precedence)
 - **If not found**: Read `${CLAUDE_PLUGIN_ROOT}/templates/transition-architecture-template.md` (default)
 
