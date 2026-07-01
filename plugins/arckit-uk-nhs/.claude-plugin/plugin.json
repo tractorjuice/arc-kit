@@ -3,7 +3,7 @@
   "name": "arckit-uk-nhs",
   "version": "6.1.1",
   "defaultEnabled": false,
-  "description": "UK NHS Clinical Safety Overlay for ArcKit — 4 commands for NHS DCB0129 (manufacturer) and DCB0160 (deployer) clinical safety case + hazard log, NHS DTAC v3 assessment, and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device classification (SaMD / AIaMD). Adopts Marcus Baw's SAFETY.md spec for DCB0129/0160 file naming and YAML-frontmatter hazard log. Recipe: uk-nhs-clinical-safety. Requires arckit core plugin.",
+  "description": "UK NHS Clinical Safety Overlay for ArcKit \u2014 4 commands for NHS DCB0129 (manufacturer) and DCB0160 (deployer) clinical safety case + hazard log, NHS DTAC v3 assessment, and UK MDR 2002 + EU MDR 2017/745 software-as-medical-device classification (SaMD / AIaMD). Adopts Marcus Baw's SAFETY.md spec for DCB0129/0160 file naming and YAML-frontmatter hazard log. Recipe: uk-nhs-clinical-safety. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -30,5 +30,10 @@
       "name": "arckit",
       "version": "=6.1.1"
     }
-  ]
+  ],
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification"
+    }
+  }
 }

@@ -3,7 +3,7 @@
   "name": "arckit-uk-gcloud",
   "version": "6.1.1",
   "defaultEnabled": false,
-  "description": "UK G-Cloud Supplier Bid-Authoring Overlay for ArcKit — 11 supplier-side commands that drive a G-Cloud 14 Digital Marketplace submission end to end: supplier profile, service design, Service Definition Documents (Lots 1/2/3), supplier declaration, pricing, NCSC Cloud Security Principles assertions, competitor benchmark, submission review, and CCS submission packaging. Recipe: uk-gcloud-submission. Requires arckit core plugin. PROPRIETARY — not covered by the repository MIT licence. EXPERIMENTAL.",
+  "description": "UK G-Cloud Supplier Bid-Authoring Overlay for ArcKit \u2014 11 supplier-side commands that drive a G-Cloud 14 Digital Marketplace submission end to end: supplier profile, service design, Service Definition Documents (Lots 1/2/3), supplier declaration, pricing, NCSC Cloud Security Principles assertions, competitor benchmark, submission review, and CCS submission packaging. Recipe: uk-gcloud-submission. Requires arckit core plugin. PROPRIETARY \u2014 not covered by the repository MIT licence. EXPERIMENTAL.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -30,5 +30,10 @@
       "name": "arckit",
       "version": "=6.1.1"
     }
-  ]
+  ],
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification"
+    }
+  }
 }

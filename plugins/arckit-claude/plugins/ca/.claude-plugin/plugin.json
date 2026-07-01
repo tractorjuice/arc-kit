@@ -3,7 +3,7 @@
   "name": "arckit-ca",
   "version": "6.1.1",
   "defaultEnabled": false,
-  "description": "Canadian Federal Overlay for ArcKit — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA, and federal cloud residency. Requires arckit core plugin.",
+  "description": "Canadian Federal Overlay for ArcKit \u2014 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA, and federal cloud residency. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -23,5 +23,10 @@
       "name": "arckit",
       "version": "=6.1.1"
     }
-  ]
+  ],
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification"
+    }
+  }
 }

@@ -3,7 +3,7 @@
   "name": "arckit-uae",
   "version": "6.1.1",
   "defaultEnabled": false,
-  "description": "UAE Federal Overlay for ArcKit — 12 commands for UAE PDPL, IAS, AI Charter, autonomy tiers, sovereign cloud residency, UAE Pass, and federal procurement. Requires arckit core plugin.",
+  "description": "UAE Federal Overlay for ArcKit \u2014 12 commands for UAE PDPL, IAS, AI Charter, autonomy tiers, sovereign cloud residency, UAE Pass, and federal procurement. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -22,5 +22,10 @@
       "name": "arckit",
       "version": "=6.1.1"
     }
-  ]
+  ],
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification"
+    }
+  }
 }

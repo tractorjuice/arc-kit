@@ -3,7 +3,7 @@
   "name": "arckit-au",
   "version": "6.1.1",
   "defaultEnabled": false,
-  "description": "Australian Federal Overlay for ArcKit — 8 commands for ASD Essential Eight, ISM, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC Notifiable Data Breach, PSPF, DTA AI Assurance, and DISP supplier attestation. Recipe: au-federal. Requires arckit core plugin.",
+  "description": "Australian Federal Overlay for ArcKit \u2014 8 commands for ASD Essential Eight, ISM, DTA Digital Service Standard, Privacy Act 1988 PIA, OAIC Notifiable Data Breach, PSPF, DTA AI Assurance, and DISP supplier attestation. Recipe: au-federal. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -23,5 +23,10 @@
       "name": "arckit",
       "version": "=6.1.1"
     }
-  ]
+  ],
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification"
+    }
+  }
 }

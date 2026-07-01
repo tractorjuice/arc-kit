@@ -3,7 +3,7 @@
   "name": "arckit-uk-finance",
   "version": "6.1.1",
   "defaultEnabled": false,
-  "description": "UK Financial Services Payments Overlay for ArcKit — 4 commands for established UK Payment Service Providers, E-Money Institutions, and Payment Institutions: PSD2 SCA-RTS exemption design, EMI/PI safeguarding assessment, FCA Consumer Duty board report, and Critical Third Parties dependency assessment. Recipe: uk-fs-payments. Requires arckit core plugin. EXPERIMENTAL — community-maintained, no named domain co-maintainer at launch.",
+  "description": "UK Financial Services Payments Overlay for ArcKit \u2014 4 commands for established UK Payment Service Providers, E-Money Institutions, and Payment Institutions: PSD2 SCA-RTS exemption design, EMI/PI safeguarding assessment, FCA Consumer Duty board report, and Critical Third Parties dependency assessment. Recipe: uk-fs-payments. Requires arckit core plugin. EXPERIMENTAL \u2014 community-maintained, no named domain co-maintainer at launch.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -31,5 +31,10 @@
       "name": "arckit",
       "version": "=6.1.1"
     }
-  ]
+  ],
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification"
+    }
+  }
 }

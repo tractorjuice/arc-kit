@@ -3,7 +3,7 @@
   "name": "arckit-eu",
   "version": "6.1.1",
   "defaultEnabled": false,
-  "description": "EU Overlay for ArcKit — 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA. Requires arckit core plugin.",
+  "description": "EU Overlay for ArcKit \u2014 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -23,5 +23,10 @@
       "name": "arckit",
       "version": "=6.1.1"
     }
-  ]
+  ],
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification"
+    }
+  }
 }

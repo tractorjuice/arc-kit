@@ -3,7 +3,7 @@
   "name": "arckit-us",
   "version": "6.1.1",
   "defaultEnabled": false,
-  "description": "USA Federal Civilian Overlay for ArcKit — 10 commands for FedRAMP (SSP, Readiness), FISMA/NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Gov Act §208 PIA, and EO 14028 SBOM self-attestation. Recipe: us-federal. Requires arckit core plugin.",
+  "description": "USA Federal Civilian Overlay for ArcKit \u2014 10 commands for FedRAMP (SSP, Readiness), FISMA/NIST 800-53 Rev 5, CISA Zero Trust Maturity Model, OMB M-19-17 ICAM, NIST AI RMF + OMB M-24-10/M-25-21 AI assurance, E-Gov Act \u00a7208 PIA, and EO 14028 SBOM self-attestation. Recipe: us-federal. Requires arckit core plugin.",
   "author": {
     "name": "TractorJuice",
     "url": "https://github.com/tractorjuice"
@@ -25,5 +25,10 @@
       "name": "arckit",
       "version": "=6.1.1"
     }
-  ]
+  ],
+  "userConfig": {
+    "default_classification": {
+      "title": "Default Classification"
+    }
+  }
 }
