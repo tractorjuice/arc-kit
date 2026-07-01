@@ -11,11 +11,12 @@
   "license": "MIT",
   "defaultEnabled": false,
   "userConfig": {
-    "default_classification": {
-      "type": "string",
-      "default": "PUBLIC",
-      "description": "Default document classification (e.g. PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE)"
-    }
+      "default_classification": {
+          "type": "string",
+          "default": "PUBLIC",
+          "title": "Default Classification",
+          "description": "Default document classification (e.g. PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE)"
+      }
   },
   "dependencies": [
     {
