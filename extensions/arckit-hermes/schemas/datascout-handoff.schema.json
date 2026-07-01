@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arckit.org/schemas/datascout-handoff/v1",
+  "title": "datascout reader → orchestrator handoff payload (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["category", "source_type", "sources", "errors"],
+  "properties": {
+    "category": {
+      "type": "string",
+      "enum": [
+        "geospatial", "financial", "company", "demographics",
+        "weather", "health", "transport", "energy", "education",
+        "property", "identity", "crime", "reference"
+      ]
+    },
+    "source_type": {
+      "type": "string",
+      "enum": ["uk-gov", "commercial", "free", "oss"]
+    },
+    "sources": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "$ref": "#/$defs/SourceRecord" }
+    },
+    "unfetched_urls": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "type": "string", "format": "uri", "maxLength": 512 }
+    },
+    "errors": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "reason"],
+        "properties": {
+          "url": { "type": "string", "format": "uri", "maxLength": 512 },
+          "reason": { "type": "string", "maxLength": 256 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "SourceRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "name", "fetched_from_url", "evidence"],
+      "properties": {
+        "provider": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9 .,&()/-]+$"
+        },
+        "name": { "type": "string", "maxLength": 256 },
+        "fetched_from_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "fetched_at_iso": { "type": "string", "format": "date-time" },
+        "citation_id": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^[A-Z0-9-]+$"
+        },
+        "evidence": { "$ref": "#/$defs/Evidence" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hosted_in_iso_country": { "type": "string", "pattern": "^[A-Z]{2}$" },
+        "certifications": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "string",
+            "enum": [
+              "ISO27001", "SOC2-Type2", "Cyber-Essentials-Plus",
+              "OGL-v3", "OGL-v2", "G-Cloud-listed", "DOS-listed",
+              "GDPR-compliant-asserted", "NCSC-CAF-aligned-asserted"
+            ]
+          }
+        },
+        "licence_type": {
+          "type": "string",
+          "enum": [
+            "OGL-v3", "OGL-v2", "MIT", "Apache-2.0", "BSD-3-Clause",
+            "GPL-3.0", "AGPL-3.0", "Commercial", "Freemium", "Proprietary",
+            "CC-BY-4.0", "CC0-1.0", "Unknown"
+          ]
+        },
+        "pricing_model": {
+          "type": "string",
+          "enum": [
+            "free", "freemium", "subscription", "usage-based",
+            "per-seat", "enterprise-quote", "open-data"
+          ]
+        },
+        "contract_vehicles": {
+          "type": "array",
+          "maxItems": 10,
+          "items": {
+            "type": "string",
+            "enum": [
+              "G-Cloud-14", "G-Cloud-13", "DOS-6", "Crown-Commercial",
+              "EU-Public-Procurement", "Direct", "None"
+            ]
+          }
+        },
+        "rate_limit_per_minute": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "refresh_cadence": {
+          "type": "string",
+          "enum": [
+            "real-time", "hourly", "daily", "weekly", "monthly",
+            "quarterly", "annual", "ad-hoc", "static"
+          ]
+        },
+        "auth_required": { "type": "boolean" },
+        "auth_method": {
+          "type": "string",
+          "enum": ["none", "api-key", "oauth2", "basic", "mtls", "ip-allowlist"]
+        },
+        "data_categories_supported": {
+          "type": "array",
+          "maxItems": 20,
+          "items": { "type": "string", "maxLength": 64, "pattern": "^[a-z0-9-]+$" }
+        }
+      }
+    }
+  }
+}

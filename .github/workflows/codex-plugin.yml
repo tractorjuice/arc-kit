@@ -42,6 +42,9 @@ jobs:
       # the community overlays) by converter.py and is no longer tracked in git
       # (see .gitignore "Generated distribution formats"). Regenerate it before
       # the tests so a fresh checkout has the files the suite asserts against.
+      - name: Validate plugin manifests
+        run: python scripts/validate-plugins.py
+
       - name: Generate extension formats
         run: python scripts/converter.py
 

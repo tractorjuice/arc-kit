@@ -346,6 +346,24 @@ AGENT_CONFIG = {
         "has_context_hook": False,
         "has_sync_guides_hook": False,
     },
+    "hermes": {
+        "name": "Hermes Agent",
+        "output_dir": "extensions/arckit-hermes/skills",
+        "filename_pattern": "{name}",
+        "format": "hermes_skill",
+        "path_prefix": ".arckit",
+        "arg_placeholder": "{topic}",
+        "extension_dir": "extensions/arckit-hermes",
+        "copy_commands_to_extension": False,
+        "copy_agents_to_extension": False,
+        "copy_core_skills_to_extension": False,
+        "copy_scripts_to_extension": True,
+        "copy_references_to_extension": True,
+        "copy_schemas_to_extension": True,
+        "clean_output_dir": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
+    },
 }
 
 
@@ -617,6 +635,8 @@ def convert(commands_dirs, agents_dir):
                 cmd_fmt = codex_skill_invocation
             elif config["format"] == "vibe_skill":
                 cmd_fmt = lambda cmd: f"/{vibe_skill_name(cmd)}"
+            elif config["format"] == "hermes_skill":
+                cmd_fmt = lambda cmd: f"arckit-{cmd}"
             else:
                 cmd_fmt = "/arckit:{cmd}"
 
@@ -689,6 +709,37 @@ def convert(commands_dirs, agents_dir):
                 with open(out_path, "w", encoding="utf-8") as f:
                     f.write(skill_md)
                 print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
+                counts[agent_id] += 1
+            elif config["format"] == "hermes_skill":
+                skill_name = f"arckit-{base_name}"
+                skill_dir = os.path.join(config["output_dir"], skill_name)
+                os.makedirs(skill_dir, exist_ok=True)
+
+                # Build trigger keywords from base_name + common variants
+                triggers = [f"/arckit:{base_name}", f"arckit-{base_name}"]
+                if base_name.startswith("arckit-"):
+                    triggers.append(f"/{base_name}")
+                triggers_str = ", ".join(f'"{t}"' for t in triggers)
+
+                # Hermes SKILL.md format: frontmatter + "When to Use" + instructions
+                escaped_desc = description.replace('"', '\\"')
+                skill_md = (
+                    f"---\n"
+                    f"name: {skill_name}\n"
+                    f"description: \"{escaped_desc}\"\n"
+                    f"category: development\n"
+                    f"tags: [arckit, architecture, governance]\n"
+                    f"---\n\n"
+                    f"# {titleize_arckit_name(base_name)}\n\n"
+                    f"## When to Use\n\n"
+                    f"Triggers: {triggers_str}, \"{description[:60]}\".\n\n"
+                    f"{rewritten}"
+                )
+
+                with open(os.path.join(skill_dir, "SKILL.md"), "w", encoding="utf-8") as f:
+                    f.write(skill_md)
+
+                print(f"  {config['name'] + ':':14s}{source_label} -> {skill_dir}/")
                 counts[agent_id] += 1
             else:
                 content = format_output(description, rewritten, config["format"])

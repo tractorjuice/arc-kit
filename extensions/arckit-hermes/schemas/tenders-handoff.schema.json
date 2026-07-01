@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arckit.org/schemas/tenders-handoff/v1",
+  "title": "tenders reader → orchestrator handoff payload (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["query", "sources", "suppliers", "caveats", "errors"],
+  "properties": {
+    "query": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["focus"],
+      "properties": {
+        "focus": { "type": "string", "enum": ["buyer", "capability", "supplier"] },
+        "buyer": { "type": "string", "maxLength": 256 },
+        "cpv": { "type": "string", "pattern": "^[0-9]{8}(-[0-9])?$" },
+        "supplier": { "type": "string", "maxLength": 256 },
+        "keywords": { "type": "array", "maxItems": 20, "items": { "type": "string", "maxLength": 128 } },
+        "date_from": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "date_to": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" }
+      }
+    },
+    "data_current_as_of": { "type": "string", "format": "date-time" },
+    "sources": {
+      "type": "array",
+      "maxItems": 5,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["source", "health"],
+        "properties": {
+          "source": { "type": "string", "enum": ["contracts_finder", "fts", "pcs", "sell2wales", "etendersni"] },
+          "health": { "type": "string", "enum": ["green", "amber", "red"] },
+          "coverage_to": { "type": "string", "format": "date-time" },
+          "releases_total": { "type": "integer", "minimum": 0, "maximum": 100000000 }
+        }
+      }
+    },
+    "suppliers": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "$ref": "#/$defs/SupplierRecord" }
+    },
+    "buyers": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "$ref": "#/$defs/BuyerRecord" }
+    },
+    "aggregates": { "$ref": "#/$defs/Aggregates" },
+    "time_series": {
+      "type": "array",
+      "maxItems": 60,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["period"],
+        "properties": {
+          "period": { "type": "string", "maxLength": 16 },
+          "awarded_value_gbp": { "type": "integer", "minimum": 0, "maximum": 1000000000000 },
+          "award_count": { "type": "integer", "minimum": 0, "maximum": 10000000 }
+        }
+      }
+    },
+    "caveats": {
+      "type": "array",
+      "maxItems": 10,
+      "items": { "type": "string", "maxLength": 512 }
+    },
+    "errors": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["tool", "reason"],
+        "properties": {
+          "tool": { "type": "string", "maxLength": 64 },
+          "reason": { "type": "string", "maxLength": 256 }
+        }
+      }
+    },
+    "degraded_sources": {
+      "type": "array",
+      "maxItems": 5,
+      "items": { "type": "string", "enum": ["contracts_finder", "fts", "pcs", "sell2wales", "etendersni"] }
+    }
+  },
+  "$defs": {
+    "SupplierRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "maxLength": 256 },
+        "awarded_value_total_gbp": { "type": "integer", "minimum": 0, "maximum": 1000000000000 },
+        "award_count": { "type": "integer", "minimum": 0, "maximum": 10000000 },
+        "share_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "buyers": { "type": "array", "maxItems": 30, "items": { "type": "string", "maxLength": 256 } },
+        "sample_notices": { "type": "array", "maxItems": 5, "items": { "$ref": "#/$defs/Notice" } }
+      }
+    },
+    "BuyerRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "maxLength": 256 },
+        "awarded_value_total_gbp": { "type": "integer", "minimum": 0, "maximum": 1000000000000 },
+        "award_count": { "type": "integer", "minimum": 0, "maximum": 10000000 },
+        "top_suppliers": { "type": "array", "maxItems": 20, "items": { "type": "string", "maxLength": 256 } }
+      }
+    },
+    "Aggregates": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "median_award_value_gbp": { "type": "integer", "minimum": 0, "maximum": 1000000000000 },
+        "total_awarded_value_gbp": { "type": "integer", "minimum": 0, "maximum": 1000000000000 },
+        "top1_share_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "top3_share_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "hhi": { "type": "number", "minimum": 0, "maximum": 10000 }
+      }
+    },
+    "Notice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["notice_url"],
+      "properties": {
+        "title": { "type": "string", "maxLength": 512 },
+        "buyer": { "type": "string", "maxLength": 256 },
+        "value_gbp": { "type": "integer", "minimum": 0, "maximum": 1000000000000 },
+        "award_date": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$" },
+        "notice_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "cpv": { "type": "string", "pattern": "^[0-9]{8}(-[0-9])?$" }
+      }
+    }
+  }
+}

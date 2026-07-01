@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arckit.org/schemas/gov-reuse-handoff/v1",
+  "title": "gov-reuse reader → orchestrator handoff payload (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["capability", "candidates", "errors"],
+  "properties": {
+    "capability": {
+      "type": "string",
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9 .,&()/'\\-]+$"
+    },
+    "candidates": {
+      "type": "array",
+      "maxItems": 30,
+      "items": { "$ref": "#/$defs/CandidateRecord" }
+    },
+    "unfetched_urls": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "type": "string", "format": "uri", "maxLength": 512 }
+    },
+    "dependency_comparisons": {
+      "type": "array",
+      "maxItems": 20,
+      "description": "Pairwise dependency-overlap results from mcp__govreposcrape__dependency_compare, used by the orchestrator to detect near-duplicate / forked candidates within a capability. Extract-only: no judgement.",
+      "items": { "$ref": "#/$defs/DependencyComparison" }
+    },
+    "errors": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "reason"],
+        "properties": {
+          "url": { "type": "string", "format": "uri", "maxLength": 512 },
+          "reason": { "type": "string", "maxLength": 256 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "DependencyComparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repo_a", "repo_b", "overlap_pct"],
+      "properties": {
+        "repo_a": {
+          "type": "string",
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9][A-Za-z0-9._-]*$"
+        },
+        "repo_b": {
+          "type": "string",
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9][A-Za-z0-9._-]*$"
+        },
+        "overlap_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+        "shared_count": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "unique_a_count": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "unique_b_count": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "fetched_at_iso": { "type": "string", "format": "date-time" },
+        "citation_id": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^[A-Z0-9-]+$"
+        }
+      }
+    },
+    "CandidateRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["org", "repo", "repo_url", "fetched_from_url", "evidence"],
+      "properties": {
+        "org": {
+          "type": "string",
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9-]*$"
+        },
+        "repo": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"
+        },
+        "repo_url": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 256,
+          "pattern": "^https://github\\.com/[A-Za-z0-9][A-Za-z0-9-]*/[A-Za-z0-9][A-Za-z0-9._-]*$"
+        },
+        "fetched_from_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "fetched_at_iso": { "type": "string", "format": "date-time" },
+        "citation_id": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^[A-Z0-9-]+$"
+        },
+        "evidence": { "$ref": "#/$defs/Evidence" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "language": {
+          "type": "string",
+          "enum": [
+            "javascript",
+            "typescript",
+            "python",
+            "ruby",
+            "go",
+            "rust",
+            "java",
+            "kotlin",
+            "scala",
+            "csharp",
+            "fsharp",
+            "php",
+            "cpp",
+            "c",
+            "swift",
+            "elixir",
+            "clojure",
+            "haskell",
+            "shell",
+            "html",
+            "other",
+            "unknown"
+          ]
+        },
+        "framework_hints": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string",
+            "enum": [
+              "react",
+              "vue",
+              "angular",
+              "express",
+              "nextjs",
+              "rails",
+              "sinatra",
+              "django",
+              "flask",
+              "fastapi",
+              "spring",
+              "spring-boot",
+              "dropwizard",
+              "play",
+              "dotnet-core",
+              "aspnet",
+              "laravel",
+              "phoenix",
+              "actix",
+              "gin",
+              "echo",
+              "govuk-frontend",
+              "govuk-prototype-kit",
+              "openapi",
+              "graphql",
+              "kubernetes-helm",
+              "terraform",
+              "ansible",
+              "other"
+            ]
+          }
+        },
+        "licence": {
+          "type": "string",
+          "enum": [
+            "OGL-v3",
+            "OGL-v2",
+            "MIT",
+            "Apache-2.0",
+            "BSD-3-Clause",
+            "BSD-2-Clause",
+            "ISC",
+            "GPL-3.0",
+            "GPL-2.0",
+            "LGPL-3.0",
+            "LGPL-2.1",
+            "AGPL-3.0",
+            "MPL-2.0",
+            "CC-BY-4.0",
+            "CC0-1.0",
+            "Unlicense",
+            "Proprietary",
+            "Unlicensed",
+            "Unknown"
+          ]
+        },
+        "last_commit_iso": { "type": "string", "format": "date" },
+        "stars": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "forks": { "type": "integer", "minimum": 0, "maximum": 100000 },
+        "contributors": { "type": "integer", "minimum": 0, "maximum": 10000 },
+        "has_tests": { "type": "boolean" },
+        "has_ci": { "type": "boolean" },
+        "has_docs": { "type": "boolean" },
+        "has_readme": { "type": "boolean" },
+        "archived": { "type": "boolean" },
+        "default_branch": {
+          "type": "string",
+          "maxLength": 64,
+          "pattern": "^[A-Za-z0-9._/-]+$"
+        },
+        "installation_method": {
+          "type": "string",
+          "enum": [
+            "npm",
+            "pypi",
+            "rubygems",
+            "cargo",
+            "go-module",
+            "maven",
+            "gradle",
+            "nuget",
+            "composer",
+            "fork-and-build",
+            "clone-only",
+            "docker",
+            "helm",
+            "terraform-module",
+            "unknown"
+          ]
+        },
+        "installation_command": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "summary_one_liner": {
+          "type": "string",
+          "maxLength": 256
+        }
+      }
+    }
+  }
+}

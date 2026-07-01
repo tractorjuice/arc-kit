@@ -1,0 +1,201 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://arckit.org/schemas/grants-handoff/v1",
+  "title": "grants reader → orchestrator handoff payload (v1)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["funder_category", "programmes", "errors"],
+  "properties": {
+    "funder_category": {
+      "type": "string",
+      "enum": [
+        "government-rd",
+        "health",
+        "charitable",
+        "social-impact",
+        "accelerator",
+        "defence-security",
+        "open-data"
+      ]
+    },
+    "programmes": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "$ref": "#/$defs/ProgrammeRecord" }
+    },
+    "unfetched_urls": {
+      "type": "array",
+      "maxItems": 50,
+      "items": { "type": "string", "format": "uri", "maxLength": 512 }
+    },
+    "errors": {
+      "type": "array",
+      "maxItems": 20,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["url", "reason"],
+        "properties": {
+          "url": { "type": "string", "format": "uri", "maxLength": 512 },
+          "reason": { "type": "string", "maxLength": 256 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "ProgrammeRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["funder", "programme_name", "funder_type", "fetched_from_url", "evidence"],
+      "properties": {
+        "funder": {
+          "type": "string",
+          "maxLength": 128,
+          "pattern": "^[A-Za-z0-9 .,&()/'-]+$"
+        },
+        "programme_name": {
+          "type": "string",
+          "maxLength": 200,
+          "pattern": "^[A-Za-z0-9 .,&()/'\\-:]+$"
+        },
+        "funder_type": {
+          "type": "string",
+          "enum": [
+            "ukri-council",
+            "innovate-uk",
+            "dsit",
+            "nihr",
+            "dasa",
+            "dstl",
+            "uk-gov-department",
+            "devolved-gov",
+            "charitable-foundation",
+            "social-impact-investor",
+            "accelerator",
+            "corporate-vc",
+            "eu-programme",
+            "international",
+            "other"
+          ]
+        },
+        "fetched_from_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "fetched_at_iso": { "type": "string", "format": "date-time" },
+        "citation_id": {
+          "type": "string",
+          "maxLength": 32,
+          "pattern": "^[A-Z0-9-]+$"
+        },
+        "evidence": { "$ref": "#/$defs/Evidence" },
+        "confidence": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "Evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "award_min_gbp": { "type": "integer", "minimum": 0, "maximum": 50000000 },
+        "award_max_gbp": { "type": "integer", "minimum": 0, "maximum": 50000000 },
+        "match_funding_required": { "type": "boolean" },
+        "match_funding_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "application_status": {
+          "type": "string",
+          "enum": ["open", "opening-soon", "closed", "rolling", "paused", "unknown"]
+        },
+        "deadline_iso": { "type": "string", "format": "date" },
+        "eligible_organisation_types": {
+          "type": "array",
+          "maxItems": 12,
+          "items": {
+            "type": "string",
+            "enum": [
+              "sme",
+              "large-enterprise",
+              "startup",
+              "sole-trader",
+              "academic",
+              "research-organisation",
+              "charity",
+              "public-sector",
+              "nhs-trust",
+              "local-authority",
+              "consortium",
+              "any"
+            ]
+          }
+        },
+        "eligible_sectors": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "string",
+            "enum": [
+              "health",
+              "defence",
+              "digital",
+              "ai",
+              "data",
+              "energy",
+              "transport",
+              "education",
+              "environment",
+              "agritech",
+              "fintech",
+              "spacetech",
+              "quantum",
+              "biotech",
+              "advanced-manufacturing",
+              "creative",
+              "housing",
+              "social-care",
+              "criminal-justice",
+              "cross-sector"
+            ]
+          }
+        },
+        "trl_min": { "type": "integer", "minimum": 1, "maximum": 9 },
+        "trl_max": { "type": "integer", "minimum": 1, "maximum": 9 },
+        "geography": {
+          "type": "string",
+          "enum": [
+            "uk-wide",
+            "england",
+            "scotland",
+            "wales",
+            "northern-ireland",
+            "london",
+            "north-of-england",
+            "midlands",
+            "south-of-england",
+            "multi-region",
+            "international"
+          ]
+        },
+        "application_complexity": {
+          "type": "string",
+          "enum": ["low", "medium", "high"]
+        },
+        "success_rate_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "programme_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "guidance_url": { "type": "string", "format": "uri", "maxLength": 512 },
+        "partnership_required": { "type": "boolean" },
+        "delivery_partner_categories": {
+          "type": "array",
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "enum": [
+              "academic",
+              "sme",
+              "large-enterprise",
+              "public-sector",
+              "nhs",
+              "charity",
+              "international"
+            ]
+          }
+        },
+        "historical_grants_count": { "type": "integer", "minimum": 0, "maximum": 100000 }
+      }
+    }
+  }
+}

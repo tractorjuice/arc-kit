@@ -1,0 +1,87 @@
+# UK-Gov scoring rubric for arckit-gov-reuse
+#
+# Inherits weights and scoring from gov-reuse-generic.yaml. Adds bonus
+# adjustments to favour:
+#   - Open Government Licence (OGL) over MIT/Apache (when both work,
+#     prefer the licence aligned with UK Gov's default policy)
+#   - Repos owned by trusted UK Gov organisations (alphagov,
+#     dfe-digital, hmrc-digital, ministryofjustice, nhsd-cwa, etc.)
+#     because they have known maintenance, governance, and discoverable
+#     contact channels for collaboration.
+#
+# Activated by the orchestrator when the project matches UK-Gov
+# patterns ("UK Government", "Ministry of", "Department for", "NHS",
+# "MOD", "GDS", "TCoP", "Crown Commercial") in requirements/principles.
+
+name: gov-reuse-uk-gov
+version: 1
+inherits: gov-reuse-generic
+weights:
+  license_compatibility: 25
+  code_quality: 20
+  documentation: 20
+  tech_stack_alignment: 20
+  activity_maintenance: 15
+
+scoring:
+  # Override license_compatibility to bump OGL slightly above MIT/Apache.
+  # Reflects UK Gov's "code is open by default under OGL" preference
+  # without making MIT/Apache unsuitable.
+  license_compatibility:
+    method: map
+    field: evidence.licence
+    map:
+      OGL-v3: 100
+      OGL-v2: 100
+      MIT: 95
+      Apache-2.0: 95
+      BSD-3-Clause: 90
+      BSD-2-Clause: 90
+      ISC: 90
+      MPL-2.0: 70
+      LGPL-3.0: 55
+      LGPL-2.1: 50
+      GPL-3.0: 40
+      GPL-2.0: 35
+      AGPL-3.0: 20
+      CC-BY-4.0: 75
+      CC0-1.0: 100
+      Unlicense: 85
+      Proprietary: 0
+      Unlicensed: 0
+      Unknown: 15
+    when_missing: 15
+
+# trusted_org_bonus is an additive adjustment, not a standalone
+# weighted criterion. The orchestrator must:
+#   1. Look up CandidateRecord.org in the map; absent org = 0.
+#   2. Add the resulting integer to the per-criterion score named in
+#      applies_to BEFORE multiplying by that criterion's weight.
+#   3. Clamp the adjusted per-criterion score to [0, cap].
+trusted_org_bonus:
+  method: org_preference
+  field: org
+  map:
+    alphagov: +10
+    dfe-digital: +8
+    hmrc-digital: +8
+    ministryofjustice: +8
+    nhsd-cwa: +8
+    NHSDigital: +8
+    co-cddo: +6
+    cabinetoffice: +6
+    DEFRA-ND: +6
+    department-for-transport: +6
+    UKHomeOffice: +6
+    Co-op-Department-for-Education: +5
+    LearningLocker: +3
+    LandRegistry: +5
+    OfficeForNationalStatistics: +6
+    ONSdigital: +6
+    UKHSA: +6
+    NHSBSA: +5
+    DefenceDigital: +6
+    NaturalEngland: +5
+    GO-FCO: +5
+  cap: 100
+  applies_to: code_quality

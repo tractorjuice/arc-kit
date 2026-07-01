@@ -128,6 +128,18 @@ ln -s $(pwd) ~/.vibe/extensions/arckit
 
 Zero-config: 75 official commands as skills, 10 specialized agents, all templates, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, GovRepoScrape).
 
+**Hermes Agent** — install ArcKit as skills:
+
+```bash
+# Generate the Hermes extension (requires the ArcKit source repo)
+python scripts/converter.py
+
+# Install skills into your Hermes workspace
+cp -r extensions/arckit-hermes/skills/* ~/.hermes/skills/
+```
+
+All commands available as `skill_view(name='arckit-{command}')`. Templates, scripts, and references installed alongside skills for autonomous execution.
+
 **Latest Release**: [v6.1.1](https://github.com/tractorjuice/arc-kit/releases/tag/v6.1.1)
 
 ### OKF Interoperability
@@ -140,12 +152,12 @@ ArcKit can exchange Markdown knowledge bundles using an Open Knowledge Format-sh
 
 ### Platform Support
 
-| Platform | Claude Code Plugin | Gemini CLI Extension | GitHub Copilot | Codex / OpenCode CLI | Mistral Vibe |
-|----------|-------------------|---------------------|----------------|---------------------|--------------|
-| macOS | Full support | Full support | Full support | Full support | Full support |
-| Linux | Full support | Full support | Full support | Full support | Full support |
-| Windows (WSL2) | Full support | Full support | Full support | Full support | Full support |
-| Windows (native) | Full support | Full support | Full support | Partial | Full support |
+| Platform | Claude Code Plugin | Gemini CLI Extension | GitHub Copilot | Codex / OpenCode CLI | Mistral Vibe | Hermes Agent |
+|----------|-------------------|---------------------|----------------|---------------------|--------------|--------------|
+| macOS | Full support | Full support | Full support | Full support | Full support | Full support |
+| Linux | Full support | Full support | Full support | Full support | Full support | Full support |
+| Windows (WSL2) | Full support | Full support | Full support | Full support | Full support | Full support |
+| Windows (native) | Full support | Full support | Full support | Partial | Full support | Full support |
 
 **Windows users**: The Claude Code plugin, Gemini CLI extension, GitHub Copilot prompt files, and Mistral Vibe extension work natively on all platforms. For Codex CLI / OpenCode CLI on native Windows (without WSL), some commands containing inline bash snippets may require [Git Bash](https://git-scm.com/downloads/win) or [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). We recommend WSL2 for the best experience.
 
