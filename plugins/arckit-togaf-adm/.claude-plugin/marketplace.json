@@ -1,0 +1,33 @@
+{
+  "name": "arckit-togaf-adm",
+  "owner": {
+    "name": "ArcKit Contributors",
+    "email": "arckit@nousresearch.com"
+  },
+  "metadata": {
+    "description": "TOGAF ADM — Enterprise Architecture Development Method for AI-assisted governance",
+    "version": "6.1.1"
+  },
+  "plugins": [
+    {
+      "name": "arckit-togaf-adm",
+      "source": ".",
+      "description": "TOGAF ADM — Enterprise Architecture Development Method. 9 commands covering all ADM phases (Preliminary through H) plus Architecture Repository.",
+      "version": "6.1.1",
+      "author": {
+        "name": "ArcKit Contributors"
+      },
+      "homepage": "https://github.com/tractorjuice/arc-kit",
+      "repository": "https://github.com/tractorjuice/arc-kit",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "togaf",
+        "adm",
+        "enterprise-architecture"
+      ],
+      "category": "productivity"
+    }
+  ]
+}
