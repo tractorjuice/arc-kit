@@ -12,7 +12,8 @@
   "defaultEnabled": false,
   "userConfig": {
     "default_classification": {
-      "title": "Default Classification"
+      "title": "Default Classification",
+      "type": "string"
     }
   },
   "dependencies": [
