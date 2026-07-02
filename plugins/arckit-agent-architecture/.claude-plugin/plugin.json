@@ -12,10 +12,7 @@
   "defaultEnabled": false,
   "userConfig": {
     "default_classification": {
-      "title": "Default Classification",
-      "type": "string",
-      "default": "PUBLIC",
-      "description": "Default document classification (e.g. PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE)"
+      "title": "Default Classification"
     }
   },
   "dependencies": [
