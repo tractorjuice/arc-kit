@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.3] — 2026-07-02
+
+### Fixed
+
+- **Codex Pages namespaced invocation (#631).** Updated the generated Codex
+  hook bundle so `$arckit-codex:arckit-pages` receives the sync-guides
+  statistics required by the pages command.
+
 ## [6.1.0] — 2026-06-30
 
 ### Added
