@@ -877,7 +877,7 @@ export function runSyncGuidesHook(data = {}) {
 // OR the Skill-expanded body (unique description/heading).
 // No ^ anchors — Skill tool may wrap the expanded body in XML tags.
 const userPrompt = data.prompt || '';
-const isRawCommand = /^\s*(?:\/arckit[.:]+|\$arckit-)pages\b/i.test(userPrompt);
+const isRawCommand = /^\s*(?:\/arckit[.:]+pages\b|\$arckit-pages\b|\$arckit-codex:arckit-pages\b)/i.test(userPrompt);
 const isExpandedBody = /description:\s*Generate documentation site/i.test(userPrompt)
   || /#\s*ArcKit:\s*Documentation Site Generator/i.test(userPrompt);
 if (!isRawCommand && !isExpandedBody) return null;

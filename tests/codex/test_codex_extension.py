@@ -607,6 +607,31 @@ def test_codex_hook_runs_pages_preprocessor(tmp_path):
     assert (tmp_path / "docs" / "index.html").is_file()
 
 
+def test_codex_hook_runs_pages_preprocessor_for_namespaced_invocation(tmp_path):
+    project_dir = tmp_path / "projects" / "001-demo"
+    project_dir.mkdir(parents=True)
+    artifact = project_dir / "ARC-001-REQ-v1.0.md"
+    artifact.write_text(
+        "# Requirements\n\n| Field | Value |\n|-------|-------|\n| Status | Draft |\n\nBR-001 user need\n",
+        encoding="utf-8",
+    )
+
+    output = run_codex_hook(
+        "UserPromptSubmit",
+        {
+            "hook_event_name": "UserPromptSubmit",
+            "cwd": str(tmp_path),
+            "prompt": "$arckit-codex:arckit-pages",
+        },
+    )
+
+    context = output["hookSpecificOutput"]["additionalContext"]
+    assert "Pages Pre-processor Complete (hook)" in context
+    assert "DOCUMENT STATS" in context
+    assert (tmp_path / "docs" / "manifest.json").is_file()
+    assert (tmp_path / "docs" / "index.html").is_file()
+
+
 def test_codex_hook_updates_manifest_and_stamps_provenance(tmp_path):
     project_dir = tmp_path / "projects" / "001-demo"
     project_dir.mkdir(parents=True)
