@@ -271,7 +271,7 @@ function hookAdditionalContext(output) {
 
 function promptMatchesCommand(prompt, command) {
   const escaped = command.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  return new RegExp(`(?:^|\\s)(?:\\$arckit-${escaped}|/arckit[.:]${escaped})\\b`, "i").test(prompt);
+  return new RegExp(`(?:^|\\s)(?:\\$arckit-${escaped}|\\$arckit-codex:arckit-${escaped}|/arckit[.:]${escaped})\\b`, "i").test(prompt);
 }
 
 function detectSecrets(text) {
