@@ -266,7 +266,7 @@ AGENT_CONFIG = {
         "copy_agents_to_extension": True,
         "project_template_overrides": True,
         "has_context_hook": False,
-        "has_sync_guides_hook": False,
+        "has_sync_guides_hook": True,
     },
     "codex_skills": {
         "name": "Codex Skills",
@@ -275,7 +275,7 @@ AGENT_CONFIG = {
         "path_prefix": ".arckit",
         "project_template_overrides": True,
         "has_context_hook": False,
-        "has_sync_guides_hook": False,
+        "has_sync_guides_hook": True,
     },
     "opencode": {
         "name": "OpenCode CLI",

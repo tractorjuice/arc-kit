@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.2] — 2026-07-02
+
+### Fixed
+
+- **Codex Pages fresh-repo handling (#629).** Updated the generated Codex
+  pages command, prompt, and skill to rely on the `sync-guides` hook for
+  template and version resolution so `$arckit-pages` no longer requires a
+  preinstalled `.arckit` scaffold in a fresh repository.
+
+### Changed
+
+- **Documentation site coverage.** Completed command guide coverage across the
+  ArcKit docs and published the TOGAF ADM and agent architecture guide pages.
+
 ## [6.1.0] — 2026-06-30
 
 ### Added

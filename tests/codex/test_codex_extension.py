@@ -379,6 +379,22 @@ def test_codex_bundles_claude_graph_and_pages_hook_processors():
     assert "runSyncGuidesHook" in runner
 
 
+def test_codex_pages_surfaces_delegate_generation_to_hook():
+    pages_surfaces = [
+        CODEX_PROMPTS / "arckit.pages.md",
+        CODEX_COMMANDS / "arckit.pages.md",
+        CODEX_SKILLS / "arckit-pages" / "SKILL.md",
+    ]
+
+    for path in pages_surfaces:
+        text = path.read_text(encoding="utf-8")
+        assert "Steps 0\u20134: Handled by Hook" in text
+        assert "The `sync-guides` hook runs before this command and handles everything" in text
+        assert "Do NOT call any tools" in text
+        assert ".arckit/VERSION" not in text
+        assert "If the template file does not exist, STOP" not in text
+
+
 def run_codex_hook(event_name: str, payload: dict) -> dict:
     result = subprocess.run(
         ["node", str(CODEX_HOOK_RUNNER), event_name],
@@ -568,7 +584,6 @@ def test_codex_hook_injects_graph_context_for_health(tmp_path):
 def test_codex_hook_runs_pages_preprocessor(tmp_path):
     project_dir = tmp_path / "projects" / "001-demo"
     project_dir.mkdir(parents=True)
-    (tmp_path / ".arckit").mkdir()
     artifact = project_dir / "ARC-001-REQ-v1.0.md"
     artifact.write_text(
         "# Requirements\n\n| Field | Value |\n|-------|-------|\n| Status | Draft |\n\nBR-001 user need\n",
