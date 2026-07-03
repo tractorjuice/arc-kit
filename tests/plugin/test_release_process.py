@@ -221,6 +221,19 @@ def test_push_extensions_publishes_tags_and_github_releases():
     assert "ARCKIT_SKIP_EXTENSION_RELEASES=1" in script
 
 
+def test_push_extensions_requires_generated_distribution_outputs():
+    script = PUSH_EXTENSIONS.read_text(encoding="utf-8")
+
+    assert "GENERATED_EXTENSION_REQUIRED_PATHS" in script
+    assert "validate_generated_extension_source" in script
+    assert "python scripts/converter.py" in script
+    assert "[codex]" in script
+    assert ".codex-plugin/plugin.json" in script
+    assert "prompts" in script
+    assert "commands/arckit" in script
+    assert "src/data/commands.json" in script
+
+
 def test_push_extensions_prepares_gemini_for_gallery_discovery():
     script = PUSH_EXTENSIONS.read_text(encoding="utf-8")
 
