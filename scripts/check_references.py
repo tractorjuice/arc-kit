@@ -4,11 +4,13 @@
 Walks `plugins/arckit-claude/` and checks that:
 
   1. Every `${CLAUDE_PLUGIN_ROOT}/<path>` reference in a `.md` file resolves
-     to an existing file or directory inside `plugins/arckit-claude/`.
+     to an existing file or directory inside that file's plugin root or one of
+     its local plugin dependencies.
   2. Every `handoffs[].command` entry in command frontmatter names an
      existing command file under `plugins/arckit-claude/commands/`.
   3. Every `${user_config.KEY}` reference names a key declared in
-     `plugins/arckit-claude/.claude-plugin/plugin.json` under `userConfig`.
+     that file's `.claude-plugin/plugin.json` or local plugin dependencies
+     under `userConfig`.
 
 Exits non-zero on any broken reference. Run from repo root:
 
@@ -26,7 +28,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 PLUGIN = ROOT / "plugins" / "arckit-claude"
-PLUGIN_JSON = PLUGIN / ".claude-plugin" / "plugin.json"
+PLUGIN_JSON_REL = Path(".claude-plugin") / "plugin.json"
 
 REF_RE = re.compile(r"\$\{CLAUDE_PLUGIN_ROOT\}/([^\s`\"')}\]<>]+)")
 USER_CONFIG_RE = re.compile(r"\$\{user_config\.([A-Za-z_][A-Za-z0-9_]*)\}")
@@ -44,13 +46,59 @@ def is_placeholder(path: str) -> bool:
     return False
 
 
-def load_plugin_userconfig_keys() -> set[str]:
+def plugin_root_for(md_path: Path) -> Path:
+    for parent in md_path.parents:
+        if parent == PLUGIN.parent:
+            break
+        if (parent / PLUGIN_JSON_REL).is_file():
+            return parent
+    return PLUGIN
+
+
+def load_plugin_manifest(plugin_root: Path) -> dict:
+    plugin_json = plugin_root / PLUGIN_JSON_REL
     try:
-        data = json.loads(PLUGIN_JSON.read_text())
+        return json.loads(plugin_json.read_text())
     except (OSError, json.JSONDecodeError) as exc:
-        print(f"[error] cannot read {PLUGIN_JSON}: {exc}", file=sys.stderr)
+        print(f"[error] cannot read {plugin_json}: {exc}", file=sys.stderr)
+        return {}
+
+
+def discover_plugin_roots() -> dict[str, Path]:
+    roots: dict[str, Path] = {}
+    for plugin_json in sorted(PLUGIN.rglob(str(PLUGIN_JSON_REL))):
+        plugin_root = plugin_json.parent.parent
+        data = load_plugin_manifest(plugin_root)
+        name = data.get("name")
+        if isinstance(name, str):
+            roots[name] = plugin_root
+    return roots
+
+
+def reference_roots_for(plugin_root: Path, plugin_roots_by_name: dict[str, Path]) -> list[Path]:
+    roots = [plugin_root]
+    data = load_plugin_manifest(plugin_root)
+    dependencies = data.get("dependencies") or []
+    if not isinstance(dependencies, list):
+        return roots
+    for dependency in dependencies:
+        if not isinstance(dependency, dict):
+            continue
+        name = dependency.get("name")
+        dependency_root = plugin_roots_by_name.get(name) if isinstance(name, str) else None
+        if dependency_root and dependency_root not in roots:
+            roots.append(dependency_root)
+    return roots
+
+
+def load_plugin_userconfig_keys(reference_roots: list[Path]) -> set[str]:
+    keys: set[str] = set()
+    for plugin_root in reference_roots:
+        data = load_plugin_manifest(plugin_root)
+        keys.update((data.get("userConfig") or {}).keys())
+    if not keys:
         return set()
-    return set((data.get("userConfig") or {}).keys())
+    return keys
 
 
 def iter_md_files() -> list[Path]:
@@ -61,14 +109,15 @@ def line_of(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
 
 
-def check_plugin_root_refs(md_path: Path, text: str) -> list[tuple[int, str]]:
+def check_plugin_root_refs(
+    md_path: Path, text: str, reference_roots: list[Path]
+) -> list[tuple[int, str]]:
     errors: list[tuple[int, str]] = []
     for match in REF_RE.finditer(text):
         rel = match.group(1).rstrip(".,;:)")
         if is_placeholder(rel):
             continue
-        target = PLUGIN / rel
-        if not target.exists():
+        if not any((plugin_root / rel).exists() for plugin_root in reference_roots):
             errors.append((line_of(text, match.start()), f"${{CLAUDE_PLUGIN_ROOT}}/{rel}"))
     return errors
 
@@ -111,15 +160,26 @@ def main() -> int:
 
     commands_dir = PLUGIN / "commands"
     command_slugs = {p.stem for p in commands_dir.glob("*.md")}
-    known_user_config = load_plugin_userconfig_keys()
+    plugin_roots_by_name = discover_plugin_roots()
+    reference_roots_by_root: dict[Path, list[Path]] = {}
+    user_config_by_root: dict[Path, set[str]] = {}
 
     total_errors = 0
     files_with_errors = 0
 
     for md_path in iter_md_files():
         text = md_path.read_text()
+        plugin_root = plugin_root_for(md_path)
+        if plugin_root not in reference_roots_by_root:
+            reference_roots_by_root[plugin_root] = reference_roots_for(
+                plugin_root, plugin_roots_by_name
+            )
+        reference_roots = reference_roots_by_root[plugin_root]
+        if plugin_root not in user_config_by_root:
+            user_config_by_root[plugin_root] = load_plugin_userconfig_keys(reference_roots)
+        known_user_config = user_config_by_root[plugin_root]
         errors: list[tuple[int, str]] = []
-        errors.extend(check_plugin_root_refs(md_path, text))
+        errors.extend(check_plugin_root_refs(md_path, text, reference_roots))
         errors.extend(check_user_config_refs(md_path, text, known_user_config))
         if md_path.parent.name == "commands" and md_path.parent.parent == PLUGIN:
             errors.extend(check_handoffs(md_path, text, command_slugs))

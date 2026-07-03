@@ -92,7 +92,7 @@ Read all available documents identified in the Prerequisites section. Build a me
 
 ### 5. Load Mermaid Syntax References
 
-Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/flowchart.md` and `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/quadrant.md` for official Mermaid syntax — node shapes, edge labels, quadrant chart syntax, and styling options.
+Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/flowchart.md` and `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/quadrantChart.md` for official Mermaid syntax — node shapes, edge labels, quadrant chart syntax, and styling options.
 
 ### 6. Generate Gap Analysis
 
