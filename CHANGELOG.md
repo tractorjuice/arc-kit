@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.4] — 2026-07-03
+
+### Fixed
+
+- **Pages guide grouping (#633).** Centralized guide section/category metadata
+  so plugin operations, overlay packs, community guides, and uncategorised
+  items render in predictable Pages guide sections instead of collapsing into
+  the generic `Other` bucket.
+- **Standalone overlay reference validation.** Updated reference checks and
+  shared plugin assets so nested Claude overlay docs resolve bundled and core
+  plugin references correctly.
+
 ## [6.1.3] — 2026-07-02
 
 ### Fixed

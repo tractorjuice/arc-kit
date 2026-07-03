@@ -1,10 +1,10 @@
 # ArcKit Mistral Vibe Extension Configuration
-# Version: 6.1.3
+# Version: 6.1.4
 # Generated from ArcKit canonical plugin (plugins/arckit-claude/)
 
 [extension]
 name = "arckit"
-version = "6.1.3"
+version = "6.1.4"
 description = """
 The Enterprise Architecture Governance Harness - 73+ slash commands across
 strategy, architecture, delivery, and assurance. Enables enterprise architects
