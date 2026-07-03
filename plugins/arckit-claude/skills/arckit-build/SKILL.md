@@ -310,7 +310,7 @@ Build wave {N}: {targets joined} via arckit-build
 
 {One-line per target with line count and headline result}
 
-Co-Authored-By: Claude Opus 4.7 (1M context) <noreply@anthropic.com>
+Co-Authored-By: Claude Code <noreply@anthropic.com>
 EOF
 )"
 ```

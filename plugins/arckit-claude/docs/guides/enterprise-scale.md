@@ -215,6 +215,98 @@ We're looking for a real-world enterprise case study to anchor this guide — id
 
 ---
 
+## Fleet & Version Governance (managed settings)
+
+At enterprise scale you usually want to govern *which* Claude Code versions run
+ArcKit, *which* models are available, and *which* plugins teams may install —
+centrally, not repo by repo. Claude Code's
+[managed settings](https://code.claude.com/docs/en/permissions#managed-settings)
+(admin-deployed policy that users cannot override) give you the control point
+ArcKit benefits from.
+
+### Pin a version range across the fleet
+
+ArcKit ships a soft floor: the `version-check.mjs` SessionStart hook *warns*
+anyone running below the supported Claude Code version. To *enforce* it, an
+admin can set the native managed settings (Claude Code v2.1.163+):
+
+```json
+{
+  "requiredMinimumVersion": "2.1.200",
+  "requiredMaximumVersion": "2.1.999"
+}
+```
+
+Claude Code then **refuses to start** outside the range and directs the user to
+an approved version. Use `requiredMinimumVersion` to guarantee everyone has the
+features ArcKit relies on; use `requiredMaximumVersion` as a known-good ceiling
+so a regulated fleet doesn't auto-adopt a release before you've validated it.
+These are *managed-settings only* — a plugin or repo cannot set them.
+
+> **Run v2.1.166+ for reliable enforcement.** On earlier versions a single
+> invalid entry anywhere in the managed-settings file could silently disable
+> enforcement of the remaining valid policies. v2.1.166 fixes this and also
+> fixes `allowedMcpServers` / `deniedMcpServers` predicates that use `${VAR}`
+> references not matching.
+
+For an **individual** user or repo that just wants to avoid drifting *below*
+the floor, the softer, user-scoped `minimumVersion` in `.claude/settings.json`
+blocks auto-update/`claude update` from going below it. ArcKit pins this in its
+own repos and the below-floor warning recommends it.
+
+### Govern available models
+
+Managed settings can also govern which models are available to a fleet. Use
+your organisation defaults and model restrictions together, and enable
+`enforceAvailableModels` when you need project settings, subagents, or manual
+model overrides to stay inside the approved list.
+
+ArcKit does not pin a model in its commands. Commands inherit the Claude Code
+session default, so a centrally managed model policy is the right control point
+for regulated deployments. The current ArcKit guidance assumes Claude Sonnet 5
+as the normal default; allow Claude Fable 5 only where the tenant exposes it and
+the work justifies the higher tier.
+
+### Allowlist the ArcKit marketplace
+
+`pluginSuggestionMarketplaces` lets admins allowlist org marketplaces whose
+plugins may surface in context-aware tips. Allowlisting
+`tractorjuice/arckit-claude` means Claude Code can suggest ArcKit when a user
+opens a directory with a `projects/` tree or `ARC-*` artefacts — useful for
+driving adoption across many teams without a manual rollout. Pair with
+`strictKnownMarketplaces` / `blockedMarketplaces` if you want to *restrict*
+installs to only the marketplaces you've vetted.
+
+### Slice usage/cost metrics by project
+
+If you run Claude Code's OpenTelemetry export, set
+`OTEL_RESOURCE_ATTRIBUTES` (Claude Code v2.1.161+) to attach custom labels to
+every metric datapoint:
+
+```bash
+export OTEL_RESOURCE_ATTRIBUTES="repo=arc-kit,team=enterprise-architecture,project=042-identity-service"
+```
+
+You can then slice token/cost usage by team, repo, or project — a natural
+complement to the per-artefact Document Control headers and `provenance-stamp`
+ArcKit already produces. **Privacy caveat:** these labels are emitted as-is, so
+don't put project identifiers in them for OFFICIAL-SENSITIVE / SECRET work
+where the label itself would be sensitive.
+
+If you export prompt telemetry but must not export generated response text,
+leave assistant-response logging disabled:
+
+```bash
+export OTEL_LOG_ASSISTANT_RESPONSES=0
+```
+
+Only set `OTEL_LOG_ASSISTANT_RESPONSES=1` in environments where response
+content is approved for the telemetry backend. Treat ArcKit artefact drafts,
+policy decisions, and evidence summaries as sensitive until your data-handling
+rules say otherwise.
+
+---
+
 ## Related Guides
 
 - [ArcKit Init](init.md) — bootstrapping a new repo

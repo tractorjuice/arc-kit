@@ -24,6 +24,12 @@ You write **one** source file in `arckit-claude/commands/<n>.md`. The converter 
 
 The first row is the file you edit by hand; the converter generates all others. You do not edit the generated files directly. The converter handles argument-placeholder rewriting, path rewriting for the Gemini sandbox, frontmatter stripping for Claude-only fields, and extension-file copying.
 
+ArcKit does not use a root-level `SKILL.md` for plugin behaviour. Reusable
+Claude Code skills live in `plugins/arckit-claude/skills/<skill-name>/SKILL.md`;
+Codex skill outputs live under `extensions/arckit-codex/skills/`. Keep command
+authoring guidance in this guide unless Claude Code's plugin layout explicitly
+adds root-level skill support.
+
 ---
 
 ## The Source File

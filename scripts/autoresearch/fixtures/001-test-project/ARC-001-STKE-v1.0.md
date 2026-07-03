@@ -97,4 +97,4 @@ Low Power  │                       │ Lead Architect
 **Generated on:** 2026-03-20
 **ArcKit Version:** 4.4.0
 **Project:** Digital Appointment Booking Service (Project 001)
-**Model:** claude-sonnet-4-5-20250929
+**Model:** Claude Sonnet 5 (session default)
