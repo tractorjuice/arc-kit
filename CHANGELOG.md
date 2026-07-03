@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.5] — 2026-07-03
+
+### Fixed
+
+- **Claude plugin manifest validation.** Added the required `title` field to
+  the TOGAF ADM and Agent Architecture `default_classification` user-config
+  entries so `claude plugin validate` and marketplace installs succeed.
+
 ## [6.1.4] — 2026-07-03
 
 ### Fixed
