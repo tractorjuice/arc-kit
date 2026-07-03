@@ -34,6 +34,18 @@ declare -A EXTENSIONS=(
   [vibe]="extensions/arckit-vibe:arckit-vibe"
 )
 
+# Generated distributions are gitignored in the monorepo and must be created in
+# the release worktree before publishing. These checks prevent a clean checkout
+# from wiping standalone repos with only the few tracked scaffold files.
+declare -A GENERATED_EXTENSION_REQUIRED_PATHS=(
+  [gemini]="commands/arckit skills templates agents policies/rules.toml"
+  [codex]=".codex-plugin/plugin.json .mcp.json config.toml agents commands prompts skills templates"
+  [opencode]="commands skills templates agents"
+  [copilot]="prompts skills templates agents copilot-instructions.md"
+  [paperclip]="src/data/commands.json skills templates docs/guides config"
+  [vibe]="skills templates agents config docs/guides"
+)
+
 # Claude Code plugins are published together to the arckit-claude marketplace
 # repo. The core plugin stays at the repo root for compatibility with the
 # original standalone mirror. Overlays live under structured plugins/ paths.
@@ -79,6 +91,32 @@ check_repo_exists() {
   if gh repo view "${REPO_OWNER}/${repo}" &>/dev/null; then
     return 0
   else
+    return 1
+  fi
+}
+
+validate_generated_extension_source() {
+  local target="$1"
+  local source_path="$2"
+  local local_dir="$3"
+  local required_paths="${GENERATED_EXTENSION_REQUIRED_PATHS[$target]:-}"
+  local rel_path
+  local missing=()
+
+  if [[ -z "$required_paths" ]]; then
+    return 0
+  fi
+
+  for rel_path in $required_paths; do
+    if [[ ! -e "$source_path/$rel_path" ]]; then
+      missing+=("$rel_path")
+    fi
+  done
+
+  if [[ ${#missing[@]} -gt 0 ]]; then
+    red "  Generated distribution is incomplete: $local_dir/"
+    red "  Missing generated path(s): ${missing[*]}"
+    yellow "  Run python scripts/converter.py before publishing standalone extensions."
     return 1
   fi
 }
@@ -345,6 +383,11 @@ for target in "${TARGETS[@]}"; do
   # Check source dir exists
   if [[ ! -d "$source_path" ]]; then
     red "  Source directory not found: $local_dir/"
+    ((FAILED++))
+    continue
+  fi
+
+  if ! validate_generated_extension_source "$target" "$source_path" "$local_dir"; then
     ((FAILED++))
     continue
   fi
