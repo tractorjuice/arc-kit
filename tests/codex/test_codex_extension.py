@@ -373,6 +373,7 @@ def test_codex_bundles_claude_graph_and_pages_hook_processors():
         if not (CODEX_HOOKS / module).is_file()
     ]
     assert not missing
+    assert (CODEX_ROOT / "config" / "guide-groups.mjs").is_file()
 
     runner = CODEX_HOOK_RUNNER.read_text(encoding="utf-8")
     assert "runGraphInjectHook" in runner
@@ -605,6 +606,36 @@ def test_codex_hook_runs_pages_preprocessor(tmp_path):
     assert "docs/llms.txt" in context
     assert (tmp_path / "docs" / "manifest.json").is_file()
     assert (tmp_path / "docs" / "index.html").is_file()
+
+    manifest = json.loads((tmp_path / "docs" / "manifest.json").read_text(encoding="utf-8"))
+    guides = {Path(guide["path"]).stem: guide for guide in manifest["guides"]}
+
+    assert manifest["guideSectionOrder"] == [
+        "Core Workflows",
+        "Plugin and Extension Operations",
+        "Overlay Packs",
+        "Community Guides",
+        "Other / Uncategorised",
+    ]
+    assert guides["hooks"]["section"] == "Plugin and Extension Operations"
+    assert guides["hooks"]["category"] == "Plugin Operations"
+    assert guides["mcp-servers"]["section"] == "Plugin and Extension Operations"
+    assert guides["session-memory"]["section"] == "Plugin and Extension Operations"
+    assert guides["adm-preliminary"]["section"] == "Overlay Packs"
+    assert guides["adm-preliminary"]["pack"] == "TOGAF ADM Overlay"
+    assert guides["eu-ai-act"]["pack"] == "Community overlays - EU"
+    assert guides["uk-nhs-dtac"]["pack"] == "UK NHS Clinical Safety Overlay"
+
+    index_html = (tmp_path / "docs" / "index.html").read_text(encoding="utf-8")
+    assert "manifest.guideSectionOrder" in index_html
+    assert "guide.section || 'Other / Uncategorised'" in index_html
+    assert "doc.section || ''" in index_html
+    assert "doc.pack || ''" in index_html
+
+    other_guides = sorted(
+        guide["path"] for guide in manifest["guides"] if guide.get("category") == "Other"
+    )
+    assert other_guides == []
 
 
 def test_codex_hook_runs_pages_preprocessor_for_namespaced_invocation(tmp_path):

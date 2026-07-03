@@ -2078,7 +2078,7 @@
                 manifest.guides.forEach(doc => {
                     allDocuments.push({
                         ...doc,
-                        searchText: `${doc.title} ${doc.category || ''} guide command`.toLowerCase()
+                        searchText: `${doc.title} ${doc.section || ''} ${doc.category || ''} ${doc.pack || ''} guide command`.toLowerCase()
                     });
                 });
             }
@@ -2322,32 +2322,43 @@
                 return;
             }
 
-            // Group guides by category
-            const byCategory = {};
+            // Group guides by manifest-provided section and category
+            const bySection = {};
             manifest.guides.forEach(guide => {
+                const section = guide.section || 'Other / Uncategorised';
                 const cat = guide.category || 'Other';
-                if (!byCategory[cat]) byCategory[cat] = [];
-                byCategory[cat].push(guide);
+                if (!bySection[section]) bySection[section] = {};
+                if (!bySection[section][cat]) bySection[section][cat] = [];
+                bySection[section][cat].push(guide);
             });
 
-            // Sort categories
-            const categoryOrder = ['Getting Started', 'Discovery', 'Planning', 'Architecture', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Integrations', 'Reporting'];
-            const sortedCategories = Object.keys(byCategory).sort((a, b) => {
-                const aIdx = categoryOrder.indexOf(a);
-                const bIdx = categoryOrder.indexOf(b);
+            const sortByOrder = (keys, order) => keys.sort((a, b) => {
+                const aIdx = order.indexOf(a);
+                const bIdx = order.indexOf(b);
+                if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
                 return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
             });
+            const sectionOrder = manifest.guideSectionOrder || ['Core Workflows', 'Plugin and Extension Operations', 'Overlay Packs', 'Community Guides', 'Other / Uncategorised'];
+            const categoryOrder = manifest.guideCategoryOrder || ['Getting Started', 'Discovery', 'Planning', 'Architecture', 'Wardley Mapping', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Interoperability', 'Integrations', 'Reporting', 'Plugin Operations', 'Community', 'Other'];
+            const sortedSections = sortByOrder(Object.keys(bySection), sectionOrder);
 
             let guidesHtml = '';
-            sortedCategories.forEach(category => {
-                guidesHtml += `<h2>${category}</h2><ul class="app-guides-list">`;
-                byCategory[category].forEach(guide => {
-                    const statusBadge = guide.status
-                        ? `<span class="guide-status ${guide.status}">${guide.status}</span>`
-                        : '';
-                    guidesHtml += `<li><a href="#${guide.path}" data-path="${guide.path}"><span>${guide.title}</span>${statusBadge}</a></li>`;
+            sortedSections.forEach(section => {
+                guidesHtml += `<h2>${escapeHtml(section)}</h2>`;
+                const sortedCategories = sortByOrder(Object.keys(bySection[section]), categoryOrder);
+                sortedCategories.forEach(category => {
+                    guidesHtml += `<h3>${escapeHtml(category)}</h3><ul class="app-guides-list">`;
+                    bySection[section][category]
+                        .sort((a, b) => (a.title || a.path).localeCompare(b.title || b.path))
+                        .forEach(guide => {
+                            const statusBadge = guide.status
+                                ? `<span class="guide-status ${escapeHtml(guide.status)}">${escapeHtml(guide.status)}</span>`
+                                : '';
+                            const path = escapeHtml(guide.path);
+                            guidesHtml += `<li><a href="#${path}" data-path="${path}"><span>${escapeHtml(guide.title)}</span>${statusBadge}</a></li>`;
+                        });
+                    guidesHtml += '</ul>';
                 });
-                guidesHtml += '</ul>';
             });
 
             content.innerHTML = `

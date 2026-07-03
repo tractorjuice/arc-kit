@@ -24,6 +24,14 @@ import { join, dirname, resolve, relative, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
 import {
+  GUIDE_CATEGORY_ORDER,
+  GUIDE_SECTION_ORDER,
+  GUIDE_SECTIONS,
+  ROLE_COMMAND_COUNTS,
+  ROLE_FAMILIES,
+  guideMetadataForStem,
+} from '../config/guide-groups.mjs';
+import {
   isDir, isFile, mtimeMs, readText, listDir,
   findRepoRoot, parseHookInput,
 } from './hook-utils.mjs';
@@ -122,93 +130,6 @@ function hasArcExt(filename) {
   return false;
 }
 
-const GUIDE_CATEGORIES = {
-  // Getting Started
-  'init': 'Getting Started', 'start': 'Getting Started', 'upgrading': 'Getting Started',
-  'customize': 'Getting Started', 'template-builder': 'Getting Started',
-  'remote-control': 'Getting Started',
-  'productivity': 'Getting Started',
-  // Discovery
-  'requirements': 'Discovery', 'stakeholders': 'Discovery', 'stakeholder-analysis': 'Discovery',
-  'research': 'Discovery', 'datascout': 'Discovery',
-  // Planning
-  'sobc': 'Planning', 'business-case': 'Planning', 'plan': 'Planning', 'roadmap': 'Planning',
-  'backlog': 'Planning', 'strategy': 'Planning', 'migration': 'Planning',
-  // Architecture
-  'principles': 'Architecture', 'adr': 'Architecture', 'diagram': 'Architecture',
-  'wardley': 'Architecture', 'data-model': 'Architecture', 'hld-review': 'Architecture',
-  'dld-review': 'Architecture', 'design-review': 'Architecture', 'platform-design': 'Architecture',
-  'data-mesh-contract': 'Architecture', 'c4-layout-science': 'Architecture',
-  'dfd': 'Architecture', 'framework': 'Architecture',
-  // Governance
-  'risk': 'Governance', 'risk-management': 'Governance', 'traceability': 'Governance',
-  'principles-compliance': 'Governance', 'analyze': 'Governance', 'artifact-health': 'Governance',
-  'data-quality-framework': 'Governance', 'knowledge-compounding': 'Governance',
-  'search': 'Governance', 'impact': 'Governance',
-  'conformance': 'Governance', 'health': 'Governance', 'maturity-model': 'Governance',
-  // Compliance
-  'tcop': 'Compliance', 'secure': 'Compliance', 'mod-secure': 'Compliance', 'dpia': 'Compliance',
-  'ai-playbook': 'Compliance', 'atrs': 'Compliance', 'jsp-936': 'Compliance',
-  'service-assessment': 'Compliance', 'govs-007-security': 'Compliance',
-  'national-data-strategy': 'Compliance', 'codes-of-practice': 'Compliance',
-  'security-hooks': 'Compliance',
-  // Operations
-  'devops': 'Operations', 'mlops': 'Operations', 'finops': 'Operations',
-  'operationalize': 'Operations',
-  // Procurement
-  'sow': 'Procurement', 'evaluate': 'Procurement', 'dos': 'Procurement',
-  'gcloud-search': 'Procurement', 'gcloud-clarify': 'Procurement', 'procurement': 'Procurement',
-  'score': 'Procurement',
-  // Integrations
-  'aws-research': 'Integrations', 'azure-research': 'Integrations', 'gcp-research': 'Integrations',
-  'mcp-servers': 'Integrations', 'pinecone-mcp': 'Integrations',
-  'trello': 'Integrations', 'servicenow': 'Integrations',
-  // Reporting
-  'pages': 'Reporting', 'story': 'Reporting', 'presentation': 'Reporting',
-  'glossary': 'Reporting',
-  // Community — EU regulatory (all Compliance)
-  'eu-ai-act': 'Compliance', 'eu-cra': 'Compliance', 'eu-data-act': 'Compliance',
-  'eu-dora': 'Compliance', 'eu-dsa': 'Compliance', 'eu-nis2': 'Compliance',
-  'eu-rgpd': 'Compliance',
-  // Community — French public sector (majority Compliance, some Architecture/Governance/Procurement)
-  'fr-algorithme-public': 'Compliance', 'fr-anssi': 'Compliance',
-  'fr-dinum': 'Compliance', 'fr-pssi': 'Compliance',
-  'fr-rgpd': 'Compliance', 'fr-secnumcloud': 'Compliance',
-  'fr-anssi-carto': 'Architecture', 'fr-code-reuse': 'Architecture',
-  'fr-dr': 'Governance', 'fr-ebios': 'Governance',
-  'fr-marche-public': 'Procurement',
-};
-
-const GUIDE_STATUS = {};
-for (const name of ['plan','principles','stakeholders','stakeholder-analysis','risk','sobc','requirements','data-model','diagram','traceability','principles-compliance','story','sow','evaluate','customize','risk-management','business-case']) GUIDE_STATUS[name] = 'live';
-for (const name of ['dpia','research','strategy','roadmap','adr','hld-review','dld-review','backlog','servicenow','analyze','service-assessment','tcop','secure','presentation','artifact-health','design-review','procurement','knowledge-compounding','c4-layout-science','security-hooks','codes-of-practice','data-quality-framework','govs-007-security','national-data-strategy','upgrading','start','conformance','productivity','remote-control','mcp-servers','search','score','impact']) GUIDE_STATUS[name] = 'beta';
-for (const name of ['data-mesh-contract','ai-playbook','atrs','pages','template-builder']) GUIDE_STATUS[name] = 'alpha';
-for (const name of ['platform-design','wardley','azure-research','aws-research','gcp-research','datascout','dos','gcloud-search','gcloud-clarify','trello','devops','mlops','finops','operationalize','mod-secure','jsp-936','migration','pinecone-mcp','dfd','framework','health','maturity-model','glossary','init']) GUIDE_STATUS[name] = 'experimental';
-for (const name of ['eu-ai-act','eu-cra','eu-data-act','eu-dora','eu-dsa','eu-nis2','eu-rgpd','fr-algorithme-public','fr-anssi','fr-anssi-carto','fr-code-reuse','fr-dinum','fr-dr','fr-ebios','fr-marche-public','fr-pssi','fr-rgpd','fr-secnumcloud']) GUIDE_STATUS[name] = 'community';
-
-const ROLE_FAMILIES = {
-  'enterprise-architect': 'Architecture', 'solution-architect': 'Architecture',
-  'data-architect': 'Architecture', 'security-architect': 'Architecture',
-  'business-architect': 'Architecture', 'technical-architect': 'Architecture',
-  'network-architect': 'Architecture',
-  'cto-cdio': 'Chief Digital and Data', 'cdo': 'Chief Digital and Data',
-  'ciso': 'Chief Digital and Data',
-  'product-manager': 'Product and Delivery', 'delivery-manager': 'Product and Delivery',
-  'business-analyst': 'Product and Delivery', 'service-owner': 'Product and Delivery',
-  'data-governance-manager': 'Data', 'performance-analyst': 'Data',
-  'it-service-manager': 'IT Operations',
-  'devops-engineer': 'Software Development',
-};
-
-const ROLE_COMMAND_COUNTS = {
-  'enterprise-architect': 12, 'solution-architect': 10, 'data-architect': 4,
-  'security-architect': 5, 'business-architect': 5, 'technical-architect': 5,
-  'network-architect': 3, 'cto-cdio': 5, 'cdo': 4, 'ciso': 5,
-  'product-manager': 5, 'delivery-manager': 6, 'business-analyst': 4,
-  'service-owner': 3, 'data-governance-manager': 4, 'performance-analyst': 4,
-  'it-service-manager': 3, 'devops-engineer': 3,
-};
-
 // ── Doc type extraction from filename ──
 
 // Match compound types first (SECD-MOD, PRIN-COMP), then simple types.
@@ -264,6 +185,8 @@ function buildGuides(guideTitles) {
         title,
         category: 'Community',
         status: 'community',
+        section: GUIDE_SECTIONS.COMMUNITY,
+        pack: 'Community',
       });
       continue;
     }
@@ -283,12 +206,16 @@ function buildGuides(guideTitles) {
     } else if (!rel.includes('/')) {
       // Top-level guide only (exclude uk-government/, uk-mod/ subdirs)
       const stem = basename(rel, '.md');
-      guides.push({
+      const meta = guideMetadataForStem(stem);
+      const guide = {
         path,
         title,
-        category: GUIDE_CATEGORIES[stem] || 'Other',
-        status: GUIDE_STATUS[stem] || 'beta',
-      });
+        category: meta.category,
+        status: meta.status,
+        section: meta.section,
+      };
+      if (meta.pack) guide.pack = meta.pack;
+      guides.push(guide);
     }
   }
 
@@ -746,24 +673,36 @@ function buildLlmsTxt(manifest, repoInfo, version) {
     }
   }
 
-  // Guides — grouped by category, only top-level (skip roles)
+  // Guides — grouped by section and category, only top-level (skip roles)
   if (manifest.guides && manifest.guides.length > 0) {
     lines.push('## ArcKit guides');
     lines.push('');
-    const byCategory = {};
+    const bySection = {};
     for (const g of manifest.guides) {
+      const section = g.section || GUIDE_SECTIONS.OTHER;
       const cat = g.category || 'Other';
-      (byCategory[cat] = byCategory[cat] || []).push(g);
+      bySection[section] = bySection[section] || {};
+      (bySection[section][cat] = bySection[section][cat] || []).push(g);
     }
-    const categoryOrder = ['Getting Started', 'Discovery', 'Planning', 'Architecture', 'Governance', 'Compliance', 'Operations', 'Procurement', 'Integrations', 'Reporting', 'Community', 'Other'];
-    for (const cat of categoryOrder) {
-      const entries = byCategory[cat];
-      if (!entries) continue;
-      for (const g of entries) {
-        lines.push(`- [${g.title}](${guideUrl(g.path)}): ${cat}.`);
+
+    const ordered = (keys, preferred) => [...keys].sort((a, b) => {
+      const aIdx = preferred.indexOf(a);
+      const bIdx = preferred.indexOf(b);
+      if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
+      return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+    });
+
+    for (const section of ordered(Object.keys(bySection), GUIDE_SECTION_ORDER)) {
+      lines.push(`### ${section}`);
+      lines.push('');
+      for (const cat of ordered(Object.keys(bySection[section]), GUIDE_CATEGORY_ORDER)) {
+        for (const g of bySection[section][cat]) {
+          const pack = g.pack && g.pack !== cat ? ` / ${g.pack}` : '';
+          lines.push(`- [${g.title}](${guideUrl(g.path)}): ${cat}${pack}.`);
+        }
       }
+      lines.push('');
     }
-    lines.push('');
   }
 
   // DDaT role guides
@@ -825,6 +764,8 @@ function buildManifest(repoRoot, repoInfo, guideTitles) {
     defaultDocument: defaultDoc ? defaultDoc.path : '',
     guides,
     roleGuides,
+    guideSectionOrder: GUIDE_SECTION_ORDER,
+    guideCategoryOrder: GUIDE_CATEGORY_ORDER,
     global: globalDocs,
   };
 

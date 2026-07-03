@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- **Pages guide grouping (#633).** Centralized guide section/category metadata
+  in `config/guide-groups.mjs`, added manifest `section`/`pack` fields, and
+  updated Codex Pages coverage so plugin operations and overlay guides no
+  longer fall into the generic `Other` bucket.
+
 ## [6.1.3] — 2026-07-02
 
 ### Fixed

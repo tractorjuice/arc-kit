@@ -29,6 +29,13 @@ Output:
 - `docs/llms.txt` - LLM/agent-friendly markdown index ([llmstxt.org](https://llmstxt.org/) format) linking to every artifact, guide, and project. Hand-curated `docs/llms.txt` files (without the ArcKit generation marker) are preserved.
 - `docs/telemetry.json` - Session telemetry rollup (newer-first, capped at 50 sessions). Written by the `session-learner.mjs` Stop hook when `docs/` exists; powers the dashboard's Session Telemetry + Recent Sessions panels.
 
+Guide grouping metadata is sourced from `config/guide-groups.mjs`. The
+manifest includes each guide's functional `category`, top-level `section`,
+optional overlay/community `pack`, lifecycle `status`, plus
+`guideSectionOrder` and `guideCategoryOrder` for deterministic UI sorting.
+The fallback `Other / Uncategorised` section is reserved for guides without an
+explicit mapping.
+
 ---
 
 ## Generated Site Features
