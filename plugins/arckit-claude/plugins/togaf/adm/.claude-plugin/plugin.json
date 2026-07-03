@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-togaf-adm",
-  "version": "6.1.4",
+  "version": "6.1.5",
   "description": "TOGAF ADM — Enterprise Architecture Development Method for AI-assisted governance. 9 commands covering all ADM phases (Preliminary through H) plus Architecture Repository.",
   "author": {
     "name": "ArcKit Contributors",
@@ -12,6 +12,7 @@
   "defaultEnabled": false,
   "userConfig": {
     "default_classification": {
+      "title": "Default Classification",
       "type": "string",
       "default": "PUBLIC",
       "description": "Default document classification (e.g. PUBLIC, OFFICIAL, OFFICIAL-SENSITIVE)"
@@ -20,7 +21,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.1.4"
+      "version": "=6.1.5"
     }
   ]
 }
