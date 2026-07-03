@@ -70,7 +70,7 @@ Outputs: `projects/<id>/ARC-<id>-DSCT-v1.0.md`
 claude remote-control
 ```
 
-Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (data source shortlist confirmation, licensing trade-off). ArcKit's minimum Claude Code floor (v2.1.121) already covers the v2.1.110 RC requirement.
+Drive the session from claude.ai/code or the mobile app, then enable `/config → Push when Claude decides` so your phone gets a notification on completion or when the agent reaches a decision point (data source shortlist confirmation, licensing trade-off). ArcKit's minimum Claude Code floor (v2.1.200) already covers the v2.1.110 RC requirement.
 
 Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
 
