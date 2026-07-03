@@ -195,6 +195,27 @@ export DATA_COMMONS_API_KEY="your-api-key-here"
 
 > **Your keys stay hidden in `claude mcp` output.** Both keyed servers carry their key in an HTTP header (`X-Goog-Api-Key`, `X-API-Key`) via `${GOOGLE_API_KEY}` / `${DATA_COMMONS_API_KEY}`. As of Claude Code v2.1.161, `claude mcp list` / `get` / `add` no longer expand `${VAR}` references and redact credential headers and URL secrets — so inspecting your MCP config (or screen-sharing it) won't leak the keys. Relevant for OFFICIAL-SENSITIVE / regulated deployments. The other four bundled servers are keyless, so there's nothing to redact.
 
+### Managing MCP authentication
+
+For OAuth-backed or interactive MCP servers, use Claude Code's MCP auth
+commands instead of editing token files by hand:
+
+```bash
+claude mcp login <server-name>
+claude mcp logout <server-name>
+```
+
+ArcKit's bundled keyed servers still use environment variables, but the same
+`claude mcp` workflow is useful when you add third-party MCP servers alongside
+ArcKit. Recent Claude Code releases improved OAuth retries and headless login
+flows, so stale browser hand-offs are less likely to leave a server half
+configured.
+
+Servers that use a `headersHelper` can also refresh credentials after 401/403
+responses. If a helper-backed server works once and then starts failing after a
+token expiry, run `claude mcp login <server-name>` again before changing the
+ArcKit configuration.
+
 ---
 
 ## Troubleshooting

@@ -103,7 +103,7 @@ Before generating the agent design, use the **AskUserQuestion** tool to gather k
 
 - **Architecture pattern**: Single / Chain / Multi-Agent / Hierarchical (from Question 1)
 - **Scope**: Task Automation / Knowledge Work / Creative / Decision Support (from Question 2)
-- **LLM model**: Primary model (e.g., "claude-sonnet-4-5-20250929")
+- **LLM model**: Primary model (e.g., "Claude Sonnet 5 (session default)")
 - **Hosting**: Local / Cloud / Hybrid
 
 **Tool inventory** (minimum 3 tools):

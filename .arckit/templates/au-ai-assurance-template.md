@@ -160,7 +160,7 @@ National AI Centre (NAIC) operational practices for safe and responsible AI adop
 | Aspect | Detail |
 |--------|--------|
 | **Vendor Name** | [E.g., Anthropic / OpenAI / Google] |
-| **Model + Version** | [E.g., Claude Opus 4.7] |
+| **Model + Version** | [E.g., Claude Sonnet 5 (session default)] |
 | **Vendor AI Policy Compliance** | [Vendor's published AI policy alignment] |
 | **Training-Data Provenance** | [Disclosed / Partially disclosed / Not disclosed] |
 | **Inference Region** | [AU / US / EU / global] |

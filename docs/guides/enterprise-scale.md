@@ -236,6 +236,19 @@ Claude Code then **refuses to start** outside the range and directs the user to 
 
 For an **individual** user or repo that just wants to avoid drifting *below* the floor, the softer, user-scoped `minimumVersion` in `.claude/settings.json` blocks auto-update/`claude update` from going below it (it doesn't refuse startup). ArcKit pins this in its own repos and the below-floor warning recommends it.
 
+### Govern available models
+
+Managed settings can also govern which models are available to a fleet. Use
+your organisation defaults and model restrictions together, and enable
+`enforceAvailableModels` when you need project settings, subagents, or manual
+model overrides to stay inside the approved list.
+
+ArcKit does not pin a model in its commands. Commands inherit the Claude Code
+session default, so a centrally managed model policy is the right control point
+for regulated deployments. The current ArcKit guidance assumes Claude Sonnet 5
+as the normal default; allow Claude Fable 5 only where the tenant exposes it and
+the work justifies the higher tier.
+
 ### Allowlist the ArcKit marketplace
 
 `pluginSuggestionMarketplaces` lets admins allowlist org marketplaces whose plugins may surface in context-aware tips. Allowlisting `tractorjuice/arckit-claude` means Claude Code can suggest ArcKit when a user opens a directory with a `projects/` tree or `ARC-*` artefacts — useful for driving adoption across many teams without a manual rollout. Pair with `strictKnownMarketplaces` / `blockedMarketplaces` if you want to *restrict* installs to only the marketplaces you've vetted.
@@ -249,6 +262,18 @@ export OTEL_RESOURCE_ATTRIBUTES="repo=arc-kit,team=enterprise-architecture,proje
 ```
 
 You can then slice token/cost usage by team, repo, or project — a natural complement to the per-artefact Document Control headers and `provenance-stamp` ArcKit already produces. **Privacy caveat:** these labels are emitted as-is, so don't put project identifiers in them for OFFICIAL-SENSITIVE / SECRET work where the label itself would be sensitive.
+
+If you export prompt telemetry but must not export generated response text,
+leave assistant-response logging disabled:
+
+```bash
+export OTEL_LOG_ASSISTANT_RESPONSES=0
+```
+
+Only set `OTEL_LOG_ASSISTANT_RESPONSES=1` in environments where response
+content is approved for the telemetry backend. Treat ArcKit artefact drafts,
+policy decisions, and evidence summaries as sensitive until your data-handling
+rules say otherwise.
 
 ---
 
