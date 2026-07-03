@@ -8,10 +8,11 @@
  *   2. Claude Code minimum — reads `$CLAUDE_CODE_VERSION` (if set) or runs
  *      `claude --version` via spawnSync, and warns when the client is below
  *      MIN_CLAUDE_CODE_VERSION (features like userConfig, hook `if:`, skill
- *      `paths:`, plugin dependency enforcement, `defaultEnabled`, and the
- *      Opus 4.8 thinking-block fix, Claude Fable 5 runtime, and the
- *      WebFetch wildcard-domain fix depend on
- *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/v2.1.172+). Silent on
+ *      `paths:`, plugin dependency enforcement, `defaultEnabled`, the
+ *      Opus 4.8 thinking-block fix, Claude Fable 5/Sonnet 5 runtime updates,
+ *      the WebFetch wildcard-domain fix, and project-scoped plugin worktree
+ *      fixes depend on v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/
+ *      v2.1.172+/v2.1.200+). Silent on
  *      detection failure.
  *
  * Side effect: when inside an ArcKit project, persists the detected client
@@ -30,7 +31,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.172';
+const MIN_CLAUDE_CODE_VERSION = '2.1.200';
 
 const data = parseHookInput(); // consume stdin (required by hook protocol)
 const cwd = data.cwd || '.';
@@ -81,10 +82,14 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Plugin dependency enforcement — \`claude plugin disable arckit\` warns when a community overlay depends on it, instead of silently breaking the overlay (needs v2.1.143)\n` +
     `- Session title bug fix — ArcKit's \`stale-artifact-scan\` monitor was being used to name new sessions instead of the user's first prompt (needs v2.1.144)\n` +
     `- Skill tool headless permission fix — \`/arckit:*\` commands run via \`claude -p\` / CI failed with permission errors on v2.1.141–v2.1.143 (needs v2.1.144)\n` +
-    `- Plugin \`defaultEnabled: false\` — ArcKit's 9 community overlays no longer auto-enable on marketplace install; users opt in to only the jurisdiction/sector they need (needs v2.1.154)\n` +
+    `- Plugin \`defaultEnabled: false\` — ArcKit's community overlays no longer auto-enable on marketplace install; users opt in to only the jurisdiction/sector they need (needs v2.1.154)\n` +
     `- Opus 4.8 thinking-block API-error fix — modified thinking blocks caused API errors on earlier clients; affects \`/arckit:*\` commands and research agents using extended thinking (needs v2.1.156)\n` +
     `- Claude Fable 5 general availability — ArcKit defaults to the latest model tier and standardises on the Fable 5-era runtime (needs v2.1.170)\n` +
-    `- WebFetch wildcard-domain fix — \`WebFetch(domain:*.gov.uk)\`-style allow rules ArcKit recommends for OFFICIAL-SENSITIVE deployments never matched subdomains on earlier clients (needs v2.1.172)\n\n` +
+    `- WebFetch wildcard-domain fix — \`WebFetch(domain:*.gov.uk)\`-style allow rules ArcKit recommends for OFFICIAL-SENSITIVE deployments never matched subdomains on earlier clients (needs v2.1.172)\n` +
+    `- Claude Sonnet 5 default runtime and 1M context availability for current Claude Code sessions (needs v2.1.197)\n` +
+    `- Background-by-default subagent reliability and parent error propagation fixes for ArcKit's parallel build and reader/writer flows (needs v2.1.198+)\n` +
+    `- SessionStart / Setup / SubagentStart hook stderr visibility on blocking exits, improving hook diagnosis (needs v2.1.199)\n` +
+    `- Project-scoped plugin loading from git worktrees and \`claude agents --plugin-dir <dir>\` plugin agent/skill visibility fixes for ArcKit branch testing (needs v2.1.200)\n\n` +
     `Update with: \`claude update\`\n\n` +
     `**Tip — stop drifting back below the floor:** after updating, add ` +
     `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +

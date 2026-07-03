@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Claude Code minimum-version floor raised to v2.1.200.** Updated the
+  runtime version check, repo/test-repo settings, and docs to require the
+  latest v2.1.200 floor for project-scoped plugin loading from git worktrees,
+  `claude agents --plugin-dir` agent/skill visibility, and the recent
+  background-subagent reliability and hook diagnostics fixes tracked in #580.
+
 ## [6.1.7] — 2026-07-03
 
 ### Fixed

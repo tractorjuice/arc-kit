@@ -50,7 +50,7 @@ Use the **Write** tool to create each file inside `/tmp/arckit-test-setup/${REPO
 
 ```json
 {
-  "minimumVersion": "2.1.172",
+  "minimumVersion": "2.1.200",
   "extraKnownMarketplaces": {
     "arckit-claude": {
       "source": {

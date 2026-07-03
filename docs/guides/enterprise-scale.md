@@ -225,7 +225,7 @@ ArcKit ships a soft floor: the `version-check.mjs` SessionStart hook *warns* any
 
 ```json
 {
-  "requiredMinimumVersion": "2.1.172",
+  "requiredMinimumVersion": "2.1.200",
   "requiredMaximumVersion": "2.1.999"
 }
 ```

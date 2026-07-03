@@ -6,7 +6,7 @@ The Enterprise Architecture Governance Harness — a Claude Code plugin providin
 
 ### Step 0: Make sure Claude Code is up to date
 
-ArcKit v4.14.0 needs Claude Code **v2.1.121 or later** (see Prerequisites below). The simplest way to land on a supported version — even if you've never installed Claude Code before — is:
+ArcKit needs Claude Code **v2.1.200 or later** (see Prerequisites below). The simplest way to land on a supported version — even if you've never installed Claude Code before — is:
 
 ```bash
 claude install latest
@@ -60,13 +60,13 @@ claude --plugin-dir /path/to/arckit-claude
 
 ## Prerequisites
 
-- **Claude Code** v2.1.121 or later (recommended minimum)
+- **Claude Code** v2.1.200 or later (recommended minimum)
 - **Bash** shell (for helper scripts)
 - For `/arckit:aws-research`: AWS Knowledge MCP server (included)
 - For `/arckit:azure-research`: Microsoft Learn MCP server (included)
 - For `/arckit:gcp-research`: Google Developer Knowledge MCP (requires `GOOGLE_API_KEY` — see [MCP Servers](#mcp-servers))
 
-> **Why v2.1.121?** ArcKit now uses MCP `alwaysLoad` to eager-load AWS Knowledge and Microsoft Learn tools at session start (skips a discovery round-trip on `/arckit:aws-research` and `/arckit:azure-research`), and PostToolUse `hookSpecificOutput.updatedToolOutput` so provenance-stamp and manifest hooks surface their effects to the model in-band — both v2.1.121 features. The release flow uses `claude plugin tag --dry-run` (v2.1.118) to validate plugin/marketplace version agreement, and the session-telemetry hook records `duration_ms` on every tool call (v2.1.119). Carries forward the v2.1.117 unlocks: Opus 4.7 `/context` correctly sized to 1M instead of 200K (long research sessions no longer autocompact early) and agent frontmatter `mcpServers` loading for `--agent` sessions; the v2.1.111+ unlocks: Opus 4.7 `xhigh` effort tier, Auto mode without `--enable-auto-mode`, read-only bash glob patterns without permission prompts; and the v2.1.97 fixes: `claude plugin update` correctly detects new commits for git-based plugins (critical for ArcKit distribution), MCP HTTP/SSE memory leak fix (~50 MB/hr, affects ArcKit's 5 bundled servers), proper 429 exponential backoff (benefits 10 research agents), Stop/SubagentStop hooks no longer fail on long sessions (affects session-learner), and subagent working directory leak fix.
+> **Why v2.1.200?** v2.1.200 fixes project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility for plugin agents/skills, which makes ArcKit branch and test-repo workflows reliable. It also carries the v2.1.198-v2.1.199 background-subagent reliability, parent error-propagation, and hook stderr-visibility fixes that matter to `/arckit:build`, reader/writer handoffs, and hook diagnosis. v2.1.197 makes Claude Sonnet 5 the default Claude Code model with native 1M context, while v2.1.172 fixed wildcard-domain `WebFetch` permission rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients. The floor also carries forward the older MCP `alwaysLoad`, provenance hook, release validation, telemetry, `/context`, Auto mode, plugin update, MCP leak, retry, and subagent working-directory fixes ArcKit relies on.
 
 ## Quick Start
 
