@@ -37,19 +37,20 @@ export const GUIDE_CATEGORY_ORDER = [
   'Integrations',
   'Reporting',
   'Plugin Operations',
-  'TOGAF ADM Overlay',
+  // Overlay packs: global/framework packs first, then country/region packs.
   'AI Agent Architecture Overlay',
-  'UK G-Cloud Supplier Overlay',
   'FDE Site Generator',
-  'Community overlays - EU',
-  'Community overlays - France',
+  'TOGAF ADM Overlay',
+  'Australian Federal / Energy Overlay',
   'Community overlays - Austria',
   'Canada Federal Overlay',
+  'Community overlays - EU',
+  'Community overlays - France',
   'UAE Federal Overlay',
-  'Australian Federal / Energy Overlay',
-  'USA Federal Civilian Overlay',
+  'UK G-Cloud Supplier Overlay',
   'UK Finance Payments Overlay',
   'UK NHS Clinical Safety Overlay',
+  'USA Federal Civilian Overlay',
   'Community',
   'Other',
 ];
@@ -217,6 +218,17 @@ add(GUIDE_SECTIONS.PLUGIN, 'Plugin Operations', 'alpha', ['template-builder']);
 add(GUIDE_SECTIONS.PLUGIN, 'Plugin Operations', 'experimental', ['pinecone-mcp']);
 
 // Overlay packs
+add(GUIDE_SECTIONS.OVERLAY, 'AI Agent Architecture Overlay', 'community', [
+  'agent-inventory',
+  'agent-design',
+  'agent-governance',
+  'agent-integration',
+  'agent-security',
+  'agent-maturity',
+], 'AI Agent Architecture Overlay');
+
+add(GUIDE_SECTIONS.OVERLAY, 'FDE Site Generator', 'community', ['create'], 'FDE Site Generator');
+
 add(GUIDE_SECTIONS.OVERLAY, 'TOGAF ADM Overlay', 'community', [
   'adm-preliminary',
   'business-capability-map',
@@ -229,30 +241,41 @@ add(GUIDE_SECTIONS.OVERLAY, 'TOGAF ADM Overlay', 'community', [
   'architecture-repository',
 ], 'TOGAF ADM Overlay');
 
-add(GUIDE_SECTIONS.OVERLAY, 'AI Agent Architecture Overlay', 'community', [
-  'agent-inventory',
-  'agent-design',
-  'agent-governance',
-  'agent-integration',
-  'agent-security',
-  'agent-maturity',
-], 'AI Agent Architecture Overlay');
+add(GUIDE_SECTIONS.OVERLAY, 'Australian Federal / Energy Overlay', 'community', [
+  'au-aescsf',
+  'au-ai-assurance',
+  'au-disp-attestation',
+  'au-dss',
+  'au-e8-posture',
+  'au-energy-compliance',
+  'au-ism-controls',
+  'au-ndb-playbook',
+  'au-ot-security',
+  'au-pia',
+  'au-pspf',
+  'au-soci-cirmp',
+], 'Australian Federal / Energy Overlay');
 
-add(GUIDE_SECTIONS.OVERLAY, 'UK G-Cloud Supplier Overlay', 'community', [
-  'supplier-profile',
-  'service-design',
-  'sdd-lot1',
-  'sdd-lot2',
-  'sdd-lot3',
-  'declaration',
-  'pricing',
-  'security',
-  'gcloud-competitors',
-  'review',
-  'submission-pack',
-], 'UK G-Cloud Supplier Overlay');
+add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - Austria', 'community', [
+  'at-bvergg',
+  'at-dsgvo',
+  'at-nisg',
+], 'Community overlays - Austria');
 
-add(GUIDE_SECTIONS.OVERLAY, 'FDE Site Generator', 'community', ['create'], 'FDE Site Generator');
+add(GUIDE_SECTIONS.OVERLAY, 'Canada Federal Overlay', 'community', [
+  'ca-aia',
+  'ca-atip',
+  'ca-charter',
+  'ca-cloud-residency',
+  'ca-fitaa',
+  'ca-gc-digital-standards',
+  'ca-itsg-33',
+  'ca-ocap',
+  'ca-ola',
+  'ca-pia',
+  'ca-pspc',
+  'ca-soia',
+], 'Canada Federal Overlay');
 
 add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - EU', 'community', [
   'eu-ai-act',
@@ -279,27 +302,6 @@ add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - France', 'community', [
   'fr-secnumcloud',
 ], 'Community overlays - France');
 
-add(GUIDE_SECTIONS.OVERLAY, 'Community overlays - Austria', 'community', [
-  'at-bvergg',
-  'at-dsgvo',
-  'at-nisg',
-], 'Community overlays - Austria');
-
-add(GUIDE_SECTIONS.OVERLAY, 'Canada Federal Overlay', 'community', [
-  'ca-aia',
-  'ca-atip',
-  'ca-charter',
-  'ca-cloud-residency',
-  'ca-fitaa',
-  'ca-gc-digital-standards',
-  'ca-itsg-33',
-  'ca-ocap',
-  'ca-ola',
-  'ca-pia',
-  'ca-pspc',
-  'ca-soia',
-], 'Canada Federal Overlay');
-
 add(GUIDE_SECTIONS.OVERLAY, 'UAE Federal Overlay', 'community', [
   'uae-ai-autonomy-tier',
   'uae-ai-charter',
@@ -315,33 +317,19 @@ add(GUIDE_SECTIONS.OVERLAY, 'UAE Federal Overlay', 'community', [
   'uae-zero-bureaucracy',
 ], 'UAE Federal Overlay');
 
-add(GUIDE_SECTIONS.OVERLAY, 'Australian Federal / Energy Overlay', 'community', [
-  'au-aescsf',
-  'au-ai-assurance',
-  'au-disp-attestation',
-  'au-dss',
-  'au-e8-posture',
-  'au-energy-compliance',
-  'au-ism-controls',
-  'au-ndb-playbook',
-  'au-ot-security',
-  'au-pia',
-  'au-pspf',
-  'au-soci-cirmp',
-], 'Australian Federal / Energy Overlay');
-
-add(GUIDE_SECTIONS.OVERLAY, 'USA Federal Civilian Overlay', 'community', [
-  'us-ai-impact',
-  'us-ai-rmf',
-  'us-fedramp-readiness',
-  'us-fedramp-ssp',
-  'us-fisma-categorization',
-  'us-icam',
-  'us-nist-800-53',
-  'us-privacy-pia',
-  'us-sbom-eo-14028',
-  'us-zero-trust',
-], 'USA Federal Civilian Overlay');
+add(GUIDE_SECTIONS.OVERLAY, 'UK G-Cloud Supplier Overlay', 'community', [
+  'supplier-profile',
+  'service-design',
+  'sdd-lot1',
+  'sdd-lot2',
+  'sdd-lot3',
+  'declaration',
+  'pricing',
+  'security',
+  'gcloud-competitors',
+  'review',
+  'submission-pack',
+], 'UK G-Cloud Supplier Overlay');
 
 add(GUIDE_SECTIONS.OVERLAY, 'UK Finance Payments Overlay', 'community', [
   'uk-fs-consumer-duty',
@@ -356,6 +344,19 @@ add(GUIDE_SECTIONS.OVERLAY, 'UK NHS Clinical Safety Overlay', 'community', [
   'uk-nhs-dcb0160',
   'uk-nhs-dtac',
 ], 'UK NHS Clinical Safety Overlay');
+
+add(GUIDE_SECTIONS.OVERLAY, 'USA Federal Civilian Overlay', 'community', [
+  'us-ai-impact',
+  'us-ai-rmf',
+  'us-fedramp-readiness',
+  'us-fedramp-ssp',
+  'us-fisma-categorization',
+  'us-icam',
+  'us-nist-800-53',
+  'us-privacy-pia',
+  'us-sbom-eo-14028',
+  'us-zero-trust',
+], 'USA Federal Civilian Overlay');
 
 export { GUIDE_METADATA };
 
