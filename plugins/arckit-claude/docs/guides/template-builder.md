@@ -93,7 +93,7 @@ To submit a community template for official ArcKit inclusion:
 3. Move command from `.claude/commands/` to `plugins/arckit-claude/commands/` and drop the `arckit.community.` prefix
 4. Change `Template Origin: Community` to `Template Origin: Official`
 5. Change `Guide Origin: Community` to `Guide Origin: Official`
-6. Add guide to the category map in `plugins/arckit-claude/hooks/sync-guides.mjs`
+6. Add guide metadata to `plugins/arckit-claude/config/guide-groups.mjs`
 7. Open a PR describing the template's purpose and use cases
 
 ---

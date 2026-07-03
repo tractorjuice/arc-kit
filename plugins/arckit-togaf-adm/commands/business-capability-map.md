@@ -157,7 +157,7 @@ If this is a Ministry of Defence project, include:
 
 ### 7. Load Mermaid Syntax References
 
-Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/mindmap.md` and `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/flowchart.md` for official Mermaid syntax — mindmap node syntax, flowchart node shapes, edge labels, and styling options. Also read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/quadrant.md` for quadrant chart syntax.
+Read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/mindmap.md` and `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/flowchart.md` for official Mermaid syntax — mindmap node syntax, flowchart node shapes, edge labels, and styling options. Also read `${CLAUDE_PLUGIN_ROOT}/skills/mermaid-syntax/references/quadrantChart.md` for quadrant chart syntax.
 
 ### 8. Mermaid Diagram Requirements
 

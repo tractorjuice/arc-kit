@@ -44,37 +44,23 @@ The following reference sections document the manifest structure and data tables
 
 ---
 
-### Reference: Guide Categories
+### Reference: Guide Grouping
 
-**Guide Categories** (based on filename):
+Guide grouping metadata is loaded by the hook from
+`config/guide-groups.mjs`. Do not duplicate filename-to-category tables in this
+command text. The hook writes each top-level guide with:
 
-| Category | Guide Files |
-|----------|-------------|
-| Getting Started | build, init, start, customize, template-builder, upgrading, remote-control, productivity |
-| Discovery | requirements, stakeholders, stakeholder-analysis, research, datascout, gov-reuse, gov-code-search, gov-landscape, grants |
-| Planning | sobc, business-case, plan, roadmap, backlog, strategy, migration |
-| Architecture | principles, adr, diagram, data-model, hld-review, dld-review, design-review, platform-design, data-mesh-contract, c4-layout-science, dfd, framework |
-| Wardley Mapping | wardley, wardley-value-chain, wardley-doctrine, wardley-climate, wardley-gameplay |
-| TOGAF ADM Overlay | adm-preliminary, business-capability-map, application-inventory, application-rationalization, gap-analysis, transition-architecture, architecture-board, architecture-change, architecture-repository |
-| AI Agent Architecture Overlay | agent-inventory, agent-design, agent-governance, agent-integration, agent-security, agent-maturity |
-| Governance | risk, risk-management, traceability, principles-compliance, analyze, artifact-health, data-quality-framework, knowledge-compounding, graph-report, search, impact, conformance, health, maturity-model, navigator |
-| Compliance | tcop, secure, mod-secure, dpia, ai-playbook, atrs, jsp-936, service-assessment, govs-007-security, national-data-strategy, codes-of-practice, security-hooks |
-| Operations | devops, mlops, finops, operationalize |
-| Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement, score, tenders, competitors |
-| UK G-Cloud Supplier Overlay | supplier-profile, service-design, sdd-lot1, sdd-lot2, sdd-lot3, declaration, pricing, security, gcloud-competitors, review, submission-pack |
-| Interoperability | export-okf, import-okf |
-| Integrations | aws-research, azure-research, gcp-research, mcp-servers, pinecone-mcp, trello, servicenow |
-| Reporting | pages, story, presentation, glossary |
-| FDE Site Generator | create |
-| Community overlays — EU | eu-ai-act, eu-cra, eu-data-act, eu-dora, eu-dsa, eu-nis2, eu-rgpd |
-| Community overlays — France | fr-algorithme-public, fr-anssi, fr-anssi-carto, fr-code-reuse, fr-dinum, fr-dr, fr-ebios, fr-irn, fr-marche-public, fr-pssi, fr-rgpd, fr-secnumcloud |
-| Community overlays — Austria | at-bvergg, at-dsgvo, at-nisg |
-| Canada Federal Overlay | ca-aia, ca-atip, ca-charter, ca-cloud-residency, ca-fitaa, ca-gc-digital-standards, ca-itsg-33, ca-ocap, ca-ola, ca-pia, ca-pspc, ca-soia |
-| UAE Federal Overlay | uae-ai-autonomy-tier, uae-ai-charter, uae-classification, uae-cloud-residency, uae-data-sharing, uae-digital-records, uae-ias, uae-pdpl, uae-priorities-alignment, uae-procurement, uae-uaepass, uae-zero-bureaucracy |
-| Australian Federal / Energy Overlay | au-aescsf, au-ai-assurance, au-disp-attestation, au-dss, au-e8-posture, au-energy-compliance, au-ism-controls, au-ndb-playbook, au-ot-security, au-pia, au-pspf, au-soci-cirmp |
-| USA Federal Civilian Overlay | us-ai-impact, us-ai-rmf, us-fedramp-readiness, us-fedramp-ssp, us-fisma-categorization, us-icam, us-nist-800-53, us-privacy-pia, us-sbom-eo-14028, us-zero-trust |
-| UK Finance Payments Overlay | uk-fs-consumer-duty, uk-fs-ctp-dependency, uk-fs-safeguarding, uk-fs-sca-rts |
-| UK NHS Clinical Safety Overlay | uk-mdr-classification, uk-nhs-dcb0129, uk-nhs-dcb0160, uk-nhs-dtac |
+- `category`: functional guide category, for example `Architecture` or
+  `Plugin Operations`
+- `section`: top-level Pages group, for example `Core Workflows`,
+  `Plugin and Extension Operations`, or `Overlay Packs`
+- `pack`: optional overlay/community pack name, for example
+  `UK G-Cloud Supplier Overlay`
+- `status`: lifecycle maturity badge
+
+The hook also writes `guideSectionOrder` and `guideCategoryOrder` into
+`docs/manifest.json` so the browser UI and `llms.txt` can sort guides without
+filename-only heuristics.
 
 **DDaT Role Guides** (in `docs/guides/roles/`):
 
@@ -113,16 +99,6 @@ Add role guides to a separate `roleGuides` array in manifest.json (not the `guid
 | performance-analyst | 4 |
 | it-service-manager | 3 |
 | devops-engineer | 3 |
-
-**Guide Status** (from README command maturity):
-
-| Status | Description | Guide Files |
-|--------|-------------|-------------|
-| live | Production-ready | build, plan, principles, stakeholders, stakeholder-analysis, risk, sobc, requirements, data-model, diagram, traceability, principles-compliance, story, sow, evaluate, customize, risk-management, business-case, navigator, graph-report |
-| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, presentation, artifact-health, design-review, procurement, knowledge-compounding, c4-layout-science, security-hooks, codes-of-practice, data-quality-framework, govs-007-security, national-data-strategy, upgrading, start, conformance, productivity, remote-control, mcp-servers, search, score, impact, competitors, tenders, export-okf, import-okf |
-| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs, pages |
-| experimental | Early adopters | platform-design, wardley, wardley-value-chain, wardley-doctrine, wardley-climate, wardley-gameplay, azure-research, aws-research, gcp-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936, migration, pinecone-mcp, dfd, framework, health, maturity-model, glossary, init, gov-reuse, gov-code-search, gov-landscape, grants |
-| community | Community-contributed overlay | adm-preliminary, business-capability-map, application-inventory, application-rationalization, gap-analysis, transition-architecture, architecture-board, architecture-change, architecture-repository, agent-inventory, agent-design, agent-governance, agent-integration, agent-security, agent-maturity, create, supplier-profile, service-design, sdd-lot1, sdd-lot2, sdd-lot3, declaration, pricing, security, gcloud-competitors, review, submission-pack, eu-ai-act, eu-cra, eu-data-act, eu-dora, eu-dsa, eu-nis2, eu-rgpd, fr-algorithme-public, fr-anssi, fr-anssi-carto, fr-code-reuse, fr-dinum, fr-dr, fr-ebios, fr-irn, fr-marche-public, fr-pssi, fr-rgpd, fr-secnumcloud, at-bvergg, at-dsgvo, at-nisg, au-aescsf, au-ai-assurance, au-disp-attestation, au-dss, au-e8-posture, au-energy-compliance, au-ism-controls, au-ndb-playbook, au-ot-security, au-pia, au-pspf, au-soci-cirmp, ca-aia, ca-atip, ca-charter, ca-cloud-residency, ca-fitaa, ca-gc-digital-standards, ca-itsg-33, ca-ocap, ca-ola, ca-pia, ca-pspc, ca-soia, uae-ai-autonomy-tier, uae-ai-charter, uae-classification, uae-cloud-residency, uae-data-sharing, uae-digital-records, uae-ias, uae-pdpl, uae-priorities-alignment, uae-procurement, uae-uaepass, uae-zero-bureaucracy, uk-fs-consumer-duty, uk-fs-ctp-dependency, uk-fs-safeguarding, uk-fs-sca-rts, uk-mdr-classification, uk-nhs-dcb0129, uk-nhs-dcb0160, uk-nhs-dtac, us-ai-impact, us-ai-rmf, us-fedramp-readiness, us-fedramp-ssp, us-fisma-categorization, us-icam, us-nist-800-53, us-privacy-pia, us-sbom-eo-14028, us-zero-trust |
 
 ### 1.2 Global Documents
 

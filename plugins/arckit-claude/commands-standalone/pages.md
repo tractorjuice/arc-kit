@@ -49,20 +49,13 @@ Use **Glob** and **Read** tools to scan the repository. Do NOT use `ls`, `find`,
 
 Use the titles (from hook or manual extraction) to build the `guides` array for top-level guides (excluding `roles/` subdirectory) and the `roleGuides` array for role guides. Role guides in `docs/guides/roles/` are added to a separate `roleGuides` array in manifest.json (see DDaT Role Guides section below).
 
-**Guide Categories** (based on filename):
+**Guide grouping model**:
 
-| Category | Guide Files |
-|----------|-------------|
-| Discovery | requirements, stakeholders, stakeholder-analysis, research, datascout |
-| Planning | sobc, business-case, plan, roadmap, backlog, strategy |
-| Architecture | principles, adr, diagram, wardley, data-model, hld-review, dld-review, design-review, platform-design, data-mesh-contract, c4-layout-science |
-| Governance | risk, risk-management, traceability, principles-compliance, analyze, artifact-health, data-quality-framework, knowledge-compounding |
-| Compliance | tcop, secure, mod-secure, dpia, ai-playbook, atrs, jsp-936, service-assessment, govs-007-security, national-data-strategy, codes-of-practice, security-hooks |
-| Operations | devops, mlops, finops, servicenow, operationalize |
-| Procurement | sow, evaluate, dos, gcloud-search, gcloud-clarify, procurement |
-| Research | aws-research, azure-research, gcp-research |
-| Reporting | pages, story, presentation, trello |
-| Other | migration, customize, upgrading, pinecone-mcp, start, conformance, productivity, remote-control, mcp-servers |
+Use `${CLAUDE_PLUGIN_ROOT}/config/guide-groups.mjs` as the source of truth for
+guide `category`, `section`, optional `pack`, and `status`. Do not maintain a
+separate filename-to-category table in this command text. Add `guideSectionOrder`
+and `guideCategoryOrder` to `manifest.json` from that same config so the browser
+UI can sort guides without filename-only heuristics.
 
 **DDaT Role Guides** (in `docs/guides/roles/`):
 
@@ -101,15 +94,6 @@ Add role guides to a separate `roleGuides` array in manifest.json (not the `guid
 | performance-analyst | 4 |
 | it-service-manager | 3 |
 | devops-engineer | 3 |
-
-**Guide Status** (from README command maturity):
-
-| Status | Description | Guide Files |
-|--------|-------------|-------------|
-| live | Production-ready | plan, principles, stakeholders, stakeholder-analysis, risk, sobc, requirements, data-model, diagram, traceability, principles-compliance, story, sow, evaluate, customize, risk-management, business-case |
-| beta | Feature-complete | dpia, research, strategy, roadmap, adr, hld-review, dld-review, backlog, servicenow, analyze, service-assessment, tcop, secure, presentation, artifact-health, design-review, procurement, knowledge-compounding, c4-layout-science, security-hooks, codes-of-practice, data-quality-framework, govs-007-security, national-data-strategy, upgrading, start, conformance, productivity, remote-control, mcp-servers |
-| alpha | Working, limited testing | data-mesh-contract, ai-playbook, atrs, pages |
-| experimental | Early adopters | platform-design, wardley, azure-research, aws-research, gcp-research, datascout, dos, gcloud-search, gcloud-clarify, trello, devops, mlops, finops, operationalize, mod-secure, jsp-936, migration, pinecone-mcp |
 
 ### 1.2 Global Documents
 

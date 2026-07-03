@@ -288,7 +288,7 @@ To propose this template for official inclusion:
 3. Rename command file: drop `community.` prefix
 4. Change `Template Origin: Community` to `Template Origin: Official`
 5. Change `Guide Origin: Community` to `Guide Origin: Official`
-6. Add guide to the category map in `arckit-claude/hooks/sync-guides.mjs`
+6. Add guide metadata to `arckit-claude/config/guide-groups.mjs`
 7. Open a PR with description of the template's purpose
 ```
 

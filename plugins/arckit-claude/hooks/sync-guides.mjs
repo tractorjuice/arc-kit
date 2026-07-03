@@ -24,6 +24,14 @@ import { join, dirname, resolve, relative, basename, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
 import {
+  GUIDE_CATEGORY_ORDER,
+  GUIDE_SECTION_ORDER,
+  GUIDE_SECTIONS,
+  ROLE_COMMAND_COUNTS,
+  ROLE_FAMILIES,
+  guideMetadataForStem,
+} from '../config/guide-groups.mjs';
+import {
   isDir, isFile, mtimeMs, readText, listDir,
   findRepoRoot, parseHookInput,
 } from './hook-utils.mjs';
@@ -122,160 +130,6 @@ function hasArcExt(filename) {
   return false;
 }
 
-const GUIDE_CATEGORIES = {
-  // Getting Started
-  'build': 'Getting Started', 'init': 'Getting Started', 'start': 'Getting Started',
-  'upgrading': 'Getting Started',
-  'customize': 'Getting Started', 'template-builder': 'Getting Started',
-  'remote-control': 'Getting Started',
-  'productivity': 'Getting Started',
-  // Discovery
-  'requirements': 'Discovery', 'stakeholders': 'Discovery', 'stakeholder-analysis': 'Discovery',
-  'research': 'Discovery', 'datascout': 'Discovery', 'gov-reuse': 'Discovery',
-  'gov-code-search': 'Discovery', 'gov-landscape': 'Discovery', 'grants': 'Discovery',
-  // Planning
-  'sobc': 'Planning', 'business-case': 'Planning', 'plan': 'Planning', 'roadmap': 'Planning',
-  'backlog': 'Planning', 'strategy': 'Planning', 'migration': 'Planning',
-  // Architecture
-  'principles': 'Architecture', 'adr': 'Architecture', 'diagram': 'Architecture',
-  'data-model': 'Architecture', 'hld-review': 'Architecture',
-  'dld-review': 'Architecture', 'design-review': 'Architecture', 'platform-design': 'Architecture',
-  'data-mesh-contract': 'Architecture', 'c4-layout-science': 'Architecture',
-  'dfd': 'Architecture', 'framework': 'Architecture',
-  // Wardley Mapping
-  'wardley': 'Wardley Mapping', 'wardley-value-chain': 'Wardley Mapping',
-  'wardley-doctrine': 'Wardley Mapping', 'wardley-climate': 'Wardley Mapping',
-  'wardley-gameplay': 'Wardley Mapping',
-  // Community — TOGAF ADM overlay
-  'adm-preliminary': 'TOGAF ADM Overlay', 'business-capability-map': 'TOGAF ADM Overlay',
-  'application-inventory': 'TOGAF ADM Overlay', 'application-rationalization': 'TOGAF ADM Overlay',
-  'gap-analysis': 'TOGAF ADM Overlay', 'transition-architecture': 'TOGAF ADM Overlay',
-  'architecture-board': 'TOGAF ADM Overlay', 'architecture-change': 'TOGAF ADM Overlay',
-  'architecture-repository': 'TOGAF ADM Overlay',
-  // Community — AI Agent Architecture overlay
-  'agent-inventory': 'AI Agent Architecture Overlay', 'agent-design': 'AI Agent Architecture Overlay',
-  'agent-governance': 'AI Agent Architecture Overlay', 'agent-integration': 'AI Agent Architecture Overlay',
-  'agent-security': 'AI Agent Architecture Overlay', 'agent-maturity': 'AI Agent Architecture Overlay',
-  // Governance
-  'risk': 'Governance', 'risk-management': 'Governance', 'traceability': 'Governance',
-  'principles-compliance': 'Governance', 'analyze': 'Governance', 'artifact-health': 'Governance',
-  'data-quality-framework': 'Governance', 'knowledge-compounding': 'Governance',
-  'search': 'Governance', 'impact': 'Governance', 'graph-report': 'Governance',
-  'navigator': 'Governance',
-  'conformance': 'Governance', 'health': 'Governance', 'maturity-model': 'Governance',
-  // Compliance
-  'tcop': 'Compliance', 'secure': 'Compliance', 'mod-secure': 'Compliance', 'dpia': 'Compliance',
-  'ai-playbook': 'Compliance', 'atrs': 'Compliance', 'jsp-936': 'Compliance',
-  'service-assessment': 'Compliance', 'govs-007-security': 'Compliance',
-  'national-data-strategy': 'Compliance', 'codes-of-practice': 'Compliance',
-  'security-hooks': 'Compliance',
-  // Operations
-  'devops': 'Operations', 'mlops': 'Operations', 'finops': 'Operations',
-  'operationalize': 'Operations',
-  // Procurement
-  'sow': 'Procurement', 'evaluate': 'Procurement', 'dos': 'Procurement',
-  'gcloud-search': 'Procurement', 'gcloud-clarify': 'Procurement', 'procurement': 'Procurement',
-  'score': 'Procurement', 'tenders': 'Procurement', 'competitors': 'Procurement',
-  // UK G-Cloud supplier overlay
-  'supplier-profile': 'UK G-Cloud Supplier Overlay', 'service-design': 'UK G-Cloud Supplier Overlay',
-  'sdd-lot1': 'UK G-Cloud Supplier Overlay', 'sdd-lot2': 'UK G-Cloud Supplier Overlay',
-  'sdd-lot3': 'UK G-Cloud Supplier Overlay', 'declaration': 'UK G-Cloud Supplier Overlay',
-  'pricing': 'UK G-Cloud Supplier Overlay', 'security': 'UK G-Cloud Supplier Overlay',
-  'gcloud-competitors': 'UK G-Cloud Supplier Overlay', 'review': 'UK G-Cloud Supplier Overlay',
-  'submission-pack': 'UK G-Cloud Supplier Overlay',
-  // Interoperability
-  'export-okf': 'Interoperability', 'import-okf': 'Interoperability',
-  // Integrations
-  'aws-research': 'Integrations', 'azure-research': 'Integrations', 'gcp-research': 'Integrations',
-  'mcp-servers': 'Integrations', 'pinecone-mcp': 'Integrations',
-  'trello': 'Integrations', 'servicenow': 'Integrations',
-  // Reporting
-  'pages': 'Reporting', 'story': 'Reporting', 'presentation': 'Reporting',
-  'glossary': 'Reporting',
-  // FDE site generator
-  'create': 'FDE Site Generator',
-  // Community overlays
-  'eu-ai-act': 'Community overlays - EU', 'eu-cra': 'Community overlays - EU',
-  'eu-data-act': 'Community overlays - EU', 'eu-dora': 'Community overlays - EU',
-  'eu-dsa': 'Community overlays - EU', 'eu-nis2': 'Community overlays - EU',
-  'eu-rgpd': 'Community overlays - EU',
-  'fr-algorithme-public': 'Community overlays - France', 'fr-anssi': 'Community overlays - France',
-  'fr-anssi-carto': 'Community overlays - France', 'fr-code-reuse': 'Community overlays - France',
-  'fr-dinum': 'Community overlays - France', 'fr-dr': 'Community overlays - France',
-  'fr-ebios': 'Community overlays - France', 'fr-irn': 'Community overlays - France',
-  'fr-marche-public': 'Community overlays - France', 'fr-pssi': 'Community overlays - France',
-  'fr-rgpd': 'Community overlays - France', 'fr-secnumcloud': 'Community overlays - France',
-  'at-bvergg': 'Community overlays - Austria', 'at-dsgvo': 'Community overlays - Austria',
-  'at-nisg': 'Community overlays - Austria',
-  'ca-aia': 'Canada Federal Overlay', 'ca-atip': 'Canada Federal Overlay',
-  'ca-charter': 'Canada Federal Overlay', 'ca-cloud-residency': 'Canada Federal Overlay',
-  'ca-fitaa': 'Canada Federal Overlay', 'ca-gc-digital-standards': 'Canada Federal Overlay',
-  'ca-itsg-33': 'Canada Federal Overlay', 'ca-ocap': 'Canada Federal Overlay',
-  'ca-ola': 'Canada Federal Overlay', 'ca-pia': 'Canada Federal Overlay',
-  'ca-pspc': 'Canada Federal Overlay', 'ca-soia': 'Canada Federal Overlay',
-  'uae-ai-autonomy-tier': 'UAE Federal Overlay', 'uae-ai-charter': 'UAE Federal Overlay',
-  'uae-classification': 'UAE Federal Overlay', 'uae-cloud-residency': 'UAE Federal Overlay',
-  'uae-data-sharing': 'UAE Federal Overlay', 'uae-digital-records': 'UAE Federal Overlay',
-  'uae-ias': 'UAE Federal Overlay', 'uae-pdpl': 'UAE Federal Overlay',
-  'uae-priorities-alignment': 'UAE Federal Overlay', 'uae-procurement': 'UAE Federal Overlay',
-  'uae-uaepass': 'UAE Federal Overlay', 'uae-zero-bureaucracy': 'UAE Federal Overlay',
-  'au-ai-assurance': 'Australian Federal / Energy Overlay',
-  'au-disp-attestation': 'Australian Federal / Energy Overlay',
-  'au-dss': 'Australian Federal / Energy Overlay', 'au-e8-posture': 'Australian Federal / Energy Overlay',
-  'au-ism-controls': 'Australian Federal / Energy Overlay',
-  'au-ndb-playbook': 'Australian Federal / Energy Overlay',
-  'au-ot-security': 'Australian Federal / Energy Overlay', 'au-pia': 'Australian Federal / Energy Overlay',
-  'au-pspf': 'Australian Federal / Energy Overlay', 'au-soci-cirmp': 'Australian Federal / Energy Overlay',
-  'au-aescsf': 'Australian Federal / Energy Overlay',
-  'au-energy-compliance': 'Australian Federal / Energy Overlay',
-  'uk-fs-consumer-duty': 'UK Finance Payments Overlay',
-  'uk-fs-ctp-dependency': 'UK Finance Payments Overlay',
-  'uk-fs-safeguarding': 'UK Finance Payments Overlay',
-  'uk-fs-sca-rts': 'UK Finance Payments Overlay',
-  'uk-mdr-classification': 'UK NHS Clinical Safety Overlay',
-  'uk-nhs-dcb0129': 'UK NHS Clinical Safety Overlay',
-  'uk-nhs-dcb0160': 'UK NHS Clinical Safety Overlay',
-  'uk-nhs-dtac': 'UK NHS Clinical Safety Overlay',
-  'us-ai-impact': 'USA Federal Civilian Overlay', 'us-ai-rmf': 'USA Federal Civilian Overlay',
-  'us-fedramp-readiness': 'USA Federal Civilian Overlay',
-  'us-fedramp-ssp': 'USA Federal Civilian Overlay',
-  'us-fisma-categorization': 'USA Federal Civilian Overlay',
-  'us-icam': 'USA Federal Civilian Overlay', 'us-nist-800-53': 'USA Federal Civilian Overlay',
-  'us-privacy-pia': 'USA Federal Civilian Overlay',
-  'us-sbom-eo-14028': 'USA Federal Civilian Overlay',
-  'us-zero-trust': 'USA Federal Civilian Overlay',
-};
-
-const GUIDE_STATUS = {};
-for (const name of ['build','plan','principles','stakeholders','stakeholder-analysis','risk','sobc','requirements','data-model','diagram','traceability','principles-compliance','story','sow','evaluate','customize','risk-management','business-case','navigator','graph-report']) GUIDE_STATUS[name] = 'live';
-for (const name of ['dpia','research','strategy','roadmap','adr','hld-review','dld-review','backlog','servicenow','analyze','service-assessment','tcop','secure','presentation','artifact-health','design-review','procurement','knowledge-compounding','c4-layout-science','security-hooks','codes-of-practice','data-quality-framework','govs-007-security','national-data-strategy','upgrading','start','conformance','productivity','remote-control','mcp-servers','search','score','impact','competitors','tenders','export-okf','import-okf']) GUIDE_STATUS[name] = 'beta';
-for (const name of ['data-mesh-contract','ai-playbook','atrs','pages','template-builder']) GUIDE_STATUS[name] = 'alpha';
-for (const name of ['platform-design','wardley','wardley-value-chain','wardley-doctrine','wardley-climate','wardley-gameplay','azure-research','aws-research','gcp-research','datascout','dos','gcloud-search','gcloud-clarify','trello','devops','mlops','finops','operationalize','mod-secure','jsp-936','migration','pinecone-mcp','dfd','framework','health','maturity-model','glossary','init','gov-reuse','gov-code-search','gov-landscape','grants']) GUIDE_STATUS[name] = 'experimental';
-for (const name of ['eu-ai-act','eu-cra','eu-data-act','eu-dora','eu-dsa','eu-nis2','eu-rgpd','fr-algorithme-public','fr-anssi','fr-anssi-carto','fr-code-reuse','fr-dinum','fr-dr','fr-ebios','fr-irn','fr-marche-public','fr-pssi','fr-rgpd','fr-secnumcloud','at-bvergg','at-dsgvo','at-nisg','au-aescsf','au-ai-assurance','au-disp-attestation','au-dss','au-e8-posture','au-energy-compliance','au-ism-controls','au-ndb-playbook','au-ot-security','au-pia','au-pspf','au-soci-cirmp','ca-aia','ca-atip','ca-charter','ca-cloud-residency','ca-fitaa','ca-gc-digital-standards','ca-itsg-33','ca-ocap','ca-ola','ca-pia','ca-pspc','ca-soia','create','uae-ai-autonomy-tier','uae-ai-charter','uae-classification','uae-cloud-residency','uae-data-sharing','uae-digital-records','uae-ias','uae-pdpl','uae-priorities-alignment','uae-procurement','uae-uaepass','uae-zero-bureaucracy','uk-fs-consumer-duty','uk-fs-ctp-dependency','uk-fs-safeguarding','uk-fs-sca-rts','supplier-profile','service-design','sdd-lot1','sdd-lot2','sdd-lot3','declaration','pricing','security','gcloud-competitors','review','submission-pack','uk-mdr-classification','uk-nhs-dcb0129','uk-nhs-dcb0160','uk-nhs-dtac','us-ai-impact','us-ai-rmf','us-fedramp-readiness','us-fedramp-ssp','us-fisma-categorization','us-icam','us-nist-800-53','us-privacy-pia','us-sbom-eo-14028','us-zero-trust','adm-preliminary','business-capability-map','application-inventory','application-rationalization','gap-analysis','transition-architecture','architecture-board','architecture-change','architecture-repository','agent-inventory','agent-design','agent-governance','agent-integration','agent-security','agent-maturity']) GUIDE_STATUS[name] = 'community';
-
-const ROLE_FAMILIES = {
-  'enterprise-architect': 'Architecture', 'solution-architect': 'Architecture',
-  'data-architect': 'Architecture', 'security-architect': 'Architecture',
-  'business-architect': 'Architecture', 'technical-architect': 'Architecture',
-  'network-architect': 'Architecture',
-  'cto-cdio': 'Chief Digital and Data', 'cdo': 'Chief Digital and Data',
-  'ciso': 'Chief Digital and Data',
-  'product-manager': 'Product and Delivery', 'delivery-manager': 'Product and Delivery',
-  'business-analyst': 'Product and Delivery', 'service-owner': 'Product and Delivery',
-  'data-governance-manager': 'Data', 'performance-analyst': 'Data',
-  'it-service-manager': 'IT Operations',
-  'devops-engineer': 'Software Development',
-};
-
-const ROLE_COMMAND_COUNTS = {
-  'enterprise-architect': 12, 'solution-architect': 10, 'data-architect': 4,
-  'security-architect': 5, 'business-architect': 5, 'technical-architect': 5,
-  'network-architect': 3, 'cto-cdio': 5, 'cdo': 4, 'ciso': 5,
-  'product-manager': 5, 'delivery-manager': 6, 'business-analyst': 4,
-  'service-owner': 3, 'data-governance-manager': 4, 'performance-analyst': 4,
-  'it-service-manager': 3, 'devops-engineer': 3,
-};
-
 // ── Doc type extraction from filename ──
 
 // Match compound types first (SECD-MOD, PRIN-COMP), then simple types.
@@ -331,6 +185,8 @@ function buildGuides(guideTitles) {
         title,
         category: 'Community',
         status: 'community',
+        section: GUIDE_SECTIONS.COMMUNITY,
+        pack: 'Community',
       });
       continue;
     }
@@ -350,12 +206,16 @@ function buildGuides(guideTitles) {
     } else if (!rel.includes('/')) {
       // Top-level guide only (exclude uk-government/, uk-mod/ subdirs)
       const stem = basename(rel, '.md');
-      guides.push({
+      const meta = guideMetadataForStem(stem);
+      const guide = {
         path,
         title,
-        category: GUIDE_CATEGORIES[stem] || 'Other',
-        status: GUIDE_STATUS[stem] || 'beta',
-      });
+        category: meta.category,
+        status: meta.status,
+        section: meta.section,
+      };
+      if (meta.pack) guide.pack = meta.pack;
+      guides.push(guide);
     }
   }
 
@@ -813,32 +673,36 @@ function buildLlmsTxt(manifest, repoInfo, version) {
     }
   }
 
-  // Guides — grouped by category, only top-level (skip roles)
+  // Guides — grouped by section and category, only top-level (skip roles)
   if (manifest.guides && manifest.guides.length > 0) {
     lines.push('## ArcKit guides');
     lines.push('');
-    const byCategory = {};
+    const bySection = {};
     for (const g of manifest.guides) {
+      const section = g.section || GUIDE_SECTIONS.OTHER;
       const cat = g.category || 'Other';
-      (byCategory[cat] = byCategory[cat] || []).push(g);
+      bySection[section] = bySection[section] || {};
+      (bySection[section][cat] = bySection[section][cat] || []).push(g);
     }
-    const categoryOrder = [
-      'Getting Started', 'Discovery', 'Planning', 'Architecture', 'Wardley Mapping',
-      'TOGAF ADM Overlay', 'AI Agent Architecture Overlay', 'Governance', 'Compliance',
-      'Operations', 'Procurement', 'UK G-Cloud Supplier Overlay', 'Interoperability',
-      'Integrations', 'Reporting', 'FDE Site Generator', 'Community overlays - EU',
-      'Community overlays - France', 'Community overlays - Austria', 'Canada Federal Overlay',
-      'UAE Federal Overlay', 'Australian Federal / Energy Overlay', 'USA Federal Civilian Overlay',
-      'UK Finance Payments Overlay', 'UK NHS Clinical Safety Overlay', 'Community', 'Other',
-    ];
-    for (const cat of categoryOrder) {
-      const entries = byCategory[cat];
-      if (!entries) continue;
-      for (const g of entries) {
-        lines.push(`- [${g.title}](${guideUrl(g.path)}): ${cat}.`);
+
+    const ordered = (keys, preferred) => [...keys].sort((a, b) => {
+      const aIdx = preferred.indexOf(a);
+      const bIdx = preferred.indexOf(b);
+      if (aIdx === -1 && bIdx === -1) return a.localeCompare(b);
+      return (aIdx === -1 ? 999 : aIdx) - (bIdx === -1 ? 999 : bIdx);
+    });
+
+    for (const section of ordered(Object.keys(bySection), GUIDE_SECTION_ORDER)) {
+      lines.push(`### ${section}`);
+      lines.push('');
+      for (const cat of ordered(Object.keys(bySection[section]), GUIDE_CATEGORY_ORDER)) {
+        for (const g of bySection[section][cat]) {
+          const pack = g.pack && g.pack !== cat ? ` / ${g.pack}` : '';
+          lines.push(`- [${g.title}](${guideUrl(g.path)}): ${cat}${pack}.`);
+        }
       }
+      lines.push('');
     }
-    lines.push('');
   }
 
   // DDaT role guides
@@ -900,6 +764,8 @@ function buildManifest(repoRoot, repoInfo, guideTitles) {
     defaultDocument: defaultDoc ? defaultDoc.path : '',
     guides,
     roleGuides,
+    guideSectionOrder: GUIDE_SECTION_ORDER,
+    guideCategoryOrder: GUIDE_CATEGORY_ORDER,
     global: globalDocs,
   };
 
