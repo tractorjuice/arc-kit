@@ -52,7 +52,7 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
 - **Risk level**: `unacceptable` | `high` | `medium` | `low`
 - **Status**: `open` | `mitigated` | `accepted` | `closed`
 
-> Note: the DCB0129 scale inverts the usual ArcKit / Orange Book convention where 5 = highest. We follow DCB0129 because that is what CSOs sign off against. Templates carry the legend prominently.
+> Note: ArcKit numbers the DCB0129 labels 1 (worst) to 5 (least) to store them; DCB0129 itself puts no numbers on the severity/likelihood axes (word-labelled), and its only numbers are the Risk Class cells (1-5, 5 = unacceptable/highest, the conventional direction). ArcKit keeps the DCB0129 label order because that is what CSOs sign off against; templates carry the legend prominently.
 
 ## Process
 

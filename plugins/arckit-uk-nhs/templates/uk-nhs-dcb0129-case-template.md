@@ -39,7 +39,7 @@
 **Risk levels**: `unacceptable` · `high` · `medium` · `low`
 **Hazard status**: `open` · `mitigated` · `accepted` · `closed`
 
-> ⚠️ DCB0129 inverts the usual Orange Book convention where 5 = highest. Read carefully when cross-referencing project risk registers.
+> ⚠️ **Numbering note (ArcKit encoding, not DCB0129).** ArcKit numbers the DCB0129 labels 1 (worst) to 5 (least) purely to store them. DCB0129 itself puts no numbers on the severity/likelihood axes - they are word-labelled. The only numbers in the standard are the Risk Class cells (1-5, where 5 = unacceptable/highest, the conventional direction), so these ordinals run opposite to both the usual risk-register convention and DCB0129's own risk classes. Take care when cross-referencing project risk registers.
 
 ---
 
