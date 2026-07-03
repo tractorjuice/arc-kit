@@ -617,6 +617,27 @@ def test_codex_hook_runs_pages_preprocessor(tmp_path):
         "Community Guides",
         "Other / Uncategorised",
     ]
+    expected_overlay_category_order = [
+        "AI Agent Architecture Overlay",
+        "FDE Site Generator",
+        "TOGAF ADM Overlay",
+        "Australian Federal / Energy Overlay",
+        "Community overlays - Austria",
+        "Canada Federal Overlay",
+        "Community overlays - EU",
+        "Community overlays - France",
+        "UAE Federal Overlay",
+        "UK G-Cloud Supplier Overlay",
+        "UK Finance Payments Overlay",
+        "UK NHS Clinical Safety Overlay",
+        "USA Federal Civilian Overlay",
+    ]
+    overlay_category_order = [
+        category
+        for category in manifest["guideCategoryOrder"]
+        if category in expected_overlay_category_order
+    ]
+    assert overlay_category_order == expected_overlay_category_order
     assert guides["hooks"]["section"] == "Plugin and Extension Operations"
     assert guides["hooks"]["category"] == "Plugin Operations"
     assert guides["mcp-servers"]["section"] == "Plugin and Extension Operations"
