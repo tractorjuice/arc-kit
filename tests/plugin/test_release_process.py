@@ -239,3 +239,16 @@ def test_push_extensions_prepares_gemini_for_gallery_discovery():
 
     assert "ensure_repo_topic" in script
     assert "gemini-cli-extension" in script
+
+
+def test_claude_plugin_user_config_entries_have_titles():
+    failures = []
+
+    for manifest_path in REPO_ROOT.glob("plugins/**/.claude-plugin/plugin.json"):
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        user_config = manifest.get("userConfig") or {}
+        for key, value in user_config.items():
+            if not isinstance(value, dict) or not value.get("title"):
+                failures.append(f"{manifest_path.relative_to(REPO_ROOT)}:{key}")
+
+    assert not failures, "Claude plugin userConfig entries missing titles:\n" + "\n".join(failures)
