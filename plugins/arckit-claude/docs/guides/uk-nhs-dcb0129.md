@@ -27,7 +27,7 @@ The 3 files together implement the four DCB0129 deliverables — Clinical Risk M
 - **Risk level**: `unacceptable` | `high` | `medium` | `low`
 - **Status**: `open` | `mitigated` | `accepted` | `closed`
 
-> ⚠️ DCB0129 inverts the usual Orange Book convention where 5 = highest. Templates carry the legend prominently.
+> ⚠️ **Numbering note (ArcKit encoding, not DCB0129).** ArcKit numbers the DCB0129 labels 1 (worst) to 5 (least) purely to store them. DCB0129 itself puts no numbers on the severity/likelihood axes - they are word-labelled; the only numbers in the standard are the Risk Class cells (1-5, where 5 = unacceptable/highest, the conventional direction). So these ordinals run opposite to both the usual risk-register convention and DCB0129's own risk classes. The templates carry this legend prominently.
 
 ## When to use
 
