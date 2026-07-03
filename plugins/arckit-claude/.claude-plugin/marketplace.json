@@ -13,7 +13,7 @@
       "name": "arckit",
       "source": ".",
       "description": "73 slash commands across strategy, architecture, delivery, and assurance — including UK Government compliance",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -34,7 +34,7 @@
       "name": "arckit-uae",
       "source": "./plugins/uae",
       "description": "UAE Federal Overlay — 12 commands for PDPL, IAS, AI Charter, autonomy, sovereign cloud, UAE Pass",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -53,7 +53,7 @@
       "name": "arckit-fr",
       "source": "./plugins/fr",
       "description": "French Public Sector Overlay — 12 commands for DINUM, ANSSI, RGPD/CNIL, EBIOS, PSSI, SecNumCloud",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -73,7 +73,7 @@
       "name": "arckit-ca",
       "source": "./plugins/ca",
       "description": "Canadian Federal Overlay — 12 commands for AIA, ATIP, ITSG-33, GC Digital Standards, OCAP, OLA",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -93,7 +93,7 @@
       "name": "arckit-eu",
       "source": "./plugins/eu",
       "description": "EU Overlay — 7 commands for GDPR, AI Act, DSA, DORA, Data Act, NIS2, and CRA",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -113,7 +113,7 @@
       "name": "arckit-at",
       "source": "./plugins/at",
       "description": "Austrian Overlay — 3 commands for DSG/DSGVO, NISG, and Bundesvergabegesetz public procurement",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -132,7 +132,7 @@
       "name": "arckit-au",
       "source": "./plugins/au",
       "description": "Australian Federal Overlay — 10 commands for ASD Essential Eight, ISM, DTA DSS, Privacy Act 1988, OAIC NDB, PSPF, AI Assurance, DISP attestation, OT security, and SOCI/CIRMP",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -152,7 +152,7 @@
       "name": "arckit-au-energy",
       "source": "./plugins/au/energy",
       "description": "Australian Energy Sector Overlay — 2 commands for AESCSF maturity assessment and energy-sector compliance (AER ring-fencing, AEMC NER/NGR, AEMO interfaces, DERMS/DOE, CSIP-AUS, SOCI escalation). Recipe: au-energy. First Australian sector overlay; composes the arckit-au federal baseline. Requires arckit and arckit-au.",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -175,7 +175,7 @@
       "name": "arckit-us",
       "source": "./plugins/us",
       "description": "USA Federal Civilian Overlay — 10 commands for FedRAMP, FISMA/NIST 800-53, CISA Zero Trust, OMB M-19-17 ICAM, NIST AI RMF, OMB M-24-10/M-25-21 AI assurance, E-Gov §208 PIA, EO 14028 SBOM",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -196,7 +196,7 @@
       "name": "arckit-uk-finance",
       "source": "./plugins/uk/finance",
       "description": "UK Financial Services Payments Overlay — 4 commands for established UK PSPs / EMIs / PIs: PSD2 SCA-RTS exemption design, EMI/PI safeguarding, FCA Consumer Duty board report, Critical Third Parties dependency assessment. Recipe: uk-fs-payments. First sector-specific overlay.",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -224,7 +224,7 @@
       "name": "arckit-uk-nhs",
       "source": "./plugins/uk/nhs",
       "description": "UK NHS Clinical Safety Overlay — 4 commands for NHS DCB0129 (manufacturer), DCB0160 (deployer), DTAC v3, and UK/EU MDR SaMD/AIaMD classification. Adopts Marcus Baw SAFETY.md spec. Second sector-specific overlay.",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -249,7 +249,7 @@
       "name": "arckit-fde",
       "source": "./plugins/fde",
       "description": "ArcKit FDE Site Generator — /arckit-fde:create interviews you and renders a brandable, GitHub-Pages-ready Forward Deploy Engineering consulting website to docs/. White-label brand, colour, pricing and contact; UK public sector or generic market preset. Claude Code only.",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -273,7 +273,7 @@
       "name": "arckit-uk-gcloud",
       "source": "./plugins/uk/gcloud",
       "description": "UK G-Cloud Supplier Bid-Authoring Overlay — 11 supplier-side commands driving a G-Cloud 14 Digital Marketplace submission end to end: supplier profile, service design, Service Definition Documents (Lots 1/2/3), supplier declaration, pricing, NCSC Cloud Security Principles assertions, competitor benchmark, submission review, and CCS submission packaging. Recipe: uk-gcloud-submission. Requires arckit core. Proprietary, experimental.",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "TractorJuice"
       },
@@ -300,7 +300,7 @@
       "name": "arckit-togaf-adm",
       "source": "./plugins/togaf/adm",
       "description": "TOGAF ADM — Enterprise Architecture Development Method. 9 commands covering all ADM phases (Preliminary through H) plus Architecture Repository. [COMMUNITY]",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "ArcKit Contributors"
       },
@@ -320,7 +320,7 @@
       "name": "arckit-agent-architecture",
       "source": "./plugins/agent/architecture",
       "description": "AI Agent Architecture — Governance, design, and security for autonomous AI agent programs. 6 commands. [COMMUNITY]",
-      "version": "6.1.6",
+      "version": "6.1.7",
       "author": {
         "name": "ArcKit Contributors"
       },

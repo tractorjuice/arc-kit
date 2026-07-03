@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.7] — 2026-07-03
+
+### Fixed
+
+- **Generated extension publishing guard (#638).** Added release preflight
+  checks so standalone extension publishing fails before touching remote repos
+  when required generated distribution files are missing.
+
+### Changed
+
+- **NHS DCB0129 numbering caveat (#641).** Corrected the clinical-safety
+  severity/likelihood caveat so it attributes the `1 = worst` ordinals to
+  ArcKit's storage encoding rather than to DCB0129/0160 or the Orange Book.
+
 ## [6.1.6] — 2026-07-03
 
 ### Fixed
