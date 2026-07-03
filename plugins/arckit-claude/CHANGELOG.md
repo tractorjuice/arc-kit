@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.1.6] — 2026-07-03
+
+### Fixed
+
+- **Pages overlay guide ordering (#636).** Ordered overlay packs as
+  global/framework packs first, followed by country and regional packs in a
+  consistent sequence so generated Pages guide indexes are easier to scan.
+
 ## [6.1.5] — 2026-07-03
 
 ### Fixed
