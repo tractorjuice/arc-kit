@@ -22,6 +22,7 @@ PLUGIN_COMMAND_DIRS = [
     REPO_ROOT / "plugins" / "arckit-uk-nhs" / "commands",
     REPO_ROOT / "plugins" / "arckit-togaf-adm" / "commands",
     REPO_ROOT / "plugins" / "arckit-agent-architecture" / "commands",
+    REPO_ROOT / "plugins" / "arckit-repo" / "commands",
     REPO_ROOT / "plugins" / "arckit-claude" / "commands",
 ]
 CLAUDE_AGENTS = REPO_ROOT / "plugins" / "arckit-claude" / "agents"

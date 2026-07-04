@@ -270,6 +270,28 @@
       "category": "productivity"
     },
     {
+      "name": "arckit-repo",
+      "source": "./plugins/arckit-repo",
+      "description": "Repository tooling plugin for ArcKit. Starts with /arckit:repo-docs for source-grounded, agent-readable repository documentation; future commands can cover git and repository operations. Requires arckit core. [COMMUNITY]",
+      "version": "6.1.7",
+      "author": {
+        "name": "ArcKit Contributors"
+      },
+      "homepage": "https://github.com/tractorjuice/arckit-claude",
+      "repository": "https://github.com/tractorjuice/arckit-claude",
+      "license": "MIT",
+      "keywords": [
+        "architecture",
+        "governance",
+        "repository",
+        "git",
+        "documentation",
+        "agents",
+        "openwiki"
+      ],
+      "category": "productivity"
+    },
+    {
       "name": "arckit-uk-gcloud",
       "source": "./plugins/arckit-uk-gcloud",
       "description": "UK G-Cloud Supplier Bid-Authoring Overlay — 11 supplier-side commands driving a G-Cloud 14 Digital Marketplace submission end to end: supplier profile, service design, Service Definition Documents (Lots 1/2/3), supplier declaration, pricing, NCSC Cloud Security Principles assertions, competitor benchmark, submission review, and CCS submission packaging. Recipe: uk-gcloud-submission. Requires arckit core. Proprietary, experimental.",

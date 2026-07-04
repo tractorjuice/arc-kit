@@ -40,6 +40,7 @@ export const GUIDE_CATEGORY_ORDER = [
   // Overlay packs: global/framework packs first, then country/region packs.
   'AI Agent Architecture Overlay',
   'FDE Site Generator',
+  'Repository Plugin',
   'TOGAF ADM Overlay',
   'Australian Federal / Energy Overlay',
   'Community overlays - Austria',
@@ -228,6 +229,10 @@ add(GUIDE_SECTIONS.OVERLAY, 'AI Agent Architecture Overlay', 'community', [
 ], 'AI Agent Architecture Overlay');
 
 add(GUIDE_SECTIONS.OVERLAY, 'FDE Site Generator', 'community', ['create'], 'FDE Site Generator');
+
+add(GUIDE_SECTIONS.OVERLAY, 'Repository Plugin', 'community', [
+  'repo-docs',
+], 'Repository Plugin');
 
 add(GUIDE_SECTIONS.OVERLAY, 'TOGAF ADM Overlay', 'community', [
   'adm-preliminary',

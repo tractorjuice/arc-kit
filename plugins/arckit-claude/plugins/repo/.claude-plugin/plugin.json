@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "arckit-repo",
+  "version": "6.1.7",
+  "description": "Repository tooling for ArcKit, starting with source-grounded, agent-readable repository docs inspired by OpenWiki.",
+  "author": {
+    "name": "ArcKit Contributors",
+    "url": "https://github.com/tractorjuice/arckit-claude"
+  },
+  "repository": "https://github.com/tractorjuice/arckit-claude",
+  "license": "MIT",
+  "defaultEnabled": false,
+  "dependencies": [
+    {
+      "name": "arckit",
+      "version": "=6.1.7"
+    }
+  ]
+}

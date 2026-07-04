@@ -28,6 +28,7 @@ PLUGIN_COMMAND_DIRS = [
     REPO_ROOT / "plugins" / "arckit-uk-nhs" / "commands",
     REPO_ROOT / "plugins" / "arckit-togaf-adm" / "commands",
     REPO_ROOT / "plugins" / "arckit-agent-architecture" / "commands",
+    REPO_ROOT / "plugins" / "arckit-repo" / "commands",
 ]
 CODEX_ROOT = REPO_ROOT / "extensions" / "arckit-codex"
 CODEX_SKILLS = CODEX_ROOT / "skills"

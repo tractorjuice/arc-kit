@@ -217,6 +217,10 @@ French government (apply on top of EU baseline):
 
 - [FDE Site Generator](https://arckit.org/guides/create.md): `/arckit-fde:create` generate a brandable Forward Deploy Engineering consulting website into docs/.
 
+### Repository plugin
+
+- [Repository Documentation Wiki](https://arckit.org/guides/repo-docs.md): `/arckit:repo-docs` generate and maintain source-grounded, agent-readable repository documentation under `docs/repository/`.
+
 ### Cloud research integrations
 
 - [AWS research](https://arckit.org/guides/aws-research.md): `/arckit:aws-research` via AWS Knowledge MCP.

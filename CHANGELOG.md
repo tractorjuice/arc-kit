@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Repository plugin.** Added the optional `arckit-repo` plugin, starting with
+  `/arckit:repo-docs` to generate and maintain source-grounded, agent-readable
+  repository documentation under `docs/repository/`, adapting OpenWiki-style
+  targeted discovery and incremental update prompts for ArcKit.
+
 ### Changed
 
 - **Reactive external-document context (#580).** Added Claude Code

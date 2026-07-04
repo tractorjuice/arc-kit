@@ -40,6 +40,7 @@ EXPECTED_CLAUDE_MARKETPLACE_SOURCES = {
         "plugins/arckit-agent-architecture",
         "MIT",
     ),
+    "arckit-repo": ("./plugins/repo", "plugins/arckit-repo", "MIT"),
 }
 
 PINNED_README_VERSION_PATTERNS = [

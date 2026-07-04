@@ -353,6 +353,17 @@
       ]
     },
     {
+      "id": "guides-repository",
+      "name": "Repository Plugin Guides",
+      "documents": [
+        {
+          "path": "docs/guides/repo-docs.md",
+          "title": "Repository Documentation Wiki",
+          "category": "Repository Plugin"
+        }
+      ]
+    },
+    {
       "id": "templates",
       "name": "Document Templates",
       "documents": [

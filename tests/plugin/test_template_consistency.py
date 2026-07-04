@@ -31,6 +31,7 @@ PLUGIN_SOURCES = [
     "plugins/arckit-uk-nhs",
     "plugins/arckit-togaf-adm",
     "plugins/arckit-agent-architecture",
+    "plugins/arckit-repo",
 ]
 CLI_TEMPLATES_DIR = os.path.join(REPO_ROOT, ".arckit", "templates")
 
