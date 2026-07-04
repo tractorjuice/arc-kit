@@ -10,6 +10,252 @@ Tracking issue: [#346](https://github.com/tractorjuice/arc-kit/issues/346).
 
 ---
 
+## Claude Enterprise Deployment (first rollout)
+
+ArcKit's canonical runtime is the Claude Code plugin in
+`plugins/arckit-claude/`. Treat the enterprise rollout as two linked controls:
+the **ArcKit governance repository pattern** and the **Claude Code managed
+configuration** that makes the plugin, MCP servers, hooks, and model policy
+consistent across developer machines.
+
+Source basis for this section: Anthropic's Claude Code organization setup,
+server-managed settings, managed MCP, enterprise deployment, network, security,
+data usage, plugin marketplace, plugin recommendation, and Claude Enterprise
+administrator docs, plus the Claude Code changelog reviewed through v2.1.201
+on 2026-07-04.
+
+### 1. Choose the Claude deployment model
+
+For most ArcKit teams, start with Claude for Enterprise and Claude Code seats.
+That gives the architecture function one subscription, SSO, domain capture,
+seat assignment, usage analytics, and server-managed Claude Code policy without
+running your own model gateway.
+
+Use a cloud-provider deployment only when your security model requires provider
+billing, regional controls, or existing cloud compliance inheritance:
+
+| Deployment | Use when | ArcKit notes |
+|------------|----------|--------------|
+| Claude for Enterprise | You want the shortest path with SSO, managed settings, analytics, Claude.ai, and Claude Code in one estate | Recommended default for the first ArcKit rollout |
+| Anthropic Console/API | You are API-first and accept separate Claude.ai access decisions | Good for automation; weaker for user-seat rollout |
+| Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, or Microsoft Foundry | You need cloud-provider billing, IAM, audit, or regional controls | Pair with endpoint-managed settings or a Claude apps gateway; some Claude.ai features still require Enterprise seats |
+
+Do not design the first ArcKit rollout around Claude Desktop. The current
+ArcKit package is a Claude Code plugin, and the full workflow depends on Claude
+Code plugin hooks, slash commands, subagents, MCP configuration, and project
+settings.
+
+### 2. Prepare identity, seats, and client version
+
+Before installing ArcKit broadly:
+
+- Configure SSO with SAML 2.0 or OIDC, test it with a pilot group, then enable
+  domain capture and enforce SSO once validated.
+- Use SCIM for phased rollout groups where available. Manual invites are fine
+  for a short pilot.
+- Assign a seat type that includes Claude Code. In Anthropic's current
+  Enterprise guidance, legacy seat-based plans need Premium seats; usage-based
+  plans need Chat + Code or Claude Enterprise seats.
+- Install Claude Code v2.1.200 or later on pilot machines. ArcKit's
+  SessionStart version hook warns below this floor; managed settings can block
+  startup below it.
+- Verify each pilot user with `claude --version`, `/status`, and
+  `/plugin list --enabled`.
+
+### 3. Deploy the ArcKit marketplace and plugin
+
+For a team repository pilot, commit a project-level `.claude/settings.json` so
+users are prompted to add the ArcKit marketplace when they trust the repo:
+
+```json
+{
+  "minimumVersion": "2.1.200",
+  "extraKnownMarketplaces": {
+    "arckit-claude": {
+      "source": {
+        "source": "github",
+        "repo": "tractorjuice/arckit-claude"
+      },
+      "autoUpdate": true
+    }
+  },
+  "enabledPlugins": {
+    "arckit@arckit-claude": true
+  }
+}
+```
+
+For a managed enterprise rollout, deliver the same marketplace through
+server-managed settings or endpoint-managed settings and add a hard version
+range:
+
+```json
+{
+  "requiredMinimumVersion": "2.1.200",
+  "requiredMaximumVersion": "2.1.999",
+  "extraKnownMarketplaces": {
+    "arckit-claude": {
+      "source": {
+        "source": "github",
+        "repo": "tractorjuice/arckit-claude"
+      },
+      "autoUpdate": true
+    }
+  },
+  "enabledPlugins": {
+    "arckit@arckit-claude": true
+  },
+  "strictKnownMarketplaces": [
+    {
+      "source": "github",
+      "repo": "tractorjuice/arckit-claude"
+    }
+  ],
+  "pluginSuggestionMarketplaces": ["arckit-claude"],
+  "pluginTrustMessage": "ArcKit is approved by the enterprise architecture team."
+}
+```
+
+Use `strictKnownMarketplaces` only after the pilot, when your support path is
+ready. It blocks non-allowlisted marketplaces before network or filesystem
+access. Claude Code v2.1.195 and later asks users to install and trust plugins
+before they run, even when a project enables them. For managed dev containers
+or golden images, pre-populate the plugin cache with `CLAUDE_CODE_PLUGIN_SEED_DIR`
+so startup does not need to clone the marketplace at runtime.
+
+### 4. Configure ArcKit options and MCP
+
+At enable time, the ArcKit plugin exposes user configuration for organization
+defaults and optional MCP credentials:
+
+| ArcKit option | Purpose | Enterprise default |
+|---------------|---------|--------------------|
+| `organisation_name` | Document Control organization field | Set to the legal entity or architecture function name |
+| `default_classification` | Initial classification for generated artifacts | Match your policy, for example `OFFICIAL` or `OFFICIAL-SENSITIVE` |
+| `governance_framework` | Default framework in prompts and templates | `UK Gov`, `UAE Federal`, or `Generic` |
+| `classification_scheme` | Classification ladder | `UK` unless your rollout uses UAE Smart Data terms |
+| `GOOGLE_API_KEY` | Google Developer Knowledge MCP | Leave blank until GCP research is approved |
+| `DATA_COMMONS_API_KEY` | Data Commons MCP | Leave blank until statistical lookups are approved |
+| `desktop_notifications` | Terminal desktop notifications for stale artifacts | Keep `false` unless the terminal fleet supports OSC notifications |
+
+ArcKit bundles six HTTP MCP servers in `plugins/arckit-claude/.mcp.json`:
+AWS Knowledge, Microsoft Learn, Google Developer Knowledge, Data Commons,
+govreposcrape, and UK Tenders. AWS Knowledge, Microsoft Learn, govreposcrape,
+and UK Tenders are keyless. Google Developer Knowledge and Data Commons need
+the sensitive plugin user-config keys above.
+
+If your organization blocks ad-hoc MCP additions, lock customization to plugin
+or managed sources and allowlist the ArcKit MCP endpoints by URL:
+
+```json
+{
+  "strictPluginOnlyCustomization": ["mcp"],
+  "allowManagedMcpServersOnly": true,
+  "allowedMcpServers": [
+    { "serverUrl": "https://knowledge-mcp.global.api.aws" },
+    { "serverUrl": "https://learn.microsoft.com/api/mcp" },
+    { "serverUrl": "https://developerknowledge.googleapis.com/mcp" },
+    { "serverUrl": "https://api.datacommons.org/mcp" },
+    { "serverUrl": "https://govreposcrape-api-1060386346356.us-central1.run.app/mcp" },
+    { "serverUrl": "https://tenders.run.cns.me/mcp" }
+  ]
+}
+```
+
+Do not put shared API keys into `managed-mcp.json`. That file is readable by
+users on the machine. Use per-user environment variables, OAuth, a
+`headersHelper`, or ArcKit's sensitive plugin user-config fields.
+
+### 5. Set the security and network baseline
+
+Minimum enterprise controls for ArcKit:
+
+- Deny reads of `.env`, secret stores, credential dumps, and build outputs in
+  managed `permissions.deny`.
+- Keep Claude Code's Manual permission mode as the default for regulated
+  repositories. Use Auto mode only after your `autoMode.environment` describes
+  trusted source control, artifact stores, and internal domains.
+- Use sandboxing or development containers for repositories that process
+  untrusted supplier documents, procurement evidence, or generated code.
+- Configure corporate proxy and CA trust via `HTTPS_PROXY`,
+  `NO_PROXY`, `CLAUDE_CODE_CERT_STORE`, and `NODE_EXTRA_CA_CERTS` where needed.
+- Allow egress to Claude authentication/API endpoints, the ArcKit marketplace
+  repository, and only the MCP endpoints your rollout approves.
+- Disable non-essential telemetry where policy requires it with
+  `CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC=1`, `DISABLE_TELEMETRY=1`,
+  `DISABLE_ERROR_REPORTING=1`, or `DISABLE_FEEDBACK_COMMAND=1`.
+- If you export prompts to OpenTelemetry, keep
+  `OTEL_LOG_ASSISTANT_RESPONSES=0` unless generated ArcKit artifacts are
+  explicitly approved for the telemetry backend.
+
+Commercial Claude Code usage is not used to train Anthropic models by default.
+Standard commercial retention is separate from local Claude Code transcripts,
+which are stored in plaintext under `~/.claude/projects/` for session resume.
+Set `cleanupPeriodDays` and endpoint data-handling rules to match your local
+records policy. Zero Data Retention is available only to qualified Enterprise
+accounts and must be confirmed with the Anthropic account team.
+
+### 6. Roll out by governance wave
+
+Use a narrow pilot before broad installation:
+
+1. **Architecture pilot**: one EA-owned repo, `projects/000-global/`, and one
+   live application project. Validate `/arckit:init`, `/arckit:principles`,
+   `/arckit:requirements`, `/arckit:adr`, `/arckit:health`, and
+   `/arckit:pages`.
+2. **Control pilot**: add managed settings, plugin marketplace restrictions,
+   MCP allowlists, secret-read denies, telemetry policy, and a support path for
+   `/status`, `/doctor`, `/plugin`, and `claude --safe-mode`.
+3. **Domain expansion**: onboard solution/domain repos with unique project IDs
+   and references back to `ARC-000-*` artifacts.
+4. **Operating model**: assign owners for global principles, reference
+   frameworks, project artifacts, templates, and ArcKit release adoption.
+5. **Quarterly review**: review Claude Code changelogs, ArcKit changelog
+   entries, enabled MCP servers, prompt telemetry labels, stale artifacts, and
+   template overrides.
+
+### Claude Code changelog items that matter for ArcKit enterprise
+
+| Version | Enterprise-relevant change | ArcKit impact |
+|---------|----------------------------|---------------|
+| v2.1.201 | Latest reviewed release as of 2026-07-04; adjusts Claude Sonnet 5 harness reminder handling | No ArcKit floor change identified; include in next tracker review |
+| v2.1.200 | Manual permission wording, project-scoped plugin loading from git worktrees, plugin validation, background-agent reliability, Windows hook execution, and shell/edit fixes | Current ArcKit floor because branch testing, hooks, background agents, and generated artifact edits are materially more reliable |
+| v2.1.198 | Server-managed settings cache hardening with proxy/API-routing/auth env vars withheld until a fresh fetch confirms the payload | Important for enterprises that deliver proxy or credential-related settings remotely |
+| v2.1.195 | Plugin trust/install is required on every plugin-loading path; plugin enable/disable handles marketplace/manifest name differences | Use seed images or clear onboarding instructions if you want low-friction install |
+| v2.1.191 | `forceRemoteSettingsRefresh` can make remote settings fail closed at startup | Use for high-control fleets after confirming `api.anthropic.com` or your gateway is reachable |
+| v2.1.176 | `availableModels` enforcement and hook path-condition fixes | Supports model governance and ArcKit's path-scoped hooks |
+| v2.1.166-v2.1.169 | Managed settings tolerate invalid entries and keep enforcing valid policy; `--safe-mode` added for troubleshooting | Reduces blast radius from malformed policy and gives support a clean recovery path |
+| v2.1.163 | `requiredMinimumVersion` / `requiredMaximumVersion`, `/plugin list --enabled`, and managed permission fetch fixes | Enables hard fleet version gates and plugin-state verification |
+| v2.1.152-v2.1.154 | `pluginSuggestionMarketplaces`, directory-based suggestions, and `defaultEnabled: false` for plugins | Lets ArcKit be suggested for architecture repos while overlays remain opt-in |
+| v2.1.145 | Agent and tool OpenTelemetry attributes | ArcKit session telemetry can attribute work to research and writer subagents |
+
+### ArcKit changelog items reflected in this guide
+
+| ArcKit entry | Enterprise impact |
+|--------------|-------------------|
+| Unreleased #580 | Reactive `FileChanged` context for `projects/*/external/` means newly added evidence can enter Claude Code context without restart or `/compact` |
+| Unreleased #580 | Claude Code floor raised to v2.1.200 and docs refreshed for managed model governance, OTEL response logging, MCP auth, safe-mode troubleshooting, and plugin branch testing |
+| v6.0.0 | `tractorjuice/arckit-claude` became the preferred single Claude Code marketplace repo for the core plugin plus overlays |
+| v5.13.1 | Claude Code floor v2.1.172 made wildcard-domain `WebFetch(domain:*.gov.uk)` restrictions reliable for regulated research-agent traffic |
+| June 2026 #576/#579 | Managed fleet settings, `/plugin list --enabled`, and per-agent telemetry guidance landed in the ArcKit docs and telemetry hooks |
+| v5.9.1 | Plugin-bundled MCP servers gained the prefixed tool allowlists and `alwaysLoad` settings needed for ArcKit subagents to reach them reliably |
+| Reader/orchestrator/writer security work | Research commands use explicit tool allowlists, untrusted-input boundaries, schema validation, and writer-only file access to reduce MCP/web prompt-injection risk |
+
+### Official Claude references
+
+- [Set up Claude Code for your organization](https://code.claude.com/docs/en/admin-setup)
+- [Enterprise deployment overview](https://code.claude.com/docs/en/third-party-integrations)
+- [Server-managed settings](https://code.claude.com/docs/en/server-managed-settings)
+- [Managed MCP configuration](https://code.claude.com/docs/en/managed-mcp)
+- [Enterprise network configuration](https://code.claude.com/docs/en/network-config)
+- [Claude Code security](https://code.claude.com/docs/en/security)
+- [Claude Code data usage](https://code.claude.com/docs/en/data-usage)
+- [Plugin marketplaces](https://code.claude.com/docs/en/plugin-marketplaces)
+- [Plugin relevance and organization recommendations](https://code.claude.com/docs/en/plugin-relevance)
+- [Claude Code changelog](https://code.claude.com/docs/en/changelog)
+- [Set up single sign-on](https://support.claude.com/en/articles/13132885-set-up-single-sign-on-sso)
+- [Claude Enterprise plan](https://support.claude.com/en/articles/9797531-what-is-the-enterprise-plan)
+
 ## The Core Pattern: `000-global/` + numbered projects
 
 Every ArcKit repo reserves `projects/000-global/` for **cross-cutting artifacts** — principles, enterprise standards, reference patterns, and common ADRs that apply across every downstream project.
@@ -218,11 +464,11 @@ We're looking for a real-world enterprise case study to anchor this guide — id
 ## Fleet & Version Governance (managed settings)
 
 At enterprise scale you usually want to govern *which* Claude Code versions run
-ArcKit, *which* models are available, and *which* plugins teams may install —
-centrally, not repo by repo. Claude Code's
-[managed settings](https://code.claude.com/docs/en/permissions#managed-settings)
-(admin-deployed policy that users cannot override) give you the control point
-ArcKit benefits from.
+ArcKit, *which* models are available, *which* plugins teams may install, and
+*which* MCP servers may run - centrally, not repo by repo. Claude Code's
+[managed settings](https://code.claude.com/docs/en/settings#settings-files)
+and [server-managed settings](https://code.claude.com/docs/en/server-managed-settings)
+give administrators the control point ArcKit benefits from.
 
 ### Pin a version range across the fleet
 
@@ -243,11 +489,11 @@ features ArcKit relies on; use `requiredMaximumVersion` as a known-good ceiling
 so a regulated fleet doesn't auto-adopt a release before you've validated it.
 These are *managed-settings only* — a plugin or repo cannot set them.
 
-> **Run v2.1.166+ for reliable enforcement.** On earlier versions a single
-> invalid entry anywhere in the managed-settings file could silently disable
-> enforcement of the remaining valid policies. v2.1.166 fixes this and also
-> fixes `allowedMcpServers` / `deniedMcpServers` predicates that use `${VAR}`
-> references not matching.
+> **Run v2.1.169+ for reliable managed-policy salvage.** Current Claude Code
+> strips invalid managed-settings entries, surfaces the validation error, and
+> keeps enforcing every remaining valid policy. Older clients had weaker
+> behavior, so do not rely on hard fleet controls until the client floor is
+> enforced.
 
 For an **individual** user or repo that just wants to avoid drifting *below*
 the floor, the softer, user-scoped `minimumVersion` in `.claude/settings.json`

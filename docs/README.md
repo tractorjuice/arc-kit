@@ -34,7 +34,7 @@ See the [full articles index](articles.html) for all ArcKit release notes, analy
 - [Upgrading ArcKit](guides/upgrading.md) - Version upgrade instructions
 - [Remote Control](guides/remote-control.md) - Remote architecture governance
 - [Productivity](guides/productivity.md) - Workflow optimization tips
-- [ArcKit at Enterprise Scale](guides/enterprise-scale.md) - Multi-repo, multi-application topology and governance
+- [ArcKit at Enterprise Scale](guides/enterprise-scale.md) - Claude enterprise deployment, managed settings, MCP controls, and multi-repo governance
 
 ### Discovery
 
