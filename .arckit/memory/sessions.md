@@ -10,6 +10,63 @@ Automated session summaries captured by the ArcKit session-learner hook.
   - chore: bump version to 4.6.1
   - fix: trim skill descriptions to fit 250-char context cap (#215) (#266)
 
+### 2026-07-04 12:00 - general
+
+- **Commits:** 1 | **Files changed:** 2
+- **Artifacts touched:** 0
+- **Summary:**
+  - fix: point repo plugin at standalone repository
+
+### 2026-07-04 11:56 - general
+
+- **Commits:** 1 | **Files changed:** 28
+- **Artifacts touched:** 0
+- **Summary:**
+  - feat: add repository tooling plugin
+
+### 2026-07-04 11:04 - general
+
+- **Commits:** 1 | **Files changed:** 1
+- **Artifacts touched:** 0
+- **Summary:**
+  - test: guard claude user config titles (#639)
+
+### 2026-07-04 07:05 - general
+
+- **Commits:** 1 | **Files changed:** 4
+- **Artifacts touched:** 0
+- **Summary:**
+  - docs: add Claude enterprise deployment guide (#645)
+
+### 2026-07-04 05:22 - general
+
+- **Commits:** 1 | **Files changed:** 10
+- **Artifacts touched:** 0
+- **Summary:**
+  - fix: inject external context on file changes (#644)
+
+### 2026-07-03 20:59 - architecture
+
+- **Commits:** 1 | **Files changed:** 66
+- **Artifacts touched:** 2
+- **Summary:**
+  - docs: update Claude Code platform guidance (#643)
+
+### 2026-07-03 20:37 - general
+
+- **Commits:** 1 | **Files changed:** 32
+- **Artifacts touched:** 0
+- **Summary:**
+  - chore: bump Claude Code floor to v2.1.200 (#642)
+
+### 2026-07-03 20:16 - general
+
+- **Commits:** 2 | **Files changed:** 88
+- **Artifacts touched:** 0
+- **Summary:**
+  - chore: bump version to 6.1.7
+  - docs(nhs): correct DCB0129 severity/likelihood numbering caveat (#641)
+
 ### 2026-06-15 17:48 — failure (oauth_org_not_allowed)
 
 - **Status:** session interrupted by API error
@@ -218,76 +275,3 @@ Automated session summaries captured by the ArcKit session-learner hook.
 - **Summary:**
   - chore(release): v5.11.2
 - **Telemetry:** 16 tool calls (p50=2017ms, p95=51462ms)
-
-### 2026-06-08 08:46 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 65
-- **Artifacts:** none detected
-- **Summary:**
-  - refactor: move generated extension dirs under extensions/ (#588)
-- **Telemetry:** 50 tool calls (p50=1510ms, p95=8317ms)
-
-### 2026-06-08 06:47 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 2
-- **Artifacts:** none detected
-- **Summary:**
-  - docs: note Claude Code v2.1.166 fallbackModel + managed-settings hardening (#587)
-- **Telemetry:** 4 tool calls (p50=4570ms, p95=5408ms)
-
-### 2026-06-08 06:45 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 2
-- **Artifacts:** none detected
-- **Summary:**
-  - docs: note Claude Code v2.1.166 fallbackModel + managed-settings hardening
-- **Telemetry:** 18 tool calls (p50=2348ms, p95=24644ms)
-
-### 2026-06-07 10:45 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 5
-- **Artifacts:** none detected
-- **Summary:**
-  - chore(docs): tidy docs/ — untrack confidential plan, relocate stray files (#586)
-- **Telemetry:** 11 tool calls (p50=3240ms, p95=7153ms)
-
-### 2026-06-07 10:34 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 5
-- **Artifacts:** none detected
-- **Summary:**
-  - chore(docs): tidy docs/ — untrack confidential plan, relocate stray files
-- **Telemetry:** 14 tool calls (p50=2406ms, p95=3889ms)
-
-### 2026-06-07 10:17 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 36
-- **Artifacts:** none detected
-- **Summary:**
-  - chore(release): v5.11.1
-- **Telemetry:** 20 tool calls (p50=2565ms, p95=67289ms)
-
-### 2026-06-07 10:07 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 777
-- **Artifacts:** none detected
-- **Summary:**
-  - refactor: move the 11 Claude Code plugins under plugins/ (#585)
-- **Telemetry:** 3 tool calls (p50=8254ms, p95=8880ms)
-
-### 2026-06-07 10:04 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 777
-- **Artifacts:** none detected
-- **Summary:**
-  - refactor: move the 11 Claude Code plugins under plugins/
-- **Telemetry:** 150 tool calls (p50=1684ms, p95=14008ms) | by agent: main(103 calls, p95=18361ms), Explore(37 calls, p95=5767ms), claude-code-guide(10 calls, p95=3302ms)
-
