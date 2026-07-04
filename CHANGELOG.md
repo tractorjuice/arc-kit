@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- **Reactive external-document context (#580).** Added Claude Code
+  `FileChanged` hook coverage for `projects/*/external/` directories so newly
+  added or changed evidence is injected into session context without waiting
+  for a restart, `/compact`, or another `/arckit:` command.
 - **Claude Code minimum-version floor raised to v2.1.200.** Updated the
   runtime version check, repo/test-repo settings, and docs to require the
   latest v2.1.200 floor for project-scoped plugin loading from git worktrees,
