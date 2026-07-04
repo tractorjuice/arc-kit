@@ -14,7 +14,8 @@
 import { readdirSync, appendFileSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { isDir, isFile, listFilesRecursive, mtimeMs, readText, parseHookInput } from './hook-utils.mjs';
+import { isDir, isFile, listFilesRecursive, mtimeMs, readText, parseHookInput, findRepoRoot } from './hook-utils.mjs';
+import { collectExternalWatchPaths } from './external-context-utils.mjs';
 
 const data = parseHookInput();
 
@@ -129,6 +130,7 @@ const output = {
   hookSpecificOutput: {
     hookEventName: 'SessionStart',
     additionalContext: context,
+    watchPaths: collectExternalWatchPaths(findRepoRoot(cwd) || cwd),
   },
 };
 console.log(JSON.stringify(output));

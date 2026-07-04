@@ -2,19 +2,22 @@
 
 > **Guide Origin**: Official | **ArcKit Version**: [VERSION]
 
-ArcKit's Claude Code plugin includes 17 automation hooks across 7 event types. Hooks run automatically — no manual configuration required.
+ArcKit's Claude Code plugin includes automation hooks across 10 event types. Hooks run automatically — no manual configuration required.
 
 ## Overview
 
 | Event | Hooks | When it fires |
 |-------|-------|---------------|
-| **SessionStart** | arckit-session, version-check | Session start, resume, clear, compact |
+| **SessionStart** | arckit-session, version-check, v5-migration-banner, notify-stale-artifacts | Session start, resume, clear, compact |
 | **Stop** | session-learner | Session ends normally |
 | **StopFailure** | session-learner | Session ends with error |
-| **UserPromptSubmit** | arckit-context, secret-detection, + 6 command-specific | Every user message |
-| **PreToolUse** | validate-arc-filename, score-validator, file-protection, secret-file-scanner | Before Write or Edit |
-| **PostToolUse** | update-manifest | After Write |
+| **UserPromptSubmit** | arckit-context, secret-detection, sync-guides, graph-inject | Every user message and matched ArcKit commands |
+| **PreToolUse** | allow-plugin-internals, inject-agent-context, validate-arc-filename, score-validator, validate-wardley-math, file-protection, secret-file-scanner | Before selected tool calls |
+| **PostToolUse** | update-manifest, provenance-stamp, tidy-wardley-labels, telemetry | After selected tool calls |
+| **TaskCreated** | telemetry | When an agent task is created |
 | **PermissionRequest** | allow-mcp-tools | MCP tool permission prompt |
+| **FileChanged** | external-context-watch | Watched external documents change |
+| **PostCompact** | postcompact-rehydrate | After context compaction |
 
 ## SessionStart Hooks
 
@@ -27,6 +30,7 @@ Also detects:
 - Whether a `projects/` directory exists
 - External files newer than the latest artifacts (prompts re-running commands)
 - Recent session history from `.arckit/memory/sessions.md`
+- `projects/*/external/` directories to watch for mid-session evidence changes
 
 ### version-check
 
@@ -37,6 +41,21 @@ Compares the local plugin version against the latest GitHub release tag. Shows a
 ### session-learner
 
 Fires when a session ends (both normal and failure). Records session activity — which projects were touched, what artifact types were created or modified — to `.arckit/memory/sessions.md` for context in future sessions.
+
+## FileChanged Hooks
+
+### external-context-watch
+
+`arckit-session` registers every existing `projects/*/external/` directory as a
+dynamic watch path at session start. `external-context-watch` injects refreshed
+project context when a watched external document is added, changed, or removed,
+and refreshes the watch list so newly created nested external directories are
+picked up after the next file-change event.
+
+This means a briefing, transcript, vendor pack, regulation, or architecture
+note dropped into `external/` mid-session is surfaced to Claude without waiting
+for a restart, `/compact`, or another `/arckit:` command. README files inside
+`external/` are ignored.
 
 ## UserPromptSubmit Hooks
 
@@ -95,6 +114,21 @@ After a file is written to `projects/`, updates `docs/manifest.json` with the ne
 
 After an ArcKit artifact is written or edited, stamps build provenance when the hook can derive build context or command effort. It can also add OKF-compatible frontmatter when explicitly enabled with `ARCKIT_OKF_FRONTMATTER=1` or `.arckit/config.json` containing `{ "okfFrontmatter": true }`.
 
+## TaskCreated Hooks
+
+### telemetry
+
+Records ArcKit agent spawns so session summaries can show which subagents ran
+and how much tool activity they performed.
+
+## PostCompact Hooks
+
+### postcompact-rehydrate
+
+Re-injects the same project inventory used by `arckit-context` after manual or
+automatic compaction so dynamic project state is not lost from the context
+window.
+
 ## PermissionRequest Hooks
 
 ### allow-mcp-tools
@@ -108,6 +142,7 @@ These are shared libraries, not hooks themselves:
 | File | Purpose |
 |------|---------|
 | **hook-utils.mjs** | Shared utilities: `parseHookInput()`, `findRepoRoot()`, `extractDocType()`, file I/O helpers |
+| **external-context-utils.mjs** | Shared helpers for external-document watch paths and path filtering |
 | **graph-utils.mjs** | Dependency graph construction (nodes, edges, requirements, principles, risks, vendors, externals) |
 | **graph-rollups.mjs** | Shared health, coverage, and compliance computations: `tagNodeHealth()`, `computeAllProjectRollups()`, plus the canonical `ESSENTIAL_TYPES` / `HIGH_SEVERITY_TYPES` / `CONTEXTUAL_TYPES` / `STALE_THRESHOLD_DAYS` constants used by both `graph-inject` and `sync-guides` |
 | **hooks.json** | Hook registration — maps events and matchers to handler commands |

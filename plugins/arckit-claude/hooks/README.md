@@ -1,6 +1,6 @@
 # ArcKit Plugin Hooks
 
-Hook handlers live in this directory and are registered in `hooks.json`. Supported hook events include `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop`, `StopFailure`, `PermissionRequest`, plus the newer `PostCompact` (v2.1.76), `FileChanged`/`CwdChanged`/`TaskCreated` (v2.1.83–84), `PermissionDenied` (v2.1.89), and `PreCompact` blocking (v2.1.105).
+Hook handlers live in this directory and are registered in `hooks.json`. Supported hook events include `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Stop`, `StopFailure`, `PermissionRequest`, plus the newer `PostCompact` (v2.1.76), `FileChanged`/`CwdChanged`/`TaskCreated` (v2.1.83-84), `PermissionDenied` (v2.1.89), and `PreCompact` blocking (v2.1.105).
 
 ## `args:` Exec Form (v2.1.139+)
 
@@ -117,12 +117,35 @@ Companion to `keep-coding-instructions: true` (v2.1.94): that flag preserves the
 
 Reuses `buildProjectContext` from `project-context-builder.mjs` (same builder as `arckit-context.mjs` and `inject-agent-context.mjs`). No new marker-file convention — the filesystem (`projects/`, ARC artefact files, `external/`, `policies/`) is the source of truth, so the post-compact view is always consistent with the live repo state. Exits silently with `{}` when no `projects/` directory exists.
 
+## Reactive External Context (`external-context-watch.mjs`)
+
+SessionStart and FileChanged now cooperate to keep external document context
+live during a session:
+
+- `arckit-session.mjs` returns `hookSpecificOutput.watchPaths` for every
+  existing `projects/*/external/` directory, including nested subdirectories,
+  so Claude Code starts watching external evidence as soon as the plugin loads.
+- `external-context-watch.mjs` runs on `FileChanged`. When the changed path is
+  under a project `external/` directory and is not that directory's README, it
+  injects a compact "ArcKit External Document Update" notice plus refreshed
+  `buildProjectContext()` output via `hookSpecificOutput.additionalContext`.
+  It also returns the current `watchPaths` list so newly created nested
+  external directories can be watched after the next file-change event.
+
+This closes the gap where a user could drop a briefing, transcript, vendor
+pack, regulation, or architecture note into `external/` mid-session and the
+model would not see it until the next `/arckit:` command, `/compact`, or
+session restart. The hook is observational: it cannot block file changes, and
+it has no marker-file state. The filesystem remains the source of truth.
+
 ## All Registered Hooks
 
 See `hooks.json` for the full registration. Current handler files in this directory:
 
 - `allow-mcp-tools.mjs` — pre-approve specific MCP tool calls
 - `arckit-context.mjs` / `arckit-session.mjs` — session context + summary
+- `external-context-watch.mjs` / `external-context-utils.mjs` — reactive
+  external-document watch paths and FileChanged context injection
 - `file-protection.mjs` — guards critical files
 - `graph-inject.mjs` / `graph-rollups.mjs` / `graph-utils.mjs` — requirement-graph injection
 - `hook-utils.mjs` — shared helpers
