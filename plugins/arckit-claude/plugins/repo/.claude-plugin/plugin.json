@@ -5,9 +5,9 @@
   "description": "Repository tooling for ArcKit, starting with source-grounded, agent-readable repository docs inspired by OpenWiki.",
   "author": {
     "name": "ArcKit Contributors",
-    "url": "https://github.com/tractorjuice/arckit-claude"
+    "url": "https://github.com/tractorjuice/arckit-repo"
   },
-  "repository": "https://github.com/tractorjuice/arckit-claude",
+  "repository": "https://github.com/tractorjuice/arckit-repo",
   "license": "MIT",
   "defaultEnabled": false,
   "dependencies": [
