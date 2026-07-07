@@ -1191,6 +1191,21 @@
       "Future-Proofing Your Multi-Platform Strategy",
       "Other Platforms and Future Considerations",
       "Platform-Specific ArcKit Implementations"
+    ],
+    [
+      "Mapping ArcKit to ITIL Service Management Processes",
+      "Integrating with Existing Governance Frameworks",
+      "Enterprise Integration and Governance Alignment"
+    ],
+    [
+      "Aligning with TOGAF Architecture Development Method",
+      "Integrating with Existing Governance Frameworks",
+      "Enterprise Integration and Governance Alignment"
+    ],
+    [
+      "COBIT Governance and Control Objectives Integration",
+      "Integrating with Existing Governance Frameworks",
+      "Enterprise Integration and Governance Alignment"
     ]
   ],
   "failed_topics": [],
@@ -1485,24 +1500,24 @@
     },
     "Mapping ArcKit to ITIL Service Management Processes": {
       "book": {
-        "content": "",
-        "status": "pending"
+        "content": "# Mapping ArcKit to ITIL Service Management Processes\n\nThe integration of ArcKit with ITIL Service Management Processes represents a strategic convergence of architecture governance and IT service management best practices. As organizations adopt AI-driven development at scale, aligning ArcKit's architecture-as-code philosophy with ITIL's structured service management framework enables enterprises to achieve both technical consistency and operational excellence.",
+        "status": "complete"
       },
       "chapter_title": "Enterprise Integration and Governance Alignment",
       "section_title": "Integrating with Existing Governance Frameworks"
     },
     "Aligning with TOGAF Architecture Development Method": {
       "book": {
-        "content": "",
-        "status": "pending"
+        "content": "# Aligning with TOGAF Architecture Development Method\n\nThe alignment of ArcKit with TOGAF's Architecture Development Method represents a strategic integration of practical architecture governance with established enterprise architecture methodology. TOGAF provides a comprehensive approach for developing and managing an organization's architecture, while ArcKit offers the operational tools and governance mechanisms to implement and enforce architectural standards in the context of AI-driven development.",
+        "status": "complete"
       },
       "chapter_title": "Enterprise Integration and Governance Alignment",
       "section_title": "Integrating with Existing Governance Frameworks"
     },
     "COBIT Governance and Control Objectives Integration": {
       "book": {
-        "content": "",
-        "status": "pending"
+        "content": "# COBIT Governance and Control Objectives Integration\n\nThe integration of ArcKit with COBIT represents a strategic alignment of operational architecture governance with comprehensive IT governance frameworks. COBIT provides a robust, adaptable solution for AI governance, ensuring alignment with business objectives, compliance goals, and ethical considerations. In 2026, COBIT has evolved to address the unique challenges of AI and LLM governance, making it an essential framework for organizations seeking to implement ArcKit at enterprise scale with proper governance, risk management, and compliance controls.",
+        "status": "complete"
       },
       "chapter_title": "Enterprise Integration and Governance Alignment",
       "section_title": "Integrating with Existing Governance Frameworks"
