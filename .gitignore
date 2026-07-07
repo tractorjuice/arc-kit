@@ -211,3 +211,7 @@ docs/*LinkedInDataExport*
 # arckit-consulting/ is a clone of the separate tractorjuice/arckit-fde repo.
 # Per project memory, FDE-site changes belong in that repo, not here.
 arckit-consulting/
+
+books/
+plugins/arckit-deepbook/
+output/
