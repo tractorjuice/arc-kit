@@ -62,6 +62,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 ## Workflow Stages
 
 ### Step 0: Initialize State and Check Resume
+
 - Generate session identity (`deepbook-{YYYYMMDD}-{HHMMSS}-{random-6-chars}`)
 - Create safe book title slug
 - Check for existing checkpoint in `.arckit/deepbook-checkpoints/`
@@ -70,6 +71,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 **Checkpoint location**: `.arckit/deepbook-checkpoints/{session_id}.json`
 
 ### Step 1: Grounding and Topic Refinement
+
 - Assemble external knowledge from URL, file, or external directories
 - Execute refinement prompt (`pp-refine-top-78c850`)
 - Extract: Refined Topic, Potential Subtitle, Explanation, Key Areas, Differentiation
@@ -79,6 +81,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 **Temperature**: 0.3
 
 ### Step 2: Book Structure Generation
+
 - Execute structure prompt (`pp-prepare-bo-87a490`) with refined topic and key areas
 - Parse JSON output for chapters, sections, subsections
 - Fallback to text parsing if JSON invalid
@@ -90,6 +93,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 **Temperature**: 0.3
 
 ### Step 3: Structure Review
+
 - Display formatted book structure as markdown
 - Use `AskUserQuestion` for user interaction
 - Options: Approve, Reject, Refresh
@@ -101,6 +105,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 **Temperature**: 0.5
 
 ### Step 4: Topic List and Placeholders
+
 - Flatten structure into topic list: `(subsection, section_title, chapter_title)` tuples
 - Initialize state for tracking:
   - `all_topics`: List of all topic tuples
@@ -110,6 +115,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 - Save checkpoint
 
 ### Step 5: Per-Topic Generation Loop
+
 **Main loop** processing each topic in order:
 
 1. **Skip if already processed** (check `processed_topics`)
@@ -131,6 +137,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 **Temperature**: 0.3
 
 **Content types supported**:
+
 - paragraph: Plain text
 - heading: Levels 4 or 5
 - list: Bullet list with items
@@ -139,6 +146,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 - placeholder: Placeholder text
 
 ### Step 6: Final Book Assembly
+
 **Executes when**: `len(processed_topics) + len(failed_topics) >= len(all_topics)`
 
 1. **Combine content**:
@@ -169,30 +177,35 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 ## Sector Contexts
 
 ### Government
+
 - **Context**: Public sector and government digital transformation
 - **Example Sources**: GOV.UK, Government Digital Service, Cabinet Office, UK Government frameworks
 - **Target Audience**: Senior civil servants, digital leaders, policy makers, public sector CIOs
 - **Guidance**: Focus on citizen outcomes, service delivery, policy implementation, and public value
 
 ### Neutral
+
 - **Context**: General business and enterprise
 - **Example Sources**: Harvard Business Review, McKinsey, BCG, Deloitte Insights
 - **Target Audience**: Business executives, managers, consultants, entrepreneurs
 - **Guidance**: Focus on commercial outcomes, ROI, competitive advantage, and market positioning
 
 ### Healthcare
+
 - **Context**: Healthcare and life sciences
 - **Example Sources**: NHS, WHO, BMJ, medical journals, healthcare providers
 - **Target Audience**: Clinical leaders, healthcare administrators, health tech professionals, CIOs
 - **Guidance**: Focus on patient outcomes, clinical effectiveness, regulatory compliance, and care quality
 
 ### Finance
+
 - **Context**: Financial services and fintech
 - **Example Sources**: Bank of England, FCA, financial institutions, fintech startups
 - **Target Audience**: CFOs, risk officers, fintech entrepreneurs, regulators, compliance officers
 - **Guidance**: Focus on risk management, compliance, financial innovation, and market stability
 
 ### Technology
+
 - **Context**: Technology and digital innovation
 - **Example Sources**: TechCrunch, Gartner, IEEE, major tech companies, CTO publications
 - **Target Audience**: CTOs, engineers, product managers, innovators, architects
@@ -249,6 +262,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 **Supported extensions**: `.md`, `.txt`, `.json`, `.yaml`, `.yml`
 
 **Constraints**:
+
 - Skip files > 10MB
 - Skip binary files
 - Truncate individual files to first 50,000 characters
@@ -300,29 +314,35 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 ## Example Workflow
 
 ### 1. Start a new book
+
 ```bash
 /arckit:deepbook "AI Governance in Enterprise"
 ```
+
 - DeepBook will refine the topic
 - Generate book structure
 - Present structure for your approval
 - Upon approval, begin per-topic generation
 
 ### 2. Resume interrupted session
+
 ```bash
 /arckit:deepbook --resume
 ```
+
 - Finds most recent checkpoint
 - Restores all state
 - Continues from where it left off
 
 ### 3. Generate with grounding
+
 ```bash
 /arckit:deepbook "Cloud Migration Strategy" \
   --reference-url https://aws.amazon.com/cloud-migration \
   --sector technology \
   --auto-approve
 ```
+
 - Fetches external knowledge from URL
 - Uses technology sector context
 - Skips structure review
@@ -355,6 +375,7 @@ DeepBook is an autonomous book generation agent that executes a 6-stage workflow
 ## Support
 
 For issues or questions:
+
 - Check the checkpoint file for state information
 - Review the structure JSON for book organization
 - Verify external knowledge sources are accessible
