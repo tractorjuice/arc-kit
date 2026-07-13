@@ -13,7 +13,7 @@ The command ships in the optional `arckit-repo` plugin. It is inspired by OpenWi
 Install the optional repository plugin with the ArcKit core plugin:
 
 ```bash
-claude plugin install arckit arckit-repo
+claude plugin install arckit-repo
 ```
 
 Create the first repository wiki:
