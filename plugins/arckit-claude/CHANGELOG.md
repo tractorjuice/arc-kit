@@ -7,28 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.2.0] — 2026-07-13
+
 ### Added
 
 - **Repository plugin.** Added the optional `arckit-repo` plugin, starting with
   `/arckit:repo-docs` to generate and maintain source-grounded, agent-readable
   repository documentation under `docs/repository/`, adapting OpenWiki-style
-  targeted discovery and incremental update prompts for ArcKit.
+  targeted discovery and incremental update prompts for ArcKit. It is a
+  Claude Code only tooling plugin with no core dependency, following the
+  `arckit-fde` shape: it ships via the marketplace but is not converted into
+  the non-Claude extensions (#651).
 
 ### Changed
 
-- **Reactive external-document context (#580).** Added Claude Code
+- **Reactive external-document context (#580, #644).** Added Claude Code
   `FileChanged` hook coverage for `projects/*/external/` directories so newly
   added or changed evidence is injected into session context without waiting
   for a restart, `/compact`, or another `/arckit:` command.
-- **Claude Code minimum-version floor raised to v2.1.200.** Updated the
+- **Claude Code minimum-version floor raised to v2.1.200 (#642).** Updated the
   runtime version check, repo/test-repo settings, and docs to require the
   latest v2.1.200 floor for project-scoped plugin loading from git worktrees,
   `claude agents --plugin-dir` agent/skill visibility, and the recent
   background-subagent reliability and hook diagnostics fixes tracked in #580.
-- **Claude Code v2.1.200 documentation backlog (#580).** Added managed model
-  governance, OTEL assistant-response, MCP auth, safe-mode troubleshooting,
-  plugin branch-testing, and ArcKit skill-layout guidance; refreshed stale
-  Claude model examples for Sonnet 5-era defaults.
+- **Claude Code v2.1.200 documentation backlog (#580, #643, #645).** Added
+  managed model governance, OTEL assistant-response, MCP auth, safe-mode
+  troubleshooting, plugin branch-testing, and ArcKit skill-layout guidance,
+  plus a Claude enterprise deployment guide; refreshed stale Claude model
+  examples for Sonnet 5-era defaults.
+- **DeepBook guide marked proprietary (#651).** `arckit-deepbook` is
+  proprietary software in a private repository and is not part of the
+  open-source ArcKit distribution. Its guide now states that it is not
+  installable from the public marketplace and that no rights are granted
+  without written consent.
+
+### Fixed
+
+- **User-config title validation guard (#639).** Added a test asserting every
+  plugin `userConfig` entry declares a `title`, so a missing field fails in CI
+  instead of breaking `claude plugin validate` and marketplace installs.
+- **Removed DeepBook generated content from the public repository (#650).**
+  Book drafts, run checkpoints, and a symlink to an absolute path outside the
+  repository had been committed. They are untracked and ignored, restoring a
+  green `Lint Markdown` build.
 
 ## [6.1.7] — 2026-07-03
 
