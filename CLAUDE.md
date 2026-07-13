@@ -130,7 +130,11 @@ Plugin-level user config is declared in `plugins/arckit-claude/.claude-plugin/pl
 
 Substitution uses `${user_config.KEY}`. Sensitive values are never substituted into prompt content. The converter rewrites `${user_config.KEY}` → `${KEY}` for non-Claude extensions (which fall back to shell env vars).
 
-**MCP `alwaysLoad`** (v2.1.121): `aws-knowledge` and `microsoft-learn` are eagerly loaded since the AWS/Azure research commands always reach for them. Other MCP servers stay deferred. The field is passed through unchanged to non-Claude extensions.
+**MCP `alwaysLoad`** (v2.1.121): **all six** bundled servers set it — not just the AWS/Azure pair. This is load-bearing, not an optimisation: a deferred (non-`alwaysLoad`) plugin MCP server is **not injected into subagent context**, so only the main agent could reach it via ToolSearch. Every MCP-backed agent therefore needs its server eagerly loaded — `arckit-gcp-research` calls `google-developer-knowledge`, `arckit-datascout-reader` calls `datacommons-mcp`, the `gov-*` agents call `govreposcrape`, and so on. **Do not remove `alwaysLoad` to tidy up a server that fails to connect** — it breaks the agent that depends on it. (See also the tool-name prefix rule: agents must allowlist `mcp__plugin_arckit_<server>__<tool>`; a bare `mcp__<server>__<tool>` matches nothing.)
+
+The two **keyed** servers (`google-developer-knowledge`, `datacommons-mcp`) need `${user_config.*}` API keys. On a keyless session they attempt to connect at startup, fail auth, and are marked **failed** in `/plugin` — the session continues normally, bounded by the connect timeout. This is expected and harmless; there is no way to conditionally omit an MCP server based on whether its config value is set, so a blank key means a failed server, **not** an absent one. Do not document it as "leave blank to disable".
+
+The field is passed through unchanged to non-Claude extensions.
 
 ### Plugin Hooks
 

@@ -23,13 +23,13 @@
   "userConfig": {
     "GOOGLE_API_KEY": {
       "title": "Google API Key",
-      "description": "Google API key for the google-developer-knowledge MCP server (optional — leave blank to disable)",
+      "description": "Google API key for the google-developer-knowledge MCP server, used by /arckit:gcp-research. Only needed if you run that command. Left blank, the server shows as 'failed to connect' in /plugin — harmless, and everything else works normally.",
       "type": "string",
       "sensitive": true
     },
     "DATA_COMMONS_API_KEY": {
       "title": "Data Commons API Key",
-      "description": "Data Commons API key for the datacommons-mcp MCP server (optional — leave blank to disable)",
+      "description": "Data Commons API key (from apikeys.datacommons.org) for the datacommons-mcp MCP server, used by /arckit:datascout. Only needed if you run that command. Left blank, the server shows as 'failed to connect' in /plugin — harmless, and everything else works normally.",
       "type": "string",
       "sensitive": true
     },
