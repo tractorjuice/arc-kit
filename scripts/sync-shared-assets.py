@@ -28,10 +28,11 @@ SHARED_DIRS = ("templates/_partials", "references")
 
 
 # Plugins exempt from the shared-asset sync: the core plugin itself (the source
-# of truth), and `arckit-fde` — a Claude-only tooling plugin (white-label FDE
-# site generator) that has no governance commands and references none of the
-# shared partials/references, so it must not carry them.
-SYNC_EXEMPT_PLUGINS = {"arckit-claude", "arckit-fde"}
+# of truth), plus the tooling plugins — `arckit-fde` (white-label FDE site
+# generator) and `arckit-repo` (repository docs). Tooling plugins have no
+# governance commands and reference none of the shared partials/references, so
+# they must not carry them.
+SYNC_EXEMPT_PLUGINS = {"arckit-claude", "arckit-fde", "arckit-repo"}
 
 
 def discover_community_plugins() -> list[Path]:

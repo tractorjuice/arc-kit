@@ -213,5 +213,12 @@ docs/*LinkedInDataExport*
 arckit-consulting/
 
 books/
-plugins/arckit-deepbook/
 output/
+
+# DeepBook: the plugin lives in the separate (private) tractorjuice/arckit-deepbook
+# repo and is symlinked in for local dev. Generated book content and run
+# checkpoints must never be committed to this public repo.
+# No trailing slash on the symlink rule — a "dir/" pattern does not match a symlink.
+plugins/arckit-deepbook
+deepbook-test-output/
+.arckit/deepbook-checkpoints/
