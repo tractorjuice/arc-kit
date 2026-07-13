@@ -31,8 +31,9 @@ PLUGIN_SOURCES = [
     "plugins/arckit-uk-nhs",
     "plugins/arckit-togaf-adm",
     "plugins/arckit-agent-architecture",
-    "plugins/arckit-repo",
 ]
+# arckit-fde and arckit-repo are absent by design: tooling plugins with no
+# governance templates to mirror into .arckit/templates/.
 CLI_TEMPLATES_DIR = os.path.join(REPO_ROOT, ".arckit", "templates")
 
 _TEMPLATE_RE = re.compile(r"\$\{CLAUDE_PLUGIN_ROOT\}/templates/([\w-]+\.md)")

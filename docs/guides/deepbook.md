@@ -1,8 +1,24 @@
 # DeepBook Guide
 
 > **Guide Origin**: Official | **ArcKit Version**: 4.20.1+ | **Status**: BETA
+> **Licence**: PROPRIETARY — not open source, not publicly available
 
 `/arckit:deepbook` generates comprehensive books using DeepBook's large mode workflow with stateful checkpoints and per-topic generation.
+
+---
+
+## Licence and Availability
+
+**DeepBook is proprietary software and is not part of the open-source ArcKit distribution.**
+
+Unlike every other plugin documented here, `arckit-deepbook` is **not** published in the ArcKit marketplace and is **not** covered by the licence that governs the rest of ArcKit. It lives in a separate, private repository.
+
+- **Licence**: Proprietary and confidential. Copyright (c) 2026 Mark Craddock. All rights reserved.
+- **Availability**: Private. It cannot be installed from the public ArcKit marketplace.
+- **Permission**: No right is granted to use, copy, modify, distribute, or sublicense the plugin without prior written consent of the copyright holder.
+- **Generated output**: Books you generate remain your own. The licence governs the software, not its output.
+
+This guide is published for reference and for licensed users. If you want access, contact the copyright holder — installing it is not a self-service step.
 
 ---
 
@@ -10,7 +26,7 @@
 
 DeepBook is an autonomous book generation agent that executes a 6-stage workflow to create comprehensive non-fiction books. It replicates DeepBook's large mode behavior with faithful prompt replication and ArcKit formatting.
 
-**Source**: DeepBook repository commit `318776efe29a995da4b52838389df920d479bf36` (2026-05-03)
+**Source**: DeepBook repository, which is owned by the same copyright holder and covered by the same proprietary terms.
 
 ---
 
