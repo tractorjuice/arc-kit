@@ -109,6 +109,7 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
    - `controls:` array — at minimum the corresponding controls (C001+) referenced by the hazards
    - Render the human-readable Markdown table below the frontmatter showing ID, Description, Sev, Like, Risk, Controls, Residual Risk, Status
    - Each hazard MUST have `cso-reviewed: false` and `status: open` in the initial generation (the CSO transitions these during review)
+   Before finalising, walk every hazard-archetype family in `${CLAUDE_PLUGIN_ROOT}/references/hazard-archetypes.md`. For each family, either raise at least one hazard or record in the safety case why the family is not applicable to this product. This makes hazard discovery coverage-led, not example-led.
 
 9. **Adapt to the actual project**: the six starter hazards above are baseline. If the project's requirements suggest additional product-specific hazards (e.g. an AI-powered decision support tool has additional model-drift / model-bias hazards), add them. Do not pad with generic hazards just to hit a count.
 

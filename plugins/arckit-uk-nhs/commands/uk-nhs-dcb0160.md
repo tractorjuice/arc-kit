@@ -99,6 +99,7 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
    - Local configuration error (e.g. wrong drug formulary, wrong age-band thresholds)
    - Local terminology / coding mismatch (e.g. local SNOMED subset diverges from product expectations)
    - Authorisation / role-mapping error (local RBAC misaligned with intended product RBAC)
+   Before finalising, walk every hazard-archetype family in `${CLAUDE_PLUGIN_ROOT}/references/hazard-archetypes.md`. For each family, either raise at least one hazard or record in the safety case why the family is not applicable to this product. This makes hazard discovery coverage-led, not example-led.
 
 9. **Adapt to the actual deployment**: starter hazards above are baseline. Add deployment-specific hazards from the project's context — e.g. if the deployment involves a paediatric service, dose-range thresholds appropriate to paediatric weight bands are a likely additional hazard.
 
