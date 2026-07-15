@@ -1,10 +1,11 @@
 # NHS clinical-safety quality checklist
 
-> Generation guidance for `/arckit:uk-nhs-dcb0129`, `/arckit:uk-nhs-dcb0160`, and `/arckit:uk-nhs-dtac`.
-> Verify these checks before writing the SAFETY.md file set or a DTAC clinical-safety section.
+> Generation guidance for `/arckit:uk-nhs-dcb0129` and `/arckit:uk-nhs-dcb0160`
+> (and, where relevant, DTAC clinical-safety sections).
+> Verify these checks before writing the SAFETY.md file set.
 > They supplement the common checks in `references/quality-checklist.md`.
 
-(The three Marcus Baw SAFETY.md files carry no ARC- doc-type code; these checks apply to them and to DTAC clinical-safety evidence.)
+(The three Marcus Baw SAFETY.md files carry no ARC- doc-type code; these checks apply to them and, where relevant, to DTAC clinical-safety evidence.)
 
 - **Roles distinct** -- Manufacturer/supplier and deployer/use roles are clearly separated; operator, maintainer, and DUAA 2025 "relevant IT provider" status are explicit or marked pending.
 - **No overclaiming** -- No unsupported "compliant", "approved", "safe", or "complete" claim; DRAFT/IN_REVIEW status is clear where CSO review is incomplete; CSO approval is never invented.
