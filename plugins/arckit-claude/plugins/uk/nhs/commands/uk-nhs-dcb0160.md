@@ -106,6 +106,7 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
 10. **Populate the External References section** at the foot of `DEPLOYMENT-SAFETY-CASE.md`. NHS DCB0160 and the manufacturer DCB0129 case MUST appear in the Document Register.
 
 11. **Write all three files via the Write tool**:
+    Before writing the files, verify the checks in `${CLAUDE_PLUGIN_ROOT}/references/nhs-clinical-safety-checklist.md` and resolve any failures.
     - `projects/{NNN}-<slug>/clinical-safety/deployment/SAFETY.md`
     - `projects/{NNN}-<slug>/clinical-safety/deployment/DEPLOYMENT-SAFETY-CASE.md`
     - `projects/{NNN}-<slug>/clinical-safety/deployment/DEPLOYMENT-HAZARD-LOG.md`
