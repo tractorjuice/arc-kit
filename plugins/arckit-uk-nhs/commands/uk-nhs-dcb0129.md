@@ -30,7 +30,7 @@ $ARGUMENTS
 
 ## Context
 
-NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of Health IT Systems") is the NHS England information standard that defines the clinical risk management process a manufacturer of health IT must follow. It is mandated under the Health and Social Care Act 2012 s250 for any system that will be deployed in the NHS. The standard requires four deliverables:
+NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of Health IT Systems") is the NHS England information standard that defines the clinical risk management process a manufacturer of health IT must follow. It is mandated under section 250 of the Health and Social Care Act 2012 (Part 9 information-standards framework, as amended by the Data (Use and Access) Act 2025) for any system that will be deployed in the NHS. The standard requires four deliverables:
 
 1. **Clinical Risk Management Plan** (process) — covered briefly in `SAFETY.md`; can be expanded to a separate `SAFETY-PLAN.md` for Tier 3 / SaMD products
 2. **Hazard Log** — `HAZARD-LOG.md` (YAML frontmatter + rendered table)

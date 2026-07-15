@@ -30,7 +30,7 @@ $ARGUMENTS
 
 ## Context
 
-NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Use of Health IT Systems") is the NHS England information standard that defines the clinical risk management process a deploying NHS organisation must follow. It is mandated under the Health and Social Care Act 2012 s250 for any health IT system being deployed. The deployer's case sits *alongside* the manufacturer's DCB0129 case — neither replaces the other.
+NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Use of Health IT Systems") is the NHS England information standard that defines the clinical risk management process a deploying NHS organisation must follow. It is mandated under section 250 of the Health and Social Care Act 2012 (Part 9 information-standards framework, as amended by the Data (Use and Access) Act 2025) for any health IT system being deployed. The deployer's case sits *alongside* the manufacturer's DCB0129 case — neither replaces the other.
 
 **Authoritative anchors**:
 
