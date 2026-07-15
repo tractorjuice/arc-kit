@@ -88,6 +88,7 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
    - `last-reviewed` — today's date
    - **Summary** section (one to two paragraphs): what the product does, intended clinical context, scope of safety claim, summary of safety approach
    - **Documents** section: relative links to `./SAFETY-CASE.md` and `./HAZARD-LOG.md` (plus `./SAFETY-PLAN.md` if the user explicitly asked for a Tier 3 build)
+   - **Applicable standards and assurance domains** and **Roles and responsibilities** tables: populate using the screening questions in `${CLAUDE_PLUGIN_ROOT}/references/duaa2025.md`. The CSO owns only the clinical-safety row; adjacent domains are cross-referenced, not annexed.
 
 7. **Generate `SAFETY-CASE.md`** following the GSN-inspired six-section structure:
    1. **Intended Use** — clinical purpose, indications, contraindications, intended user population (clinicians / patients / both), intended clinical context

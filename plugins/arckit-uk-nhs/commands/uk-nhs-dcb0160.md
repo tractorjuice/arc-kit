@@ -78,6 +78,7 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
    - `last-reviewed` — today's date
    - **Summary** section: deployment context, deploying organisation, summary of deployment-specific safety arrangements
    - **Documents** section: relative links to `./DEPLOYMENT-SAFETY-CASE.md`, `./DEPLOYMENT-HAZARD-LOG.md`, and the upstream manufacturer case
+   - **Applicable standards and assurance domains** and **Roles and responsibilities** tables: populate using the screening questions in `${CLAUDE_PLUGIN_ROOT}/references/duaa2025.md`. The DCB0160 row is this deployment's own local case; the DCB0129 row references the manufacturer case received from upstream. The deploying organisation's CSO owns only the clinical-safety row; adjacent domains are cross-referenced, not annexed.
 
 7. **Generate `DEPLOYMENT-SAFETY-CASE.md`** with deployer-specific sections:
    1. **Deployment Context** — which clinical service is being affected, patient population, deploying organisation, project sponsor
