@@ -116,6 +116,7 @@ NHS DCB0129 ("Clinical Risk Management: its Application in the Manufacture of He
 10. **Populate the External References section** at the foot of `SAFETY-CASE.md` per `${CLAUDE_PLUGIN_ROOT}/references/citation-instructions.md`. NHS DCB0129 and the Marcus SAFETY.md spec MUST appear in the Document Register.
 
 11. **Write all three files via the Write tool**:
+    Before writing the files, verify the checks in `${CLAUDE_PLUGIN_ROOT}/references/nhs-clinical-safety-checklist.md` and resolve any failures.
     - `projects/{NNN}-<slug>/clinical-safety/SAFETY.md`
     - `projects/{NNN}-<slug>/clinical-safety/SAFETY-CASE.md`
     - `projects/{NNN}-<slug>/clinical-safety/HAZARD-LOG.md`
