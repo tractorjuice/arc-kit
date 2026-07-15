@@ -58,6 +58,36 @@
 
 ---
 
+## Applicable standards and assurance domains
+
+Clinical safety evidence sits alongside wider information-standard evidence. Under the Data (Use and Access) Act 2025 (amending the Health and Social Care Act 2012 Part 9 information-standards framework), standards can reach IT, software, interoperability, portability, information access, and security. This register records which domains apply, where the evidence lives, and who owns it. The Clinical Safety Officer owns the clinical-safety row and cross-references the others where a failure in that domain could cause patient harm; the CSO does not own every domain below.
+
+| Domain | Standard / framework | Applies? | Evidence location | Owner |
+|---|---|---|---|---|
+| Clinical risk management (manufacture) | DCB0129 | [YES] | `SAFETY-CASE.md` | Manufacturer CSO |
+| Clinical risk management (deployment/use) | DCB0160 | [YES/NO/TBD] | Deployment safety case | Deployer CSO |
+| Health/care information standards | HSC Act 2012 Part 9 as amended (DUAA 2025) | [TBD] | Evidence pack | Responsible owner |
+| Interoperability / connectivity | [e.g. FHIR UK Core, NHS Number, SNOMED CT] | [TBD] | [TBD] | Technical owner |
+| Data protection / secondary use | UK GDPR / DPA 2018 / DUAA 2025 context | [TBD] | DPIA / IG evidence | IG lead |
+| Information security | [e.g. DSPT, NCSC CAF, Cyber Essentials] | [TBD] | [TBD] | Security owner |
+| Portability / storage / access | [TBD] | [TBD] | [TBD] | [TBD] |
+
+---
+
+## Roles and responsibilities
+
+The Data (Use and Access) Act 2025 "relevant IT provider" concept can bring suppliers, operators, and maintainers into the information-standards compliance picture, not only the deploying organisation. Record who holds each role so that clinical-risk ownership across the lifecycle is unambiguous.
+
+| Role | Applies? | Organisation / person | Evidence |
+|---|---|---|---|
+| Manufacturer / supplier | [YES/NO] | [ORGANISATION] | `SAFETY-CASE.md` |
+| Deployer / health organisation | [YES/NO] | [ORGANISATION] | Deployment safety case |
+| Operator | [YES/NO] | [ORGANISATION] | [TBD] |
+| Maintainer | [YES/NO] | [ORGANISATION] | [TBD] |
+| Relevant IT provider (DUAA 2025) | [YES/NO] | [ORGANISATION] | Evidence pack |
+
+---
+
 ## Tier
 
 This product is assessed as Marcus Baw SAFETY.md **Tier 2** by default (3-file set). Adjust to Tier 1 (consolidate into this single file) for low-risk reference or information-only tools where the CSO judges a separate case + hazard log to be disproportionate. Adjust to Tier 3 (add `SAFETY-PLAN.md`) for SaMD products and any product where the manufacturer needs to evidence a separate Clinical Risk Management Plan to MHRA or a Notified Body.

@@ -30,7 +30,7 @@ $ARGUMENTS
 
 ## Context
 
-NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Use of Health IT Systems") is the NHS England information standard that defines the clinical risk management process a deploying NHS organisation must follow. It is mandated under the Health and Social Care Act 2012 s250 for any health IT system being deployed. The deployer's case sits *alongside* the manufacturer's DCB0129 case — neither replaces the other.
+NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Use of Health IT Systems") is the NHS England information standard that defines the clinical risk management process a deploying NHS organisation must follow. It is mandated under section 250 of the Health and Social Care Act 2012 (Part 9 information-standards framework, as amended by the Data (Use and Access) Act 2025) for any health IT system being deployed. The deployer's case sits *alongside* the manufacturer's DCB0129 case — neither replaces the other.
 
 **Authoritative anchors**:
 
@@ -78,6 +78,7 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
    - `last-reviewed` — today's date
    - **Summary** section: deployment context, deploying organisation, summary of deployment-specific safety arrangements
    - **Documents** section: relative links to `./DEPLOYMENT-SAFETY-CASE.md`, `./DEPLOYMENT-HAZARD-LOG.md`, and the upstream manufacturer case
+   - **Applicable standards and assurance domains** and **Roles and responsibilities** tables: populate using the screening questions in `${CLAUDE_PLUGIN_ROOT}/references/duaa2025.md`. The DCB0160 row is this deployment's own local case; the DCB0129 row references the manufacturer case received from upstream. The deploying organisation's CSO owns only the clinical-safety row; adjacent domains are cross-referenced, not annexed.
 
 7. **Generate `DEPLOYMENT-SAFETY-CASE.md`** with deployer-specific sections:
    1. **Deployment Context** — which clinical service is being affected, patient population, deploying organisation, project sponsor
@@ -98,6 +99,7 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
    - Local configuration error (e.g. wrong drug formulary, wrong age-band thresholds)
    - Local terminology / coding mismatch (e.g. local SNOMED subset diverges from product expectations)
    - Authorisation / role-mapping error (local RBAC misaligned with intended product RBAC)
+   Before finalising, walk every hazard-archetype family in `${CLAUDE_PLUGIN_ROOT}/references/hazard-archetypes.md`. For each family, either raise at least one hazard or record in the safety case why the family is not applicable to this product. This makes hazard discovery coverage-led, not example-led.
 
 9. **Adapt to the actual deployment**: starter hazards above are baseline. Add deployment-specific hazards from the project's context — e.g. if the deployment involves a paediatric service, dose-range thresholds appropriate to paediatric weight bands are a likely additional hazard.
 
