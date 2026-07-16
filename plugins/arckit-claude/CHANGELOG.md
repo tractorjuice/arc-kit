@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.3.0] — 2026-07-16
+
+### Added
+
+- **`arckit-uk-nhs` overlay — UK Data (Use and Access) Act 2025 (DUAA 2025).** DUAA 2025 (c. 18, s121 + Schedule 15) amends the Health and Social Care Act 2012 Part 9 information-standards framework so standards can reach IT, software, interoperability, portability, information access, and security, and introduces the "relevant IT provider" concept. The DCB0129 and DCB0160 `SAFETY.md` anchors gain an **"Applicable standards and assurance domains"** register and a **"Roles and responsibilities"** table, and a new `references/duaa2025.md` generation note (instrument, effect, screening questions) is wired into both commands (#646).
+- **`arckit-uk-nhs` overlay — coverage-led hazard discovery.** New `references/hazard-archetypes.md` (17-family hazard taxonomy); the DCB0129/0160 hazard-log step now walks every family and records each as raised or not-applicable, rather than relying on the seeded examples.
+- **`arckit-uk-nhs` overlay — review aids.** New `references/nhs-clinical-safety-checklist.md` (roles distinct, no overclaiming, well-formed hazards, DUAA register, no stale references) wired into both commands, plus a rendered "Re-review triggers" subsection in both case templates.
+
+### Changed
+
+- **`arckit-uk-nhs` overlay.** Statutory anchor corrected across commands and templates to "section 250 of the Health and Social Care Act 2012 (Part 9 information-standards framework, as amended by the Data (Use and Access) Act 2025)".
+- Corrected two false claims about the bundled MCP servers in the documentation (#653).
+
+### Credits
+
+- NHS DUAA 2025 and clinical-safety reference content are ArcKit-authored adaptations informed by Dr Marcus Baw's SAFETY.md project (CC BY-SA 4.0), <https://github.com/pacharanero/SAFETY.md>.
+
 ## [6.2.0] — 2026-07-13
 
 ### Added
