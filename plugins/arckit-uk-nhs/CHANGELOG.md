@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Data (Use and Access) Act 2025 coverage: an "Applicable standards and assurance domains" register and expanded "Roles and responsibilities" table on the DCB0129 and DCB0160 `SAFETY.md` anchors, a `references/duaa2025.md` generation note, and DUAA screening questions wired into both commands (#646).
+- `references/hazard-archetypes.md` (17-family hazard taxonomy) with a systematic hazard-family walk added to the DCB0129/0160 hazard-log step.
+- NHS clinical-safety block in `references/nhs-clinical-safety-checklist.md`; "Re-review triggers" subsection in both case templates.
+
+### Changed
+
+- Statutory anchor corrected to "section 250 of the Health and Social Care Act 2012 (Part 9 information-standards framework, as amended by the Data (Use and Access) Act 2025)" across commands and templates.
+
+### Credits
+
+- DUAA 2025 and skills-reference content are ArcKit-authored adaptations informed by Dr Marcus Baw's SAFETY.md project (CC BY-SA 4.0), <https://github.com/pacharanero/SAFETY.md>.
+
 ## [5.0.3] - 2026-05-19
 
 ### Added

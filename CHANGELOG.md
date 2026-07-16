@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **arckit-uk-nhs**: DUAA 2025 coverage, hazard-archetype checklist, re-review triggers, and statutory-anchor correction (#646).
+
 ## [6.2.0] — 2026-07-13
 
 ### Added
