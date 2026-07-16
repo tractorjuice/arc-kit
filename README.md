@@ -128,7 +128,7 @@ ln -s $(pwd) ~/.vibe/extensions/arckit
 
 Zero-config: 75 official commands as skills, 10 specialized agents, all templates, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, GovRepoScrape).
 
-**Latest Release**: [v6.2.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.2.0)
+**Latest Release**: [v6.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.3.0)
 
 ### OKF Interoperability
 
@@ -1909,7 +1909,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.2.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.2.0)
+- **Latest Version**: [v6.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.3.0)
 
 ---
 
