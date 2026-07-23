@@ -1324,6 +1324,254 @@ def copy_vibe_reference_skills(src_skills_dir, dest_skills_dir):
     print(f"  Copied {count} Vibe reference skill dirs to {dest_skills_dir}")
 
 
+def _rewrite_skill_content(
+    content,
+    *,
+    skill_dir_name,
+    invocation_fn,
+    platform_label,
+    plugin_root_prefix,
+):
+    """Rewrite Claude Code-specific references in one skill body.
+
+    Pure and platform-parameterised so Codex and Kimi share one implementation.
+    `invocation_fn` maps a bare command name to that platform's invocation
+    string (for example `codex_skill_invocation` or `kimi_skill_invocation`).
+    """
+
+    def normalize_invocation(match):
+        return invocation_fn(match.group(1))
+
+    sample_invocation = invocation_fn("x")
+    inv_prefix = sample_invocation[: -len("x")]  # "$arckit-" or "/skill:arckit-"
+
+    # Rewrite a small number of Claude Code-only workflow notes that
+    # otherwise leak into generated skills. Do this before the generic
+    # command invocation rewrite so filesystem paths such as
+    # `.claude/commands/arckit.foo.md` are converted as paths, not
+    # accidentally rewritten into malformed invocation snippets.
+    if skill_dir_name == "arckit-template-builder":
+        community_name_invocation = invocation_fn("community.{name}")
+        community_security_invocation = invocation_fn("community.security-assessment")
+        content = content.replace("Slash Command", f"{platform_label} Skill")
+        content = content.replace("slash command", f"{platform_label} skill")
+        content = content.replace(
+            "Ask these questions BEFORE reading any templates. Call the **AskUserQuestion** tool exactly once with all 4 questions below in a single call. Do NOT proceed until the user has answered.",
+            "Ask these questions BEFORE reading any templates. Present all 4 questions together, then wait for the user's answers before continuing.",
+        )
+        content = content.replace(
+            "Use the Read tool only — do NOT use Bash, Glob, or Agent to search for templates.",
+            "Read these files directly. Do not search broadly or delegate this step.",
+        )
+        content = content.replace(" using the Write tool", "")
+        content = content.replace(" using the Write tool.", ".")
+        content = content.replace(
+            "The Write tool MUST be used for all file creation (avoids token limit issues)",
+            "Write generated artifacts to files instead of printing full content in the response",
+        )
+        content = content.replace("command file", "skill file")
+        content = content.replace("Command Structure", "Skill Structure")
+        content = content.replace(
+            f"Generate a matching `{community_name_invocation}` skill file",
+            f"Generate a matching `{community_name_invocation}` skill",
+        )
+        content = content.replace(
+            f'If "{platform_label} Skill" is selected, generate a skill file in Step 6.',
+            f'If "{platform_label} Skill" is selected, generate a skill in Step 6.',
+        )
+        content = content.replace(
+            "description: {Brief description of what this command generates}\nargument-hint: \"<project ID or name>\"",
+            "name: arckit-community-{name}\ndescription: \"{Brief description of what this skill generates}\"",
+        )
+        content = content.replace(
+            ".claude/commands/arckit.community.{name}.md",
+            ".agents/skills/arckit-community-{name}/SKILL.md",
+        )
+        content = content.replace(
+            ".claude/commands/arckit.community.security-assessment.md",
+            ".agents/skills/arckit-community-security-assessment/SKILL.md",
+        )
+        content = content.replace(".claude/commands/", ".agents/skills/")
+        content = content.replace(".claude/commands", ".agents/skills")
+        content = content.replace(
+            "arckit.community.{name}.md",
+            "arckit-community-{name}/SKILL.md",
+        )
+        content = content.replace(
+            "arckit.community.security-assessment.md",
+            "arckit-community-security-assessment/SKILL.md",
+        )
+        content = content.replace(
+            "/arckit:community.{name}",
+            community_name_invocation,
+        )
+        content = content.replace(
+            "/arckit:community.security-assessment",
+            community_security_invocation,
+        )
+        content = content.replace(
+            "arckit.community.{name}",
+            community_name_invocation,
+        )
+        content = content.replace(
+            "arckit.community.security-assessment",
+            community_security_invocation,
+        )
+        content = content.replace(
+            f"This location is auto-discovered by Claude Code as a project-level {platform_label} skill",
+            f"This location is auto-discovered by {platform_label} as a project-level skill",
+        )
+
+    # Rewrite /arckit:X -> platform invocation (colon-prefixed plugin format)
+    content = re.sub(
+        r"(?<![\w/])/arckit:(\w[\w.-]*)",
+        normalize_invocation,
+        content,
+    )
+
+    # Rewrite /arckit.X -> platform invocation (dot-prefixed format)
+    content = re.sub(
+        r"(?<![\w/])/arckit\.(\w[\w.-]*)",
+        normalize_invocation,
+        content,
+    )
+
+    # Rewrite /prompts:arckit.X -> platform invocation (old Codex prompt format)
+    content = re.sub(
+        r"/prompts:arckit\.(\w[\w.-]*)",
+        normalize_invocation,
+        content,
+    )
+
+    # Normalize any already-rewritten skill invocations that still
+    # contain command-name dots, such as $arckit-wardley.climate.
+    content = re.sub(
+        re.escape(inv_prefix) + r"([A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z0-9.-]*)",
+        normalize_invocation,
+        content,
+    )
+    content = re.sub(r"(?<![\w/])/arckit:\*", f"{inv_prefix}*", content)
+    content = re.sub(r"(?<![\w/])/arckit:", inv_prefix, content)
+    content = re.sub(r"(?<![\w/])/arckit\.", inv_prefix, content)
+    content = content.replace(f"`/{inv_prefix}", f"`{inv_prefix}")
+    content = content.replace(f"(/{inv_prefix}", f"({inv_prefix}")
+    content = content.replace(f"Run `/{inv_prefix}", f"Run `{inv_prefix}")
+
+    # Generated skills should ask the user directly instead of naming
+    # Claude Code's AskUserQuestion UI tool.
+    content = re.sub(
+        r"use the \*\*AskUserQuestion\*\* tool to gather",
+        "ask the user for",
+        content,
+        flags=re.IGNORECASE,
+    )
+    content = re.sub(
+        r"use the \*\*AskUserQuestion\*\* tool to ask",
+        "ask the user",
+        content,
+        flags=re.IGNORECASE,
+    )
+    content = re.sub(
+        r"use the AskUserQuestion tool to interactively gather",
+        "ask the user for",
+        content,
+        flags=re.IGNORECASE,
+    )
+    content = re.sub(
+        r"use the AskUserQuestion tool to gather",
+        "ask the user for",
+        content,
+        flags=re.IGNORECASE,
+    )
+    content = re.sub(
+        r"use AskUserQuestion to ask",
+        "ask the user",
+        content,
+        flags=re.IGNORECASE,
+    )
+    content = re.sub(
+        r"use AskUserQuestion to confirm",
+        "ask the user to confirm",
+        content,
+        flags=re.IGNORECASE,
+    )
+    content = re.sub(
+        r"use AskUserQuestion to clarify with the user",
+        "ask the user to clarify",
+        content,
+        flags=re.IGNORECASE,
+    )
+    content = content.replace("using AskUserQuestion", "by asking the user")
+    content = content.replace(
+        "AskUserQuestion with multiple-choice options",
+        "multiple-choice options",
+    )
+    content = content.replace("single AskUserQuestion call", "single message")
+    content = content.replace("AskUserQuestion", "direct user question")
+
+    if skill_dir_name == "arckit-template-builder":
+        content = content.replace(
+            "For official promotion: rename command (drop `community.` prefix), change banner to `Template Origin: Official`, and open a PR.",
+            "For official promotion: rename the generated skill if needed, change banner to `Template Origin: Official`, and open a PR.",
+        )
+        content = content.replace(
+            "Rename skill file: drop `community.` prefix",
+            "Rename or relocate the community skill if promoting it to an official ArcKit command",
+        )
+        content = content.replace(
+            "Rename command file: drop `community.` prefix",
+            "Rename or relocate the community skill if promoting it to an official ArcKit command",
+        )
+        content = content.replace(
+            "Copy of the command (if generated)",
+            "Copy of the skill (if generated)",
+        )
+        content = content.replace(
+            "Copy the command (if generated)",
+            "Copy of the skill (if generated)",
+        )
+        content = content.replace(
+            "Community commands use the `community.` prefix",
+            "Community skills use the `arckit-community-` prefix",
+        )
+
+    content = content.replace(
+        "Claude Code's 32K token output limit",
+        f"{platform_label} output limits",
+    )
+    content = content.replace(
+        "The Stop hook (`validate-wardley-math.mjs`) checks both blocks for consistency.",
+        "Manually check that the OWM source and Mermaid output stay consistent after conversion.",
+    )
+    content = content.replace(
+        "### Example 5: Continuous Monitoring with `/loop`",
+        "### Example 5: Repeat Monitoring",
+    )
+    health_invocation = invocation_fn("health")
+    content = content.replace(
+        f"```bash\n/loop 30m {health_invocation} SEVERITY=HIGH\n```",
+        f"```text\n{health_invocation} SEVERITY=HIGH\n```",
+    )
+    content = content.replace(
+        "Runs the health check every 30 minutes during your session, surfacing HIGH severity findings as they appear. Useful during long architecture sessions where multiple artifacts are being created or updated. Requires Claude Code v2.1.97+.",
+        "Re-run this health check periodically during long architecture sessions to "
+        "surface HIGH severity findings as artifacts change. "
+        f"{platform_label} does not provide a built-in loop command; "
+        "use a scheduler if you need automation.",
+    )
+
+    # Remove SessionStart hook reference
+    content = content.replace(
+        "- Use ArcKit Project Context from the SessionStart hook if available\n",
+        "",
+    )
+
+    # Rewrite plugin root paths
+    content = content.replace("${CLAUDE_PLUGIN_ROOT}", plugin_root_prefix)
+
+    return content
+
+
 def rewrite_codex_skills(skills_dir):
     """Rewrite Claude Code-specific references in skills for Codex extension.
 
@@ -1336,9 +1584,6 @@ def rewrite_codex_skills(skills_dir):
     if not os.path.isdir(skills_dir):
         return
 
-    def normalize_codex_invocation(match):
-        return codex_skill_invocation(match.group(1))
-
     count = 0
     for root, dirs, files in os.walk(skills_dir):
         for filename in files:
@@ -1349,224 +1594,13 @@ def rewrite_codex_skills(skills_dir):
                 content = f.read()
 
             original = content
-
-            # Rewrite a small number of Claude Code-only workflow notes that
-            # otherwise leak into generated Codex skills. Do this before the
-            # generic command invocation rewrite so filesystem paths such as
-            # `.claude/commands/arckit.foo.md` are converted as paths, not
-            # accidentally rewritten into malformed `$arckit-foo` snippets.
-            if os.path.basename(root) == "arckit-template-builder":
-                content = content.replace("Slash Command", "Codex Skill")
-                content = content.replace("slash command", "Codex skill")
-                content = content.replace(
-                    "Ask these questions BEFORE reading any templates. Call the **AskUserQuestion** tool exactly once with all 4 questions below in a single call. Do NOT proceed until the user has answered.",
-                    "Ask these questions BEFORE reading any templates. Present all 4 questions together, then wait for the user's answers before continuing.",
-                )
-                content = content.replace(
-                    "Use the Read tool only — do NOT use Bash, Glob, or Agent to search for templates.",
-                    "Read these files directly. Do not search broadly or delegate this step.",
-                )
-                content = content.replace(" using the Write tool", "")
-                content = content.replace(" using the Write tool.", ".")
-                content = content.replace(
-                    "The Write tool MUST be used for all file creation (avoids token limit issues)",
-                    "Write generated artifacts to files instead of printing full content in the response",
-                )
-                content = content.replace("command file", "skill file")
-                content = content.replace("Command Structure", "Skill Structure")
-                content = content.replace(
-                    "Generate a matching `$arckit-community-{name}` skill file",
-                    "Generate a matching `$arckit-community-{name}` skill",
-                )
-                content = content.replace(
-                    "If \"Codex Skill\" is selected, generate a skill file in Step 6.",
-                    "If \"Codex Skill\" is selected, generate a skill in Step 6.",
-                )
-                content = content.replace(
-                    "description: {Brief description of what this command generates}\nargument-hint: \"<project ID or name>\"",
-                    "name: arckit-community-{name}\ndescription: \"{Brief description of what this skill generates}\"",
-                )
-                content = content.replace(
-                    ".claude/commands/arckit.community.{name}.md",
-                    ".agents/skills/arckit-community-{name}/SKILL.md",
-                )
-                content = content.replace(
-                    ".claude/commands/arckit.community.security-assessment.md",
-                    ".agents/skills/arckit-community-security-assessment/SKILL.md",
-                )
-                content = content.replace(".claude/commands/", ".agents/skills/")
-                content = content.replace(".claude/commands", ".agents/skills")
-                content = content.replace(
-                    "arckit.community.{name}.md",
-                    "arckit-community-{name}/SKILL.md",
-                )
-                content = content.replace(
-                    "arckit.community.security-assessment.md",
-                    "arckit-community-security-assessment/SKILL.md",
-                )
-                content = content.replace(
-                    "/arckit:community.{name}",
-                    "$arckit-community-{name}",
-                )
-                content = content.replace(
-                    "/arckit:community.security-assessment",
-                    "$arckit-community-security-assessment",
-                )
-                content = content.replace(
-                    "arckit.community.{name}",
-                    "$arckit-community-{name}",
-                )
-                content = content.replace(
-                    "arckit.community.security-assessment",
-                    "$arckit-community-security-assessment",
-                )
-                content = content.replace(
-                    "This location is auto-discovered by Claude Code as a project-level Codex skill",
-                    "This location is auto-discovered by Codex as a project-level skill",
-                )
-
-            # Rewrite /arckit:X -> $arckit-X (colon-prefixed plugin format)
-            content = re.sub(
-                r"(?<![\w/])/arckit:(\w[\w.-]*)",
-                normalize_codex_invocation,
+            content = _rewrite_skill_content(
                 content,
+                skill_dir_name=os.path.basename(root),
+                invocation_fn=codex_skill_invocation,
+                platform_label="Codex",
+                plugin_root_prefix=".arckit",
             )
-
-            # Rewrite /arckit.X -> $arckit-X (dot-prefixed format)
-            content = re.sub(
-                r"(?<![\w/])/arckit\.(\w[\w.-]*)",
-                normalize_codex_invocation,
-                content,
-            )
-
-            # Rewrite /prompts:arckit.X -> $arckit-X (old Codex prompt format)
-            content = re.sub(
-                r"/prompts:arckit\.(\w[\w.-]*)",
-                normalize_codex_invocation,
-                content,
-            )
-
-            # Normalize any already-rewritten skill invocations that still
-            # contain command-name dots, such as $arckit-wardley.climate.
-            content = re.sub(
-                r"\$arckit-([A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z0-9.-]*)",
-                normalize_codex_invocation,
-                content,
-            )
-            content = re.sub(r"(?<![\w/])/arckit:\*", "$arckit-*", content)
-            content = re.sub(r"(?<![\w/])/arckit:", "$arckit-", content)
-            content = re.sub(r"(?<![\w/])/arckit\.", "$arckit-", content)
-            content = content.replace("`/$arckit-", "`$arckit-")
-            content = content.replace("(/$arckit-", "($arckit-")
-            content = content.replace("Run `/$arckit-", "Run `$arckit-")
-
-            # Codex skills should ask the user directly instead of naming
-            # Claude Code's AskUserQuestion UI tool.
-            content = re.sub(
-                r"use the \*\*AskUserQuestion\*\* tool to gather",
-                "ask the user for",
-                content,
-                flags=re.IGNORECASE,
-            )
-            content = re.sub(
-                r"use the \*\*AskUserQuestion\*\* tool to ask",
-                "ask the user",
-                content,
-                flags=re.IGNORECASE,
-            )
-            content = re.sub(
-                r"use the AskUserQuestion tool to interactively gather",
-                "ask the user for",
-                content,
-                flags=re.IGNORECASE,
-            )
-            content = re.sub(
-                r"use the AskUserQuestion tool to gather",
-                "ask the user for",
-                content,
-                flags=re.IGNORECASE,
-            )
-            content = re.sub(
-                r"use AskUserQuestion to ask",
-                "ask the user",
-                content,
-                flags=re.IGNORECASE,
-            )
-            content = re.sub(
-                r"use AskUserQuestion to confirm",
-                "ask the user to confirm",
-                content,
-                flags=re.IGNORECASE,
-            )
-            content = re.sub(
-                r"use AskUserQuestion to clarify with the user",
-                "ask the user to clarify",
-                content,
-                flags=re.IGNORECASE,
-            )
-            content = content.replace("using AskUserQuestion", "by asking the user")
-            content = content.replace(
-                "AskUserQuestion with multiple-choice options",
-                "multiple-choice options",
-            )
-            content = content.replace("single AskUserQuestion call", "single message")
-            content = content.replace("AskUserQuestion", "direct user question")
-
-            if os.path.basename(root) == "arckit-template-builder":
-                content = content.replace(
-                    "For official promotion: rename command (drop `community.` prefix), change banner to `Template Origin: Official`, and open a PR.",
-                    "For official promotion: rename the generated skill if needed, change banner to `Template Origin: Official`, and open a PR.",
-                )
-                content = content.replace(
-                    "Rename skill file: drop `community.` prefix",
-                    "Rename or relocate the community skill if promoting it to an official ArcKit command",
-                )
-                content = content.replace(
-                    "Rename command file: drop `community.` prefix",
-                    "Rename or relocate the community skill if promoting it to an official ArcKit command",
-                )
-                content = content.replace(
-                    "Copy of the command (if generated)",
-                    "Copy of the skill (if generated)",
-                )
-                content = content.replace(
-                    "Copy the command (if generated)",
-                    "Copy of the skill (if generated)",
-                )
-                content = content.replace(
-                    "Community commands use the `community.` prefix",
-                    "Community skills use the `arckit-community-` prefix",
-                )
-
-            content = content.replace(
-                "Claude Code's 32K token output limit",
-                "Codex output limits",
-            )
-            content = content.replace(
-                "The Stop hook (`validate-wardley-math.mjs`) checks both blocks for consistency.",
-                "Manually check that the OWM source and Mermaid output stay consistent after conversion.",
-            )
-            content = content.replace(
-                "### Example 5: Continuous Monitoring with `/loop`",
-                "### Example 5: Repeat Monitoring",
-            )
-            content = content.replace(
-                "```bash\n/loop 30m $arckit-health SEVERITY=HIGH\n```",
-                "```text\n$arckit-health SEVERITY=HIGH\n```",
-            )
-            content = content.replace(
-                "Runs the health check every 30 minutes during your session, surfacing HIGH severity findings as they appear. Useful during long architecture sessions where multiple artifacts are being created or updated. Requires Claude Code v2.1.97+.",
-                "Re-run this health check periodically during long architecture sessions to surface HIGH severity findings as artifacts change. Codex does not provide a built-in loop command; use a scheduler if you need automation.",
-            )
-
-            # Remove SessionStart hook reference
-            content = content.replace(
-                "- Use ArcKit Project Context from the SessionStart hook if available\n",
-                "",
-            )
-
-            # Rewrite plugin root paths
-            content = content.replace("${CLAUDE_PLUGIN_ROOT}", ".arckit")
 
             if content != original:
                 with open(filepath, "w", encoding="utf-8") as f:
