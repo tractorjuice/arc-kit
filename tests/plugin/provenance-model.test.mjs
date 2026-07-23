@@ -21,9 +21,20 @@ test('extractModelFromContent: no model line returns null', () => {
   assert.equal(extractModelFromContent('# Heading\n\nBody text.\n'), null);
 });
 
-// KNOWN BUG (fixed in Task 2): provider-prefixed / suffixed ids currently drop to null.
-test('extractModelFromContent: slash id currently returns null (pre-fix baseline)', () => {
-  assert.equal(extractModelFromContent('**Model**: moonshotai/kimi-v3\n'), null);
+test('extractModelFromContent: provider-prefixed id (slash) parses', () => {
+  assert.equal(extractModelFromContent('**Model**: moonshotai/kimi-v3\n'), 'moonshotai/kimi-v3');
+});
+
+test('extractModelFromContent: context-window suffix (brackets) parses', () => {
+  assert.equal(extractModelFromContent('**AI Model**: claude-opus-4-8[1m]\n'), 'claude-opus-4-8[1m]');
+});
+
+test('extractModelFromContent: colon-versioned id parses', () => {
+  assert.equal(extractModelFromContent('**Model**: kimi-k2-0711-preview\n'), 'kimi-k2-0711-preview');
+});
+
+test('extractModelFromContent: bedrock-style dotted prefix parses', () => {
+  assert.equal(extractModelFromContent('**Model**: us.anthropic.claude-opus-4-8\n'), 'us.anthropic.claude-opus-4-8');
 });
 
 test('downgradeEffort: null requested returns null', () => {

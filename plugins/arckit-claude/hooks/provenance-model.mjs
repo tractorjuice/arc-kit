@@ -38,6 +38,9 @@ export function downgradeEffort(requested, model) {
 // today and is the only source of truth until upstream Claude Code exposes
 // the active model to hooks (see arc-kit#407).
 export function extractModelFromContent(content) {
-  const m = content.match(/^\s*\*?\*?(?:AI )?Model\*?\*?:\s*`?([a-z0-9.-]+)`?\s*$/im);
+  // Character class covers provider prefixes (moonshotai/kimi-v3), colon/dot
+  // versioned ids (us.anthropic.claude-...), and bracketed context suffixes
+  // (claude-opus-4-8[1m]). `-` is last, brackets and slash are escaped.
+  const m = content.match(/^\s*\*?\*?(?:AI )?Model\*?\*?:\s*`?([a-z0-9._:\/\[\]-]+)`?\s*$/im);
   return m ? m[1].trim() : null;
 }
