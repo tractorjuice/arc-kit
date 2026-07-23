@@ -184,6 +184,16 @@ def vibe_skill_name(command_name):
     return f"arckit-{command_name.replace('.', '-')}"
 
 
+def kimi_skill_name(command_name):
+    """Return the Kimi Code CLI skill name for an ArcKit command name."""
+    return f"arckit-{command_name.replace('.', '-')}"
+
+
+def kimi_skill_invocation(command_name):
+    """Return the invocation string for a Kimi skill-backed command."""
+    return f"/skill:{kimi_skill_name(command_name)}"
+
+
 def titleize_arckit_name(name):
     """Return a human-readable ArcKit display name."""
     stem = name.replace("arckit-", "", 1).replace(".", "-")
