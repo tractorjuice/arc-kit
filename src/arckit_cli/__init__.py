@@ -59,6 +59,12 @@ AGENT_CONFIG = {
         "install_url": "https://github.com/features/copilot",
         "requires_cli": False,
     },
+    "kimi": {
+        "name": "Kimi Code CLI",
+        "folder": ".arckit/",
+        "install_url": "https://github.com/tractorjuice/arckit-kimi",
+        "requires_cli": True,
+    },
 }
 
 BANNER = """
@@ -327,7 +333,7 @@ def init(
         None,
         help="Name for your new project directory (optional, use '.' for current directory)",
     ),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot, kimi"),
     no_git: bool = typer.Option(
         False, "--no-git", help="Skip git repository initialization"
     ),
@@ -985,6 +991,17 @@ export OPENCODE_HOME="$PWD/.opencode"
         next_steps.append("3. Open Copilot Chat and type: [cyan]/arckit-principles[/cyan]")
         next_steps.append(
             "4. Create your first project: [cyan]/arckit-requirements[/cyan]"
+        )
+    elif ai_assistant == "kimi":
+        next_steps.append("2. Install the ArcKit plugin for Kimi Code CLI:")
+        next_steps.append(
+            "   [cyan]kimi plugin install https://github.com/tractorjuice/arckit-kimi.git[/cyan]"
+        )
+        next_steps.append(
+            "3. Establish architecture principles: [cyan]/skill:arckit-principles[/cyan]"
+        )
+        next_steps.append(
+            "4. Create your first project: [cyan]/skill:arckit-requirements[/cyan]"
         )
 
     console.print(Panel("\n".join(next_steps), title="Next Steps", border_style="cyan"))
