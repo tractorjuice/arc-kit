@@ -1406,8 +1406,8 @@ def generate_vibe_config_toml(output_path, version, agent_files):
     print(f"  Generated: {output_path}")
 
 
-def copy_vibe_reference_skills(src_skills_dir, dest_skills_dir):
-    """Copy non-command reference skills into the Vibe extension."""
+def copy_reference_skills(src_skills_dir, dest_skills_dir):
+    """Copy non-command reference skills into a non-Claude extension."""
     if not os.path.isdir(src_skills_dir):
         return
 
@@ -2158,7 +2158,7 @@ if __name__ == "__main__":
 
     print()
     print("Generating Mistral Vibe extension config...")
-    copy_vibe_reference_skills(
+    copy_reference_skills(
         os.path.join(plugin_dir, "skills"),
         "extensions/arckit-vibe/skills",
     )
@@ -2189,6 +2189,10 @@ if __name__ == "__main__":
         os.path.join(plugin_dir, ".mcp.json"),
         kimi_version,
         "extensions/arckit-kimi/plugin.json",
+    )
+    copy_reference_skills(
+        os.path.join(plugin_dir, "skills"),
+        "extensions/arckit-kimi/skills",
     )
 
     print()
