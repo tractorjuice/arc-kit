@@ -17,7 +17,10 @@
 // by the active model are silently downgraded to the highest supported.
 export const EFFORT_RANK = { low: 0, medium: 1, high: 2, max: 3, xhigh: 4 };
 
+// Claude-only by design (see module header). `claude-opus-4-8`: 'xhigh' is the
+// top rank, so it never downgrades — the row is for explicitness, not behaviour.
 export const MODEL_MAX_EFFORT = {
+  'claude-opus-4-8': 'xhigh',
   'claude-opus-4-7': 'xhigh',
   'claude-opus-4-6': 'max',
   'claude-sonnet-4-6': 'high',

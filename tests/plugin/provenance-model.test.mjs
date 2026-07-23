@@ -51,6 +51,16 @@ test('downgradeEffort: caps above the model max (current 4-6 behaviour)', () => 
   assert.equal(downgradeEffort('xhigh', 'claude-opus-4-6'), 'max');
 });
 
+test('downgradeEffort: opus-4-8 is capped at xhigh (never downgrades)', () => {
+  assert.equal(downgradeEffort('xhigh', 'claude-opus-4-8'), 'xhigh');
+  assert.equal(downgradeEffort('max', 'claude-opus-4-8'), 'max');
+  assert.equal(downgradeEffort('high', 'claude-opus-4-8'), 'high');
+});
+
+test('MODEL_MAX_EFFORT includes claude-opus-4-8', () => {
+  assert.equal(MODEL_MAX_EFFORT['claude-opus-4-8'], 'xhigh');
+});
+
 test('MODEL_MAX_EFFORT is Claude-only (no kimi/moonshot keys)', () => {
   for (const key of Object.keys(MODEL_MAX_EFFORT)) {
     assert.ok(key.startsWith('claude-'), `unexpected non-Claude matrix key: ${key}`);
