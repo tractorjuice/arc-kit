@@ -1030,6 +1030,64 @@ def generate_codex_mcp_json(mcp_json_path, output_path):
     print(f"  Generated: {output_path}")
 
 
+def generate_kimi_plugin_json(mcp_json_path, version, output_path):
+    """Generate the Kimi Code CLI plugin manifest.
+
+    Kimi's mcpServers schema is close to Claude's: remote servers use `url`
+    with optional `headers`, stdio servers use `command`/`args`/`env`. Claude's
+    `type` discriminator has no Kimi equivalent and is dropped; the shape is
+    inferred from whether `url` or `command` is present.
+    """
+    servers = {}
+    if os.path.isfile(mcp_json_path):
+        with open(mcp_json_path, "r", encoding="utf-8") as f:
+            mcp_config = json.load(f)
+        for name, entry in mcp_config.get("mcpServers", {}).items():
+            mapped = {}
+            if entry.get("url"):
+                mapped["url"] = entry["url"]
+                if entry.get("headers"):
+                    mapped["headers"] = entry["headers"]
+            elif entry.get("command"):
+                mapped["command"] = entry["command"]
+                if entry.get("args"):
+                    mapped["args"] = entry["args"]
+                if entry.get("env"):
+                    mapped["env"] = entry["env"]
+            else:
+                continue
+            servers[name] = mapped
+
+    manifest = {
+        "name": "arckit",
+        "version": version,
+        "description": (
+            "The Enterprise Architecture Governance Harness: strategy, "
+            "architecture, delivery and assurance artefacts."
+        ),
+        "skills": "./skills/",
+        "sessionStart": {"skill": "architecture-workflow"},
+        "mcpServers": servers,
+        "interface": {
+            "displayName": "ArcKit",
+            "shortDescription": (
+                "Strategy, architecture, delivery and assurance artefacts"
+            ),
+        },
+    }
+
+    # user_config placeholders are Claude-only; non-Claude targets fall back
+    # to plain environment variables.
+    rendered = rewrite_user_config_placeholders(
+        json.dumps(manifest, indent=2, ensure_ascii=False)
+    )
+
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(rendered + "\n")
+    print(f"  Generated: {output_path} ({len(servers)} MCP servers)")
+
+
 def generate_codex_plugin_manifest(output_dir):
     """Generate Codex plugin manifest for the standalone ArcKit Codex bundle."""
     version_path = os.path.join(output_dir, "VERSION")
