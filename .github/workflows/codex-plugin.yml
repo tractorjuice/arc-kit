@@ -53,3 +53,6 @@ jobs:
 
       - name: Run Codex plugin tests
         run: python -m pytest tests/codex/test_codex_extension.py
+
+      - name: Test Kimi extension
+        run: python -m pytest tests/kimi/

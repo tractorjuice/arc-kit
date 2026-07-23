@@ -1423,6 +1423,7 @@ def copy_reference_skills(src_skills_dir, dest_skills_dir):
         shutil.copytree(src, dst)
         count += 1
 
+    strip_claude_only_skill_fields(dest_skills_dir)
     print(f"  Copied {count} Vibe reference skill dirs to {dest_skills_dir}")
 
 
