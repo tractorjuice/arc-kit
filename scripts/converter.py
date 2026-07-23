@@ -357,6 +357,21 @@ AGENT_CONFIG = {
         "has_context_hook": False,
         "has_sync_guides_hook": False,
     },
+    "kimi": {
+        "name": "Kimi Code CLI",
+        "output_dir": "extensions/arckit-kimi/skills",
+        "format": "kimi_skill",
+        "path_prefix": ".arckit",
+        "extension_dir": "extensions/arckit-kimi",
+        "copy_commands_to_extension": False,
+        "copy_agents_to_extension": False,
+        "copy_scripts_to_extension": True,
+        "copy_references_to_extension": True,
+        "copy_schemas_to_extension": True,
+        "clean_output_dir": True,
+        "has_context_hook": False,
+        "has_sync_guides_hook": False,
+    },
 }
 
 
@@ -628,6 +643,8 @@ def convert(commands_dirs, agents_dir):
                 cmd_fmt = codex_skill_invocation
             elif config["format"] == "vibe_skill":
                 cmd_fmt = lambda cmd: f"/{vibe_skill_name(cmd)}"
+            elif config["format"] == "kimi_skill":
+                cmd_fmt = kimi_skill_invocation
             else:
                 cmd_fmt = "/arckit:{cmd}"
 
@@ -700,6 +717,33 @@ def convert(commands_dirs, agents_dir):
                 with open(out_path, "w", encoding="utf-8") as f:
                     f.write(skill_md)
                 print(f"  {config['name'] + ':':14s}{source_label} -> {out_path}")
+                counts[agent_id] += 1
+            elif config["format"] == "kimi_skill":
+                skill_name = kimi_skill_name(base_name)
+                skill_dir = os.path.join(config["output_dir"], skill_name)
+                os.makedirs(skill_dir, exist_ok=True)
+
+                escaped_desc = description.replace('"', '\\"')
+                # Kimi validates frontmatter against a closed field set, so
+                # only name/description/license/metadata are emitted. Every
+                # Claude-only field (effort, keep-coding-instructions,
+                # disallowed-tools, paths, handoffs, allowed-tools, model) is
+                # dropped by construction: nothing here copies them through.
+                skill_md = (
+                    f"---\n"
+                    f"name: {skill_name}\n"
+                    f'description: "{escaped_desc}"\n'
+                    f"license: MIT\n"
+                    f"metadata:\n"
+                    f"  arckit-command: {base_name}\n"
+                    f"---\n\n"
+                    f"{rewritten}\n"
+                )
+                with open(
+                    os.path.join(skill_dir, "SKILL.md"), "w", encoding="utf-8"
+                ) as f:
+                    f.write(skill_md)
+                print(f"  {config['name'] + ':':14s}{source_label} -> {skill_dir}/")
                 counts[agent_id] += 1
             else:
                 content = format_output(description, rewritten, config["format"])
@@ -1671,6 +1715,43 @@ def rewrite_codex_skills(skills_dir):
         print(f"  Rewrote {count} skill files for Codex skill invocation format")
 
 
+def rewrite_kimi_skills(skills_dir):
+    """Rewrite Claude Code-specific references for the Kimi extension.
+
+    Shares its implementation with the Codex rewriter via
+    _rewrite_skill_content; only the invocation format, platform label and
+    plugin-root prefix differ.
+    """
+    if not os.path.isdir(skills_dir):
+        return
+
+    count = 0
+    for root, _dirs, files in os.walk(skills_dir):
+        for filename in files:
+            if not filename.endswith(".md"):
+                continue
+            filepath = os.path.join(root, filename)
+            with open(filepath, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            original = content
+            content = _rewrite_skill_content(
+                content,
+                skill_dir_name=os.path.basename(root),
+                invocation_fn=kimi_skill_invocation,
+                platform_label="Kimi",
+                plugin_root_prefix=".arckit",
+            )
+
+            if content != original:
+                with open(filepath, "w", encoding="utf-8") as f:
+                    f.write(content)
+                count += 1
+
+    if count:
+        print(f"  Rewrote {count} skill files for Kimi skill invocation format")
+
+
 def generate_gemini_agents(agents_dir, output_dir):
     """Generate Gemini CLI sub-agent markdown files from Claude Code agents.
 
@@ -2096,6 +2177,23 @@ if __name__ == "__main__":
         vibe_version,
         vibe_agent_files,
     )
+
+    print()
+    print("Generating Kimi Code CLI extension config...")
+    kimi_version = "0.0.0"
+    kimi_version_path = "extensions/arckit-kimi/VERSION"
+    if os.path.isfile(kimi_version_path):
+        with open(kimi_version_path, "r", encoding="utf-8") as f:
+            kimi_version = f.read().strip() or kimi_version
+    generate_kimi_plugin_json(
+        os.path.join(plugin_dir, ".mcp.json"),
+        kimi_version,
+        "extensions/arckit-kimi/plugin.json",
+    )
+
+    print()
+    print("Rewriting Kimi extension skills for Kimi command format...")
+    rewrite_kimi_skills("extensions/arckit-kimi/skills")
 
     print()
     total = sum(counts.values())
