@@ -128,6 +128,14 @@ ln -s $(pwd) ~/.vibe/extensions/arckit
 
 Zero-config: 75 official commands as skills, 10 specialized agents, all templates, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, GovRepoScrape).
 
+**Kimi Code CLI** — install the ArcKit plugin:
+
+```bash
+kimi plugin install https://github.com/tractorjuice/arckit-kimi.git
+```
+
+Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
+
 **Latest Release**: [v6.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.3.0)
 
 ### OKF Interoperability
@@ -140,20 +148,30 @@ ArcKit can exchange Markdown knowledge bundles using an Open Knowledge Format-sh
 
 ### Platform Support
 
-| Platform | Claude Code Plugin | Gemini CLI Extension | GitHub Copilot | Codex / OpenCode CLI | Mistral Vibe |
-|----------|-------------------|---------------------|----------------|---------------------|--------------|
-| macOS | Full support | Full support | Full support | Full support | Full support |
-| Linux | Full support | Full support | Full support | Full support | Full support |
-| Windows (WSL2) | Full support | Full support | Full support | Full support | Full support |
-| Windows (native) | Full support | Full support | Full support | Partial | Full support |
+| Platform | Claude Code Plugin | Gemini CLI Extension | GitHub Copilot | Codex / OpenCode CLI | Mistral Vibe | Kimi Code CLI |
+|----------|-------------------|---------------------|----------------|---------------------|--------------|----------------|
+| macOS | Full support | Full support | Full support | Full support | Full support | Full support |
+| Linux | Full support | Full support | Full support | Full support | Full support | Full support |
+| Windows (WSL2) | Full support | Full support | Full support | Full support | Full support | Full support |
+| Windows (native) | Full support | Full support | Full support | Partial | Full support | Full support |
 
-**Windows users**: The Claude Code plugin, Gemini CLI extension, GitHub Copilot prompt files, and Mistral Vibe extension work natively on all platforms. For Codex CLI / OpenCode CLI on native Windows (without WSL), some commands containing inline bash snippets may require [Git Bash](https://git-scm.com/downloads/win) or [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). We recommend WSL2 for the best experience.
+**Windows users**: The Claude Code plugin, Gemini CLI extension, GitHub Copilot prompt files, Mistral Vibe extension, and Kimi Code CLI extension work natively on all platforms. For Codex CLI / OpenCode CLI on native Windows (without WSL), some commands containing inline bash snippets may require [Git Bash](https://git-scm.com/downloads/win) or [WSL2](https://learn.microsoft.com/en-us/windows/wsl/install). We recommend WSL2 for the best experience.
 
 ### Initialize a Project
 
 **Claude Code**: No initialization needed — the plugin provides everything.
 
 **Mistral Vibe**: No initialization needed — the extension provides everything.
+
+**Kimi Code CLI**:
+
+```bash
+# Create a new architecture governance project
+arckit init payment-modernization --ai kimi
+
+# Or initialize in current directory
+arckit init . --ai kimi
+```
 
 **GitHub Copilot** (VS Code):
 
@@ -215,6 +233,14 @@ vibe
 
 # Or use specialized agents:
 vibe --agent arckit-research "Research cloud providers"
+
+# Kimi Code CLI
+cd payment-modernization
+kimi
+# Use ArcKit skills:
+/skill:arckit-principles Create principles for a financial services company
+/skill:arckit-requirements Build a payment processing system...
+/skill:arckit-sow Generate RFP for vendor selection
 ```
 
 ### Upgrading
@@ -226,6 +252,8 @@ vibe --agent arckit-research "Research cloud providers"
 **GitHub Copilot**: Re-run `arckit init --here --ai copilot` to update prompt files, agents, and instructions.
 
 **Mistral Vibe**: Pull the latest standalone extension repo: `cd ~/.vibe/extensions/arckit && git pull`.
+
+**Kimi Code CLI**: Re-run the install command to pick up the latest release: `kimi plugin install https://github.com/tractorjuice/arckit-kimi.git`.
 
 **Codex CLI**:
 

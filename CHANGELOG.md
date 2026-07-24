@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Kimi Code CLI extension** (`arckit-kimi`) — ninth distribution format. Every ArcKit command ships as a Kimi Agent Skill invoked with `/skill:arckit-<command>`, with the six bundled MCP servers declared in `plugin.json` and `architecture-workflow` auto-loaded at session start. Install with `kimi plugin install https://github.com/tractorjuice/arckit-kimi.git`; scaffold a project with `arckit init --ai kimi`.
+
 ## [6.3.0] — 2026-07-16
 
 ### Added
