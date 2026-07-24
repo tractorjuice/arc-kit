@@ -2,6 +2,16 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
+> **CORRECTION (2026-07-24, after Task 10 installed the real CLI).** This plan was written against documentation for **legacy `kimi-cli`**. The shipping product is **`kimi-code`** (verified at v0.29.1), and three facts below are wrong. The implementation has been corrected; the task text is left as written for the historical record.
+>
+> | Plan says | Actually correct |
+> |---|---|
+> | Manifest is `plugin.json` | `kimi.plugin.json` at plugin root, or `.kimi-plugin/plugin.json` |
+> | Install via `kimi plugin install <url>` | No such subcommand. Use `/plugins install <path-or-url>` inside the TUI |
+> | Frontmatter allows `license`, `compatibility`, `metadata` | Documented fields are `name`, `description`, `type`, `whenToUse`, `disableModelInvocation`, `arguments` |
+>
+> Config lives at `~/.kimi-code/`, not `~/.kimi/`. Skills are searched in `~/.kimi-code/skills/`, `~/.agents/skills/`, `.kimi-code/skills/`, `.agents/skills/`. Current docs: <https://moonshotai.github.io/kimi-code/>.
+
 **Goal:** Ship ArcKit as a native Kimi Code CLI plugin (`arckit-kimi`), the seventh distribution format, with the full command set as Agent Skills, the six bundled MCP servers, and session-start workflow orientation.
 
 **Architecture:** `plugins/arckit-claude/` remains the single source of truth. A new `"kimi"` entry in `scripts/converter.py`'s `AGENT_CONFIG` emits one `skills/<name>/SKILL.md` per command, and a new `generate_kimi_plugin_json()` emits the `plugin.json` manifest carrying the skill path, `sessionStart`, and the mapped MCP servers. The ~250-line `rewrite_codex_skills()` is first refactored into a shared, parameterised core so Kimi reuses its platform-generic rewrites instead of duplicating them.
