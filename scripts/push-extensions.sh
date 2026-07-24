@@ -45,7 +45,7 @@ declare -A GENERATED_EXTENSION_REQUIRED_PATHS=(
   [copilot]="prompts skills templates agents copilot-instructions.md"
   [paperclip]="src/data/commands.json skills templates docs/guides config"
   [vibe]="skills templates agents config docs/guides"
-  [kimi]="skills plugin.json"
+  [kimi]="skills templates config docs/guides plugin.json"
 )
 
 # Claude Code plugins are published together to the arckit-claude marketplace
