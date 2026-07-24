@@ -75,7 +75,7 @@ CLAUDE_PLUGIN_LAYOUT=(
 if [[ $# -gt 0 ]]; then
   TARGETS=("$@")
 else
-  TARGETS=("claude" "gemini" "codex" "opencode" "copilot" "paperclip" "vibe")
+  TARGETS=("claude" "gemini" "codex" "opencode" "copilot" "paperclip" "vibe" "kimi")
 fi
 
 # ── Read version from root VERSION file ───────────────────────────────────────
