@@ -422,6 +422,7 @@ def init(
         console.print("1. codex (OpenAI Codex CLI)")
         console.print("2. opencode (OpenCode CLI)")
         console.print("3. copilot (GitHub Copilot in VS Code)")
+        console.print("4. kimi (Kimi Code CLI)")
         console.print()
         console.print("[dim]For Claude Code, use the ArcKit plugin instead:[/dim]")
         console.print("[dim]  /plugin marketplace add tractorjuice/arc-kit[/dim]")
@@ -431,7 +432,7 @@ def init(
         )
 
         choice = typer.prompt("Enter choice", default="1")
-        ai_map = {"1": "codex", "2": "opencode", "3": "copilot"}
+        ai_map = {"1": "codex", "2": "opencode", "3": "copilot", "4": "kimi"}
         ai_assistant = ai_map.get(choice, "codex")
 
     if ai_assistant == "claude":
