@@ -78,7 +78,7 @@ def test_generate_kimi_plugin_json_maps_mcp_and_session_start(tmp_path):
         ),
         encoding="utf-8",
     )
-    out = tmp_path / "plugin.json"
+    out = tmp_path / "kimi.plugin.json"
 
     converter.generate_kimi_plugin_json(str(mcp_src), "6.3.0", str(out))
 
@@ -103,7 +103,7 @@ def test_generate_kimi_plugin_json_is_strict_json(tmp_path):
     converter = _load_converter()
     mcp_src = tmp_path / ".mcp.json"
     mcp_src.write_text(json.dumps({"mcpServers": {}}), encoding="utf-8")
-    out = tmp_path / "plugin.json"
+    out = tmp_path / "kimi.plugin.json"
 
     converter.generate_kimi_plugin_json(str(mcp_src), "6.3.0", str(out))
 
@@ -139,7 +139,7 @@ def _parse_frontmatter_keys(text):
 def test_manifest_exists_and_has_required_fields():
     manifest = json.loads(KIMI_MANIFEST.read_text(encoding="utf-8"))
     for field in ("name", "version", "skills", "sessionStart", "mcpServers", "interface"):
-        assert field in manifest, f"plugin.json missing required field: {field}"
+        assert field in manifest, f"kimi.plugin.json missing required field: {field}"
 
 
 def test_session_start_skill_actually_exists():

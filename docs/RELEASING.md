@@ -118,6 +118,7 @@ After step 11, verify the umbrella GitHub Release and every standalone GitHub Re
 - `tractorjuice/arckit-copilot`
 - `tractorjuice/arckit-paperclip`
 - `tractorjuice/arckit-vibe`
+- `tractorjuice/arckit-kimi`
 
 ### Note on `claude plugin tag`
 

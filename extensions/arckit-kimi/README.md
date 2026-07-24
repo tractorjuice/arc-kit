@@ -16,7 +16,7 @@ ArcKit skills read templates and helper scripts from your project's `.arckit/`
 directory, so scaffold it once per repository:
 
 ```bash
-pip install arckit
+pip install git+https://github.com/tractorjuice/arc-kit.git
 arckit init my-project --ai kimi
 ```
 

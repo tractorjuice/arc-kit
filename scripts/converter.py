@@ -724,12 +724,14 @@ def convert(commands_dirs, agents_dir):
                 os.makedirs(skill_dir, exist_ok=True)
 
                 escaped_desc = description.replace('"', '\\"')
-                # Kimi Code documents a closed frontmatter field set (name,
-                # description, type, whenToUse, disableModelInvocation,
-                # arguments). Only name/description are emitted here — every
-                # Claude-only field (effort, keep-coding-instructions,
-                # disallowed-tools, paths, handoffs, allowed-tools, model) is
-                # dropped by construction: nothing here copies them through.
+                # Kimi Code documents SKILL.md fields as name, description, type,
+                # whenToUse, disableModelInvocation, arguments; undocumented keys
+                # are reported as skipped, not rejected. We emit only name/
+                # description here regardless — every Claude-only field (effort,
+                # keep-coding-instructions, disallowed-tools, paths, handoffs,
+                # allowed-tools, model) is dropped by construction: nothing here
+                # copies them through. Don't add undocumented fields on the
+                # assumption they'd be validated — they're simply skipped.
                 skill_md = (
                     f"---\n"
                     f"name: {skill_name}\n"
@@ -1422,7 +1424,9 @@ def copy_reference_skills(src_skills_dir, dest_skills_dir):
         count += 1
 
     strip_claude_only_skill_fields(dest_skills_dir)
-    print(f"  Copied {count} Vibe reference skill dirs to {dest_skills_dir}")
+    dest_label = os.path.basename(os.path.dirname(dest_skills_dir.rstrip("/")))
+    dest_label = dest_label.removeprefix("arckit-").capitalize() or "extension"
+    print(f"  Copied {count} {dest_label} reference skill dirs to {dest_skills_dir}")
 
 
 def _rewrite_skill_content(

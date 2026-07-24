@@ -91,7 +91,7 @@ cp LICENSE extensions/arckit-kimi/LICENSE
 
 Create `extensions/arckit-kimi/README.md`:
 
-```markdown
+````markdown
 # ArcKit for Kimi Code CLI
 
 The Enterprise Architecture Governance Harness, packaged as a Kimi Code CLI plugin.
@@ -139,7 +139,7 @@ expected and harmless; the rest of the plugin works normally.
 ## Licence
 
 MIT. See LICENSE.
-```
+````
 
 - [ ] **Step 4: Add the gitignore block**
 

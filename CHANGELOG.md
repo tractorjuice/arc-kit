@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Kimi Code CLI extension** (`arckit-kimi`) — ninth distribution format. Every ArcKit command ships as a Kimi Agent Skill invoked with `/skill:arckit-<command>`, with the six bundled MCP servers declared in `kimi.plugin.json` and `architecture-workflow` auto-loaded at session start. Install by starting `kimi` and running `/plugins install https://github.com/tractorjuice/arckit-kimi.git` at the prompt; scaffold a project with `arckit init --ai kimi`.
 
+### Fixed
+
+- The converter now strips Claude-only `paths:` frontmatter from reference skills it copies into the Mistral Vibe and Kimi Code CLI extensions, matching the stripping already applied elsewhere; the field is meaningless (and previously left dangling) in both non-Claude formats.
+
 ## [6.3.0] — 2026-07-16
 
 ### Added

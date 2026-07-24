@@ -76,7 +76,6 @@
     "extensions/arckit-vibe/references/**",
     "extensions/arckit-vibe/scripts/**",
     "extensions/arckit-vibe/hooks/**",
-    "extensions/arckit-kimi/agents/**",
     "extensions/arckit-kimi/skills/**",
     "extensions/arckit-kimi/templates/**",
     "extensions/arckit-kimi/docs/guides/**",

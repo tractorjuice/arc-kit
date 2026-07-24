@@ -717,6 +717,8 @@ def init(
         p = "$arckit-"  # skill invocation
     elif ai_assistant == "copilot":
         p = "/arckit-"  # copilot prompt invocation
+    elif ai_assistant == "kimi":
+        p = "/skill:arckit-"  # kimi agent skill invocation
     else:
         p = "/arckit."  # slash command
 
