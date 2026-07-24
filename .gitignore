@@ -172,7 +172,7 @@ extensions/arckit-kimi/schemas/
 extensions/arckit-kimi/references/
 extensions/arckit-kimi/scripts/
 extensions/arckit-kimi/hooks/
-extensions/arckit-kimi/plugin.json
+extensions/arckit-kimi/kimi.plugin.json
 
 # Draft articles (not for version control)
 docs/articles/

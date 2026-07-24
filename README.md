@@ -128,13 +128,13 @@ ln -s $(pwd) ~/.vibe/extensions/arckit
 
 Zero-config: 75 official commands as skills, 10 specialized agents, all templates, and bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, GovRepoScrape).
 
-**Kimi Code CLI** — install the ArcKit plugin:
+**Kimi Code CLI** — start `kimi`, then install the ArcKit plugin from the prompt:
 
-```bash
-kimi plugin install https://github.com/tractorjuice/arckit-kimi.git
+```text
+/plugins install https://github.com/tractorjuice/arckit-kimi.git
 ```
 
-Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
+Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
 **Latest Release**: [v6.3.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.3.0)
 
@@ -253,7 +253,7 @@ kimi
 
 **Mistral Vibe**: Pull the latest standalone extension repo: `cd ~/.vibe/extensions/arckit && git pull`.
 
-**Kimi Code CLI**: Re-run the install command to pick up the latest release: `kimi plugin install https://github.com/tractorjuice/arckit-kimi.git`.
+**Kimi Code CLI**: Re-run the install command from the `kimi` prompt to pick up the latest release: `/plugins install https://github.com/tractorjuice/arckit-kimi.git`.
 
 **Codex CLI**:
 

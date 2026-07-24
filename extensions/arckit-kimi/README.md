@@ -4,8 +4,10 @@ The Enterprise Architecture Governance Harness, packaged as a Kimi Code CLI plug
 
 ## Install
 
-```bash
-kimi plugin install https://github.com/tractorjuice/arckit-kimi.git
+Start `kimi`, then install the plugin from the prompt:
+
+```text
+/plugins install https://github.com/tractorjuice/arckit-kimi.git
 ```
 
 ## Set up a project

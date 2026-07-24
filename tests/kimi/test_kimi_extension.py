@@ -8,18 +8,18 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[2]
 KIMI_ROOT = REPO_ROOT / "extensions" / "arckit-kimi"
 KIMI_SKILLS = KIMI_ROOT / "skills"
-KIMI_MANIFEST = KIMI_ROOT / "plugin.json"
+KIMI_MANIFEST = KIMI_ROOT / "kimi.plugin.json"
 
-# Frontmatter keys Kimi Code CLI accepts. Anything else is a hard failure:
-# Kimi validates against a closed set, so a leaked Claude-only field breaks
-# the skill at load time rather than being ignored.
+# Frontmatter keys Kimi Code CLI documents for skills. Anything else is a
+# hard failure: if Kimi validates against a closed set, a leaked Claude-only
+# or legacy field breaks the skill at load time rather than being ignored.
 KIMI_ALLOWED_FRONTMATTER_KEYS = {
     "name",
     "description",
-    "license",
-    "compatibility",
-    "metadata",
     "type",
+    "whenToUse",
+    "disableModelInvocation",
+    "arguments",
 }
 
 # build.md is deliberately excluded from every non-Claude conversion target

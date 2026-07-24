@@ -994,9 +994,10 @@ export OPENCODE_HOME="$PWD/.opencode"
             "4. Create your first project: [cyan]/arckit-requirements[/cyan]"
         )
     elif ai_assistant == "kimi":
-        next_steps.append("2. Install the ArcKit plugin for Kimi Code CLI:")
+        next_steps.append("2. Start Kimi Code CLI and install the ArcKit plugin:")
+        next_steps.append("   [cyan]kimi[/cyan]")
         next_steps.append(
-            "   [cyan]kimi plugin install https://github.com/tractorjuice/arckit-kimi.git[/cyan]"
+            "   [cyan]/plugins install https://github.com/tractorjuice/arckit-kimi.git[/cyan]"
         )
         next_steps.append(
             "3. Establish architecture principles: [cyan]/skill:arckit-principles[/cyan]"

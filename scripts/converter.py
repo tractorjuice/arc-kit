@@ -724,8 +724,9 @@ def convert(commands_dirs, agents_dir):
                 os.makedirs(skill_dir, exist_ok=True)
 
                 escaped_desc = description.replace('"', '\\"')
-                # Kimi validates frontmatter against a closed field set, so
-                # only name/description/license/metadata are emitted. Every
+                # Kimi Code documents a closed frontmatter field set (name,
+                # description, type, whenToUse, disableModelInvocation,
+                # arguments). Only name/description are emitted here — every
                 # Claude-only field (effort, keep-coding-instructions,
                 # disallowed-tools, paths, handoffs, allowed-tools, model) is
                 # dropped by construction: nothing here copies them through.
@@ -733,9 +734,6 @@ def convert(commands_dirs, agents_dir):
                     f"---\n"
                     f"name: {skill_name}\n"
                     f'description: "{escaped_desc}"\n'
-                    f"license: MIT\n"
-                    f"metadata:\n"
-                    f"  arckit-command: {base_name}\n"
                     f"---\n\n"
                     f"{rewritten}\n"
                 )
@@ -2189,7 +2187,7 @@ if __name__ == "__main__":
     generate_kimi_plugin_json(
         os.path.join(plugin_dir, ".mcp.json"),
         kimi_version,
-        "extensions/arckit-kimi/plugin.json",
+        "extensions/arckit-kimi/kimi.plugin.json",
     )
     copy_reference_skills(
         os.path.join(plugin_dir, "skills"),
