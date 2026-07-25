@@ -826,3 +826,82 @@ def test_codex_skills_do_not_expose_claude_command_syntax_or_hooks():
             offenders.append(f"{path.relative_to(REPO_ROOT)} contains /$arckit invocation syntax")
 
     assert not offenders
+
+
+def test_codex_skill_rewrite_preserves_trailing_punctuation():
+    """A command reference at the end of a sentence must not swallow the full stop.
+
+    Regression for the greedy `(\\w[\\w.-]*)` capture: `/arckit:stakeholders.`
+    used to render as `$arckit-stakeholders-` (period consumed into the name,
+    then mapped `.`->`-`). The period is sentence punctuation, not part of the
+    command name, and must survive as a literal.
+    """
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "arckit_converter", REPO_ROOT / "scripts" / "converter.py"
+    )
+    converter = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(converter)
+
+    sample = (
+        "Run /arckit:stakeholders.\n"
+        "Then /arckit.adr.\n"
+        "And /arckit:wardley.climate.\n"
+    )
+    expected = (
+        "Run $arckit-stakeholders.\n"
+        "Then $arckit-adr.\n"
+        "And $arckit-wardley-climate.\n"
+    )
+    result = converter._rewrite_skill_content(
+        sample,
+        skill_dir_name="arckit-requirements",
+        invocation_fn=converter.codex_skill_invocation,
+        platform_label="Codex",
+        plugin_root_prefix=".arckit",
+    )
+    assert result == expected
+
+
+def test_codex_skill_rewrite_is_stable():
+    """Golden test: locks rewrite output so the shared-core extraction is provably safe.
+
+    Exercises every branch that differs per platform: the invocation rewrite,
+    the AskUserQuestion replacement, the SessionStart hook removal, and the
+    plugin-root rewrite.
+    """
+    import importlib.util
+
+    spec = importlib.util.spec_from_file_location(
+        "arckit_converter", REPO_ROOT / "scripts" / "converter.py"
+    )
+    converter = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(converter)
+
+    sample = (
+        "Run /arckit:requirements then /arckit.stakeholders.\n"
+        "Also /arckit:wardley.climate and /prompts:arckit.adr.\n"
+        "Please use the **AskUserQuestion** tool to gather the project name.\n"
+        "- Use ArcKit Project Context from the SessionStart hook if available\n"
+        "Templates live in ${CLAUDE_PLUGIN_ROOT}/templates/.\n"
+        "Beware Claude Code's 32K token output limit.\n"
+    )
+    # Sentence-final full stops after a command reference stay as literal
+    # punctuation (`$arckit-stakeholders.`, `$arckit-adr.`), not swallowed into
+    # the name. See test_codex_skill_rewrite_preserves_trailing_punctuation.
+    expected = (
+        "Run $arckit-requirements then $arckit-stakeholders.\n"
+        "Also $arckit-wardley-climate and $arckit-adr.\n"
+        "Please ask the user for the project name.\n"
+        "Templates live in .arckit/templates/.\n"
+        "Beware Codex output limits.\n"
+    )
+    result = converter._rewrite_skill_content(
+        sample,
+        skill_dir_name="arckit-requirements",
+        invocation_fn=converter.codex_skill_invocation,
+        platform_label="Codex",
+        plugin_root_prefix=".arckit",
+    )
+    assert result == expected

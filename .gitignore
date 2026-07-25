@@ -163,6 +163,17 @@ extensions/arckit-vibe/references/
 extensions/arckit-vibe/scripts/
 extensions/arckit-vibe/hooks/
 
+# -- extensions/arckit-kimi (generated) --
+extensions/arckit-kimi/skills/
+extensions/arckit-kimi/templates/
+extensions/arckit-kimi/docs/guides/
+extensions/arckit-kimi/config/
+extensions/arckit-kimi/schemas/
+extensions/arckit-kimi/references/
+extensions/arckit-kimi/scripts/
+extensions/arckit-kimi/hooks/
+extensions/arckit-kimi/kimi.plugin.json
+
 # Draft articles (not for version control)
 docs/articles/
 .tmp*

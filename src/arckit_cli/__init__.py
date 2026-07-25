@@ -59,6 +59,12 @@ AGENT_CONFIG = {
         "install_url": "https://github.com/features/copilot",
         "requires_cli": False,
     },
+    "kimi": {
+        "name": "Kimi Code CLI",
+        "folder": ".arckit/",
+        "install_url": "https://github.com/tractorjuice/arckit-kimi",
+        "requires_cli": True,
+    },
 }
 
 BANNER = """
@@ -327,7 +333,7 @@ def init(
         None,
         help="Name for your new project directory (optional, use '.' for current directory)",
     ),
-    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot"),
+    ai_assistant: str = typer.Option(None, "--ai", help="AI assistant to use: codex, opencode, copilot, kimi"),
     no_git: bool = typer.Option(
         False, "--no-git", help="Skip git repository initialization"
     ),
@@ -416,6 +422,7 @@ def init(
         console.print("1. codex (OpenAI Codex CLI)")
         console.print("2. opencode (OpenCode CLI)")
         console.print("3. copilot (GitHub Copilot in VS Code)")
+        console.print("4. kimi (Kimi Code CLI)")
         console.print()
         console.print("[dim]For Claude Code, use the ArcKit plugin instead:[/dim]")
         console.print("[dim]  /plugin marketplace add tractorjuice/arc-kit[/dim]")
@@ -425,7 +432,7 @@ def init(
         )
 
         choice = typer.prompt("Enter choice", default="1")
-        ai_map = {"1": "codex", "2": "opencode", "3": "copilot"}
+        ai_map = {"1": "codex", "2": "opencode", "3": "copilot", "4": "kimi"}
         ai_assistant = ai_map.get(choice, "codex")
 
     if ai_assistant == "claude":
@@ -710,6 +717,8 @@ def init(
         p = "$arckit-"  # skill invocation
     elif ai_assistant == "copilot":
         p = "/arckit-"  # copilot prompt invocation
+    elif ai_assistant == "kimi":
+        p = "/skill:arckit-"  # kimi agent skill invocation
     else:
         p = "/arckit."  # slash command
 
@@ -985,6 +994,18 @@ export OPENCODE_HOME="$PWD/.opencode"
         next_steps.append("3. Open Copilot Chat and type: [cyan]/arckit-principles[/cyan]")
         next_steps.append(
             "4. Create your first project: [cyan]/arckit-requirements[/cyan]"
+        )
+    elif ai_assistant == "kimi":
+        next_steps.append("2. Start Kimi Code CLI and install the ArcKit plugin:")
+        next_steps.append("   [cyan]kimi[/cyan]")
+        next_steps.append(
+            "   [cyan]/plugins install https://github.com/tractorjuice/arckit-kimi.git[/cyan]"
+        )
+        next_steps.append(
+            "3. Establish architecture principles: [cyan]/skill:arckit-principles[/cyan]"
+        )
+        next_steps.append(
+            "4. Create your first project: [cyan]/skill:arckit-requirements[/cyan]"
         )
 
     console.print(Panel("\n".join(next_steps), title="Next Steps", border_style="cyan"))

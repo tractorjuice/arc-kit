@@ -58,6 +58,7 @@ EXCLUDE_PREFIXES = [
     "CHANGELOG.md",
     "plugins/arckit-claude/CHANGELOG.md",
     "docs/articles/",
+    "docs/plans/",                 # planning artefacts; may quote the dot form verbatim
     "docs/proposals/",
     "docs/superpowers/",
     "docs/pitch-decks/",
@@ -65,6 +66,7 @@ EXCLUDE_PREFIXES = [
     "node_modules/", ".git/",
     "scripts/converter.py",        # community-rewrite literals patched by hand
     "scripts/standardise-colon.py",
+    "tests/",                      # test fixtures feed the dot form in on purpose
 ]
 
 TEXT_EXT = {".md", ".html", ".txt", ".xml", ".sh", ".py", ".json",
