@@ -5,7 +5,7 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [6.4.0] — 2026-07-25
 
 ### Added
 
@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - The converter now strips Claude-only `paths:` frontmatter from reference skills it copies into the Mistral Vibe and Kimi Code CLI extensions, matching the stripping already applied elsewhere; the field is meaningless (and previously left dangling) in both non-Claude formats.
+- A command reference at the end of a sentence, e.g. `/arckit:stakeholders.`, no longer has the sentence-final full stop swallowed into the command name (which previously rendered `$arckit-stakeholders-` in the Codex extension, and the equivalent in Kimi). The converter's command-name capture now stops at a word boundary; internal dots and hyphens (`wardley.climate`, `security-assessment`) are preserved (#666).
 
 ## [6.3.0] — 2026-07-16
 

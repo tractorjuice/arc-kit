@@ -1,6 +1,6 @@
 {
   "name": "arckit",
-  "version": "6.3.0",
+  "version": "6.4.0",
   "description": "The Enterprise Architecture Governance Harness - 68 commands across strategy, architecture, delivery, and assurance — including UK Government compliance",
   "contextFileName": "GEMINI.md",
   "mcpServers": {
