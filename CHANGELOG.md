@@ -5,6 +5,17 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Kimi Code CLI hooks.** The `arckit-kimi` plugin manifest now wires 16 governance and security hooks (session context injection, prompt and file secret detection, file protection, ARC filename validation, score and Wardley-math validation, provenance stamping, manifest updates, stale-artifact notices, session learner, post-compact rehydrate, and telemetry) through a new `hooks/kimi-hook-adapter.mjs`. The adapter runs each unmodified Claude hook as a child and re-expresses its Claude-shaped output in Kimi's contract (context to stdout on exit 0, blocks to exit 2), so the battle-tested Claude hooks stay byte-for-byte unchanged. Path-scoped hooks carry an adapter-level guard that stands in for Claude's `if:` conditions, which Kimi's flat hook schema cannot express. The translation logic is unit-tested in isolation; the end-to-end wiring is not yet smoke-tested against a live Kimi runtime.
+- **Kimi manifest metadata.** `kimi.plugin.json` now carries `author`, `homepage`, `repository`, `license`, `keywords`, and a fuller `interface` block (`longDescription`, `developerName`, `websiteURL`) for the `/plugins` browser.
+
+### Fixed
+
+- Softened the converter's `generate_kimi_plugin_json` note that asserted Kimi supports `headers` on remote MCP servers. Kimi's published schema documents only `url`, so the two keyed servers (`google-developer-knowledge`, `datacommons-mcp`) may not authenticate under Kimi until confirmed on a live instance.
+
 ## [6.4.0] — 2026-07-25
 
 ### Added
