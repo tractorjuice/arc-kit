@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-at",
-  "version": "6.3.0",
+  "version": "6.4.0",
   "defaultEnabled": false,
   "description": "Austrian Overlay for ArcKit — 3 commands for DSG/DSGVO, NISG, and Bundesvergabegesetz public procurement. Requires arckit core plugin.",
   "author": {
@@ -20,7 +20,7 @@
   "dependencies": [
     {
       "name": "arckit",
-      "version": "=6.3.0"
+      "version": "=6.4.0"
     }
   ]
 }
