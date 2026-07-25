@@ -22,7 +22,7 @@ test('extractModelFromContent: no model line returns null', () => {
 });
 
 test('extractModelFromContent: provider-prefixed id (slash) parses', () => {
-  assert.equal(extractModelFromContent('**Model**: moonshotai/kimi-v3\n'), 'moonshotai/kimi-v3');
+  assert.equal(extractModelFromContent('**Model**: moonshotai/kimi-k3\n'), 'moonshotai/kimi-k3');
 });
 
 test('extractModelFromContent: context-window suffix (brackets) parses', () => {
