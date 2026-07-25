@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Softened the converter's `generate_kimi_plugin_json` note that asserted Kimi supports `headers` on remote MCP servers. Kimi's published schema documents only `url`, so the two keyed servers (`google-developer-knowledge`, `datacommons-mcp`) may not authenticate under Kimi until confirmed on a live instance.
+- **Build Provenance effort matrix corrected** (#669). The effort helper ranked `xhigh` above `max`, inverting the official Claude Code ordering (`max` is the deepest tier), and used a single per-model cap that could not represent Opus 4.6 / Sonnet 4.6, which support `max` but not `xhigh`. The stamp therefore recorded the wrong "Effective Effort" for those models: `xhigh` was reported as downgraded to `max`, where the harness actually falls back to `high`. Replaced the single cap with per-model supported sets, fixed the level ordering, and dropped the incorrect Haiku 4.5 entry (Haiku does not support effort). Verified against the official model-config docs (`code.claude.com/docs`).
 
 ## [6.4.0] — 2026-07-25
 
