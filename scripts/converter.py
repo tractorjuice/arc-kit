@@ -1074,13 +1074,75 @@ def generate_codex_mcp_json(mcp_json_path, output_path):
     print(f"  Generated: {output_path}")
 
 
+def generate_kimi_hooks():
+    """Build the Kimi plugin-manifest ``hooks`` array.
+
+    Kimi hook entries are flat objects: ``{event, matcher, command, timeout}``.
+    Every entry routes through ``hooks/kimi-hook-adapter.mjs``, which runs the
+    unmodified Claude hook as a child and translates its Claude-shaped output
+    into Kimi's stdout/exit-code contract. The optional third adapter argument
+    is a path substring that replaces Claude's ``if:`` condition, which Kimi's
+    flat schema has no equivalent for.
+
+    Deliberately excluded: version-check / v5-migration-banner (Claude Code
+    version specific), graph-inject and sync-guides (they match Claude
+    ``/arckit:`` slash commands that do not exist in Kimi), allow-plugin-internals
+    / allow-mcp-tools / inject-agent-context (auto-allow and Agent-tool hooks
+    with no effect under Kimi), and external-context-watch (FileChanged has no
+    Kimi event).
+
+    NOTE: not yet smoke-tested against a live Kimi runtime — see the Kimi
+    extension memory. The adapter's translation logic is unit-tested in
+    isolation (tests/plugin/test_kimi_hook_adapter.mjs).
+    """
+    def command(target, guard=None):
+        base = f"node ./hooks/kimi-hook-adapter.mjs {target}"
+        return f"{base} {guard}" if guard else base
+
+    # event, matcher (""=all), target hook, timeout (s), path guard
+    specs = [
+        ("SessionStart", "", "arckit-session.mjs", 5, None),
+        ("SessionStart", "", "notify-stale-artifacts.mjs", 8, None),
+        ("UserPromptSubmit", "", "arckit-context.mjs", 10, None),
+        ("UserPromptSubmit", "", "secret-detection.mjs", 5, None),
+        ("PreToolUse", "Edit|Write", "file-protection.mjs", 5, None),
+        ("PreToolUse", "Edit|Write", "secret-file-scanner.mjs", 5, None),
+        ("PreToolUse", "Write", "validate-arc-filename.mjs", 5, "/projects/"),
+        ("PreToolUse", "Write", "score-validator.mjs", 5, "/vendors/scores.json"),
+        ("PreToolUse", "Write", "validate-wardley-math.mjs", 5, "/wardley-maps/"),
+        ("PostToolUse", "Write|Edit", "provenance-stamp.mjs", 5, "/projects/"),
+        ("PostToolUse", "Write|Edit", "tidy-wardley-labels.mjs", 10, "/wardley-maps/"),
+        ("PostToolUse", "Write", "update-manifest.mjs", 5, "/projects/"),
+        ("PostToolUse", ".*", "telemetry.mjs", 3, None),
+        ("Stop", "", "session-learner.mjs", 10, None),
+        ("StopFailure", "", "session-learner.mjs", 10, None),
+        ("PostCompact", "", "postcompact-rehydrate.mjs", 5, None),
+    ]
+
+    hooks = []
+    for event, matcher, target, timeout, guard in specs:
+        entry = {"event": event}
+        if matcher:
+            entry["matcher"] = matcher
+        entry["command"] = command(target, guard)
+        entry["timeout"] = timeout
+        hooks.append(entry)
+    return hooks
+
+
 def generate_kimi_plugin_json(mcp_json_path, version, output_path):
     """Generate the Kimi Code CLI plugin manifest.
 
-    Kimi's mcpServers schema is close to Claude's: remote servers use `url`
-    with optional `headers`, stdio servers use `command`/`args`/`env`. Claude's
-    `type` discriminator has no Kimi equivalent and is dropped; the shape is
-    inferred from whether `url` or `command` is present.
+    Remote MCP servers map to ``url`` (plus ``headers`` when present); stdio
+    servers map to ``command``/``args``/``env``. Claude's ``type`` discriminator
+    has no Kimi equivalent and is dropped; the shape is inferred from whether
+    ``url`` or ``command`` is present.
+
+    CAVEAT: Kimi's published mcpServers schema documents only ``url`` for remote
+    servers — ``headers`` is NOT documented and is unverified against the Kimi
+    runtime. The two keyed servers (google-developer-knowledge, datacommons-mcp)
+    rely on ``headers`` to send their API key, so those two may fail to
+    authenticate under Kimi until this is confirmed on a live instance.
     """
     servers = {}
     if os.path.isfile(mcp_json_path):
@@ -1109,14 +1171,33 @@ def generate_kimi_plugin_json(mcp_json_path, version, output_path):
             "The Enterprise Architecture Governance Harness: strategy, "
             "architecture, delivery and assurance artefacts."
         ),
+        "author": "ArcKit",
+        "homepage": "https://github.com/tractorjuice/arckit-kimi",
+        "repository": "https://github.com/tractorjuice/arckit-kimi",
+        "license": "MIT",
+        "keywords": [
+            "enterprise-architecture",
+            "governance",
+            "procurement",
+            "public-sector",
+            "kimi",
+        ],
         "skills": "./skills/",
         "sessionStart": {"skill": "architecture-workflow"},
         "mcpServers": servers,
+        "hooks": generate_kimi_hooks(),
         "interface": {
             "displayName": "ArcKit",
             "shortDescription": (
                 "Strategy, architecture, delivery and assurance artefacts"
             ),
+            "longDescription": (
+                "Use ArcKit to create, review, and connect architecture, "
+                "procurement, governance, compliance, research, and delivery "
+                "artefacts in Kimi Code CLI."
+            ),
+            "developerName": "ArcKit",
+            "websiteURL": "https://github.com/tractorjuice/arc-kit",
         },
     }
 
@@ -2201,6 +2282,25 @@ if __name__ == "__main__":
         os.path.join(plugin_dir, ".mcp.json"),
         kimi_version,
         "extensions/arckit-kimi/kimi.plugin.json",
+    )
+    # Copy every hook script plus the Kimi adapter so the wired hooks — and
+    # their hook-to-hook imports (hook-utils, project-context-builder,
+    # session-nudge, wardley-tidy, okf-frontmatter, ...) — resolve inside the
+    # extension. config/doc-types.mjs is already copied via the config dir.
+    kimi_hooks_dst = "extensions/arckit-kimi/hooks"
+    os.makedirs(kimi_hooks_dst, exist_ok=True)
+    kimi_hooks_src = os.path.join(plugin_dir, "hooks")
+    kimi_hook_count = 0
+    for hook_file in sorted(os.listdir(kimi_hooks_src)):
+        if hook_file.endswith(".mjs"):
+            shutil.copy2(
+                os.path.join(kimi_hooks_src, hook_file),
+                os.path.join(kimi_hooks_dst, hook_file),
+            )
+            kimi_hook_count += 1
+    print(
+        f"  Copied {kimi_hook_count} hook scripts "
+        f"(incl. kimi-hook-adapter.mjs) to {kimi_hooks_dst}"
     )
     copy_reference_skills(
         os.path.join(plugin_dir, "skills"),

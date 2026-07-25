@@ -108,7 +108,10 @@ def test_generate_kimi_plugin_json_is_strict_json(tmp_path):
     converter.generate_kimi_plugin_json(str(mcp_src), "6.3.0", str(out))
 
     raw = out.read_text(encoding="utf-8")
-    assert "//" not in raw
+    # No JS-style comments. URLs (homepage, repository, websiteURL) legitimately
+    # contain "//", so match comment patterns precisely rather than bare "//".
+    assert "\n//" not in raw and not raw.lstrip().startswith("//")
+    assert "/*" not in raw
     json.loads(raw)  # raises if malformed
 
 
@@ -207,3 +210,95 @@ def test_all_mcp_servers_mapped_without_user_config():
 def test_arckit_build_skill_is_excluded():
     """arckit-build orchestrates parallel Agent dispatch and is Claude-only."""
     assert not (KIMI_SKILLS / "arckit-build").exists()
+
+
+# Events Kimi Code CLI documents for hooks. A wired event outside this set would
+# be rejected (or silently ignored) at load time.
+KIMI_HOOK_EVENTS = {
+    "UserPromptSubmit",
+    "PreToolUse",
+    "Stop",
+    "PostToolUse",
+    "PostToolUseFailure",
+    "PermissionRequest",
+    "PermissionResult",
+    "SessionStart",
+    "SessionEnd",
+    "SubagentStart",
+    "SubagentStop",
+    "StopFailure",
+    "Interrupt",
+    "PreCompact",
+    "PostCompact",
+    "Notification",
+}
+
+# Claude hooks intentionally NOT wired for Kimi (Claude Code-version specific,
+# Claude slash-command matchers, auto-allow/Agent hooks with no Kimi effect, or
+# events Kimi lacks). See generate_kimi_hooks() in scripts/converter.py.
+KIMI_EXCLUDED_HOOKS = {
+    "version-check.mjs",
+    "v5-migration-banner.mjs",
+    "graph-inject.mjs",
+    "sync-guides.mjs",
+    "allow-plugin-internals.mjs",
+    "allow-mcp-tools.mjs",
+    "inject-agent-context.mjs",
+    "external-context-watch.mjs",
+}
+
+
+def _manifest_hooks():
+    manifest = json.loads(KIMI_MANIFEST.read_text(encoding="utf-8"))
+    return manifest.get("hooks", [])
+
+
+def test_manifest_has_hooks_array():
+    hooks = _manifest_hooks()
+    assert hooks, "kimi.plugin.json has no hooks array"
+    for entry in hooks:
+        assert entry["event"] in KIMI_HOOK_EVENTS, f"unsupported hook event: {entry['event']}"
+        assert "kimi-hook-adapter.mjs" in entry["command"], (
+            f"hook command bypasses the adapter: {entry['command']}"
+        )
+        assert isinstance(entry["timeout"], int) and entry["timeout"] > 0
+
+
+def test_wired_hook_targets_and_adapter_exist_on_disk():
+    """Every wired hook (and the adapter) must be a real file in the extension."""
+    hooks_dir = KIMI_ROOT / "hooks"
+    assert (hooks_dir / "kimi-hook-adapter.mjs").is_file(), "adapter missing from extension"
+    for entry in _manifest_hooks():
+        # command: "node ./hooks/kimi-hook-adapter.mjs <target>.mjs [guard]"
+        # tokens:   0     1                            2           3
+        parts = entry["command"].split()
+        target = parts[2]
+        assert (hooks_dir / target).is_file(), f"wired hook target missing on disk: {target}"
+
+
+def test_excluded_hooks_are_not_wired():
+    wired = {entry["command"].split()[2] for entry in _manifest_hooks()}
+    leaked = wired & KIMI_EXCLUDED_HOOKS
+    assert not leaked, f"Claude-only hooks wired for Kimi: {sorted(leaked)}"
+
+
+def test_hook_utils_dependency_is_shipped():
+    """The adapter runs the real hooks, which import hook-utils.mjs."""
+    assert (KIMI_ROOT / "hooks" / "hook-utils.mjs").is_file()
+    assert (KIMI_ROOT / "config" / "doc-types.mjs").is_file()
+
+
+def test_generate_kimi_hooks_scopes_project_hooks_with_a_guard():
+    """Hooks that must fire only under projects/ carry the adapter path guard."""
+    converter = _load_converter()
+    hooks = converter.generate_kimi_hooks()
+    guarded = {
+        h["command"].split()[2]: h["command"].split()[3]
+        for h in hooks
+        if len(h["command"].split()) > 3
+    }
+    assert guarded.get("validate-arc-filename.mjs") == "/projects/"
+    assert guarded.get("score-validator.mjs") == "/vendors/scores.json"
+    assert guarded.get("validate-wardley-math.mjs") == "/wardley-maps/"
+    assert guarded.get("provenance-stamp.mjs") == "/projects/"
+    assert guarded.get("update-manifest.mjs") == "/projects/"
