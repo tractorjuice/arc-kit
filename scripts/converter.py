@@ -1527,31 +1527,40 @@ def _rewrite_skill_content(
             f"This location is auto-discovered by {platform_label} as a project-level skill",
         )
 
+    # The command-name capture must END in a word char so a sentence-final
+    # full stop (or other trailing punctuation) is left as a literal rather
+    # than swallowed into the name — otherwise `/arckit:stakeholders.` renders
+    # as `$arckit-stakeholders-` (the `.` is captured then mapped `.`->`-`).
+    # Internal dots/hyphens (wardley.climate, security-assessment) are kept.
+    _cmd_name = r"(\w(?:[\w.-]*\w)?)"
+
     # Rewrite /arckit:X -> platform invocation (colon-prefixed plugin format)
     content = re.sub(
-        r"(?<![\w/])/arckit:(\w[\w.-]*)",
+        r"(?<![\w/])/arckit:" + _cmd_name,
         normalize_invocation,
         content,
     )
 
     # Rewrite /arckit.X -> platform invocation (dot-prefixed format)
     content = re.sub(
-        r"(?<![\w/])/arckit\.(\w[\w.-]*)",
+        r"(?<![\w/])/arckit\." + _cmd_name,
         normalize_invocation,
         content,
     )
 
     # Rewrite /prompts:arckit.X -> platform invocation (old Codex prompt format)
     content = re.sub(
-        r"/prompts:arckit\.(\w[\w.-]*)",
+        r"/prompts:arckit\." + _cmd_name,
         normalize_invocation,
         content,
     )
 
     # Normalize any already-rewritten skill invocations that still
     # contain command-name dots, such as $arckit-wardley.climate.
+    # The capture must end in an alphanumeric so a trailing full stop is not
+    # re-consumed (otherwise it undoes the trailing-punctuation fix above).
     content = re.sub(
-        re.escape(inv_prefix) + r"([A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z0-9.-]*)",
+        re.escape(inv_prefix) + r"([A-Za-z0-9][A-Za-z0-9.-]*\.[A-Za-z0-9.-]*[A-Za-z0-9])",
         normalize_invocation,
         content,
     )
