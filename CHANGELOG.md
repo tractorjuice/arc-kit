@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Guide-tree parity check** (`scripts/check-guide-parity.py`, wired into `lint-markdown.yml`). ArcKit keeps user guides in two trees — `docs/guides/` (the published site and CLI package data) and `plugins/arckit-claude/docs/guides/` (what the converter pushes into all seven extensions) — and nothing kept them in step. `sync-shared-assets.py` covers `templates/_partials/` and `references/` but has never touched `docs/guides`. The check enforces byte-identical parity for every guide present in both trees, allows root-only guides (community-overlay and maintainer docs deliberately don't ship to extensions), and rejects plugin-only guides, which can never reach the site or the CLI package. `--sync` copies root to plugin and only ever writes to the plugin tree.
+
 ### Documentation
 
 - **Claude Code v2.1.201–v2.1.220 adoption** (#580). Refreshed guidance against the current platform:
@@ -20,6 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - **Plugin-tree guide drift.** `plugins/arckit-claude/docs/guides/mcp-servers.md` was missing the "Optional: MCP per-request timeout" section that four `*-research.md` guides in the same tree link to, leaving a dead anchor; `security-hooks.md` was missing "Restricting web access for research agents" entirely, so the plugin tree shipped no domain-restriction guidance. Both sections backfilled; the two trees now share a heading structure.
+- **Guide-tree drift resolved across 10 files.** Drift ran in *both* directions, so this was a merge rather than a one-way copy:
+  - Root was correct and the plugin copy stale in 7: `autoresearch.md` (missing the entire Stopping Conditions and Self-Harness sections), `mcp-servers.md` (hardcoded "75 slash commands" and "Skills: 1"), `security-hooks.md` / `c4-layout-science.md` / `custom-commands.md` (pre-v6 `arckit-claude/` paths that no longer exist, since plugins moved under `plugins/`), `roles/README.md` and `roles/enterprise-architect.md` (hardcoded "70 commands").
+  - The plugin copy was correct and root stale in 3: `pages.md` and `template-builder.md` (both still pointed at a category map in `hooks/sync-guides.mjs`; the real source is `config/guide-groups.mjs`, which `sync-guides.mjs` imports from), and `roles/service-owner.md`, where root documented the service-assessment artefact as `ARC-{PID}-SASS-v*.md` — the registered doc-type code is `SVCASS`, so readers were told to look for a file the command never writes.
+- **`CLAUDE.md` step 3 for adding a command pointed at `plugins/arckit-claude/guides/`, a directory that does not exist** (the real path is `plugins/arckit-claude/docs/guides/`). This was the root cause of the drift: the documented workflow sent guide authors somewhere invalid, so the plugin copy was routinely skipped. Step 3 now names the sync command, and a new "Guide Trees" section documents the canonical direction.
 - `mcp-servers.md` troubleshooting told users to run `echo $GOOGLE_API_KEY`, printing a live credential to the terminal in a guide that elsewhere highlights key redaction for OFFICIAL-SENSITIVE deployments. Replaced with a presence check that does not echo the value.
 
 ## [6.5.0] — 2026-07-27

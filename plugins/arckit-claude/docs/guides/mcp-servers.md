@@ -83,12 +83,14 @@ The plugin loads MCP servers and hooks at startup. **A restart is required** aft
 
 After restart, open the plugin manager (`/plugin`) and navigate to **Installed**. You should see:
 
-- **Commands**: 75 slash commands
-- **Agents**: Autonomous research and specialist agents
-- **Skills**: 1 (Wardley Mapping)
+- **Commands**: ArcKit slash commands
+- **Agents**: Autonomous research agents
+- **Skills**: Reference skills (Wardley, Mermaid, PlantUML, workflow, build harness)
 - **Hooks**: SessionStart, UserPromptSubmit, PreToolUse, PermissionRequest
 
 > **Tip**: You may see 2 MCP errors about missing API keys for Google and Data Commons. These are harmless — see [Servers Requiring API Keys](#servers-requiring-api-keys) below.
+
+> **Confirm what's enabled from the CLI** (Claude Code v2.1.163+): `/plugin list --enabled` lists the active plugins. Handy because the community overlays (`arckit-uae`, `arckit-fr`, `arckit-au`, …) ship `defaultEnabled: false` — if an overlay's `/arckit:*` commands aren't showing up, it's almost always because it wasn't enabled. Use `/plugin list --disabled` to see what's installed but off.
 
 ### Auto-enabling for team repos
 
@@ -195,14 +197,7 @@ export DATA_COMMONS_API_KEY="your-api-key-here"
 
 3. Restart Claude Code
 
-> **Your keys stay hidden in `claude mcp` output.** Both keyed servers carry
-> their key in an HTTP header (`X-Goog-Api-Key`, `X-API-Key`) via
-> `${GOOGLE_API_KEY}` / `${DATA_COMMONS_API_KEY}`. As of Claude Code v2.1.161,
-> `claude mcp list` / `get` / `add` no longer expand `${VAR}` references and
-> redact credential headers and URL secrets, so inspecting your MCP config or
-> screen-sharing it will not leak the keys. Relevant for OFFICIAL-SENSITIVE /
-> regulated deployments. The other four bundled servers are keyless, so there's
-> nothing to redact.
+> **Your keys stay hidden in `claude mcp` output.** Both keyed servers carry their key in an HTTP header (`X-Goog-Api-Key`, `X-API-Key`) via `${GOOGLE_API_KEY}` / `${DATA_COMMONS_API_KEY}`. As of Claude Code v2.1.161, `claude mcp list` / `get` / `add` no longer expand `${VAR}` references and redact credential headers and URL secrets — so inspecting your MCP config (or screen-sharing it) won't leak the keys. Relevant for OFFICIAL-SENSITIVE / regulated deployments. The other four bundled servers are keyless, so there's nothing to redact.
 
 ### Managing MCP authentication
 
@@ -236,7 +231,7 @@ Invalid MCP server config for 'google-developer-knowledge': Missing environment 
 Invalid MCP server config for 'datacommons-mcp': Missing environment variables: DATA_COMMONS_API_KEY
 ```
 
-**These errors are harmless.** They mean you haven't configured the optional API keys. All 70 commands, 10 agents, hooks, and skills work without them. Only `/arckit:gcp-research` and Data Commons lookups are affected.
+**These errors are harmless.** They mean you haven't configured the optional API keys. All ArcKit commands, agents, hooks, and skills work without them. Only `/arckit:gcp-research` and Data Commons lookups are affected.
 
 **To fix**: Set the environment variables as described above and restart Claude Code.
 
