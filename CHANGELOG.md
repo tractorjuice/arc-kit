@@ -5,7 +5,7 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [6.5.0] — 2026-07-27
 
 ### Added
 
@@ -14,8 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Build Provenance model-id parsing** (#664). `extractModelFromContent` rejected model ids containing a provider prefix or a bracketed context-window suffix (e.g. `claude-opus-4-8[1m]`, bedrock-style `us.anthropic.claude-*`), silently dropping the model from the stamp. Widened the id character class and extracted the pure model/effort helpers into a testable `provenance-model.mjs`.
 - Softened the converter's `generate_kimi_plugin_json` note that asserted Kimi supports `headers` on remote MCP servers. Kimi's published schema documents only `url`, so the two keyed servers (`google-developer-knowledge`, `datacommons-mcp`) may not authenticate under Kimi until confirmed on a live instance.
 - **Build Provenance effort matrix corrected** (#669). The effort helper ranked `xhigh` above `max`, inverting the official Claude Code ordering (`max` is the deepest tier), and used a single per-model cap that could not represent Opus 4.6 / Sonnet 4.6, which support `max` but not `xhigh`. The stamp therefore recorded the wrong "Effective Effort" for those models: `xhigh` was reported as downgraded to `max`, where the harness actually falls back to `high`. Replaced the single cap with per-model supported sets, fixed the level ordering, and dropped the incorrect Haiku 4.5 entry (Haiku does not support effort). Verified against the official model-config docs (`code.claude.com/docs`).
+- Corrected a non-existent `moonshotai/kimi-v3` example id to `kimi-k3` in the provenance model helper (#670).
 
 ## [6.4.0] — 2026-07-25
 

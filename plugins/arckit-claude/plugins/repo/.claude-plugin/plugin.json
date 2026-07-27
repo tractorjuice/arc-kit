@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "arckit-repo",
-  "version": "6.4.0",
+  "version": "6.5.0",
   "description": "Repository tooling for ArcKit, starting with source-grounded, agent-readable repository docs inspired by OpenWiki.",
   "author": {
     "name": "ArcKit Contributors",
