@@ -81,10 +81,11 @@ The command can create a temporary `docs/repository/_plan.md` while preparing a 
 | Command | Scope | Output |
 |---|---|---|
 | `/arckit:repo-docs` | Source-code repository understanding | `docs/repository/*.md` |
+| `/arckit:repo-audit` | Source-code repository assessment | `ARC-{PID}-CDAU-*.md` in `audits/` |
 | `/arckit:pages` | Static site for ArcKit artifacts and guides | `docs/index.html`, `docs/manifest.json`, `docs/llms.txt` |
 | `/arckit:architecture-repository` | TOGAF-style governance repository | `ARC-000-REPO-v*.md` or project repository artifact |
 
-Use `/arckit:repo-docs` when the question is "how does this repo work?" Use `/arckit:pages` when the question is "how do we publish ArcKit artifacts?" Use the TOGAF architecture repository when the question is "what reusable architecture knowledge has this organisation captured?"
+Use `/arckit:repo-docs` when the question is "how does this repo work?" Use `/arckit:repo-audit` when the question is "is this repo any good, and what did we never write down?" Use `/arckit:pages` when the question is "how do we publish ArcKit artifacts?" Use the TOGAF architecture repository when the question is "what reusable architecture knowledge has this organisation captured?"
 
 ---
 
