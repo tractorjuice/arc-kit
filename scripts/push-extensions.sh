@@ -319,6 +319,22 @@ publish_claude_plugins_repo() {
     copy_distribution_files "$ROOT_DIR/$source_path" "$clone_path/$repo_subdir"
   done
 
+  # Namespace overlay command invocations for Claude Code. MUST run after the
+  # loop above: that loop tar-extracts the RAW overlay sources over the same
+  # paths the core copy just populated, so it overwrites the already-namespaced
+  # mirror from sync-claude-plugin-layout.py. Without this the published repo
+  # ships `/arckit:uae-x`, which does not resolve (Claude Code namespaces by the
+  # plugin's own name, and only core is named `arckit`).
+  #
+  # This also covers the core tree itself — guides and commands under the repo
+  # root that reference overlay commands — which the mirror never touched.
+  echo "  Namespacing overlay command invocations for Claude Code..."
+  if ! python3 "$ROOT_DIR/scripts/claude_command_namespacing.py" "$clone_path"; then
+    red "  Failed to namespace overlay command invocations"
+    cd "$ROOT_DIR"
+    return 1
+  fi
+
   cd "$clone_path"
   git add -A
   if git diff --cached --quiet; then
