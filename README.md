@@ -136,7 +136,7 @@ Zero-config: 75 official commands as skills, 10 specialized agents, all template
 
 Every ArcKit command ships as an Agent Skill, invoked with `/skill:arckit-<command>` (for example `/skill:arckit-requirements`). The `kimi.plugin.json` manifest carries all six bundled MCP servers and auto-loads the `architecture-workflow` skill at session start.
 
-**Latest Release**: [v6.6.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.6.0)
+**Latest Release**: [v6.7.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.7.0)
 
 ### OKF Interoperability
 
@@ -1937,7 +1937,7 @@ arckit init .
 
 - **Issues**: [GitHub Issues](https://github.com/tractorjuice/arc-kit/issues)
 - **Releases**: [GitHub Releases](https://github.com/tractorjuice/arc-kit/releases)
-- **Latest Version**: [v6.6.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.6.0)
+- **Latest Version**: [v6.7.0](https://github.com/tractorjuice/arc-kit/releases/tag/v6.7.0)
 
 ---
 
