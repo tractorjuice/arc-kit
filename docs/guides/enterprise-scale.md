@@ -166,6 +166,14 @@ Do not put shared API keys into `managed-mcp.json`. That file is readable by
 users on the machine. Use per-user environment variables, OAuth, a
 `headersHelper`, or ArcKit's sensitive plugin user-config fields.
 
+**Set ArcKit options at user or managed scope, not in the repo.** As of Claude
+Code v2.1.207, plugin option values (`pluginConfigs`) are read only from user
+settings, `--settings`, and managed settings — a `pluginConfigs` block committed
+to a repository's `.claude/settings.json` is ignored. Push `organisation_name`,
+`default_classification`, `governance_framework`, and `classification_scheme`
+through managed settings so every repository inherits the same Document Control
+defaults without a per-repo file to drift.
+
 ### 5. Set the security and network baseline
 
 Minimum enterprise controls for ArcKit:
@@ -176,7 +184,18 @@ Minimum enterprise controls for ArcKit:
   repositories. Use Auto mode only after your `autoMode.environment` describes
   trusted source control, artifact stores, and internal domains.
 - Use sandboxing or development containers for repositories that process
-  untrusted supplier documents, procurement evidence, or generated code.
+  untrusted supplier documents, procurement evidence, or generated code. Two
+  settings tighten this for ArcKit's research commands, which fetch supplier and
+  government content from the open web:
+  - `sandbox.network.strictAllowlist` (Claude Code v2.1.219+) denies
+    non-allowlisted hosts for sandboxed commands **without prompting**, rather
+    than asking. Paired with the MCP endpoint allowlist above, research agents
+    reach approved sources and nothing else — the closest available fit for
+    OFFICIAL-SENSITIVE and egress-restricted deployments.
+  - `sandbox.filesystem.disabled` (v2.1.216+) skips filesystem isolation while
+    keeping network egress control. Use it only where a helper script genuinely
+    breaks under filesystem isolation; it removes a protection layer, so prefer
+    fixing the script.
 - Configure corporate proxy and CA trust via `HTTPS_PROXY`,
   `NO_PROXY`, `CLAUDE_CODE_CERT_STORE`, and `NODE_EXTRA_CA_CERTS` where needed.
 - Allow egress to Claude authentication/API endpoints, the ArcKit marketplace

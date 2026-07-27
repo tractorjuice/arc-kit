@@ -149,6 +149,8 @@ Add rules to `.claude/settings.json` (or org managed settings for fleet-wide enf
 
 This is a Claude Code permission policy, not an ArcKit hook — ArcKit ships no domain restrictions by default, leaving the choice to the deployment.
 
+**Sandboxed commands can be restricted harder (Claude Code v2.1.219+).** `WebFetch` rules govern the model's own fetches. Commands that run inside the sandbox reach the network on their own, and `sandbox.network.strictAllowlist` denies any non-allowlisted host outright rather than prompting for it. Pair it with the MCP endpoint allowlist — see [the enterprise security baseline](enterprise-scale.md#5-set-the-security-and-network-baseline).
+
 ## Testing
 
 You can test each hook by piping JSON to stdin. All hooks handle empty input gracefully.

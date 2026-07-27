@@ -10,6 +10,7 @@ on:
       - "scripts/check_references.py"
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
+      - "scripts/check-guide-parity.py"
       - "plugins/arckit-*/recipes/**"
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
@@ -25,6 +26,7 @@ on:
       - "scripts/check_references.py"
       - "scripts/check_recipes.py"
       - "scripts/check_doctype_collisions.py"
+      - "scripts/check-guide-parity.py"
       - "plugins/arckit-*/recipes/**"
       - "plugins/arckit-claude/skills/arckit-build/recipes/**"
       - "plugins/arckit-claude/config/doc-types.mjs"
@@ -61,7 +63,10 @@ jobs:
 
       - name: Shared-asset drift check (closes #520)
         run: python3 scripts/sync-shared-assets.py --check
-        
+
+      - name: Guide-tree parity check (docs/guides vs plugin copy)
+        run: python3 scripts/check-guide-parity.py --check
+
       - uses: actions/setup-node@v4
         with:
           node-version: "20"

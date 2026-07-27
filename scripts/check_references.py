@@ -109,10 +109,55 @@ def line_of(text: str, offset: int) -> int:
     return text.count("\n", 0, offset) + 1
 
 
+FENCE_RE = re.compile(r"^[ \t]*(`{3,}|~{3,})", re.MULTILINE)
+
+
+def blank_fenced_blocks(text: str) -> str:
+    """Replace fenced code blocks with blank lines, preserving line numbering.
+
+    Only used for `docs/guides/**`. A guide that teaches users to write their own
+    command necessarily *displays* command source, and that sample source contains
+    `${CLAUDE_PLUGIN_ROOT}` references to files the reader has not created yet --
+    `custom-commands.md` walks through building an `/arckit:sla` command and tells
+    the reader to create `sla-template.md` as a later step. Those are illustrations,
+    not references the runtime resolves, so checking them reports false positives.
+
+    Command, agent, and skill bodies keep full checking including code blocks,
+    because a `${CLAUDE_PLUGIN_ROOT}` reference there is real wherever it appears.
+
+    Handles variable-length and nested fences: a fence closes only on a marker of
+    the same character that is at least as long as the opener, so the ````markdown
+    wrapper in custom-commands.md swallows the ```text block nested inside it.
+    """
+    out = list(text)
+    pos = 0
+    while True:
+        opener = FENCE_RE.search(text, pos)
+        if not opener:
+            break
+        marker = opener.group(1)
+        char, length = marker[0], len(marker)
+        search_from = opener.end()
+        closer = None
+        for cand in FENCE_RE.finditer(text, search_from):
+            cand_marker = cand.group(1)
+            if cand_marker[0] == char and len(cand_marker) >= length:
+                closer = cand
+                break
+        end = closer.end() if closer else len(text)
+        for i in range(opener.start(), end):
+            if out[i] != "\n":
+                out[i] = " "
+        pos = end
+    return "".join(out)
+
+
 def check_plugin_root_refs(
     md_path: Path, text: str, reference_roots: list[Path]
 ) -> list[tuple[int, str]]:
     errors: list[tuple[int, str]] = []
+    if (PLUGIN / "docs" / "guides") in md_path.parents:
+        text = blank_fenced_blocks(text)
     for match in REF_RE.finditer(text):
         rel = match.group(1).rstrip(".,;:)")
         if is_placeholder(rel):

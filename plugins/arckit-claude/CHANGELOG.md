@@ -5,6 +5,32 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Guide-tree parity check** (`scripts/check-guide-parity.py`, wired into `lint-markdown.yml`). ArcKit keeps user guides in two trees — `docs/guides/` (the published site and CLI package data) and `plugins/arckit-claude/docs/guides/` (what the converter pushes into all seven extensions) — and nothing kept them in step. `sync-shared-assets.py` covers `templates/_partials/` and `references/` but has never touched `docs/guides`. The check enforces byte-identical parity for every guide present in both trees, allows root-only guides (community-overlay and maintainer docs deliberately don't ship to extensions), and rejects plugin-only guides, which can never reach the site or the CLI package. `--sync` copies root to plugin and only ever writes to the plugin tree.
+
+### Documentation
+
+- **Claude Code v2.1.201–v2.1.220 adoption** (#580). Refreshed guidance against the current platform:
+  - `agents/READER-PATTERN.md` asserted that "subagents cannot spawn other subagents" — true when written, false since nested `Agent` dispatch returned. Rewrote the rationale: the orchestrators stay on the main thread by **choice**, not platform limitation, because the nesting default moved three times in three months (depth 5 in v2.1.172, disabled in v2.1.217, depth 3 in v2.1.219) and any user can disable it with `CLAUDE_CODE_MAX_SUBAGENT_SPAWN_DEPTH=1`, which would break a re-homed orchestrator outright rather than degrade it.
+  - `CLAUDE.md` model guidance: Opus 5 is the default Opus model; effort support now covers Opus 5 / Sonnet 5 / Fable 5; fast mode applies to Opus 5 and Opus 4.8 only, with Opus 4.7 fast mode removed on 2026-07-24 (Claude Code still treats 4.7 as fast-mode-capable while the API rejects the requests, so it fails silently rather than degrading). Rates corrected to the documented $10/$50 per MTok. Verified against the official model-config and fast-mode docs.
+  - `mcp-servers.md`: MCP calls auto-background after 2 minutes (`CLAUDE_CODE_MCP_AUTO_BACKGROUND_MS`, v2.1.212) and how that interacts with a raised `MCP_TOOL_TIMEOUT`; per-server `request_timeout_ms` is honoured again (v2.1.206); failed servers now report HTTP status and error text (v2.1.218).
+  - `enterprise-scale.md`: `sandbox.network.strictAllowlist` (v2.1.219) and `sandbox.filesystem.disabled` (v2.1.216) in the security baseline; plugin option values must be set at user or managed scope, since v2.1.207 stopped reading `pluginConfigs` from a repository's `.claude/settings.json`.
+  - `security-hooks.md`: sandboxed commands reach the network independently of `WebFetch` rules, and `strictAllowlist` closes that gap.
+  - `research.md` / `autoresearch.md`: the session-wide 200-call WebSearch budget and 200/20 subagent budgets (v2.1.212, v2.1.217), which a search-heavy run or a long optimisation loop can exhaust.
+
+### Fixed
+
+- **Plugin-tree guide drift.** `plugins/arckit-claude/docs/guides/mcp-servers.md` was missing the "Optional: MCP per-request timeout" section that four `*-research.md` guides in the same tree link to, leaving a dead anchor; `security-hooks.md` was missing "Restricting web access for research agents" entirely, so the plugin tree shipped no domain-restriction guidance. Both sections backfilled; the two trees now share a heading structure.
+- **Cross-reference linter false positive on guide code blocks.** `check_references.py` resolved `${CLAUDE_PLUGIN_ROOT}` references found inside fenced code blocks in `docs/guides/**`. A guide that teaches users to write their own command necessarily *displays* command source, and that sample source references files the reader has not created yet — `custom-commands.md` walks through building an `/arckit:sla` command and tells the reader to create `sla-template.md` as a later step. The linter now blanks fenced blocks (handling nested and variable-length fences, preserving line numbers) for guides only; command, agent, and skill bodies keep full checking including code blocks, because a reference there is real wherever it appears. Surfaced by the new guide-parity sync, which propagated the root copy into the plugin tree where the linter runs.
+- **Guide-tree drift resolved across 10 files.** Drift ran in *both* directions, so this was a merge rather than a one-way copy:
+  - Root was correct and the plugin copy stale in 7: `autoresearch.md` (missing the entire Stopping Conditions and Self-Harness sections), `mcp-servers.md` (hardcoded "75 slash commands" and "Skills: 1"), `security-hooks.md` / `c4-layout-science.md` / `custom-commands.md` (pre-v6 `arckit-claude/` paths that no longer exist, since plugins moved under `plugins/`), `roles/README.md` and `roles/enterprise-architect.md` (hardcoded "70 commands").
+  - The plugin copy was correct and root stale in 3: `pages.md` and `template-builder.md` (both still pointed at a category map in `hooks/sync-guides.mjs`; the real source is `config/guide-groups.mjs`, which `sync-guides.mjs` imports from), and `roles/service-owner.md`, where root documented the service-assessment artefact as `ARC-{PID}-SASS-v*.md` — the registered doc-type code is `SVCASS`, so readers were told to look for a file the command never writes.
+- **`CLAUDE.md` step 3 for adding a command pointed at `plugins/arckit-claude/guides/`, a directory that does not exist** (the real path is `plugins/arckit-claude/docs/guides/`). This was the root cause of the drift: the documented workflow sent guide authors somewhere invalid, so the plugin copy was routinely skipped. Step 3 now names the sync command, and a new "Guide Trees" section documents the canonical direction.
+- `mcp-servers.md` troubleshooting told users to run `echo $GOOGLE_API_KEY`, printing a live credential to the terminal in a guide that elsewhere highlights key redaction for OFFICIAL-SENSITIVE deployments. Replaced with a presence check that does not echo the value.
+
 ## [6.5.0] — 2026-07-27
 
 ### Added

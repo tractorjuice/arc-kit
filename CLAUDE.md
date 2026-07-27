@@ -76,14 +76,14 @@ Commands exist in multiple formats across the distribution. The plugin source is
 
 **Plugin command frontmatter** supports:
 
-- `description` (required), `effort:` (override session effort — frontmatter accepts `low`, `medium`, `high`, `xhigh`, `max`. Per-model support: Opus 4.8 and 4.7 support all five (`xhigh` and `max`); Opus 4.6 and Sonnet 4.6 support `low`/`medium`/`high`/`max` but **not** `xhigh`. An unsupported level falls back to the highest supported level at or below it (e.g. `xhigh` → `high` on Opus 4.6). `max` is the deepest tier (above `xhigh`) but the docs caution it can overthink — test before adopting broadly. Default effort is `high` on Opus 4.8/4.6/Sonnet 4.6, `xhigh` on Opus 4.7. ArcKit's heavy commands/agents use `effort: max`, which is valid in frontmatter and runs as `max` on Opus 4.8.)
+- `description` (required), `effort:` (override session effort — frontmatter accepts `low`, `medium`, `high`, `xhigh`, `max`. Per-model support, from the [model-config docs](https://code.claude.com/docs/en/model-config#adjust-effort-level): **Opus 5, Sonnet 5, Opus 4.8, Opus 4.7 and Fable 5 support all five**; Opus 4.6 and Sonnet 4.6 support `low`/`medium`/`high`/`max` but **not** `xhigh`. An unsupported level falls back to the highest supported level at or below it (e.g. `xhigh` → `high` on Opus 4.6). `max` is the deepest tier (above `xhigh`) but the docs caution it can overthink — test before adopting broadly. Default effort is `high` on every model that supports effort, except Opus 4.7 which defaults to `xhigh`. ArcKit's heavy commands/agents use `effort: max`, which is valid in frontmatter and runs as `max` on Opus 5.)
 - `keep-coding-instructions: true` (v2.1.94+) — persist instructions across `/compact` for long-running commands
 - `disallowed-tools:` (v2.1.152+) — remove tools from the model while the command/skill is active; available but **not yet used** in ArcKit (candidate hardening for read-only commands like `/arckit:search`, `/arckit:navigator`, `/arckit:health`)
 - `handoffs:` — list of `{command, description?, condition?}` entries; converter renders these as a "Suggested Next Steps" section for non-Claude targets
 
 Effort, `keep-coding-instructions`, and `disallowed-tools` are stripped by the converter for non-Claude targets.
 
-**Fast mode** (`/fast` toggle) runs the current Opus model with faster output — same model, no smaller-model downgrade. As of Claude Code v2.1.154 the default backing model for `/fast` is **Opus 4.8** (2x the standard rate for 2.5x the speed); it was Opus 4.7 on v2.1.142–v2.1.153 and Opus 4.6 before that. `/fast` is unrelated to the `effort:` frontmatter — the two compose: a command with `effort: xhigh` still benefits from `/fast` if the user has toggled it.
+**Fast mode** (`/fast` toggle) runs Claude Opus with a speed-prioritised API configuration — same model, identical quality, up to 2.5x faster at $10/$50 per MTok (flat across the full 1M context). Supported on **Opus 5 and Opus 4.8 only**; **Opus 4.7 fast mode was removed on 2026-07-24** and Claude Code still treats 4.7 as a fast-mode model in its toggle logic while the API rejects those requests, so a 4.7 session with `/fast` on silently fails rather than degrading to standard speed. As of Claude Code v2.1.219 the default backing model is **Opus 5** (Opus 4.8 on v2.1.154–v2.1.218, Opus 4.7 on v2.1.142–v2.1.153). Requires usage credits and is unavailable on Bedrock, Vertex, Foundry, and Claude Platform on AWS. `/fast` is unrelated to the `effort:` frontmatter — the two compose: a command with `effort: xhigh` still benefits from `/fast` if the user has toggled it.
 
 ### Agent System
 
@@ -203,13 +203,24 @@ project/
 
 1. Create `plugins/arckit-claude/commands/{name}.md` with YAML frontmatter (source of truth for Claude Code)
 2. Create `.arckit/templates/{name}-template.md` (also copy to `plugins/arckit-claude/templates/`)
-3. Create `docs/guides/{name}.md` (also copy to `plugins/arckit-claude/guides/`)
+3. Create `docs/guides/{name}.md`, then run `python3 scripts/check-guide-parity.py --sync` to copy it into `plugins/arckit-claude/docs/guides/`
 4. If heavy web research (>10 WebSearch/WebFetch calls), create `plugins/arckit-claude/agents/arckit-{name}.md` and make the command a thin wrapper
 5. Run `python scripts/converter.py` to generate Codex/OpenCode/Gemini/Copilot variants
 6. Test plugin in a test repo, test CLI via `arckit init test --ai codex --no-git`
 7. Update README.md, docs/index.html, docs/DEPENDENCY-MATRIX.md, CHANGELOG.md
 
 **Command must**: check prerequisites; use `create-project.sh --json` for project path; read its template; **use Write tool** to save output (avoids 32K output token limit); show only a summary; delegate to agent if research-heavy; declare `handoffs:` for logical next steps.
+
+### Guide Trees (two copies, root is canonical)
+
+User guides live in two places: **`docs/guides/`** (canonical — the published site, plus CLI package data) and **`plugins/arckit-claude/docs/guides/`** (the copy `scripts/converter.py` pushes into all seven generated extensions). They must be byte-identical for every guide present in both.
+
+Nothing guarded this until #675, and the trees drifted silently **in both directions** — the plugin tree lost whole sections (including one that four `*-research.md` guides linked to, shipping a dead anchor to every extension), while the root tree went stale on a doc-type code and a config path. `sync-shared-assets.py` does **not** cover `docs/guides`; `scripts/check-guide-parity.py` does, and CI runs it via `lint-markdown.yml`.
+
+- Edit `docs/guides/{name}.md`, then `python3 scripts/check-guide-parity.py --sync`.
+- **Never edit the plugin copy directly** — `--sync` overwrites it from root.
+- `--sync` only ever writes to the plugin tree. If the plugin copy holds the correct content, port it into the root copy by hand *first*, or the sync destroys it.
+- Root-only guides are fine (community-overlay and maintainer docs deliberately don't ship to extensions); a **plugin-only** guide is an error, because it can never reach the site or the CLI package. Record intentional root-only guides in `ROOT_ONLY_BY_DESIGN` in the script.
 
 ### Template Customization
 

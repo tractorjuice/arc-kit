@@ -46,6 +46,19 @@ Drive the session from claude.ai/code or the mobile app, then enable `/config �
 
 Caveats: Pro/Max plans only (no API keys, no Bedrock/Vertex/Foundry), push is a single on/off so chatty agents can over-notify, and the local `claude` process must keep running.
 
+## Session search budget
+
+Claude Code v2.1.212 added a session-wide cap of **200 WebSearch calls**, after which further searches are refused. `/arckit:research` is deliberately search-heavy — the agent is instructed to discover the current market landscape rather than rely on general knowledge — so a single large-scope run uses a meaningful slice of that budget, and several research commands back to back in one session can exhaust it.
+
+If you hit the cap, either start a fresh session (`/clear` also resets the parallel subagent budget) or raise it:
+
+```bash
+export CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION=500
+claude
+```
+
+The cap exists to stop runaway search loops, so raise it deliberately rather than as a default. `WebFetch` calls are not counted against it.
+
 ---
 
 ## Output Highlights

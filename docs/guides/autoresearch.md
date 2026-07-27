@@ -209,6 +209,7 @@ For Self-Harness runs, the editable scope depends on the selected mode and is de
 - **Simplicity criterion** -- marginal improvement + added complexity = not worth it; simplification + same score = keep
 - **Log everything** -- every iteration gets a row in `results.tsv`
 - **No git reset --hard** -- use targeted `git checkout` + revert commits
+- **Session-wide budgets apply** -- Claude Code caps each session at 200 WebSearch calls and 200 subagent spawns (v2.1.212), with 20 subagents running concurrently (v2.1.217). A long autoresearch loop that repeatedly re-runs a research-heavy command can exhaust the search budget mid-run. Raise with `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` / `CLAUDE_CODE_MAX_SUBAGENTS_PER_SESSION`, or let the loop start fresh sessions -- `/clear` resets the subagent budget.
 
 ---
 
