@@ -67,7 +67,16 @@ if [[ "$FORCE_CREATE" != "true" ]]; then
     GLOBAL_DIR="$(get_memory_dir "$REPO_ROOT")"
 
     # Look for principles file with new naming convention (ARC-000-PRIN-*.md)
-    PRINCIPLES_FILE=$(find "$GLOBAL_DIR" -name "ARC-000-PRIN-*.md" 2>/dev/null | head -1)
+    #
+    # `find` exits non-zero when $GLOBAL_DIR does not exist, and `2>/dev/null`
+    # hides the reason. Under `set -euo pipefail` that killed the script right
+    # here, exit 1 with NO output at all — so a fresh repository, the exact case
+    # that needs the "run /arckit:principles" guidance below, got silence.
+    # Guard the directory and tolerate a non-zero find so the message can print.
+    PRINCIPLES_FILE=""
+    if [[ -d "$GLOBAL_DIR" ]]; then
+        PRINCIPLES_FILE=$(find "$GLOBAL_DIR" -name "ARC-000-PRIN-*.md" 2>/dev/null | head -1) || true
+    fi
 
     if [[ -z "$PRINCIPLES_FILE" || ! -f "$PRINCIPLES_FILE" ]]; then
         log_error "Prerequisites not met: Architecture principles not found"

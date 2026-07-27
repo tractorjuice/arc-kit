@@ -86,16 +86,34 @@ git -C "<repo>" shortlog -sn --all | wc -l
 
 Use `.arckit/scripts/bash/list-projects.sh --json` to enumerate projects. If that path does not exist, glob `projects/*/` directly rather than failing.
 
-- **No project exists** → Cold mode.
-- **Exactly one project** → use it.
+### 3a. Pick a candidate project
+
+- **No project exists** → skip to 3c, Cold mode. Do **not** call `create-project.sh` here: it requires `ARC-000-PRIN-*.md` and will refuse, which would block the audit on a prerequisite this command deliberately does not need. Write the artefact to `projects/001-{repo-slug}/audits/`, creating the directory directly.
+- **Exactly one project** → treat it as a *candidate*, not a decision. Continue to 3b.
 - **More than one** and the arguments do not name one → ask which project the audit belongs to. Do not guess.
 
-Then look for `ARC-{PID}-PRIN-v*.md` in `projects/000-global/` and `ARC-{PID}-REQ-v*.md` in the project directory.
+### 3b. Confirm the project actually describes this repository
+
+**A project existing in the repo does not mean it describes the code you are auditing.** Check before scoring anything against it. Read the candidate's `REQ` (and `PRIN`) title, Document Purpose, and a sample of requirements, then judge whether they describe *this* codebase.
+
+Signals that it does **not**:
+
+- The project name refers to a market study, a policy, an organisation, or a procurement rather than a system.
+- Requirements describe business outcomes with no counterpart anywhere in the source tree.
+- No requirement references a component, service, or technology present in the repository.
+
+If the evidence is weak or contradictory, **ask the user**: "Project `{id}-{name}` looks like it describes `{summary}` rather than this codebase. Audit against it, or run a standalone audit?" A wrong answer here is expensive: it produces a full page of confident Met/Not-met verdicts scoring the code against requirements for an unrelated system.
+
+Record the outcome in the artefact's Audit Scope, whichever way it goes.
+
+### 3c. Select the mode
+
+Only once 3b confirms correspondence:
 
 | Found | Mode |
 |---|---|
-| PRIN and/or REQ | **Conformance** — score the codebase against them. |
-| Neither | **Cold** — standalone as-built audit. |
+| PRIN and/or REQ, confirmed to describe this repo | **Conformance** — score the codebase against them. |
+| Neither, or correspondence not confirmed | **Cold** — standalone as-built audit. |
 
 If only one of the two exists, score against it and mark the other as not assessed. **Do not hard-error on missing prerequisites.** A repo audit is often the first thing a user runs, and blocking on artefacts they have not created yet defeats the command.
 
@@ -157,7 +175,9 @@ Populate every section of the template. Specific requirements:
 
 ## Step 7: Check Mode
 
-With `--check` or `--dry-run`: report the resolved target, whether it is local or would be cloned, the detected project and mode, which artefacts would be scored against, and which dimensions would run. Write nothing, and do not clone.
+With `--check` or `--dry-run`: report the resolved target, whether it is local or would be cloned, the detected project, **whether that project appears to describe this repository** (step 3b) and the mode that follows from it, which artefacts would be scored against, and which dimensions would run. Write nothing, and do not clone.
+
+Check mode is the cheapest way to catch a wrong project before a full run.
 
 ## Success Criteria
 
