@@ -78,7 +78,7 @@ The methodology decomposes the system into its constituent **information types**
 
 ## Handoffs
 
-The categorization output directly feeds `/arckit:us-nist-800-53` (the water-mark selects the Low / Moderate / High baseline). If any information type contains PII, run `/arckit:us-privacy-pia` next to discharge the E-Government Act §208 PIA obligation. Any ambiguous or upgraded categorizations should be logged into the project risk register via `/arckit:risk` for AO visibility.
+The categorization output directly feeds `/arckit-us:us-nist-800-53` (the water-mark selects the Low / Moderate / High baseline). If any information type contains PII, run `/arckit-us:us-privacy-pia` next to discharge the E-Government Act §208 PIA obligation. Any ambiguous or upgraded categorizations should be logged into the project risk register via `/arckit:risk` for AO visibility.
 
 ## Important Notes
 

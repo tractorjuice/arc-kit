@@ -2,18 +2,18 @@
 
 12 slash commands covering Canadian federal compliance:
 
-- `/arckit:ca-aia` — Algorithmic Impact Assessment (TBS Directive on Automated Decision-Making)
-- `/arckit:ca-atip` — ATIP reconciliation (Access to Information Act / Privacy Act)
-- `/arckit:ca-charter` — Charter rights design review (Oakes proportionality framing)
-- `/arckit:ca-cloud-residency` — Sovereign cloud residency (GC Cloud Adoption Strategy, Protected B+)
-- `/arckit:ca-fitaa` — Foreign Influence Transparency and Accountability Act compliance
-- `/arckit:ca-gc-digital-standards` — Government of Canada Digital Standards conformance scorecard
-- `/arckit:ca-itsg-33` — ITSG-33 Statement of Applicability with TBS security categorization
-- `/arckit:ca-ocap` — First Nations OCAP® sovereignty assessment (FNIGC pre-engagement)
-- `/arckit:ca-ola` — Official Languages Act review (Parts IV, V, VI)
-- `/arckit:ca-pia` — Privacy Impact Assessment (Privacy Act and TBS Directive on PIA)
-- `/arckit:ca-pspc` — Federal procurement strategy (PSPC Supply Manual, PSAB 5%)
-- `/arckit:ca-soia` — Security of Information Act handling plan
+- `/arckit-ca:ca-aia` — Algorithmic Impact Assessment (TBS Directive on Automated Decision-Making)
+- `/arckit-ca:ca-atip` — ATIP reconciliation (Access to Information Act / Privacy Act)
+- `/arckit-ca:ca-charter` — Charter rights design review (Oakes proportionality framing)
+- `/arckit-ca:ca-cloud-residency` — Sovereign cloud residency (GC Cloud Adoption Strategy, Protected B+)
+- `/arckit-ca:ca-fitaa` — Foreign Influence Transparency and Accountability Act compliance
+- `/arckit-ca:ca-gc-digital-standards` — Government of Canada Digital Standards conformance scorecard
+- `/arckit-ca:ca-itsg-33` — ITSG-33 Statement of Applicability with TBS security categorization
+- `/arckit-ca:ca-ocap` — First Nations OCAP® sovereignty assessment (FNIGC pre-engagement)
+- `/arckit-ca:ca-ola` — Official Languages Act review (Parts IV, V, VI)
+- `/arckit-ca:ca-pia` — Privacy Impact Assessment (Privacy Act and TBS Directive on PIA)
+- `/arckit-ca:ca-pspc` — Federal procurement strategy (PSPC Supply Manual, PSAB 5%)
+- `/arckit-ca:ca-soia` — Security of Information Act handling plan
 
 Recipes: `ca-federal-fitaa`.
 

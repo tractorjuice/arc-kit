@@ -4,8 +4,8 @@ Optional ArcKit plugin for repository-oriented commands: source-grounded documen
 
 ## Commands
 
-- `/arckit:repo-docs` - generate or update `docs/repository/` using targeted repository discovery, git-history-aware incremental updates, source references, and strict secret avoidance.
-- `/arckit:repo-audit` - audit a codebase (local path, or a public GitHub/GitLab URL) against architecture principles and requirements. Writes a `CDAU` artefact to `projects/{PID}-{name}/audits/`, with findings graded by severity and confidence, and undocumented decisions emitted as ready-to-file ADR stubs.
+- `/arckit-repo:repo-docs` - generate or update `docs/repository/` using targeted repository discovery, git-history-aware incremental updates, source references, and strict secret avoidance.
+- `/arckit-repo:repo-audit` - audit a codebase (local path, or a public GitHub/GitLab URL) against architecture principles and requirements. Writes a `CDAU` artefact to `projects/{PID}-{name}/audits/`, with findings graded by severity and confidence, and undocumented decisions emitted as ready-to-file ADR stubs.
 
 ## Requires arckit core plugin
 
@@ -19,9 +19,9 @@ Without `arckit` core, this plugin still provides the command prompt, but it wil
 
 **In scope**: repository quickstart, source architecture overview, development workflow, testing workflow, release/configuration overview, future-agent operating guidance, and codebase auditing against ArcKit governance artefacts.
 
-**Deliberately out of bounds for `/arckit:repo-audit`**: executing any code from the audited repository (no install, build, or test run - it is static reading only), writing into the audited repository, writing a discovered secret's value into a report, and private repositories (clone locally and audit the path).
+**Deliberately out of bounds for `/arckit-repo:repo-audit`**: executing any code from the audited repository (no install, build, or test run - it is static reading only), writing into the audited repository, writing a discovered secret's value into a report, and private repositories (clone locally and audit the path).
 
-**Out of scope**: replacing `/arckit:pages`, replacing TOGAF `/arckit:architecture-repository`, replacing `/arckit:conformance` (which stays artefact-to-artefact), vendoring the OpenWiki CLI runtime, or language-specific deep static analysis. `/arckit:repo-audit` is an architecture-level audit, not a linter or SAST tool.
+**Out of scope**: replacing `/arckit:pages`, replacing TOGAF `/arckit-togaf-adm:architecture-repository`, replacing `/arckit:conformance` (which stays artefact-to-artefact), vendoring the OpenWiki CLI runtime, or language-specific deep static analysis. `/arckit-repo:repo-audit` is an architecture-level audit, not a linter or SAST tool.
 
 ## OpenWiki Relationship
 

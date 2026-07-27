@@ -46,7 +46,7 @@ From the JSON `projects[]` array, each entry has `name`, `number`, and `path`. R
   the user pick. If `$ARGUMENTS` is empty, list the candidate projects and ask which one.
 
 **If no matching project is found**, tell the user the service project does not exist and that they
-must run `/arckit:service-design` first to create it, then **stop** (do not create a project here).
+must run `/arckit-uk-gcloud:service-design` first to create it, then **stop** (do not create a project here).
 
 From the matched project record extract:
 
@@ -56,7 +56,7 @@ From the matched project record extract:
 
 ### 2. Verify the documents are ready
 
-The pack should only be assembled once the service has passed `/arckit:review`. Check that each
+The pack should only be assembled once the service has passed `/arckit-uk-gcloud:review`. Check that each
 required artefact exists. Per-service artefacts live in `{path}`; the supplier-wide documents live
 under `projects/000-global/supplier/`:
 
@@ -73,8 +73,8 @@ ls projects/000-global/supplier/ARC-000-DECL-v*.md 2>/dev/null && echo "✅ Supp
 ```
 
 If any required document is missing, **stop** and advise the user to create it first with the
-relevant command (`/arckit:service-design`, `/arckit:sdd-lot1` / `lot2` / `lot3`, `/arckit:pricing`,
-`/arckit:security`, `/arckit:supplier-profile`, `/arckit:declaration`). If a review report
+relevant command (`/arckit-uk-gcloud:service-design`, `/arckit-uk-gcloud:sdd-lot1` / `lot2` / `lot3`, `/arckit-uk-gcloud:pricing`,
+`/arckit-uk-gcloud:security`, `/arckit-uk-gcloud:supplier-profile`, `/arckit-uk-gcloud:declaration`). If a review report
 (`ARC-{PROJECT_ID}-GCRV-v*.md`) exists, read it with the **Read tool** and warn the user if it is not
 🟢 READY before proceeding.
 
@@ -191,9 +191,9 @@ Print only a short summary (not the manifest contents):
 
 - This is an **export action** — it copies approved artefacts and writes an index; it creates **no**
   ArcKit doc-type and **no** `ARC-…-` ID for the bundle.
-- Run `/arckit:review` first; only assemble the pack once the service is 🟢 READY.
+- Run `/arckit-uk-gcloud:review` first; only assemble the pack once the service is 🟢 READY.
 - This command never creates a project — if none is found, direct the user to
-  `/arckit:service-design`.
+  `/arckit-uk-gcloud:service-design`.
 - Framework deadlines are strict and CCS review can take several weeks; respond to clarifications
   within 10 working days and keep evidence files for the framework period (typically 4 years).
 - This pack does **not** guarantee CCS acceptance.

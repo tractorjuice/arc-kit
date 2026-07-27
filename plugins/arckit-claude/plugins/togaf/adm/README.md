@@ -2,15 +2,15 @@
 
 9 slash commands and the `togaf-adm-full` build recipe covering the TOGAF Architecture Development Method:
 
-- `/arckit:adm-preliminary` — Preliminary phase: scope, drivers, constraints, architecture vision
-- `/arckit:business-capability-map` — Phase A Business Architecture: strategy, capabilities, value chains
-- `/arckit:application-inventory` — Phase C Application Architecture: portfolio assessment and integration patterns
-- `/arckit:application-rationalization` — Application rationalization: consolidate, retire, replace
-- `/arckit:gap-analysis` — Phase E Opportunities & Solutions: gap analysis and workload prioritization
-- `/arckit:transition-architecture` — Phase F Migration Planning: transition architectures and work packages
-- `/arckit:architecture-board` — Phase G Implementation Governance: architecture board and compliance review
-- `/arckit:architecture-change` — Phase H Architecture Change Management: change requests and ADM re-entry
-- `/arckit:architecture-repository` — Architecture Repository: patterns, standards, reference architectures, lessons learned
+- `/arckit-togaf-adm:adm-preliminary` — Preliminary phase: scope, drivers, constraints, architecture vision
+- `/arckit-togaf-adm:business-capability-map` — Phase A Business Architecture: strategy, capabilities, value chains
+- `/arckit-togaf-adm:application-inventory` — Phase C Application Architecture: portfolio assessment and integration patterns
+- `/arckit-togaf-adm:application-rationalization` — Application rationalization: consolidate, retire, replace
+- `/arckit-togaf-adm:gap-analysis` — Phase E Opportunities & Solutions: gap analysis and workload prioritization
+- `/arckit-togaf-adm:transition-architecture` — Phase F Migration Planning: transition architectures and work packages
+- `/arckit-togaf-adm:architecture-board` — Phase G Implementation Governance: architecture board and compliance review
+- `/arckit-togaf-adm:architecture-change` — Phase H Architecture Change Management: change requests and ADM re-entry
+- `/arckit-togaf-adm:architecture-repository` — Architecture Repository: patterns, standards, reference architectures, lessons learned
 
 Doc-type codes: `ADMP`, `BPCM`, `APP`, `APPR`, `GAPA`, `TRANS`, `BORD`, `ACHG`, `REPO`.
 

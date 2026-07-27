@@ -1,6 +1,6 @@
 # NHS clinical-safety quality checklist
 
-> Generation guidance for `/arckit:uk-nhs-dcb0129` and `/arckit:uk-nhs-dcb0160`
+> Generation guidance for `/arckit-uk-nhs:uk-nhs-dcb0129` and `/arckit-uk-nhs:uk-nhs-dcb0160`
 > (and, where relevant, DTAC clinical-safety sections).
 > Verify these checks before writing the SAFETY.md file set.
 > They supplement the common checks in `references/quality-checklist.md`.

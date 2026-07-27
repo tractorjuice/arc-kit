@@ -51,7 +51,7 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
    - `projects/000-global/ARC-000-PRIN-*.md`
    - The project's `ARC-{PID}-REQ-*.md` and `ARC-{PID}-DATA-*.md`
    - The project's `ARC-{PID}-STKE-*.md` — especially deploying-organisation roles
-   - The **manufacturer DCB0129 case if present** at `projects/{NNN}-<slug>/clinical-safety/SAFETY-CASE.md` and `clinical-safety/HAZARD-LOG.md`. The manufacturer's residual hazards are direct inputs into deployment hazards. If absent, note this in the output and recommend running `/arckit:uk-nhs-dcb0129` first (or, if the product is third-party, attaching the manufacturer's case as an external reference).
+   - The **manufacturer DCB0129 case if present** at `projects/{NNN}-<slug>/clinical-safety/SAFETY-CASE.md` and `clinical-safety/HAZARD-LOG.md`. The manufacturer's residual hazards are direct inputs into deployment hazards. If absent, note this in the output and recommend running `/arckit-uk-nhs:uk-nhs-dcb0129` first (or, if the product is third-party, attaching the manufacturer's case as an external reference).
    - Any `ARC-{PID}-OPS-*.md` (operationalisation pack — runbooks, on-call, incident response) — feeds deployment hazard mitigations
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
 
@@ -65,7 +65,7 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
 
 4. **Ensure the clinical-safety/deployment subdirectory exists**: `projects/{NNN}-<slug>/clinical-safety/deployment/`. Use `mkdir -p` via the Bash tool.
 
-5. **Resolve the Document Control block** for each file per `RENDERING.md`. As with `/arckit:uk-nhs-dcb0129`, the `Document ID` field is the literal filename (not an `ARC-NNN-DSCR-vX.Y` identifier). Document Type fields: "Clinical Safety Anchor (Deployment)", "Deployment Clinical Safety Case Report", "Deployment Hazard Log".
+5. **Resolve the Document Control block** for each file per `RENDERING.md`. As with `/arckit-uk-nhs:uk-nhs-dcb0129`, the `Document ID` field is the literal filename (not an `ARC-NNN-DSCR-vX.Y` identifier). Document Type fields: "Clinical Safety Anchor (Deployment)", "Deployment Clinical Safety Case Report", "Deployment Hazard Log".
 
 6. **Generate the deployer `SAFETY.md`** with required fields:
    - `product-name` (product being deployed), `version` (product version being deployed)
@@ -119,4 +119,4 @@ NHS DCB0160 ("Clinical Risk Management: its Application in the Deployment and Us
 - **CSO at the deploying organisation**: must be appointed by the deploying NHS organisation, not by the product manufacturer.
 - **Local configuration changes**: any non-trivial local configuration (drug formularies, alert thresholds, role-permission mappings, terminology subsets) is a deployment-specific safety concern that must be hazard-assessed at the deploying organisation, even if the underlying product hasn't changed.
 - **Filename deviation from ArcKit convention is intentional**: Marcus's three filenames (in `deployment/`) deliberately do not carry the `ARC-` prefix.
-- **Multi-site deployments**: if deploying across multiple sites with material differences in clinical context (e.g. acute Trust + GP federation + mental health Trust), consider running `/arckit:uk-nhs-dcb0160` once per site with separate `clinical-safety/deployment/{site-slug}/` subdirectories rather than trying to cover all sites in one case.
+- **Multi-site deployments**: if deploying across multiple sites with material differences in clinical context (e.g. acute Trust + GP federation + mental health Trust), consider running `/arckit-uk-nhs:uk-nhs-dcb0160` once per site with separate `clinical-safety/deployment/{site-slug}/` subdirectories rather than trying to cover all sites in one case.

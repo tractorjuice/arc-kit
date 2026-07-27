@@ -24,7 +24,7 @@ $ARGUMENTS
 ### MANDATORY (warn if missing)
 
 - **APP** (Application Portfolio) — Extract: Application inventory, current state, capabilities served, technology stack, lifecycle status, business criticality, cost data, vendor dependencies
-  - If missing: STOP and ask user to run `/arckit:app-inventory` (or equivalent APP command) first. Rationalisation requires an existing application inventory.
+  - If missing: STOP and ask user to run `/arckit:application-inventory` (or equivalent APP command) first. Rationalisation requires an existing application inventory.
 
 ### RECOMMENDED (read if available, note if missing)
 

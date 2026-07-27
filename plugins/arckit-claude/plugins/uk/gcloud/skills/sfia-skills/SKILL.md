@@ -110,8 +110,8 @@ These ArcKit commands use SFIA data:
 
 | Command | SFIA Usage |
 |---------|-----------|
-| `/arckit:sdd-lot3` | Maps service roles to SFIA skills and levels (reads `sfia-skills.md` reference) |
-| `/arckit:pricing` | Day rates informed by SFIA level benchmarks |
+| `/arckit-uk-gcloud:sdd-lot3` | Maps service roles to SFIA skills and levels (reads `sfia-skills.md` reference) |
+| `/arckit-uk-gcloud:pricing` | Day rates informed by SFIA level benchmarks |
 
 ## Additional Resources
 

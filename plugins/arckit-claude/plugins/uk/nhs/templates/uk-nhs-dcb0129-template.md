@@ -1,6 +1,6 @@
 # NHS DCB0129 Clinical Safety Case — Wrapper Template
 
-> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:uk-nhs-dcb0129`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit-uk-nhs:uk-nhs-dcb0129`
 
 This wrapper exists only for `/arckit:customize list` and the documentation site. The actual generated outputs are three files:
 

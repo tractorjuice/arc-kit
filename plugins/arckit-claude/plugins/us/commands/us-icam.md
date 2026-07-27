@@ -88,7 +88,7 @@ Federal employees and contractors authenticate using **PIV** (Personal Identity 
 
 ## Handoffs
 
-ICAM is the foundation of the Zero Trust Identity pillar — feed IAL/AAL/FAL outputs into `/arckit:us-zero-trust` scoring. The proofing data flows (especially at IAL2/IAL3) collect significant PII, so trigger `/arckit:us-privacy-pia`. Identity-provider selection and federation pattern decisions should be captured as ADRs via `/arckit:adr`.
+ICAM is the foundation of the Zero Trust Identity pillar — feed IAL/AAL/FAL outputs into `/arckit-us:us-zero-trust` scoring. The proofing data flows (especially at IAL2/IAL3) collect significant PII, so trigger `/arckit-us:us-privacy-pia`. Identity-provider selection and federation pattern decisions should be captured as ADRs via `/arckit:adr`.
 
 ## Important Notes
 

@@ -1,6 +1,6 @@
 # Supplier Declaration: [PROJECT_NAME]
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit:declaration`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit-uk-gcloud:declaration`
 
 ## Document Control
 

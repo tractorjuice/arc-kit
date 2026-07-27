@@ -132,6 +132,6 @@ The Australian Signals Directorate (ASD) Information Security Manual (ISM) is th
 - For systems integrating with IRAP-assessed cloud services, note explicit shared-responsibility — many ISM controls inherit from the cloud provider's IRAP attestation. Cite the IRAP scope statement, not the cloud provider's marketing.
 - Cross-reference the E8 posture artefact wherever an ISM control maps to an E8 sub-control — avoids duplication and keeps the two artefacts consistent.
 - For DISP members or systems supporting Defence work, scope the Personnel Security and Physical Security domains carefully — these are commonly under-assessed in cloud-only environments.
-- The Cyber Security Incidents domain should reference the project's NDB playbook (`/arckit:au-ndb-playbook`) for personal-information breach scenarios.
+- The Cyber Security Incidents domain should reference the project's NDB playbook (`/arckit-au:au-ndb-playbook`) for personal-information breach scenarios.
 - The Outsourced Services domain must include MSP-held admin role boundaries, contractual security-control flow-down, and supply-chain attestation review.
 - Use embedded ArcKit artefacts as evidence: diagrams and DFDs for boundaries and data transfer, data models for classification, ServiceNow/CMDB for ownership and operations, risk and traceability for controls, graph-report for coverage, and maturity-model for uplift.

@@ -197,8 +197,8 @@ High-priority recommendations:        {N}
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next steps:
-1. Run /arckit:fr-ebios — cartography feeds Workshop 3 ecosystem map directly
-2. Run /arckit:fr-anssi — use network and system findings to prioritise hygiene gaps
+1. Run /arckit-fr:fr-ebios — cartography feeds Workshop 3 ecosystem map directly
+2. Run /arckit-fr:fr-anssi — use network and system findings to prioritise hygiene gaps
 3. Run /arckit:diagram — generate visual diagrams from cartography data
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
@@ -235,9 +235,9 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit:fr-anssi-carto Produce SI cartography for a French ministry digital services platform — three production data centres, Azure cloud, 50k citizen users, integration with FranceConnect and DGFIP APIs
+/arckit-fr:fr-anssi-carto Produce SI cartography for a French ministry digital services platform — three production data centres, Azure cloud, 50k citizen users, integration with FranceConnect and DGFIP APIs
 
-/arckit:fr-anssi-carto Cartography for 001 — regional hospital IS (SIH), OIV santé designation, connected to Mon Espace Santé, mix of on-premise VMware and SaaS clinical software
+/arckit-fr:fr-anssi-carto Cartography for 001 — regional hospital IS (SIH), OIV santé designation, connected to Mon Espace Santé, mix of on-premise VMware and SaaS clinical software
 
-/arckit:fr-anssi-carto ANSSI cartography for a French energy operator (OIV énergie), separate IT and OT networks, SCADA interconnection, cloud-hosted analytics platform
+/arckit-fr:fr-anssi-carto ANSSI cartography for a French energy operator (OIV énergie), separate IT and OT networks, SCADA interconnection, cloud-hosted analytics platform
 ```

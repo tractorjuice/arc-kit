@@ -224,8 +224,8 @@ After writing the file, show a concise summary (NOT the full document):
 ### Next Steps
 1. Review Architecture Vision with Architecture Board / Sponsor
 2. Validate scope boundaries with key stakeholders
-3. Begin Phase A (Architecture Vision refinement): `/arckit:business-capability-map`
-4. Perform gap analysis: `/arckit:gap-analysis`
+3. Begin Phase A (Architecture Vision refinement): `/arckit-togaf-adm:business-capability-map`
+4. Perform gap analysis: `/arckit-togaf-adm:gap-analysis`
 
 ### Traceability
 - Aligns to [N] architecture principles
@@ -250,7 +250,7 @@ After writing the file, show a concise summary (NOT the full document):
 6. **Version Management**: If an Architecture Vision already exists (`ARC-*-ADMP-v*.md`), create a new version (v2.0) rather than overwriting. Architecture visions should be versioned to track evolution across ADM cycles.
 
 7. **Integration with Other Commands**:
-   - ADMP feeds into: `/arckit:business-capability-map` (Phase A — Business Architecture), `/arckit:gap-analysis` (Phase E — Opportunities & Solutions)
+   - ADMP feeds into: `/arckit-togaf-adm:business-capability-map` (Phase A — Business Architecture), `/arckit-togaf-adm:gap-analysis` (Phase E — Opportunities & Solutions)
    - ADMP is informed by: `/arckit:principles`, `/arckit:stakeholders`, `/arckit:strategy`
 
 8. **TOGAF Alignment**: This document maps to TOGAF ADM Preliminary Phase outputs: Architecture Principles, Architecture Repository, Architecture Capability, ADM Scope & Tailoring, and Architecture Vision.

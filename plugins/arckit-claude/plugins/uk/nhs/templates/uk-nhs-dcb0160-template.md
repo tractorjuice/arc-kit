@@ -1,6 +1,6 @@
 # NHS DCB0160 Deployment Clinical Safety Case — Wrapper Template
 
-> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit:uk-nhs-dcb0160`
+> **Template Origin**: Community | **ArcKit Version**: [VERSION] | **Command**: `/arckit-uk-nhs:uk-nhs-dcb0160`
 
 This wrapper exists only for `/arckit:customize list` and the documentation site. The actual generated outputs are three files under `clinical-safety/deployment/`:
 
