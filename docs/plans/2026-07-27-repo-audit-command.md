@@ -183,42 +183,59 @@ Inherit every rule from `/arckit:repo-docs` and add four:
 
 ## Files to create or change
 
+> **Corrected during implementation, 2026-07-27.** Three assumptions in the first draft of this section were wrong, and the corrections are folded in below. For the record: the command is **not** converted to the seven extension formats (`arckit-repo` is deliberately excluded from `PLUGIN_SOURCES` in `scripts/converter.py`, so this is Claude Code only, exactly like `/arckit:repo-docs`); the template belongs in **`plugins/arckit-repo/templates/`**, not the core plugin's tree, because overlay and tooling plugins carry their own; and the headline command count does **not** move, because tooling-plugin commands are not part of the maintained baseline.
+
 **New:**
 
 - `plugins/arckit-repo/commands/repo-audit.md`
-- `plugins/arckit-claude/templates/codebase-audit-template.md`
-- `.arckit/templates/codebase-audit-template.md` (byte-identical to the above)
-- `docs/guides/repo-audit.md`, then `python3 scripts/check-guide-parity.py --sync` to produce the plugin copy. Never hand-edit the plugin copy.
+- `plugins/arckit-repo/templates/codebase-audit-template.md`
+- `.arckit/templates/codebase-audit-template.md` (byte-identical to the above; enforced by `tests/plugin/test_template_consistency.py`)
+- `docs/guides/repo-audit.md`, then copy to `plugins/arckit-claude/docs/guides/`. Note `check-guide-parity.py --sync` only refreshes guides that already exist in both trees, so a brand-new guide has to be copied across once by hand before `--check` will police it.
+- `scripts/check-multi-instance-parity.py` (new CI guard, see below)
+- `tests/plugin/test_repo_audit.py`
 
 **Modified:**
 
-- `plugins/arckit-claude/config/doc-types.mjs` (`DOC_TYPES`, `MULTI_INSTANCE_TYPES`, `SUBDIR_MAP`)
-- `scripts/bash/generate-document-id.sh` (`MULTI_INSTANCE_TYPES`)
+- `plugins/arckit-claude/config/doc-types.mjs` (`DOC_TYPES`, `MULTI_INSTANCE_TYPES`, `SUBDIR_MAP`, plus the stale header comment)
+- **Both** copies of `generate-document-id.sh` (`scripts/bash/` and `plugins/arckit-claude/scripts/bash/`). The plugin copy is what an installed plugin actually runs.
 - `plugins/arckit-claude/commands/pages.md` (the dual-registration allow-list called out at the top of `doc-types.mjs`; without it the artefact is silently absent from the dashboard sidebar)
+- `plugins/arckit-claude/config/guide-groups.mjs` (an unregistered guide lands in "Other / Uncategorised", which `tests/codex/` asserts against)
+- `scripts/sync-shared-assets.py` (`SYNC_EXEMPT_PLUGINS`, see below)
+- `plugins/arckit-repo/.claude-plugin/plugin.json` (description, and the missing core dependency, see below)
 - `plugins/arckit-repo/README.md`, `plugins/arckit-repo/CHANGELOG.md`
-- `.claude-plugin/marketplace.json` and `plugins/arckit-claude/.claude-plugin/marketplace.json` (the `arckit-repo` description names its commands)
-- `docs/DEPENDENCY-MATRIX.md`
-- `README.md`, `docs/index.html`, `docs/commands.html` (command counts and a command entry)
+- `.claude-plugin/marketplace.json` and `plugins/arckit-claude/.claude-plugin/marketplace.json` (the `arckit-repo` description and keywords). Patch these as **text**, not by `json.load`/`json.dumps` round-trip: the default `ensure_ascii=True` rewrites every em-dash in both files as `—`.
+- `tests/plugin/test_template_consistency.py` (its `PLUGIN_SOURCES` excluded `arckit-repo` on the stated basis that tooling plugins have no governance templates, which stopped being true)
+- `plugins/arckit-claude/plugins/repo/**` via `python3 scripts/sync-claude-plugin-layout.py` (the standalone publish mirror; `tests/plugin/test_release_process.py` compares it file-for-file against the source)
 - Both `CHANGELOG.md` files
 
-Then run `python scripts/converter.py` so the command reaches all seven generated extension formats.
+**Not modified:** `README.md`, `docs/index.html`, `docs/commands.html`, `docs/DEPENDENCY-MATRIX.md`. The headline "N slash commands" figure tracks the core `plugins/arckit-claude/commands/` baseline only; overlay and tooling commands are additive and counted in their own sections. The dependency matrix is likewise baseline-only, and `/arckit:repo-docs` does not appear in it either. Running the `new-command-docs` checklist wholesale here would wrongly bump every count in the repo.
 
-The `.claude/skills/new-command-docs/` skill carries the exact grep patterns and line numbers for the count updates. Use it rather than hand-hunting.
+### Two structural changes this command forces
 
-### Pre-existing defect this work touches
+**`arckit-repo` is no longer sync-exempt.** `SYNC_EXEMPT_PLUGINS` in `sync-shared-assets.py` listed it as a tooling plugin with "no governance commands", which was true of `/arckit:repo-docs` and is not true of `/arckit:repo-audit`. A `CDAU` artefact carries a standard Document Control header, which resolves `${CLAUDE_PLUGIN_ROOT}/templates/_partials/document-control-*.md` against the plugin's **own** root. The plugin therefore has to carry its own copy of the 5 shared assets.
 
-`MULTI_INSTANCE_TYPES` has already drifted between the two registries. `doc-types.mjs` lists 19 types; `scripts/bash/generate-document-id.sh` lists 18 and is missing `GRNT`. The comment in `doc-types.mjs` claims the bash list has 10 entries, which was true a long time ago. Adding `CDAU` means touching both lists anyway, so fix `GRNT` and correct the stale comment in the same change. Consider a CI guard that diffs the two lists; there is currently nothing preventing the next drift.
+**`arckit-repo` now declares its dependency on core.** The manifest had `"dependencies": []` while the README and marketplace description both claimed "Requires arckit core". Every other community plugin declares `{"name": "arckit", "version": "=6.6.0"}`. Beyond fixing the marketplace install chain, this is what makes `check_references.py` resolve `${user_config.*}` keys from core, which the newly-synced partials reference.
 
-## Implementation tasks
+### Pre-existing defect this work fixed
 
-1. Register `CDAU` across `doc-types.mjs`, the bash helper, and `pages.md`. Fix the `GRNT` drift. Verify `generate-document-id.sh CDAU 001 --next-num <dir>` returns `ARC-001-CDAU-001-v1.0`.
-2. Write the template in both template trees, with the severity rubric and all 13 sections.
-3. Write the command prompt: argument parsing, mode inference, clone flow with confirmation, discovery, the 10 dimensions, and Write-tool output (never inline, given the 32K output cap).
-4. Add the guide, sync it, and confirm `check-guide-parity.py` passes clean.
-5. Run the converter and confirm the command appears in all seven extension formats with Claude-only frontmatter stripped.
-6. Tests in `tests/repo_audit/`: target parsing for every input form in the table above, mode inference against fixture projects (PRIN only, REQ only, both, neither), doc ID generation and sequencing, and the failure paths (missing `git`, clone auth failure, target is a file not a directory, empty repository).
-7. Docs and counts per the `new-command-docs` checklist.
-8. End-to-end on a real public repo plus a real ArcKit test project, in both modes.
+`MULTI_INSTANCE_TYPES` had drifted between its registries again. `doc-types.mjs` listed 19 types; both bash copies listed 18 and were missing `GRNT`, so `/arckit:grants` generated IDs with no `-NNN-` sequence and each run overwrote the previous artefact. The header comment in `doc-types.mjs` claimed the bash list had "10 entries", long stale. This is the second occurrence of the same bug (`TNDR`/`CMPT`, fixed v5.9.2 in PR #566), and the follow-up CI guard proposed then was never built.
+
+Fixed here, and `scripts/check-multi-instance-parity.py` now diffs the `.mjs` set against both bash copies and runs in `lint-markdown.yml`. Verified it fails (exit 1) when a type is removed, not merely that it passes today.
+
+## Implementation status
+
+All complete as of 2026-07-27 on branch `docs/repo-audit-spec-616`.
+
+1. ✅ `CDAU` registered across `doc-types.mjs`, both bash helpers, and `pages.md`. `GRNT` drift fixed. `generate-document-id.sh 001 CDAU --next-num <dir>` verified to return `ARC-001-CDAU-001-v1.0` then `-002-`.
+2. ✅ Template in both trees, byte-identical, with the severity rubric, the Verified/Inferred/Absent confidence scale, and all 11 sections.
+3. ✅ Command prompt with argument parsing, mode inference, confirmed shallow clone, targeted discovery, the 10 dimensions, and Write-tool output.
+4. ✅ Guide in both trees; `check-guide-parity.py --check` clean at 230 shared guides.
+5. ✅ Converter run and **verified the command does not leak into any extension**, which is the correct outcome here. The guide does ship, matching the `repo-docs` precedent.
+6. ✅ `tests/plugin/test_repo_audit.py`, 26 tests covering doc-type registration, the dual `pages.md` registration, multi-instance parity across all three registries, `GRNT` as an explicit regression, ID sequencing, template parity, the sync exemption, and each of the four absolute safety rules as a string assertion so a future edit cannot quietly drop one.
+7. ✅ Plugin README, CHANGELOG, manifest, both marketplace manifests, and the standalone mirror.
+8. ⬜ **Outstanding:** end-to-end run against a real public repo and a real ArcKit test project, in both modes. Everything above is static verification; the command prompt itself has not been executed.
+
+**Verification at completion:** 1168 passed / 225 skipped across the full `tests/` tree; all six CI check scripts clean; `claude plugin validate plugins/arckit-repo` passes; markdownlint clean on every file touched.
 
 ## Rejected alternatives
 

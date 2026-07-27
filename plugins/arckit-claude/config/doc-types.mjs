@@ -11,8 +11,18 @@
  * dashboard sidebar even though the manifest hook records them correctly.
  * See PR #317 for context — long term the two registries should be unified.
  *
- * NOTE: scripts/bash/generate-document-id.sh has its own MULTI_INSTANCE_TYPES
- * list (bash, 10 entries). Keep it in sync manually — low drift risk.
+ * ⚠️ MULTI_INSTANCE_TYPES IS DUPLICATED IN BASH — keep both in sync.
+ * generate-document-id.sh carries its own space-separated MULTI_INSTANCE_TYPES
+ * (line ~85) and there are TWO copies of that script: scripts/bash/ and
+ * plugins/arckit-claude/scripts/bash/. The plugin copy is what the installed
+ * plugin actually runs. All three lists must match.
+ *
+ * This has drifted twice. v5.9.0 added TNDR/CMPT and bash was not updated, so
+ * every /arckit:competitors run emitted the same colliding ID (fixed v5.9.2,
+ * PR #566). GRNT then went the same way and was only caught in 2026-07 while
+ * adding CDAU. A missing entry is silent: the helper returns an ID with no
+ * -NNN- sequence and each run of a multi-instance command overwrites the last.
+ * Verify with scripts/check-multi-instance-parity.py, which CI runs.
  *
  * Schema per entry:
  *   name:      Human-readable display name shown on the dashboard sidebar.
@@ -87,6 +97,7 @@ export const DOC_TYPES = {
   'DECK':      { name: 'Executive Deck',                    category: 'Reporting', extension: '.html' },
   'ANAL':      { name: 'Analysis Report',                  category: 'Governance' },
   'GAPS':      { name: 'Gap Analysis',                     category: 'Governance' },
+  'CDAU':      { name: 'Codebase Audit',                   category: 'Governance' },
   // Compliance — UK Gov + MOD officially-maintained
   'TCOP':      { name: 'TCoP Assessment',                  category: 'Compliance', regime: 'UK',  severity: 'HIGH' },
   'SECD':      { name: 'Secure by Design',                 category: 'Compliance',                severity: 'HIGH' },
@@ -264,6 +275,7 @@ export const MULTI_INSTANCE_TYPES = new Set([
   'RSCH', 'AWRS', 'AZRS', 'GCRS', 'DSCT', 'TNDR', 'CMPT',
   'WGAM', 'WCLM', 'WVCH',
   'GOVR', 'GCSR', 'GLND', 'GRNT',
+  'CDAU',
 ]);
 
 // Type code -> required subdirectory
@@ -290,6 +302,7 @@ export const SUBDIR_MAP = {
   'GCSR': 'research',
   'GLND': 'research',
   'GRNT': 'research',
+  'CDAU': 'audits',
 };
 
 // Derived: set of all valid type codes

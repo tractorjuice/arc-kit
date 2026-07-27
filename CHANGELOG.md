@@ -5,6 +5,24 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **`/arckit:repo-audit`** in the optional `arckit-repo` plugin (#616). Audits a codebase against architecture principles and requirements. Accepts the current repository, a local path, or a public GitHub/GitLab URL; remote targets are shallow-cloned (`--depth 100`, no submodules) to a temporary directory after confirmation, and deleted afterwards. Two modes are inferred, never flagged: **conformance** scores the codebase against the project's `PRIN`/`REQ` artefacts, giving each principle and requirement a Met / Partial / Not met / Not evidenced verdict with the source path that justifies it; **cold** runs a standalone as-built audit and emits a seed capability list. Unlike `/arckit:conformance` it degrades rather than hard-erroring when prerequisites are thin, because auditing an inherited codebase is usually the first thing a user does. Findings carry a severity *and* a confidence (Verified / Inferred / Absent), and the Blocking Decisions section emits every implied-but-unrecorded decision as a ready-to-file ADR stub. Three rules are absolute: never execute code from the audited repository (static reading only, because the code is untrusted at the point it is read), never write a discovered secret's value into the report, and never write into the audited repo. Private repositories are out of scope; clone locally and audit the path. Claude Code only, like `/arckit:repo-docs`.
+- **`CDAU` doc-type** (Codebase Audit, Governance, multi-instance) writing to a new `projects/{PID}-{name}/audits/` subdirectory, so one project can audit several repositories and a re-audit does not overwrite its predecessor.
+- **`scripts/check-multi-instance-parity.py`**, wired into `lint-markdown.yml`. `MULTI_INSTANCE_TYPES` is duplicated across `doc-types.mjs` and *two* copies of `generate-document-id.sh`, and nothing enforced agreement.
+
+### Fixed
+
+- **`GRNT` was missing from both bash `MULTI_INSTANCE_TYPES` lists**, so `/arckit:grants` generated IDs with no `-NNN-` sequence and every run overwrote the previous artefact. This is the second occurrence of this exact bug (`TNDR`/`CMPT`, fixed v5.9.2 in PR #566); the CI guard proposed at the time was never built, and now is. The header comment in `doc-types.mjs` claiming the bash list held "10 entries" was long stale and is rewritten.
+- **`arckit-repo` declared `"dependencies": []`** while its README and marketplace description both stated "Requires arckit core". Every other community plugin declares `{"name": "arckit", "version": "=6.6.0"}`. Beyond the marketplace install chain, the missing declaration meant `check_references.py` could not resolve `${user_config.*}` keys from core.
+
+### Changed
+
+- **`arckit-repo` is no longer exempt from the shared-asset sync.** `SYNC_EXEMPT_PLUGINS` listed it as a tooling plugin with no governance commands, which was true of `/arckit:repo-docs` and is not true of `/arckit:repo-audit`: a `CDAU` artefact carries a Document Control header that resolves `${CLAUDE_PLUGIN_ROOT}/templates/_partials/` against the plugin's own root, so it must carry its own copy.
+- `tests/plugin/test_template_consistency.py` now includes `arckit-repo` in its plugin scan, for the same reason.
+
 ## [6.6.0] — 2026-07-27
 
 ### Changed

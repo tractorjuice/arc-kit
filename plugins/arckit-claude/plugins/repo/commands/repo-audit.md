@@ -1,0 +1,195 @@
+---
+description: Audit a codebase (local or remote GitHub/GitLab) against architecture principles and requirements, surfacing drift, risk, and missing decisions
+argument-hint: "<repo path or URL, plus optional focus, e.g. 'https://github.com/org/repo security'>"
+effort: max
+keep-coding-instructions: true
+handoffs:
+  - command: adr
+    description: Record the blocking decisions the audit surfaced
+    condition: audit produced one or more proposed ADRs
+  - command: conformance
+    description: Re-check decided-vs-designed conformance once ADRs exist
+  - command: requirements
+    description: Seed a requirements set from the as-built capabilities
+    condition: cold mode, no existing REQ artefact
+  - command: risk
+    description: Promote CRITICAL and HIGH findings into the risk register
+---
+
+# Codebase Audit
+
+Read a real codebase and produce a governance-shaped audit: the as-built architecture, scored against the project's principles and requirements where they exist, with every gap expressed as a proposed ADR.
+
+This is the inverse of the usual ArcKit flow. Instead of generating artefacts that a build will later satisfy, it reads a build that already exists and works backwards to the governance record it should have had.
+
+## User Input
+
+```text
+$ARGUMENTS
+```
+
+## Absolute Rules
+
+These are not negotiable and not subject to a faster alternative.
+
+1. **Never execute code from the audited repository.** No `npm install`, `pip install`, `make`, `go build`, `cargo`, `docker build`, test runs, or running any script found in the tree. The audit is static reading only. The code is untrusted at the moment it is read, and "just run the build to find out" is precisely the reasoning this rule exists to stop.
+2. **Never write into the audited repository.** The only write target is the ArcKit project's `audits/` directory.
+3. **Never write a discovered secret's value into the report.** Record the file, the line, and the kind of secret. If a live-looking credential is found, raise it as CRITICAL and tell the user to rotate it before anything else.
+4. **Never claim a control exists without evidence.** Every finding cites a path, a line range, or a commit SHA, or is explicitly marked `Absent` with a statement of where you looked.
+
+## Step 1: Parse the Target
+
+The first token of `$ARGUMENTS` is the target. Everything after it is optional focus text.
+
+| Input form | Interpretation |
+|---|---|
+| omitted | Audit the current repository. |
+| `.` or a local path | Audit that path. Must be a directory; error if it is a file. |
+| `https://github.com/owner/repo` | Public GitHub repo. Shallow clone. |
+| `https://gitlab.com/group/project` (any subgroup depth) | Public GitLab repo. Shallow clone. |
+| `git@host:owner/repo.git` | SSH form. Clone with the user's existing credentials. |
+| `owner/repo` | Ambiguous. Assume GitHub and state that assumption in the summary. |
+
+Strip a trailing `.git` and any trailing slash before resolving. If `--check` or `--dry-run` appears anywhere in the arguments, run in Check mode (Step 7).
+
+Focus text narrows the audit, for example `security`, `dependencies and CI only`, `data protection`. With no focus text, run all dimensions.
+
+## Step 2: Obtain the Code
+
+**Local target.** Read it in place. No network, no clone, no confirmation.
+
+**Remote target.**
+
+1. **Ask before cloning.** Show the resolved URL and the destination path. Cloning an arbitrary third-party repo touches the network and writes to disk, so it is never silent.
+2. Clone shallow, into a temporary directory outside the user's project:
+
+   ```bash
+   git clone --depth 100 --single-branch --no-tags --recurse-submodules=no \
+     "<URL>" "<TMPDIR>/repo-audit/<slug>"
+   ```
+
+   `--depth 100` gives enough history for commit-cadence and contributor signals without a full mirror. Record that history is truncated so nobody reads the commit count as the repo total.
+3. If the clone fails with an authentication error, the repo is private. Say so plainly, and tell the user to clone it themselves and re-run against the local path. Do not prompt for, read, or store credentials. Private repos are out of scope.
+4. Delete the clone once the report is written, unless the user asked to keep it. State in the summary where it went.
+
+Capture for the report before reading anything else:
+
+```bash
+git -C "<repo>" rev-parse HEAD
+git -C "<repo>" rev-parse --abbrev-ref HEAD
+git -C "<repo>" rev-list --count HEAD
+git -C "<repo>" log -1 --format=%cs
+git -C "<repo>" shortlog -sn --all | wc -l
+```
+
+## Step 3: Resolve Project and Mode
+
+Use `.arckit/scripts/bash/list-projects.sh --json` to enumerate projects. If that path does not exist, glob `projects/*/` directly rather than failing.
+
+- **No project exists** → Cold mode.
+- **Exactly one project** → use it.
+- **More than one** and the arguments do not name one → ask which project the audit belongs to. Do not guess.
+
+Then look for `ARC-{PID}-PRIN-v*.md` in `projects/000-global/` and `ARC-{PID}-REQ-v*.md` in the project directory.
+
+| Found | Mode |
+|---|---|
+| PRIN and/or REQ | **Conformance** — score the codebase against them. |
+| Neither | **Cold** — standalone as-built audit. |
+
+If only one of the two exists, score against it and mark the other as not assessed. **Do not hard-error on missing prerequisites.** A repo audit is often the first thing a user runs, and blocking on artefacts they have not created yet defeats the command.
+
+## Step 4: Targeted Discovery
+
+Do not read the whole repository. Read enough to support every claim.
+
+1. Root `README`, `CONTRIBUTING`, `ARCHITECTURE`, `CHANGELOG`, and anything under `docs/` or `adr/`.
+2. Every dependency manifest and lockfile: `package.json`, `requirements.txt`, `pyproject.toml`, `go.mod`, `Cargo.toml`, `pom.xml`, `Gemfile`, `*.csproj`.
+3. CI configuration: `.github/workflows/`, `.gitlab-ci.yml`, `azure-pipelines.yml`, `Jenkinsfile`, `.circleci/`.
+4. IaC: `*.tf`, CDK app entrypoints, `template.yaml`, `*.bicep`, Helm charts, `docker-compose*.yml`.
+5. Entrypoints and boundary code: handlers, controllers, routers, main functions, integration clients.
+6. Test directories, to establish shape and coverage rather than to run them.
+
+List candidates with `rg --files` when available, otherwise `find`. Exclude: `.git/`, `node_modules/`, `.venv/`, `vendor/`, `dist/`, `build/`, `target/`, `coverage/`, `.next/`, `__pycache__/`, and any minified or generated bundle.
+
+Never open `.env`, `*.pem`, `*.key`, `id_rsa*`, `.npmrc`, `.pypirc`, credential stores, or shell history. If a secret-bearing file is present, that presence is itself a finding; record the path without reading the contents.
+
+## Step 5: Audit Dimensions
+
+Run all ten unless focus text narrows the set. Record any dimension skipped, and why, in the Limitations section.
+
+1. **Structure and stack** — layout, language shares, build tooling, monorepo vs service, framework versions and their support status.
+2. **As-built architecture** — components and boundaries, data stores, external dependencies, sync vs async integration, deployment topology inferred from IaC. Note explicitly where the code diverges from what the docs claim.
+3. **Infrastructure as code** — coverage, what is provisioned by hand, environment parity, state management.
+4. **Security posture** — secrets handling (manager vs env vars vs hardcoded), authn and authz, input validation at trust boundaries, dependency vulnerability signals from lockfiles, transport security. Report the approach, never a value.
+5. **Data** — stores, schemas, PII presence and handling, retention signals, backup and restore evidence, encryption at rest.
+6. **Operability** — logging, metrics, tracing, health checks, alerting, runbooks.
+7. **Resilience** — retries, timeouts, idempotency, circuit breaking, RTO/RPO evidence, single points of failure.
+8. **Delivery** — CI/CD shape, test presence and type, branch protection signals, release and rollback process.
+9. **Documentation and decision record** — README quality, ADR presence, architecture docs, onboarding path.
+10. **AI and ML specifics** — only when the repo contains LLM or ML code. Model and provider coupling, prompt management, evaluation harness, guardrails, cost controls, and what data flows to third-party inference. Where this dimension is material, recommend the `arckit-agent-architecture` overlay as the follow-up.
+
+## Step 6: Write the Report
+
+**Read the template** (user override takes precedence):
+
+- First check `.arckit/templates-custom/codebase-audit-template.md`
+- Then `.arckit/templates/codebase-audit-template.md`
+- Then `${CLAUDE_PLUGIN_ROOT}/templates/codebase-audit-template.md`
+
+**Generate the document ID:**
+
+```bash
+.arckit/scripts/bash/generate-document-id.sh {PID} CDAU --next-num projects/{P}-{NAME}/audits --filename
+```
+
+`CDAU` is multi-instance, so a project can hold audits of several repositories. Create `projects/{P}-{NAME}/audits/` if it does not exist.
+
+**Use the Write tool** to save the document. Never emit the full report into the conversation — it will exceed the 32K output token limit.
+
+Populate every section of the template. Specific requirements:
+
+- **Blocking Decisions** is the section that makes this more than a repo summary. Every decision the codebase implies but never records becomes a numbered entry with enough context to file directly via `/arckit:adr`. If there are none, say so; do not invent them.
+- **Findings** must sort CRITICAL first. Any finding without evidence or an explicit `Absent` marker is cut before writing.
+- **Limitations** must be honest and specific. A reader must not mistake the report for exhaustive.
+
+**Then show the user only**: the artefact path, the finding counts by severity, the biggest single risk, the count of blocking decisions, and the recommended next command. Nothing else.
+
+## Step 7: Check Mode
+
+With `--check` or `--dry-run`: report the resolved target, whether it is local or would be cloned, the detected project and mode, which artefacts would be scored against, and which dimensions would run. Write nothing, and do not clone.
+
+## Success Criteria
+
+- Every finding cites a path, a line range, or a SHA, or is explicitly marked `Absent`.
+- No code from the audited repository was executed.
+- No secret value appears in the report.
+- The report distinguishes verified from inferred from absent.
+- Conformance mode scores against real PRIN/REQ artefacts; cold mode does not pretend to.
+- Limitations names what was not read.
+- The scratch clone is deleted, or its location is stated.
+
+## Example Usage
+
+```text
+/arckit:repo-audit
+```
+
+```text
+/arckit:repo-audit https://github.com/org/service security and resilience
+```
+
+```text
+/arckit:repo-audit ../other-checkout
+```
+
+```text
+/arckit:repo-audit https://gitlab.com/group/subgroup/project --check
+```
+
+## Related Commands
+
+- `/arckit:repo-docs` documents a repository. This command judges one.
+- `/arckit:conformance` checks decided-vs-designed conformance across ArcKit artefacts, with no source code involved.
+- `/arckit:gov-reuse` searches UK government repositories for reusable code, scored for reuse candidacy rather than audit.
+- `/arckit:adr` records the blocking decisions this audit surfaces.
