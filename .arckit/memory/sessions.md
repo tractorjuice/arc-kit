@@ -10,268 +10,274 @@ Automated session summaries captured by the ArcKit session-learner hook.
   - chore: bump version to 4.6.1
   - fix: trim skill descriptions to fit 250-char context cap (#215) (#266)
 
-### 2026-07-04 12:00 - general
+### 2026-07-27 12:10 — general
 
-- **Commits:** 1 | **Files changed:** 2
-- **Artifacts touched:** 0
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 80
+- **Artifacts:** none detected
 - **Summary:**
-  - fix: point repo plugin at standalone repository
+  - chore: bump version to 6.6.0
+- **Telemetry:** 30 tool calls (p50=3879ms, p95=57753ms)
 
-### 2026-07-04 11:56 - general
+### 2026-07-27 11:52 — general
 
-- **Commits:** 1 | **Files changed:** 28
-- **Artifacts touched:** 0
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 35
+- **Artifacts:** none detected
 - **Summary:**
-  - feat: add repository tooling plugin
+  - chore: raise Claude Code floor to v2.1.219 for Claude Opus 5 (#580)
+- **Telemetry:** 24 tool calls (p50=1933ms, p95=27241ms)
 
-### 2026-07-04 11:04 - general
+### 2026-07-27 11:35 — general
 
-- **Commits:** 1 | **Files changed:** 1
-- **Artifacts touched:** 0
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 6
+- **Artifacts:** none detected
 - **Summary:**
-  - test: guard claude user config titles (#639)
+  - fix: guard arckit-build waves against the subagent concurrency cap (#580)
+- **Telemetry:** 38 tool calls (p50=1759ms, p95=67456ms)
 
-### 2026-07-04 07:05 - general
-
-- **Commits:** 1 | **Files changed:** 4
-- **Artifacts touched:** 0
-- **Summary:**
-  - docs: add Claude enterprise deployment guide (#645)
-
-### 2026-07-04 05:22 - general
-
-- **Commits:** 1 | **Files changed:** 10
-- **Artifacts touched:** 0
-- **Summary:**
-  - fix: inject external context on file changes (#644)
-
-### 2026-07-03 20:59 - architecture
-
-- **Commits:** 1 | **Files changed:** 66
-- **Artifacts touched:** 2
-- **Summary:**
-  - docs: update Claude Code platform guidance (#643)
-
-### 2026-07-03 20:37 - general
-
-- **Commits:** 1 | **Files changed:** 32
-- **Artifacts touched:** 0
-- **Summary:**
-  - chore: bump Claude Code floor to v2.1.200 (#642)
-
-### 2026-07-03 20:16 - general
-
-- **Commits:** 2 | **Files changed:** 88
-- **Artifacts touched:** 0
-- **Summary:**
-  - chore: bump version to 6.1.7
-  - docs(nhs): correct DCB0129 severity/likelihood numbering caveat (#641)
-
-### 2026-06-15 17:48 — failure (oauth_org_not_allowed)
+### 2026-07-27 09:49 — failure (server_error)
 
 - **Status:** session interrupted by API error
-- **Effort:** high
+- **Effort:** xhigh
 - **Commits:** 0 | **Files changed:** 0
 - **Artifacts:** none detected
+- **Telemetry:** 5 tool calls (p50=4612ms, p95=23570ms)
 
-### 2026-06-15 17:46 — failure (oauth_org_not_allowed)
+### 2026-07-27 08:35 — general
 
-- **Status:** session interrupted by API error
-- **Effort:** high
-- **Commits:** 0 | **Files changed:** 0
-- **Artifacts:** none detected
-- **Telemetry:** 18 tool calls (p50=1617ms, p95=5404ms)
-
-### 2026-06-11 10:52 — general
-
-- **Effort:** high
-- **Commits:** 2 | **Files changed:** 46
+- **Effort:** xhigh
+- **Commits:** 2 | **Files changed:** 16
 - **Artifacts:** none detected
 - **Summary:**
-  - chore(release): v5.13.1
-  - chore(version): bump Claude Code min-version floor v2.1.156 → v2.1.172 (#593)
-- **Telemetry:** 26 tool calls (p50=2537ms, p95=28881ms)
+  - fix: don't resolve ${CLAUDE_PLUGIN_ROOT} refs inside guide code blocks
+  - fix: guard docs/guides parity between the two trees (#580)
+- **Telemetry:** 47 tool calls (p50=2110ms, p95=17204ms)
 
-### 2026-06-11 08:53 — general
+### 2026-07-27 08:09 — general
 
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 7
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 14
 - **Artifacts:** none detected
 - **Summary:**
-  - chore(version): bump Claude Code min-version floor v2.1.156 → v2.1.172
-- **Telemetry:** 15 tool calls (p50=33ms, p95=4703ms)
+  - docs: adopt Claude Code v2.1.201-v2.1.220 guidance (#580)
+- **Telemetry:** 92 tool calls (p50=1815ms, p95=6445ms)
 
-### 2026-06-11 08:49 — general
+### 2026-07-27 06:40 — general
 
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 7
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 80
 - **Artifacts:** none detected
 - **Summary:**
-  - chore(version): bump Claude Code min-version floor v2.1.156 → v2.1.170
-- **Telemetry:** 41 tool calls (p50=50ms, p95=9529ms)
+  - chore: bump version to 6.5.0
+- **Telemetry:** 42 tool calls (p50=1637ms, p95=39535ms)
 
-### 2026-06-10 16:05 — general
+### 2026-07-25 13:40 — general
 
-- **Effort:** high
-- **Commits:** 2 | **Files changed:** 84
-- **Artifacts:** none detected
-- **Summary:**
-  - chore(release): v5.13.0
-  - feat: arckit-uk-gcloud supplier bid-authoring overlay (13th plugin) (#592)
-- **Telemetry:** 43 tool calls (p50=2792ms, p95=43544ms)
-
-### 2026-06-10 15:42 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 2
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(uk-gcloud): fit buyer/supplier callout text inside its box
-- **Telemetry:** 4 tool calls (p50=2013ms, p95=5554ms)
-
-### 2026-06-10 15:41 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 2
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(uk-gcloud): enlarge hero text for legibility
-- **Telemetry:** 4 tool calls (p50=2485ms, p95=5156ms)
-
-### 2026-06-10 15:37 — general
-
-- **Effort:** high
-- **Commits:** 2 | **Files changed:** 4
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(uk-gcloud): force-add launch article + hero (docs/articles gitignored)
-  - docs(uk-gcloud): launch article + hero for the supplier overlay
-- **Telemetry:** 23 tool calls (p50=1587ms, p95=5186ms)
-
-### 2026-06-10 15:15 — general
-
-- **Effort:** high
-- **Commits:** 17 | **Files changed:** 53
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(uk-gcloud): list submission-pack in pages.md Procurement row
-  - chore(uk-gcloud): remove redundant .gitkeep placeholders
-  - docs(uk-gcloud): document 13th plugin across README, index, matrix, changelogs
-  - docs(plan): avoid dot-form literal that tripped colon guard
-  - feat(uk-gcloud): keep overlay Claude-only (exclude from converter + CLI templates)
-  - feat(uk-gcloud): proprietary licence + repo-root MIT carve-out
-  - feat(uk-gcloud): add uk-gcloud-submission build recipe
-  - fix(uk-gcloud): rebrand stale 'gcloud-kit commands' prose to ArcKit in ported skills
-- **Telemetry:** 233 tool calls (p50=1540ms, p95=5690ms) | by agent: general-purpose(162 calls, p95=2161ms), main(71 calls, p95=159415ms)
-
-### 2026-06-10 12:50 — general
-
-- **Effort:** high
-- **Commits:** 4 | **Files changed:** 25
-- **Artifacts:** none detected
-- **Summary:**
-  - feat(uk-gcloud): port 8 bid-authoring templates with ArcKit Document Control headers
-  - feat(uk-gcloud): add marketplace.json entry
-  - feat(uk-gcloud): register 8 G-Cloud supplier doc-types (SUPP/SVCD/SDD/DECL/PRIC/SECA/GCMP/GCRV)
-  - feat(uk-gcloud): scaffold plugin skeleton + manifest
-- **Telemetry:** 59 tool calls (p50=1421ms, p95=63917ms) | by agent: general-purpose(39 calls, p95=1975ms), main(20 calls, p95=170203ms)
-
-### 2026-06-10 11:35 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 1
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(plan): arckit-uk-gcloud overlay implementation plan
-- **Telemetry:** 8 tool calls (p50=1926ms, p95=2074ms)
-
-### 2026-06-10 11:19 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 1
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(spec): add dedicated /arckit:gcloud-competitors command
-- **Telemetry:** 16 tool calls (p50=35ms, p95=1981ms)
-
-### 2026-06-10 10:48 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 1
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(spec): set arckit-uk-gcloud licence to Proprietary
-- **Telemetry:** 9 tool calls (p50=75ms, p95=2039ms)
-
-### 2026-06-10 10:43 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 1
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(spec): arckit-uk-gcloud bid-authoring overlay design
-- **Telemetry:** 24 tool calls (p50=1524ms, p95=3499ms)
-
-### 2026-06-10 10:15 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 38
-- **Artifacts:** none detected
-- **Summary:**
-  - chore(release): v5.12.1
-- **Telemetry:** 22 tool calls (p50=2114ms, p95=27574ms)
-
-### 2026-06-10 08:42 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 7
-- **Artifacts:** none detected
-- **Summary:**
-  - fix(hooks): guard secret scanner against code/IaC references (#590) (#591)
-- **Telemetry:** 5 tool calls (p50=4178ms, p95=6395ms)
-
-### 2026-06-10 08:33 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 1
-- **Artifacts:** none detected
-- **Summary:**
-  - docs(contributors): credit @jonathan-moulds-sb for the #590 secret-scanner fix
-- **Telemetry:** 11 tool calls (p50=1812ms, p95=5523ms)
-
-### 2026-06-10 08:29 — general
-
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 1
-- **Artifacts:** none detected
-- **Summary:**
-  - ci: run all tests/plugin/*.test.mjs and trigger on hook/test changes (#590)
-- **Telemetry:** 10 tool calls (p50=1868ms, p95=6164ms)
-
-### 2026-06-10 08:26 — general
-
-- **Effort:** high
+- **Effort:** xhigh
 - **Commits:** 1 | **Files changed:** 5
 - **Artifacts:** none detected
 - **Summary:**
-  - fix(hooks): guard secret scanner against code/IaC references (#590)
-- **Telemetry:** 21 tool calls (p50=1933ms, p95=5299ms)
+  - fix(hooks): correct the provenance effort-downgrade matrix (#669)
+- **Telemetry:** 25 tool calls (p50=1621ms, p95=10010ms) | by agent: main(22 calls, p95=6343ms), claude-code-guide(3 calls, p95=10010ms)
 
-### 2026-06-10 08:09 — general
+### 2026-07-25 13:20 — general
 
-- **Effort:** high
-- **Commits:** 2 | **Files changed:** 62
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 2
 - **Artifacts:** none detected
 - **Summary:**
-  - chore(release): v5.12.0
-  - feat(arckit-fde): white-label FDE consulting site generator plugin (#589)
-- **Telemetry:** 23 tool calls (p50=1966ms, p95=5079ms)
+  - docs(hooks): correct kimi-k3 model name and flag the effort-matrix known issue
+- **Telemetry:** 17 tool calls (p50=2512ms, p95=10395ms)
 
-### 2026-06-08 08:58 — general
+### 2026-07-25 12:41 — general
 
-- **Effort:** high
-- **Commits:** 1 | **Files changed:** 36
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 6
 - **Artifacts:** none detected
 - **Summary:**
-  - chore(release): v5.11.2
-- **Telemetry:** 16 tool calls (p50=2017ms, p95=51462ms)
+  - feat(kimi): wire governance hooks and enrich the plugin manifest
+- **Telemetry:** 62 tool calls (p50=1604ms, p95=10299ms)
+
+### 2026-07-25 09:34 — general
+
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 80
+- **Artifacts:** none detected
+- **Summary:**
+  - chore(release): v6.4.0
+- **Telemetry:** 24 tool calls (p50=3196ms, p95=55278ms)
+
+### 2026-07-25 09:18 — general
+
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 1
+- **Artifacts:** none detected
+- **Summary:**
+  - fix(lint): exempt tests and plans from the colon-form command linter
+- **Telemetry:** 19 tool calls (p50=4497ms, p95=33791ms)
+
+### 2026-07-25 08:28 — general
+
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 2
+- **Artifacts:** none detected
+- **Summary:**
+  - fix(converter): stop swallowing trailing punctuation in skill invocations
+- **Telemetry:** 35 tool calls (p50=2312ms, p95=11454ms)
+
+### 2026-07-24 12:09 — general
+
+- **Effort:** xhigh
+- **Commits:** 9 | **Files changed:** 14
+- **Artifacts:** none detected
+- **Summary:**
+  - fix(kimi): address whole-branch review findings
+  - docs(plans): record the legacy-vs-current Kimi docs correction
+  - fix(kimi): correct manifest filename, install command and frontmatter for Kimi Code
+  - chore(lint): exclude generated arckit-kimi output and process scratch
+  - docs: document the Kimi Code CLI distribution format
+  - fix(release): widen the kimi publish guard to catch partial converter runs
+  - fix(release): include kimi in the default push-extensions target set
+  - chore(kimi): register arckit-kimi for publishing and version bumps
+- **Telemetry:** 351 tool calls (p50=1590ms, p95=62303ms) | by agent: general-purpose(307 calls, p95=7315ms), main(44 calls, p95=1042532ms)
+
+### 2026-07-24 08:54 — general
+
+- **Effort:** xhigh
+- **Commits:** 8 | **Files changed:** 10
+- **Artifacts:** none detected
+- **Summary:**
+  - feat(cli): add --ai kimi for Kimi Code CLI project scaffolding
+  - test(kimi): validate generated extension structure and CI wiring
+  - fix(kimi): ship core reference skills so sessionStart resolves
+  - feat(kimi): wire Kimi Code CLI target into the converter
+  - feat(kimi): generate plugin.json manifest with mapped MCP servers
+  - refactor(converter): extract platform-parameterised skill rewrite core
+  - feat(kimi): add skill naming and invocation helpers
+  - chore(kimi): scaffold arckit-kimi extension directory
+- **Telemetry:** 316 tool calls (p50=1503ms, p95=35507ms) | by agent: general-purpose(277 calls, p95=3638ms), main(39 calls, p95=576533ms)
+
+### 2026-07-23 09:45 — general
+
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 1
+- **Artifacts:** none detected
+- **Summary:**
+  - docs(plans): implementation plan for the Kimi Code CLI extension
+- **Telemetry:** 44 tool calls (p50=1656ms, p95=6896ms)
+
+### 2026-07-23 09:27 — general
+
+- **Effort:** xhigh
+- **Commits:** 3 | **Files changed:** 3
+- **Artifacts:** none detected
+- **Summary:**
+  - chore(hooks): add claude-opus-4-8 to effort matrix; mark matrix Claude-only
+  - fix(hooks): parse provider-prefixed and bracket-suffixed model ids in provenance footer
+  - refactor(hooks): extract testable model/effort helpers into provenance-model.mjs
+- **Telemetry:** 48 tool calls (p50=2287ms, p95=6667ms)
+
+### 2026-07-22 11:24 — general
+
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 1
+- **Artifacts:** none detected
+- **Summary:**
+  - docs(plans): revise Kimi V3 plan — correct Codex/Vibe misidentification, add TDD tasks
+- **Telemetry:** 24 tool calls (p50=2534ms, p95=6643ms)
+
+### 2026-07-22 10:07 — general
+
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 3
+- **Artifacts:** none detected
+- **Summary:**
+  - docs(site): list Atomic Task Graph article + add 1200x630 social card (#662)
+- **Telemetry:** 3 tool calls (p50=8592ms, p95=9008ms)
+
+### 2026-07-22 10:01 — general
+
+- **Effort:** xhigh
+- **Commits:** 1 | **Files changed:** 3
+- **Artifacts:** none detected
+- **Summary:**
+  - docs(site): list Atomic Task Graph article + add 1200x630 social card
+- **Telemetry:** 21 tool calls (p50=1892ms, p95=3694ms)
+
+### 2026-07-22 09:48 — general
+
+- **Effort:** xhigh
+- **Commits:** 2 | **Files changed:** 3
+- **Artifacts:** none detected
+- **Summary:**
+  - docs: replace Atomic Task Graph hero with polished design (#661)
+  - docs: add Atomic Task Graph article validating ArcKit build harness (#660)
+- **Telemetry:** 186 tool calls (p50=64ms, p95=310134ms) | by agent: arckit-deepbook:arckit-deepbook-writer(68 calls, p95=9ms), main(65 calls, p95=8758ms), arckit-deepbook:arckit-deepbook(53 calls, p95=434032ms)
+
+### 2026-07-21 20:04 — failure (rate_limit)
+
+- **Status:** session interrupted by API error
+- **Effort:** xhigh
+- **Commits:** 0 | **Files changed:** 0
+- **Artifacts:** none detected
+
+### 2026-07-21 19:23 — failure (rate_limit)
+
+- **Status:** session interrupted by API error
+- **Effort:** xhigh
+- **Commits:** 0 | **Files changed:** 0
+- **Artifacts:** none detected
+
+### 2026-07-21 19:04 — failure (rate_limit)
+
+- **Status:** session interrupted by API error
+- **Effort:** xhigh
+- **Commits:** 0 | **Files changed:** 0
+- **Artifacts:** none detected
+
+### 2026-07-21 18:04 — failure (rate_limit)
+
+- **Status:** session interrupted by API error
+- **Effort:** xhigh
+- **Commits:** 0 | **Files changed:** 0
+- **Artifacts:** none detected
+
+### 2026-07-21 17:15 — failure (rate_limit)
+
+- **Status:** session interrupted by API error
+- **Effort:** xhigh
+- **Commits:** 0 | **Files changed:** 0
+- **Artifacts:** none detected
+
+### 2026-07-21 17:04 — failure (rate_limit)
+
+- **Status:** session interrupted by API error
+- **Effort:** xhigh
+- **Commits:** 0 | **Files changed:** 0
+- **Artifacts:** none detected
+
+### 2026-07-21 17:04 — failure (rate_limit)
+
+- **Status:** session interrupted by API error
+- **Effort:** max
+- **Commits:** 0 | **Files changed:** 0
+- **Artifacts:** none detected
+- **Telemetry:** 1 tool calls (p50=4032271ms, p95=4032271ms)
+
+### 2026-07-21 17:04 — failure (rate_limit)
+
+- **Status:** session interrupted by API error
+- **Effort:** max
+- **Commits:** 0 | **Files changed:** 0
+- **Artifacts:** none detected
+- **Telemetry:** 132 tool calls (p50=5ms, p95=295080ms) | by agent: arckit-deepbook:arckit-deepbook-writer(61 calls, p95=7ms), arckit-deepbook:arckit-deepbook(54 calls, p95=354981ms), main(17 calls, p95=4765ms)
+
+### 2026-07-21 12:17 — failure (rate_limit)
+
+- **Status:** session interrupted by API error
+- **Effort:** xhigh
+- **Commits:** 0 | **Files changed:** 0
+- **Artifacts:** none detected
+
