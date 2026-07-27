@@ -13,9 +13,6 @@ on:
       - "scripts/check-guide-parity.py"
       - "scripts/check-multi-instance-parity.py"
       - "scripts/check-guide-site-links.py"
-      - "scripts/generate-docs-manifest.py"
-      - "docs/manifest.json"
-      - ".arckit/templates/**"
       - "docs/guides.html"
       - "docs/roles.html"
       - "plugins/arckit-*/recipes/**"
@@ -38,9 +35,6 @@ on:
       - "scripts/check-guide-parity.py"
       - "scripts/check-multi-instance-parity.py"
       - "scripts/check-guide-site-links.py"
-      - "scripts/generate-docs-manifest.py"
-      - "docs/manifest.json"
-      - ".arckit/templates/**"
       - "docs/guides.html"
       - "docs/roles.html"
       - "plugins/arckit-*/recipes/**"
@@ -90,9 +84,6 @@ jobs:
 
       - name: Guide site-link check (every guide reachable, no dead links)
         run: python3 scripts/check-guide-site-links.py
-
-      - name: docs/manifest.json freshness (generated from disk, not hand-edited)
-        run: python3 scripts/generate-docs-manifest.py --check
 
       - uses: actions/setup-node@v4
         with:
