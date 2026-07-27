@@ -10,6 +10,17 @@
  *   - docs/manifest.json doesn't exist (no pages setup yet)
  *   - File path doesn't contain /projects/
  *   - Filename doesn't match ARC-NNN-*-vN.N.md pattern
+ *   - The artefact is gitignored (a published index must not reference a
+ *     file that will never be published)
+ *
+ * Ownership of docs/manifest.json:
+ *   - THIS hook owns project artefact entries (projects[] groups), keeping the
+ *     pages dashboard current between /arckit:pages runs. That is the product
+ *     behaviour in a user's repo.
+ *   - scripts/generate-docs-manifest.py owns the guide/template/article/global
+ *     index in the ArcKit repo itself, rebuilt from git-tracked sources.
+ *   The two do not overlap once the gitignore guard is in place, because
+ *   ArcKit gitignores its own projects/.
  *
  * Hook Type: PostToolUse
  * Matcher: Write
@@ -26,6 +37,7 @@
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
+import { spawnSync } from 'node:child_process';
 import { join, basename, resolve } from 'node:path';
 import { DOC_TYPES, SUBDIR_MAP } from '../config/doc-types.mjs';
 import { isDir, isFile, findRepoRoot, parseHookInput, emitUpdatedToolOutput } from './hook-utils.mjs';
@@ -46,6 +58,23 @@ for (const dir of new Set(Object.values(SUBDIR_MAP))) {
 SUBDIR_TO_KEY['reviews'] = 'reviews';
 
 // ── Doc type extraction ──
+
+// True only when git actively ignores the path. Untracked-but-not-ignored
+// returns false, which is the case for any newly written artefact in a repo
+// that tracks projects/. Fail open on any error: no git, not a repo, or git
+// unavailable all mean "cannot prove it is ignored", so index it.
+function isGitIgnored(filePath, repoRoot) {
+  try {
+    const r = spawnSync('git', ['check-ignore', '-q', '--', filePath], {
+      cwd: repoRoot,
+      timeout: 2000,
+      stdio: 'ignore',
+    });
+    return r.status === 0;
+  } catch {
+    return false;
+  }
+}
 
 function extractDocType(filename) {
   const m = filename.match(/^ARC-\d{3}-(.+)-v\d+(\.\d+)?\.md$/);
@@ -113,6 +142,24 @@ if (!repoRoot) process.exit(0);
 
 const manifestPath = join(repoRoot, 'docs', 'manifest.json');
 if (!isFile(manifestPath)) process.exit(0);
+
+// ── Guard: never index an artefact git will not publish ──
+//
+// docs/manifest.json is a published index — in the ArcKit repo itself it is
+// served at arckit.org/manifest.json. Indexing a gitignored artefact puts a
+// reference to a file that exists only on one machine into a file everyone
+// fetches, i.e. a permanent 404.
+//
+// This matters most in the ArcKit repo, where `projects/` is gitignored, so
+// writing any ARC artefact used to append a group referencing an unpublished
+// path — and that also collided with scripts/generate-docs-manifest.py, which
+// rebuilds the same file from tracked sources and legitimately drops them.
+//
+// IGNORED, not merely untracked. A brand-new artefact in a repo that tracks
+// projects/ is untracked until committed and must still be indexed; only an
+// ignored path can never be published. Fail open: if git is unavailable or
+// this is not a repo, index as before.
+if (isGitIgnored(filePath, repoRoot)) process.exit(0);
 
 // ── Parse manifest ──
 let manifest;
