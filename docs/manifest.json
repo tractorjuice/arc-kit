@@ -2275,11 +2275,6 @@
           "category": "Marketing"
         },
         {
-          "path": "docs/articles/2026-03-12-document-map-linkedin.md",
-          "title": "Document Map — LinkedIn Post",
-          "category": "Marketing"
-        },
-        {
           "path": "docs/articles/2026-03-12-document-map-medium.md",
           "title": "Your Architecture Documents Are Connected — Now You Can See How",
           "category": "Marketing"
@@ -2340,16 +2335,6 @@
           "category": "Marketing"
         },
         {
-          "path": "docs/articles/2026-04-23-cabinet-agentic-ai-framework.md",
-          "title": "Mohammed bin Rashid unveils framework to deploy agentic AI across 50% of government sectors within 2 years",
-          "category": "Marketing"
-        },
-        {
-          "path": "docs/articles/2026-04-27-bootstrap-25k-week.md",
-          "title": "From Brief to Investment-Ready in Four £25k Weeks: Bootstrapping a UK Public Sector Project with ArcKit",
-          "category": "Marketing"
-        },
-        {
           "path": "docs/articles/2026-04-27-mckinsey-decks-from-arckit.md",
           "title": "From ArcKit to McKinsey-Style Infographics in an Afternoon: AntV Infographic and the End of the £200k Wrap",
           "category": "Marketing"
@@ -2405,33 +2390,8 @@
           "category": "Marketing"
         },
         {
-          "path": "docs/articles/2026-05-03-research-gcloud-spend-actuals.md",
-          "title": "G-Cloud Spend — Actuals from CCS / GCA",
-          "category": "Marketing"
-        },
-        {
-          "path": "docs/articles/2026-05-03-research-mark-craddock-books.md",
-          "title": "Mark Craddock — Published Books",
-          "category": "Marketing"
-        },
-        {
           "path": "docs/articles/2026-05-06-anthropics-financial-services-architecture-lesson.md",
           "title": "Five patterns to steal from anthropics/financial-services",
-          "category": "Marketing"
-        },
-        {
-          "path": "docs/articles/2026-05-06-linkedin-product-hunt-launch.md",
-          "title": "LinkedIn launch post — pointing to Product Hunt",
-          "category": "Marketing"
-        },
-        {
-          "path": "docs/articles/2026-05-06-product-hunt-arckit.md",
-          "title": "Product Hunt launch: ArcKit",
-          "category": "Marketing"
-        },
-        {
-          "path": "docs/articles/2026-05-06-show-hn-arckit.md",
-          "title": "Show HN: ArcKit – Architecture governance as slash commands across 6 AI assistants",
           "category": "Marketing"
         },
         {
@@ -2497,11 +2457,6 @@
         {
           "path": "docs/articles/2026-06-03-uk-government-consulting-spend.md",
           "title": "Britain's War on Consultants: What the Procurement Data Actually Shows",
-          "category": "Marketing"
-        },
-        {
-          "path": "docs/articles/2026-06-05-independent-architect-becomes-kpmg.md",
-          "title": "How an Independent Architect Becomes a KPMG",
           "category": "Marketing"
         },
         {

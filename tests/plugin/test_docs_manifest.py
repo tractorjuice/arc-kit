@@ -68,6 +68,13 @@ def test_no_duplicate_entries(listed_paths):
     assert not dupes, f"duplicate manifest entries: {dupes}"
 
 
+def tracked_files() -> set[str]:
+    out = subprocess.run(
+        ["git", "ls-files"], capture_output=True, text=True, cwd=REPO_ROOT
+    ).stdout
+    return set(out.split("\n"))
+
+
 @pytest.mark.parametrize(
     "label,directory,pattern,prefix",
     [
@@ -76,15 +83,29 @@ def test_no_duplicate_entries(listed_paths):
         ("articles", "docs/articles", "*.md", "docs/articles/"),
     ],
 )
-def test_every_file_on_disk_is_listed(listed_paths, label, directory, pattern, prefix):
+def test_every_tracked_file_is_listed(listed_paths, label, directory, pattern, prefix):
+    tracked = tracked_files()
     on_disk = {
         str(p.relative_to(REPO_ROOT))
         for p in (REPO_ROOT / directory).glob(pattern)
-        if p.is_file()
+        if p.is_file() and str(p.relative_to(REPO_ROOT)) in tracked
     }
     listed = {p for p in listed_paths if p.startswith(prefix)}
     missing = sorted(on_disk - listed)
     assert not missing, f"{label}: {len(missing)} file(s) missing from the manifest: {missing[:5]}"
+
+
+def test_no_untracked_file_is_listed(listed_paths):
+    """The manifest must match a clean checkout, not the local working tree.
+
+    Regression: the first version globbed the filesystem and picked up nine
+    gitignored docs/articles/*.md. Locally it read 472 documents; CI, on a clean
+    checkout, computed 463 and failed. Every listed path must be tracked, or the
+    published index advertises documents that 404.
+    """
+    tracked = tracked_files()
+    untracked = sorted(p for p in listed_paths if p not in tracked)
+    assert not untracked, f"manifest lists untracked file(s): {untracked}"
 
 
 def test_repo_audit_guide_is_listed(listed_paths):

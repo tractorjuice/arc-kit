@@ -9,6 +9,10 @@ with one entry pointing at a file that no longer existed.
 
 Hand-maintaining a ~470-entry index does not work. This derives it from disk.
 
+Only **git-tracked** files are indexed. The manifest advertises what is
+published, and a gitignored working-tree file is not: nine gitignored
+docs/articles/*.md would otherwise have been listed as 404s for every visitor.
+
 Sources of truth:
   guides     docs/guides/**/*.md, grouped via GUIDE_METADATA in
              plugins/arckit-claude/config/guide-groups.mjs (the same registry
@@ -90,11 +94,29 @@ def load_guide_metadata() -> dict[str, dict]:
     return json.loads(result.stdout)
 
 
+def tracked_files() -> set[str]:
+    """Repo-relative paths of everything git tracks.
+
+    The manifest indexes what is *published*, and only tracked files reach the
+    site. Globbing the filesystem instead would include gitignored working-tree
+    files and advertise documents that 404 for every visitor: nine gitignored
+    `docs/articles/*.md` did exactly that locally, and CI caught the mismatch
+    (472 local vs 463 in a clean checkout). Filtering here also makes the
+    output identical on a developer machine and on a runner.
+    """
+    result = subprocess.run(
+        ["git", "ls-files"], capture_output=True, text=True, cwd=ROOT
+    )
+    if result.returncode != 0:
+        raise SystemExit(f"ERROR: git ls-files failed:\n{result.stderr}")
+    return set(result.stdout.split("\n"))
+
+
 def slug(text: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
 
 
-def guide_projects(metadata: dict[str, dict]) -> list[dict]:
+def guide_projects(metadata: dict[str, dict], tracked: set[str]) -> list[dict]:
     """Group every guide on disk into a project bucket.
 
     Bucketing rules, in order:
@@ -106,6 +128,8 @@ def guide_projects(metadata: dict[str, dict]) -> list[dict]:
     buckets: dict[str, dict] = {}
 
     for path in sorted(GUIDES_DIR.rglob("*.md")):
+        if str(path.relative_to(ROOT)) not in tracked:
+            continue
         stem = str(path.relative_to(GUIDES_DIR)).removesuffix(".md")
         parent = stem.split("/")[0] if "/" in stem else None
 
@@ -131,9 +155,12 @@ def guide_projects(metadata: dict[str, dict]) -> list[dict]:
     return [buckets[k] for k in sorted(buckets)]
 
 
-def flat_project(project_id: str, name: str, directory: Path, prefix: str, category: str) -> dict:
+def flat_project(project_id: str, name: str, directory: Path, prefix: str,
+                 category: str, tracked: set[str]) -> dict:
     documents = []
     for path in sorted(directory.glob("*.md")):
+        if str(path.relative_to(ROOT)) not in tracked:
+            continue
         documents.append({
             "path": f"{prefix}/{path.name}",
             "title": title_of(path, path.stem),
@@ -143,10 +170,13 @@ def flat_project(project_id: str, name: str, directory: Path, prefix: str, categ
 
 
 def build(generated: str) -> dict:
+    tracked = tracked_files()
     metadata = load_guide_metadata()
-    projects = guide_projects(metadata)
-    projects.append(flat_project("templates", "Document Templates", TEMPLATES_DIR, ".arckit/templates", "Templates"))
-    projects.append(flat_project("articles", "Articles", ARTICLES_DIR, "docs/articles", "Marketing"))
+    projects = guide_projects(metadata, tracked)
+    projects.append(flat_project("templates", "Document Templates", TEMPLATES_DIR,
+                                 ".arckit/templates", "Templates", tracked))
+    projects.append(flat_project("articles", "Articles", ARTICLES_DIR,
+                                 "docs/articles", "Marketing", tracked))
 
     return {
         "generated": generated,
@@ -154,7 +184,7 @@ def build(generated: str) -> dict:
         "global": [
             {"path": p, "title": t, "category": "Overview"}
             for p, t in GLOBAL_DOCS
-            if (ROOT / p).is_file()
+            if p in tracked
         ],
         "projects": projects,
     }
