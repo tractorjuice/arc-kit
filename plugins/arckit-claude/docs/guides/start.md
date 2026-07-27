@@ -23,7 +23,7 @@ Examples below use Claude Code / OpenCode syntax. Translate commands using the t
 
 If ArcKit is already installed and enabled for your platform, skip to Step 1.
 
-For Claude Code, ArcKit needs Claude Code **v2.1.200 or later**. From a terminal:
+For Claude Code, ArcKit needs Claude Code **v2.1.219 or later**. From a terminal:
 
 ```bash
 claude install latest

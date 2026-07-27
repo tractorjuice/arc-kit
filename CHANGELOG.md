@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Minimum Claude Code version raised to v2.1.219** (from v2.1.200) for **Claude Opus 5** support. v2.1.219 added `claude-opus-5` as the default Opus model, with 1M context and fast mode; earlier clients cannot select it. The floor carries forward every prior driver (project-scoped plugin loading from git worktrees and `claude agents --plugin-dir` visibility from v2.1.200, background-subagent reliability from v2.1.198-v2.1.199, the wildcard-domain `WebFetch` fix from v2.1.172, and older MCP/hook/telemetry unlocks). Updated across `version-check.mjs` (constant, per-feature warning bullet, header threshold list), both READMEs, `CLAUDE.md`, 13 guides, the enterprise-scale managed-settings examples and changelog table, the repo dogfood `.claude/settings.json`, and the test-repo scaffold template.
+
 ### Added
 
 - **Guide-tree parity check** (`scripts/check-guide-parity.py`, wired into `lint-markdown.yml`). ArcKit keeps user guides in two trees — `docs/guides/` (the published site and CLI package data) and `plugins/arckit-claude/docs/guides/` (what the converter pushes into all seven extensions) — and nothing kept them in step. `sync-shared-assets.py` covers `templates/_partials/` and `references/` but has never touched `docs/guides`. The check enforces byte-identical parity for every guide present in both trees, allows root-only guides (community-overlay and maintainer docs deliberately don't ship to extensions), and rejects plugin-only guides, which can never reach the site or the CLI package. `--sync` copies root to plugin and only ever writes to the plugin tree.

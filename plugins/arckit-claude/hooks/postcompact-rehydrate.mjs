@@ -18,7 +18,7 @@
  * builder as `arckit-context.mjs` and `inject-agent-context.mjs`. No
  * new marker-file convention; the filesystem is the source of truth.
  *
- * Hook Type:  PostCompact (Claude Code v2.1.76+; current ArcKit floor v2.1.200)
+ * Hook Type:  PostCompact (Claude Code v2.1.76+; current ArcKit floor v2.1.219)
  * Input:      JSON hook input (no fields used)
  * Output:     JSON with hookSpecificOutput.additionalContext when a
  *             projects/ directory exists; empty object otherwise.

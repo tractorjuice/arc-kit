@@ -10,9 +10,10 @@
  *      MIN_CLAUDE_CODE_VERSION (features like userConfig, hook `if:`, skill
  *      `paths:`, plugin dependency enforcement, `defaultEnabled`, the
  *      Opus 4.8 thinking-block fix, Claude Fable 5/Sonnet 5 runtime updates,
- *      the WebFetch wildcard-domain fix, and project-scoped plugin worktree
- *      fixes depend on v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/
- *      v2.1.172+/v2.1.200+). Silent on
+ *      the WebFetch wildcard-domain fix, project-scoped plugin worktree
+ *      fixes, and Claude Opus 5 availability depend on
+ *      v2.1.83+/v2.1.121+/v2.1.143+/v2.1.154+/v2.1.156+/
+ *      v2.1.172+/v2.1.200+/v2.1.219+). Silent on
  *      detection failure.
  *
  * Side effect: when inside an ArcKit project, persists the detected client
@@ -31,7 +32,7 @@ import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { isDir, isFile, readText, parseHookInput, parseVersion, compareVersions } from './hook-utils.mjs';
 
-const MIN_CLAUDE_CODE_VERSION = '2.1.200';
+const MIN_CLAUDE_CODE_VERSION = '2.1.219';
 
 const data = parseHookInput(); // consume stdin (required by hook protocol)
 const cwd = data.cwd || '.';
@@ -89,7 +90,8 @@ if (clientVersion && compareVersions(clientVersion, MIN_CLAUDE_CODE_VERSION) < 0
     `- Claude Sonnet 5 default runtime and 1M context availability for current Claude Code sessions (needs v2.1.197)\n` +
     `- Background-by-default subagent reliability and parent error propagation fixes for ArcKit's parallel build and reader/writer flows (needs v2.1.198+)\n` +
     `- SessionStart / Setup / SubagentStart hook stderr visibility on blocking exits, improving hook diagnosis (needs v2.1.199)\n` +
-    `- Project-scoped plugin loading from git worktrees and \`claude agents --plugin-dir <dir>\` plugin agent/skill visibility fixes for ArcKit branch testing (needs v2.1.200)\n\n` +
+    `- Project-scoped plugin loading from git worktrees and \`claude agents --plugin-dir <dir>\` plugin agent/skill visibility fixes for ArcKit branch testing (needs v2.1.200)\n` +
+    `- Claude Opus 5 — the current default Opus model, with 1M context and fast mode; earlier clients cannot select it (needs v2.1.219)\n\n` +
     `Update with: \`claude update\`\n\n` +
     `**Tip — stop drifting back below the floor:** after updating, add ` +
     `\`"minimumVersion": "${MIN_CLAUDE_CODE_VERSION}"\` to your \`.claude/settings.json\`. ` +

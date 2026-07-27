@@ -45,7 +45,7 @@ ArcKit is a toolkit for enterprise architects that transforms architecture gover
 
 ### Installation
 
-**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.200+**):
+**Claude Code** (premier experience) — install the ArcKit plugin (requires **v2.1.219+**):
 
 First, make sure Claude Code is on the latest version:
 
@@ -79,7 +79,7 @@ The standalone `tractorjuice/arckit-claude` marketplace hosts all Claude Code pl
 
 The older `tractorjuice/arc-kit` marketplace remains available for compatibility, but new Claude Code installs should use `tractorjuice/arckit-claude`. Claude Code is the **primary development platform** for ArcKit and provides the most complete experience: all official commands, autonomous research agents, automation hooks, bundled MCP servers (AWS Knowledge, Microsoft Learn, Google Developer Knowledge, govreposcrape, uk-tenders), and automatic updates via the marketplace. See [Why Claude Code?](#why-claude-code) below.
 
-> **Why v2.1.200?** v2.1.200 fixes project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility for plugin agents/skills, which makes ArcKit's branch and test-repo workflows reliable. It also carries the v2.1.198-v2.1.199 background-subagent reliability, parent error-propagation, and hook stderr-visibility fixes that matter to `/arckit:build`, reader/writer handoffs, and hook diagnosis. v2.1.197 makes Claude Sonnet 5 the default Claude Code model with native 1M context, while v2.1.172 fixed wildcard-domain `WebFetch` permission rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients — the exact shape ArcKit recommends for confining research-agent traffic in OFFICIAL-SENSITIVE deployments. The floor also carries forward the v2.1.156 Opus 4.8 thinking-block fix, v2.1.154 plugin `defaultEnabled: false`, v2.1.144 session-title and headless Skill tool fixes, v2.1.143 plugin dependency enforcement, v2.1.139 hook `args: string[]`, v2.1.129 monitor layout and prompt-cache fixes, v2.1.121 MCP/provenance hook unlocks, v2.1.118-v2.1.119 release/telemetry unlocks, and the earlier `/context`, Auto mode, plugin update, MCP leak, retry, and subagent working-directory fixes.
+> **Why v2.1.219?** v2.1.219 adds **Claude Opus 5** (`claude-opus-5`), the current default Opus model, with 1M context and fast mode support — earlier clients cannot select it. The floor also carries v2.1.200's fix for project-scoped plugin loading from git worktrees and `claude agents --plugin-dir <dir>` visibility for plugin agents/skills, which makes ArcKit's branch and test-repo workflows reliable. It also carries the v2.1.198-v2.1.199 background-subagent reliability, parent error-propagation, and hook stderr-visibility fixes that matter to `/arckit:build`, reader/writer handoffs, and hook diagnosis. v2.1.197 makes Claude Sonnet 5 the default Claude Code model with native 1M context, while v2.1.172 fixed wildcard-domain `WebFetch` permission rules (`WebFetch(domain:*.gov.uk)`) that never matched subdomains on earlier clients — the exact shape ArcKit recommends for confining research-agent traffic in OFFICIAL-SENSITIVE deployments. The floor also carries forward the v2.1.156 Opus 4.8 thinking-block fix, v2.1.154 plugin `defaultEnabled: false`, v2.1.144 session-title and headless Skill tool fixes, v2.1.143 plugin dependency enforcement, v2.1.139 hook `args: string[]`, v2.1.129 monitor layout and prompt-cache fixes, v2.1.121 MCP/provenance hook unlocks, v2.1.118-v2.1.119 release/telemetry unlocks, and the earlier `/context`, Auto mode, plugin update, MCP leak, retry, and subagent working-directory fixes.
 
 **Gemini CLI** — install the ArcKit extension:
 
@@ -1788,7 +1788,7 @@ Key references live in `docs/` and top-level guides:
 
 - **Python 3.11+**
 - **Git** (optional but recommended)
-- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.200+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
+- **AI Coding Agent**: [Claude Code](https://www.anthropic.com/claude-code) v2.1.219+ (via plugin), [Gemini CLI](https://github.com/google-gemini/gemini-cli) (via extension), [OpenCode CLI](https://opencode.net/cli) (via CLI), or [OpenAI Codex CLI](https://chatgpt.com/features/codex) (via CLI)
 - **uv** for package management: [Install uv](https://docs.astral.sh/uv/)
 
 ---
