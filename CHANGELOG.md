@@ -31,6 +31,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`CLAUDE.md` step 3 for adding a command pointed at `plugins/arckit-claude/guides/`, a directory that does not exist** (the real path is `plugins/arckit-claude/docs/guides/`). This was the root cause of the drift: the documented workflow sent guide authors somewhere invalid, so the plugin copy was routinely skipped. Step 3 now names the sync command, and a new "Guide Trees" section documents the canonical direction.
 - `mcp-servers.md` troubleshooting told users to run `echo $GOOGLE_API_KEY`, printing a live credential to the terminal in a guide that elsewhere highlights key redaction for OFFICIAL-SENSITIVE deployments. Replaced with a presence check that does not echo the value.
 
+## [Unreleased]
+
+### Added
+
+- **Recipe wave-width and cycle checks** (`scripts/check_recipes.py`). The validator now computes the topological wave plan for every recipe and fails when a wave exceeds Claude Code's concurrent-subagent cap (20), warns within 4 of it, and detects dependency cycles that previously surfaced only at runtime as an empty wave. Baseline: widest shipped wave is 16 of 20.
+- **`/arckit:build` wave splitting.** The orchestrator now splits any wave wider than 20 at dispatch time rather than assuming the recipe is well-formed — user-authored recipes under `.arckit/recipes/` never pass through CI. A split wave still produces one commit.
+
+### Documentation
+
+- **`build.md` session limits** (#580). Documents the concurrent-subagent (20), per-session subagent (200), and per-session WebSearch (200) caps, and — the point the spike settled — that **all three deny rather than queue**. Verified against the Claude Code v2.1.220 binary: an over-cap spawn throws "Concurrent subagent limit reached ... Do not retry" per excess call. Because the harness is halt-on-fail, an over-wide wave fails rather than running slower. Records the current margin (widest shipped wave 16 of 20, largest total spawn 49 of 200) and notes the ultracode bypass exists but must not be relied on.
+
 ## [6.5.0] — 2026-07-27
 
 ### Added
