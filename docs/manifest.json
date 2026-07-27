@@ -360,6 +360,11 @@
           "path": "docs/guides/repo-docs.md",
           "title": "Repository Documentation Wiki",
           "category": "Repository Plugin"
+        },
+        {
+          "path": "docs/guides/repo-audit.md",
+          "title": "Codebase Audit",
+          "category": "Repository Plugin"
         }
       ]
     },
