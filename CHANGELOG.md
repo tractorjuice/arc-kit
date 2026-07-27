@@ -5,6 +5,26 @@ All notable changes to ArcKit will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.2] — 2026-07-27
+
+### Fixed
+
+- **Overlay artefacts silently lost their Build Provenance block — a regression introduced in v6.7.1.** The publish-time namespacing rewrite (#685, #686) rewrites every published `.md`, template footers included, so an artefact generated from a published overlay template carries `/arckit-repo:repo-audit`. The footer pattern in `provenance-stamp.mjs` required `:` or `.` immediately after `arckit`, so `arckit-repo:` matched nothing: the command went undetected, its `effort:` was never read, and with no build context the block was skipped entirely. Source-tree runs were unaffected because sources keep the portable `/arckit:X` form, which is exactly why no test caught it. The pattern now accepts an optional `-<namespace>` (#689).
+
+- **An overlay command's `effort:` could never resolve — pre-existing, all 105 overlay commands.** `readCommandFrontmatter` only ever looked at `<plugin-root>/commands/<name>.md`. Core lives there; overlays do not — in the published layout they nest under the core root, and in the dev tree they are siblings. Command lookup now falls back to a bounded search of both layouts. Bounded deliberately: an unbounded walk inside a PostToolUse hook with a 5s timeout is a bad trade (#689).
+
+- **`docs/manifest.json` no longer indexes artefacts that git actively ignores.** The manifest is a *published* index — ArcKit serves its own at `arckit.org/manifest.json` — so indexing a gitignored artefact writes a reference to a one-machine-only file into a file everyone fetches, producing a permanent 404. `update-manifest.mjs` now skips ignored paths. Ignored, **not** merely untracked: a brand-new artefact in a repo that tracks `projects/` is untracked until committed and must still be indexed. Fails open when git is absent or the directory is not a repository, since neither can prove a path is ignored (#690).
+
+- **`CLAUDE.md` recommended the wrong Claude Code marketplace.** It told users to add `tractorjuice/arc-kit` while three other places recommend `tractorjuice/arckit-claude`. Both publish all 16 plugins under identical names, so a user following both instructions registers `arckit`, `arckit-repo` and the rest twice. Reported by @jhonurrego-tekton, who found duplicate entries in `installed_plugins.json` alongside a "Plugin 'arckit' not cached" warning (#688).
+
+### Removed
+
+- **`scripts/generate-docs-manifest.py`, added in v6.7.1, has been reverted** along with its 13 tests and its CI step (#691). It was a duplicate, inferior implementation of something the product already does: `sync-guides.mjs`, driven by `/arckit:pages`, is the real generator and builds a far richer schema (`guides`, `roleGuides`, `guideSectionOrder`, `typeCategories`, `dependencyGraph`, `projectHealth` and more). The generator wrote four of those keys and modelled guides as pseudo-projects rather than the arrays the dashboard consumes, so running `/arckit:pages` would have overwritten it, CI would then have failed on `--check`, and the obvious fix — running `--write` — would have destroyed the real manifest.
+
+  **This supersedes the v6.7.1 entries** that listed the generator under *Added* and stated that `docs/manifest.json` "is now generated, never hand-edited". There is no `generate-docs-manifest.py` step to run after adding a guide, template, or article.
+
+  The enriched `docs/manifest.json` **content** is kept. Reverting it would restore four entries pointing at deleted files; 463 entries with zero dangling references is a better frozen snapshot than 107 with four 404s. Nothing maintains it in this repository, and `sync-guides.mjs` owns it wherever `/arckit:pages` is actually run.
+
 ## [6.7.1] — 2026-07-27
 
 ### Fixed

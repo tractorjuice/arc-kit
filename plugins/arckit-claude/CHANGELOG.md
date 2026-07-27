@@ -5,6 +5,16 @@ All notable changes to the ArcKit Claude Code plugin will be documented in this 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.7.2] — 2026-07-27
+
+### Fixed
+
+- **Overlay artefacts silently lost their Build Provenance block — a regression introduced in v6.7.1.** The publish-time namespacing rewrite (#685, #686) rewrites every published `.md`, template footers included, so an artefact generated from a published overlay template carries `/arckit-repo:repo-audit`. The footer pattern in `provenance-stamp.mjs` required `:` or `.` immediately after `arckit`, so `arckit-repo:` matched nothing: the command went undetected, its `effort:` was never read, and with no build context the block was skipped entirely. Source-tree runs were unaffected because sources keep the portable `/arckit:X` form, which is exactly why no test caught it. The pattern now accepts an optional `-<namespace>`, verified across `/arckit:adr` (unchanged), the legacy `/arckit.adr` form (unchanged), `/arckit-repo:repo-audit` and `/arckit-uae:uae-ai-charter` (both previously unstamped) (#689).
+
+- **An overlay command's `effort:` could never resolve — pre-existing, all 105 overlay commands.** `readCommandFrontmatter` only ever looked at `<plugin-root>/commands/<name>.md`. Core lives there; overlays do not — in the published layout they nest under the core root, and in the dev tree they are siblings. Command lookup now falls back to a bounded search of both layouts. Bounded deliberately: an unbounded walk inside a PostToolUse hook with a 5s timeout is a bad trade. `/arckit-repo:repo-audit` now resolves `effort: max`, which is the proof that lookup reached the overlay's own plugin rather than falling back to a core default (#689).
+
+- **`update-manifest.mjs` no longer indexes artefacts that git actively ignores.** `docs/manifest.json` is a *published* index, so indexing a gitignored artefact writes a reference to a one-machine-only file into a file everyone fetches, producing a permanent 404. Ignored, **not** merely untracked: a brand-new artefact in a repo that tracks `projects/` is untracked until committed and must still be indexed. Fails open when git is absent or the directory is not a repository, since neither can prove a path is ignored. Ownership of the manifest is now documented in the hook header (#690).
+
 ## [6.7.1] — 2026-07-27
 
 ### Fixed
