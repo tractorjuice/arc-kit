@@ -2,16 +2,16 @@
 
 10 slash commands and the `au-federal` build recipe covering Australian Federal Government and DISP-supplier compliance:
 
-- `/arckit:au-e8-posture` — ASD Essential Eight ML0–ML3 maturity assessment (8 mitigation strategies)
-- `/arckit:au-pia` — Privacy Act 1988 s33D Privacy Impact Assessment (13 APPs)
-- `/arckit:au-dss` — DTA Digital Service Standard (13 criteria) compliance assessment
-- `/arckit:au-ism-controls` — ASD Information Security Manual Statement of Applicability (17 control domains)
-- `/arckit:au-ndb-playbook` — OAIC Notifiable Data Breach response playbook (Privacy Act 1988 Part IIIC)
-- `/arckit:au-ot-security` — ASD operational technology cyber security assessment for connected OT environments
-- `/arckit:au-soci-cirmp` — SOCI Act / Critical Infrastructure Risk Management Program governance pack
-- `/arckit:au-pspf` — Protective Security Policy Framework (4 outcomes / 16 core requirements)
-- `/arckit:au-ai-assurance` — DTA AI Assurance Framework + Responsible AI Policy v2.0 baseline
-- `/arckit:au-disp-attestation` — DISP Member self-attestation pack (consolidates E8, ISM, PIA, NDB, PSPF)
+- `/arckit-au:au-e8-posture` — ASD Essential Eight ML0–ML3 maturity assessment (8 mitigation strategies)
+- `/arckit-au:au-pia` — Privacy Act 1988 s33D Privacy Impact Assessment (13 APPs)
+- `/arckit-au:au-dss` — DTA Digital Service Standard (13 criteria) compliance assessment
+- `/arckit-au:au-ism-controls` — ASD Information Security Manual Statement of Applicability (17 control domains)
+- `/arckit-au:au-ndb-playbook` — OAIC Notifiable Data Breach response playbook (Privacy Act 1988 Part IIIC)
+- `/arckit-au:au-ot-security` — ASD operational technology cyber security assessment for connected OT environments
+- `/arckit-au:au-soci-cirmp` — SOCI Act / Critical Infrastructure Risk Management Program governance pack
+- `/arckit-au:au-pspf` — Protective Security Policy Framework (4 outcomes / 16 core requirements)
+- `/arckit-au:au-ai-assurance` — DTA AI Assurance Framework + Responsible AI Policy v2.0 baseline
+- `/arckit-au:au-disp-attestation` — DISP Member self-attestation pack (consolidates E8, ISM, PIA, NDB, PSPF)
 
 Recipe: `au-federal` (35 default targets across 9 build waves, plus optional default-off OT and SOCI/CIRMP targets).
 

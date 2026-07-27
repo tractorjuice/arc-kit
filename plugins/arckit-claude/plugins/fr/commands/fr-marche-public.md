@@ -270,9 +270,9 @@ Next steps:
 ## Example Usage
 
 ```text
-/arckit:fr-marche-public Generate procurement documentation for a digital identity platform for a French ministry, estimated value €2.5M, handling personal data, requires SecNumCloud, RGAA compliance mandatory
+/arckit-fr:fr-marche-public Generate procurement documentation for a digital identity platform for a French ministry, estimated value €2.5M, handling personal data, requires SecNumCloud, RGAA compliance mandatory
 
-/arckit:fr-marche-public Procurement file for 001 — cybersecurity services contract, €800K, MAPA procedure, existing UGAP framework available
+/arckit-fr:fr-marche-public Procurement file for 001 — cybersecurity services contract, €800K, MAPA procedure, existing UGAP framework available
 
-/arckit:fr-marche-public Create procurement file for a French regional health authority digital platform, health data in scope, HDS certification required, estimated €3.5M over 3 years
+/arckit-fr:fr-marche-public Create procurement file for a French regional health authority digital platform, health data in scope, HDS certification required, estimated €3.5M over 3 years
 ```

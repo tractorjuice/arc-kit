@@ -103,6 +103,6 @@ The Australian Signals Directorate (ASD) Essential Eight is the baseline cyber-s
 - ML0 means the strategy is **not implemented** — it does not mean "assessed and found satisfactory at a low level." Explicitly state this distinction.
 - Each maturity level has specific sub-controls defined by ASD. Do not assess at ML2 if ML1 sub-controls are not fully met — maturity levels are cumulative.
 - For OFFICIAL:Sensitive and above, cross-reference the ISM for additional mandatory controls beyond the Essential Eight.
-- The Essential Eight is a **mitigation** framework, not a comprehensive security standard. Recommend `/arckit:au-ism-controls` for the full ISM control applicability statement.
+- The Essential Eight is a **mitigation** framework, not a comprehensive security standard. Recommend `/arckit-au:au-ism-controls` for the full ISM control applicability statement.
 - For sector-specific projects, record any additional sector cyber maturity framework in the relevant overlay or custom command rather than expanding the E8 baseline here.
 - Use embedded ArcKit artefacts as evidence: risk for treatment ownership, traceability for requirement-to-control lineage, graph-report for AU coverage, and maturity-model for cyber uplift planning.

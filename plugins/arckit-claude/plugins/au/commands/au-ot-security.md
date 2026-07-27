@@ -120,5 +120,5 @@ ASD operational technology guidance is reusable beyond any one industry sector. 
 - Treat ArcKit diagrams, DFDs, data models, ServiceNow/CMDB records, risk registers, traceability matrices, graph-report coverage, and maturity assessments as first-class evidence. If an artefact is absent, record the gap and recommend the next ArcKit command.
 - OT safety and availability may override normal enterprise IT patching and change windows. Record compensating controls and residual risk explicitly.
 - Direct internet exposure, unmanaged vendor remote access, undocumented radio links, flat OT networks, and obsolete boundary devices are high-risk patterns that must be called out.
-- SOCI/CIRMP applicability is handled by `/arckit:au-soci-cirmp`; this command supplies OT cyber evidence that may feed that artefact.
+- SOCI/CIRMP applicability is handled by `/arckit-au:au-soci-cirmp`; this command supplies OT cyber evidence that may feed that artefact.
 - Keep this artefact cross-sector. Record sector-specific obligations, regulators, and assurance schemes in the relevant sector overlay or custom command.

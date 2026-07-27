@@ -84,7 +84,7 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
 
    - **NER / NGR and AEMO Obligation Mapping** - map architecture-relevant NER, NGR, AEMO procedure, market interface, registration, dispatch, metering, settlement, and operational obligations at a high level for specialist confirmation.
 
-   - **Energy-Specific SOCI Interpretation** - cross-reference `/arckit:au-soci-cirmp` for critical-infrastructure applicability, protected information, reporting, CIRMP hazards, and SOCI incident escalation.
+   - **Energy-Specific SOCI Interpretation** - cross-reference `/arckit-au:au-soci-cirmp` for critical-infrastructure applicability, protected information, reporting, CIRMP hazards, and SOCI incident escalation.
 
    - **Market and System-Operator Interface Register** - identify AEMO portals, APIs, B2B / B2M, file transfers, telemetry, dispatch, outage, settlement, and operational interfaces.
 
@@ -116,5 +116,5 @@ Australian energy projects may need architecture evidence for **AER ring-fencing
 - AER ring-fencing, NER, NGR, AEMO procedures, SOCI obligations, and participant-specific obligations change over time. Record versions, dates checked, and unresolved assumptions.
 - If AEMO site resources are temporarily unavailable, record the access date and use the latest verified local or public copy available to the organisation.
 - Do not collapse regulated and unregulated data flows into a generic system diagram. Produce explicit boundary, interface, data-model, traceability, and ADR handoffs.
-- Use `/arckit:au-aescsf` for energy cyber maturity and `/arckit:au-ot-security` for OT-specific evidence where applicable.
+- Use `/arckit-au-energy:au-aescsf` for energy cyber maturity and `/arckit-au:au-ot-security` for OT-specific evidence where applicable.
 - Inventory-heavy findings should reuse existing ArcKit artefacts: `/arckit:data-model` for data catalogues, `/arckit:servicenow` for CMDB/service inventory, `/arckit:dfd` and `/arckit:diagram` for colour-coded visualisation, `/arckit:risk` for heat/scoring, and `/arckit:graph-report` for register coverage gaps.

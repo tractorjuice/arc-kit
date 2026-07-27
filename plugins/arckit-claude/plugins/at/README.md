@@ -2,9 +2,9 @@
 
 3 slash commands covering Austrian regulatory compliance:
 
-- `/arckit:at-bvergg` — Austrian public procurement (Bundesvergabegesetz 2018, ANKÖ, BVwG)
-- `/arckit:at-dsgvo` — Austrian DSG / DSGVO obligations (Datenschutzbehörde, §§12–13 DSG)
-- `/arckit:at-nisg` — Austrian NISG obligations (BGBl. I Nr. 94/2025, BKA/BMI reporting)
+- `/arckit-at:at-bvergg` — Austrian public procurement (Bundesvergabegesetz 2018, ANKÖ, BVwG)
+- `/arckit-at:at-dsgvo` — Austrian DSG / DSGVO obligations (Datenschutzbehörde, §§12–13 DSG)
+- `/arckit-at:at-nisg` — Austrian NISG obligations (BGBl. I Nr. 94/2025, BKA/BMI reporting)
 
 Recipes: No recipes ship in this overlay yet.
 

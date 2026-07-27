@@ -92,9 +92,9 @@ These ArcKit commands generate security-related documents:
 
 | Command | Security Area |
 |---------|--------------|
-| `/arckit:security` | Comprehensive security evidence document |
-| `/arckit:sdd-lot1`, `sdd-lot2`, `sdd-lot3` | Security sections within SDDs |
-| `/arckit:declaration` | Legal compliance and exclusion grounds |
+| `/arckit-uk-gcloud:security` | Comprehensive security evidence document |
+| `/arckit-uk-gcloud:sdd-lot1`, `sdd-lot2`, `sdd-lot3` | Security sections within SDDs |
+| `/arckit-uk-gcloud:declaration` | Legal compliance and exclusion grounds |
 
 ## Additional Resources
 

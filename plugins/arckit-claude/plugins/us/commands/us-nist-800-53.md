@@ -52,7 +52,7 @@ For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / M
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (architecture principles, if present)
-   - **REQUIRED**: The project's FIPS 199 artefact — the system water-mark selects the baseline. If absent, stop and direct the user to run `/arckit:us-fisma-categorization` first.
+   - **REQUIRED**: The project's FIPS 199 artefact — the system water-mark selects the baseline. If absent, stop and direct the user to run `/arckit-us:us-fisma-categorization` first.
    - The project's REQ artefact — extract `NFR-SEC-*` (security NFRs), `DR-*` (data requirements), `INT-*` (integration requirements)
    - Any prior ADRs touching identity, encryption, logging, network architecture
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
@@ -83,7 +83,7 @@ For systems pursuing FedRAMP authorization, the FedRAMP Rev 5 Baselines (Low / M
 
 ## Handoffs
 
-The tailored control matrix is the source-of-truth for the FedRAMP SSP (`/arckit:us-fedramp-ssp`) and the input to the Zero Trust scoring (`/arckit:us-zero-trust`). The SR (Supply Chain Risk Management) family controls cross-reference the EO 14028 attestation and SBOM via `/arckit:us-sbom-eo-14028`. Any non-trivial compensating controls, inheritance-boundary calls, or parameter-value deviations should be captured as ADRs via `/arckit:adr`.
+The tailored control matrix is the source-of-truth for the FedRAMP SSP (`/arckit-us:us-fedramp-ssp`) and the input to the Zero Trust scoring (`/arckit-us:us-zero-trust`). The SR (Supply Chain Risk Management) family controls cross-reference the EO 14028 attestation and SBOM via `/arckit-us:us-sbom-eo-14028`. Any non-trivial compensating controls, inheritance-boundary calls, or parameter-value deviations should be captured as ADRs via `/arckit:adr`.
 
 ## Important Notes
 

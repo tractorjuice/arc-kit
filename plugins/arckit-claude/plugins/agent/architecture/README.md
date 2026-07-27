@@ -4,12 +4,12 @@
 
 | Command | Doc Type | Description |
 |---------|----------|-------------|
-| `/arckit:agent-inventory` | `AAGI` | Agent inventory and capabilities assessment |
-| `/arckit:agent-design` | `AAGR` | Agent design patterns and architecture decisions |
-| `/arckit:agent-governance` | `AAOV` | Governance frameworks, human oversight, and audit trails |
-| `/arckit:agent-integration` | `AAIN` | Agent-to-agent integration, tool contracts, and orchestration |
-| `/arckit:agent-security` | `AASE` | Agent security hardening, sandboxing, and permission models |
-| `/arckit:agent-maturity` | `AAMT` | Agent maturity model and continuous improvement |
+| `/arckit-agent-architecture:agent-inventory` | `AAGI` | Agent inventory and capabilities assessment |
+| `/arckit-agent-architecture:agent-design` | `AAGR` | Agent design patterns and architecture decisions |
+| `/arckit-agent-architecture:agent-governance` | `AAOV` | Governance frameworks, human oversight, and audit trails |
+| `/arckit-agent-architecture:agent-integration` | `AAIN` | Agent-to-agent integration, tool contracts, and orchestration |
+| `/arckit-agent-architecture:agent-security` | `AASE` | Agent security hardening, sandboxing, and permission models |
+| `/arckit-agent-architecture:agent-maturity` | `AAMT` | Agent maturity model and continuous improvement |
 
 Recipe: `agent-architecture` (6 phases: inventory → design → governance → integration → security → maturity).
 

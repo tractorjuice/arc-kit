@@ -67,11 +67,11 @@ These ArcKit commands generate documents that answer framework questions:
 
 | Command | Framework Area |
 |---------|---------------|
-| `/arckit:service-design` | Service identity, features, benefits |
-| `/arckit:sdd-lot1`, `sdd-lot2`, `sdd-lot3` | Technical, security, data, infrastructure questions |
-| `/arckit:pricing` | Pricing questions |
-| `/arckit:security` | Security and compliance questions |
-| `/arckit:declaration` | All declaration questions |
+| `/arckit-uk-gcloud:service-design` | Service identity, features, benefits |
+| `/arckit-uk-gcloud:sdd-lot1`, `sdd-lot2`, `sdd-lot3` | Technical, security, data, infrastructure questions |
+| `/arckit-uk-gcloud:pricing` | Pricing questions |
+| `/arckit-uk-gcloud:security` | Security and compliance questions |
+| `/arckit-uk-gcloud:declaration` | All declaration questions |
 
 ## Additional Resources
 

@@ -327,9 +327,9 @@ After writing the file, show a concise summary (NOT the full document):
 - [✅/⚠️] Transition Architecture: ARC-{P}-TRANS-v[N].md
 
 ### Next Steps
-1. Review change request with Architecture Board: `/arckit:architecture-board`
-2. Update transition plan for approved changes: `/arckit:transition-architecture`
-3. Re-assess gaps after implementation: `/arckit:gap-analysis`
+1. Review change request with Architecture Board: `/arckit-togaf-adm:architecture-board`
+2. Update transition plan for approved changes: `/arckit-togaf-adm:transition-architecture`
+3. Re-assess gaps after implementation: `/arckit-togaf-adm:gap-analysis`
 4. Schedule ADM cycle re-entry if phases require re-work
 5. Update affected artefacts after approval
 
@@ -360,8 +360,8 @@ After writing the file, show a concise summary (NOT the full document):
 6. **Multi-Instance Numbering**: Change requests follow sequential numbering (ACHG-001, ACHG-002, etc.) similar to ADRs. Numbers are never reused — superseded or rejected changes retain their numbers.
 
 7. **Integration with Other Commands**:
-   - Architecture Change feeds into: `/arckit:transition-architecture` (update migration plans), `/arckit:gap-analysis` (re-assess after implementation)
-   - Architecture Change is informed by: `/arckit:architecture-board` (governance context), BPCM (capability baseline), ADMP (framework)
+   - Architecture Change feeds into: `/arckit-togaf-adm:transition-architecture` (update migration plans), `/arckit-togaf-adm:gap-analysis` (re-assess after implementation)
+   - Architecture Change is informed by: `/arckit-togaf-adm:architecture-board` (governance context), BPCM (capability baseline), ADMP (framework)
 
 8. **Version Management**: If a change request needs revision (e.g., after board feedback), create a new version (v1.1 for minor changes, v2.0 for significant changes) rather than overwriting.
 

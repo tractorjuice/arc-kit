@@ -7,6 +7,18 @@ import tomllib
 
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _load_sync_layout():
+    """Import scripts/sync-claude-plugin-layout.py (hyphens block a normal import)."""
+    import importlib.util
+
+    path = REPO_ROOT / "scripts/sync-claude-plugin-layout.py"
+    spec = importlib.util.spec_from_file_location("sync_claude_plugin_layout", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
 PUSH_EXTENSIONS = REPO_ROOT / "scripts" / "push-extensions.sh"
 RELEASING_DOC = REPO_ROOT / "docs" / "RELEASING.md"
 ROOT_VERSION = REPO_ROOT / "VERSION"
@@ -188,8 +200,16 @@ def test_local_claude_standalone_plugin_paths_match_sources():
 
     assert actual_files == set(expected_files)
 
+    # Compare against the source as it should look AFTER publish-time rewriting.
+    # sync-claude-plugin-layout.py namespaces overlay command invocations for
+    # Claude Code (`/arckit:uae-x` -> `/arckit-uae:uae-x`), so a raw byte
+    # comparison would flag every namespaced file as drift.
+    sync = _load_sync_layout()
+    namespaces = sync.command_namespaces()
+    pattern = sync._invocation_pattern(namespaces)
+
     for target, source in expected_files.items():
-        assert target.read_bytes() == source.read_bytes(), (
+        assert target.read_bytes() == sync.publish_bytes(source, namespaces, pattern), (
             f"{target.relative_to(REPO_ROOT)} differs from "
             f"{source.relative_to(REPO_ROOT)}"
         )

@@ -116,8 +116,8 @@ The Digital Transformation Agency (DTA) Digital Service Standard sets the mandat
 ## Important Notes
 
 - The DTA Digital Service Standard applies to **all new and redesigned Australian Government digital services**. Existing services may be assessed when undergoing significant change.
-- Criterion 5 (Make it secure) should cross-reference the ASD Essential Eight assessment (`/arckit:au-e8-posture`) if one exists.
-- Criterion 7 (Protect users' privacy) should cross-reference the Privacy Impact Assessment (`/arckit:au-pia`) if one exists.
+- Criterion 5 (Make it secure) should cross-reference the ASD Essential Eight assessment (`/arckit-au:au-e8-posture`) if one exists.
+- Criterion 7 (Protect users' privacy) should cross-reference the Privacy Impact Assessment (`/arckit-au:au-pia`) if one exists.
 - Criterion 9 (Make it accessible) requires WCAG 2.2 Level AA as the minimum standard for Australian Government services.
 - The Standard is assessed at Alpha, Beta, and Live phases — the depth of evidence expected increases at each gate.
 - This assessment is analogous to the UK GDS Service Standard assessment (`/arckit:service-assessment`) but uses Australian criteria and governance structures.

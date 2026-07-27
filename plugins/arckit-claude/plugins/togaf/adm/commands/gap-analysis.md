@@ -24,7 +24,7 @@ $ARGUMENTS
 **MANDATORY** (warn if missing):
 
 - **BPCM** (Business Capability Model) — Extract: Capability hierarchy, maturity levels, capability ownership, capability-to-objective mappings
-  - If missing: STOP and ask user to run `/arckit:business-capability-map` first. Gap analysis requires a capability baseline.
+  - If missing: STOP and ask user to run `/arckit-togaf-adm:business-capability-map` first. Gap analysis requires a capability baseline.
 
 **RECOMMENDED** (read if available, note if missing):
 
@@ -251,8 +251,8 @@ After writing the file, show a concise summary (NOT the full document):
 - [✅/⚠️] Principles: ARC-000-PRIN-v[N].md
 
 ### Next Steps
-1. Review gap analysis with Architecture Board: `/arckit:architecture-board`
-2. Create work packages to close gaps: `/arckit:transition-architecture`
+1. Review gap analysis with Architecture Board: `/arckit-togaf-adm:architecture-board`
+2. Create work packages to close gaps: `/arckit-togaf-adm:transition-architecture`
 3. Validate workstream sequencing with delivery team
 4. Prioritise immediate-action gaps with sponsor
 
@@ -280,8 +280,8 @@ After writing the file, show a concise summary (NOT the full document):
 6. **Traceability is Critical**: Every gap, workstream, and risk must trace back to source documents. This ensures the gap analysis is grounded in evidence, not assumptions.
 
 7. **Integration with Other Commands**:
-   - Gap Analysis feeds into: `/arckit:transition-architecture` (Phase F — Migration Planning), `/arckit:architecture-board` (governance review)
-   - Gap Analysis is informed by: `/arckit:business-capability-map` (BPCM), `/arckit:strategy` (STRAT), `/arckit:principles` (PRIN)
+   - Gap Analysis feeds into: `/arckit-togaf-adm:transition-architecture` (Phase F — Migration Planning), `/arckit-togaf-adm:architecture-board` (governance review)
+   - Gap Analysis is informed by: `/arckit-togaf-adm:business-capability-map` (BPCM), `/arckit:strategy` (STRAT), `/arckit:principles` (PRIN)
 
 8. **Version Management**: If a gap analysis already exists (`ARC-*-GAPA-v*.md`), create a new version (v2.0) rather than overwriting. Gap analyses should be versioned to track re-assessment across ADM cycles.
 

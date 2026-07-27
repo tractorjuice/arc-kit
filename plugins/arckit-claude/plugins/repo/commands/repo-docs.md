@@ -248,19 +248,19 @@ Document:
 ## Example Usage
 
 ```text
-/arckit:repo-docs --init
+/arckit-repo:repo-docs --init
 ```
 
 ```text
-/arckit:repo-docs --update
+/arckit-repo:repo-docs --update
 ```
 
 ```text
-/arckit:repo-docs document hooks and release flow only
+/arckit-repo:repo-docs document hooks and release flow only
 ```
 
 ```text
-/arckit:repo-docs --check
+/arckit-repo:repo-docs --check
 ```
 
 ## Key References
@@ -275,7 +275,7 @@ Document:
 
 ## Related Commands
 
-- `/arckit:repo-audit` judges a codebase against architecture principles and requirements. This command describes a repository; that one assesses one.
+- `/arckit-repo:repo-audit` judges a codebase against architecture principles and requirements. This command describes a repository; that one assesses one.
 - `/arckit:pages` publishes ArcKit artifacts, guides, and documentation indexes.
 - `/arckit:search` locates ArcKit artifacts and guide references.
-- `/arckit:architecture-repository` in the TOGAF ADM overlay creates a governance repository artifact, not source-code repository docs.
+- `/arckit-togaf-adm:architecture-repository` in the TOGAF ADM overlay creates a governance repository artifact, not source-code repository docs.

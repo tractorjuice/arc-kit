@@ -1,6 +1,6 @@
 # Service Design: [PROJECT_NAME]
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit:service-design`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit-uk-gcloud:service-design`
 
 ## Document Control
 

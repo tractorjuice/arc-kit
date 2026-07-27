@@ -2,16 +2,16 @@
 
 10 slash commands and the `us-federal` build recipe covering US Federal Civilian agency compliance:
 
-- `/arckit:us-fisma-categorization` — FIPS 199 categorization (NIST SP 800-60 information types)
-- `/arckit:us-nist-800-53` — NIST SP 800-53 Rev 5 tailoring against Low / Moderate / High baselines
-- `/arckit:us-fedramp-ssp` — FedRAMP System Security Plan (Moderate / High template, 15 sections)
-- `/arckit:us-fedramp-readiness` — 3PAO-style Readiness Assessment Report + Agency vs JAB path
-- `/arckit:us-zero-trust` — CISA Zero Trust Maturity Model v2.0 across 5 pillars + 3 cross-cuts
-- `/arckit:us-icam` — OMB M-19-17 / NIST SP 800-63-3 IAL/AAL/FAL (PIV + login.gov integration)
-- `/arckit:us-ai-rmf` — NIST AI RMF 1.0 (Govern/Map/Measure/Manage) + Generative AI Profile (AI 600-1)
-- `/arckit:us-ai-impact` — OMB M-24-10 rights/safety-impacting AI determination + M-25-21 acquisition
-- `/arckit:us-privacy-pia` — E-Gov Act §208 PIA + OMB M-03-22 + Privacy Act §552a SORN trigger
-- `/arckit:us-sbom-eo-14028` — EO 14028 + OMB M-22-18 / M-23-16 secure-software self-attestation + SBOM
+- `/arckit-us:us-fisma-categorization` — FIPS 199 categorization (NIST SP 800-60 information types)
+- `/arckit-us:us-nist-800-53` — NIST SP 800-53 Rev 5 tailoring against Low / Moderate / High baselines
+- `/arckit-us:us-fedramp-ssp` — FedRAMP System Security Plan (Moderate / High template, 15 sections)
+- `/arckit-us:us-fedramp-readiness` — 3PAO-style Readiness Assessment Report + Agency vs JAB path
+- `/arckit-us:us-zero-trust` — CISA Zero Trust Maturity Model v2.0 across 5 pillars + 3 cross-cuts
+- `/arckit-us:us-icam` — OMB M-19-17 / NIST SP 800-63-3 IAL/AAL/FAL (PIV + login.gov integration)
+- `/arckit-us:us-ai-rmf` — NIST AI RMF 1.0 (Govern/Map/Measure/Manage) + Generative AI Profile (AI 600-1)
+- `/arckit-us:us-ai-impact` — OMB M-24-10 rights/safety-impacting AI determination + M-25-21 acquisition
+- `/arckit-us:us-privacy-pia` — E-Gov Act §208 PIA + OMB M-03-22 + Privacy Act §552a SORN trigger
+- `/arckit-us:us-sbom-eo-14028` — EO 14028 + OMB M-22-18 / M-23-16 secure-software self-attestation + SBOM
 
 Recipe: `us-federal` (5 waves: baseline → controls → posture → ai → authorization).
 

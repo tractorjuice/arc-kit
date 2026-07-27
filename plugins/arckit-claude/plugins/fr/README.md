@@ -2,18 +2,18 @@
 
 12 slash commands covering French public sector compliance:
 
-- `/arckit:fr-algorithme-public` — Public algorithm transparency notice (Article L311-3-1 CRPA)
-- `/arckit:fr-anssi` — ANSSI Guide d'hygiène informatique and cloud security recommendations
-- `/arckit:fr-anssi-carto` — ANSSI-methodology information system cartography (4 reading levels)
-- `/arckit:fr-code-reuse` — Public code reuse via code.gouv.fr and SILL
-- `/arckit:fr-dinum` — French digital administration standards (RGI, RGAA, RGESN, RGS, DINUM cloud doctrine)
-- `/arckit:fr-dr` — Diffusion Restreinte handling compliance
-- `/arckit:fr-ebios` — EBIOS Risk Manager risk analysis (5 ANSSI workshops)
-- `/arckit:fr-irn` — Indice de Résilience Numérique self-assessment (aDRI framework)
-- `/arckit:fr-marche-public` — French public procurement (code de la commande publique, UGAP)
-- `/arckit:fr-pssi` — Information System Security Policy (PSSI)
-- `/arckit:fr-rgpd` — CNIL-specific GDPR obligations
-- `/arckit:fr-secnumcloud` — SecNumCloud 3.2 qualification compliance
+- `/arckit-fr:fr-algorithme-public` — Public algorithm transparency notice (Article L311-3-1 CRPA)
+- `/arckit-fr:fr-anssi` — ANSSI Guide d'hygiène informatique and cloud security recommendations
+- `/arckit-fr:fr-anssi-carto` — ANSSI-methodology information system cartography (4 reading levels)
+- `/arckit-fr:fr-code-reuse` — Public code reuse via code.gouv.fr and SILL
+- `/arckit-fr:fr-dinum` — French digital administration standards (RGI, RGAA, RGESN, RGS, DINUM cloud doctrine)
+- `/arckit-fr:fr-dr` — Diffusion Restreinte handling compliance
+- `/arckit-fr:fr-ebios` — EBIOS Risk Manager risk analysis (5 ANSSI workshops)
+- `/arckit-fr:fr-irn` — Indice de Résilience Numérique self-assessment (aDRI framework)
+- `/arckit-fr:fr-marche-public` — French public procurement (code de la commande publique, UGAP)
+- `/arckit-fr:fr-pssi` — Information System Security Policy (PSSI)
+- `/arckit-fr:fr-rgpd` — CNIL-specific GDPR obligations
+- `/arckit-fr:fr-secnumcloud` — SecNumCloud 3.2 qualification compliance
 
 Recipes: No recipes ship in this overlay yet.
 

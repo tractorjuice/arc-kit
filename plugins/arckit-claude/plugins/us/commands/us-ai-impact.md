@@ -53,7 +53,7 @@ Appendix I of M-24-10 lists **presumed-impacting** use cases (those agencies mus
 
 1. Read prerequisites:
    - `projects/000-global/ARC-000-PRIN-*.md` (architecture principles, if present)
-   - The project's AI RMF artefact (recommended prerequisite — if absent, suggest running `/arckit:us-ai-rmf` first)
+   - The project's AI RMF artefact (recommended prerequisite — if absent, suggest running `/arckit-us:us-ai-rmf` first)
    - The project's REQ artefact — extract `NFR-SEC-*`, `DR-*`, `INT-*`, plus any explicit fairness / non-discrimination requirements
    - The project's STKE artefact — for affected populations and decisions affecting them
    - `${CLAUDE_PLUGIN_ROOT}/templates/_partials/RENDERING.md`
@@ -85,7 +85,7 @@ Appendix I of M-24-10 lists **presumed-impacting** use cases (those agencies mus
 
 ## Handoffs
 
-Minimum-practice gaps drive the AI RMF uplift backlog via `/arckit:us-ai-rmf`. PII-handling AI systems require `/arckit:us-privacy-pia`. Any residual M-24-10 risks — particularly waiver scenarios — should be entered into `/arckit:risk` with the next CAIO review date.
+Minimum-practice gaps drive the AI RMF uplift backlog via `/arckit-us:us-ai-rmf`. PII-handling AI systems require `/arckit-us:us-privacy-pia`. Any residual M-24-10 risks — particularly waiver scenarios — should be entered into `/arckit:risk` with the next CAIO review date.
 
 ## Important Notes
 

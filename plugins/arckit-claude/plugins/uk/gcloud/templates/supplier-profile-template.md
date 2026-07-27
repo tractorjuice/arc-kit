@@ -1,6 +1,6 @@
 # Supplier Profile: [PROJECT_NAME]
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit:supplier-profile`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit-uk-gcloud:supplier-profile`
 
 ## Document Control
 

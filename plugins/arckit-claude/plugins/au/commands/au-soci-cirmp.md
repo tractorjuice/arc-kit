@@ -125,4 +125,4 @@ SOCI is a cross-sector Australian critical-infrastructure regime, not an energy-
 - Treat ArcKit diagrams, DFDs, data models, ServiceNow/CMDB records, risk registers, traceability matrices, graph-report coverage, and maturity assessments as first-class evidence. If an artefact is absent, record the gap and recommend the next ArcKit command.
 - CIRMP obligations and rules are subject to amendments and may vary by asset class. Record the legislation and guidance version checked.
 - The annual report is a governance obligation, not only a cyber artefact. Board/council/governing body approval readiness must be assessed.
-- Where the asset includes OT, cross-reference `/arckit:au-ot-security`; where it does not, mark OT evidence as not applicable rather than forcing it into scope.
+- Where the asset includes OT, cross-reference `/arckit-au:au-ot-security`; where it does not, mark OT evidence as not applicable rather than forcing it into scope.

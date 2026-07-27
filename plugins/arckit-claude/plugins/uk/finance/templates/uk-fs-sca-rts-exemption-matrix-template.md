@@ -2,7 +2,7 @@
 
 > **Template Origin**: Community | **ArcKit Version**: [VERSION]
 > **Usage**: This template defines the shape of one per-exemption entry in §3 of the master
-> `uk-fs-sca-rts-template.md`. The `/arckit:uk-fs-sca-rts` command generates one block per
+> `uk-fs-sca-rts-template.md`. The `/arckit-uk-finance:uk-fs-sca-rts` command generates one block per
 > in-scope SCA-RTS Article (10, 10A, 11, 13, 14, 15, 16, 17, 18). Article 12 is excluded from
 > scope. Copy and fill this block for each exemption — do not include this header comment in the
 > generated artefact.

@@ -1,6 +1,6 @@
 # Security Assertions: [PROJECT_NAME]
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit:security`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit-uk-gcloud:security`
 
 ## Document Control
 

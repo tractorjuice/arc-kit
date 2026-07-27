@@ -1,6 +1,6 @@
 # Pricing Document: [PROJECT_NAME]
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit:pricing`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit-uk-gcloud:pricing`
 
 ## Document Control
 

@@ -90,7 +90,7 @@ Since 2024, FedRAMP requires all new SSP submissions against the **Rev 5** basel
 
 ## Handoffs
 
-Once the SSP is in draft, run `/arckit:us-fedramp-readiness` to produce the 3PAO-style Readiness Assessment Report (RAR) capturing gaps against the SSP control claims. The SSP control implementations also drive the Zero Trust scoring (`/arckit:us-zero-trust`) and the ICAM architecture (`/arckit:us-icam`). Boundary, interconnection, and Types-of-Users content must be kept consistent with the architecture diagrams under `projects/<id>/diagrams/`.
+Once the SSP is in draft, run `/arckit-us:us-fedramp-readiness` to produce the 3PAO-style Readiness Assessment Report (RAR) capturing gaps against the SSP control claims. The SSP control implementations also drive the Zero Trust scoring (`/arckit-us:us-zero-trust`) and the ICAM architecture (`/arckit-us:us-icam`). Boundary, interconnection, and Types-of-Users content must be kept consistent with the architecture diagrams under `projects/<id>/diagrams/`.
 
 ## Important Notes
 

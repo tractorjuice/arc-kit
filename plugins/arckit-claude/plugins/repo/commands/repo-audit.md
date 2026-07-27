@@ -192,24 +192,24 @@ Check mode is the cheapest way to catch a wrong project before a full run.
 ## Example Usage
 
 ```text
-/arckit:repo-audit
+/arckit-repo:repo-audit
 ```
 
 ```text
-/arckit:repo-audit https://github.com/org/service security and resilience
+/arckit-repo:repo-audit https://github.com/org/service security and resilience
 ```
 
 ```text
-/arckit:repo-audit ../other-checkout
+/arckit-repo:repo-audit ../other-checkout
 ```
 
 ```text
-/arckit:repo-audit https://gitlab.com/group/subgroup/project --check
+/arckit-repo:repo-audit https://gitlab.com/group/subgroup/project --check
 ```
 
 ## Related Commands
 
-- `/arckit:repo-docs` documents a repository. This command judges one.
+- `/arckit-repo:repo-docs` documents a repository. This command judges one.
 - `/arckit:conformance` checks decided-vs-designed conformance across ArcKit artefacts, with no source code involved.
 - `/arckit:gov-reuse` searches UK government repositories for reusable code, scored for reuse candidacy rather than audit.
 - `/arckit:adr` records the blocking decisions this audit surfaces.

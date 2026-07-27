@@ -86,7 +86,7 @@ The AI RMF underpins the federal policy stack: OMB M-24-10 requires agencies to 
 
 ## Handoffs
 
-The RMF findings drive `/arckit:us-ai-impact` — the M-24-10 rights/safety-impacting determination and M-25-21 acquisition controls inherit the RMF risk register. PII-handling AI systems require `/arckit:us-privacy-pia`. Residual risks flow into `/arckit:risk`. Significant model, hosting, data-governance, and human-oversight decisions captured during the RMF process should be recorded as ADRs via `/arckit:adr`.
+The RMF findings drive `/arckit-us:us-ai-impact` — the M-24-10 rights/safety-impacting determination and M-25-21 acquisition controls inherit the RMF risk register. PII-handling AI systems require `/arckit-us:us-privacy-pia`. Residual risks flow into `/arckit:risk`. Significant model, hosting, data-governance, and human-oversight decisions captured during the RMF process should be recorded as ADRs via `/arckit:adr`.
 
 ## Important Notes
 

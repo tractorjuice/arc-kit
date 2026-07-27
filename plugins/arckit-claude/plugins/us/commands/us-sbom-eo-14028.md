@@ -86,7 +86,7 @@ Alongside the attestation, agencies may require an **SBOM** conforming to the NT
 
 ## Handoffs
 
-The attestation and SBOM directly evidence NIST 800-53 SR and SA family controls in `/arckit:us-nist-800-53`. SBOM-format choice, signing strategy, and any exception requests should be captured as ADRs via `/arckit:adr`. Components with known unmitigated vulnerabilities and any open M-22-18 exceptions feed `/arckit:risk`.
+The attestation and SBOM directly evidence NIST 800-53 SR and SA family controls in `/arckit-us:us-nist-800-53`. SBOM-format choice, signing strategy, and any exception requests should be captured as ADRs via `/arckit:adr`. Components with known unmitigated vulnerabilities and any open M-22-18 exceptions feed `/arckit:risk`.
 
 ## Important Notes
 

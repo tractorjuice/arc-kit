@@ -1,6 +1,6 @@
 # Service Definition Document: [PROJECT_NAME]
 
-> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit:sdd-lot1`
+> **Template Origin**: Official | **ArcKit Version**: [VERSION] | **Command**: `/arckit-uk-gcloud:sdd-lot1`
 
 **G-Cloud Lot**: Lot 1 — Cloud Hosting (IaaS/PaaS)
 

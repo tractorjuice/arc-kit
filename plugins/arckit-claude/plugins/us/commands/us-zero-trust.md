@@ -79,7 +79,7 @@ NIST SP 800-207 is the foundational Zero Trust Architecture specification (logic
 
 ## Handoffs
 
-Identity-pillar gaps drive the ICAM architecture (`/arckit:us-icam`) — particularly IAL/AAL/FAL determination and PIV / login.gov integration. The ZTMM-to-800-53 mapping flags controls in the NIST 800-53 artefact (`/arckit:us-nist-800-53`) that may require re-tailoring or compensating-control entries. Architectural decisions to reach Advanced or Optimal maturity (e.g. service-mesh selection, policy-decision-point platform, microsegmentation strategy) should be captured as ADRs via `/arckit:adr`.
+Identity-pillar gaps drive the ICAM architecture (`/arckit-us:us-icam`) — particularly IAL/AAL/FAL determination and PIV / login.gov integration. The ZTMM-to-800-53 mapping flags controls in the NIST 800-53 artefact (`/arckit-us:us-nist-800-53`) that may require re-tailoring or compensating-control entries. Architectural decisions to reach Advanced or Optimal maturity (e.g. service-mesh selection, policy-decision-point platform, microsegmentation strategy) should be captured as ADRs via `/arckit:adr`.
 
 ## Important Notes
 

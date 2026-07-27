@@ -24,7 +24,7 @@ $ARGUMENTS
 **MANDATORY** (warn if missing):
 
 - **GAPA** (Gap Analysis) — Extract: Capability gaps, gap severity scores, workstream mappings, gap-to-risk mappings
-  - If missing: STOP and ask user to run `/arckit:gap-analysis` first. Transition architecture cannot be planned without a gap baseline.
+  - If missing: STOP and ask user to run `/arckit-togaf-adm:gap-analysis` first. Transition architecture cannot be planned without a gap baseline.
 
 **RECOMMENDED** (read if available, note if missing):
 
@@ -280,8 +280,8 @@ After writing the file, show a concise summary (NOT the full document):
 - [✅/⚠️] Architecture Decisions: ARC-{P}-ADR-*.md
 
 ### Next Steps
-1. Present transition plan to Architecture Board: `/arckit:architecture-board`
-2. Create change requests for scope adjustments: `/arckit:architecture-change`
+1. Present transition plan to Architecture Board: `/arckit-togaf-adm:architecture-board`
+2. Create change requests for scope adjustments: `/arckit-togaf-adm:architecture-change`
 3. Break work packages into delivery plans: `/arckit:plan`
 4. Generate backlog from work packages: `/arckit:backlog`
 
@@ -319,8 +319,8 @@ After writing the file, show a concise summary (NOT the full document):
    - Must be independently verifiable (not "stakeholder satisfaction" — use "UAT pass rate > 95%")
 
 7. **Integration with Other Commands**:
-   - Transition Architecture feeds into: `/arckit:architecture-board` (governance approval), `/arckit:plan` (detailed delivery plans), `/arckit:backlog` (work package decomposition)
-   - Transition Architecture is informed by: `/arckit:gap-analysis` (GAPA), `/arckit:roadmap` (ROAD), `/arckit:application-rationalization` (APPR)
+   - Transition Architecture feeds into: `/arckit-togaf-adm:architecture-board` (governance approval), `/arckit:plan` (detailed delivery plans), `/arckit:backlog` (work package decomposition)
+   - Transition Architecture is informed by: `/arckit-togaf-adm:gap-analysis` (GAPA), `/arckit:roadmap` (ROAD), `/arckit-togaf-adm:application-rationalization` (APPR)
 
 8. **Version Management**: If a transition architecture already exists (`ARC-*-TRANS-v*.md`), create a new version (v2.0) rather than overwriting.
 
