@@ -233,3 +233,4 @@ output/
 plugins/arckit-deepbook
 deepbook-test-output/
 .arckit/deepbook-checkpoints/
+.arckit/deepbook-tools/
